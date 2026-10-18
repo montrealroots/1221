@@ -2647,9 +2647,9 @@
  },
  "src/ui/screens/Home.tsx#Home": {
   "status": "Rewritten And Verified",
-  "hash": "cd6a21bdb4ac",
+  "hash": "e3e96b088d83",
   "on": "2026-10-18",
-  "evidence": "Editorial review, batch 4: Worth is assets less what’s owed (`netWorth`), so “Worth $503,542, $10 of it owed.” said part of the worth was owed; now “Worth $503,542, after $10 owed.” tests/evidence2-b12.test.ts “the twin never opted in: …”, tests/evidence-g33-ui.test.ts “with the day’s spending put on the card, …” and tests/scope-money.test.ts assert it exactly; the School line’s place, “1st of 16 in the class”, is asserted by tests/language-dynamic.test.ts, tests/evidence2-b12.test.ts, tests/evidence3-home.test.ts and tests/evidence-g33-ui.test.ts"
+  "evidence": "Editorial review, batch 4: Worth is assets less what’s owed (`netWorth`), so “Worth $503,542, $10 of it owed.” said part of the worth was owed; now “Worth $503,542, after $10 owed.” tests/evidence2-b12.test.ts “the twin never opted in: …”, tests/evidence-g33-ui.test.ts “with the day’s spending put on the card, …” and tests/scope-money.test.ts assert it exactly; the School line’s place, “1st of 16 in the class”, is asserted by tests/language-dynamic.test.ts, tests/evidence2-b12.test.ts, tests/evidence3-home.test.ts and tests/evidence-g33-ui.test.ts. Batch 6: Where You Are’s “Home.”, the screen’s own name, reads “Your home. 130K people.”: tests/evidence2-b11.test.ts and tests/evidence-g32-ui.test.ts h-where-weather, exact, in New Haven and London. The final walk of the built app (docs/verification/language-2026-10-17/editorial/after-1440, after-390) shows all three on every save’s Home (the worth with a debt on lien.json); names.json reads them in the browser"
  },
  "src/ui/screens/Home.tsx#PapersLine": {
   "status": "Reviewed And Retained",
@@ -2784,10 +2784,10 @@
   "reason": "The screens' tab labels: plain Title Case nouns, one name for each section wherever it's offered (the tools and tests press them by these names)."
  },
  "src/ui/shell/TimeControls.tsx#AdvanceMenu": {
-  "status": "Reviewed And Retained",
-  "hash": "7e7c30347de5",
-  "on": "2026-10-17",
-  "reason": "Its items (One Hour, This Evening, Tonight, Tomorrow Morning, Next Event, Next Monday, One Week, Choose An Event…) say where the clock goes, each with its time, and Locked and How Play And Pause Work are the guide's own words; plain Title Case. Pressed in tests/language-frame-ui.test.ts; held in tests/help-mechanics.test.ts."
+  "status": "Rewritten And Verified",
+  "hash": "789810fc3e7d",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 6: the menu's arrow is drawn in an aria-hidden span, so the button's accessible name is “Advance”, where it was “Advance ▾”. Measured on the built app: docs/verification/language-2026-10-17/editorial/names.json (getByRole, exact: “Advance” 1, “Advance ▾” 0); tests/editorial-frame-names.test.ts holds the markup, and fails with the arrow said"
  },
  "src/ui/shell/TimeControls.tsx#DIAL_LABEL": {
   "status": "Reviewed And Retained",
@@ -2802,10 +2802,10 @@
   "evidence": "tests/language-frame-ui.test.ts 'the stop says it needs you now…' (a plan of your own, and a visit to the passport office) and 'PLAYER JOURNEY: the stop says the partner is expecting you…' (Call It Off pressed, its toast, the partner's trust lower)"
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
-  "status": "Reviewed And Retained",
-  "hash": "e769051550bd",
-  "on": "2026-10-17",
-  "reason": "Its toast says what was done and the time the clock stands at ('Shower: done at 7:50 AM.'), and its chips, Needed Now and Most Worth It, are plain; each item's own words are life.ts's. Held in tests/evidence-g01-life.test.ts and tests/evidence2-b01.test.ts."
+  "status": "Rewritten And Verified",
+  "hash": "8ac8efdf6a2d",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 6: as Advance, the button's accessible name is “Look After Yourself”, where it was “Look After Yourself ▾”. docs/verification/language-2026-10-17/editorial/names.json (exact 1, with the arrow 0); tests/editorial-frame-names.test.ts, and tests/defects-g7-1.test.ts “the menu button the guide’s example presses is the one the top bar draws, Locked while its chapter is unread”, which reads the same markup"
  },
  "src/ui/shell/TimeControls.tsx#MENU_FOOT": {
   "status": "Reviewed And Retained",

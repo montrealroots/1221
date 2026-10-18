@@ -279,3 +279,54 @@ the first run and were brought to the new words, as narrow.
 refusal's now four words shorter than the five a quote needs), `traceability`, `devmap`, `coverage` 0; 28 test files, 419
 of 419 once the lien's two patterns were brought to the new words. **Statuses:** 10 sources Rewritten And Verified (papers 6,
 health 2, money 2).
+
+## Batch 6: The Top Bar's Menus, Home's Place Line, And The Final Walk
+
+- **Two controls named with their arrow (Unclear).** The top bar's Advance and Look After Yourself buttons drew their
+  menu's arrow as text, so the button's accessible name was “Advance ▾” and “Look After Yourself ▾”: a screen reader says
+  the character's name with it. The arrow is drawn in a span with `aria-hidden`, and the browser's own accessible name
+  (`getByRole`, `names.mjs` on the built app, `names.json`) is now “Advance” and “Look After Yourself” exactly, with
+  none named with the arrow. Sighted, the button reads as before. `tests/editorial-frame-names.test.ts` holds the
+  markup, and saying Advance's arrow again fails it. The walk records a button's text, not its name, so its `buttons`
+  lists still show “Advance ▾”; that's the walk's, not the player's.
+- **“Home.” on Home (Unclear).** Where You Are said “New Haven, Connecticut · United States” and under it “Home. 130K
+  people.”: “Home.” standing alone reads as the screen's own name, where it means this city is the player's home. Now
+  “Your home. 130K people.” The comment above it said what was no longer true and was brought up to date in the past
+  tense, as was `tests/evidence2-b11.test.ts`'s header.
+- **Evidence the earlier batches promised.** Run Lines Together?'s line where you share no open scene (batch 2) is on no
+  walk save, so its first status cited a walk that doesn't show it. `tests/editorial-class-moments.test.ts` plays a
+  student until such a request is open and renders the panel: “You share no open scene with …, so you’d run their lines.
+  That helps them, but it doesn’t move your own work.” and “… asks if you’d run lines together for an hour on … at 7:00
+  PM.” Removing “for an hour” fails it. The status now cites the test, and says the walk doesn't show it. Standing's
+  lines and the Profile's “running it with a reader” (batch 4) were left for this walk, and it shows each: the leave's
+  sentences on `rehearsal.json` and `tax.json`, attendance with nothing yet to count on `roundups.json`, “5 of 5 classes
+  attended.” and “Year 1 of 3” on every student save, “Coursework: running it with a reader” on `decision.json` and
+  `missed-plan.json`, and the Casting tab's “Chloe Tanaka, a leading part in a new play” on `decision.json`,
+  `direction.json`, `leave.json` and `lien.json`. `names.mjs` reads the same lines in the browser, on the saves that
+  show them.
+
+**The final walk** (`after-1440/`, `after-390/`): the fourteen scenario saves on the build of this batch's code, 25
+screens each at both widths, every walk's exit 0. `tools/text-render-check.mjs` on both (`render-after.txt`): 128,638
+strings, exit 1 on one distinct fault, “You and Hannah had rehearsed together 1 times.” on `workload.json`'s Coursework.
+It's the save's own stored feedback, written on 2026-10-17 before the school area's first batch gave `timesWords` its
+“once”, and it was in the walk this review read (`walk-1440/`) and in the school, json, money and profile areas' walks;
+the save is a fixed file, not this code's words. Written again by `tools/scenario-saves.mjs` on this code and walked at
+both widths (`render-now-workload.txt`): 10,336 strings, 0 faults, exit 0, and the line reads “You and Hannah had
+rehearsed together once.”
+
+**Tests updated:** `tests/evidence2-b11.test.ts` and `tests/evidence-g32-ui.test.ts` (Where You Are, exact, in New Haven
+and London); `tests/defects-g7-1.test.ts` (it reads `TimeControls.tsx` for Look After Yourself's markup, and failed on the
+first run until brought to the span, as exactly). **New:** `tests/editorial-class-moments.test.ts`,
+`tests/editorial-frame-names.test.ts`. The 39 test files that name `TimeControls.tsx` or `Home.tsx`, with the new one:
+722 of 723, the one `defects-g7-1`'s, then 27 of 27 with `help-mechanics` and `language-frame-ui` once it was brought to
+the new markup.
+
+**The completion matrix.** `tools/completion-matrix.mjs --check` failed here: its `completion-matrix.json` quotes each
+command's refusals from `docs/TRACEABILITY.md`, which batch 1 wrote again with the new refusals, and the matrix wasn't
+written with it. Written now: sixteen lines, the refusals' words only (eight rows' preconditions and validation), with
+two counts of refusals one higher, Move Money's (“has only” and “has nothing” are two now) and cash's (a typed nothing
+and too much); the page and its completion line are unchanged, 527 of 636 (82.8%), and the check passes.
+
+**Checks:** listed in `README.md` with the last commit's. **Statuses:** `Home#Home`, `AdvanceMenu` and `LookAfterMenu`
+`--by frame`; `StandingPane` `--by school` and `sourceWords` `--by profile` on this walk; `ClassMoments` `--by school`
+again, on the new test.

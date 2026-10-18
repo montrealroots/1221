@@ -32,9 +32,10 @@
  *   worked here; a card payment missed through play, everyday spending put on the card and the current account emptied
  *   into savings before each due date: a payment behind owing $510, then suspended owing $850; and a return filed
  *   with nothing in the bank, You owe $166 of income tax, where its twin who could pay is All Clear.
- * - `h-where-weather`: a student from abroad, born in London, reads "Home." in New Haven as a New Yorker does: the away
- *   line ("… from home in …") was reached by no life since the scope of 2026-10-09 removed the home apart from where
- *   the player stands (`homeCityOf`); it was reported, and went later on 2026-10-13, with Local Time's hours from home.
+ * - `h-where-weather`: a student from abroad, born in London, reads "Your home." ("Home." until 2026-10-17) in New Haven
+ *   as a New Yorker does: the away line ("… from home in …") was reached by no life since the scope of 2026-10-09
+ *   removed the home apart from where the player stands (`homeCityOf`); it was reported, and went later on 2026-10-13,
+ *   with Local Time's hours from home.
  *
  * PLAYER JOURNEYS: new lives (`createSave` with `newLifeConfig`), Ada Cole, she/her, an actress at Yale in New Haven
  * from Monday 24 August 2026 at 7:30 AM, born in New York (the birthplace a player picks on Identity), or in London
@@ -717,12 +718,12 @@ describe('h-where-weather', () => {
   it('PLAYER JOURNEY: a student from abroad, born in London, reads Home. in New Haven as a New Yorker does, with no distance or hours from home: Home is the city she lives in (`homeCityOf`), and London is where she’s from', () => {
     const london = fromAbroad('b11-where');
     const newYork = ada('b11-where');
-    const said = 'Where You Are How This Works New Haven, Connecticut · United States Home. 130K people. Local Time 7:30 AM EDT';
+    const said = 'Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 7:30 AM EDT';
     expect(where(london)).toBe(said);
     expect(where(newYork)).toBe(said);
     // Where she's from is kept, and read on the Profile: not where Home measures from.
     expect(drawn(london, ProfileWorkspace).text).toContain('From London A citizen of the United Kingdom');
     london.advanceTo(at(2026, 9, 14, 12));
-    expect(where(london)).toBe('Where You Are How This Works New Haven, Connecticut · United States Home. 130K people. Local Time 12:00 PM EDT');
+    expect(where(london)).toBe('Where You Are How This Works New Haven, Connecticut · United States Your home. 130K people. Local Time 12:00 PM EDT');
   });
 });

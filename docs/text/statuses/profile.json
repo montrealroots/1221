@@ -2683,9 +2683,9 @@
  },
  "src/ui/looks/actor.tsx#sourceWords": {
   "status": "Rewritten And Verified",
-  "hash": "3122e8b6b711",
-  "on": "2026-10-17",
-  "evidence": "Every kind of development source printed through sourceWords in docs/verification/language-2026-10-17/profile/b1-looks.txt (Class: Play (DRAM 153a), Coursework: the choices and the rest); tests/evidence-g23-school.test.ts 'development ledger' journeys pass on the new words"
+  "hash": "1fdc81b02e37",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: Development History named the reader's evenings by their key, “Coursework: reader”; now “Coursework: running it with a reader”, and an approach and a genre likewise. The final walk of the built app (docs/verification/language-2026-10-17/editorial/after-1440): decision.json's and missed-plan.json's Player Profile, “+0.01, Coursework: running it with a reader”; names.json reads it in the browser"
  },
  "src/ui/looks/actor.tsx#top": {
   "status": "Rewritten And Verified",

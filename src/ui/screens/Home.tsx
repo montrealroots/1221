@@ -382,12 +382,12 @@ export function Home() {
                   <Open subject={at('country', place.city.countryId)}>{place.countryName}</Open>
                 </div>
                 {/* Until 2026-10-13 this line said the distance and the hours from home when away, and Local Time’s note
-                    the hours from home; nothing has put a player away from home since the home went in the scope of
-                    2026-10-09, as the city Home profiles is the one `homeCityOf` gives (found by that day’s evidence
-                    pass). The place look still says them for another city. */}
+                    the hours from home; none since the scope of 2026-10-09, as the city Home profiles is the one
+                    `homeCityOf` gives (found by that day’s evidence pass). The place look still says them for another
+                    city. Until 2026-10-17 it began “Home.”, the screen’s own name, where it means the player’s. */}
                 <div className="xs dim" style={{ marginBottom: 'var(--s3)' }}>
                   <Open subject={at('place', place.city.id)}>
-                    Home.
+                    Your home.
                     {placeLine(place) && ` ${placeLine(place)}.`}
                   </Open>
                 </div>

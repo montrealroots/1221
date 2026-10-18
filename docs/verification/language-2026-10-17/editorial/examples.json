@@ -6,7 +6,10 @@
   "after": "Your bank can’t cover $125.37 for every condition’s fill, so nothing was filled or charged.",
   "why": "One shape for money that isn't there: what can't pay, the amount, and what didn't happen. It named no amount at all, so the player couldn't tell how much to move.",
   "meaningSensitive": true,
-  "verified": "tests/defects-g8-5.test.ts \"PLAYER JOURNEY: refused, and nothing filled, when the bank can’t cover the supply\", exact, with the figure held to medicineShareOf × fillsCharged; two conditions: tests/evidence-g03-life.test.ts, $60.00"
+  "verified": "tests/defects-g8-5.test.ts \"PLAYER JOURNEY: refused, and nothing filled, when the bank can’t cover the supply\", exact, with the figure held to medicineShareOf × fillsCharged; two conditions: tests/evidence-g03-life.test.ts, $60.00",
+  "fault": "Unclear",
+  "part": "Health",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/health.ts#registerHealth <health.dental>",
@@ -15,7 +18,10 @@
   "after": "Your bank can’t cover $312.72 for the year, so nothing was charged.",
   "why": "The same shape as Papers' refusals, saying nothing was charged.",
   "meaningSensitive": false,
-  "verified": "tests/evidence-g03-life.test.ts \"refused in its own words when the bank can’t cover the year, and nothing bought or posted\""
+  "verified": "tests/evidence-g03-life.test.ts \"refused in its own words when the bank can’t cover the year, and nothing bought or posted\"",
+  "fault": "Voice",
+  "part": "Health",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/health.ts#registerHealth <health.dental>",
@@ -24,7 +30,10 @@
   "after": "Your bank can’t cover $25.00 for the first month, so nothing was charged.",
   "why": "The monthly variant: it's the first month's premium the purchase takes, so it says so.",
   "meaningSensitive": true,
-  "verified": "tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\""
+  "verified": "tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\"",
+  "fault": "Voice",
+  "part": "Health",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/health.ts#registerHealth <health.prepay>",
@@ -33,7 +42,10 @@
   "after": "Your bank can’t cover £32.05, so nothing was charged.",
   "why": "One shape.",
   "meaningSensitive": false,
-  "verified": "tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\""
+  "verified": "tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\"",
+  "fault": "Voice",
+  "part": "Health",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/health.ts#registerHealth <health.pay_bill>",
@@ -42,7 +54,10 @@
   "after": "Chase Total Checking has only $50.00 of the $100.00, so nothing was paid. Move money into it first, on your bank’s Move Money.",
   "why": "The account the player chose, what it has of what was asked, what didn't happen, then the next step as its own sentence.",
   "meaningSensitive": false,
-  "verified": "tests/editorial-money-refusals.test.ts \"a medical debt part covered: …\"; tests/commands-kept.test.ts \"pays toward a debt for care from the current account, only what it holds\""
+  "verified": "tests/editorial-money-refusals.test.ts \"a medical debt part covered: …\"; tests/commands-kept.test.ts \"pays toward a debt for care from the current account, only what it holds\"",
+  "fault": "Voice",
+  "part": "Health",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/school.ts#registerSchool <school.buy_ppe>",
@@ -51,7 +66,10 @@
   "after": "Your bank can’t cover $150.00, so nothing was charged.",
   "why": "One shape, one sentence.",
   "meaningSensitive": false,
-  "verified": "tests/school-everyday.test.ts \"not bought before, is bought at the first shift; the bank short of it, the supervisor sends you home\""
+  "verified": "tests/school-everyday.test.ts \"not bought before, is bought at the first shift; the bank short of it, the supervisor sends you home\"",
+  "fault": "Voice",
+  "part": "School",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
@@ -60,7 +78,10 @@
   "after": "Chase Total Checking has only $92,391.00, so nothing was moved.",
   "why": "The player chose the account and the amount, so the figure is what the account has, now to the cent (with the cents dropped, $40.75 read as “$41” and a $40.80 move was refused by an account that seemed to hold more); and it says nothing moved.",
   "meaningSensitive": true,
-  "verified": "tests/language-money.test.ts \"refuses a move, savings and a standing order in words that name the obstacle, and moves nothing\""
+  "verified": "tests/language-money.test.ts \"refuses a move, savings and a standing order in words that name the obstacle, and moves nothing\"",
+  "fault": "Wrong",
+  "part": "Money",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
@@ -69,7 +90,10 @@
   "after": "Citi Access Checking has nothing in it, so nothing was moved.",
   "why": "Zero said as nothing, not “only $0”.",
   "meaningSensitive": false,
-  "verified": "tests/remaining-banking.test.ts \"PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October …\""
+  "verified": "tests/remaining-banking.test.ts \"PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October …\"",
+  "fault": "Mechanics",
+  "part": "Money",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/cash.ts#shortWords",
@@ -78,7 +102,10 @@
   "after": "Chase Total Checking has only $20.01, and $20.00 in cash with its fees comes to $26.22.",
   "why": "Refused for the fees, it said only what the account held, which was more than the cash asked: the player couldn't see why. Said before pressing, so it doesn't say nothing was taken out.",
   "meaningSensitive": true,
-  "verified": "tests/editorial-money-refusals.test.ts \"a withdrawal its fees push over: …\", the fees from the quote that went through; a mutation dropping the clause fails it"
+  "verified": "tests/editorial-money-refusals.test.ts \"a withdrawal its fees push over: …\", the fees from the quote that went through; a mutation dropping the clause fails it",
+  "fault": "Wrong",
+  "part": "Money",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/lending.ts#registerLending <bank.repay_loan>",
@@ -87,7 +114,10 @@
   "after": "Citi Access Checking can’t cover the $3,016.83 it takes to pay it off, so nothing was paid.",
   "why": "Names the account and the payoff to the cent, and what didn't happen.",
   "meaningSensitive": true,
-  "verified": "tests/evidence-g11-money.test.ts \"pays a Citi loan off from the Personal Loan panel 20 days into a 30-day month: …\", the payoff the test works out"
+  "verified": "tests/evidence-g11-money.test.ts \"pays a Citi loan off from the Personal Loan panel 20 days into a 30-day month: …\", the payoff the test works out",
+  "fault": "Unclear",
+  "part": "Money",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/lending.ts#registerLending <bank.open_term>",
@@ -96,7 +126,10 @@
   "after": "Chase Total Checking has only $92,391.00, so no term deposit was opened.",
   "why": "One shape, with what didn't happen.",
   "meaningSensitive": false,
-  "verified": "tests/evidence-g10-money.test.ts \"is refused past what the account holds, …\""
+  "verified": "tests/evidence-g10-money.test.ts \"is refused past what the account holds, …\"",
+  "fault": "Voice",
+  "part": "Money",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/cash.ts#registerCash <cash.deposit>",
@@ -105,7 +138,10 @@
   "after": "You have only $60.00 in cash, so nothing was paid in.",
   "why": "It answered a typed nothing and too much alike, and didn't say why or what didn't happen. A typed nothing is “Enter how much cash to pay in.” now.",
   "meaningSensitive": true,
-  "verified": "tests/evidence-g12-money.test.ts \"pays $40 of $100 back in at Chase’s machine, …\""
+  "verified": "tests/evidence-g12-money.test.ts \"pays $40 of $100 back in at Chase’s machine, …\"",
+  "fault": "Unclear",
+  "part": "Money",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/leave.ts#bankShortWords",
@@ -114,7 +150,10 @@
   "after": "Your current account and the savings beside it can’t cover any of it. Move money into your current account first.",
   "why": "A reason shown before pressing: what can't pay and the next step, as two sentences.",
   "meaningSensitive": false,
-  "verified": "tests/remaining-banking.test.ts, tests/evidence-g25-school.test.ts, tests/evidence-g26-school.test.ts"
+  "verified": "tests/remaining-banking.test.ts, tests/evidence-g25-school.test.ts, tests/evidence-g26-school.test.ts",
+  "fault": "Voice",
+  "part": "School",
+  "batch": 1
  },
  {
   "source": "src/engine/systems/statetax.ts#statePlanRefusal",
@@ -123,7 +162,10 @@
   "after": "Your bank can’t cover the $500.00 down payment.",
   "why": "“$… down” was clipped. A reason shown beside the form, so it names the amount and not a charge stopped.",
   "meaningSensitive": false,
-  "verified": "tests/editorial-money-refusals.test.ts \"a state plan’s down payment, said before it’s asked for: …\""
+  "verified": "tests/editorial-money-refusals.test.ts \"a state plan’s down payment, said before it’s asked for: …\"",
+  "fault": "Mechanics",
+  "part": "Papers",
+  "batch": 1
  },
  {
   "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
@@ -132,7 +174,10 @@
   "after": "Pressed, Buy Dental says “Your bank can’t cover … for the year, so nothing was charged.” when the bank can’t pay the year.",
   "why": "The guide quotes what the game says.",
   "meaningSensitive": false,
-  "verified": "tools/guide-quotes.mjs --check, 581 of 581"
+  "verified": "tools/guide-quotes.mjs --check, 581 of 581",
+  "fault": "Voice",
+  "part": "The guide",
+  "batch": 1
  },
  {
   "source": "src/engine/content/guide/money.ts#MONEY [bank.cash]",
@@ -141,7 +186,10 @@
   "after": "“… has only ….”, or, where the fees push it over, “… has only …, and … in cash with its fees comes to ….”",
   "why": "The guide quotes both variants the game says.",
   "meaningSensitive": false,
-  "verified": "tools/guide-quotes.mjs --check, 581 of 581"
+  "verified": "tools/guide-quotes.mjs --check, 581 of 581",
+  "fault": "Voice",
+  "part": "The guide",
+  "batch": 1
  },
  {
   "source": "src/ui/components/CourseworkPane.tsx#AssignmentCard",
@@ -150,7 +198,10 @@
   "after": "Shown Today: … it would come to about 41.3 (Unready). The Presentation Prepared isn’t complete, which costs Execution 43.9 points. Still to finish: Its Context Researched (Research It At The Library); The Presentation Prepared (Prepare The Presentation).",
   "why": "One part was named two ways on one card, and “the revision” of a piece not yet shown named something the player can't do yet. The card's own labels, as the stat tiles and Put First name them.",
   "meaningSensitive": true,
-  "verified": "tests/editorial-school-words.test.ts \"a part of a piece is named as its card names it, …\""
+  "verified": "tests/editorial-school-words.test.ts \"a part of a piece is named as its card names it, …\"",
+  "fault": "Wrong",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/coursework.ts#show",
@@ -159,7 +210,10 @@
   "after": "Simulated note from Speech And Accents III: It didn’t come together today. Drills wasn’t complete, which cost Execution 16.9 points.",
   "why": "The teacher names the part the card names; the warning already said “What held most of them back was “Drills””.",
   "meaningSensitive": true,
-  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "Wrong",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/coursework.ts#show",
@@ -168,7 +222,10 @@
   "after": "Your speech and your accents and dialects carried it.",
   "why": "A list with an “and” inside an item, joined so it reads once.",
   "meaningSensitive": false,
-  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/coursework.ts#show",
@@ -177,7 +234,10 @@
   "after": "Your on-camera work and scene study carried it.",
   "why": "A skill's label lowercased isn't a phrase; the glossary's words for it.",
   "meaningSensitive": false,
-  "verified": "tests/editorial-school-words.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "tests/editorial-school-words.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/coursework.ts#show",
@@ -186,7 +246,10 @@
   "after": "You took the earlier note on Drilled With Your Partner.",
   "why": "The part as its card names it; lowercased, a past participle read as a sentence's verb.",
   "meaningSensitive": false,
-  "verified": "tests/feedback.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "tests/feedback.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/coursework.ts#reshownWords",
@@ -195,7 +258,10 @@
   "after": "You showed Heightened Text Scene again on October 31, 2028, and worked the note on Rehearsal into the revision. Rehearsal stayed at 0%.",
   "why": "A note taken by the revision's own work, with the part no further on, read as a contradiction. It says how it was taken.",
   "meaningSensitive": true,
-  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "Wrong",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/coursework.ts#reshownWords",
@@ -204,7 +270,10 @@
   "after": "You showed Scene Study again on September 22, 2026, but the note on With Your Partner isn’t taken yet.",
   "why": "The part's name, and the tense of what's still true.",
   "meaningSensitive": false,
-  "verified": "tests/language-dynamic.test.ts \"a note worked and the piece shown again: …\""
+  "verified": "tests/language-dynamic.test.ts \"a note worked and the piece shown again: …\"",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/coursework.ts#reshownWords",
@@ -213,7 +282,10 @@
   "after": "…, but the next step you were given doesn’t show in it yet.",
   "why": "“didn’t show yet” mixed tenses.",
   "meaningSensitive": false,
-  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/classmates.ts#disagreement",
@@ -222,7 +294,10 @@
   "after": "Priya reads the given circumstances in Julius Caesar another way: “The Capitol on the Ides of March”, where you have “…”.",
   "why": "A question's label lowercased lost its article; “a choice to play” became “the choice to play”.",
   "meaningSensitive": false,
-  "verified": "tests/editorial-school-words.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "tests/editorial-school-words.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/classmates.ts#studyEvening",
@@ -231,7 +306,10 @@
   "after": "Caleb asks if you’d run lines together for an hour on October 28, 2028 at 7:00 PM.",
   "why": "The duration tacked on after the time.",
   "meaningSensitive": false,
-  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "Unclear",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/classmates.ts#MOMENT_TITLE",
@@ -240,7 +318,10 @@
   "after": "Caleb: A Request For Help",
   "why": "The one moment titled as a verb after a colon; the others are nouns (A Different Reading, A Word After Class).",
   "meaningSensitive": false,
-  "verified": "tests/editorial-school-words.test.ts"
+  "verified": "tests/editorial-school-words.test.ts",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/classmates.ts#registerClassmates",
@@ -249,7 +330,10 @@
   "after": "You share no open scene with Maya, so you ran their lines. It helped them, but it didn’t move your own work.",
   "why": "“nothing of yours moved” is the engine's view; the player's is their own work.",
   "meaningSensitive": false,
-  "verified": "tests/student-experience.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "tests/student-experience.test.ts; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "The engine showing",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/coursework.ts#setWork",
@@ -258,7 +342,10 @@
   "after": "What We Keep, their late father’s apartment, half packed into boxes, a Saturday in 2012.",
   "why": "A place opening on a capital mid-sentence.",
   "meaningSensitive": false,
-  "verified": "tests/editorial-school-words.test.ts \"a scene’s place reads mid-sentence, …\"; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "tests/editorial-school-words.test.ts \"a scene’s place reads mid-sentence, …\"; docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/coursework.ts#noteText",
@@ -267,7 +354,10 @@
   "after": "It asked for more clowning than you have yet.",
   "why": "The glossary's word for the technique in a sentence.",
   "meaningSensitive": false,
-  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b2-rendered.txt, journey J01 played on this code",
+  "fault": "One word for one thing",
+  "part": "School",
+  "batch": 2
  },
  {
   "source": "src/engine/systems/production.ts#reflect",
@@ -276,7 +366,10 @@
   "after": "Major Barbara: you answered all 12 calls. The director gave you 5 notes. You took 4, 3 of them answered in the work, and worked on 1 that didn’t move. The dress rehearsal was solid. With the company, your nights averaged 55 out of 100. What’s still open goes with you into class. (Simulated: the game’s summary, not the director’s words.)",
   "why": "A ledger in semicolons and fragments, read as sentences; the label says whose words they are without engine-speak.",
   "meaningSensitive": true,
-  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code",
+  "fault": "Voice",
+  "part": "School",
+  "batch": 3
  },
  {
   "source": "src/engine/systems/production.ts#reflect",
@@ -285,7 +378,10 @@
   "after": "The Seagull: you answered all 11 calls. The director gave you no notes. (Simulated: the game’s summary, not the director’s words.)",
   "why": "Zero said as none.",
   "meaningSensitive": false,
-  "verified": "tests/language-dynamic.test.ts \"nights with the company and the calls and notes of a run, …\"; docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+  "verified": "tests/language-dynamic.test.ts \"nights with the company and the calls and notes of a run, …\"; docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 3
  },
  {
   "source": "src/engine/systems/production.ts#reflect",
@@ -294,7 +390,10 @@
   "after": "Carlotta Festival Of New Plays: you answered all 12 calls. The director gave you 5 notes. You took 4, 3 of them answered in the work, and worked on 1 that didn’t move. The dress rehearsal was an off night. With the company, your nights averaged 53 out of 100, with a slip by others, which you covered.",
   "why": "“the dress off” and “1 with a slip in the company, 1 of them covered” in words a player reads once.",
   "meaningSensitive": true,
-  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code",
+  "fault": "Unclear",
+  "part": "School",
+  "batch": 3
  },
  {
   "source": "src/engine/systems/production.ts#reflect",
@@ -303,7 +402,10 @@
   "after": "The Seagull: you answered your one call. The director gave you 1 note, and you took it.",
   "why": "One of one, said as one.",
   "meaningSensitive": false,
-  "verified": "tests/language-dynamic.test.ts \"nights with the company and the calls and notes of a run, …\""
+  "verified": "tests/language-dynamic.test.ts \"nights with the company and the calls and notes of a run, …\"",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 3
  },
  {
   "source": "src/engine/systems/school.ts#registerSchool closeRun()",
@@ -312,7 +414,10 @@
   "after": "You were on call to cover the company through the run, and didn’t go on. The work you did in the room isn’t lost.",
   "why": "A part cast by size isn't a role you cover; the label read as a name mid-sentence.",
   "meaningSensitive": false,
-  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code",
+  "fault": "Wrong",
+  "part": "School",
+  "batch": 3
  },
  {
   "source": "src/ui/workspaces/SchoolWorkspace.tsx#CastingPane",
@@ -321,7 +426,10 @@
   "after": "From the class with you: Chloe Tanaka, a leading part in a new play; Zoe Park, a leading part in a new play; …",
   "why": "A part cast by size in a sentence, not as a Title Case name.",
   "meaningSensitive": false,
-  "verified": "tests/editorial-school-words.test.ts (partWords); the Casting tab in editorial/walk-1440"
+  "verified": "tests/editorial-school-words.test.ts (partWords); the Casting tab in editorial/walk-1440",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 3
  },
  {
   "source": "src/ui/components/RehearsalProcess.tsx#RehearsalProcess",
@@ -330,7 +438,10 @@
   "after": "Simulated: the game’s summary, not the director’s words.",
   "why": "“the game’s reading of the process” is the engine describing itself; the label says whose words the summary isn't.",
   "meaningSensitive": false,
-  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code",
+  "fault": "The engine showing",
+  "part": "School",
+  "batch": 3
  },
  {
   "source": "src/engine/systems/production.ts#reflect",
@@ -339,7 +450,10 @@
   "after": "The Winter’s Tale: you answered all 15 calls. The director gave you 7 notes. You took 7, all of them answered in the work. The dress rehearsal was solid.",
   "why": "All of them, said as all.",
   "meaningSensitive": false,
-  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code"
+  "verified": "docs/verification/language-2026-10-17/editorial/b3-rendered.txt, journey J01 played on this code",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 3
  },
  {
   "source": "src/ui/screens/Home.tsx#Home",
@@ -348,7 +462,10 @@
   "after": "Chase Total Checking: $5,000.00. Worth $4,851, after $149 owed.",
   "why": "Worth is assets less what's owed, so “of it owed” said part of the worth was a debt.",
   "meaningSensitive": true,
-  "verified": "tests/evidence2-b12.test.ts, tests/evidence-g33-ui.test.ts, tests/scope-money.test.ts"
+  "verified": "tests/evidence2-b12.test.ts, tests/evidence-g33-ui.test.ts, tests/scope-money.test.ts",
+  "fault": "Wrong",
+  "part": "Home",
+  "batch": 4
  },
  {
   "source": "src/ui/screens/Home.tsx#Home",
@@ -357,7 +474,10 @@
   "after": "Year 1, good standing, 1st of 16 in the class.",
   "why": "A place, not a count; the School's look already said “1st of 16”.",
   "meaningSensitive": true,
-  "verified": "tests/language-dynamic.test.ts, tests/evidence2-b12.test.ts, tests/evidence3-home.test.ts, tests/evidence-g33-ui.test.ts"
+  "verified": "tests/language-dynamic.test.ts, tests/evidence2-b12.test.ts, tests/evidence3-home.test.ts, tests/evidence-g33-ui.test.ts",
+  "fault": "Wrong",
+  "part": "Home",
+  "batch": 4
  },
  {
   "source": "src/ui/workspaces/SchoolWorkspace.tsx#SchoolWorkspace",
@@ -366,7 +486,10 @@
   "after": "MFA in Acting, class of 2029. Year 1 of 3, good standing.",
   "why": "A figure and a word for the same kind of number in one phrase.",
   "meaningSensitive": false,
-  "verified": "tests/language-dynamic.test.ts \"the term review’s notice and the screens at good standing, …\""
+  "verified": "tests/language-dynamic.test.ts \"the term review’s notice and the screens at good standing, …\"",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 4
  },
  {
   "source": "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane",
@@ -375,7 +498,10 @@
   "after": "There’s been no class day, call or shift to count toward attendance this term yet.",
   "why": "Zero said as none.",
   "meaningSensitive": false,
-  "verified": "the Standing tab on the final walk (editorial/walk-1440)"
+  "verified": "the Standing tab on the final walk (editorial/walk-1440)",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 4
  },
  {
   "source": "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane",
@@ -384,7 +510,10 @@
   "after": "Acting I: 5 of 5 classes attended.",
   "why": "“at 5 of 5 classes” left the verb out.",
   "meaningSensitive": false,
-  "verified": "tests/language-dynamic.test.ts \"a course’s meetings and the term’s class days on the first day of classes, …\""
+  "verified": "tests/language-dynamic.test.ts \"a course’s meetings and the term’s class days on the first day of classes, …\"",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 4
  },
  {
   "source": "src/ui/components/StudyPlanPanels.tsx#LeavePanel",
@@ -393,7 +522,10 @@
   "after": "If it’s granted, it runs from Fall Term 2027 to Fall Term 2028. While you’re on leave there’s no aid, and no classes, calls or shifts. Yale Health goes on as Affiliate cover the School pays for, and you need a physician’s clearance to come back. Give notice of your return eight weeks before, or the leave ends in dismissal.",
   "why": "One sentence with a colon and three semicolons, made four; the last says what the leave's notice says.",
   "meaningSensitive": false,
-  "verified": "tests/evidence-g25-school.test.ts \"PLAYER JOURNEY: Ask For A Leave… …\""
+  "verified": "tests/evidence-g25-school.test.ts \"PLAYER JOURNEY: Ask For A Leave… …\"",
+  "fault": "Unclear",
+  "part": "School",
+  "batch": 4
  },
  {
   "source": "src/engine/systems/school.ts#registerSchool",
@@ -402,7 +534,10 @@
   "after": "Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.",
   "why": "“none was found” hid who found what; the guide's chapter already said it this way.",
   "meaningSensitive": false,
-  "verified": "tests/evidence3-person.test.ts, tests/need-paths.test.ts, tests/evidence2-b10.test.ts"
+  "verified": "tests/evidence3-person.test.ts, tests/need-paths.test.ts, tests/evidence2-b10.test.ts",
+  "fault": "The engine showing",
+  "part": "School",
+  "batch": 4
  },
  {
   "source": "src/ui/workspaces/SchoolWorkspace.tsx#TermsPane",
@@ -411,7 +546,10 @@
   "after": "…, goes by need, judged from your family’s means. Yours rule it out, so the health plan and living costs come from your bank.",
   "why": "“the need assessment reads” is the engine describing itself.",
   "meaningSensitive": false,
-  "verified": "tests/need-paths.test.ts"
+  "verified": "tests/need-paths.test.ts",
+  "fault": "The engine showing",
+  "part": "School",
+  "batch": 4
  },
  {
   "source": "src/engine/systems/artistry.ts#identityOf",
@@ -420,7 +558,10 @@
   "after": "6 pieces played with a partner, a reader or a company came to 61.8 together on average; of the 1 slip by the others, you covered it.",
   "why": "A plural that disagreed.",
   "meaningSensitive": false,
-  "verified": "tests/evidence2-b11.test.ts"
+  "verified": "tests/evidence2-b11.test.ts",
+  "fault": "Mechanics",
+  "part": "Player Profile",
+  "batch": 4
  },
  {
   "source": "src/ui/looks/actor.tsx#sourceWords",
@@ -429,7 +570,10 @@
   "after": "+0.01, Coursework: running it with a reader",
   "why": "A key shown as a word.",
   "meaningSensitive": false,
-  "verified": "the Player Profile's Development History on the final walk (editorial/walk-1440)"
+  "verified": "the Player Profile's Development History on the final walk (editorial/walk-1440)",
+  "fault": "The engine showing",
+  "part": "Player Profile",
+  "batch": 4
  },
  {
   "source": "src/engine/systems/coursework.ts#ORIENTATION [faculty]",
@@ -438,7 +582,10 @@
   "after": "First-year courses are taught by Gregory Wallace, …, Michael Rossmy and Paul Walsh.",
   "why": "A list with no “and”.",
   "meaningSensitive": false,
-  "verified": "journey J01 part 1 replayed on this code: the Meeting The Acting Faculty notice ends “…, Kelsey Rainwater, Michael Rossmy and Paul Walsh.”"
+  "verified": "journey J01 part 1 replayed on this code: the Meeting The Acting Faculty notice ends “…, Kelsey Rainwater, Michael Rossmy and Paul Walsh.”",
+  "fault": "Mechanics",
+  "part": "School",
+  "batch": 4
  },
  {
   "source": "src/engine/systems/credit.ts#registerCredit",
@@ -447,7 +594,10 @@
   "after": "The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.",
   "why": "A statement notice with no due date; the date is the one the card's due item is set to.",
   "meaningSensitive": true,
-  "verified": "tests/evidence-g28-ui.test.ts, tests/evidence-g34-ui.test.ts"
+  "verified": "tests/evidence-g28-ui.test.ts, tests/evidence-g34-ui.test.ts",
+  "fault": "Unclear",
+  "part": "Money",
+  "batch": 5
  },
  {
   "source": "src/engine/systems/credit.ts#registerCredit",
@@ -456,7 +606,10 @@
   "after": "The Chase Freedom Unlimited’s limit is $78,260.00 now, because your credit score is 700 or more and you haven’t paid late in the past year.",
   "why": "Which card, and the review's own conditions in place of “clean”.",
   "meaningSensitive": true,
-  "verified": "tests/evidence-g13-money.test.ts \"raises a clean record’s limit by a fifth …\""
+  "verified": "tests/evidence-g13-money.test.ts \"raises a clean record’s limit by a fifth …\"",
+  "fault": "Unclear",
+  "part": "Money",
+  "batch": 5
  },
  {
   "source": "src/engine/systems/lending.ts#closeForOverdraft",
@@ -465,7 +618,10 @@
   "after": "Deutsche Bank closed AktivKonto. It had been below zero for 60 days, so the bank took what it was owed from your other money there. Flexgeld stays open.",
   "why": "A notice leads with what happened.",
   "meaningSensitive": false,
-  "verified": "tests/remaining-banking.test.ts, tests/home-account-setoff.test.ts"
+  "verified": "tests/remaining-banking.test.ts, tests/home-account-setoff.test.ts",
+  "fault": "Voice",
+  "part": "Money",
+  "batch": 5
  },
  {
   "source": "src/engine/systems/health.ts#applyRenewal",
@@ -474,7 +630,10 @@
   "after": "HUSKY D is renewed. Its next renewal is on January 1, 2028.",
   "why": "Renewed until its renewal said nothing.",
   "meaningSensitive": false,
-  "verified": "tests/scope-cover.test.ts and five more"
+  "verified": "tests/scope-cover.test.ts and five more",
+  "fault": "Unclear",
+  "part": "Health",
+  "batch": 5
  },
  {
   "source": "src/engine/systems/statetax.ts#lienDisputeRefusal",
@@ -483,7 +642,10 @@
   "after": "It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.",
   "why": "The glossary's word for a lien; “It secured” is the one it replaced.",
   "meaningSensitive": false,
-  "verified": "tests/scope-taxpapers.test.ts, tests/remaining-tax.test.ts, tests/liens-and-arrangements.test.ts"
+  "verified": "tests/scope-taxpapers.test.ts, tests/remaining-tax.test.ts, tests/liens-and-arrangements.test.ts",
+  "fault": "One word for one thing",
+  "part": "Papers",
+  "batch": 5
  },
  {
   "source": "src/engine/systems/statetax.ts#lienReleaseRefusal",
@@ -492,7 +654,10 @@
   "after": "You can ask for its release once what it was filed for is paid in full.",
   "why": "One word for one thing.",
   "meaningSensitive": false,
-  "verified": "tests/liens-and-arrangements.test.ts, tests/scope-taxpapers.test.ts, tests/remaining-tax.test.ts"
+  "verified": "tests/liens-and-arrangements.test.ts, tests/scope-taxpapers.test.ts, tests/remaining-tax.test.ts",
+  "fault": "One word for one thing",
+  "part": "Papers",
+  "batch": 5
  },
  {
   "source": "src/engine/systems/residence.ts#MEXICO_UNREAD",
@@ -501,7 +666,10 @@
   "after": "Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.",
   "why": "“it” read as Mexico.",
   "meaningSensitive": false,
-  "verified": "tests/residence.test.ts and four more"
+  "verified": "tests/residence.test.ts and four more",
+  "fault": "Unclear",
+  "part": "Papers",
+  "batch": 5
  },
  {
   "source": "src/engine/systems/appointments.ts#bookIn",
@@ -510,7 +678,10 @@
   "after": "A doctor’s visit: booked at Yale Health Center, Student Health for September 1, 2026, the usual wait where you live.",
   "why": "The date isn't the wait; the usual wait where you live sets it.",
   "meaningSensitive": false,
-  "verified": "tests/scope-health.test.ts and six more; tests/guide-examples-papers.test.ts holds the guide's quote to it"
+  "verified": "tests/scope-health.test.ts and six more; tests/guide-examples-papers.test.ts holds the guide's quote to it",
+  "fault": "Wrong",
+  "part": "Health",
+  "batch": 5
  },
  {
   "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]",
@@ -519,6 +690,45 @@
   "after": "On a lien filed for tax you owed, the panel says so …",
   "why": "The guide in the glossary's word, quoting the panel's.",
   "meaningSensitive": false,
-  "verified": "tools/guide-quotes.mjs --check, 580 of 580"
+  "verified": "tools/guide-quotes.mjs --check, 580 of 580",
+  "fault": "One word for one thing",
+  "part": "The guide",
+  "batch": 5
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#AdvanceMenu",
+  "kind": "button",
+  "before": "Advance ▾ (its accessible name)",
+  "after": "Advance (its accessible name; the arrow still drawn)",
+  "why": "A screen reader says the arrow character by name as part of the button. The arrow is drawn, not said.",
+  "meaningSensitive": false,
+  "verified": "names.json: getByRole(\"button\", { name: \"Advance\", exact: true }) finds 1 and \"Advance ▾\" finds 0 on the built app; tests/defects-g7-1.test.ts holds the markup",
+  "fault": "Unclear",
+  "part": "The top bar",
+  "batch": 6
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#LookAfterMenu",
+  "kind": "button",
+  "before": "Look After Yourself ▾ (its accessible name)",
+  "after": "Look After Yourself (its accessible name; the arrow still drawn)",
+  "why": "As Advance.",
+  "meaningSensitive": false,
+  "verified": "names.json: 1 exact, 0 with the arrow; tests/defects-g7-1.test.ts “the menu button the guide’s example presses is the one the top bar draws, Locked while its chapter is unread”",
+  "fault": "Unclear",
+  "part": "The top bar",
+  "batch": 6
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "label",
+  "before": "Home. 130K people.",
+  "after": "Your home. 130K people.",
+  "why": "“Home.” alone reads as the screen’s own name; the line means this city is the player’s home.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b11.test.ts and tests/evidence-g32-ui.test.ts h-where-weather, exact, in New Haven and London; after-1440 (every save’s Home) and names.json",
+  "fault": "Unclear",
+  "part": "Home",
+  "batch": 6
  }
 ]

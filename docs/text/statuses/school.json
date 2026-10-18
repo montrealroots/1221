@@ -3357,7 +3357,7 @@
   "status": "Rewritten And Verified",
   "hash": "1c1de9e46236",
   "on": "2026-10-18",
-  "evidence": "Editorial review, batch 2: the line under Run Lines Together? says what the notice says, \"That helps them, but it doesn’t move your own work.\"; the walk of the built app (editorial/walk-1440, the Coursework tab of each save with a request open) reads it"
+  "evidence": "Editorial review, batch 2: the line under Run Lines Together? where you share no open scene says what the notice says, \"That helps them, but it doesn’t move your own work.\", and the invitation says \"for an hour on\" its date at 7:00 PM; tests/editorial-class-moments.test.ts renders the panel on a played student with such a request open and reads both. No walk save holds that request, so the walk doesn't show it"
  },
  "src/ui/components/CourseworkPane.tsx#AnotherWay": {
   "status": "Rewritten And Verified",
@@ -3608,8 +3608,8 @@
  "src/ui/workspaces/SchoolWorkspace.tsx#CoursesPanel": {
   "status": "Rewritten And Verified",
   "hash": "b4486a981257",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code); tests/language-dynamic.test.ts 'a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several' (at 1 of 1 class; 1 of 1 and 3 of 3 make-up sessions)"
+  "on": "2026-10-18",
+  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/evidence-g19/g20-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code). Editorial review, batch 4: a course's line “Acting I: at 5 of 5 classes.” lacked its verb, and reads “Acting I: 5 of 5 classes attended.”: tests/language-dynamic.test.ts 'a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several' (“: 1 of 1 class attended.”), and the final walk (docs/verification/language-2026-10-17/editorial/after-1440, after-390) on every student save's School, Standing"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#KIND_WORDS": {
   "status": "Reviewed And Retained",
@@ -3667,9 +3667,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane": {
   "status": "Rewritten And Verified",
-  "hash": "1ccdd0f007e9",
-  "on": "2026-10-17",
-  "evidence": "tests/remaining-09-journeys.test.ts, tests/evidence-g24-school.test.ts and tests/evidence2-b08.test.ts (Term Reviews), tests/remaining-school-term.test.ts, tests/remaining-school.test.ts; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, after-new-1440, after-new-390); tests/language-dynamic.test.ts 'a course’s meetings and the term’s class days on the first day of classes…' (1 of 1 class day) and 'the term review’s notice and the screens at good standing, then a concern, a warning and a dismissal'"
+  "hash": "dea5bc28d648",
+  "on": "2026-10-18",
+  "evidence": "Editorial review, batch 4: a term with nothing yet to count read “Attendance counts 0 of 0 class days, 0 of 0 calls and 0 of 0 assigned shifts.”; now “There’s been no class day, call or shift to count toward attendance this term yet.” (and last term's, in the past). The final walk of the built app (docs/verification/language-2026-10-17/editorial/after-1440, after-390): roundups.json's School, Standing; names.json reads the same line in the browser. A term with days to count keeps its counts, on every other student save's walk"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SummerPanel": {
   "status": "Rewritten And Verified",
