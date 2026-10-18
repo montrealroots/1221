@@ -487,7 +487,7 @@ async function normal() {
     await press(stop.getByRole('button', { name: /^Go$/ }), 'Go'); await wait(1500); await settle();
     must((await dateText()) !== day && /^7:00\s?AM$/.test(await clock()), `after Go: ${await when()}`);
     const { body } = await readNotice(/^Registration And Your Account$/);
-    must(/Tuition/.test(body) && /Yale Health/.test(body), `the registration notice says: ${body.slice(0, 200)}`);
+    must(/Your tuition/.test(body) && /Yale Health/.test(body), `the registration notice says: ${body.slice(0, 200)}`);
   });
   await step('the orientation week: each morning to the weekend, each stop gone to', [], async () => {
     const days = [];
@@ -575,7 +575,7 @@ async function normal() {
     const { row, title, body } = await readNotice(new RegExp(`^Shown: ${short.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}, (Unready|Working|Strong|Exceptional)$`));
     await shot('showing-notice');
     const band = title.split(', ').at(-1);
-    must(/was there|wasn’t there|The note/.test(body), `the showing’s words: ${body.slice(0, 200)}`);
+    must(/Well prepared: |Simulated note from /.test(body), `the showing’s words: ${body.slice(0, 200)}`);
     await press(row.getByRole('button', { name: /^Go There$/ }), 'Go There'); await wait(1200);
     must(hash().startsWith('#/workspace/school'), `Go There opened ${hash()}`);
     await tab('Coursework');
@@ -637,7 +637,7 @@ async function setback() {
     await openSave('workload.json');
     trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json';
     const { body } = await readNotice(/^A Word On Your Coursework$/);
-    must(/\d+ of the \d+ pieces (shown|due) this term so far were Unready/.test(body), `no count: ${body.slice(0, 200)}`);
+    must(/So far this term, \d+ of the \d+ pieces (you’ve shown|due) were Unready/.test(body), `no count: ${body.slice(0, 200)}`);
     must(/What held most of them back was [^,]+, unfinished on [^.]+\. To work on it, use .*Run It With A Reader.*\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
     must(/(One piece is|\d+ pieces are) set and still to be shown/.test(body), `no pieces still to be shown: ${body.slice(0, 300)}`);
     must(/This is a warning, not the term review\. The faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, .* the review would (give you a notice of academic concern|put you on academic warning|keep you on academic warning|dismiss you from the School|not recommend your degree)\./.test(body), `no review day: ${body.slice(0, 400)}`);
@@ -658,7 +658,7 @@ async function setback() {
     must(hash().startsWith('#/workspace/school'), `Go There opened ${hash()}`);
     await tab('Coursework');
     const soonest = (await page.locator('[data-due-soonest] li').allInnerTexts()).map(clean);
-    must(soonest.length > 0 && soonest.every((s) => /, due .+: about \d+\.\d \((Unready|Working|Strong|Exceptional)\) shown today\./.test(s)), `Due Soonest: ${soonest.join(' | ').slice(0, 300)}`);
+    must(soonest.length > 0 && soonest.every((s) => /, due .+\. Shown today, it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\./.test(s)), `Due Soonest: ${soonest.join(' | ').slice(0, 300)}`);
     said(`Due Soonest: ${soonest.join(' | ')}`);
     const forecast = page.locator('[data-shown-today]').filter({ hasText: /Run It With A Reader/ }).first();
     must(await forecast.count(), 'no open scene whose Shown Today names Run It With A Reader');
@@ -816,7 +816,7 @@ async function specialist() {
     trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json';
     trace.startingPoint.testSetup = 'emotional depth, composure, imagination and presence at 90; memory, voice, movement, listening, focus, adaptability and discipline at 49 (tools/brief-journeys.ts’s specialist), on the first morning';
     const { title, body } = await readNotice(/^Shown: .+, (Unready|Working|Strong|Exceptional)$/);
-    must(/was there|wasn’t there|The note/.test(body), `the showing’s words: ${body.slice(0, 200)}`);
+    must(/Well prepared: |Simulated note from /.test(body), `the showing’s words: ${body.slice(0, 200)}`);
     return title;
   });
   await step('the Player Profile: the four strengths at 90.0 and the rest about 49; Composure opened, its look, a way further in, Close', ['navigation', 'drill-down'], async () => {
@@ -861,7 +861,7 @@ async function specialist() {
     must(side, `neither side of the scale suits the scene: Restrained ${re}, Expansive ${ex}`);
     await row(side).locator('input[type=radio]').check(); cur.pressed.push(`${side} (the side that suits)`); await wait(300);
     const mark = clean(await briefPane().innerText()).match(/This choice is complete once it’s rehearsed to (\d+)%: ([^.]+)/);
-    must(mark && /with the grain/.test(mark[2]), `the side’s mark isn’t said with the grain: ${mark?.[0]}`);
+    must(mark && /it suits the scene, so it asks less/.test(mark[2]), `the side’s mark isn’t said with the grain: ${mark?.[0]}`);
     said(mark[0]);
     said(await briefButton(/^Play It This Way$/));
     said(await briefButton(/^Rehearse It On Your Feet/));
