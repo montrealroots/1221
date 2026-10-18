@@ -898,7 +898,7 @@ describe('school.pay_balance', () => {
     const payments = () => sim.universe.transactions.filter((t) => t.memo === 'Payment: Yale Student Account').length;
     const paidBefore = payments();
     // In the bank's words from 2026-10-16, which say what to do; until then “Your bank can’t cover it.”
-    const nothing = 'Your current account and the savings beside it have nothing to pay it with: move money into your current account first.';
+    const nothing = 'Your current account and the savings beside it can’t cover any of it. Move money into your current account first.';
     expect(sim.execute({ kind: 'school.pay_balance', payload: {} }).error).toBe(nothing);
     expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 100_00 } }).error).toBe(nothing);
     expect(accountOwed(sim, sim.player)).toBe(owed);

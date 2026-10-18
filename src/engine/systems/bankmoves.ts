@@ -381,7 +381,7 @@ export function registerBankMoves(sim: Simulation): void {
     if (from && from.bankId === bank.id) throw new CommandError(`That account is already at ${bank.name}. Pay the deposit from an account at another bank.`);
     if (min > 0 && (!from || amount < min)) throw new CommandError(`${bank.name} asks for an opening deposit of ${formatMoney(min, saveCurrency(s.universe), { cents: false })}, sent from another of your accounts.`);
     if (amount < 0 || (from && !(amount > 0))) throw new CommandError('Enter how much to pay in.');
-    if (from && amount > from.balance) throw new CommandError(`${from.name} only has ${formatMoney(Math.max(0, from.balance), saveCurrency(s.universe), { cents: false })} in it.`);
+    if (from && amount > from.balance) throw new CommandError(`${from.name} ${from.balance > 0 ? `has only ${formatMoney(from.balance, saveCurrency(s.universe))}` : 'has nothing in it'}, so the account wasn’t opened.`);
     // Under review, the deposit goes now and waits for the decision; decided at once, the account opens now.
     if (rules?.reviewDays) {
       const kept = daysOfAccount({ bankId: bank.id }, person);

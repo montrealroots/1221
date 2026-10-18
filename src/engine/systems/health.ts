@@ -1323,7 +1323,7 @@ export function reviewed(person: Person, what: string, at: Instant): void {
  * `health.extra_supply` reported a longer supply filled that wasn't). Until the journeys went on 2026-10-09 the days
  * asked for were a supply before a trip.
  */
-export function fillMedicine(sim: Simulation, person: Person, at: Instant, days?: number, skipped: Condition[] = []): Money {
+export function fillMedicine(sim: Simulation, person: Person, at: Instant, days?: number, skipped: Condition[] = [], asked: { total: Money } = { total: 0 }): Money {
   const cur = saveCurrency(sim.universe);
   const usual = fillDaysOf(person);
   let paid = 0;
@@ -1346,6 +1346,8 @@ export function fillMedicine(sim: Simulation, person: Person, at: Instant, days?
     const want = days ?? usual;
     // England charges an item once, whatever it supplies; elsewhere a fill's share for each usual fill it covers.
     const cost = medicineShareOf(person, condition, state, at, cur) * fillsCharged(person, want);
+    // What the whole fill asks, paid or not, for a refusal to name (from 2026-10-17, brief 14's editorial review).
+    asked.total += cost;
     if (cost > 0 && !payFromCurrent(sim, person, cost, `Medicine for ${CONDITION_LABEL[condition].toLowerCase()}`, 'health')) { skipped.push(condition); continue; }
     state.supplyUntil = Math.max(at, state.supplyUntil ?? at) + want * MS_DAY;
     paid += cost;
@@ -2220,8 +2222,9 @@ export function registerHealth(sim: Simulation): void {
     const no = extraSupplyRefusal(person, Number(p?.days));
     if (no) throw new CommandError(no);
     const skipped: Condition[] = [];
-    const paid = fillMedicine(s, person, s.now, Number(p.days), skipped);
-    if (skipped.length) throw new CommandError('It costs more than your bank can cover.');
+    const asked = { total: 0 };
+    const paid = fillMedicine(s, person, s.now, Number(p.days), skipped, asked);
+    if (skipped.length) throw new CommandError(`Your bank can’t cover ${formatMoney(asked.total, saveCurrency(s.universe))} for every condition’s fill, so nothing was filled or charged.`);
     return { paid };
   });
   sim.onCommand<{ months: 3 | 12 }, { paid: Money; until: Instant }>('health.prepay', (p, { sim: s }) => {
@@ -2232,7 +2235,7 @@ export function registerHealth(sim: Simulation): void {
     const pounds = months === 3 ? NHS.prepayment.months3 : NHS.prepayment.months12;
     const cur = saveCurrency(s.universe);
     const paid = cur === 'GBP' ? Math.round(pounds * 100) : exchange(Math.round(pounds * 100), 'GBP', cur) ?? Math.round(pounds * 100);
-    if (!payFromCurrent(s, person, paid, `A prescription prepayment certificate, ${months} months`, 'health')) throw new CommandError(`It costs ${formatMoney(paid, cur)}, more than your bank can cover.`);
+    if (!payFromCurrent(s, person, paid, `A prescription prepayment certificate, ${months} months`, 'health')) throw new CommandError(`Your bank can’t cover ${formatMoney(paid, cur)}, so nothing was charged.`);
     const h = healthOf(person);
     const from = Math.max(s.now, h.prepaidUntil ?? 0);
     h.prepaidUntil = from + Math.round((months * 365.25) / 12) * MS_DAY;
@@ -2395,11 +2398,11 @@ export function registerHealth(sim: Simulation): void {
       // one bought in August or September ran to the coming 30 September, a few weeks for the year's price.
       const t = zonedParts(s.now, HOME);
       until = firstOf(t.month >= 8 ? t.year + 1 : t.year, 10);
-      if (!payFromCurrent(s, person, usd(d.premium, cur), `${d.label}, the year`, 'health')) throw new CommandError(`The year costs ${formatMoney(usd(d.premium, cur), cur)}, more than your bank can cover.`);
+      if (!payFromCurrent(s, person, usd(d.premium, cur), `${d.label}, the year`, 'health')) throw new CommandError(`Your bank can’t cover ${formatMoney(usd(d.premium, cur), cur)} for the year, so nothing was charged.`);
     } else if (!payFromCurrent(s, person, usd(d.premium, cur), `${d.label} premium`, 'health')) {
       // A monthly plan's first month, paid as it starts covering (from 2026-10-06; until then its first premium came on
       // the 1st of the next month, and the days to it were covered and never paid for).
-      throw new CommandError(`The month costs ${formatMoney(usd(d.premium, cur), cur)}, more than your bank can cover.`);
+      throw new CommandError(`Your bank can’t cover ${formatMoney(usd(d.premium, cur), cur)} for the first month, so nothing was charged.`);
     }
     h.dental = { plan, from, ...(until ? { until } : {}), deductible: {}, paid: {} };
     armHealth(s, person);
@@ -2439,8 +2442,8 @@ export function registerHealth(sim: Simulation): void {
     if (current.balance < amount) {
       const cur = saveCurrency(s.universe);
       throw new CommandError(current.balance > 0
-        ? `${current.name} holds ${formatMoney(current.balance, cur)} of the ${formatMoney(amount, cur)}: move money into it first, on your bank’s Move Money.`
-        : `${current.name} has nothing to pay it with: move money into it first, on your bank’s Move Money.`);
+        ? `${current.name} has only ${formatMoney(current.balance, cur)} of the ${formatMoney(amount, cur)}, so nothing was paid. Move money into it first, on your bank’s Move Money.`
+        : `${current.name} has nothing to pay it with, so nothing was paid. Move money into it first, on your bank’s Move Money.`);
     }
     s.post({ memo: 'Paid toward medical debt', category: 'health', postings: [{ accountId: current.id, amount: -amount }, { accountId: debt.id, amount }] });
     // The debt cleared, every bill that had gone to it is settled.

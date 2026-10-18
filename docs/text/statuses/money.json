@@ -2551,9 +2551,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.borrowing]": {
   "status": "Rewritten And Verified",
-  "hash": "93113b217b20",
+  "hash": "e1253af5192f",
   "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
+  "evidence": "Editorial review, batch 1: its quote of the loan payoff refusal brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-offers]": {
   "status": "Rewritten And Verified",
@@ -2575,9 +2575,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
   "status": "Rewritten And Verified",
-  "hash": "c728637cd6c7",
+  "hash": "4e917ff928c0",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "Editorial review, batch 1: its quotes of the cash refusals brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.home-account]": {
   "status": "Rewritten And Verified",
@@ -2605,15 +2605,15 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.term]": {
   "status": "Rewritten And Verified",
-  "hash": "39e44b3a5e94",
+  "hash": "d1ffdcf76c7b",
   "on": "2026-10-17",
-  "evidence": "tests/guide-examples-money.test.ts 'the money entries’ worked examples, played' (each example's figures played against the simulation, 16 of 16); tests/language-money.test.ts 'gives every money entry a next step and a short overview, and names no SLATE, ledger or postings'; every control and panel the steps name checked against the UI code and the after-walk (Money's five tabs, Your Banks, Move Money, Your Accounts Over Time, Your Cards, The Card’s Offers, Borrowing's panels, Statements' Alerts and The Year)"
+  "evidence": "Editorial review, batch 1: its quote of the term deposit refusal brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.transfer]": {
   "status": "Rewritten And Verified",
-  "hash": "41936c20d2c0",
+  "hash": "de2b295466ad",
   "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1); tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-money.test.ts (the money entries’ worked examples, played; money.affairs’ quote of Home’s line read from Home); each quote set against the code that writes it (crossarea/examples.json)"
+  "evidence": "Editorial review, batch 1: its quote of the Move Money refusal brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.upkeep]": {
   "status": "Rewritten And Verified",
@@ -2905,9 +2905,9 @@
  },
  "src/engine/systems/banking.ts#registerBanking <bank.transfer>": {
   "status": "Rewritten And Verified",
-  "hash": "cbea8fa12f8e",
+  "hash": "d23cffb4d80f",
   "on": "2026-10-17",
-  "evidence": "tests/language-money.test.ts 'refuses a move, savings and a standing order in words that name the obstacle, and moves nothing'; tests/evidence-g12-money.test.ts and tests/home-account-transfers.test.ts (… only has … in it.); tests/evidence-g10-money.test.ts (Reactivate it first, under Your Accounts Over Time)"
+  "evidence": "Editorial review, batch 1 (one shape for money that is not there): tests/language-money.test.ts \"refuses a move, savings and a standing order in words that name the obstacle, and moves nothing\" and tests/home-account-transfers.test.ts \"says what the bank or the research leaves out\" assert \"… has only $…, so nothing was moved.\" and \"… has nothing in it, so nothing was moved.\" exactly"
  },
  "src/engine/systems/banking.ts#registerBanking <world.day_rollover>": {
   "status": "Reviewed And Retained",
@@ -2989,9 +2989,9 @@
  },
  "src/engine/systems/bankmoves.ts#registerBankMoves <bank.open_current>": {
   "status": "Rewritten And Verified",
-  "hash": "ff9b80a3070b",
+  "hash": "6ad1506fbfa1",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g14-money.test.ts 'refuses an opening deposit from a card, from an account at the bank itself, of nothing or less, and of more than the account holds, each in its own words, nothing moved'"
+  "evidence": "Editorial review, batch 1: tests/evidence-g14-money.test.ts \"refuses an opening deposit from a card, from an account at the bank itself, of nothing or less, and of more than the account holds, each in its own words, nothing moved\" asserts \"Chase Total Checking has only $92,391.00, so the account wasn’t opened.\" exactly"
  },
  "src/engine/systems/bankmoves.ts#registerBankMoves <bank.redirect_deposits>": {
   "status": "Rewritten And Verified",
@@ -3127,15 +3127,21 @@
  },
  "src/engine/systems/cash.ts#registerCash <cash.deposit>": {
   "status": "Rewritten And Verified",
-  "hash": "640b2e84d566",
+  "hash": "88dd7b53897f",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g12-money.test.ts and tests/defects3-bank.test.ts (Your debit card is locked/stopped/hasn’t arrived yet. You can still pay cash in at the counter.; … is dormant. Reactivate it first, under Your Accounts Over Time.)"
+  "evidence": "Editorial review, batch 1: tests/evidence-g12-money.test.ts \"pays $40 of $100 back in at Chase’s machine, …\" asserts \"You have only $60.00 in cash, so nothing was paid in.\" exactly; \"Enter how much cash to pay in.\" split from it for a typed nothing"
  },
  "src/engine/systems/cash.ts#registerCash <cash.withdraw>": {
   "status": "Rewritten And Verified",
   "hash": "c2ff671acd5e",
   "on": "2026-10-17",
   "evidence": "tests/language-money.test.ts 'refuses a payment set for a date, an alert, a term deposit command and cash in their own words' (Enter an amount.; Choose where to take it from: …); tests/evidence-g12-money.test.ts"
+ },
+ "src/engine/systems/cash.ts#shortWords": {
+  "status": "Rewritten And Verified",
+  "hash": "42a14d557816",
+  "on": "2026-10-17",
+  "evidence": "Editorial review, batch 1, new: tests/editorial-money-refusals.test.ts \"a withdrawal its fees push over: what the account has, and what the cash and its fees come to\" asserts both variants exactly, the fee sum from the quote that went through; a mutation dropping the fees clause fails it"
  },
  "src/engine/systems/cash.ts#walletOf [cash]": {
   "status": "Reviewed And Retained",
@@ -3145,9 +3151,9 @@
  },
  "src/engine/systems/cash.ts#withdrawalQuote": {
   "status": "Rewritten And Verified",
-  "hash": "9cbbee3a74d2",
+  "hash": "e9b44d212ac4",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g12-money.test.ts (… of its limit left, and this needs …; The card lets you take … out as cash; You can still take cash out at the counter); tests/cash.test.ts (… a day out of machines …); tests/home-account-abroad.test.ts (HSBC Bank Account only has £… ($…) in it.)"
+  "evidence": "Editorial review, batch 1: tests/evidence-g12-money.test.ts \"refuses in its own words a dormant account, … and a bad request\" (\"Chase Total Checking has only $250.00.\") and \"refuses the machine until a new account’s first card arrives …\" (\"… has nothing in it.\"); tests/home-account-abroad.test.ts \"charges HSBC UK’s 2.75% …\" (pounds, dollars and fees); tests/editorial-money-refusals.test.ts \"a withdrawal its fees push over …\""
  },
  "src/engine/systems/credit.ts#afterMissed": {
   "status": "Rewritten And Verified",
@@ -3403,9 +3409,9 @@
  },
  "src/engine/systems/lending.ts#registerLending <bank.open_term>": {
   "status": "Rewritten And Verified",
-  "hash": "946c79d567ec",
+  "hash": "4e37c5b9ed1a",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g10-money.test.ts (A term deposit at Wells Fargo is paid for from your current account there. Open a current account at Wells Fargo first.; Chase Total Checking only has $92,391 in it.); tests/lending.test.ts (A term deposit there needs at least €100,000.)"
+  "evidence": "Editorial review, batch 1: tests/evidence-g10-money.test.ts \"is refused past what the account holds, at a bank with no current account there, and for nothing, and opens nothing\" asserts \"Chase Total Checking has only $92,391.00, so no term deposit was opened.\" exactly"
  },
  "src/engine/systems/lending.ts#registerLending <bank.pay_collections>": {
   "status": "Reviewed And Retained",
@@ -3415,9 +3421,9 @@
  },
  "src/engine/systems/lending.ts#registerLending <bank.repay_loan>": {
   "status": "Rewritten And Verified",
-  "hash": "f8e435e57c16",
+  "hash": "c747b8c408e4",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g11-money.test.ts and tests/defects-r3b-1.test.ts (Paying it off takes …, and the repayment account can’t cover it all.)"
+  "evidence": "Editorial review, batch 1: tests/evidence-g11-money.test.ts \"pays a Citi loan off from the Personal Loan panel 20 days into a 30-day month: …\" asserts \"Citi Access Checking can’t cover the $3,016.83 it takes to pay it off, so nothing was paid.\" exactly, the payoff the test works out; tests/defects-r3b-1.test.ts holds the Chase variant"
  },
  "src/engine/systems/lending.ts#registerLending <bank.set_loan_repayment>": {
   "status": "Reviewed And Retained",

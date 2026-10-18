@@ -668,7 +668,7 @@ await step('money: a transfer refused for more than the account holds, in the en
   await amount.fill('99999999'); await wait(200);
   await page.getByRole('button', { name: /^Move It/ }).first().click(); await wait(800);
   const refused = await toast();
-  must(/only has|holds|can’t|more than/i.test(refused), `refusal said: ${refused}`);
+  must(/has only|has nothing|holds|can’t|more than/i.test(refused), `refusal said: ${refused}`);
   await amount.fill('1'); await wait(200);
   await page.getByRole('button', { name: /^Move It/ }).first().click(); await wait(800);
   return `${refused} / ${await toast()}`;

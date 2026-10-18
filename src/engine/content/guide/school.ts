@@ -537,7 +537,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Register: “A financial hold stops registration: … is owed on your Yale account. Pay it on the Terms And Award tab.”, or on leave “You’re on leave: you register for the term you come back to, when it begins.”',
       // The bank's refusal from 2026-10-16, when Affiliate cover began to be paid from the savings beside the current account
       // too; until then it was “Your bank can’t cover it.”, and this list left it out.
-      'Affiliate cover: “The School pays for your Affiliate cover.” on a medical leave, “It could only be bought until …”, or, as it’s paid in full, “Your current account and the savings beside it can pay … of it now: …”, going on “it’s paid in full, so move money into your current account first”, or “… have nothing to pay it with: move money into your current account first.”',
+      'Affiliate cover: “The School pays for your Affiliate cover.” on a medical leave, “It could only be bought until …”, or, as it’s paid in full, “Your current account and the savings beside it can cover only … of it now.”, going on “It’s paid in full, so move money into your current account first.”, or “Your current account and the savings beside it can’t cover any of it. Move money into your current account first.”',
       'Appeal: “Only a leave the dean imposed can be appealed.” or “The appeal had to be in by …”.',
       'Call It Off, on a leave the dean imposed: “The dean imposed this leave, so it isn’t yours to call off”, and while it can still be appealed, “appeal it in writing to the dean by …”.',
     ],
@@ -751,7 +751,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     unavailable: [
       // Until 2026-10-16 the last was “Your bank can’t cover it.”, said with savings at the bank that could: a payment to
       // Yale reached savings only where linked (`fromBankToYale`, systems/leave.ts).
-      '“Your Yale account owes no balance.”, “Enter an amount to pay.”, “… is owed. Pay that or less.”, “Your current account and the savings beside it can pay … of it now: …”, going on “pay that or less, or move money into your current account first”, or “Your current account and the savings beside it have nothing to pay it with: move money into your current account first.”',
+      '“Your Yale account owes no balance.”, “Enter an amount to pay.”, “… is owed. Pay that or less.”, “Your current account and the savings beside it can cover only … of it now.”, going on “Pay that or less, or move money into your current account first.”, or “Your current account and the savings beside it can’t cover any of it. Move money into your current account first.”',
       '“Support past six terms is reviewed once a seventh is coming: you’re within the six.”',
       '“It’s with the aid office, decided by …” or “The aid office has reviewed your support.”',
       '“Converting hours to grant aid is only for students on financial aid, and the aid office found no need for you.”',
@@ -845,7 +845,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       '“You’re on leave, so there are no shifts until you’re back.”: on a leave it shows in place of the button.',
       `“There’s no free evening in the next two weeks within Yale’s cap of ${WORK_LIMITS.weekHours} hours a week in term, across all your Yale jobs.”`,
       '“There’s no free evening left in the term in the next two weeks.”: outside a term’s classes, in the summer or between terms, the Rep is dark.',
-      `Protective equipment: “It costs ${formatMoney(REQUIRED_PPE.cost, 'USD')}, and your bank can’t cover it. You haven’t been charged.” Once bought, or once you’ve left the School, the button doesn’t show.`,
+      `Protective equipment: “Your bank can’t cover ${formatMoney(REQUIRED_PPE.cost, 'USD')}, so nothing was charged.” Once bought, or once you’ve left the School, the button doesn’t show.`,
     ],
     mistakes: [
       'Counting on buying the equipment at the shift with an empty bank: the supervisor sends you home, and the shift counts as missed. Buy it when the money’s there.',

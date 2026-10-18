@@ -677,7 +677,7 @@ describe('school.buy_affiliate', () => {
     // TEST SETUP: the bank emptied, as spending would leave it.
     drain(sim);
     // In the bank's words from 2026-10-16, which say what to do; until then “Your bank can’t cover it.”
-    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('Your current account and the savings beside it have nothing to pay it with: move money into your current account first.');
+    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('Your current account and the savings beside it can’t cover any of it. Move money into your current account first.');
     expect(sim.player.school!.leave!.affiliate).toBeUndefined();
     expect(sim.player.school!.uncovered).toEqual([{ from: at(2027, 1, 20, 12) }]);
     expect(healthOf(sim.player).bills.find((b) => b.id === bill.id)!.amount).toBe(billed);

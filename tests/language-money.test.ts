@@ -352,7 +352,7 @@ describe('PLAYER JOURNEY: a refused banking action says why and what to do', () 
     const [held, kept] = [checking.balance, savings.balance];
     expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: checking.id, amount: 1_00 })).toBe('From and To are the same account. Choose another account to move it to.');
     expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: 0 })).toBe('Enter how much to move.');
-    expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: held + 1_00 })).toBe(`${checking.name} only has ${formatMoney(held, 'USD', { cents: false })} in it.`);
+    expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: held + 1_00 })).toBe(`${checking.name} has only ${formatMoney(held, 'USD')}, so nothing was moved.`);
     expect(refused(sim, 'bank.open_savings', { bankId: 'us-chase' })).toBe('You already have a savings account at Chase.');
     expect(refused(sim, 'bank.open_savings', { bankId: 'us-citi' })).toBe('You can only open savings at a bank where you have a current account.');
     expect(refused(sim, 'bank.add_standing_order', { amount: 0, day: 1, toId: savings.id })).toBe('Enter how much to pay each month.');

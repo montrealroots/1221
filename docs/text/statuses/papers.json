@@ -139,15 +139,15 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
   "status": "Rewritten And Verified",
-  "hash": "db704bfd6bb7",
+  "hash": "0c919c059a6a",
   "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), four of the health-cover and doctor examples’ quotes held exactly by tests/guide-examples-papers.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-papers.test.ts (every papers example played, the health cover example with financial assistance)"
+  "evidence": "Editorial review, batch 1: its quote of the medical debt refusal brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
   "status": "Rewritten And Verified",
-  "hash": "6415728e1ded",
+  "hash": "ccda608e1712",
   "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words, two of this entry’s example quotes held exactly by tests/guide-examples-papers.test.ts (crossarea/batches.md, batch 1); tests/evidence2-b13.test.ts, ‘PLAYER JOURNEY: Health Cover’s reference, opened by its own address…’, draws the entry and reads its work-rules lines whole; tests/guide-examples-papers.test.ts (its worked example played, financial assistance in its words); tools/tutorial-routes.mjs --check exit 0 on the crossarea walk and capture of 9246c074 (crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts"
+  "evidence": "Editorial review, batch 1: its quotes of the dental and longer-supply refusals brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
   "status": "Rewritten And Verified",
@@ -2149,9 +2149,9 @@
  },
  "src/engine/systems/statetax.ts#registerStateTax <tax.apply_state_plan>": {
   "status": "Rewritten And Verified",
-  "hash": "2df321606dd9",
+  "hash": "9ec81cf1e2fe",
   "on": "2026-10-17",
-  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+  "evidence": "Editorial review, batch 1: “the … down payment, so nothing was paid.” is reached only where the bank fails after statePlanRefusal passed, which reads the same bank first; the command’s refusal as a player meets it is held by tests/editorial-money-refusals.test.ts \"a state plan’s down payment, …\""
  },
  "src/engine/systems/statetax.ts#registerStateTax <tax.catch_up_state_plan>": {
   "status": "Rewritten And Verified",
@@ -2239,9 +2239,9 @@
  },
  "src/engine/systems/statetax.ts#statePlanRefusal": {
   "status": "Rewritten And Verified",
-  "hash": "09ee921f568e",
+  "hash": "48a82e314ecd",
   "on": "2026-10-17",
-  "evidence": "tests/state-tax.test.ts, tests/scope-taxpapers.test.ts, tests/liens-and-arrangements.test.ts, tests/tax-places.test.ts, tests/remaining-tax.test.ts"
+  "evidence": "Editorial review, batch 1: tests/editorial-money-refusals.test.ts \"a state plan’s down payment, said before it’s asked for: …\" asserts \"Your bank can’t cover the $500.00 down payment.\" from statePlanRefusal and from the command, exactly"
  },
  "src/engine/systems/statetax.ts#threeYearCheck": {
   "status": "Rewritten And Verified",

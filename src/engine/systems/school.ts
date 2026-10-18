@@ -3280,7 +3280,7 @@ export function registerSchool(sim: Simulation): void {
     const person = s.player;
     const no = ppeRefusal(person);
     if (no) throw new CommandError(no);
-    if (!buyPpe(s, person)) throw new CommandError(`It costs ${formatMoney(ppeCost(s), saveCurrency(s.universe))}, and your bank can’t cover it. You haven’t been charged.`);
+    if (!buyPpe(s, person)) throw new CommandError(`Your bank can’t cover ${formatMoney(ppeCost(s), saveCurrency(s.universe))}, so nothing was charged.`);
     return { cost: person.school!.ppe!.cost };
   });
 

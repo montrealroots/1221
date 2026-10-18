@@ -197,7 +197,7 @@ Assumed in the game are Core's; health cover and its words are under Health.
 | **claim**, **Claim filed** | An unemployment or benefit claim (`benefits.claim`). | Filed, alone |
 | **base period**, **waiting week** | The quarters a claim's wages come from, and the first unpaid week. | |
 | **claim it**, **You've already claimed it** | Starting a pension. | drawing it |
-| **Your bank can't cover $…, so nothing was charged** (or **paid**, or **changed**) | Papers' one refusal for a fee or payment your accounts can't meet. The health area's and Money's refusals of the same kind are worded their own way (`crossarea/batches.md`, left for the coordinator). | … is more than the bank can cover |
+| **Your bank can't cover $…, so nothing was charged** (or **paid**, **changed**, **moved**) | The one refusal for a fee or payment your accounts can't meet, on Papers, Health Cover, School and Money alike (`docs/STYLE.md`, Errors and unavailable actions). Where you chose the account and the amount, the figure is what it has: "… has only $…, so nothing was moved." Until 2026-10-17 the health area's and Money's were worded their own way (`editorial/batches.md`, batch 1). | … is more than the bank can cover; It costs …, more than your bank can cover; … only has … in it |
 
 ## Health, Body And Time
 

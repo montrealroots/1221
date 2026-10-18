@@ -470,7 +470,7 @@ export function statePlanRefusal(sim: Simulation, person: Person, state: string,
   if (down < 0 || down >= owed) return 'A down payment must be more than nothing and less than what you owe.';
   if (down > 0 && !dp) return `${rules.short}’s plan doesn’t take a down payment.`;
   if (dp?.required && down < downOf(dp, owed)) return `${rules.short} asks for ${Math.round((dp.share ?? 0) * 100)}% down, ${formatMoney(downOf(dp, owed), cur)}. ${dp.why}`;
-  if (down > 0 && inTheBank(sim, person) < down) return `Your bank can’t cover ${formatMoney(down, cur)} down.`;
+  if (down > 0 && inTheBank(sim, person) < down) return `Your bank can’t cover the ${formatMoney(down, cur)} down payment.`;
   return undefined;
 }
 
@@ -973,7 +973,7 @@ export function registerStateTax(sim: Simulation): void {
     }
     // Paid down first, from the bank, to the oldest year.
     if (opts.down > 0) {
-      if (!payFromBank(s, person, opts.down, `${rules.short}, paid down with a plan request`, 'tax')) throw new CommandError(`Your bank can’t cover ${formatMoney(opts.down, cur)} down, so nothing was paid.`);
+      if (!payFromBank(s, person, opts.down, `${rules.short}, paid down with a plan request`, 'tax')) throw new CommandError(`Your bank can’t cover the ${formatMoney(opts.down, cur)} down payment, so nothing was paid.`);
       payStateOldest(s, person, state, opts.down, 'payment');
     }
     const owed = owedToState(person, state, s.now) + (rules.plan.feeAdded ? fee : 0);

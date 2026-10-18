@@ -839,7 +839,7 @@ describe('cash.deposit', () => {
     expect(must(sim, 'cash.deposit', { amount: 40_00, toId: account.id, at: 'atm' })).toEqual({ paid: 40_00 });
     expect(account.balance).toBe(40_00);
     expect(inHand(sim)).toBe(60_00);
-    expect(run(sim, 'cash.deposit', { amount: 60_01, toId: account.id, at: 'counter' }).error).toBe('You have $60.00 in cash.');
+    expect(run(sim, 'cash.deposit', { amount: 60_01, toId: account.id, at: 'counter' }).error).toBe('You have only $60.00 in cash, so nothing was paid in.');
     const sv = savings(sim);
     const kept = sv.balance;
     expect(must(sim, 'cash.deposit', { amount: 25_00, toId: sv.id, at: 'counter' })).toEqual({ paid: 25_00 });
@@ -977,7 +977,7 @@ describe('cash.withdraw', () => {
     expect(out(20_00, 'bank').error).toBe('Choose where to take it from: your bank’s ATM, another bank’s, the counter, the Post Office or the card.');
     expect(out(20_00, 'post_office').error).toBe('Chase’s customers can’t use the Post Office for cash.');
     setBalance(sim, account, 250_00); // TEST SETUP
-    expect(out(300_00, 'counter').error).toBe('Chase Total Checking only has $250.00 in it.');
+    expect(out(300_00, 'counter').error).toBe('Chase Total Checking has only $250.00.');
     account.dormant = true; // TEST SETUP: dormant, as thirty months untouched at Chase would make it
     expect(out(20_00, 'atm').error).toBe('Chase Total Checking is dormant. Reactivate it first, under Your Accounts Over Time.');
     expect(out(20_00, 'counter').error).toBe('Chase Total Checking is dormant. Reactivate it first, under Your Accounts Over Time.');
@@ -1004,7 +1004,7 @@ describe('cash.withdraw', () => {
     must(sim, 'bank.set_primary', { accountId: opened.accountId });
     const wf = sim.universe.accounts[opened.accountId]!;
     expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card hasn’t arrived yet. You can still take cash out at the counter.');
-    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' }).error).toBe(`${wf.name} only has $0.00 in it.`);
+    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' }).error).toBe(`${wf.name} has nothing in it.`);
     sim.advanceTo(opened.arrivesAt + 60_000);
     expect(wf.balance).toBe(100_00);
     expect(must(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' })).toEqual({ fee: 0 });

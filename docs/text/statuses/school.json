@@ -769,15 +769,15 @@
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.leave]": {
   "status": "Rewritten And Verified",
-  "hash": "73b5d1ce5614",
+  "hash": "2ca886097508",
   "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
+  "evidence": "Editorial review, batch 1: its quotes of the Affiliate cover refusals brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.money]": {
   "status": "Rewritten And Verified",
-  "hash": "deeec2f6de5a",
+  "hash": "aef9159269b4",
   "on": "2026-10-17",
-  "evidence": "tools/guide-quotes.mjs --check exit 0, every quote the game’s live words (crossarea/batches.md, batch 1), productions.notes’ example quote held exactly by tests/guide-examples-productions.test.ts; tools/tutorial-routes.mjs --check exit 0 on the text walk of the built app at 9246c074 (docs/verification/language-2026-10-17/crossarea/after-1440, after-390, 14 scenario saves) and the tutorial capture of the same build (every chapter page, the menus, the Sleep dialog, the Calendar): every label it names on a screen or in the code (docs/verification/language-2026-10-17/crossarea/routes.md); tests/guide.test.ts and tests/help-mechanics.test.ts; tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts and tests/guide-examples-school.test.ts (every worked example played)"
+  "evidence": "Editorial review, batch 1: its quotes of the Yale account refusals brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.orientation]": {
   "status": "Rewritten And Verified",
@@ -793,9 +793,9 @@
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.shifts]": {
   "status": "Rewritten And Verified",
-  "hash": "e0b5e8b78c59",
+  "hash": "9afcca6c3ec1",
   "on": "2026-10-17",
-  "evidence": "tests/guide.test.ts (the registry), tests/guide-examples-school/coursework/productions.test.ts (every worked example played), tests/remaining-school.test.ts (school.s6.policy), tests/need-paths.test.ts; every quoted refusal set against its code, every label against the UI and the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
+  "evidence": "Editorial review, batch 1: its quote of the protective equipment refusal brought to the game’s words; tools/guide-quotes.mjs --check, 581 of 581 said"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.sick]": {
   "status": "Rewritten And Verified",
@@ -2514,10 +2514,10 @@
   "evidence": "tests/leave.test.ts, tests/evidence-g26-school.test.ts, tests/remaining-school.test.ts, tests/scope-school.test.ts, tests/whynot-studyplan.test.ts"
  },
  "src/engine/systems/leave.ts#bankShortWords": {
-  "status": "Reviewed And Retained",
-  "hash": "d567c7fa18d4",
+  "status": "Rewritten And Verified",
+  "hash": "35de98ad2d13",
   "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
+  "evidence": "Editorial review, batch 1: tests/remaining-banking.test.ts \"PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account …\" asserts both variants exactly; tests/evidence-g25-school.test.ts and tests/evidence-g26-school.test.ts the nothing variant"
  },
  "src/engine/systems/leave.ts#billUnsupportedTerm": {
   "status": "Reviewed And Retained",
@@ -3061,9 +3061,9 @@
  },
  "src/engine/systems/school.ts#registerSchool <school.buy_ppe>": {
   "status": "Rewritten And Verified",
-  "hash": "180502cf0c67",
+  "hash": "dcebd6e10732",
   "on": "2026-10-17",
-  "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
+  "evidence": "Editorial review, batch 1: tests/school-everyday.test.ts \"not bought before, is bought at the first shift; the bank short of it, the supervisor sends you home\" asserts /^Your bank can’t cover \\$[\\d,]+\\.\\d\\d, so nothing was charged\\.$/"
  },
  "src/engine/systems/school.ts#registerSchool <school.cabaret>": {
   "status": "Reviewed And Retained",

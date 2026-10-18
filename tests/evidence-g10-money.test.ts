@@ -514,7 +514,7 @@ describe('bank.open_term', () => {
     const checking = primary(sim);
     const start = checking.balance;
     expect(start).toBe(92_391_00);
-    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking only has $92,391 in it.');
+    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking has only $92,391.00, so no term deposit was opened.');
     expect(refused(sim, 'bank.open_term', { amount: 1_000_00, bankId: 'us-wells-fargo' })).toBe('A term deposit at Wells Fargo is paid for from your current account there. Open a current account at Wells Fargo first.');
     expect(refused(sim, 'bank.open_term', { amount: 0 })).toBe('Enter how much to put away.');
     expect(termsOf(sim, sim.player)).toEqual([]);

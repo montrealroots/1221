@@ -348,8 +348,8 @@ export const PAPERS: readonly GuideEntry[] = [
       `“That claim wasn’t denied.”, “It’s been appealed.” or “An appeal has to be filed within ${DENIALS.appealDays} days of the denial, and that time has passed.”: Appeal It doesn’t show.`,
       '“Only a Connecticut hospital’s bill can be put in for its financial assistance.”, “It’s already settled or past its due date.”, “The hospital’s financial assistance has already come off it.” or “It’s already been put in for the hospital’s financial assistance.”, for a bill applied for or screened over the limit at billing: Apply For Assistance doesn’t show.',
       // Until 2026-10-16 the last was “… can’t cover it.”, which said nothing of what to do.
-      '“You owe nothing for care.”, or, when your current account holds less than the debt, “… holds … of the …: move money into it first, on your bank’s Move Money.” (“… has nothing to pay it with: …” where it holds nothing).',
-      'A Dental Plan shows only while Yale Health covers you or a Yale plan you bought runs: once Yale Health ends, New Haven sells none. Pressed, Buy Dental says “The year costs …, more than your bank can cover.” when the bank can’t pay the year.',
+      '“You owe nothing for care.”, or, when your current account holds less than the debt, “… has only … of the …, so nothing was paid. Move money into it first, on your bank’s Move Money.” (“… has nothing to pay it with, so nothing was paid.” where it holds nothing).',
+      'A Dental Plan shows only while Yale Health covers you or a Yale plan you bought runs: once Yale Health ends, New Haven sells none. Pressed, Buy Dental says “Your bank can’t cover … for the year, so nothing was charged.” when the bank can’t pay the year.',
       `Prepay Three Months and Prepay A Year are England’s, for its ${gbp(NHS.prescription)} prescription charge: “The prepayment certificate is only for England’s prescription charge.” A life in New Haven never sees them.`,
     ],
     next: [
@@ -432,7 +432,7 @@ export const PAPERS: readonly GuideEntry[] = [
       'Choosing a doctor or a pharmacy sets it at once, and the toast names it: “… is now your doctor.” or “… is now your pharmacy.”',
       'Book An Appointment puts it on the calendar; the toast gives its date, and a notice names the practice.',
       'Call It Off takes it off the calendar, with no toast, and leaves the visit owed: the panel reads “…: not yet seen”.',
-      `Fill A Longer Supply pays at once from ${FROM_CURRENT}, moves each Medicine until date on by the days filled, and the toast says “${LONGEST} days of medicine filled.” Where the bank can’t cover every condition’s fill, it’s refused whole, “It costs more than your bank can cover.”, and nothing is filled or paid.`,
+      `Fill A Longer Supply pays at once from ${FROM_CURRENT}, moves each Medicine until date on by the days filled, and the toast says “${LONGEST} days of medicine filled.” Where the bank can’t cover every condition’s fill, it’s refused whole, “Your bank can’t cover … for every condition’s fill, so nothing was filled or charged.”, and nothing is filled or paid.`,
     ],
     later: [
       `At the hour, kept: “A Doctor’s Visit” comes as a notice, and what your cover leaves you is billed, due in ${MEDICAL_DEBT.dueDays} days, under the practice it was booked at; on Yale Health at ${YALE_PRACTICE}, HUSKY D or Covered Connecticut that’s $0, and no bill is made. On Yale Health at ${PRACTICE} it’s ${usd(UNINSURED_VISIT)} in 2026, and the notice says Yale Health pays for a visit at its own Health Center. On Access Health CT’s silver plan it’s the ${usd(SILVER.visit)} copay, with no deductible, and Care And Its Bills gives what the plan paid of the visit’s price under Plan Paid. Your prescriptions are renewed, a review visit marks its condition reviewed, and the visit may end in a referral, booked for the specialist’s wait.`,
@@ -463,7 +463,7 @@ export const PAPERS: readonly GuideEntry[] = [
       '“Your doctor has to be in the town you live in.” or “That isn’t a doctor’s practice.”',
       '“Yale Health sees Yale students it covers, and it doesn’t cover you now.”: Yale Health’s practice sent once its cover has ended; the box doesn’t offer it then.',
       '“You can choose a pharmacy only in the United States.”',
-      'Pressed, Fill A Longer Supply says “It costs more than your bank can cover.” when the bank can’t pay every condition’s fill.',
+      'Pressed, Fill A Longer Supply says “Your bank can’t cover … for every condition’s fill, so nothing was filled or charged.” when the bank can’t pay every condition’s fill.',
       'Before the chapter is read, the boxes, Call It Off and Book An Appointment are grayed, their tooltip naming the chapter.',
     ],
     next: [

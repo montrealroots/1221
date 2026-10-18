@@ -524,7 +524,7 @@ describe('health.dental', () => {
     const sim = student('g03-dental-broke');
     broke(sim);
     const before = sim.universe.transactions.length;
-    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'The year costs $312.72, more than your bank can cover.' });
+    expect(sim.execute({ kind: 'health.dental', payload: { on: true } })).toMatchObject({ ok: false, error: 'Your bank can’t cover $312.72 for the year, so nothing was charged.' });
     expect(healthOf(sim.player).dental).toBeUndefined();
     expect(sim.universe.transactions.length).toBe(before);
   });
@@ -651,7 +651,7 @@ describe('health.extra_supply', () => {
     // first condition's $30 and not the second's.
     broke(sim, 45_00);
     const before = { txns: sim.universe.transactions.length, balance: current(sim).balance };
-    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 90 } })).toMatchObject({ ok: false, error: 'It costs more than your bank can cover.' });
+    expect(sim.execute({ kind: 'health.extra_supply', payload: { days: 90 } })).toMatchObject({ ok: false, error: 'Your bank can’t cover $60.00 for every condition’s fill, so nothing was filled or charged.' });
     expect(healthOf(sim.player).chronic!.depression!.supplyUntil).toBeUndefined();
     expect(healthOf(sim.player).chronic!.hypertension!.supplyUntil).toBeUndefined();
     expect(sim.universe.transactions.length).toBe(before.txns);
@@ -763,7 +763,7 @@ describe('health.pay_bill', () => {
     const was = { current: current(sim).balance, savings: savings(sim).balance };
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 0 } })).toMatchObject({ ok: false, error: 'Say how much.' });
     // In words that say what to do from 2026-10-16; until then “Chase Total Checking can’t cover it.”
-    expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00 } })).toMatchObject({ ok: false, error: 'Chase Total Checking has nothing to pay it with: move money into it first, on your bank’s Move Money.' });
+    expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00 } })).toMatchObject({ ok: false, error: 'Chase Total Checking has nothing to pay it with, so nothing was paid. Move money into it first, on your bank’s Move Money.' });
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00, fromId: savings(sim).id } })).toMatchObject({ ok: true, value: { paid: 100_00 } });
     expect(-medicalDebtOf(sim, sim.player)!.balance).toBe(800_00);
     expect(healthOf(sim.player).debtSince).toBeDefined();

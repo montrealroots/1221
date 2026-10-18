@@ -63,6 +63,16 @@ Every string is written for a player who knows the game only by playing it.
   Never promise a recovery or an eligibility the game doesn't offer. Never
   show a command's id or a raw field name. Name a place on screen by its
   labels in words ("Health, then Cover"), never with an arrow.
+  A refusal for money that isn't there has one shape everywhere: what can't
+  pay, the amount, and, once something has been pressed, what didn't happen.
+  "Your bank can’t cover $28.00, so nothing was charged." Where the player
+  chose both the account and the amount, the figure that helps is what the
+  account has: "Chase Total Checking has only $40.50, so nothing was moved."
+  A reason shown beside a control before it's pressed names the amount and
+  not what didn't happen, since nothing was tried: "Your bank can’t cover the
+  $500.00 down payment." Until 2026-10-17 (brief 14's editorial review) health
+  said "It costs …, more than your bank can cover." and Money "… only has $…
+  in it." with the cents dropped.
 
 ### Tutorials and help teach a task
 

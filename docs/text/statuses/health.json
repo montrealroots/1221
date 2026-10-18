@@ -805,9 +805,9 @@
  },
  "src/engine/systems/health.ts#registerHealth <health.dental>": {
   "status": "Rewritten And Verified",
-  "hash": "60abc61e8ebc",
+  "hash": "782604ff5e2c",
   "on": "2026-10-17",
-  "evidence": "tests/evidence-g03-life.test.ts “refused in its own words when the bank can’t cover the year…”; docs/verification/language-2026-10-17/health/render-after-2.txt (London; Los Angeles without Covered California)"
+  "evidence": "Editorial review, batch 1: tests/evidence-g03-life.test.ts \"refused in its own words when the bank can’t cover the year, and nothing bought or posted\" (the year, $312.72) and tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: …\" (the first month, $25.00), both exact"
  },
  "src/engine/systems/health.ts#registerHealth <health.drop>": {
   "status": "Rewritten And Verified",
@@ -817,21 +817,21 @@
  },
  "src/engine/systems/health.ts#registerHealth <health.extra_supply>": {
   "status": "Rewritten And Verified",
-  "hash": "5ea4813cf83e",
+  "hash": "50ce06883fc9",
   "on": "2026-10-17",
-  "evidence": "tests/defects-g8-5.test.ts “PLAYER JOURNEY: refused, and nothing filled, when the bank can’t cover the supply”; tests/evidence-g03-life.test.ts"
+  "evidence": "Editorial review, batch 1: tests/defects-g8-5.test.ts \"PLAYER JOURNEY: refused, and nothing filled, when the bank can’t cover the supply\" asserts \"Your bank can’t cover $125.37 for every condition’s fill, so nothing was filled or charged.\" and that $125.37 is the fill’s own price; tests/evidence-g03-life.test.ts \"two conditions, the second unpayable: …\" the $60.00 of two"
  },
  "src/engine/systems/health.ts#registerHealth <health.pay_bill>": {
-  "status": "Reviewed And Retained",
-  "hash": "789eddc92cb7",
+  "status": "Rewritten And Verified",
+  "hash": "73c701270d8e",
   "on": "2026-10-17",
-  "reason": "Pay It Off’s refusals, already plain and specific (how much there is, and Move Money as the next step); the papers guide quotes them word for word (guide/papers.ts), so they stay as they are."
+  "evidence": "Editorial review, batch 1: tests/evidence-g03-life.test.ts \"paid from a savings account named, …; each refusal in its own words\" (nothing in it), tests/commands-kept.test.ts \"pays toward a debt for care from the current account, only what it holds\" and tests/editorial-money-refusals.test.ts \"a medical debt part covered: …\" (\"… has only $50.00 of the $100.00, so nothing was paid. Move money into it first, on your bank’s Move Money.\"), each exact or as narrow as before"
  },
  "src/engine/systems/health.ts#registerHealth <health.prepay>": {
   "status": "Rewritten And Verified",
-  "hash": "59ef65023824",
+  "hash": "05b8b1555aaa",
   "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/health/render-after-2.txt (London, Prepay A Year with nothing in the bank)"
+  "evidence": "Editorial review, batch 1: tests/editorial-money-refusals.test.ts \"England’s prescription prepayment and a monthly dental plan: the bank, the price, and nothing charged\" asserts the words exactly with NHS.prepayment.months3 in pounds"
  },
  "src/engine/systems/health.ts#registerHealth <health.treat>": {
   "status": "Rewritten And Verified",
