@@ -66,3 +66,60 @@ next batch's Pending chapters. `vitest run` on `help-mechanics` (12 tests), then
 **Screens verified (built app, 1440 wide):** the guide's Opened page after each of the seventeen chapters and the last
 chapter's line; the help's contents with every group's lead (`follow-1440/help-contents.txt`, screenshot
 `02-help-contents.png`); the empty search's hint and the no-match line (`follow-1440/log.txt`, chapter welcome).
+
+## Batch 2: The Guide's First Ten Chapters, Your Day
+
+**Sources (11):** `src/engine/content/tutorial.ts`, `hoursOf` and the chapters Your Life, Hour By Hour; What’s
+Coming; The Clock; Moving Time On; What Needs You; How You Are; Sleep; Looking After Yourself; Your Own Plans; and
+Weather (`CHAPTERS [welcome]` to `[weather]`), about 2,300 words.
+
+**Rewritten (10):** every chapter. The pattern, chapter by chapter: the first sentence is the first action and its
+control (“Press Play, in the top bar, to start the clock”; “To jump ahead instead of waiting, press Advance”; “Press
+Open Calendar … to see the whole month”); the engine as a subject went (“the world tells you things”, “a word stays
+plain text until the chapter that opens it has been read”); each closing line says which chapter to read next and
+why, as an instruction (“Read “Sleep” next, about how your energy comes back.”); and fragments became sentences (“the
+top bar says until when”, “its climate, its season and that day’s luck”). Two leads changed: Sleep's “The night, and
+what it gives back.” and Weather's “The sky over your town, …”. How You Are's age ceiling and traits moved behind The
+Details: they're the figures, not the task.
+
+**Kept (1):** `hoursOf`, which says “half an hour” for the Sleep dialog's shortest sleep and a plural count otherwise.
+
+**Meaning-sensitive, and how each was checked:**
+- **What’s Coming, Skip It.** The brief's example said school events have no Skip option. The code (`calendar.skip`
+  takes only `PLAN_KIND`; `DueNow` shows Skip It only for `mine`) shows a doctor's appointment, therapy and an office
+  visit have none either, so the chapter says only a plan of your own has Skip It, and you can't skip a class “or any
+  other commitment”. Played: the clock stopped at Registration And Your Account with Go and Stand Here and no Skip It.
+- **What’s Coming, what a commitment is.** It now names an appointment among them: `appointments.ts` schedules one
+  with `requiresPlayer`, so the clock stops at it.
+- **How You Are, condition.** The old sentence said condition came “after illness, injury and rest”. An injury moves
+  stress and morale, not condition (`mayHurt`), so the sentence was wrong (`defects.md`, 2). It now names what wears
+  condition down (illness, going hungry, heavy stress, short nights: `life.ts`, `health.ts`) and what mends it (a night
+  of real rest, `applySleep`), as the glossary's row does. `tests/guide-chapter-facts.test.ts` measures an injury and
+  fails a condition sentence that names injury while it changes nothing.
+- **Moving Time On, the times.** “(ten)”, “(seven)” are “(10 p.m.)”, “(7 a.m.)”: the menu's own 10:00 PM and 7:00 AM.
+- **What Needs You, Mark Read.** “Clears them from the panel”: the panel draws only unread notices, and Mark N Read
+  marks them all (`Home.tsx`). Played: Mark 3 Read left All Clear.
+- **Sleep, while at a commitment.** “The top bar says when you’ll be free”: `topbar-why` says “You’re at … until
+  1:00 PM.” Played, at Meeting Your Class.
+
+**Interactions read whole:** a new life's first screen, the guide opening by itself, a locked panel and its Read About
+It, the links on Home's greeting line and in Where You Are; the Calendar panel, an entry's look, the stop's dialog and
+its three buttons, On The Way, Choose An Event's Skip To Event; What Needs You and Mark Read; How You Are, Readiness and
+its measures; the Sleep dialog and the grayed Sleep with its reason in the bar; the Look After Yourself menu and its
+toast; the Calendar screen, a day, the plan form, Put It On, the plan's dialog and Call It Off; the Weather panel and its
+look. Each against the chapter's words and the How This Works entry the frame area owns for it.
+
+**Tests updated:** none held these chapters' old words. **New:** `tests/guide-chapter-facts.test.ts` (two tests).
+**Tool matchers:** none named them (`grep -rnF` over `tools/` for each changed sentence's opening words).
+
+**Checks:** `tsc` 0, `eslint` 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 1 then 0 (a new
+sentence opened on “Nothing”, the tic's budget being 0 over; it now says “before you press it”), spelling 1 then 0
+(“behaviour” in the new test's comment), typos 0, doc-refs 0, deciders 0, guide-quotes 0, text-inventory 0 for these
+sources once marked. `vitest run` on `help-mechanics`, `guide-chapter-facts`, `defects-g1-1`, `tutorial`,
+`guide-examples-start-day-body`, `evidence-g34-ui`, `evidence-g33-ui`, `evidence-g32-ui`, `language-data-dates` and
+`guide`: 10 files, 167 tests, exit 0.
+
+**Screens verified (built app, 1440 wide, `follow-1440/`):** each chapter read word for word in the guide dialog, its
+details opened (`chapter-01-welcome.txt` to `chapter-10-weather.txt`), then followed: 208 checks, 0 failed, no page
+errors (`log.txt`, `results.json`). Screens kept: `03-on-the-way.png`, `04-a-commitment-stops-the-clock.png`,
+`05-sleep-dialog.png`, `06-sleep-grayed-at-a-commitment.png`, `07-look-after-menu.png`, `08-plan-call-it-off.png`.

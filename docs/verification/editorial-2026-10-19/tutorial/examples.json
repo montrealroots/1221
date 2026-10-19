@@ -118,5 +118,135 @@
   "why": "Residence Abroad is the group's last entry and the lead didn't name it.",
   "meaningSensitive": false,
   "verified": "follow-1440/help-contents.txt."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [welcome]",
+  "kind": "tutorial",
+  "before": "A word stays plain text until the chapter that opens it has been read. A panel that isn’t open yet says Locked and names its chapter, and its Read About It button takes you there.",
+  "after": "Some words only become links once you’ve read the guide chapter that covers them. A panel you can’t use yet says Locked and names the chapter to read. Press its Read About It button to go straight there.",
+  "why": "The working reference's example 1: a passive sentence about the game's state became what the player sees and presses.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-01-welcome.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the Calendar panel says Locked and “What’s Coming”, and Read About It opened that chapter"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [welcome]",
+  "kind": "tutorial",
+  "before": "SLATE is one life, lived hour by hour in a real town. What you see is that town on that day: its local time, its season and weather, its prices, its money and its law.",
+  "after": "In SLATE you live one life, hour by hour, in a real town with its own time, seasons, weather, prices, money and laws. This guide shows you how, one part at a time, and each chapter you read opens the part of the game it explains.",
+  "why": "The first thing a new player reads now says who does what (you live it) and how the guide itself works, which the old paragraph left to later.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-01-welcome.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [calendar]",
+  "kind": "tutorial",
+  "before": "The school’s commitments aren’t yours to skip: go, or stand where you are while the clock waits. Whatever moves the clock next runs the commitment, and you’re there only if you’re awake, out of hospital and in its town; otherwise it’s missed.",
+  "after": "Only a plan of your own has a Skip It button, which lets you walk away from it. You can’t skip a class or any other commitment, so press Go, or Stand Here to wait. It happens the next time the clock moves: you’re there if you’re awake, out of hospital and in its town, and if not, you miss it.",
+  "why": "The brief's own example (“School events don’t have a Skip option.”), with the dialog's real button names. Checked against the code first: it isn't only school events. A doctor's appointment, therapy and an office visit have no Skip It either (`calendar.skip` takes only `PLAN_KIND`), so the sentence says a plan of your own is the only one that has it.",
+  "meaningSensitive": true,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-02-calendar.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the clock stopped at Registration And Your Account with Go and Stand Here and no Skip It (screenshot 04)"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [clock]",
+  "kind": "tutorial",
+  "before": "The clock in the top bar runs at the speed of real time: a minute in SLATE is a minute for you. A new life starts with it paused.",
+  "after": "Press Play, in the top bar, to start the clock, and Pause to stop it. The button always shows what pressing it will do. A new life starts with the clock paused.",
+  "why": "The chapter opened on a description; it now opens on the first action and the control's name.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-03-clock.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: Play turned to Pause, a minute later the clock read 7:31 AM, Pause turned back to Play"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [advance]",
+  "kind": "tutorial",
+  "before": "When you don’t want to wait, Advance, in the top bar, moves the clock ahead. Pick how far: One Hour, This Evening (six o’clock), Tonight (ten), Tomorrow Morning (seven), Next Event, Next Monday (nine in the morning) or One Week.",
+  "after": "To jump ahead instead of waiting, press Advance in the top bar and choose how far: One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.) or One Week.",
+  "why": "Imperative and the control first. “(ten)” and “(seven)” left the player to guess morning or night; the menu shows 6:00 PM, 10:00 PM, 7:00 AM and 9:00 AM.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-04-advance.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the menu showed each line with those times"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [advance]",
+  "kind": "tutorial",
+  "before": "Everything on the way happens, in order. If the jump passes commitments, Advance says how many first, and the clock still stops at each one and asks, as it would on its own.",
+  "after": "Everything on the way happens, in order. If the jump would pass any commitments, a dialog called On The Way first says how many, and the clock still stops at each one to ask what you want to do.",
+  "why": "Names the dialog the player will see, by its title.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-04-advance.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: Tonight showed On The Way, “passes one commitment”, then stopped at it (screenshot 03)"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [needs]",
+  "kind": "tutorial",
+  "before": "What Needs You, on Home, is where the world tells you things: groceries you couldn’t pay for, a late card payment, a teacher’s note on your work, a birthday.",
+  "after": "What Needs You, on Home, is where you find out what’s happened and what’s waiting for you: groceries you couldn’t pay for, a late card payment, a teacher’s note on your work, a birthday.",
+  "why": "“The world tells you things” personified the engine; the player finds out.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-05-needs.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the welcome notice opened, Go There was there, Mark 3 Read cleared the panel to All Clear"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [body]",
+  "kind": "tutorial",
+  "before": "Condition is how fit your body is for work today, after illness, injury and rest.",
+  "after": "Condition is how sound your body is. Illness, going hungry, heavy stress and short nights wear it down, and a night of real rest mends it.",
+  "why": "The old sentence was wrong: an injury raises stress and lowers morale but leaves condition alone (defects.md, 2). The new one names what does wear it down, as the glossary does.",
+  "meaningSensitive": true,
+  "verified": "tests/guide-chapter-facts.test.ts measures an injury (condition unchanged) and fails the old sentence; life.ts (hunger, stress over 75, nights under five hours of real rest) and health.ts (illness) read; follow-1440/log.txt, chapter body"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [sleep]",
+  "kind": "tutorial",
+  "before": "The night, and what it gives back.",
+  "after": "Going to sleep, and getting your energy back.",
+  "why": "A literary lead for a basic control. It shows under the chapter's title and on the strip under the bar.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-07-sleep.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [sleep]",
+  "kind": "tutorial",
+  "before": "In the middle of a commitment, Sleep is grayed out, and the top bar says until when.",
+  "after": "While you’re at a commitment, Sleep is grayed out, and the top bar says when you’ll be free.",
+  "why": "“Says until when” was a fragment of a thought.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-07-sleep.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: at Meeting Your Class, Sleep was grayed and the bar said “You’re at Meeting Your Class until 1:00 PM.” (screenshot 06)"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [looking-after]",
+  "kind": "tutorial",
+  "before": "The menu is in order of what each is worth now. First comes whatever is costing you every hour you leave it (hunger, going unwashed, stress past its limit), then whatever gives back the most readiness. The top line says why it’s there: Needed Now or Most Worth It.",
+  "after": "What matters most right now is at the top. Anything that costs you more every hour you leave it comes first (hunger, going unwashed, stress past its limit), then whatever would do most for your readiness. The top line is marked Needed Now or Most Worth It.",
+  "why": "Plainer: what's at the top, then why. The chip is a mark on the line, not a reason it gives.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-08-looking-after.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the menu opened with Eat A Meal marked Most Worth It (screenshot 07); `lookAfterOptions` sorts urgent, then readiness gain"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [plans]",
+  "kind": "tutorial",
+  "before": "Open Calendar, on Home’s Calendar panel, shows the whole month. Press a day, then Put Something On It, and say what it is, when it starts and how long it takes, from half an hour to all day. Put It On adds it.",
+  "after": "Press Open Calendar, on Home’s Calendar panel, to see the whole month. Press a day, then Put Something On It. Say what it is, when it starts and how long it lasts, from half an hour to all day, then press Put It On.",
+  "why": "The steps in the order the player presses them, each with its button.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-09-plans.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: a plan, Lunch With Sam, put on a day and called off (screenshot 08)"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [weather]",
+  "kind": "tutorial",
+  "before": "The weather is your town’s own: its climate, its season and that day’s luck. It’s the same every time you look.",
+  "after": "The weather comes from your town’s climate and the season, with some day-to-day luck, and it stays the same however often you look.",
+  "why": "A list after a colon became a sentence with a verb.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-10-weather.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph"
  }
 ]

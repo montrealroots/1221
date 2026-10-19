@@ -69,6 +69,83 @@
   "reason": "Two searches written the way a player would type them, lower case and plain, each of which tests/guide.test.ts holds to finding an entry.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/content/tutorial.ts#CHAPTERS [advance]": {
+  "status": "Rewritten",
+  "hash": "25c9bf4190ed",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter advance, and follow-1440/chapter-04-advance.txt; the Advance menu, Choose An Event, One Hour, On The Way and the stop it led to",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [body]": {
+  "status": "Rewritten",
+  "hash": "d5bce17ee4bc",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter body, and follow-1440/chapter-06-body.txt; Readiness and one of its measures opened; tests/guide-chapter-facts.test.ts holds the condition sentence to what an injury does",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [calendar]": {
+  "status": "Rewritten",
+  "hash": "5ce6124e284c",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter calendar, and follow-1440/chapter-02-calendar.txt; an entry opened, and the stop at Registration And Your Account with Go and Stand Here and no Skip It",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
+  "status": "Rewritten",
+  "hash": "2d62b9ae285a",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter clock, and follow-1440/chapter-03-clock.txt; Play, a minute of real time, Pause",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [looking-after]": {
+  "status": "Rewritten",
+  "hash": "7ba68c694ad7",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter looking-after, and follow-1440/chapter-08-looking-after.txt; the menu and its mark, and Eat A Meal done",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [needs]": {
+  "status": "Rewritten",
+  "hash": "2aae82967b5c",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter needs, and follow-1440/chapter-05-needs.txt; a notice opened, Go There, Mark 3 Read and All Clear",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [plans]": {
+  "status": "Rewritten",
+  "hash": "fe75051483f8",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter plans, and follow-1440/chapter-09-plans.txt; Open Calendar, a day, Put Something On It, Put It On and Call It Off",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [sleep]": {
+  "status": "Rewritten",
+  "hash": "f9ceca1c134d",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter sleep, and follow-1440/chapter-07-sleep.txt; the dialog, Not Yet, Sleep grayed at a commitment with the bar saying until when, and Sleep 8 Hours",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [weather]": {
+  "status": "Rewritten",
+  "hash": "e33125302ecf",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter weather, and follow-1440/chapter-10-weather.txt; today’s weather opened",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [welcome]": {
+  "status": "Rewritten",
+  "hash": "8f159c2bf318",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter welcome, and follow-1440/chapter-01-welcome.txt; its links, a locked panel, Read About It, How This Works, ?, /, Save & Exit and Continue each pressed",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#hoursOf": {
+  "status": "Retained",
+  "hash": "bbce7c890355",
+  "on": "2026-10-19",
+  "reason": "The Sleep chapter's shortest sleep said the way a person says it, half an hour, and any other count through plural (eight hours, one hour).",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/world/tutorial.ts#lockedBecause": {
   "status": "Retained",
   "hash": "dd55aa2473a4",

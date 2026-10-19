@@ -61,7 +61,7 @@
    "chapter": "welcome",
    "what": "the line under the greeting shows the time, the town, its time zone, the season and the weather",
    "ok": true,
-   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ⛅ 75°F Partly Cloudy"
+   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ☁️ 75°F Overcast"
   },
   {
    "chapter": "welcome",
@@ -859,7 +859,7 @@
    "chapter": "weather",
    "what": "the Weather panel shows the weather now and the next few days",
    "ok": true,
-   "seen": "Weather How This Works ⛅63°F Partly Cloudy · High 77°F · Low 59°F Humidity 57% · Wind 7 mph · Continental Thu ⛅ Cloudy 81° / 63° Fri ⛅ Cloudy 86° / 68° Sat ⛅ Cloudy 75° / 57° Sun 🌧️ Rain 70° / 59° Mo"
+   "seen": "Weather How This Works ☁️74°F Overcast · High 88°F · Low 70°F Humidity 58% · Wind 14 mph · Continental Thu ⛈️ Storm 87° / 69° Fri 🌧️ Rain 70° / 59° Sat 🌧️ Rain 75° / 64° Sun ⛈️ Storm 74° / 56° Mon ⛅"
   },
   {
    "chapter": "weather",
@@ -871,7 +871,7 @@
    "chapter": "weather",
    "what": "pressing it shows more: the week, each day and each hour",
    "ok": true,
-   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 63°F and partly cloudy where you are, with a high of 77°F and a low of 59°F today. The wind is 7 mph and the humidity is 57%. Today is 5° colder than normal"
+   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 74°F and overcast where you are, with a high of 88°F and a low of 70°F today. The wind is 14 mph and the humidity is 58%. Today is 6° warmer than normal for"
   },
   {
    "chapter": "school",

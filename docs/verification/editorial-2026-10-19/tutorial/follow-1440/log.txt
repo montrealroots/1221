@@ -8,7 +8,7 @@
 [welcome] ok   I’ve Read It is offered
 [welcome] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own
 [welcome] ok   and offers Try It or the next chapter, in its words — he date, the town, its region and country, its money, the season and the daylight, when you press them It’s open now. Press Try It to go and use it, or go straight on to “What’s Coming”. Next time you open the guide, it starts there. Try It Next: What’s Coming
-[welcome] ok   the line under the greeting shows the time, the town, its time zone, the season and the weather — Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ⛅ 75°F Partly Cloudy
+[welcome] ok   the line under the greeting shows the time, the town, its time zone, the season and the weather — Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ☁️ 75°F Overcast
 [welcome] ok   Where You Are is on Home
 [welcome] ok   pressing the town’s name opens it just below — New Haven: WHERE YOU LIVE New Haven Close This is where you live. It’s 7:30 AM, and 130K people live here. 130K people live here, in Connecticut, and the climate is contin
 [welcome] ok   with links inside for its region, its country and its money — Close | Connecticut | United States | Dollar | Daylight
@@ -149,9 +149,9 @@
 [weather] ok   I’ve Read It is offered
 [weather] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
 [weather] ok   and offers Try It or the next chapter, in its words — A Whole Life Later OPENED Weather Weather The sky, the week, each day and each hour, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Drama School”. Next time you open the guide, it starts there. Try It Next: Drama School
-[weather] ok   the Weather panel shows the weather now and the next few days — Weather How This Works ⛅63°F Partly Cloudy · High 77°F · Low 59°F Humidity 57% · Wind 7 mph · Continental Thu ⛅ Cloudy 81° / 63° Fri ⛅ Cloudy 86° / 68° Sat ⛅ Cloudy 75° / 57° Sun 🌧️ Rain 70° / 59° Mo
+[weather] ok   the Weather panel shows the weather now and the next few days — Weather How This Works ☁️74°F Overcast · High 88°F · Low 70°F Humidity 58% · Wind 14 mph · Continental Thu ⛈️ Storm 87° / 69° Fri 🌧️ Rain 70° / 59° Sat 🌧️ Rain 75° / 64° Sun ⛈️ Storm 74° / 56° Mon ⛅
 [weather] ok   today’s weather and the days are links — 20 links
-[weather] ok   pressing it shows more: the week, each day and each hour — Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 63°F and partly cloudy where you are, with a high of 77°F and a low of 59°F today. The wind is 7 mph and the humidity is 57%. Today is 5° colder than normal
+[weather] ok   pressing it shows more: the week, each day and each hour — Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 74°F and overcast where you are, with a high of 88°F and a low of 70°F today. The wind is 14 mph and the humidity is 58%. Today is 6° warmer than normal for
 [school] ok   Guide, in the top bar, opens at “Drama School” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
 [school] ok   Chapter 11 Of 17 shows “Drama School” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
 [school] ok   its lead is on the page — Where your life as an actor begins.
