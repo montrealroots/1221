@@ -149,7 +149,10 @@ function walkJson(dir) {
 function isWords(t) {
   const s = t.trim();
   if (s.length < 2 || !/[A-Za-z]/.test(s)) return false;
-  if (/^(https?:|mailto:|\/|\.\/|\.\.\/|#|var\(|rgba?\(|calc\()/.test(s)) return false;
+  // A web address alone isn't words, but one followed by words is a citation a screen shows: until 2026-10-19 (brief 15's
+  // coordinator) any string that began with an address was set aside, and with it every genre's "Source for its
+  // definition" line and 22 other citations.
+  if (/^(https?:\S*$|mailto:|\/|\.\/|\.\.\/|#|var\(|rgba?\(|calc\()/.test(s)) return false;
   if (/^[a-z0-9_.:/\-#@$%*+=,]+$/.test(s)) return false; // ids, kinds, keys, class lists without spaces
   if (/^[a-z][\w-]*( [a-z][\w-]*)+$/.test(s) && /-/.test(s) && !/[.?!’']/.test(s)) return false; // class lists
   if (/^[\w-]+:\s*[^ ]+;/.test(s) || /^[A-Z0-9_]+$/.test(s)) return false; // css, CONSTANT_IDS, ISO codes

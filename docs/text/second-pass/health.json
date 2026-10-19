@@ -57,10 +57,10 @@
  },
  "src/engine/content/clinics.ts#SELF_PAY": {
   "status": "Retained",
-  "hash": "df4a94c08de5",
+  "hash": "db5e8217e06a",
   "on": "2026-10-19",
-  "reason": "The self-pay price lines as each provider labels them, the Bupa private GP and the Farmacias Similares consulta among them, in their own words.",
-  "first": "Reviewed And Retained"
+  "reason": "The self-pay price lines as each provider labels them, the Bupa private GP and the Farmacias Similares consulta among them, in their own words. Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the two pages CityMD's self-pay prices come from, each address as published",
+  "first": "Pending"
  },
  "src/engine/content/geography.ts#CALIBRATED_CITIES [ae-du-dubai]": {
   "status": "Retained",
@@ -545,6 +545,13 @@
   "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section's connections",
   "first": "Pending"
  },
+ "src/engine/content/injury.ts#INJURY": {
+  "status": "Retained",
+  "hash": "ceb5fd6e33a8",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the injury rates' sources, the Bureau of Labor Statistics' tables for performing arts and private industry by address and year, and the studies by author and year, each a citation a reader can look up",
+  "first": "Pending"
+ },
  "src/engine/content/injury.ts#INJURY_KIND": {
   "status": "Retained",
   "hash": "591f72560c1b",
@@ -558,6 +565,20 @@
   "on": "2026-10-19",
   "reason": "Each age band's line follows the fitness figure and says, in plain everyday words, what age does to training and to a night's rest at that age, true to the band's own rates.",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/content/plans.ts#INTEREST_PLANS": {
+  "status": "Retained",
+  "hash": "a57fc9890f94",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): CaixaBank's and BBVA's card-instalment pages, each with the rates it gives (TIN 20.40%; 0%, 4.30%, 5.20% or 6% over 3 to 6 months), the bank's own terms said in English",
+  "first": "Pending"
+ },
+ "src/engine/content/revolving.ts#REVOLVING_COURSE": {
+  "status": "Rewritten",
+  "hash": "6a72893328bb",
+  "on": "2026-10-19",
+  "evidence": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the Japanese and Korean revolving-credit courses' pages with each one's minimum. Two said SLATE's estimate, the engine-speak the glossary sets aside: now the game's estimate, said once in each, read in the inventory's print after the change (node tools/text-inventory.mjs)",
+  "first": "Pending"
  },
  "src/engine/content/world-data.ts#CITY_COUNTS": {
   "status": "Retained",

@@ -678,6 +678,13 @@
   "reason": "Says exactly why a balance can't move: no card to move from, same bank, no terms found, nothing owed, or the new limit too small with the fee, and to pay the old card down",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/cash.ts#OWNER_SURCHARGE": {
+  "status": "Retained",
+  "hash": "cdc464b89f1d",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): Bankrate's 2025 checking survey and the Reserve Bank of Australia's 2017 bulletin, each with the average it gives and its year",
+  "first": "Pending"
+ },
  "src/engine/systems/cash.ts#registerCash <cash.deposit>": {
   "status": "Rewritten",
   "hash": "6a205ee6cd39",
@@ -902,6 +909,13 @@
   "reason": "The statement line for a payment returned unpaid, Returned payment fee against Bank Fees, the bank's own name for it",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/lending.ts#CHEX": {
+  "status": "Retained",
+  "hash": "0052ddeb5f6c",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): ChexSystems' consumer disclosure, the CFPB's page on account screening and Bank On's standards, the citation behind the second-chance account and the ChexSystems report on the bank screen",
+  "first": "Pending"
+ },
  "src/engine/systems/lending.ts#closeForOverdraft": {
   "status": "Rewritten",
   "hash": "4f0e8ba3f9c3",
@@ -936,6 +950,20 @@
   "on": "2026-10-19",
   "reason": "Each switch outcome says what opened, where wages, standing orders and autopay went, what stays in the old account and the one step to clear it; decision 4's words",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#FRANCE": {
+  "status": "Retained",
+  "hash": "61730b6b4a29",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): Légifrance with the articles of the Code de la consommation and the Code monétaire et financier, the citation behind the bank screen's paragraph on French overdraft law",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#FRENCH_CARDS_SOURCE": {
+  "status": "Retained",
+  "hash": "5733d9750d30",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the five French banks' card pages and LCL's 2026 card terms, each card by its name",
+  "first": "Pending"
  },
  "src/engine/systems/lending.ts#frenchOverrun": {
   "status": "Rewritten",

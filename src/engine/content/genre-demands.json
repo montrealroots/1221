@@ -334,7 +334,7 @@
  "creature_feature": {
   "claim": "Creature films with practical creatures have used a recognized specialty, the creature or prosthetic performer, who acts head to toe in suits and prosthetics with restricted sight and hearing. That demand belongs to the creature role, not to the human cast.",
   "source": "James Ostime, Doug Jones, Unmasked (Interview Magazine, 2013), https://www.interviewmagazine.com/culture/doug-jones-falling-skies [read directly]; Witney Seibold, The Shape Of Water And Pan's Labyrinth Were Very Different Prosthetics Experiences For Doug Jones (SlashFilm, 2022), https://www.slashfilm.com/1021091/the-shape-of-water-and-pans-labyrinth-were-very-different-prosthetics-experiences-for-doug-jones/ [read directly]; NPR, Creature Actor Doug Jones Shares How He Transforms Into Movie Monsters (NPR, 2018), https://www.npr.org/2018/02/22/588069904/creature-actor-doug-jones-shares-how-he-transforms-into-movie-monsters [from a search summary]",
-  "sourceSupports": "Doug Jones, Unmasked: Jones: 'I’m one of the top \"makeup actors\" in the movie business, appearing head to toe in prosthetic pieces and elaborate costumes.' The Shape Of Water And Pan’s Labyrinth Were Very Different Prosthetics Experiences For Doug Jones: Jones: 'Any creature suit that I’ve worn over the last 31 years hampers your eyesight, your hearing'; Pan’s Labyrinth makeup took five to six hours, The Shape of Water three. Creature Actor Doug Jones Shares How He Transforms Into Movie Monsters: Only its title was read, as the page timed out. It names 'creature actor' as a role, and transformation into monsters.",
+  "sourceSupports": "Doug Jones, Unmasked: Jones: 'I’m one of the top \"makeup actors\" in the movie business, appearing head to toe in prosthetic pieces and elaborate costumes.' The Shape Of Water And Pan’s Labyrinth Were Very Different Prosthetics Experiences For Doug Jones: Jones: 'Any creature suit that I’ve worn over the last 31 years hampers your eyesight, your hearing'; Pan’s Labyrinth makeup took five to six hours, The Shape of Water three. Creature Actor Doug Jones Shares How He Transforms Into Movie Monsters: Only its title was read, as the page didn’t load. It names 'creature actor' as a role, and transformation into monsters.",
   "how": "two of its three sources read directly and the remaining one from a search summary, reviewed October 10, 2026",
   "confidence": "low",
   "tags": [
@@ -939,7 +939,7 @@
  "parody": {
   "claim": "Screen parody of the Airplane! school asks actors to deliver absurd material with complete dramatic seriousness, deadpan, oblivious to the gags around them.",
   "source": "'R.I.P. Leslie Nielsen', The A.V. Club, https://www.avclub.com/r-i-p-leslie-nielsen-1798223005",
-  "sourceSupports": "Nielsen could invest \"the most ridiculous lines of dialogue with a delivery that was serious as a heart attack\"; the Zucker-Abrahams-Zucker team cast him as \"an archetypal straight man oblivious to the constant stream of gags going on around him.\" A search summary of Nielsen’s 1993 Fresh Air interview (NPR; the page timed out): approaching the material \"with the same seriousness and the same gravity\" as their police shows \"would be very funny.\"",
+  "sourceSupports": "Nielsen could invest \"the most ridiculous lines of dialogue with a delivery that was serious as a heart attack\"; the Zucker-Abrahams-Zucker team cast him as \"an archetypal straight man oblivious to the constant stream of gags going on around him.\" A search summary of Nielsen’s 1993 Fresh Air interview (NPR; the page didn’t load): approaching the material \"with the same seriousness and the same gravity\" as their police shows \"would be very funny.\"",
   "how": "read directly",
   "confidence": "medium",
   "tags": [
@@ -1241,7 +1241,7 @@
     "why": "The sources show sustained athletic physical action trained for the role, which the vocabulary’s 'sustained physical action' covers."
    }
   ],
-  "uncertainty": "The NPR page timed out; only its headline and a search summary were read. Fights And Stunts is trained as Stage Combat, which fits combat sports (boxing films) better than rowing or baseball, so the fit is partial. On review (October 10, 2026), a fit with combat sports alone wasn’t enough to make it a requirement of the whole genre.",
+  "uncertainty": "The NPR page didn’t load; only its headline and a search summary were read. Fights And Stunts is trained as Stage Combat, which fits combat sports (boxing films) better than rowing or baseball, so the fit is partial. On review (October 10, 2026), a fit with combat sports alone wasn’t enough to make it a requirement of the whole genre.",
   "belongsTo": "combat-sport films such as boxing films"
  },
  "spy": {

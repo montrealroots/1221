@@ -1681,10 +1681,10 @@
  },
  "src/engine/content/school.ts#LABS": {
   "status": "Retained",
-  "hash": "899d31fb76d7",
+  "hash": "b57a74d56e06",
   "on": "2026-10-19",
-  "reason": "The labs by the names the Bulletin gives them, Drama 50, The New Play Lab and You Are The Creator.",
-  "first": "Reviewed And Retained"
+  "reason": "The labs by the names the Bulletin gives them, Drama 50, The New Play Lab and You Are The Creator. Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the Bulletin's 2026 to 2027 course numbers for the labs and the acting plan of study, as the Bulletin names them",
+  "first": "Pending"
  },
  "src/engine/content/school.ts#LEAVE_RULES": {
   "status": "Retained",
@@ -1700,11 +1700,25 @@
   "reason": "The source line for a leave the dean imposes, the Bulletin's page, as a citation reads.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/content/school.ts#REQUIRED_PPE": {
+  "status": "Retained",
+  "hash": "3c83f73353c2",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): Yale's cost of attendance page for 2026 to 2027 and the Bulletin's work-study section, the citation behind the School screen's line on the protective equipment",
+  "first": "Pending"
+ },
  "src/engine/content/school.ts#SCHOOL_POLICIES": {
   "status": "Rewritten",
   "hash": "446f10ab8d6e",
   "on": "2026-10-19",
   "evidence": "The Standing And Craft tab's Policies panel (SchoolWorkspace PoliciesPanel), read in tests/evidence-g19-school.test.ts and tests/language-dynamic.test.ts; its Incomplete line names the tab by its label",
+  "first": "Pending"
+ },
+ "src/engine/content/school.ts#SCHOOL_SEASON": {
+  "status": "Retained",
+  "hash": "4612830939a6",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the Bulletin's acting, production and casting sections, the school's productions page and LORT Rule 39(E), the citation behind the School screen's casting paragraph",
   "first": "Pending"
  },
  "src/engine/content/school.ts#SEAGULL_2027": {
@@ -1868,12 +1882,33 @@
   "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/school.ts#SUMMER_CABARET": {
+  "status": "Retained",
+  "hash": "f6c4d6abe681",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the Summer Cabaret's 2026 season and the School of Drama's Bulletin, the citation behind the School screen's Summer Cabaret paragraph",
+  "first": "Pending"
+ },
+ "src/engine/content/school.ts#WORK_LIMITS": {
+  "status": "Rewritten",
+  "hash": "6becabefa79c",
+  "on": "2026-10-19",
+  "evidence": "Newly read by the inventory from brief 15's coordinator on: Yale's student employment page and the Bulletin's pages, the source the study plan's work-study fine print shows (StudyPlanPanels). It ended with the research's file name, research-yale-leave.json, which a player read as the engine; now the Bulletin's page numbers in words, read in node tools/text-inventory.mjs after the change; tests/work-limits.test.ts passes on it",
+  "first": "Pending"
+ },
  "src/engine/content/school.ts#WORK_STUDY": {
   "status": "Retained",
   "hash": "da4cfd90f16f",
   "on": "2026-10-19",
   "reason": "The source line for work-study's hours and pay, naming the Bulletin's General Policies and the School's financial aid page.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#YALE_COST_GROWTH": {
+  "status": "Retained",
+  "hash": "b352348b1587",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the School of Drama Bulletins from 2022 to 2027 the cost growth is measured over, as a range of the files' addresses",
+  "first": "Pending"
  },
  "src/engine/content/school.ts#YALE_DRAMA": {
   "status": "Retained",
@@ -3253,6 +3288,13 @@
   "on": "2026-10-19",
   "reason": "Each refusal for converting work-study hours says which hours count and when, January's processing or May's, so a player knows whether to ask again later.",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#DEGREE_DATES": {
+  "status": "Rewritten",
+  "hash": "2131247b4b6f",
+  "on": "2026-10-19",
+  "evidence": "Newly read by the inventory from brief 15's coordinator on: the registrar's degree conferral page and Yale's 2026 to 2027 academic calendar. It ended with the research's file name, research-yale-leave-2.json, now gone, and the year's span takes the house's dash; read in node tools/text-inventory.mjs after the change; tests/work-limits.test.ts passes on it",
+  "first": "Pending"
  },
  "src/engine/systems/school.ts#directorsNote": {
   "status": "Retained",

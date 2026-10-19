@@ -1063,12 +1063,19 @@
   "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/safetynet.ts#CONNECTICUT_UI": {
+  "status": "Retained",
+  "hash": "cd62a2d27093",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): Connecticut's unemployment law by its sections and the Department of Labor's 2026 tax-rate page, the citation Papers' unemployment panel gives as its source",
+  "first": "Pending"
+ },
  "src/engine/content/safetynet.ts#DENTAL_PLANS": {
   "status": "Retained",
-  "hash": "96346facab4b",
+  "hash": "f44ee13fd090",
   "on": "2026-10-19",
-  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
-  "first": "Reviewed And Retained"
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines. Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): Covered California's, New York State of Health's and Yale Health's pages, each with the plan year it gives, the citation the dental panel gives",
+  "first": "Pending"
  },
  "src/engine/content/safetynet.ts#ENHANCED_CREDIT": {
   "status": "Retained",
@@ -1076,6 +1083,20 @@
   "on": "2026-10-19",
   "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#MEDICAL_CPI": {
+  "status": "Retained",
+  "hash": "28c1cb7620be",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the Bureau of Labor Statistics' data address and the medical price series by their codes, a citation a reader can look up as written",
+  "first": "Pending"
+ },
+ "src/engine/content/safetynet.ts#NHS": {
+  "status": "Retained",
+  "hash": "4ab61f862cc6",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the NHS Business Services Authority (HC12, April 2026) and the government's migrant health guide, each by its address",
+  "first": "Pending"
  },
  "src/engine/content/safetynet.ts#PLANS": {
   "status": "Retained",
@@ -1779,9 +1800,9 @@
  },
  "src/engine/content/visas.ts#US_B1B2": {
   "status": "Rewritten",
-  "hash": "a61e85fe9520",
+  "hash": "8619f931abcb",
   "on": "2026-10-19",
-  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis. Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): its source, the State Department's fees and waitvisa.com for the wait, which Your Passport's visa fine print shows after its basis (Documents.tsx)",
   "first": "Pending"
  },
  "src/engine/content/visas.ts#VISAS": {
@@ -2112,6 +2133,13 @@
   "on": "2026-10-19",
   "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/homepensions.ts#IRISH_NCP": {
+  "status": "Retained",
+  "hash": "650b6d4f9cf2",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the Irish government's non-contributory State Pension page, read through Citizens Information and search excerpts on its date",
+  "first": "Pending"
  },
  "src/engine/systems/homepensions.ts#irishMeans": {
   "status": "Retained",

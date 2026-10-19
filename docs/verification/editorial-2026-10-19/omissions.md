@@ -50,6 +50,22 @@ weren't in the inventory:
 The inventory also leaves out two directories, `geography` and `world-data`, that no longer exist under `src/`, so
 nothing hides there.
 
+### One More, Found At The Cross-Area Review
+
+A citation that starts with a web address wasn't in the inventory: `isWords` set aside any string that began with
+`http`, so it missed what follows the address too. That's every genre's "Source for its definition" line on the genre
+look, "https://www.britannica.com/art/film-noir (Encyclopaedia Britannica; direct fetch blocked)", and 22 other
+citations (`school.ts`'s work limits, `lending.ts`'s ChexSystems and French law, `safetynet.ts`'s unemployment and
+dental plans, and others). The walk's check missed it too: the screen's line is "Source for its definition: " plus a
+value, so it counted as assembled, though the value wasn't one the inventory held.
+
+From brief 15's coordinator on, a bare address is set aside and an address followed by words is read. That brought 21
+sources in and gave 139 more new words. Every one was read and marked:
+- **The genre lines:** 30 of the 149 said how the research reached a page ("direct fetch returned 403", "also listed",
+  "referenced in search results"). They're plain citations now. Brief 15 left the definitions themselves as they were.
+- **Two citations** named the research's own files (`research-yale-leave.json`, one of them on the study plan's
+  work-study fine print). Two others said "SLATE's estimate". Both kinds are gone.
+
 ## What This Can't Show
 
 A walk reads the screens it reaches:

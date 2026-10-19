@@ -519,4 +519,4 @@ export const EXTENDED_STUDY = {
  * illness or injury converted to grant-in-aid for a student on aid, up to 150, processed in January and May (p.189).
  * Not found: how Yale bounds the week; SLATE's is Monday to Sunday, New Haven time.
  */
-export const WORK_LIMITS = { weekHours: 19, recessWeekHours: 40, convertibleHours: 150, convertMonths: [1, 5], source: 'https://your.yale.edu (student employment hours); Yale Bulletin 2026–2027 pp.147, 189; research-yale-leave.json' } as const;
+export const WORK_LIMITS = { weekHours: 19, recessWeekHours: 40, convertibleHours: 150, convertMonths: [1, 5], source: 'https://your.yale.edu (student employment hours); Yale Bulletin 2026–2027, pages 147 and 189' } as const;

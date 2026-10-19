@@ -5,76 +5,73 @@ as it came in, with what was done about it and when. Nothing here is applied unt
 
 ## Open
 
-### From The Frame Area (merged `6b70f047`)
+- **For the owner:**
+  - **Dead content.** `licensepaths.ts` and most of `licenses.ts` are read by nothing (the papers area). Deleting them
+    is a scope call, as it was in brief 14. They stay, read and marked.
+  - **`residenceRefusal`** (`systems/documents.ts`) has no caller (the papers area). A function nothing calls is a
+    declared word nothing reads, so this is a defect, recorded in the receipt's defects. Removing it is code, not words,
+    so it's left for the owner.
+- **The engine-speak ratchet** is lowered once, at the end, to every area's counts, after the cross-area review's last
+    change.
 
-- **Money:** "Current Account" in three labels the frame area doesn't own:
-  - `src/ui/looks/money.tsx`, line 47: 'Current Account' → 'Checking Account';
-  - `src/ui/bank/BankStatements.tsx`, line 225: "Any Current Account Under" → "Any Checking Account Under";
-  - `src/ui/bank/BankPayments.tsx`, line 86: "Savings Covers The Current Account" → "…The Checking Account". Three
-    tests hold it: `tests/defects-r6-1`, `defects-r3b-1` and `evidence-g11-money`.
-- **Tutorial:**
-  - `content/tutorial.ts`, line 120, to match the clock's stop dialog as the frame area rewrote it ("You can only skip
-    a plan of your own, so there's no Skip It button here."). The dialog also stops for appointments and paper visits,
-    not only school events.
-  - `world/tutorial.ts`, line 89: the working reference's example 8.
-- **Health:** `guide/body.ts` quotes "The payment didn't go through." The frame area kept that sentence, because
-  nothing reaches it now. If either changes, the quote moves with it.
-- **Glossary:** the frame area's `frame/glossary.md` has new rows: a life, in place of the old universe wording;
-  marked Clash; when it's time; checks the weather.
-- **Kept, though other areas quote them:** "… there isn't the time before it." (other guides and 11 tests), "The
-  payment didn't go through." and "You dismissed that question, so it can't be answered from What Needs You."
+## Settled
 
-### From The Papers Area (merged `8b8e820a`)
+Each item as the area reported it, and what was done.
 
-- **Tutorial** (`content/tutorial.ts`), sent to the tutorial area while it works:
-  - line 384, to follow the papers area's rename "Your Conditions" → "Your Long-Term Conditions";
-  - lines 445, 480, 481, 483, 485, 495 and 499: "current account" → "checking account".
-- **Health** (`systems/health.ts`, lines 1822, 2173 and 2441): "current account" → "checking account". Sent to the
-  health area while it works.
-- **Money:** if "Savings Covers The Current Account" is renamed, `FROM_CURRENT` in `guide/papers.ts`, line 94, moves
-  with it.
-- **Frame:** if Go There is renamed, `guide/papers.ts` names it in its overview and in `day.needs`.
-- **The owner's to decide:**
-  - **Dead content:** `licensepaths.ts` and most of `licenses.ts` are read by nothing. Deleting them is a scope call,
-    as it was in brief 14.
-- **For the coordinator to decide:**
-  - **The US passport's fee basis:** it reads "Two separate payments.", a fragment. It's generated, so a fix belongs
-    in `tools/build-passports.mjs`.
-  - **`residenceRefusal`:** it has no caller.
-- **Glossary:** six terms in `papers/glossary.md`: On Its Way, Answered By, Not by direct debit, Your Long-Term
-  Conditions, Left Untreated, and "from a secondary source".
+### From The Frame Area
 
-### From The Second Material Area (merged `9d52f895`)
+- **Money's three "Current Account" labels.** The money area renamed them: Checking Account in the money look, Any
+  Checking Account Under in Alerts, and Savings Covers The Checking Account in How You Pay. Its three tests moved with
+  them. At the money merge, the coordinator carried the last rename into the tutorial's bank chapter and the papers
+  guide's `FROM_CURRENT`.
+- **The tutorial's two lines.** The tutorial area took both: the clock's stop dialog as the frame area rewrote it, and
+  the reference's example 8.
+- **"The payment didn't go through."** Frame and health both kept it, so `guide/body.ts`'s quote holds. guide-quotes
+  passes, 581 of 581.
+- **"What it's known for:"** on the place look (`ui/looks/place.tsx`) stays. The frame area suggested "In short:", but
+  the label names what the list is ("What it's known for: theater, film and nightlife."), and "In short:" wouldn't.
+- **The glossary rows** are in `docs/GLOSSARY.md`, with every area's.
 
-- **School** (sent to the school area while it works):
-  - `BriefPane.tsx`, line 174, says a brief's arc of beats twice: in the rehearsal sentence and after the Tone line;
-  - `PlayingChooser.tsx`, line 46, "N transitions to play", is the count the pane calls "changes of tone between
-    beats".
-- **The first material area** (sent while it works): material-b's conventions, so the two halves agree:
-  - staging notes as instructions to the actor ("your side of the frame");
-  - a voice brief's `reader` field names who it is, under the pane's You Speak To;
-  - "Recorded alone at a microphone." made a sentence or cut;
-  - three of material-a's sentences given in material-b's form.
-- **Glossary:** "on your side of the frame", the You Speak To convention, "clowning" in technique notes, and an
-  anthology's "story" for a "segment".
-- **Engine-speak:** material's hits fell from 120 to 118. The ratchet is lowered once, at the end, from every area's
-  counts.
+### From The Papers Area
 
-### Found By The Coordinator While Finishing The Profile Area
+- **The tutorial's conditions and checking account.** The tutorial area took both.
+- **Health's "current account".** The health area changed it to checking account. No player string in `health.ts`
+  says current account (the inventory's search, at the cross-area review).
+- **`FROM_CURRENT`** moved with money's rename, at the money merge.
+- **Go There** wasn't renamed, so the papers guide's overview and `day.needs` are right as they are.
+- **The US passport's fee basis** was "Two separate payments.", a fragment. It's now a sentence, through a words
+  override in `tools/build-passports.mjs` (`FEE_BASIS_WORDS`). The builder reproduced the file exactly before the
+  change, and the rebuild changes that one line.
 
-- **The research's fetch reports in shown source lines.** "direct fetch returned 403", "direct fetch blocked", "site
-  returned 403 to direct fetches" and "returned HTTP 403 to direct fetching" are how the research was done. Each area
-  kept them as part of a citation:
-  - profile: `genres.ts` (the genre look's "Source for its definition") and `genre-demands.json`;
-  - papers: `passports.ts`;
-  - money: `pending.ts` and `security.ts`;
-  - money-data: `home-accounts.json`.
+### From The Second Material Area
 
-  A player reads "403" as the engine showing. That's one rule across four areas, so it's settled in the cross-area
-  review, not by one area. "[read directly]" and "[from a search summary]" stay: they tell the reader how far to trust
-  the line, in words a reader knows.
+- **School's two items** are in: BriefPane says the arc of beats once, and PlayingChooser counts changes of tone. The
+  coordinator read the change at the school merge.
+- **Material-a's conventions** are in material-a's batch 9.
+- **The glossary's terms** are in, with material-b's row for "on your side of the frame".
 
-### Renames, To Carry Into The Guide And Tests
+### Found By The Coordinator
+
+- **The research's fetch reports**, in the source lines a screen shows, are said in a reader's words now. One rule,
+  `gameAccess` in `tools/research-dates.mjs`, covers the bank files' shown fields and the genre small print's builder.
+  The genres' definition sources were edited by hand: 30 lines, the fetch reports and the research's "also listed" and
+  "referenced in search results". Every change is in `coordinator-access.md`. The home accounts' research has the most
+  such notes, but no screen shows it: the game's words for each bank are read by hand into `ABROAD` and `READ`
+  (`content/homeaccounts.ts`). The passports', entry rules' and licenses' notes reach no screen either.
+- **The inventory's omission** of citations that start with a web address is in `omissions.md`. The 160 sources it
+  changed were read and marked.
+- **Cambodia's currency** is the Riel, through the world generator's `CURRENCY_OVERRIDE` and the table by hand.
+- **ING's round-ups** pause on "your checking account".
+- **Two sentences one area changed and another's test held**, found when the merges' tests ran:
+  - the tutorial's "doesn't tax that interest", which the stale-claims check read as the removed interests;
+  - Before Yale's reordered sentence.
+  Also: money's cash refusal ("available"), school's term review, and a comment's apostrophe in the money looks. Each
+  is fixed in its merge or the commit after it, as each commit message says.
+
+### The Renames, Carried Into The Guide And Tests
+
+No player string in the guide or the tutorial holds an old label (the cross-area review's search). The tests that held
+them moved in each area's batches.
 
 | Area | Old | New |
 |---|---|---|
@@ -89,8 +86,12 @@ as it came in, with what was done about it and when. Nothing here is applied unt
 | papers | Paid by you | Not by direct debit |
 | papers | Your Conditions | Your Long-Term Conditions |
 | papers | Left Alone | Left Untreated |
+| money | Savings Covers The Current Account | Savings Covers The Checking Account |
+| money | Any Current Account Under | Any Checking Account Under |
+| money | …, To Its Closing | …, Until It Closed |
 
-## Settled
+### At The Health Merge
+
 - **Health's Blocked booking notice** (`systems/appointments.ts`, `bookIn`). The health area left it Blocked: it named
   the date and gave no next step, and a test of the papers guide quoted it, which isn't the health area's file. At the
   merge, the coordinator added "Be there then, or press Call It Off on Papers, under Health Cover." to the notice and to

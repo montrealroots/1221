@@ -30,8 +30,8 @@ export interface RevolvingCourse {
 export const REVOLVING_COURSE: Readonly<Record<string, RevolvingCourse>> = {
   'jp-mufg': { pay: 5_000_00, every: 100_000_00, source: 'https://www.cr.mufg.jp/mufgcard/service/payment/revo/index.html (残高スライド 一般 course: ¥5,000 to ¥100,000, then ¥5,000 more each ¥100,000)' },
   'jp-smbc': { pay: 5_000_00, plusInterest: true, source: 'https://www.smbc-card.com/mem/revo/mypace.jsp (マイ・ペイすリボ: ¥5,000 of principal at least, interest on top)' },
-  'kr-shinhan': { shareByScore: [[740, 0.1], [670, 0.2], [0, 0.3]], source: 'https://www.shinhancard.com/pconts/html/finance/revolving/CONFM60030/CONFM60030R01.html (a 10% to 30% minimum by credit grade; the grades against SLATE’s record are SLATE’s estimate)' },
-  'kr-kb-kookmin': { shareByScore: [[740, 0.1], [670, 0.2], [0, 0.3]], source: 'https://card.kbcard.com/CXPRIFIC0009.cms (a minimum ratio by grade, raised after a delinquency; Shinhan’s 10% to 30% taken for its range, SLATE’s estimate)' },
+  'kr-shinhan': { shareByScore: [[740, 0.1], [670, 0.2], [0, 0.3]], source: 'https://www.shinhancard.com/pconts/html/finance/revolving/CONFM60030/CONFM60030R01.html (a 10% to 30% minimum by credit grade; which grade a credit record in the game falls in is the game’s estimate)' },
+  'kr-kb-kookmin': { shareByScore: [[740, 0.1], [670, 0.2], [0, 0.3]], source: 'https://card.kbcard.com/CXPRIFIC0009.cms (a minimum ratio by grade, raised after a delinquency; its range is the game’s estimate, Shinhan’s 10% to 30%)' },
 };
 
 /** What a course asks of a balance, before any interest on top: its fixed payment by the balance's steps, or its share by the record. */

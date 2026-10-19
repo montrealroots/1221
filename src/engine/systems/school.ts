@@ -525,7 +525,7 @@ export const CONFERRAL_KIND = 'school.conferral';
  * School's 2026–27 calendar gives 22 December 2026). SLATE confers a degree finished in an additional fall term on 22
  * December; later years' dates are SLATE's estimate by the same day. A diploma off-cycle is mailed six weeks after.
  */
-export const DEGREE_DATES = { december: [12, 22] as const, mailedWeeks: 6, source: 'https://registrar.yale.edu (degree conferral); Yale Graduate School 2026-2027 academic calendar; research-yale-leave-2.json' } as const;
+export const DEGREE_DATES = { december: [12, 22] as const, mailedWeeks: 6, source: 'https://registrar.yale.edu (degree conferral); Yale Graduate School 2026–2027 academic calendar' } as const;
 export const CABARET_KIND = 'school.cabaret';
 export const SUMMER_KIND = 'school.summer';
 export const STIPEND_KIND = 'school.stipend';

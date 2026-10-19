@@ -1,9 +1,9 @@
 {
  "src/engine/content/accountlife.ts#ACCOUNT_LIFE": {
   "status": "Rewritten",
-  "hash": "6a8bb223025b",
+  "hash": "f24b6a8422e7",
   "on": "2026-10-19",
-  "evidence": "Your Accounts Over Time drawn at all 60 banks with a term deposit and a dormant savings account by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accountlife.txt); tests/evidence-g10-money.test.ts asserts Citi's penalty and Capital One's dormancy words on the screen",
+  "evidence": "Your Accounts Over Time drawn at all 60 banks with a term deposit and a dormant savings account by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accountlife.txt); tests/evidence-g10-money.test.ts asserts Citi's penalty and Capital One's dormancy words on the screen. Then brief 15's coordinator's gameAccess rule (tools/research-dates.mjs --write): its source lines say a page couldn't be opened, didn't load, or was read in the Internet Archive's copy or a search summary, where the research's words said HTTP 403, timed out, Wayback snapshot or search snippet; every change listed in docs/verification/editorial-2026-10-19/coordinator-access.md",
   "first": "Pending"
  },
  "src/engine/content/accountlife.ts#UNCLAIMED": {
@@ -841,10 +841,10 @@
  },
  "src/engine/content/banks-world-iban.ts#IBAN_CODES": {
   "status": "Retained",
-  "hash": "e6111be5067c",
+  "hash": "1c45f4b7326d",
   "on": "2026-10-19",
-  "reason": "IBAN structures in the IBAN Registry’s own notation (“3!n11!n”) and each bank’s code inside its IBANs, which banks.ts reads to build an account number; no screen prints these strings, only the number built from them.",
-  "first": "Reviewed And Retained"
+  "reason": "IBAN structures in the IBAN Registry’s own notation (“3!n11!n”) and each bank’s code inside its IBANs, which banks.ts reads to build an account number; no screen prints these strings, only the number built from them. Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): Egypt's IBAN format, cited to Banque Misr's own IBAN guide with the date it was added, a citation in plain words",
+  "first": "Pending"
  },
  "src/engine/content/banks-world-iban.ts#IBAN_FORMATS .AD": {
   "status": "Retained",
@@ -3473,9 +3473,9 @@
  },
  "src/engine/content/pending.ts#PENDING": {
   "status": "Rewritten",
-  "hash": "b2d6e0eb3722",
+  "hash": "e0e7e3f3f405",
   "on": "2026-10-19",
-  "evidence": "Statements drawn at all 60 banks, and the card with a payment hold, by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/statements.txt, rendered/card.txt); tests/language-data-dates.test.ts asserts Chase's source on Statements",
+  "evidence": "Statements drawn at all 60 banks, and the card with a payment hold, by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/statements.txt, rendered/card.txt); tests/language-data-dates.test.ts asserts Chase's source on Statements. Then brief 15's coordinator's gameAccess rule (tools/research-dates.mjs --write): its source lines say a page couldn't be opened, didn't load, or was read in the Internet Archive's copy or a search summary, where the research's words said HTTP 403, timed out, Wayback snapshot or search snippet; every change listed in docs/verification/editorial-2026-10-19/coordinator-access.md",
   "first": "Pending"
  },
  "src/engine/content/rents.ts#PUBLISHED_RENTS": {
@@ -3648,9 +3648,9 @@
  },
  "src/engine/content/security.ts#SECURITY": {
   "status": "Rewritten",
-  "hash": "42f15112aa94",
+  "hash": "7ae4cfac742a",
   "on": "2026-10-19",
-  "evidence": "Your Cards drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/security.txt); tests/evidence2-b04.test.ts asserts Wells Fargo's rush words on the screen",
+  "evidence": "Your Cards drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/security.txt); tests/evidence2-b04.test.ts asserts Wells Fargo's rush words on the screen. Then brief 15's coordinator's gameAccess rule (tools/research-dates.mjs --write): its source lines say a page couldn't be opened, didn't load, or was read in the Internet Archive's copy or a search summary, where the research's words said HTTP 403, timed out, Wayback snapshot or search snippet; every change listed in docs/verification/editorial-2026-10-19/coordinator-access.md",
   "first": "Pending"
  }
 }

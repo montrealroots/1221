@@ -588,11 +588,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#creature_feature": {
-  "status": "Retained",
-  "hash": "cd4a55aabb6a",
+  "status": "Rewritten",
+  "hash": "753aed9249c4",
   "on": "2026-10-19",
-  "reason": "Creature Feature's small print says what the research found (“Creature films with practical creatures have used…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "evidence": "Creature Feature's small print says what the research found (“Creature films with practical creatures have used…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself. Then brief 15's coordinator's gameAccess rule, rebuilt by tools/build-attribute-content.mjs: the research's 'timed out' as 'didn't load'; printed in docs/verification/editorial-2026-10-19/coordinator-genres.txt",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#crime": {
   "status": "Retained",
@@ -1008,11 +1008,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#parody": {
-  "status": "Retained",
-  "hash": "97d5658cbfda",
+  "status": "Rewritten",
+  "hash": "81812ff61529",
   "on": "2026-10-19",
-  "reason": "Parody's small print says what the research found (“Screen parody of the Airplane! school asks…”), what its source says in its own words, how sure it is (medium), why each requirement is applied and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "evidence": "Parody's small print says what the research found (“Screen parody of the Airplane! school asks…”), what its source says in its own words, how sure it is (medium), why each requirement is applied and what it couldn’t settle, as careful as the research itself. Then brief 15's coordinator's gameAccess rule, rebuilt by tools/build-attribute-content.mjs: the research's 'timed out' as 'didn't load'; printed in docs/verification/editorial-2026-10-19/coordinator-genres.txt",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#period_drama": {
   "status": "Retained",
@@ -1225,11 +1225,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#sports": {
-  "status": "Retained",
-  "hash": "114e4dcc3bd9",
+  "status": "Rewritten",
+  "hash": "8e555aaee049",
   "on": "2026-10-19",
-  "reason": "Sports's small print says what the research found (“Sports films ask actors to train in…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "evidence": "Sports's small print says what the research found (“Sports films ask actors to train in…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself. Then brief 15's coordinator's gameAccess rule, rebuilt by tools/build-attribute-content.mjs: the research's 'timed out' as 'didn't load'; printed in docs/verification/editorial-2026-10-19/coordinator-genres.txt",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#spy": {
   "status": "Retained",
@@ -2458,640 +2458,640 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .absurdist": {
   "status": "Rewritten",
-  "hash": "25c0520412ac",
+  "hash": "9b12b3dcb74f",
   "on": "2026-10-19",
-  "evidence": "Absurdist's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Absurdist's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .action": {
   "status": "Retained",
-  "hash": "65cc6138417e",
+  "hash": "939a0bcd21b9",
   "on": "2026-10-19",
-  "reason": "Defines Action in one plain sentence paraphrasing its source (“A film genre that predominantly features chase…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Action in one plain sentence paraphrasing its source (“A film genre that predominantly features chase…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .action_comedy": {
   "status": "Retained",
-  "hash": "99d8c5df74ec",
+  "hash": "d530e34715be",
   "on": "2026-10-19",
-  "reason": "Defines Action Comedy in one plain sentence paraphrasing its source (“A genre combining action and comedy, with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Action Comedy in one plain sentence paraphrasing its source (“A genre combining action and comedy, with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .adventure": {
   "status": "Retained",
-  "hash": "a3793ca1c886",
+  "hash": "26c768508ef9",
   "on": "2026-10-19",
-  "reason": "Defines Adventure in one plain sentence paraphrasing its source (“A film genre whose plots feature travel…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Adventure in one plain sentence paraphrasing its source (“A film genre whose plots feature travel…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .alternate_history": {
   "status": "Retained",
-  "hash": "df3c202b596c",
+  "hash": "40534d50ab03",
   "on": "2026-10-19",
-  "reason": "Defines Alternate History in one plain sentence paraphrasing its source (“A genre of fiction that imagines a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Alternate History in one plain sentence paraphrasing its source (“A genre of fiction that imagines a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .animated": {
   "status": "Retained",
-  "hash": "f4711f5397ba",
+  "hash": "2d0014418fb7",
   "on": "2026-10-19",
-  "reason": "Defines Animated in one plain sentence paraphrasing its source (“Films made from a series of drawings…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Animated in one plain sentence paraphrasing its source (“Films made from a series of drawings…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Britannica Dictionary) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .anime": {
   "status": "Retained",
-  "hash": "1b18239ad186",
+  "hash": "9bc2437652ca",
   "on": "2026-10-19",
-  "reason": "Defines Anime in one plain sentence paraphrasing its source (“A style of animation originating in Japan…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Anime in one plain sentence paraphrasing its source (“A style of animation originating in Japan…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Britannica Dictionary; Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .anthology": {
   "status": "Retained",
-  "hash": "8601605b9754",
+  "hash": "6cac3df6acc1",
   "on": "2026-10-19",
-  "reason": "Defines Anthology in one plain sentence paraphrasing its source (“A single film or series made of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Anthology in one plain sentence paraphrasing its source (“A single film or series made of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .apocalyptic": {
   "status": "Retained",
-  "hash": "b52456575595",
+  "hash": "b93810d32a3f",
   "on": "2026-10-19",
-  "reason": "Defines Apocalyptic in one plain sentence paraphrasing its source (“A subgenre of science fiction concerned with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Apocalyptic in one plain sentence paraphrasing its source (“A subgenre of science fiction concerned with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .art_house": {
   "status": "Retained",
-  "hash": "2bb802d62c4c",
+  "hash": "78d970637ea1",
   "on": "2026-10-19",
-  "reason": "Defines Art House in one plain sentence paraphrasing its source (“Films made primarily as serious artistic expression…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Art House in one plain sentence paraphrasing its source (“Films made primarily as serious artistic expression…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .avant_garde": {
   "status": "Retained",
-  "hash": "93836687bd5b",
+  "hash": "6646f8d3881d",
   "on": "2026-10-19",
-  "reason": "Defines Avant-Garde in one plain sentence paraphrasing its source (“Filmmaking that rejects standard cinematic conventions in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Avant-Garde in one plain sentence paraphrasing its source (“Filmmaking that rejects standard cinematic conventions in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia; Britannica Dictionary, general sense) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .backstage_musical": {
   "status": "Retained",
-  "hash": "261f7542096c",
+  "hash": "395927df140f",
   "on": "2026-10-19",
-  "reason": "Defines Backstage Musical in one plain sentence paraphrasing its source (“A musical whose plot is set in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Backstage Musical in one plain sentence paraphrasing its source (“A musical whose plot is set in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .biker": {
   "status": "Retained",
-  "hash": "bc5acef09762",
+  "hash": "8061cfec0d18",
   "on": "2026-10-19",
-  "reason": "Defines Biker in one plain sentence paraphrasing its source (“A film genre, regarded as a branch…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Biker in one plain sentence paraphrasing its source (“A film genre, regarded as a branch…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .biographical": {
   "status": "Retained",
-  "hash": "177e4e2399b6",
+  "hash": "5a88a3cfc9e4",
   "on": "2026-10-19",
-  "reason": "Defines Biographical in one plain sentence paraphrasing its source (“A film that dramatizes the life, or…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Biographical in one plain sentence paraphrasing its source (“A film that dramatizes the life, or…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .black_comedy": {
   "status": "Retained",
-  "hash": "4bd4670a5f81",
+  "hash": "611651c2445a",
   "on": "2026-10-19",
-  "reason": "Defines Black Comedy in one plain sentence paraphrasing its source (“Comedy that juxtaposes morbid or ghastly elements…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Black Comedy in one plain sentence paraphrasing its source (“Comedy that juxtaposes morbid or ghastly elements…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica, 'Black humor') with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .blaxploitation": {
   "status": "Retained",
-  "hash": "335ae6139a14",
+  "hash": "22a570a8d9e4",
   "on": "2026-10-19",
-  "reason": "Defines Blaxploitation in one plain sentence paraphrasing its source (“A 1970s subgenre of American exploitation film…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Blaxploitation in one plain sentence paraphrasing its source (“A 1970s subgenre of American exploitation film…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Dartmouth College film genres research guide) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .body_horror": {
   "status": "Retained",
-  "hash": "2085b5b1923d",
+  "hash": "138a30893ac7",
   "on": "2026-10-19",
-  "reason": "Defines Body Horror in one plain sentence paraphrasing its source (“A subgenre of horror that showcases grotesque…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Body Horror in one plain sentence paraphrasing its source (“A subgenre of horror that showcases grotesque…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .buddy_comedy": {
   "status": "Retained",
-  "hash": "0a5e5bbfec38",
+  "hash": "72e8e017c5cc",
   "on": "2026-10-19",
-  "reason": "Defines Buddy Comedy in one plain sentence paraphrasing its source (“A subgenre in which two people, usually…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Buddy Comedy in one plain sentence paraphrasing its source (“A subgenre in which two people, usually…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .buddy_cop": {
   "status": "Retained",
-  "hash": "dfcc331988ca",
+  "hash": "8ba4ad5e4172",
   "on": "2026-10-19",
-  "reason": "Defines Buddy Cop in one plain sentence paraphrasing its source (“A film and television genre in which…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Buddy Cop in one plain sentence paraphrasing its source (“A film and television genre in which…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .caper": {
-  "status": "Retained",
-  "hash": "74e300a56e02",
+  "status": "Rewritten",
+  "hash": "07a040e158fa",
   "on": "2026-10-19",
-  "reason": "Defines Caper in one plain sentence paraphrasing its source (“A lighter-toned subgenre of crime fiction in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Caper in one plain sentence paraphrasing its source (“A lighter-toned subgenre of crime fiction in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .chanbara": {
   "status": "Rewritten",
-  "hash": "0054f2979f4d",
+  "hash": "ed20f501a525",
   "on": "2026-10-19",
-  "evidence": "Chanbara's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Chanbara's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .chase": {
-  "status": "Retained",
-  "hash": "02211d590ca2",
+  "status": "Rewritten",
+  "hash": "ca62f589bcc0",
   "on": "2026-10-19",
-  "reason": "Defines Chase in one plain sentence paraphrasing its source (“Films in which a chase or race…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Chase in one plain sentence paraphrasing its source (“Films in which a chase or race…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .childrens": {
   "status": "Retained",
-  "hash": "b65c7cc209af",
+  "hash": "82e159f61ca6",
   "on": "2026-10-19",
-  "reason": "Defines Children’s in one plain sentence paraphrasing its source (“Films made specifically for children, typically with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Children’s in one plain sentence paraphrasing its source (“Films made specifically for children, typically with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .christmas": {
   "status": "Retained",
-  "hash": "15dc4c0a7a0e",
+  "hash": "a7759732c101",
   "on": "2026-10-19",
-  "reason": "Defines Christmas in one plain sentence paraphrasing its source (“Films set around Christmas in which the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Christmas in one plain sentence paraphrasing its source (“Films set around Christmas in which the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia; Final Draft blog) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .comedy": {
-  "status": "Retained",
-  "hash": "5074a15e6747",
+  "status": "Rewritten",
+  "hash": "8a876dccea48",
   "on": "2026-10-19",
-  "reason": "Defines Comedy in one plain sentence paraphrasing its source (“A genre that treats the light and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Comedy in one plain sentence paraphrasing its source (“A genre that treats the light and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .coming_of_age": {
   "status": "Retained",
-  "hash": "b10bd62ff396",
+  "hash": "5065d59c3c86",
   "on": "2026-10-19",
-  "reason": "Defines Coming Of Age in one plain sentence paraphrasing its source (“Stories that follow a young protagonist through…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Coming Of Age in one plain sentence paraphrasing its source (“Stories that follow a young protagonist through…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .concert_film": {
   "status": "Retained",
-  "hash": "e0d00bef1362",
+  "hash": "7b42ef309fe9",
   "on": "2026-10-19",
-  "reason": "Defines Concert Film in one plain sentence paraphrasing its source (“A film whose content consists primarily of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Concert Film in one plain sentence paraphrasing its source (“A film whose content consists primarily of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .conspiracy_thriller": {
   "status": "Retained",
-  "hash": "39cd8f94149f",
+  "hash": "9d7ac5d1d0b8",
   "on": "2026-10-19",
-  "reason": "Defines Conspiracy Thriller in one plain sentence paraphrasing its source (“A thriller in which the protagonist confronts…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Conspiracy Thriller in one plain sentence paraphrasing its source (“A thriller in which the protagonist confronts…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .cosmic_horror": {
   "status": "Rewritten",
-  "hash": "8356018a1400",
+  "hash": "ee5f4fad8bf0",
   "on": "2026-10-19",
-  "evidence": "Cosmic Horror's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Cosmic Horror's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .costume_drama": {
   "status": "Retained",
-  "hash": "74737e91f1f2",
+  "hash": "828d4f88813c",
   "on": "2026-10-19",
-  "reason": "Defines Costume Drama in one plain sentence paraphrasing its source (“A film or television drama set in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Costume Drama in one plain sentence paraphrasing its source (“A film or television drama set in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Merriam-Webster) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .courtroom_drama": {
   "status": "Retained",
-  "hash": "5afdce473038",
+  "hash": "567c8215952f",
   "on": "2026-10-19",
-  "reason": "Defines Courtroom Drama in one plain sentence paraphrasing its source (“A genre of film and television, also…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Courtroom Drama in one plain sentence paraphrasing its source (“A genre of film and television, also…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia; also cites the AFI definition) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .creature_feature": {
-  "status": "Retained",
-  "hash": "57eb3dc7e159",
+  "status": "Rewritten",
+  "hash": "da7db79ab686",
   "on": "2026-10-19",
-  "reason": "Defines Creature Feature in one plain sentence paraphrasing its source (“A subgenre of horror and science fiction…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Creature Feature in one plain sentence paraphrasing its source (“A subgenre of horror and science fiction…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .crime": {
-  "status": "Retained",
-  "hash": "6643d7a55d95",
+  "status": "Rewritten",
+  "hash": "93fb246cd010",
   "on": "2026-10-19",
-  "reason": "Defines Crime in one plain sentence paraphrasing its source (“A film genre in which crime, its…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Crime in one plain sentence paraphrasing its source (“A film genre in which crime, its…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .cyberpunk": {
   "status": "Retained",
-  "hash": "0211576931b3",
+  "hash": "6346f21755f5",
   "on": "2026-10-19",
-  "reason": "Defines Cyberpunk in one plain sentence paraphrasing its source (“A subgenre of science fiction set in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Cyberpunk in one plain sentence paraphrasing its source (“A subgenre of science fiction set in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (University of Texas at Austin library glossary of science-fiction genres) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .dance": {
   "status": "Rewritten",
-  "hash": "3febb069288f",
+  "hash": "d4c440185efd",
   "on": "2026-10-19",
-  "evidence": "Dance's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Dance's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .dark_fantasy": {
   "status": "Retained",
-  "hash": "acf3101ddd81",
+  "hash": "8946ae47ff63",
   "on": "2026-10-19",
-  "reason": "Defines Dark Fantasy in one plain sentence paraphrasing its source (“A subgenre of fantasy that combines magical…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Dark Fantasy in one plain sentence paraphrasing its source (“A subgenre of fantasy that combines magical…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .detective": {
   "status": "Retained",
-  "hash": "b3253157dd88",
+  "hash": "aada94973575",
   "on": "2026-10-19",
-  "reason": "Defines Detective in one plain sentence paraphrasing its source (“A story dealing with the step-by-step investigation…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Detective in one plain sentence paraphrasing its source (“A story dealing with the step-by-step investigation…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica summary) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .disaster": {
   "status": "Retained",
-  "hash": "42e20852d132",
+  "hash": "e664a3ef4eeb",
   "on": "2026-10-19",
-  "reason": "Defines Disaster in one plain sentence paraphrasing its source (“A film genre that has an impending…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Disaster in one plain sentence paraphrasing its source (“A film genre that has an impending…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .docudrama": {
   "status": "Retained",
-  "hash": "02d0503d25a2",
+  "hash": "f5ff302cc336",
   "on": "2026-10-19",
-  "reason": "Defines Docudrama in one plain sentence paraphrasing its source (“A drama, as for television, dealing freely…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Docudrama in one plain sentence paraphrasing its source (“A drama, as for television, dealing freely…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Merriam-Webster) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .docufiction": {
   "status": "Retained",
-  "hash": "1cae97694d21",
+  "hash": "c29830efb603",
   "on": "2026-10-19",
-  "reason": "Defines Docufiction in one plain sentence paraphrasing its source (“The cinematographic combination of documentary and fiction…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "reason": "Defines Docufiction in one plain sentence paraphrasing its source (“The cinematographic combination of documentary and fiction…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .documentary": {
   "status": "Retained",
-  "hash": "efa9096bef3e",
+  "hash": "4f52d7ffb2df",
   "on": "2026-10-19",
-  "reason": "Defines Documentary in one plain sentence paraphrasing its source (“A motion picture that shapes and interprets…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Documentary in one plain sentence paraphrasing its source (“A motion picture that shapes and interprets…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .domestic_drama": {
-  "status": "Retained",
-  "hash": "02afd84fb37d",
+  "status": "Rewritten",
+  "hash": "28ce6f27c09f",
   "on": "2026-10-19",
-  "reason": "Defines Domestic Drama in one plain sentence paraphrasing its source (“Drama centered on the private and family…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Domestic Drama in one plain sentence paraphrasing its source (“Drama centered on the private and family…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .drama": {
   "status": "Retained",
-  "hash": "daf993e72abe",
+  "hash": "bda3f7880597",
   "on": "2026-10-19",
-  "reason": "Defines Drama in one plain sentence paraphrasing its source (“A play, film or television program about…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Drama in one plain sentence paraphrasing its source (“A play, film or television program about…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Britannica Dictionary) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .dystopian": {
   "status": "Retained",
-  "hash": "8bb231d4fb77",
+  "hash": "1e180ddf5b23",
   "on": "2026-10-19",
-  "reason": "Defines Dystopian in one plain sentence paraphrasing its source (“Fiction set in a dystopia, an imagined…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Dystopian in one plain sentence paraphrasing its source (“Fiction set in a dystopia, an imagined…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Britannica Dictionary) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .eco_horror": {
-  "status": "Retained",
-  "hash": "8a7df535f077",
+  "status": "Rewritten",
+  "hash": "30a9e1e274d0",
   "on": "2026-10-19",
-  "reason": "Defines Eco-Horror in one plain sentence paraphrasing its source (“A subgenre of horror, also called eco-terror…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Eco-Horror in one plain sentence paraphrasing its source (“A subgenre of horror, also called eco-terror…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .epic": {
-  "status": "Retained",
-  "hash": "38ff6c37f459",
+  "status": "Rewritten",
+  "hash": "f8405344f86f",
   "on": "2026-10-19",
-  "reason": "Defines Epic in one plain sentence paraphrasing its source (“A film genre of grand scale and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Epic in one plain sentence paraphrasing its source (“A film genre of grand scale and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .erotic_thriller": {
   "status": "Retained",
-  "hash": "9d15b51f2c1e",
+  "hash": "b2a09d6a06ed",
   "on": "2026-10-19",
-  "reason": "Defines Erotic Thriller in one plain sentence paraphrasing its source (“A film subgenre of the thriller with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Erotic Thriller in one plain sentence paraphrasing its source (“A film subgenre of the thriller with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .espionage": {
   "status": "Retained",
-  "hash": "d4dcd20efa0d",
+  "hash": "f4a2313a0534",
   "on": "2026-10-19",
-  "reason": "Defines Espionage in one plain sentence paraphrasing its source (“A genre, also called the spy film…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Espionage in one plain sentence paraphrasing its source (“A genre, also called the spy film…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .experimental": {
-  "status": "Retained",
-  "hash": "7124a22f7dbc",
+  "status": "Rewritten",
+  "hash": "64e980b33cf9",
   "on": "2026-10-19",
-  "reason": "Defines Experimental in one plain sentence paraphrasing its source (“A mode of filmmaking, also called avant-garde…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Experimental in one plain sentence paraphrasing its source (“A mode of filmmaking, also called avant-garde…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .exploitation": {
-  "status": "Retained",
-  "hash": "0afe676b4632",
+  "status": "Rewritten",
+  "hash": "19d21f9cc185",
   "on": "2026-10-19",
-  "reason": "Defines Exploitation in one plain sentence paraphrasing its source (“A film that seeks commercial success by…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "evidence": "Defines Exploitation in one plain sentence paraphrasing its source (“A film that seeks commercial success by…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .fairy_tale": {
   "status": "Retained",
-  "hash": "41851082f163",
+  "hash": "fa264ac8e1e7",
   "on": "2026-10-19",
-  "reason": "Defines Fairy Tale in one plain sentence paraphrasing its source (“A wonder tale involving marvelous elements and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Fairy Tale in one plain sentence paraphrasing its source (“A wonder tale involving marvelous elements and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .family": {
-  "status": "Retained",
-  "hash": "459b7169b77a",
+  "status": "Rewritten",
+  "hash": "d8ca2990b845",
   "on": "2026-10-19",
-  "reason": "Defines Family in one plain sentence paraphrasing its source (“A film genre with content appropriate for…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Family in one plain sentence paraphrasing its source (“A film genre with content appropriate for…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .fantasy": {
   "status": "Retained",
-  "hash": "3aa7bd47ae50",
+  "hash": "24181f5318e4",
   "on": "2026-10-19",
-  "reason": "Defines Fantasy in one plain sentence paraphrasing its source (“Imaginative fiction that relies on strangeness of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Fantasy in one plain sentence paraphrasing its source (“Imaginative fiction that relies on strangeness of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .farce": {
-  "status": "Retained",
-  "hash": "b154b5e4cb4f",
+  "status": "Rewritten",
+  "hash": "aea335fde1a5",
   "on": "2026-10-19",
-  "reason": "Defines Farce in one plain sentence paraphrasing its source (“A form of comedy that relies on…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Farce in one plain sentence paraphrasing its source (“A form of comedy that relies on…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .film_noir": {
-  "status": "Retained",
-  "hash": "ae818dc1858a",
+  "status": "Rewritten",
+  "hash": "bcc5ff1cc47d",
   "on": "2026-10-19",
-  "reason": "Defines Film Noir in one plain sentence paraphrasing its source (“A film genre offering dark or fatalistic…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Film Noir in one plain sentence paraphrasing its source (“A film genre offering dark or fatalistic…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .folk_horror": {
-  "status": "Retained",
-  "hash": "22fd991406a8",
+  "status": "Rewritten",
+  "hash": "32b0159e6ed6",
   "on": "2026-10-19",
-  "reason": "Defines Folk Horror in one plain sentence paraphrasing its source (“A subgenre of horror that uses elements…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Folk Horror in one plain sentence paraphrasing its source (“A subgenre of horror that uses elements…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .found_footage": {
   "status": "Retained",
-  "hash": "c44af87878b5",
+  "hash": "61dd0d64ecf7",
   "on": "2026-10-19",
-  "reason": "Defines Found Footage in one plain sentence paraphrasing its source (“A cinematic technique and film genre in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Found Footage in one plain sentence paraphrasing its source (“A cinematic technique and film genre in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .gangster": {
   "status": "Retained",
-  "hash": "4eb3400e0a21",
+  "hash": "9f2e4a517ad2",
   "on": "2026-10-19",
-  "reason": "Defines Gangster in one plain sentence paraphrasing its source (“A motion-picture genre, originating in the United…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "reason": "Defines Gangster in one plain sentence paraphrasing its source (“A motion-picture genre, originating in the United…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .giallo": {
   "status": "Retained",
-  "hash": "23e3d0059c2f",
+  "hash": "5678f296674e",
   "on": "2026-10-19",
-  "reason": "Defines Giallo in one plain sentence paraphrasing its source (“An Italian crime film with murder-mystery elements…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "reason": "Defines Giallo in one plain sentence paraphrasing its source (“An Italian crime film with murder-mystery elements…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (BFI) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .gothic_horror": {
-  "status": "Retained",
-  "hash": "bf601ab0c8ce",
+  "status": "Rewritten",
+  "hash": "87ee116e8534",
   "on": "2026-10-19",
-  "reason": "Defines Gothic Horror in one plain sentence paraphrasing its source (“Horror that draws on Gothic literature, with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Gothic Horror in one plain sentence paraphrasing its source (“Horror that draws on Gothic literature, with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .grindhouse": {
   "status": "Rewritten",
-  "hash": "da46d57e1810",
+  "hash": "0b3d2294a624",
   "on": "2026-10-19",
-  "evidence": "Grindhouse's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Grindhouse's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .hangout": {
-  "status": "Retained",
-  "hash": "a78b046f2336",
+  "status": "Rewritten",
+  "hash": "e6913acabf8a",
   "on": "2026-10-19",
-  "reason": "Defines Hangout in one plain sentence paraphrasing its source (“A hangout film prioritizes unhurried interaction among…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "evidence": "Defines Hangout in one plain sentence paraphrasing its source (“A hangout film prioritizes unhurried interaction among…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .heist": {
   "status": "Retained",
-  "hash": "305a72b7bf44",
+  "hash": "0043c1b9cc73",
   "on": "2026-10-19",
-  "reason": "Defines Heist in one plain sentence paraphrasing its source (“The heist film is a subgenre of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Heist in one plain sentence paraphrasing its source (“The heist film is a subgenre of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .historical_drama": {
   "status": "Retained",
-  "hash": "961e86d9f9f5",
+  "hash": "8b9b63df0747",
   "on": "2026-10-19",
-  "reason": "Defines Historical Drama in one plain sentence paraphrasing its source (“A historical drama is a dramatic work…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Historical Drama in one plain sentence paraphrasing its source (“A historical drama is a dramatic work…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .historical_fiction": {
   "status": "Retained",
-  "hash": "91b61c865b05",
+  "hash": "a9db68a77875",
   "on": "2026-10-19",
-  "reason": "Defines Historical Fiction in one plain sentence paraphrasing its source (“Historical fiction is a genre in which…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Historical Fiction in one plain sentence paraphrasing its source (“Historical fiction is a genre in which…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia; the article treats it as a literary genre also applied to film) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .holiday": {
   "status": "Rewritten",
-  "hash": "b7b361f2f85d",
+  "hash": "2084ab6a2423",
   "on": "2026-10-19",
-  "evidence": "Holiday's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Holiday's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .hood_film": {
   "status": "Retained",
-  "hash": "2330f0eabd30",
+  "hash": "dabfba4e19de",
   "on": "2026-10-19",
-  "reason": "Defines Hood Film in one plain sentence paraphrasing its source (“Hood film is a film genre originating…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Hood Film in one plain sentence paraphrasing its source (“Hood film is a film genre originating…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .horror": {
   "status": "Retained",
-  "hash": "1167b52f00cf",
+  "hash": "5d42f29a62da",
   "on": "2026-10-19",
-  "reason": "Defines Horror in one plain sentence paraphrasing its source (“Horror films are motion pictures calculated to…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Horror in one plain sentence paraphrasing its source (“Horror films are motion pictures calculated to…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .horror_comedy": {
   "status": "Retained",
-  "hash": "c35cf39e781e",
+  "hash": "efb727a13a27",
   "on": "2026-10-19",
-  "reason": "Defines Horror Comedy in one plain sentence paraphrasing its source (“Comedy horror is a film and television…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Horror Comedy in one plain sentence paraphrasing its source (“Comedy horror is a film and television…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .isekai": {
   "status": "Rewritten",
-  "hash": "94afb65177af",
+  "hash": "b2efe2af776c",
   "on": "2026-10-19",
-  "evidence": "Isekai's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Isekai's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .jidaigeki": {
   "status": "Retained",
-  "hash": "60d975397a87",
+  "hash": "a50a9963c61d",
   "on": "2026-10-19",
-  "reason": "Defines Jidaigeki in one plain sentence paraphrasing its source (“Jidaigeki is a genre of Japanese film…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Jidaigeki in one plain sentence paraphrasing its source (“Jidaigeki is a genre of Japanese film…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .jukebox_musical": {
   "status": "Retained",
-  "hash": "7cc213b615da",
+  "hash": "0fd0c0962374",
   "on": "2026-10-19",
-  "reason": "Defines Jukebox Musical in one plain sentence paraphrasing its source (“A jukebox musical is a stage musical…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Jukebox Musical in one plain sentence paraphrasing its source (“A jukebox musical is a stage musical…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .kaiju": {
   "status": "Rewritten",
-  "hash": "20a1927f8470",
+  "hash": "778e5a1d573f",
   "on": "2026-10-19",
-  "evidence": "Kaiju's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Kaiju's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .kitchen_sink": {
   "status": "Rewritten",
-  "hash": "344c5900a5a0",
+  "hash": "d958f1ee3cd6",
   "on": "2026-10-19",
-  "evidence": "Kitchen Sink Drama's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Kitchen Sink Drama's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .legal_drama": {
   "status": "Retained",
-  "hash": "c167bda5a04e",
+  "hash": "219aeb30278f",
   "on": "2026-10-19",
-  "reason": "Defines Legal Drama in one plain sentence paraphrasing its source (“Legal drama is a genre of film…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Legal Drama in one plain sentence paraphrasing its source (“Legal drama is a genre of film…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .magical_realism": {
   "status": "Retained",
-  "hash": "021bfbd01c71",
+  "hash": "7b9d629f0719",
   "on": "2026-10-19",
-  "reason": "Defines Magical Realism in one plain sentence paraphrasing its source (“Magical realism is a style or genre…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Magical Realism in one plain sentence paraphrasing its source (“Magical realism is a style or genre…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .martial_arts": {
   "status": "Retained",
-  "hash": "398cf8f731ac",
+  "hash": "35a6865a5d1e",
   "on": "2026-10-19",
-  "reason": "Defines Martial Arts in one plain sentence paraphrasing its source (“Martial arts films are a subgenre of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Martial Arts in one plain sentence paraphrasing its source (“Martial arts films are a subgenre of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .medical_drama": {
   "status": "Rewritten",
-  "hash": "10ddb5b0073c",
+  "hash": "a93eae33dba2",
   "on": "2026-10-19",
-  "evidence": "Medical Drama's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Medical Drama's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .melodrama": {
   "status": "Retained",
-  "hash": "1eb6737283b7",
+  "hash": "24defb6f758d",
   "on": "2026-10-19",
-  "reason": "Defines Melodrama in one plain sentence paraphrasing its source (“Melodrama is a sentimental dramatic form that…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "reason": "Defines Melodrama in one plain sentence paraphrasing its source (“Melodrama is a sentimental dramatic form that…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .military": {
-  "status": "Retained",
-  "hash": "e8d6e6196a23",
+  "status": "Rewritten",
+  "hash": "d8c2dbfdb38a",
   "on": "2026-10-19",
-  "reason": "Defines Military in one plain sentence paraphrasing its source (“A military film centers on armed forces…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "evidence": "Defines Military in one plain sentence paraphrasing its source (“A military film centers on armed forces…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .mockumentary": {
   "status": "Retained",
-  "hash": "eeb96f1147d9",
+  "hash": "171c2c86f2cc",
   "on": "2026-10-19",
-  "reason": "Defines Mockumentary in one plain sentence paraphrasing its source (“A mockumentary is a film or television…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Mockumentary in one plain sentence paraphrasing its source (“A mockumentary is a film or television…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .monster_movie": {
   "status": "Retained",
-  "hash": "70c5c5859c62",
+  "hash": "4eb3a6d703d4",
   "on": "2026-10-19",
-  "reason": "Defines Monster Movie in one plain sentence paraphrasing its source (“A monster movie is a film that…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Monster Movie in one plain sentence paraphrasing its source (“A monster movie is a film that…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .mumblecore": {
   "status": "Rewritten",
-  "hash": "8a28d3bd88fa",
+  "hash": "c50d3330c42c",
   "on": "2026-10-19",
-  "evidence": "Mumblecore's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Mumblecore's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .musical": {
   "status": "Retained",
-  "hash": "fb6a2e3c1949",
+  "hash": "b350bc8f730e",
   "on": "2026-10-19",
-  "reason": "Defines Musical in one plain sentence paraphrasing its source (“A musical film is a motion picture…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Musical in one plain sentence paraphrasing its source (“A musical film is a motion picture…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .mystery": {
   "status": "Retained",
-  "hash": "e8be8f2c22a4",
+  "hash": "f90b2662df87",
   "on": "2026-10-19",
-  "reason": "Defines Mystery in one plain sentence paraphrasing its source (“A mystery is a narrative genre centered…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "reason": "Defines Mystery in one plain sentence paraphrasing its source (“A mystery is a narrative genre centered…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .nature_documentary": {
   "status": "Retained",
-  "hash": "dfd222d34ebb",
+  "hash": "f74725f7dcd9",
   "on": "2026-10-19",
-  "reason": "Defines Nature Documentary in one plain sentence paraphrasing its source (“A nature or wildlife documentary is a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Nature Documentary in one plain sentence paraphrasing its source (“A nature or wildlife documentary is a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .neo_noir": {
   "status": "Retained",
-  "hash": "a4d54f0c7da8",
+  "hash": "512cb0749c83",
   "on": "2026-10-19",
-  "reason": "Defines Neo-Noir in one plain sentence paraphrasing its source (“Neo-noir is a film genre from the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Neo-Noir in one plain sentence paraphrasing its source (“Neo-noir is a film genre from the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .neorealism": {
   "status": "Retained",
-  "hash": "fde2299e3bb0",
+  "hash": "0d1b9a77e1fc",
   "on": "2026-10-19",
-  "reason": "Defines Neorealism in one plain sentence paraphrasing its source (“Italian Neorealism was a postwar film movement…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Neorealism in one plain sentence paraphrasing its source (“Italian Neorealism was a postwar film movement…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .new_wave": {
   "status": "Retained",
-  "hash": "526e8139e5c7",
+  "hash": "4ccc63e26909",
   "on": "2026-10-19",
-  "reason": "Defines New Wave in one plain sentence paraphrasing its source (“The New Wave (Nouvelle Vague) was the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines New Wave in one plain sentence paraphrasing its source (“The New Wave (Nouvelle Vague) was the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .nordic_noir": {
   "status": "Retained",
-  "hash": "cf3065c050fd",
+  "hash": "c6a0b8d4d375",
   "on": "2026-10-19",
-  "reason": "Defines Nordic Noir in one plain sentence paraphrasing its source (“Nordic noir is a genre of crime…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Nordic Noir in one plain sentence paraphrasing its source (“Nordic noir is a genre of crime…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .occult": {
-  "status": "Retained",
-  "hash": "110ba9338cdd",
+  "status": "Rewritten",
+  "hash": "7aca5bf16cd8",
   "on": "2026-10-19",
-  "reason": "Defines Occult in one plain sentence paraphrasing its source (“A subgenre of horror, and at times…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Occult in one plain sentence paraphrasing its source (“A subgenre of horror, and at times…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .parody": {
   "status": "Retained",
@@ -3116,73 +3116,73 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .police_procedural": {
   "status": "Retained",
-  "hash": "323ce219a1ed",
+  "hash": "bc90fbcd2f4d",
   "on": "2026-10-19",
-  "reason": "Defines Police Procedural in one plain sentence paraphrasing its source (“A subgenre of detective fiction that emphasizes…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Police Procedural in one plain sentence paraphrasing its source (“A subgenre of detective fiction that emphasizes…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .political_drama": {
   "status": "Rewritten",
-  "hash": "a331b3e05d6a",
+  "hash": "1b00a3d76d8b",
   "on": "2026-10-19",
-  "evidence": "Political Drama's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Political Drama's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .political_thriller": {
   "status": "Retained",
-  "hash": "4687cddcc217",
+  "hash": "638175ca17ae",
   "on": "2026-10-19",
-  "reason": "Defines Political Thriller in one plain sentence paraphrasing its source (“A thriller set against the backdrop of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Political Thriller in one plain sentence paraphrasing its source (“A thriller set against the backdrop of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .post_apocalyptic": {
   "status": "Retained",
-  "hash": "35bbc7199243",
+  "hash": "42f7bd0fe905",
   "on": "2026-10-19",
-  "reason": "Defines Post-Apocalyptic in one plain sentence paraphrasing its source (“Speculative fiction set in a world or…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Post-Apocalyptic in one plain sentence paraphrasing its source (“Speculative fiction set in a world or…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .prison_film": {
   "status": "Retained",
-  "hash": "6ddd4dd33cbc",
+  "hash": "0ca4b1ed1f3c",
   "on": "2026-10-19",
-  "reason": "Defines Prison Film in one plain sentence paraphrasing its source (“A film genre concerned with prison life…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Prison Film in one plain sentence paraphrasing its source (“A film genre concerned with prison life…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .psychological_horror": {
   "status": "Retained",
-  "hash": "b3a01f09ec9b",
+  "hash": "897bc2c884ac",
   "on": "2026-10-19",
-  "reason": "Defines Psychological Horror in one plain sentence paraphrasing its source (“A subgenre of horror and psychological fiction…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Psychological Horror in one plain sentence paraphrasing its source (“A subgenre of horror and psychological fiction…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .psychological_thriller": {
   "status": "Rewritten",
-  "hash": "3069d3a752ed",
+  "hash": "74c1264fcce0",
   "on": "2026-10-19",
-  "evidence": "Psychological Thriller's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Psychological Thriller's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .queer_cinema": {
-  "status": "Retained",
-  "hash": "fed61f03fa45",
+  "status": "Rewritten",
+  "hash": "fee7f7924900",
   "on": "2026-10-19",
-  "reason": "Defines Queer Cinema in one plain sentence paraphrasing its source (“Films involving the representation of fictional and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Queer Cinema in one plain sentence paraphrasing its source (“Films involving the representation of fictional and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .revenge": {
-  "status": "Retained",
-  "hash": "fe97e333ee3b",
+  "status": "Rewritten",
+  "hash": "3f35c31922ff",
   "on": "2026-10-19",
-  "reason": "Defines Revenge in one plain sentence paraphrasing its source (“A film centered on vengeance, usually following…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Revenge in one plain sentence paraphrasing its source (“A film centered on vengeance, usually following…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .road_movie": {
-  "status": "Retained",
-  "hash": "672da0c7ff15",
+  "status": "Rewritten",
+  "hash": "16bd8a6f7dc7",
   "on": "2026-10-19",
-  "reason": "Defines Road Movie in one plain sentence paraphrasing its source (“A film genre in which the main…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Road Movie in one plain sentence paraphrasing its source (“A film genre in which the main…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .rockumentary": {
   "status": "Retained",
@@ -3193,10 +3193,10 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .romance": {
   "status": "Retained",
-  "hash": "9aef0a006b63",
+  "hash": "1226ca6f1a9c",
   "on": "2026-10-19",
-  "reason": "Defines Romance in one plain sentence paraphrasing its source (“A film genre whose main plot focus…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Romance in one plain sentence paraphrasing its source (“A film genre whose main plot focus…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .romantic_comedy": {
   "status": "Retained",
@@ -3207,17 +3207,17 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .romantic_drama": {
   "status": "Retained",
-  "hash": "17ede998bfcb",
+  "hash": "648c9423551b",
   "on": "2026-10-19",
-  "reason": "Defines Romantic Drama in one plain sentence paraphrasing its source (“An intersection of drama and romance films…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "reason": "Defines Romantic Drama in one plain sentence paraphrasing its source (“An intersection of drama and romance films…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .samurai": {
   "status": "Retained",
-  "hash": "df150c2d441c",
+  "hash": "cdcc25f40abb",
   "on": "2026-10-19",
-  "reason": "Defines Samurai in one plain sentence paraphrasing its source (“Japanese films about samurai, closely tied to…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Samurai in one plain sentence paraphrasing its source (“Japanese films about samurai, closely tied to…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .satire": {
   "status": "Retained",
@@ -3228,10 +3228,10 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .science_fantasy": {
   "status": "Retained",
-  "hash": "4d0d436a8aa4",
+  "hash": "dbe9e982ede2",
   "on": "2026-10-19",
-  "reason": "Defines Science Fantasy in one plain sentence paraphrasing its source (“A hybrid genre of speculative fiction that…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Science Fantasy in one plain sentence paraphrasing its source (“A hybrid genre of speculative fiction that…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .science_fiction": {
   "status": "Retained",
@@ -3249,10 +3249,10 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .sea_adventure": {
   "status": "Retained",
-  "hash": "325305c7101d",
+  "hash": "0a4fc54a8b74",
   "on": "2026-10-19",
-  "reason": "Defines Sea Adventure in one plain sentence paraphrasing its source (“Adventure stories set on or near the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Sea Adventure in one plain sentence paraphrasing its source (“Adventure stories set on or near the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .silent_film": {
   "status": "Retained",
@@ -3270,24 +3270,24 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .slasher": {
   "status": "Retained",
-  "hash": "2fce358d6afd",
+  "hash": "3be19901141e",
   "on": "2026-10-19",
-  "reason": "Defines Slasher in one plain sentence paraphrasing its source (“A subgenre of horror in which a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Slasher in one plain sentence paraphrasing its source (“A subgenre of horror in which a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .slice_of_life": {
-  "status": "Retained",
-  "hash": "d604a1cc1f9a",
+  "status": "Rewritten",
+  "hash": "b3fed8e83424",
   "on": "2026-10-19",
-  "reason": "Defines Slice Of Life in one plain sentence paraphrasing its source (“A genre depicting ordinary people and the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Slice Of Life in one plain sentence paraphrasing its source (“A genre depicting ordinary people and the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .social_realism": {
   "status": "Retained",
-  "hash": "b345a5782934",
+  "hash": "77c7dbad3610",
   "on": "2026-10-19",
-  "reason": "Defines Social Realism in one plain sentence paraphrasing its source (“Work that depicts the everyday lives and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Social Realism in one plain sentence paraphrasing its source (“Work that depicts the everyday lives and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .space_opera": {
   "status": "Retained",
@@ -3297,207 +3297,207 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .spaghetti_western": {
-  "status": "Retained",
-  "hash": "fafef511bc86",
+  "status": "Rewritten",
+  "hash": "ce8916ebea0b",
   "on": "2026-10-19",
-  "reason": "Defines Spaghetti Western in one plain sentence paraphrasing its source (“A subgenre of Westerns set in the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Spaghetti Western in one plain sentence paraphrasing its source (“A subgenre of Westerns set in the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .splatter": {
   "status": "Retained",
-  "hash": "84af8c3257e3",
+  "hash": "8fcdf495bee9",
   "on": "2026-10-19",
-  "reason": "Defines Splatter in one plain sentence paraphrasing its source (“A subgenre of horror film that deliberately…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Splatter in one plain sentence paraphrasing its source (“A subgenre of horror film that deliberately…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .sports": {
   "status": "Retained",
-  "hash": "82ee9280bf4f",
+  "hash": "5e4abdd090c4",
   "on": "2026-10-19",
-  "reason": "Defines Sports in one plain sentence paraphrasing its source (“A film genre in which a sport…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Sports in one plain sentence paraphrasing its source (“A film genre in which a sport…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .spy": {
   "status": "Retained",
-  "hash": "0569f5d9d902",
+  "hash": "24c9671569b7",
   "on": "2026-10-19",
-  "reason": "Defines Spy in one plain sentence paraphrasing its source (“A genre of film dealing with fictional…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Spy in one plain sentence paraphrasing its source (“A genre of film dealing with fictional…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .steampunk": {
   "status": "Retained",
-  "hash": "a302dfceb5f3",
+  "hash": "886129ab7a18",
   "on": "2026-10-19",
-  "reason": "Defines Steampunk in one plain sentence paraphrasing its source (“Science fiction dealing with 19th-century societies dominated…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Steampunk in one plain sentence paraphrasing its source (“Science fiction dealing with 19th-century societies dominated…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Merriam-Webster) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .stoner_comedy": {
   "status": "Retained",
-  "hash": "b772a49b102c",
+  "hash": "abd75539fbd2",
   "on": "2026-10-19",
-  "reason": "Defines Stoner Comedy in one plain sentence paraphrasing its source (“A subgenre of comedy film based on…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Stoner Comedy in one plain sentence paraphrasing its source (“A subgenre of comedy film based on…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .superhero": {
   "status": "Retained",
-  "hash": "d31f70b68040",
+  "hash": "cffe567b93b9",
   "on": "2026-10-19",
-  "reason": "Defines Superhero in one plain sentence paraphrasing its source (“A film genre centered on superhero characters…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Superhero in one plain sentence paraphrasing its source (“A film genre centered on superhero characters…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .supernatural": {
   "status": "Retained",
-  "hash": "bd0cc21a1561",
+  "hash": "31bd595ad205",
   "on": "2026-10-19",
-  "reason": "Defines Supernatural in one plain sentence paraphrasing its source (“A film genre built on supernatural themes…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Supernatural in one plain sentence paraphrasing its source (“A film genre built on supernatural themes…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .surrealist": {
   "status": "Retained",
-  "hash": "f124aa840430",
+  "hash": "a7f92b5bdc4f",
   "on": "2026-10-19",
-  "reason": "Defines Surrealist in one plain sentence paraphrasing its source (“A modernist approach to filmmaking that arose…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Surrealist in one plain sentence paraphrasing its source (“A modernist approach to filmmaking that arose…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .survival": {
   "status": "Retained",
-  "hash": "6267adca4056",
+  "hash": "63b4c1029256",
   "on": "2026-10-19",
-  "reason": "Defines Survival in one plain sentence paraphrasing its source (“A film genre, often treated as a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Survival in one plain sentence paraphrasing its source (“A film genre, often treated as a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .swashbuckler": {
   "status": "Retained",
-  "hash": "e9989421c66f",
+  "hash": "5348696ca49e",
   "on": "2026-10-19",
-  "reason": "Defines Swashbuckler in one plain sentence paraphrasing its source (“A film genre characterized by swordfighting and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Rewritten And Verified"
+  "reason": "Defines Swashbuckler in one plain sentence paraphrasing its source (“A film genre characterized by swordfighting and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia; Merriam-Webster: 'a novel or drama dealing with a swashbuckler') with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .sword_and_sandal": {
   "status": "Retained",
-  "hash": "35ef8b17399a",
+  "hash": "c73945687940",
   "on": "2026-10-19",
-  "reason": "Defines Sword And Sandal in one plain sentence paraphrasing its source (“Also called peplum, a subgenre of largely…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Sword And Sandal in one plain sentence paraphrasing its source (“Also called peplum, a subgenre of largely…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .sword_and_sorcery": {
   "status": "Retained",
-  "hash": "4bdd6eb9b9dd",
+  "hash": "26717eeda646",
   "on": "2026-10-19",
-  "reason": "Defines Sword And Sorcery in one plain sentence paraphrasing its source (“A subgenre of fantasy featuring sword-wielding heroes…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Sword And Sorcery in one plain sentence paraphrasing its source (“A subgenre of fantasy featuring sword-wielding heroes…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .techno_thriller": {
   "status": "Retained",
-  "hash": "bdda2dbffef8",
+  "hash": "9cf2429d94c6",
   "on": "2026-10-19",
-  "reason": "Defines Techno-Thriller in one plain sentence paraphrasing its source (“A thriller whose plot relies on modern…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Techno-Thriller in one plain sentence paraphrasing its source (“A thriller whose plot relies on modern…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Merriam-Webster; Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .teen": {
-  "status": "Retained",
-  "hash": "be9b352cac64",
+  "status": "Rewritten",
+  "hash": "e0816f0a198e",
   "on": "2026-10-19",
-  "reason": "Defines Teen in one plain sentence paraphrasing its source (“A film genre aimed at teenagers and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Teen in one plain sentence paraphrasing its source (“A film genre aimed at teenagers and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .thriller": {
   "status": "Retained",
-  "hash": "5f59abef31dd",
+  "hash": "841b4f8b98b7",
   "on": "2026-10-19",
-  "reason": "Defines Thriller in one plain sentence paraphrasing its source (“A broad genre that evokes excitement and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Thriller in one plain sentence paraphrasing its source (“A broad genre that evokes excitement and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Britannica Dictionary; Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .time_travel": {
-  "status": "Retained",
-  "hash": "21e32f139b81",
+  "status": "Rewritten",
+  "hash": "b46d9c076e43",
   "on": "2026-10-19",
-  "reason": "Defines Time Travel in one plain sentence paraphrasing its source (“A subgenre of science fiction or fantasy…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Time Travel in one plain sentence paraphrasing its source (“A subgenre of science fiction or fantasy…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .tokusatsu": {
   "status": "Retained",
-  "hash": "4e3d89872975",
+  "hash": "7015b6e1b2bd",
   "on": "2026-10-19",
-  "reason": "Defines Tokusatsu in one plain sentence paraphrasing its source (“A Japanese term for live-action films or…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Tokusatsu in one plain sentence paraphrasing its source (“A Japanese term for live-action films or…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .tragedy": {
-  "status": "Retained",
-  "hash": "d9156c300b03",
+  "status": "Rewritten",
+  "hash": "92410cc625a2",
   "on": "2026-10-19",
-  "reason": "Defines Tragedy in one plain sentence paraphrasing its source (“A branch of drama that treats in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Tragedy in one plain sentence paraphrasing its source (“A branch of drama that treats in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .tragicomedy": {
-  "status": "Retained",
-  "hash": "556d4ca3f5d7",
+  "status": "Rewritten",
+  "hash": "7f8fd5f4cd2d",
   "on": "2026-10-19",
-  "reason": "Defines Tragicomedy in one plain sentence paraphrasing its source (“A dramatic work incorporating both tragic and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Tragicomedy in one plain sentence paraphrasing its source (“A dramatic work incorporating both tragic and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .true_crime": {
   "status": "Retained",
-  "hash": "661309d9f021",
+  "hash": "4872c4b5f865",
   "on": "2026-10-19",
-  "reason": "Defines True Crime in one plain sentence paraphrasing its source (“A non-fiction genre across literature, film and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines True Crime in one plain sentence paraphrasing its source (“A non-fiction genre across literature, film and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia; Merriam-Webster) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .vampire": {
   "status": "Retained",
-  "hash": "ba84106512f4",
+  "hash": "70a0847f9390",
   "on": "2026-10-19",
-  "reason": "Defines Vampire in one plain sentence paraphrasing its source (“Films about vampires, folkloric beings who feed…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Vampire in one plain sentence paraphrasing its source (“Films about vampires, folkloric beings who feed…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .war": {
   "status": "Retained",
-  "hash": "5035b9697c25",
+  "hash": "f744b856acc5",
   "on": "2026-10-19",
-  "reason": "Defines War in one plain sentence paraphrasing its source (“A film genre concerned with warfare, typically…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines War in one plain sentence paraphrasing its source (“A film genre concerned with warfare, typically…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .werewolf": {
   "status": "Retained",
-  "hash": "9923bd9414d6",
+  "hash": "887bbe4be1d6",
   "on": "2026-10-19",
-  "reason": "Defines Werewolf in one plain sentence paraphrasing its source (“Fiction and film portraying werewolves, humans who…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Werewolf in one plain sentence paraphrasing its source (“Fiction and film portraying werewolves, humans who…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .western": {
-  "status": "Retained",
-  "hash": "b338944de53e",
+  "status": "Rewritten",
+  "hash": "8e876dc295a0",
   "on": "2026-10-19",
-  "reason": "Defines Western in one plain sentence paraphrasing its source (“A genre of novels, stories, films and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "evidence": "Defines Western in one plain sentence paraphrasing its source (“A genre of novels, stories, films and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .whodunit": {
   "status": "Retained",
-  "hash": "de4b7b711187",
+  "hash": "73b6d87c046a",
   "on": "2026-10-19",
-  "reason": "Defines Whodunit in one plain sentence paraphrasing its source (“A detective or mystery story, presented as…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Whodunit in one plain sentence paraphrasing its source (“A detective or mystery story, presented as…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Merriam-Webster) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .wuxia": {
   "status": "Retained",
-  "hash": "b14fcc4bcb22",
+  "hash": "78d4d35fe382",
   "on": "2026-10-19",
-  "reason": "Defines Wuxia in one plain sentence paraphrasing its source (“A genre of Chinese fiction and low…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Wuxia in one plain sentence paraphrasing its source (“A genre of Chinese fiction and low…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .yakuza": {
   "status": "Rewritten",
-  "hash": "1aa6d27b80a4",
+  "hash": "413c28a79bc1",
   "on": "2026-10-19",
-  "evidence": "Yakuza's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks",
+  "evidence": "Yakuza's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .zombie": {
   "status": "Retained",
-  "hash": "3c46332ead4b",
+  "hash": "e19f4fab66c2",
   "on": "2026-10-19",
-  "reason": "Defines Zombie in one plain sentence paraphrasing its source (“A film genre featuring creatures usually portrayed…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "reason": "Defines Zombie in one plain sentence paraphrasing its source (“A film genre featuring creatures usually portrayed…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.brief-choose]": {
   "status": "Rewritten",

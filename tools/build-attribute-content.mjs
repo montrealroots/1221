@@ -35,7 +35,7 @@
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
-import { gameDates } from './research-dates.mjs';
+import { gameAccess, gameDates } from './research-dates.mjs';
 
 const json = (p) => JSON.parse(readFileSync(p, 'utf8'));
 const confidence = (r) => (['high', 'medium', 'low'].includes(r) ? r : 'low');
@@ -133,10 +133,10 @@ const BRITISH = new RegExp(`\\b(${Object.keys(AMERICAN).join('|')})\\b`, 'g');
 /** The house's apostrophe (’) inside a word, quotation or not: "Beckett’s", "It’s like a dance". A quotation mark stays as written. */
 const typographic = (text) => text.replace(/(\p{L})'(\p{L})/gu, '$1’$2');
 
-const house = (text) => gameDates(typographic(outside(outside(text, CONTRACTION, contract), BRITISH, (w) => AMERICAN[w])));
+const house = (text) => gameAccess(gameDates(typographic(outside(outside(text, CONTRACTION, contract), BRITISH, (w) => AMERICAN[w]))));
 
 /** A source's citations as written, with the research's marks of how each was read in the look's words, no space before a semicolon, and no last full stop. */
-const cited = (text) => gameDates(text.replace(/ ; /g, '; ').replace(/ \[fetched\]/g, ' [read directly]').replace(/ \[snippet\]/g, ' [from a search summary]').replace(/\.$/, ''));
+const cited = (text) => gameAccess(gameDates(text.replace(/ ; /g, '; ').replace(/ \[fetched\]/g, ' [read directly]').replace(/ \[snippet\]/g, ' [from a search summary]').replace(/\.$/, '')));
 
 // ---------------------------------------------------------------------------------------------------------------------
 // How each was read, as the look's parenthesis says it: "(… ; medium confidence)".
