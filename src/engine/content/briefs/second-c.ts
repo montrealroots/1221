@@ -11,10 +11,10 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-fairy_tale-2', title: 'The Lantern On The Ferry', kinds: ['fairy_tale'], medium: 'voice', size: 'medium', stakes: 2,
     logline: 'On the one night a year it can speak, an old ferry lantern has until the midnight bell to talk the ferrywoman’s daughter out of selling the boat for a purse of fairy gold.',
-    circumstances: 'A river crossing on Midwinter Night, between the first star and the midnight bell: the only hours in the year the lantern can speak, and then only in rhyme. Linnet’s mother, the ferrywoman, died in the autumn, the crossing is behind on its tolls, and this evening a smiling stranger in a gray coat offered Linnet a heavy purse for the boat. The lantern has seen that purse before, a hundred winters ago, and by dawn it held only leaves. Recorded alone at a microphone for an animated tale, before any of it is drawn.',
+    circumstances: 'A river crossing on Midwinter Night, between the first star and the midnight bell: the only hours in the year the lantern can speak, and then only in rhyme. Linnet’s mother, the ferrywoman, died in the autumn, the crossing is behind on its tolls, and this evening a smiling stranger in a gray coat offered Linnet a heavy purse for the boat. The lantern has seen that purse before, a hundred winters ago, and by dawn it held only leaves. You record it alone at a microphone for an animated tale, before any of it is drawn.',
     relationship: 'The lantern has hung over the bow since before Linnet was born and watched her learn to pole the boat; she has never once heard it speak.',
     you: 'Old Wick, the ferry lantern, tin and glass and very old, fond of the girl and fonder of its own rhymes.',
-    reader: 'The voice speaks to Linnet, sixteen, the ferrywoman’s daughter, whose lines aren’t in the booth; the actor plays to her as if she stood on the landing.',
+    reader: 'Linnet, sixteen, the ferrywoman’s daughter. Her lines aren’t in the booth, so play to her as if she stood on the landing.',
     objective: 'Stop the sale before the stranger comes back for his answer at midnight.',
     obstacle: 'Linnet thinks she’s dreaming, the lantern can speak only in rhyme, and the gold looks like the only way to keep the crossing.',
     beats: [
@@ -29,7 +29,7 @@ export const SECOND_C: readonly Brief[] = [
       language: 'The lantern can speak only in rhyme, short couplets with a strong beat, so every line has a shape to keep and the sense has to come through it for a girl who thinks she’s dreaming.',
       timing: 'A rhyme lands on its last word, and the bell in the last beat counts down the lines the lantern has left, so the pace tightens as its hours run out.',
       vocal: 'One small, old, vain voice carries a joke, a warning and a goodbye, with no face to help it.',
-      techniques: 'Voiced alone at a microphone for an animated tale, it’s all voice-over: the lantern’s age, its vanity and its love for the girl, played to a partner who isn’t in the booth.',
+      techniques: 'You voice it alone at a microphone for an animated tale, so it’s all voice-over: the lantern’s age, its vanity and its love for the girl, played to a partner who isn’t in the booth.',
       beats: 'A grand introduction played for laughs, a test it shows off in, a warning, and a goodbye against the bell.',
     },
     readings: [
@@ -41,7 +41,7 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-family-2', title: 'Career Day In Room Twelve', kinds: ['family'], medium: 'camera', size: 'medium', stakes: 0, readerPlays: 'pressing',
     logline: 'On career day in her son’s third-grade class, a sanitation truck driver who swapped two shifts to be there has twenty minutes to win over a rug full of eight-year-olds, and a son who asked her not to mention the smell.',
-    circumstances: 'A third-grade classroom on a Friday morning, career day, the children on the rug and the parents who’ve spoken already standing along the back wall: a dentist, a pilot and a man who sells software. Last night her son asked her to say she works “for the city” and leave it there. She has brought her reflective vest, her work gloves and a laminated card of the hand signals she uses to back the truck down a narrow street. On the tape the vest, the gloves and the card sit on a chair at her side in frame.',
+    circumstances: 'A third-grade classroom on a Friday morning, career day, the children on the rug and the parents who’ve spoken already standing along the back wall: a dentist, a pilot and a man who sells software. Last night her son asked her to say she works “for the city” and leave it there. She has brought her reflective vest, her work gloves and a laminated card of the hand signals she uses to back the truck down a narrow street. For the tape, set the vest, the gloves and the card on a chair at your side, in frame.',
     relationship: 'Visiting parent and her son’s classmate: a small, fearless girl in the front row who has a follow-up question for everything.',
     you: 'Loretta Coyle, forty-one, who has driven a city sanitation truck for sixteen years.',
     reader: 'Tilly, eight, cross-legged at the front of the rug, who asks her next question before the last answer is finished.',
@@ -56,9 +56,9 @@ export const SECOND_C: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 2,
     why: {
       timing: 'Each answer has to land before Tilly’s next question, or after it in a way that wins the room back.',
-      physical: 'The hand signals, made big and clear enough for a driver to read in a mirror, in the vest and gloves from the chair at her side, and taught to a room.',
+      physical: 'She makes the hand signals big and clear enough for a driver to read in a mirror, in the vest and gloves from the chair at her side, and teaches them to a room.',
       partner: 'Every question of Tilly’s changes the next answer, so she plays the girl as much as the room.',
-      improvisation: 'The talk between the set beats has room to follow whatever Tilly asks, so some of it is found live inside them.',
+      improvisation: 'The talk between the set beats has room to follow whatever Tilly asks, so you find some of it live.',
       beats: 'A cautious opening, a lesson the room can join, an honest answer that turns into a story, and an invitation to her son.',
     },
     readings: [
@@ -85,7 +85,7 @@ export const SECOND_C: readonly Brief[] = [
     ],
     language: 'everyday', timing: 3, physical: 0, partner: 3, vocal: 1, improvisation: 1,
     why: {
-      timing: 'Each round has to fit inside the warden’s minute, so the case is cut and paced tighter every time she makes it.',
+      timing: 'Each round has to fit inside the warden’s minute, so she cuts the case and paces it tighter every time she makes it.',
       partner: 'The warden greets her differently each time it forgets, and she has to read what this greeting will take.',
       beats: 'A plea, a first loss to the forgetting, a speech honed to a single breath, a price that costs her, and a gate opened by a stranger.',
     },
@@ -104,7 +104,7 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-farce-3', title: 'Rooms 412, 414 And 416', kinds: ['farce'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'pressing',
     logline: 'A hotel night manager who promised the same suite to three guests keeps all three content for one night by running between their doors, until all three doors open at once.',
-    circumstances: 'The fourth-floor corridor of a grand old hotel during a convention, a little before midnight, three doors in a row. Through a booking error the night manager gave the bridal suite to a honeymooning bride, a visiting judge and a famous critic, and moved each, unknowing, into a room he swore was the suite. He has told each a different story about who the others are. For the tape the three doors are marks on the floor before the lens, the reader plays all three guests off camera, each in a voice of their own, and his runs between the marks are set and repeated exactly.',
+    circumstances: 'The fourth-floor corridor of a grand old hotel during a convention, a little before midnight, three doors in a row. Through a booking error the night manager gave the bridal suite to a honeymooning bride, a visiting judge and a famous critic, and moved each, unknowing, into a room he swore was the suite. He has told each a different story about who the others are. For the tape, the three doors are marks on the floor before the lens, and the reader plays all three guests off camera, each in a voice of their own. Set your runs between the marks and repeat them exactly.',
     relationship: 'Strangers who each expect the best the hotel has, and the hotel’s last chance of a good review.',
     you: 'Felix Brand, forty, the night manager, who has never once been caught and believes he never will be.',
     reader: 'All three guests, the bride, the judge and the critic, played by one reader off camera, each at the door with a new demand.',
@@ -122,14 +122,14 @@ export const SECOND_C: readonly Brief[] = [
     techniques: { comedy: 2, clown: 2 },
     why: {
       timing: 'Every door opens on a cue, and every story has to be finished before the next door does: the comedy is in landing each lie on its beat.',
-      physical: 'Runs between three doors set to the inch on the floor marks, and one beat where he answers all three without moving his feet.',
+      physical: 'He runs between three doors set to the inch on the floor marks, and in one beat answers all three without moving his feet.',
       partner: 'One reader plays all three guests, each at him in a voice of their own, and every lie is shaped to who’s at the door.',
-      techniques: 'Comedy carries the lies against three sets of questions, and clowning the runs, the doors and the frozen feet, set on floor marks so they repeat safely on every take.',
+      techniques: 'The lies against three sets of questions ask for comedy, and the runs, the doors and the frozen feet ask for clowning, set on floor marks so they repeat safely on every take.',
       beats: 'Three lies at three doors, a fourth beat where the lies meet, one quiet confession, then a way out.',
     },
     readings: [
       { id: 'ledger', label: 'He Keeps The Ledger', reading: 'He’s a professional with three stories in his head and three doors to run between, and the comedy is how perfectly he keeps them apart until he can’t.', rests: 'He has told each guest a different story about who the others are, and his runs between the doors are set to the inch.', lean: { consistency: 1.2, execution: 1.05 }, draws: [{ dim: 'consistency', ability: 'memory', weight: 0.6 }, { dim: 'execution', ability: 'physical', weight: 0.4 }] },
-      { id: 'doors', label: 'Whatever Opens Next', reading: 'He has no plan, only reflexes, and the scene is a man inventing faster than the doors can open.', rests: 'Three doors that open without warning, each on a guest with a new demand.', lean: { responsiveness: 1.25, execution: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.7 }, { dim: 'execution', ability: 'physical', weight: 0.3 }] },
+      { id: 'doors', label: 'Whatever Opens Next', reading: 'He has no plan, only reflexes, and the scene is a man inventing faster than the doors can open.', rests: 'Three doors open without warning, each on a guest with a new demand.', lean: { responsiveness: 1.25, execution: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.7 }, { dim: 'execution', ability: 'physical', weight: 0.3 }] },
       { id: 'believer', label: 'He Believes Every Word', reading: 'He believes each lie while he’s telling it, his whole body behind it, and the quiet beat against the wall is the only time he hears himself.', rests: 'He has never once been caught, and admits to the corridor that he has lost track.', lean: { believability: 1.2, connection: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'execution', ability: 'physical', weight: 0.3 }] },
     ],
   },
@@ -142,27 +142,27 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-film_noir-3', title: 'The Pawn Ticket', kinds: ['film_noir'], medium: 'camera', size: 'long', stakes: 2, readerPlays: 'pressing',
     logline: 'At closing time in 1947, a pawnbroker who knows what the revolver in his safe was used for is pressed by the man who pawned it to hand it back without the ticket, and tells us the night afterward in his own words.',
-    circumstances: 'A pawnshop on a wet side street in 1947, ten minutes to closing, the blinds half down. Three days ago a man pawned a revolver; yesterday the papers said a bookmaker was shot with one like it. Tonight the man is back without his ticket, and the pawnbroker has the gun in the safe behind him and a police detective’s card in his vest pocket. The tape opens and closes with his narration, recorded off camera in the same session and laid over the scene: the account he gives afterward. For the tape the counter, the ledger and the safe’s dial are on his side of the frame.',
+    circumstances: 'A pawnshop on a wet side street in 1947, ten minutes to closing, the blinds half down. Three days ago a man pawned a revolver; yesterday the papers said a bookmaker was shot with one like it. Tonight the man is back without his ticket, and the pawnbroker has the gun in the safe behind him and a police detective’s card in his vest pocket. The tape opens and closes with his narration, the account he gives afterward, which you record off camera in the same session to lay over the scene. For the tape, keep the counter, the ledger and the safe’s dial on your side of the frame.',
     relationship: 'Customer and broker for three years: small things pawned and redeemed, a watch, a radio, a ring, always on time.',
     you: 'Abel Kreuzer, sixty, a pawnbroker who sees everything that crosses his counter and says nothing about it.',
     reader: 'Danny Moore, thirty, a regular, charming and broke, leaning harder on the counter every minute.',
     objective: 'Get Danny out of the shop at closing with the gun still in the safe, and nothing in his face to say why.',
     obstacle: 'Danny presses, flatters and threatens by turns, he knows Abel too well to be fooled for long, and the trade’s own rule is no ticket, no goods.',
     beats: [
-      { what: 'Narration over the shop: how a broker reads a man by what he pawns.', tones: ['lyric', 'grave'] },
+      { what: 'In narration over the shop, he tells how a broker reads a man by what he pawns.', tones: ['lyric', 'grave'] },
       { what: 'Danny jokes about the rain and asks for the gun, no ticket; Abel quotes the rule, dry as a ledger.', tones: ['comic', 'grave'] },
       { what: 'Danny leans in and names Abel’s daughter, friendly as ever; Abel turns a page of the ledger with a steady hand.', tones: ['grave'] },
       { what: 'Abel spins the safe’s dial, stops, and offers Danny the watch he pawned in the spring instead, on the house.', tones: ['grave', 'comic'] },
-      { what: 'Narration again: what he did with the detective’s card after Danny left, and why he still isn’t sure.', tones: ['lyric'] },
+      { what: 'In narration again, he tells what he did with the detective’s card after Danny left, and why he still isn’t sure.', tones: ['lyric'] },
     ],
     language: 'everyday', timing: 2, physical: 2, partner: 3, vocal: 2, improvisation: 0,
     techniques: { voiceover: 2 },
     why: {
-      timing: 'Every pause before an answer is measured against Danny’s patience, and the narration is timed to the picture it lies over.',
-      physical: 'The ledger, the dial and the watch are handled on his side of the frame with a steadiness the scene rests on: the hands give nothing away.',
+      timing: 'Measure every pause before an answer against Danny’s patience, and time the narration to the picture it lies over.',
+      physical: 'Handle the ledger, the dial and the watch on your side of the frame with a steadiness the scene rests on: his hands give nothing away.',
       partner: 'Danny presses from every side, and every answer is shaped to what he has just tried.',
-      vocal: 'Two voices: the dry, even one at the counter, and the narration, closer and older, knowing how the night ends.',
-      techniques: 'The narration is an account given afterward, played as voice-over in its own register and recorded off camera in the same session, so it’s played to a microphone with no face to show it.',
+      vocal: 'He has two voices: the dry, even one at the counter, and the narration, closer and older, knowing how the night ends.',
+      techniques: 'The narration is an account given afterward. Play it as voice-over in its own register, recorded off camera in the same session, to a microphone with no face to show it.',
       beats: 'A broker’s creed, a joke and a rule, a threat met with a steady hand, an offer in its place, then a narration that won’t say if he was right.',
     },
     readings: [
@@ -201,14 +201,14 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-found_footage-2', title: 'The Tape For Later', kinds: ['found_footage'], medium: 'camera', size: 'medium', stakes: 1, readerPlays: 'steady',
     logline: 'On the last night of 1999, a college sophomore records a message to her future self on her roommate’s camcorder, and the roommate, behind the lens, won’t let her leave out the real news.',
-    circumstances: 'A dorm room on New Year’s Eve, 1999, an hour before midnight, the hallway loud with a party. The tape is meant for the campus time capsule, to be opened in twenty-five years, and this is what was found in it. Her roommate holds the camcorder: on the tape the lens stands in for it, and the reader is beside the lens as Dana. She talks to the lens for her future self and just beside it for Dana. Yesterday she withdrew from school to go home and look after her father, and she has told no one but Dana.',
+    circumstances: 'A dorm room on New Year’s Eve, 1999, an hour before midnight, the hallway loud with a party. The tape is meant for the campus time capsule, to be opened in twenty-five years, and this is what was found in it. Her roommate holds the camcorder. On your tape the lens stands in for it, and the reader is beside the lens as Dana: talk to the lens for her future self and just beside it for Dana. Yesterday she withdrew from school to go home and look after her father, and she has told no one but Dana.',
     relationship: 'Roommates for a year and a half, closer than sisters, who record everything.',
     you: 'Rosa Cordero, nineteen, a sophomore who meant to be a marine biologist.',
     reader: 'Dana, her roommate, behind the camcorder, asking questions from off camera.',
     objective: 'Make a cheerful tape her future self will enjoy, and keep the withdrawal off it.',
     obstacle: 'Dana believes the tape is worthless unless it holds the truth, and she won’t stop recording or asking.',
     beats: [
-      { what: 'A goofy hello to the future: predictions, a tour of the room, a little dance to the party through the wall.', tones: ['comic'] },
+      { what: 'She says a goofy hello to the future: predictions, a tour of the room, a little dance to the party through the wall.', tones: ['comic'] },
       { what: 'Dana asks, from behind the camera, what she’s doing next semester, and she dodges with a joke.', tones: ['comic', 'grave'] },
       { what: 'She tells the lens the truth, and asks her future self whether it was the right call.', tones: ['lyric', 'grave'] },
     ],
@@ -218,7 +218,7 @@ export const SECOND_C: readonly Brief[] = [
     why: {
       partner: 'Dana steers every turn from behind the lens, and Rosa plays two eyelines: the lens for the future, and just beside it for her friend.',
       improvisation: 'The brief gives the beats and the objective and leaves every word to the take, the way the form is made.',
-      techniques: 'Improvisation carries the tape: every line is found live inside the beats, in answer to what Dana asks. The lens she talks to is the on-camera work every self-tape asks for.',
+      techniques: 'The tape is improvised: you find every line live inside the beats, in answer to what Dana asks. Talking to the lens is the on-camera work every self-tape asks for.',
       allows: 'With no written lines, the words come fresh from what the reader asks in each take, so it can only be played open, never set and repeated.',
       beats: 'A home video, a question dodged, and the truth told to a listener who doesn’t exist yet.',
     },
@@ -254,16 +254,16 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-giallo-2', title: 'Berth Fifteen', kinds: ['giallo'], medium: 'voice', size: 'medium', stakes: 3,
     logline: 'In the English dub of a thriller, a crime reporter coaxes a frightened concierge into describing a murdered stamp dealer’s last visitor, and learns the visitor holds the berth beside hers on tonight’s sleeper.',
-    circumstances: 'A dubbing booth. On the screen, a concierge’s lodge in a Milan apartment building, the afternoon after a stamp dealer on the fourth floor was found dead. The film was shot without sound, as many in the form were, and every line has to land on lips already filmed. In the story, the reporter’s editor has booked her on tonight’s sleeper to Rome, berth fifteen, to cover a trial there.',
+    circumstances: 'A dubbing booth. On the screen, a concierge’s lodge in a Milan apartment building, the afternoon after a stamp dealer on the fourth floor was found dead. The film was shot without sound, as many giallo films were, and every line has to land on lips already filmed. In the story, the reporter’s editor has booked her on tonight’s sleeper to Rome, berth fifteen, to cover a trial there.',
     relationship: 'Strangers: the concierge has turned away every reporter today, and this one has brought pastries.',
     you: 'Marta Ferri, thirty-two, a crime reporter for an evening paper, charming when it pays.',
-    reader: 'The voice speaks to Signora Ruffo, the concierge, whose lines are already on the track in the headphones.',
+    reader: 'Signora Ruffo, the concierge, whose lines are already on the track in your headphones.',
     objective: 'Get the concierge to describe the visitor, down to the smallest detail she can recall.',
     obstacle: 'She’s frightened and proud, the filmed lips fix the length of every line, and the detail that matters comes last.',
     beats: [
       { what: 'She flatters the concierge, admires the lodge and offers the pastries, each line fitted to the filmed smile.', tones: ['comic'] },
       { what: 'The concierge describes the visitor: a woman in a green coat and gloves, who said she was family.', tones: ['grave'] },
-      { what: 'She mentions the visitor dropped something, a ticket for tonight’s sleeper, berth fourteen, and the reporter takes out her own.', tones: ['grave'] },
+      { what: 'The concierge mentions the visitor dropped something, a ticket for tonight’s sleeper, berth fourteen, and the reporter takes out her own.', tones: ['grave'] },
       { what: 'She thanks the concierge as if all were well, and keeps her voice light for the last line on the picture.', tones: ['grave', 'grotesque'] },
     ],
     language: 'everyday', timing: 3, physical: 0, partner: 2, vocal: 2, improvisation: 0,
@@ -291,10 +291,10 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-gothic_horror-3', title: 'Entries For The Twelfth Of November', kinds: ['gothic_horror'], medium: 'voice', size: 'medium', stakes: 2,
     logline: 'Alone at a microphone, a governess reads the entries she wrote in her journal through one night in a house where something walks the corridor, as she wrote them, hour by hour.',
-    circumstances: 'A remote house on a fen in the 1850s, the night of the twelfth of November, told as the journal kept that night. The family is away; she was left with the two children and a manservant who won’t come upstairs after dark. Each entry is headed with its hour. Recorded alone at a microphone and read as the journal it is, each entry written at the time, not knowing how the night will end.',
+    circumstances: 'A remote house on a fen in the 1850s, the night of the twelfth of November, told as the journal kept that night. The family is away; she was left with the two children and a manservant who won’t come upstairs after dark. Each entry is headed with its hour. You record it alone at a microphone, as the journal it is: each entry written at the time, not knowing how the night will end.',
     relationship: 'The journal is written to her sister in Bristol, the one person she tells the truth, who may never read it.',
     you: 'Miss Clara Ashdown, twenty-six, a governess four months in the house, educated, practical and very frightened.',
-    reader: 'No reader: the voice writes to her absent sister, and twice to whatever is on the other side of the door.',
+    reader: 'Her absent sister, to whom the journal is written, and twice, whatever is on the other side of the door. There’s no reader.',
     objective: 'Keep a true record of the night, so that someone will believe it.',
     obstacle: 'Every hour the record is harder to keep calm, and by the last entry she can’t say for certain that the hand writing it belongs to her.',
     beats: [
@@ -306,7 +306,7 @@ export const SECOND_C: readonly Brief[] = [
     language: 'heightened', timing: 2, physical: 0, partner: 0, vocal: 3, improvisation: 0,
     why: {
       language: 'The journal is written in the educated prose of the 1850s, long careful sentences in their proper forms, and the fear has to come through the proprieties.',
-      timing: 'Each entry is headed with its hour, and the pauses where she stops writing to listen are placed exactly.',
+      timing: 'Each entry is headed with its hour, and you place exactly the pauses where she stops writing to listen.',
       vocal: 'Alone at a microphone, the voice carries the whole night: the hours, the steps, the whisper through the door and the steadier hand at dawn.',
       beats: 'A sensible evening, footsteps counted like a register, a whisper through a door, then a calm last entry that frightens more than the rest.',
     },
@@ -319,7 +319,7 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-grindhouse-2', title: 'Paid In Quarters', kinds: ['grindhouse'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'pressing',
     logline: 'A karate teacher in a strip-mall school pays the landlord’s collector the rent in quarters, and when he brings two men to collect double, she gives them a lesson.',
-    circumstances: 'A karate school between a laundromat and a pawnshop in a strip mall off the interstate, 1978, after the evening class has gone home. The landlord has doubled the rent to push her out for a liquor store, and his collector has brought two large men, who wait by the door. She has the old rent counted out in rolls of quarters from the laundromat next door. On the tape the fight is marked solo at half speed against cues the reader calls, every blow reacted to and none landed, and the two men stay off frame.',
+    circumstances: 'A karate school between a laundromat and a pawnshop in a strip mall off the interstate, 1978, after the evening class has gone home. The landlord has doubled the rent to push her out for a liquor store, and his collector has brought two large men, who wait by the door. She has the old rent counted out in rolls of quarters from the laundromat next door. For the tape, mark the fight solo at half speed against cues the reader calls, reacting to every blow and landing none; the two men stay off frame.',
     relationship: 'She has known the collector since he was a skinny kid in her Saturday class who quit after a month.',
     you: 'Dee Carver, forty-one, a former stuntwoman who teaches karate to kids and retirees.',
     reader: 'Lonnie Gaskell, thirty, the landlord’s collector, polite, embarrassed and determined to collect.',
@@ -335,9 +335,9 @@ export const SECOND_C: readonly Brief[] = [
     techniques: { combat: 2 },
     why: {
       timing: 'The fight is set to the reader’s calls, and each move lands on its cue. The jokes around it need the same precision.',
-      physical: 'A short, hard fight against two men, four moves and the reactions to them, then stillness, all marked solo at half speed and set so it repeats on every take.',
+      physical: 'It’s a short, hard fight against two men, four moves and the reactions to them, then stillness, all marked solo at half speed and set so it repeats on every take.',
       partner: 'Lonnie is the only one she talks to, and she plays the fight to his calls and to his embarrassment.',
-      techniques: 'Stage combat carries the four moves: choreographed and marked solo at reduced speed against called cues, contact reacted to and never made, with the reader well clear and every strike angled away from the lens.',
+      techniques: 'The four moves are stage combat: choreographed and marked solo at reduced speed against called cues. React to the contact and never make it, keep well clear of the reader, and angle every strike away from the lens.',
       beats: 'Courtesy, an ultimatum, a fight played with grim relish, and a receipt.',
     },
     readings: [
@@ -348,7 +348,7 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-hangout-2', title: 'No Meteors Tonight', kinds: ['hangout'], medium: 'camera', size: 'medium', stakes: 0, readerPlays: 'unpredictable',
     logline: 'Two neighbors who only know each other from the roof of their building wait in lawn chairs for a meteor shower behind the clouds, and neither wants to be first to go down.',
-    circumstances: 'The flat roof of a six-story apartment building on a warm August night, after midnight. The meteor shower was supposed to peak at one; the clouds came in at eleven. They met up here three summers ago and have never once run into each other anywhere else in the building. On the tape she leans back in a lawn chair, looking up past the lens, and the sky is wherever she says it is.',
+    circumstances: 'The flat roof of a six-story apartment building on a warm August night, after midnight. The meteor shower was supposed to peak at one; the clouds came in at eleven. They met up here three summers ago and have never once run into each other anywhere else in the building. For the tape, lean back in a lawn chair, looking up past the lens: the sky is wherever she says it is.',
     relationship: 'Roof friends: they know each other’s opinions on everything and not each other’s last names.',
     you: 'June Tremaine, forty-four, a night-shift radiographer on her night off.',
     reader: 'Walt, sixty, from the fourth floor, who brought the thermos and keeps announcing he’s going to bed.',
@@ -365,7 +365,7 @@ export const SECOND_C: readonly Brief[] = [
     allows: { structure: ['open'] },
     why: {
       partner: 'The pleasure of the scene is in how she listens to him, and he never takes the same tangent twice.',
-      improvisation: 'The brief gives the beats and leaves the talk to the take, so each argument and tangent is found live with the reader.',
+      improvisation: 'The brief gives the beats and leaves the talk to the take, so you find each argument and tangent live with the reader.',
       techniques: 'The talk is improvised, unhurried and found in the moment, built on whatever the reader offers.',
       allows: 'With the talk left to the take, each night on the roof goes differently, so it can only be played open, never set and repeated.',
       beats: 'An argument about clouds, a tangent worth following, a quiet admission, and a streak that keeps him up there.',
@@ -378,7 +378,7 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-heist-2', title: 'The Last Number', kinds: ['heist'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'unpredictable',
     logline: 'Halfway through cracking a wholesaler’s safe, an old safecracker has to admit to his granddaughter, keeping lookout on the radio, that he can no longer hear the last number fall.',
-    circumstances: 'The back office of a jewelry wholesaler at three in the morning. He has opened safes for forty years and promised his daughter this would be his last job; his granddaughter, on her first, is in the alley with a walkie-talkie and a view of the street. On the tape the safe’s dial is a prop mounted at his side of the frame, the walkie is in his hand, and every sound from outside reaches him through her.',
+    circumstances: 'The back office of a jewelry wholesaler at three in the morning. He has opened safes for forty years and promised his daughter this would be his last job; his granddaughter, on her first, is in the alley with a walkie-talkie and a view of the street. For the tape, the safe’s dial is a prop mounted at your side of the frame and the walkie is in your hand; every sound from outside reaches him through her.',
     relationship: 'Grandfather and granddaughter: he taught her to ride a bike and to pick a lock the same summer, and her mother has never forgiven him.',
     you: 'Augie Penner, sixty-eight, a safecracker with very good hands and failing ears.',
     reader: 'Tess, twenty, his granddaughter, on the walkie-talkie, nervous and trying hard not to sound it.',
@@ -393,8 +393,8 @@ export const SECOND_C: readonly Brief[] = [
     ],
     language: 'everyday', timing: 3, physical: 2, partner: 2, vocal: 0, improvisation: 0,
     why: {
-      timing: 'The dial turns against her reports, the clicks are counted aloud between them, and the last beat waits on one word from her.',
-      physical: 'Fine, slow work at a prop dial at his side of the frame, and a stillness held while the patrol car idles outside.',
+      timing: 'He turns the dial against her reports and counts the clicks aloud between them, and the last beat waits on one word from her.',
+      physical: 'The work at the prop dial is fine and slow, and he holds still while the patrol car idles outside.',
       partner: 'Each report of hers changes what he does, and in the last beat she becomes his ears.',
       beats: 'A grumble to calm her, a freeze, a talk-down, a confession, and a lock opened together.',
     },
@@ -456,14 +456,14 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-holiday-2', title: 'The Closing Announcement', kinds: ['holiday'], medium: 'voice', size: 'short', stakes: 0,
     logline: 'At closing time on Christmas Eve, a department store’s announcer has to coax a hiding seven-year-old out of the toy floor with only the store’s loudspeakers.',
-    circumstances: 'A department store at six on Christmas Eve, closing time, the aisles emptied. A boy who ran off from his father an hour ago is hiding somewhere on the toy floor; his father is waiting at the service desk, and the night crew will find him eventually. The announcer at the microphone in the office can speak to the whole store, and the old intercom carries the toy floor’s sounds back to her, so she hears only what the boy chooses to answer with: the honk of a toy horn, a bell, a squeaky duck. Recorded alone at a microphone, with the toy sounds in the headphones.',
+    circumstances: 'A department store at six on Christmas Eve, closing time, the aisles emptied. A boy who ran off from his father an hour ago is hiding somewhere on the toy floor; his father is waiting at the service desk, and the night crew will find him eventually. The announcer at the microphone in the office can speak to the whole store, and the old intercom carries the toy floor’s sounds back to her, so she hears only what the boy chooses to answer with: the honk of a toy horn, a bell, a squeaky duck. You record it alone at a microphone, with the toy sounds in your headphones.',
     relationship: 'Strangers: she has made the closing announcement a thousand times, and he has never before heard a grown-up talk to him out of the ceiling.',
     you: 'Bernadette Sowerby, fifty-eight, the store’s announcer for twenty years, warm, precise and dry.',
-    reader: 'The voice speaks to Danny, seven, hiding on the toy floor, who answers only with toy horns and bells; the actor plays to the sounds as if he were in the room.',
+    reader: 'Danny, seven, hiding on the toy floor, who answers only with toy horns and bells. Play to the sounds as if he were in the room.',
     objective: 'Get Danny to walk to the service desk on his own.',
     obstacle: 'He thinks he’s in trouble for breaking a snow globe, he won’t answer in words, and she can’t see him.',
     beats: [
-      { what: 'The standard closing announcement, then a second one, addressed to Danny by name and very formal.', tones: ['comic'] },
+      { what: 'She makes the standard closing announcement, then a second one, addressed to Danny by name and very formal.', tones: ['comic'] },
       { what: 'A honk answers, and she sets up a code: one honk for yes, two for no.', tones: ['comic'] },
       { what: 'She learns about the snow globe, and tells the whole store about the vase she broke at his age.', tones: ['lyric', 'comic'] },
       { what: 'She plays the closing chime early, as a fanfare for him, and waits with the microphone open until the service desk buzzes up to say he’s there.', tones: ['lyric'] },
@@ -509,10 +509,10 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-horror-2', title: 'Chapter Nine', kinds: ['horror'], medium: 'voice', size: 'medium', stakes: 2,
     logline: 'Recording an audiobook late at night, a narrator reaches a chapter that describes a narrator alone in a booth, reading, and the engineer in the control room stops answering.',
-    circumstances: 'A recording booth in a small studio at one in the morning, the last session of a long week. The book is a novel by an author who died before it was published, and she has read eight chapters of it without trouble. Chapter nine opens in a padded booth exactly like hers. The engineer sits behind the glass and talks to her through the headphones between takes. Recorded alone at a microphone, the way an audiobook is.',
+    circumstances: 'A recording booth in a small studio at one in the morning, the last session of a long week. The book is a novel by an author who died before it was published, and she has read eight chapters of it without trouble. Chapter nine opens in a padded booth exactly like hers. The engineer sits behind the glass and talks to her through the headphones between takes. You record it alone at a microphone, as an audiobook is recorded.',
     relationship: 'Colleagues of six years who finish each other’s jokes between takes; he’s the one who always stays late with her.',
     you: 'Corinne Delmont, forty-five, an audiobook narrator with three hundred books behind her and a famously steady voice.',
-    reader: 'The voice speaks to Eli, the engineer, heard in her headphones between takes, until he stops.',
+    reader: 'Eli, the engineer, heard in her headphones between takes, until he stops.',
     objective: 'Read her way to a page she isn’t on.',
     obstacle: 'The chapter describes each thing she does a line before she does it, and it says that if the narrator stops reading, she’ll hear the booth door open.',
     beats: [
@@ -524,7 +524,7 @@ export const SECOND_C: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 0, partner: 1, vocal: 3, improvisation: 0,
     techniques: { voiceover: 3 },
     why: {
-      vocal: 'Two voices in one throat: the book’s narration, polished and even, and her own between the lines, held as steady as the narration while it fills with dread.',
+      vocal: 'She has two voices in one throat: the book’s narration, polished and even, and her own between the lines, held as steady as the narration while it fills with dread.',
       techniques: 'Audiobook narration is voice-over work at a microphone, and the scene asks for it at its most exact: her reading can’t crack even as the book turns on her.',
       beats: 'A routine session, a coincidence, a silence on the talkback, and a page turned anyway.',
     },
@@ -536,7 +536,7 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-horror_comedy-2', title: 'The Story She Made Up', kinds: ['horror_comedy'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'unpredictable',
     logline: 'A camp counselor telling a scary story after lights out sees the creature from her story at the edge of the trees, and has to keep telling it while she talks her campers to safety.',
-    circumstances: 'A summer camp in the woods on the last night of the session, after the campfire has been put out; she tells the story by flashlight to a cabin of ten-year-olds on the porch steps. She made the creature up three summers ago, and every year the campers love it more. Tonight, behind them, something exactly like it is standing in the pines. On the tape the flashlight is her only light, the campers sit where the reader is, off camera, and the creature is in her eyeline just past them.',
+    circumstances: 'A summer camp in the woods on the last night of the session, after the campfire has been put out; she tells the story by flashlight to a cabin of ten-year-olds on the porch steps. She made the creature up three summers ago, and every year the campers love it more. Tonight, behind them, something exactly like it is standing in the pines. For the tape, the flashlight is your only light, the campers sit where the reader is, off camera, and the creature is in your eyeline just past them.',
     relationship: 'Counselor and camper: Owen has heard the story twice before and corrects every detail she changes.',
     you: 'Hallie Moss, twenty, a counselor in her third summer, who does all the voices.',
     reader: 'Owen, ten, the cabin’s know-it-all, who interrupts somewhere different every time.',
@@ -553,9 +553,9 @@ export const SECOND_C: readonly Brief[] = [
     techniques: { comedy: 3 },
     why: {
       timing: 'The scary story and the escape share every line, and each change to the story has to come at a storyteller’s pace so the campers don’t hear the fear.',
-      physical: 'Flashlight business and the creature’s gestures, played seated and then standing on her side of the frame, while her eyes keep checking the same spot past the lens.',
+      physical: 'Play the flashlight business and the creature’s gestures seated, then standing, on your side of the frame, while your eyes keep checking the same spot past the lens.',
       partner: 'Owen interrupts somewhere new every time, and she has to fold each interruption into the story.',
-      vocal: 'Every voice in the story, the narrator’s hush and the creature’s growl, held steady while her own fear runs under them.',
+      vocal: 'She holds every voice in the story steady, the narrator’s hush and the creature’s growl, while her own fear runs under them.',
       techniques: 'The comedy is in the situation, a storyteller trapped inside her own story, and it lands only with the fear played straight under it. The comic timing of the rewrites comes from the scene itself.',
       beats: 'A hammy opening, a heckle, a sighting, a rewrite on the run, and the true ending at full speed.',
     },
@@ -568,10 +568,10 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-isekai-2', title: 'Dialogue Option Three', kinds: ['isekai'], medium: 'voice', size: 'long', stakes: 2,
     logline: 'A game translator wakes inside the fantasy game she translated on deadline, where everyone speaks the clumsy lines she wrote, and has to warn an innkeeper about the fire she wrote into his chapter.',
-    circumstances: 'The common room of a village inn in another world, at dusk. Last night she sent off the English script of a fantasy role-playing game two minutes before the deadline and closed her eyes; she opened them in its first village, where everyone says exactly the lines she typed, mistakes and all. She knows the inn burns in chapter three. Recorded alone at a microphone for an animated series, with the innkeeper’s lines on the track in her headphones.',
+    circumstances: 'The common room of a village inn in another world, at dusk. Last night she sent off the English script of a fantasy role-playing game two minutes before the deadline and closed her eyes; she opened them in its first village, where everyone says exactly the lines she typed, mistakes and all. She knows the inn burns in chapter three. You record it alone at a microphone for an animated series, with the innkeeper’s lines on the track in your headphones.',
     relationship: 'She wrote every word he has ever said; he has never met her and finds her strange.',
     you: 'Noor Amari, thirty-one, a game translator who wrote this world’s dialogue in eleven sleepless days.',
-    reader: 'The voice speaks to Bram, the innkeeper, whose recorded lines play in the headphones; he can say only what she wrote for him.',
+    reader: 'Bram, the innkeeper, whose recorded lines play in your headphones. He can say only what she wrote for him.',
     objective: 'Make Bram leave the inn before tonight, when the script says it burns.',
     obstacle: 'He can answer only with the lines she gave him, and she gave him six.',
     beats: [
@@ -588,7 +588,7 @@ export const SECOND_C: readonly Brief[] = [
       timing: 'Bram’s lines are fixed on the track, so each of hers has to set up the one of his six it will get and fit the space before it.',
       partner: 'His six lines never change, and what they mean changes completely as she learns what she’s up against.',
       vocal: 'The voice goes from a giddy fan in a world she knows by heart to a woman pleading with a man who can’t hear her, with no face to help.',
-      techniques: 'Voiced alone for an animated series against a recorded partner, it’s all voice-over: the scene’s comedy, horror and tenderness, played to six lines in the headphones.',
+      techniques: 'You voice it alone for an animated series against a recorded partner, so it’s all voice-over: the scene’s comedy, horror and tenderness, played to six lines in the headphones.',
       beats: 'Three beats of a fan’s delight, then the chapter she remembers, a plea that hits a wall of fixed lines, and one new word.',
     },
     readings: [
@@ -600,7 +600,7 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-jidaigeki-2', title: 'The Small Door In The Ward Gate', kinds: ['jidaigeki'], medium: 'camera', size: 'long', stakes: 2, readerPlays: 'unpredictable',
     logline: 'In Edo, after the ward gates have closed for the night, an old gatekeeper has to get a drunk young samurai through the low side door without opening the great gate, and without either of them losing face.',
-    circumstances: 'A ward gate in Edo in the 1830s, an hour after it closed for the night. The town’s wards shut their gates at night, and anyone passing late went through a low side door, stooping, while the gatekeeper struck his wooden clappers to tell the next gate how many were coming. With robberies in the ward, the magistrate’s office is checking every gate this month, and a gatekeeper who opens the great gate after hours loses his post. The ward keeps an oak staff at the gatehouse, and the gatekeeper carried a lord’s spear in the processions to Edo for twenty years before he took this post. On the tape the gate is the edge of the frame, the clappers and the staff are on his side of it, and the young man’s sword is the reader’s to call and is never seen.',
+    circumstances: 'A ward gate in Edo in the 1830s, an hour after it closed for the night. The town’s wards shut their gates at night, and anyone passing late went through a low side door, stooping, while the gatekeeper struck his wooden clappers to tell the next gate how many were coming. With robberies in the ward, the magistrate’s office is checking every gate this month, and a gatekeeper who opens the great gate after hours loses his post. The ward keeps an oak staff at the gatehouse, and the gatekeeper carried a lord’s spear in the processions to Edo for twenty years before he took this post. For the tape, the gate is the edge of the frame, with the clappers and the staff on your side of it, and the young man’s sword is the reader’s to call and is never seen.',
     relationship: 'Strangers of different stations: the gatekeeper has bowed to a thousand young men like this one, and the young man has never once looked at a gatekeeper’s face.',
     you: 'Kihei, sixty-six, the ward’s gatekeeper, who sells straw sandals and sweets from the gatehouse by day.',
     reader: 'Hosaka Ichinojō, twenty, a retainer of a great lord’s household, drunk and proud, and under both of them afraid of reaching the household’s gate after it’s barred.',
@@ -618,9 +618,9 @@ export const SECOND_C: readonly Brief[] = [
     why: {
       language: 'A townsman speaks to a samurai in the set phrases of deference, and the young man answers in the clipped commands of his rank, so the lines are heightened throughout, and courtesy is the gatekeeper’s first defense and his last.',
       timing: 'The clappers open and close the scene on a count, the two exchanges are set to the reader’s calls, and the question about the dropped sword needs a pause long enough for the young man to choose his answer.',
-      physical: 'A townsman’s bows to a samurai, held low and long, then two exchanges with a six-foot staff and the stillness after them, in an old body that hasn’t done this in years.',
+      physical: 'He bows as a townsman bows to a samurai, low and long, then fights two exchanges with a six-foot staff and holds the stillness after them, in an old body that hasn’t done this in years.',
       partner: 'The young man is drunk and changes from one line to the next, so each courtesy answers the mood in front of it, and the last beat waits on what he decides.',
-      techniques: 'Classical text work carries the deferential register and its set phrases, spoken with weight and never modernized. Stage combat carries the two staff exchanges, marked solo at half speed with a light replica staff against the reader’s called cues, kept low and angled away from the lens and the reader’s eyeline, the sword reacted to and never shown, and repeated exactly on every take.',
+      techniques: 'The deferential register and its set phrases ask for classical text work: speak them with weight and never modernize them. The two staff exchanges ask for stage combat: mark them solo at half speed with a light replica staff against the reader’s called cues, keep them low and angled away from the lens and the reader’s eyeline, react to the sword without ever showing it, and repeat them exactly on every take.',
       beats: 'A rule repeated, an offer taken as an insult, a fight he can’t be seen to win, a fiction that lets the young man keep his face, and one soft clap for the next gate.',
     },
     readings: [
@@ -637,7 +637,7 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-jukebox_musical-3', title: 'The Last Dance Before The Cake', kinds: ['jukebox_musical'], medium: 'camera', size: 'long', stakes: 2, readerPlays: 'pressing',
     logline: 'At his sister’s wedding, a best man who promised a speech leads the dance floor through three songs everyone knows instead, to bring their father, who walked out to his car, back into the room.',
-    circumstances: 'A wedding reception in a rented hall, nine at night, the band between sets. Their father sat through the ceremony and walked out before the speeches, and he’s in his car in the parking lot with the radio on. The best man has asked the band for the three songs their father used to sing in the kitchen, all well-known hits of his youth: as in any musical of the kind, songs the audience already knows. The father’s brother, who wants to go out and haul him in, keeps cutting in. For the tape the steps are set and danced solo, the reader well clear.',
+    circumstances: 'A wedding reception in a rented hall, nine at night, the band between sets. Their father sat through the ceremony and walked out before the speeches, and he’s in his car in the parking lot with the radio on. The best man has asked the band for the three songs their father used to sing in the kitchen, all well-known hits of his youth: as in any musical of the kind, songs the audience already knows. The father’s brother, who wants to go out and haul him in, keeps cutting in. For the tape, set the steps and dance them solo, well clear of the reader.',
     relationship: 'Father and son haven’t danced since the son was six; the uncle and the best man have argued all day about how to handle him.',
     you: 'Tom Okafor, twenty-nine, a quantity surveyor, who can sing a bit and dance less.',
     reader: 'Uncle Femi, the father’s brother, loud, loving and sure he knows best, who pushes in at every chorus.',
@@ -653,16 +653,16 @@ export const SECOND_C: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 3, improvisation: 1,
     techniques: { singing: 2, dance: 2 },
     why: {
-      timing: 'Three songs with their own tempos, and every turn of the scene placed on a bar the audience already knows.',
+      timing: 'There are three songs, each with its own tempo, and every turn of the scene has to land on a bar the audience already knows.',
       physical: 'He leads a dance floor through three numbers, a few steps set and danced solo, and keeps them up the length of the medley: the songs carry the scene, and the body keeps time with them.',
       partner: 'His uncle pushes in at every chorus, and each time Tom has to turn him without dropping the song.',
-      vocal: 'Three songs sung live as the character, a man who can sing a bit, never as an impression of the records.',
+      vocal: 'He sings three songs live as the character, a man who can sing a bit, never as an impression of the records.',
       techniques: 'The medley asks for singing, as the character and never as an impression of whoever made the songs famous, and the steps he leads ask for dance, set and danced solo with the reader well clear.',
       beats: 'A speech that fails, a song to the doors, an uncle turned into a dancer, a song to an empty chair, then the doors.',
     },
     readings: [
       { id: 'floor', label: 'Keep Them Dancing', reading: 'He’s the host of the room, and the scene is a man holding a whole dance floor together until his father comes.', rests: 'He has to keep the whole floor dancing while he waits.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.5 }, { dim: 'consistency', ability: 'stamina', weight: 0.5 }] },
-      { id: 'chair', label: 'Sung To The Empty Chair', reading: 'The songs are his father’s, and every one of them is sung to a man who isn’t there yet.', rests: 'He sings the second song to the empty chair.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'interpretation', ability: 'imagination', weight: 0.5 }] },
+      { id: 'chair', label: 'Sung To The Empty Chair', reading: 'The songs are his father’s, and he sings every one of them to a man who isn’t there yet.', rests: 'He sings the second song to the empty chair.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'interpretation', ability: 'imagination', weight: 0.5 }] },
       { id: 'uncle', label: 'Turning Femi', reading: 'The real scene is with his uncle: every chorus is an argument won without stopping the song.', rests: 'His uncle keeps cutting in, and Tom sings at him until he dances.', lean: { responsiveness: 1.2, connection: 1.1 }, draws: [{ dim: 'responsiveness', ability: 'listening', weight: 0.6 }, { dim: 'connection', ability: 'presence', weight: 0.4 }] },
     ],
   },
@@ -709,7 +709,7 @@ export const SECOND_C: readonly Brief[] = [
     techniques: { accents: 2 },
     why: {
       partner: 'Everything turns on the rent man: what he has heard, what he believes, and what he decides to do with his own money.',
-      vocal: 'Two volumes in one scene, the bright voice for the wall and the woman behind it and the low one for the truth, with the town’s speech in both.',
+      vocal: 'She speaks at two volumes: the bright voice for the wall and the woman behind it, and the low one for the truth, with the town’s speech in both.',
       techniques: 'The lines are written in the working-class speech of a Lancashire mill town, its rhythms and its “love” and “ta” among them, and the accent is played as the way Jean talks, with the dignity it’s owed, never as color or a joke.',
       beats: 'A show for the neighbors, a story he has heard, the truth told low, and a kindness she didn’t ask for.',
     },

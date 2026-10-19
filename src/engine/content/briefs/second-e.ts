@@ -16,7 +16,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-psychological_thriller-3', title: 'The Third Telling', kinds: ['psychological_thriller'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'pressing',
     logline: 'Asked by a detective to tell the night her husband disappeared for the third time, a woman tells it in exactly the same words, and the detective wants to know why.',
-    circumstances: 'An interview room at a county sheriff’s office, a Tuesday afternoon, three days after her husband walked out of their lake house and didn’t come back. She has told the story twice already, and both times it was word for word the same, down to the time on the stove clock. The detective has noticed. She isn’t under arrest and can leave whenever she likes. For the tape she sits at the table, and the detective is read off camera across it.',
+    circumstances: 'An interview room at a county sheriff’s office, a Tuesday afternoon, three days after her husband walked out of their lake house and didn’t come back. She has told the story twice already, and both times it was word for word the same, down to the time on the stove clock. The detective has noticed. She isn’t under arrest and can leave whenever she likes. For the tape, sit at the table, with the reader off camera across it as the detective.',
     relationship: 'Strangers until Saturday: he’s polite and patient and doesn’t believe a word.',
     you: 'Dana Whitlock, forty-three, a court stenographer, who remembers everything she hears exactly and always has.',
     reader: 'Detective Ray Corso, who asks the same questions in a different order every time.',
@@ -32,7 +32,7 @@ export const SECOND_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 3, physical: 0, partner: 2, vocal: 1, improvisation: 0,
     why: {
-      timing: 'The telling is word for word each time, and every interruption has to be met and the story taken up again exactly where it was left.',
+      timing: 'The telling is word for word each time: she has to meet every interruption and take the story up again exactly where she left it.',
       partner: 'He asks the same questions in a different order every time, and each answer is shaped to where he has jumped.',
       beats: 'The same beginning, an interruption refused, a correction, an explanation, the one new word, then leaving.',
     },
@@ -70,7 +70,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-revenge-2', title: 'The Dealer’s Last Hand', kinds: ['revenge'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'pressing',
     logline: 'Eight years after she lost her diner to a stacked deck, a card dealer plays the man who stacked it heads-up for the deed, with a deck he insists be fresh.',
-    circumstances: 'The back room of a lumberyard office, past two in the morning, the private Thursday game over and the other players gone home. Eight years ago, the week her divorce came through, June lost her diner to Royce Garland at this table on a hand he’d stacked. She got sober, learned to deal at a casino two hundred miles away, and was hired for his game in March. Tonight, bored and up big, he’s offered to play the dealer heads-up: her savings against the deed to the diner. He still owns it and has let it fall apart. For the tape she sits at the table’s edge with the deck and the chips on her side of the frame; his cards are dealt to an empty place at the frame’s edge, and he never touches what she holds.',
+    circumstances: 'The back room of a lumberyard office, past two in the morning, the private Thursday game over and the other players gone home. Eight years ago, the week her divorce came through, June lost her diner to Royce Garland at this table on a hand he’d stacked. She got sober, learned to deal at a casino two hundred miles away, and was hired for his game in March. Tonight, bored and up big, he’s offered to play the dealer heads-up: her savings against the deed to the diner. He still owns it and has let it fall apart. For the tape, sit at the table’s edge with the deck and the chips on your side of the frame, and deal his cards to an empty place at the frame’s edge; he never touches what she holds.',
     relationship: 'Dealer and player, as far as he knows. He took her diner in a single night and has never once looked closely at the woman who shuffles his cards.',
     you: 'June Halloran, forty-six, eight years sober, with the steadiest hands in the county and her savings on the table.',
     reader: 'Royce Garland, sixty, who owns the lumberyard, the game and half of Main Street, and who watches every dealer’s hands.',
@@ -85,8 +85,8 @@ export const SECOND_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 0, improvisation: 0,
     why: {
-      timing: 'The shuffle, the deal and her answers keep a dealer’s steady rhythm under his pushing, and the last cards are turned one at a time, each one placed.',
-      physical: 'Continuous card handling: the riffle, the cut, the deal and the slow turn, done with a real deck on her side of the frame, his cards dealt to an empty place at its edge.',
+      timing: 'The shuffle, the deal and her answers keep a dealer’s steady rhythm under his pushing, and she turns the last cards one at a time, placing each one.',
+      physical: 'She handles the cards all the way through: the riffle, the cut, the deal and the slow turn, with a real deck on her side of the frame and his cards dealt to an empty place at its edge.',
       partner: 'He presses her with a story, a demand and a question, and she has to take each one without the shuffle missing a beat.',
       beats: 'An invisible dealer, his boast heard out, a fresh deck handled in plain sight, a truth told by halves, then the cards turned.',
     },
@@ -98,7 +98,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-road_movie-2', title: 'One More State', kinds: ['road_movie'], medium: 'camera', size: 'short', stakes: 1, readerPlays: 'steady',
     logline: 'Two women in their sixties, eleven days into the road trip they planned at nineteen, stand outside their motel room at midnight while one asks the other not to fly home on Sunday.',
-    circumstances: 'The second-floor walkway of a roadside motel in the high desert, near midnight, eleven days and six states in. Bernadette has a plane ticket home from the next city on Sunday, two days ahead of her granddaughter’s recital. An hour ago, over vending-machine crackers, Connie told her she sold her house before they left and has nowhere she has to be. For the tape Connie stands at the walkway rail turning the plastic room key in her fingers, and Bernadette speaks from the doorway beside the lens.',
+    circumstances: 'The second-floor walkway of a roadside motel in the high desert, near midnight, eleven days and six states in. Bernadette has a plane ticket home from the next city on Sunday, two days ahead of her granddaughter’s recital. An hour ago, over vending-machine crackers, Connie told her she sold her house before they left and has nowhere she has to be. For the tape, stand at the walkway rail turning the plastic room key in your fingers; Bernadette speaks from the doorway beside the lens.',
     relationship: 'College roommates who planned this drive the spring they were nineteen, then spent forty-three years writing at Christmas. On the road they’ve found they still finish each other’s jokes.',
     you: 'Connie Marchetti, sixty-two, a widowed bookkeeper who has decided to keep driving.',
     reader: 'Bernadette Moss, sixty-two, her old roommate, in the doorway in her robe, her ticket on the dresser behind her.',
@@ -121,7 +121,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-rockumentary-2', title: 'Soundcheck At The Granary', kinds: ['rockumentary'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'unpredictable',
     logline: 'With a documentary crew filming, a band’s keyboard player has an hour to coax their singer out of a locked dressing room before the first reunion show in eighteen years.',
-    circumstances: 'A converted granary in a river town, five in the afternoon, the soundcheck already an hour late and the crew’s camera trained on her. The drummer and the guitarist are onstage tuning. The singer locked herself in the dressing room the moment she heard the opening chord of their best-known song through the wall. For the tape Marisol plays to the dressing-room door at the edge of frame and glances now and then at the lens, the way people do when they know they’re being filmed.',
+    circumstances: 'A converted granary in a river town, five in the afternoon, the soundcheck already an hour late and the crew’s camera trained on her. The drummer and the guitarist are onstage tuning. The singer locked herself in the dressing room the moment she heard the opening chord of their best-known song through the wall. For the tape, play to the dressing-room door at the edge of the frame, and glance now and then at the lens, the way people do when they know they’re being filmed.',
     relationship: 'Bandmates since high school who shared a van and every meal for six years, then a lawyer when the band split; they haven’t been alone in a room together since.',
     you: 'Marisol Quintero, fifty-one, the band’s keyboard player, who tunes pianos for a living and put this reunion together herself.',
     reader: 'Dot Kavanagh, the singer, behind the locked door, never the same twice: silent one moment, sarcastic the next, then suddenly close against the other side.',
@@ -149,7 +149,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-romance-2', title: 'Thursday Beginners', kinds: ['romance'], medium: 'camera', size: 'medium', stakes: 1, readerPlays: 'withholding',
     logline: 'After six weeks as practice partners in a beginners’ ballroom class, a retired bus mechanic tries to ask the woman he counts steps with to Saturday’s social as his date, and keeps being heard as asking something else.',
-    circumstances: 'A community-center hall after the Thursday evening class, the folding chairs stacked and the instructor’s speaker still playing a slow foxtrot. Augustin signed up in January because his daughter said he needed to get out of the house. Saturday’s social is the class’s first real dance, with a demonstration waltz by the beginners. Philippa is putting on her coat. For the tape he dances alone, his arm held for a partner who isn’t there, his eyes on her eyeline beside the lens.',
+    circumstances: 'A community-center hall after the Thursday evening class, the folding chairs stacked and the instructor’s speaker still playing a slow foxtrot. Augustin signed up in January because his daughter said he needed to get out of the house. Saturday’s social is the class’s first real dance, with a demonstration waltz by the beginners. Philippa is putting on her coat. For the tape, dance alone, your arm held for a partner who isn’t there and your eyes on her eyeline beside the lens.',
     relationship: 'Practice partners for six Thursdays, paired by the instructor because they’re the same height. She laughs at his jokes and corrects his left foot, and neither has asked the other a single personal question.',
     you: 'Augustin Kowalczyk, seventy-two, a retired bus mechanic, widowed four years, who counts every step out loud.',
     reader: 'Philippa Nwosu, seventy, a retired court stenographer, buttoning her coat, who answers most questions with a question.',
@@ -204,7 +204,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-romantic_drama-2', title: 'The Twelve-Minute Window', kinds: ['romantic_drama'], medium: 'camera', size: 'long', stakes: 2, readerPlays: 'steady',
     logline: 'In the twelve minutes a satellite link allows each week, a band director tells his wife at a polar research station about the job he’s been offered, and hears her news too.',
-    circumstances: 'The spare room of their house on a Sunday night, a laptop open on the desk. Ines has been at a research station in Antarctica for fourteen months, and the link opens once a week for twelve minutes, with a two-second delay on every line. Today he was offered the conducting post he’s wanted since he was twenty-five, in a city three thousand miles from where they planned to settle. For the tape he sits facing the lens, the laptop below frame, and her voice arrives two seconds late from beside it.',
+    circumstances: 'The spare room of their house on a Sunday night, a laptop open on the desk. Ines has been at a research station in Antarctica for fourteen months, and the link opens once a week for twelve minutes, with a two-second delay on every line. Today he was offered the conducting post he’s wanted since he was twenty-five, in a city three thousand miles from where they planned to settle. For the tape, sit facing the lens with the laptop below the frame; her voice arrives two seconds late from beside it.',
     relationship: 'Husband and wife for nine years, apart for the last fourteen months by a plan they made together: her posting first, then a house near her mother, then a family.',
     you: 'Emeka Hollis, forty, a high-school band director who has kept the house exactly as she left it.',
     reader: 'Ines Hollis, thirty-eight, a glaciologist on the station’s satellite line, in a parka, at the end of a long shift on the ice.',
@@ -238,7 +238,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-samurai-3', title: 'Two Bowls Of Rice A Day', kinds: ['samurai'], medium: 'camera', size: 'short', stakes: 2, readerPlays: 'pressing',
     logline: 'A masterless samurai with an empty stomach haggles with a rice merchant over what it costs to guard his warehouse, until the bandits they’re both waiting for arrive early.',
-    circumstances: 'The yard of a rice warehouse in a post town on the highway, late in the Edo period, an autumn evening. Bandits have robbed two warehouses on the road this month. The merchant needs a guard tonight and has found only this ronin, who hasn’t eaten in two days and won’t say so. They’re arguing over the fee when a shout comes from the gate. For the tape the fight is two short exchanges marked solo with a replica sword to the reader’s called cues.',
+    circumstances: 'The yard of a rice warehouse in a post town on the highway, late in the Edo period, an autumn evening. Bandits have robbed two warehouses on the road this month. The merchant needs a guard tonight and has found only this ronin, who hasn’t eaten in two days and won’t say so. They’re arguing over the fee when a shout comes from the gate. For the tape, the fight is two short exchanges: mark them solo with a replica sword to the reader’s called cues.',
     relationship: 'Strangers: the merchant has watched a dozen ronin pass through this year and trusted none of them.',
     you: 'Kuroda Hyōe, thirty-five, a samurai without a lord for three years, proud, funny and very hungry.',
     reader: 'Densuke, the rice merchant, sharp, stingy and talking the whole time.',
@@ -247,16 +247,16 @@ export const SECOND_E: readonly Brief[] = [
     beats: [
       { what: 'The merchant offers one bowl of rice a day; Kuroda names a price in gold, as if he were still in a lord’s service.', tones: ['comic'] },
       { what: 'They haggle down to two bowls a day, and his stomach gives him away.', tones: ['comic'] },
-      { what: 'A shout at the gate: two short exchanges, marked solo, and the first bandit runs.', tones: ['grave'] },
+      { what: 'A shout comes from the gate; he fights two short exchanges, marked solo, and the first bandit runs.', tones: ['grave'] },
       { what: 'Sheathing his sword, he tells the merchant the price is three bowls now, and sits down on the step to wait for the rest.', tones: ['comic', 'lyric'] },
     ],
     language: 'everyday', timing: 2, physical: 2, partner: 3, vocal: 1, improvisation: 0,
     techniques: { combat: 1 },
     why: {
       timing: 'The haggle runs at the merchant’s pace, offer and counter-offer, and the fight’s two exchanges come on the reader’s called cues.',
-      physical: 'A swordsman’s carriage kept up through hunger, a fast draw and two short exchanges, then a sheathing done with ceremony while he’s still out of breath.',
+      physical: 'He keeps a swordsman’s carriage through his hunger, draws fast, fights two short exchanges, then sheathes with ceremony while he’s still out of breath.',
       partner: 'Every offer the merchant makes is answered, and the price Kuroda names is always shaped by the last insult.',
-      techniques: 'The fight is two short exchanges with a replica sword, marked solo at reduced speed on the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.',
+      techniques: 'The fight is two short exchanges with a replica sword. Mark them solo at reduced speed on the reader’s called cues, toward an off-camera eyeline and never at the lens or the reader.',
       beats: 'A grand price, a bargain lost to his stomach, a fight over fast, then a joke that names a new price.',
     },
     readings: [
@@ -280,7 +280,7 @@ export const SECOND_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 0, partner: 0, vocal: 2, improvisation: 0,
     why: {
-      timing: 'Each absurdity is read at the brand’s steady, cheerful pace, and the comedy depends on never letting a phrase sound like a joke.',
+      timing: 'He reads each absurdity at the brand’s steady, cheerful pace, and the comedy depends on never letting a phrase sound like a joke.',
       vocal: 'The scene is carried by one public-address voice, bright and even, held steady through news that ought to break it.',
       beats: 'A deadpan reading of corporate nonsense, then the same voice reading out its own replacement.',
     },
@@ -292,7 +292,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-science_fantasy-2', title: 'Spoken Into Force', kinds: ['science_fantasy'], medium: 'camera', size: 'medium', stakes: 3, readerPlays: 'unpredictable',
     logline: 'In a kingdom where an oath spoken aloud binds as surely as iron, the court’s oath-speaker voices a starship envoy’s treaty and hears, halfway through, a clause that would bind her people’s children.',
-    circumstances: 'The audience hall of a mountain kingdom, the morning after the first ship from the stars came down in the barley fields. Here a promise spoken in the old tongue binds the speaker and anyone it names, so the crown keeps an oath-speaker to say treaties into force. The envoy talks through a translating device that gets the grammar right and the meaning wrong. The queen has told Sefa to speak the treaty exactly as written. For the tape Sefa stands to the lens with the treaty in her hands, and the envoy’s voice comes from beside it.',
+    circumstances: 'The audience hall of a mountain kingdom, the morning after the first ship from the stars came down in the barley fields. Here a promise spoken in the old tongue binds the speaker and anyone it names, so the crown keeps an oath-speaker to say treaties into force. The envoy talks through a translating device that gets the grammar right and the meaning wrong. The queen has told Sefa to speak the treaty exactly as written. For the tape, stand to the lens with the treaty in your hands; the envoy’s voice comes from beside it.',
     relationship: 'They met an hour ago across the treaty table: an envoy from another world who wants it in force by noon, and the oath-speaker whose voice will make it binding.',
     you: 'Sefa Ondrecht, thirty, the court’s oath-speaker, trained since childhood never to say a word she doesn’t mean.',
     reader: 'The envoy of the Halvorine Combine, courteous and strange, whose device answers half a beat late and sometimes in the wrong mood entirely.',
@@ -334,7 +334,7 @@ export const SECOND_E: readonly Brief[] = [
     techniques: { improv: 1 },
     allows: { structure: ['open'] },
     why: {
-      improvisation: 'Clinic rules forbid a script, so each take is found at the microphone in her own words, from what the brief tells her she means to cover.',
+      improvisation: 'Clinic rules forbid a script, so you find each take at the microphone in her own words, from what the brief says she means to cover.',
       techniques: 'Speaking unscripted, live, to a listener who isn’t in the room asks an improviser’s skill at finding words in the moment.',
       allows: 'The clinic requires the statement unscripted, so a version learned word for word would break the scene’s own rule. It can only be played open.',
       beats: 'False starts, the plain facts, a secret given away because it can’t be kept, then a blessing with the clock running out.',
@@ -348,7 +348,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-screwball_comedy-2', title: 'Night Board At The Halloway', kinds: ['screwball_comedy'], medium: 'camera', size: 'medium', stakes: 1, readerPlays: 'unpredictable',
     logline: 'An heiress hiding from her own engagement party talks her way onto a hotel’s night switchboard and has to put through her fiancé’s calls hunting for her, while the night clerk grows suspicious.',
-    circumstances: 'The switchboard alcove off the lobby of the Halloway Hotel in New York, 1937, a quarter to midnight. Three floors up, her engagement party is looking for her. Cora talked her way into the night operator’s chair an hour ago by claiming years of experience. She has none. The board is lit with calls, and two of them are from her fiancé. For the tape she sits at a mimed board with a headset on, the cords played as business in her own hands, and the clerk speaks from the lobby beside the lens.',
+    circumstances: 'The switchboard alcove off the lobby of the Halloway Hotel in New York, 1937, a quarter to midnight. Three floors up, her engagement party is looking for her. Cora talked her way into the night operator’s chair an hour ago by claiming years of experience. She has none. The board is lit with calls, and two of them are from her fiancé. For the tape, sit at a mimed board with a headset on, playing the cords as business in your own hands; the clerk speaks from the lobby beside the lens.',
     relationship: 'Strangers since nine o’clock: a clerk who has run this lobby for six years, and a new operator who doesn’t know a trunk line from a toaster and whom he can’t stop watching.',
     you: 'Cora Vandermeer, twenty-six, an heiress who has never held a job and is very good at pretending she has.',
     reader: 'Leo Brannigan, the night clerk, who asks a new question every time he passes the alcove and never asks it the same way twice.',
@@ -367,7 +367,7 @@ export const SECOND_E: readonly Brief[] = [
       physical: 'She works a mimed board with both hands, plugging and pulling cords, and the tangle that yanks her half off the stool is a lurch she makes herself and catches on her own seat.',
       partner: 'Leo is never the same twice, and every reply she makes has to cover whatever he’s just noticed.',
       vocal: 'She switches between her own voice and a flat operator’s monotone line by line, and mustn’t slip into her own on her fiancé’s calls.',
-      techniques: 'The rapid crossed talk is screwball comedy’s own, and it asks for comic timing. The business with the cords and the lurch off the stool is physical comedy, worked out slowly first and repeatable on every take.',
+      techniques: 'The rapid crossed talk is screwball comedy’s own, and it asks for comic timing. The business with the cords and the lurch off the stool is clowning: physical comedy you work out slowly first, so it repeats on every take.',
       beats: 'Chaos at the board, a disguise that works, a tangle that nearly gives her away, then a call that turns into an invitation.',
     },
     readings: [
@@ -378,7 +378,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-sea_adventure-2', title: 'Twenty-Two Days Becalmed', kinds: ['sea_adventure'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'pressing',
     logline: 'On a merchant brig becalmed for twenty-two days, the mate who holds the key to the last water cask faces the crew’s spokesman at the hatch to the hold.',
-    circumstances: 'The main deck of a two-masted trading brig in the doldrums, in the 1840s, the afternoon heat at its worst and no wind for twenty-two days. The ration is half a cup a man, and the captain lies below with fever. The crew has sent the bosun to demand the key to the last cask in the hold, and it hangs on a cord around the mate’s neck. For the tape he stands with his back to an imagined hatch, the key in his own hand, and the bosun speaks from beside the lens, with the crew imagined behind him.',
+    circumstances: 'The main deck of a two-masted trading brig in the doldrums, in the 1840s, the afternoon heat at its worst and no wind for twenty-two days. The ration is half a cup a man, and the captain lies below with fever. The crew has sent the bosun to demand the key to the last cask in the hold, and it hangs on a cord around the mate’s neck. For the tape, stand with your back to an imagined hatch and the key in your own hand; the bosun speaks from beside the lens, with the crew imagined behind him.',
     relationship: 'Shipmates on three voyages. The bosun taught him his knots when he was a boy, and the crew trusts the bosun more than any officer aboard.',
     you: 'Elias Penhallow, forty, the brig’s mate, who keeps the keys to the stores and, with the captain sick, commands the ship.',
     reader: 'Abel Shorey, the bosun, fifty, at the head of the crew, with a belaying pin in his belt and no wish to use it.',
@@ -394,7 +394,7 @@ export const SECOND_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 1, partner: 3, vocal: 2, improvisation: 0,
     why: {
-      timing: 'Two waits carry the scene, for the men’s laugh after the joke and for wind that never comes, and each has to be held exactly as long as it lasts.',
+      timing: 'Two waits carry the scene, for the men’s laugh after the joke and for wind that never comes, and he can’t hurry either one.',
       partner: 'The bosun pushes at him all scene, and every answer has to meet the man in front of him and the crew at his back.',
       vocal: 'He speaks past the bosun to a whole deck of thirsty men, loud enough to carry, through a parched throat, and the voice has to last six beats.',
       beats: 'A demand met by the rules, a joke that buys a minute, an offer from his own share, a warning, a false hope, then the key held up and the burden shared.',
@@ -412,7 +412,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-silent_film-3', title: 'Forty Feet Left', kinds: ['silent_film'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'unpredictable',
     logline: 'On a silent picture’s set in 1924, a young actress plays the big scene of her first lead while the director, calling through a megaphone, changes his mind about how she should play it before the camera runs out of film.',
-    circumstances: 'A glass-roofed studio stage in 1924, a cottage parlor built against one wall. In the picture Ruth reads that her sweetheart’s ship has gone down, and the title card is already written. The camera is cranked by hand and holds forty feet of film for this take, under a minute, and the director talks her through it as silent directors did, calling moods and business through a megaphone while the camera turns. For the tape she plays to the lens with a letter in her hand, and his calls come from beside it.',
+    circumstances: 'A glass-roofed studio stage in 1924, a cottage parlor built against one wall. In the picture Ruth reads that her sweetheart’s ship has gone down, and the title card is already written. The camera is cranked by hand and holds forty feet of film for this take, under a minute, and the director talks her through it as silent directors did, calling moods and business through a megaphone while the camera turns. For the tape, play to the lens with a letter in your hand; his calls come from beside it.',
     relationship: 'He found her in a dance-hall chorus six months ago and has never once let her finish a scene the way they rehearsed it.',
     you: 'Nell Garvey, nineteen, in her first lead, with no line to say and every thought to show.',
     reader: 'Mr. Ambrose, the director, off camera with his megaphone, who has three ideas a minute and calls every one of them.',
@@ -441,7 +441,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-slapstick-2', title: 'The Enchanted Folding Chair', kinds: ['slapstick'], medium: 'camera', size: 'medium', stakes: 0, readerPlays: 'unpredictable',
     logline: 'A father picked as the volunteer at his daughter’s seventh birthday magic show is betrayed by every prop the magician tells him to pick up.',
-    circumstances: 'A rented party room behind a roller rink on a Saturday afternoon, fourteen seven-year-olds cross-legged on the floor and paper plates of cake waiting on a side table. The magician’s assistant went home sick, so she picked Gil from the parents to help. He promised his daughter this would be the best party of the year. For the tape the props wait on a low table on his side of the frame, the magician’s voice comes from beside the lens, and a crash mat lies hidden behind the little chair.',
+    circumstances: 'A rented party room behind a roller rink on a Saturday afternoon, fourteen seven-year-olds cross-legged on the floor and paper plates of cake waiting on a side table. The magician’s assistant went home sick, so she picked Gil from the parents to help. He promised his daughter this would be the best party of the year. For the tape, the props wait on a low table on your side of the frame, the magician’s voice comes from beside the lens, and a crash mat lies hidden behind the little chair.',
     relationship: 'Strangers. The magician needs a volunteer with a sense of humor and has decided, at a glance, that Gil has one.',
     you: 'Gil Esposito, forty, an insurance adjuster, careful by trade, who badly wants his daughter to be proud of him.',
     reader: 'The Amazing Delphine, the magician, who calls the next trick before he’s finished the last and changes their order every time.',
@@ -459,7 +459,7 @@ export const SECOND_E: readonly Brief[] = [
       timing: 'Each gag lands on the magician’s call, and the calls never come in the same order twice.',
       physical: 'A rope that falls apart, a fall backward off a folding chair, a hat that springs into his face and a grand bow: the scene is a body betrayed by objects.',
       partner: 'Every trick starts on the magician’s call, and he has to take each one as it comes and play it back to her.',
-      techniques: 'The rope, the hat and the wand are slapstick’s physical comedy, and they ask for comic timing. The fall off the child’s chair is a stunt fall backward onto the crash mat hidden behind it, rehearsed slowly first and repeatable on every take. The hat’s hit is a gag he works with his own hand and sells as a blow.',
+      techniques: 'The rope, the hat and the wand are slapstick’s clowning, and they ask for comic timing. The fall off the child’s chair is a stunt fall, the stage combat the scene asks for: fall backward onto the crash mat hidden behind it, rehearsed slowly first so it repeats on every take. The hat’s hit is a gag he works with his own hand and sells as a blow.',
       beats: 'Three gags that climb from embarrassment to a fall to a hit, then a bow that’s funny and tender at once.',
     },
     readings: [
@@ -470,7 +470,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-slasher-2', title: 'Inside The Walk-In', kinds: ['slasher'], medium: 'camera', size: 'medium', stakes: 3, readerPlays: 'unpredictable',
     logline: 'Hiding in a diner’s walk-in freezer after closing, a waitress has to keep her terrified coworker quiet while the killer searches the kitchen outside.',
-    circumstances: 'The walk-in freezer of a highway diner, just after midnight, their breath showing in the glow of a phone turned down to its dimmest. Ten minutes ago a man with a scarf wound over his face came through the back door with something in his hand; they ran in here and pulled the door to. Through it they can hear him opening the kitchen drawers one by one. Inside the freezer the phone has no signal. For the tape she crouches alone among stacked crates, Danny’s voice comes from beside the lens, and the replica cleaver she grabbed from the prep line on the way in stays close in her hands, never pointed at the lens or the eyeline.',
+    circumstances: 'The walk-in freezer of a highway diner, just after midnight, their breath showing in the glow of a phone turned down to its dimmest. Ten minutes ago a man with a scarf wound over his face came through the back door with something in his hand; they ran in here and pulled the door to. Through it they can hear him opening the kitchen drawers one by one. Inside the freezer the phone has no signal. For the tape, crouch alone among stacked crates, with Danny’s voice coming from beside the lens, and keep the replica cleaver she grabbed from the prep line close in your hands, never pointed at the lens or the eyeline.',
     relationship: 'Coworkers on the closing shift for a year. She trained him, he covers her Sundays, and she has always been the calm one.',
     you: 'Tamsin Reyes, twenty-four, a waitress putting herself through paramedic school, who knows exactly how long a person lasts in the cold.',
     reader: 'Danny Fitch, nineteen, the line cook, crouched across from her nursing a burned hand, who whispers, then sobs, then cracks jokes, never the same way twice.',
@@ -512,7 +512,7 @@ export const SECOND_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 0, partner: 1, vocal: 1, improvisation: 2,
     why: {
-      improvisation: 'The brief gives the script and the memories it sets off and leaves the wandering to the actor, so each take can leave the page in its own words.',
+      improvisation: 'The brief gives the script and the memories it sets off and leaves the wandering to you, so each take can leave the page in its own words.',
       beats: 'A stiff start, two memories that take over the script, then a return to it with apologies.',
     },
     readings: [
@@ -562,7 +562,7 @@ export const SECOND_E: readonly Brief[] = [
     ],
     language: 'heightened', timing: 2, physical: 0, partner: 0, vocal: 3, improvisation: 0,
     why: {
-      language: 'A commander’s address to a fleet, in the ringing, formal register of the genre’s great speeches: names, ranks, orders and a ceremonial sign-off.',
+      language: 'It’s a commander’s address to a fleet, in the ringing, formal register of the genre’s great speeches: names, ranks, orders and a ceremonial sign-off.',
       timing: 'The names have to come in order without a stumble, and the laugh after the cook’s story has to be waited for across forty ships.',
       vocal: 'One voice carries a fleet through its surrender: it rings on the names and the orders, drops to a goodnight, and holds through a long scene.',
       beats: 'A roll call, the hard news, a story that buys a laugh, an order to the three, then the last goodnight.',
@@ -576,7 +576,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-spaghetti_western-2', title: 'Three Shares At The Mission', kinds: ['spaghetti_western'], medium: 'camera', size: 'medium', stakes: 3, readerPlays: 'pressing',
     logline: 'Two outlaws dividing a stolen mine payroll in a ruined mission count it into three shares, though their third partner died on the trail.',
-    circumstances: 'The roofless chapel of an abandoned mission in the territories, late afternoon, flies in the heat, the payroll strongbox open on a broken pew. Three days ago she, Silas and Eli Rook took the silver mine’s pay wagon. Eli was shot at the river crossing and died the second night, asking Henrietta to see his share to his wife in Pinyon Flats. Silas wants it split two ways and the box buried by dark. For the tape she counts at a table’s edge with the coins and banknotes on her side of the frame, and Silas speaks from the doorway beside the lens, his gun on his hip and out of sight.',
+    circumstances: 'The roofless chapel of an abandoned mission in the territories, late afternoon, flies in the heat, the payroll strongbox open on a broken pew. Three days ago she, Silas and Eli Rook took the silver mine’s pay wagon. Eli was shot at the river crossing and died the second night, asking Henrietta to see his share to his wife in Pinyon Flats. Silas wants it split two ways and the box buried by dark. For the tape, count at a table’s edge with the coins and banknotes on your side of the frame; Silas speaks from the doorway beside the lens, his gun on his hip and out of sight.',
     relationship: 'Partners in three robberies who have never once turned their backs on each other, and who respect each other more than they trust each other.',
     you: 'Henrietta Cole, forty, a schoolteacher once, who keeps the accounts of every job to the cent.',
     reader: 'Silas Strand, the other surviving partner, leaning in the doorway, who keeps asking why the count is taking so long.',
@@ -590,7 +590,7 @@ export const SECOND_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 3, physical: 1, partner: 2, vocal: 0, improvisation: 0,
     why: {
-      timing: 'The count is the scene’s clock: each coin and each pause between his pushes is placed, and the silence after the third stack is held to the second.',
+      timing: 'The count is the scene’s clock: place each coin and each pause between his pushes, and hold the silence after the third stack to the second.',
       partner: 'He presses all scene, and every answer she gives has to keep him talking and his hand away from his gun.',
       beats: 'A slow count under pressure, a cruel joke answered dryly, the third share set apart, then a dare made as a courtesy.',
     },
@@ -602,7 +602,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-splatter-2', title: 'Two Heartbeats In The Straw', kinds: ['splatter'], medium: 'camera', size: 'short', stakes: 2, readerPlays: 'pressing',
     logline: 'Alone on her dairy farm at one in the morning, a farmer calls the after-hours vet line about the thing she just killed in the calving barn, and the old vet, sure it’s a calf, talks her through examining it.',
-    circumstances: 'The calving barn of a small dairy farm, past one in the morning, a single work light on a hook. Twenty minutes ago something came in through the back of the barn and went for the heifers; she brought it down with the barn shovel, and it lies in the straw at her knees, opened up and still. It has more legs than a calf and no name she knows. She called the after-hours line, and it put her through to the county vet at his kitchen table. For the tape she kneels at the bottom of the frame with the phone pinned to her shoulder and the creature played below the lens, her gloves and sleeves red (stage blood, or none at all), the shovel out of frame, and the vet’s voice comes from beside the lens.',
+    circumstances: 'The calving barn of a small dairy farm, past one in the morning, a single work light on a hook. Twenty minutes ago something came in through the back of the barn and went for the heifers; she brought it down with the barn shovel, and it lies in the straw at her knees, opened up and still. It has more legs than a calf and no name she knows. She called the after-hours line, and it put her through to the county vet at his kitchen table. For the tape, kneel at the bottom of the frame with the phone pinned to your shoulder, and play the creature below the lens. Her gloves and sleeves are red with stage blood, or not at all, the shovel is out of frame, and the vet’s voice comes from beside the lens.',
     relationship: 'He’s looked after the farm’s herd for thirty years and let her ride along on calvings when she was a girl. Since her father died she’s run the place alone and never once called him for something she couldn’t handle.',
     you: 'Josie Haugen, twenty-nine, who runs her late father’s dairy farm by herself and has pulled calves since she was twelve.',
     reader: 'Dr. Walt Bergeron, sixty-eight, the county’s large-animal vet, on the phone from his kitchen, who works down his checklist in order and keeps asking her for one more look.',
@@ -615,7 +615,7 @@ export const SECOND_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     why: {
-      timing: 'Each grisly finding has to land flat on the tail of his routine question, and the pause before she says how many eyes is held.',
+      timing: 'Each grisly finding has to land flat on the tail of his routine question, and she holds the pause before she says how many eyes.',
       physical: 'She works below frame with gloved hands and the phone pinned to her shoulder, reaching, counting and recoiling on the reader’s called cues. The creature is her own reach toward an empty space below the lens, the blood is stage blood or none, and no animal is used.',
       partner: 'He presses down his checklist one question at a time, and each answer has to keep him on the line without telling him what she’s looking at.',
       beats: 'A call for help he hears as routine, a gruesome inventory given deadpan, then two heartbeats where there should be none, and the plain request at last.',
@@ -669,7 +669,7 @@ export const SECOND_E: readonly Brief[] = [
     allows: { structure: ['set'] },
     why: {
       timing: 'Every group falls on the station’s fixed cadence, and the scene lives in whether the group after four-seven-four-seven lands exactly on time.',
-      vocal: 'One flat, exact voice, kept level through news that would break it, with one breath let through at the very end.',
+      vocal: 'She keeps one flat, exact voice level through news that would break it, and lets one breath through at the very end.',
       allows: 'The station reads at a fixed cadence and any change is logged, so every group falls where the sheet puts it. It can only be played set.',
       beats: 'Routine, the recognition read straight through without a flicker, then the smallest goodbye the form permits.',
     },
@@ -681,7 +681,7 @@ export const SECOND_E: readonly Brief[] = [
   {
     id: 'brief-steampunk-2', title: 'Forty-One Turns', kinds: ['steampunk'], medium: 'camera', size: 'short', stakes: 3, readerPlays: 'steady',
     logline: 'The night before her father comes home with a clockwork regulator keeping his heart in time, a typesetter is taught to wind it by the artificer who fitted it, a man she called a butcher that morning.',
-    circumstances: 'A recovery ward in the steam-heated Artificers’ Infirmary of an alternate Victorian city, the evening before her father is discharged. His failing heart now keeps time by a brass regulator set under his collarbone, and it must be wound every night with a key, exactly forty-one turns: too few and his heart slows with it, too many and the mainspring can snap. The artificer has brought a teaching model, the same mechanism under glass, and set it on the table on her side. For the tape the model and the key stay in her hands, and his voice comes from across the table beside the lens.',
+    circumstances: 'A recovery ward in the steam-heated Artificers’ Infirmary of an alternate Victorian city, the evening before her father is discharged. His failing heart now keeps time by a brass regulator set under his collarbone, and it must be wound every night with a key, exactly forty-one turns: too few and his heart slows with it, too many and the mainspring can snap. The artificer has brought a teaching model, the same mechanism under glass, and set it on the table on her side. For the tape, keep the model and the key in your hands; his voice comes from across the table beside the lens.',
     relationship: 'The surgeon-artificer who saved her father’s life and the daughter who will have to keep it going, meeting properly for the first time; she called him a butcher in the corridor this morning, and he heard.',
     you: 'Clementine Marsh, twenty-two, a typesetter with quick, sure hands that won’t stop shaking tonight.',
     reader: 'Dr. Ferdinand Oakes, the artificer, patient and dry, guiding her through the winding from across the table.',
@@ -695,7 +695,7 @@ export const SECOND_E: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 0, improvisation: 0,
     why: {
       timing: 'Each turn of the key falls on a spoken count, and the scene lives in whether the count holds.',
-      physical: 'Fine handwork on a small mechanism on her side of the table, with hands that shake and then steady, played close to the lens.',
+      physical: 'It’s fine handwork on a small mechanism on her side of the table, with hands that shake and then steady, played close to the lens.',
       partner: 'He guides her through each try, and her trust in him grows or fails on how he meets her mistakes.',
       beats: 'A failed count, a mistake that breaks the tension with a laugh, then a steady third try and a question that means she’s staying with it.',
     },

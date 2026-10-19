@@ -44,10 +44,10 @@ export const SECOND_A: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 3, partner: 3, vocal: 1, improvisation: 0,
     techniques: { combat: 2 },
     why: {
-      timing: 'The fight’s four moves sit inside the talk, and each line before a move is cut off by it, so where the words stop is placed exactly.',
+      timing: 'The fight’s four moves sit inside the talk, and each move cuts off the line before it, so you have to place exactly where the words stop.',
       physical: 'She plays the scene in a body that still knows how to fight and a shoulder that can’t: the stance, the four moves, the punch held back, all on her side of the frame.',
       partner: 'She reads him the way she read him from the corner, and every turn of the scene answers something he does or says.',
-      techniques: 'The fight is staged combat, four moves marked solo at reduced speed against the reader’s called cues from off camera, with no contact. The hit to her shoulder is reacted to, never landed, and the pry bar stays off frame with him, only talked about.',
+      techniques: 'The fight is staged combat. Mark its four moves solo, at reduced speed, against the reader’s called cues from off camera, with no contact. React to the hit on her shoulder; it never lands. The pry bar stays off frame with him and is only talked about.',
       beats: 'A slow start in the half dark, a memory used to hold him, a fight she wins by not finishing it, then a laugh and a debt paid in work.',
     },
     readings: [
@@ -74,7 +74,7 @@ export const SECOND_A: readonly Brief[] = [
     why: {
       timing: 'The interviewer’s reading lands just ahead of each answer, so every line is a race the man loses by a hair, and the comedy depends on how small the hair is.',
       partner: 'Everything he tries is a reply to what the interviewer has just read, and the order of the pages decides what he has to answer next.',
-      improvisation: 'The reader picks which typed answer to read next, in any order and never the same twice, so his attempts to get ahead are found on the take.',
+      improvisation: 'The reader picks which typed answer to read next, in any order and never the same twice, so you find his attempts to get ahead fresh on each take.',
       beats: 'An ordinary interview going strange, a frantic effort that turns grotesque, then a quiet surrender to the page.',
     },
     readings: [
@@ -101,9 +101,9 @@ export const SECOND_A: readonly Brief[] = [
     techniques: { combat: 2, comedy: 2 },
     why: {
       timing: 'His narration runs under the whole walk, and her briefing, his ratings and the photographer’s jump each have to land in the space the last one leaves.',
-      physical: 'She walks as a guard walks, half a step ahead and turned to him, and the scuffle comes out of that walk without a pause: a body trained for falls, now trained to stand in the way. The walk is played in a few steps on her mark, the corridor in her eyeline.',
+      physical: 'She walks as a guard walks, half a step ahead and turned to him, and the scuffle comes out of that walk without a pause: a body trained for falls, now trained to stand in the way. Play the walk in a few steps on your mark, with the corridor in your eyeline.',
       partner: 'He pushes at her all the way, with the phone, the comments and the requests, and every move she makes answers where he is and what he has just said.',
-      techniques: 'The scuffle is staged combat, three moves marked solo at reduced speed against the reader’s called cues from off camera, with no contact: the photographer is off frame, his lunge is played in her reactions, and the memory card is a prop kept in her hand from the start. The comedy is in the gap between her calm and his narration, so the scene asks for comic timing.',
+      techniques: 'The scuffle is staged combat. Mark its three moves solo, at reduced speed, against the reader’s called cues from off camera, with no contact. The photographer stays off frame, so play his lunge in her reactions, and keep the memory card, a prop, in your hand from the start. The comedy is in the gap between her calm and his narration, so the scene asks for comic timing.',
       beats: 'A briefing turned into a show, a scuffle he streams, a fright that stops the stream, then a picture taken her way.',
     },
     readings: [
@@ -130,9 +130,9 @@ export const SECOND_A: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 2, partner: 3, vocal: 1, improvisation: 0,
     techniques: { combat: 1 },
     why: {
-      physical: 'Four days of climbing are in her legs and back, and she tries to get past her own son in a narrow doorway: the body’s work is the tiredness and the attempt.',
+      physical: 'Four days of climbing are in her legs and back, and she has to try to get past her own son in a narrow doorway, tired as she is.',
       partner: 'He gives her almost nothing, one word at a time, and every argument she tries is built on reading what his silence means.',
-      techniques: 'The attempt to get past him is a staged struggle, two moves marked solo at reduced speed against the reader’s called cues from off camera; his hand on the strap is played in her body, never taken, and the ice axe is a light replica kept on her side of the frame.',
+      techniques: 'The attempt to get past him is a staged struggle. Mark its two moves solo, at reduced speed, against the reader’s called cues from off camera. Play his hand on the strap in your body: nobody takes hold of you. The ice axe is a light replica, kept on your side of the frame.',
       beats: 'Bright small talk that pretends the decision hasn’t been made, an appeal, a struggle she can’t win, then a promise made in place of the summit.',
     },
     readings: [
@@ -143,14 +143,14 @@ export const SECOND_A: readonly Brief[] = [
   {
     id: 'brief-alternate_history-2', title: 'Column Nine', kinds: ['alternate_history'], medium: 'voice', size: 'long', stakes: 3,
     logline: 'In a world where a treaty outlawed the electronic computer before the first one was finished, the head of a forecast hall where two hundred people compute the weather by hand finds an error ninety minutes before a storm warning must go out, and talks the whole hall through the work again over the loudspeaker.',
-    circumstances: 'The forecast hall of the national weather service in 1969, in a world where a treaty signed in 1946 forbade any machine that calculates electronically, and none was ever built. Two hundred people at tiered desks work tomorrow’s weather by hand and by mechanical adding machine, one patch of map each, and the head of the hall speaks to them from a gallery microphone. A storm is coming up the coast, and the warning has to reach the radio stations by six. At half past four she finds that column nine, the southern pressure figures, carried a wrong number from the first sheet. Recorded alone at a microphone; the hall is on the picture.',
+    circumstances: 'The forecast hall of the national weather service in 1969, in a world where a treaty signed in 1946 forbade any machine that calculates electronically, and none was ever built. Two hundred people at tiered desks work tomorrow’s weather by hand and by mechanical adding machine, one patch of map each, and the head of the hall speaks to them from a gallery microphone. A storm is coming up the coast, and the warning has to reach the radio stations by six. At half past four she finds that column nine, the southern pressure figures, carried a wrong number from the first sheet. You record alone at a microphone, and the hall is only on screen.',
     relationship: 'She came up through the desks herself and knows most of the two hundred by their handwriting. They trust her voice more than any memo from upstairs.',
     you: 'Odile Brandt, fifty, head of the forecast hall, twenty-six years on its floor and its gallery.',
-    reader: 'The voice speaks to the two hundred computers at their desks below the gallery, whose figures come up on paper slips and aren’t in the booth.',
+    reader: 'The hall’s two hundred computers, the people at the desks below the gallery. Their figures come up to you on paper slips, and none of them is in the booth.',
     objective: 'Get the corrected column worked, checked and out to the radio stations by six, without the hall losing its nerve.',
     obstacle: 'Ninety minutes is barely enough to work the column once, the hall has been at it since dawn, and every person down there will hear in her voice how wrong the warning would have been.',
     beats: [
-      { what: 'The afternoon announcement as on any storm day, with the dry joke about the coffee the hall expects from her.', tones: ['comic'] },
+      { what: 'She gives the afternoon announcement as on any storm day, with the dry joke about the coffee that the hall expects from her.', tones: ['comic'] },
       { what: 'She stops the hall: column nine is wrong from the first sheet, and every desk south of the river has to work it again.', tones: ['grave'] },
       { what: 'She talks them through the new order of work, desk by desk, each figure read twice and slow enough to be written down.', tones: ['grave'] },
       { what: 'At twenty to six one desk’s figure disagrees with the check; she reads both out to the hall and asks them to find which is true.', tones: ['grave'] },
@@ -158,7 +158,7 @@ export const SECOND_A: readonly Brief[] = [
     ],
     language: 'heightened', timing: 2, physical: 0, partner: 1, vocal: 3, improvisation: 1,
     why: {
-      timing: 'Every figure is read twice at the speed two hundred hands can write it, and the clock to six is in each pause she takes.',
+      timing: 'She reads every figure twice, at the speed two hundred hands can write it, and the clock to six is in each pause she takes.',
       vocal: 'One voice fills a hall of two hundred over a loudspeaker for the length of the scene, steady enough to calm them and clear enough for every digit to land.',
       language: 'She speaks in the set phrases of a public address in a 1969 institution, orders and figures in a fixed form, and the feeling has to come through the form.',
       beats: 'A routine afternoon, an error that stops the hall, a long steady climb back through the work, a scare at the check, and a roll call that thanks them.',
@@ -177,7 +177,7 @@ export const SECOND_A: readonly Brief[] = [
   {
     id: 'brief-animated-3', title: 'The Lamp On Gull Rock', kinds: ['animated'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'pressing',
     logline: 'Filmed as reference for the animators, voice and body together, an old walrus who keeps a lighthouse has to teach the puffin chick pestering him to light the lamp, because his flippers shake too much to do it himself.',
-    circumstances: 'An animated feature: the lamp room of a lighthouse on a rock, in a storm. Barnaby the walrus has kept the lamp for fifty years, and tonight his flippers shake too badly to strike the flint; nobody’s there but Tuck, a puffin chick who climbed the stairs to watch. The scene is filmed on a bare stage as live-action reference, as animated features use it: the animators take the walrus’s weight, his breath and every gesture from the footage, and the voice from the same take. The director reads Tuck’s lines off camera.',
+    circumstances: 'An animated feature: the lamp room of a lighthouse on a rock, in a storm. Barnaby the walrus has kept the lamp for fifty years, and tonight his flippers shake too badly to strike the flint; nobody’s there but Tuck, a puffin chick who climbed the stairs to watch. You film the scene on a bare stage as live-action reference, the way animated features do: the animators take the walrus’s weight, his breath and every gesture from the footage, and his voice from the same take. The director reads Tuck’s lines off camera.',
     relationship: 'Tuck has followed him for a week, and Barnaby has told the chick to go home every day of it.',
     you: 'Barnaby, the walrus, old, enormous, slow on land and proud of the lamp.',
     reader: 'Tuck, the puffin chick, read by the director off camera, full of questions and never still.',
@@ -192,15 +192,15 @@ export const SECOND_A: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 3, partner: 2, vocal: 2, improvisation: 0,
     techniques: { voiceover: 2, character: 2 },
     why: {
-      timing: 'The animators cut the scene to the take: each gesture and line has to land where a drawing can use it.',
-      physical: 'A walrus’s weight, breath and slowness, played full size on a bare stage for the animators to draw from: the stairs, the heavy sitting down, the shaking flippers.',
+      timing: 'The animators time their drawings to your take, so each gesture and line has to land where a drawing can use it.',
+      physical: 'Play a walrus’s weight, breath and slowness full size on a bare stage, for the animators to draw from: the stairs, the heavy sitting down, the shaking flippers.',
       partner: 'Tuck’s questions come at every pause, and Barnaby’s patience is played against each one.',
       vocal: 'The voice is recorded in the same take as the body: an old, enormous voice, out of breath, kept the same throughout so it fits what’s drawn.',
-      techniques: 'It asks for voice-over, because the take’s sound is the film’s voice, and for character work, because the walrus is built from the actor’s own body and voice with no costume, every gesture sized so the drawing can follow it.',
+      techniques: 'It asks for voice-over, because the sound you record is the film’s voice, and for character work, because you build the walrus from your own body and voice with no costume, every gesture sized so the drawing can follow it.',
       beats: 'A grumbling arrival, a failure blamed on the weather, a lesson given low, then a lamp lit and no thanks said.',
     },
     readings: [
-      { id: 'weight', label: 'All That Weight', reading: 'Barnaby is his body: the scene is a huge old creature moving through it, and the animators should be able to draw every pound.', rests: 'He hauls his weight up the stairs and sits down heavily to teach.', lean: { execution: 1.25, consistency: 1.05 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.7 }, { dim: 'consistency', ability: 'stamina', weight: 0.3 }] },
+      { id: 'weight', label: 'All That Weight', reading: 'Barnaby is his body. The scene is a huge old creature on the move, and the animators should be able to draw every pound.', rests: 'He hauls his weight up the stairs and sits down heavily to teach.', lean: { execution: 1.25, consistency: 1.05 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.7 }, { dim: 'consistency', ability: 'stamina', weight: 0.3 }] },
       { id: 'teacher', label: 'Teaching The Chick', reading: 'Under the grumbling he’s handing on the lamp, and the lesson is the heart of the scene.', rests: 'He teaches Tuck the strike one step at a time, his voice gone low.', lean: { connection: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
       { id: 'proud', label: 'Too Proud To Ask', reading: 'He’d sooner the boats hit the rocks than say he needs help, and every line is pride holding on.', rests: 'He blames the damp, loudly, and doesn’t say thank you.', lean: { consistency: 1.2, believability: 1.1 }, draws: [{ dim: 'consistency', ability: 'discipline', weight: 0.5 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }] },
     ],
@@ -208,10 +208,10 @@ export const SECOND_A: readonly Brief[] = [
   {
     id: 'brief-anime-2', title: 'The Spillway Walk', kinds: ['anime'], medium: 'voice', size: 'medium', stakes: 3,
     logline: 'In an anime dub, a young dam keeper holds a jammed flood gate shut by hand while she talks her little brother across the narrow walkway below it.',
-    circumstances: 'Recorded alone at a microphone against picture that’s complete: a mountain town’s old stone dam in a storm, each line cued by bars that run across the frame. In the tale the gate’s motor has broken down, and the keeper is turning the hand wheel to hold it shut while her brother, who followed her out, is halfway across the spillway walk under it. Each line and each effort sound has to sit on the drawn mouth and the drawn strain.',
+    circumstances: 'You record alone at a microphone against finished picture: a mountain town’s old stone dam in a storm, each line cued by bars that run across the frame. In the story the gate’s motor has broken down, and the keeper is turning the hand wheel to hold it shut while her brother, who followed her out, is halfway across the spillway walk under it. Each line and each effort sound has to sit on the drawn mouth and the drawn strain.',
     relationship: 'Sister and brother, eight years apart. Since their mother left, she has raised him, and he follows her everywhere.',
     you: 'Sayo, nineteen, apprentice dam keeper, holding the wheel with everything she has.',
-    reader: 'The voice speaks to Kenta, her brother, eleven, already recorded on the track; the actor plays against his lines and his frightened breathing in the headphones.',
+    reader: 'Kenta, her brother, eleven, already recorded on the track. Play against his lines and his frightened breathing in your headphones.',
     objective: 'Keep him walking and keep him calm until he reaches the far side.',
     obstacle: 'The wheel is slipping, he freezes whenever he looks down, and every word has to land on drawings that won’t wait for her.',
     beats: [
@@ -225,7 +225,7 @@ export const SECOND_A: readonly Brief[] = [
     why: {
       timing: 'Each line sits on cue bars and drawn mouths, and the effort sounds have to fit the drawn strain on the wheel to the frame.',
       vocal: 'She shouts over a storm, strains at the wheel and keeps her voice gentle for him, all at once and for the length of the scene: a long, hard demand on the voice.',
-      techniques: 'A dub recorded alone at a microphone to finished animation and her brother’s recorded lines, with effort sounds matched to the picture as well as the words. The struggle with the wheel lives in the breath, the body still at the microphone.',
+      techniques: 'It’s a dub, recorded alone at a microphone to finished animation and her brother’s recorded lines, so match the effort sounds to the picture as well as the words. Play the struggle with the wheel in your breath, and keep your body still at the microphone.',
       beats: 'Calm laid over strain, a slip that tests it, a joke to get him moving, then the release.',
     },
     readings: [
@@ -236,10 +236,10 @@ export const SECOND_A: readonly Brief[] = [
   {
     id: 'brief-anthology-2', title: 'The Last Thing Handed In', kinds: ['anthology'], medium: 'voice', size: 'short', stakes: 1,
     logline: 'The narrator who opens and closes every story in an anthology film set at a railway lost-property office reaches the last one, and the object handed in is one she lost herself.',
-    circumstances: 'An anthology film of six stories, each beginning when an object is handed in at a railway lost-property office and ending when its owner claims it. The same unseen narrator opens and closes each one in four rhymed lines. This is the final segment: the object is a child’s red glove, and the narrator lost it on a platform forty years ago and has kept its pair ever since. Recorded alone at a microphone.',
+    circumstances: 'An anthology film of six stories, each beginning when an object is handed in at a railway lost-property office and ending when its owner claims it. The same unseen narrator opens and closes each one in four rhymed lines. This is the last story: the object is a child’s red glove, and the narrator lost it on a platform forty years ago and has kept its pair ever since.',
     relationship: 'Until now the narrator has never been a character in the film; the audience knows only her voice, and the glove is the first thing in six stories that belongs to her.',
     you: 'The narrator, a woman in her fifties whose name the film never gives.',
-    reader: 'The voice speaks to the audience, as it has for five stories, and in the close to the glove on the counter.',
+    reader: 'The audience, as in the five stories before, and in the close, the glove on the counter.',
     objective: 'Open and close the last story in the voice she has used for every other one.',
     obstacle: 'The glove is hers, the rhymes written for her say so plainly, and her voice wants to change.',
     beats: [
@@ -251,14 +251,14 @@ export const SECOND_A: readonly Brief[] = [
     allows: { structure: ['set'] },
     why: {
       timing: 'The narration is laid over picture, and each couplet has to end where the cut does.',
-      vocal: 'One even narrating voice is held through the opening, then gives for a single line in the close, all of it carried on the breath.',
+      vocal: 'Hold one even narrating voice through the opening, then let it give for a single line in the close, all of it carried on the breath.',
       language: 'The narrator speaks in rhymed lines, four to open each story and four to close it, and the rhyme has to hold when her voice doesn’t.',
       techniques: 'Speaking rhymed verse to its meter over finished picture asks for classical text work.',
       allows: 'Every story opens and closes in the same rhymed shape, and the scene depends on the last one matching the others. It can only be played set, the same way every time.',
       beats: 'A familiar opening, then a close in which the story turns out to be the narrator’s own.',
     },
     readings: [
-      { id: 'frame', label: 'Holding The Frame', reading: 'She keeps the voice even all the way, and the feeling lives only in how hard that is to hear.', rests: 'She has to close the story in the voice she used for every other one.', lean: { consistency: 1.2, execution: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'execution', ability: 'vocal', weight: 0.5 }] },
+      { id: 'frame', label: 'Holding The Frame', reading: 'She keeps the voice even all the way, and you hear the feeling only in what that costs her.', rests: 'She has to close the story in the voice she used for every other one.', lean: { consistency: 1.2, execution: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'execution', ability: 'vocal', weight: 0.5 }] },
       { id: 'glove', label: 'Her Own Story', reading: 'The narrator has waited six stories for this one, and the single line where the voice gives is the film’s ending.', rests: 'The glove is hers: she lost it on a platform forty years ago and has kept its pair ever since.', lean: { believability: 1.2, interpretation: 1.15 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'interpretation', ability: 'imagination', weight: 0.4 }] },
     ],
   },
@@ -306,7 +306,7 @@ export const SECOND_A: readonly Brief[] = [
     allows: { scale: ['restrained'] },
     why: {
       timing: 'In one unbroken close-up the scene lives in the gaps: how long she holds before each reply, and how soon she stops it.',
-      improvisation: 'Only the first words of each reply are written; the rest is found on the take, so no two takes say the same thing.',
+      improvisation: 'Only the first words of each reply are written. You find the rest on the take, so no two takes say the same thing.',
       techniques: 'The replies are improvised past their first words, so the scene asks for improvisation, kept inside a frame that can’t move.',
       allows: 'The camera is a hand’s width from her face for the whole take, and anything sized for a room breaks the frame, so it can only be played restrained.',
       beats: 'Listening, an old anger, a deflecting joke, then one plain sentence that leaves a door open.',
@@ -323,7 +323,7 @@ export const SECOND_A: readonly Brief[] = [
     circumstances: 'A recording booth, for the soundtrack of an experimental film with no dialogue. On the music stand are four pages of pencil marks: dots, long level lines, a dense scribble, and a page left blank. The composer sent the score by mail with one instruction on the back: “Voice it once. Don’t rehearse the last page.”',
     relationship: 'A performer and a sheet of marks from a composer who asked not to be contacted; the score is the only thing between them.',
     you: 'The performer, any age, any voice, alone in the booth.',
-    reader: 'No one: the voice follows the score on the stand, and the only other sound is the room.',
+    reader: 'No one. You follow the score on the stand, and the only other sound is the room.',
     objective: 'Turn every mark on the four pages into sound, in order, without words.',
     obstacle: 'The score has no key, the marks mean whatever the voice makes them mean, and the last page is empty.',
     beats: [
@@ -336,7 +336,7 @@ export const SECOND_A: readonly Brief[] = [
     techniques: { improv: 2 },
     why: {
       vocal: 'Wordless sound across a whole range, from clipped dots to long held tones to a rush of noise, is all the piece is made of.',
-      improvisation: 'The marks have no key: what each sound is, and how long the silence lasts, is found at the microphone.',
+      improvisation: 'The marks have no key, so you find out at the microphone what each sound is and how long the silence lasts.',
       techniques: 'The score fixes the order and leaves the sound open, so the piece asks for improvisation, recorded alone at a microphone with the score on the stand.',
       beats: 'Curiosity, mourning, ugliness, then an empty page held as long as nerve allows.',
     },
@@ -369,8 +369,8 @@ export const SECOND_A: readonly Brief[] = [
       physical: 'She dances an eight-bar break alone in street shoes after singing, so her breath and her legs are spent going into the last chorus.',
       partner: 'He gives her one word in the scene, and she has to play everything she sees in his face.',
       vocal: 'She sings the song twice, slow and fast, and the last chorus after dancing: the voice carries the scene from start to finish.',
-      improvisation: 'The fast version is rewritten on the spot, and its new line and new speed are found as she sings them.',
-      techniques: 'The number is sung and danced in the scene itself, part of the show being made: an original song sung through twice, a short soft-shoe break danced solo in the space in front of the camera, and a lyric rewritten as she sings it.',
+      improvisation: 'She rewrites the fast version on the spot, finding its new line and new speed as she sings them.',
+      techniques: 'She sings and dances the number in the scene itself, as part of the show being made: an original song sung through twice, a short soft-shoe break danced solo in the space in front of the camera, and a lyric rewritten as she sings it.',
       beats: 'Nerves, the song as written, a single word that stops it, a quick rewrite, a dance she has no business doing, and the song as written again.',
     },
     readings: [
@@ -423,15 +423,15 @@ export const SECOND_A: readonly Brief[] = [
     techniques: { character: 2 },
     why: {
       timing: 'Her documented habit sets the rhythm: the angrier she gets the slower she speaks, so the scene’s pace runs against its rising heat.',
-      physical: 'The stance, the chalk tapped twice and the writing at the board are kept through five beats of argument, and the board work is real work done while she speaks, on a board on her side of the frame.',
+      physical: 'Keep the stance, the two taps of the chalk and the writing at the board through five beats of argument. The board work is real work, done while she speaks, on a board on your side of the frame.',
       partner: 'He drives the scene with question after question, and each of her answers is built from what he has just said.',
-      language: 'Academic argument in the formal register of a 1924 examination, with the mathematics spoken aloud as she writes it.',
+      language: 'She argues in the formal register of a 1924 examination, speaking the mathematics aloud as she writes it.',
       techniques: 'Playing a person from a research pack means taking on her documented stance, habits and pace of speech: a character transformation, portrayed and not impersonated.',
       beats: 'A formal start, a real blow, a recovery made live, a slow answer that turns the room, and grace at the end.',
     },
     readings: [
       { id: 'mind', label: 'The Mind At Work', reading: 'The mathematics is the drama, and the scene peaks when she sees how to close the gap.', rests: 'He finds a real gap in the second proof, and she closes it at the board while he talks.', lean: { interpretation: 1.2, execution: 1.1 }, draws: [{ dim: 'interpretation', ability: 'focus', weight: 0.6 }, { dim: 'execution', ability: 'memory', weight: 0.5 }] },
-      { id: 'record', label: 'True To The Pack', reading: 'The documented habits carry the performance, and the slowing speech is how her anger is seen.', rests: 'The research pack gives her the chalk tapped twice, her stance and her slowing speech.', lean: { consistency: 1.2, execution: 1.15 }, draws: [{ dim: 'consistency', ability: 'discipline', weight: 0.6 }, { dim: 'execution', ability: 'physical', weight: 0.4 }] },
+      { id: 'record', label: 'True To The Pack', reading: 'The documented habits carry the performance, and the slowing speech is how her anger shows.', rests: 'The research pack gives her the chalk tapped twice, her stance and her slowing speech.', lean: { consistency: 1.2, execution: 1.15 }, draws: [{ dim: 'consistency', ability: 'discipline', weight: 0.6 }, { dim: 'execution', ability: 'physical', weight: 0.4 }] },
       { id: 'room', label: 'Winning The Room', reading: 'She plays to the faculty on the benches as much as to him, and the laugh in the fourth beat is the vote turning.', rests: 'The room is on his side until she answers so slowly that it laughs at him.', lean: { responsiveness: 1.2, connection: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'presence', weight: 0.6 }, { dim: 'connection', ability: 'composure', weight: 0.4 }] },
     ],
   },
@@ -507,9 +507,9 @@ export const SECOND_A: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 3, partner: 2, vocal: 1, improvisation: 0,
     techniques: { character: 2 },
     why: {
-      physical: 'Her shoulder and arm stiffen through the scene: the arm won’t lift, then the shoulder locks high and crooked as she stands, and the rest of her body works around it. It’s all played in her body, on her side of the frame: she turns the shoulder from the lens to loosen the bandage, so what’s under it lives only in what she says.',
+      physical: 'Her shoulder and arm stiffen through the scene: the arm won’t lift, then the shoulder locks high and crooked as she stands, and the rest of her body works around it. Play it all in your body, on your side of the frame: turn the shoulder away from the lens to loosen the bandage, so what’s under it lives only in what she says.',
       partner: 'He swings from jokes to panic to silence, never the same order twice, and she has to answer each swing without losing him.',
-      techniques: 'A body partway through a transformation, kept consistent across five beats, is character work: the stiff arm and the locked shoulder are built and repeated exactly on every take, with no prosthetic, and the bandage is the only prop, on her side of the frame.',
+      techniques: 'A body partway through a transformation, kept consistent across five beats, is character work. Build the stiff arm and the locked shoulder and repeat them exactly on every take, with no prosthetic. The bandage is the only prop, kept on your side of the frame.',
       beats: 'A careful start, a grotesque unveiling told like a lesson, a strange tenderness for the thing, a moment the body betrays her, and a request for one more night.',
     },
     readings: [
@@ -537,9 +537,9 @@ export const SECOND_A: readonly Brief[] = [
     techniques: { clown: 2, comedy: 1 },
     why: {
       timing: 'The steps read out of order and the pole that springs loose are set pieces, and each lands only if the reaction comes on the exact beat after.',
-      physical: 'A bundle of poles that won’t behave and a frame that folds around him are the scene’s jokes, played in the body: the poles are a light real bundle on his side of the frame, and the collapse is mimed.',
+      physical: 'A bundle of poles that won’t behave and a frame that folds around him are the scene’s jokes, played in the body. The poles are a light, real bundle on your side of the frame, and you mime the collapse.',
       partner: 'Benny’s order of steps changes every take, and Martin’s planning has to keep answering it.',
-      techniques: 'The fight with the poles and the collapse are physical comedy, built and repeated exactly, with the poles never swung toward the lens or the reader; the bickering is written to be funny, so it also asks for comic timing.',
+      techniques: 'The fight with the poles and the collapse are clowning, physical comedy you build and repeat exactly, and you never swing the poles toward the lens or the reader. The bickering is written to be funny, so it also asks for comic timing.',
       beats: 'Order against chaos, a frame that wins, a shared laugh in the dark, and a tent put up by luck.',
     },
     readings: [
@@ -568,8 +568,8 @@ export const SECOND_A: readonly Brief[] = [
       timing: 'Every line she sings and every line she hears in her ear share the song’s beat, and the jokes land on the collisions.',
       partner: 'Her partner’s voice is the other half of the scene, never the same twice, and she answers it without being seen to.',
       vocal: 'She sings a whole song badly over a backing track, then well enough to send a message in it.',
-      improvisation: 'The new words to the chorus are made up on the spot to fit the tune, and the reader’s chatter changes every take.',
-      techniques: 'An original song is sung in the scene and its chorus rewritten on the spot, and the laughs depend on where everything falls: singing, improvisation and comic timing. The earpiece voice comes from off camera.',
+      improvisation: 'She makes up the new words to the chorus on the spot to fit the tune, and the reader’s chatter changes every take.',
+      techniques: 'She sings an original song in the scene and rewrites its chorus on the spot, and the laughs depend on where everything falls, so it asks for singing, improvisation and comic timing. The voice in her earpiece comes from off camera.',
       beats: 'A bad performance, a sighting mid-verse, a warning sung as a chorus, then applause she didn’t want.',
     },
     readings: [
@@ -625,13 +625,13 @@ export const SECOND_A: readonly Brief[] = [
     techniques: { combat: 3 },
     why: {
       timing: 'Each form runs at speed or stops dead on her call, and the stillness before the eleventh, while he decides, is the longest pause in the scene.',
-      physical: 'Five forms of a sword school in a sixty-eight-year-old body: one at full speed, one held halfway, a low guard on shaking knees, and one performed as a memory of a man long dead.',
+      physical: 'He performs five forms of a sword school in a sixty-eight-year-old body: one at full speed, one held halfway, a low guard on shaking knees, and one as a memory of a man long dead.',
       language: 'The lines are in the formal register of a period master answering an official commission, plain and exact.',
-      techniques: 'The forms are choreographed swordplay, fixed, memorized and repeated exactly on every take. On the tape each is performed solo with a wooden practice sword, at a speed the actor can repeat exactly, never toward the lens or the reader, and each halt comes on the reader’s called “Stop”.',
+      techniques: 'The forms are choreographed swordplay, fixed, memorized and repeated exactly on every take. Perform each one solo with a wooden practice sword, at a speed you can repeat exactly, never toward the lens or the reader, and halt on the reader’s called “Stop”.',
       beats: 'A comedy of a cut held still for a brush, a body near its limit, a teacher remembered, a secret given away, and a picture he has to be told.',
     },
     readings: [
-      { id: 'line', label: 'The Last Of The Line', reading: 'The scroll is the only heir the school will have, and every form is performed as if it were being handed on.', rests: 'The school has no heir and no pupils left, and he performs the eleventh for her once.', lean: { execution: 1.2, consistency: 1.15 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.6 }, { dim: 'consistency', ability: 'memory', weight: 0.5 }] },
+      { id: 'line', label: 'The Last Of The Line', reading: 'The scroll is the only heir the school will have, and he performs every form as if he were handing it on.', rests: 'The school has no heir and no pupils left, and he performs the eleventh for her once.', lean: { execution: 1.2, consistency: 1.15 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.6 }, { dim: 'consistency', ability: 'memory', weight: 0.5 }] },
       { id: 'teacher', label: 'Who She’s Painting', reading: 'The forms were his teacher’s first, and the scene is an old man meeting him again in the seventh.', rests: 'He performs the seventh against the teacher who taught it to him and tells her who she’s painting.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'interpretation', ability: 'imagination', weight: 0.4 }] },
       { id: 'painter', label: 'Teaching Her To See', reading: 'He starts by doubting the brush and ends by trusting it, and the scene is two crafts learning each other.', rests: 'He has her tell him how she drew his grip, and at the end he has her describe the sheet to him.', lean: { connection: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
     ],
@@ -653,9 +653,9 @@ export const SECOND_A: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 3, partner: 2, vocal: 1, improvisation: 1,
     why: {
-      physical: 'She walks the scene at full effort, runs one stretch of it and stops bent over a bad hip, and every line is spoken on the breath she has left. The walk and the run are marked in place on her mark, framed from the chest up, with the road and the bus in her eyeline; he never takes her arm, and when he reaches for it she waves him off to the eyeline.',
+      physical: 'She walks the scene at full effort, runs one stretch of it and stops bent over a bad hip, and every line is spoken on the breath she has left. Mark the walk and the run in place on your mark, framed from the chest up, with the road and the bus in your eyeline. He never takes her arm: when he reaches for it, she waves him off toward the eyeline.',
       partner: 'He pushes her at every step, with the distance, the watch and the pleading, and she answers each push in her own time.',
-      beats: 'Chatter to keep from thinking, a run nobody planned, the reason told bent over in the road, and a last block walked with the chase called off by the driver chasing her.',
+      beats: 'Chatter to keep from thinking, a run nobody planned, the reason told bent over in the road, and a last block walked at her own pace, the bus driver holding back to let her finish.',
     },
     readings: [
       { id: 'pace', label: 'Her Own Pace', reading: 'She was always going to walk it, and the run is the one thing she gives the bus.', rests: 'She trained all spring, and she walks the last block at her own pace.', lean: { consistency: 1.2, believability: 1.05 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.5 }, { dim: 'believability', ability: 'stamina', weight: 0.4 }] },
@@ -695,7 +695,7 @@ export const SECOND_A: readonly Brief[] = [
   {
     id: 'brief-christmas-3', title: 'The Last Hour In The Grotto', kinds: ['christmas'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'unpredictable',
     logline: 'In the last hour of Christmas Eve, a department store Santa who took the job for the rent gets a seven-year-old who asks him for something he can’t promise, and has to answer her as Santa.',
-    circumstances: 'The Santa’s grotto on the top floor of a department store, half past five on Christmas Eve, the store closing at six. He’s an actor out of work who took the job for December’s rent. The girl came up alone while her grandmother paid downstairs, and she has asked him to bring her father home from overseas for Christmas morning. He has no idea where her father is or whether he’s coming. For the tape he sits in the big chair, and the child is read off camera at the eyeline of a child beside him.',
+    circumstances: 'The Santa’s grotto on the top floor of a department store, half past five on Christmas Eve, the store closing at six. He’s an actor out of work who took the job for December’s rent. The girl came up alone while her grandmother paid downstairs, and she has asked him to bring her father home from overseas for Christmas morning. He has no idea where her father is or whether he’s coming. For the tape, sit in the big chair and play to the reader off camera, at a child’s eyeline beside you.',
     relationship: 'Strangers, though she has written him three letters this month and expects him to remember every one.',
     you: 'Gil Abernathy, forty-four, an actor between jobs, three weeks into being Santa and very good at it.',
     reader: 'Rosie, seven, who changes the subject every few seconds and comes back each time to the one thing.',
@@ -711,13 +711,13 @@ export const SECOND_A: readonly Brief[] = [
     techniques: { improv: 1, character: 1 },
     why: {
       partner: 'Everything he says is an answer to her, and she takes every word as Santa’s.',
-      vocal: 'Santa’s voice, big, warm and practiced, kept up through the whole scene, even when what he says under it is his own.',
+      vocal: 'He keeps up Santa’s voice, big, warm and practiced, through the whole scene, even when what he says under it is his own.',
       improvisation: 'Her questions change every few seconds, and he has to answer each as Santa, live, without leaving the routine.',
       techniques: 'It asks for improvisation, because nothing she asks is in his patter, and for character work, because Santa is a part he plays in a suit, with a voice and a laugh that aren’t his own.',
       beats: 'The practiced routine, a stall in character, a promise he can keep, then a laugh held until she’s gone.',
     },
     readings: [
-      { id: 'live', label: 'Answering Her Live', reading: 'The scene is a quick-witted man keeping up with a child, and every answer is found on the spot.', rests: 'She changes the subject every few seconds and comes back each time to the one thing.', lean: { responsiveness: 1.25, connection: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.7 }, { dim: 'connection', ability: 'listening', weight: 0.3 }] },
+      { id: 'live', label: 'Answering Her Live', reading: 'The scene is a quick-witted man keeping up with a child, and he finds every answer on the spot.', rests: 'She changes the subject every few seconds and comes back each time to the one thing.', lean: { responsiveness: 1.25, connection: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.7 }, { dim: 'connection', ability: 'listening', weight: 0.3 }] },
       { id: 'suit', label: 'Never Out Of The Suit', reading: 'He never lets Santa slip, not once, and the feeling is all in what the part lets him say.', rests: 'He can’t step out of the suit to tell her the truth, and holds the laugh until she has gone.', lean: { consistency: 1.2, execution: 1.1 }, draws: [{ dim: 'execution', ability: 'vocal', weight: 0.5 }, { dim: 'consistency', ability: 'discipline', weight: 0.5 }] },
       { id: 'promise', label: 'One True Thing', reading: 'He means the promise as himself, and the scene is a man finding one true thing to say from inside a costume.', rests: 'He tells her, as Santa, the one thing he can promise.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'interpretation', ability: 'imagination', weight: 0.5 }] },
     ],
@@ -741,10 +741,10 @@ export const SECOND_A: readonly Brief[] = [
     language: 'everyday', timing: 3, physical: 2, partner: 2, vocal: 0, improvisation: 2,
     techniques: { comedy: 2, improv: 1 },
     why: {
-      timing: 'The schedule read at speed is a rhythm the horn cuts across, and every “last thing” has to be placed just after he seemed to be done.',
-      physical: 'He puts his jacket on and takes it off again, tests a bottle on his own wrist and starts for the door twice: business played on his side of the frame, with the schedule, the bottle and the monitor as his props and the door off frame.',
+      timing: 'He reads the schedule at speed, in a rhythm the horn cuts across, and every “last thing” has to come just after he seemed to be done.',
+      physical: 'He puts his jacket on and takes it off again, tests a bottle on his own wrist and starts for the door twice. Play the business on your side of the frame, with the schedule, the bottle and the monitor as props and the door off frame.',
       partner: 'Each new instruction answers how she took the last one, and she never takes two the same way.',
-      improvisation: 'The schedule is written; the last things after it are found on the take, and the reader’s mood changes with each one.',
+      improvisation: 'The schedule is written. You find the last things after it on the take, and the reader’s mood changes with each one.',
       techniques: 'The laughs are in where each new instruction lands against the horn and her calm, so the scene asks for comic timing, and the last things found on the take ask for improvisation.',
       beats: 'A briefing at speed, a demonstration she didn’t need, a confession, a teenager who knows more than he does, and an exit that takes two tries.',
     },
