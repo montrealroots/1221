@@ -219,3 +219,52 @@ commit, `03d06abc`); no briefs-c source was Pending. Engine-speak fell from 329 
 
 The record of this batch went in a commit of its own after `03d06abc`: a helper failed on batch 4's missing
 `meta.json` and stopped the shell line that wrote it, and the code and marks were committed without it.
+
+## Batch 4: Briefs, Magical Realism To Psychological Horror
+
+**Sources (74):** `briefs/briefs-d.ts`, 25 briefs (brief-magical_realism, brief-martial_arts, brief-medical_drama,
+brief-melodrama, brief-military, brief-mockumentary, brief-monster_movie, brief-mumblecore, brief-musical,
+brief-mystery, brief-nature_documentary, brief-neo_noir, brief-neorealism, brief-new_wave, brief-nordic_noir,
+brief-occult, brief-parody, brief-period_drama, brief-picaresque, brief-police_procedural, brief-political_drama,
+brief-political_thriller, brief-post_apocalyptic, brief-prison_film, brief-psychological_horror) and 49 reading ids
+(plain (two readings: Perfectly Ordinary and Just The Errand), keeping, form (two: Control As Craft and Within The
+Forms), temper, numbers, hunch, full, held, rank, human, believes, lens, dread, sister, small, friends, persuade,
+farewell, sleuth, fear, observer, story, cool, tempted, pride, whim, hope, closed, reach, skeptic, family, deadpan,
+size, appeal, charm, survival, procedure, loyalty, operator, friend, still, betrayal, steward, voice, dignity,
+reaching, grief, real, unsure). About 8,300 words.
+
+**Rewritten (6 sources, 7 strings):** brief-martial_arts, brief-medical_drama, brief-mockumentary,
+brief-nature_documentary, still, brief-prison_film. By kind:
+- **Staging as instructions (2):** The Return Bow's sparring ("Mark each exchange at reduced speed …, land nothing on
+  anyone, and stop the held strike short of his eyeline on every take.") and Table Nine's hug ("play the hug to her
+  eyeline, and never make it").
+- **A sentence that said the opposite of the scene (1):** Handover At Seven's circumstances said each reading was
+  "still inside the range that triggers a call", which reads as each reading triggering one. The brief's own obstacle
+  ("Every single reading is defensible") and the reading The Case On Paper ("Each reading is inside range") say none
+  does. It now says "each reading still short of the level that would trigger a call".
+- **Passives where the actor does it (3):** Pool Manager Of The Year's circumstances and improvisation note ("You make
+  up her answers live …"), Invisible's reading.
+- **A voice brief's You Speak To (1):** The Last Pool now matches the others ("The viewer at home, watching the
+  sequence. Speak to them alone, as if no one else were listening.").
+
+**Kept (68 sources):** the rest. The set descriptions that begin "On the tape …" (The Pump House's "she kneels alone on
+a bare floor, with her brother off camera at her shoulder and the water only in her eyes") are kept as descriptions:
+they say what the frame holds.
+
+**Meaning-sensitive (3), and how each was checked:**
+- Handover At Seven: read against the obstacle, the reading The Case On Paper and the hunch reading's "she can’t prove
+  what she’s afraid of"; the scene's whole problem is that no one reading crosses the line.
+- The Return Bow and Table Nine: every condition kept (reduced speed, the reader's called cues, nothing landing on
+  anyone, the strike stopped short of the eyeline; the hug played to the eyeline and never made).
+
+**Interactions read whole:** each brief's pane; the voice brief The Last Pool with its header and heading; the
+improvised briefs (Pool Manager Of The Year, The Night Train South) with their improvisation and allows notes.
+
+**Tests and tool matchers updated:** none. The Last Pool's old phrasing ("the voice speaks to them alone, at the
+microphone") is shared by three of material-b's briefs in `second-d.ts` (lines 301, 476, 615), listed in the report.
+
+**Checks (exits, `scratchpad/ma/b4/`):** `tsc -b --noEmit` 0; `eslint briefs-d.ts --max-warnings=0` 0; title-case 0;
+label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-refs 0; deciders 0; guide-quotes 0;
+text-inventory 0 after the marks. vitest: material-words and briefs-content, 2 files, 454 tests, exit 0.
+
+**Screens:** BriefPane for each brief, rendered by the material-words test.

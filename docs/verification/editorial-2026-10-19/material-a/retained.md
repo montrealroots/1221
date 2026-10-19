@@ -45,3 +45,13 @@ with the words kept and the reason, so the owner can judge the reasons as well a
 - **`briefs-c.ts` [nobody], Nobody Waiting.** "The comedy is a woman holding off the fact that no one at home will
   miss her, and the third beat lets it in." *Reason:* it says exactly where the comedy and the grief meet, resting on
   the panel's "no record of a home".
+
+## Batch 4
+
+- **`briefs-d.ts` [brief-monster_movie], The Pump House.** Circumstances: "On the tape she kneels alone on a bare floor,
+  with her brother off camera at her shoulder and the water only in her eyes." *Reason:* a monster scene built on one
+  rule (it hunts by sound) and a whisper, with a set description a tape can do; kept as a description because it says
+  what the frame holds.
+- **`briefs-d.ts` [brief-period_drama], The Gown For Tonight.** Obstacle: "A maid may not accuse a tradeswoman of
+  error, may not mention her mistress’s debts, and may not go home without the gown." *Reason:* 1911's rules for a
+  lady's maid set out plainly, so the contest inside good manners is playable.

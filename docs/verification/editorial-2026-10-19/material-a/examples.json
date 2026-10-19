@@ -636,5 +636,82 @@
   "why": "The fact and the direction were one long sentence; the direction is now an instruction of its own.",
   "meaningSensitive": false,
   "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-martial_arts]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The sparring is a staged fight taped solo: she marks each exchange at reduced speed against the reader’s called cues from off camera, nothing lands on anyone, and the held strike stops short of his eyeline on every take.",
+  "after": "The sparring is a staged fight, taped solo. Mark each exchange at reduced speed against the reader’s called cues from off camera, land nothing on anyone, and stop the held strike short of his eyeline on every take.",
+  "why": "The staging note as an instruction, as the other fights now are; every condition kept.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-medical_drama]",
+  "field": "circumstances",
+  "kind": "narration",
+  "before": "has had a slowly rising heart rate and falling blood pressure through the night, each reading still inside the range that triggers a call.",
+  "after": "has had a slowly rising heart rate and falling blood pressure through the night, each reading still short of the level that would trigger a call.",
+  "why": "'Inside the range that triggers a call' said the opposite of the scene: the readings are each defensible (the obstacle) and 'inside range' (a reading's rests), so no single one triggers a call. That's the whole problem she has.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-mockumentary]",
+  "field": "circumstances",
+  "kind": "narration",
+  "before": "Her answers are improvised from those facts, to the producer’s questions.",
+  "after": "You improvise her answers from those facts, to the producer’s questions.",
+  "why": "Passive to active: the player improvises.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-mockumentary]",
+  "field": "why.improvisation",
+  "kind": "other",
+  "before": "Her answers are made up live from the given facts, to questions she hasn’t heard in advance.",
+  "after": "You make up her answers live from the given facts, to questions you haven’t heard in advance.",
+  "why": "As the circumstances: the actor makes them up, and it's the actor who hasn't heard the questions.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-nature_documentary]",
+  "field": "reader (You Speak To)",
+  "kind": "label",
+  "before": "The viewer at home, watching the sequence; the voice speaks to them alone, at the microphone.",
+  "after": "The viewer at home, watching the sequence. Speak to them alone, as if no one else were listening.",
+  "why": "As the other voice briefs' You Speak To lines: the person first, then what to do; 'the voice speaks' repeated the heading.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [still]",
+  "field": "reading",
+  "kind": "narration",
+  "before": "She gives away nothing: the scene is played almost entirely in stillness, and the audience reads her from very little.",
+  "after": "She gives away nothing: she plays the scene almost entirely in stillness, and the audience reads her from very little.",
+  "why": "A passive in a reading of how she plays it.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-prison_film]",
+  "field": "circumstances",
+  "kind": "narration",
+  "before": "On the tape the reader sits off camera across the table, and the hug is played to her eyeline, never made.",
+  "after": "On the tape the reader sits off camera across the table: play the hug to her eyeline, and never make it.",
+  "why": "The contact's staging as an instruction, as the fights' and the embraces' now are.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
  }
 ]
