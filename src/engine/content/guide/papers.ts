@@ -342,7 +342,7 @@ export const PAPERS: readonly GuideEntry[] = [
       // Until 2026-10-16 the sentence said “of earnings” and nothing of an exception, and it was the end of it: Apply For
       // HUSKY D takes the application on its notice since. Until 2026-10-17 it began “80 hours’ work” (brief 12).
       `HUSKY D, its work rules not shown: “From January 1, 2027, … asks for … in the month before you apply, and last month had none of them.”, naming HUSKY D and what it asks: ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception. The line goes on to say whether the marketplace is open to you, and Enroll shows only where it is, and buys its plan; Apply For HUSKY D, beside it, takes the application on a notice.`,
-      '“Your application waits on its notice: answer it by …”: one application at a time. “Last month meets its work rules, so press Enroll instead.”: Apply For HUSKY D is for a month that doesn’t.',
+      '“You’ve already applied. Answer its notice of noncompliance by …”: one application at a time. “Last month meets its work rules, so press Enroll instead.”: Apply For HUSKY D is for a month that doesn’t.',
       '“There’s no notice of noncompliance waiting for an answer.”, “The … days to answer ended on ….” or “None of the months it checked, …, had a stay in hospital, the one hardship the game counts.”: Request A Hardship Exception doesn’t show, and the notice’s line says which.',
       '“You have no plan of your own to drop.”, or, dropped already, “It’s already dropped, and it ends on ….”',
       '“…, so there’s no renewal left to answer.”, saying the program has ended or the day it ends: a renewal’s notice whose program has ended some other way, and Request A Hardship Exception doesn’t show.',
@@ -490,7 +490,7 @@ export const PAPERS: readonly GuideEntry[] = [
       steps: [
         // From 2026-10-15: until then the visit was booked at Fair Haven, 24 days on, a student on Yale Health being given
         // the town's first practice with nothing picked.
-        `A notice: “A doctor’s visit: booked at ${YALE_PRACTICE} for …, the usual wait where you live.”, ${YALE_SOON}.`,
+        `A notice: “A doctor’s visit: booked at ${YALE_PRACTICE} for …, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.”, ${YALE_SOON}.`,
         `On the day you sleep past ${clock(CONSULT_HOUR)}, and “Missed The Doctor” follows.`,
         'Open Papers, Health Cover, and press Book An Appointment beside “A doctor’s visit: not yet seen”.',
       ],

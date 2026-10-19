@@ -162,16 +162,16 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
   "status": "Rewritten",
-  "hash": "69309ae87363",
+  "hash": "5b3cabe37d2f",
   "on": "2026-10-19",
-  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "evidence": "tests/guide-examples-papers.test.ts plays the example and holds its quoted notice equal to the game's, with the next step the health area added",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
   "status": "Rewritten",
-  "hash": "e84ce1f0b482",
+  "hash": "4aa3cd1645d8",
   "on": "2026-10-19",
-  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "evidence": "tools/guide-quotes.mjs --check finds the quoted refusal in systems/health.ts as the health area rewrote it, exit 0",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {

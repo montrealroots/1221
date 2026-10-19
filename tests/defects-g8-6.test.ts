@@ -149,12 +149,12 @@ describe('a specialist booked again after it was called off is told so in plain 
     const zone = CITIES.require(sim.player.currentLocationId).timeZone;
     // The referral, as a kept visit draws one (odds 1 stands in for the draw).
     const a = mayRefer(sim, sim.player, { id: 'v1', at: sim.now, what: 'A checkup' }, 1)!;
-    expect(titled(sim, 'A Referral').at(-1)!.body).toBe(`Referred after a checkup: a specialist, booked for ${formatDate(a.at, zone)}, the usual wait where you live.`);
+    expect(titled(sim, 'A Referral').at(-1)!.body).toBe(`Referred after a checkup: a specialist, booked for ${formatDate(a.at, zone)}, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.`);
     sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
     expect(healthOf(sim.player).owedVisit).toBe(SPECIALIST);
     const again = sim.must<{ at: number }>({ kind: 'health.book', payload: {} });
     const body = titled(sim, 'A Referral').at(-1)!.body;
-    expect(body).toBe(`A specialist, referred: booked for ${formatDate(again.at, zone)}, the usual wait where you live.`);
+    expect(body).toBe(`A specialist, referred: booked for ${formatDate(again.at, zone)}, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.`);
     expect(body).not.toMatch(/booked specialist/);
     expect(appointmentsOf(sim.player)).toHaveLength(1);
   });

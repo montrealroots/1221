@@ -77,3 +77,10 @@ as it came in, with what was done about it and when. Nothing here is applied unt
 | papers | Left Alone | Left Untreated |
 
 ## Settled
+- **Health's Blocked booking notice** (`systems/appointments.ts`, `bookIn`). The health area left it Blocked: it named
+  the date and gave no next step, and a test of the papers guide quoted it, which isn't the health area's file. At the
+  merge, the coordinator added "Be there then, or press Call It Off on Papers, under Health Cover." to the notice and to
+  the guide's quote of it (`guide/papers.ts`, `papers.doctor`). The coordinator also gave `papers.health-cover`'s quote
+  the words the papers area had left it. Eight exact assertions in five test files moved with the notice, among them a
+  re-booked specialist in `defects-g8-6`. A mutation check showed that `guide-examples-papers` fails when only the notice
+  changes. The seven files run: 124 of 124 tests. text-inventory, guide-quotes, traceability, typecheck and lint all hold.

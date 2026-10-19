@@ -391,7 +391,7 @@ describe('health.appointment', () => {
     expect(visitsLogged(sim).map((c) => c.at)).toEqual([visit.at]);
     const specialist = appointmentsOf(sim.player);
     expect(specialist.map((a) => [a.what, a.at])).toEqual([[SPECIALIST, at(2026, 10, 9, 10)]]);
-    expect(titled(sim, 'A Referral').map((n) => n.body)).toEqual(['Referred after a doctor’s visit: a specialist, booked for October 9, 2026, the usual wait where you live.']);
+    expect(titled(sim, 'A Referral').map((n) => n.body)).toEqual(['Referred after a doctor’s visit: a specialist, booked for October 9, 2026, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.']);
     expect(drawn(sim).text).toContain(`${SPECIALIST}: an appointment October 9, 2026, ${YALE_CLINIC} Call It Off`);
     // Seen, and a specialist refers no further, though the draw is still forced to. Both at Yale Health (until
     // 2026-10-15, both at Fair Haven).

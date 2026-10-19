@@ -623,11 +623,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/appointments.ts#bookIn": {
-  "status": "Blocked",
-  "hash": "2a5c9b70b3d1",
+  "status": "Rewritten",
+  "hash": "72ae2f0f8ea2",
   "on": "2026-10-19",
-  "reason": "The booking notice is quoted whole by the papers guide's papers.doctor example in src/engine/content/guide/papers.ts, the papers area's file, and tests/guide-examples-papers.test.ts holds the two equal, so rewriting it here alone fails that test. It unblocks when the coordinator changes both together, to: … the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.",
-  "first": "Rewritten And Verified"
+  "evidence": "tests/guide-examples-papers.test.ts, papers.doctor: the played Monday's notice equals the guide's quote, new next step included; fails with the old notice",
+  "first": "Pending"
  },
  "src/engine/systems/appointments.ts#mayRefer": {
   "status": "Retained",
