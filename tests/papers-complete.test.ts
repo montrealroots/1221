@@ -53,7 +53,7 @@ describe('PLAYER JOURNEY: an international student’s banks and Social Security
     sim = reload(sim);
     tended(sim, applied.arrivesAt + MS_HOUR);
     expect(hasSsn(sim.player)).toBe(true);
-    expect(sim.universe.notifications.some((n) => n.title === 'Your Social Security Card Came')).toBe(true);
+    expect(sim.universe.notifications.some((n) => n.title === 'Your Social Security Card Has Arrived')).toBe(true);
   });
 
   it('a US citizen holds a number already, and opens online, no branch hour', () => {

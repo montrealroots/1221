@@ -186,7 +186,7 @@ const irsLetters = (sim: Simulation) => sim.universe.notifications.filter((n) =>
 describe('tax.early_filing_notices', () => {
   // 18 April 2028 at 11:59 PM in New Haven, the deadline after Emancipation Day and a weekend.
   const DUE = at(2028, 4, 18, 23, 59);
-  const BILL = 'Notice CP14: your 2027 return shows $1,700.39 owed to the IRS, due by April 18, 2028. If you pay by then, nothing is added. After that, interest at 7% a year and a penalty for paying late of 0.5% a month are added to what’s unpaid, and the IRS’s reminders begin 5 weeks after the due date. Pay it on Papers, under Tax Returns.';
+  const BILL = 'Notice CP14: your 2027 return shows $1,700.39 owed to the IRS, due by April 18, 2028. If you pay by then, nothing is added. After that, interest at 7% a year and a penalty for paying late of 0.5% a month are added to what’s unpaid, and the IRS’s reminders begin five weeks after the due date. Pay it on Papers, under Tax Returns.';
 
   it('PLAYER JOURNEY: filed on Papers on 1 February 2028 unpaid, the IRS’s bill comes at once and names 18 April; no letter before the due date; CP501, CP503, CP504 and the LT11 35 days apart from it, $1,728.81 to $1,789.55, and the levy 30 days on, each once across reloads; Connecticut’s bill 30 days after its due date: until 2026-10-16 CP501 came on 7 March and CP503 on 11 April, with no bill', () => {
     let sim = thaw(unpaid());
@@ -215,9 +215,9 @@ describe('tax.early_filing_notices', () => {
     sim.advanceTo(DUE + 140 * MS_DAY + MS_HOUR);
     expect(irsLetters(sim).slice(1)).toEqual([
       ['A Reminder From The IRS', DUE + 35 * MS_DAY, 'Notice CP501: you owe $1,728.81 on your 2027 return. It’s still unpaid, and interest and the late-payment penalty keep adding up. Pay it on Papers, under Tax Returns, or apply for a payment plan there.'],
-      ['A Second Reminder From The IRS', DUE + 70 * MS_DAY, 'Notice CP503: you owe $1,748.92 on your 2027 return. The IRS hasn’t heard from you and expects it paid. Pay it on Papers, under Tax Returns, or apply for a payment plan there.'],
-      ['The IRS Intends To Levy', DUE + 105 * MS_DAY, 'Notice CP504: you owe $1,769.17 on your 2027 return. The IRS may now take a state refund and certain federal payments without further notice. Paying it, or a payment plan, stops collection.'],
-      ['Final Notice Of Intent To Levy', DUE + 140 * MS_DAY, 'Notice LT11: you owe $1,789.55 on your 2027 return. In 30 days the IRS takes what you owe from your bank accounts. Paying it, or a payment plan, stops the levy.'],
+      ['A Second Reminder From The IRS', DUE + 70 * MS_DAY, 'Notice CP503: you owe $1,748.92 on your 2027 return. The IRS hasn’t heard from you since its first reminder, and it expects payment. Pay it on Papers, under Tax Returns, or apply for a payment plan there.'],
+      ['The IRS Intends To Levy', DUE + 105 * MS_DAY, 'Notice CP504: you owe $1,769.17 on your 2027 return. The IRS may now take a state refund and certain federal payments without further notice. Paying it, or setting up a payment plan, stops collection: both are on Papers, under Tax Returns.'],
+      ['Final Notice Of Intent To Levy', DUE + 140 * MS_DAY, 'Notice LT11: you owe $1,789.55 on your 2027 return. In 30 days the IRS takes what you owe from your bank accounts. Paying it, or setting up a payment plan, stops the levy: both are on Papers, under Tax Returns.'],
     ]);
     // The levy 30 days after the LT11 finds her accounts empty, her money in the CD: six months begun, $51.00, and 30
     // days more of interest, $56.96 in all: $1,808.35 still owed.
@@ -249,7 +249,7 @@ describe('tax.early_filing_notices', () => {
     sim.must({ kind: 'tax.file', payload: { year: 2027 } });
     const filed = sim.now;
     expect(ret(sim).owed).toBe(1_790_51);
-    expect(titled(sim, 'A Bill From The IRS').map((n) => [n.at, n.body])).toEqual([[filed, 'Notice CP14: you owe $1,790.51 on your 2027 return, including the penalties and interest since its due date. Until it’s paid, interest at 7% a year and a penalty for paying late of 0.5% a month keep adding up, and the IRS’s reminders begin in 5 weeks. Pay it on Papers, under Tax Returns.']]);
+    expect(titled(sim, 'A Bill From The IRS').map((n) => [n.at, n.body])).toEqual([[filed, 'Notice CP14: you owe $1,790.51 on your 2027 return, including the penalties and interest since its due date. Until it’s paid, interest at 7% a year and a penalty for paying late of 0.5% a month keep adding up, and the IRS’s reminders begin in five weeks. Pay it on Papers, under Tax Returns.']]);
     expect(pending(sim, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([filed + 35 * MS_DAY]);
   });
 });
@@ -494,6 +494,8 @@ describe('tax.catch_up_state_plan (FIXTURE: a New York quick-save)', () => {
     twin.advanceTo(endsBy + MS_HOUR);
     expect(twin.player.statePlans!['us-ny']!).toMatchObject({ status: 'ended', why: 'Ended: not caught up' });
     expect(titled(twin, 'New York DTF Ended Your Plan')).toHaveLength(1);
+    // Its words (brief 15, 2026-10-19).
+    expect(titled(twin, 'New York DTF Ended Your Plan').map((n) => n.body)).toEqual(['You didn’t make up the missed payment in time. Collection resumes on what you owe.']);
   });
 });
 

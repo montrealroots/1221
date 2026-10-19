@@ -778,7 +778,7 @@ export function waiverRefusal(sim: Simulation, r: TaxReturn | undefined, state: 
   if (sd.threeYear.waived !== undefined) return 'Its waiver has already been decided.';
   if (sd.assessedBy && sd.replacedAt === undefined) return 'File your own return for the year first.';
   const paidAt = sd.owed ? undefined : (sd.payments ?? []).at(-1)?.at;
-  if (paidAt !== undefined && sim.now > paidAt + ty.windowDays * MS_DAY) return 'A waiver must be asked for before full payment or within a year after it, and that year has passed.';
+  if (paidAt !== undefined && sim.now > paidAt + ty.windowDays * MS_DAY) return 'You have to ask for a waiver before paying in full or within a year after, and that year has passed.';
   return undefined;
 }
 
@@ -1126,7 +1126,7 @@ export function registerStateTax(sim: Simulation): void {
     const p = person?.statePlans?.[state];
     if (!person || !p || p.status !== 'missed') return;
     endStatePlan(s, person, p, 'ended', 'Ended: not caught up');
-    notifyPlayer(s, person, `${rulesOf(state)!.short} Ended Your Plan`, 'The missed payment wasn’t made up in time. Collection resumes on what you owe.');
+    notifyPlayer(s, person, `${rulesOf(state)!.short} Ended Your Plan`, 'You didn’t make up the missed payment in time. Collection resumes on what you owe.');
   });
 
   sim.onCommand<{ state: string }, { paid: Money }>('tax.catch_up_state_plan', (p, { sim: s }) => {

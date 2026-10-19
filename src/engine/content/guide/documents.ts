@@ -53,6 +53,10 @@
  * SLATE's. Each now says it's SLATE's assumption, read from the one value that sets it (`NONCITIZEN_ID.toLawfulPresence`,
  * `NZ_FROM_ABROAD`), and what a later correction does: a card keeps its date, a fee paid stands. Japan's fee from abroad
  * was read that day in its own law, US$62, and stopped being SLATE's.
+ *
+ * On 2026-10-19 (brief 15) the entry stopped saying what a later correction of an assumption would do, which is the
+ * game's upkeep and no step of the player's; the ID card's Now line, which said Being Decided until the card came, said
+ * On Its Way for a card past every check, as the row has shown since 2026-10-17 (`idCardOnItsWay`).
  */
 
 import { CHAPTER_FOR } from '../tutorial';
@@ -139,7 +143,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     questions: ['How do I renew my passport?', 'What happens if I lose my passport?', 'How do I get a state ID card?', 'Why does a bank want a photo ID?', 'Do I need a police report for a lost card?', 'Can I travel abroad?'],
     where: on('passport', 'Papers, Passport And ID, Your Passport And Your ID'),
     available: `From the guide’s chapter “${CHAPTER}”. File A Police Report opens with “${PAPERS_CHAPTER}”.`,
-    short: 'Passport And ID holds the papers that prove who you are: your passport, from the country you’re a citizen of, and the state ID card where you live, beside any license you carry. A bank you don’t bank with yet asks to see one of them in force before it opens an account. The Social Security office asks for your passport, and so does the DMV if you’re not a US citizen. Applying for a paper isn’t the same as holding it: it counts only once it’s issued and arrives. You also report a lost or stolen paper here, and replace a license or ID card.',
+    short: 'Your passport and your state ID card prove who you are. A bank you don’t bank with yet asks to see one of them in force before it opens an account. The Social Security office asks for your passport, and so does the DMV if you’re not a US citizen. Applying for one isn’t the same as holding it: it counts only once it’s issued and arrives. On Passport And ID you apply for or renew each one, report a lost or stolen paper, and replace a license or an ID card.',
     steps: [
       'Open Papers, then the Passport And ID tab. Your Passport shows the one in force, A New One with its fee and wait, and Faster where the office offers it.',
       'Press Apply For One, or Renew It if you hold one. Apply Faster or Renew It Faster pays for the quicker service.',
@@ -153,13 +157,13 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       'For the ID card: living where the game issues one (New York, Connecticut, California, Ontario, British Columbia, Mexico City or Ireland), with no license from there in force and no card held or on its way.',
       'If you’re not a US citizen, at a US state’s counter: being in status; being at school on an F-1, or, once school is over, holding a US permit in force such as OPT; a primary identity document in force (your passport, or OPT’s card instead); and a Social Security number, which the game issues only through work-study at school.',
       'To replace a card: report it lost first, and live where it was issued (though New York mails a license out of state).',
-      'The fee in your accounts.',
+      'Enough in your bank for the fee.',
     ],
     costs: [
       { label: 'Time', value: 'None: applying, reporting and replacing don’t move the clock' },
       { label: 'A US Passport', value: `${dollars(US.fee)} the first time or after one is lost, ready in up to ${US.days} days, good for ${US.validityYears} years. Renewed by mail on Form ${US_RENEWAL.form}, it’s ${dollars(US_RENEWAL.fee)}, if your most recent passport was issued within ${US_RENEWAL.withinYears} years, at ${US_RENEWAL.issuedFromAge} or older, and never reported lost. ${dollars(US_FASTER.extra)} more gets it in ${US_FASTER.days} days`, estimate: US.daysEstimated },
-      { label: 'Another Country’s Passport', value: `Applied for from New Haven, so from abroad: its office’s fee and time for an applicant outside the country, where the game has them, such as the UK’s ${inOwn(UK_ABROAD.fee, UK_ABROAD.currency)} online, Australia’s ${inOwn(AU_ABROAD.fee, AU_ABROAD.currency)} with its overseas surcharge, and Japan’s ${inOwn(JP_ABROAD.fee, JP_ABROAD.currency)} at a consulate in the US. Its faster service is offered only where it’s sold abroad, which the UK’s Fast Track isn’t. Where an office’s own figure couldn’t be read, the fine print says it’s assumed: New Zealand’s GST (${NZ_FROM_ABROAD.gstCharged ? 'charged' : 'not charged'}), and its urgent fee from overseas, taken as its standard fee. If a figure is corrected later, a fee you’ve paid stands, and the new figure applies to what you apply for after`, estimate: true },
-      { label: 'Connecticut’s ID Card', value: `${dollars(CT_ID.fee)}, good for ${CT_ID.years} years, to your first birthday at least ${CT_ID.years} years on. It’s mailed, and comes ${CT_ID.mailedBusinessDays} business days after you apply, not counting weekends and federal holidays. If you’re not a citizen, the DMV’s SAVE check comes first, ${NONCITIZEN_ID.saveBusinessDays} federal workdays, and ${NONCITIZEN_ID.toLawfulPresence ? `the card runs to your program’s end while you’re at school, or on OPT to the end printed on it, ${OPT.months} months from its start. That term is assumed, because the state publishes no term for a card it doesn’t verify. If OPT is canceled for its days without work, the card stays in force to that printed end` : 'the card runs its full term to a birthday, as anyone’s does. That term is assumed, because the state publishes no term for a card it doesn’t verify'}. If the assumption is corrected later, a card already issued keeps its date`, estimate: true },
+      { label: 'Another Country’s Passport', value: `Applied for from New Haven, so from abroad: its office’s fee and time for an applicant outside the country, where the game has them, such as the UK’s ${inOwn(UK_ABROAD.fee, UK_ABROAD.currency)} online, Australia’s ${inOwn(AU_ABROAD.fee, AU_ABROAD.currency)} with its overseas surcharge, and Japan’s ${inOwn(JP_ABROAD.fee, JP_ABROAD.currency)} at a consulate in the US. Its faster service is offered only where it’s sold abroad, which the UK’s Fast Track isn’t. Where an office’s own figure couldn’t be read, the fine print says what the game assumes: New Zealand’s GST (${NZ_FROM_ABROAD.gstCharged ? 'charged' : 'not charged'}), and its urgent fee from overseas, taken as its standard fee`, estimate: true },
+      { label: 'Connecticut’s ID Card', value: `${dollars(CT_ID.fee)}, good for ${CT_ID.years} years, to your first birthday at least ${CT_ID.years} years on. It’s mailed, and comes ${CT_ID.mailedBusinessDays} business days after you apply, not counting weekends and federal holidays. If you’re not a citizen, the DMV’s SAVE check comes first, ${NONCITIZEN_ID.saveBusinessDays} federal workdays, and ${NONCITIZEN_ID.toLawfulPresence ? `the card runs to your program’s end while you’re at school, or on OPT to the end printed on it, ${OPT.months} months from its start. That term is assumed, because the state publishes no term for a card it doesn’t verify. If OPT is canceled for its days without work, the card stays in force to that printed end` : 'the card runs its full term to a birthday, as anyone’s does. That term is assumed, because the state publishes no term for a card it doesn’t verify'}`, estimate: true },
       { label: 'Replacing An ID Card', value: `Connecticut ${dollars(CT_ID_AGAIN.fee)} in ${CT_ID_AGAIN.days} days; New York ${dollars(NY_ID_AGAIN.fee)} in ${NY_ID_AGAIN.days}; California ${dollars(CA_ID_AGAIN.fee)} in ${CA_ID_AGAIN.days}` },
       { label: 'Replacing A License', value: `Connecticut ${dollars(CT_LICENSE.fee)} in ${CT_LICENSE.days} days; New York ${dollars(NY_LICENSE.fee)} in ${NY_LICENSE.days}, free if it was stolen and the police have your report; California ${dollars(CA_LICENSE.fee)} in ${CA_LICENSE.days}` },
       { label: 'A Police Report', value: 'Free, and filed at once' },
@@ -172,19 +176,19 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     ],
     now: [
       'The fee leaves your bank, and a passport you’ve applied for shows Being Decided with the day it should be ready. You don’t hold it yet.',
-      `Connecticut’s ID card shows Being Decided until it comes by mail, ${CT_ID.mailedBusinessDays} business days later, after the DMV’s SAVE check if you’re not a citizen. Until it comes, you can’t show it as a photo ID.`,
+      `Connecticut’s ID card shows On Its Way until it comes by mail, ${CT_ID.mailedBusinessDays} business days later. If you’re not a citizen, it shows Being Decided first, during the DMV’s SAVE check. Until it comes, you can’t show it as a photo ID.`,
       'Reported lost or stolen, a paper is canceled for good, even if it turns up. A passport takes with it any visa or travel authorization issued on it, though an F-1 status continues.',
       'A police report is kept on the lost paper’s record.',
       'Replace It cancels the lost card and puts a new one, with a new number, on its way.',
     ],
     later: [
       'A passport is issued on its day for its term, and the one it replaces is canceled then, along with any travel authorization on it.',
-      'A new or replacement card arrives on its day, and is in force from then. Until it comes, you can’t show it as a photo ID.',
+      'A new or replacement card arrives on its day, and you can use it from then. Until it comes, you can’t show it as a photo ID.',
     ],
     interpret: [
-      'Status in a row reads In Force, Being Decided, Reported Lost, Canceled or Run Out.',
+      'Status in a row reads In Force, Being Decided, On Its Way (an ID card past every check, in the mail), Reported Lost, Canceled or Run Out.',
       // From 2026-10-16 (brief 09's journeys): until then a row run out said nothing past Run Out.
-      'A license that has run out says beside it that a driving license can’t be renewed in the game, and that a passport or ID card in force is your photo ID. A passport or ID card that has run out says to apply for a new one in its panel. A new bank asks for one in force.',
+      'A license that has run out says beside it that you can’t renew a driving license in the game, and to use a passport or ID card in force as your photo ID. A passport or ID card that has run out says to apply for a new one in its panel. A new bank asks for one in force.',
       'A passport’s own page counts the countries that would let you in on it for a week’s visit. That’s for reference only: travel isn’t part of the game, so you never cross a border.',
       'A card’s own page says “It meets REAL ID.” on a US state ID card issued to a citizen, and “It’s marked Not For Federal Identification: it isn’t REAL ID.” on one issued to someone who isn’t, as Connecticut issues it. A license you began with says “It meets REAL ID.” if it was drawn as one: at its state’s published share of REAL ID licenses, or, for a state with none published, the average of the shares that are. There are no flights in the game, so no airport check reads it.',
       'Going Abroad lists what each country asks of a short-stay visitor with your citizenship, for reference. You can’t apply for visas or travel authorizations here.',
@@ -195,11 +199,11 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       'Keep at least one photo ID in force before you open an account at a new bank.',
     ],
     unavailable: [
-      '“Your country’s passport office isn’t in the game yet.” or “You’ve already applied, and it’s being decided.”',
+      '“Your country’s passport office isn’t in the game.” or “You’ve already applied, and it’s being decided.”',
       'Apply Faster shows only where the office offers a faster service to you where you are. From abroad, where it offers none, the refusal says “… offers no faster service to applicants abroad.” Where that service “is for renewals only”, it waits until you’ve held a passport from that office.',
       'Get, if you’re not a US citizen and have no passport in force and no OPT card: “The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for a passport or renew it under Your Passport first.”',
       'Get: “You hold a driving license from here, and it already serves as your ID.”, “You already hold one in force.”, “One is already on its way.”, or, if you live where the game issues no card, the list of places it does.',
-      'Get, if you’re not a US citizen, at a US state’s counter: “The DMV checks lawful presence through SAVE, and you stayed past the end of your status.” Out of school on an F-1 with no OPT in force: “On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.” With no Social Security number: “The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one.”, followed by where you stand. At school: “You can get one through work-study: apply for it first, under Social Security Number on Papers.” Applied for: “Yours is on its way.” Out of school with none applied for: “In the game, the number goes only to an F-1 student at school, through work-study, and the letter is never issued.”, so the card is out of reach.',
+      'Get, if you’re not a US citizen, at a US state’s counter: “The DMV checks lawful presence through SAVE, and you’re out of status, so it won’t issue you a card.” Out of school on an F-1 with no OPT in force: “On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.” With no Social Security number: “The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one.”, followed by where you stand. At school: “You can get one through work-study: apply for it first, under Social Security Number on Papers.” Applied for: “Yours is on its way.” Out of school with none applied for: “In the game, the number goes only to an F-1 student at school, through work-study, and the letter is never issued.”, so the card is out of reach.',
       'Report Lost… and Report Stolen… show only on a passport, a license, an international driving permit or an ID card in force. A visa, a permit or a travel authorization is a status the government holds, and losing its paper doesn’t end it.',
       'File A Police Report: “Here lost property is reported in person at a police station, not online.” or “Here a theft is reported in person at a police station, not online.”',
       'Replace It, for an ID card: “It’s replaced only where it was issued, for someone living there.” If it has run out, or runs out before a new card would come: “It ran out on …” or “It runs out on …, before a new card would come”, then “, and a replacement keeps the same date, so it can’t be replaced. Apply for a new card instead, if you can.”',
@@ -238,7 +242,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     questions: ['How do I get a Social Security number?', 'Can I work after I graduate?', 'When can I apply for OPT?', 'What happens when my F-1 status ends?', 'Is premium processing worth it?'],
     where: on('work', 'Papers, Permission To Work, Social Security Number And OPT'),
     available: `From the guide’s chapter “${CHAPTER}”. It’s for a student on an F-1: a US citizen already has a Social Security number, and OPT is only for F-1 students.`,
-    short: `If you’re a student on an F-1, Permission To Work is where you make two applications of your own. A Social Security number, applied for in person at New Haven’s office, gets an IRS plan decided at once, lets some banks open your account online, is needed for Connecticut’s ID card, and saves a 1040-NR its ITIN wait. OPT, after your degree, keeps your US status past its ${STARTING.graceDays} days of grace. The game has no work after the degree, so OPT ends after ${OPT.unemploymentDays} days without work.`,
+    short: `On an F-1, you make two applications here. The first is a Social Security number, which you apply for in person at New Haven’s office. With it, the IRS decides a payment plan at once, some banks open your account online, Connecticut’s DMV can issue you an ID card, and a 1040-NR doesn’t wait on an ITIN. The second is OPT, after your degree, which keeps your US status going past its ${STARTING.graceDays}-day grace period. The game has no work after the degree, so OPT ends after ${OPT.unemploymentDays} days without work.`,
     steps: [
       'Open Papers, then the Permission To Work tab. The Permission To Work panel shows Your Program Ends and Your US Status.',
       `Once you’re registered at the School and have your passport in force, press Apply At The Social Security Office under Social Security Number. It takes ${SSN_VISIT} there.`,
@@ -252,7 +256,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       'OPT’s fee in your accounts.',
     ],
     costs: [
-      { label: 'Time', value: `${SSN.visitMinutes} minutes at the Social Security office, which the clock moves through. Applying for OPT doesn’t move the clock`, estimate: true },
+      { label: 'Time', value: `${SSN.visitMinutes} minutes at the Social Security office, and the clock moves on by that much. Applying for OPT doesn’t move the clock`, estimate: true },
       { label: 'A Social Security Number', value: 'Free' },
       { label: 'OPT', value: `${dollars(OPT.fee)} filed online; premium processing costs ${dollars(OPT.premiumFee)} more` },
       { label: 'How Long', value: `The card comes in ${SSN.days} days. OPT is decided in ${OPT.standardDays} days, or within ${OPT.premiumBusinessDays} business days with premium processing, not counting weekends and federal holidays`, estimate: true },
@@ -262,7 +266,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     reads: [
       { label: 'Your Program’s End', value: 'May 31 of your class’s last year, or the day you left school without the degree' },
       { label: 'How School Ended', value: `The grace period after your program: ${STATUS_GRACE_DAYS.f1} days with the degree, ${STATUS_GRACE_DAYS.withdrawn} after a withdrawal or a degree withheld, and none after a dismissal. OPT follows a completed degree: if you applied while the degree was on its way and school ends without it, OPT is denied when it’s decided, and the fee isn’t refunded` },
-      { label: 'Your Registration', value: 'The number needs on-campus work that has begun or starts within 30 days. Once you’re registered, the School’s work-study is yours' },
+      { label: 'Your Registration', value: 'The number needs on-campus work that has started or starts within 30 days. Once you’re registered, the School’s work-study counts' },
       { label: 'Days Without Work', value: `Counted on OPT a week at a time. After ${OPT.unemploymentDays}, OPT ends` },
     ],
     now: [
@@ -283,12 +287,12 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       'The game keeps no actual Social Security number, only whether you hold one, so no number is shown.',
     ],
     next: [
-      'Once the card comes, give the number to your bank and the School’s payroll. The game asks for nothing more.',
+      'Once the card comes, a new bank can open an account for you online, and Connecticut’s DMV can issue you an ID card: see Passport And ID.',
       'Near your program’s end, apply for OPT inside its window if you want your status to last past the grace period.',
     ],
     unavailable: [
       'The number’s button shows only while you have no number and none on its way. A US citizen’s panel reads Held, as a US citizen.',
-      '“On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.”, or once school is over, “On an F-1, the number needs on-campus work, and that ended with your program.”',
+      '“On an F-1, you can get a number only with on-campus work that has started or starts within 30 days. Register at the School first: once you’re registered, the School’s work-study counts.”, or once school is over, “On an F-1, you can get a number only with on-campus work, and yours ended with your program.”',
       '“The office asks for your passport, and you don’t have one in force.”, or another commitment in that hour.',
       `OPT: “You can apply from …”, a date ${OPT.windowBeforeDays} days before your program ends, or “The time to apply closed on …”, ${OPT.windowAfterDays} days after.`,
       '“OPT follows a completed degree, and you left without one.”',
@@ -302,13 +306,13 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     ],
     related: ['documents.passport-id', 'documents.residence', 'taxes.return', 'taxes.plan', 'papers.benefits', 'papers.health-cover', 'school.shifts'],
     connections: [
-      { to: 'school.orientation', kind: 'prerequisite', why: 'The number needs you registered for your program: once you are, the School’s work-study is yours.' },
+      { to: 'school.orientation', kind: 'prerequisite', why: 'You need to be registered for your program to get the number: once you are, the School’s work-study counts as your on-campus work.' },
       { to: 'documents.passport-id', kind: 'prerequisite', why: 'The Social Security office asks for your passport in force.' },
-      { to: 'taxes.return', kind: 'evaluation', why: `A 1040-NR filed without a number goes in with an ITIN application, which holds up its refund ${SSN.itinWeeks} weeks longer.` },
+      { to: 'taxes.return', kind: 'evaluation', why: `A 1040-NR filed without a number goes in with an ITIN application, which holds up its refund ${SSN.itinWeeks === 7 ? 'seven' : SSN.itinWeeks} weeks longer.` },
       { to: 'taxes.plan', kind: 'evaluation', why: `With a number, the IRS decides a plan within a minute. Without one, it’s by mail in ${PLAN.mailDays} days.` },
       { to: 'bank.other-banks', kind: 'evaluation', why: 'Without a number, a bank that opens accounts for international students opens yours only in a branch.' },
       { to: 'papers.benefits', kind: 'evaluation', why: 'Unemployment insurance pays a noncitizen only with permission to work in the US, such as OPT in force.' },
-      { to: 'papers.health-cover', kind: 'scheduled', why: 'Your status’s end is on the clock. Out of status, a marketplace plan ends at the end of the month.' },
+      { to: 'papers.health-cover', kind: 'scheduled', why: 'Your status ends on a set day. Once you’re out of status, a marketplace plan ends at the end of the month.' },
     ],
     example: {
       setup: `An F-1 student in the class that began in 2026, whose program ends ${day(PROGRAM_END)}, with no work lined up.`,

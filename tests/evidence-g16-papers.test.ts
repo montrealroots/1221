@@ -457,7 +457,7 @@ describe('documents.idcard_arrives', () => {
     sim.advanceTo(Date.UTC(2026, 8, 14, 12, 30));
     expect(coming.status).toBe('valid');
     expect(coming.issuedAt).toBe(Date.UTC(2026, 8, 14, 11, 30));
-    expect(titled(sim, 'Class D (Operator) driver license Arrived').map((n) => [n.at, n.body])).toEqual([[Date.UTC(2026, 8, 14, 11, 30), 'It’s in your hands and in force from today.']]);
+    expect(titled(sim, 'Class D (Operator) driver license Arrived').map((n) => [n.at, n.body])).toEqual([[Date.UTC(2026, 8, 14, 11, 30), 'It’s arrived, and you can use it from today.']]);
     const row = rowOf(drawn(sim, PapersWorkspace, 'passport').html, coming.number);
     expect(row).toContain('September 14, 2026');
     expect(row).toContain('In Force');
@@ -559,7 +559,7 @@ describe('documents.permission', () => {
     const twice = drawn(sim, WorkPane);
     expect(twice.button('Apply For OPT')).toMatchObject({ disabled: true, title: 'You’ve already applied for OPT.' });
     expect(run(sim, 'documents.apply_opt')).toMatchObject({ ok: false, error: 'You’ve already applied for OPT.' });
-    expect(twice.text).toContain('Your US Status Held While you study, or while an application is decided');
+    expect(twice.text).toContain('Your US Status Held While you study, or while an application is being decided');
 
     // Across a reload, decided on its day, once.
     const later = reload(sim);
@@ -661,10 +661,10 @@ describe('documents.us_status', () => {
     expect(pendingOf(again, 'documents.us_status')).toEqual([]);
     // What reads it, each through its own command.
     expect(run(again, 'health.enroll')).toMatchObject({ ok: false, error: 'The marketplace is only for citizens and people lawfully present, and you’re out of status.' });
-    expect(run(again, 'documents.apply_idcard')).toMatchObject({ ok: false, error: 'The DMV checks lawful presence through SAVE, and you stayed past the end of your status.' });
+    expect(run(again, 'documents.apply_idcard')).toMatchObject({ ok: false, error: 'The DMV checks lawful presence through SAVE, and you’re out of status, so it won’t issue you a card.' });
     expect(run(again, 'benefits.claim')).toMatchObject({ ok: false, error: 'Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3304(a)(14)).' });
     const out = drawn(again, WorkPane);
-    expect(out.text).toContain('Your US Status Out Of Status Since February 16, 2027. In the game, the Visa Waiver Program is now closed to you');
+    expect(out.text).toContain('Your US Status Out Of Status Since February 16, 2027. In the game, you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you');
     expect(rowOf(out.html, 'F-1 Student Visa')).toContain('Canceled');
     // Said once: a further reload and a month on add nothing.
     const month = reload(again);
@@ -980,7 +980,7 @@ describe('benefits.week', () => {
     later.advanceTo(Date.UTC(2030, 5, 10, 1));
     expect(unemploymentOf(later.player).claim).toBeUndefined();
     expect(unemploymentOf(later.player).past).toMatchObject([{ paid: 1_116_00, closedAt: Date.UTC(2030, 5, 10, 0) }]);
-    expect(titled(later, 'Your Unemployment Claim Ended').map((n) => n.body)).toEqual(['A year from filing, the benefit year is over.']);
+    expect(titled(later, 'Your Unemployment Claim Ended').map((n) => n.body)).toEqual(['The benefit year ended a year after you filed.']);
     expect(pendingOf(later, BENEFIT_WEEK_KIND)).toEqual([]);
     expect(memos(later, /^Unemployment insurance/)).toHaveLength(12);
   }, 60_000);

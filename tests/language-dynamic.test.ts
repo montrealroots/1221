@@ -349,7 +349,7 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const papers = () => drawn(sim, PassportPane);
     const held = () => documentsOf(sim.player).filter((d) => ['passport', 'visa', 'authorization'].includes(d.kind));
     expect(held()).toHaveLength(0);
-    expect(papers()).toContain('None held.');
+    expect(papers()).toContain('You don’t hold any.');
     const applied = sim.must<{ readyAt: number; fee: number }>({ kind: 'documents.apply_passport', payload: {} });
     expect(held()).toHaveLength(1);
     const row = papers().split('\n');
@@ -587,8 +587,8 @@ describe('missing optional information: each part absent, and the sentence still
     const pane = drawn(sim, WorkPane).split('\n');
     // No number is kept (`systems/taxid.ts`): its status stands in its place, and the button says why it can't be pressed yet.
     const at = pane.indexOf('Social Security Number');
-    expect(pane[at + 1]).toBe('Not yet');
-    const why = 'On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.';
+    expect(pane[at + 1]).toBe('None yet');
+    const why = 'On an F-1, you can get a number only with on-campus work that has started or starts within 30 days. Register at the School first: once you’re registered, the School’s work-study counts.';
     expect(pane).toContain(why);
     expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} })).toMatchObject({ ok: false, error: why });
     expect(pane.find((l) => l.startsWith('Source: SSA POMS'))).toContain('read October 10, 2026.');
@@ -1157,7 +1157,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
     expect(once.ok).toBe(false);
     expect(twice.error).toBe(once.error);
     // Why (the number needs on-campus work) and the next step (register, and the School's work-study is yours).
-    expect(once.error).toMatch(/^On an F-1, the number needs on-campus work that has begun or starts within 30 days\. Register at the School first, and the School’s work-study is yours\.$/);
+    expect(once.error).toMatch(/^On an F-1, you can get a number only with on-campus work that has started or starts within 30 days\. Register at the School first: once you’re registered, the School’s work-study counts\.$/);
     expect(sim.player.ssn).toBeUndefined();
     expect(balance()).toBeLessThanOrEqual(before);
     // And a medical leave asked twice with nothing to recommend it: the same reason each time, with its lookback.

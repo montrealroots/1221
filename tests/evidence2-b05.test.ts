@@ -593,7 +593,7 @@ describe('documents.report_lost', () => {
     const shown = papers(sim, 'passport');
     // From 2026-10-16 the row says what replaces it after Run Out (brief 09's journeys, tests/remaining-09-journeys.test.ts):
     // until then nothing came after it, and this read the row's end there.
-    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out A driving license can’t be renewed in the game\. A passport or ID card in force is your photo ID: see Your Passport and Your ID\.$/);
+    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out You can’t renew a driving license in the game\. Use a passport or ID card in force as your photo ID: see Your Passport and Your ID\.$/);
     expect([named(shown, 'Report Lost…'), named(shown, 'Report Stolen…')]).toEqual([[], []]);
   }, 60_000);
 

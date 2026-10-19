@@ -1,0 +1,3257 @@
+{
+ "src/engine/content/guide/documents.ts#DOCUMENTS [documents.passport-id]": {
+  "status": "Rewritten",
+  "hash": "e00d409d99a5",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure by tools in my folder (guide-documents.txt, vite-node over GUIDE_BY_ID); its quotes held by tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]": {
+  "status": "Retained",
+  "hash": "6e719027cf15",
+  "on": "2026-10-19",
+  "reason": "Residence Abroad's entry says first that the game grants none of these papers and why, then Mexico's rule for reference, with an example that changes nothing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
+  "status": "Rewritten",
+  "hash": "8e7b201617a7",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID); quotes held by tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
+  "status": "Rewritten",
+  "hash": "ceb8f6fd00cf",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), How It Connects (seven weeks)",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [immediate]": {
+  "status": "Retained",
+  "hash": "3f9eb0c50efb",
+  "on": "2026-10-19",
+  "reason": "Two short lines that say a fee leaves your accounts the moment you apply, replace, settle or naturalize, which is when the bank changes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [optional]": {
+  "status": "Retained",
+  "hash": "72dfcdc14d59",
+  "on": "2026-10-19",
+  "reason": "Two connections that keep residence apart from US permission to work and say your birth passport stays yours, which players otherwise ask about.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [prerequisite]": {
+  "status": "Rewritten",
+  "hash": "66ff425d4328",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), How It Connects",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [scheduled]": {
+  "status": "Rewritten",
+  "hash": "a22329170568",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), Permission To Work's How It Connects",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/documents.ts#NEW_HAVEN": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the guide's dates are written in, America/New_York, which the guide never shows as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/documents.ts#NY_MAILS": {
+  "status": "Retained",
+  "hash": "5f510aebbacb",
+  "on": "2026-10-19",
+  "reason": "Says which issuer mails a replacement out of state and on which form, so a New Yorker in New Haven knows the replacement still works.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/documents.ts#SSN_VISIT": {
+  "status": "Retained",
+  "hash": "90335b649ade",
+  "on": "2026-10-19",
+  "reason": "The Social Security visit's length in plain words, an hour, read from the rule's minutes so the guide can't drift from it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#BENCH_WORDS": {
+  "status": "Retained",
+  "hash": "9a44c3a7b273",
+  "on": "2026-10-19",
+  "reason": "The benchmark premium for each year the rules hold, said with its year, so a life begun in 2026 reads its own.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#CHAINS": {
+  "status": "Retained",
+  "hash": "a0739eaa08d1",
+  "on": "2026-10-19",
+  "reason": "Each pharmacy chain with its generic's cash price, short names in a list the costs line reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#CT_FLOOR_WORDS": {
+  "status": "Retained",
+  "hash": "09f0ed187691",
+  "on": "2026-10-19",
+  "reason": "Connecticut's weekly floor by year, the later year's said as estimated by the statute's index, where it differs.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/papers.ts#EMERGENCY_ROOM": {
+  "status": "Retained",
+  "hash": "9788f46689e7",
+  "on": "2026-10-19",
+  "reason": "The town's emergency department by its own name, or the town's hospital, where an emergency is had.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#FROM_CURRENT": {
+  "status": "Rewritten",
+  "hash": "a3dadd549527",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID): where a bill or a premium is taken from, the checking account first, as the glossary now names it",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#MONTHS": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The months' names the guide's dates are written with, so every date reads as the game writes one.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [evaluation]": {
+  "status": "Rewritten",
+  "hash": "c26581d576da",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (your cover decides your share each time you have care)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [history]": {
+  "status": "Retained",
+  "hash": "648d7a5db6ac",
+  "on": "2026-10-19",
+  "reason": "Each history connection says what's kept for later: Yale Health's bill with the School's charges, a premium for the tax credit, a claim as income.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [immediate]": {
+  "status": "Rewritten",
+  "hash": "6653d8900019",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (a visit you keep is billed for your share)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [optional]": {
+  "status": "Retained",
+  "hash": "fc4e06469743",
+  "on": "2026-10-19",
+  "reason": "Each optional connection says what the other tab or entry holds, in the tab's own terms, so the player knows where to look.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.benefits]": {
+  "status": "Rewritten",
+  "hash": "243c83c7d557",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.conditions]": {
+  "status": "Rewritten",
+  "hash": "5e731c1be28a",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
+  "status": "Rewritten",
+  "hash": "69309ae87363",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
+  "status": "Rewritten",
+  "hash": "e84ce1f0b482",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
+  "status": "Retained",
+  "hash": "6cdc73d92262",
+  "on": "2026-10-19",
+  "reason": "Papers' entry says what the screen holds, its five tabs by name, the three ways to reach it, and that moving between tabs changes nothing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.pensions]": {
+  "status": "Retained",
+  "hash": "854fdfeca5db",
+  "on": "2026-10-19",
+  "reason": "Pensions' entry gives the forty credits, the claiming ages and the cut or rise, and says plainly that a school life's record stops near a few credits, so Claim never shows.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [prerequisite]": {
+  "status": "Retained",
+  "hash": "2d3da8701dd4",
+  "on": "2026-10-19",
+  "reason": "Each prerequisite says what has to be true first in one sentence: the chapter read, Yale Health ended, the stipend in the base period.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [scheduled]": {
+  "status": "Rewritten",
+  "hash": "ba56db431cf8",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (a long-term condition left untreated takes its toll)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PRACTICE": {
+  "status": "Retained",
+  "hash": "aae7e7690819",
+  "on": "2026-10-19",
+  "reason": "The town's first practice by its own name, or a plain fallback, as the doctor's entry names where a visit goes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#SNAP_FULL": {
+  "status": "Retained",
+  "hash": "8607c9472184",
+  "on": "2026-10-19",
+  "reason": "SNAP's most for a month, from its own table, the figure the benefits entry gives.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#YALE_PRACTICE": {
+  "status": "Retained",
+  "hash": "e1faaf1accf2",
+  "on": "2026-10-19",
+  "reason": "Yale Health's practice by its own name, or Yale Health, as the entry names where a student is seen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#YALE_SOON": {
+  "status": "Retained",
+  "hash": "1074be4669e2",
+  "on": "2026-10-19",
+  "reason": "How soon Yale Health sees a student, the next weekday, said in words from the practice's own wait.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/taxes.ts#NEW_HAVEN": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the guide's dates are written in, America/New_York, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/taxes.ts#PART": {
+  "status": "Retained",
+  "hash": "b95c5225568c",
+  "on": "2026-10-19",
+  "reason": "The three parts of what's owed in plain words, the tax, the penalty, the interest, as Connecticut's order is said.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/taxes.ts#REFUND_WORDS": {
+  "status": "Retained",
+  "hash": "740e9da84718",
+  "on": "2026-10-19",
+  "reason": "When a refund comes, the IRS's and Connecticut's, and the 1040-NR's longer wait without a number, each day from its rule.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [immediate]": {
+  "status": "Rewritten",
+  "hash": "e09150ad9595",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt, How It Connects (checking account first, then savings)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [optional]": {
+  "status": "Rewritten",
+  "hash": "556e0fa28d6d",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt, How It Connects (the seven weeks an ITIN holds up the refund)",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [prerequisite]": {
+  "status": "Retained",
+  "hash": "19172408c6ac",
+  "on": "2026-10-19",
+  "reason": "Each prerequisite says what has to be true first in one sentence: a filed return, paid in full, your own return in the assessment's place.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [scheduled]": {
+  "status": "Rewritten",
+  "hash": "6aa0e4a9e649",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt, How It Connects (five weeks; the checking account)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]": {
+  "status": "Rewritten",
+  "hash": "1b616e4f1522",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.pay]": {
+  "status": "Rewritten",
+  "hash": "c71e62c1b3a2",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]": {
+  "status": "Rewritten",
+  "hash": "2d6ff1848140",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.return]": {
+  "status": "Rewritten",
+  "hash": "c11f09053621",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_EXCHANGES": {
+  "status": "Retained",
+  "hash": "4e8c04e02cbf",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .au-nsw": {
+  "status": "Retained",
+  "hash": "b0986d64fcaf",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .br": {
+  "status": "Retained",
+  "hash": "7f3ca04f5c34",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .ca-bc": {
+  "status": "Retained",
+  "hash": "b6635e39f8ac",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .ca-on": {
+  "status": "Retained",
+  "hash": "a4c26c8e7a7a",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .de": {
+  "status": "Retained",
+  "hash": "1cce4307f0a1",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .es": {
+  "status": "Retained",
+  "hash": "94a67cdef360",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .fr": {
+  "status": "Retained",
+  "hash": "a00a8097e6c2",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .gb": {
+  "status": "Retained",
+  "hash": "7418a2b0a7ce",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .gb-nir": {
+  "status": "Retained",
+  "hash": "9684f672566e",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .ie": {
+  "status": "Retained",
+  "hash": "fa675d1426c6",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .is": {
+  "status": "Retained",
+  "hash": "fbff9fe851b8",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .jp": {
+  "status": "Retained",
+  "hash": "bad98325fbf0",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .kr": {
+  "status": "Retained",
+  "hash": "e613d9203375",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .lv": {
+  "status": "Retained",
+  "hash": "2a337b8dcfeb",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .mx-cmx": {
+  "status": "Retained",
+  "hash": "364d9819f0de",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .nz": {
+  "status": "Retained",
+  "hash": "2c3241178606",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .us-ca": {
+  "status": "Retained",
+  "hash": "b21d3639f3fa",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .us-ct": {
+  "status": "Retained",
+  "hash": "326f08ddabe4",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .us-ny": {
+  "status": "Retained",
+  "hash": "58e2e268d713",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [application]": {
+  "status": "Retained",
+  "hash": "cacbd0230e97",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [aptitude]": {
+  "status": "Retained",
+  "hash": "b610ea163134",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [class5]": {
+  "status": "Retained",
+  "hash": "090f8acb1105",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [class7-50]": {
+  "status": "Retained",
+  "hash": "5abddf1f9328",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [class7]": {
+  "status": "Retained",
+  "hash": "1c6f7a813901",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [cnh]": {
+  "status": "Retained",
+  "hash": "7057b35d4a68",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [code]": {
+  "status": "Retained",
+  "hash": "5505dd2a1a32",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [course]": {
+  "status": "Retained",
+  "hash": "a095b1c2e80f",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [dkt]": {
+  "status": "Retained",
+  "hash": "099c1b244ec4",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [driving]": {
+  "status": "Retained",
+  "hash": "ca8a190f826d",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [dt]": {
+  "status": "Retained",
+  "hash": "985deddedd94",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [edt]": {
+  "status": "Retained",
+  "hash": "ec28a83a4b9e",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [exam]": {
+  "status": "Retained",
+  "hash": "a9b0e2c4cf07",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [eyes]": {
+  "status": "Retained",
+  "hash": "694928577995",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [firstaid]": {
+  "status": "Retained",
+  "hash": "660140675000",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [full]": {
+  "status": "Retained",
+  "hash": "35226a4b031b",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [full2027]": {
+  "status": "Retained",
+  "hash": "2dd905acf1a0",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [full25]": {
+  "status": "Retained",
+  "hash": "59a16dc72cc7",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [g]": {
+  "status": "Retained",
+  "hash": "f6aaadf9f4b7",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [g1]": {
+  "status": "Retained",
+  "hash": "925f802bcc78",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [g2]": {
+  "status": "Retained",
+  "hash": "7a1d9a072630",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [hpt]": {
+  "status": "Retained",
+  "hash": "46ec7d434a2c",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [knowledge]": {
+  "status": "Retained",
+  "hash": "2d62d2cf3e2d",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [learner]": {
+  "status": "Retained",
+  "hash": "be0a4041d24a",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [lessons]": {
+  "status": "Retained",
+  "hash": "5829f9c49a91",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [license]": {
+  "status": "Retained",
+  "hash": "d7be3dcca95d",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [logbook]": {
+  "status": "Retained",
+  "hash": "aa5156372087",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [medical]": {
+  "status": "Retained",
+  "hash": "b229ee6a0a3c",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [neph]": {
+  "status": "Retained",
+  "hash": "033d39049dbe",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [p2]": {
+  "status": "Retained",
+  "hash": "cd6c2953903d",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [permit]": {
+  "status": "Retained",
+  "hash": "933671dab131",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [practical]": {
+  "status": "Retained",
+  "hash": "60b69fcfe140",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [practice]": {
+  "status": "Retained",
+  "hash": "7db751604c14",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [provisional]": {
+  "status": "Retained",
+  "hash": "ecfb9cecd51a",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [restricted]": {
+  "status": "Retained",
+  "hash": "84d3bde879cf",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [road]": {
+  "status": "Retained",
+  "hash": "5488e3d9bb79",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [safety]": {
+  "status": "Retained",
+  "hash": "232177216b61",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [school]": {
+  "status": "Retained",
+  "hash": "676a8de3b0c1",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [school3]": {
+  "status": "Retained",
+  "hash": "2df37a554d0f",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [skill]": {
+  "status": "Retained",
+  "hash": "3c20372850c8",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [tasa]": {
+  "status": "Retained",
+  "hash": "56ba53501e09",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [test]": {
+  "status": "Retained",
+  "hash": "48c714d6c471",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [theory]": {
+  "status": "Retained",
+  "hash": "1d7e57c9b353",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [toxicology]": {
+  "status": "Retained",
+  "hash": "cb076796d991",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [training]": {
+  "status": "Retained",
+  "hash": "e9358a138765",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [written]": {
+  "status": "Retained",
+  "hash": "7322417ce6c9",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#PASS_RATES [road]": {
+  "status": "Retained",
+  "hash": "aef0d88dbda8",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#PASS_RATES [theory]": {
+  "status": "Retained",
+  "hash": "c53032c3d6a5",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#passRate": {
+  "status": "Retained",
+  "hash": "41779aaed45e",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .au-nsw": {
+  "status": "Retained",
+  "hash": "295005761fd8",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .br": {
+  "status": "Retained",
+  "hash": "f01e7217f4a2",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .ca-bc": {
+  "status": "Retained",
+  "hash": "c8f8d177e580",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .ca-on": {
+  "status": "Retained",
+  "hash": "c73a45151d58",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .de": {
+  "status": "Retained",
+  "hash": "c2e2c7d19a2f",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .es": {
+  "status": "Retained",
+  "hash": "36127654cd7b",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .fr": {
+  "status": "Retained",
+  "hash": "adddd7bfd332",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .gb": {
+  "status": "Retained",
+  "hash": "15e64331fc6b",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/licenses.ts#LICENSES .gb-nir": {
+  "status": "Retained",
+  "hash": "c92646488153",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .ie": {
+  "status": "Retained",
+  "hash": "ab63091048c9",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .is": {
+  "status": "Retained",
+  "hash": "21464a041a46",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .jp": {
+  "status": "Retained",
+  "hash": "3a02e7c85b97",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .kr": {
+  "status": "Retained",
+  "hash": "76c5750fd7f4",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .lv": {
+  "status": "Retained",
+  "hash": "b2b87a123c43",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .mx-cmx": {
+  "status": "Retained",
+  "hash": "f10e99c42ed7",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .nz": {
+  "status": "Retained",
+  "hash": "d1be7091399d",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .us-ca": {
+  "status": "Retained",
+  "hash": "20029f66731c",
+  "on": "2026-10-19",
+  "reason": "A US state's license by its own name (Class D (Operator) driver license) and its authority, the two fields a license's page shows for a US-born citizen; its notes, steps and renewal texts reach no screen since driving went.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .us-ct": {
+  "status": "Retained",
+  "hash": "4ea40016a1a2",
+  "on": "2026-10-19",
+  "reason": "A US state's license by its own name (Class D (Operator) driver license) and its authority, the two fields a license's page shows for a US-born citizen; its notes, steps and renewal texts reach no screen since driving went.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .us-ny": {
+  "status": "Retained",
+  "hash": "e4d4f32682e3",
+  "on": "2026-10-19",
+  "reason": "A US state's license by its own name (Class D (Operator) driver license) and its authority, the two fields a license's page shows for a US-born citizen; its notes, steps and renewal texts reach no screen since driving went.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .AU": {
+  "status": "Retained",
+  "hash": "c233ce7f835d",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .BR": {
+  "status": "Retained",
+  "hash": "8a5ed9e3894e",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .CA": {
+  "status": "Retained",
+  "hash": "3e25cc958178",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .DE": {
+  "status": "Retained",
+  "hash": "16cbfaf8b134",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .ES": {
+  "status": "Retained",
+  "hash": "60f94605f2e7",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .FR": {
+  "status": "Retained",
+  "hash": "37e13692f28e",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .GB": {
+  "status": "Retained",
+  "hash": "d138344962ff",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .IE": {
+  "status": "Retained",
+  "hash": "71e6a5a109f1",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .IS": {
+  "status": "Retained",
+  "hash": "d7a42b83d25c",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .JP": {
+  "status": "Retained",
+  "hash": "aaf161a9223d",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .KR": {
+  "status": "Retained",
+  "hash": "9fd9bb04a198",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .LV": {
+  "status": "Retained",
+  "hash": "16ce5089b0d9",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .MX": {
+  "status": "Retained",
+  "hash": "0e42d446bbbe",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .NZ": {
+  "status": "Retained",
+  "hash": "8ceebda83a02",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .US": {
+  "status": "Retained",
+  "hash": "516ed2563b4a",
+  "on": "2026-10-19",
+  "reason": "The US office's names and, for a citizen applying at home, its fee breakdown and its rule from abroad in Your Passport's fine print: DS-11's two payments and where a citizen abroad applies, as the State Department sets them out; generated, so changed only in the research.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passportsabroad.ts#nzTerms": {
+  "status": "Retained",
+  "hash": "fdb8056d6967",
+  "on": "2026-10-19",
+  "reason": "New Zealand's online fee from overseas with and without GST, and the two assumptions the game makes (GST, the urgent fee), each said as an assumption with why, under Assumed in the game.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passportsabroad.ts#PASSPORTS_ABROAD": {
+  "status": "Retained",
+  "hash": "b355ba637fe7",
+  "on": "2026-10-19",
+  "reason": "Each office's terms for a citizen applying from New Haven, in Your Passport's fine print: the fee abroad with its date, the time, what isn't offered from abroad, and where the game had to assume, said as the game's.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/safetynet.ts#CARE": {
+  "status": "Retained",
+  "hash": "5d8e1e8d06d3",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#CHARITY": {
+  "status": "Retained",
+  "hash": "efac3c21f6a0",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#CHRONIC": {
+  "status": "Retained",
+  "hash": "d084e1d3a10f",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#DENTAL_PLANS": {
+  "status": "Retained",
+  "hash": "96346facab4b",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#ENHANCED_CREDIT": {
+  "status": "Retained",
+  "hash": "7e90ace48079",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#PLANS": {
+  "status": "Retained",
+  "hash": "997e9dd7894a",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#FEDERAL_STATE_OFFSET": {
+  "status": "Retained",
+  "hash": "5ae463b2ac4a",
+  "on": "2026-10-19",
+  "reason": "The Treasury Offset Program's source line, named as the program and its statute, which the federal-offset notice cites.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-az": {
+  "status": "Retained",
+  "hash": "16deffe2f45c",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ca": {
+  "status": "Retained",
+  "hash": "765f956b395f",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-co": {
+  "status": "Retained",
+  "hash": "b14b8026c03e",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ct": {
+  "status": "Retained",
+  "hash": "ff6daa51524b",
+  "on": "2026-10-19",
+  "reason": "Connecticut DRS as every New Haven life meets it: its names, its Installment Agreement, its lien recorded in the town clerk's land records, released on request, and its statutes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-dc": {
+  "status": "Retained",
+  "hash": "ea012d16537b",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ga": {
+  "status": "Retained",
+  "hash": "9870a07e2afa",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-hi": {
+  "status": "Retained",
+  "hash": "847d2449d15f",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-il": {
+  "status": "Retained",
+  "hash": "bc2260d13da6",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-in": {
+  "status": "Retained",
+  "hash": "5de2765eaf89",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-la": {
+  "status": "Retained",
+  "hash": "392a786656ad",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ma": {
+  "status": "Retained",
+  "hash": "75994e0d04a5",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-nc": {
+  "status": "Retained",
+  "hash": "c116339a43ab",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-nm": {
+  "status": "Rewritten",
+  "hash": "e18ec3dcbaa9",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts the long-term agreement’s terms as a sentence",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ny": {
+  "status": "Retained",
+  "hash": "991f11fec8ab",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-oh": {
+  "status": "Retained",
+  "hash": "2ac1e5eb12a2",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-oh-columbus": {
+  "status": "Rewritten",
+  "hash": "8c3c152ae1f5",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts the lien’s effect It’s a judgment against you.",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ok": {
+  "status": "Retained",
+  "hash": "ea5a59547acc",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-or": {
+  "status": "Retained",
+  "hash": "e9a546471b90",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-or-portland": {
+  "status": "Retained",
+  "hash": "717e86ed7570",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-pa": {
+  "status": "Retained",
+  "hash": "33a429a382ec",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-pa-philadelphia": {
+  "status": "Retained",
+  "hash": "361f741dfcd1",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [ADOR Bill]": {
+  "status": "Retained",
+  "hash": "e2265ce8abda",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [AU-222]": {
+  "status": "Retained",
+  "hash": "77d09edff81d",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Bill]": {
+  "status": "Retained",
+  "hash": "df713acd7411",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Billing Notice]": {
+  "status": "Retained",
+  "hash": "05ced64f4767",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [bL0001]": {
+  "status": "Retained",
+  "hash": "51be7fb57fe1",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [bL0006]": {
+  "status": "Rewritten",
+  "hash": "55cd256ff04a",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts Ohio’s bL0006 (you have 60 days to pay or appeal.)",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [bL0008]": {
+  "status": "Retained",
+  "hash": "1dc85bef398a",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Certified Claim]": {
+  "status": "Retained",
+  "hash": "4a101ef8d776",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Delinquent Notice]": {
+  "status": "Retained",
+  "hash": "1c828e1534ba",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Demand For Payment]": {
+  "status": "Retained",
+  "hash": "5b4536539848",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Demand To File]": {
+  "status": "Retained",
+  "hash": "80ba56aed8cc",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Distraint Warrant]": {
+  "status": "Retained",
+  "hash": "bce0bfd75fb0",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DOTAX Bill]": {
+  "status": "Retained",
+  "hash": "30f2ae0a1d28",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DRS Bill]": {
+  "status": "Retained",
+  "hash": "945636faf363",
+  "on": "2026-10-19",
+  "reason": "Connecticut's bill says the tax, its 10% penalty and 1% a month of interest are due, the three parts Papers shows beneath it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DTF Bill]": {
+  "status": "Retained",
+  "hash": "bf6f35decc29",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DTF-966-E]": {
+  "status": "Retained",
+  "hash": "fcb609775818",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Earnings Tax Assessment]": {
+  "status": "Retained",
+  "hash": "20dddc491755",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Failure To File Notice]": {
+  "status": "Retained",
+  "hash": "9e4a608c0f53",
+  "on": "2026-10-19",
+  "reason": "Connecticut's letter to a non-filer says DRS worked out what you owe from what was reported, and the 60 days to file before it's assessed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Demand]": {
+  "status": "Retained",
+  "hash": "f4d651a189af",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Determination And Demand]": {
+  "status": "Retained",
+  "hash": "e0a240a91109",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Notice Before Seizure]": {
+  "status": "Retained",
+  "hash": "cc27ed529390",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Notice]": {
+  "status": "Retained",
+  "hash": "238b8c243665",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4600]": {
+  "status": "Retained",
+  "hash": "927231ba56e7",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4601]": {
+  "status": "Retained",
+  "hash": "b49bbcb3e799",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4963]": {
+  "status": "Retained",
+  "hash": "154cbb35ea54",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4966]": {
+  "status": "Retained",
+  "hash": "a417adad5be1",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [IDOR-2-BILL]": {
+  "status": "Retained",
+  "hash": "268422b8a7a5",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Information Request For Non-Filed Period]": {
+  "status": "Retained",
+  "hash": "7160ed1a163a",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [ITDQ0009]": {
+  "status": "Retained",
+  "hash": "e1f96450d30a",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [LTR-393-IPD]": {
+  "status": "Retained",
+  "hash": "09a6d7383062",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Nonfiling Notice]": {
+  "status": "Retained",
+  "hash": "00b66c9d9861",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice And Demand]": {
+  "status": "Retained",
+  "hash": "b17e92fa5d40",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Assessment]": {
+  "status": "Retained",
+  "hash": "96308d803281",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Collection, Second]": {
+  "status": "Retained",
+  "hash": "58c2985a9bdc",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Collection]": {
+  "status": "Retained",
+  "hash": "f9ab6f326207",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Deficiency]": {
+  "status": "Retained",
+  "hash": "798895e86109",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Determination And Assessment]": {
+  "status": "Retained",
+  "hash": "be6cf495e67b",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Enforcement]": {
+  "status": "Retained",
+  "hash": "a6bb13a72d82",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Estimated Assessment]": {
+  "status": "Retained",
+  "hash": "cb4dfd31ef43",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Failure To File]": {
+  "status": "Retained",
+  "hash": "86de6939b106",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Final Assessment]": {
+  "status": "Retained",
+  "hash": "35e09c421d56",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Individual Income Tax Assessment]": {
+  "status": "Retained",
+  "hash": "d1e488b86ef1",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Assess]": {
+  "status": "Retained",
+  "hash": "165d848c8fa7",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Garnish]": {
+  "status": "Retained",
+  "hash": "931c4882ae0a",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Issue Judgment/Lien]": {
+  "status": "Retained",
+  "hash": "92f7db982fc2",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Levy]": {
+  "status": "Retained",
+  "hash": "1c438f089a8a",
+  "on": "2026-10-19",
+  "reason": "Connecticut's notice of intent says in 30 days it may take what you owe from your bank accounts by warrant, the next step if unpaid.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Offset]": {
+  "status": "Retained",
+  "hash": "ded4cf65ac46",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Proposed Assessment]": {
+  "status": "Rewritten",
+  "hash": "ab098e1cce2d",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts Louisiana’s letter (You have 30 days to file or respond.)",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Tax, Penalty And/Or Interest Due]": {
+  "status": "Retained",
+  "hash": "ebaaf6d4af9d",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice To File]": {
+  "status": "Retained",
+  "hash": "ef3141cccabf",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice To Submit Return]": {
+  "status": "Retained",
+  "hash": "8665f9182fe9",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Official Assessment And Demand]": {
+  "status": "Retained",
+  "hash": "aa6964b8e682",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Past-Due Bill]": {
+  "status": "Retained",
+  "hash": "792f4fbc14a8",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Personal Income Tax Non-Filer Notice]": {
+  "status": "Retained",
+  "hash": "3686bec230e5",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Proposed Assessment]": {
+  "status": "Rewritten",
+  "hash": "50b6042fa95d",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts Hawaii’s letter (You have 30 days to file your own or object.)",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Referral Notice]": {
+  "status": "Retained",
+  "hash": "bf7b6e1721ef",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [State Tax Execution]": {
+  "status": "Retained",
+  "hash": "ace842e63f62",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Statement Of Account]": {
+  "status": "Retained",
+  "hash": "14b6f48826c7",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Statement Of Proposed Audit Change]": {
+  "status": "Retained",
+  "hash": "73669805a39e",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Statement Of Tax Due]": {
+  "status": "Retained",
+  "hash": "b742beed8b6d",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Tax Warrant]": {
+  "status": "Retained",
+  "hash": "a9bddd1e54cf",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Top Notice]": {
+  "status": "Retained",
+  "hash": "df1b3577b503",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Written Demand]": {
+  "status": "Retained",
+  "hash": "60cdde38a7ae",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_UNRESEARCHED": {
+  "status": "Rewritten",
+  "hash": "d56ba70579b3",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders it under Owed To and asserts it, and the plan refusal that returns it",
+  "first": "Pending"
+ },
+ "src/engine/content/tax.ts#APPROX": {
+  "status": "Retained",
+  "hash": "e8683c2d776d",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#computeAnnualTax": {
+  "status": "Retained",
+  "hash": "4f55b0e644f3",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#DENVER_OPT": {
+  "status": "Retained",
+  "hash": "8f8010fd21fd",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tax.ts#ICELAND_NOTE": {
+  "status": "Retained",
+  "hash": "0ee5efabe642",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES": {
+  "status": "Retained",
+  "hash": "9943cecd4c21",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES [flat]": {
+  "status": "Retained",
+  "hash": "a433e7c99e96",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES [none]": {
+  "status": "Retained",
+  "hash": "ea620c3397bf",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES [progressive]": {
+  "status": "Retained",
+  "hash": "bc09b5bd0a49",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tax.ts#PROPERTY_TAX_RULES": {
+  "status": "Retained",
+  "hash": "7a8076900efa",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#SALES_TAX_RULES": {
+  "status": "Retained",
+  "hash": "f2d6804565c3",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/visas.ts#AU_600": {
+  "status": "Rewritten",
+  "hash": "2028c5062c63",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/content/visas.ts#BR_EVISA": {
+  "status": "Rewritten",
+  "hash": "6da433386ed1",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/content/visas.ts#CA_TRV": {
+  "status": "Rewritten",
+  "hash": "8c129827b43f",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/content/visas.ts#US_B1B2": {
+  "status": "Rewritten",
+  "hash": "a61e85fe9520",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/content/visas.ts#VISAS": {
+  "status": "Rewritten",
+  "hash": "66a6efb40c7a",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/content/workrules.ts#WORK_RULES": {
+  "status": "Retained",
+  "hash": "63deba223f3c",
+  "on": "2026-10-19",
+  "reason": "The form's own name, Form I-765, (c)(3)(B), the one string here a screen shows (the OPT panel's subtitle); the fee basis cites USCIS's G-1055 by its edition date and no screen reads it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#abroadQuote": {
+  "status": "Retained",
+  "hash": "887617bf3945",
+  "on": "2026-10-19",
+  "reason": "Each refusal for a payment abroad says the obstacle (no bank the game has, an unknown charge, too little held, too small to cover the margin) in one sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#abroadRefusal": {
+  "status": "Rewritten",
+  "hash": "f5783de35c9b",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-09-banking.test.ts and tests/home-account-setoff.test.ts assert There’s no known way to open anything new at … from America …",
+  "first": "Pending"
+ },
+ "src/engine/systems/abroad.ts#armHomeAccounts": {
+  "status": "Retained",
+  "hash": "18f1c5c319d2",
+  "on": "2026-10-19",
+  "reason": "A bank closing your account: who, why, the notice it gives, the day, and where the money goes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#arriveFromAbroad": {
+  "status": "Retained",
+  "hash": "dc3e1eb15050",
+  "on": "2026-10-19",
+  "reason": "What arrived and where, or why a payment came back and what it cost, in one notice each.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#atmAbroad": {
+  "status": "Retained",
+  "hash": "74c9ccad315f",
+  "on": "2026-10-19",
+  "reason": "Where the bank's own machines are, that its card works here only at another bank's machine, and what the game doesn't know.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#cardAbroadRefusal": {
+  "status": "Retained",
+  "hash": "66a3eb41df42",
+  "on": "2026-10-19",
+  "reason": "Says what the game doesn't know (the bank's charge for a purchase in dollars) and what follows from it: the card can't be your everyday card here.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#chargeAbroadFee": {
+  "status": "Retained",
+  "hash": "63e778379d32",
+  "on": "2026-10-19",
+  "reason": "The ledger memo and category for the fee a bank charges a customer abroad, naming what it's for.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#chargeWords": {
+  "status": "Retained",
+  "hash": "24e72264ae57",
+  "on": "2026-10-19",
+  "reason": "Fragments a bank-abroad sentence is built from (at least, at most, less on smaller sums), each reading whole inside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#closingBanks": {
+  "status": "Retained",
+  "hash": "bf3566f0f953",
+  "on": "2026-10-19",
+  "reason": "The two reasons a bank closes an account from abroad, said as the bank's own terms.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#foreignAccountsNotice": {
+  "status": "Retained",
+  "hash": "29373ab50404",
+  "on": "2026-10-19",
+  "reason": "The FBAR and Form 8938 notice: the highest balance, the thresholds, the dates and where each is filed, then what the game doesn't do for you.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#homeAccountLines": {
+  "status": "Retained",
+  "hash": "0e9a6c66e2e9",
+  "on": "2026-10-19",
+  "reason": "What a bank at home charges a customer abroad, when and from which account, its card's costs and its closing, each figure the bank's own.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#homeCloses": {
+  "status": "Retained",
+  "hash": "cb23e1fc7b31",
+  "on": "2026-10-19",
+  "reason": "Why an account didn't close (overdrawn by the amount) or that it did, and the money on its way, with the day it arrives.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#limitRefusal": {
+  "status": "Retained",
+  "hash": "4ec23611b266",
+  "on": "2026-10-19",
+  "reason": "The bank's daily and monthly limit for money going abroad, with how much has gone already.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#quoteWords": {
+  "status": "Retained",
+  "hash": "a246bf55f625",
+  "on": "2026-10-19",
+  "reason": "A payment abroad quoted whole: what leaves, at what rate against the estimated exchange rate, what arrives, when, and the fees, with the estimate labelled.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#sendAbroad": {
+  "status": "Retained",
+  "hash": "1be28df6553f",
+  "on": "2026-10-19",
+  "reason": "The ledger memos and the calendar's Money Arrives From Abroad for a payment on its way.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/assistance.ts#assistanceRefusal": {
+  "status": "Retained",
+  "hash": "77b6b2552811",
+  "on": "2026-10-19",
+  "reason": "Each refusal says why, and where the game narrows a real rule (SNAP for US citizens only) it says the game does so and why.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/assistance.ts#registerAssistance": {
+  "status": "Retained",
+  "hash": "f078dbcb4507",
+  "on": "2026-10-19",
+  "reason": "SNAP's time limit and closing notices say what happened, why (three months in three years without 80 hours, or the summer rule), and what reopens it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/assistance.ts#registerAssistance [escrow]": {
+  "status": "Retained",
+  "hash": "e136d8ae7040",
+  "on": "2026-10-19",
+  "reason": "EBT Card, SNAP: the account's name as the card itself is known, which the groceries are paid from first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/assistance.ts#schedule": {
+  "status": "Retained",
+  "hash": "3cd487e7f4ad",
+  "on": "2026-10-19",
+  "reason": "Assistance, The Month, the calendar's line for the month's payment, short on a crowded day.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/assistance.ts#snapStudentRefusal": {
+  "status": "Retained",
+  "hash": "0603849eaa6e",
+  "on": "2026-10-19",
+  "reason": "SNAP's student rule in one sentence with its regulation: in the summer, work-study or 20 hours of work a week.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/assistance.ts#snapYearOn": {
+  "status": "Retained",
+  "hash": "cfe7e4812bff",
+  "on": "2026-10-19",
+  "reason": "A date key the code builds for SNAP's fiscal years, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/citizenship.ts#naturalizeRefusal": {
+  "status": "Retained",
+  "hash": "543738f58af9",
+  "on": "2026-10-19",
+  "reason": "Each says what naturalizing there asks (residence first, twelve months settled, five years with a green card) in one short sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/citizenship.ts#registerCitizenship": {
+  "status": "Rewritten",
+  "hash": "a732025371f7",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'naturalizing names the country it made you a citizen of' plays it for Mexico and the United Kingdom",
+  "first": "Pending"
+ },
+ "src/engine/systems/citizenship.ts#registerCitizenship <documents.naturalize>": {
+  "status": "Retained",
+  "hash": "c96a02402436",
+  "on": "2026-10-19",
+  "reason": "The money refusal with nothing charged, the ledger memo, and the calendar's Citizenship Decided, which says the application isn't a grant.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/documents.ts#issue": {
+  "status": "Rewritten",
+  "hash": "9e83afbf49e0",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a passport’s arrival names what it replaced only when it replaced something' plays a first passport and two renewals",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#mayDrive": {
+  "status": "Rewritten",
+  "hash": "be34206e0891",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a citizenship with no passport office in the game, and a town with no driving rules, say so …' asserts the refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#mayEnter": {
+  "status": "Rewritten",
+  "hash": "35c5be602cc2",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print …' (A visitor can stay up to 180 days.) and tests/documents.test.ts, which reads the stay lines",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#passportOffice": {
+  "status": "Rewritten",
+  "hash": "41425a5127ab",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a US renewal by mail says its terms in sentences under Your Passport' renders the fine print",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#passportRefusal": {
+  "status": "Rewritten",
+  "hash": "d02999309a9e",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a citizenship with no passport office in the game …' asserts Your country’s passport office isn’t in the game.",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#policeReportRefusal": {
+  "status": "Rewritten",
+  "hash": "0a68ee86f7c0",
+  "on": "2026-10-19",
+  "evidence": "tests/commands-kept.test.ts asserts You’ve already filed a police report for it.",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#registerDocuments <documents.apply_passport>": {
+  "status": "Retained",
+  "hash": "112b3679a853",
+  "on": "2026-10-19",
+  "reason": "The house refusal for a fee the bank can't meet, Your bank can’t cover $…, so nothing was charged, and the ledger memo the code writes beside it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/documents.ts#registerDocuments <documents.report_lost>": {
+  "status": "Rewritten",
+  "hash": "d2c1e382745d",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g15-papers.test.ts and tests/papers-fixes.test.ts assert the refusal You can’t report a status lost. It stays in force …",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#residenceRefusal": {
+  "status": "Retained",
+  "hash": "1184e4b1d6e5",
+  "on": "2026-10-19",
+  "reason": "No screen calls it now (grep of src finds no caller; tests/residence.test.ts reads it): it names the country by name and the exact panel and tab that show any route.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/documents.ts#STARTING": {
+  "status": "Retained",
+  "hash": "8cee4a741f85",
+  "on": "2026-10-19",
+  "reason": "A research citation line of published statistics and a regulation, kept as its sources name themselves, which no player sentence quotes as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/documents.ts#startingDocuments": {
+  "status": "Retained",
+  "hash": "d5ed1ca0e308",
+  "on": "2026-10-19",
+  "reason": "Document names the code reads back (the F-1 match in report_lost, Driver License as the license fallback): they're keys as well as labels, and plain English.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/documents.ts#startingDocuments [license]": {
+  "status": "Retained",
+  "hash": "a86dcee9e106",
+  "on": "2026-10-19",
+  "reason": "Document names the code reads back (the F-1 match in report_lost, Driver License as the license fallback): they're keys as well as labels, and plain English.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/documents.ts#startingDocuments [visa]": {
+  "status": "Retained",
+  "hash": "6d5e4249b611",
+  "on": "2026-10-19",
+  "reason": "Document names the code reads back (the F-1 match in report_lost, Driver License as the license fallback): they're keys as well as labels, and plain English.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/eiself.ts#eiRefusal": {
+  "status": "Retained",
+  "hash": "820690bb0a87",
+  "on": "2026-10-19",
+  "reason": "EI's refusals (living in Canada, a Canadian citizen, already registered) and its ledger lines, short and exact; a life in New Haven never reaches them.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/eiself.ts#eiWeek": {
+  "status": "Retained",
+  "hash": "4e96e8a24281",
+  "on": "2026-10-19",
+  "reason": "EI's refusals (living in Canada, a Canadian citizen, already registered) and its ledger lines, short and exact; a life in New Haven never reaches them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homebenefits.ts#CDMX_DESEMPLEO": {
+  "status": "Retained",
+  "hash": "9c3125ef32aa",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homebenefits.ts#claimAtHome": {
+  "status": "Retained",
+  "hash": "477d001ce8f0",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homebenefits.ts#desempleoRefusal": {
+  "status": "Retained",
+  "hash": "da8a11622513",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/homebenefits.ts#jobseekerRefusal": {
+  "status": "Retained",
+  "hash": "3d87b14bb051",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/homebenefits.ts#registerHomeBenefits": {
+  "status": "Retained",
+  "hash": "bda3d2e82154",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homepensions.ts#bienestarRefusal": {
+  "status": "Retained",
+  "hash": "4c10d15b1efa",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/homepensions.ts#irishMeans": {
+  "status": "Retained",
+  "hash": "81428446f962",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homepensions.ts#irishPensionRefusal": {
+  "status": "Retained",
+  "hash": "c0679701b9ce",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/homepensions.ts#registerHomePensions": {
+  "status": "Retained",
+  "hash": "9ca5645cf72e",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homepensions.ts#registerHomePensions <pension.bienestar>": {
+  "status": "Retained",
+  "hash": "f8cd68af078b",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homepensions.ts#registerHomePensions <pension.ie_state>": {
+  "status": "Retained",
+  "hash": "6daaa499360e",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/identity.ts#idCardRefusal": {
+  "status": "Rewritten",
+  "hash": "6c510378e97c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/evidence-g16-papers.test.ts and tests/remaining-09-journeys.test.ts assert the out-of-status refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/identity.ts#idReplaceRefusal": {
+  "status": "Retained",
+  "hash": "5b4e011d9482",
+  "on": "2026-10-19",
+  "reason": "Says why a lost ID card can't be replaced (not lost, not here, past its date) and points to the step that works: apply for a new card.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/identity.ts#licenseReplaceRefusal": {
+  "status": "Retained",
+  "hash": "d1dd560f9805",
+  "on": "2026-10-19",
+  "reason": "Each refusal says the obstacle and the real way out (report it lost first), and the last says plainly that the game doesn't renew a driving license.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/identity.ts#noncitizenTermNote": {
+  "status": "Rewritten",
+  "hash": "d0e0b94111eb",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-papers.test.ts (TERM_NOTE, and the full-term variant) renders Your ID’s fine print for a noncitizen",
+  "first": "Pending"
+ },
+ "src/engine/systems/identity.ts#pastItsDate": {
+  "status": "Retained",
+  "hash": "adea485c362f",
+  "on": "2026-10-19",
+  "reason": "The date a card ran out or will run out, said in the past or the future as the case is, which the two replacement refusals open with.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/identity.ts#registerIdentity": {
+  "status": "Rewritten",
+  "hash": "06ecd9ccb53e",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g16-papers.test.ts and tests/defects3-50-70.test.ts assert the arrival notice It’s arrived, and you can use it from today. (the working reference’s example 5)",
+  "first": "Pending"
+ },
+ "src/engine/systems/identity.ts#registerIdentity <documents.apply_idcard>": {
+  "status": "Retained",
+  "hash": "679a42d7d829",
+  "on": "2026-10-19",
+  "reason": "The money refusal with nothing charged, the card's own name with Limited Term for a noncitizen's, and the calendar's The ID Card Comes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/identity.ts#registerIdentity <documents.replace_idcard>": {
+  "status": "Retained",
+  "hash": "9439a4a91972",
+  "on": "2026-10-19",
+  "reason": "The house money refusal with nothing charged, and the calendar line The ID Card Comes, short and plain on a crowded day.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/identity.ts#registerIdentity <documents.replace_license>": {
+  "status": "Retained",
+  "hash": "e6e336f7cf41",
+  "on": "2026-10-19",
+  "reason": "The money refusal with nothing charged and the calendar's The License Comes, each the shortest true thing for its place.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/imss.ts#imssRefusal": {
+  "status": "Retained",
+  "hash": "f6b9474160a9",
+  "on": "2026-10-19",
+  "reason": "The IMSS pension's refusals give the age, the year's weeks against your record and the other pension Mexico pays from 65.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/imss.ts#registerImss": {
+  "status": "Retained",
+  "hash": "3abd51a81bf9",
+  "on": "2026-10-19",
+  "reason": "The IMSS pension's refusals give the age, the year's weeks against your record and the other pension Mexico pays from 65.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/imss.ts#registerImss <pension.imss>": {
+  "status": "Retained",
+  "hash": "c922c52be7d7",
+  "on": "2026-10-19",
+  "reason": "The IMSS pension's refusals give the age, the year's weeks against your record and the other pension Mexico pays from 65.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/papervisits.ts#registerPaperVisits": {
+  "status": "Rewritten",
+  "hash": "9a24e9ac5859",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b03.test.ts plays the London enrolment missed and kept, asserting both notices’ bodies",
+  "first": "Pending"
+ },
+ "src/engine/systems/papervisits.ts#VISITS": {
+  "status": "Rewritten",
+  "hash": "991f22f3d5b6",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a visa interview missed ends the application with no step the game doesn’t offer' plays the miss",
+  "first": "Pending"
+ },
+ "src/engine/systems/permission.ts#businessDaysOn": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the code passes to the calendar, America/New_York, which no screen shows as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/permission.ts#optRefusal": {
+  "status": "Retained",
+  "hash": "30ddfc830ba5",
+  "on": "2026-10-19",
+  "reason": "Each refusal says the exact obstacle and date (from 90 days before your program ends, closed 60 days after), and that OPT follows a completed degree.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/permission.ts#registerPermission": {
+  "status": "Retained",
+  "hash": "a7ec4ef2a3ad",
+  "on": "2026-10-19",
+  "reason": "The OPT and status notices: what happened, then what it means in the game (can't work, visa canceled, Visa Waiver closed) said as the game's rule, and the next step where there is one.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/permission.ts#registerPermission [permit]": {
+  "status": "Retained",
+  "hash": "fa444ed0db6d",
+  "on": "2026-10-19",
+  "reason": "Employment Authorization, OPT: the permit's own name, which the code reads back by OPT and the guide quotes in Being Decided.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/permission.ts#registerPermission <documents.apply_opt>": {
+  "status": "Retained",
+  "hash": "772bb7251df9",
+  "on": "2026-10-19",
+  "reason": "The ledger memo's premium processing and the calendar's OPT Decided, which name the application and its day and nothing more.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/permission.ts#scheduleUsStatus": {
+  "status": "Retained",
+  "hash": "1a1611328206",
+  "on": "2026-10-19",
+  "reason": "US Status, the calendar's two-word line for the day status ends, the same words as Your US Status on the tab.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/residence.ts#MEXICO_RENEWAL": {
+  "status": "Retained",
+  "hash": "5c8e0ea2c245",
+  "on": "2026-10-19",
+  "reason": "Mexico's renewal rule and its fee, then why the game doesn't renew, shown beside a card an older save holds.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/residence.ts#MEXICO_RULE": {
+  "status": "Retained",
+  "hash": "c163b195ceda",
+  "on": "2026-10-19",
+  "reason": "Mexico's published test and fees, every figure from the rule's constants, said as Mexico's rule and not as an offer.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/residence.ts#MEXICO_UNREAD": {
+  "status": "Retained",
+  "hash": "eda68e14d89b",
+  "on": "2026-10-19",
+  "reason": "One plain sentence that says why Mexico's papers can't be had here (moving abroad isn't part of the game), after each of Mexico's rules.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/residence.ts#registerResidence <documents.settle>": {
+  "status": "Retained",
+  "hash": "cc395c6b7232",
+  "on": "2026-10-19",
+  "reason": "Britain's own name for settlement, Indefinite Leave To Remain, as the Home Office spells it, and the money refusal with nothing charged.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/residence.ts#routeRefusal": {
+  "status": "Retained",
+  "hash": "e26c01aa4250",
+  "on": "2026-10-19",
+  "reason": "Each country's own answer in a sentence of its own (Canada's paused program, Ireland's employer's offer, the professional record), plain and specific.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/residence.ts#settleRefusal": {
+  "status": "Retained",
+  "hash": "b5d0d439c52e",
+  "on": "2026-10-19",
+  "reason": "Each says what settling asks in that country (five years, money earned in Britain in your field) or that you already are, with no invented route.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/socialsecurity.ts#registerSocialSecurity": {
+  "status": "Retained",
+  "hash": "505a1d852d57",
+  "on": "2026-10-19",
+  "reason": "Social Security's refusals give the ages (62, full at 67, more until 70) and the forty credits against yours, as the panel's Claimed note shows them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/socialsecurity.ts#registerSocialSecurity <pension.social_security>": {
+  "status": "Retained",
+  "hash": "1bc13bd76f79",
+  "on": "2026-10-19",
+  "reason": "Social Security's refusals give the ages (62, full at 67, more until 70) and the forty credits against yours, as the panel's Claimed note shows them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/socialsecurity.ts#socialSecurityRefusal": {
+  "status": "Retained",
+  "hash": "1a90f73e6b53",
+  "on": "2026-10-19",
+  "reason": "Social Security's refusals give the ages (62, full at 67, more until 70) and the forty credits against yours, as the panel's Claimed note shows them.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statepension.ts#registerStatePension": {
+  "status": "Retained",
+  "hash": "3671ecdd7b1e",
+  "on": "2026-10-19",
+  "reason": "The UK State Pension's refusals give your State Pension age and the ten qualifying years against your record, and its four-weekly payment notice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statepension.ts#registerStatePension <pension.state>": {
+  "status": "Retained",
+  "hash": "904cfb8df299",
+  "on": "2026-10-19",
+  "reason": "The UK State Pension's refusals give your State Pension age and the ten qualifying years against your record, and its four-weekly payment notice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statepension.ts#statePensionRefusal": {
+  "status": "Retained",
+  "hash": "7a46ba15e2b1",
+  "on": "2026-10-19",
+  "reason": "The UK State Pension's refusals give your State Pension age and the ten qualifying years against your record, and its four-weekly payment notice.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#agencyOf": {
+  "status": "Retained",
+  "hash": "c2fa3ba9d1dd",
+  "on": "2026-10-19",
+  "reason": "The fallback name for a state without its own, its revenue department, which a sentence can always say.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#applyStatePayment": {
+  "status": "Retained",
+  "hash": "531da6ba6538",
+  "on": "2026-10-19",
+  "reason": "Paid off, the plan history's two words when a payment clears what a state plan covers.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#assessStateNonFiler": {
+  "status": "Retained",
+  "hash": "5b48c5e13d1e",
+  "on": "2026-10-19",
+  "reason": "A state's assessment of a return never filed: what it charged and from what, and how to replace it on Papers.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#federalOffsetToState": {
+  "status": "Retained",
+  "hash": "3d8a695c216b",
+  "on": "2026-10-19",
+  "reason": "A federal refund sent to a state: how much paid past-due tax, and through which program, the Treasury Offset Program.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#fileState": {
+  "status": "Retained",
+  "hash": "fb70af69b41c",
+  "on": "2026-10-19",
+  "reason": "The ledger memo for a state's tax paid at filing, naming the state, the year and any penalty and interest with it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#fileStateLien": {
+  "status": "Retained",
+  "hash": "3d954714e2cc",
+  "on": "2026-10-19",
+  "reason": "A state lien filed: who, how much, which year, where recorded, why, its fee, that it's public, its effect and how it's released.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#HOME": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the states' dates are written in, America/New_York, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#interestWords": {
+  "status": "Retained",
+  "hash": "b95278178949",
+  "on": "2026-10-19",
+  "reason": "A state's interest rate and how it accrues, kept to the statute's terms, shown under Interest.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#lienDisputeRefusal": {
+  "status": "Retained",
+  "hash": "23dbf87ffddd",
+  "on": "2026-10-19",
+  "reason": "The dispute's refusals, including the one the panel shows instead of the button: filed for tax you owed, so released once paid, not withdrawn.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#lienReleaseRefusal": {
+  "status": "Retained",
+  "hash": "c18df9f9c844",
+  "on": "2026-10-19",
+  "reason": "Each refusal says why release can't be asked now: no lien, already released, not yet paid, released on its own, already asked, or the fee.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#lienReleaseWords": {
+  "status": "Retained",
+  "hash": "4e24314bf828",
+  "on": "2026-10-19",
+  "reason": "How a state's lien is released, by request, by payment or within its days, with an estimate labelled as one.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#missStatePlan": {
+  "status": "Retained",
+  "hash": "feab43fa2e9b",
+  "on": "2026-10-19",
+  "reason": "A missed state payment: the amount, then the state's rule or, where unpublished, the game's, said as the game's, and what follows.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#nextJanuary": {
+  "status": "Retained",
+  "hash": "0e2aaaf149af",
+  "on": "2026-10-19",
+  "reason": "Date keys the code builds for January's interest, never shown to a player as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#orderWords": {
+  "status": "Retained",
+  "hash": "fae1d8e3c4ba",
+  "on": "2026-10-19",
+  "reason": "Where a partial payment goes, by the state's rule or, where unpublished, by the game's, said as the game's.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#payLateFor": {
+  "status": "Retained",
+  "hash": "cfe7e4812bff",
+  "on": "2026-10-19",
+  "reason": "A date key the code builds, never shown to a player as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#payLateWords": {
+  "status": "Retained",
+  "hash": "4e133f8583e7",
+  "on": "2026-10-19",
+  "reason": "A state's late-payment penalty in the fewest words that keep its rate, cap and conditions, shown under Penalties.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#payStateRefund": {
+  "status": "Retained",
+  "hash": "9b00ba1de6eb",
+  "on": "2026-10-19",
+  "reason": "A state refund kept for what's owed: how much, from which year, to what, and under which agreement, in one notice each.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#reconsiderState": {
+  "status": "Retained",
+  "hash": "3faf4f5d1a07",
+  "on": "2026-10-19",
+  "reason": "A state accepting your own return: the tax for the year, then what's still owed or what comes back.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax": {
+  "status": "Rewritten",
+  "hash": "efd06265e7e7",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts asserts the ended plan’s notice (You didn’t make up the missed payment in time …); tests/scope-taxpapers.test.ts the other state notices",
+  "first": "Pending"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.apply_state_plan>": {
+  "status": "Retained",
+  "hash": "9ec81cf1e2fe",
+  "on": "2026-10-19",
+  "reason": "The state plan's history lines and the money refusal, an estimate of the decision's time labelled as estimated.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.catch_up_state_plan>": {
+  "status": "Retained",
+  "hash": "af3f3e6cfeba",
+  "on": "2026-10-19",
+  "reason": "Catch Up's refusals for a state plan and its history lines, nothing paid when the bank can't cover it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.lien_dispute>": {
+  "status": "Retained",
+  "hash": "a324ce637186",
+  "on": "2026-10-19",
+  "reason": "The history line Asked to be withdrawn as filed in error, with the date a decision is due.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.lien_release>": {
+  "status": "Retained",
+  "hash": "780279f1f750",
+  "on": "2026-10-19",
+  "reason": "The release fee's refusal and history lines, with nothing paid when the bank can't cover it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.pay_state>": {
+  "status": "Retained",
+  "hash": "e019c3b67deb",
+  "on": "2026-10-19",
+  "reason": "Pay's refusals for a state, each naming the agency, the amount you owe it, or that the bank can't cover it and nothing was paid.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.request_waiver>": {
+  "status": "Retained",
+  "hash": "cb52c3394c36",
+  "on": "2026-10-19",
+  "reason": "A waiver granted: the share waived by the state's schedule, and where the money already paid toward it goes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#releaseLater": {
+  "status": "Retained",
+  "hash": "686a18eeb8bb",
+  "on": "2026-10-19",
+  "reason": "To be released by and the date, the history line for a release the state is to make.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#releaseStateLien": {
+  "status": "Retained",
+  "hash": "148a9c0fb70b",
+  "on": "2026-10-19",
+  "reason": "The release notice says the state released it and where the release is recorded.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#scheduleStateNonFiler": {
+  "status": "Retained",
+  "hash": "67b93cebada8",
+  "on": "2026-10-19",
+  "reason": "A calendar label, Connecticut DRS On Your 2026 Return, that names who acts and on which year.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#startStatePlan": {
+  "status": "Retained",
+  "hash": "9dcf7ec50c54",
+  "on": "2026-10-19",
+  "reason": "The state plan's history and calendar lines: approved for an amount and months, the fee added, a payment due.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#stateLienPaid": {
+  "status": "Retained",
+  "hash": "835e183d67db",
+  "on": "2026-10-19",
+  "reason": "Paid in full, the notice says the lien is released only when asked and where to ask, the one step the player must take.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#stateLienStep": {
+  "status": "Retained",
+  "hash": "f250ae11d436",
+  "on": "2026-10-19",
+  "reason": "A state's notice of intent to file a lien: the amount, the year, where it will be filed, in how many days, and how to stop it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#stateName": {
+  "status": "Retained",
+  "hash": "12824acb788d",
+  "on": "2026-10-19",
+  "reason": "The states' and cities' names as the world spells them, read by every state sentence on Papers.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#stateNonFilerStep": {
+  "status": "Retained",
+  "hash": "1f3fd5b83861",
+  "on": "2026-10-19",
+  "reason": "A state's letter to a non-filer: its code, the year, and the state's own sentence of what to do by when.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#statePlanNewBalance": {
+  "status": "Retained",
+  "hash": "c8dda4d1fbc7",
+  "on": "2026-10-19",
+  "reason": "A history line saying a new balance joined the plan, which is exactly what happened.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#statePlanRefusal": {
+  "status": "Retained",
+  "hash": "48a82e314ecd",
+  "on": "2026-10-19",
+  "reason": "Each refusal names the state's agency and its own condition (limit, months, levy, fee, down payment) and the step that works instead.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#threeYearCheck": {
+  "status": "Retained",
+  "hash": "ce299b761a03",
+  "on": "2026-10-19",
+  "reason": "Oregon's three-year penalty: the years unfiled, the share, the statute, its cap, and the waiver's schedule with where to ask.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#waiverRefusal": {
+  "status": "Rewritten",
+  "hash": "c322f3530c20",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a waiver asked for too late says what the rule asks, in the active voice'; tests/liens-and-arrangements.test.ts reads the others",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxid.ts#registerTaxId": {
+  "status": "Rewritten",
+  "hash": "8eb3179db129",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g17-papers.test.ts asserts the notice Your Social Security Card Has Arrived and its body, and tests/papers-complete.test.ts its title",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxid.ts#registerTaxId <documents.apply_ssn>": {
+  "status": "Retained",
+  "hash": "ad91f135c691",
+  "on": "2026-10-19",
+  "reason": "The calendar's Your Social Security Card Comes, saying the card is on its way on its day, which the panel's Applied for. The card comes … matches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxid.ts#ssnRefusal": {
+  "status": "Rewritten",
+  "hash": "de68f18c83e1",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts and tests/evidence-g17-papers.test.ts assert the registration refusal on Papers and from the command",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#amendRefusal": {
+  "status": "Retained",
+  "hash": "c3b36431ac27",
+  "on": "2026-10-19",
+  "reason": "Each reason Amend The Return… is grayed out, said beside it: not filed, the IRS's own, one already in, or the date the time ran out.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#amendState": {
+  "status": "Retained",
+  "hash": "044167201597",
+  "on": "2026-10-19",
+  "reason": "A state's amended return processed: more or less tax, the interest it adds, and where the money went, in one notice.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#armCollection": {
+  "status": "Retained",
+  "hash": "93104e6be6aa",
+  "on": "2026-10-19",
+  "reason": "Calendar labels, The IRS On Your 2026 Return, that name who acts and on which year, short enough for a day's list.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#armTaxes": {
+  "status": "Retained",
+  "hash": "164a33a7591f",
+  "on": "2026-10-19",
+  "reason": "Tax Season, the calendar's two words for the day returns are made, which the guide's February 1 matches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#billed": {
+  "status": "Rewritten",
+  "hash": "c8e4afa02840",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts asserts both CP14 variants (the reminders begin five weeks after the due date)",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [CP501]": {
+  "status": "Retained",
+  "hash": "a9adcae07ed0",
+  "on": "2026-10-19",
+  "reason": "The first reminder says the balance is still unpaid, that the late-payment penalty and the IRS's charges keep adding up, and exactly where to pay or ask for a plan.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [CP503]": {
+  "status": "Rewritten",
+  "hash": "9b30cac905c8",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts plays the IRS’s letters and asserts each body (the second reminder says it follows the first)",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [CP504]": {
+  "status": "Rewritten",
+  "hash": "739cd80aab19",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts plays the IRS’s letters and asserts CP504’s body, with where to pay or set up a plan",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [LT11]": {
+  "status": "Rewritten",
+  "hash": "c02e9ba880b3",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts and tests/scope-taxpapers.test.ts assert the final notice’s body",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#FEDERAL_LIEN": {
+  "status": "Retained",
+  "hash": "969abe90796f",
+  "on": "2026-10-19",
+  "reason": "The IRS's own warning about a lien, attributed to it, the recorder's office in plain words, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#federalLienPaid": {
+  "status": "Retained",
+  "hash": "bc792cf2ebd1",
+  "on": "2026-10-19",
+  "reason": "A short history line, Paid in full: to be released by and the date, the IRS's deadline said as one it is to meet.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#federalLienStep": {
+  "status": "Retained",
+  "hash": "ea70eb977872",
+  "on": "2026-10-19",
+  "reason": "Letter 3172 by its number: the amount, the year, where it's recorded, the hearing the letter offers and that the game doesn't, and the release rule.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#federalLienWithdrawRefusal": {
+  "status": "Retained",
+  "hash": "61f67800c869",
+  "on": "2026-10-19",
+  "reason": "Each refusal names the exact obstacle, the release's days or the unfiled year, and the step that clears it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#HOME": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the IRS's dates are written in, America/New_York, which the player never reads as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#newLiability": {
+  "status": "Retained",
+  "hash": "141c1d773780",
+  "on": "2026-10-19",
+  "reason": "CP523 for a new balance says the amount, why it can't join (two payments), the date to revise by and what happens otherwise.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#nextNotice": {
+  "status": "Retained",
+  "hash": "084589cb5e3a",
+  "on": "2026-10-19",
+  "reason": "The IRS, the sender a notice's calendar line names, two words that need nothing more.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#planRefusal": {
+  "status": "Retained",
+  "hash": "fe546c7a7f97",
+  "on": "2026-10-19",
+  "reason": "Each refusal says why the IRS won't take this plan now (one already in, a return unfiled, the size of the balance) and what to do instead.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#reconsider": {
+  "status": "Retained",
+  "hash": "aeaa0c61ab10",
+  "on": "2026-10-19",
+  "reason": "Your own return replacing the IRS's: the new tax against its figure, then what's still owed or what comes back, in that order.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#refusePlan": {
+  "status": "Retained",
+  "hash": "c8c2d6c9cea9",
+  "on": "2026-10-19",
+  "reason": "The declined plan's notice gives the IRS's reason and says its letters start again, which is what happens next.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerFederalLien": {
+  "status": "Retained",
+  "hash": "b1d2fdc02b6d",
+  "on": "2026-10-19",
+  "reason": "The release and withdrawal notices say what the IRS did, on which year, and what a withdrawal means, in the IRS's own terms.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerFederalLien <tax.federal_lien_withdraw>": {
+  "status": "Retained",
+  "hash": "2ef03f2199c7",
+  "on": "2026-10-19",
+  "reason": "Two history lines that name what was asked for and on which form or statute, which The Lien's History lists.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn": {
+  "status": "Rewritten",
+  "hash": "7c86d268f43b",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-taxpapers.test.ts asserts the ended plan’s notice (You didn’t make up the missed payment …); tests/remaining-tax.test.ts the returns’ notices",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.amend>": {
+  "status": "Retained",
+  "hash": "dcc4d3854aff",
+  "on": "2026-10-19",
+  "reason": "The amendment's refusal says nothing on record differs from what was filed, and its form's name, 1040-X with 1040-NR.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.apply_plan>": {
+  "status": "Retained",
+  "hash": "48917d532047",
+  "on": "2026-10-19",
+  "reason": "The lowest-payment and setup-fee refusals give the figure and that nothing was charged; the history says online or by mail and why.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.catch_up_plan>": {
+  "status": "Retained",
+  "hash": "f4ae30c98f28",
+  "on": "2026-10-19",
+  "reason": "Catch Up's refusals say the plan isn't behind or the bank can't cover the amount, nothing paid, with the history's short lines.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.file>": {
+  "status": "Retained",
+  "hash": "9487c1decbc5",
+  "on": "2026-10-19",
+  "reason": "File It's refusals: no return for that year, or already filed with the next step (amend it), and the ledger's own memos.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.pay>": {
+  "status": "Retained",
+  "hash": "9ab60d5730a1",
+  "on": "2026-10-19",
+  "reason": "Pay's refusals: already paid, an amount above zero, no more than you owe (with the figure), or the bank can't cover it, nothing paid.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.revise_plan>": {
+  "status": "Rewritten",
+  "hash": "399517b20f2c",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-taxpapers.test.ts asserts the refusal You can revise only a monthly plan that’s in force.",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn tell()": {
+  "status": "Retained",
+  "hash": "07d1964f9130",
+  "on": "2026-10-19",
+  "reason": "Your 2026 Accounts Abroad, the foreign-account notice's title, naming the year it reports on.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#settleUkYears": {
+  "status": "Retained",
+  "hash": "17da8f89c635",
+  "on": "2026-10-19",
+  "reason": "A UK tax year settled: its years, what came back or was paid and why the treaty left it untaxed, with the ledger's own memos.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#splitReturns": {
+  "status": "Retained",
+  "hash": "849673c70dad",
+  "on": "2026-10-19",
+  "reason": "An older save's single balance split by authority, said once with how, and the IRS-only plan's limit said where a state's tax left it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#startPlan": {
+  "status": "Retained",
+  "hash": "afc3404ffba0",
+  "on": "2026-10-19",
+  "reason": "The calendar's and the history's short lines for a plan payment and an approval, each with its amount or date.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/unemployment.ts#basePeriodFor": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the base period's quarters are counted in, America/New_York, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/unemployment.ts#claimStateFor": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the claim's dates are written in, America/New_York, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/unemployment.ts#close": {
+  "status": "Retained",
+  "hash": "f781978a98d6",
+  "on": "2026-10-19",
+  "reason": "Your Unemployment Claim Ended, the notice's title, which says what happened before its body says why.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/unemployment.ts#monetary": {
+  "status": "Retained",
+  "hash": "1b0e6672e630",
+  "on": "2026-10-19",
+  "reason": "Each state's monetary test said as its own rule, New York's and California's quarters, Connecticut's multiple, then the week's benefit and its weeks, after Filed now on the claim panel.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/unemployment.ts#registerUnemployment": {
+  "status": "Rewritten",
+  "hash": "084b61d31196",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g16-papers.test.ts asserts the claim ended at its benefit year (The benefit year ended a year after you filed.) and tests/evidence-g15-papers.test.ts at its most",
+  "first": "Pending"
+ },
+ "src/engine/systems/unemployment.ts#registerUnemployment <benefits.claim>": {
+  "status": "Retained",
+  "hash": "ba582570deb1",
+  "on": "2026-10-19",
+  "reason": "Each refusal says the obstacle (no state, a claim open, no permission to work, the base period short with what it paid), and the calendar's line for each Sunday.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/unemployment.ts#studentUnavailable": {
+  "status": "Retained",
+  "hash": "dc3d13998486",
+  "on": "2026-10-19",
+  "reason": "Connecticut's rule for a full-time student with its statute, and what it means for you: a claim pays only once you've left school.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/universalcredit.ts#close": {
+  "status": "Retained",
+  "hash": "40dabaf13784",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/universalcredit.ts#creditAward": {
+  "status": "Retained",
+  "hash": "e7489c1ddcf2",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/universalcredit.ts#creditRefusal": {
+  "status": "Retained",
+  "hash": "75529b01d102",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/universalcredit.ts#registerUniversalCredit": {
+  "status": "Retained",
+  "hash": "2f5f40783629",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/universalcredit.ts#schedule": {
+  "status": "Retained",
+  "hash": "44fea49f14af",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/LienPanels.tsx#FederalLien": {
+  "status": "Retained",
+  "hash": "e3d2bcdf11cc",
+  "on": "2026-10-19",
+  "reason": "The IRS's effect in its own words, its release days and Form 12277's condition, and a button that names the form it sends.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/LienPanels.tsx#LienFacts": {
+  "status": "Rewritten",
+  "hash": "840c261846ab",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'California’s notice of intent reads as a lien still to be filed, and one dropped as never filed'; tools/acceptance-ui.mjs reads the Filed variant",
+  "first": "Pending"
+ },
+ "src/ui/components/LienPanels.tsx#StateLienAndPenalty": {
+  "status": "Retained",
+  "hash": "82cb31f131b5",
+  "on": "2026-10-19",
+  "reason": "The state's effect in its own words, how it's released, and the one button the lien allows, with the refusal beside it; Oregon's penalty with its statute and waiver.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/LienPanels.tsx#STATUS": {
+  "status": "Retained",
+  "hash": "a53b018163ff",
+  "on": "2026-10-19",
+  "reason": "A lien's seven statuses as the glossary has them, release kept apart from withdrawal, short enough to sit after its name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/papers.tsx#KIND_WORD": {
+  "status": "Retained",
+  "hash": "3ba330715984",
+  "on": "2026-10-19",
+  "reason": "The kind line of a document's page, Travel Document or Proof Of Identity, which says what the paper is for without repeating its own name above it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/papers.tsx#PLAIN_NAME": {
+  "status": "Retained",
+  "hash": "0d7c2d17f8f6",
+  "on": "2026-10-19",
+  "reason": "The plain fallback name, Passport or ID Card, shown only where a document's own name won't read as one, so the page always has a familiar title.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/papers.tsx#top": {
+  "status": "Rewritten",
+  "hash": "374b0109f28c",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a document reported stolen says stolen on its page, and one reported lost says lost' resolves the look",
+  "first": "Pending"
+ },
+ "src/ui/looks/papers.tsx#whatItDoes": {
+  "status": "Rewritten",
+  "hash": "e6de861cd826",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g25-1.test.ts 'names an older one, still in force, as not the one in your name' resolves the look and asserts It’s in force, but another passport …",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#DocumentList": {
+  "status": "Rewritten",
+  "hash": "bcbcf00fff81",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts (the passports held: You don’t hold any.) and the run-out license row in tests/evidence2-b05.test.ts and tests/remaining-09-journeys.test.ts, which render the table",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#IdPanel": {
+  "status": "Rewritten",
+  "hash": "67cec91a1fe3",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-papers.test.ts presses Get (the mailed Connecticut card) and tests/editorial-papers.test.ts 'Get on Your ID says a card handed over at the counter is yours now, and a free one names no fee'",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#KIND_WORD": {
+  "status": "Retained",
+  "hash": "f42966c65c02",
+  "on": "2026-10-19",
+  "reason": "The plain name of each kind of paper as the report-lost toast says it, Passport Reported Stolen And Canceled, short and unambiguous beside each row.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#PassportPane": {
+  "status": "Rewritten",
+  "hash": "59108227a324",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g25-1.test.ts 'on Papers, Going Abroad says the country would let you in, not that you may go' renders the pane (Australia would let you in for a week’s visit.); the renewal fine print in tests/editorial-papers.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel": {
+  "status": "Rewritten",
+  "hash": "c8b7551d25c6",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Naturalize, on a green card held five years as an older save holds one, says what was applied for and what it cost' presses it",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.naturalize>": {
+  "status": "Retained",
+  "hash": "a19e83dc5f89",
+  "on": "2026-10-19",
+  "reason": "Applied for citizenship, which says plainly that pressing Naturalize applies and doesn't yet make you a citizen, before the toast names the fee.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.renew_residence>": {
+  "status": "Retained",
+  "hash": "21677df38d7d",
+  "on": "2026-10-19",
+  "reason": "One word, Renewed, that opens the toast Renewed and paid its fee, saying what the button did before its cost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.residence>": {
+  "status": "Retained",
+  "hash": "a3e4a569ead0",
+  "on": "2026-10-19",
+  "reason": "One word, Applied, that opens the toast Applied and paid its fee, the same shape as the passport's Applied and paid.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.settle>": {
+  "status": "Retained",
+  "hash": "7fb3a9b5101b",
+  "on": "2026-10-19",
+  "reason": "One word, Settled, opening the toast Settled and paid its fee, for the one step on this panel that's granted at once.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#STATUS_WORD": {
+  "status": "Retained",
+  "hash": "e0cc317e85d2",
+  "on": "2026-10-19",
+  "reason": "The glossary's four statuses for a document, Being Decided and In Force keeping applying apart from holding, exactly as the guide and the look name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#TaxIdPanel": {
+  "status": "Rewritten",
+  "hash": "002b53b18d99",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts 'a document’s missing number …' and tests/evidence-g17-papers.test.ts 'PLAYER JOURNEY: Papers’ Social Security Number panel …' render the panel (None yet, the refund held up seven weeks)",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#WorkPane": {
+  "status": "Rewritten",
+  "hash": "c293a9c40e61",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g15-papers.test.ts 'documents.apply_opt > on Permission To Work, the OPT panel says its fees …' and tests/evidence-g16-papers.test.ts (the out-of-status note) render the pane",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#WorkPane <documents.apply_opt>": {
+  "status": "Retained",
+  "hash": "1570df1f36c0",
+  "on": "2026-10-19",
+  "reason": "The two openings of the OPT toast, Applied for OPT and Applied for OPT with premium processing, each naming exactly which application was made before its fee and decision date.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#aidWord": {
+  "status": "Retained",
+  "hash": "b951d9fc1a33",
+  "on": "2026-10-19",
+  "reason": "The Assistance column's four words, Free Care, 67% Off, Over The Limit and Assistance Taken Off, each saying what the hospital did to the bill.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#amendWords": {
+  "status": "Retained",
+  "hash": "d219673787c9",
+  "on": "2026-10-19",
+  "reason": "An amendment's change said plainly as more tax, less tax, or no change in the total with each side that moved, read straight from the figures.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#AssistancePanel": {
+  "status": "Retained",
+  "hash": "b23c42387380",
+  "on": "2026-10-19",
+  "reason": "SNAP's panel: what's open, the most a month less 30% of net income, what's on the EBT card, and SNAP's income rules with their regulations in the fine print.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#BenefitsPane": {
+  "status": "Rewritten",
+  "hash": "778bce4d36ec",
+  "on": "2026-10-19",
+  "evidence": "the built app’s Unemployment tab, read in the text walk of the tax, health and withdraw saves at 1440 and 390 (after-1440, after-390: The game certifies each week for you on Sunday …)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#ConditionsPanel": {
+  "status": "Rewritten",
+  "hash": "86cc183c601e",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g04-life.test.ts presses Let It Go and Keep It Up and draws Health Cover (Depression: Left Untreated, the new toast)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#DentalPanel": {
+  "status": "Rewritten",
+  "hash": "1b1dfcc64e3c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g03-life.test.ts presses Buy Dental (You’re covered for the dentist from today.)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#EiPanel": {
+  "status": "Retained",
+  "hash": "6d3a7df26db6",
+  "on": "2026-10-19",
+  "reason": "EI's special benefits for the self-employed: when you registered, what premiums would cost, a sick week's benefit and its conditions; a life in New Haven never sees it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#filedWords": {
+  "status": "Retained",
+  "hash": "2da3674d1107",
+  "on": "2026-10-19",
+  "reason": "The File It toast in each of its variants says what filing did with the money: the refund's day, what the bank couldn't pay and where it now shows, or that nothing is owed either way.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#HealthPane": {
+  "status": "Rewritten",
+  "hash": "0e748e24f87d",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-health-eligibility.test.ts (Apply For HUSKY D’s toast), tests/defects-g8-6.test.ts (assistance over the limit, nothing off the bill), tests/evidence-g05-life.test.ts and tests/evidence-g03-life.test.ts (Pay It Off)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#HomeClaimsPanel": {
+  "status": "Retained",
+  "hash": "1e4f90666602",
+  "on": "2026-10-19",
+  "reason": "Universal Credit, Jobseeker's Allowance and the Seguro de Desempleo by their own names, each panel saying what's open, what's paid and why not; a life in New Haven never sees them.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#PapersWorkspace": {
+  "status": "Retained",
+  "hash": "3a1625091e6c",
+  "on": "2026-10-19",
+  "reason": "The screen's one-line subtitle names its five tabs' subjects in the tabs' order, so a player knows what Papers holds before choosing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#PensionsPanel": {
+  "status": "Retained",
+  "hash": "01cf72af5398",
+  "on": "2026-10-19",
+  "reason": "Each pension's credits or record, what it would pay and when, and Claim It's toast with the amount, its share of the full benefit where it's cut.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#PLAN_STATUS": {
+  "status": "Retained",
+  "hash": "5e6bd316c6b9",
+  "on": "2026-10-19",
+  "reason": "The IRS plan's six statuses in the glossary's words, Being decided apart from In force, matched by the state plan's panel and the guide.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife": {
+  "status": "Retained",
+  "hash": "4d899bf4acab",
+  "on": "2026-10-19",
+  "reason": "The IRS's own return, its replacement and an amendment, each said in the order a player meets them, with the estimated processing date labelled as estimated.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane": {
+  "status": "Rewritten",
+  "hash": "a59fe438048c",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts renders a UK tax year (January 31, 2028; a refund of …) and tests/defects-g8-8.test.ts the returns' fine print",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#STATE_NAMES": {
+  "status": "Retained",
+  "hash": "fa6cc8fb543e",
+  "on": "2026-10-19",
+  "reason": "The six states' names Papers writes beside their agencies, spelled as the states spell them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel": {
+  "status": "Rewritten",
+  "hash": "3810784a4ec7",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders Connecticut DRS Installment Agreement (It covers up to $50,000.00 …)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel": {
+  "status": "Rewritten",
+  "hash": "cce56c686012",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders the panel before and after applying (the number's two ways, Not by direct debit), its rules now a second paragraph",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#TherapyRow": {
+  "status": "Retained",
+  "hash": "41c458c77293",
+  "on": "2026-10-19",
+  "reason": "Therapy's progress, the therapist with each one's price or Free With Yale Health, and the button that names the course's length.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#WhoIsOwed": {
+  "status": "Rewritten",
+  "hash": "43c9395806f1",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders Owed To with an unresearched state’s two notes; tests/scope-taxpapers.test.ts renders Connecticut’s",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#YourDoctor": {
+  "status": "Retained",
+  "hash": "a2f7221584b0",
+  "on": "2026-10-19",
+  "reason": "Where you're seen and what it would cost now, each practice and chain with its price and wait, and an appointment's line that says how to be seen where your cover pays.",
+  "first": "Rewritten And Verified"
+ }
+}

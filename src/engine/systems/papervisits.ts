@@ -89,12 +89,20 @@ interface VisitTerms {
 }
 
 export const VISITS: Readonly<Record<VisitRule, VisitTerms>> = {
-  'us-interview': { what: 'Visa Interview At The Consulate', after: 7, ended: 'You missed the visa interview: a no-show closes the application, and its fee isn’t refunded. Apply again to book another.' },
+  'us-interview': { what: 'Visa Interview At The Consulate', after: 7, ended: 'You missed the visa interview: a no-show closes the application, and its fee isn’t refunded.' },
   'us-biometrics': { what: 'Biometrics At A USCIS Application Support Center', after: 0, ended: 'You missed the biometrics appointment, and USCIS treats the case as abandoned and denies it (8 CFR 103.2(b)(13)(ii)). The fees aren’t returned.' },
-  'uk-enrolment-home': { what: 'Biometrics At A UKVCAS Service Point', after: 0, again: { days: 10, from: 'missed' }, ended: 'You didn’t enrol your biometrics after the Home Office’s warning, so the application is rejected and treated as not made.' },
-  'uk-enrolment-abroad': { what: 'Biometrics At A Visa Application Center', after: 0, ended: 'You didn’t enrol your biometrics, so the Home Office treats the application as not made.' },
+  'uk-enrolment-home': { what: 'Biometrics At A UKVCAS Service Point', after: 0, again: { days: 10, from: 'missed' }, ended: 'You didn’t give your biometrics after the Home Office’s warning, so it rejected the application and treats it as not made.' },
+  'uk-enrolment-abroad': { what: 'Biometrics At A Visa Application Center', after: 0, ended: 'You didn’t give your biometrics, so the Home Office treats the application as not made.' },
   'ca-biometrics': { what: 'Biometrics At A Visa Application Center', after: 0, again: { days: 30, from: 'applied' }, ended: 'You didn’t give your biometrics within the 30 days of IRCC’s letter, so IRCC refuses the application.' },
 };
+
+/**
+ * A visit's name inside a sentence: its words in lower case but an acronym's (from 2026-10-19, brief 15: until then
+ * lowercased whole, "biometrics at a uscis application support center", and in its title's case after "Done:").
+ */
+export function visitWords(rule: VisitRule): string {
+  return VISITS[rule].what.split(' ').map((w) => (/^[A-Z]{2,}$/.test(w) ? w : w.toLowerCase())).join(' ');
+}
 
 /** The visit a document waits on, where there is one, and whether it's been kept. */
 export interface PaperVisit {
@@ -164,7 +172,7 @@ export function registerPaperVisits(sim: Simulation): void {
       doc.readyAt = ready;
       if (v.years) doc.expiresAt = ready + v.years * 365.2425 * MS_DAY;
       if (ready !== was || ready <= s.now) s.schedule({ at: ready, kind: v.decidedBy ?? DECIDED_KIND, label: `${doc.name} Decided`, category: 'system', priority: 20, payload: { personId: person.id, documentId: doc.id } });
-      tell(`${terms.what.split(' At ')[0]} Done`, `Done: ${terms.what}, for ${doc.name}. It’s decided from ${formatDate(ready, s.zone)}.`, 45);
+      tell(`${terms.what.split(' At ')[0]} Done`, `You went to your ${visitWords(v.rule)} for your ${doc.name}. It’s decided on ${formatDate(ready, s.zone)}.`, 45);
       return;
     }
     v.missed = (v.missed ?? 0) + 1;
@@ -174,7 +182,7 @@ export function registerPaperVisits(sim: Simulation): void {
       if (again !== undefined) {
         v.at = again;
         schedule(s, person, doc);
-        tell('An Appointment Missed', `You missed the ${terms.what.toLowerCase()} for ${doc.name}. It’s booked again for ${formatDate(v.at, s.zone)}, the last chance before the application ends.`, 80);
+        tell('An Appointment Missed', `You missed your ${visitWords(v.rule)} for your ${doc.name}. It’s booked again for ${formatDate(v.at, s.zone)}, your last chance before the application ends.`, 80);
         return;
       }
     }

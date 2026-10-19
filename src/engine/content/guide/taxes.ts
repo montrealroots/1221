@@ -73,6 +73,8 @@ type Section = 'returns';
 const on = (section: Section, label: string) => ({ route: PAPERS, tab: section, label });
 
 const usd = (cents: number): string => formatMoney(cents, 'USD', { cents: cents % 100 !== 0 });
+/** A number under ten in words, as prose writes one (from 2026-10-19, brief 15: until then "5 weeks", "7 weeks", "2 payments’ worth"). */
+const said = (n: number): string => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
 const pct = (x: number): string => `${+(x * 100).toFixed(2)}%`;
 const day = (at: number): string => formatDate(at, NEW_HAVEN);
 
@@ -165,7 +167,7 @@ export const TAXES: readonly GuideEntry[] = [
     questions: ['When is my tax return due?', 'What happens if I file late?', 'When does my refund come?', 'Why does the IRS say it filed my return?', 'How do I amend a return?'],
     where: on('returns', 'Papers, Tax Returns, Each Year’s Return Panel'),
     available: `From the guide’s chapter “${CHAPTER}”. Each year’s return is ready on February 1 of the next year, if there’s one to file.`,
-    short: `Your tax return settles a year’s income tax with the IRS and your state. The game prepares it for you each February 1 from what you earned, what was withheld and where you lived, and you file it with one button. Filed by the deadline, April 15 or the next business day (June 15 for a 1040-NR with no wages on it), it costs only the tax. Filed late with tax owed, the IRS adds penalties and interest. A refund comes ${REFUND_WORDS}.`,
+    short: `Your tax return settles a year’s income tax with the IRS and your state. The game prepares it for you each February 1 from what you earned, what was withheld and where you lived, and you send it with File It. Filed by the deadline, April 15 or the next business day (June 15 for a 1040-NR with no wages on it), it costs only the tax. Filed late with tax owed, the IRS adds penalties and interest. A refund comes ${REFUND_WORDS}.`,
     steps: [
       'Open Papers, then the Tax Returns tab. Each year has a panel headed with the year, showing Due and its date, or Filed once it’s in.',
       'Read its lines: your wages, interest and any scholarship for living costs, the tax on them and what was withheld. The last line says You Owe or Your Refund.',
@@ -174,12 +176,12 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     needs: [
       `A return for the year. You get one each February 1 for a year where you owe tax, are due a refund (including Canada’s), or had income of at least a single filer’s standard deduction (${DEDUCTIONS}). A student on an F-1 gets one every year they’re here, for Form 8843.`,
-      'To pay a balance when you file, enough in your current account and savings for each authority’s part. The IRS’s part and each state’s are taken separately, each whole or not at all.',
+      'To pay a balance when you file, enough in your checking account and savings for each authority’s part. The IRS’s part and each state’s are taken separately, each whole or not at all.',
       `To amend: a return you filed yourself, within ${AMEND.years} years of filing or ${AMEND.paidYears} of your last payment on it, with no amendment already being processed.`,
     ],
     costs: [
       { label: 'Time', value: 'None: filing and amending don’t move the clock' },
-      { label: 'A Balance', value: 'Taken from your current account when you file, then from savings at the same bank. Each authority’s part is paid in full or not at all' },
+      { label: 'A Balance', value: 'Taken from your checking account when you file, then from savings at the same bank. Each authority’s part is paid in full or not at all' },
       { label: 'Filing Late With A Balance', value: `${pct(RETURN.lateMonthly)} of the IRS’s part for each month or part of a month, for the first five months: ${pct(RETURN.payLateMonthly)} of it for paying late and the rest for filing late. After that, ${pct(RETURN.payLateMonthly)} a month for paying late alone, until that share reaches ${pct(RETURN.lateCap)}. After ${RETURN.lateMinimumAfterDays} days the filing share is at least ${usd(RETURN.lateMinimum)}, or the IRS’s whole part if that’s less`, estimate: false },
       // Until 2026-10-13 this said interest ran from the due date on what was owed alone; the filing share of the penalty
       // draws it from then too (`lateInterest`, `systems/taxreturn.ts`).
@@ -192,18 +194,18 @@ export const TAXES: readonly GuideEntry[] = [
       { label: 'Where You Lived', value: 'The town you last lived in that year decides the state’s tax and any city’s' },
       { label: 'Your Citizenship', value: 'A student on an F-1 files Form 1040-NR with Form 8843, on US income only, so bank interest isn’t taxed' },
       { label: 'Your Health Cover', value: 'Months on a marketplace plan count toward the premium tax credit and Connecticut’s premium assistance' },
-      { label: 'A Social Security Number', value: `On a 1040-NR filed without one, an ITIN application holds up the refund for ${SSN.itinWeeks} weeks more` },
+      { label: 'A Social Security Number', value: `On a 1040-NR filed without one, an ITIN application holds up the refund for ${said(SSN.itinWeeks)} weeks more` },
     ],
     now: [
       'The panel reads Filed with the date, and the year’s item in What Needs You is answered.',
-      'Any balance your current account and savings can cover is paid at once, to the IRS and to each state separately. A part they can’t cover stays owed, and the panel shows what you still owe each one.',
+      'Any balance your checking account and savings can cover is paid at once, to the IRS and to each state separately. A part they can’t cover stays owed, and the panel shows what you still owe each one.',
       'Filed late with a balance owed to the IRS, a Late Penalties line shows what filing late added. A state’s own late penalty is under its Penalties, in Owed To and the state’s agency.',
       'An IRS refund shows as Refund Arrives, with its date. A state refund shows under Who It’s Owed To.',
       'An amendment shows on the panel with its form, the date you filed it, how much more or less tax it means (or “no change in the total”, with each side that moved), and an estimate of when the IRS will process it. Once processed, the same line gives the date, with any refund and its interest.',
     ],
     later: [
-      `An IRS refund is paid into your current account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} days on a 1040-NR filed without a Social Security number. The IRS first takes from it anything you owe for another year, then any past-due tax you owe a state.`,
-      `If you leave a balance owing, the IRS’s bill, Notice CP14, comes when you file, and its reminders start ${COLLECTION.noticeWeeks} weeks after the deadline, or after filing if that’s later. Connecticut’s bill comes ${CT.notices[0]!.days} days after the deadline, or after filing if that’s later. See Paying Tax Owed. With an IRS plan in force, a new IRS balance goes into the plan instead. Connecticut’s deadline is mid-April, even on a 1040-NR the IRS takes in June.`,
+      `An IRS refund is paid into your checking account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} days on a 1040-NR filed without a Social Security number. The IRS first takes from it anything you owe for another year, then any past-due tax you owe a state.`,
+      `If you leave a balance owing, the IRS’s bill, Notice CP14, comes when you file, and its reminders start ${said(COLLECTION.noticeWeeks)} weeks after the deadline, or after filing if that’s later. Connecticut’s bill comes ${CT.notices[0]!.days} days after the deadline, or after filing if that’s later. See Paying Tax Owed. With an IRS plan in force, a new IRS balance goes into the plan instead. Connecticut’s deadline is mid-April, even on a 1040-NR the IRS takes in June.`,
       'If it’s still unfiled on the deadline, a notice tells you the return is late.',
       `If it’s unfiled and you owe the IRS, Notice CP2566 comes ${SUBSTITUTE.afterDays} days after the deadline (when is estimated) with the IRS’s own figures, which leave out the foreign tax credit and the premium tax credit that only your return can claim. ${SUBSTITUTE.answerDays} days later it’s assessed, with its penalty and interest, and collected.`,
       'Past its deadline and unfiled with a balance, it weighs on you each day, the way tax owed does. See Paying Tax Owed.',
@@ -218,7 +220,7 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     next: [
       'If the panel shows a balance still owed, pay it or set up a plan: see Paying Tax Owed and Payment Plans And Waivers.',
-      'If a refund is coming, watch for Refund Arrives on the panel and the money in your current account.',
+      'If a refund is coming, watch for Refund Arrives on the panel and the money in your checking account.',
       'On an F-1 without a Social Security number, apply for one before next year’s return: see Permission To Work.',
     ],
     unavailable: [
@@ -235,17 +237,17 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     related: ['taxes.pay', 'taxes.plan', 'papers.overview', 'papers.health-cover', 'school.shifts', 'day.needs'],
     connections: [
-      { to: 'bank.accounts', kind: 'immediate', why: 'Filing takes any balance from your accounts at once, the current account first and then savings.' },
+      { to: 'bank.accounts', kind: 'immediate', why: 'Filing takes any balance from your accounts at once, the checking account first and then savings.' },
       { to: 'day.needs', kind: 'immediate', why: 'Filing answers the year’s item in What Needs You.' },
-      { to: 'taxes.pay', kind: 'scheduled', why: `A balance your bank couldn’t pay at filing stays owed: the IRS’s bill comes at once, and its first reminder ${COLLECTION.noticeWeeks} weeks after the deadline, or after filing if that’s later.` },
-      { to: 'bank.accounts', kind: 'scheduled', why: `A refund is paid into your current account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} days on a 1040-NR filed without a Social Security number.` },
+      { to: 'taxes.pay', kind: 'scheduled', why: `A balance your bank couldn’t pay at filing stays owed: the IRS’s bill comes at once, and its first reminder ${said(COLLECTION.noticeWeeks)} weeks after the deadline, or after filing if that’s later.` },
+      { to: 'bank.accounts', kind: 'scheduled', why: `A refund is paid into your checking account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} days on a 1040-NR filed without a Social Security number.` },
       { to: 'papers.overview', kind: 'immediate', why: 'The Papers line on Home says when an unfiled return is due, what filing it would pay (including any late penalty), and the tax you owe.' },
-      { to: 'documents.work', kind: 'optional', why: `On a 1040-NR, having a Social Security number before you file saves the ${SSN.itinWeeks} weeks an ITIN application holds up the refund.` },
+      { to: 'documents.work', kind: 'optional', why: `On a 1040-NR, having a Social Security number before you file saves the ${said(SSN.itinWeeks)} weeks an ITIN application holds up the refund.` },
     ],
     example: {
       setup: `Your 2026 return leaves ${usd(OWED)} owed to the IRS, due ${day(DUE)}, and your accounts can cover what filing takes.`,
       steps: [`Press File It by ${day(DUE)}.`, `Or wait, and press it ${LATE_DAYS} days late, on ${day(LATE_AT)}.`],
-      result: `On time, it costs the ${usd(OWED)} and nothing more. On ${day(LATE_AT)} the IRS adds ${usd(LATE_PENALTY)} of late penalties, ${usd(LATE_FILE_PART)} for filing late and ${usd(LATE_PAY_PART)} for paying late${LATE_FLOOR > 0 && LATE_FILE_PART <= LATE_FLOOR ? ` (after ${RETURN.lateMinimumAfterDays} days the filing share is at least ${usd(LATE_FLOOR)}${LATE_FLOOR < RETURN.lateMinimum ? `, the whole balance, since that’s under ${usd(RETURN.lateMinimum)}` : ''})` : ''}, and about ${usd(LATE_INTEREST)} of interest: ${usd(OWED + LATE_PENALTY + LATE_INTEREST)} in all.`,
+      result: `On time, it costs the ${usd(OWED)} and nothing more. On ${day(LATE_AT)}, the IRS adds ${usd(LATE_PENALTY)} of late penalties, ${usd(LATE_FILE_PART)} for filing late and ${usd(LATE_PAY_PART)} for paying late${LATE_FLOOR > 0 && LATE_FILE_PART <= LATE_FLOOR ? ` (after ${RETURN.lateMinimumAfterDays} days the filing share is at least ${usd(LATE_FLOOR)}${LATE_FLOOR < RETURN.lateMinimum ? `, the whole balance, since that’s under ${usd(RETURN.lateMinimum)}` : ''})` : ''}, and about ${usd(LATE_INTEREST)} of interest: ${usd(OWED + LATE_PENALTY + LATE_INTEREST)} in all.`,
     },
   },
   {
@@ -257,7 +259,7 @@ export const TAXES: readonly GuideEntry[] = [
     questions: ['How do I pay tax I owe?', 'Can I pay part of it?', 'What happens if I don’t pay?', 'Why did the IRS take money from my account?', 'Where does a part payment go first?'],
     where: on('returns', 'Papers, Tax Returns, Owed To The IRS And Owed To A State'),
     available: `From the guide’s chapter “${CHAPTER}”, once a filed year has a balance left owing.`,
-    short: `If your bank couldn’t pay all your tax when you filed, the rest stays owed in three parts: the tax, the penalties and the interest. The last two keep growing by each authority’s rules. Pay takes any part of it from your bank now, or all of it if you leave the box blank. If you leave it, the IRS levies your accounts ${IRS_LEVY_DAYS} days after the deadline, and Connecticut ${CT_LEVY_DAYS} days after it, each counted from filing if that’s later.`,
+    short: `If your bank couldn’t pay all your tax when you filed, the rest stays owed in three parts: the tax, the penalties and the interest. The last two keep growing by each authority’s rules. Pay takes any part of it from your bank now, or all of it if you leave the box blank. If you don’t pay, the IRS levies your accounts ${IRS_LEVY_DAYS} days after the deadline, and Connecticut ${CT_LEVY_DAYS} days after it, each counted from filing if that’s later.`,
     steps: [
       'Open Papers, then Tax Returns, and find the year’s panel. Owed To The IRS shows Tax Unpaid, Penalties and Interest as of now.',
       'Type an amount in Pay (Blank Pays It All), or leave it blank, and press Pay.',
@@ -266,7 +268,7 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     needs: [
       'A filed year with a balance still owed to that authority, or a year a state assessed without your return.',
-      'The amount in your current account and savings. A payment is taken whole or not at all, from the current account first and then savings.',
+      'The amount in your checking account and savings. A payment is taken whole or not at all, from the checking account first and then savings.',
     ],
     costs: [
       { label: 'Time', value: 'None' },
@@ -285,7 +287,7 @@ export const TAXES: readonly GuideEntry[] = [
     reads: [
       { label: 'Where A Partial Payment Goes', value: `To the IRS: the tax, then the penalties, then the interest. To Connecticut DRS: ${CT_ORDER}, as its statute says` },
       { label: 'What You Owe Now', value: 'Brought up to date the minute you pay, with its interest and penalty included' },
-      { label: 'Your Accounts', value: 'Your current account, and your savings at the same bank, as far as that bank lets money out' },
+      { label: 'Your Accounts', value: 'Your checking account, and your savings at the same bank, as far as that bank lets money out' },
     ],
     now: [
       'The amount leaves your bank, and a message says how it was split between the tax, penalties and interest, and what you still owe.',
@@ -294,7 +296,7 @@ export const TAXES: readonly GuideEntry[] = [
       'If you pay off everything you owe a state outside its plan, the plan ends as paid.',
     ],
     later: [
-      `If you left a balance at filing, the IRS’s bill, Notice CP14, comes at once. On a return filed before the deadline it names the deadline, and nothing is added before then. Notice CP501 comes ${COLLECTION.noticeWeeks} weeks after the deadline, or after filing if that’s later, then CP503, CP504 and the LT11 final notice, each ${COLLECTION.noticeWeeks} weeks after the one before. ${COLLECTION.finalDays} days after the LT11, the IRS levies your current account and savings for what they hold, and again every ${COLLECTION.againDays} days while you owe anything (how often is estimated).`,
+      `If you left a balance at filing, the IRS’s bill, Notice CP14, comes at once. On a return filed before the deadline it names the deadline, and nothing is added before then. Notice CP501 comes ${said(COLLECTION.noticeWeeks)} weeks after the deadline, or after filing if that’s later, then CP503, CP504 and the LT11 final notice, each ${said(COLLECTION.noticeWeeks)} weeks after the one before. ${COLLECTION.finalDays} days after the LT11, the IRS levies your checking account and savings for what they hold, and again every ${COLLECTION.againDays} days while you owe anything (how often is estimated).`,
       `Connecticut sends “${CT.notices[0]!.title}” ${CT.notices[0]!.days} days after the deadline, or after filing if that’s later (its deadline is mid-April, even on a 1040-NR the IRS takes in June), and “${CT.notices[1]!.title}” ${CT.notices[1]!.days} days after that, filing its lien then. ${CT.levy.afterDays} days later it levies, and again every ${CT.levy.againDays} days${CT.timingAssumed ? ' (these timings are estimated, since DRS doesn’t publish its own)' : ''}.`,
       `If you owe the IRS ${usd(FEDERAL_LIEN.threshold)} or more on the year at its final notice, it files a Notice Of Federal Tax Lien. See A Tax Lien.`,
       'A federal refund from another year goes first to what you owe the IRS, then to past-due tax you owe a state. A Connecticut refund goes first to what you owe Connecticut.',
@@ -303,7 +305,7 @@ export const TAXES: readonly GuideEntry[] = [
     interpret: [
       'Tax Unpaid, Penalties and Interest are as of now. The Still Owed line in the year’s table is their total.',
       `The note under Penalties gives the rate running: ${pct(RETURN.payLateMonthly)} a month, or ${pct(PLAN.reducedRate)} for each month that begins while an IRS plan is in force on a return filed on time. A state’s note gives its own rule.`,
-      'A state whose notes read “None added: this state’s rules aren’t researched” keeps its balance with no penalty or interest, because its collection rules aren’t in the game.',
+      'A state whose notes read “None added: the game doesn’t have this state’s rules” keeps its balance with no penalty or interest, because its collection rules aren’t in the game.',
       'In a list of payments, “taken by levy” is a levy, and “kept from a refund” is a refund kept for what you owe, whether another year’s or an amended return’s, in the IRS’s list and a state’s alike. A state’s list also reads “paid through the payment plan” for its plan’s payments.',
     ],
     next: [
@@ -314,17 +316,17 @@ export const TAXES: readonly GuideEntry[] = [
       'Pay shows only while you owe that authority something on the year.',
       '“Enter an amount above zero.” for nothing or less.',
       'An amount over what you owe: “You owe …. Pay that amount or less.”',
-      '“Your bank can’t cover …, so nothing was paid.”: your current account and savings together hold less than the amount. Pay a smaller part.',
+      '“Your bank can’t cover …, so nothing was paid.”: your checking account and savings together hold less than the amount. Pay a smaller part.',
     ],
     mistakes: [
-      'Waiting for the levy: it takes whatever your current account and savings hold on the day, up to everything you owe, whatever that money was for.',
+      'Waiting for the levy: it takes whatever your checking account and savings hold on the day, up to everything you owe, whatever that money was for.',
       `Watching only the IRS: Connecticut levies ${CT_LEVY_DAYS} days after the deadline, or after filing if that’s later, against the IRS’s ${IRS_LEVY_DAYS}, so Connecticut levies first.`,
       'Holding back because a part won’t clear it: a part paid to the IRS cuts the tax first, and its penalty is a share of the tax left. Connecticut takes its penalty and interest first, so there a part shrinks the tax last.',
     ],
     related: ['taxes.return', 'taxes.plan', 'taxes.lien', 'bank.accounts', 'papers.overview'],
     connections: [
       { to: 'taxes.return', kind: 'prerequisite', why: 'You owe a balance only on a filed return, or on one the IRS or a state assessed without you.' },
-      { to: 'bank.accounts', kind: 'immediate', why: 'Each payment leaves your accounts at once, the current account first and then savings.' },
+      { to: 'bank.accounts', kind: 'immediate', why: 'Each payment leaves your accounts at once, the checking account first and then savings.' },
       { to: 'taxes.lien', kind: 'immediate', why: 'Paying a year in full moves its lien to Paid: Release To Come.' },
       { to: 'bank.accounts', kind: 'scheduled', why: 'If you leave it owing, a levy takes what your accounts hold on its day.' },
       { to: 'body.how', kind: 'immediate', why: 'Tax owed weighs on you: each day ends with more stress and less morale until it’s paid.' },
@@ -385,22 +387,22 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     later: [
       `A monthly plan takes its payment every 30 days, oldest year first. A short-term plan takes everything you owe on its ${PLAN.shortDays}th day.`,
-      `If your bank can’t cover a payment, Notice CP523 gives you ${PLAN.defaultDays} days to catch up. After that the plan ends, and ${COLLECTION.noticeWeeks} weeks later the IRS sends its final notice before a levy.`,
-      `New tax while a monthly plan is in force joins it if it’s no more than ${PLAN.addedPayments} payments’ worth. More than that brings Notice CP523 and ${PLAN.defaultDays} days to revise the plan before it ends.`,
+      `If your bank can’t cover a payment, Notice CP523 gives you ${PLAN.defaultDays} days to catch up. After that the plan ends, and ${said(COLLECTION.noticeWeeks)} weeks later the IRS sends its final notice before a levy.`,
+      `New tax while a monthly plan is in force joins it if it’s no more than ${said(PLAN.addedPayments)} payments’ worth. More than that brings Notice CP523 and ${PLAN.defaultDays} days to revise the plan before it ends.`,
       `Connecticut ends its plan at the first missed payment. DRS publishes no rule for this, so that part is the game’s. ${CT.notices[1]!.days} days later it sends “${CT.notices[1]!.title}” and files its lien. New York allows until the next due date and California gives a ${CA_CURE_DAYS}-day notice, and for those Catch Up appears.`,
       'Paid off, a plan ends as Paid in full.',
       'If the IRS declines a plan, it reads Declined, a notice says why, and the IRS’s letters on what you still owe start again from the step they had reached.',
     ],
     interpret: [
       'The panel’s subtitle is the plan’s status: Being decided, In force, A payment missed, Ended, Paid in full or Declined, for the IRS’s plan and a state’s alike.',
-      'Covers is what the plan took in when it began, or when it was last revised. Each Month and Next Payment are what it takes and when.',
+      'Covers is what the plan took in when it began, or when it was last revised. Each Month and Next Payment are what it takes and when. While a plan is being decided, Answered By gives the day you’ll hear.',
       'By Direct Debit changes the setup fee and the words beside Each Month. Either way, every plan payment is taken from your accounts on its day.',
       'The Plan’s History lists every payment, missed payment and change.',
       'Under a plan, a year’s balance still grows by its interest, so a longer plan costs more in total.',
       'A Connecticut plan has no Catch Up, and Oregon’s waiver is only for a year you owed Oregon. A life lived in New Haven files in Connecticut, so it meets neither.',
     ],
     next: [
-      'Keep each payment in your current account or savings on its day, every 30 days.',
+      'Keep each payment in your checking account or savings on its day, every 30 days.',
       'If you can pay more, use Pay on the year’s panel to finish sooner: interest keeps adding up while the plan runs.',
       'Once a year is paid off, check for a lien under it: see A Tax Lien.',
     ],
@@ -416,7 +418,7 @@ export const TAXES: readonly GuideEntry[] = [
       'Ask For Its Waiver: “There’s no three-year penalty on that year.”, “Its waiver has already been decided.”, “File your own return for the year first.”, or more than a year since full payment.',
     ],
     mistakes: [
-      'Setting a monthly payment your accounts can’t keep: a missed one brings CP523 at once. Keep the payment in your current account or savings on its day.',
+      'Setting a monthly payment your accounts can’t keep: a missed one brings CP523 at once. Keep the payment in your checking account or savings on its day.',
       `Applying with no Social Security number and paying nothing meanwhile: the IRS answers a mailed Form 9465 in ${PLAN.mailDays} days, and interest runs the whole time.`,
       'Taking the IRS’s plan for a state’s: it covers federal tax only. Apply to Connecticut for its own.',
       `Missing a Connecticut payment: its plan ends at once, where the IRS gives you ${PLAN.defaultDays} days. Pay the year off with Pay if you can.`,
@@ -431,7 +433,7 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     example: {
       setup: `You owe the IRS ${usd(PLAN_OWED)} across two years. Every return is filed, the later one in February before it was due. You have a Social Security number, and your latest return’s income is under ${PLAN.lowIncomeShare * 100}% of the poverty line.`,
-      steps: ['Choose Monthly Payments, leave Each Month at its lowest and By Direct Debit ticked, and press Apply.', 'Keep the payment in your current account each month.'],
+      steps: ['Choose Monthly Payments, leave Each Month at its lowest and By Direct Debit ticked, and press Apply.', 'Keep the payment in your checking account each month.'],
       result: `It’s approved within a minute${PLAN.fee.lowIncomeDebit ? `, for a ${usd(PLAN.fee.lowIncomeDebit)} setup fee` : ', with no setup fee at the low-income rate'}: ${usd(PLAN_LEAST)} a month, the ${usd(PLAN_OWED)} over ${PLAN.leastMonths} months, with the first payment 30 days later. The IRS’s letters stop. On both years’ returns, filed on time, each month of penalty that begins under the plan is ${pct(PLAN.reducedRate)} instead of ${pct(RETURN.payLateMonthly)}: on the earlier year from its next month (the month already begun stays at ${pct(RETURN.payLateMonthly)}), and on the later year from its first month past its due date. Interest keeps adding up, so paying more with Pay shortens the plan.`,
     },
   },
@@ -515,7 +517,7 @@ export const TAXES: readonly GuideEntry[] = [
       { to: 'taxes.plan', kind: 'optional', why: 'While a state plan is in force, no lien is filed. Connecticut files its lien at its second notice.' },
     ],
     example: {
-      setup: `You filed your 2026 return on ${day(LIEN_FILED)} with ${usd(LIEN_TAX)} owed to Connecticut that your bank couldn’t pay.`,
+      setup: `You filed your 2026 return on ${day(LIEN_FILED)}, with ${usd(LIEN_TAX)} owed to Connecticut that your bank couldn’t pay.`,
       steps: [
         `${day(LIEN_BILL)}: “${CT.notices[0]!.title}”.`,
         `${day(LIEN_AT)}: “${CT.notices[1]!.title}”, and its lien is filed for ${usd(LIEN_AMOUNT)}, the tax with its penalty and interest by then.`,

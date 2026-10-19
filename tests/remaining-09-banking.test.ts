@@ -707,7 +707,7 @@ describe('banking.6.fee-schedule: ING’s month’s fee in the month after, Comm
 
 describe('banking.2: what a student keeping an account at home meets at the eight unresolved bank rows', () => {
   it('PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set', async () => {
-    const away = (bank: string) => `No way to open anything new at ${bank} from America was found, so the game assumes there’s none.`;
+    const away = (bank: string) => `There’s no known way to open anything new at ${bank} from America, so the game assumes there’s none.`;
     const lives = [
       ['uk-eng-london', 'gb-hsbc', 2010, 'HSBC UK', 'HSBC UK opens its accounts for people living in the UK; for a customer abroad it has HSBC Expat, from £75,000.', 'gb-barclays'],
       ['fr-idf-paris', 'fr-bnp-paribas', 2010, 'BNP Paribas', away('BNP Paribas'), 'gb-hsbc'],

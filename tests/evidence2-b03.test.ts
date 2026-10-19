@@ -400,12 +400,14 @@ describe('holidays', () => {
     // The Home Office's ten days from the miss end on Sunday 5 April; Easter Monday and Good Friday aren't business
     // days, so the last ten o'clock by then is Thursday 2 April's, in British Summer Time.
     expect(doc.visit!.at).toBe(Date.UTC(2026, 3, 2, 9));
-    expect(notices(sim, 'An Appointment Missed').map((n) => n.body)).toEqual(['You missed the biometrics at a ukvcas service point for Global Talent Visa. It’s booked again for April 2, 2026, the last chance before the application ends.']);
+    expect(notices(sim, 'An Appointment Missed').map((n) => n.body)).toEqual(['You missed your biometrics at a UKVCAS service point for your Global Talent Visa. It’s booked again for April 2, 2026, your last chance before the application ends.']);
     const again = reload(sim);
     again.advanceTo(Date.UTC(2026, 3, 2, 9) + 60_000);
     const kept = documentsOf(again.player).find((d) => d.id === 'gt-visa')!;
     expect(kept.visit!.keptAt).toBe(Date.UTC(2026, 3, 2, 9));
     expect(notices(again, 'Biometrics Done')).toHaveLength(1);
+    // Its words, the visit named in a sentence with its acronym kept (brief 15, 2026-10-19).
+    expect(notices(again, 'Biometrics Done').map((n) => n.body)).toEqual(['You went to your biometrics at a UKVCAS service point for your Global Talent Visa. It’s decided on April 2, 2026.']);
   });
 });
 

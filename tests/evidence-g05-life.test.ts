@@ -568,7 +568,7 @@ describe('health.bill', () => {
     const back = reload(sim);
     fund(back, 300_00); // TEST SETUP
     drawn(back);
-    expect(press('health.pay_bill')).toEqual(['Paid off.']);
+    expect(press('health.pay_bill')).toEqual(['Your medical debt is paid off.']);
     const settled = healthOf(back.player).bills.find((b) => b.id === bill.id)!;
     expect(settled.paid).toBe(true);
     expect(settled.inDebt).toBeUndefined();

@@ -183,10 +183,10 @@ export function mayEnter(person: Person, destination: string, at: Instant, stayD
   const citizenship = isoOfCountry(person.citizenshipId);
   // Britain's id is `uk`, not its code: until 2026-10-17 a British destination was named "GB" here.
   const country = COUNTRIES.get(countryOfIso(destination))?.name ?? destination;
-  if (!dest || !citizenship) return { ok: false, missing: [`The game doesn’t have ${country}’s entry rules yet.`] };
+  if (!dest || !citizenship) return { ok: false, missing: [`The game doesn’t have ${country}’s entry rules.`] };
   const rule = dest.citizens[citizenship];
   const theirs = theCountry(COUNTRIES.get(person.citizenshipId ?? '')?.name ?? citizenship);
-  if (!rule) return { ok: false, missing: [`The game doesn’t have ${country}’s rule for citizens of ${theirs} yet.`] };
+  if (!rule) return { ok: false, missing: [`The game doesn’t have ${country}’s rule for citizens of ${theirs}.`] };
   const missing: string[] = [];
   const passport = passportOf(person, at);
   const leaving = at + stayDays * MS_DAY;
@@ -219,9 +219,11 @@ export function mayEnter(person: Person, destination: string, at: Instant, stayD
     const visa = documentsOf(person).find((d) => (d.kind === 'visa' || (d.kind === 'permit' && d.bookingId === undefined)) && d.destination === destination && inForce(d, at) && (d.expiresAt ?? Infinity) >= leaving);
     if (!visa) missing.push(`${theCountry(country).replace(/^./, (c) => c.toUpperCase())} asks for a visa: ${VISAS[`${destination}<${isoOfCountry(person.citizenshipId)}`]?.name ?? rule.visa ?? 'a visitor visa'}, issued by its consulate.`);
   }
-  const stay = rule.status === 'citizen' ? 'As a citizen, as long as you like.'
-    : rule.status === 'free-movement' ? 'Free movement: to live and work as well as visit.'
-      : rule.maxDays !== null ? `Up to ${rule.maxDays} days${rule.windowDays ? ` in any ${rule.windowDays}` : ''} as a visitor.` : undefined;
+  // Said as sentences after "… would let you in for a week's visit." (from 2026-10-19, brief 15: until then fragments,
+  // "As a citizen, as long as you like.", "Free movement: to live and work as well as visit.", "Up to 90 days … as a visitor.").
+  const stay = rule.status === 'citizen' ? 'As a citizen, you can stay as long as you like.'
+    : rule.status === 'free-movement' ? 'Free movement lets you live and work there, as well as visit.'
+      : rule.maxDays !== null ? `A visitor can stay up to ${rule.maxDays} days${rule.windowDays ? ` in any ${rule.windowDays}` : ''}.` : undefined;
   return { ok: missing.length === 0, rule, missing, ...(stay ? { stay } : {}) };
 }
 
@@ -339,7 +341,7 @@ export function registerDocuments(sim: Simulation): void {
     // In force, as the screen offers it (from 2026-10-13: until then a document run out was taken too, and a license
     // so reported was replaced with the same past date; found by the second round of that day).
     if (!doc || !inForce(doc, s.now)) throw new CommandError('That isn’t a document you hold in force.');
-    if (!LOSABLE.has(doc.kind)) throw new CommandError('A status can’t be reported lost: it stays in force whatever happens to the paper.');
+    if (!LOSABLE.has(doc.kind)) throw new CommandError('You can’t report a status lost. It stays in force whatever happens to the paper.');
     doc.status = 'lost';
     if (p.stolen) doc.stolen = true;
     // A passport reported lost is canceled, and what was issued on it goes with it, except the F-1: SLATE's F-1 is the
@@ -389,7 +391,7 @@ export const ONLINE_REPORTS: Readonly<Record<string, { lost: boolean; stolen: bo
 
 export function policeReportRefusal(person: Person, doc: PersonDocument | undefined): string | undefined {
   if (!doc || doc.status !== 'lost') return 'Report it lost first.';
-  if (doc.policeReport !== undefined) return 'A police report is already filed.';
+  if (doc.policeReport !== undefined) return 'You’ve already filed a police report for it.';
   const here = person.currentLocationId;
   if (here === 'uk-eng-london') return 'The Met doesn’t record lost documents. The DVLA and the Passport Office handle them.';
   const rule = ONLINE_REPORTS[here];
@@ -441,7 +443,7 @@ export function passportOffice(person: Person, at: Instant): PassportOffice | un
     return { fee: young && away.youngFee !== undefined ? away.youngFee : away.fee, currency: away.currency, days: away.days, daysEstimated: away.daysEstimated, expedite: away.expedite, years: terms.years, basis: away.basis, abroad: true, renewal: false, assumed: away.assumed };
   }
   if (iso === 'US' && here === 'US' && renewsByMail(person, at)) {
-    return { fee: US_RENEWAL.fee, currency: US_RENEWAL.currency, days: rule.days, daysEstimated: rule.daysEstimated, expedite: rule.expedite, years: terms.years, basis: `A renewal by mail on Form ${US_RENEWAL.form}: $${US_RENEWAL.fee} to the Department of State, with no acceptance fee, your most recent passport issued within ${US_RENEWAL.withinYears} years, at ${US_RENEWAL.issuedFromAge} or older, and never reported lost or stolen.`, abroad: false, renewal: true, assumed: [] };
+    return { fee: US_RENEWAL.fee, currency: US_RENEWAL.currency, days: rule.days, daysEstimated: rule.daysEstimated, expedite: rule.expedite, years: terms.years, basis: `You can renew by mail on Form ${US_RENEWAL.form}: $${US_RENEWAL.fee} to the Department of State, with no acceptance fee. Your most recent passport has to have been issued within the last ${US_RENEWAL.withinYears} years, when you were ${US_RENEWAL.issuedFromAge} or older, and never reported lost or stolen.`, abroad: false, renewal: true, assumed: [] };
   }
   return { fee: terms.fee, currency: rule.currency, days: rule.days, daysEstimated: rule.daysEstimated, expedite: rule.expedite, years: terms.years, basis: rule.feeBasis, abroad: false, renewal: false, assumed: [] };
 }
@@ -463,7 +465,7 @@ export function renewsByMail(person: Person, at: Instant): boolean {
 /** Why a passport can't be applied for now, or nothing. */
 export function passportRefusal(person: Person, expedite = false): string | undefined {
   const rule = passportRuleFor(person);
-  if (!rule) return 'Your country’s passport office isn’t in the game yet.';
+  if (!rule) return 'Your country’s passport office isn’t in the game.';
   if (documentsOf(person).some((d) => d.kind === 'passport' && d.status === 'pending')) return 'You’ve already applied, and it’s being decided.';
   // From abroad, the faster service the office sells there, if any (from 2026-10-16, `passportOffice`).
   const iso = isoOfCountry(person.citizenshipId) ?? '';
@@ -564,8 +566,13 @@ function classOfYear(person: Person): number {
 /** A pending document issued: in force from now, to its term. */
 function issue(sim: Simulation, person: Person, doc: PersonDocument): void {
   if (doc.kind === 'passport') {
+    // What it replaces, read before it's issued, so the notice says only what happened (from 2026-10-19, brief 15: until
+    // then every passport's notice said a travel authorization on the one it replaced had ended, a first passport's too).
+    const replaced = documentsOf(person).filter((d) => d !== doc && d.kind === 'passport' && d.status === 'valid' && d.issuer === doc.issuer);
+    const ended = documentsOf(person).some((d) => d.kind === 'authorization' && d.status === 'valid' && replaced.some((old) => old.id === d.passportId));
     issuePassport(sim, person, doc, (sim.now - person.birthInstant) / (365.25 * MS_DAY));
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'personal', title: `${doc.name} Issued`, body: `Your ${doc.name}, ${doc.number}, has arrived. It’s good until ${formatDate(doc.expiresAt!, sim.zone)}. A travel authorization issued on the passport it replaces ended with that passport.`, importance: 60, route: '/workspace/papers' });
+    const after = replaced.length ? ` Your old passport is canceled${ended ? ', and the travel authorization issued on it ended with it' : ''}.` : '';
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'personal', title: `${doc.name} Issued`, body: `Your ${doc.name}, ${doc.number}, has arrived. It’s good until ${formatDate(doc.expiresAt!, sim.zone)}.${after}`, importance: 60, route: '/workspace/papers' });
     return;
   }
   doc.status = 'valid';
@@ -647,7 +654,7 @@ export const MOPED_ON_CAR: Readonly<Record<string, number>> = { 'ca-bc': 50 };
 export function mayDrive(person: Person, cityId: string, at: Instant, arrivedAt = at, cls: VehicleClass = 'car', cc?: number): { ok: boolean; why?: string } {
   const here = licensingOf(cityId);
   const place = CITIES.get(cityId)?.name ?? 'here';
-  if (!here) return { ok: false, why: `The game doesn’t have the driving rules for ${place} yet.` };
+  if (!here) return { ok: false, why: `The game doesn’t have the driving rules for ${place}.` };
   const car = cls === 'motorcycle' && cc !== undefined && cc <= (MOPED_ON_CAR[here] ?? 0) ? licenseOf(person, at, 'car') : undefined;
   // Its own: a car license from elsewhere carries no moped. A learner's is refused below as for a car.
   if (car && car.issuer === here) cls = 'car';

@@ -161,7 +161,7 @@ describe('papers', () => {
     const r = sim.execute({ kind: 'documents.police_report', payload: { documentId: doc.id } });
     expect(r.ok, r.error).toBe(true);
     expect(doc.policeReport).toBe(sim.now);
-    expect(sim.execute({ kind: 'documents.police_report', payload: { documentId: doc.id } }).error).toBe('A police report is already filed.');
+    expect(sim.execute({ kind: 'documents.police_report', payload: { documentId: doc.id } }).error).toBe('You’ve already filed a police report for it.');
   });
 
   it('issues an ID card where SLATE issues one, charges its fee, and refuses a second', () => {
