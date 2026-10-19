@@ -471,5 +471,170 @@
   "why": "'Her objective is' named the brief's field; the rest says what she wants, as the objective itself does.",
   "meaningSensitive": false,
   "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-farce]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "Comedy carries the timing of his cover stories against her questions, and clowning the physical business of hiding the cake in frame, staged with a box so it repeats safely on every take.",
+  "after": "Comic timing carries his cover stories against her questions, and clowning carries the physical business of hiding the cake in frame. Stage it with a box so it repeats safely on every take.",
+  "why": "The second clause dropped its verb ('and clowning the physical business'), so the sentence had to be read twice; the staging is now its own instruction.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-farce]",
+  "field": "why.allows",
+  "kind": "other",
+  "before": "The cake has to be out of her eyeline on exactly the lines the brief places, so it can only be played set: the hiding business fixed and the same every time.",
+  "after": "The cake has to be out of her eyeline on exactly the right lines, so it can only be played set: the hiding business fixed and the same every time.",
+  "why": "'The lines the brief places' pointed at the paperwork; the rule is about her lines. 'Only be played set' stays, as the allows test holds it to the brief's allows.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-film_noir]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The narration is an account given after the fact, so it’s played as voice-over in its own register, close and even and knowing how the night ends, against a scene that doesn’t know yet. It’s recorded off camera in the same session and laid over the opening and closing of the tape, so it’s played to a microphone with no face to show it.",
+  "after": "The narration is her account the next day, so play it as voice-over in its own register: close, even, and knowing how the night ends, against a scene that doesn’t know yet. You record it off camera in the same session, to a microphone with no face to show it, and it’s laid over the opening and closing of the tape.",
+  "why": "Four passives ('given', 'played', 'recorded', 'played') in two long sentences became an instruction and a fact, with 'after the fact' said as the circumstances say it, the next day.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [two]",
+  "field": "reading",
+  "kind": "narration",
+  "before": "The narrator and the operator are played as two people, the one who knows and the one who doesn’t, and the tape is the gap between them.",
+  "after": "She plays the narrator and the operator as two people, the one who knows and the one who doesn’t, and the tape is the gap between them.",
+  "why": "A reading says how she plays it; the passive hid who.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-found_footage]",
+  "field": "why.improvisation",
+  "kind": "other",
+  "before": "The brief gives the beats and the objective and no lines: every word is found in the take.",
+  "after": "The brief gives the beats and the objective but no lines, so you find every word as you tape.",
+  "why": "A passive ('is found in the take') became the actor finding it.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-found_footage]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The lines are improvised inside the outline of beats, the way the form is made, so the scene asks for improvisation.",
+  "after": "You improvise the lines inside the outline of beats, the way found footage is made, so the scene asks for improvisation.",
+  "why": "Passive to active, and 'the form' named: found footage.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-grindhouse]",
+  "field": "why.partner",
+  "kind": "other",
+  "before": "Every word to the phone is checked against his face.",
+  "after": "She checks every word she says into the phone against his face.",
+  "why": "The passive hid who checks; it's her.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [terror]",
+  "field": "rests",
+  "kind": "narration",
+  "before": "She has never been scared on the shift before, and the order is improvised with him watching her hands.",
+  "after": "She has never been scared on the shift before, and she makes up the order with him watching her hands.",
+  "why": "As above: she makes it up.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-horror]",
+  "field": "why.physical",
+  "kind": "other",
+  "before": "A slow, controlled walk backward with the laptop, held steady enough that he can still see.",
+  "after": "She walks slowly backward with the laptop, holding it steady enough that he can still see.",
+  "why": "A noun phrase after 'Physical: Medium.' became a sentence with its subject.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-isekai]",
+  "field": "reader (You Speak To)",
+  "kind": "label",
+  "before": "No one answers aloud: she speaks to the floating status panel, whose messages are written into the brief for her to read and react to.",
+  "after": "The floating status panel only she can see. No one answers aloud: you read its messages and react to them.",
+  "why": "Under You Speak To it names the panel first. 'Written into the brief' promised text the pane doesn't show; the beats give the messages' gist, and the actor reads and reacts.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-isekai]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "A voice alone at the microphone carries the whole scene, so the interior life, the reading of the panel and the turn to grief are all voice-over work.",
+  "after": "Your voice alone at the microphone carries the whole scene, so her inner life, the panel’s messages read aloud and the turn to grief are all voice-over work.",
+  "why": "'The reading of the panel' sat a few lines above Your Reading, the brief's choice, and meant something else.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-jidaigeki]",
+  "field": "why.physical",
+  "kind": "other",
+  "before": "A formal kneeling posture held through the audience, then one drawn-sword form and a full bow.",
+  "after": "She holds a formal kneeling posture through the audience, then makes one drawn-sword form and a full bow.",
+  "why": "A noun phrase became a sentence with its subject.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-jidaigeki]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "On the tape the form is marked solo with a replica blade at reduced speed, angled away from the lens and the reader’s eyeline, and repeats exactly on every take.",
+  "after": "For the tape, mark the form solo with a replica blade at reduced speed, angled away from the lens and the reader’s eyeline, so it repeats exactly on every take.",
+  "why": "The staging note as an instruction, as the other fights now are; every safety term kept.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-jukebox_musical]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The song is sung as the character, a music teacher in her forties singing a pop song from her youth to one person, never as an impression of its original singer.",
+  "after": "Sing the song as the character, a music teacher in her forties singing a pop song from her youth to one person, never as an impression of its original singer.",
+  "why": "A direction to the actor, said as one.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-kitchen_sink]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The lines are written in the regional working-class speech of the town, “Mam” and “our kid” among it, and the accent is played as the way Dennis and his mother talk, with the dignity it’s owed, never as color or a joke.",
+  "after": "The lines are written in the regional working-class speech of the town, “Mam” and “our kid” among it. Play the accent as the way Dennis and his mother talk, with the dignity it’s owed, never as color or a joke.",
+  "why": "The fact and the direction were one long sentence; the direction is now an instruction of its own.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
  }
 ]

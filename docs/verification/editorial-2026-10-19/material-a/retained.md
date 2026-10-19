@@ -33,3 +33,15 @@ with the words kept and the reason, so the owner can judge the reasons as well a
 - **`briefs-b.ts` [brief-costume_drama], Quarter Day.** Obstacle: "The custom of the house forbids her to sit until
   invited, or to name a sum first, and Mrs. Ashworth knows it and offers a glowing reference in place of the money."
   *Reason:* 1847's rules for a governess are set out plainly and the scene is made from them.
+
+## Batch 3
+
+- **`briefs-c.ts` [brief-giallo], The Dry Umbrella.** Circumstances: "One detail stays with her: the umbrella the figure
+  carried was closed, and dry, in the rain. It rained again this morning, and the inspector’s coat is still wet."
+  *Reason:* the scene turns on one clue an actor can see and hold, and ends with that umbrella in the room.
+- **`briefs-c.ts` [brief-family], The Treehouse Treaty.** "On the tape the treehouse is a cramped corner, and the
+  ladder is never seen." *Reason:* a set description a self-tape can do, kept as a description because it says what
+  the frame holds, not a safety instruction.
+- **`briefs-c.ts` [nobody], Nobody Waiting.** "The comedy is a woman holding off the fact that no one at home will
+  miss her, and the third beat lets it in." *Reason:* it says exactly where the comedy and the grief meet, resting on
+  the panel's "no record of a home".

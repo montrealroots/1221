@@ -163,3 +163,59 @@ the second after the last edit). Engine-speak unchanged at 329: the two staged-i
 take" each.
 
 **Screens:** BriefPane for each brief, rendered by the material-words test.
+
+## Batch 3: Briefs, Fairy Tale To Legal Drama
+
+**Sources (77):** `briefs/briefs-c.ts`, 26 briefs (brief-fairy_tale, brief-family, brief-fantasy, brief-farce,
+brief-film_noir, brief-folk_horror, brief-found_footage, brief-gangster, brief-giallo, brief-gothic_horror,
+brief-grindhouse, brief-hangout, brief-heist, brief-historical_drama, brief-historical_fiction, brief-holiday,
+brief-hood_film, brief-horror, brief-horror_comedy, brief-isekai, brief-jidaigeki, brief-jukebox_musical, brief-kaiju,
+brief-kitchen_sink, brief-legal_drama) and 51 reading ids (riddle, forgive, deal, scared, craft, brother, wonder,
+calm, panic, cool, liked, two, polite, slow, mom, live, king, lesson, sleuth, dread, inquiry, longing, nerve, terror,
+easy, unsaid, recall, reason, duty, sister, true, learned, sincere, light, brothers, own, trust, training, straight,
+hustle, audit, nobody, forms, grief, dare, apology, line, awe, angry, son, counsel, promise). About 9,200 words.
+
+**Rewritten (11 sources, 15 strings):** brief-farce, brief-film_noir, two, brief-found_footage, brief-grindhouse,
+terror, brief-horror, brief-isekai, brief-jidaigeki, brief-jukebox_musical, brief-kitchen_sink. By kind:
+- **Staging and direction as instructions (4):** The Petition For Vengeance's sword form ("For the tape, mark the form
+  solo with a replica blade at reduced speed, angled away from the lens and the reader’s eyeline, so it repeats exactly
+  on every take."), The Second Cake's box ("Stage it with a box so it repeats safely on every take."), The Reunion
+  Set's "Sing the song as the character …", Not Going Back's "Play the accent as the way Dennis and his mother talk …".
+- **A sentence that dropped its verb (1):** The Second Cake's "and clowning the physical business of hiding the cake"
+  now says "and clowning carries".
+- **Passives where the actor or the character does it (6):** The Night Line's voice-over note (four passives), Two
+  Women, Night Two At Juniper Creek's two improvisation notes, Last Gas For Ninety Miles' partner note and Shaking
+  Hands.
+- **Noun phrases made sentences (2):** Someone Behind You's and The Petition For Vengeance's physical notes.
+- **A word of the game's own (1):** Level One, Again's "the reading of the panel", beside Your Reading.
+- **A promise the pane doesn't keep (1):** Level One, Again's You Speak To said the panel's messages "are written into
+  the brief for her to read"; the pane shows no such messages. It now names the panel and says what to do: "you read
+  its messages and react to them".
+
+**Kept (66 sources):** the rest, each with its own reason. The set descriptions that begin "On the tape …" (The
+Treehouse Treaty, Night Two At Juniper Creek, Sunday At The Laundromat) are kept: they say what the frame holds, not
+what the actor must do safely.
+
+**Meaning-sensitive (3):** The Second Cake's allows note keeps "It can only be played set", which the allows test holds
+to the brief's `allows: { structure: ['set'] }` (it passed). The Petition For Vengeance's sword note keeps the replica
+blade, the reduced speed, the angle away from the lens and the reader's eyeline, and the exact repetition. Level One,
+Again's You Speak To: `BriefPane.tsx` shows `b.reader` under You Speak To and nothing else of the panel, so "written
+into the brief" promised words the player never sees; the new line makes no promise.
+
+**Interactions read whole:** each brief's pane. The voice brief (Level One, Again) with its header and You Speak To
+heading; the briefs with It Only Takes (The Second Cake, Night Two At Juniper Creek) with their allows lines.
+
+**Tests and tool matchers updated:** none. Shared phrasings were found in material-b's `second-c.ts` (lines 165, 220,
+713) and `second-d.ts` (line 407), listed in the report.
+
+**Checks (exits, `scratchpad/ma/b3/`):** `tsc -b --noEmit` 0; `eslint briefs-c.ts --max-warnings=0` 0; title-case 0;
+label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-refs 0; deciders 0; guide-quotes 0.
+vitest: material-words and briefs-content, 2 files, 454 tests, exit 0. text-inventory after the marks: 1, from the six
+briefs-d sources batch 4 had already edited in the working tree while batch 3's marks ran (they weren't in batch 3's
+commit, `03d06abc`); no briefs-c source was Pending. Engine-speak fell from 329 to 328 (Night Two At Juniper Creek's
+"in the take").
+
+**Screens:** BriefPane for each brief, rendered by the material-words test.
+
+The record of this batch went in a commit of its own after `03d06abc`: a helper failed on batch 4's missing
+`meta.json` and stopped the shell line that wrote it, and the code and marks were committed without it.
