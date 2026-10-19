@@ -344,10 +344,14 @@ screen.
   with statuses of its own in `docs/text/second-pass/` (Rewritten, Retained,
   Pending, Blocked) and the first pass kept as history. `--mark2` records one,
   only by the area that owns the source, and refuses a reason that isn't
-  specific. A source counts as read when either pass matches its words. Once
-  the coordinator closes the second pass, `--check` also fails a source it
-  hasn't read. The inventory also holds the page's title and
-  description in `index.html` and the holiday names under `public/holidays/`.
+  specific. A source counts as read when either pass matches its words. The
+  coordinator closed the second pass at brief 15's end
+  (`docs/text/second-pass-closed.json`). Since then `--check` fails a source
+  the second pass hasn't read, so a change to anything a player reads is read
+  again and marked with `--mark2` in the same commit. The inventory also holds
+  the page's title and description in `index.html`, the holiday names under
+  `public/holidays/`, and, from brief 15's cross-area review, a citation that
+  begins with a web address (a bare address isn't words, and stays out).
 - `tools/text-omissions.mjs` — what a walk of the built app shows, line by
   line, against the inventory: held by it, in a file it doesn't read (an
   omission), or built from values by a template. From brief 15, to check the
