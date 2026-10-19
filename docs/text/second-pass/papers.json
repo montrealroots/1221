@@ -1022,11 +1022,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/passports.ts#PASSPORTS .US": {
-  "status": "Retained",
-  "hash": "516ed2563b4a",
+  "status": "Rewritten",
+  "hash": "b1e94bb7ff1d",
   "on": "2026-10-19",
-  "reason": "The US office's names and, for a citizen applying at home, its fee breakdown and its rule from abroad in Your Passport's fine print: DS-11's two payments and where a citizen abroad applies, as the State Department sets them out; generated, so changed only in the research.",
-  "first": "Reviewed And Retained"
+  "evidence": "rebuilt by tools/build-passports.mjs with FEE_BASIS_WORDS, the papers area's report taken at the coordinator's cross-area review: the fee basis Your Passport's fine print shows (Documents.tsx, office.basis) ends in a sentence, not the fragment 'Two separate payments.'; tests/remaining-papers.test.ts plays the DS-11 first passport and passes",
+  "first": "Pending"
  },
  "src/engine/content/passportsabroad.ts#nzTerms": {
   "status": "Retained",

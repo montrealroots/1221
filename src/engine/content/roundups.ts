@@ -164,7 +164,7 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     ways: [{ kind: 'change', units: [1, 5] }],
     when: 'day',
     pausedUnder: 20,
-    short: 'It pauses while the current account holds less than 20 €, so it doesn’t go into the red, and starts again above it.',
+    short: 'It pauses while your checking account holds less than 20 €, so it doesn’t go into the red, and starts again above it.',
     open: ['Round-ups from payments made while it’s paused: the game counts none.', 'Whether a refunded payment takes its round-up back: purchases in the game aren’t refunded.', OFF],
     notHere: ['With Girokonto Future, the change can go to a charity instead of savings.'],
     source: 'ing.de, Kleingeld Plus product page and FAQ; Bedingungen Girokonto Future, June 19, 2026',

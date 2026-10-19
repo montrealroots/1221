@@ -60,6 +60,20 @@ as it came in, with what was done about it and when. Nothing here is applied unt
 - **Engine-speak:** material's hits fell from 120 to 118. The ratchet is lowered once, at the end, from every area's
   counts.
 
+### Found By The Coordinator While Finishing The Profile Area
+
+- **The research's fetch reports in shown source lines.** "direct fetch returned 403", "direct fetch blocked", "site
+  returned 403 to direct fetches" and "returned HTTP 403 to direct fetching" are how the research was done. Each area
+  kept them as part of a citation:
+  - profile: `genres.ts` (the genre look's "Source for its definition") and `genre-demands.json`;
+  - papers: `passports.ts`;
+  - money: `pending.ts` and `security.ts`;
+  - money-data: `home-accounts.json`.
+
+  A player reads "403" as the engine showing. That's one rule across four areas, so it's settled in the cross-area
+  review, not by one area. "[read directly]" and "[from a search summary]" stay: they tell the reader how far to trust
+  the line, in words a reader knows.
+
 ### Renames, To Carry Into The Guide And Tests
 
 | Area | Old | New |

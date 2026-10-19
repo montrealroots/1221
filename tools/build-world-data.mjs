@@ -37,9 +37,12 @@ const COUNTRY_ID_OVERRIDE = { GB: 'uk' };
  * Currencies GeoNames hasn't caught up with: Bulgaria has used the euro since
  * 1 January 2026, at a fixed 1.95583 leva (the European Commission). Until
  * 2026-09-26 SLATE kept it on the lev, and charged Bulbank's €2.84 fee as
- * 2.84 leva.
+ * 2.84 leva. GeoNames also names Cambodia's currency in the plural, "Riels", where
+ * every other country's is a singular (the Dollar, the Euro); from 2026-10-19
+ * (brief 15) it is the Riel, and the generated table was corrected by hand to
+ * match, since the GeoNames dumps aren't kept in the repository.
  */
-const CURRENCY_OVERRIDE = { BG: ['EUR', 'Euro'] };
+const CURRENCY_OVERRIDE = { BG: ['EUR', 'Euro'], KH: ['KHR', 'Riel'] };
 
 /**
  * The same exceptions for subdivisions and cities. GeoNames keys many

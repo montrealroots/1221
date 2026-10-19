@@ -575,10 +575,10 @@
  },
  "src/engine/content/world-data.ts#COUNTRY_TABLE": {
   "status": "Retained",
-  "hash": "308fc8f9c0e6",
+  "hash": "f68ae64f4d58",
   "on": "2026-10-19",
-  "reason": "GeoNames' country table as published: the place look shows a country's name, capital, currency name, calling code, languages by name, population and area, each a real fact kept exact.",
-  "first": "Reviewed And Retained"
+  "reason": "GeoNames' country table as published, but for two overrides the generator names: the place look shows a country's name, capital, currency name, calling code, languages by name, population and area, each a real fact kept exact; Cambodia's currency is the Riel, singular like every other, from the coordinator's cross-area review",
+  "first": "Pending"
  },
  "src/engine/content/world-data.ts#REGION_TABLE": {
   "status": "Retained",

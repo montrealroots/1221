@@ -3521,11 +3521,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .de-ing": {
-  "status": "Retained",
-  "hash": "6ded31247d69",
+  "status": "Rewritten",
+  "hash": "38e0efbf529c",
   "on": "2026-10-19",
-  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
-  "first": "Rewritten And Verified"
+  "evidence": "the coordinator's cross-area review: the glossary's checking account, which the money areas use, for a description that said current account (ING's own name for it, Girokonto, isn't in this sentence); tests/roundups.test.ts reads the words from the data and passes",
+  "first": "Pending"
  },
  "src/engine/content/roundups.ts#ROUND_UPS .es-bankinter": {
   "status": "Retained",
