@@ -58,7 +58,7 @@ can be judged as well as the rewrites. Every reason is in `docs/text/second-pass
 
 ## Batch 3
 
-14. **`src/engine/content/world-data.ts#COUNTRY_TABLE`.** "gb GB United Kingdom London EU GBP … Pound 44 en-GB,cy-GB,gd".
+14. **`src/engine/content/world-data.ts#COUNTRY_TABLE`.** Cambodia's row: "kh KH Cambodia Phnom Penh AS KHR 16249798 181040 Riels 855 km,fr,en".
     - GeoNames' table as published.
     - Cambodia's place look reads its fields as "The capital is Phnom Penh", the currency title-cased, a calling code
       of "+855" and the languages by name.
