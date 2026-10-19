@@ -1,0 +1,112 @@
+
+ RUN  v2.1.9 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/e15-money-data
+
+ ✓ tests/evidence2-b13.test.ts (7 tests) 32559ms
+   ✓ i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load 1082ms
+   ✓ i-ui-text > PLAYER JOURNEY: the guide’s reference, every entry opened by its own address, its contents, and a search for “interests” and for “interest”, names no interests, and says “interest” only on money’s and the papers’ pages, in money’s words 2533ms
+   ✓ i-stale-claims > keeps every sentence naming the interests in the places the row corrected dated by the removal with no clause in the present, or among the sentences read and found true 2517ms
+   ✓ i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal with no clause in the present, or among the sentences read and found true; the audit trail and the research records aside 25973ms
+ ✓ tests/evidence3-person.test.ts (19 tests) 42467ms
+   ✓ c-traits and trait-receipts: the receipts knob gone > PLAYER JOURNEY: Keeps Accounts and Chaotic pressed on the page make a life holding both; each look lists only the knobs it still moves, its own and with all she is, and neither says a receipt 327ms
+   ✓ trait-receipts: changing the two traits changes no return > PLAYER JOURNEY: London-born twins, one holding Keeps Accounts and Chaotic, played to the tax season of 2027 with the same work each midnight, are given the same 2026 return to the cent, on income earned 12312ms
+   ✓ l-trait: the look’s figures are what play charges > PLAYER JOURNEY: Spender and Generous held; their looks say +25% and +10% of the food’s price on their own and +28% with all she is, and the meal through life.look_after costs $6.41 for the plain twin’s $5.00, and lifts the mood 2.273 for 2 636ms
+   ✓ c-wealth: Starting Point’s tiles are what Begin opens, for every family > PLAYER JOURNEY: nothing chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score 486ms
+   ✓ c-family: the means go with the family the select last chose > PLAYER JOURNEY: Inherited chosen, then Nothing: Review says Need Found, and at the fall term’s start Nothing’s student is paid $13,318.50 where Inherited’s pays the $1,882 plan from $260,870 587ms
+   ✓ i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside 26408ms
+ ✓ tests/remaining-09-banking.test.ts (17 tests) 90604ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student that closing her AktivKonto charges its fees to the day, €3.12 ($3.39), October’s €6.90 for 14 of its 31 days; Close It pressed charges that once against Bank Fees and sends the rest to Chase, and a second press and a reload charge nothing more 6492ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: at the month’s edges: 31 October 2026 at 11:30 PM, after October’s end, €6.90 once (until 2026-10-16 €13.80); 1 March 2027 €14.02, January’s and February’s kept and one day of March’s; 31 March at 10 PM €20.70; at 11:30 PM, after the quarter’s closing took its €20.70, nothing at closing, and the screen says why 7845ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: February in a leap year: closed on 15 February 2027, €10.60, January’s €6.90 and 15 of 28 days, €3.70; on 15 February 2028, €10.47, 15 of 29, €3.57; on 29 February 2028, €13.80, the month whole; and the 2027 close comes to the same postings whether the clock jumps from 1 February or runs a day at a time with a reload on the 8th 19848ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: moved down to €1.00, the AktivKonto is refused Close It on Your Banks for its fees to the day, with what to pay in; $50 moved in from Chase, it closes on the day it’s pressed for that day’s share, once 3871ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th: Your Accounts Over Time says canceling charges €1.90 of fees, 12 of January’s 31 days of its €4.90, and refuses it for those and 43 cents of overdraft interest, “Pay in €2.33 first”; paid in, canceled, both charged, once 429ms
+   ✓ banking.1.pro-rata.opening-month: Deutsche Bank’s month of opening, free > FIXTURE, Berlin: an AktivKonto opened beside Commerzbank on Monday 5 January is told on Your Banks that closing charges nothing, January being the month it opened; closed on 31 January at 10 PM nothing is charged; its twin kept is charged nothing at January’s end, and closed on 10 February €2.46, 10 of February’s 28 days 785ms
+   ✓ banking.3: a home bank’s own close settles the fees once > GUARD: Deutsche Bank given Barclays’ kind of rule (TEST SETUP: it closes no home account), its close on 23 October 2026 finding the AktivKonto overdrawn charges €5.12, 23 of October’s 31 days, once; the daily tries after and the months’ ends charge no more fees; paid off, it closes, and the quarter’s closing finds nothing 4147ms
+   ✓ banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: a Berlin-raised student keeping Berliner Sparkasse is charged €12.00 on her first night; on Wednesday 14 October 2026 Your Banks says closing charges October’s €4.95 to the day, €2.24, and refunds €10.32, 314 of the card’s 365 days; Close It pressed posts both once, against Bank Fees, and a second press and a reload give nothing more back 8153ms
+   ✓ banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: kept, the card’s second year is charged on 25 August 2027, once, the same whether the clock jumps from 20 August or runs a day at a time with a reload on the 24th; closed on 1 September 2027, July’s and August’s €4.95 kept and one day of September’s, €10.07, and €11.74 of the year refunded, 357 days 9314ms
+   ✓ banking.5.arion-card: Arion’s yearly debit-card fee in its own figure > PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly on her first night and a year on, the krónur held falling by 950 kr each time; one of 20 is charged nothing; closing on 26 August 2027 gives back 945 kr of the year paid ahead, as SLATE simulates when Arion charges it 16706ms
+   ✓ banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student of 30 keeping ING is charged its €4.90 at the first minute of each next month, 1 September 2026 to 1 January 2027, €24.50, what the quarter’s closings took until 2026-10-16, and none at a quarter’s closing; the screen says when; the same whether the clock jumps or runs a day at a time with a reload on 1 November 3891ms
+   ✓ banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: the ING student closing at 11:30 PM on 31 October 2026, October’s €4.90 counted and not yet charged, is told and charged it once, and 1 November charges nothing more 2065ms
+   ✓ banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student keeping Commerzbank is charged its €4.90 at 11 PM on each month’s last day, August to December 2026, and none at a quarter’s closing; the screen says the day; Deutsche Bank’s still goes to the quarter’s closing 5124ms
+   ✓ banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set 465ms
+   ✓ banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it 1191ms
+ ✓ tests/guide-examples-money.test.ts (16 tests) 71322ms
+   ✓ the money entries’ worked examples, played > bank.round-ups: Round-Ups 346ms
+   ✓ the money entries’ worked examples, played > money.affairs: Your Affairs And What You’re Worth 2586ms
+   ✓ the money entries’ worked examples, played > bank.transfer: Moving Money 812ms
+   ✓ the money entries’ worked examples, played > bank.term: Term Deposits 1745ms
+   ✓ the money entries’ worked examples, played > bank.upkeep: Keeping An Account 27005ms
+   ✓ the money entries’ worked examples, played > bank.card-offers: A Card’s Offers 2778ms
+   ✓ the money entries’ worked examples, played > bank.card-security: Card Security 332ms
+   ✓ the money entries’ worked examples, played > leaves a live save byte for byte as it was, every example played beside it 35052ms
+ ✓ tests/home-account-abroad.test.ts (16 tests) 26129ms
+   ✓ nothing new at a bank abroad > refuses savings, a term deposit, a loan, an overdraft and cash paid in at HSBC UK in its words, and wages in Yale’s; Chase opens savings 483ms
+   ✓ the bank’s fee for a customer abroad, on its schedule, in its own money > SMBC’s ¥220 at the month’s end; BNP Paribas’ €15 each month; SG’s €75 at the quarter’s end at 26 and none at 24 5373ms
+   ✓ the bank’s fee for a customer abroad, on its schedule, in its own money > owes SMBC’s ¥220 where no account there holds it, stops its payments abroad in its words, and takes it the night money arrives; MUFG’s ¥300 the same 2788ms
+   ✓ the bank’s fee for a customer abroad, on its schedule, in its own money > charges Deutsche Bank’s €6.90 a month at its quarterly closing in its own figure, and takes no tax from the Flexgeld’s interest 943ms
+   ✓ Barclays closes the account of a customer abroad > says so on the first morning with its date, once through a reload, and closes on it, the money arriving at Chase less its costs 1769ms
+   ✓ Barclays closes the account of a customer abroad > keeps an F-1’s HSBC UK account past the same day, and schedules nothing 819ms
+   ✓ statements of an account held from before the life began > start at August 2026 for HSBC UK’s savings, opened years before, as for Chase’s current account 1072ms
+   ✓ what Your Banks says an account is for, through a reload > names the everyday card’s autopay on Chase before a reload as after it, and not once the card has closed 1676ms
+   ✓ Barclays’ closing of an account overdrawn on its day > tries again each day and closes it once it’s paid, saying so once, with nothing announced again on a reload 1754ms
+   ✓ Barclays’ closing of an account overdrawn on its day > charges off what’s never paid without marking the American record, which a bank abroad doesn’t report to 4526ms
+   ✓ a yen account’s own figure > holds whole yen through interest and a payment from Chase, and closes its savings into the current account yen for yen 4332ms
+ ✓ tests/roundups.test.ts (24 tests) 2940ms
+   ✓ the ledger, a reload and a long skip > moves each day’s once across a reload, and the same day by day as in one long skip 789ms
+   ✓ the panel > shows the bank’s feature, its choices, what’s waiting, the last transfer and why one didn’t, and what the bank leaves open, with its source 396ms
+ ✓ tests/home-account-creation.test.ts (16 tests) 1804ms
+   ✓ a life made with an account kept at home > opens Barclays’ current account at nothing and its savings with the family’s, in pounds, the money adding up to the cent 409ms
+   ✓ a life made with an account kept at home > keeps the account, its figure and where they lived through a save and a load, and plays days with the books in order 674ms
+   ✓ the creation screen > draws Before Yale with the banks there, a refused one disabled with its reason, and the split 308ms
+ ✓ tests/language-data-dates.test.ts (12 tests) 5150ms
+   ✓ the research data writes its dates the game’s way wherever a screen shows them > the bank research made by scripts outside the repository: every field the screens show 856ms
+   ✓ the research data writes its dates the game’s way wherever a screen shows them > the bank research kept by hand: each product’s, fee’s, overdraft’s, term’s, loan’s, round-up’s and opening’s source 873ms
+   ✓ the genres’ research writes its dates the game’s way, and the genre look shows them so > each genre’s claim, reasons, what the research says, how it was read, what’s uncertain and its source: build-attribute-content’s words step 466ms
+   ✓ the genres’ research writes its dates the game’s way, and the genre look shows them so > PLAYER JOURNEY: a first-year opens Horror and Adventure: the source’s day, how it was read and the review’s day, as the game writes a date 366ms
+   ✓ the guide, the tutorial and Papers say a day month first, as the game writes a date > every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them 1073ms
+   ✓ the guide, the tutorial and Papers say a day month first, as the game writes a date > PLAYER JOURNEY: a student reads Health Cover’s dental plan and, with a UK pension claimed, the State Pension’s fine print 375ms
+   ✓ PLAYER JOURNEY: a New York student at Chase reads each source line’s day as the game writes a date > says the day a product, a card, its cash, its security and its term deposit were read, once each, as the data holds it 619ms
+ ✓ tests/defects-g4-2.test.ts (8 tests) 816ms
+ ✓ tests/home-account-screens.test.ts (3 tests) 3320ms
+   ✓ an account kept at home, in its own money on every screen > shows HSBC UK’s accounts in pounds with the dollars beside, on the bank, Home, the looks and the statement, through a reload 2603ms
+   ✓ an account kept at home, in its own money on every screen > tells the alerts and the statement notice in pounds 460ms
+ ✓ tests/school.test.ts (54 tests) 152664ms
+   ✓ one student, one calendar > asks a third-year in the Rep’s company to play there that fall, not in a School production too 492ms
+   ✓ one student, one calendar > calls off a night on call the understudy wasn’t needed for, and excuses a rehearsal on a day called in sick 6149ms
+   ✓ one student, one calendar > excuses a performance missed laid up by an injury, as a stay in hospital is 7638ms
+   ✓ one student, one calendar > offers no Cabaret show where no week can be, in a term’s last three weeks 2322ms
+   ✓ the admitted class > is fifteen classmates, each an actor or an actress with their own drive, and the player among the strongest, not above everyone 306ms
+   ✓ money > pays a student in need the rest of the living scholarship each term, and takes nothing from the bank for the plan 4661ms
+   ✓ classes > grow a rested student more than an exhausted one, and take energy beyond the hours awake 725ms
+   ✓ classes > excuse a student down with the flu, whatever the condition reads 457ms
+   ✓ classes > can’t be called in sick once the day’s classes have run 431ms
+   ✓ classes > can’t be called in sick from on a day with nothing at school, and can on a Saturday shift (from 2026-10-10) 1346ms
+   ✓ work-study > works six hours each class-week Saturday and pays them on the Friday, as wages a bank counts 1501ms
+   ✓ work-study > doesn’t pay a shift a student isn’t there for, and counts the miss 437ms
+   ✓ work-study > takes elective evenings of four hours on request, past fifty hours a year, the Bulletin’s fifty being part of a minimum 334ms
+   ✓ casting > casts a first-year in good standing to understudy at Yale Rep in the first spring, beside the Carlotta Festival, on call at five every performance day, with a run-through 3582ms
+   ✓ casting > doesn’t send a student out of good standing to Yale Rep, however good 3183ms
+   ✓ casting > clears last term’s Yale Rep assignment in a term without one, so nothing goes on the résumé twice 9715ms
+   ✓ casting > casts a first-year’s spring in the Carlotta Festival: rehearsals Tuesday to Friday from mid-April, four performances in early May 3483ms
+   ✓ casting > takes an actor out of the pool after missed rehearsal calls, and a missed performance is a grave breach 6755ms
+   ✓ casting > covers a performance and a rehearsal missed in hospital, with no breach and no call counted 6389ms
+   ✓ casting > sends an understudy on when the night calls for it, and grows them; away that night, it’s a grave breach 35317ms
+   ✓ casting > puts nothing on the résumé for a production never gone on in, and keeps what was played on dismissal 16468ms
+   ✓ casting > sends an understudy on about one performance in fifty 1084ms
+   ✓ the Yale Cabaret > puts a student in a show this term, three weeks off and clear of recesses, and grows them for it 2267ms
+   ✓ the Yale Cabaret > turns away a student on academic warning, and finds a week clear of the term’s casting calls 3855ms
+   ✓ the Yale Cabaret, clear of casting > moves the show past a week a casting call falls in, and keeps no credit for a show never played 5442ms
+   ✓ the Yale Summer Cabaret > lets a student go who misses a performance, and stops the stipend after the days of the week worked 6120ms
+   ✓ the Yale Summer Cabaret > keeps a student in the company who misses a performance in hospital 4755ms
+   ✓ the Yale Summer Cabaret > forms in the spring of the first and second years, for a student in good standing, by the end of April 14023ms
+   ✓ the curriculum’s labs > calls a first-year to Drama 50, grows them there, and counts a missed afternoon 1423ms
+ ✓ tests/looks.test.ts (23 tests) 15617ms
+   ✓ the shape of a look > never prints a field name where a word belongs 352ms
+   ✓ the shape of a look > says what is behind every way before it is taken 336ms
+   ✓ the graph > never parents a thing to itself 14230ms
+
+ Test Files  12 passed (12)
+      Tests  215 passed (215)
+   Start at  17:11:44
+   Duration  244.55s (transform 23.41s, setup 3.42s, collect 199.34s, tests 445.39s, environment 3ms, prepare 7.85s)
+
+exit=0

@@ -421,5 +421,59 @@
   "why": "\"as ptsb.ie returns 403\" said as what it means: the bank's site couldn't be opened, so the archive was read.",
   "meaningSensitive": false,
   "verified": "read on Your Cards, rendered/security.txt, PTSB"
+ },
+ {
+  "source": "src/engine/content/roundups.ts (DROPPED_UNSAID)",
+  "kind": "feedback",
+  "before": "const DROPPED_UNSAID = 'In the game, nothing moves that day, all or nothing, and never into an overdraft, and what was counted is dropped: the bank doesn’t say whether it’s carried.';",
+  "after": "const DROPPED_UNSAID = 'In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.';",
+  "why": "After \"When the account is short:\", \"nothing moves that day, all or nothing, … and what was counted is dropped\" said one thing twice and ended in the passive. It says what doesn't move, that it isn't partial or overdrawn, and that it's dropped, with the bank's silence last.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/roundups.txt, at the seven banks that share it (BBVA México, Santander México, Santander, Sabadell, Bankinter, ANZ, and others); systems/roundups.ts: \"all or nothing, and never into an overdraft; what couldn’t move is dropped\""
+ },
+ {
+  "source": "src/engine/content/roundups.ts (kr-kakaobank.words)",
+  "kind": "label",
+  "before": "words: 'Not a purchase round-up: on each weekday, Monday to Friday, holidays or not, the part of the day before’s closing balance under 1,000원 moves to your savings, the 저금통.',",
+  "after": "words: 'Not a purchase round-up: each weekday, Monday to Friday, holidays or not, the part of the previous day’s closing balance under ₩1,000 moves to your savings, the 저금통.',",
+  "why": "\"the day before's closing balance under 1,000원\" read as a possessive on a day; the won in the game's form, ₩1,000, as Your Cards and the rest of Money write it.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/roundups.txt, KakaoBank"
+ },
+ {
+  "source": "src/engine/content/roundups.ts (mx-santander.open)",
+  "kind": "label",
+  "before": "'That credit card round-ups come from the current account is inferred, not stated.'",
+  "after": "'Santander doesn’t say that a credit card purchase’s round-up comes from your checking account; the game takes it from there.'",
+  "why": "\"… is inferred, not stated\" was the research's note in the passive, and \"the current account\" the old word. It says what Santander doesn't say and what the game does.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/roundups.txt, Santander México"
+ },
+ {
+  "source": "src/engine/content/rents.ts (newyork (order))",
+  "kind": "label",
+  "before": "'HUD’s Fair Market Rent, the 40th percentile rent, utilities included; the room’s rent is SpareRoom’s', 'fiscal year 2026; the room, the second quarter of 2026'",
+  "after": "'HUD’s Fair Market Rent, the 40th percentile rent, utilities included', 'fiscal year 2026; the room’s rent is SpareRoom’s, for the second quarter of 2026'",
+  "why": "The place look prints \"<measure>, <period>; source: …\", so the room's provenance in the measure put the one-bedroom's \"FY2026\" after it. Each date now follows what it dates, in words.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/places.txt, New York: \"HUD’s Fair Market Rent, the 40th percentile rent, utilities included, fiscal year 2026; the room’s rent is SpareRoom’s, for the second quarter of 2026; source: …\""
+ },
+ {
+  "source": "src/engine/content/rents.ts (seoul)",
+  "kind": "label",
+  "before": "'monthly rent (wolse) on small units, normalized to a 10 million won deposit', 'Q1 2026'",
+  "after": "'the monthly rent (wolse) on small units, taken at a ₩10 million deposit', 'the first quarter of 2026'",
+  "why": "\"normalized to a 10 million won deposit\" said plainly, with the won as the game writes them.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/places.txt, Seoul"
+ },
+ {
+  "source": "src/engine/content/rents.ts (mosfellsbr (span))",
+  "kind": "label",
+  "before": "'September–October 2025'",
+  "after": "'September to October 2025'",
+  "why": "A span of months in the glossary's form, \"to\", not an en dash.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/places.txt, Mosfellsbær"
  }
 ]

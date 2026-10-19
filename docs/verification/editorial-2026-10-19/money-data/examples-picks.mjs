@@ -140,4 +140,14 @@ export const PICKS = [
   { file: 'b5-diagnostics-security-changes.json', sourceFile: 'src/engine/content/security.ts', export: 'SECURITY', key: 'ie-ptsb', field: 'source', kind: 'label', meaningSensitive: false,
     why: '"as ptsb.ie returns 403" said as what it means: the bank\'s site couldn\'t be opened, so the archive was read.',
     verified: 'read on Your Cards, rendered/security.txt, PTSB' },
+
+  // Batch 6: round-ups and rents (hand-kept; picked by key from b6-changes.json)
+  ...[
+    ['DROPPED_UNSAID', 'src/engine/content/roundups.ts', true, 'After "When the account is short:", "nothing moves that day, all or nothing, … and what was counted is dropped" said one thing twice and ended in the passive. It says what doesn\'t move, that it isn\'t partial or overdrawn, and that it\'s dropped, with the bank\'s silence last.', 'rendered/roundups.txt, at the seven banks that share it (BBVA México, Santander México, Santander, Sabadell, Bankinter, ANZ, and others); systems/roundups.ts: "all or nothing, and never into an overdraft; what couldn’t move is dropped"'],
+    ['kr-kakaobank.words', 'src/engine/content/roundups.ts', false, '"the day before\'s closing balance under 1,000원" read as a possessive on a day; the won in the game\'s form, ₩1,000, as Your Cards and the rest of Money write it.', 'rendered/roundups.txt, KakaoBank'],
+    ['mx-santander.open', 'src/engine/content/roundups.ts', true, '"… is inferred, not stated" was the research\'s note in the passive, and "the current account" the old word. It says what Santander doesn\'t say and what the game does.', 'rendered/roundups.txt, Santander México'],
+    ['newyork (order)', 'src/engine/content/rents.ts', true, 'The place look prints "<measure>, <period>; source: …", so the room\'s provenance in the measure put the one-bedroom\'s "FY2026" after it. Each date now follows what it dates, in words.', 'rendered/places.txt, New York: "HUD’s Fair Market Rent, the 40th percentile rent, utilities included, fiscal year 2026; the room’s rent is SpareRoom’s, for the second quarter of 2026; source: …"'],
+    ['seoul', 'src/engine/content/rents.ts', false, '"normalized to a 10 million won deposit" said plainly, with the won as the game writes them.', 'rendered/places.txt, Seoul'],
+    ['mosfellsbr (span)', 'src/engine/content/rents.ts', false, 'A span of months in the glossary\'s form, "to", not an en dash.', 'rendered/places.txt, Mosfellsbær'],
+  ].map(([key, file, ms, why, seen]) => ({ ...fromText('b6-changes.json', file, key), kind: key.includes('DROPPED') ? 'feedback' : 'label', meaningSensitive: ms, why, verified: `read on ${seen}` })),
 ];

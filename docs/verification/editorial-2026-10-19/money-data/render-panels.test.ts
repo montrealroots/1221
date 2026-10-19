@@ -112,3 +112,21 @@ describe('money-data render', () => {
     for (const p of want) writeFileSync(`${dir}/${p}${suffix}.txt`, out[p]!.join('\n\n') + '\n');
   });
 });
+
+describe('money-data render: the places with a published rent', () => {
+  it('draws each place’s look as a New York student opens it (RENDER=places)', async () => {
+    if (!(process.env.RENDER ?? '').split(',').includes('places')) return;
+    await import('@/ui/looks/all');
+    const { resolveLook } = await import('@/ui/looks/registry');
+    const { at } = await import('@/ui/looks/subject');
+    const { PUBLISHED_RENTS } = await import('@/engine/content/rents');
+    const sim = lifeAt('us-chase', 'US');
+    h.sim = sim;
+    const out = PUBLISHED_RENTS.map((one) => {
+      const look = resolveLook(sim, at('place', one.cityId)) as { body?: ReactElement } | undefined;
+      const words = look?.body ? onScreen(renderToStaticMarkup(createElement('div', null, look.body))) : '(no look)';
+      return `=== ${one.cityId}\n${words.split('\n').filter((l) => /rent/i.test(l)).join('\n')}`;
+    });
+    writeFileSync('docs/verification/editorial-2026-10-19/money-data/rendered/places.txt', out.join('\n\n') + '\n');
+  });
+});

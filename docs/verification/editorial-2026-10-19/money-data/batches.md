@@ -451,3 +451,75 @@ None held these words.
 - `ROWS` and the IBAN data Retained;
 - the sheets Retained by one pattern, then the 128 sheet sources the edits changed (`b5-changed-sources.txt`, the ones
   whose first pass had gone to Pending) Rewritten one by one.
+
+## Batch 6: `content/roundups.ts` (22 sources), `rents.ts` (1), `homeaccounts.ts` (7), `home-accounts.json` (75)
+
+### What the screen shows
+
+- **The Round-Ups panel** under Your Accounts Over Time (`ui/bank/RoundUps.tsx`), for the bank whose screen it is:
+  - "Round-Ups, <product>. <words>";
+  - "When the account is short: <short>";
+  - the bank's open questions, each said with what the game does, and "Not in the game: <notHere>";
+  - the source line.
+- **A place's look** (`ui/looks/place.tsx`), for the 20 places with a published rent: "The rent is published:
+  <measure>, <period>; source: <address>."
+- **A home bank kept from abroad** (`systems/homeaccount.ts`, `abroad.ts`, creation's home account): `READ`, `ABROAD`,
+  `NEW_HERE`, `conditionOf`, `RETENTION_CONFIDENCE`, `ASSUMED_WORDS` and `NON_RESIDENT_TAX`'s notes, all hand-written
+  in brief 14.
+- **`home-accounts.json` reaches no screen**, as brief 14 found, and still. `homeaccounts.ts` reads from it only each
+  bank's `kept`, `closesWithNoticeDays`, `sources` (a title and address, into `HomeTerms.source`) and the day read
+  (`HomeTerms.asOf`), and `grep` finds no reader of either field anywhere in `src/`. Its prose is the research quoted,
+  rebuilt by `tools/build-home-accounts.mjs` from `docs/research/banking/home-accounts.json`.
+
+### What changed and what stayed
+
+- **Round-ups.** The money area wrote these on 2026-10-13 in the player's words, and 19 banks' and the shared
+  turning-off sentence stay. Three things change:
+  - the shared sentence for a shortfall the bank doesn't explain, at seven banks, which said "nothing moves that day,
+    all or nothing, … and what was counted is dropped";
+  - Santander México's two lines with "current account" and "is inferred, not stated";
+  - KakaoBank's sweep in the game's won and word order.
+- **Rents.** Each measure and period said in words:
+  - "a 40th percentile with utilities" became "the 40th percentile rent, utilities included";
+  - "warm" became "including heating (warm)";
+  - "FY2026" became "fiscal year 2026", and "Q3 2025" "the third quarter of 2025";
+  - spans of months use "to".
+
+  The look prints "<measure>, <period>", so where a measure ended on the room's provenance, the one-bedroom's period
+  came after the room. The room's provenance and date moved into the period, after the one-bedroom's.
+- **Home accounts.** Kept, every source: brief 14 wrote them in this voice, and each says what the bank does for a
+  student who moved to America, what it asks, the bank's own words where it hedges, and what the game assumes.
+
+### Meaning-sensitive changes, and how each was checked
+
+- **The shortfall sentence** against `systems/roundups.ts` (line 277: "all or nothing, and never into an overdraft;
+  what couldn't move is dropped"): no part of the day moves, never into an overdraft, and it's dropped.
+  `tests/roundups.test.ts` ("moves nothing, all or nothing, never into an overdraft, says so, and doesn't move it
+  later") reads the panel's words from the data, and passes.
+- **Each rent** keeps its figure, its area, its source and its date; only the order of the room's clause and the words
+  for the codes changed. A Sydney or Melbourne "a week" figure is given its dollar sign, the Australian one, as the
+  measure is in the city's currency.
+
+### Interactions read whole
+
+The Round-Ups panel at each bank, from its sentence to its choices, the reason it can't start yet, the shortfall, the
+open questions and the source (`rendered/roundups.txt`); the place look's paragraph on rent and the cost of living
+(`rendered/places.txt`); a home bank's terms on the creation screen and on Money, as `tests/home-account-screens.test.ts`
+draws them.
+
+### Tests and tool matchers
+
+None needed changing: `tests/roundups.test.ts` reads the round-up words from the data, and nothing else held the
+rents' words. `tools/acceptance-ui.mjs` matches Citi's "Round-Ups, Spend & Save." and "at most $15 a transfer", which
+didn't change.
+
+### Checks
+
+- `npx tsc -b --noEmit`: exit 0 (`b6-tsc.txt`). `npx eslint` on the changed files: exit 0 (`b6-eslint.txt`).
+- `npx vitest run` on the 12 test files that touch round-ups, rents, places and the home accounts: 215 of 215, exit 0
+  (`b6-tests.txt`).
+- The text checks: exit 0 each (`b6-checks.txt`). Engine-speak stayed at 332.
+
+### Statuses
+
+`b6-marks.mjs` (`b6-marks.log`). After it, `node tools/text-inventory.mjs --todo2 money-data`: 0 Pending.

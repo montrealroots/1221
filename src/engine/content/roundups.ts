@@ -83,7 +83,7 @@ export interface RoundUpRule {
 }
 
 const CHECKED = '2026-10-13';
-const DROPPED_UNSAID = 'In the game, nothing moves that day, all or nothing, and never into an overdraft, and what was counted is dropped: the bank doesn’t say whether it’s carried.';
+const DROPPED_UNSAID = 'In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.';
 const OFF = 'In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.';
 
 export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
@@ -212,18 +212,18 @@ export const ROUND_UPS: Readonly<Record<string, RoundUpRule>> = {
     when: 'day',
     credit: true,
     short: DROPPED_UNSAID,
-    open: ['A purchase already at a multiple of $10: the game moves nothing.', 'When it posts: Santander says with each purchase, and the game moves the day’s together at its end.', 'That credit card round-ups come from the current account is inferred, not stated.', OFF],
-    notHere: ['Disfruta y guarda, a set amount at participating merchants, whose list isn’t published.', 'A meta is a goal kept inside the current account, not a savings product, and Santander’s pages disagree on whether it earns interest; the game moves it to your savings.'],
+    open: ['A purchase already at a multiple of $10: the game moves nothing.', 'When it posts: Santander says with each purchase, and the game moves the day’s together at its end.', 'Santander doesn’t say that a credit card purchase’s round-up comes from your checking account; the game takes it from there.', OFF],
+    notHere: ['Disfruta y guarda, a set amount at participating merchants, whose list isn’t published.', 'A meta is a goal kept inside your checking account, not a savings product, and Santander’s pages disagree on whether it earns interest; the game moves it to your savings.'],
     source: 'Santander México, Mis Metas page and FAQ (read live October 13, 2026); contract clause V.28',
     checked: CHECKED,
   },
   'kr-kakaobank': {
     product: '저금통, 동전 모으기',
-    words: 'Not a purchase round-up: on each weekday, Monday to Friday, holidays or not, the part of the day before’s closing balance under 1,000원 moves to your savings, the 저금통.',
+    words: 'Not a purchase round-up: each weekday, Monday to Friday, holidays or not, the part of the previous day’s closing balance under ₩1,000 moves to your savings, the 저금통.',
     ways: [{ kind: 'remainder', unit: 1000, above: 1000, cap: 100000 }],
     when: 'weekdays',
-    short: 'Skipped when the balance is 1,000원 or less, never partial and never overdrawn.',
-    open: ['A sweep that would take the 저금통 past its 100,000원 cap: the game skips it. Your KakaoBank savings stand in for the 저금통, and the cap counts what the sweeps have put in, never more than the savings hold.', 'Stopping it stops saving from that moment, as KakaoBank says.'],
+    short: 'It’s skipped when the balance is ₩1,000 or less, never moves just part, and never overdraws the account.',
+    open: ['A sweep that would take the 저금통 past its ₩100,000 cap: the game skips it. Your KakaoBank savings stand in for the 저금통, and the cap counts what the sweeps have put in, never more than the savings hold.', 'Stopping it stops saving from that moment, as KakaoBank says.'],
     notHere: ['자동 모으기, an amount KakaoBank works out each Saturday.', '캐시백 모으기, cashback from brand coupons.'],
     source: 'kakaobank.com/products/coinbox; 저금통 특약 (부칙 September 23, 2026)',
     checked: CHECKED,

@@ -2897,12 +2897,747 @@
   "evidence": "Payments And Cash drawn at all 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/cash.txt); tests/language-data-dates.test.ts asserts Chase's cash source line on the screen",
   "first": "Pending"
  },
+ "src/engine/content/home-accounts.json#banks [au-anz]": {
+  "status": "Retained",
+  "hash": "fa7eb1c0ca19",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [au-commbank]": {
+  "status": "Retained",
+  "hash": "23e3d7a6fcde",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [au-nab]": {
+  "status": "Retained",
+  "hash": "f2f0b97ba2cf",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [au-westpac]": {
+  "status": "Retained",
+  "hash": "a4cd17d1492a",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-bmo]": {
+  "status": "Retained",
+  "hash": "019a48429893",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-cibc]": {
+  "status": "Retained",
+  "hash": "815abcf38004",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-rbc]": {
+  "status": "Retained",
+  "hash": "98cf2e50cee1",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-scotiabank]": {
+  "status": "Retained",
+  "hash": "751ae67a9cf4",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [ca-td]": {
+  "status": "Retained",
+  "hash": "852a5217605e",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [de-berliner-sparkasse]": {
+  "status": "Retained",
+  "hash": "a11cdb546422",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [de-commerzbank]": {
+  "status": "Retained",
+  "hash": "e6a1aee583eb",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [de-deutsche-bank]": {
+  "status": "Retained",
+  "hash": "fa5bbb947a30",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [de-ing]": {
+  "status": "Retained",
+  "hash": "e05dbd0d4231",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [de-postbank]": {
+  "status": "Retained",
+  "hash": "2bda7293b85b",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [es-bankinter]": {
+  "status": "Retained",
+  "hash": "903c552f4875",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [es-bbva]": {
+  "status": "Retained",
+  "hash": "c45d24d8b433",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [es-caixabank]": {
+  "status": "Retained",
+  "hash": "3ebc4eab8f71",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [es-sabadell]": {
+  "status": "Retained",
+  "hash": "9200a86b6c2b",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [es-santander]": {
+  "status": "Retained",
+  "hash": "f82303725b16",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-bnp-paribas]": {
+  "status": "Retained",
+  "hash": "b1b95adb3151",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-credit-agricole]": {
+  "status": "Retained",
+  "hash": "fa4adb1fb0fb",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-la-banque-postale]": {
+  "status": "Retained",
+  "hash": "9b3e3a6a10ec",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-lcl]": {
+  "status": "Retained",
+  "hash": "029dcd00cad5",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [fr-societe-generale]": {
+  "status": "Retained",
+  "hash": "c5a662fc7110",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-barclays]": {
+  "status": "Retained",
+  "hash": "b2e16c37c365",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-hsbc]": {
+  "status": "Retained",
+  "hash": "6913665c2ae3",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-lloyds]": {
+  "status": "Retained",
+  "hash": "bc3420c0acdf",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-nationwide]": {
+  "status": "Retained",
+  "hash": "98ee7d1d0e99",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-natwest]": {
+  "status": "Retained",
+  "hash": "31aefc6b214b",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [gb-santander]": {
+  "status": "Retained",
+  "hash": "7de9a5113d76",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [ie-aib]": {
+  "status": "Retained",
+  "hash": "c0465ebf2917",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [ie-bank-of-ireland]": {
+  "status": "Retained",
+  "hash": "e36a403b9243",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [ie-ptsb]": {
+  "status": "Retained",
+  "hash": "4239f69470fb",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [is-arion]": {
+  "status": "Retained",
+  "hash": "b35f442477a7",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [is-islandsbanki]": {
+  "status": "Retained",
+  "hash": "8780fe0cefd8",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [is-landsbankinn]": {
+  "status": "Retained",
+  "hash": "ba5779eb005a",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-japan-post-bank]": {
+  "status": "Retained",
+  "hash": "2adaecc6d7a9",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-mizuho]": {
+  "status": "Retained",
+  "hash": "652343955003",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-mufg]": {
+  "status": "Retained",
+  "hash": "2fc94c84c675",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-resona]": {
+  "status": "Retained",
+  "hash": "9eb505a3a3bd",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [jp-smbc]": {
+  "status": "Retained",
+  "hash": "362918db5d9e",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-hana]": {
+  "status": "Retained",
+  "hash": "b5a75c78e822",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-kakaobank]": {
+  "status": "Retained",
+  "hash": "8f3e9df0c89d",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-kb-kookmin]": {
+  "status": "Retained",
+  "hash": "05c20b68a54b",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-nh]": {
+  "status": "Retained",
+  "hash": "dc35266a3754",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [kr-shinhan]": {
+  "status": "Retained",
+  "hash": "4e4340c145bf",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [mx-banamex]": {
+  "status": "Retained",
+  "hash": "7203f8d82bc6",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [mx-banorte]": {
+  "status": "Retained",
+  "hash": "5836bf972d6d",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [mx-bbva]": {
+  "status": "Retained",
+  "hash": "d4c7e61e408c",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [mx-santander]": {
+  "status": "Retained",
+  "hash": "d56b94d7fbb8",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-anz]": {
+  "status": "Retained",
+  "hash": "6328528c5b53",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-asb]": {
+  "status": "Retained",
+  "hash": "3a02bb69ec55",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-bnz]": {
+  "status": "Retained",
+  "hash": "9b9a682799a8",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-kiwibank]": {
+  "status": "Retained",
+  "hash": "fd3f92c28c7e",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [nz-westpac]": {
+  "status": "Retained",
+  "hash": "a8741499e10c",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [us-bank-of-america]": {
+  "status": "Retained",
+  "hash": "278b0a773eef",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [us-capital-one]": {
+  "status": "Retained",
+  "hash": "c7b203dd2ccb",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [us-chase]": {
+  "status": "Retained",
+  "hash": "507b0a9a9ed5",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [us-citi]": {
+  "status": "Retained",
+  "hash": "fb2e830b8cae",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#banks [us-wells-fargo]": {
+  "status": "Retained",
+  "hash": "8b78d2c110f8",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [AU]": {
+  "status": "Retained",
+  "hash": "4bad036b2385",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [CA]": {
+  "status": "Retained",
+  "hash": "30ffaa6a915b",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [DE]": {
+  "status": "Retained",
+  "hash": "47a9ab68422d",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [ES]": {
+  "status": "Retained",
+  "hash": "7f63423e1f5d",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [FR]": {
+  "status": "Retained",
+  "hash": "6cbf6f5fd197",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [GB]": {
+  "status": "Retained",
+  "hash": "b4251787d9fc",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [IE]": {
+  "status": "Retained",
+  "hash": "954c53ee350f",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [IS]": {
+  "status": "Retained",
+  "hash": "9e784eb3a707",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [JP]": {
+  "status": "Retained",
+  "hash": "2325f81eb8d3",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [KR]": {
+  "status": "Retained",
+  "hash": "435b50dbcb8d",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [MX]": {
+  "status": "Retained",
+  "hash": "1fa7a0ba5b71",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [NZ]": {
+  "status": "Retained",
+  "hash": "a5f39935fe3a",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#countries [US]": {
+  "status": "Retained",
+  "hash": "963951d73e8f",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#us": {
+  "status": "Retained",
+  "hash": "269dc5f6a8cc",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/home-accounts.json#world": {
+  "status": "Retained",
+  "hash": "67bdf2db5612",
+  "on": "2026-10-19",
+  "reason": "The banks’ research quoted, copied from docs/research/banking/home-accounts.json by tools/build-home-accounts.mjs. homeaccounts.ts reads only each bank’s kept, closesWithNoticeDays and its sources’ title and address, into HomeTerms.source, which nothing reads; READ and ABROAD hold what the screens say, so no word of this file reaches a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/homeaccounts.ts#ABROAD": {
+  "status": "Retained",
+  "hash": "0a14707ea772",
+  "on": "2026-10-19",
+  "reason": "Each home bank’s refusals and conditions for a customer abroad, said plainly, with the bank’s own words quoted in its language where they are the rule (“Wohnsitz und Arbeitsplatz in Deutschland”).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/homeaccounts.ts#ASSUMED_WORDS": {
+  "status": "Retained",
+  "hash": "c4bbfce8b241",
+  "on": "2026-10-19",
+  "reason": "The two estimates a payment abroad carries, each saying what the bank doesn’t publish and the figure the game uses instead (the FSB’s 2.6%, three business days), in brackets after the figure they qualify.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/homeaccounts.ts#conditionOf": {
+  "status": "Retained",
+  "hash": "27bb232cf143",
+  "on": "2026-10-19",
+  "reason": "The general condition for a home bank with no sentence of its own, naming the bank and the two things it asks of a customer abroad: an American address and a tax self-certification.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/homeaccounts.ts#NEW_HERE": {
+  "status": "Retained",
+  "hash": "0731cee900ba",
+  "on": "2026-10-19",
+  "reason": "The sentence that names a home bank and where it opens accounts, with each country’s phrase written to sit in it (“the UK”, “Australia or moving there”), so it reads whole for every bank.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/homeaccounts.ts#NON_RESIDENT_TAX": {
+  "status": "Retained",
+  "hash": "1381c2d9911b",
+  "on": "2026-10-19",
+  "reason": "Each country’s tax on the interest of a customer abroad, with its rate, the law that sets it, and, where a treaty rate needs a form, that the game assumes none was filed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/homeaccounts.ts#READ": {
+  "status": "Retained",
+  "hash": "8e37e8b5fe6d",
+  "on": "2026-10-19",
+  "reason": "Each home bank’s sentence on keeping the account of a student who has moved to America, with the step it asks (an address, a form, a non-resident account) and the bank’s own words quoted where it hedges.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/homeaccounts.ts#RETENTION_CONFIDENCE": {
+  "status": "Retained",
+  "hash": "1aa95b8b25f2",
+  "on": "2026-10-19",
+  "reason": "Three sentences that tell the player how sure the game is that a home bank keeps their account: in the bank’s own words, from its price with no rule, or the game’s assumption; the guide reads the first back.",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/content/pending.ts#PENDING": {
   "status": "Rewritten",
   "hash": "b2d6e0eb3722",
   "on": "2026-10-19",
   "evidence": "Statements drawn at all 60 banks, and the card with a payment hold, by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/statements.txt, rendered/card.txt); tests/language-data-dates.test.ts asserts Chase's source on Statements",
   "first": "Pending"
+ },
+ "src/engine/content/rents.ts#PUBLISHED_RENTS": {
+  "status": "Rewritten",
+  "hash": "86bb6c6fecf4",
+  "on": "2026-10-19",
+  "evidence": "The place look's \"The rent is published: …\" drawn for each of the 20 places with a published rent by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts with RENDER=places (rendered/places.txt)",
+  "first": "Pending"
+ },
+ "src/engine/content/roundups.ts#DROPPED_UNSAID": {
+  "status": "Rewritten",
+  "hash": "d86a762486bb",
+  "on": "2026-10-19",
+  "evidence": "The Round-Ups panel drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/roundups.txt, and under Your Accounts Over Time in rendered/accountlife.txt); tests/roundups.test.ts asserts the panel's words from the data",
+  "first": "Pending"
+ },
+ "src/engine/content/roundups.ts#OFF": {
+  "status": "Retained",
+  "hash": "fbabdd5f514a",
+  "on": "2026-10-19",
+  "reason": "One sentence for every bank whose terms don’t say what turning round-ups off does: what the game does first, then that the bank doesn’t say, so the player knows which part is the game’s.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .au-anz": {
+  "status": "Retained",
+  "hash": "c8eae46c000f",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .ca-scotiabank": {
+  "status": "Retained",
+  "hash": "e7a56b7b7eed",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .ca-td": {
+  "status": "Retained",
+  "hash": "0925bad73fb0",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .de-ing": {
+  "status": "Retained",
+  "hash": "6ded31247d69",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .es-bankinter": {
+  "status": "Retained",
+  "hash": "01d9c0fafe76",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .es-bbva": {
+  "status": "Retained",
+  "hash": "b912c1d594a1",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .es-sabadell": {
+  "status": "Retained",
+  "hash": "6caf02cd8f6a",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .es-santander": {
+  "status": "Retained",
+  "hash": "00955e1ef194",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .fr-lcl": {
+  "status": "Retained",
+  "hash": "fa682e419874",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .gb-lloyds": {
+  "status": "Retained",
+  "hash": "88fc458fb44c",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .gb-natwest": {
+  "status": "Retained",
+  "hash": "a3e3bc58a5a8",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .is-islandsbanki": {
+  "status": "Retained",
+  "hash": "caeea60b0a7a",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .is-landsbankinn": {
+  "status": "Retained",
+  "hash": "e07fda38ea1d",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .kr-kakaobank": {
+  "status": "Rewritten",
+  "hash": "734dc3ff8ad1",
+  "on": "2026-10-19",
+  "evidence": "The Round-Ups panel drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/roundups.txt, and under Your Accounts Over Time in rendered/accountlife.txt); tests/roundups.test.ts asserts the panel's words from the data",
+  "first": "Pending"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .mx-bbva": {
+  "status": "Retained",
+  "hash": "26b5ce4b26db",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .mx-santander": {
+  "status": "Rewritten",
+  "hash": "9a08369d3d2b",
+  "on": "2026-10-19",
+  "evidence": "The Round-Ups panel drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/roundups.txt, and under Your Accounts Over Time in rendered/accountlife.txt); tests/roundups.test.ts asserts the panel's words from the data",
+  "first": "Pending"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .nz-asb": {
+  "status": "Retained",
+  "hash": "f52dbadbc12a",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .us-bank-of-america": {
+  "status": "Retained",
+  "hash": "236c3ddae5fb",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .us-citi": {
+  "status": "Retained",
+  "hash": "3ae516bead80",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/roundups.ts#ROUND_UPS .us-wells-fargo": {
+  "status": "Retained",
+  "hash": "c4a355ee51f5",
+  "on": "2026-10-19",
+  "reason": "Each bank’s round-up as the bank names it (Keep the Change, Save the Change, Kleingeld Plus), said to the player in a sentence or two, with what happens when the account is short, what the bank leaves open and what the game leaves out, each said as the game’s, and the terms it was read from.",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/security.ts#FRAUD_LAW": {
   "status": "Rewritten",

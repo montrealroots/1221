@@ -224,7 +224,7 @@ Round-Ups, Plan, Redondeo. Each purchase on your BBVA debit or credit card is ro
 Round Up To Choose… The next MX$10.00 The next MX$50.00 The next MX$100.00 
 Round-Ups: Off How This Works 
 Not now: Choose what to round up to: MX$10.00, MX$50.00, MX$100.00.
-When the account is short: In the game, nothing moves that day, all or nothing, and never into an overdraft, and what was counted is dropped: the bank doesn’t say whether it’s carried.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
 What The Bank Leaves Open, And What The Game Leaves Out
 When each amount posts: BBVA says “with each purchase”, and the game moves the day’s together at its end.
 BBVA may cap it at amounts it doesn’t publish: the game sets none.
@@ -254,14 +254,14 @@ Term deposits, round-ups, accounts left unused, and canceling something new.
 How This Works 
 Round-Ups, Mis Metas, Redondeo. Each purchase on your Santander debit or credit card is rounded up to the next $10, and the difference goes to your savings.
 Round-Ups: Off How This Works 
-When the account is short: In the game, nothing moves that day, all or nothing, and never into an overdraft, and what was counted is dropped: the bank doesn’t say whether it’s carried.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
 What The Bank Leaves Open, And What The Game Leaves Out
 A purchase already at a multiple of $10: the game moves nothing.
 When it posts: Santander says with each purchase, and the game moves the day’s together at its end.
-That credit card round-ups come from the current account is inferred, not stated.
+Santander doesn’t say that a credit card purchase’s round-up comes from your checking account; the game takes it from there.
 In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
 Not in the game: Disfruta y guarda, a set amount at participating merchants, whose list isn’t published.
-Not in the game: A meta is a goal kept inside the current account, not a savings product, and Santander’s pages disagree on whether it earns interest; the game moves it to your savings.
+Not in the game: A meta is a goal kept inside your checking account, not a savings product, and Santander’s pages disagree on whether it earns interest; the game moves it to your savings.
 Source: Santander México, Mis Metas page and FAQ (read live October 13, 2026); contract clause V.28, checked October 13, 2026.
 The bank’s terms: After 3 years with no deposits or withdrawals, the bank moves the balance to its cuenta global, a general holding account, after writing to your registered address 90 days before. The money is still yours there: it’s charged no fees and earns interest each month, and fees the bank charges don’t count as using the account. After 3 more years there with no claim or movement, 6 years in all, a balance of up to 300 days of the Mexico City minimum wage goes to the Beneficencia Pública (Ley de Instituciones de Crédito, art. 61).
 Débito LikeU is dormant: the bank has blocked it until you reactivate it. Reactivate 
@@ -411,7 +411,7 @@ Demand Deposit Account is dormant: the bank has blocked it until you reactivate 
 Demand Deposit Account is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
 Fixed Term Deposit is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
 €123.45 went to the Dormant Accounts Fund after years unused. An account becomes dormant on September 30 after 15 years with no transaction, and its money moves after the following March 31. You can always claim it back, with interest, with a Dormant Account Claim Form sent to the bank. Claim It Back 
-Source: the bank’s terms, https://www.ptsb.ie/saving-and-investing/deposit-accounts/fixed-term-deposit-account/ (via web.archive.org; live site 403) and PTSB T&C PDF https://www.ptsb.ie/globalassets/pdf-documents/terms-and-conditions/current-account-including-online-explore-account-savings--investments/, read September 26, 2026. The country’s rules: https://www.citizensinformation.ie/en/money-and-tax/personal-finance/banking/dormant-bank-accounts-in-ireland/, read September 26, 2026.
+Source: the bank’s terms, https://www.ptsb.ie/saving-and-investing/deposit-accounts/fixed-term-deposit-account/ (via web.archive.org; the live site couldn’t be opened) and PTSB T&C PDF https://www.ptsb.ie/globalassets/pdf-documents/terms-and-conditions/current-account-including-online-explore-account-savings--investments/, read September 26, 2026. The country’s rules: https://www.citizensinformation.ie/en/money-and-tax/personal-finance/banking/dormant-bank-accounts-in-ireland/, read September 26, 2026.
 
 === is-landsbankinn (the life banks at is-landsbankinn)
 Your Accounts Over Time
@@ -684,7 +684,7 @@ Breaking it now costs nothing.
 Break It Early How This Works 
 Round-Ups, Cuenta Hucha, redondeo. Each card purchase is rounded up to the next euro, and the difference goes to your Hucha savings.
 Round-Ups: Off How This Works 
-When the account is short: In the game, nothing moves that day, all or nothing, and never into an overdraft, and what was counted is dropped: the bank doesn’t say whether it’s carried.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
 What The Bank Leaves Open, And What The Game Leaves Out
 Santander also offers “two units up” and “another figure”, without saying how either is worked out: the game offers the next euro only.
 A purchase of whole euros: the game moves nothing.
@@ -753,7 +753,7 @@ Breaking it now costs nothing.
 Pay It Out At The End Break It Early How This Works 
 Round-Ups, Ahorro Sabadell, redondeo de cada compra. Each purchase is rounded up to the next euro, and the week’s round-ups move to your Ahorro Sabadell overnight from Friday to Saturday.
 Round-Ups: Off How This Works 
-When the account is short: In the game, nothing moves that day, all or nothing, and never into an overdraft, and what was counted is dropped: the bank doesn’t say whether it’s carried.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
 What The Bank Leaves Open, And What The Game Leaves Out
 The next euro is only in Sabadell’s 2020 brochure; its pages now give no unit.
 Whether a “compra” is a card purchase only or, as in 2020, any payment from the account: the game counts card purchases.
@@ -781,7 +781,7 @@ Round-Ups, Cuenta Modo Ahorro, redondeo. Each card purchase moves the change to 
 Amount Choose… €1.00 €2.00 
 Round-Ups: Off How This Works 
 Not now: Choose the amount: €1.00 or €2.00.
-When the account is short: In the game, nothing moves that day, all or nothing, and never into an overdraft, and what was counted is dropped: the bank doesn’t say whether it’s carried.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
 What The Bank Leaves Open, And What The Game Leaves Out
 Bankinter also lets you pick any other amount, with no limits stated: the game offers the two it names.
 A purchase of whole euros: the game moves the amount past the first euro, nothing at €1.
@@ -934,11 +934,11 @@ The bank’s terms at the end: You choose: close automatically; renew automatica
 Sources And Estimates
 Breaking it now costs nothing. The bank’s terms: Ended early, a 카카오뱅크 정기예금 earns a share of its base rate at opening, times the days it ran over the days agreed: 10% under 1 month (at least 0.10%), 30% from 1 to 3 months (at least 0.30%), then 50% from 3 to 6 months, 70% from 6 to 9, 80% from 9 to 11 and 90% from 11 months on, each at least 0.50%.
 Renew It At The End Pay It Out At The End Break It Early How This Works 
-Round-Ups, 저금통, 동전 모으기. Not a purchase round-up: on each weekday, Monday to Friday, holidays or not, the part of the day before’s closing balance under 1,000원 moves to your savings, the 저금통.
+Round-Ups, 저금통, 동전 모으기. Not a purchase round-up: each weekday, Monday to Friday, holidays or not, the part of the previous day’s closing balance under ₩1,000 moves to your savings, the 저금통.
 Round-Ups: Off How This Works 
-When the account is short: Skipped when the balance is 1,000원 or less, never partial and never overdrawn.
+When the account is short: It’s skipped when the balance is ₩1,000 or less, never moves just part, and never overdraws the account.
 What The Bank Leaves Open, And What The Game Leaves Out
-A sweep that would take the 저금통 past its 100,000원 cap: the game skips it. Your KakaoBank savings stand in for the 저금통, and the cap counts what the sweeps have put in, never more than the savings hold.
+A sweep that would take the 저금통 past its ₩100,000 cap: the game skips it. Your KakaoBank savings stand in for the 저금통, and the cap counts what the sweeps have put in, never more than the savings hold.
 Stopping it stops saving from that moment, as KakaoBank says.
 Not in the game: 자동 모으기, an amount KakaoBank works out each Saturday.
 Not in the game: 캐시백 모으기, cashback from brand coupons.
@@ -1007,7 +1007,7 @@ Round-Ups, ANZ Plus Round Ups. Each ANZ Plus Visa Debit purchase is rounded up t
 Round Up To Choose… The next A$1.00 The next A$2.00 The next A$5.00 The next A$10.00 
 Round-Ups: Off How This Works 
 Not now: Choose what to round up to: A$1.00, A$2.00, A$5.00, A$10.00.
-When the account is short: In the game, nothing moves that day, all or nothing, and never into an overdraft, and what was counted is dropped: the bank doesn’t say whether it’s carried.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
 What The Bank Leaves Open, And What The Game Leaves Out
 ANZ Plus accounts only: the game takes your ANZ account as one.
 A $2 default appears only in ANZ’s 2023 launch release, and its pages now state none: you choose.

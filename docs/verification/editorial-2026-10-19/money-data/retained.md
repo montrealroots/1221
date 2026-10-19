@@ -65,3 +65,22 @@ holds many fields; where a source was rewritten in part, the fields kept inside 
   (BIC-Comores)"): as their customers know them, with the short form they go by.
 - **The IBAN structures** ("3!n11!n"): the IBAN Registry's notation, which builds the account number the player sees;
   the strings themselves are never printed.
+
+## `content/roundups.ts`, `homeaccounts.ts`, `home-accounts.json`
+
+- **Bank of America, `words`:** "Each Bank of America debit card purchase is rounded up to the next whole dollar, and
+  the difference moves to your savings in one transfer at the end of each business day." The feature in one sentence,
+  in the order the player sees it work: the purchase, the dollar, the transfer, when.
+- **Wells Fargo, `words`:** "Not a round-up: a flat $1 for each one-time debit card purchase, …" It corrects the
+  player's expectation before it explains, which is what the panel's heading, Round-Ups, would otherwise mislead.
+- **`OFF`:** "In the game, turning it off, or switching your primary account to another bank, drops what was counted
+  and hasn't moved. The bank doesn't say what happens." The game's rule first, then the bank's silence, so the player
+  knows which part is the game's.
+- **Lloyds' `READ`:** "Lloyds keeps it once you've told it your American address, though its terms say it “may not be
+  able to keep your account open” for a customer who moves abroad." The step, the risk, and the bank's own words for
+  the risk.
+- **Japan's `NON_RESIDENT_TAX` note:** "Japan withholds 15.315% from a customer abroad; the treaty's exemption needs a
+  notice through the bank, and the game assumes none was given." The rate, why a lower one doesn't apply, and that the
+  game made that assumption.
+- **`home-accounts.json`:** the research quoted, which no screen reads (batches.md, batch 6); rebuilt from its source
+  by `tools/build-home-accounts.mjs`, so an edit here would be lost and would change nothing a player sees.
