@@ -288,7 +288,7 @@ describe('taxes-returns-fine-print-stale: the returns’ fine print and No Retur
     expect(text).toContain('A return is due April 15, or the next business day. A 1040-NR with no wages on it is due June 15.');
     expect(text).toContain(`A refund comes ${RETURN.refundDays} days after filing, or ${RETURN.refundDays + SSN.itinWeeks * 7} days for a 1040-NR filed without a Social Security number.`);
     expect(text).not.toContain('yours to replace for 120 days');
-    expect(text).toContain(`Nothing of it is assessed if your own return arrives within ${SUBSTITUTE.answerDays} days of its notice, and your return replaces it if it comes later`);
+    expect(text).toContain(`None of it is assessed if your own return arrives within ${SUBSTITUTE.answerDays} days of its notice, and your return replaces it if it comes later`);
     // The comment beside SUBSTITUTE says what it was until 2026-10-10, and what their own return does now.
     const source = readFileSync(join(fileURLToPath(new URL('.', import.meta.url)), '..', 'src/engine/systems/taxreturn.ts'), 'utf8');
     const doc = source.slice(source.lastIndexOf('/**', source.indexOf('export const SUBSTITUTE')), source.indexOf('export const SUBSTITUTE'));

@@ -452,7 +452,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // wasn't found.
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
-      letters: [{ code: 'Proposed Assessment', title: 'Hawaii Made Your Return', words: 'you didn’t file, so it worked out the tax from what was reported. 30 days to file your own or object.', days: 30 }],
+      letters: [{ code: 'Proposed Assessment', title: 'Hawaii Made Your Return', words: 'you didn’t file, so it worked out the tax from what was reported. You have 30 days to file your own or object.', days: 30 }],
       lettersAssumed: false,
     },
     refundDays: 21,
@@ -536,7 +536,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // An estimate from the federal match, by a proposed assessment's 30 days. When wasn't found.
     nonFiler: {
       firstDays: YEAR, firstAssumed: true,
-      letters: [{ code: 'Notice Of Proposed Assessment', title: 'Louisiana Proposes What You Owe', words: 'you didn’t file, so it estimated the tax from what the IRS reported. 30 days to file or respond.', days: 30 }],
+      letters: [{ code: 'Notice Of Proposed Assessment', title: 'Louisiana Proposes What You Owe', words: 'you didn’t file, so it estimated the tax from what the IRS reported. You have 30 days to file or respond.', days: 30 }],
       lettersAssumed: false,
     },
     refundDays: 21,
@@ -641,7 +641,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // 2026-10-11 the longer one too, its lien filed with it. Approved online, many automatically.
     plan: { name: 'Installment Agreement', minMonths: 1, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: false, newBalance: 'default', newBalanceAssumed: false, notInCollection: false,
       downPayment: { required: false, why: 'TRD’s online agreement takes a down payment of your choosing.' },
-      long: { name: 'Long-Term Installment Agreement', maxMonths: 72, maxAssumed: false, lien: true, decideDays: 0, decideAssumed: true, how: 'Thirteen to 72 months, with a lien filed as its security; approved online.' } },
+      long: { name: 'Long-Term Installment Agreement', maxMonths: 72, maxAssumed: false, lien: true, decideDays: 0, decideAssumed: true, how: 'It runs 13 to 72 months, with a lien filed as its security, and it’s approved online.' } },
     offsetsOwnRefunds: true, offsetsFor: [],
     // Estimated from the IRS's data, seven years back. The demand's days weren't found.
     nonFiler: {
@@ -752,7 +752,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     // assessment, and how the Attorney General garnishes, weren't found.
     notices: [
       { code: 'bL0001', title: 'A Billing Notice From Ohio', words: 'the tax, its penalties and interest are due.', days: 30 },
-      { code: 'bL0006', title: 'A Notice Of Assessment From Ohio', words: '60 days to pay or appeal.', days: 30 },
+      { code: 'bL0006', title: 'A Notice Of Assessment From Ohio', words: 'you have 60 days to pay or appeal.', days: 30 },
       { code: 'bL0008', title: 'Ohio’s Post Appeal Notice', words: 'the assessment is final. Pay it now.', days: 60 },
       { code: 'Top Notice', title: 'Ohio’s Top Notice', words: 'in 45 days the claim goes to the Attorney General, and your federal refund may be taken.', days: 45 },
       { code: 'Certified Claim', title: 'Your Ohio Tax Went To The Attorney General', words: 'the Attorney General collects it now, with its collection cost, and interest runs on the penalties too.', days: 45 },
@@ -941,7 +941,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'Columbus Collected By Judgment', afterDays: 60, againDays: 91 },
     timingAssumed: true,
-    lien: { name: 'Judgment Lien', atStep: 2, recordedAt: 'the court of common pleas, by the City Attorney’s suit', releaseDays: 30, releaseAssumed: true, error: { how: 'Columbus’s process for a lien filed in error isn’t published, so in the game its review takes 30 days', days: 30, daysAssumed: true }, effect: 'A judgment against you.' },
+    lien: { name: 'Judgment Lien', atStep: 2, recordedAt: 'the court of common pleas, by the City Attorney’s suit', releaseDays: 30, releaseAssumed: true, error: { how: 'Columbus’s process for a lien filed in error isn’t published, so in the game its review takes 30 days', days: 30, daysAssumed: true }, effect: 'It’s a judgment against you.' },
     // Its plans' terms weren't found: SLATE's twelve months, said.
     plan: { name: 'Payment Plan', minMonths: 1, maxMonths: 12, monthsAssumed: true, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: true, notInCollection: false },
     offsetsOwnRefunds: true, offsetsFor: [],
@@ -982,7 +982,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
 };
 
 /** A state SLATE computes a tax for and hasn't researched: a balance kept, nothing added to it, and nothing assumed. */
-export const STATE_UNRESEARCHED = 'This state’s collection rules haven’t been researched for the game, so the balance is kept with no penalty, interest, notice or plan added.';
+export const STATE_UNRESEARCHED = 'The game doesn’t have this state’s collection rules, so the balance is kept with no penalty, interest, notice or plan added.';
 
 /**
  * The IRS's offset of a federal refund to a state's income tax debt (IRC 6402(e)): only the state on the return's

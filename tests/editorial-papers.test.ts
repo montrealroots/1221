@@ -14,7 +14,12 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createElement, isValidElement, type FunctionComponent, type ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { quickSave } from '@/engine';
+import { createSave, quickSave } from '@/engine';
+import { newLifeConfig, withFamily } from '@/engine/world/bootstrap';
+import { instantFromZoned } from '@/engine/core/time';
+import { STATE_TAX, STATE_UNRESEARCHED } from '@/engine/content/statetax';
+import { statePlanRefusal, waiverRefusal } from '@/engine/systems/statetax';
+import { earningsOf } from '@/engine/systems/earnings';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, formatDate } from '@/engine/core/time';
 import { documentsOf, licensingOf, mayDrive, mayEnter, passportOf, passportRefusal, type PersonDocument } from '@/engine/systems/documents';
@@ -212,5 +217,79 @@ describe('batch 1: the refusals and the fine print no older test reads', () => {
     sim.must({ kind: 'documents.apply_passport', payload: {} });
     sim.advanceBy(43 * MS_DAY);
     expect(mayEnter(sim.player, 'GB', sim.now).stay).toBe('A visitor can stay up to 180 days.');
+  });
+});
+
+describe('batch 2: a lien announced, or announced and never filed, says so', () => {
+  it('California’s notice of intent reads as a lien still to be filed, and one dropped as never filed', async () => {
+    const { StateLienAndPenalty } = await import('@/ui/components/LienPanels');
+    const sim = life('ed15-lien-intent');
+    // FIXTURE: a 2026 return with $600.00 owed to California, its lien announced, as `stateLienStep` leaves one.
+    sim.player.returns = { '2026': { year: 2026, stateDue: { 'us-ca': { owed: 600_00, lien: { name: 'Notice Of State Tax Lien', status: 'intent', trigger: 'collection', amount: 600_00, recordedAt: 'the county recorder and the Secretary of State', intentAt: sim.now, fee: 0, history: [] } } } } } as never;
+    const drawLien = () => drawn(sim, (() => createElement(StateLienAndPenalty, { year: 2026, state: 'us-ca' })) as FunctionComponent);
+    expect(drawLien()).toContain('Notice Of State Tax Lien · Notice Of Intent Sent. It’s to be filed for $600.00, with the county recorder and the Secretary of State, unless you pay it or set up a payment plan first.');
+    expect(drawLien()).not.toContain('It was filed for');
+    (sim.player.returns as Record<string, { stateDue: Record<string, { lien: { status: string } }> }>)['2026']!.stateDue['us-ca']!.lien.status = 'dropped';
+    expect(drawLien()).toContain('Notice Of State Tax Lien · Not Filed. It was never filed, because what it was for was paid or put under a payment plan first.');
+  });
+});
+
+describe('batch 2: the Tax Returns tab, played', () => {
+  it('a 2027 return left owing: the IRS plan says how it’s decided with and without a number, the state’s plan what it covers, a plan off direct debit says so, an unresearched state says the game doesn’t have its rules, and a UK year says its refund', async () => {
+    const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
+    const at = (year: number, month: number, day: number) => instantFromZoned({ year, month, day, hour: 12, minute: 0 }, 'America/New_York');
+    // Ada Cole from the Scraping family, as tests/scope-taxpapers.test.ts plays her: her 2027 return filed on
+    // 1 February 2028 with her money in a CD, so the IRS and Connecticut are both owed.
+    const sim = createSave(1, 'r3-tax-scraping', { ...withFamily(newLifeConfig(), 'scraping'), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    sim.advanceTo(at(2027, 2, 1));
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    sim.advanceTo(at(2028, 2, 1));
+    const own = (kind: string) => sim.ledger.accountsOf(sim.player.id).find((a) => a.kind === kind && !a.closedAt && a.category !== 'term')!;
+    const checking = sim.universe.accounts[sim.player.primaryAccountId!]!;
+    sim.must({ kind: 'bank.transfer', payload: { fromId: own('savings').id, toId: checking.id, amount: own('savings').balance } });
+    sim.must({ kind: 'bank.open_term', payload: { amount: checking.balance } });
+    sim.must({ kind: 'tax.file', payload: { year: 2027 } });
+    const screen = drawn(sim, PapersWorkspace as FunctionComponent);
+    expect(screen).toContain('A monthly plan for up to $50,000.00 has a setup fee. With a Social Security number you apply online, and the IRS answers within a minute. Without one, your application goes by mail and the answer takes 30 days.');
+    expect(screen).toContain('This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It covers up to $50,000.00, paid over 2 to 12 months.');
+    // Applied for off direct debit, the CD broken to pay its fee: the note beside Each Month says so, where it said "Paid by you".
+    const cd = sim.ledger.accountsOf(sim.player.id).find((a) => a.category === 'term' && !a.closedAt)!;
+    sim.must({ kind: 'bank.break_term', payload: { accountId: cd.id } });
+    sim.must({ kind: 'tax.apply_plan', payload: { kind: 'long', directDebit: false } });
+    sim.advanceTo(sim.now + 2 * MS_HOUR);
+    expect(sim.player.taxPlan!.status).toBe('active');
+    expect(drawn(sim, PapersWorkspace as FunctionComponent)).toMatch(/EACH MONTH \$[\d,.]+ Not by direct debit|Each Month \$[\d,.]+ Not by direct debit/);
+    // FIXTURE: the year's Connecticut balance moved under New Jersey, whose collection rules the game doesn't have.
+    const r = sim.player.returns!['2027']!;
+    r.stateDue = { 'us-nj': r.stateDue!['us-ct']! };
+    const nj = drawn(sim, PapersWorkspace as FunctionComponent);
+    expect(nj).toContain(STATE_UNRESEARCHED);
+    expect(STATE_UNRESEARCHED).toBe('The game doesn’t have this state’s collection rules, so the balance is kept with no penalty, interest, notice or plan added.');
+    expect(nj.match(/None added: the game doesn’t have this state’s rules/g)).toHaveLength(2);
+    expect(statePlanRefusal(sim, sim.player, 'us-nj', 12)).toBe(STATE_UNRESEARCHED);
+    // FIXTURE: a UK tax year's earnings and withholding, as work in Britain left them until the career went.
+    const record = earningsOf(sim.player);
+    record.ukYears = { '2026': 4_000_00 };
+    record.ukWithheld = { '2026': 500_00 };
+    expect(drawn(sim, PapersWorkspace as FunctionComponent)).toMatch(/2026–27: \$4,000\.00 earned and \$500\.00 withheld by payers\. It settles on January 31, 2028\. As things stand, you’d get a refund of \$500\.00\./);
+  }, 120_000);
+});
+
+describe('batch 2: the states’ words that no life in New Haven reaches, said as sentences', () => {
+  it('each notice fragment reads as a sentence once the notice capitalizes it, and a lien’s effect and a long plan’s terms are sentences too', () => {
+    const letter = (state: keyof typeof STATE_TAX, code: string) => STATE_TAX[state].nonFiler.letters.find((l) => l.code === code)!.words;
+    expect(letter('us-la', 'Notice Of Proposed Assessment')).toBe('you didn’t file, so it estimated the tax from what the IRS reported. You have 30 days to file or respond.');
+    expect(letter('us-hi', 'Proposed Assessment')).toBe('you didn’t file, so it worked out the tax from what was reported. You have 30 days to file your own or object.');
+    expect(STATE_TAX['us-oh'].notices.find((n) => n.code === 'bL0006')!.words).toBe('you have 60 days to pay or appeal.');
+    expect(STATE_TAX['us-oh-columbus'].lien!.effect).toBe('It’s a judgment against you.');
+    expect(STATE_TAX['us-nm'].plan.long!.how).toBe('It runs 13 to 72 months, with a lien filed as its security, and it’s approved online.');
+  });
+
+  it('a waiver asked for too late says what the rule asks, in the active voice', () => {
+    const sim = life('ed15-waiver');
+    const YEAR_MS = 365 * MS_DAY;
+    // FIXTURE: an Oregon year with its three-year penalty, paid off two years ago.
+    const r = { year: 2001, stateDue: { 'us-or': { owed: 0, threeYear: { amount: 100_00, at: sim.now - 3 * YEAR_MS }, payments: [{ at: sim.now - 2 * YEAR_MS, amount: 100_00, tax: 0, penalty: 100_00, interest: 0, how: 'payment' }] } } } as never;
+    expect(waiverRefusal(sim, r, 'us-or')).toBe('You have to ask for a waiver before paying in full or within a year after, and that year has passed.');
   });
 });

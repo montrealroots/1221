@@ -1,0 +1,320 @@
+## Your Tax Return (taxes.return)
+
+Your tax return settles a year’s income tax with the IRS and your state. The game prepares it for you each February 1 from what you earned, what was withheld and where you lived, and you send it with File It. Filed by the deadline, April 15 or the next business day (June 15 for a 1040-NR with no wages on it), it costs only the tax. Filed late with tax owed, the IRS adds penalties and interest. A refund comes 21 days later, the IRS’s and Connecticut’s alike, though the IRS’s takes 70 on a 1040-NR filed without a Social Security number.
+
+Where To Find It: Papers, Tax Returns, Each Year’s Return Panel
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”. Each year’s return is ready on February 1 of the next year, if there’s one to file.
+
+What To Press:
+  1. Open Papers, then the Tax Returns tab. Each year has a panel headed with the year, showing Due and its date, or Filed once it’s in.
+  2. Read its lines: your wages, interest and any scholarship for living costs, the tax on them and what was withheld. The last line says You Owe or Your Refund.
+  3. Press File It, on the panel or on the year’s item in What Needs You. If the IRS has filed one for you, the button reads File Your Own In Its Place.
+  4. To correct a year you’ve filed, press Amend The Return…, then File The Amendment. Not Now leaves it as it is.
+
+What You Need First:
+  - A return for the year. You get one each February 1 for a year where you owe tax, are due a refund (including Canada’s), or had income of at least a single filer’s standard deduction ($16,100 for 2026). A student on an F-1 gets one every year they’re here, for Form 8843.
+  - To pay a balance when you file, enough in your checking account and savings for each authority’s part. The IRS’s part and each state’s are taken separately, each whole or not at all.
+  - To amend: a return you filed yourself, within 3 years of filing or 2 of your last payment on it, with no amendment already being processed.
+
+What It Costs:
+  - Time: None: filing and amending don’t move the clock
+  - A Balance: Taken from your checking account when you file, then from savings at the same bank. Each authority’s part is paid in full or not at all
+  - Filing Late With A Balance: 5% of the IRS’s part for each month or part of a month, for the first five months: 0.5% of it for paying late and the rest for filing late. After that, 0.5% a month for paying late alone, until that share reaches 25%. After 60 days the filing share is at least $535, or the IRS’s whole part if that’s less
+  - Interest: 7% a year, compounded daily, from the due date, on the IRS’s part and on the filing-late share of the penalty
+  - An Amendment: No fee
+  - An Amendment’s Wait: 10 weeks before the IRS processes it (the IRS says eight to twelve) (estimated)
+
+What Happens:
+  - The panel reads Filed with the date, and the year’s item in What Needs You is answered.
+  - Any balance your checking account and savings can cover is paid at once, to the IRS and to each state separately. A part they can’t cover stays owed, and the panel shows what you still owe each one.
+  - Filed late with a balance owed to the IRS, a Late Penalties line shows what filing late added. A state’s own late penalty is under its Penalties, in Owed To and the state’s agency.
+  - An IRS refund shows as Refund Arrives, with its date. A state refund shows under Who It’s Owed To.
+  - An amendment shows on the panel with its form, the date you filed it, how much more or less tax it means (or “no change in the total”, with each side that moved), and an estimate of when the IRS will process it. Once processed, the same line gives the date, with any refund and its interest.
+  - (later) An IRS refund is paid into your checking account 21 days after filing, or 70 days on a 1040-NR filed without a Social Security number. The IRS first takes from it anything you owe for another year, then any past-due tax you owe a state.
+  - (later) If you leave a balance owing, the IRS’s bill, Notice CP14, comes when you file, and its reminders start five weeks after the deadline, or after filing if that’s later. Connecticut’s bill comes 30 days after the deadline, or after filing if that’s later. See Paying Tax Owed. With an IRS plan in force, a new IRS balance goes into the plan instead. Connecticut’s deadline is mid-April, even on a 1040-NR the IRS takes in June.
+  - (later) If it’s still unfiled on the deadline, a notice tells you the return is late.
+  - (later) If it’s unfiled and you owe the IRS, Notice CP2566 comes 365 days after the deadline (when is estimated) with the IRS’s own figures, which leave out the foreign tax credit and the premium tax credit that only your return can claim. 120 days later it’s assessed, with its penalty and interest, and collected.
+  - (later) Past its deadline and unfiled with a balance, it weighs on you each day, the way tax owed does. See Paying Tax Owed.
+  - (later) If you owe Connecticut, DRS acts on its own part: its notice that it made your return comes 92 days after the deadline (estimated, since DRS doesn’t say when it acts), and 60 days later it’s assessed, with a penalty of at least $50.
+  - (later) An amendment is processed 10 weeks after you file it. More tax is added, with interest from the due date. Less tax comes off what you owe, and the rest is refunded with the IRS’s interest.
+
+How It Connects:
+  - [immediate] bank.accounts: Filing takes any balance from your accounts at once, the checking account first and then savings.
+  - [immediate] day.needs: Filing answers the year’s item in What Needs You.
+  - [scheduled] taxes.pay: A balance your bank couldn’t pay at filing stays owed: the IRS’s bill comes at once, and its first reminder five weeks after the deadline, or after filing if that’s later.
+  - [scheduled] bank.accounts: A refund is paid into your checking account 21 days after filing, or 70 days on a 1040-NR filed without a Social Security number.
+  - [immediate] papers.overview: The Papers line on Home says when an unfiled return is due, what filing it would pay (including any late penalty), and the tax you owe.
+  - [optional] documents.work: On a 1040-NR, having a Social Security number before you file saves the seven weeks an ITIN application holds up the refund.
+
+What To Do Next:
+  - If the panel shows a balance still owed, pay it or set up a plan: see Paying Tax Owed and Payment Plans And Waivers.
+  - If a refund is coming, watch for Refund Arrives on the panel and the money in your checking account.
+  - On an F-1 without a Social Security number, apply for one before next year’s return: see Permission To Work.
+
+If You Can’t:
+  - A year with nothing owed or due back, and income under the year’s standard deduction ($16,100 for 2026), has no return and so no File It. A student on an F-1 always has one.
+  - File It shows only on a year you haven’t filed, or one the IRS filed, where it reads File Your Own In Its Place. To change a year you’ve filed, amend it.
+  - Amend The Return… is grayed out with its reason beside it: “An amended return for this year is already with the IRS.”, or the date the time to amend it ran out. A year the IRS filed shows no Amend The Return…: file your own return in its place first.
+  - File The Amendment: “Your return as filed matches what’s on record, so there’s nothing to amend.” Nothing about the year has changed since you filed.
+  - Until you’ve read the guide’s chapter “Cover, Benefits And Returns”, File It shows as Locked.
+  - (mistake) Waiting past the deadline because your bank is short. After 60 days the IRS’s filing share is at least $535, or the whole IRS part if that’s less, and a state charges its own. File on time anyway: what goes unpaid then grows only by the late-payment share and interest.
+  - (mistake) Looking for the item in What Needs You after the deadline: it lapses on the day, but File It stays on the Papers panel for as long as the year is unfiled.
+  - (mistake) Leaving the IRS’s own return in place: it leaves out the foreign tax credit and the premium tax credit. File Your Own In Its Place replaces it, even after it’s been assessed.
+
+What Decides It:
+  - Your Year’s Record: Wages and what was withheld from them, bank interest, any taxable scholarship, unemployment insurance and a pension, as recorded through the year
+  - Where You Lived: The town you last lived in that year decides the state’s tax and any city’s
+  - Your Citizenship: A student on an F-1 files Form 1040-NR with Form 8843, on US income only, so bank interest isn’t taxed
+  - Your Health Cover: Months on a marketplace plan count toward the premium tax credit and Connecticut’s premium assistance
+  - A Social Security Number: On a 1040-NR filed without one, an ITIN application holds up the refund for seven weeks more
+  - The You Owe or Your Refund line covers the whole year, the IRS and the state together. Once it’s filed, Who It’s Owed To splits it: the IRS’s line, then each state’s.
+  - A balance on a return filed on time means the year’s withholding and credits fell short of the tax. A refund means they came to more.
+  - Filed by the IRS in the heading means the IRS assessed the year without you. If you file your own return instead, the tax becomes what your return says, the penalty and interest fall in proportion, and anything you paid beyond your own return’s tax comes back at once.
+  - Late Penalties is what filing late added on the day you filed. What the IRS charges after that grows under Penalties in Owed To The IRS.
+
+A Worked Example:
+  Your 2026 return leaves $400 owed to the IRS, due April 15, 2027, and your accounts can cover what filing takes.
+  1. Press File It by April 15, 2027.
+  2. Or wait, and press it 85 days late, on July 9, 2027.
+  On time, it costs the $400 and nothing more. On July 9, 2027, the IRS adds $406 of late penalties, $400 for filing late and $6 for paying late (after 60 days the filing share is at least $400, the whole balance, since that’s under $535), and about $13.15 of interest: $819.15 in all.
+
+
+## Paying Tax Owed (taxes.pay)
+
+If your bank couldn’t pay all your tax when you filed, the rest stays owed in three parts: the tax, the penalties and the interest. The last two keep growing by each authority’s rules. Pay takes any part of it from your bank now, or all of it if you leave the box blank. If you don’t pay, the IRS levies your accounts 170 days after the deadline, and Connecticut 90 days after it, each counted from filing if that’s later.
+
+Where To Find It: Papers, Tax Returns, Owed To The IRS And Owed To A State
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”, once a filed year has a balance left owing.
+
+What To Press:
+  1. Open Papers, then Tax Returns, and find the year’s panel. Owed To The IRS shows Tax Unpaid, Penalties and Interest as of now.
+  2. Type an amount in Pay (Blank Pays It All), or leave it blank, and press Pay.
+  3. A state has its own box under Owed To and its agency’s name, such as Pay Connecticut (Blank Pays It All), with its own Pay.
+  4. Payments On The Year, and Payments To each state, list every payment, levy and refund offset with how it was split.
+
+What You Need First:
+  - A filed year with a balance still owed to that authority, or a year a state assessed without your return.
+  - The amount in your checking account and savings. A payment is taken whole or not at all, from the checking account first and then savings.
+
+What It Costs:
+  - Time: None
+  - Money: Whatever you choose to pay, up to what you owe now
+  - The IRS’s Interest: 7% a year, compounded daily (a 366th of it a day in a leap year), on the tax, the penalties and the interest. It runs from the due date on the tax and on a late return’s filing-late share. On that return’s paying-late share it runs only once that share is still unpaid 21 days after the filing or the IRS’s assessment, and then from that day. On each month’s penalty after that, it runs from when the penalty is added
+  - The IRS’s Late-Payment Penalty: 0.5% of the unpaid tax for each month or part of a month since the due date, up to 25% in all. On a return filed late, the months up to filing (including the month it was filed) are charged with filing, count toward the 25%, and aren’t charged again. On a return filed on time, it’s 0.25% for each month that begins while a payment plan is in force
+  - Connecticut’s Penalty: 10% of the tax still unpaid after its due date, charged once. The due date is mid-April, even on a 1040-NR due in June
+  - Connecticut’s Interest: 1% for each month or part of a month from that date, worked out to the cent each month, on the tax alone
+
+What Happens:
+  - The amount leaves your bank, and a message says how it was split between the tax, penalties and interest, and what you still owe.
+  - The IRS’s monthly penalty is a share of the tax still unpaid, so paying down the tax lowers every later month of it.
+  - Paid in full, the year’s remaining letters are canceled, and any lien on it reads Paid: Release To Come.
+  - If you pay off everything you owe a state outside its plan, the plan ends as paid.
+  - (later) If you left a balance at filing, the IRS’s bill, Notice CP14, comes at once. On a return filed before the deadline it names the deadline, and nothing is added before then. Notice CP501 comes five weeks after the deadline, or after filing if that’s later, then CP503, CP504 and the LT11 final notice, each five weeks after the one before. 30 days after the LT11, the IRS levies your checking account and savings for what they hold, and again every 91 days while you owe anything (how often is estimated).
+  - (later) Connecticut sends “A Bill From Connecticut DRS” 30 days after the deadline, or after filing if that’s later (its deadline is mid-April, even on a 1040-NR the IRS takes in June), and “Connecticut DRS Intends To Levy” 30 days after that, filing its lien then. 30 days later it levies, and again every 91 days (these timings are estimated, since DRS doesn’t publish its own).
+  - (later) If you owe the IRS $10,000 or more on the year at its final notice, it files a Notice Of Federal Tax Lien. See A Tax Lien.
+  - (later) A federal refund from another year goes first to what you owe the IRS, then to past-due tax you owe a state. A Connecticut refund goes first to what you owe Connecticut.
+  - (later) While you owe tax, or a return is past its deadline and unfiled with a balance, each day ends with 4 more points of stress and 2 fewer of morale, scaled by your temperament. It’s the same worry any money trouble brings, felt once a day however many troubles there are.
+
+How It Connects:
+  - [prerequisite] taxes.return: You owe a balance only on a filed return, or on one the IRS or a state assessed without you.
+  - [immediate] bank.accounts: Each payment leaves your accounts at once, the checking account first and then savings.
+  - [immediate] taxes.lien: Paying a year in full moves its lien to Paid: Release To Come.
+  - [scheduled] bank.accounts: If you leave it owing, a levy takes what your accounts hold on its day.
+  - [immediate] body.how: Tax owed weighs on you: each day ends with more stress and less morale until it’s paid.
+  - [optional] taxes.plan: When you can’t pay at once, a plan stops collection for as long as you keep it up.
+
+What To Do Next:
+  - If you can’t pay it all soon, apply for a payment plan to stop the letters and the levy: see Payment Plans And Waivers.
+  - Once a year is paid in full, check for a lien under it and ask for its release if the authority needs asking: see A Tax Lien.
+
+If You Can’t:
+  - Pay shows only while you owe that authority something on the year.
+  - “Enter an amount above zero.” for nothing or less.
+  - An amount over what you owe: “You owe …. Pay that amount or less.”
+  - “Your bank can’t cover …, so nothing was paid.”: your checking account and savings together hold less than the amount. Pay a smaller part.
+  - (mistake) Waiting for the levy: it takes whatever your checking account and savings hold on the day, up to everything you owe, whatever that money was for.
+  - (mistake) Watching only the IRS: Connecticut levies 90 days after the deadline, or after filing if that’s later, against the IRS’s 170, so Connecticut levies first.
+  - (mistake) Holding back because a part won’t clear it: a part paid to the IRS cuts the tax first, and its penalty is a share of the tax left. Connecticut takes its penalty and interest first, so there a part shrinks the tax last.
+
+What Decides It:
+  - Where A Partial Payment Goes: To the IRS: the tax, then the penalties, then the interest. To Connecticut DRS: the penalty, then the interest, then the tax, as its statute says
+  - What You Owe Now: Brought up to date the minute you pay, with its interest and penalty included
+  - Your Accounts: Your checking account, and your savings at the same bank, as far as that bank lets money out
+  - Tax Unpaid, Penalties and Interest are as of now. The Still Owed line in the year’s table is their total.
+  - The note under Penalties gives the rate running: 0.5% a month, or 0.25% for each month that begins while an IRS plan is in force on a return filed on time. A state’s note gives its own rule.
+  - A state whose notes read “None added: the game doesn’t have this state’s rules” keeps its balance with no penalty or interest, because its collection rules aren’t in the game.
+  - In a list of payments, “taken by levy” is a levy, and “kept from a refund” is a refund kept for what you owe, whether another year’s or an amended return’s, in the IRS’s list and a state’s alike. A state’s list also reads “paid through the payment plan” for its plan’s payments.
+
+A Worked Example:
+  Your 2026 return, filed on time, left $400 of tax owed to the IRS and $200 to Connecticut, and your bank couldn’t pay either.
+  1. On May 10, 2027, type 150 in Pay (Blank Pays It All) and press Pay.
+  2. Type 100 in Pay Connecticut (Blank Pays It All) and press Pay.
+  All $150 goes to the IRS’s tax, leaving $250, so each month’s penalty from then on is $1.25 instead of $2. By then Connecticut has added $20 of penalty and $2 of interest. Its $100 pays the penalty, then the interest, then the tax: $20, $2 and $78, leaving $122 of tax.
+
+
+## Payment Plans And Waivers (taxes.plan)
+
+A payment plan spreads what you owe over time and stops collection for as long as you keep it up. The IRS Payment Plan covers every year you owe the IRS: monthly payments on up to $50,000, or everything paid within 180 days with no fee. Each state has its own plan, separate from the IRS’s. Connecticut’s Installment Agreement runs 2 to 12 months on up to $50,000. Interest keeps adding up under every plan.
+
+Where To Find It: Papers, Tax Returns, IRS Payment Plan And Connecticut DRS Installment Agreement
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”. The plan panels show while you owe anything, or once a plan has a history.
+
+What To Press:
+  1. On Tax Returns, find the IRS Payment Plan panel. Under Plan Type, choose Monthly Payments or Paid Within 180 Days.
+  2. For monthly payments, type an amount in Each Month (USD) or leave the lowest one shown, leave By Direct Debit ticked or clear it, read the setup fee below, and press Apply.
+  3. For a state, use its own panel, such as Connecticut DRS Installment Agreement: choose the months under Pay Over and press Apply For The Plan.
+  4. If you miss a payment, press Catch Up on the plan’s panel. To change a monthly IRS plan, type a New Monthly Payment (USD) and press Revise The Plan.
+  5. Under a year with Oregon’s three-year penalty, press Ask For Its Waiver.
+
+What You Need First:
+  - Something owed to that authority, and every return past its due date filed.
+  - For the IRS: less than $100,000 for the short-term plan, or $50,000 or less for monthly payments, with each month at least what you owe spread over 72 months.
+  - For Connecticut: up to $50,000, over 2 to 12 months, with no year it has levied still owed. A year a levy paid off doesn’t count.
+  - To catch up, a plan with a missed payment. To revise, a monthly IRS plan that’s in force or behind.
+
+What It Costs:
+  - Time: None
+  - IRS Setup Fee, Monthly: $29 by direct debit, $69 without. If your latest return shows income of at most 250% of that year’s poverty line, or you have no return yet, $0 by direct debit or $43 without
+  - IRS Short-Term Plan: No fee
+  - Revising An IRS Plan: $6
+  - Connecticut’s Plan: No fee
+  - The IRS’s Lowest Monthly Payment: What you owe spread over 72 months (estimated)
+  - How Often A Payment Is Taken: Every 30 days from approval, from your accounts
+
+What Happens:
+  - Once you apply, the IRS plan reads Being decided, and the IRS’s letters stop.
+  - Once it’s approved, the setup fee leaves your bank. On a return filed on time, each month of late-payment penalty that begins from then on is 0.25%; the month already begun stays at 0.5%.
+  - Connecticut decides at once, stops its letters, and files no lien while the plan is in force.
+  - Catch Up pays the missed payment now (everything you owe, on a short-term plan) and puts the plan back in force.
+  - Revise The Plan pays its $6 fee and sets the new monthly payment on everything you owe. A plan that was behind is back in force, the missed payment left in what you owe, and its next payment comes 30 days later.
+  - A waiver takes its share off the three-year penalty, or refunds it if the year is already paid.
+  - (later) A monthly plan takes its payment every 30 days, oldest year first. A short-term plan takes everything you owe on its 180th day.
+  - (later) If your bank can’t cover a payment, Notice CP523 gives you 30 days to catch up. After that the plan ends, and five weeks later the IRS sends its final notice before a levy.
+  - (later) New tax while a monthly plan is in force joins it if it’s no more than two payments’ worth. More than that brings Notice CP523 and 30 days to revise the plan before it ends.
+  - (later) Connecticut ends its plan at the first missed payment. DRS publishes no rule for this, so that part is the game’s. 30 days later it sends “Connecticut DRS Intends To Levy” and files its lien. New York allows until the next due date and California gives a 30-day notice, and for those Catch Up appears.
+  - (later) Paid off, a plan ends as Paid in full.
+  - (later) If the IRS declines a plan, it reads Declined, a notice says why, and the IRS’s letters on what you still owe start again from the step they had reached.
+
+How It Connects:
+  - [prerequisite] taxes.return: Every return past its due date has to be filed before the IRS or a state sets up a plan.
+  - [immediate] taxes.pay: A plan being decided or in force stops the letters and the levy on what you owe.
+  - [immediate] taxes.lien: While a state plan is in force, no lien is filed, and one that was only announced comes to nothing.
+  - [scheduled] bank.accounts: Each plan payment is taken from your accounts on its day, every 30 days.
+  - [optional] documents.work: A Social Security number gets an IRS plan decided within a minute. Without one it takes 30 days.
+
+What To Do Next:
+  - Keep each payment in your checking account or savings on its day, every 30 days.
+  - If you can pay more, use Pay on the year’s panel to finish sooner: interest keeps adding up while the plan runs.
+  - Once a year is paid off, check for a lien under it: see A Tax Lien.
+
+If You Can’t:
+  - Apply shows while you owe the IRS and have no IRS plan being decided, in force or behind.
+  - Apply, for monthly payments: “Your bank can’t cover the … setup fee, so you haven’t applied and nothing was charged.” Applied for by mail, a plan is declined on its decision day if your bank can’t pay the fee then.
+  - “The IRS needs every return filed first, and your … return isn’t. File it first.”
+  - A short-term plan for $100,000 or more: “A short-term plan is for less than ….” A Simple Payment Plan over $50,000: a larger balance needs a financial statement, which the game doesn’t offer.
+  - “The lowest monthly payment is …: what you owe, spread over 72 months.”
+  - For a state, each refusal names its agency, such as Connecticut DRS: “… needs every return filed first, and your … return isn’t. File it first.”, a balance over its limit, months outside its range (“… sets up a plan over 2 to 12 months.”), a plan already applied for or in force (“You already have a plan with ….”), or a year it has levied that’s still owed.
+  - Catch Up shows only while a plan is behind, and your bank has to cover the payment: “Your bank can’t cover …, so nothing was paid.” On a plan that isn’t behind: “Your plan isn’t behind, so there’s nothing to catch up.”, or for a state’s plan, which Connecticut ends rather than lets fall behind, “That plan isn’t behind, so there’s nothing to catch up.”
+  - Revise The Plan shows only on a monthly IRS plan in force or behind. It refuses a payment under the lowest monthly payment, more than $50,000 owed now, or a $6 fee your bank can’t cover.
+  - Ask For Its Waiver: “There’s no three-year penalty on that year.”, “Its waiver has already been decided.”, “File your own return for the year first.”, or more than a year since full payment.
+  - (mistake) Setting a monthly payment your accounts can’t keep: a missed one brings CP523 at once. Keep the payment in your checking account or savings on its day.
+  - (mistake) Applying with no Social Security number and paying nothing meanwhile: the IRS answers a mailed Form 9465 in 30 days, and interest runs the whole time.
+  - (mistake) Taking the IRS’s plan for a state’s: it covers federal tax only. Apply to Connecticut for its own.
+  - (mistake) Missing a Connecticut payment: its plan ends at once, where the IRS gives you 30 days. Pay the year off with Pay if you can.
+
+What Decides It:
+  - A Social Security Number: With one, the IRS decides an online application within a minute. Without one, Form 9465 goes by mail and is answered in 30 days
+  - Your Latest Return: Its income decides whether you pay the IRS’s low-income fee
+  - Every Year Owed: One IRS plan covers them all, paying the oldest first
+  - When Each Return Was Filed: The IRS’s late-payment penalty falls to 0.25% for each month that begins under a plan only on a return filed on time
+  - Oregon’s Waiver Schedule: 70% of the penalty if your return came before any notice, 50% after a demand, and 25% after an assessment
+  - The panel’s subtitle is the plan’s status: Being decided, In force, A payment missed, Ended, Paid in full or Declined, for the IRS’s plan and a state’s alike.
+  - Covers is what the plan took in when it began, or when it was last revised. Each Month and Next Payment are what it takes and when. While a plan is being decided, Answered By gives the day you’ll hear.
+  - By Direct Debit changes the setup fee and the words beside Each Month. Either way, every plan payment is taken from your accounts on its day.
+  - The Plan’s History lists every payment, missed payment and change.
+  - Under a plan, a year’s balance still grows by its interest, so a longer plan costs more in total.
+  - A Connecticut plan has no Catch Up, and Oregon’s waiver is only for a year you owed Oregon. A life lived in New Haven files in Connecticut, so it meets neither.
+
+A Worked Example:
+  You owe the IRS $1,800 across two years. Every return is filed, the later one in February before it was due. You have a Social Security number, and your latest return’s income is under 250% of the poverty line.
+  1. Choose Monthly Payments, leave Each Month at its lowest and By Direct Debit ticked, and press Apply.
+  2. Keep the payment in your checking account each month.
+  It’s approved within a minute, with no setup fee at the low-income rate: $25 a month, the $1,800 over 72 months, with the first payment 30 days later. The IRS’s letters stop. On both years’ returns, filed on time, each month of penalty that begins under the plan is 0.25% instead of 0.5%: on the earlier year from its next month (the month already begun stays at 0.5%), and on the later year from its first month past its due date. Interest keeps adding up, so paying more with Pay shortens the plan.
+
+
+## A Tax Lien (taxes.lien)
+
+A lien is a public claim an authority files when a balance stays unpaid deep into collection. Connecticut DRS files one with its notice of intent to levy. The IRS files one at its final notice if you owe $10,000 or more on the year. Paying in full is what gets it released. The buttons under it ask for a release where the authority needs asking, or a withdrawal: the IRS’s once it has released its lien, or any lien filed in error. In the game a lien changes only its own record: no credit record or bank reads it.
+
+Where To Find It: Papers, Tax Returns, The Year’s Return, The IRS’s Lien Or Connecticut DRS’s Lien
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”. A lien shows under the year it was filed for once one is on record.
+
+What To Press:
+  1. Open the year’s panel on Tax Returns. A lien shows as The IRS’s Lien or Connecticut DRS’s Lien, with its status and The Lien’s History.
+  2. Pay the year in full with Pay. The lien reads Paid: Release To Come.
+  3. For Connecticut, then press Ask For Its Release.
+  4. Once the IRS has released its lien, press Ask For Its Withdrawal (Form 12277). If it was filed in error, the button reads Ask For Its Release As Erroneous, and you can press it at once.
+  5. For a state lien on an assessment that your own return later showed was already paid, Ask For Its Withdrawal As Filed In Error shows on that lien alone. Press it.
+
+What You Need First:
+  - A lien on the year.
+  - For a release, what it was filed for paid in full.
+  - For the IRS’s withdrawal, its lien released, and none of your returns for the three tax years before this one left unfiled past its due date with a balance.
+  - For an error, your own return having replaced an assessment, and showing no more owed than you’d paid before the lien was filed.
+
+What It Costs:
+  - Time: None
+  - Money: Connecticut charges no fee for its lien. The IRS’s recording fees aren’t published, so the game charges none
+  - The IRS’s Release: 30 days after payment in full, or 14 days after you ask for it as erroneous
+  - The IRS’s Withdrawal: Decided 30 days after Form 12277 goes in (estimated)
+  - Connecticut’s Days: Released 30 days after you ask; withdrawn as filed in error 30 days after you ask (estimated)
+
+What Happens:
+  - Once you ask for its release, Connecticut’s lien shows the date it’s to be released by.
+  - Once you ask for a withdrawal, a lien reads Asked To Be Withdrawn, with the date a decision is due.
+  - Your money and every other record stay as they were.
+  - (later) Paid in full, the IRS’s lien is released 30 days later on its own, and a notice says you can then ask for it to be withdrawn.
+  - (later) Connecticut’s is released 30 days after you ask, recorded in the town clerk’s land records and the Secretary of the State’s UCC filings.
+  - (later) A withdrawal is decided on its date, and the lien reads Withdrawn. The IRS’s notice says a withdrawn notice is treated as if it had never been filed, and a state refunds any fee it charged for the lien.
+  - (later) Collection on the year continues while a lien stands. The lien itself takes no money.
+
+How It Connects:
+  - [prerequisite] taxes.pay: A lien is released only once what it was filed for is paid in full.
+  - [prerequisite] taxes.return: A lien is withdrawn as filed in error only after your own return has replaced the assessment it was filed on.
+  - [optional] taxes.plan: While a state plan is in force, no lien is filed. Connecticut files its lien at its second notice.
+
+What To Do Next:
+  - If a lien is filed, pay the year in full as soon as you can: see Paying Tax Owed.
+  - After paying Connecticut, press Ask For Its Release, because DRS releases its lien only when asked.
+  - After the IRS releases its lien, you can ask for it to be withdrawn on Form 12277.
+
+If You Can’t:
+  - A lien’s buttons show only under a year that has one. Ask For Its Release, and the IRS’s withdrawal, are grayed out with the reason beside them until you can press them. Ask For Its Withdrawal As Filed In Error shows only on a lien that was filed in error.
+  - “The lien has already been released.” or “The lien has already been withdrawn.”, or that you’ve already asked, with the date a decision is due.
+  - “You can ask for its release once what it was filed for is paid in full.”
+  - For a state that releases without being asked: “There’s nothing to ask: it’s released on its own”, with its days.
+  - For the IRS: “You can ask for a withdrawal once the lien is released, which happens within 30 days of paying in full. Only a lien filed in error can be withdrawn sooner, and this one wasn’t.”
+  - “The IRS withdraws a lien after payment only if your last three years’ returns are filed”, naming the year that isn’t.
+  - Filed in error: not offered where the lien was filed for tax you owed, and the panel says so.
+  - (mistake) Asking for a withdrawal on a lien filed for tax you owed: it’s refused. Pay it, and it’s released.
+  - (mistake) Paying Connecticut in full and stopping there: DRS releases its lien only when you ask, so press Ask For Its Release.
+  - (mistake) Leaving one of the last three tax years unfiled with a balance: the IRS’s Form 12277 waits on those returns.
+
+What Decides It:
+  - The Balance When Filed: Everything owed on the year that day: the amount the lien was filed for
+  - Payments Before It Was Filed: For an error: the tax you’d paid on the year before the lien went on record
+  - Your Last Three Years’ Returns: For the IRS’s withdrawal after release: the three tax years before this one, whichever year the lien is on, each filed if it’s past due with a balance
+  - Its status is one of: Notice Of Intent Sent, Filed, Paid: Release To Come, Released, Asked To Be Withdrawn, Withdrawn, or Not Filed.
+  - “when collection reached that stage” or “because the payment plan requires one” says why it went on record.
+  - The line about its effect is in the authority’s own words. Connecticut’s says “It takes priority over liens recorded after it.” The IRS’s says it may limit your ability to get credit.
+  - In the game, no credit record or bank reads a lien, so its status is all that changes.
+  - On a lien filed for tax you owed, the panel says so instead of offering Ask For Its Withdrawal As Filed In Error: “It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.” Connecticut’s always does, because it takes a payment to its penalty and interest before its tax and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.
+  - A student’s year never owes the IRS $10,000: a year of a living-cost scholarship and work-study owes it less than two thousand dollars. The IRS’s lien and its Form 12277 are for much bigger balances.
+
+A Worked Example:
+  You filed your 2026 return on March 1, 2027, with $600 owed to Connecticut that your bank couldn’t pay.
+  1. May 15, 2027: “A Bill From Connecticut DRS”.
+  2. June 14, 2027: “Connecticut DRS Intends To Levy”, and its lien is filed for $672, the tax with its penalty and interest by then.
+  3. Pay it all with Pay Connecticut (Blank Pays It All), then press Ask For Its Release.
+  The lien reads Paid: Release To Come, then shows a date 30 days later, when it reads Released. Paid before June 14, 2027, it would never have been filed. Left unpaid, the levy follows 30 days after it.
+

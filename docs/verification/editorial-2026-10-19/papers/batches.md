@@ -86,3 +86,60 @@ none of batch 1's sources pending.
 
 **Screens:** the guide entries rendered in `guide-documents.txt`; the built app's Passport And ID and Permission To Work
 are read in the area's final walk (below).
+
+## Batch 2: The Tax Returns Tab, The Tax Engine And The Tax Guide
+
+**Sources (199):** the Tax Returns parts of `src/ui/workspaces/PapersWorkspace.tsx` (9: `WhoIsOwed`, `filedWords`,
+`amendWords`, `StatePlanPanel`, `ReturnLife`, `PLAN_STATUS`, `TaxPlanPanel`, `PapersWorkspace`, `ReturnsPane`),
+`src/ui/components/LienPanels.tsx` (4), `src/engine/systems/taxreturn.ts` (32), `src/engine/systems/statetax.ts` (37),
+`src/engine/content/statetax.ts` (86), `src/engine/content/tax.ts` (10), `src/engine/content/guide/taxes.ts` (11), and
+one connection of `guide/documents.ts` that took its weeks in words. About 14,000 words. The tax guide was planned as
+its own batch; it went with the engine whose words it quotes, inside the size the prompt sets.
+
+**Rewritten (34):**
+- *The screen:* an unresearched state's notes ("None added: the game doesn't have this state's rules"); the state
+  plan "covers" up to its limit, and a plan being decided gives its day under Answered By; the IRS plan says how it's
+  decided with a Social Security number and without (defects.md, 8) and "Not by direct debit" (defects.md, 9); a UK
+  year's date and refund; the returns' fine print ("None of it is assessed …"); a lien announced or dropped
+  (defects.md, 4).
+- *The IRS's letters:* CP503 says it follows the first reminder; CP504 and LT11 say where to pay or set up a plan;
+  CP14's weeks in words; the ended plan and the revise refusal in the active voice.
+- *The states:* the ended plan; the waiver's window; five fragments made sentences (Louisiana's and Hawaii's letters,
+  Ohio's bL0006, Columbus's lien effect, New Mexico's long-term agreement); the unresearched state's line.
+- *The guide:* the checking account throughout (the glossary's word from brief 15: 16 places); "send it with File
+  It"; "If you don't pay"; weeks and payments under ten in words; a date's comma; Answered By said.
+
+**Kept (165):** every other notice, refusal, label and line, with a reason each. Most of the tax engine's words were
+rewritten in brief 14 to say the amount, the year, who acts, when and where to pay, and they still do. The 21 states
+other than Connecticut are reachable by no life in New Haven (every life files in Connecticut), and their names,
+notice titles and statutes are the agencies' own; their reasons say so. `content/tax.ts`'s labels are tax names the
+place page lists; its research notes reach no screen.
+
+**Meaning-sensitive, and how each was checked:**
+- *A lien's facts:* each variant matches its status as `stateLienStep`, `fileStateLien` and `stateLienPaid` set it.
+- *The IRS plan's two ways:* `tax.apply_plan` decides at `s.now + 60_000` with `hasSsn`, else at `PLAN.mailDays`.
+- *"Not by direct debit":* `directDebit` changes the setup fee only (`planFee`); every payment is posted by the plan's
+  schedule from the accounts either way.
+- *"You'd get a refund":* the UK year's `change < 0` branch is money coming back from HMRC at settlement.
+- *The state fragments:* the words only; the codes and titles, which the code keys notices by, unchanged.
+
+**Interactions read whole:**
+- *A return due, filed late, the bill, the plan, the lien:* No Returns Yet → the year's panel → File It → the
+  toast (`filedWords`) → CP14 → CP501, CP503, CP504, LT11 → Pay → the toast → the IRS plan (apply, Being decided,
+  approved, CP523, catch up or end) → the state's bill, notice of intent and lien → Ask For Its Release → the guide's
+  four entries. The letters now say where to act each time and why a second one came; the lien no longer says it
+  was filed before it was.
+
+**Tests and tool matchers updated:** `tests/remaining-tax.test.ts` (and a new assertion of the state's ended plan),
+`tests/scope-taxpapers.test.ts` (and a new assertion of the IRS's ended plan), `tests/defects-g8-8.test.ts`,
+`tests/guide-examples-papers.test.ts` (the late example's comma, and the lien example's regex now reads "…, with");
+new tests in `tests/editorial-papers.test.ts` (batch 2: a played 2027 return; the lien's announced and dropped facts;
+the state fragments; the waiver). No tool matcher read these words: `tools/acceptance-ui.mjs`'s lien matcher
+(`· Filed.` and `recorded in the town clerk`) still reads the Filed variant.
+
+**Checks:** `npx tsc -b --noEmit` 0; `npx eslint` on the 13 changed files 0; `npx vitest run` on the 34 tax and papers
+files, 1 failure (the lien example's regex reading the old "… with"), fixed, then 0; the new file 13 of 13; title-case,
+label-sweep, plural-check, voice-check, tics, spelling, typos, doc-refs, deciders and guide-quotes 0.
+
+**Screens:** the guide entries rendered in `guide-taxes.txt`; the Tax Returns tab drawn on a played 2027 return in the
+new test; the built app's Tax Returns on the tax, lien, missed-plan and nonfiler saves in the area's final walk.

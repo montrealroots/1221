@@ -21,10 +21,10 @@
   "first": "Pending"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
-  "status": "Retained",
+  "status": "Rewritten",
   "hash": "ceb8f6fd00cf",
   "on": "2026-10-19",
-  "reason": "Each connection says what one paper is checked for by whom (a new bank, the Social Security office, the IRS's plan, a branch-only bank), in one sentence each.",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), How It Connects (seven weeks)",
   "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [immediate]": {
@@ -74,6 +74,755 @@
   "hash": "90335b649ade",
   "on": "2026-10-19",
   "reason": "The Social Security visit's length in plain words, an hour, read from the rule's minutes so the guide can't drift from it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/taxes.ts#NEW_HAVEN": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the guide's dates are written in, America/New_York, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/taxes.ts#PART": {
+  "status": "Retained",
+  "hash": "b95c5225568c",
+  "on": "2026-10-19",
+  "reason": "The three parts of what's owed in plain words, the tax, the penalty, the interest, as Connecticut's order is said.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/taxes.ts#REFUND_WORDS": {
+  "status": "Retained",
+  "hash": "740e9da84718",
+  "on": "2026-10-19",
+  "reason": "When a refund comes, the IRS's and Connecticut's, and the 1040-NR's longer wait without a number, each day from its rule.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [immediate]": {
+  "status": "Rewritten",
+  "hash": "e09150ad9595",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt, How It Connects (checking account first, then savings)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [optional]": {
+  "status": "Rewritten",
+  "hash": "556e0fa28d6d",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt, How It Connects (the seven weeks an ITIN holds up the refund)",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [prerequisite]": {
+  "status": "Retained",
+  "hash": "19172408c6ac",
+  "on": "2026-10-19",
+  "reason": "Each prerequisite says what has to be true first in one sentence: a filed return, paid in full, your own return in the assessment's place.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [scheduled]": {
+  "status": "Rewritten",
+  "hash": "6aa0e4a9e649",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt, How It Connects (five weeks; the checking account)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]": {
+  "status": "Rewritten",
+  "hash": "1b616e4f1522",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.pay]": {
+  "status": "Rewritten",
+  "hash": "c71e62c1b3a2",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]": {
+  "status": "Rewritten",
+  "hash": "2d6ff1848140",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/taxes.ts#TAXES [taxes.return]": {
+  "status": "Rewritten",
+  "hash": "c11f09053621",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#FEDERAL_STATE_OFFSET": {
+  "status": "Retained",
+  "hash": "5ae463b2ac4a",
+  "on": "2026-10-19",
+  "reason": "The Treasury Offset Program's source line, named as the program and its statute, which the federal-offset notice cites.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-az": {
+  "status": "Retained",
+  "hash": "16deffe2f45c",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ca": {
+  "status": "Retained",
+  "hash": "765f956b395f",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-co": {
+  "status": "Retained",
+  "hash": "b14b8026c03e",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ct": {
+  "status": "Retained",
+  "hash": "ff6daa51524b",
+  "on": "2026-10-19",
+  "reason": "Connecticut DRS as every New Haven life meets it: its names, its Installment Agreement, its lien recorded in the town clerk's land records, released on request, and its statutes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-dc": {
+  "status": "Retained",
+  "hash": "ea012d16537b",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ga": {
+  "status": "Retained",
+  "hash": "9870a07e2afa",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-hi": {
+  "status": "Retained",
+  "hash": "847d2449d15f",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-il": {
+  "status": "Retained",
+  "hash": "bc2260d13da6",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-in": {
+  "status": "Retained",
+  "hash": "5de2765eaf89",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-la": {
+  "status": "Retained",
+  "hash": "392a786656ad",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ma": {
+  "status": "Retained",
+  "hash": "75994e0d04a5",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-nc": {
+  "status": "Retained",
+  "hash": "c116339a43ab",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-nm": {
+  "status": "Rewritten",
+  "hash": "e18ec3dcbaa9",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts the long-term agreement’s terms as a sentence",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ny": {
+  "status": "Retained",
+  "hash": "991f11fec8ab",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-oh": {
+  "status": "Retained",
+  "hash": "2ac1e5eb12a2",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-oh-columbus": {
+  "status": "Rewritten",
+  "hash": "8c3c152ae1f5",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts the lien’s effect It’s a judgment against you.",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-ok": {
+  "status": "Retained",
+  "hash": "ea5a59547acc",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-or": {
+  "status": "Retained",
+  "hash": "e9a546471b90",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-or-portland": {
+  "status": "Retained",
+  "hash": "717e86ed7570",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-pa": {
+  "status": "Retained",
+  "hash": "33a429a382ec",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX .us-pa-philadelphia": {
+  "status": "Retained",
+  "hash": "361f741dfcd1",
+  "on": "2026-10-19",
+  "reason": "A researched state's agency and short name, its plan's and lien's own names, where a lien is recorded and its effect in the agency's terms, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [ADOR Bill]": {
+  "status": "Retained",
+  "hash": "e2265ce8abda",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [AU-222]": {
+  "status": "Retained",
+  "hash": "77d09edff81d",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Bill]": {
+  "status": "Retained",
+  "hash": "df713acd7411",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Billing Notice]": {
+  "status": "Retained",
+  "hash": "05ced64f4767",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [bL0001]": {
+  "status": "Retained",
+  "hash": "51be7fb57fe1",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [bL0006]": {
+  "status": "Rewritten",
+  "hash": "55cd256ff04a",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts Ohio’s bL0006 (you have 60 days to pay or appeal.)",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [bL0008]": {
+  "status": "Retained",
+  "hash": "1dc85bef398a",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Certified Claim]": {
+  "status": "Retained",
+  "hash": "4a101ef8d776",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Delinquent Notice]": {
+  "status": "Retained",
+  "hash": "1c828e1534ba",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Demand For Payment]": {
+  "status": "Retained",
+  "hash": "5b4536539848",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Demand To File]": {
+  "status": "Retained",
+  "hash": "80ba56aed8cc",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Distraint Warrant]": {
+  "status": "Retained",
+  "hash": "bce0bfd75fb0",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DOTAX Bill]": {
+  "status": "Retained",
+  "hash": "30f2ae0a1d28",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DRS Bill]": {
+  "status": "Retained",
+  "hash": "945636faf363",
+  "on": "2026-10-19",
+  "reason": "Connecticut's bill says the tax, its 10% penalty and 1% a month of interest are due, the three parts Papers shows beneath it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DTF Bill]": {
+  "status": "Retained",
+  "hash": "bf6f35decc29",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [DTF-966-E]": {
+  "status": "Retained",
+  "hash": "fcb609775818",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Earnings Tax Assessment]": {
+  "status": "Retained",
+  "hash": "20dddc491755",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Failure To File Notice]": {
+  "status": "Retained",
+  "hash": "9e4a608c0f53",
+  "on": "2026-10-19",
+  "reason": "Connecticut's letter to a non-filer says DRS worked out what you owe from what was reported, and the 60 days to file before it's assessed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Demand]": {
+  "status": "Retained",
+  "hash": "f4d651a189af",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Determination And Demand]": {
+  "status": "Retained",
+  "hash": "e0a240a91109",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Notice Before Seizure]": {
+  "status": "Retained",
+  "hash": "cc27ed529390",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Final Notice]": {
+  "status": "Retained",
+  "hash": "238b8c243665",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4600]": {
+  "status": "Retained",
+  "hash": "927231ba56e7",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4601]": {
+  "status": "Retained",
+  "hash": "b49bbcb3e799",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4963]": {
+  "status": "Retained",
+  "hash": "154cbb35ea54",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [FTB 4966]": {
+  "status": "Retained",
+  "hash": "a417adad5be1",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [IDOR-2-BILL]": {
+  "status": "Retained",
+  "hash": "268422b8a7a5",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Information Request For Non-Filed Period]": {
+  "status": "Retained",
+  "hash": "7160ed1a163a",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [ITDQ0009]": {
+  "status": "Retained",
+  "hash": "e1f96450d30a",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [LTR-393-IPD]": {
+  "status": "Retained",
+  "hash": "09a6d7383062",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Nonfiling Notice]": {
+  "status": "Retained",
+  "hash": "00b66c9d9861",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice And Demand]": {
+  "status": "Retained",
+  "hash": "b17e92fa5d40",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Assessment]": {
+  "status": "Retained",
+  "hash": "96308d803281",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Collection, Second]": {
+  "status": "Retained",
+  "hash": "58c2985a9bdc",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Collection]": {
+  "status": "Retained",
+  "hash": "f9ab6f326207",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Deficiency]": {
+  "status": "Retained",
+  "hash": "798895e86109",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Determination And Assessment]": {
+  "status": "Retained",
+  "hash": "be6cf495e67b",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Enforcement]": {
+  "status": "Retained",
+  "hash": "a6bb13a72d82",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Estimated Assessment]": {
+  "status": "Retained",
+  "hash": "cb4dfd31ef43",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Failure To File]": {
+  "status": "Retained",
+  "hash": "86de6939b106",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Final Assessment]": {
+  "status": "Retained",
+  "hash": "35e09c421d56",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Individual Income Tax Assessment]": {
+  "status": "Retained",
+  "hash": "d1e488b86ef1",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Assess]": {
+  "status": "Retained",
+  "hash": "165d848c8fa7",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Garnish]": {
+  "status": "Retained",
+  "hash": "931c4882ae0a",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Issue Judgment/Lien]": {
+  "status": "Retained",
+  "hash": "92f7db982fc2",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Levy]": {
+  "status": "Retained",
+  "hash": "1c438f089a8a",
+  "on": "2026-10-19",
+  "reason": "Connecticut's notice of intent says in 30 days it may take what you owe from your bank accounts by warrant, the next step if unpaid.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Intent To Offset]": {
+  "status": "Retained",
+  "hash": "ded4cf65ac46",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Proposed Assessment]": {
+  "status": "Rewritten",
+  "hash": "ab098e1cce2d",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts Louisiana’s letter (You have 30 days to file or respond.)",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice Of Tax, Penalty And/Or Interest Due]": {
+  "status": "Retained",
+  "hash": "ebaaf6d4af9d",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice To File]": {
+  "status": "Retained",
+  "hash": "ef3141cccabf",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Notice To Submit Return]": {
+  "status": "Retained",
+  "hash": "8665f9182fe9",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Official Assessment And Demand]": {
+  "status": "Retained",
+  "hash": "aa6964b8e682",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Past-Due Bill]": {
+  "status": "Retained",
+  "hash": "792f4fbc14a8",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Personal Income Tax Non-Filer Notice]": {
+  "status": "Retained",
+  "hash": "3686bec230e5",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Proposed Assessment]": {
+  "status": "Rewritten",
+  "hash": "50b6042fa95d",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'each notice fragment reads as a sentence …' asserts Hawaii’s letter (You have 30 days to file your own or object.)",
+  "first": "Pending"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Referral Notice]": {
+  "status": "Retained",
+  "hash": "bf7b6e1721ef",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [State Tax Execution]": {
+  "status": "Retained",
+  "hash": "ace842e63f62",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Statement Of Account]": {
+  "status": "Retained",
+  "hash": "14b6f48826c7",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Statement Of Proposed Audit Change]": {
+  "status": "Retained",
+  "hash": "73669805a39e",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Statement Of Tax Due]": {
+  "status": "Retained",
+  "hash": "b742beed8b6d",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Tax Warrant]": {
+  "status": "Retained",
+  "hash": "a9bddd1e54cf",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Top Notice]": {
+  "status": "Retained",
+  "hash": "df1b3577b503",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_TAX [Written Demand]": {
+  "status": "Retained",
+  "hash": "60cdde38a7ae",
+  "on": "2026-10-19",
+  "reason": "A state's own notice code and title, and one sentence of what it means, said after you owe and the year's return and before where to pay it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/statetax.ts#STATE_UNRESEARCHED": {
+  "status": "Rewritten",
+  "hash": "d56ba70579b3",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders it under Owed To and asserts it, and the plan refusal that returns it",
+  "first": "Pending"
+ },
+ "src/engine/content/tax.ts#APPROX": {
+  "status": "Retained",
+  "hash": "e8683c2d776d",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#computeAnnualTax": {
+  "status": "Retained",
+  "hash": "4f55b0e644f3",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#DENVER_OPT": {
+  "status": "Retained",
+  "hash": "8f8010fd21fd",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tax.ts#ICELAND_NOTE": {
+  "status": "Retained",
+  "hash": "0ee5efabe642",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES": {
+  "status": "Retained",
+  "hash": "9943cecd4c21",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES [flat]": {
+  "status": "Retained",
+  "hash": "a433e7c99e96",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES [none]": {
+  "status": "Retained",
+  "hash": "ea620c3397bf",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#INCOME_TAX_RULES [progressive]": {
+  "status": "Retained",
+  "hash": "bc09b5bd0a49",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tax.ts#PROPERTY_TAX_RULES": {
+  "status": "Retained",
+  "hash": "7a8076900efa",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tax.ts#SALES_TAX_RULES": {
+  "status": "Retained",
+  "hash": "f2d6804565c3",
+  "on": "2026-10-19",
+  "reason": "Tax names as the place page lists them (California Income Tax, Texas with no state income tax) and the rules' own research citations, which no screen prints as prose.",
   "first": "Reviewed And Retained"
  },
  "src/engine/content/visas.ts#AU_600": {
@@ -384,6 +1133,265 @@
   "reason": "Each says what settling asks in that country (five years, money earned in Britain in your field) or that you already are, with no invented route.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/statetax.ts#agencyOf": {
+  "status": "Retained",
+  "hash": "c2fa3ba9d1dd",
+  "on": "2026-10-19",
+  "reason": "The fallback name for a state without its own, its revenue department, which a sentence can always say.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#applyStatePayment": {
+  "status": "Retained",
+  "hash": "531da6ba6538",
+  "on": "2026-10-19",
+  "reason": "Paid off, the plan history's two words when a payment clears what a state plan covers.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#assessStateNonFiler": {
+  "status": "Retained",
+  "hash": "5b48c5e13d1e",
+  "on": "2026-10-19",
+  "reason": "A state's assessment of a return never filed: what it charged and from what, and how to replace it on Papers.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#federalOffsetToState": {
+  "status": "Retained",
+  "hash": "3d8a695c216b",
+  "on": "2026-10-19",
+  "reason": "A federal refund sent to a state: how much paid past-due tax, and through which program, the Treasury Offset Program.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#fileState": {
+  "status": "Retained",
+  "hash": "fb70af69b41c",
+  "on": "2026-10-19",
+  "reason": "The ledger memo for a state's tax paid at filing, naming the state, the year and any penalty and interest with it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#fileStateLien": {
+  "status": "Retained",
+  "hash": "3d954714e2cc",
+  "on": "2026-10-19",
+  "reason": "A state lien filed: who, how much, which year, where recorded, why, its fee, that it's public, its effect and how it's released.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#HOME": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the states' dates are written in, America/New_York, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#interestWords": {
+  "status": "Retained",
+  "hash": "b95278178949",
+  "on": "2026-10-19",
+  "reason": "A state's interest rate and how it accrues, kept to the statute's terms, shown under Interest.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#lienDisputeRefusal": {
+  "status": "Retained",
+  "hash": "23dbf87ffddd",
+  "on": "2026-10-19",
+  "reason": "The dispute's refusals, including the one the panel shows instead of the button: filed for tax you owed, so released once paid, not withdrawn.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#lienReleaseRefusal": {
+  "status": "Retained",
+  "hash": "c18df9f9c844",
+  "on": "2026-10-19",
+  "reason": "Each refusal says why release can't be asked now: no lien, already released, not yet paid, released on its own, already asked, or the fee.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#lienReleaseWords": {
+  "status": "Retained",
+  "hash": "4e24314bf828",
+  "on": "2026-10-19",
+  "reason": "How a state's lien is released, by request, by payment or within its days, with an estimate labelled as one.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#missStatePlan": {
+  "status": "Retained",
+  "hash": "feab43fa2e9b",
+  "on": "2026-10-19",
+  "reason": "A missed state payment: the amount, then the state's rule or, where unpublished, the game's, said as the game's, and what follows.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#nextJanuary": {
+  "status": "Retained",
+  "hash": "0e2aaaf149af",
+  "on": "2026-10-19",
+  "reason": "Date keys the code builds for January's interest, never shown to a player as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#orderWords": {
+  "status": "Retained",
+  "hash": "fae1d8e3c4ba",
+  "on": "2026-10-19",
+  "reason": "Where a partial payment goes, by the state's rule or, where unpublished, by the game's, said as the game's.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#payLateFor": {
+  "status": "Retained",
+  "hash": "cfe7e4812bff",
+  "on": "2026-10-19",
+  "reason": "A date key the code builds, never shown to a player as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#payLateWords": {
+  "status": "Retained",
+  "hash": "4e133f8583e7",
+  "on": "2026-10-19",
+  "reason": "A state's late-payment penalty in the fewest words that keep its rate, cap and conditions, shown under Penalties.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#payStateRefund": {
+  "status": "Retained",
+  "hash": "9b00ba1de6eb",
+  "on": "2026-10-19",
+  "reason": "A state refund kept for what's owed: how much, from which year, to what, and under which agreement, in one notice each.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#reconsiderState": {
+  "status": "Retained",
+  "hash": "3faf4f5d1a07",
+  "on": "2026-10-19",
+  "reason": "A state accepting your own return: the tax for the year, then what's still owed or what comes back.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax": {
+  "status": "Rewritten",
+  "hash": "efd06265e7e7",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts asserts the ended plan’s notice (You didn’t make up the missed payment in time …); tests/scope-taxpapers.test.ts the other state notices",
+  "first": "Pending"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.apply_state_plan>": {
+  "status": "Retained",
+  "hash": "9ec81cf1e2fe",
+  "on": "2026-10-19",
+  "reason": "The state plan's history lines and the money refusal, an estimate of the decision's time labelled as estimated.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.catch_up_state_plan>": {
+  "status": "Retained",
+  "hash": "af3f3e6cfeba",
+  "on": "2026-10-19",
+  "reason": "Catch Up's refusals for a state plan and its history lines, nothing paid when the bank can't cover it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.lien_dispute>": {
+  "status": "Retained",
+  "hash": "a324ce637186",
+  "on": "2026-10-19",
+  "reason": "The history line Asked to be withdrawn as filed in error, with the date a decision is due.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.lien_release>": {
+  "status": "Retained",
+  "hash": "780279f1f750",
+  "on": "2026-10-19",
+  "reason": "The release fee's refusal and history lines, with nothing paid when the bank can't cover it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.pay_state>": {
+  "status": "Retained",
+  "hash": "e019c3b67deb",
+  "on": "2026-10-19",
+  "reason": "Pay's refusals for a state, each naming the agency, the amount you owe it, or that the bank can't cover it and nothing was paid.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#registerStateTax <tax.request_waiver>": {
+  "status": "Retained",
+  "hash": "cb52c3394c36",
+  "on": "2026-10-19",
+  "reason": "A waiver granted: the share waived by the state's schedule, and where the money already paid toward it goes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#releaseLater": {
+  "status": "Retained",
+  "hash": "686a18eeb8bb",
+  "on": "2026-10-19",
+  "reason": "To be released by and the date, the history line for a release the state is to make.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#releaseStateLien": {
+  "status": "Retained",
+  "hash": "148a9c0fb70b",
+  "on": "2026-10-19",
+  "reason": "The release notice says the state released it and where the release is recorded.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#scheduleStateNonFiler": {
+  "status": "Retained",
+  "hash": "67b93cebada8",
+  "on": "2026-10-19",
+  "reason": "A calendar label, Connecticut DRS On Your 2026 Return, that names who acts and on which year.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#startStatePlan": {
+  "status": "Retained",
+  "hash": "9dcf7ec50c54",
+  "on": "2026-10-19",
+  "reason": "The state plan's history and calendar lines: approved for an amount and months, the fee added, a payment due.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#stateLienPaid": {
+  "status": "Retained",
+  "hash": "835e183d67db",
+  "on": "2026-10-19",
+  "reason": "Paid in full, the notice says the lien is released only when asked and where to ask, the one step the player must take.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#stateLienStep": {
+  "status": "Retained",
+  "hash": "f250ae11d436",
+  "on": "2026-10-19",
+  "reason": "A state's notice of intent to file a lien: the amount, the year, where it will be filed, in how many days, and how to stop it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#stateName": {
+  "status": "Retained",
+  "hash": "12824acb788d",
+  "on": "2026-10-19",
+  "reason": "The states' and cities' names as the world spells them, read by every state sentence on Papers.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#stateNonFilerStep": {
+  "status": "Retained",
+  "hash": "1f3fd5b83861",
+  "on": "2026-10-19",
+  "reason": "A state's letter to a non-filer: its code, the year, and the state's own sentence of what to do by when.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#statePlanNewBalance": {
+  "status": "Retained",
+  "hash": "c8dda4d1fbc7",
+  "on": "2026-10-19",
+  "reason": "A history line saying a new balance joined the plan, which is exactly what happened.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statetax.ts#statePlanRefusal": {
+  "status": "Retained",
+  "hash": "48a82e314ecd",
+  "on": "2026-10-19",
+  "reason": "Each refusal names the state's agency and its own condition (limit, months, levy, fee, down payment) and the step that works instead.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#threeYearCheck": {
+  "status": "Retained",
+  "hash": "ce299b761a03",
+  "on": "2026-10-19",
+  "reason": "Oregon's three-year penalty: the years unfiled, the share, the statute, its cap, and the waiver's schedule with where to ask.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statetax.ts#waiverRefusal": {
+  "status": "Rewritten",
+  "hash": "c322f3530c20",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a waiver asked for too late says what the rule asks, in the active voice'; tests/liens-and-arrangements.test.ts reads the others",
+  "first": "Pending"
+ },
  "src/engine/systems/taxid.ts#registerTaxId": {
   "status": "Rewritten",
   "hash": "8eb3179db129",
@@ -404,6 +1412,258 @@
   "on": "2026-10-19",
   "evidence": "tests/language-dynamic.test.ts and tests/evidence-g17-papers.test.ts assert the registration refusal on Papers and from the command",
   "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#amendRefusal": {
+  "status": "Retained",
+  "hash": "c3b36431ac27",
+  "on": "2026-10-19",
+  "reason": "Each reason Amend The Return… is grayed out, said beside it: not filed, the IRS's own, one already in, or the date the time ran out.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#amendState": {
+  "status": "Retained",
+  "hash": "044167201597",
+  "on": "2026-10-19",
+  "reason": "A state's amended return processed: more or less tax, the interest it adds, and where the money went, in one notice.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#armCollection": {
+  "status": "Retained",
+  "hash": "93104e6be6aa",
+  "on": "2026-10-19",
+  "reason": "Calendar labels, The IRS On Your 2026 Return, that name who acts and on which year, short enough for a day's list.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#armTaxes": {
+  "status": "Retained",
+  "hash": "164a33a7591f",
+  "on": "2026-10-19",
+  "reason": "Tax Season, the calendar's two words for the day returns are made, which the guide's February 1 matches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#billed": {
+  "status": "Rewritten",
+  "hash": "c8e4afa02840",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts asserts both CP14 variants (the reminders begin five weeks after the due date)",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [CP501]": {
+  "status": "Retained",
+  "hash": "a9adcae07ed0",
+  "on": "2026-10-19",
+  "reason": "The first reminder says it's unpaid, that interest and the penalty keep adding up, and exactly where to pay or ask for a plan.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [CP503]": {
+  "status": "Rewritten",
+  "hash": "9b30cac905c8",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts plays the IRS’s letters and asserts each body (the second reminder says it follows the first)",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [CP504]": {
+  "status": "Rewritten",
+  "hash": "739cd80aab19",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts plays the IRS’s letters and asserts CP504’s body, with where to pay or set up a plan",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#COLLECTION [LT11]": {
+  "status": "Rewritten",
+  "hash": "c02e9ba880b3",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-tax.test.ts and tests/scope-taxpapers.test.ts assert the final notice’s body",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#FEDERAL_LIEN": {
+  "status": "Retained",
+  "hash": "969abe90796f",
+  "on": "2026-10-19",
+  "reason": "The IRS's own warning about a lien, attributed to it, the recorder's office in plain words, and the statute citations of its source line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#federalLienPaid": {
+  "status": "Retained",
+  "hash": "bc792cf2ebd1",
+  "on": "2026-10-19",
+  "reason": "A short history line, Paid in full: to be released by and the date, the IRS's deadline said as one it is to meet.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#federalLienStep": {
+  "status": "Retained",
+  "hash": "ea70eb977872",
+  "on": "2026-10-19",
+  "reason": "Letter 3172 by its number: the amount, the year, where it's recorded, the hearing the letter offers and that the game doesn't, and the release rule.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#federalLienWithdrawRefusal": {
+  "status": "Retained",
+  "hash": "61f67800c869",
+  "on": "2026-10-19",
+  "reason": "Each refusal names the exact obstacle, the release's days or the unfiled year, and the step that clears it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#HOME": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the IRS's dates are written in, America/New_York, which the player never reads as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#newLiability": {
+  "status": "Retained",
+  "hash": "141c1d773780",
+  "on": "2026-10-19",
+  "reason": "CP523 for a new balance says the amount, why it can't join (two payments), the date to revise by and what happens otherwise.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#nextNotice": {
+  "status": "Retained",
+  "hash": "084589cb5e3a",
+  "on": "2026-10-19",
+  "reason": "The IRS, the sender a notice's calendar line names, two words that need nothing more.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#planRefusal": {
+  "status": "Retained",
+  "hash": "fe546c7a7f97",
+  "on": "2026-10-19",
+  "reason": "Each refusal says why the IRS won't take this plan now (one already in, a return unfiled, the size of the balance) and what to do instead.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#reconsider": {
+  "status": "Retained",
+  "hash": "aeaa0c61ab10",
+  "on": "2026-10-19",
+  "reason": "Your own return replacing the IRS's: the new tax against its figure, then what's still owed or what comes back, in that order.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#refusePlan": {
+  "status": "Retained",
+  "hash": "c8c2d6c9cea9",
+  "on": "2026-10-19",
+  "reason": "The declined plan's notice gives the IRS's reason and says its letters start again, which is what happens next.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerFederalLien": {
+  "status": "Retained",
+  "hash": "b1d2fdc02b6d",
+  "on": "2026-10-19",
+  "reason": "The release and withdrawal notices say what the IRS did, on which year, and what a withdrawal means, in the IRS's own terms.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerFederalLien <tax.federal_lien_withdraw>": {
+  "status": "Retained",
+  "hash": "2ef03f2199c7",
+  "on": "2026-10-19",
+  "reason": "Two history lines that name what was asked for and on which form or statute, which The Lien's History lists.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn": {
+  "status": "Rewritten",
+  "hash": "7c86d268f43b",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-taxpapers.test.ts asserts the ended plan’s notice (You didn’t make up the missed payment …); tests/remaining-tax.test.ts the returns’ notices",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.amend>": {
+  "status": "Retained",
+  "hash": "dcc4d3854aff",
+  "on": "2026-10-19",
+  "reason": "The amendment's refusal says nothing on record differs from what was filed, and its form's name, 1040-X with 1040-NR.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.apply_plan>": {
+  "status": "Retained",
+  "hash": "48917d532047",
+  "on": "2026-10-19",
+  "reason": "The lowest-payment and setup-fee refusals give the figure and that nothing was charged; the history says online or by mail and why.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.catch_up_plan>": {
+  "status": "Retained",
+  "hash": "f4ae30c98f28",
+  "on": "2026-10-19",
+  "reason": "Catch Up's refusals say the plan isn't behind or the bank can't cover the amount, nothing paid, with the history's short lines.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.file>": {
+  "status": "Retained",
+  "hash": "9487c1decbc5",
+  "on": "2026-10-19",
+  "reason": "File It's refusals: no return for that year, or already filed with the next step (amend it), and the ledger's own memos.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.pay>": {
+  "status": "Retained",
+  "hash": "9ab60d5730a1",
+  "on": "2026-10-19",
+  "reason": "Pay's refusals: already paid, an amount above zero, no more than you owe (with the figure), or the bank can't cover it, nothing paid.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.revise_plan>": {
+  "status": "Rewritten",
+  "hash": "399517b20f2c",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-taxpapers.test.ts asserts the refusal You can revise only a monthly plan that’s in force.",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxreturn.ts#registerTaxReturn tell()": {
+  "status": "Retained",
+  "hash": "07d1964f9130",
+  "on": "2026-10-19",
+  "reason": "Your 2026 Accounts Abroad, the foreign-account notice's title, naming the year it reports on.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxreturn.ts#settleUkYears": {
+  "status": "Retained",
+  "hash": "17da8f89c635",
+  "on": "2026-10-19",
+  "reason": "A UK tax year settled: its years, what came back or was paid and why the treaty left it untaxed, with the ledger's own memos.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#splitReturns": {
+  "status": "Retained",
+  "hash": "849673c70dad",
+  "on": "2026-10-19",
+  "reason": "An older save's single balance split by authority, said once with how, and the IRS-only plan's limit said where a state's tax left it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxreturn.ts#startPlan": {
+  "status": "Retained",
+  "hash": "afc3404ffba0",
+  "on": "2026-10-19",
+  "reason": "The calendar's and the history's short lines for a plan payment and an approval, each with its amount or date.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/LienPanels.tsx#FederalLien": {
+  "status": "Retained",
+  "hash": "e3d2bcdf11cc",
+  "on": "2026-10-19",
+  "reason": "The IRS's effect in its own words, its release days and Form 12277's condition, and a button that names the form it sends.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/LienPanels.tsx#LienFacts": {
+  "status": "Rewritten",
+  "hash": "840c261846ab",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'California’s notice of intent reads as a lien still to be filed, and one dropped as never filed'; tools/acceptance-ui.mjs reads the Filed variant",
+  "first": "Pending"
+ },
+ "src/ui/components/LienPanels.tsx#StateLienAndPenalty": {
+  "status": "Retained",
+  "hash": "82cb31f131b5",
+  "on": "2026-10-19",
+  "reason": "The state's effect in its own words, how it's released, and the one button the lien allows, with the refusal beside it; Oregon's penalty with its statute and waiver.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/LienPanels.tsx#STATUS": {
+  "status": "Retained",
+  "hash": "a53b018163ff",
+  "on": "2026-10-19",
+  "reason": "A lien's seven statuses as the glossary has them, release kept apart from withdrawal, short enough to sit after its name.",
+  "first": "Reviewed And Retained"
  },
  "src/ui/looks/papers.tsx#KIND_WORD": {
   "status": "Retained",
@@ -523,5 +1783,68 @@
   "on": "2026-10-19",
   "reason": "The two openings of the OPT toast, Applied for OPT and Applied for OPT with premium processing, each naming exactly which application was made before its fee and decision date.",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#amendWords": {
+  "status": "Retained",
+  "hash": "d219673787c9",
+  "on": "2026-10-19",
+  "reason": "An amendment's change said plainly as more tax, less tax, or no change in the total with each side that moved, read straight from the figures.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#filedWords": {
+  "status": "Retained",
+  "hash": "2da3674d1107",
+  "on": "2026-10-19",
+  "reason": "The File It toast in each of its variants says what filing did with the money: the refund's day, what the bank couldn't pay and where it now shows, or that nothing is owed either way.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#PapersWorkspace": {
+  "status": "Retained",
+  "hash": "3a1625091e6c",
+  "on": "2026-10-19",
+  "reason": "The screen's one-line subtitle names its five tabs' subjects in the tabs' order, so a player knows what Papers holds before choosing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#PLAN_STATUS": {
+  "status": "Retained",
+  "hash": "5e6bd316c6b9",
+  "on": "2026-10-19",
+  "reason": "The IRS plan's six statuses in the glossary's words, Being decided apart from In force, matched by the state plan's panel and the guide.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#ReturnLife": {
+  "status": "Retained",
+  "hash": "4d899bf4acab",
+  "on": "2026-10-19",
+  "reason": "The IRS's own return, its replacement and an amendment, each said in the order a player meets them, with the estimated processing date labelled as estimated.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane": {
+  "status": "Rewritten",
+  "hash": "a59fe438048c",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts renders a UK tax year (January 31, 2028; a refund of …) and tests/defects-g8-8.test.ts the returns' fine print",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel": {
+  "status": "Rewritten",
+  "hash": "3810784a4ec7",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders Connecticut DRS Installment Agreement (It covers up to $50,000.00 …)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel": {
+  "status": "Rewritten",
+  "hash": "e8c1ddee9080",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders the panel before and after applying (the number's two ways, Not by direct debit)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#WhoIsOwed": {
+  "status": "Rewritten",
+  "hash": "43c9395806f1",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders Owed To with an unresearched state’s two notes; tests/scope-taxpapers.test.ts renders Connecticut’s",
+  "first": "Pending"
  }
 }

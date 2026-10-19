@@ -308,7 +308,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     connections: [
       { to: 'school.orientation', kind: 'prerequisite', why: 'You need to be registered for your program to get the number: once you are, the School’s work-study counts as your on-campus work.' },
       { to: 'documents.passport-id', kind: 'prerequisite', why: 'The Social Security office asks for your passport in force.' },
-      { to: 'taxes.return', kind: 'evaluation', why: `A 1040-NR filed without a number goes in with an ITIN application, which holds up its refund ${SSN.itinWeeks} weeks longer.` },
+      { to: 'taxes.return', kind: 'evaluation', why: `A 1040-NR filed without a number goes in with an ITIN application, which holds up its refund ${SSN.itinWeeks === 7 ? 'seven' : SSN.itinWeeks} weeks longer.` },
       { to: 'taxes.plan', kind: 'evaluation', why: `With a number, the IRS decides a plan within a minute. Without one, it’s by mail in ${PLAN.mailDays} days.` },
       { to: 'bank.other-banks', kind: 'evaluation', why: 'Without a number, a bank that opens accounts for international students opens yours only in a branch.' },
       { to: 'papers.benefits', kind: 'evaluation', why: 'Unemployment insurance pays a noncitizen only with permission to work in the US, such as OPT in force.' },

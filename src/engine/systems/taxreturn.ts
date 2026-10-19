@@ -91,9 +91,9 @@ export const COLLECTION = {
   againDays: 91,
   notices: [
     { code: 'CP501', title: 'A Reminder From The IRS', words: 'It’s still unpaid, and interest and the late-payment penalty keep adding up. Pay it on Papers, under Tax Returns, or apply for a payment plan there.' },
-    { code: 'CP503', title: 'A Second Reminder From The IRS', words: 'The IRS hasn’t heard from you and expects it paid. Pay it on Papers, under Tax Returns, or apply for a payment plan there.' },
-    { code: 'CP504', title: 'The IRS Intends To Levy', words: 'The IRS may now take a state refund and certain federal payments without further notice. Paying it, or a payment plan, stops collection.' },
-    { code: 'LT11', title: 'Final Notice Of Intent To Levy', words: 'In 30 days the IRS takes what you owe from your bank accounts. Paying it, or a payment plan, stops the levy.' },
+    { code: 'CP503', title: 'A Second Reminder From The IRS', words: 'The IRS hasn’t heard from you since its first reminder, and it expects payment. Pay it on Papers, under Tax Returns, or apply for a payment plan there.' },
+    { code: 'CP504', title: 'The IRS Intends To Levy', words: 'The IRS may now take a state refund and certain federal payments without further notice. Paying it, or setting up a payment plan, stops collection: both are on Papers, under Tax Returns.' },
+    { code: 'LT11', title: 'Final Notice Of Intent To Levy', words: 'In 30 days the IRS takes what you owe from your bank accounts. Paying it, or setting up a payment plan, stops the levy: both are on Papers, under Tax Returns.' },
   ],
   source: 'https://www.irs.gov/newsroom/interest-rates-remain-the-same-for-the-fourth-quarter-of-2026; https://www.irsproblemsolve.com/2026/03/24/cp14-cp501-cp503-cp504-lt11/',
 } as const;
@@ -417,9 +417,11 @@ function billed(sim: Simulation, person: Person, r: TaxReturn): void {
   const owed = owedOn(r, sim.now);
   const pct = (x: number) => `${Math.round(x * 1000) / 10}%`;
   const runs = `interest at ${pct(COLLECTION.interest)} a year and a penalty for paying late of ${pct(RETURN.payLateMonthly)} a month`;
+  // The weeks in words, as prose writes a number under ten (from 2026-10-19, brief 15: until then "5 weeks").
+  const weeks = COLLECTION.noticeWeeks === 5 ? 'five' : String(COLLECTION.noticeWeeks);
   const body = sim.now < r.due
-    ? `Notice CP14: your ${r.year} return shows ${formatMoney(owed, cur)} owed to the IRS, due by ${formatDate(r.due, HOME)}. If you pay by then, nothing is added. After that, ${runs} are added to what’s unpaid, and the IRS’s reminders begin ${COLLECTION.noticeWeeks} weeks after the due date. Pay it on Papers, under Tax Returns.`
-    : `Notice CP14: you owe ${formatMoney(owed, cur)} on your ${r.year} return${owed > (r.parts?.tax ?? owed) ? ', including the penalties and interest since its due date' : ''}. Until it’s paid, ${runs} keep adding up, and the IRS’s reminders begin in ${COLLECTION.noticeWeeks} weeks. Pay it on Papers, under Tax Returns.`;
+    ? `Notice CP14: your ${r.year} return shows ${formatMoney(owed, cur)} owed to the IRS, due by ${formatDate(r.due, HOME)}. If you pay by then, nothing is added. After that, ${runs} are added to what’s unpaid, and the IRS’s reminders begin ${weeks} weeks after the due date. Pay it on Papers, under Tax Returns.`
+    : `Notice CP14: you owe ${formatMoney(owed, cur)} on your ${r.year} return${owed > (r.parts?.tax ?? owed) ? ', including the penalties and interest since its due date' : ''}. Until it’s paid, ${runs} keep adding up, and the IRS’s reminders begin in ${weeks} weeks. Pay it on Papers, under Tax Returns.`;
   sim.notify({ category: 'tax', title: 'A Bill From The IRS', body, importance: 75, route: '/workspace/papers' });
 }
 export const TAX_DUE_KIND = 'tax.due';
@@ -1539,7 +1541,7 @@ export function registerTaxReturn(sim: Simulation): void {
     const p = person?.taxPlan;
     if (!person || !p || p.status !== 'default') return;
     endPlan(s, person, p, 'ended', 'Ended: not caught up after CP523');
-    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Has Ended', body: 'The missed payment wasn’t made up within its thirty days. Collection resumes on what you owe, and the final notice before a levy comes next.', importance: 95, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'tax', title: 'Your IRS Payment Plan Has Ended', body: 'You didn’t make up the missed payment within its thirty days. Collection resumes on what you owe, and the final notice before a levy comes next.', importance: 95, route: '/workspace/papers' });
   });
 
   sim.onCommand<Record<string, never>, { paid: Money }>('tax.catch_up_plan', (_p, { sim: s }) => {
@@ -1561,7 +1563,7 @@ export function registerTaxReturn(sim: Simulation): void {
   sim.onCommand<{ monthly?: Money }, { monthly: Money; fee: Money }>('tax.revise_plan', (p, { sim: s }) => {
     const person = s.player;
     const plan = person.taxPlan;
-    if (!plan || (plan.status !== 'active' && plan.status !== 'default') || plan.kind !== 'long') throw new CommandError('Only a monthly plan that’s in force can be revised.');
+    if (!plan || (plan.status !== 'active' && plan.status !== 'default') || plan.kind !== 'long') throw new CommandError('You can revise only a monthly plan that’s in force.');
     const owed = owedAll(person, s.now);
     const cur = saveCurrency(s.universe);
     const monthly = Math.round(Number(p?.monthly ?? leastMonthly(owed)));
