@@ -1,0 +1,189 @@
+=== start.home
+How This Works
+✕ 
+Contents › Home And Where You Are Search How This Works Search 
+Home And Where You Are
+Show Everything 
+Home is your day at a glance. The line under the greeting shows the time, your town, its time zone, the season and the weather. Where You Are names your town, its region and its country, with the local time and the daylight. Press any underlined word to see more about it.
+Where To Find It
+Home, The Where You Are Panel.
+When You Can Use It
+From the guide’s first chapter, “Your Life, Hour By Hour”.
+Show Me Where 
+What To Press
+Open Home: press the SLATE mark at the top left, Home on the menu, or the H key.
+Read Where You Are: the town, the region and the country, then Local Time and Daylight. The season is in the line under the greeting.
+Press an underlined word to open it under its line, and a word inside it to go deeper. Press Close, or the word again, to fold it away.
+What You Need First
+Home is there from your first moment in the game.
+Time And Money
+Time
+None: reading Home and opening words doesn’t move the clock
+Money
+None
+What Happens
+Straight Away
+Home only shows the world. Reading it changes nothing.
+Later On
+As the clock moves the time, the season and the daylight move with it.
+Reading The Result
+The line under your town says it’s your home, and how many people live there.
+Daylight gives today’s sunrise and sunset, and how many hours of daylight that makes.
+How It Connects
+Comes First
+The Guide And This Help : A word becomes a link once you’ve read the guide chapter that covers it.
+Changes Straight Away
+The Clock: Play And Pause : The local time is the game’s clock, so it moves when the clock does.
+Worth Doing With It
+The Weather : The weather beside it shows the same town, hour by hour.
+What Leads Here
+The Guide And This Help : Reading a chapter opens Home’s panels and the underlined words it names.
+The Weather : The weather is the same town’s, beside its time, season and daylight on Home.
+What To Do Next
+Read the Calendar panel on Home for what’s coming, and the Weather panel for the sky.
+If a word or a panel is still Locked, read the next chapter in the guide.
+If You Can’t
+Some words only become links once you’ve read the guide chapter that covers them.
+Mistakes, And Putting Them Right
+Pressing a word opens it in place: nothing on the screen behind it is lost, so there’s nothing to undo.
+What Decides It
+The Town And Its Zone
+Where you live, with its time zone and daylight saving time
+The Day
+The game’s clock, in your town’s local time
+The Season And The Daylight
+Calculated from the town’s latitude and the date
+A Worked Example
+A student new at Yale, in New Haven, on an August evening.
+Open Home.
+Press New Haven in Where You Are.
+Inside it, press Connecticut, then United States.
+What comes of it. New Haven opens under its line with its facts, Connecticut opens inside it, and United States inside that, each with more to press. Your save is just as it was.
+Read With It
+The Guide And This Help 
+Finding Your Way 
+The Calendar 
+How You Are 
+The clock waits while you read. Back Close
+
+=== start.guide
+How This Works
+✕ 
+Contents › The Guide And This Help Search How This Works Search 
+The Guide And This Help
+Show Everything 
+SLATE has two kinds of help. The guide’s 17 chapters teach the game in order, and each one opens a part of it: a part you haven’t opened yet shows as Locked. How This Works has an entry for every feature, saying what it does, what it changes now and later, and what it affects. Reading either doesn’t move the clock, and the only thing it changes in your save is which chapters you’ve read.
+Where To Find It
+Guide, How This Works, And ? Or / On Any Screen.
+When You Can Use It
+Always.
+Show Me Where 
+What To Press
+To read the next chapter, press Guide in the top bar, or Read on the strip under it. Press I’ve Read It at the end, and the chapter lists what it opened.
+For a part of the game you’re looking at, press How This Works on its panel.
+To look something up, press ? for the contents by what you’re trying to do, or / to search.
+Press a link in an entry to open another. Back goes back the way you came, and Close returns you to the screen exactly as you left it.
+What You Need First
+The guide is always there. If you chose “I Know SLATE” when you made your character, everything is open from the start, and you can read the chapters in any order.
+Time And Money
+Time
+None: the clock waits while a chapter or an entry is open
+Money
+None
+What Happens
+Straight Away
+Reading a chapter opens what it names: its buttons, its panels and its underlined words.
+Opening How This Works changes nothing.
+Later On
+What a chapter opens stays open from then on.
+Reading The Result
+Locked on a button means you haven’t read its chapter yet. Press it to open the guide at that chapter.
+In an entry, an estimate says it’s estimated. Every other figure is the rule the game uses.
+How It Connects
+Comes First
+The Clock: Play And Pause : With the guide, the clock starts paused, and reading “The Clock” opens Play.
+Changes Straight Away
+Home And Where You Are : Reading a chapter opens Home’s panels and the underlined words it names.
+The Calendar : “What’s Coming” opens the calendar, and the dialog that asks what to do when a commitment comes up.
+What Leads Here
+Home And Where You Are : A word becomes a link once you’ve read the guide chapter that covers it.
+Finding Your Way : A place joins the menu once you’ve read its chapter.
+The Player Profile : The profile opens with the guide’s chapter “You As An Actor”.
+Papers : “Cover, Benefits And Returns” in the guide opens Papers and every button on it.
+What To Do Next
+Read the next chapter, then try what it opened.
+On any panel, press How This Works for its entry.
+If You Can’t
+You can open and read any chapter at any time, but I’ve Read It only works on the next one.
+Mistakes, And Putting Them Right
+Closing the guide doesn’t lose your place: it opens again at the next unread chapter.
+Show Me Where takes you to the feature’s screen and tab, and Back To Help brings you back to the help where you were.
+What Decides It
+Which Chapters You’ve Read
+The one thing the guide keeps in your save
+A Worked Example
+A guided life, two chapters read, pressing Look After Yourself.
+The button says Locked.
+Press it: the guide opens at “Looking After Yourself”, and says “The Clock” comes first.
+Read the chapters in order to it and press I’ve Read It.
+What comes of it. Look After Yourself opens. The clock didn’t move while the guide was open.
+Read With It
+Home And Where You Are 
+Finding Your Way 
+The clock waits while you read. Back Close
+
+=== start.find
+How This Works
+✕ 
+Contents › Finding Your Way Search How This Works Search 
+Finding Your Way
+Show Everything 
+The menu down the left lists every place the guide has opened. Home is at the top, with the number of things waiting for you. On a screen narrower than a laptop’s, the menu folds away behind Menu. The breadcrumbs above a screen take you back along where you’ve been, and the browser’s Back and Forward buttons work too. Every screen has its own address, so a reload or a link opens it.
+Where To Find It
+The Menu And The Breadcrumb.
+When You Can Use It
+Always. A place joins the menu once you’ve read its chapter.
+Show Me Where 
+What To Press
+Press a place on the menu to go there, or a breadcrumb to go back to it.
+Keys, anywhere but a text box: H for Home, C for the calendar, P for the Player Profile, ? for the guide’s contents, / to search it. None of them act while a dialog is open.
+Escape closes the dialog on top, and the menu drawer on a phone.
+What You Need First
+A screen whose chapter you haven’t read opens as Locked, and names the chapter to read.
+Time And Money
+Time
+None
+Money
+None
+What Happens
+Straight Away
+Moving between screens changes nothing in the world. A screen keeps its tab while you’re elsewhere.
+Reading The Result
+The number beside Home is the notices and questions waiting in What Needs You.
+How It Connects
+Comes First
+The Guide And This Help : A place joins the menu once you’ve read its chapter.
+Worth Doing With It
+What Needs You : Go There on a notice takes you to its screen and tab.
+What Leads Here
+What Needs You : Go There takes you to the screen a notice or a question is about.
+The Player Profile : P opens the profile from anywhere but a text box.
+What To Do Next
+Press ? anywhere for the guide’s contents, grouped by what you want to do.
+If You Can’t
+A place isn’t on the menu until you’ve read its chapter.
+Mistakes, And Putting Them Right
+Leaving a screen with a form half filled in loses what was typed in it; opening help over it doesn’t.
+What Decides It
+The Chapters Read
+Which places the menu lists
+A Worked Example
+On the School screen’s Coursework tab, then Home.
+Press H.
+Press the School breadcrumb.
+What comes of it. School opens on Coursework, the tab it was left on.
+Read With It
+The Guide And This Help 
+Home And Where You Are 
+What Needs You 
+The clock waits while you read. Back Close

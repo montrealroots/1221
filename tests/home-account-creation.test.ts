@@ -246,6 +246,6 @@ describe('the creation screen', () => {
     expect(validate(london('gb-hsbc'), STARTING_POINT as never)).toEqual([]);
     expect(validate(life({ priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-japan-post-bank' }), STARTING_POINT as never))
       .toEqual(['Japan Post Bank asks a customer going abroad to close the account, and keeps one open only if someone in Japan acts for them, which the game doesn’t offer.']);
-    expect(validate(london('gb-hsbc', { priorResidence: { cityId: 'uk-eng-london', fromYear: 1999, fromMonth: 1 } }), STARTING_POINT as never)).toContain('You can’t have lived there from before you were born.');
+    expect(validate(london('gb-hsbc', { priorResidence: { cityId: 'uk-eng-london', fromYear: 1999, fromMonth: 1 } }), STARTING_POINT as never)).toContain('You can’t have moved there before you were born.');
   });
 });

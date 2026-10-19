@@ -91,3 +91,88 @@ voice-check 0, tics 0, spelling 0, typos 0, text-inventory 0, doc-refs 0, decide
 
 **Screens:** the startup sequence and the slots are walked on the built app at the end of the area (below, the built
 app), where these words are read at 1440 and 390.
+
+## Batch 2: Creation, Its Pickers, The Traits, And Getting Started
+
+**Sources (269, in 13 files):** `src/ui/creation/CharacterCreation.tsx` (24, one of them new: `WEALTH_LABEL`),
+`LocationPicker.tsx`, `PortraitPicker.tsx`, `WorldMap.tsx`, `portrait.ts` (3), `world-map.ts` (2),
+`src/engine/content/personality-traits.ts` (37), `ethnicity.ts` (9), `identity.ts` (1), `languages.ts` (154),
+`src/engine/decided.ts` (27), `src/engine/world/bootstrap.ts` (3), and the How This Works entries in
+`src/engine/content/guide/start.ts` (6).
+
+**Read whole:** a new life from New Save through Identity, Dispositions & Traits, Genres & Background, Starting Point
+(Your Body, Where It Begins, Your Money, Before Yale) and Review to Begin; the place picker from the map to a town; the
+photo picker from an empty frame to a framed photo and each refusal; a trait from its card on creation to its look on
+the Player Profile; the three How This Works entries a first-day player opens, through the Help dialog.
+
+**Rewritten (27):**
+- **Dispositions,** which a new player meets before knowing anything. The intro is "Your temperament, not your
+  talent." Each line says what the slider does in the player's terms, and the three that go either way say so ("whether
+  … raises your stress or eases it"). The close leads with what matters: none of them makes you a better or worse actor,
+  apart from where Composure and Discipline start.
+- **Traits.** A ninety-word sentence became a list of what traits change. The note under it names the Player Profile,
+  where a trait opens, instead of "your own page". A gray trait says why in a sentence about the player ("It clashes
+  with Early Riser, which you’ve picked.", "You already have four traits, the most you can pick."). Three traits' own
+  words changed: Curious's "your reading of a scene" (a brief's reading is another thing in the glossary), Scattered's
+  cost, which began "Most of them." as a fragment, and Self Critical's "harshest reader" (a reader is someone else in
+  the glossary). A trait's look names what a session of preparation gets done, in the glossary's words.
+- **Identity:** the pronoun and They/Them notes, Place Of Birth, and "You’ll be 22 when you start." for "when this life
+  begins".
+- **Your Body:** "drawn from the averages" (the engine's word for a random draw) is "SLATE picks your height and weight
+  at random, around the averages where you were born".
+- **The family:** its labels were the ids capitalized, so Review said "Family Nothing, Need Found". They're now Next To
+  Nothing, Scraping By, Modest, Comfortable, Wealthy and Inherited Wealth, each in its note's words. The aid callout keeps
+  every amount, with one condition to a sentence. A card is "with a $1,630 limit and $913 owed on it", or "and nothing
+  owed on it".
+- **Starting Point:** What Is Yours is Your Money. Where the game has no bank, "a plain checking account". Before Yale
+  asks its question in the player's terms and says, for each choice, where the savings go (a defect, below).
+- **Review:** the guide's two choices, "Recommended if you’re new", and "Your life starts with the clock paused. Once
+  you press Play, a minute passes in the game for every real minute, and what’s on your calendar happens whether you’re
+  watching or not."
+- **The pickers:** the place picker's hints for a country with nothing on record, and an empty search that printed empty
+  quotes (a defect, below). The map's tooltip for a country with nothing on record. Each photo refusal gives the way out.
+- **How This Works, getting started:** Home And Where You Are, The Guide And This Help and Finding Your Way. The owner's
+  example ("Some words only become links once you’ve read the guide chapter that covers them."); How This Works by its
+  name, not "the reference"; "Home at the top wearing the count" became "Home is at the top, with the number of things
+  waiting for you"; the clock "waits", the glossary's word.
+
+**Kept (242):** the step names, the sliders' names and ends, 32 of the 35 traits (each with a reason of its own in
+`frame.json`), the wealth notes, the ethnicity categories and their note, the ID cards' official names, the 154
+language names, the 27 developer notes in `decided.ts` (no screen imports the file), the storage and file keys, and the
+two connection lines under Worth Doing With It.
+
+**Meaning-sensitive, and how each was checked:**
+- **Either way.** `enjoyment.ts`: `lean()` is positive above 50 and negative below it, for an audience watching
+  (stress, `DISPOSED.room`), new work (morale, `DISPOSED.away`) and a rehearsal (morale, `DISPOSED.rehearsal`). The
+  disposition journeys in `tests/evidence-g28-ui.test.ts` measure both sides.
+- **"Above 65".** `credit.ts` starts autopay on the minimum where risk tolerance is `> CARRIES_A_BALANCE` (65).
+- **"Picks … at random, around the averages".** `systems/body.ts` draws height and body mass index from the birth
+  country's adult mean and spread when either is missing (`decided.ts`, `body.draw`).
+- **Before Yale.** `splitOf` keeps the savings at home unless `savingsAtHome === false`. It gives the account kept there
+  its fees to graduation where `feesToGraduation` is above zero, from the savings or the checking account.
+- **The aid.** The amounts are `termAccount`'s, unchanged; each condition is the one the old sentence named.
+- **I’ve Read It only on the next chapter.** `world/tutorial.ts` refuses any other ("Read “…” first. The chapters open
+  in order.").
+
+**Tests and tool matchers updated** (each as exact as before; no title changed): `tests/language-frame-ui.test.ts`,
+`creation.test.ts`, `evidence-g27-ui.test.ts`, `evidence-g28-ui.test.ts`, `evidence-g29-ui.test.ts` (Your Money),
+`evidence-g33-ui.test.ts` (Curious), `evidence3-person.test.ts`, `evidence3-lifepapers.test.ts`, `need-paths.test.ts`,
+`portrait.test.ts`, `guide-examples-start-day-body.test.ts` (start.home's result), `evidence2-b10.test.ts`,
+`evidence2-b12.test.ts`, `home-account-creation.test.ts`. No tool matcher held these words.
+
+**Tests added** (`tests/language-frame-ui.test.ts`, "creation’s pickers and Before Yale, said in words"): the place
+picker's variants; the map's tooltip and each photo refusal; a trait's look for five traits and two descriptions on
+Traits; creation's header, a restored draft, every disposition, the traits' list, the family's card both ways, the
+guide's choices, Before Yale's three refusals and the town with no bank; and Before Yale's line for each choice, which
+fails on the old line.
+
+**Evidence tool:** `render-help.mjs` (this folder) draws a How This Works entry through the real Help dialog over
+`GameProvider` and `GuideProvider`, opened as an address naming it opens it, and writes its text; `help-b2.txt` holds
+the three getting-started entries.
+
+**Checks:** tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos 0,
+text-inventory 0 once marked (1 before: the new `WEALTH_LABEL` and 26 sources Pending, which the marks settle),
+doc-refs 0, deciders 0, guide-quotes 0. `npx vitest run` on the 23 files that hold these words: 23 files, 443 tests,
+exit 0, after the fixes above (the first run found 12 assertions holding the old words in strings split across lines).
+
+**Defects:** two, fixed with tests (`defects.md` 1 and 2).

@@ -427,33 +427,33 @@ describe('creation, step by step', () => {
   it('says each step’s guidance in the player’s words, with what each choice does, and why Continue waits', () => {
     let text = step(0, ada());
     expect(text).toContain('Your legal name is the one on your documents. What people call you can be different.');
-    expect(text).toContain('It’s what you say when someone asks, and it decides the citizenship you were born to.');
-    expect(text).toMatch(/You’ll be \d+ when this life begins\./);
-    expect(text).toContain('Any size or shape works. It’s cropped to a headshot and made small enough to keep in the save. It’s only shown: the game never looks at what’s in it.');
+    expect(text).toContain('Where you’re from, which isn’t always where you live now. It’s what you tell people when they ask, and it decides your citizenship.');
+    expect(text).toMatch(/You’ll be \d+ when you start\./);
+    expect(text).toContain('Any size or shape works. SLATE crops it to a headshot and keeps a small copy in the save. It’s only for show: the game never looks at what’s in it.');
     expect(text).toContain('Choose as many as are true. It’s part of who your character is and nothing more: it changes no ability, nothing in the game uses it, and the game never guesses it from a name or a country.');
     text = step(0, ada({ pronouns: 'they/them', performerTitle: undefined }));
-    expect(text).toContain('With They/Them, the choice is yours. Actor and Actress are two words for the same craft, and the game treats them as equals. Pick the one you want to be called: the game calls you by it, and at school you’re cast in parts written for it, or written for anyone.');
+    expect(text).toContain('With They/Them, you choose. Actor and Actress are two words for the same craft, and neither counts for more. The game calls you by the one you pick, and at school you’re cast in parts written for it, or for anyone.');
     expect(text).toContain('Choose whether you’re billed as an actor or an actress.');
     text = step(0, ada({ firstName: '', lastName: ' ' }));
     expect(text).toContain('Enter a first name. Enter a last name.');
 
     text = step(1, ada());
-    expect(text).toContain('How you lean, not what you can do. Each one shapes a part of your life:');
-    expect(text).toContain(`Risk Tolerance: over ${CARRIES_A_BALANCE}, your card’s autopay starts on the minimum payment, so you carry a balance.`);
-    expect(text).toContain('Extraversion: how being watched as you perform, by an audience or a class, affects your stress.');
-    expect(text).toContain('Composure is an ability your work is judged on. Apart from where Composure and Discipline start, none of these makes you better or worse at anything.');
-    expect(text).toContain('Pick up to four. Traits come in opposing pairs, and you can’t hold both sides of a pair.');
+    expect(text).toContain('Your temperament, not your talent. Each one changes a part of your life:');
+    expect(text).toContain(`Risk Tolerance: above ${CARRIES_A_BALANCE}, your card’s autopay starts out paying only the minimum, so you carry a balance.`);
+    expect(text).toContain('Extraversion: whether performing in front of people, an audience or your class, raises your stress or eases it.');
+    expect(text).toContain('Apart from your starting Composure and Discipline, none of these makes you a better or worse actor. Composure is one of the abilities your performances are judged on.');
+    expect(text).toContain('Pick up to four. Traits come in opposing pairs, and you can’t have both of a pair. Between them, they change: how fast stress builds and clears; how well you sleep, and how much a night restores;');
 
     text = step(3, ada());
     expect(text).toContain('You’re a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, one of 16 actors admitted this year: among the strongest of them, but not ahead of everyone.');
     expect(text).toContain('Your money is kept in the dollar (USD), the currency where you start, and stays in it wherever you go.');
-    expect(text).toContain('Leave them blank and your body is drawn from the averages where you were born.');
+    expect(text).toContain('Leave them blank and SLATE picks them at random, around the averages where you were born.');
 
     text = step(4, ada());
     expect(text).toContain('Ready To Begin');
     expect(text).toMatch(/Food Each Month \$[\d,]+/);
-    expect(text).toContain('You haven’t picked any traits. That’s fine: only the dispositions above will shape your sleep, your temper and your card.');
-    expect(text).toContain('This life begins with the clock paused. Once you press Play, time passes a minute for every minute, and the calendar fills whether you’re watching or not.');
+    expect(text).toContain('You haven’t picked any traits. That’s fine: the dispositions above still shape your stress, your sleep, your morale and your card.');
+    expect(text).toContain('Your life starts with the clock paused. Once you press Play, a minute passes in the game for every real minute, and what’s on your calendar happens whether you’re watching or not.');
   });
 });
 
@@ -579,5 +579,136 @@ describe('opening and starting, said in words', () => {
     // The button, then the note under it, in that order.
     expect(text).toMatch(/Slot 1 Empty, but there’s a backup of the save that was here\. New Save Restore Backup (B)ackup from an unknown date/);
     expect(text).toMatch(/Slot 2 Empty, but there’s a backup of the save that was here\. New Save Restore Backup (B)ackup from March 3, 2027/);
+  });
+});
+
+/**
+ * From 2026-10-19 (brief 15): creation's pickers and Before Yale, word for word in each variant. Before Yale's savings
+ * line said "Your savings stay where you saved them" with Moved To chosen too, and "opens with nothing in it" beside a
+ * current account the split had given its fees (frame `defects.md`, brief 15, 1).
+ */
+describe('creation’s pickers and Before Yale, said in words', () => {
+  /** A component drawn with some of its state given, by the order its useState is called in. TEST SETUP. */
+  const drawnWith = (el: ReturnType<typeof createElement>, given: [number, unknown][] = []) => {
+    h.given = new Map(given);
+    h.calls = 0; h.inits = []; h.sets = []; h.buttons = [];
+    const html = renderToStaticMarkup(el).replace(/<!-- -->/g, '');
+    return { html, text: words(html) };
+  };
+
+  it('the place picker says what a country has, and a search that finds nothing what to try', async () => {
+    const { LocationPicker } = await import('@/ui/creation/LocationPicker');
+    const { REGIONS } = await import('@/engine/content/geography');
+    const picker = (given: [number, unknown][]) => drawnWith(createElement(LocationPicker, { cityId: '', map: false, onPick: () => undefined }), given).text;
+    // Antarctica: no towns on record, and no states or regions. TEST SETUP: the country given as the picker's first state.
+    let text = picker([[0, 'aq']]);
+    expect(text).toContain('No towns or cities on record for this country.');
+    expect(text).toContain('None');
+    expect(text).toContain('There are no states or regions to choose from in this country.');
+    expect(text).toContain('There’s no town or city on record there.');
+    // A search in a state that finds nothing names the select's own way wider.
+    const state = REGIONS.all().find((r) => r.parentId === 'us')!;
+    text = picker([[0, 'us'], [1, state.id], [2, 'Zzyzxq']]);
+    expect(text).toContain('No town or city matches “Zzyzxq” there. Try a different spelling, or choose Anywhere in United States.');
+    text = picker([[0, 'us'], [2, 'Zzyzxq']]);
+    expect(text).toContain('No town or city matches “Zzyzxq” there. Try a different spelling.');
+  });
+
+  it('the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { WorldMap } = await import('@/ui/creation/WorldMap');
+    const map = JSON.parse(readFileSync('public/geo/world-map.json', 'utf8')) as unknown;
+    const { html } = drawnWith(createElement(WorldMap, { countryId: 'us', onPick: () => undefined }), [[0, map]]);
+    expect(html).toContain('<title>Antarctica: no towns or cities on record</title>');
+    const { describeRejection, CANNOT_DECODE } = await import('@/ui/creation/portrait');
+    expect(describeRejection({ type: 'application/pdf', size: 100, name: 'resume.pdf' })).toBe('resume.pdf isn’t an image. Choose a JPEG, PNG or WebP photo.');
+    expect(describeRejection({ type: 'image/jpeg', size: 30 * 1024 * 1024, name: 'huge.jpg' })).toBe('That photo is 30.0MB, over the 24MB limit. Try a smaller one.');
+    expect(describeRejection({ type: 'image/png', size: 0, name: 'empty.png' })).toBe('That file is empty. Choose a different photo.');
+    expect(CANNOT_DECODE).toBe('That photo couldn’t be opened. It may be damaged, so try a different one.');
+    // A photo being framed: what to do with it. TEST SETUP: an image given as the picker's first state.
+    const { PortraitPicker } = await import('@/ui/creation/PortraitPicker');
+    const framing = drawnWith(createElement(PortraitPicker, { portrait: undefined, name: 'Ada Cole', onChange: () => undefined }), [[0, { width: 800, height: 600 }]]).text;
+    expect(framing).toContain('Drag the photo to move it in the frame, and use Zoom to size it.');
+  });
+
+  it('creation says what it’s for, a draft put back, each disposition and trait’s reach, the family’s card, and the guide’s choice', async () => {
+    const { CharacterCreation: Creation, validate, StartingPointStep } = await import('@/ui/creation/CharacterCreation');
+    const { withFamily } = await import('@/engine/world/bootstrap');
+    const ada = (extra: Partial<NewSaveConfig> = {}): NewSaveConfig => ({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
+    const at = (step: number, config: NewSaveConfig, restored = false) => drawnWith(createElement(Creation, { slot: 1 as never, onCancel: () => undefined, onStart: () => undefined }), [[0, step], [1, config], [2, restored]]).text;
+    let text = at(0, ada(), true);
+    expect(text).toContain('Who Are You Going To Be? SLATE is a life simulator. Here you create the actress you’ll play.');
+    expect(text).toContain('You’d started filling this in before, so it’s back the way you left it. Start Over');
+    text = at(1, ada());
+    expect(text).toContain('Emotional Stability: how fast stress builds and clears, and how much Composure you start with.');
+    expect(text).toContain('Conscientiousness: how well you sleep, and how much Discipline you start with.');
+    expect(text).toContain('Ambition: how fast stress builds, from work and from money alike.');
+    expect(text).toContain('Openness: whether rehearsing new work, a festival’s new play or a Cabaret piece, lifts your morale or lowers it.');
+    expect(text).toContain('Agreeableness: whether a day of rehearsal lifts your morale or lowers it.');
+    expect(text).toContain('how hard an illness hits; how sharp you are in the morning or the evening; which part of preparing a scene goes furthest; how you warm to classmates, and how much a slight from one hurts; and, for Frugal, Spender and Generous, what your food costs and how much a meal lifts you.');
+    expect(text).toContain('A trait’s description and cost describe the whole person, but the game uses only the effects above. Once you’re playing, open a trait on your Player Profile to see exactly what it changes.');
+    text = at(2, withFamily(ada(), 'scraping'));
+    expect(text).toContain('Background Who you were before you arrived.');
+    expect(text).toMatch(/in checking and \$[\d,]+ in savings, and a card with a \$[\d,]+ limit and \$[\d,]+ owed on it\./);
+    text = at(2, withFamily(ada(), 'wealthy'));
+    expect(text).toMatch(/, and a card with a \$[\d,]+ limit and nothing owed on it\./);
+    text = at(4, ada());
+    expect(text).toContain('Guide Me Through It. The game opens a part at a time, each with a short chapter of the guide that explains it. Recommended if you’re new.');
+    expect(text).toContain('I Know SLATE. Everything is open from the start, and the clock starts paused. The guide’s chapters and How This Works are there whenever you want them.');
+    // Before Yale's three refusals of a time, as validate words them.
+    const STARTING_POINT = 3;
+    const before = (fromYear: number, fromMonth: number) => validate(ada({ priorResidence: { cityId: 'uk-eng-london', fromYear, fromMonth } }), STARTING_POINT);
+    expect(before(2010, 13)).toContain('Choose the month and year you moved there.');
+    expect(before(1990, 1)).toContain('You can’t have moved there before you were born.');
+    expect(before(2027, 1)).toContain('That’s after you arrive at Yale. Choose an earlier month.');
+    // Where the game has no bank, the money is in a plain checking account.
+    const { CITIES } = await import('@/engine/content/geography');
+    const { banksFor } = await import('@/engine/systems/banking');
+    const town = CITIES.all().find((c) => banksFor(c.id).length === 0)!;
+    text = drawnWith(createElement(StartingPointStep, { config: ada({ startLocationId: town.id, school: undefined }), set: (() => undefined) as never, setConfig: (() => undefined) as never })).text;
+    expect(text).toContain('SLATE has no bank on record where you live, so your money is in a plain checking account.');
+  });
+
+  it('a trait’s look names what a session of preparation gets done, and how soon you need a shower, for each trait that moves one', async () => {
+    const { resolveLook } = await import('@/ui/looks/registry');
+    const { at: lookAt } = await import('@/ui/looks/subject');
+    await import('@/ui/looks/all');
+    const said = (trait: string) => {
+      const sim = createSave(1, `frame-trait-${trait}`, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', personalityTraits: [trait] });
+      const found = resolveLook(sim, lookAt('trait', trait)) as { body?: unknown };
+      return drawn(sim, () => found.body as never).text;
+    };
+    expect(said('curious')).toMatch(/How much a session on how to play a part gets done \+15%/);
+    expect(said('single_minded')).toContain('How much a session learning the lines gets done');
+    expect(said('scattered')).toContain('How much a session getting to know the play gets done');
+    expect(said('scattered')).toContain('Most of them, anyway: something is always the one you dropped.');
+    expect(said('self_critical')).toContain('How much a session revising after a note gets done');
+    // A trait's description is on creation's Traits, where it's chosen.
+    const { CharacterCreation: Creation } = await import('@/ui/creation/CharacterCreation');
+    const traits = drawnWith(createElement(Creation, { slot: 1 as never, onCancel: () => undefined, onStart: () => undefined }), [[0, 1], [1, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' }]]).text;
+    expect(traits).toContain('Self Critical You’re the harshest critic you’ll ever have, and a revision is better for it.');
+    expect(traits).toContain('Curious The thing nobody asked you to read gets read, and you go deeper into how to play a part.');
+    expect(said('chaotic')).toContain('How soon you need a shower');
+    expect(said('unshakeable')).toContain('How fast stress clears while you’re awake, and with a workout or an hour unwinding');
+  });
+
+  it('Before Yale says where the savings go and what the account kept there opens with, for each choice', async () => {
+    const { StartingPointStep } = await import('@/ui/creation/CharacterCreation');
+    const { withFamily } = await import('@/engine/world/bootstrap');
+    const life = (extra: Partial<NewSaveConfig>): NewSaveConfig => ({ ...withFamily(newLifeConfig(), 'modest'), homeRegionId: 'uk-eng-london', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId: 'us-chase', ...extra });
+    const step = (config: NewSaveConfig) => drawnWith(createElement(StartingPointStep, { config, set: (() => undefined) as never, setConfig: (() => undefined) as never })).text;
+    // Barclays, savings kept: its current account opens at nothing (tests/home-account-creation.test.ts).
+    let text = step(life({ priorResidence: { cityId: 'uk-eng-london', fromYear: 2008, fromMonth: 9 }, homeBankId: 'gb-barclays' }));
+    expect(text).toContain('Your savings stay at Barclays. Your everyday money is in your account here, and your card stays with Chase. Your Barclays Bank Account opens with nothing in it.');
+    // HSBC UK, savings moved: still nothing in the current account kept there.
+    text = step(life({ priorResidence: { cityId: 'uk-eng-london', fromYear: 2008, fromMonth: 9 }, homeBankId: 'gb-hsbc', savingsAtHome: false }));
+    expect(text).toContain('Your savings move to Chase. Your everyday money is in your account here, and your card stays with Chase.');
+    expect(text).toMatch(/and your card stays with Chase\. Your [^.]+ opens with nothing in it\./);
+    // MUFG, whose current account opens with its fees to graduation: the line doesn't say it opens with nothing.
+    text = step(life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-mufg' }));
+    expect(text).toContain('Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥10,200, from your savings');
+    expect(text).toContain('Your savings stay at MUFG Bank. Your everyday money is in your account here, and your card stays with Chase.');
+    expect(text).not.toContain('opens with nothing in it');
+    expect(text).toContain('If you lived outside America just before Yale, say where, and whether you kept a bank account there.');
   });
 });

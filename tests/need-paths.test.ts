@@ -265,12 +265,12 @@ function look(sim: Simulation, kind: string, id: string): string {
 
 /** Each family's first morning, worked by hand above: checking, savings, and the card's limit and what's owed on it. */
 const MONEY: Record<StartingWealth, { label: string; checking: string; savings: string; card?: string; need: boolean; cents: [number, number] }> = {
-  nothing: { label: 'Nothing', checking: '$43', savings: '$0', need: true, cents: [43_00, 0] },
-  scraping: { label: 'Scraping', checking: '$1,348', savings: '$326', card: '$913 owed of $1,630', need: true, cents: [1_348_00, 326_00] },
+  nothing: { label: 'Next To Nothing', checking: '$43', savings: '$0', need: true, cents: [43_00, 0] },
+  scraping: { label: 'Scraping By', checking: '$1,348', savings: '$326', card: '$913 owed of $1,630', need: true, cents: [1_348_00, 326_00] },
   modest: { label: 'Modest', checking: '$5,217', savings: '$7,065', card: '$457 owed of $6,522', need: true, cents: [5_217_00, 7_065_00] },
   comfortable: { label: 'Comfortable', checking: '$19,565', savings: '$45,652', card: '$0 owed of $21,739', need: true, cents: [19_565_00, 45_652_00] },
   wealthy: { label: 'Wealthy', checking: '$92,391', savings: '$413,043', card: '$0 owed of $65,217', need: false, cents: [92_391_00, 413_043_00] },
-  inherited: { label: 'Inherited', checking: '$260,870', savings: '$2,608,696', card: '$0 owed of $163,043', need: false, cents: [260_870_00, 2_608_696_00] },
+  inherited: { label: 'Inherited Wealth', checking: '$260,870', savings: '$2,608,696', card: '$0 owed of $163,043', need: false, cents: [260_870_00, 2_608_696_00] },
 };
 
 describe('the family a new life comes from (c-family, c-wealth)', () => {
@@ -279,7 +279,7 @@ describe('the family a new life comes from (c-family, c-wealth)', () => {
     expect(step.text).toContain('Your Family The family you come from decides the money in your name on the first morning, and whether Yale’s needs assessment finds you need aid.');
     const select = step.control('family');
     expect(select.props.value).toBe('wealthy');
-    expect(step.html).toContain('<option value="nothing">Nothing</option><option value="scraping">Scraping</option><option value="modest">Modest</option><option value="comfortable">Comfortable</option><option value="wealthy" selected="">Wealthy</option><option value="inherited">Inherited</option>');
+    expect(step.html).toContain('<option value="nothing">Next To Nothing</option><option value="scraping">Scraping By</option><option value="modest">Modest</option><option value="comfortable">Comfortable</option><option value="wealthy" selected="">Wealthy</option><option value="inherited">Inherited Wealth</option>');
     for (const family of FAMILIES) {
       const m = MONEY[family];
       const config = step.choose('family', family);
@@ -288,8 +288,8 @@ describe('the family a new life comes from (c-family, c-wealth)', () => {
       const callout = creation(STEP.Background, config).text;
       expect(callout).toContain(`${m.checking} in checking and ${m.savings} in savings`);
       expect(callout).toContain(m.need
-        ? 'Yale finds that you need aid. Its living-expense scholarship, $15,200.50 a term, pays the term’s Yale Health plan, $1,882.00, and the rest, $13,318.50, goes into your bank each fall and spring.'
-        : 'Yale finds that you don’t need aid, because of your family’s means. There’s no aid for living costs, and the term’s Yale Health plan, $1,882.00, comes out of your bank each fall and spring.');
+        ? 'Yale finds that you need aid. Its living-expense scholarship of $15,200.50 a term pays for that term’s Yale Health plan, $1,882.00, and puts the rest, $13,318.50, into your bank each fall and spring.'
+        : 'Yale finds that you don’t need aid, given your family’s means, so there’s no aid for living costs. The term’s Yale Health plan, $1,882.00, comes out of your bank each fall and spring.');
       const review = creation(STEP.Review, config).text;
       expect(review).toContain(`Family ${m.label}, ${m.need ? 'Need Found' : 'No Need Found'}`);
       expect(review).toContain(`Checking ${m.checking}`);

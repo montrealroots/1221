@@ -491,7 +491,7 @@ describe('l-person', () => {
       ['Nourishment', `${Math.round(w.nourishment)}/100. How well fed you are. A meal puts it back.`],
       ['Hygiene', `${Math.round(w.hygiene!)}/100. How clean you are. When it’s low, it drags on your morale, and on readiness a little.`],
       ['Readiness', 'How ready you are today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how judged work goes.'],
-      ['Curious', 'The thing nobody asked you to read gets read: your reading of a scene goes deeper.'],
+      ['Curious', 'The thing nobody asked you to read gets read, and you go deeper into how to play a part.'],
       ['Depression', 'Kept up, at what your plan doesn’t cover.'],
       ['Your Own Plans', 'Everything you’ve put on the calendar yourself.'],
     ]);

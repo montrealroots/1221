@@ -52,21 +52,21 @@ export interface DrawRect {
  * way wherever a photo is framed: the headshot picker and the phone's.
  */
 export const CANNOT_ENCODE = 'That photo couldn’t be saved. Try a different one.';
-export const CANNOT_DECODE = 'That photo couldn’t be opened. It may be damaged.';
+export const CANNOT_DECODE = 'That photo couldn’t be opened. It may be damaged, so try a different one.';
 
 /** Why a file was refused, in words a player can act on. */
 export function describeRejection(file: { type: string; size: number; name: string }): string | null {
   if (!file.type.startsWith('image/')) {
-    return `${file.name || 'That file'} isn’t an image.`;
+    return `${file.name || 'That file'} isn’t an image. Choose a JPEG, PNG or WebP photo.`;
   }
   if (!(ACCEPTED_TYPES as readonly string[]).includes(file.type)) {
     return `${file.type.replace('image/', '').toUpperCase()} images aren’t supported. Try a JPEG, PNG or WebP.`;
   }
   if (file.size > MAX_UPLOAD_BYTES) {
-    return `That photo is ${(file.size / 1024 / 1024).toFixed(1)}MB. The limit is ${MAX_UPLOAD_BYTES / 1024 / 1024}MB.`;
+    return `That photo is ${(file.size / 1024 / 1024).toFixed(1)}MB, over the ${MAX_UPLOAD_BYTES / 1024 / 1024}MB limit. Try a smaller one.`;
   }
   if (file.size === 0) {
-    return 'That file is empty.';
+    return 'That file is empty. Choose a different photo.';
   }
   return null;
 }

@@ -273,7 +273,7 @@ describe('c-traits and trait-receipts: the receipts knob gone', () => {
     expect(accounts.kind).toBe('Your Trait');
     expect(accounts.words).toContain('How hard a slight from a classmate cuts +10% +10% all told');
     const chaotic = look(sim, 'trait', 'chaotic');
-    expect(chaotic.words).toContain('How fast you stop being clean +30% +24% all told');
+    expect(chaotic.words).toContain('How soon you need a shower +30% +24% all told');
     expect(chaotic.words).toContain('How much stress a hard hour, a performance’s nerves or an injury adds −8% −8% all told');
     // Two rows for Chaotic and one for Keeps Accounts, and nothing about a receipt or a deduction in either.
     for (const [seen, rows] of [[accounts, 1], [chaotic, 2]] as const) {
@@ -425,11 +425,11 @@ describe('c-wealth: Starting Point’s tiles are what Begin opens, for every fam
 describe('c-family: the means go with the family the select last chose', () => {
   it('PLAYER JOURNEY: Inherited chosen, then Nothing: Review says Need Found, and at the fall term’s start Nothing’s student is paid $13,318.50 where Inherited’s pays the $1,882 plan from $260,870', () => {
     const rich = chosen(ada(), 'inherited');
-    expect(creation(STEP.review, rich).text).toContain('Family Inherited, No Need Found');
+    expect(creation(STEP.review, rich).text).toContain('Family Inherited Wealth, No Need Found');
     const poor = chosen(rich, 'nothing');
     expect(poor).toMatchObject({ wealth: 'nothing' });
     expect(poor.family).toBeUndefined();
-    expect(creation(STEP.review, poor).text).toContain('Family Nothing, Need Found');
+    expect(creation(STEP.review, poor).text).toContain('Family Next To Nothing, Need Found');
     const need = begun('e3-need', poor);
     const without = begun('e3-need', rich);
     expect(need.player.family).toBeUndefined();

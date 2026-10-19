@@ -74,10 +74,10 @@ export type PersonalityKnob =
  */
 export const KNOB_READS: Readonly<Record<PersonalityKnob, string>> = {
   stressGain: 'How much stress a hard hour, a performance’s nerves or an injury adds',
-  stressRecovery: 'How fast stress clears, awake and with a workout or an hour unwinding',
+  stressRecovery: 'How fast stress clears while you’re awake, and with a workout or an hour unwinding',
   sleepQuality: 'How good a night’s sleep is',
   energyRecovery: 'How much energy a night puts back',
-  hygieneDrift: 'How fast you stop being clean',
+  hygieneDrift: 'How soon you need a shower',
   moraleSwing: 'How far your morale moves, up and down',
   spending: 'What the day’s food costs you',
   illnessToll: 'How hard an illness hits, and how long an injury takes to mend',
@@ -90,10 +90,10 @@ export const KNOB_READS: Readonly<Record<PersonalityKnob, string>> = {
   appetite: 'How much you eat in a day, which your weight follows',
   morning: 'How sharp you are before noon, at classes, calls and preparation',
   evening: 'How sharp you are from five in the evening',
-  readsAround: 'How far a step on a part’s interpretation goes',
-  drills: 'How far a step on learning the lines goes',
-  skims: 'How far a step on knowing the play goes',
-  revises: 'How far a step on revising after a note goes',
+  readsAround: 'How much a session on how to play a part gets done',
+  drills: 'How much a session learning the lines gets done',
+  skims: 'How much a session getting to know the play gets done',
+  revises: 'How much a session revising after a note gets done',
   mealMood: 'How much a meal lifts your morale',
 };
 
@@ -338,7 +338,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   // --- Mind: how they think -------------------------------------------------
   {
     id: 'curious', name: 'Curious', group: 'Mind',
-    description: 'The thing nobody asked you to read gets read: your reading of a scene goes deeper.',
+    description: 'The thing nobody asked you to read gets read, and you go deeper into how to play a part.',
     cost: 'It isn’t useful now, and now is when the work is due.',
     systemMods: { stressGain: 1.1, readsAround: 1.15 },
     conflictsWith: ['single_minded'],
@@ -353,13 +353,13 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'scattered', name: 'Scattered', group: 'Mind',
     description: 'Six things at once, all of them moving: you get around a scene fast.',
-    cost: 'Most of them. Something is always the one you dropped.',
+    cost: 'Most of them, anyway: something is always the one you dropped.',
     systemMods: { stressGain: 1.1, skims: 1.15 },
     conflictsWith: ['single_minded'],
   },
   {
     id: 'self_critical', name: 'Self Critical', group: 'Mind',
-    description: 'You’re the harshest reader you’ll ever have, and a revision is better for it.',
+    description: 'You’re the harshest critic you’ll ever have, and a revision is better for it.',
     cost: 'It isn’t free. It comes out of you.',
     systemMods: { stressGain: 1.22, moraleSwing: 1.2, revises: 1.15 },
     conflictsWith: ['self_assured'],

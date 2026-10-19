@@ -142,5 +142,167 @@
   "why": "A transaction memo is read in a statement list: cryptic fragments became what the money is.",
   "meaningSensitive": false,
   "verified": "tests/language-frame-ui.test.ts, same test, both memos found in an opened save at 90"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "How you lean, not what you can do. Each one shapes a part of your life:",
+  "after": "Your temperament, not your talent. Each one changes a part of your life:",
+  "why": "A new player meets this before knowing anything; 'how you lean' was the engine's word for a disposition's direction.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says each step’s guidance in the player’s words…'"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "Extraversion: how being watched as you perform, by an audience or a class, affects your stress. / Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale.",
+  "after": "Extraversion: whether performing in front of people, an audience or your class, raises your stress or eases it. / Openness: whether rehearsing new work, a festival’s new play or a Cabaret piece, lifts your morale or lowers it.",
+  "why": "'Affects' hid that it goes either way; the slider's side decides which.",
+  "meaningSensitive": true,
+  "verified": "enjoyment.ts: lean() is positive above 50 and negative below, for DISPOSED.room (stress) and DISPOSED.away and DISPOSED.rehearsal (morale); tests/evidence-g28-ui.test.ts's disposition journeys measure both sides"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "Composure is an ability your work is judged on. Apart from where Composure and Discipline start, none of these makes you better or worse at anything.",
+  "after": "Apart from your starting Composure and Discipline, none of these makes you a better or worse actor. Composure is one of the abilities your performances are judged on.",
+  "why": "What matters first (they don't make you better) leads; 'your work' was the engine's word for a performance.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g27-ui.test.ts, 'starts composure at 26.8 at stability 5 and at 58.3 at 95, as creation and the Profile say'"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "Pick up to four. Traits come in opposing pairs, and you can’t hold both sides of a pair. For now they change how stress builds and clears, how well you sleep and how much a night restores, how quickly you need a shower, … and how you warm to classmates and how much a slight from one hurts. Frugal, Spender and Generous also change what your food costs and how much a meal lifts you.",
+  "after": "Pick up to four. Traits come in opposing pairs, and you can’t have both of a pair. Between them, they change: [a list of nine] … and, for Frugal, Spender and Generous, what your food costs and how much a meal lifts you.",
+  "why": "A ninety-word sentence became a list a new player can scan; 'for now' promised a future the game doesn't have.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'creation says what it’s for…', and tests/evidence2-b10.test.ts, the Keeps Accounts line"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "Each description and cost is written for a whole life, and the game applies only the parts that reach those. Once you’re playing, each trait opens from your own page to show what it changes.",
+  "after": "A trait’s description and cost describe the whole person, but the game uses only the effects above. Once you’re playing, open a trait on your Player Profile to see exactly what it changes.",
+  "why": "'The parts that reach those' pointed at nothing a player could find; the place is named by its screen, the Player Profile, where 'Traits you chose.' lists them.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'creation says what it’s for…'; ProfileWorkspace.tsx lists the traits with links"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#blockedTraitReason",
+  "kind": "error",
+  "before": "Can’t be held with Even Tempered or Unshakeable. / You already hold four traits.",
+  "after": "It clashes with Even Tempered and Unshakeable, which you’ve picked. / You already have four traits, the most you can pick.",
+  "why": "A subjectless passive became a sentence about what the player did and why the button is gray; the list uses spokenList.",
+  "meaningSensitive": false,
+  "verified": "tests/creation.test.ts, 'says why a trait can’t be picked, and says nothing when it can', one clash, two and the full four"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#BodyFields",
+  "kind": "feedback",
+  "before": "Give both, or neither. With only one, your body is drawn from the averages where you were born.",
+  "after": "Enter both, or neither. With only one, SLATE picks your height and weight at random, around the averages where you were born.",
+  "why": "'Drawn' is the engine's word for a random draw; the player reads it as a picture.",
+  "meaningSensitive": true,
+  "verified": "systems/body.ts draws height and BMI from the birth country's adult mean and spread when either is missing (decided.ts's body.draw); tests/evidence-g28-ui.test.ts's Your Body journey"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#IdentityStep",
+  "kind": "tutorial",
+  "before": "With They/Them, the choice is yours. Actor and Actress are two words for the same craft, and the game treats them as equals. Pick the one you want to be called: the game calls you by it, and at school you’re cast in parts written for it, or written for anyone.",
+  "after": "With They/Them, you choose. Actor and Actress are two words for the same craft, and neither counts for more. The game calls you by the one you pick, and at school you’re cast in parts written for it, or for anyone.",
+  "why": "Shorter sentences, one fact each, and the repeated 'written' dropped.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says each step’s guidance…', and tests/evidence-g27-ui.test.ts's Billed As journey"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#IdentityStep",
+  "kind": "label",
+  "before": "You’ll be 22 when this life begins.",
+  "after": "You’ll be 22 when you start.",
+  "why": "The brief names 'this life' as a phrase to drop.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g27-ui.test.ts, the leap-day and year tests"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#BeforeYale",
+  "kind": "other",
+  "before": "Your savings stay where you saved them. Your everyday money is in your account here, and the card stays with Chase. Your 普通預金 (Ordinary Deposit) opens with nothing in it.",
+  "after": "(Kept At MUFG Bank) Your savings stay at MUFG Bank. Your everyday money is in your account here, and your card stays with Chase. / (Moved To Chase) Your savings move to Chase. … Your HSBC current account opens with nothing in it.",
+  "why": "A defect: the line said the savings stayed even with Moved To chosen, and that the account opened empty right under the sentence that gave it its fees. Each variant now says what splitOf does.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'Before Yale says where the savings go and what the account kept there opens with, for each choice', which fails on the old line (defects.md 1)"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#FamilyChoice",
+  "kind": "official",
+  "before": "Yale finds that you need aid. Its living-expense scholarship, $15,200.50 a term, pays the term’s Yale Health plan, $1,882.00, and the rest, $13,318.50, goes into your bank each fall and spring. Work-study hours you miss while ill can be converted to grant aid, and a leave that begins mid-term means giving back part of the scholarship.",
+  "after": "Yale finds that you need aid. Its living-expense scholarship of $15,200.50 a term pays for that term’s Yale Health plan, $1,882.00, and puts the rest, $13,318.50, into your bank each fall and spring. If you miss work-study hours while you’re ill, you can convert them to grant aid. If you take a leave in the middle of a term, you give back part of the scholarship.",
+  "why": "Every amount kept; each condition its own sentence, with the player as the subject.",
+  "meaningSensitive": true,
+  "verified": "tests/need-paths.test.ts and tests/evidence3-person.test.ts, each family; the amounts are termAccount's"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#WEALTH_LABEL",
+  "kind": "label",
+  "before": "Family Nothing, Need Found (the select: Nothing, Scraping, Modest, Comfortable, Wealthy, Inherited)",
+  "after": "Family Next To Nothing, Need Found (Next To Nothing, Scraping By, Modest, Comfortable, Wealthy, Inherited Wealth)",
+  "why": "The labels were the ids capitalized; two read as nonsense on Review. Each now says what its note says.",
+  "meaningSensitive": false,
+  "verified": "tests/need-paths.test.ts's six families, and tests/evidence3-person.test.ts's Review"
+ },
+ {
+  "source": "src/ui/creation/LocationPicker.tsx#LocationPicker",
+  "kind": "empty",
+  "before": "No town or city matches “” there. Try a different spelling, or widen the region.",
+  "after": "(nothing typed) There’s no town or city on record there. / (typed, in a state) No town or city matches “Zzyzxq” there. Try a different spelling, or choose Anywhere in United States.",
+  "why": "An empty search printed empty quotes; 'widen the region' named no control, and the select's first option is Anywhere in the country.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'the place picker says what a country has, and a search that finds nothing what to try', three variants"
+ },
+ {
+  "source": "src/ui/creation/portrait.ts#describeRejection",
+  "kind": "error",
+  "before": "That photo is 30.0MB. The limit is 24MB.",
+  "after": "That photo is 30.0MB, over the 24MB limit. Try a smaller one.",
+  "why": "The refusal now gives the way out.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do'"
+ },
+ {
+  "source": "src/engine/content/personality-traits.ts#KNOB_READS",
+  "kind": "label",
+  "before": "How far a step on a part’s interpretation goes / How fast you stop being clean",
+  "after": "How much a session on how to play a part gets done / How soon you need a shower",
+  "why": "The glossary's 'how much a session gets done' and 'how you play it'; 'stop being clean' was the hygiene measure's mechanism, not the player's experience.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'a trait’s look names what a session of preparation gets done…', five traits' looks"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.home]",
+  "kind": "tutorial",
+  "before": "A word stays plain text until the guide’s chapter that opens it has been read.",
+  "after": "Some words only become links once you’ve read the guide chapter that covers them.",
+  "why": "The owner's own example, adapted to the guide's name for itself (the reference, row 1).",
+  "meaningSensitive": false,
+  "verified": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, drawn through the Help dialog"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.guide]",
+  "kind": "tutorial",
+  "before": "Two things share one button. The guide’s 17 chapters teach the game in order: … The reference is everything else: an entry for each feature, opened by How This Works beside it, and searchable, … Reading either moves no clock, and changes nothing in your save but which chapters you’ve read.",
+  "after": "SLATE has two kinds of help. The guide’s 17 chapters teach the game in order, and each one opens a part of it: a part you haven’t opened yet shows as Locked. How This Works has an entry for every feature, … Reading either doesn’t move the clock, and the only thing it changes in your save is which chapters you’ve read.",
+  "why": "'Two things share one button' named no button; 'the reference' isn't a name on any screen, How This Works is (glossary).",
+  "meaningSensitive": false,
+  "verified": "help-b2.txt"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.find]",
+  "kind": "tutorial",
+  "before": "The menu down the left lists every place the guide has opened, with Home at the top wearing the count of what’s waiting on you.",
+  "after": "The menu down the left lists every place the guide has opened. Home is at the top, with the number of things waiting for you.",
+  "why": "A literary sentence about a basic control (the brief, section 3).",
+  "meaningSensitive": false,
+  "verified": "help-b2.txt"
  }
 ]

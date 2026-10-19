@@ -148,7 +148,7 @@ describe('what it refuses, and why', () => {
     expect(describeRejection({ type: 'image/tiff', size: 100, name: 'scan.tiff' }))
       .toMatch(/n[o’]t supported/);
     expect(describeRejection({ type: 'image/jpeg', size: MAX_UPLOAD_BYTES + 1, name: 'huge.jpg' }))
-      .toMatch(/limit is/);
+      .toMatch(/over the \d+MB limit/);
     expect(describeRejection({ type: 'image/png', size: 0, name: 'empty.png' }))
       .toMatch(/empty/);
   });

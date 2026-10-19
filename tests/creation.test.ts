@@ -150,13 +150,13 @@ describe('Dispositions & Traits', () => {
   });
 
   it('says why a trait can’t be picked, and says nothing when it can', () => {
-    expect(blockedTraitReason(['early_riser'], 'night_owl')).toBe('Can’t be held with Early Riser.');
+    expect(blockedTraitReason(['early_riser'], 'night_owl')).toBe('It clashes with Early Riser, which you’ve picked.');
     expect(blockedTraitReason(['even_tempered', 'unshakeable'], 'quick_tempered'))
-      .toBe('Can’t be held with Even Tempered or Unshakeable.');
+      .toBe('It clashes with Even Tempered and Unshakeable, which you’ve picked.');
     const four = ['frugal', 'loyal', 'curious', 'orderly'];
-    expect(blockedTraitReason(four, 'resilient')).toBe('You already hold four traits.');
+    expect(blockedTraitReason(four, 'resilient')).toBe('You already have four traits, the most you can pick.');
     // A clash is the thing to fix first, so it is the thing said.
-    expect(blockedTraitReason(four, 'chaotic')).toBe('Can’t be held with Orderly.');
+    expect(blockedTraitReason(four, 'chaotic')).toBe('It clashes with Orderly, which you’ve picked.');
     // Held, it can be put down. Free, it can be picked.
     expect(blockedTraitReason(four, 'loyal')).toBeUndefined();
     expect(blockedTraitReason(['frugal'], 'loyal')).toBeUndefined();
@@ -224,9 +224,9 @@ describe('Starting Point', () => {
   it('asks your height and weight, and shows no food', () => {
     const step = stepSource('function StartingPointStep', 'function BankChoice');
     expect(step).toContain('<BodyFields config={config} setConfig={setConfig} />');
-    // First on the page (2026-10-10): before Where It Begins and What Is Yours.
+    // First on the page (2026-10-10): before Where It Begins and Your Money (What Is Yours until 2026-10-19).
     expect(step.indexOf('<h2>Your Body</h2>')).toBeLessThan(step.indexOf('<h2>{config.school'));
-    expect(step.indexOf('<h2>Your Body</h2>')).toBeLessThan(step.indexOf('<h2>What Is Yours</h2>'));
+    expect(step.indexOf('<h2>Your Body</h2>')).toBeLessThan(step.indexOf('<h2>Your Money</h2>'));
     expect(step).not.toContain('<MonthByMonth');
     expect(stepSource('function IdentityStep', 'function PersonalityStep')).not.toContain('<BodyFields');
     expect(SOURCE).not.toContain('function MonthByMonth');
