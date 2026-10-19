@@ -167,7 +167,8 @@ function GuideDialog({ start, onClose }: { start: string; onClose: () => void })
   const next = useWorld((s) => nextChapter(s));
   const isGuided = useWorld((s) => guided(s));
   // A guide finished leaves a chapter added after it open and unread for good: there’s no I’ve Read It for it, and what
-  // it names is open already. Until 2026-10-13 it was listed as Later, over What Reading It Opens.
+  // it names is open already. Until 2026-10-13 it was listed as Later, over What Reading It Opens (What It Opens from
+  // 2026-10-19, brief 15).
   const finished = useWorld((s) => Boolean(s.universe.tutorial?.finished));
   // An empty start is the next chapter; any chapter asked for opens, to read.
   const [at, setAt] = useState(() => CHAPTER_BY_ID[start]?.id ?? next?.id ?? CHAPTERS[0]!.id);
@@ -243,8 +244,8 @@ function GuideDialog({ start, onClose }: { start: string; onClose: () => void })
               </ul>
               <p className="small muted">
                 {next
-                  ? `It’s open now. Try it, or go straight on to “${next.title}”. The guide picks up there whenever you open it.`
-                  : 'That was the last chapter, and every part of the game is open. Guide, at the top of the screen, opens any chapter again whenever you want it.'}
+                  ? `It’s open now. Press Try It to go and use it, or go straight on to “${next.title}”. Next time you open the guide, it starts there.`
+                  : 'That was the last chapter, and every part of the game is open now. To read any chapter again, press Guide at the top of the screen.'}
               </p>
             </>
           ) : (
@@ -272,7 +273,7 @@ function GuideDialog({ start, onClose }: { start: string; onClose: () => void })
                 </details>
               )}
               <div className="guide-opens-box">
-                <div className="eyebrow">{read.includes(chapter.id) ? 'What It Opened' : finished ? 'What It Covers, Already Open' : 'What Reading It Opens'}</div>
+                <div className="eyebrow">{read.includes(chapter.id) ? 'What It Opened' : finished ? 'What It Covers, Already Open' : 'What It Opens'}</div>
                 <ul className="small guide-opens">
                   {chapter.names.map((name) => <li key={name}>{name}</li>)}
                 </ul>

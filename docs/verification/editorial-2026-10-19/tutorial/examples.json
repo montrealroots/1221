@@ -1,0 +1,122 @@
+[
+ {
+  "batch": 1,
+  "source": "src/engine/world/tutorial.ts#registerTutorial",
+  "kind": "error",
+  "before": "This life was begun without the guide, so everything is already open.",
+  "after": "You started without the guide, so everything is already open.",
+  "why": "The working reference's example 8 and the owner's: “This life was begun” was the game describing its own state in the passive. The player started the life; say so.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts and tests/evidence-g29-ui.test.ts assert the new words; the condition (no guide state) is unchanged, and the Guide button isn't shown then, so only a command reaches it."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Contents",
+  "kind": "other",
+  "before": "Everything is open on this life. The chapters are there to read in any order.",
+  "after": "Everything is already open. You can read the chapters in any order.",
+  "why": "“On this life” is one of the brief's named tics, and “are there to read” is indirect. Two short sentences: what's true, what the player can do.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts, 'on a finished guide missing chapters…', asserts the line on a finished guide."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Entry",
+  "kind": "feedback",
+  "before": "This isn’t open yet. Reading “Drama School” in the guide opens it. [Read About It]",
+  "after": "This isn’t open yet. Read “Drama School” in the guide to open it. [Read About It]",
+  "why": "A gerund for a subject described the guide's mechanics; an instruction tells the player what to do, beside the button that does it.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, '? on School’s Casting tab…', asserts it; seen on the built app."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Entry",
+  "kind": "button",
+  "before": "Show Everything / Fold It Up (aria-pressed)",
+  "after": "Show Everything / Show Less (no pressed state)",
+  "why": "Show Less is the plain partner of Show Everything. The toggle also carried aria-pressed while its name changed, so a screen reader said “Fold It Up, pressed”: the label now says what a press does, as Play and Pause do (defects.md, 1).",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'Show Everything and Show Less name what a press does, with no pressed state', which fails with aria-pressed put back."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Guide.tsx#GuideDialog",
+  "kind": "confirmation",
+  "before": "It’s open now. Try it, or go straight on to “What’s Coming”. The guide picks up there whenever you open it.",
+  "after": "It’s open now. Press Try It to go and use it, or go straight on to “What’s Coming”. Next time you open the guide, it starts there.",
+  "why": "It names the button beside it, Try It, rather than echoing it in lower case, and says plainly where the guide opens next time.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts reads it after every chapter of a new life's guide; follow-1440/log.txt reads it after each of the seventeen chapters on the built app."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Guide.tsx#GuideDialog",
+  "kind": "confirmation",
+  "before": "That was the last chapter, and every part of the game is open. Guide, at the top of the screen, opens any chapter again whenever you want it.",
+  "after": "That was the last chapter, and every part of the game is open now. To read any chapter again, press Guide at the top of the screen.",
+  "why": "Lead with what the player can do and the control that does it, not with the button's name as a subject.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts asserts it; follow-1440/log.txt, chapter life."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Guide.tsx#GuideDialog",
+  "kind": "heading",
+  "before": "What Reading It Opens",
+  "after": "What It Opens",
+  "why": "A gerund phrase as a heading read stiffly. What It Opens says the same beside What It Opened, its read form.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts asserts it on an unfinished guide and its absence on a finished one; follow-1440/log.txt checks it on every chapter."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [coursework]",
+  "kind": "label",
+  "before": "Preparing the work your classes set, table work, how you’ll play a scene, feedback, rehearsing with a partner and working a problem through.",
+  "after": "Preparing the pieces your classes set, table work, how you’ll play a scene, your teachers’ notes, rehearsing with a partner, your classmates and working a problem through.",
+  "why": "“The work” is engine-speak for a piece; “feedback” is the glossary's word for what the screen calls your teacher's notes; and the lead left out its entry Your Class.",
+  "meaningSensitive": false,
+  "verified": "The help's contents on the built app (follow-1440/help-contents.txt); tests/help-mechanics.test.ts renders it."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [productions]",
+  "kind": "label",
+  "before": "Being cast, learning a part, the director’s notes, the nights, the Cabaret and plays to read.",
+  "after": "Being cast, learning a part, the director’s notes, how you’ll play a part, the nights, the Cabaret and plays to read.",
+  "why": "The lead named its entries in order but skipped How You’ll Play A Part.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/help-contents.txt."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [craft]",
+  "kind": "label",
+  "before": "Your Player Profile, practice, genres, practice briefs, a piece of work explained and your work so far.",
+  "after": "Your Player Profile, practice, genres, practice briefs from preparing to taping, how a piece was judged, and your work so far.",
+  "why": "“A piece of work explained” was a fragment of the entry's title; say what the entry tells you. Practice briefs cover four entries, preparing through taping.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/help-contents.txt."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [money]",
+  "kind": "label",
+  "before": "Your accounts, moving money, cards, paying, borrowing, other banks and what you’re worth.",
+  "after": "What you’re worth, your accounts, moving money, savings, paying, cards, borrowing, another bank and an account at home.",
+  "why": "It now runs in its entries' order (Your Affairs And What You’re Worth comes first) and names the savings and A Bank At Home entries it left out.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/help-contents.txt."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [papers]",
+  "kind": "label",
+  "before": "Health cover and the doctor, benefits and pensions, tax returns, your passport and ID, and permission to work.",
+  "after": "Health cover and the doctor, benefits and pensions, tax returns, your passport and ID, permission to work and living abroad.",
+  "why": "Residence Abroad is the group's last entry and the lead didn't name it.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/help-contents.txt."
+ }
+]

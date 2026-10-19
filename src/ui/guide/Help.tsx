@@ -264,7 +264,7 @@ function Contents({ onOpen }: { onOpen: (id: string) => void }) {
   const read = useWorld((s) => chaptersRead(s).filter((id) => CHAPTERS.some((c) => c.id === id)).length);
   const onScreen = useMemo(onThisScreen, []);
   const said = !isGuided
-    ? 'Everything is open on this life. The chapters are there to read in any order.'
+    ? 'Everything is already open. You can read the chapters in any order.'
     : read === 0
       ? `You haven’t read any of its ${CHAPTERS.length} chapters yet. Each one you read opens a part of the game.`
       : `You’ve read ${read} of its ${CHAPTERS.length} chapters. Each one you read opens a part of the game.`;
@@ -419,11 +419,15 @@ function Entry({ e, onOpen, onWhere }: { e: GuideEntry; onOpen: (id: string) => 
     <article className="help-entry" aria-labelledby={`entry-${e.id}`}>
       <div className="row-between" style={{ alignItems: 'baseline' }}>
         <h3 id={`entry-${e.id}`} style={{ margin: 0 }}>{e.title}</h3>
-        <button type="button" className="btn btn-ghost btn-sm" onClick={() => setAll((x) => !x)} aria-pressed={all}>{all ? 'Fold It Up' : 'Show Everything'}</button>
+        {/* The label says what a press does, and has no pressed state (from 2026-10-19, brief 15): until then it was
+            Show Everything and Fold It Up with `aria-pressed`, so a screen reader said “Fold It Up, pressed”, a toggle
+            whose name changed with its state (WAI-ARIA Authoring Practices, Button pattern), as Play and Pause were until
+            2026-10-13 (`ui/shell/TimeControls.tsx`). */}
+        <button type="button" className="btn btn-ghost btn-sm" onClick={() => setAll((x) => !x)}>{all ? 'Show Less' : 'Show Everything'}</button>
       </div>
       {chapter && (
         <div className="callout callout-warning small" style={{ margin: 'var(--s2) 0 var(--s3)' }}>
-          This isn’t open yet. Reading “{chapter.title}” in the guide opens it.{' '}
+          This isn’t open yet. Read “{chapter.title}” in the guide to open it.{' '}
           <button type="button" className="btn btn-sm" onClick={() => guide.show(chapter.id)}>Read About It</button>
         </div>
       )}

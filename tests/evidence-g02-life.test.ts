@@ -667,7 +667,7 @@ describe('tutorial.read', () => {
     expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: 'nope' } }).error).toBe('There’s no such chapter.');
     expect(guided.universe.tutorial).toEqual({ read: [] });
     const open = student('g02-guide-none');
-    expect(open.execute({ kind: 'tutorial.read', payload: { chapterId: CHAPTERS[0]!.id } }).error).toBe('This life was begun without the guide, so everything is already open.');
+    expect(open.execute({ kind: 'tutorial.read', payload: { chapterId: CHAPTERS[0]!.id } }).error).toBe('You started without the guide, so everything is already open.');
     expect(open.universe.tutorial).toBeUndefined();
   });
 
@@ -729,14 +729,14 @@ describe('tutorial.read', () => {
       expect(atBank.html).toContain('aria-label="17. A Whole Life, Open"');
       expect(atBank.html).not.toMatch(/, Later"/);
       expect(atBank.text).toContain('What It Covers, Already Open');
-      expect(atBank.text).not.toContain('What Reading It Opens');
-      expect(contents().text).toContain('The Guide. Everything is open on this life. The chapters are there to read in any order.');
+      expect(atBank.text).not.toContain('What It Opens');
+      expect(contents().text).toContain('The Guide. Everything is already open. You can read the chapters in any order.');
       // Change the input: not finished, the same save is a guide with two chapters to go, the next of them Your Bank.
       delete sim.universe.tutorial!.finished; // TEST SETUP
       const going = guide();
       expect(going.html).toContain('aria-label="16. Your Bank, Next"');
       expect(going.html).toContain('aria-label="17. A Whole Life, Later"');
-      expect(going.text).toContain('What Reading It Opens');
+      expect(going.text).toContain('What It Opens');
       expect(going.has('I’ve Read It')).toBe(true);
       expect(contents().text).toContain('The Guide. You’ve read 15 of its 17 chapters. Each one you read opens a part of the game.');
     } finally {

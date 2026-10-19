@@ -1,0 +1,205 @@
+{
+ "src/engine/content/guide/index.ts#GOALS [body]": {
+  "status": "Retained",
+  "hash": "26ed8f871f1c",
+  "on": "2026-10-19",
+  "reason": "Looking After Yourself names its three entries in order, How You Are, Sleep and the menu's four things, in the menu's own everyday words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/index.ts#GOALS [coursework]": {
+  "status": "Rewritten",
+  "hash": "85c798692df4",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' renders the contents with every group's lead; read on the built app's How This Works contents, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/index.ts#GOALS [craft]": {
+  "status": "Rewritten",
+  "hash": "4837f2a79616",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' renders the contents with every group's lead; read on the built app's How This Works contents, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/index.ts#GOALS [day]": {
+  "status": "Retained",
+  "hash": "de60dbfb5b6e",
+  "on": "2026-10-19",
+  "reason": "Your Day And The Clock lists its six entries in order, each by the name the player meets on Home: what's coming, the clock, moving time on, what needs you, plans, weather.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/index.ts#GOALS [money]": {
+  "status": "Rewritten",
+  "hash": "0f5cad9ef6d8",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' renders the contents with every group's lead; read on the built app's How This Works contents, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/index.ts#GOALS [papers]": {
+  "status": "Rewritten",
+  "hash": "654840a2ddc5",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' renders the contents with every group's lead; read on the built app's How This Works contents, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/index.ts#GOALS [productions]": {
+  "status": "Rewritten",
+  "hash": "04397bec93b0",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' renders the contents with every group's lead; read on the built app's How This Works contents, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/index.ts#GOALS [school]": {
+  "status": "Retained",
+  "hash": "54866e56424b",
+  "on": "2026-10-19",
+  "reason": "Staying At School lists its seven entries in their order, from standing and classes to work-study, in the words the School screen uses.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/index.ts#GOALS [start]": {
+  "status": "Retained",
+  "hash": "700418186a2a",
+  "on": "2026-10-19",
+  "reason": "Getting Started names its three entries in their order, Home, the guide and this help, and finding your way, in plain words a new player reads first.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/index.ts#SEARCH_EXAMPLES": {
+  "status": "Retained",
+  "hash": "8e5813806ca6",
+  "on": "2026-10-19",
+  "reason": "Two searches written the way a player would type them, lower case and plain, each of which tests/guide.test.ts holds to finding an entry.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/tutorial.ts#lockedBecause": {
+  "status": "Retained",
+  "hash": "dd55aa2473a4",
+  "on": "2026-10-19",
+  "reason": "A locked control's reason names the chapter to read in quotes, the chapter to read first when it's another, and where the Guide button is, in two short sentences.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/tutorial.ts#registerTutorial": {
+  "status": "Rewritten",
+  "hash": "2f5fb22923b0",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g02-life.test.ts, 'refuses an unknown chapter “There’s no such chapter.” and a life with no guide in its words, reading nothing', and tests/evidence-g29-ui.test.ts, 'makes a life with no guide and the clock paused when Review’s “I Know SLATE” is chosen, every command open, and keeps it so across a reload', assert “You started without the guide, so everything is already open.”",
+  "first": "Pending"
+ },
+ "src/ui/guide/Guide.tsx#Gated": {
+  "status": "Retained",
+  "hash": "a798882f1c31",
+  "on": "2026-10-19",
+  "reason": "The one word a locked control adds after its own label, the glossary's Locked, so the control still says what it is and pressing it opens its chapter.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/guide/Guide.tsx#GuideButton": {
+  "status": "Retained",
+  "hash": "bf073fae640d",
+  "on": "2026-10-19",
+  "reason": "The top bar's Guide button, the name every chapter and help page uses for it, with how many chapters are left in brackets until the last is read.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/guide/Guide.tsx#GuideDialog": {
+  "status": "Rewritten",
+  "hash": "7a04aae430ad",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' asserts It’s open now and the last chapter's words; tests/evidence-g02-life.test.ts, 'on a finished guide missing chapters, the guide’s list calls them Open, over what they cover, and the help’s contents counts none unread' asserts What It Opens; read on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "first": "Pending"
+ },
+ "src/ui/guide/Guide.tsx#GuideStrip": {
+  "status": "Retained",
+  "hash": "e1fa99aec03c",
+  "on": "2026-10-19",
+  "reason": "The strip under the bar says where the player is in the guide (Guide · 2 Of 17), the next chapter's title and lead, and offers one short Read button to open it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/guide/Guide.tsx#LockedPanel": {
+  "status": "Retained",
+  "hash": "f3f8850d40ef",
+  "on": "2026-10-19",
+  "reason": "A locked panel keeps its title, says Locked, names the chapter to read in quotes and what the panel will hold, and its Read About It button opens that chapter: every part a player needs, once.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/guide/Help.tsx#CONNECTION_HEADING": {
+  "status": "Retained",
+  "hash": "554866d1e13a",
+  "on": "2026-10-19",
+  "reason": "How It Connects' six headings say in plain words what passes between two entries (Comes First, Changes Straight Away, Counts Toward), the glossary's own set, each distinct from the others.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/guide/Help.tsx#Contents": {
+  "status": "Rewritten",
+  "hash": "9e577a38d8f3",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g02-life.test.ts, 'on a finished guide missing chapters, the guide’s list calls them Open, over what they cover, and the help’s contents counts none unread' asserts “Everything is already open. You can read the chapters in any order.”; tests/help-mechanics.test.ts, 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' renders the rest; read on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "first": "Pending"
+ },
+ "src/ui/guide/Help.tsx#Entry": {
+  "status": "Rewritten",
+  "hash": "2c06e6775e21",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'Show Everything and Show Less name what a press does, with no pressed state' and 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' (“This isn’t open yet. Read “…” in the guide to open it.”); read on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "first": "Pending"
+ },
+ "src/ui/guide/Help.tsx#EntryLink": {
+  "status": "Retained",
+  "hash": "a798882f1c31",
+  "on": "2026-10-19",
+  "reason": "An entry's title in a list, followed by Locked while every feature it covers waits on an unread chapter, the same word the locked controls use.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/guide/Help.tsx#HelpDialog": {
+  "status": "Retained",
+  "hash": "cbb1d9f40a5c",
+  "on": "2026-10-19",
+  "reason": "The help's frame: a footer line telling the player the clock waits while they read, Back and Close, a search box labelled with what it searches and a placeholder that shows what to type.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/guide/Help.tsx#HelpProvider": {
+  "status": "Retained",
+  "hash": "28f9fc1b44d8",
+  "on": "2026-10-19",
+  "reason": "The way back after Show Me Where: Back To Help and Back To the screen left, each naming where it goes, and the dismiss's accessible name saying which buttons it hides.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/guide/Help.tsx#HINT": {
+  "status": "Retained",
+  "hash": "a1aad8ca5659",
+  "on": "2026-10-19",
+  "reason": "The empty search's hint says what can be typed and gives two real searches a player would write, each of which finds an entry (tests/guide.test.ts).",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/guide/Help.tsx#pageLabel": {
+  "status": "Retained",
+  "hash": "cd8e2fc466e5",
+  "on": "2026-10-19",
+  "reason": "The help trail's two page names, one plain word each, matching the search box's own Search button and the Contents a player went back to.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/guide/Help.tsx#Results": {
+  "status": "Retained",
+  "hash": "cfc7595f500c",
+  "on": "2026-10-19",
+  "reason": "A no-match line that repeats exactly what was typed and gives the two real ways out, fewer or other words, or back to Contents.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/guide/Help.tsx#SCREEN_NAME": {
+  "status": "Retained",
+  "hash": "70f8bb9a8a53",
+  "on": "2026-10-19",
+  "reason": "Home, the screen's own name as the rail and the breadcrumb give it, so the way back reads Back To Home.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/guide/Help.tsx#screenName": {
+  "status": "Retained",
+  "hash": "dd0ba7152437",
+  "on": "2026-10-19",
+  "reason": "The fallback for Back To when the screen left has no name of its own, Back To The Last Screen, which still says plainly where the button goes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/guide/HowItWorks.tsx#HowItWorks": {
+  "status": "Retained",
+  "hash": "d2147be65fe7",
+  "on": "2026-10-19",
+  "reason": "The button beside each panel carries the help's own title, How This Works, and its accessible name adds the entry it opens, so a screen reader hears which help it is.",
+  "first": "Reviewed And Retained"
+ }
+}
