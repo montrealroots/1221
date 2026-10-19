@@ -83,3 +83,14 @@ files, each with its words and its reason, so the reasons can be judged as well 
   player has.
 - **`src/engine/core/ledger.ts#Ledger`:** "Transaction … doesn’t balance: postings sum to … cents, expected 0." Kept: the
   ledger's integrity errors are thrown only on a bug in the game, never in play; a player doesn't read them.
+
+## Batch 6
+
+- **`src/engine/content/guide/money.ts#MONEY [history]`:** "A debt sent to collections stays in Owed until it’s paid."
+  Kept: Owed lists it until it's paid, which is all the connection says; the record's years are in the entry's later
+  field now (m2).
+- **`src/engine/content/guide/money.ts#MONEY [evaluation]`:** "The credit record your card payments build is what a bank
+  looks at to arrange an overdraft or lend to you, and at what rate." Kept: what the card's record decides elsewhere,
+  once, with the two things it decides.
+- **`src/engine/content/guide/money.ts#CHASE_BANDS`:** "90 days’ interest on a term under 6 months, 180 days’
+  interest on a term under 24 months, 365 for a longer one". Kept: the penalty as the bank's own table puts it.

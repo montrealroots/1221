@@ -376,3 +376,52 @@ fails with the old figure. No UI tool matcher held these words.
 **Checks:** tsc 0; eslint 0 on the changed files; the affected test files 0 (149 tests, then 31 and 60 on reruns);
 title-case, label-sweep, plural-check, voice-check, tics, spelling, typos, doc-refs, deciders 0; guide-quotes 0 (582 of
 582). `text-inventory --check` 1 on my guide entries only, which batch 6 reads.
+
+## Batch 6: The Guide's Money Entries
+
+**Sources (26):** `src/engine/content/guide/money.ts`: the fourteen entries (Your Affairs And What You’re Worth to A
+Bank At Home), the connections by kind, and the six helpers that write a figure into a sentence. Rewritten 19,
+Retained 7.
+
+**Read whole, against the screens and notices of batches 1 to 5:** each entry's short, steps, needs, costs, reads, now,
+later, interpret, unavailable, mistakes, next and example, beside the panel and refusals it describes; every quoted
+refusal against the game's words (guide-quotes, and the short quotes by hand: it checks five words and more).
+
+**What changed.**
+- "Current account" became "checking account" in every field a player reads, 154 words, and "current and savings",
+  "current or savings" with it; the button is **Savings Covers The Checking Account**, as the screen names it since
+  batch 1. The synonyms keep "current account" and "current account switch service", since a player may search by
+  them, and Britain's Current Account Switch Service keeps its name.
+- Each short leads with a plain overview and the first action: Moving Money ("choose From and To, type the amount and
+  press Move It"), Term Deposits ("type the amount on its panel, on the Accounts tab, and press Put It Away"), Round-Ups
+  ("Turn them on under Your Accounts Over Time"), Keeping An Account (the two panels, where they are).
+- What the game says now: the Moved message names the account (batch 5); the cash refusals say "available"; the
+  statement gives "the minimum payment" (batch 2); Short For A Payment gives what's available; a German account's fees
+  are "held over for the quarter’s closing" (batch 1).
+- Things the entries said that weren't so: the Amount is typed "as you’d write it", where "in whole money, not cents"
+  was untrue of a field that takes decimals; a card is never charged interest when the whole statement is paid "every
+  month", where paying one statement in full after carrying a balance still brings the interest built since it.
+- m2 in the guide: Overdrafts And Loans now says the charge-off stays on the credit record for seven years in the US,
+  paid or not, and what an unpaid debt blocks; its next step says what paying changes (a card can be approved again,
+  the worry stops, the next US bank is less likely to turn you away), where "to improve your chances at the next bank"
+  stood alone.
+- ING's round-up floor is written "€20", as the game writes euros.
+- *Kept:* the connections, the examples' figures (each played by `tests/guide-examples-money.test.ts`), the where labels
+  ("Your Bank, …", the screen's heading, which `tools/tutorial-routes.mjs` looks for on the screen), the questions and
+  the helpers.
+
+**Meaning-sensitive changes, and how each was checked.**
+- *"Type the Amount as you’d write it":* `centsFromTyped` reads "12.50" as 1,250 cents and "250" as 25,000.
+- *"every month … never charged interest":* the Statements tab's own line for a carried balance.
+- *The charge-off's years:* `closedByBank` marks the record for a bank in the country the person lives in, and
+  `MARK_YEARS.us` is 7; a card at any bank is declined while a collections debt is unpaid (`card.apply`), and the bank
+  owed won't open an account (`openRefusal`).
+
+**Tests and tool matchers updated:** guide-examples-money (two anchors in NatWest's round-up example, which quote the
+setup and result: "money in the checking account", "moves from the checking account"). No tool matcher held these
+words.
+
+**Checks:** tsc 0; eslint 0; tests/guide, guide-examples-money, help-mechanics, language-crossarea-raise,
+defects-g21-1, decisions-arion 0 (60 tests); title-case, label-sweep, plural-check, voice-check, tics, spelling, typos,
+doc-refs, deciders 0; guide-quotes 0 (582 of 582). `text-inventory --check` 0 once the entries were marked (below, at
+the commit).

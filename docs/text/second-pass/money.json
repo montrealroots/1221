@@ -13,6 +13,188 @@
   "reason": "Currency symbols as each country writes them, Ft, Rp, Rs, Kz and the rest, before a figure",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/guide/money.ts#businessDays": {
+  "status": "Retained",
+  "hash": "9ad26337dc53",
+  "on": "2026-10-19",
+  "reason": "A count of business days, one or several, written with the right plural for each figure",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#card": {
+  "status": "Retained",
+  "hash": "6e2e8bfc3ebf",
+  "on": "2026-10-19",
+  "reason": "A stand-in card name, Its Card, used only where the research holds no card for a bank",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#chapter": {
+  "status": "Retained",
+  "hash": "7c457d6af80e",
+  "on": "2026-10-19",
+  "reason": "The guide chapter's own title that opens a feature, or its chapter where none is found",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#CHASE_BANDS": {
+  "status": "Retained",
+  "hash": "2bef7ba11b25",
+  "on": "2026-10-19",
+  "reason": "Chase's early withdrawal penalty bands, days of interest by the length of the term, as its terms list them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#clockOf": {
+  "status": "Retained",
+  "hash": "535f5efe9016",
+  "on": "2026-10-19",
+  "reason": "When the US law's clock on a debit card report starts, from learning of it or from the statement",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#Fee": {
+  "status": "Retained",
+  "hash": "75f527181b57",
+  "on": "2026-10-19",
+  "reason": "The word Free at the head of a cost figure, where a bank charges nothing for something",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.accounts]": {
+  "status": "Rewritten",
+  "hash": "39070d251512",
+  "on": "2026-10-19",
+  "evidence": "Checking account throughout, Savings Covers The Checking Account named as the button reads; tests/guide-examples-money.test.ts plays the example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.borrowing]": {
+  "status": "Rewritten",
+  "hash": "2e15ccb6ab53",
+  "on": "2026-10-19",
+  "evidence": "The charge-off's years on the record, paid or not, and what paying it changes (m2); tests/guide-examples-money.test.ts plays the overdraft example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.card-offers]": {
+  "status": "Rewritten",
+  "hash": "8c8eab555e7b",
+  "on": "2026-10-19",
+  "evidence": "Checking account for the money transfer and its refusal; tests/defects-g21-1.test.ts and the example's play read the entry",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.card-security]": {
+  "status": "Rewritten",
+  "hash": "aa842cba2344",
+  "on": "2026-10-19",
+  "evidence": "Checking account in the new number line and the refusal; tests/guide-examples-money.test.ts plays the stranger's charge example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.card]": {
+  "status": "Rewritten",
+  "hash": "929667babb77",
+  "on": "2026-10-19",
+  "evidence": "The short says pay the whole statement every month; the statement's minimum payment named; tests/language-crossarea-raise.test.ts reads the limit lines",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
+  "status": "Rewritten",
+  "hash": "f7ce8a70f12b",
+  "on": "2026-10-19",
+  "evidence": "The cash refusals quoted as the game says them now, has only … available; tests/guide-examples-money.test.ts plays the ATM example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.home-account]": {
+  "status": "Rewritten",
+  "hash": "fca9c1512cc3",
+  "on": "2026-10-19",
+  "evidence": "Checking account and the German fees in the glossary's words; tests/decisions-arion.test.ts reads Arion's line, the example is played",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.other-banks]": {
+  "status": "Rewritten",
+  "hash": "d4d4a104c57c",
+  "on": "2026-10-19",
+  "evidence": "Checking account throughout and the fees held over for the quarter's closing; tests/guide-examples-money.test.ts plays the Bank of America example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.payments]": {
+  "status": "Rewritten",
+  "hash": "a207de90f7b9",
+  "on": "2026-10-19",
+  "evidence": "Checking account and the button Savings Covers The Checking Account; tests/guide-examples-money.test.ts plays the standing order example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.round-ups]": {
+  "status": "Rewritten",
+  "hash": "39ddc56d59eb",
+  "on": "2026-10-19",
+  "evidence": "The short says where to turn them on, ING's floor written as €20; tests/guide-examples-money.test.ts plays NatWest's example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.term]": {
+  "status": "Rewritten",
+  "hash": "043c046258b0",
+  "on": "2026-10-19",
+  "evidence": "The short gives the first action, Put It Away, and checking account throughout; tests/guide-examples-money.test.ts plays the CD broken early",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.transfer]": {
+  "status": "Rewritten",
+  "hash": "703f5a0126e4",
+  "on": "2026-10-19",
+  "evidence": "The short leads with the action, the Moved message names the account; tests/guide-examples-money.test.ts reads the quote and plays it",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.upkeep]": {
+  "status": "Rewritten",
+  "hash": "6474e637b8da",
+  "on": "2026-10-19",
+  "evidence": "tests/guide-examples-money.test.ts plays the dormant savings example; tools/guide-quotes.mjs --check reads every quoted refusal, 582 of 582",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [evaluation]": {
+  "status": "Retained",
+  "hash": "c49bcc3400f6",
+  "on": "2026-10-19",
+  "reason": "What a card's record decides, a loan or an overdraft and its rate, each said once in a sentence",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/money.ts#MONEY [history]": {
+  "status": "Retained",
+  "hash": "b8666b410d42",
+  "on": "2026-10-19",
+  "reason": "The one history connection: a debt sent to collections stays in Owed until it's paid",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/money.ts#MONEY [immediate]": {
+  "status": "Rewritten",
+  "hash": "50fe7f01ba93",
+  "on": "2026-10-19",
+  "evidence": "Checking account in the money transfer and payments connections; tests/guide.test.ts reads every connection's target",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [money.affairs]": {
+  "status": "Rewritten",
+  "hash": "f3b05c9f3545",
+  "on": "2026-10-19",
+  "evidence": "Checking account in what In The Bank counts; tests/guide-examples-money.test.ts plays the example and reads Credit Used's points",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [optional]": {
+  "status": "Retained",
+  "hash": "d9404acc24c2",
+  "on": "2026-10-19",
+  "reason": "Why an optional entry is worth reading with this one, a sentence each, naming the control and the tab",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/money.ts#MONEY [prerequisite]": {
+  "status": "Rewritten",
+  "hash": "e5263e0a501f",
+  "on": "2026-10-19",
+  "evidence": "Checking account, and the button Savings Covers The Checking Account as the screen names it; tests/guide.test.ts reads each target",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [scheduled]": {
+  "status": "Rewritten",
+  "hash": "16bf4b736f6d",
+  "on": "2026-10-19",
+  "evidence": "Checking account in the round-ups and accounts connections; tests/guide.test.ts reads every connection's target",
+  "first": "Pending"
+ },
  "src/engine/core/ledger.ts#Ledger": {
   "status": "Retained",
   "hash": "343a76f5b8cf",

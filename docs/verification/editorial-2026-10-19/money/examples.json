@@ -608,5 +608,125 @@
   "why": "The figure is what's available, pending card payments off it, which is what the payment can take (`inReach`).",
   "meaningSensitive": true,
   "verified": "tests/language-dynamic.test.ts reads Short For A Payment."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.transfer]",
+  "kind": "tutorial",
+  "before": "Move Money moves money between your own current and savings accounts. Within one bank it arrives at once. …",
+  "after": "Move Money, on the Accounts tab, moves money between your own checking and savings accounts: choose From and To, type the amount and press Move It. Within one bank it arrives at once. …",
+  "why": "An entry starts with a plain overview and the first action (common.md); the glossary's word.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts; the steps name the same controls."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.transfer]",
+  "kind": "tutorial",
+  "before": "Type the Amount in whole money, not cents (250 at a US bank is $250), and press Move It.",
+  "after": "Type the Amount as you’d write it, not in cents (250 at a US bank is $250, and 12.50 is $12.50), and press Move It.",
+  "why": "The field takes decimals (`centsFromTyped`), so \"whole money\" told the player something untrue.",
+  "meaningSensitive": true,
+  "verified": "`centsFromTyped` (core/money.ts) reads a decimal mark with one or two digits after it."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.upkeep]",
+  "kind": "tutorial",
+  "before": "An account you don’t use becomes inactive, then dormant and blocked, …",
+  "after": "Two panels look after your accounts between payments: Your Accounts Over Time, on Accounts, and Alerts, on Statements. An account you don’t use becomes inactive, then dormant and blocked, …",
+  "why": "Leads with where the entry's controls are, before the rules.",
+  "meaningSensitive": false,
+  "verified": "The where label names the same two panels; tests/guide.test.ts."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.upkeep]",
+  "kind": "tutorial",
+  "before": "Short For A Payment names the account, the payment, its date and what the account holds, and what to do about it.",
+  "after": "Short For A Payment names the payment, its amount, the account and its date, what the account has available, and what to do about it.",
+  "why": "In the alert's own order, and with batch 5's figure: what's available.",
+  "meaningSensitive": false,
+  "verified": "Read against `accountAlerts` (systems/obligations.ts); tests/language-dynamic.test.ts reads the alert."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.round-ups]",
+  "kind": "tutorial",
+  "before": "… ING counts nothing while the account holds under 20 €",
+  "after": "… ING counts nothing while the account holds under €20",
+  "why": "Euros as the game writes them everywhere else.",
+  "meaningSensitive": false,
+  "verified": "`formatMoney(ING_FLOOR * 100, 'EUR', { cents: false })`; ING's rule is 20 (content/roundups.ts)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.cash]",
+  "kind": "tutorial",
+  "before": "“… has only ….”, or, where the fees push it over, “… has only …, and … in cash with its fees comes to ….”",
+  "after": "“… has only … available.” or “… has nothing available.”, or, where the fees push it over, “… has only … available, and … in cash with its fees comes to ….”",
+  "why": "The refusals as the game says them since batch 4.",
+  "meaningSensitive": false,
+  "verified": "Read against `shortWords` (systems/cash.ts)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.card]",
+  "kind": "tutorial",
+  "before": "Each month a statement comes, and you pay at least the minimum by the due date; pay the whole statement and you’re charged no interest.",
+  "after": "Each month a statement comes, and you pay at least the minimum payment by the due date. Pay the whole statement every month and you’re never charged interest.",
+  "why": "Paying one statement in full after carrying a balance still brings the interest built since it (the statement panel says so), so \"every month\" is what makes it true.",
+  "meaningSensitive": true,
+  "verified": "The Statements tab's line: \"new spending isn’t charged interest, though the interest that built up since this statement still comes on the next one\"."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.card]",
+  "kind": "tutorial",
+  "before": "A statement on the Statements tab gives the least you can pay and, …. On a hardship plan the least is the plan’s payment, …",
+  "after": "A statement on the Statements tab gives the minimum payment and its due date and, …. On a hardship plan it gives the plan’s payment instead, …",
+  "why": "The statement's own words since batch 2, and the glossary's term.",
+  "meaningSensitive": false,
+  "verified": "Read against `BankStatements.tsx`: \"The minimum payment is …, due …\" and \"The plan’s payment is …\"."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.borrowing]",
+  "kind": "tutorial",
+  "before": "Pay a debt in collections under In Collections, to stop it weighing on you and to improve your chances at the next bank.",
+  "after": "Pay a debt in collections under In Collections. Once it’s paid, a bank can approve you for a card again, it stops worrying you, and the next US bank is less likely to turn you away.",
+  "why": "Says what paying changes, and not that it clears the record (m2).",
+  "meaningSensitive": true,
+  "verified": "`card.apply` declines on any collections debt; the day's worry counts one; ChexSystems' declines fall from the unpaid to the paid rate (`CHEX.declines`)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.borrowing]",
+  "kind": "tutorial",
+  "before": "… and 100 points come off your score. A standing order …",
+  "after": "… and 100 points come off your score. The charge-off stays on your credit record for 7 years in the US, paid or not, and while the debt is unpaid no bank approves a card and the bank owed won’t open an account for you. A standing order …",
+  "why": "m2: what the record keeps and what an unpaid debt blocks, which the entry didn't say.",
+  "meaningSensitive": true,
+  "verified": "`closedByBank` calls `markRecord` for a bank in the country the person lives in; `MARK_YEARS.us` is 7; `openRefusal` refuses while the bank's debt is unpaid."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.accounts]",
+  "kind": "tutorial",
+  "before": "The Accounts tab shows each of your current and savings accounts: …, and choose which current account is your primary account.",
+  "after": "The Accounts tab shows each of your checking and savings accounts: …, and choose which checking account is your primary account.",
+  "why": "The glossary's word, in every field of the guide's money entries (154 words).",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts plays each example; two of its anchors moved with the words."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.other-banks]",
+  "kind": "tutorial",
+  "before": "In Germany the fees are those kept for the quarter’s close plus this month’s fee only for the days it’s been open, …",
+  "after": "In Germany the fees are those held over for the quarter’s closing plus this month’s fee only for the days it’s been open, …",
+  "why": "The words the Close It line uses since batch 1.",
+  "meaningSensitive": false,
+  "verified": "Read against `closingFeesWords` (systems/banking.ts)."
  }
 ]

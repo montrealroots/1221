@@ -160,7 +160,7 @@ const PLAYS: Record<string, () => void> = {
   // From 2026-10-13: NatWest's own example (natwest.com, Round Ups: "£2.30 gives 70p; ×3 gives £2.10"), played.
   'bank.round-ups': () => {
     const { setup, steps, result } = example('bank.round-ups');
-    expect(setup).toBe('A life in London at NatWest, with savings there and money in the current account.');
+    expect(setup).toBe('A life in London at NatWest, with savings there and money in the checking account.');
     const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable', bankId: 'gb-natwest' }, 'guide-round-ups');
     const current = primary(sim);
     const savings = own(sim, 'savings', 'gb-natwest')!;
@@ -185,7 +185,7 @@ const PLAYS: Record<string, () => void> = {
     const night = at(sim, 2026, 1, 6, 0);
     sim.advanceTo(night + 60_000);
     const moved = postings(sim, savings, /^Round-ups$/, night - HOUR);
-    expect(moved).toEqual([{ at: night, amount: pence(result, 'At the start of the next day ', ' moves from the current account') }]);
+    expect(moved).toEqual([{ at: night, amount: pence(result, 'At the start of the next day ', ' moves from the checking account') }]);
     expect(postings(sim, current, /^Round-ups$/, night - HOUR)).toEqual([{ at: night, amount: -moved[0]!.amount }]);
     h.sim = sim;
     const shown = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'gb-natwest' })).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');

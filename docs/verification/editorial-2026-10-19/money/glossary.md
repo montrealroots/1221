@@ -19,3 +19,4 @@ areas began; these are the words this area's screens now use with it, and the ph
 | **The law here caps …** | A card held to the country's cap: "The law here caps the rate at 35%, and the card is held to that.", the law's citation in the Source line. | the citation as the sentence's subject |
 | **Moved … to …**, **Sent … to …** | Move Money's confirmation names the account it went to: "Moved $25 to Chase Savings.", "Sent £1,000.00 to Chase Total Checking. It arrives September 2, 2026." | "Moved $25." |
 | **has … available**, in Short For A Payment | "…, and it has $12.00 available.": the account's available balance, which is what the payment can take. | "and it holds $12.00" |
+| **minimum payment**, in the guide | The guide's card entry says "the minimum payment" where it said "the least you can pay", as the statement does since batch 2. | "the least you can pay" |
