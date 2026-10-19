@@ -221,7 +221,7 @@ goes and the notice after it (`systems/accountlife.ts`), and the guide's Your Ac
 - `npx tsc -b --noEmit`: exit 0 (`b2-tsc.txt`). `npx eslint` on the changed files: exit 0 (`b2-eslint.txt`).
 - `npx vitest run` on the 15 test files that touch the account-life data, Your Accounts Over Time or Your Cards: 258 of
   258, exit 0 (`b2-tests.txt`), after the one failure above was put right.
-- The text checks (`checks.sh`): exit 0 each (`b2-checks.txt`); typos first failed on "The examples examples.mjs" in a
+- The text checks (`checks.sh`): exit 0 each (`b2-checks.txt`); typos first failed on a doubled word in a
   comment of this folder's, mended. Engine-speak stayed at 332.
 
 ### Screens verified
