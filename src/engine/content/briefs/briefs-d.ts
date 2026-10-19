@@ -51,7 +51,7 @@ export const BRIEFS_D: readonly Brief[] = [
       physical: 'The scene is a round of sparring: footwork, strikes and the held strike at the end are the action.',
       timing: 'The lines land between exchanges, and the stopped strike has to arrive exactly when he opens up.',
       partner: 'What she does depends on what he says and where he leaves an opening.',
-      techniques: 'The sparring is a staged fight taped solo: she marks each exchange at reduced speed against the reader’s called cues from off camera, nothing lands on anyone, and the held strike stops short of his eyeline on every take.',
+      techniques: 'The sparring is a staged fight, taped solo. Mark each exchange at reduced speed against the reader’s called cues from off camera, land nothing on anyone, and stop the held strike short of his eyeline on every take.',
       beats: 'Formal caution, the temper getting loose, then control won back, with his laugh breaking the tension.',
     },
     readings: [
@@ -62,7 +62,7 @@ export const BRIEFS_D: readonly Brief[] = [
   {
     id: 'brief-medical_drama', title: 'Handover At Seven', kinds: ['medical_drama'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'pressing',
     logline: 'A resident at the end of a night shift hands over a patient she’s worried about to an attending who thinks the numbers look fine.',
-    circumstances: 'A ward corridor at seven in the morning, outside bed fourteen. The patient, a retired bus driver admitted with abdominal pain, has had a slowly rising heart rate and falling blood pressure through the night, each reading still inside the range that triggers a call.',
+    circumstances: 'A ward corridor at seven in the morning, outside bed fourteen. The patient, a retired bus driver admitted with abdominal pain, has had a slowly rising heart rate and falling blood pressure through the night, each reading still short of the level that would trigger a call.',
     relationship: 'Colleagues a few months into working together; the attending is respected, brisk, and rarely wrong.',
     you: 'Dr. Anjali Menon, a second-year resident, twenty-six hours awake.',
     reader: 'Dr. Owen Castellanos, the day attending, with a full list and twenty minutes to rounds.',
@@ -137,7 +137,7 @@ export const BRIEFS_D: readonly Brief[] = [
   {
     id: 'brief-mockumentary', title: 'Pool Manager Of The Year', kinds: ['mockumentary'], medium: 'camera', size: 'short',
     logline: 'The manager of a municipal swimming pool gives a talking-head interview to a documentary crew the day after they filmed her lifeguards draining the wrong pool.',
-    circumstances: 'The pool’s office, a morning in midsummer. The crew have been filming for a week; yesterday they caught the training pool emptied by mistake during a children’s lesson. Her answers are improvised from those facts, to the producer’s questions.',
+    circumstances: 'The pool’s office, a morning in midsummer. The crew have been filming for a week; yesterday they caught the training pool emptied by mistake during a children’s lesson. You improvise her answers from those facts, to the producer’s questions.',
     relationship: 'She has treated the crew as her biggest opportunity; the producer is friendly and has the footage.',
     you: 'Gwen Abernathy, forty-eight, pool manager for eleven years and up for a regional award.',
     reader: 'The producer, off camera, asking short, neutral questions and letting the silences run.',
@@ -152,7 +152,7 @@ export const BRIEFS_D: readonly Brief[] = [
     techniques: { improv: 2 },
     allows: { structure: ['open'] },
     why: {
-      improvisation: 'Her answers are made up live from the given facts, to questions she hasn’t heard in advance.',
+      improvisation: 'You make up her answers live from the given facts, to questions you haven’t heard in advance.',
       timing: 'The comedy is in the pauses the producer leaves and how long she lets them run before filling them.',
       partner: 'Each answer is shaped by the question, and by what she guesses the footage shows.',
       techniques: 'The interview is improvised in character, so the scene needs the improviser’s skill of building on each offer without breaking.',
@@ -167,7 +167,7 @@ export const BRIEFS_D: readonly Brief[] = [
   {
     id: 'brief-monster_movie', title: 'The Pump House', kinds: ['monster_movie'], medium: 'camera', size: 'short',
     logline: 'A woman sheltering in a flooded pump house has to keep her brother still and quiet while the thing in the water passes beneath them.',
-    circumstances: 'A concrete pump house at the edge of a drained reservoir, the night after the floodgates failed. They’ve climbed onto the machinery platform; whatever came up with the water has already taken the dog, and it hunts by sound. On the tape she kneels alone on a bare floor, with her brother off camera at her shoulder and the water only in her eyes.',
+    circumstances: 'A concrete pump house at the edge of a drained reservoir, the night after the floodgates failed. They’ve climbed onto the machinery platform; whatever came up with the water has already taken the dog, and it hunts by sound. For the tape, kneel alone on a bare floor, with her brother off camera at your shoulder and the water only in your eyes.',
     relationship: 'Brother and sister who run the family’s fishing business and haven’t agreed on anything in years.',
     you: 'Lupe Navarro, the older sister, who saw it take the dog.',
     reader: 'Ben, her younger brother, who didn’t see it and wants to make a run for the truck.',
@@ -277,7 +277,7 @@ export const BRIEFS_D: readonly Brief[] = [
     circumstances: 'A recording booth. The sequence is already cut: dawn over a cracked riverbed, a heron working one shrinking pool, the fish crowding, and at the end the first drops of rain. The narration script is written to the picture, with each line timed to a shot.',
     relationship: 'The narrator speaks to a viewer watching at home, as a guide who has been there and wants them to see it.',
     you: 'The narrator, telling the story of the pool over the pictures.',
-    reader: 'The viewer at home, watching the sequence; the voice speaks to them alone, at the microphone.',
+    reader: 'The viewer at home, watching the sequence.',
     objective: 'Carry the viewer through the sequence so they feel the dry season end.',
     obstacle: 'The lines are fixed to the shots, and the story has to live inside the time each picture allows.',
     beats: [
@@ -573,7 +573,7 @@ export const BRIEFS_D: readonly Brief[] = [
       beats: 'A routine briefing, her own name passed over, then the question that tells her he may know.',
     },
     readings: [
-      { id: 'still', label: 'Invisible', reading: 'She gives away nothing: the scene is played almost entirely in stillness, and the audience reads her from very little.', rests: 'She’s careful never to be noticed, and keeps her voice at the same pace when he reads her name.', lean: { consistency: 1.25, believability: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.7 }, { dim: 'believability', ability: 'focus', weight: 0.4 }] },
+      { id: 'still', label: 'Invisible', reading: 'She gives away nothing: she plays the scene almost entirely in stillness, and the audience reads her from very little.', rests: 'She’s careful never to be noticed, and keeps her voice at the same pace when he reads her name.', lean: { consistency: 1.25, believability: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.7 }, { dim: 'believability', ability: 'focus', weight: 0.4 }] },
       { id: 'betrayal', label: 'Mentor And Protégée', reading: 'The fear is about losing the man who believed in her, and his last question breaks her heart as much as it threatens her.', rests: 'He brought her with him from opposition, and he’s been good to her.', lean: { connection: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'connection', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'responsiveness', ability: 'listening', weight: 0.5 }] },
     ],
   },
@@ -604,7 +604,7 @@ export const BRIEFS_D: readonly Brief[] = [
   {
     id: 'brief-prison_film', title: 'Table Nine', kinds: ['prison_film'], medium: 'camera', size: 'short',
     logline: 'In a prison visiting room, a father sees his teenage daughter for the first time in a year, and she has come to ask him to sign a form.',
-    circumstances: 'The visiting room of a state prison, a Sunday afternoon, under a guard’s watch. She needs his signature to take her stepfather’s surname at school; visits are an hour, and touch is allowed only at the start and the end. On the tape the reader sits off camera across the table, and the hug is played to her eyeline, never made.',
+    circumstances: 'The visiting room of a state prison, a Sunday afternoon, under a guard’s watch. She needs his signature to take her stepfather’s surname at school; visits are an hour, and touch is allowed only at the start and the end. For the tape, the reader sits off camera across the table: play the hug to her eyeline, and never make it.',
     relationship: 'Father and daughter, close when she was small; he has three years left to serve.',
     you: 'Martin Pelletier, forty, who has written to her every week and had two replies.',
     reader: 'Josie, fifteen, with the form folded in her jacket pocket.',
