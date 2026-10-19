@@ -52,7 +52,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Primekonto",
           "source": "https://www.alandsbanken.fi/sv/prislista/konto-och-kassatjanster",
           "monthlyFee": 500,
-          "note": "Price list shows EUR 5.00/month for Primekonto and other personal accounts"
+          "note": "Price list shows EUR 5.00 a month for Primekonto and other personal accounts"
         },
         "savings": {
           "name": "Itämeritili / Östersjökonto (Baltic Sea Account)",
@@ -92,7 +92,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte chèque",
           "source": "https://www.bna.dz/wp-content/uploads/2024/06/CGB-web-particulier.pdf",
           "monthlyFee": 4167,
-          "note": "DZD 500 per year account-keeping fee, converted to monthly"
+          "note": "DZD 500 a year account-keeping fee; the game charges a month’s share"
         },
         "savings": {
           "name": "Livret épargne",
@@ -200,7 +200,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Caja de Ahorros en Pesos",
           "source": "https://bna.com.ar/Downloads/ComisionesYCargosConsumo.pdf",
-          "note": "No maintenance charge on peso savings accounts (incl. salary accounts); USD account costs USD 10/month unless salary is paid there"
+          "note": "No maintenance charge on peso savings accounts (including salary accounts); a USD account costs USD 10 a month unless a salary is paid into it"
         },
         "savings": {
           "name": "Caja de Ahorros en pesos (TNA, rates in force January 16, 2026)",
@@ -222,7 +222,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current account (AMD)",
           "source": "https://ameriabank.am/Portals/0/files/Personal/Individual_standard_tariffs_eng.pdf",
-          "note": "Management free; AMD 1,000 per half-year only if turnover < AMD 150k and balance < AMD 50k, and not charged until June 30, 2027"
+          "note": "Management free; AMD 1,000 a half-year only if turnover is under AMD 150,000 and the balance under AMD 50,000, and not charged until June 30, 2027"
         },
         "savings": {
           "name": "Savings Account (AMD; 4.0% requires AMD 200,000 minimum balance, otherwise 0.1%; effective September 15, 2025)",
@@ -306,7 +306,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "RBC Day to Day Banking",
           "source": "https://www.rbcroyalbank.com/caribbean/bahamas/docs/Home_Bahamas-Schedule-of-Fees-and-Charges.pdf",
           "monthlyFee": 1200,
-          "note": "BSD 12/month; 6 free checks"
+          "note": "BSD 12 a month; 6 free checks"
         },
         "savings": {
           "name": "RBC Day to Day Savings",
@@ -322,7 +322,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://nbbonline.com/wp-content/uploads/2026/06/Fees-Service-Charges-Retail-June-2026-2.pdf",
-          "note": "Free if weighted average monthly balance >= BHD 300, else BHD 3.3 per month"
+          "note": "Free if the weighted average monthly balance is BHD 300 or more, else BHD 3.3 a month"
         },
         "savings": {
           "name": "Express Savers",
@@ -351,7 +351,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Plus",
           "source": "https://brackweb.s3.ap-southeast-1.amazonaws.com/uploads/all/BRAC_Bank_Deposit_Interest_Rate_w.e.f._March_05,_202669a0a6e891870.pdf",
-          "note": "No interest. Account maintenance fee is charged half-yearly by average-balance band (up to Tk 200-300 per half-year per schedule of charges); exact figure for this product not confirmed."
+          "note": "No interest. Account maintenance fee is charged half-yearly by average-balance band (up to Tk 200-300 per half-year per schedule of charges); exact figure for this product not confirmed"
         },
         "savings": {
           "name": "Regular Savings (TBS) — tiered; rate shown is the Tk 1 lac–<25 lac tier (0.50%) up to 2.50% at Tk 5 crore+; effective March 5, 2026",
@@ -390,7 +390,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Текущий счёт (current account)",
           "source": "https://belarusbank.by/fizicheskim_licam/vklady/tekushchiy_schet/",
-          "note": "No charge for opening or maintenance; the current account itself pays 0.1% p.a. on BYN balances (0.0001% USD/EUR)."
+          "note": "No charge for opening or maintenance; the account itself pays 0.1% a year on BYN balances (0.0001% on USD and EUR)"
         },
         "savings": {
           "name": "Текущий счёт в BYN (interest on current-account balance; Belarusbank's revocable BYN deposits are fixed-term, 0.5%–0.75% for 6 months)",
@@ -413,7 +413,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Comfort Pack",
           "source": "https://www.test-achats.be/argent/comptes-a-vue/news/hausse-tarifs-bnppf",
           "monthlyFee": 350,
-          "note": "Price raised from EUR 3 to EUR 3.50/month (Test Achats)"
+          "note": "Price raised from EUR 3 to EUR 3.50 a month (Test Achats)"
         },
         "savings": {
           "name": "Compte d'épargne BNP Plus",
@@ -478,7 +478,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Personal current account",
           "source": "https://www.hsbc.bm/bank-fees/",
           "monthlyFee": 1200,
-          "note": "$12/month; no charge for Premier and Seniors."
+          "note": "$12 a month; no charge for Premier and Seniors"
         },
         "savings": {
           "name": "Everyday Savings (BMD, balances under $50,000; tiered to 0.15% over $1M; rates September 24, 2026)",
@@ -492,7 +492,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Personal chequing account",
           "source": "https://clarienbank.com/fees/",
           "statedFee": 1500,
-          "note": "$12 monthly maintenance plus $3 monthly compliance fee; seniors exempt."
+          "note": "$12 monthly maintenance plus $3 monthly compliance fee; seniors exempt"
         }
       }
     }
@@ -534,7 +534,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Personal current account (USD)",
           "source": "https://www.mcbbonaire.com/personal/support-services/branch-services",
           "statedFee": 150,
-          "note": "US$1.50 monthly administration fee; Resident Pension (65+) and Student accounts exempt."
+          "note": "US$1.50 monthly administration fee; Resident Pension (65+) and Student accounts exempt"
         },
         "savings": {
           "name": "Personal savings account (USD)",
@@ -552,7 +552,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Standard Paket račun",
           "source": "https://www.unicredit.ba/ba/stanovnistvo/proizvodi_i_usluge/paketi.html",
           "statedFee": 599,
-          "note": "BAM 5.99/month; waived for students"
+          "note": "BAM 5.99 a month; waived for students"
         }
       },
       "Raiffeisen Bank BiH": {
@@ -627,7 +627,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "General Current Account",
           "source": "https://bibd.com.bn/wp-content/uploads/2022/06/PDS-General-Current-Account-2022Final.pdf",
           "monthlyFee": 1500,
-          "note": "BND 15.00 per month only if average monthly balance falls below BND 1,000."
+          "note": "BND 15.00 per month only if average monthly balance falls below BND 1,000"
         },
         "savings": {
           "name": "General Saver",
@@ -645,7 +645,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "План „Плюс“",
           "source": "https://www.unicreditbulbank.bg/bg/individualni-klienti/bankirane/bankovi-smetki/plan-plus-za-tvoiata-zaplata/",
           "statedFee": 284,
-          "note": "EUR 2.84/month, free with regular income into the account"
+          "note": "EUR 2.84 a month, free with regular income into the account"
         }
       },
       "DSK Bank": {
@@ -671,7 +671,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte courant simple",
           "source": "https://burkina.coris.bank/wp-content/uploads/2022/09/Conditions-de-banque.pdf",
           "statedFee": 150000,
-          "note": "XOF 1,500/month; XOF 500 for state employees (2022 conditions)"
+          "note": "XOF 1,500 a month; XOF 500 for state employees (2022 conditions)"
         },
         "savings": {
           "name": "Epargne Coris",
@@ -697,7 +697,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://www.acledabank.com.kh/kh/eng/ps_decurrentacc",
-          "note": "No monthly maintenance fee stated; no interest; initial deposit KHR 400,000 or USD 100. Extra statements charged."
+          "note": "No monthly maintenance fee stated; no interest; initial deposit KHR 400,000 or USD 100. Extra statements charged"
         },
         "savings": {
           "name": "Savings Account",
@@ -762,7 +762,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "CuentaRUT",
           "source": "https://www.meganoticias.cl/dato-util/531486-bancoestado-elimina-cobro-300-transferencias-cuentarut-otros-bancos-2026.html",
-          "note": "No opening or maintenance fee; transfers to other banks free since April 15, 2026; some per-use charges remain."
+          "note": "No opening or maintenance fee; transfers to other banks free since April 15, 2026; some per-use charges remain"
         },
         "savings": {
           "name": "Cuenta de Ahorro",
@@ -774,7 +774,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta Corriente",
           "source": "https://ww3.bancochile.cl/wps/wcm/connect/nuestro-banco/portal/chile-abierto/productos/tarifas-claras/tarifa-plan-cuenta-corriente",
-          "note": "Basic plan quoted at 0.37 UF per month (UF-indexed, not a fixed peso figure); discounts with bundled products."
+          "note": "Basic plan quoted at 0.37 UF per month (UF-indexed, not a fixed peso figure); discounts with bundled products"
         }
       }
     }
@@ -786,7 +786,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Peony Debit Card (牡丹灵通卡) personal settlement account",
           "source": "https://www.icbc.com.cn/column/678756826291666944.html",
-          "note": "Annual and small-balance management fees waived for a customer's single (first) debit card account."
+          "note": "Annual and small-balance management fees waived for a customer's single (first) debit card account"
         },
         "savings": {
           "name": "RMB demand deposit (活期存款)",
@@ -809,7 +809,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Cuenta de Ahorros",
           "source": "https://www.larepublica.co/finanzas-personales/las-rentabilidades-y-los-cobros-por-cuota-de-manejo-en-cuentas-de-ahorro-4331758",
           "monthlyFee": 1490000,
-          "note": "Fee depends on plan and debit card; COP 14,900 is the figure reported to the Superintendencia Financiera for 2026."
+          "note": "Fee depends on plan and debit card; COP 14,900 is the figure reported to the Superintendencia Financiera for 2026"
         },
         "savings": {
           "name": "Cuenta de Ahorros",
@@ -834,7 +834,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Compte courant avec chéquier",
           "source": "https://www.eximbank-km.com/fr/personal/accounts",
-          "note": "Minimum balance 10,000 KMF; remunerated up to 0.50% p.a. (non-chequebook current account: min 3,000 KMF, up to 0.75%). Monthly fee not published."
+          "note": "Minimum balance 10,000 KMF; pays up to 0.50% a year (an account without a chequebook: minimum 3,000 KMF, up to 0.75%). Monthly fee not published"
         }
       }
     }
@@ -858,7 +858,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte courant",
           "source": "https://rawbank.com/wp-content/uploads/2026/02/Tarification-standard-produits-et-services.pdf",
           "monthlyFee": 1000000,
-          "note": "Maintenance fee USD 5 or CDF 10,000 per month for retail accounts; includes mobile banking and e-statements."
+          "note": "Maintenance fee USD 5 or CDF 10,000 per month for retail accounts; includes mobile banking and e-statements"
         },
         "savings": {
           "name": "Compte Fidélité",
@@ -876,7 +876,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Everyday Account",
           "source": "https://bci.co.ck/products/for-your-personal-needs/everyday-account/",
           "monthlyFee": 700,
-          "note": "NZD 7 monthly fee."
+          "note": "NZD 7 monthly fee"
         },
         "savings": {
           "name": "Bonus Saver",
@@ -893,7 +893,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta de ahorro en colones",
           "source": "https://www.elfinancierocr.com/finanzas/su-banco-le-cobra-por-incumplir-un-saldo-minimo-en/F7BHO5LANRHLJAATQPJYQ3BHHY/story/",
-          "note": "No monthly fee, but a CRC 3,000 charge applies if the CRC 25,000 minimum balance is not kept."
+          "note": "No monthly fee, but a CRC 3,000 charge applies if the CRC 25,000 minimum balance is not kept"
         },
         "savings": {
           "name": "Cuenta de ahorro en colones",
@@ -918,7 +918,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte Eco",
           "source": "https://particuliers.societegenerale.ci/fr/banque-quotidien/comptes/compte-eco/",
           "monthlyFee": 90000,
-          "note": "XOF 900 excluding tax per month; no initial deposit."
+          "note": "XOF 900 excluding tax per month; no initial deposit"
         },
         "savings": {
           "name": "Compte Épargne",
@@ -941,7 +941,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Start paket",
           "source": "https://www.zaba.hr/home/start",
           "monthlyFee": 590,
-          "note": "EUR 5.90 per month package; a free basic payment account (Paket besplatnih usluga) exists for the account receiving regular income."
+          "note": "EUR 5.90 per month package; a free basic payment account (Paket besplatnih usluga) exists for the account receiving regular income"
         }
       },
       "Privredna banka Zagreb": {
@@ -962,7 +962,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Current Account",
           "source": "https://www.mcb-bank.com/personal/support-services/personal-and-non-personal-account-administration-fees",
           "statedFee": 530,
-          "note": "XCG 5.30 monthly administration fee; 65+ pension and student accounts exempt."
+          "note": "XCG 5.30 monthly administration fee; 65+ pension and student accounts exempt"
         },
         "savings": {
           "name": "Savings Account",
@@ -983,7 +983,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://dom.com.cy/en/live/digest/cypriot-banks-intend-to-increase-fees-for-account-servicing-and-services-provided-by-them/",
-          "note": "Quarterly maintenance fee reported as rising from EUR 6 to EUR 12 per quarter; not confirmed against the 2026 tariff."
+          "note": "Quarterly maintenance fee reported as rising from EUR 6 to EUR 12 per quarter; not confirmed against the 2026 tariff"
         },
         "savings": {
           "name": "Savings Account (instant access, adults; minors 0.20%; table dated April 17, 2025)",
@@ -1006,7 +1006,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Plus účet",
           "source": "https://www.usetreno.cz/sporici-ucty/",
           "statedFee": 10000,
-          "note": "CZK 100 per month, waived with at least 4 card payments a month."
+          "note": "CZK 100 per month, waived with at least 4 card payments a month"
         },
         "savings": {
           "name": "Spořicí účet",
@@ -1019,7 +1019,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Plus Konto",
           "source": "https://www.csob.cz/lide/ucty/plus-konto",
-          "note": "Free without conditions."
+          "note": "Free without conditions"
         },
         "savings": {
           "name": "Spoření s bonusem",
@@ -1037,7 +1037,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Danske Konto",
           "source": "https://danskebank.dk/privat/find-hjaelp/konti/renter-gebyrer-og-kontovilkaar",
           "monthlyFee": 3500,
-          "note": "DKK 105 per quarter, shown as monthly."
+          "note": "DKK 105 a quarter; the game charges a month’s share"
         }
       },
       "Nordea": {
@@ -1093,7 +1093,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta de Ahorro en Pesos",
           "source": "https://www.banreservas.com/personal/cuentas/cuenta-de-ahorro-en-pesos/",
-          "note": "No fee while the RD$3,000 minimum balance is kept; RD$70 monthly charge below it."
+          "note": "No fee while the RD$3,000 minimum balance is kept; RD$70 monthly charge below it"
         },
         "savings": {
           "name": "Cuenta de Ahorro en Pesos",
@@ -1106,7 +1106,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta de Ahorro Popular",
           "source": "https://popularenlinea.com/Personas/Paginas/cuentas/ahorro-popular.aspx",
-          "note": "Free while the minimum balance is kept; tariff updated June 13, 2026."
+          "note": "Free while the minimum balance is kept; tariff updated June 13, 2026"
         },
         "savings": {
           "name": "Cuenta de Ahorro Popular",
@@ -1151,7 +1151,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Classic Current Account",
           "source": "https://www.cibeg.com/en/personal/accounts-and-deposits/current-accounts/classic",
           "monthlyFee": 4000,
-          "note": "Converted from EGP 120 per quarter statement/administrative fee (as of September 1, 2026); minimum balance EGP 20,000, EGP 100 fee if below."
+          "note": "EGP 120 a quarter for statements and administration (as of September 1, 2026), which the game charges as a month’s share; minimum balance EGP 20,000, with an EGP 100 fee below it"
         }
       },
       "Banque Misr": {
@@ -1176,7 +1176,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta Corriente",
           "source": "https://recursos.elsalvador.com/comercial/tasas-y-balances/pdfs/2026/marzo/Agricola-2026-04-Tasas-Comisiones-y-Recargos.pdf",
-          "note": "Up to USD 0.30 a month only when the average balance is under USD 15."
+          "note": "Up to USD 0.30 a month only when the average balance is under USD 15"
         },
         "savings": {
           "name": "Cuenta de Ahorro",
@@ -1196,7 +1196,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Põhipakett",
           "source": "https://www.swedbank.ee/private/home/more/pricesrates",
           "monthlyFee": 100,
-          "note": "EUR 1 per month; free under 25, EUR 0.32 for 65+."
+          "note": "EUR 1 per month; free under 25, EUR 0.32 for 65+"
         },
         "savings": {
           "name": "Rahakoguja",
@@ -1221,7 +1221,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "SicaloZero Account",
           "source": "https://www.times.co.sz/business/readmore.php?bhsadjgfoh=Banking+Cost+War:+Who+wins+battle+for+your+Emalangeni+in+2026?&yiphi=2421&bvhdgsj=Business+and+Economy",
-          "note": "No monthly fee; the Gold PAYU option is E46.86 a month."
+          "note": "No monthly fee; the Gold PAYU option is E46.86 a month"
         },
         "savings": {
           "name": "Savings Pocket Account",
@@ -1234,7 +1234,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Lite account",
           "source": "https://www.times.co.sz/business/readmore.php?bhsadjgfoh=Banking+Cost+War:+Who+wins+battle+for+your+Emalangeni+in+2026?&yiphi=2421&bvhdgsj=Business+and+Economy",
-          "note": "Free of monthly management charges."
+          "note": "Free of monthly management charges"
         }
       }
     }
@@ -1263,7 +1263,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Nýtslukonta",
           "source": "https://www.betri.fo/fo/banki/snarvegir/rentur",
-          "note": "Pays 0.00% interest."
+          "note": "Pays 0.00% interest"
         },
         "savings": {
           "name": "Uppsparingarkonta (3 mðr uppsøgn)",
@@ -1285,7 +1285,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "EasyCard Account",
           "source": "https://www.bsp.com.fj/personal-banking/everyday-accounts-and-cards/",
-          "note": "Pay-per-transaction everyday account."
+          "note": "Pay-per-transaction everyday account"
         },
         "savings": {
           "name": "EasySaver Account",
@@ -1314,7 +1314,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Käyttötili",
           "source": "https://www.op.fi/tac?did=HeOmi0000004731&cs=650e8bcd8d9b842a87f58261c8ebf865a94076f901792f6646711df0e029c699",
-          "note": "Account itself reported free; daily-services package fees not confirmed."
+          "note": "Account itself reported free; daily-services package fees not confirmed"
         }
       },
       "Nordea": {
@@ -1323,7 +1323,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Käyttötili",
           "source": "https://www.nordea.fi/henkiloasiakkaat/palvelumme/tilit-maksut/kayttotili.html",
           "monthlyFee": 260,
-          "note": "EUR 2.60 per account per month."
+          "note": "EUR 2.60 per account per month"
         },
         "savings": {
           "name": "EtuTili",
@@ -1354,7 +1354,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "BREDAccess",
           "source": "https://www.moneyvox.fr/tarif-bancaire/bred-guyane/",
           "monthlyFee": 568,
-          "note": "EUR 68.16 per year package; tariff as of June 25, 2026."
+          "note": "EUR 68.16 per year package; tariff as of June 25, 2026"
         },
         "savings": {
           "name": "Livret A",
@@ -1372,7 +1372,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte à vue",
           "source": "https://www.socredo.pf/uploads/documents/cards/tarifflyerpart-avril2025-6808484ca2f2f359037817.pdf",
           "monthlyFee": 38300,
-          "note": "Tenue de compte: 383 XPF per month (4,596 XPF per year), tariff from April 1, 2025. A newer tariff from May 1, 2026 exists but was not read. A free basic-banking account (services bancaires de base) also exists."
+          "note": "Tenue de compte: 383 XPF per month (4,596 XPF per year), tariff from April 1, 2025. A newer tariff from May 1, 2026 exists but was not read. A free basic-banking account (services bancaires de base) also exists"
         },
         "savings": {
           "name": "Compte sur livret",
@@ -1395,7 +1395,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Pack Odyssée",
           "source": "https://bgfibankgabon.bgfi.com/particuliers/gerer-ses-comptes/",
           "monthlyFee": 1200000,
-          "note": "XAF 12,000 incl. tax per month; figure from search summary, not the tariff."
+          "note": "XAF 12,000 a month including tax; the figure is from a search summary, not the tariff"
         },
         "savings": {
           "name": "Le Compte Epargne",
@@ -1428,7 +1428,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current account with TBC Card",
           "source": "https://tbcbank.ge/en/articles/tbc-card-terms-details",
-          "note": "No service fee for residents. Expat customers pay GEL 10 per month or GEL 100 per year, waived for expats under 24."
+          "note": "No service fee for residents. Expat customers pay GEL 10 per month or GEL 100 per year, waived for expats under 24"
         },
         "savings": {
           "name": "Savings Deposit",
@@ -1453,7 +1453,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "GCB Current Account",
           "source": "https://www.gcbbank.com.gh/personal/current-accounts/gcb-current-account",
           "monthlyFee": 1200,
-          "note": "GHS 12 monthly service charge."
+          "note": "GHS 12 monthly service charge"
         },
         "savings": {
           "name": "GCB Savings Account",
@@ -1469,7 +1469,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Personal Account",
           "source": "https://www.gibintbank.gi/wp-content/uploads/2025/09/Fees-Charges-Guide-18.09.2025.pdf",
-          "note": "The Fees & Charges Guide (September 18, 2025) lists a monthly maintenance fee only for business accounts (GBP 15); none found for personal accounts."
+          "note": "The Fees & Charges Guide (September 18, 2025) lists a monthly maintenance fee only for business accounts (GBP 15); none found for personal accounts"
         },
         "savings": {
           "name": "Personal Savings Account",
@@ -1491,7 +1491,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://www.nbg.gr/-/jssmedia/Files/Timologio/web_portal_english_epitokia-timologio_katathesewn.pdf",
-          "note": "Account maintenance free of charge; Benefits Account variants cost EUR 0.80 or 2/month."
+          "note": "Account maintenance free of charge; Benefits Account variants cost EUR 0.80 or EUR 2 a month"
         },
         "savings": {
           "name": "NBG Savings",
@@ -1509,7 +1509,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Flexkonto",
           "source": "https://www.banken.gl/media/nzdpfofb/prisbog-01-09-2026-dk.pdf",
           "monthlyFee": 2500,
-          "note": "Customer fee (kundegebyr) DKK 25/month for private customers aged 27+, charged monthly in arrears; discounted with larger business volume. Account pays 0.000%."
+          "note": "Customer fee (kundegebyr) DKK 25 a month for private customers aged 27 and over, charged monthly in arrears; discounted with larger business volume. Account pays 0.000%"
         },
         "savings": {
           "name": "Alm. Opsparing",
@@ -1534,7 +1534,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Personal Chequing Account",
           "source": "https://www.grenadaco-opbank.com/fees-and-charges/",
           "monthlyFee": 500,
-          "note": "EC$5.00 per month maintenance, applied quarterly."
+          "note": "EC$5.00 per month maintenance, applied quarterly"
         },
         "savings": {
           "name": "Regular Savings Account",
@@ -1564,7 +1564,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte de dépôt",
           "source": "https://www.moneyvox.fr/tarif-bancaire/bred-banque-populaire-guadeloupe/",
           "monthlyFee": 254,
-          "note": "Standard account-keeping fee EUR 30.48/year (BRED Guadeloupe, 2026 tariff), shown per month."
+          "note": "Standard account-keeping fee EUR 30.48 a year (BRED Guadeloupe, 2026 tariff); the game charges a month’s share"
         },
         "savings": {
           "name": "Livret A",
@@ -1582,7 +1582,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Pacific Express",
           "source": "https://bankofguam.com/personal/spend/personal-checking",
           "statedFee": 500,
-          "note": "US$5 maintenance fee waived with e-Statements and an electronic monthly deposit; waived for customers 55+."
+          "note": "US$5 maintenance fee waived with e-Statements and an electronic monthly deposit; waived for customers 55+"
         },
         "savings": {
           "name": "True Savings Plus",
@@ -1620,7 +1620,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Select Account",
           "source": "https://www.natwestinternational.com/current-accounts/select-account.html",
-          "note": "No monthly fee."
+          "note": "No monthly fee"
         },
         "savings": {
           "name": "Instant Saver",
@@ -1652,7 +1652,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Conta à Ordem",
           "source": "https://www.odemocratagb.com/?p=35708",
-          "note": "Generic account type named by the bank; no product brand or fee found."
+          "note": "Generic account type named by the bank; no product brand or fee found"
         },
         "savings": {
           "name": "Conta Poupança",
@@ -1712,7 +1712,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta de Cheques",
           "source": "https://bancatlan.hn/soluciones-financieras/ahorro-e-inversion",
-          "note": "Generic account type; product brand and fee not found."
+          "note": "Generic account type; product brand and fee not found"
         },
         "savings": {
           "name": "Cuenta de Ahorro",
@@ -1728,7 +1728,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "HSBC One",
           "source": "https://www.hsbc.com.hk/accounts/remove-below-balance-fees/",
-          "note": "No below-balance fee for HKID holders; accounts opened from January 1, 2026 by non-HKID holders with total balance under HKD 10,000 pay a management fee."
+          "note": "No below-balance fee for HKID holders; accounts opened from January 1, 2026 by non-HKID holders with total balance under HKD 10,000 pay a management fee"
         },
         "savings": {
           "name": "HSBC Hong Kong Dollar Savings Account",
@@ -1751,7 +1751,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "OTP Smart számlacsomag",
           "source": "https://www.otpbank.hu/static/portal/sw/file/OTP_Smart_H_20251118_v2.pdf",
           "statedFee": 108200,
-          "note": "Normal fee with e-statement (HUF 1,359 with paper); free when at least the net minimum wage (HUF 214,662 in 2026) arrives monthly from another bank. Terms effective November 18, 2025."
+          "note": "Normal fee with e-statement (HUF 1,359 with paper); free when at least the net minimum wage (HUF 214,662 in 2026) arrives monthly from another bank. Terms effective November 18, 2025"
         },
         "savings": {
           "name": "Smart Takarékszámla",
@@ -1768,7 +1768,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Regular Savings Bank Account",
           "source": "https://www.bankbazaar.com/savings-account/sbi-savings-account.html",
-          "note": "Indian individuals bank day to day through a savings account (current accounts are for businesses); SBI dropped minimum-balance charges in March 2020."
+          "note": "Indian individuals bank day to day through a savings account (current accounts are for businesses); SBI dropped minimum-balance charges in March 2020"
         },
         "savings": {
           "name": "Regular Savings Bank Account",
@@ -1791,7 +1791,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "BritAma",
           "source": "https://www.cnbcindonesia.com/market/20260105090548-17-699592/berlaku-2026-aturan-terbaru-biaya-admin-bank-mandiri-bri-bni-btn",
           "monthlyFee": 1200000,
-          "note": "IDR 12,000/month admin fee; a savings-type account used as the everyday account."
+          "note": "IDR 12,000 a month admin fee; a savings-type account used as the everyday account"
         },
         "savings": {
           "name": "BritAma",
@@ -1822,7 +1822,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Select Account",
           "source": "https://www.iombank.com/products/current-accounts-overdrafts/select-account.html",
-          "note": "No monthly fee."
+          "note": "No monthly fee"
         },
         "savings": {
           "name": "Instant Saver",
@@ -1845,7 +1845,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Basic track current account",
           "source": "https://bluewhitefinance.com/slash-your-banking-fees/",
           "monthlyFee": 1000,
-          "note": "Regulated basic track: at most ILS 10/month including 10 self-service transactions and 1 teller transaction."
+          "note": "Regulated basic track: at most ILS 10 a month including 10 self-service transactions and 1 teller transaction"
         }
       }
     }
@@ -1863,7 +1863,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "XME Conto",
           "source": "https://www.intesasanpaolo.com/content/dam/vetrina/trasparenza/it/Documenti/Doc/Pdf/FI/FI-Other/FI-1245.pdf",
           "monthlyFee": 850,
-          "note": "Base monthly fee (EUR 102/year) per the information sheet updated July 21, 2026; add-on services and promotions change the total."
+          "note": "Base monthly fee (EUR 102 a year) per the information sheet updated July 21, 2026; add-on services and promotions change the total"
         },
         "savings": {
           "name": "XME Salvadanaio",
@@ -1885,7 +1885,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Chequing Account",
           "source": "https://www.jncb.com/getmedia/1fb379c3-ca5a-4921-9e5e-4989b4ec5145/Customer-Fee-Guide-Effective-Dec-1-2025.pdf",
-          "note": "No charge at or above a J$75,000 minimum monthly credit balance; below it J$108.71 per entry with a J$1,015.27 minimum monthly service charge (fee guide effective December 1, 2025)."
+          "note": "No charge at or above a J$75,000 minimum monthly credit balance; below it J$108.71 per entry with a J$1,015.27 minimum monthly service charge (fee guide effective December 1, 2025)"
         },
         "savings": {
           "name": "Quick Save",
@@ -1909,7 +1909,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Select Account",
           "source": "https://www.natwestinternational.com/current-accounts/select-account.html",
-          "note": "No monthly fee."
+          "note": "No monthly fee"
         },
         "savings": {
           "name": "Instant Saver",
@@ -1931,7 +1931,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://www.arabbank.jo/footernavigation/fees-and-charges/retail-fees-and-charges",
-          "note": "JD 1/month minimum-balance fee when the balance is below JD 100 (payroll accounts exempt)."
+          "note": "JD 1 a month minimum-balance fee when the balance is below JD 100 (payroll accounts exempt)"
         },
         "savings": {
           "name": "Savings Account",
@@ -1956,7 +1956,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Kaspi Gold",
           "source": "https://guide.kaspi.kz/client/ru/gold/conditions/q1635",
           "monthlyFee": 16625,
-          "note": "Annual service fee of KZT 1,995, shown here as 1,995/12. First year free; charged only if the card was used during the year. In February 2026 Kaspi denied reports of a rise to KZT 10,000."
+          "note": "Annual service fee of KZT 1,995, which the game charges as a twelfth each month. First year free; charged only if the card was used during the year. In February 2026 Kaspi denied reports of a rise to KZT 10,000"
         },
         "savings": {
           "name": "Kaspi Депозит",
@@ -1979,7 +1979,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Personal Current Account",
           "source": "https://www.money254.co.ke/current-accounts-details/kcb-personal-current-account",
           "monthlyFee": 35000,
-          "note": "Ledger fee KSh 35 per entry, minimum KSh 350 per month."
+          "note": "Ledger fee KSh 35 per entry, minimum KSh 350 per month"
         },
         "savings": {
           "name": "Goal Savings Account",
@@ -2019,7 +2019,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://www.nbk.com/kuwait/personal/accounts/everyday-banking/current-account.html",
-          "note": "No minimum balance fees; KD 50 to open. Dormant and unclaimed accounts pay KD 2 per month."
+          "note": "No minimum balance fees; KD 50 to open. Dormant and unclaimed accounts pay KD 2 per month"
         },
         "savings": {
           "name": "Super Account",
@@ -2039,7 +2039,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Current Account",
           "source": "https://www.bcel.com.la/bcel/bcelweb-datas/file-path/other-fee/en/bcel_web_file_131_1bd13997c5c2eba1816b55616724c554.pdf",
           "monthlyFee": 350000,
-          "note": "Current account maintenance: LAK 3,500 per account per month."
+          "note": "Current account maintenance: LAK 3,500 per account per month"
         },
         "savings": {
           "name": "Saving Account",
@@ -2062,7 +2062,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Current account",
           "source": "https://www.swedbank.lv/private/home/pricelist/accounts",
           "statedFee": 200,
-          "note": "EUR 2.00/month maintenance from June 1, 2026 for many customers; free for some (exemption conditions not verified)."
+          "note": "EUR 2.00 a month maintenance from June 1, 2026 for many customers; free for some (the exemptions weren’t verified)"
         },
         "savings": {
           "name": "Krājrīks",
@@ -2084,7 +2084,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Plus Account (fresh money)",
           "source": "https://www.blomretail.com/retail/bank-accounts-lebanon/fresh-money-accounts",
-          "note": "USD 2 per month. This is a fresh-dollar account, so the fee is in US dollars, not Lebanese pounds."
+          "note": "USD 2 per month. This is a fresh-dollar account, so the fee is in US dollars, not Lebanese pounds"
         }
       }
     }
@@ -2097,7 +2097,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Access Banking (Nala)",
           "source": "https://www.standardlesothobank.co.ls/static_file/Lesotho/filedownloads/2026%20SLB%20-%20pricing%20-%20Website%20-%20Nov%20V3.pdf",
           "monthlyFee": 886,
-          "note": "M8.86/month account management fee (2026 pricing); optional Nala bundle M35.70/month."
+          "note": "M8.86 a month account management fee (2026 pricing); optional Nala bundle M35.70 a month"
         },
         "savings": {
           "name": "Moritosana PureSave",
@@ -2129,7 +2129,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Privatkonto",
           "source": "https://wise.com/at/blog/lgt-bank-liechtenstein-gebuehren-konto-im-ueberblick",
           "monthlyFee": 833,
-          "note": "CHF 25 per quarter for Liechtenstein residents (CHF 120/quarter for residents outside LI/CH), shown per month; third-party summary."
+          "note": "CHF 25 a quarter for Liechtenstein residents (CHF 120 a quarter for residents outside Liechtenstein and Switzerland), which the game charges as a month’s share; from a third-party summary"
         },
         "savings": {
           "name": "Sparkonto",
@@ -2141,7 +2141,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Privatkonto",
           "source": "https://llb.li/de/private/zahlen-und-sparen/weitere-angebote/zahlungskonten/privatkonto",
-          "note": "Pays 0.000% in CHF; opening and closing free."
+          "note": "Pays 0.000% in CHF; opening and closing free"
         },
         "savings": {
           "name": "LLB Sparkonto",
@@ -2416,7 +2416,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte de dépôt",
           "source": "https://www.moneyvox.fr/tarif-bancaire/bred-martinique/pdf/tarifs-juin-2026.pdf",
           "monthlyFee": 254,
-          "note": "Account keeping fee EUR 2.54/month (EUR 30.48/yr), June 2026 tariff"
+          "note": "Account-keeping fee EUR 2.54 a month (EUR 30.48 a year), June 2026 tariff"
         },
         "savings": {
           "name": "Livret A",
@@ -2464,7 +2464,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte de dépôt",
           "source": "https://www.moneyvox.fr/tarif-bancaire/bred-mayotte/pdf/tarifs-juin-2026.pdf",
           "monthlyFee": 254,
-          "note": "Account keeping fee EUR 2.54/month (EUR 30.48/yr), BRED Mayotte June 2026 tariff"
+          "note": "Account-keeping fee EUR 2.54 a month (EUR 30.48 a year), BRED Mayotte June 2026 tariff"
         },
         "savings": {
           "name": "Livret A",
@@ -2505,7 +2505,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "maib daily",
           "source": "https://www.maib.md/ro/anunturi/anunt-privind-modificarea-tarifelor-si-comisioanelor-pentru-deservirea-cardurilor-persoanelor-fizice",
           "monthlyFee": 1500,
-          "note": "MDL 15/month card-account fee from March 16, 2026; free under Smart Pricing with at least MDL 3,000 of card payments a month"
+          "note": "MDL 15 a month card-account fee from March 16, 2026; free under Smart Pricing with at least MDL 3,000 of card payments a month"
         }
       }
     }
@@ -2530,7 +2530,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Иргэдийн харилцах данс",
           "source": "https://www.golomtbank.com/retail/account/412",
           "monthlyFee": 50000,
-          "note": "MNT 500 per month account maintenance."
+          "note": "MNT 500 per month account maintenance"
         },
         "savings": {
           "name": "Хугацаагүй хадгаламж",
@@ -2566,7 +2566,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Personal Chequing Account",
           "source": "https://bankofmontserrat.ms/chequing-accounts/",
           "monthlyFee": 2500,
-          "note": "XCD 25/month stated as a minimum service fee; XCD 200 to open"
+          "note": "XCD 25 a month stated as a minimum service fee; XCD 200 to open"
         },
         "savings": {
           "name": "Saving Account",
@@ -2589,7 +2589,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "e-pack",
           "source": "https://www.attijariwafabank.com/fr/profil/particulier/ouvrir-un-compte-bancaire-en-ligne",
           "statedFee": 500,
-          "note": "MAD 5 TTC/month promotional rate, first 6 months free for new online customers"
+          "note": "MAD 5 a month including tax (TTC), a promotional rate, with the first 6 months free for new online customers"
         },
         "savings": {
           "name": "Compte sur carnet",
@@ -2866,7 +2866,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "HBL Conventional Current Account",
           "source": "https://www.hbl.com/assets/documents/SOBC_January_to_June_2026_-_English_Web.pdf",
-          "note": "Exempt from the Rs 50/month low-balance service charge (SOBC January to June 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000"
+          "note": "Exempt from the Rs 50 a month low-balance service charge (SOBC January to June 2026); other accounts such as HBL Freedom pay Rs 50 a month if the monthly average balance is under Rs 40,000"
         },
         "savings": {
           "name": "HBL PLS Savings Account",
@@ -2916,7 +2916,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta Corriente Esencial",
           "source": "https://www.bgeneral.com/tasas-comisiones-recargos/",
-          "note": "US$5.35 monthly charge if the average balance falls below the US$50 minimum; 5 free checks a month."
+          "note": "US$5.35 monthly charge if the average balance falls below the US$50 minimum; 5 free checks a month"
         },
         "savings": {
           "name": "Cuenta de Ahorros",
@@ -2945,7 +2945,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Kundu Standard Account",
           "source": "https://www.bsp.com.pg/personal-banking/banking-with-us/kundu-account/",
-          "note": "No monthly maintenance fee; the Kundu Package Account for frequent users charges a monthly fee (K8.50 after a 2025 reduction)."
+          "note": "No monthly maintenance fee; the Kundu Package Account for frequent users charges a monthly fee (K8.50 after a 2025 reduction)"
         },
         "savings": {
           "name": "Plus Saver Account",
@@ -2962,7 +2962,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta Full",
           "source": "https://www.itau.com.py/cuentadigital",
-          "note": "Guaraní account with no opening fee and no monthly maintenance charge."
+          "note": "Guaraní account with no opening fee and no monthly maintenance charge"
         },
         "savings": {
           "name": "Caja de Ahorro",
@@ -2987,7 +2987,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Cuenta Ilimitada BCP",
           "source": "https://www.viabcp.com/cuentas/cuenta-ahorro/cuenta-ilimitada-bcp",
           "monthlyFee": 1200,
-          "note": "S/12 monthly maintenance (US$4.80 for the dollar version); unlimited branch, agent and ATM transactions."
+          "note": "S/12 monthly maintenance (US$4.80 for the dollar version); unlimited branch, agent and ATM transactions"
         },
         "savings": {
           "name": "Cuenta Ilimitada BCP",
@@ -3009,7 +3009,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "ATM Savings",
           "source": "https://www.bdo.com.ph/personal/accounts/savings/peso-savings/atm-savings",
-          "note": "PHP 300 monthly charge after two consecutive months below the PHP 2,000 required average daily balance."
+          "note": "PHP 300 monthly charge after two consecutive months below the PHP 2,000 required average daily balance"
         },
         "savings": {
           "name": "Passbook Savings",
@@ -3047,7 +3047,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "PKO Konto za Zero",
           "source": "https://moneteo.com/analizy/konto-za-zero-pko-bp",
-          "note": "Account maintenance is unconditionally free; the debit card costs PLN 10 a month unless 5 card or BLIK payments are made."
+          "note": "Account maintenance is unconditionally free; the debit card costs PLN 10 a month unless 5 card or BLIK payments are made"
         },
         "savings": {
           "name": "Konto Oszczędnościowe Plus",
@@ -3070,7 +3070,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Conta Caixa S",
           "source": "https://www.cgd.pt/Particulares/Contas/Pages/Conta-Caixa.aspx",
           "monthlyFee": 546,
-          "note": "Monthly maintenance including 4% stamp duty; tiers M €6.55 and Azul €7.59, reduced when at least €50 a month is spent by card."
+          "note": "Monthly maintenance including 4% stamp duty; tiers M €6.55 and Azul €7.59, reduced when at least €50 a month is spent by card"
         },
         "savings": {
           "name": "CaixaPoupança",
@@ -3088,7 +3088,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Mi Cuenta",
           "source": "https://www.popular.com/assets/pdf/caracteristicas-acceso-popular-es.pdf",
           "statedFee": 250,
-          "note": "US$2.50 monthly service charge waived with direct deposit, a US$500 combined average balance, or a holder aged 25 or under."
+          "note": "US$2.50 monthly service charge waived with direct deposit, a US$500 combined average balance, or a holder aged 25 or under"
         },
         "savings": {
           "name": "Acceso Popular savings section",
@@ -3105,7 +3105,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://www.qnb.com/sites/qnb/qnbqatar/page/en/encurrentaccountpage.html",
-          "note": "No monthly charge and no minimum balance; pays no interest."
+          "note": "No monthly charge and no minimum balance; pays no interest"
         },
         "savings": {
           "name": "Savings Plus Account",
@@ -3135,7 +3135,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte de dépôt",
           "source": "https://www.moneyvox.fr/tarif-bancaire/bred-reunion/",
           "monthlyFee": 250,
-          "note": "Account-keeping fee of €30 a year for La Réunion, shown as a monthly equivalent."
+          "note": "Account-keeping fee of €30 a year for La Réunion; the game charges a month’s share"
         },
         "savings": {
           "name": "Livret A",
@@ -3157,7 +3157,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Nelimitat",
           "source": "https://www.bancatransilvania.ro/news/comunicate-de-presa/nelimitat-cea-mai-utilizata-optiune-de-servicii-de-cont-curent-din-romania-este-disponibila-si-online-",
-          "note": "BT's most-used current-account option; the September 2026 fee schedule could not be read."
+          "note": "BT's most-used current-account option; the September 2026 fee schedule could not be read"
         },
         "savings": {
           "name": "Cont de economii BT în lei",
@@ -3190,7 +3190,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "СберКарта (SberCard)",
           "source": "https://bankinform.ru/news/138284",
-          "note": "Servicing free without conditions since July 1, 2025."
+          "note": "Servicing free without conditions since July 1, 2025"
         },
         "savings": {
           "name": "Накопительный счёт",
@@ -3223,7 +3223,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Compte de dépôt",
           "source": "https://www.bred.fr/tarifs",
-          "note": "BRED publishes a separate Saint-Barthélemy and Saint-Martin tariff; the 2026 account-keeping fee was not confirmed."
+          "note": "BRED publishes a separate Saint-Barthélemy and Saint-Martin tariff; the 2026 account-keeping fee was not confirmed"
         },
         "savings": {
           "name": "Livret A",
@@ -3240,7 +3240,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Personal Current Account",
           "source": "https://www.sainthelenabank.com/accounts/accounts-personal/",
-          "note": "No standard monthly fee found; a £100 overdraft costs £1 a month. All rates track the bank's 4.0% Base Rate."
+          "note": "No standard monthly fee found; a £100 overdraft costs £1 a month. All rates track the bank's 4.0% Base Rate"
         },
         "savings": {
           "name": "Easy Saver",
@@ -3289,7 +3289,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Compte de dépôt",
           "source": "https://www.bred.fr/tarifs",
-          "note": "BRED publishes a separate Saint-Barthélemy and Saint-Martin tariff; the 2026 account-keeping fee was not confirmed."
+          "note": "BRED publishes a separate Saint-Barthélemy and Saint-Martin tariff; the 2026 account-keeping fee was not confirmed"
         },
         "savings": {
           "name": "Livret A",
@@ -3318,7 +3318,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Personal Chequing",
           "source": "https://www.bosvg.com/chequing/",
-          "note": "Fee schedule is published as images; the Senior Chequing Account for 55+ has no BOSVG fees."
+          "note": "Fee schedule is published as images; the Senior Chequing Account for 55+ has no BOSVG fees"
         },
         "savings": {
           "name": "Basic Savings Account",
@@ -3336,7 +3336,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Access Everyday Account",
           "source": "https://www.anz.com/samoa/en/personal/everyday-banking/access-everyday-account/",
           "monthlyFee": 250,
-          "note": "WST 2.50 monthly account maintenance fee, pay-as-you-go transactions, no interest."
+          "note": "WST 2.50 monthly account maintenance fee, pay-as-you-go transactions, no interest"
         },
         "savings": {
           "name": "Pacific Savings Account",
@@ -3358,7 +3358,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "B Green",
           "source": "https://www.bsm.sm/conti-correnti/",
-          "note": "The bank's free online current account; the B-YOU and B-PLUS accounts carry an all-inclusive monthly fee not published on the page."
+          "note": "The bank's free online current account; the B-YOU and B-PLUS accounts carry an all-inclusive monthly fee not published on the page"
         }
       }
     }
@@ -3370,7 +3370,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Depósito à Ordem",
           "source": "https://www.bistp.st/dotAsset/cd57fa50-a1e9-49f4-bfb7-e6ae4b117a2e.pdf",
-          "note": "The January 1, 2026 price list charges a monthly maintenance commission by average-balance tier (roughly Db 11 to 25) plus 3.5% stamp duty; the tier layout was not read cleanly."
+          "note": "The January 1, 2026 price list charges a monthly maintenance commission by average-balance tier (roughly Db 11 to 25) plus 3.5% stamp duty; the tier layout was not read cleanly"
         }
       }
     }
@@ -3382,7 +3382,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://www.alrajhibank.com.sa/en/Personal/Accounts/Memberships/Current-Account",
-          "note": "No maintenance fee found; Saudi banks do not charge for keeping a basic current account."
+          "note": "No maintenance fee found; Saudi banks do not charge for keeping a basic current account"
         },
         "savings": {
           "name": "Hassad Account",
@@ -3406,7 +3406,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Compte Chèque",
           "source": "https://comparek.sn/banques/cbao-attijariwafa-bank",
-          "note": "Account-keeping fees of 0 FCFA on the basic check account."
+          "note": "Account-keeping fees of 0 FCFA on the basic check account"
         },
         "savings": {
           "name": "Compte Épargne",
@@ -3429,7 +3429,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Intesa Hit",
           "source": "https://www.bancaintesa.rs/en/stanovnistvo/paketi-platnih-racuna/intesa-hit-racun.html",
           "monthlyFee": 35000,
-          "note": "Sells packaged payment accounts (paketi platnih računa); fees not read."
+          "note": "Sells packaged payment accounts (paketi platnih računa); fees not read"
         }
       }
     }
@@ -3441,7 +3441,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://www.scb.sc/open-an-account-with-us",
-          "note": "Opening deposit SCR 5,000; fees are in a separate schedule not read."
+          "note": "Opening deposit SCR 5,000; fees are in a separate schedule not read"
         },
         "savings": {
           "name": "Personal Savings Account",
@@ -3477,7 +3477,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "DBS Multiplier Account",
           "source": "https://www.dbs.com.sg/personal/support/bank-deposit-accounts-fall-below-fee.html",
-          "note": "S$5 fall-below fee if the average daily balance is under S$3,000; waived for customers aged 29 or under."
+          "note": "S$5 fall-below fee if the average daily balance is under S$3,000; waived for customers aged 29 or under"
         },
         "savings": {
           "name": "DBS Multiplier Account (base rate)",
@@ -3495,7 +3495,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Personal Current Account",
           "source": "https://www.wib-bank.net/personal/support-services/personal-and-non-personal-account-administration-fees",
           "monthlyFee": 1000,
-          "note": "XCG 10.00 monthly administration fee for residents (USD 6.00 on a US-dollar account)."
+          "note": "XCG 10.00 monthly administration fee for residents (USD 6.00 on a US-dollar account)"
         },
         "savings": {
           "name": "Personal Savings Account",
@@ -3517,7 +3517,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "SPACE účet",
           "source": "https://www.slsp.sk/sk/ludia/otazky-a-odpovede/aky-je-mesacny-poplatok-za-vedenie-uctu",
-          "note": "Free through the Moja odmena program, e.g. €450 a month of mobile or card payments plus three standing orders or direct debits, or €15,000 of assets at the bank."
+          "note": "Free through the Moja odmena program, for example with €450 a month of mobile or card payments plus three standing orders or direct debits, or €15,000 of assets at the bank"
         },
         "savings": {
           "name": "Sporiaci účet",
@@ -3550,7 +3550,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Paket Osnovni",
           "source": "https://www.nlb.si/content/dam/nlb/pdf-files/osebne-finance/racuni-paketi/Izvlecek-iz-tarife-osebni-racun-STP.pdf.coredownload.pdf",
           "statedFee": 699,
-          "note": "Tariff extract valid from August 1, 2026; Paket Digitalni is €0.99 and free for adults up to 27; under-30s get 50% off Paket Osnovni."
+          "note": "Tariff extract valid from August 1, 2026; Paket Digitalni is €0.99 and free for adults up to 27; under-30s get 50% off Paket Osnovni"
         },
         "savings": {
           "name": "NLB Varčevalni račun",
@@ -3567,7 +3567,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Pacific Standard Account",
           "source": "https://www.bsp.com.sb/personal-banking/pacific-standard-account/",
-          "note": "No monthly fee; transactions are charged individually."
+          "note": "No monthly fee; transactions are charged individually"
         },
         "savings": {
           "name": "Plus Saver Account",
@@ -3583,7 +3583,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Al-Wadiah Current Account",
           "source": "https://thepremierbankplc.com/islamic-banking/deposit/al-wadiah-current-and-mudaraba-savings-account/al-wadiah-current-account/",
-          "note": "Islamic safekeeping account; no fee schedule published."
+          "note": "Islamic safekeeping account; no fee schedule published"
         },
         "savings": {
           "name": "Mudaraba Savings Account",
@@ -3600,7 +3600,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Capitec account (Main account)",
           "source": "https://mybroadband.co.za/news/banking/627990-capitec-bank-charges-for-2026-revealed.html",
           "monthlyFee": 750,
-          "note": "R7.50 monthly admin fee, unchanged for 2026 (valid from March 1, 2026)."
+          "note": "R7.50 monthly admin fee, unchanged for 2026 (valid from March 1, 2026)"
         },
         "savings": {
           "name": "Access anytime",
@@ -3617,7 +3617,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://ss.kcbgroup.com/for-you/open-an-account-ss/transactional-accounts/current-account-for-you-transaction-account",
-          "note": "No minimum balance; operable in major currencies."
+          "note": "No minimum balance; operable in major currencies"
         },
         "savings": {
           "name": "Simba Savings Account",
@@ -3694,7 +3694,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Girorekening",
           "source": "https://www.dsb.sr/assets/dsb_582_infoblad.pdf",
           "monthlyFee": 2500,
-          "note": "SRD 25 a month for a private SRD giro account (USD/EUR accounts 3.00); tariff sheet dated April 2025."
+          "note": "SRD 25 a month for a private SRD giro account (USD/EUR accounts 3.00); tariff sheet dated April 2025"
         },
         "savings": {
           "name": "Spaarrekening",
@@ -3711,7 +3711,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Brukskonto",
           "source": "https://www.sparebank1.no/nb/nord-norge/privat/kundeservice/bestill/prisliste.html",
-          "note": "Price list shows no account-keeping fee for Brukskonto."
+          "note": "Price list shows no account-keeping fee for Brukskonto"
         },
         "savings": {
           "name": "Sparekonto",
@@ -3733,7 +3733,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Privatkonto",
           "source": "https://www.swedbank.se/privat/rantor-priser-och-kurser/betalningstjanster.html",
-          "note": "No fee for the account itself; the Bankkort Mastercard costs SEK 300 a year (25 a month) separately."
+          "note": "No fee for the account itself; the Bankkort Mastercard costs SEK 300 a year (25 a month) separately"
         },
         "savings": {
           "name": "e-sparkonto",
@@ -3755,7 +3755,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "UBS key4 Personal Account Pure",
           "source": "https://www.moneyland.ch/en/ubs/private-accounts/key4-pure",
-          "note": "Free online account for adults 26 and over within key4 banking."
+          "note": "Free online account for adults 26 and over within key4 banking"
         },
         "savings": {
           "name": "UBS Savings Account",
@@ -3772,7 +3772,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account (حساب جاري دائن)",
           "source": "https://www.cbs-bank.sy/ar/services/254",
-          "note": "Pays no interest."
+          "note": "Pays no interest"
         },
         "savings": {
           "name": "Savings Account (حساب توفير)",
@@ -3817,7 +3817,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://crdbbank.co.tz/en/for-you/personal-banking/current-account",
-          "note": "Fees are in CRDB's Minimum Disclosure of Bank Fees and Charges (September 17, 2026), not read."
+          "note": "Fees are in CRDB's Minimum Disclosure of Bank Fees and Charges (September 17, 2026), not read"
         },
         "savings": {
           "name": "Savings Account",
@@ -3845,7 +3845,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current",
           "source": "https://www.kasikornbank.com/en/rate/deposits/06012026-deposit-rates-en.pdf",
-          "note": "Pays 0.000%."
+          "note": "Pays 0.000%"
         },
         "savings": {
           "name": "Savings",
@@ -3892,7 +3892,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Pacific Standard Account",
           "source": "https://www.bsp.to/personal-banking/everyday-accounts-cards/pacific-standard-account/",
-          "note": "No fixed account fee; per-transaction fees apply."
+          "note": "No fixed account fee; per-transaction fees apply"
         },
         "savings": {
           "name": "Plus Saver Account",
@@ -3916,7 +3916,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Personal Interest Chequing",
           "source": "https://republictt.com/personal/deposits-investments-rates-charges",
-          "note": "Monthly maintenance fee applies (amount not found); pays 0.20% on minimum monthly balances of TT$500 or more."
+          "note": "Monthly maintenance fee applies (amount not found); pays 0.20% on minimum monthly balances of TT$500 or more"
         },
         "savings": {
           "name": "Savings Plus",
@@ -3939,7 +3939,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte Chèques",
           "source": "https://www.biat.tn/biat/Fr/nos-tarifs_11_272",
           "monthlyFee": 533,
-          "note": "TND 16 a quarter account-keeping fee, converted to monthly."
+          "note": "TND 16 a quarter account-keeping fee; the game charges a month’s share"
         },
         "savings": {
           "name": "Compte Epargne Prévoyance",
@@ -3961,7 +3961,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Vadesiz TL Mevduat Hesabı",
           "source": "https://www.ziraatbank.com.tr/tr/bireysel/mevduat/vadesiz-hesaplar/vadesiz-tl-mevduat-hesabi/vadesiz-tl-mevduat-hesabi",
-          "note": "Savings rate given is the lowest published tier of Günlük Kazanan Hesap (tiered 26%-37.5%, minimum opening balance TL 50,000)."
+          "note": "Savings rate given is the lowest published tier of Günlük Kazanan Hesap (tiered 26%-37.5%, minimum opening balance TL 50,000)"
         },
         "savings": {
           "name": "Günlük Kazanan Hesap",
@@ -3999,7 +3999,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "SMART Banking Current Account",
           "source": "https://www.stanbicbank.co.ug/uganda/personal/products-and-services/bank-with-us/bank-accounts/Smart-Banking",
           "monthlyFee": 850000,
-          "note": "Monthly bundled fee covering management fees, UGX ATM withdrawals and SMS alerts; Visa card UGX 37,000 a year extra."
+          "note": "Monthly bundled fee covering management fees, UGX ATM withdrawals and SMS alerts; Visa card UGX 37,000 a year extra"
         },
         "savings": {
           "name": "PureSave Account",
@@ -4028,7 +4028,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Картка для виплат (Card for payments)",
           "source": "https://minfin.com.ua/ua/cards/12498-4-privatbank/",
-          "note": "Free issue and maintenance."
+          "note": "Free issue and maintenance"
         },
         "savings": {
           "name": "Скарбничка (Skarbnychka)",
@@ -4045,7 +4045,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Current Account",
           "source": "https://www.emiratesnbd.com/en/kfs/cash",
           "monthlyFee": 2625,
-          "note": "Charged only if the monthly average balance falls below AED 3,000."
+          "note": "Charged only if the monthly average balance falls below AED 3,000"
         },
         "savings": {
           "name": "Standard Savings Account",
@@ -4067,7 +4067,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta Ahorro",
           "source": "https://www.brou.com.uy/personas/cuentas/cuenta-ahorro",
-          "note": "Monthly administration charge of UI 30, waived if the average balance is UYU 29,000 or more."
+          "note": "Monthly administration charge of UI 30, waived if the average balance is UYU 29,000 or more"
         },
         "savings": {
           "name": "Cuenta Ahorro",
@@ -4103,7 +4103,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Isi Akaon",
           "source": "https://www.nbv.vu/retail-savings-accounts.html",
-          "note": "Listed by NBV as a retail account for day-to-day money management."
+          "note": "Listed by NBV as a retail account for day-to-day money management"
         },
         "savings": {
           "name": "Mekem Gro",
@@ -4119,7 +4119,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Cuenta Corriente",
           "source": "https://www.bcv.org.ve/notas-de-prensa/bcv-adecua-tasas-de-interes-todos-los-depositos-en-bs-seran-remunerados-partir-del",
-          "note": "From September 15, 2026 the BCV requires at least 10% a year on bolívar demand deposits."
+          "note": "From September 15, 2026 the BCV requires at least 10% a year on bolívar demand deposits"
         },
         "savings": {
           "name": "Cuenta de Ahorro",
@@ -4136,7 +4136,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Tài khoản thanh toán (payment account)",
           "source": "https://www.vietcombank.com.vn/vi-VN/KHCN/Truy-cap-nhanh/Tin-noi-bat/Articles/vietcombank-cong-bo-chinh-sach-phi-moi-mien-toan-bo-phi-chuyen-tien-va-phi-duy-tri-tren-ngan-hang-so-vcb-digibank",
-          "note": "Vietcombank waived account-management fees for the default account registered to VCB Digibank."
+          "note": "Vietcombank waived account-management fees for the default account registered to VCB Digibank"
         },
         "savings": {
           "name": "Tiền gửi không kỳ hạn (demand deposit)",
@@ -4170,7 +4170,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Compte de dépôt",
           "source": "https://www.ieom.fr/IMG/pdf/ra_ieom_observatoire_tarifs_bancaires_2025-2026.pdf",
           "monthlyFee": 52500,
-          "note": "XPF 6,300/year account-keeping fee (April 2026, IEOM; sole bank in the territory, unchanged three years running), converted to XPF 525/month"
+          "note": "XPF 6,300 a year account-keeping fee (April 2026, IEOM; the only bank in the territory, unchanged three years running); the game charges XPF 525 a month"
         }
       }
     }
@@ -4203,7 +4203,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://www.tadhamonbank.com/en/banking/1",
-          "note": "Pays no return; minimum opening balance YER 20,000."
+          "note": "Pays no return; minimum opening balance YER 20,000"
         },
         "savings": {
           "name": "Tadhamon Saving Account",
@@ -4284,7 +4284,7 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "ZERO Package",
           "source": "https://www.procreditbank-kos.com/eng/news/procredit-banks-zero-package-lifetime-free-ma-1869/",
-          "note": "Free lifetime maintenance for new clients who moved their salary to ProCredit by June 30, 2026 (offer now closed). The standard package fee was not found; new fees took effect October 1, 2026."
+          "note": "Free lifetime maintenance for new clients who moved their salary to ProCredit by June 30, 2026 (offer now closed). The standard package fee was not found; new fees took effect October 1, 2026"
         }
       }
     }

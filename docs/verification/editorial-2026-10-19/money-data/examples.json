@@ -349,5 +349,77 @@
   "why": "\"… isn't kept\" is the research's phrase for what the game leaves out, and says so now.",
   "meaningSensitive": false,
   "verified": "read on rendered/moves.txt, a British bank’s Sources And Estimates"
+ },
+ {
+  "source": "src/engine/content/banks-world-sheets.ts (DK.Danske)",
+  "kind": "label",
+  "before": "\"note\": \"DKK 105 per quarter, shown as monthly.\"",
+  "after": "\"note\": \"DKK 105 a quarter; the game charges a month’s share.\"",
+  "why": "\"shown as monthly\" was the research describing the game in the passive; the game charges a quarter's fee as a month's share, and says so.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/accounts-world.txt, Danske Bank; monthlyFee 3500 is DKK 105 / 3"
+ },
+ {
+  "source": "src/engine/content/banks-world-sheets.ts (KZ.Kaspi)",
+  "kind": "label",
+  "before": "\"note\": \"Annual service fee of KZT 1,995, shown here as 1,995/12. First year free; charged only if the card was used during the year. In February 2026 Kaspi denied reports of a rise to KZT 10,000.\"",
+  "after": "\"note\": \"Annual service fee of KZT 1,995, which the game charges as a twelfth each month. First year free; charged only if the card was used during the year. In February 2026 Kaspi denied reports of a rise to KZT 10,000.\"",
+  "why": "\"shown here as 1,995/12\" put a formula where a sentence belongs.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/accounts-world.txt, Kaspi Bank; monthlyFee is 1,995 / 12"
+ },
+ {
+  "source": "src/engine/content/banks-world-sheets.ts (BH.NBB)",
+  "kind": "label",
+  "before": "\"note\": \"Free if weighted average monthly balance >= BHD 300, else BHD 3.3 per month\"",
+  "after": "\"note\": \"Free if the weighted average monthly balance is BHD 300 or more, else BHD 3.3 a month\"",
+  "why": "\">=\" in a sentence the player reads is a symbol standing for words.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/accounts-world.txt, National Bank of Bahrain"
+ },
+ {
+  "source": "src/engine/content/banks-world-sheets.ts (PK.HBL)",
+  "kind": "label",
+  "before": "\"note\": \"Exempt from the Rs 50/month low-balance service charge (SOBC January to June 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000\"",
+  "after": "\"note\": \"Exempt from the Rs 50 a month low-balance service charge (SOBC January to June 2026); other accounts such as HBL Freedom pay Rs 50 a month if the monthly average balance is under Rs 40,000\"",
+  "why": "\"/month\" and \"<\" written out, and the balance given its article.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/accounts-world.txt, HBL"
+ },
+ {
+  "source": "src/engine/content/banks-world.ts (worldBanking.current.source)",
+  "kind": "label",
+  "before": "current: { name: row.checking ? 'Checking Account' : 'Current Account', source: `no product sheet on record; the bank from ${row.source}`",
+  "after": "current: { name: row.checking ? 'Checking Account' : 'Current Account', source: `no fees or rates were researched for this bank, so the game charges none and pays none; the bank was found at ${row.source}`",
+  "why": "\"no product sheet on record; the bank from <address>\" named the research's files and left \"from\" hanging. It says what wasn't researched, what the game does about it, and where the bank was found.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/accounts-world.txt, a bank with no sheet in each country (Afghanistan International Bank, and the rest)"
+ },
+ {
+  "source": "src/engine/content/banks-world-fees.ts (GU|Bank of Guam)",
+  "kind": "label",
+  "before": "the game’s accounts are online, so e-Statements are taken as chosen",
+  "after": "the game’s accounts are online, so the game takes e-Statements as chosen",
+  "why": "\"e-Statements are taken as chosen\" said who takes them so: the game.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/accounts-world.txt, Bank of Guam"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING (es-bankinter.source)",
+  "kind": "label",
+  "before": "Bankinter Informacion precontractual Tarjeta Combo; Bankinter INE Tarjeta Visa Clasica; bankinter.com card FAQs (HTTP 403). None states hold periods or value dates., read September 26, 2026",
+  "after": "Bankinter Informacion precontractual Tarjeta Combo; Bankinter INE Tarjeta Visa Clasica; bankinter.com card FAQs, which couldn’t be opened; none of them gives hold periods or value dates; read September 26, 2026",
+  "why": "A web server's status code, \"(HTTP 403)\", is a diagnostic, not a source; and the line ended on a stop before the day, so the screen read \"dates., read …\".",
+  "meaningSensitive": false,
+  "verified": "read on Statements, rendered/statements.txt, Bankinter"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (ie-ptsb.source)",
+  "kind": "label",
+  "before": "PTSB General Terms & Conditions and Personal & Business Banking Charges (PDF bmk2548, via web.archive.org, as ptsb.ie returns 403); ptsb.ie help pages report-my-card-lost-or-stolen, replace-lost-stolen-card, replace-my-damaged-card, manage-cards, card-frozen-what-to-do-next, how-we-keep-you-safe (via web.archive.org), Charges booklet January 15, 2025; help pages read September 26, 2026",
+  "after": "PTSB General Terms & Conditions and Personal & Business Banking Charges (PDF bmk2548, via web.archive.org, as ptsb.ie couldn’t be opened); ptsb.ie help pages report-my-card-lost-or-stolen, replace-lost-stolen-card, replace-my-damaged-card, manage-cards, card-frozen-what-to-do-next, how-we-keep-you-safe (via web.archive.org), Charges booklet January 15, 2025; help pages read September 26, 2026",
+  "why": "\"as ptsb.ie returns 403\" said as what it means: the bank's site couldn't be opened, so the archive was read.",
+  "meaningSensitive": false,
+  "verified": "read on Your Cards, rendered/security.txt, PTSB"
  }
 ]

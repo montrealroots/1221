@@ -1,0 +1,23 @@
+[
+ {
+  "export": "SECURITY",
+  "key": "mx-santander",
+  "field": "source",
+  "before": "Santander Cuenta Debito LikeU brochure and fee clause (assets.santandermedia.com); Folleto Informativo Tarjeta de Credito LikeU (MDP_Folleto_LikeU_Dic2025_CAT2026_V4); santander.com.mx help page 'Bloqueo y reposicion de tarjeta' read via Wayback Machine snapshot of June 10, 2026 (live site returned 403), LikeU credit brochure December 2025 (CAT calculated January 1, 2026); help page snapshot June 10, 2026; read September 26, 2026",
+  "after": "Santander Cuenta Debito LikeU brochure and fee clause (assets.santandermedia.com); Folleto Informativo Tarjeta de Credito LikeU (MDP_Folleto_LikeU_Dic2025_CAT2026_V4); santander.com.mx help page 'Bloqueo y reposicion de tarjeta' read via Wayback Machine snapshot of June 10, 2026 (the live site couldn’t be opened), LikeU credit brochure December 2025 (CAT calculated January 1, 2026); help page snapshot June 10, 2026; read September 26, 2026"
+ },
+ {
+  "export": "SECURITY",
+  "key": "ie-ptsb",
+  "field": "source",
+  "before": "PTSB General Terms & Conditions and Personal & Business Banking Charges (PDF bmk2548, via web.archive.org, as ptsb.ie returns 403); ptsb.ie help pages report-my-card-lost-or-stolen, replace-lost-stolen-card, replace-my-damaged-card, manage-cards, card-frozen-what-to-do-next, how-we-keep-you-safe (via web.archive.org), Charges booklet January 15, 2025; help pages read September 26, 2026",
+  "after": "PTSB General Terms & Conditions and Personal & Business Banking Charges (PDF bmk2548, via web.archive.org, as ptsb.ie couldn’t be opened); ptsb.ie help pages report-my-card-lost-or-stolen, replace-lost-stolen-card, replace-my-damaged-card, manage-cards, card-frozen-what-to-do-next, how-we-keep-you-safe (via web.archive.org), Charges booklet January 15, 2025; help pages read September 26, 2026"
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-resona",
+  "field": "source",
+  "before": "resonabank.co.jp/kojin/faq/tetsuduki/faq_tetsuduki_0007.html, _0026.html, _0006.html; resonabank.co.jp/kojin/visa_debit/oshirase_c/20220225_visadebit.html; resonabank.co.jp/kojin/gochui/detail/phishing_card.html; resonacard.co.jp/visa/faq/trouble/faq_p_visa_trouble_0001.html (all via web.archive.org captures January 2025 to May 2026; live site returns 403), captures January 27, 2025 to May 15, 2026; read September 26, 2026",
+  "after": "resonabank.co.jp/kojin/faq/tetsuduki/faq_tetsuduki_0007.html, _0026.html, _0006.html; resonabank.co.jp/kojin/visa_debit/oshirase_c/20220225_visadebit.html; resonabank.co.jp/kojin/gochui/detail/phishing_card.html; resonacard.co.jp/visa/faq/trouble/faq_p_visa_trouble_0001.html (all via web.archive.org captures January 2025 to May 2026; the live site couldn’t be opened), captures January 27, 2025 to May 15, 2026; read September 26, 2026"
+ }
+]

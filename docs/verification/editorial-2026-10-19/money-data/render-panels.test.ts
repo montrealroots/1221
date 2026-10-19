@@ -13,7 +13,9 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
 import { THIRTEEN } from '@/engine/content/banks-thirteen';
-import { bankById } from '@/engine/content/banks';
+import { bankById, banksIn } from '@/engine/content/banks';
+import { SHEETS } from '@/engine/content/banks-world-sheets';
+import { CITIES } from '@/engine/content/geography';
 import { unclaimedLaw } from '@/engine/systems/accountlife';
 import { cardsOf, stateOf } from '@/engine/systems/credit';
 const BANKS = THIRTEEN.flatMap((c) => c.banks.map((b) => ({ id: b.id, iso: c.iso })));
@@ -44,7 +46,19 @@ const CITY: Record<string, string> = {
   FR: 'fr-idf-paris', DE: 'de-be-berlin', ES: 'es-md-madrid', JP: 'jp-13-tokyo', KR: 'kr-11-seoul', AU: 'au-nsw-sydney', NZ: 'nz-akl-auckland',
 };
 
-const lifeAt = (bankId: string, iso: string): Simulation => iso === 'US'
+/** A city of a country outside the thirteen, from the ones the game keeps before a country's cities load. */
+const cityIn = (iso: string): string | undefined => CITIES.all().find((c) => c.id.startsWith(`${iso.toLowerCase()}-`))?.id;
+/** BANKS=world: each bank the world sheets have a product for, and one bank without, by country. */
+const WORLD = Object.entries(SHEETS).flatMap(([iso, sheet]) => {
+  const named = Object.keys(sheet.products ?? {});
+  const banks = banksIn(iso);
+  const plain = banks.find((b) => !named.includes(b.name));
+  return [...named.map((name) => banks.find((b) => b.name === name)), plain].filter((b) => b !== undefined).map((b) => ({ id: b.id, iso }));
+});
+
+const lifeAt = (bankId: string, iso: string): Simulation => !CITY[iso]
+  ? quickSave({ startLocationId: cityIn(iso)!, homeRegionId: cityIn(iso)!, livesWhereBorn: true, wealth: 'comfortable', bankId }, `md15-${bankId}`)
+  : iso === 'US'
   ? createSave(1, `md15-${bankId}`, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId })
   : quickSave({ startLocationId: CITY[iso], homeRegionId: CITY[iso], livesWhereBorn: true, wealth: 'comfortable', bankId }, `md15-${bankId}`);
 
@@ -66,7 +80,8 @@ const PANELS: Record<string, Drawn> = {
 describe('money-data render', () => {
   it('draws each panel at each bank', async () => {
     const want = (process.env.RENDER ?? Object.keys(PANELS).join(',')).split(',').filter((p) => PANELS[p]);
-    const banks = (process.env.BANKS ?? 'all') === 'all' ? BANKS.filter((b) => CITY[b.iso]) : BANKS.filter((b) => process.env.BANKS!.split(',').includes(b.id));
+    const banks = process.env.BANKS === 'world' ? WORLD.filter((b) => cityIn(b.iso)) : (process.env.BANKS ?? 'all') === 'all' ? BANKS.filter((b) => CITY[b.iso]) : BANKS.filter((b) => process.env.BANKS!.split(',').includes(b.id));
+    const suffix = process.env.BANKS === 'world' ? '-world' : '';
     const dir = 'docs/verification/editorial-2026-10-19/money-data/rendered';
     mkdirSync(dir, { recursive: true });
     const out: Record<string, string[]> = Object.fromEntries(want.map((p) => [p, []]));
@@ -94,6 +109,6 @@ describe('money-data render', () => {
         out[p]!.push(`=== ${bank.id} (the life banks at ${held})\n${words}`);
       }
     }
-    for (const p of want) writeFileSync(`${dir}/${p}.txt`, out[p]!.join('\n\n') + '\n');
+    for (const p of want) writeFileSync(`${dir}/${p}${suffix}.txt`, out[p]!.join('\n\n') + '\n');
   });
 });

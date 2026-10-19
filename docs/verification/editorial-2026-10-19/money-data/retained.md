@@ -48,3 +48,20 @@ holds many fields; where a source was rewritten in part, the fields kept inside 
 - **ANZ New Zealand, `pendingWords`:** "A hold that you don't end up spending won't be processed and drops off after a
   day or two. A card verification hold won't be processed either and disappears from your account in five days." Two
   short sentences that answer the question a player has about a hold they don't recognize.
+
+## The banks' own research: `banks-thirteen.ts`, `banks-lending.ts`, `banks-world*.ts`
+
+- **Chase's product names, Chase Total Checking and Chase Savings,** and their source lines ("chase.com: $5 a month,
+  waived with a $300 balance; 0.01% APY"): the product is named as Chase sells it, and the line cites the page and
+  says in a few words what it gives, at the foot of the account.
+- **Citi's `overdraft`, "Citi charges no overdraft or returned-item fees."**: on Borrowing, where there are no terms to
+  show, the one fact a player needs.
+- **`NOT_FOUND`, "no published rate found":** the Accounts tab reads it back (`/no published rate/i` in
+  BankWorkspace.tsx) and says its own sentence to the player; it's a key.
+- **Spain's tacit overdraft cap**, "Ley 16/2011 de contratos de crédito al consumo, art. 20.4: a tacit overdraft may not
+  cost more than two and a half times the legal rate of interest (3.25% in 2026), counting its commission": the law,
+  its limit and how it's counted, cited at the foot of Borrowing.
+- **The world's bank names** ("Banka Kombëtare Tregtare (BKT)", "Banque pour l'Industrie et le Commerce – Comores
+  (BIC-Comores)"): as their customers know them, with the short form they go by.
+- **The IBAN structures** ("3!n11!n"): the IBAN Registry's notation, which builds the account number the player sees;
+  the strings themselves are never printed.

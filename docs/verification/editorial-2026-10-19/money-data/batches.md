@@ -370,3 +370,84 @@ banks Retained by a pattern, with a reason naming their products and what their 
 the edits changed (found as the ones whose first pass had gone to Pending) marked Rewritten. A run takes about ten
 seconds on the shared machine, so a status for each of the 117 sources one by one would have taken twenty minutes; the
 reasons are written for the group they cover.
+
+## Batch 5: the world's banks (`banks-world.ts`, `banks-world-sheets.ts`, `banks-world-fees.ts`, `banks-world-iban.ts`; 294 sources), and the generated files' source lines
+
+### What the screen shows
+
+- **A product sheet's name and its source line.** `banks.ts` (`fromSheet`) joins a world bank's product source, its
+  note and, where a fee is waived on a condition, the waiver's source (`WORLD_FEES`), into the line the Accounts tab
+  prints as "Source: <source>; <note>; <waiver>, <the day>." The product's name is the account's.
+- **A bank without a sheet** (`banks-world.ts`, `worldBanking`): its name, "Current Account" or "Checking Account", and
+  the source line, all three things the Accounts tab shows.
+- **Not shown:**
+  - the sheets' interest-tax notes (`OtherCharges` prints a note only where the tax comes back, and none of these do);
+  - the IBAN structures and codes (`banks-world-iban.ts`), which build an account number.
+
+  Each keeps its words, and its status says how that's known.
+
+The walk of the built app never reaches a world bank: every scenario save is a New York student. So the harness
+learned `BANKS=world`, a life in a city of each world country with a sheet, at each bank the sheet names and one
+without (468 banks, `rendered/accounts-world.txt`).
+
+### What changed and what stayed
+
+- **The notes' shorthand**: "/month", "/yr", "/quarter", "p.a.", ">=", "<", "incl.", "e.g." said in words, 37 notes.
+- **The game's handling of a quarterly or yearly fee**, said by the research in its own passive ("converted to
+  monthly", "shown as monthly", "shown per month", "shown here as 1,995/12", "converted to XPF 525/month"), said as the
+  game's: "the game charges a month's share".
+- **A doubled stop on 118 lines.** 118 product notes ended on a full stop, and the screen adds ", <the day>." after
+  them, or a waiver after "; ", so 118 world banks' source lines read "….," or "….;". Found in the world render; the
+  notes' last stops went (`b5-world-changes.json`, "trailing stop"), and the render has none left.
+- **A bank without a sheet** said "no product sheet on record; the bank from <address>". It now says "no fees or rates
+  were researched for this bank, so the game charges none and pays none; the bank was found at <address>".
+- **Waivers' sources:** Burkina Faso's fragment ("so the full fee") and the five Bank of Guam lines' passive
+  ("e-Statements are taken as chosen") say the game does it.
+- **Web servers' status codes in the generated files' source lines** ("(HTTP 403)", "page returned 403", "live site
+  403"), 11 of them in Your Cards', Your Accounts Over Time's and Statements' sources, are diagnostics. Each says the
+  page couldn't be opened (`b5-diagnostics.mjs`). Bankinter's pending source ended on a stop before the day ("dates.,
+  read …"), mended with it.
+- **Kept:**
+  - every bank's and product's name as the bank spells it;
+  - the source addresses;
+  - the notes that were already plain citations;
+  - "Current Account" and "Checking Account" as an unresearched bank's account names (the coordinator's question, in
+    the report);
+  - "weighted average" in Bahrain's note, the bank's own term, which the engine-speak count reads and which stays at
+    its count.
+
+### Meaning-sensitive changes, and how each was checked
+
+- **Each "month's share"** against the sheet's `monthlyFee`: Danske DKK 105 / 3 = 35.00; BIAT TND 16 / 3; BNA DZD 500 /
+  12; BRED Guadeloupe EUR 30.48 / 12 = 2.54; Réunion €30 / 12 = 2.50; Kaspi KZT 1,995 / 12 = 166.25; Wallis-et-Futuna XPF
+  6,300 / 12 = 525. LGT's and CIB's quarterly fees likewise.
+- **Ameriabank's** "150k" and "50k" are AMD 150,000 and 50,000. **Belarusbank's** "0.0001% USD/EUR" is "on USD and
+  EUR".
+- **The world bank's source** says what `worldBanking` does: no `monthlyFee`, no `rate`.
+- No figure moved: `apply-text.mjs` and the stop's removal change string literals only, and `tests/bank-fees.test.ts`,
+  which holds every stated fee to a rule, passes unchanged.
+
+### Interactions read whole
+
+The Accounts tab at each world bank rendered: the account, "Pays no interest." or its rate, the fee or "No monthly
+fee.", the source line and the confidence line after it ("Some of this bank's figures couldn't be fully confirmed."),
+then Move Money, Your Banks and opening at another bank.
+
+### Tests and tool matchers
+
+None held these words.
+
+### Checks
+
+- `npx tsc -b --noEmit`: exit 0 (`b5-tsc.txt`). `npx eslint` on the changed files: exit 0 (`b5-eslint.txt`).
+- `npx vitest run` on the 12 test files that touch the world's banks and the three generated files changed again: 182
+  of 182, exit 0 (`b5-tests.txt`).
+- The text checks: exit 0 each (`b5-checks.txt`). Engine-speak stayed at 332.
+
+### How the statuses were marked
+
+`b5-marks.mjs`, run by `mark.mjs` (`b5-marks.log`, 136 runs):
+- the three generated sources the diagnostics changed, marked again;
+- `ROWS` and the IBAN data Retained;
+- the sheets Retained by one pattern, then the 128 sheet sources the edits changed (`b5-changed-sources.txt`, the ones
+  whose first pass had gone to Pending) Rewritten one by one.

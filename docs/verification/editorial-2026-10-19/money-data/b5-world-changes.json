@@ -1,0 +1,980 @@
+[
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "AX.Ålandsbanken",
+  "before": "\"note\": \"Price list shows EUR 5.00/month for Primekonto and other personal accounts\"",
+  "after": "\"note\": \"Price list shows EUR 5.00 a month for Primekonto and other personal accounts\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "DZ.BNA",
+  "before": "\"note\": \"DZD 500 per year account-keeping fee, converted to monthly\"",
+  "after": "\"note\": \"DZD 500 a year account-keeping fee; the game charges a month’s share\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "AR.Banco de la Nación",
+  "before": "\"note\": \"No maintenance charge on peso savings accounts (incl. salary accounts); USD account costs USD 10/month unless salary is paid there\"",
+  "after": "\"note\": \"No maintenance charge on peso savings accounts (including salary accounts); a USD account costs USD 10 a month unless a salary is paid into it\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "AM.Ameriabank",
+  "before": "\"note\": \"Management free; AMD 1,000 per half-year only if turnover < AMD 150k and balance < AMD 50k, and not charged until June 30, 2027\"",
+  "after": "\"note\": \"Management free; AMD 1,000 a half-year only if turnover is under AMD 150,000 and the balance under AMD 50,000, and not charged until June 30, 2027\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "BS.RBC",
+  "before": "\"note\": \"BSD 12/month; 6 free checks\"",
+  "after": "\"note\": \"BSD 12 a month; 6 free checks\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "BH.NBB",
+  "before": "\"note\": \"Free if weighted average monthly balance >= BHD 300, else BHD 3.3 per month\"",
+  "after": "\"note\": \"Free if the weighted average monthly balance is BHD 300 or more, else BHD 3.3 a month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "BY.Belarusbank",
+  "before": "\"note\": \"No charge for opening or maintenance; the current account itself pays 0.1% p.a. on BYN balances (0.0001% USD/EUR).\"",
+  "after": "\"note\": \"No charge for opening or maintenance; the account itself pays 0.1% a year on BYN balances (0.0001% on USD and EUR).\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "BE.BNP Paribas Fortis",
+  "before": "\"note\": \"Price raised from EUR 3 to EUR 3.50/month (Test Achats)\"",
+  "after": "\"note\": \"Price raised from EUR 3 to EUR 3.50 a month (Test Achats)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "BM.HSBC",
+  "before": "\"note\": \"$12/month; no charge for Premier and Seniors.\"",
+  "after": "\"note\": \"$12 a month; no charge for Premier and Seniors.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "BA.UniCredit",
+  "before": "\"note\": \"BAM 5.99/month; waived for students\"",
+  "after": "\"note\": \"BAM 5.99 a month; waived for students\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "BG.UniCredit Bulbank",
+  "before": "\"note\": \"EUR 2.84/month, free with regular income into the account\"",
+  "after": "\"note\": \"EUR 2.84 a month, free with regular income into the account\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "BF.Coris",
+  "before": "\"note\": \"XOF 1,500/month; XOF 500 for state employees (2022 conditions)\"",
+  "after": "\"note\": \"XOF 1,500 a month; XOF 500 for state employees (2022 conditions)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "KM.Exim",
+  "before": "\"note\": \"Minimum balance 10,000 KMF; remunerated up to 0.50% p.a. (non-chequebook current account: min 3,000 KMF, up to 0.75%). Monthly fee not published.\"",
+  "after": "\"note\": \"Minimum balance 10,000 KMF; pays up to 0.50% a year (an account without a chequebook: minimum 3,000 KMF, up to 0.75%). Monthly fee not published.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "DK.Danske",
+  "before": "\"note\": \"DKK 105 per quarter, shown as monthly.\"",
+  "after": "\"note\": \"DKK 105 a quarter; the game charges a month’s share.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "EG.CIB",
+  "before": "\"note\": \"Converted from EGP 120 per quarter statement/administrative fee (as of September 1, 2026); minimum balance EGP 20,000, EGP 100 fee if below.\"",
+  "after": "\"note\": \"EGP 120 a quarter for statements and administration (as of September 1, 2026), which the game charges as a month’s share; minimum balance EGP 20,000, with an EGP 100 fee below it.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "GA.BGFIBank",
+  "before": "\"note\": \"XAF 12,000 incl. tax per month; figure from search summary, not the tariff.\"",
+  "after": "\"note\": \"XAF 12,000 a month including tax; the figure is from a search summary, not the tariff.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "GR.NBG",
+  "before": "\"note\": \"Account maintenance free of charge; Benefits Account variants cost EUR 0.80 or 2/month.\"",
+  "after": "\"note\": \"Account maintenance free of charge; Benefits Account variants cost EUR 0.80 or EUR 2 a month.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "GL.GrønlandsBANKEN",
+  "before": "\"note\": \"Customer fee (kundegebyr) DKK 25/month for private customers aged 27+, charged monthly in arrears; discounted with larger business volume. Account pays 0.000%.\"",
+  "after": "\"note\": \"Customer fee (kundegebyr) DKK 25 a month for private customers aged 27 and over, charged monthly in arrears; discounted with larger business volume. Account pays 0.000%.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "GP.BRED",
+  "before": "\"note\": \"Standard account-keeping fee EUR 30.48/year (BRED Guadeloupe, 2026 tariff), shown per month.\"",
+  "after": "\"note\": \"Standard account-keeping fee EUR 30.48 a year (BRED Guadeloupe, 2026 tariff); the game charges a month’s share.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "ID.BRI",
+  "before": "\"note\": \"IDR 12,000/month admin fee; a savings-type account used as the everyday account.\"",
+  "after": "\"note\": \"IDR 12,000 a month admin fee; a savings-type account used as the everyday account.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "IL.Leumi",
+  "before": "\"note\": \"Regulated basic track: at most ILS 10/month including 10 self-service transactions and 1 teller transaction.\"",
+  "after": "\"note\": \"Regulated basic track: at most ILS 10 a month including 10 self-service transactions and 1 teller transaction.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "IT.Intesa",
+  "before": "\"note\": \"Base monthly fee (EUR 102/year) per the information sheet updated July 21, 2026; add-on services and promotions change the total.\"",
+  "after": "\"note\": \"Base monthly fee (EUR 102 a year) per the information sheet updated July 21, 2026; add-on services and promotions change the total.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "JO.Arab Bank",
+  "before": "\"note\": \"JD 1/month minimum-balance fee when the balance is below JD 100 (payroll accounts exempt).\"",
+  "after": "\"note\": \"JD 1 a month minimum-balance fee when the balance is below JD 100 (payroll accounts exempt).\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "KZ.Kaspi",
+  "before": "\"note\": \"Annual service fee of KZT 1,995, shown here as 1,995/12. First year free; charged only if the card was used during the year. In February 2026 Kaspi denied reports of a rise to KZT 10,000.\"",
+  "after": "\"note\": \"Annual service fee of KZT 1,995, which the game charges as a twelfth each month. First year free; charged only if the card was used during the year. In February 2026 Kaspi denied reports of a rise to KZT 10,000.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "LV.Swedbank",
+  "before": "\"note\": \"EUR 2.00/month maintenance from June 1, 2026 for many customers; free for some (exemption conditions not verified).\"",
+  "after": "\"note\": \"EUR 2.00 a month maintenance from June 1, 2026 for many customers; free for some (the exemptions weren’t verified).\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "LS.Standard Lesotho",
+  "before": "\"note\": \"M8.86/month account management fee (2026 pricing); optional Nala bundle M35.70/month.\"",
+  "after": "\"note\": \"M8.86 a month account management fee (2026 pricing); optional Nala bundle M35.70 a month.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "LI.LGT",
+  "before": "\"note\": \"CHF 25 per quarter for Liechtenstein residents (CHF 120/quarter for residents outside LI/CH), shown per month; third-party summary.\"",
+  "after": "\"note\": \"CHF 25 a quarter for Liechtenstein residents (CHF 120 a quarter for residents outside Liechtenstein and Switzerland), which the game charges as a month’s share; from a third-party summary.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "MQ.BRED",
+  "before": "\"note\": \"Account keeping fee EUR 2.54/month (EUR 30.48/yr), June 2026 tariff\"",
+  "after": "\"note\": \"Account-keeping fee EUR 2.54 a month (EUR 30.48 a year), June 2026 tariff\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "YT.BRED",
+  "before": "\"note\": \"Account keeping fee EUR 2.54/month (EUR 30.48/yr), BRED Mayotte June 2026 tariff\"",
+  "after": "\"note\": \"Account-keeping fee EUR 2.54 a month (EUR 30.48 a year), BRED Mayotte June 2026 tariff\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "MD.maib",
+  "before": "\"note\": \"MDL 15/month card-account fee from March 16, 2026; free under Smart Pricing with at least MDL 3,000 of card payments a month\"",
+  "after": "\"note\": \"MDL 15 a month card-account fee from March 16, 2026; free under Smart Pricing with at least MDL 3,000 of card payments a month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "MS.Bank of Montserrat",
+  "before": "\"note\": \"XCD 25/month stated as a minimum service fee; XCD 200 to open\"",
+  "after": "\"note\": \"XCD 25 a month stated as a minimum service fee; XCD 200 to open\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "MA.Attijariwafa",
+  "before": "\"note\": \"MAD 5 TTC/month promotional rate, first 6 months free for new online customers\"",
+  "after": "\"note\": \"MAD 5 a month including tax (TTC), a promotional rate, with the first 6 months free for new online customers\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "PK.HBL",
+  "before": "\"note\": \"Exempt from the Rs 50/month low-balance service charge (SOBC January to June 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000\"",
+  "after": "\"note\": \"Exempt from the Rs 50 a month low-balance service charge (SOBC January to June 2026); other accounts such as HBL Freedom pay Rs 50 a month if the monthly average balance is under Rs 40,000\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "RE.BRED",
+  "before": "\"note\": \"Account-keeping fee of €30 a year for La Réunion, shown as a monthly equivalent.\"",
+  "after": "\"note\": \"Account-keeping fee of €30 a year for La Réunion; the game charges a month’s share.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "SK.Slovenská sporiteľňa",
+  "before": "\"note\": \"Free through the Moja odmena program, e.g. €450 a month of mobile or card payments plus three standing orders or direct debits, or €15,000 of assets at the bank.\"",
+  "after": "\"note\": \"Free through the Moja odmena program, for example with €450 a month of mobile or card payments plus three standing orders or direct debits, or €15,000 of assets at the bank.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "TN.BIAT",
+  "before": "\"note\": \"TND 16 a quarter account-keeping fee, converted to monthly.\"",
+  "after": "\"note\": \"TND 16 a quarter account-keeping fee; the game charges a month’s share.\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "WF.BWF",
+  "before": "\"note\": \"XPF 6,300/year account-keeping fee (April 2026, IEOM; sole bank in the territory, unchanged three years running), converted to XPF 525/month\"",
+  "after": "\"note\": \"XPF 6,300 a year account-keeping fee (April 2026, IEOM; the only bank in the territory, unchanged three years running); the game charges XPF 525 a month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-fees.ts",
+  "key": "BF|Coris Bank International",
+  "before": "XOF 500 for state employees; work in the game isn’t for the state, so the full fee",
+  "after": "XOF 500 for state employees; work in the game isn’t for the state, so the game charges the full fee"
+ },
+ {
+  "file": "src/engine/content/banks-world-fees.ts",
+  "key": "GU|Bank of Guam",
+  "before": "the game’s accounts are online, so e-Statements are taken as chosen",
+  "after": "the game’s accounts are online, so the game takes e-Statements as chosen"
+ },
+ {
+  "file": "src/engine/content/banks-world.ts",
+  "key": "worldBanking.current.source",
+  "before": "current: { name: row.checking ? 'Checking Account' : 'Current Account', source: `no product sheet on record; the bank from ${row.source}`",
+  "after": "current: { name: row.checking ? 'Checking Account' : 'Current Account', source: `no fees or rates were researched for this bank, so the game charges none and pays none; the bank was found at ${row.source}`"
+ },
+ {
+  "file": "src/engine/content/banks-world.ts",
+  "key": "worldBanking.savings.source",
+  "before": "savings: { name: 'Savings Account', source: `no product sheet on record; the bank from ${row.source}`",
+  "after": "savings: { name: 'Savings Account', source: `no fees or rates were researched for this bank, so the game charges none and pays none; the bank was found at ${row.source}`"
+ },
+ {
+  "file": "src/engine/content/banks-world-fees.ts",
+  "key": "MH|Bank of Guam",
+  "before": "source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',",
+  "after": "source: 'waived with e-Statements and an electronic deposit in the month; the game takes e-Statements as chosen',"
+ },
+ {
+  "file": "src/engine/content/banks-world-fees.ts",
+  "key": "FM|Bank of Guam",
+  "before": "source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',",
+  "after": "source: 'waived with e-Statements and an electronic deposit in the month; the game takes e-Statements as chosen',"
+ },
+ {
+  "file": "src/engine/content/banks-world-fees.ts",
+  "key": "MP|Bank of Guam",
+  "before": "source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',",
+  "after": "source: 'waived with e-Statements and an electronic deposit in the month; the game takes e-Statements as chosen',"
+ },
+ {
+  "file": "src/engine/content/banks-world-fees.ts",
+  "key": "PW|Bank of Guam",
+  "before": "source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',",
+  "after": "source: 'waived with e-Statements and an electronic deposit in the month; the game takes e-Statements as chosen',"
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 354 note: trailing stop",
+  "before": "\"note\": \"No interest. Account maintenance fee is charged half-yearly by average-balance band (up to Tk 200-300 per half-year per schedule of charges); exact figure for this product not confirmed.\"",
+  "after": "\"note\": \"No interest. Account maintenance fee is charged half-yearly by average-balance band (up to Tk 200-300 per half-year per schedule of charges); exact figure for this product not confirmed\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 393 note: trailing stop",
+  "before": "\"note\": \"No charge for opening or maintenance; the account itself pays 0.1% a year on BYN balances (0.0001% on USD and EUR).\"",
+  "after": "\"note\": \"No charge for opening or maintenance; the account itself pays 0.1% a year on BYN balances (0.0001% on USD and EUR)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 481 note: trailing stop",
+  "before": "\"note\": \"$12 a month; no charge for Premier and Seniors.\"",
+  "after": "\"note\": \"$12 a month; no charge for Premier and Seniors\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 495 note: trailing stop",
+  "before": "\"note\": \"$12 monthly maintenance plus $3 monthly compliance fee; seniors exempt.\"",
+  "after": "\"note\": \"$12 monthly maintenance plus $3 monthly compliance fee; seniors exempt\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 537 note: trailing stop",
+  "before": "\"note\": \"US$1.50 monthly administration fee; Resident Pension (65+) and Student accounts exempt.\"",
+  "after": "\"note\": \"US$1.50 monthly administration fee; Resident Pension (65+) and Student accounts exempt\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 630 note: trailing stop",
+  "before": "\"note\": \"BND 15.00 per month only if average monthly balance falls below BND 1,000.\"",
+  "after": "\"note\": \"BND 15.00 per month only if average monthly balance falls below BND 1,000\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 700 note: trailing stop",
+  "before": "\"note\": \"No monthly maintenance fee stated; no interest; initial deposit KHR 400,000 or USD 100. Extra statements charged.\"",
+  "after": "\"note\": \"No monthly maintenance fee stated; no interest; initial deposit KHR 400,000 or USD 100. Extra statements charged\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 765 note: trailing stop",
+  "before": "\"note\": \"No opening or maintenance fee; transfers to other banks free since April 15, 2026; some per-use charges remain.\"",
+  "after": "\"note\": \"No opening or maintenance fee; transfers to other banks free since April 15, 2026; some per-use charges remain\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 777 note: trailing stop",
+  "before": "\"note\": \"Basic plan quoted at 0.37 UF per month (UF-indexed, not a fixed peso figure); discounts with bundled products.\"",
+  "after": "\"note\": \"Basic plan quoted at 0.37 UF per month (UF-indexed, not a fixed peso figure); discounts with bundled products\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 789 note: trailing stop",
+  "before": "\"note\": \"Annual and small-balance management fees waived for a customer's single (first) debit card account.\"",
+  "after": "\"note\": \"Annual and small-balance management fees waived for a customer's single (first) debit card account\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 812 note: trailing stop",
+  "before": "\"note\": \"Fee depends on plan and debit card; COP 14,900 is the figure reported to the Superintendencia Financiera for 2026.\"",
+  "after": "\"note\": \"Fee depends on plan and debit card; COP 14,900 is the figure reported to the Superintendencia Financiera for 2026\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 837 note: trailing stop",
+  "before": "\"note\": \"Minimum balance 10,000 KMF; pays up to 0.50% a year (an account without a chequebook: minimum 3,000 KMF, up to 0.75%). Monthly fee not published.\"",
+  "after": "\"note\": \"Minimum balance 10,000 KMF; pays up to 0.50% a year (an account without a chequebook: minimum 3,000 KMF, up to 0.75%). Monthly fee not published\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 861 note: trailing stop",
+  "before": "\"note\": \"Maintenance fee USD 5 or CDF 10,000 per month for retail accounts; includes mobile banking and e-statements.\"",
+  "after": "\"note\": \"Maintenance fee USD 5 or CDF 10,000 per month for retail accounts; includes mobile banking and e-statements\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 879 note: trailing stop",
+  "before": "\"note\": \"NZD 7 monthly fee.\"",
+  "after": "\"note\": \"NZD 7 monthly fee\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 896 note: trailing stop",
+  "before": "\"note\": \"No monthly fee, but a CRC 3,000 charge applies if the CRC 25,000 minimum balance is not kept.\"",
+  "after": "\"note\": \"No monthly fee, but a CRC 3,000 charge applies if the CRC 25,000 minimum balance is not kept\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 921 note: trailing stop",
+  "before": "\"note\": \"XOF 900 excluding tax per month; no initial deposit.\"",
+  "after": "\"note\": \"XOF 900 excluding tax per month; no initial deposit\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 944 note: trailing stop",
+  "before": "\"note\": \"EUR 5.90 per month package; a free basic payment account (Paket besplatnih usluga) exists for the account receiving regular income.\"",
+  "after": "\"note\": \"EUR 5.90 per month package; a free basic payment account (Paket besplatnih usluga) exists for the account receiving regular income\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 965 note: trailing stop",
+  "before": "\"note\": \"XCG 5.30 monthly administration fee; 65+ pension and student accounts exempt.\"",
+  "after": "\"note\": \"XCG 5.30 monthly administration fee; 65+ pension and student accounts exempt\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 986 note: trailing stop",
+  "before": "\"note\": \"Quarterly maintenance fee reported as rising from EUR 6 to EUR 12 per quarter; not confirmed against the 2026 tariff.\"",
+  "after": "\"note\": \"Quarterly maintenance fee reported as rising from EUR 6 to EUR 12 per quarter; not confirmed against the 2026 tariff\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1009 note: trailing stop",
+  "before": "\"note\": \"CZK 100 per month, waived with at least 4 card payments a month.\"",
+  "after": "\"note\": \"CZK 100 per month, waived with at least 4 card payments a month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1022 note: trailing stop",
+  "before": "\"note\": \"Free without conditions.\"",
+  "after": "\"note\": \"Free without conditions\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1040 note: trailing stop",
+  "before": "\"note\": \"DKK 105 a quarter; the game charges a month’s share.\"",
+  "after": "\"note\": \"DKK 105 a quarter; the game charges a month’s share\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1096 note: trailing stop",
+  "before": "\"note\": \"No fee while the RD$3,000 minimum balance is kept; RD$70 monthly charge below it.\"",
+  "after": "\"note\": \"No fee while the RD$3,000 minimum balance is kept; RD$70 monthly charge below it\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1109 note: trailing stop",
+  "before": "\"note\": \"Free while the minimum balance is kept; tariff updated June 13, 2026.\"",
+  "after": "\"note\": \"Free while the minimum balance is kept; tariff updated June 13, 2026\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1154 note: trailing stop",
+  "before": "\"note\": \"EGP 120 a quarter for statements and administration (as of September 1, 2026), which the game charges as a month’s share; minimum balance EGP 20,000, with an EGP 100 fee below it.\"",
+  "after": "\"note\": \"EGP 120 a quarter for statements and administration (as of September 1, 2026), which the game charges as a month’s share; minimum balance EGP 20,000, with an EGP 100 fee below it\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1179 note: trailing stop",
+  "before": "\"note\": \"Up to USD 0.30 a month only when the average balance is under USD 15.\"",
+  "after": "\"note\": \"Up to USD 0.30 a month only when the average balance is under USD 15\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1199 note: trailing stop",
+  "before": "\"note\": \"EUR 1 per month; free under 25, EUR 0.32 for 65+.\"",
+  "after": "\"note\": \"EUR 1 per month; free under 25, EUR 0.32 for 65+\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1224 note: trailing stop",
+  "before": "\"note\": \"No monthly fee; the Gold PAYU option is E46.86 a month.\"",
+  "after": "\"note\": \"No monthly fee; the Gold PAYU option is E46.86 a month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1237 note: trailing stop",
+  "before": "\"note\": \"Free of monthly management charges.\"",
+  "after": "\"note\": \"Free of monthly management charges\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1266 note: trailing stop",
+  "before": "\"note\": \"Pays 0.00% interest.\"",
+  "after": "\"note\": \"Pays 0.00% interest\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1288 note: trailing stop",
+  "before": "\"note\": \"Pay-per-transaction everyday account.\"",
+  "after": "\"note\": \"Pay-per-transaction everyday account\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1317 note: trailing stop",
+  "before": "\"note\": \"Account itself reported free; daily-services package fees not confirmed.\"",
+  "after": "\"note\": \"Account itself reported free; daily-services package fees not confirmed\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1326 note: trailing stop",
+  "before": "\"note\": \"EUR 2.60 per account per month.\"",
+  "after": "\"note\": \"EUR 2.60 per account per month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1357 note: trailing stop",
+  "before": "\"note\": \"EUR 68.16 per year package; tariff as of June 25, 2026.\"",
+  "after": "\"note\": \"EUR 68.16 per year package; tariff as of June 25, 2026\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1375 note: trailing stop",
+  "before": "\"note\": \"Tenue de compte: 383 XPF per month (4,596 XPF per year), tariff from April 1, 2025. A newer tariff from May 1, 2026 exists but was not read. A free basic-banking account (services bancaires de base) also exists.\"",
+  "after": "\"note\": \"Tenue de compte: 383 XPF per month (4,596 XPF per year), tariff from April 1, 2025. A newer tariff from May 1, 2026 exists but was not read. A free basic-banking account (services bancaires de base) also exists\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1398 note: trailing stop",
+  "before": "\"note\": \"XAF 12,000 a month including tax; the figure is from a search summary, not the tariff.\"",
+  "after": "\"note\": \"XAF 12,000 a month including tax; the figure is from a search summary, not the tariff\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1431 note: trailing stop",
+  "before": "\"note\": \"No service fee for residents. Expat customers pay GEL 10 per month or GEL 100 per year, waived for expats under 24.\"",
+  "after": "\"note\": \"No service fee for residents. Expat customers pay GEL 10 per month or GEL 100 per year, waived for expats under 24\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1456 note: trailing stop",
+  "before": "\"note\": \"GHS 12 monthly service charge.\"",
+  "after": "\"note\": \"GHS 12 monthly service charge\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1472 note: trailing stop",
+  "before": "\"note\": \"The Fees & Charges Guide (September 18, 2025) lists a monthly maintenance fee only for business accounts (GBP 15); none found for personal accounts.\"",
+  "after": "\"note\": \"The Fees & Charges Guide (September 18, 2025) lists a monthly maintenance fee only for business accounts (GBP 15); none found for personal accounts\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1494 note: trailing stop",
+  "before": "\"note\": \"Account maintenance free of charge; Benefits Account variants cost EUR 0.80 or EUR 2 a month.\"",
+  "after": "\"note\": \"Account maintenance free of charge; Benefits Account variants cost EUR 0.80 or EUR 2 a month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1512 note: trailing stop",
+  "before": "\"note\": \"Customer fee (kundegebyr) DKK 25 a month for private customers aged 27 and over, charged monthly in arrears; discounted with larger business volume. Account pays 0.000%.\"",
+  "after": "\"note\": \"Customer fee (kundegebyr) DKK 25 a month for private customers aged 27 and over, charged monthly in arrears; discounted with larger business volume. Account pays 0.000%\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1537 note: trailing stop",
+  "before": "\"note\": \"EC$5.00 per month maintenance, applied quarterly.\"",
+  "after": "\"note\": \"EC$5.00 per month maintenance, applied quarterly\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1567 note: trailing stop",
+  "before": "\"note\": \"Standard account-keeping fee EUR 30.48 a year (BRED Guadeloupe, 2026 tariff); the game charges a month’s share.\"",
+  "after": "\"note\": \"Standard account-keeping fee EUR 30.48 a year (BRED Guadeloupe, 2026 tariff); the game charges a month’s share\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1585 note: trailing stop",
+  "before": "\"note\": \"US$5 maintenance fee waived with e-Statements and an electronic monthly deposit; waived for customers 55+.\"",
+  "after": "\"note\": \"US$5 maintenance fee waived with e-Statements and an electronic monthly deposit; waived for customers 55+\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1623 note: trailing stop",
+  "before": "\"note\": \"No monthly fee.\"",
+  "after": "\"note\": \"No monthly fee\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1655 note: trailing stop",
+  "before": "\"note\": \"Generic account type named by the bank; no product brand or fee found.\"",
+  "after": "\"note\": \"Generic account type named by the bank; no product brand or fee found\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1715 note: trailing stop",
+  "before": "\"note\": \"Generic account type; product brand and fee not found.\"",
+  "after": "\"note\": \"Generic account type; product brand and fee not found\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1731 note: trailing stop",
+  "before": "\"note\": \"No below-balance fee for HKID holders; accounts opened from January 1, 2026 by non-HKID holders with total balance under HKD 10,000 pay a management fee.\"",
+  "after": "\"note\": \"No below-balance fee for HKID holders; accounts opened from January 1, 2026 by non-HKID holders with total balance under HKD 10,000 pay a management fee\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1754 note: trailing stop",
+  "before": "\"note\": \"Normal fee with e-statement (HUF 1,359 with paper); free when at least the net minimum wage (HUF 214,662 in 2026) arrives monthly from another bank. Terms effective November 18, 2025.\"",
+  "after": "\"note\": \"Normal fee with e-statement (HUF 1,359 with paper); free when at least the net minimum wage (HUF 214,662 in 2026) arrives monthly from another bank. Terms effective November 18, 2025\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1771 note: trailing stop",
+  "before": "\"note\": \"Indian individuals bank day to day through a savings account (current accounts are for businesses); SBI dropped minimum-balance charges in March 2020.\"",
+  "after": "\"note\": \"Indian individuals bank day to day through a savings account (current accounts are for businesses); SBI dropped minimum-balance charges in March 2020\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1794 note: trailing stop",
+  "before": "\"note\": \"IDR 12,000 a month admin fee; a savings-type account used as the everyday account.\"",
+  "after": "\"note\": \"IDR 12,000 a month admin fee; a savings-type account used as the everyday account\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1825 note: trailing stop",
+  "before": "\"note\": \"No monthly fee.\"",
+  "after": "\"note\": \"No monthly fee\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1848 note: trailing stop",
+  "before": "\"note\": \"Regulated basic track: at most ILS 10 a month including 10 self-service transactions and 1 teller transaction.\"",
+  "after": "\"note\": \"Regulated basic track: at most ILS 10 a month including 10 self-service transactions and 1 teller transaction\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1866 note: trailing stop",
+  "before": "\"note\": \"Base monthly fee (EUR 102 a year) per the information sheet updated July 21, 2026; add-on services and promotions change the total.\"",
+  "after": "\"note\": \"Base monthly fee (EUR 102 a year) per the information sheet updated July 21, 2026; add-on services and promotions change the total\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1888 note: trailing stop",
+  "before": "\"note\": \"No charge at or above a J$75,000 minimum monthly credit balance; below it J$108.71 per entry with a J$1,015.27 minimum monthly service charge (fee guide effective December 1, 2025).\"",
+  "after": "\"note\": \"No charge at or above a J$75,000 minimum monthly credit balance; below it J$108.71 per entry with a J$1,015.27 minimum monthly service charge (fee guide effective December 1, 2025)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1912 note: trailing stop",
+  "before": "\"note\": \"No monthly fee.\"",
+  "after": "\"note\": \"No monthly fee\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1934 note: trailing stop",
+  "before": "\"note\": \"JD 1 a month minimum-balance fee when the balance is below JD 100 (payroll accounts exempt).\"",
+  "after": "\"note\": \"JD 1 a month minimum-balance fee when the balance is below JD 100 (payroll accounts exempt)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1959 note: trailing stop",
+  "before": "\"note\": \"Annual service fee of KZT 1,995, which the game charges as a twelfth each month. First year free; charged only if the card was used during the year. In February 2026 Kaspi denied reports of a rise to KZT 10,000.\"",
+  "after": "\"note\": \"Annual service fee of KZT 1,995, which the game charges as a twelfth each month. First year free; charged only if the card was used during the year. In February 2026 Kaspi denied reports of a rise to KZT 10,000\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 1982 note: trailing stop",
+  "before": "\"note\": \"Ledger fee KSh 35 per entry, minimum KSh 350 per month.\"",
+  "after": "\"note\": \"Ledger fee KSh 35 per entry, minimum KSh 350 per month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2022 note: trailing stop",
+  "before": "\"note\": \"No minimum balance fees; KD 50 to open. Dormant and unclaimed accounts pay KD 2 per month.\"",
+  "after": "\"note\": \"No minimum balance fees; KD 50 to open. Dormant and unclaimed accounts pay KD 2 per month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2042 note: trailing stop",
+  "before": "\"note\": \"Current account maintenance: LAK 3,500 per account per month.\"",
+  "after": "\"note\": \"Current account maintenance: LAK 3,500 per account per month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2065 note: trailing stop",
+  "before": "\"note\": \"EUR 2.00 a month maintenance from June 1, 2026 for many customers; free for some (the exemptions weren’t verified).\"",
+  "after": "\"note\": \"EUR 2.00 a month maintenance from June 1, 2026 for many customers; free for some (the exemptions weren’t verified)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2087 note: trailing stop",
+  "before": "\"note\": \"USD 2 per month. This is a fresh-dollar account, so the fee is in US dollars, not Lebanese pounds.\"",
+  "after": "\"note\": \"USD 2 per month. This is a fresh-dollar account, so the fee is in US dollars, not Lebanese pounds\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2100 note: trailing stop",
+  "before": "\"note\": \"M8.86 a month account management fee (2026 pricing); optional Nala bundle M35.70 a month.\"",
+  "after": "\"note\": \"M8.86 a month account management fee (2026 pricing); optional Nala bundle M35.70 a month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2132 note: trailing stop",
+  "before": "\"note\": \"CHF 25 a quarter for Liechtenstein residents (CHF 120 a quarter for residents outside Liechtenstein and Switzerland), which the game charges as a month’s share; from a third-party summary.\"",
+  "after": "\"note\": \"CHF 25 a quarter for Liechtenstein residents (CHF 120 a quarter for residents outside Liechtenstein and Switzerland), which the game charges as a month’s share; from a third-party summary\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2144 note: trailing stop",
+  "before": "\"note\": \"Pays 0.000% in CHF; opening and closing free.\"",
+  "after": "\"note\": \"Pays 0.000% in CHF; opening and closing free\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2533 note: trailing stop",
+  "before": "\"note\": \"MNT 500 per month account maintenance.\"",
+  "after": "\"note\": \"MNT 500 per month account maintenance\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2919 note: trailing stop",
+  "before": "\"note\": \"US$5.35 monthly charge if the average balance falls below the US$50 minimum; 5 free checks a month.\"",
+  "after": "\"note\": \"US$5.35 monthly charge if the average balance falls below the US$50 minimum; 5 free checks a month\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2948 note: trailing stop",
+  "before": "\"note\": \"No monthly maintenance fee; the Kundu Package Account for frequent users charges a monthly fee (K8.50 after a 2025 reduction).\"",
+  "after": "\"note\": \"No monthly maintenance fee; the Kundu Package Account for frequent users charges a monthly fee (K8.50 after a 2025 reduction)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2965 note: trailing stop",
+  "before": "\"note\": \"Guaraní account with no opening fee and no monthly maintenance charge.\"",
+  "after": "\"note\": \"Guaraní account with no opening fee and no monthly maintenance charge\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 2990 note: trailing stop",
+  "before": "\"note\": \"S/12 monthly maintenance (US$4.80 for the dollar version); unlimited branch, agent and ATM transactions.\"",
+  "after": "\"note\": \"S/12 monthly maintenance (US$4.80 for the dollar version); unlimited branch, agent and ATM transactions\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3012 note: trailing stop",
+  "before": "\"note\": \"PHP 300 monthly charge after two consecutive months below the PHP 2,000 required average daily balance.\"",
+  "after": "\"note\": \"PHP 300 monthly charge after two consecutive months below the PHP 2,000 required average daily balance\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3050 note: trailing stop",
+  "before": "\"note\": \"Account maintenance is unconditionally free; the debit card costs PLN 10 a month unless 5 card or BLIK payments are made.\"",
+  "after": "\"note\": \"Account maintenance is unconditionally free; the debit card costs PLN 10 a month unless 5 card or BLIK payments are made\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3073 note: trailing stop",
+  "before": "\"note\": \"Monthly maintenance including 4% stamp duty; tiers M €6.55 and Azul €7.59, reduced when at least €50 a month is spent by card.\"",
+  "after": "\"note\": \"Monthly maintenance including 4% stamp duty; tiers M €6.55 and Azul €7.59, reduced when at least €50 a month is spent by card\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3091 note: trailing stop",
+  "before": "\"note\": \"US$2.50 monthly service charge waived with direct deposit, a US$500 combined average balance, or a holder aged 25 or under.\"",
+  "after": "\"note\": \"US$2.50 monthly service charge waived with direct deposit, a US$500 combined average balance, or a holder aged 25 or under\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3108 note: trailing stop",
+  "before": "\"note\": \"No monthly charge and no minimum balance; pays no interest.\"",
+  "after": "\"note\": \"No monthly charge and no minimum balance; pays no interest\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3138 note: trailing stop",
+  "before": "\"note\": \"Account-keeping fee of €30 a year for La Réunion; the game charges a month’s share.\"",
+  "after": "\"note\": \"Account-keeping fee of €30 a year for La Réunion; the game charges a month’s share\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3160 note: trailing stop",
+  "before": "\"note\": \"BT's most-used current-account option; the September 2026 fee schedule could not be read.\"",
+  "after": "\"note\": \"BT's most-used current-account option; the September 2026 fee schedule could not be read\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3193 note: trailing stop",
+  "before": "\"note\": \"Servicing free without conditions since July 1, 2025.\"",
+  "after": "\"note\": \"Servicing free without conditions since July 1, 2025\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3226 note: trailing stop",
+  "before": "\"note\": \"BRED publishes a separate Saint-Barthélemy and Saint-Martin tariff; the 2026 account-keeping fee was not confirmed.\"",
+  "after": "\"note\": \"BRED publishes a separate Saint-Barthélemy and Saint-Martin tariff; the 2026 account-keeping fee was not confirmed\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3243 note: trailing stop",
+  "before": "\"note\": \"No standard monthly fee found; a £100 overdraft costs £1 a month. All rates track the bank's 4.0% Base Rate.\"",
+  "after": "\"note\": \"No standard monthly fee found; a £100 overdraft costs £1 a month. All rates track the bank's 4.0% Base Rate\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3292 note: trailing stop",
+  "before": "\"note\": \"BRED publishes a separate Saint-Barthélemy and Saint-Martin tariff; the 2026 account-keeping fee was not confirmed.\"",
+  "after": "\"note\": \"BRED publishes a separate Saint-Barthélemy and Saint-Martin tariff; the 2026 account-keeping fee was not confirmed\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3321 note: trailing stop",
+  "before": "\"note\": \"Fee schedule is published as images; the Senior Chequing Account for 55+ has no BOSVG fees.\"",
+  "after": "\"note\": \"Fee schedule is published as images; the Senior Chequing Account for 55+ has no BOSVG fees\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3339 note: trailing stop",
+  "before": "\"note\": \"WST 2.50 monthly account maintenance fee, pay-as-you-go transactions, no interest.\"",
+  "after": "\"note\": \"WST 2.50 monthly account maintenance fee, pay-as-you-go transactions, no interest\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3361 note: trailing stop",
+  "before": "\"note\": \"The bank's free online current account; the B-YOU and B-PLUS accounts carry an all-inclusive monthly fee not published on the page.\"",
+  "after": "\"note\": \"The bank's free online current account; the B-YOU and B-PLUS accounts carry an all-inclusive monthly fee not published on the page\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3373 note: trailing stop",
+  "before": "\"note\": \"The January 1, 2026 price list charges a monthly maintenance commission by average-balance tier (roughly Db 11 to 25) plus 3.5% stamp duty; the tier layout was not read cleanly.\"",
+  "after": "\"note\": \"The January 1, 2026 price list charges a monthly maintenance commission by average-balance tier (roughly Db 11 to 25) plus 3.5% stamp duty; the tier layout was not read cleanly\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3385 note: trailing stop",
+  "before": "\"note\": \"No maintenance fee found; Saudi banks do not charge for keeping a basic current account.\"",
+  "after": "\"note\": \"No maintenance fee found; Saudi banks do not charge for keeping a basic current account\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3409 note: trailing stop",
+  "before": "\"note\": \"Account-keeping fees of 0 FCFA on the basic check account.\"",
+  "after": "\"note\": \"Account-keeping fees of 0 FCFA on the basic check account\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3432 note: trailing stop",
+  "before": "\"note\": \"Sells packaged payment accounts (paketi platnih računa); fees not read.\"",
+  "after": "\"note\": \"Sells packaged payment accounts (paketi platnih računa); fees not read\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3444 note: trailing stop",
+  "before": "\"note\": \"Opening deposit SCR 5,000; fees are in a separate schedule not read.\"",
+  "after": "\"note\": \"Opening deposit SCR 5,000; fees are in a separate schedule not read\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3480 note: trailing stop",
+  "before": "\"note\": \"S$5 fall-below fee if the average daily balance is under S$3,000; waived for customers aged 29 or under.\"",
+  "after": "\"note\": \"S$5 fall-below fee if the average daily balance is under S$3,000; waived for customers aged 29 or under\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3498 note: trailing stop",
+  "before": "\"note\": \"XCG 10.00 monthly administration fee for residents (USD 6.00 on a US-dollar account).\"",
+  "after": "\"note\": \"XCG 10.00 monthly administration fee for residents (USD 6.00 on a US-dollar account)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3520 note: trailing stop",
+  "before": "\"note\": \"Free through the Moja odmena program, for example with €450 a month of mobile or card payments plus three standing orders or direct debits, or €15,000 of assets at the bank.\"",
+  "after": "\"note\": \"Free through the Moja odmena program, for example with €450 a month of mobile or card payments plus three standing orders or direct debits, or €15,000 of assets at the bank\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3553 note: trailing stop",
+  "before": "\"note\": \"Tariff extract valid from August 1, 2026; Paket Digitalni is €0.99 and free for adults up to 27; under-30s get 50% off Paket Osnovni.\"",
+  "after": "\"note\": \"Tariff extract valid from August 1, 2026; Paket Digitalni is €0.99 and free for adults up to 27; under-30s get 50% off Paket Osnovni\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3570 note: trailing stop",
+  "before": "\"note\": \"No monthly fee; transactions are charged individually.\"",
+  "after": "\"note\": \"No monthly fee; transactions are charged individually\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3586 note: trailing stop",
+  "before": "\"note\": \"Islamic safekeeping account; no fee schedule published.\"",
+  "after": "\"note\": \"Islamic safekeeping account; no fee schedule published\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3603 note: trailing stop",
+  "before": "\"note\": \"R7.50 monthly admin fee, unchanged for 2026 (valid from March 1, 2026).\"",
+  "after": "\"note\": \"R7.50 monthly admin fee, unchanged for 2026 (valid from March 1, 2026)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3620 note: trailing stop",
+  "before": "\"note\": \"No minimum balance; operable in major currencies.\"",
+  "after": "\"note\": \"No minimum balance; operable in major currencies\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3697 note: trailing stop",
+  "before": "\"note\": \"SRD 25 a month for a private SRD giro account (USD/EUR accounts 3.00); tariff sheet dated April 2025.\"",
+  "after": "\"note\": \"SRD 25 a month for a private SRD giro account (USD/EUR accounts 3.00); tariff sheet dated April 2025\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3714 note: trailing stop",
+  "before": "\"note\": \"Price list shows no account-keeping fee for Brukskonto.\"",
+  "after": "\"note\": \"Price list shows no account-keeping fee for Brukskonto\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3736 note: trailing stop",
+  "before": "\"note\": \"No fee for the account itself; the Bankkort Mastercard costs SEK 300 a year (25 a month) separately.\"",
+  "after": "\"note\": \"No fee for the account itself; the Bankkort Mastercard costs SEK 300 a year (25 a month) separately\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3758 note: trailing stop",
+  "before": "\"note\": \"Free online account for adults 26 and over within key4 banking.\"",
+  "after": "\"note\": \"Free online account for adults 26 and over within key4 banking\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3775 note: trailing stop",
+  "before": "\"note\": \"Pays no interest.\"",
+  "after": "\"note\": \"Pays no interest\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3820 note: trailing stop",
+  "before": "\"note\": \"Fees are in CRDB's Minimum Disclosure of Bank Fees and Charges (September 17, 2026), not read.\"",
+  "after": "\"note\": \"Fees are in CRDB's Minimum Disclosure of Bank Fees and Charges (September 17, 2026), not read\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3848 note: trailing stop",
+  "before": "\"note\": \"Pays 0.000%.\"",
+  "after": "\"note\": \"Pays 0.000%\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3895 note: trailing stop",
+  "before": "\"note\": \"No fixed account fee; per-transaction fees apply.\"",
+  "after": "\"note\": \"No fixed account fee; per-transaction fees apply\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3919 note: trailing stop",
+  "before": "\"note\": \"Monthly maintenance fee applies (amount not found); pays 0.20% on minimum monthly balances of TT$500 or more.\"",
+  "after": "\"note\": \"Monthly maintenance fee applies (amount not found); pays 0.20% on minimum monthly balances of TT$500 or more\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3942 note: trailing stop",
+  "before": "\"note\": \"TND 16 a quarter account-keeping fee; the game charges a month’s share.\"",
+  "after": "\"note\": \"TND 16 a quarter account-keeping fee; the game charges a month’s share\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 3964 note: trailing stop",
+  "before": "\"note\": \"Savings rate given is the lowest published tier of Günlük Kazanan Hesap (tiered 26%-37.5%, minimum opening balance TL 50,000).\"",
+  "after": "\"note\": \"Savings rate given is the lowest published tier of Günlük Kazanan Hesap (tiered 26%-37.5%, minimum opening balance TL 50,000)\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 4002 note: trailing stop",
+  "before": "\"note\": \"Monthly bundled fee covering management fees, UGX ATM withdrawals and SMS alerts; Visa card UGX 37,000 a year extra.\"",
+  "after": "\"note\": \"Monthly bundled fee covering management fees, UGX ATM withdrawals and SMS alerts; Visa card UGX 37,000 a year extra\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 4031 note: trailing stop",
+  "before": "\"note\": \"Free issue and maintenance.\"",
+  "after": "\"note\": \"Free issue and maintenance\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 4048 note: trailing stop",
+  "before": "\"note\": \"Charged only if the monthly average balance falls below AED 3,000.\"",
+  "after": "\"note\": \"Charged only if the monthly average balance falls below AED 3,000\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 4070 note: trailing stop",
+  "before": "\"note\": \"Monthly administration charge of UI 30, waived if the average balance is UYU 29,000 or more.\"",
+  "after": "\"note\": \"Monthly administration charge of UI 30, waived if the average balance is UYU 29,000 or more\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 4106 note: trailing stop",
+  "before": "\"note\": \"Listed by NBV as a retail account for day-to-day money management.\"",
+  "after": "\"note\": \"Listed by NBV as a retail account for day-to-day money management\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 4122 note: trailing stop",
+  "before": "\"note\": \"From September 15, 2026 the BCV requires at least 10% a year on bolívar demand deposits.\"",
+  "after": "\"note\": \"From September 15, 2026 the BCV requires at least 10% a year on bolívar demand deposits\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 4139 note: trailing stop",
+  "before": "\"note\": \"Vietcombank waived account-management fees for the default account registered to VCB Digibank.\"",
+  "after": "\"note\": \"Vietcombank waived account-management fees for the default account registered to VCB Digibank\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 4206 note: trailing stop",
+  "before": "\"note\": \"Pays no return; minimum opening balance YER 20,000.\"",
+  "after": "\"note\": \"Pays no return; minimum opening balance YER 20,000\""
+ },
+ {
+  "file": "src/engine/content/banks-world-sheets.ts",
+  "key": "line 4287 note: trailing stop",
+  "before": "\"note\": \"Free lifetime maintenance for new clients who moved their salary to ProCredit by June 30, 2026 (offer now closed). The standard package fee was not found; new fees took effect October 1, 2026.\"",
+  "after": "\"note\": \"Free lifetime maintenance for new clients who moved their salary to ProCredit by June 30, 2026 (offer now closed). The standard package fee was not found; new fees took effect October 1, 2026\""
+ }
+]

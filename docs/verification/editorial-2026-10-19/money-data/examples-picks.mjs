@@ -124,4 +124,20 @@ export const PICKS = [
     ['fr-bnp-paribas.overdraft.source', 'src/engine/content/banks-lending.ts', false, '"15.90% and 2.50 more" left "more" without a unit: it\'s percentage points.', 'rendered/lending.txt, BNP Paribas'],
     ['TRANSFERS.GB.source', 'src/engine/content/bankopening.ts', false, '"… isn\'t kept" is the research\'s phrase for what the game leaves out, and says so now.', 'rendered/moves.txt, a British bank’s Sources And Estimates'],
   ].map(([key, file, ms, why, seen]) => ({ ...fromText('b4-banks-changes.json', file, key), kind: 'label', meaningSensitive: ms, why, verified: `read on ${seen}` })),
+
+  // Batch 5: the world's banks (hand-kept; picked by key from b5-world-changes.json), and the generated files' diagnostics
+  ...[
+    ['DK.Danske', 'src/engine/content/banks-world-sheets.ts', true, '"shown as monthly" was the research describing the game in the passive; the game charges a quarter\'s fee as a month\'s share, and says so.', 'rendered/accounts-world.txt, Danske Bank; monthlyFee 3500 is DKK 105 / 3'],
+    ['KZ.Kaspi', 'src/engine/content/banks-world-sheets.ts', true, '"shown here as 1,995/12" put a formula where a sentence belongs.', 'rendered/accounts-world.txt, Kaspi Bank; monthlyFee is 1,995 / 12'],
+    ['BH.NBB', 'src/engine/content/banks-world-sheets.ts', false, '">=" in a sentence the player reads is a symbol standing for words.', 'rendered/accounts-world.txt, National Bank of Bahrain'],
+    ['PK.HBL', 'src/engine/content/banks-world-sheets.ts', false, '"/month" and "<" written out, and the balance given its article.', 'rendered/accounts-world.txt, HBL'],
+    ['worldBanking.current.source', 'src/engine/content/banks-world.ts', false, '"no product sheet on record; the bank from <address>" named the research\'s files and left "from" hanging. It says what wasn\'t researched, what the game does about it, and where the bank was found.', 'rendered/accounts-world.txt, a bank with no sheet in each country (Afghanistan International Bank, and the rest)'],
+    ['GU|Bank of Guam', 'src/engine/content/banks-world-fees.ts', false, '"e-Statements are taken as chosen" said who takes them so: the game.', 'rendered/accounts-world.txt, Bank of Guam'],
+  ].map(([key, file, ms, why, seen]) => ({ ...fromText('b5-world-changes.json', file, key), kind: 'label', meaningSensitive: ms, why, verified: `read on ${seen}` })),
+  { file: 'b5-diagnostics-pending-changes.json', sourceFile: 'src/engine/content/pending.ts', export: 'PENDING', key: 'es-bankinter', field: 'source', kind: 'label', meaningSensitive: false,
+    why: 'A web server\'s status code, "(HTTP 403)", is a diagnostic, not a source; and the line ended on a stop before the day, so the screen read "dates., read …".',
+    verified: 'read on Statements, rendered/statements.txt, Bankinter' },
+  { file: 'b5-diagnostics-security-changes.json', sourceFile: 'src/engine/content/security.ts', export: 'SECURITY', key: 'ie-ptsb', field: 'source', kind: 'label', meaningSensitive: false,
+    why: '"as ptsb.ie returns 403" said as what it means: the bank\'s site couldn\'t be opened, so the archive was read.',
+    verified: 'read on Your Cards, rendered/security.txt, PTSB' },
 ];

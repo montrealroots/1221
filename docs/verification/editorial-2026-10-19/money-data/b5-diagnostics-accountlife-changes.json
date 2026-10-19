@@ -1,0 +1,9 @@
+[
+ {
+  "export": "ACCOUNT_LIFE",
+  "key": "ie-ptsb",
+  "field": "source",
+  "before": "https://www.ptsb.ie/saving-and-investing/deposit-accounts/fixed-term-deposit-account/ (via web.archive.org; live site 403) and PTSB T&C PDF https://www.ptsb.ie/globalassets/pdf-documents/terms-and-conditions/current-account-including-online-explore-account-savings--investments/, read September 26, 2026",
+  "after": "https://www.ptsb.ie/saving-and-investing/deposit-accounts/fixed-term-deposit-account/ (via web.archive.org; the live site couldn’t be opened) and PTSB T&C PDF https://www.ptsb.ie/globalassets/pdf-documents/terms-and-conditions/current-account-including-online-explore-account-savings--investments/, read September 26, 2026"
+ }
+]

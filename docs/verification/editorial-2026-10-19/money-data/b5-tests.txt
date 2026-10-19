@@ -1,0 +1,106 @@
+
+ RUN  v2.1.9 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/e15-money-data
+
+ ✓ tests/evidence2-b04.test.ts (8 tests) 11390ms
+   ✓ bank.break_term > closes a notice given in a save from before the close went on the clock, at its own day, once 1159ms
+   ✓ bank.break_term > closes a NatWest term held beside a Barclays primary on 35 days’ notice by the clock, into the NatWest account kept beside it, the £10,000.00 whole after the £39.41 charge taken from what it earned, and Barclays sees none of it (a London life: no New Haven bank asks notice) 783ms
+   ✓ bank.break_term > closes it into the Barclays primary at once, with the NatWest account closed, and the money buys the day: a meal refused on the emptied Barclays account is bought once it lands 411ms
+   ✓ card.lock > steers somebody else’s use to the card left unlocked: the credit card locked from Your Cards, every night’s is the debit card’s; the debit card locked, every night’s is the credit card’s 1379ms
+   ✓ card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record 5004ms
+   ✓ card.request_hardship > is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48 2397ms
+ ✓ tests/language-money.test.ts (20 tests) 8172ms
+   ✓ PLAYER JOURNEY: a New York student at Chase reads Accounts > says what closing savings does, above zero, at zero and overdrawn, to the cent; and closing an overdrawn one takes what it says 1124ms
+   ✓ PLAYER JOURNEY: a New York student closes Citi while its groceries are pending > refuses what a closing account can’t take, saying why, and says where what it held went when it closes 3613ms
+   ✓ PLAYER JOURNEY: Other Charges and the sources line, at banks around the world > says a returned payment’s fee by the shortfall the bank reads, a dormant account’s and a quiet month’s, each with its source 708ms
+   ✓ PLAYER JOURNEY: a refused banking action says why and what to do > refuses a move, savings and a standing order in words that name the obstacle, and moves nothing 406ms
+ ✓ tests/accountlife.test.ts (30 tests) 20664ms
+   ✓ a term deposit’s end > renews at Chase for the same term, with ten days to take it whole 5742ms
+   ✓ a term deposit’s end > breaks at MUFG at its early rate: the ordinary deposit’s in the first six months, and never under it after 567ms
+   ✓ a term deposit’s end > pays out instead when the holder says so, and moves into savings where that’s the bank’s way 5047ms
+   ✓ a term deposit’s end > keeps Deutsche Bank’s three months’ notice to change it, and writes in time for it 3063ms
+   ✓ breaking a term deposit early > is refused once an Irish deposit has renewed: renewing doesn’t make it new again 2602ms
+   ✓ breaking a term deposit early > forfeits the interest so far where the bank words its penalty another way, SLATE’s estimate 458ms
+   ✓ breaking a term deposit early > lets Chase’s interest be taken during the term, where the bank allows it 886ms
+   ✓ savings > closes German savings past the allowance on three months’ notice, and into the current account then 314ms
+ ✓ tests/bank-fees.test.ts (32 tests) 28829ms
+   ✓ France > charges €8 an operation past zero, and no more than €80 a month 321ms
+   ✓ Spain’s descubierto > takes interest and a commission on the month’s deepest point, no more together than the law allows 493ms
+   ✓ Arion’s debit card > costs 19 kr a purchase and 950 kr a year, and nothing at 23 4391ms
+   ✓ a dormant account > costs ¥1,320 a year at MUFG once two years pass without use 5359ms
+   ✓ Santander México’s quiet month > is charged for a month with under two transactions, and not for one with wages 467ms
+   ✓ an introductory rate > steps down: CommBank’s 5.20% for five months, then 2.10% 1363ms
+   ✓ an introductory rate > and Bankinter’s 5% for a year, 2% for the next, then none on record 6642ms
+   ✓ Iceland’s assessment > gives back the tax on the first 300,000 kr of last year’s interest, on 1 June 2369ms
+   ✓ what the second research pass filled in > moves Santander UK’s Easy Access Saver to 0.90% after its first year 3802ms
+   ✓ an overdraft past its limit, or with none > charges Deutsche Bank’s higher rate on the part beyond the Dispo, and lets the account go there 637ms
+   ✓ an overdraft past its limit, or with none > charges BNZ’s unarranged fee for a month more than $20 overdrawn, and not at $20 or under 19 606ms
+   ✓ an overdraft past its limit, or with none > charges ANZ’s past the limit only after more than a day 519ms
+   ✓ the waivers as the banks write them > starts the average again each month 545ms
+ ✓ tests/evidence-g10-money.test.ts (19 tests) 102305ms
+   ✓ bank.borrow > is refused for want of wages before the first payday, on the screen and by the command, and lends the same ask once the clock has paid a week’s work-study 1124ms
+   ✓ bank.borrow > takes the clock’s first payment, $42.74, from the Citi account with a month’s interest, $17.07, once across a reload, and holds a second Citi loan off 2763ms
+   ✓ bank.borrow > prices by the record on Citi’s published range, and refuses past 35% of the month’s wages with both figures said 1133ms
+   ✓ bank.break_term > breaks a Citi CD held beside a Chase primary into the Citi account, less Citi’s 90 days’ interest past what it earned, and Chase sees none of it 888ms
+   ✓ bank.break_term > sends the money to the Chase primary in Citi’s days once no Citi current account is kept: the next business day after a weekend and Labor Day 630ms
+   ✓ bank.break_term > closes NatWest’s on 35 days’ notice by the clock, the button grayed while it runs, and pays the deposit back whole (a London life: no New Haven bank asks notice) 385ms
+   ✓ bank.claim_unclaimed > hands a Connecticut life’s untouched savings to “the state’s unclaimed-property office” in every word it’s told, keeps it across a reload, and Claim It Back brings it back once 24569ms
+   ✓ bank.debit_overdraft > at Chase: opted in by its button, the clock’s groceries go into the overdraft, and the $34 fee is held and charged after the next business day; opted out, nothing is bought and nothing charged 439ms
+   ✓ bank.debit_overdraft > at Wells Fargo: opted in, the $10.00 groceries overdraw the account with no fee, as it charges none on an item of $10 or less; opted out, they aren’t bought 674ms
+   ✓ bank.open_term > puts a Citi CD away from the Citi account on its own panel, Chase untouched, at Citi’s 4.25% for twelve months, and it accrues by the day across a reload 475ms
+   ✓ bank.open_term > draws Citi’s CD panel beside Chase’s with Chase still primary, and Put It Away on it funds the CD from the Citi account, Chase untouched 429ms
+   ✓ bank.pay_collections > closes an account overdrawn for sixty days by the clock into a debt Chase’s own, and the panel’s Pay It and the command pay it down and off, with card.apply, troubles and the open and switch refusals read before and after 4981ms
+   ✓ bank.pay_collections > keeps two banks’ charge-offs apart, each owed to its own bank and refused by its own name, and the life moves to a bank it owes nothing 2624ms
+   ✓ bank.pay_collections > describes a card charged off as a card, not an account overdrawn; paid off, the no-card report climbs again a year on, and left unpaid it doesn’t 38754ms
+   ✓ bank.reactivate > wakes Capital One accounts left idle 24 months while Citi was primary: dormant by the clock, interest stopped and every way in refused; Reactivate restarts the interest, survives a reload and lifts each refusal 21811ms
+ ✓ tests/remaining-09-banking.test.ts (17 tests) 109352ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student that closing her AktivKonto charges its fees to the day, €3.12 ($3.39), October’s €6.90 for 14 of its 31 days; Close It pressed charges that once against Bank Fees and sends the rest to Chase, and a second press and a reload charge nothing more 6064ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: at the month’s edges: 31 October 2026 at 11:30 PM, after October’s end, €6.90 once (until 2026-10-16 €13.80); 1 March 2027 €14.02, January’s and February’s kept and one day of March’s; 31 March at 10 PM €20.70; at 11:30 PM, after the quarter’s closing took its €20.70, nothing at closing, and the screen says why 11642ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: February in a leap year: closed on 15 February 2027, €10.60, January’s €6.90 and 15 of 28 days, €3.70; on 15 February 2028, €10.47, 15 of 29, €3.57; on 29 February 2028, €13.80, the month whole; and the 2027 close comes to the same postings whether the clock jumps from 1 February or runs a day at a time with a reload on the 8th 20718ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: moved down to €1.00, the AktivKonto is refused Close It on Your Banks for its fees to the day, with what to pay in; $50 moved in from Chase, it closes on the day it’s pressed for that day’s share, once 3389ms
+   ✓ banking.1.pro-rata: a German account’s month’s fee on a close, to the day > FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th: Your Accounts Over Time says canceling charges €1.90 of fees, 12 of January’s 31 days of its €4.90, and refuses it for those and 43 cents of overdraft interest, “Pay in €2.33 first”; paid in, canceled, both charged, once 641ms
+   ✓ banking.1.pro-rata.opening-month: Deutsche Bank’s month of opening, free > FIXTURE, Berlin: an AktivKonto opened beside Commerzbank on Monday 5 January is told on Your Banks that closing charges nothing, January being the month it opened; closed on 31 January at 10 PM nothing is charged; its twin kept is charged nothing at January’s end, and closed on 10 February €2.46, 10 of February’s 28 days 1629ms
+   ✓ banking.3: a home bank’s own close settles the fees once > GUARD: Deutsche Bank given Barclays’ kind of rule (TEST SETUP: it closes no home account), its close on 23 October 2026 finding the AktivKonto overdrawn charges €5.12, 23 of October’s 31 days, once; the daily tries after and the months’ ends charge no more fees; paid off, it closes, and the quarter’s closing finds nothing 5342ms
+   ✓ banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: a Berlin-raised student keeping Berliner Sparkasse is charged €12.00 on her first night; on Wednesday 14 October 2026 Your Banks says closing charges October’s €4.95 to the day, €2.24, and refunds €10.32, 314 of the card’s 365 days; Close It pressed posts both once, against Bank Fees, and a second press and a reload give nothing more back 10226ms
+   ✓ banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: kept, the card’s second year is charged on 25 August 2027, once, the same whether the clock jumps from 20 August or runs a day at a time with a reload on the 24th; closed on 1 September 2027, July’s and August’s €4.95 kept and one day of September’s, €10.07, and €11.74 of the year refunded, 357 days 12245ms
+   ✓ banking.5.arion-card: Arion’s yearly debit-card fee in its own figure > PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly on her first night and a year on, the krónur held falling by 950 kr each time; one of 20 is charged nothing; closing on 26 August 2027 gives back 945 kr of the year paid ahead, as SLATE simulates when Arion charges it 22433ms
+   ✓ banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student of 30 keeping ING is charged its €4.90 at the first minute of each next month, 1 September 2026 to 1 January 2027, €24.50, what the quarter’s closings took until 2026-10-16, and none at a quarter’s closing; the screen says when; the same whether the clock jumps or runs a day at a time with a reload on 1 November 5437ms
+   ✓ banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: the ING student closing at 11:30 PM on 31 October 2026, October’s €4.90 counted and not yet charged, is told and charged it once, and 1 November charges nothing more 2130ms
+   ✓ banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student keeping Commerzbank is charged its €4.90 at 11 PM on each month’s last day, August to December 2026, and none at a quarter’s closing; the screen says the day; Deutsche Bank’s still goes to the quarter’s closing 4469ms
+   ✓ banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set 440ms
+   ✓ banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it 2126ms
+ ✓ tests/banking.test.ts (19 tests) 6128ms
+   ✓ the bank a life starts with > is a real bank of the country, under its own account names 342ms
+   ✓ interest > builds by the day on what the account holds and is paid at the month’s end, less the tax 1339ms
+   ✓ interest > is paid only in the bank’s months: February and August in Japan 597ms
+   ✓ interest > takes New Zealand’s by the saver’s income, and France’s not at all on a Livret A 2241ms
+   ✓ interest > adds a bonus only in a month that earns it 766ms
+   ✓ the monthly fee > is Chase’s $15 on a month with no deposits and too little in it 517ms
+ ✓ tests/language-data-dates.test.ts (12 tests) 3714ms
+   ✓ the research data writes its dates the game’s way wherever a screen shows them > the bank research made by scripts outside the repository: every field the screens show 377ms
+   ✓ the research data writes its dates the game’s way wherever a screen shows them > the bank research kept by hand: each product’s, fee’s, overdraft’s, term’s, loan’s, round-up’s and opening’s source 738ms
+   ✓ the genres’ research writes its dates the game’s way, and the genre look shows them so > each genre’s claim, reasons, what the research says, how it was read, what’s uncertain and its source: build-attribute-content’s words step 389ms
+   ✓ the genres’ research writes its dates the game’s way, and the genre look shows them so > PLAYER JOURNEY: a first-year opens Horror and Adventure: the source’s day, how it was read and the review’s day, as the game writes a date 414ms
+   ✓ the guide, the tutorial and Papers say a day month first, as the game writes a date > every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them 771ms
+ ✓ tests/home-account-screens.test.ts (3 tests) 3365ms
+   ✓ an account kept at home, in its own money on every screen > shows HSBC UK’s accounts in pounds with the dollars beside, on the bank, Home, the looks and the statement, through a reload 2501ms
+   ✓ an account kept at home, in its own money on every screen > tells the alerts and the statement notice in pounds 408ms
+   ✓ an account kept at home, in its own money on every screen > says a bank’s fee for a customer abroad and a closing’s day on the account’s panel 454ms
+ ✓ tests/bank-lifecycle.test.ts (6 tests) 2134ms
+   ✓ PLAYER JOURNEY: a loan at the second bank > borrows at Citi while Chase is primary, pays into Chase, repays from Citi through a change of primary, and counts the loan against the next 989ms
+   ✓ a switching service > can be called off until seven working days before its date, then not; called off, nothing moves 301ms
+   ✓ a card statement > keeps the minimum it said when it was cut, whatever the terms are later 619ms
+ ✓ tests/security.test.ts (11 tests) 6716ms
+   ✓ a card reported lost, stolen or damaged > stops at once, charges BBVA México’s fee, and a new number follows in SLATE’s estimated days 375ms
+   ✓ somebody else’s use > is stopped by a British bank at its share, and otherwise goes through, on the country’s rate 345ms
+   ✓ somebody else’s use > leaves a US holder $50 of a debit card’s use reported at once, $500 later, and refunds the rest 460ms
+   ✓ somebody else’s use > never comes in Japan, which publishes no rate for it 604ms
+   ✓ somebody else’s use > can’t be reported past the law’s days from the statement 4282ms
+ ✓ tests/pending.test.ts (5 tests) 480ms
+   ✓ a card payment > is held against the available balance at once and posts in the bank’s days 396ms
+
+ Test Files  12 passed (12)
+      Tests  182 passed (182)
+   Start at  05:37:13
+   Duration  157.84s (transform 19.27s, setup 4.61s, collect 124.70s, tests 303.25s, environment 2ms, prepare 9.09s)
+
+exit=0
