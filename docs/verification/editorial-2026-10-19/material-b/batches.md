@@ -157,3 +157,50 @@ voice-check 0, tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes
 tests/briefs-content.test.ts` 0 (454 tests). text-inventory 1 before the marks (the changed sources Pending) and 0 after.
 
 **Screens verified:** BriefPane for all 25 briefs of the file, rendered and kept in `rendered/second-b.txt`.
+
+## Batch 3: `second-c.ts`
+
+**Sources (86):** 25 briefs and 61 reading sources ([pro], [party] and [pride] hold two readings each):
+[brief-fairy_tale-2] [vain] [keeper] [bell] [brief-family-2] [pro] [son] [spotter] [brief-fantasy-2] [race] [price] [meet]
+[brief-farce-3] [ledger] [doors] [believer] [brief-film_noir-3] [hands] [working] [tired] [brief-folk_horror-2] [grief]
+[outsider] [win] [brief-found_footage-2] [party] [letter] [brief-gangster-2] [business] [fear] [brief-giallo-2] [story]
+[next] [brief-gothic_horror-3] [record] [door] [hand] [brief-grindhouse-2] [calm] [stunt] [brief-hangout-2] [company]
+[alone] [brief-heist-2] [pass] [pride] [brief-historical_drama-2] [facts] [neighbor] [brief-historical_fiction-2] [guilt]
+[gift] [brief-holiday-2] [policy] [boy] [brief-hood_film-2] [place] [nod] [brief-horror-2] [steady] [eli]
+[brief-horror_comedy-2] [show] [made] [kids] [brief-isekai-2] [fan] [author] [word] [brief-jidaigeki-2] [rule] [face]
+[spear] [brief-jukebox_musical-3] [floor] [chair] [uncle] [brief-kaiju-2] [waiting] [customer] [brief-kitchen_sink-2]
+[sister] [brief-legal_drama-2] [advocate] [fond] [two].
+
+**Rewritten (20 sources, 55 strings):** 18 briefs (fairy_tale-2, family-2, fantasy-2, farce-3, film_noir-3,
+found_footage-2, giallo-2, gothic_horror-3, grindhouse-2, hangout-2, heist-2, holiday-2, horror-2, horror_comedy-2,
+isekai-2, jidaigeki-2, jukebox_musical-3, kitchen_sink-2) and 2 readings ([doors]'s rests, a fragment, and [chair], a
+passive). By kind: 13 circumstances whose closing "On the tape …" or "Recorded alone …" staging became an instruction or
+a sentence; 4 voice briefs' `reader` fields and gothic_horror-3's, which mixed speaking and writing; 2 dangling
+participles ("Voiced alone …, it’s all voice-over"); 11 verbless reasons and beats (film_noir-3's two narration beats
+among them); and techniques notes where a technique "carried" a list of passive participles (farce-3, jidaigeki-2,
+grindhouse-2), each now said as what the scene asks for, with its staging as instructions.
+
+**Kept (66):** seven briefs whole (folk_horror-2, gangster-2, historical_drama-2, historical_fiction-2, hood_film-2,
+kaiju-2, legal_drama-2) and 59 readings.
+
+**Meaning-sensitive, and how each was checked:**
+- giallo-2's third beat said "She mentions the visitor dropped something … and the reporter takes out her own": the
+  "she" was the concierge (the beat before it is "The concierge describes the visitor"), while "she" in every other beat
+  is Marta, the player's character. The beat now names the concierge. The facts (berth fourteen, her own ticket) are
+  unchanged.
+- giallo-2's "as many in the form were" now names the form, giallo films; the claim (shot without sound) is the brief's.
+- The staging notes (farce-3, grindhouse-2, jidaigeki-2): each keeps the old conditions word for word (marked solo, half
+  or reduced speed, called cues, reacted to and never made, angled away from the lens and the reader's eyeline, the sword
+  never shown, set on floor marks).
+- Only string values changed (`m15b/skeleton.py`).
+
+**Interactions read whole:** each pane top to bottom; the allows notes and misfit lines for found_footage-2 and hangout-2
+(open) and giallo-2 (set). Rendered: `rendered/second-c.txt`.
+
+**Tests and tool matchers updated:** none held the old words.
+
+**Checks** (scratchpad `m15b/b3-checks/`): tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0,
+tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0; vitest (material-words, briefs-content) 0, 454 tests.
+text-inventory 1 before the marks and 0 after.
+
+**Screens verified:** BriefPane for all 25 briefs of the file, rendered and kept in `rendered/second-c.txt`.
