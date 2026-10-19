@@ -94,7 +94,7 @@ describe('PLAYER JOURNEY: a French overrun at the second bank', () => {
     expect(account.creditOffered).toBeUndefined();
     // The primary's own offer is still what no account names: there's none.
     expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: {} }).error).toBe('Your bank has offered no loan for an overrun.');
-    expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: { accountId: 'nope' } }).error).toBe('That isn’t an open current account of yours.');
+    expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: { accountId: 'nope' } }).error).toBe('That isn’t one of your open checking accounts.');
     expect(sim.ledger.audit()).toEqual([]);
   }, 120_000);
 

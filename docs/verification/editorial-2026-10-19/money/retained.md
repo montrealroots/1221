@@ -42,3 +42,16 @@ files, each with its words and its reason, so the reasons can be judged as well 
 - **`src/ui/bank/feeWords.ts#waiverWords`:** "waived in any month you have $500 of electronic deposits (wages, benefits
   or a tax refund) paid in, or keep $1,500 in it all month". Kept: each condition as something the player does in a
   month, the way a bank lists them.
+
+## Batch 3
+
+- **`src/engine/systems/lending.ts#completeSwitch`:** "Your Monzo Current Account is open and your wages, standing orders
+  and autopay move to it. Barclays Bank Account stays open with £120.00, as you asked. Move it and close the account on
+  Money, under Your Banks, whenever you want." Kept: decision 4's notice says what opened, what moved, what stayed and the
+  one step left, in the order they matter.
+- **`src/engine/systems/lending.ts#registerLending <world.day_rollover>`:** "It moved, with its interest, into your
+  easy-access savings at the same bank, where it can be taken any time." Kept: where the money is now and what that
+  means, the two things the end of a term deposit has to say.
+- **`src/engine/systems/lending.ts#registerLending <bank.repay_loan>`:** "Citi Access Checking can’t cover the $1,912.40
+  it takes to pay it off, so nothing was paid." Kept: the house's refusal shape for money that isn't there, the account,
+  the figure and what didn't happen.

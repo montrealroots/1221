@@ -728,7 +728,7 @@ describe('banking.2: what a student keeping an account at home meets at the eigh
       expect(refusal(sim, 'bank.arrange_overdraft', { limit: 100_00, accountId: home.id })).toBe(overdraft);
       // Born abroad, not a US citizen: Citi's opening refuses first; a bank abroad isn't one where she lives.
       expect(refusal(sim, 'bank.switch', { bankId: 'us-citi' })).toBe('Citi only opens this account for US citizens and permanent residents.');
-      expect(refusal(sim, 'bank.switch', { bankId: other })).toBe('You can only switch to a bank where you live.');
+      expect(refusal(sim, 'bank.switch', { bankId: other })).toBe('You can only switch to a bank in the country you live in.');
       expect(refusal(sim, 'bank.cancel_switch', {})).toBe('No switch is under way.');
       expect(refusal(sim, 'bank.stop_balance_transfer', {})).toBe('No switch is under way.');
       expect(refusal(sim, 'bank.take_overrun_loan', { accountId: home.id })).toBe('Your bank has offered no loan for an overrun.');

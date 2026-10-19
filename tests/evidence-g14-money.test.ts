@@ -607,9 +607,9 @@ describe('bank.set_loan_repayment', () => {
       wages(s, c, 5_000_00);
       loanId = run<{ loanId: string }>(s, 'bank.borrow', { amount: 3_000_00, months: 24, bankId: 'us-citi', intoId: c, repayFromId: c }).loanId;
     });
-    expect(refused(sim, 'bank.set_loan_repayment', { loanId, accountId: citi })).toBe('Citi Access Checking is closing.');
+    expect(refused(sim, 'bank.set_loan_repayment', { loanId, accountId: citi })).toBe('Citi Access Checking is closing, so the loan can’t be repaid from it.');
     expect(refused(sim, 'bank.set_loan_repayment', { loanId: 'account_nobody', accountId: chase })).toBe('That isn’t an open loan of yours.');
-    expect(refused(sim, 'bank.set_loan_repayment', { loanId, accountId: savingsAt(sim, 'us-chase').id })).toBe('A loan is repaid from an open current account of yours.');
+    expect(refused(sim, 'bank.set_loan_repayment', { loanId, accountId: savingsAt(sim, 'us-chase').id })).toBe('A loan has to be repaid from one of your open checking accounts.');
     expect(acct(sim, loanId).repayFromId).toBe(chase);
     run(sim, 'bank.repay_loan', { loanId });
     expect(acct(sim, loanId).closedAt).toBe(sim.now);

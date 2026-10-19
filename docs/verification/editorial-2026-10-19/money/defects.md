@@ -13,7 +13,7 @@ would let out. Found reading the refusals' figures while rewriting them. Now the
 house writes a refusal's figure. `tests/editorial-money.test.ts`, "m1", fails without the fix (it reads "€2,000" and
 "C$99").
 
-## m2. A charge-off is said to stay on the record "until it’s paid" (the panel: batch 3; the glossary: the coordinator)
+## m2. A charge-off is said to stay on the record "until it’s paid" (the panel: fixed in batch 3; the glossary: the coordinator)
 
 `src/ui/bank/BankLending.tsx`, the In Collections panel: "It’s on your record until it’s paid." And `docs/GLOSSARY.md`,
 Money, **charged off**, **collections**: "on your record until paid". The record keeps a charge-off's mark for its
@@ -21,6 +21,8 @@ country's years (`MARK_YEARS`, seven in the US; Mexico's by the debt's size), an
 `bank.pay_collections` pays the debt down and doesn't touch the marks. What an unpaid collections debt does is block a
 card application at any bank (`card.apply`) and an account at the bank owed (`openRefusal`). Found reading the
 charge-off notice's "It’s on your record." against `markRecord`. The notice now says "for seven years, paid or not, and
-no bank approves a card while the debt is unpaid" (`tests/editorial-money.test.ts`). The panel is fixed in batch 3. The
-glossary row is for the coordinator: "on your record for its country's years, paid or not; while unpaid, no bank
+no bank approves a card while the debt is unpaid" (`tests/editorial-money.test.ts`). The panel, fixed in batch 3, now says "The charge-off stays on your credit record for seven years, paid or not. While the
+debt is unpaid, no bank approves a card, and Chase won’t open an account for you.", and nothing of the record for a bank
+abroad, which doesn't mark it; `tests/evidence-g10-money.test.ts` asserts it, and both its In Collections tests fail with
+the old sentence. The glossary row is for the coordinator: "on your record for its country's years, paid or not; while unpaid, no bank
 approves a card".

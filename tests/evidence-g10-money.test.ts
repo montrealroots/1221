@@ -49,7 +49,7 @@ import { createSave, loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { newLifeConfig } from '@/engine/world/bootstrap';
-import { addMonths, instantFromZoned, MS_DAY } from '@/engine/core/time';
+import { addMonths, formatDate, instantFromZoned, MS_DAY } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { bankById } from '@/engine/content/banks';
 import { collectionsOf, loansOf, LOAN_DUE_KIND, termsOf } from '@/engine/systems/lending';
@@ -228,7 +228,7 @@ describe('bank.borrow', () => {
     const borrow = quoted.button('Borrow It');
     expect(borrow.disabled).toBe(false);
     borrow.onClick!();
-    expect(h.toasts).toEqual(['Borrowed.']);
+    expect(h.toasts).toEqual([`Your $2,000 loan is in ${c.name}.`]);
     const [loan] = loansOf(after, after.player);
     expect(loan).toMatchObject({ name: 'Citi Personal Loan', bankId: 'us-citi', balance: -2_000_00, apr: CITI_FROM, loanPayment: PAYMENT, loanMonths: 60, repayFromId: c.id });
     expect(c.balance - b0).toBe(2_000_00);
@@ -261,14 +261,14 @@ describe('bank.borrow', () => {
     const sim = student('g10-borrow-record', 'us-citi');
     sim.advanceTo(at(2026, 9, 12));
     // 35% of the $138 the clock paid is $48.30. Over 12 months the payment is $176.06 (the same annuity), past it.
-    expect(refused(sim, 'bank.borrow', { ...ASK, months: 12 })).toBe('A payment of $176 a month is more than the bank lets a loan take of $138 of wages.');
+    expect(refused(sim, 'bank.borrow', { ...ASK, months: 12 })).toBe('A payment of $176 a month is more than the 35% of your wages a loan can take: $48 of the $138 paid in over the last 30 days.');
     expect(refused(sim, 'bank.borrow', { ...ASK, amount: 1_999_99 })).toBe('The bank lends at least $2,000.');
     // TEST SETUP: the record set at a figure, each in turn.
     sim.player.credit!.score = 579;
-    expect(refused(sim, 'bank.borrow', ASK)).toBe('Your credit record isn’t strong enough for the bank.');
+    expect(refused(sim, 'bank.borrow', ASK)).toBe('Your credit score is below 580, and in the game a bank doesn’t lend below that.');
     // At 580, the top of the range: 18.49% makes the payment $51.33, past the $48.30.
     sim.player.credit!.score = 580;
-    expect(refused(sim, 'bank.borrow', ASK)).toBe('A payment of $51 a month is more than the bank lets a loan take of $138 of wages.');
+    expect(refused(sim, 'bank.borrow', ASK)).toBe('A payment of $51 a month is more than the 35% of your wages a loan can take: $48 of the $138 paid in over the last 30 days.');
     // At 700, two fifths of the way down the line from 780 to 580: two fifths up the range, 10.24% + 0.4 × 8.25% =
     // 13.54%, and $46.0609 a month, a cent rounded up.
     sim.player.credit!.score = 700;
@@ -514,8 +514,8 @@ describe('bank.open_term', () => {
     const checking = primary(sim);
     const start = checking.balance;
     expect(start).toBe(92_391_00);
-    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking has only $92,391.00, so no term deposit was opened.');
-    expect(refused(sim, 'bank.open_term', { amount: 1_000_00, bankId: 'us-wells-fargo' })).toBe('A term deposit at Wells Fargo is paid for from your current account there. Open a current account at Wells Fargo first.');
+    expect(refused(sim, 'bank.open_term', { amount: 100_000_00 })).toBe('Chase Total Checking has only $92,391.00 available, so no term deposit was opened.');
+    expect(refused(sim, 'bank.open_term', { amount: 1_000_00, bankId: 'us-wells-fargo' })).toBe('A term deposit at Wells Fargo is paid for from your checking account there. Open a checking account at Wells Fargo first.');
     expect(refused(sim, 'bank.open_term', { amount: 0 })).toBe('Enter how much to put away.');
     expect(termsOf(sim, sim.player)).toEqual([]);
     expect(checking.balance).toBe(start);
@@ -529,7 +529,7 @@ describe('bank.open_term', () => {
     const c0 = citi.balance;
     const p0 = chase.balance;
     panel.button('Put It Away').onClick!();
-    expect(h.toasts).toEqual(['Put away.']);
+    expect(h.toasts).toEqual([`Your CD is open, locked until ${formatDate(termsOf(sim, sim.player)[0]!.maturesAt!, sim.zone)}.`]);
     const [term] = termsOf(sim, sim.player);
     // Citi 12-month CD, 4.25% (fortune.com, 24 September 2026), maturing a year to the hour.
     expect(term).toMatchObject({ name: 'CD', bankId: 'us-citi', institution: 'Citi', balance: 1_000_00, fixedRate: 0.0425, maturesAt: at(2027, 8, 27) });
@@ -572,7 +572,7 @@ describe('bank.open_term', () => {
     const c0 = citi.balance;
     const p0 = chase.balance;
     onCiti!.onClick!();
-    expect(h.toasts).toEqual(['Put away.']);
+    expect(h.toasts).toEqual([`Your CD is open, locked until ${formatDate(termsOf(sim, sim.player)[0]!.maturesAt!, sim.zone)}.`]);
     expect(termsOf(sim, sim.player)).toEqual([expect.objectContaining({ name: 'CD', bankId: 'us-citi', balance: 1_000_00, fixedRate: 0.0425 })]);
     expect(citi.balance - c0).toBe(-1_000_00);
     expect(chase.balance).toBe(p0);
@@ -669,7 +669,7 @@ describe('bank.pay_collections', () => {
     expect(moved.bankId).not.toBe('us-chase');
     expect(moved.balance).toBe(0);
     // Owed and unpaid: nothing to pay it with yet, every reader holds it.
-    expect(refused(sim, 'bank.pay_collections', { amount: 100_00 })).toBe('There’s nothing in the account to pay it with.');
+    expect(refused(sim, 'bank.pay_collections', { amount: 100_00 })).toBe('Advantage Plus Banking has nothing available to pay it with, so nothing was paid.');
     expect(troubles(sim, sim.player).filter((t) => t.kind === 'collections')).toEqual([{ kind: 'collections', amount: owed }]);
     expect(applied(sim)).toMatchObject({ approved: false, said: expect.stringMatching(/ turned down your application because you have a debt in collections\. You can pay it on Money, under Borrowing\. Applying still took a few points off your credit score\.$/) });
     expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
@@ -680,7 +680,7 @@ describe('bank.pay_collections', () => {
     const bankOf = bankById(moved.bankId!)!;
     const panel = lending(sim, bankOf.id, ['borrowing'], moved, { toCollections: '100' });
     expect(panel.text).toContain(`In Collections $${Math.round(owed / 100)} owed`);
-    expect(panel.text).toContain('Chase closed your account after it was overdrawn for 60 days, and charged off what it couldn’t recover. How long a bank lets an overdraft run is estimated. It’s on your record until it’s paid.');
+    expect(panel.text).toContain('Chase closed your account after it was overdrawn for 60 days, and charged off what it couldn’t recover. How long a bank lets an overdraft run is estimated. The charge-off stays on your credit record for seven years, paid or not. While the debt is unpaid, no bank approves a card, and Chase won’t open an account for you.');
     const b0 = moved.balance;
     expect(b0).toBeGreaterThanOrEqual(100_00);
     panel.button('Pay It').onClick!();
@@ -761,7 +761,7 @@ describe('bank.pay_collections', () => {
     const second = lending(paid, 'us-chase', ['borrowing'], chase, { toCollections: (-toChase.balance / 100).toFixed(2) });
     // The In Collections panel's own words, from its title to its field.
     const words = second.text.slice(second.text.indexOf('In Collections'), second.text.indexOf('Pay Toward It'));
-    expect(words).toBe(`In Collections $${Math.round(-toChase.balance / 100).toLocaleString('en-US')} owed How This Works Chase closed your card after its payments were 180 days behind, and charged off what was owed on it. It’s on your record until it’s paid. `);
+    expect(words).toBe(`In Collections $${Math.round(-toChase.balance / 100).toLocaleString('en-US')} owed How This Works Chase closed your card after its payments were 180 days behind, and charged off what was owed on it. The charge-off stays on your credit record for seven years, paid or not. While the debt is unpaid, no bank approves a card, and Chase won’t open an account for you. `);
     expect(words).not.toContain('overdrawn');
     second.button('Pay It').onClick!();
     expect(toChase.closedAt).toBe(paid.now);

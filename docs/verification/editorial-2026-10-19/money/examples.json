@@ -288,5 +288,95 @@
   "why": "The refusal shape for money that isn't there: what can't pay, and what didn't happen.",
   "meaningSensitive": false,
   "verified": "tests/evidence-g13-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#loanOffer",
+  "kind": "error",
+  "before": "Your credit record isn’t strong enough for the bank.",
+  "after": "Your credit score is below 580, and in the game a bank doesn’t lend below that.",
+  "why": "The figure the refusal turns on, labelled as the game's rule since no bank publishes it.",
+  "meaningSensitive": true,
+  "verified": "score < ESTIMATE.scoreFloor (580). tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#loanOffer",
+  "kind": "error",
+  "before": "A payment of $176 a month is more than the bank lets a loan take of $138 of wages.",
+  "after": "A payment of $176 a month is more than the 35% of your wages a loan can take: $48 of the $138 paid in over the last 30 days.",
+  "why": "The share and its figure, so the player can compare; variant with the loans already paid named.",
+  "meaningSensitive": true,
+  "verified": "ESTIMATE.loanShareOfPay; the comparison unchanged. tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#registerLending",
+  "kind": "notification",
+  "before": "A Missed Loan Payment — $264.09 was due, and there was only $0.00 to pay it with. It’s on your credit record, and what’s left is still owed.",
+  "after": "A Missed Loan Payment — Your Citi Personal Loan payment of $264.09 was due, and Chase Total Checking had nothing available to pay it. It’s on your credit record, and what’s left is still owed.",
+  "why": "Which loan, which account, and nothing said as nothing; variant 'only $X of it could be paid'.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g11-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Chase closed your card after its payments were 180 days behind, and charged off what was owed on it. It’s on your record until it’s paid.",
+  "after": "Chase closed your card after its payments were 180 days behind, and charged off what was owed on it. The charge-off stays on your credit record for seven years, paid or not. While the debt is unpaid, no bank approves a card, and Chase won’t open an account for you.",
+  "why": "The old sentence promised what paying doesn't do (defect m2); the new one says what the record and the unpaid debt each do.",
+  "meaningSensitive": true,
+  "verified": "markRecord, marksFallOff, bank.pay_collections, card.apply. tests/evidence-g10-money.test.ts, failing with the old sentence."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "confirmation",
+  "before": "Put away.",
+  "after": "Your CD is open, locked until August 24, 2027.",
+  "why": "A fragment became what happened and until when.",
+  "meaningSensitive": false,
+  "verified": "bank.open_term's maturesAt. tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "confirmation",
+  "before": "Borrowed.",
+  "after": "Your $2,000 loan is in Citi Access Checking.",
+  "why": "Where the money went.",
+  "meaningSensitive": false,
+  "verified": "bank.borrow pays into the Paid Into account. tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#frenchOverrun",
+  "kind": "official",
+  "before": "Your account has been past its overdraft limit for a month, by €30.24 ($32.86) at 18.40% a year, with the charges each month brings. French law has the bank tell you after a month.",
+  "after": "Your account has been past its overdraft limit for a month, by €30.24 ($32.86). The bank charges 18.40% a year on what’s overdrawn, as well as its monthly charges. French law has the bank tell you after a month.",
+  "why": "The rate is the overdraft's, not the overrun's; two sentences for two facts.",
+  "meaningSensitive": true,
+  "verified": "terms.rate is the overdraft terms' rate. tests/home-account-setoff.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#closeForOverdraft",
+  "kind": "notification",
+  "before": "Chase Took What It Was Owed — It had been below zero for 60 days, so the bank took what it was owed from your other money there. Chase Total Checking and Chase Savings stay open.",
+  "after": "Chase Took What It Was Owed — Chase Total Checking had been below zero for 60 days, so the bank took what it was owed from your other money there. Chase Total Checking and Chase Savings stay open.",
+  "why": "'It' had nothing to point at.",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-setoff.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#registerLending <bank.open_term>",
+  "kind": "error",
+  "before": "A term deposit at Wells Fargo is paid for from your current account there. Open a current account at Wells Fargo first.",
+  "after": "A term deposit at Wells Fargo is paid for from your checking account there. Open a checking account at Wells Fargo first.",
+  "why": "The glossary's word.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts."
  }
 ]

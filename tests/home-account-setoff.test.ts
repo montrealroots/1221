@@ -61,7 +61,7 @@ describe('the set-off against an overdraft', () => {
     emptied(sim, current);
     sim.advanceTo(Date.UTC(2026, 11, 29, 12));
     // France's letters in euros, the dollars beside: €15 twice and 24 cents of interest by 1 October.
-    expect(titled(sim, 'BNP Paribas Wrote About Your Overrun')).toEqual(['Your account has been past its overdraft limit for a month, by €30.24 ($32.86) at 18.40% a year, with the charges each month brings. French law has the bank tell you after a month.']);
+    expect(titled(sim, 'BNP Paribas Wrote About Your Overrun')).toEqual(['Your account has been past its overdraft limit for a month, by €30.24 ($32.86). The bank charges 18.40% a year on what’s overdrawn, as well as its monthly charges. French law has the bank tell you after a month.']);
     // No loan for the overrun from a bank abroad, which opens nothing new for a customer abroad: until 2026-10-16 it
     // offered one, and lent it.
     expect(titled(sim, 'BNP Paribas Offered A Loan For The Overrun')).toEqual([]);
@@ -161,7 +161,7 @@ describe('the set-off against an overdraft', () => {
     expect(sim.universe.transactions.some((t) => t.memo === 'Set off against the overdraft')).toBe(true);
     expect(chase.closedAt).toBeUndefined();
     expect(sim.player.primaryAccountId).toBe(chase.id);
-    expect(titled(sim, 'Chase Took What It Was Owed')).toEqual([`It had been below zero for 60 days, so the bank took what it was owed from your other money there. ${chase.name} and ${savings.name} stay open.`]);
+    expect(titled(sim, 'Chase Took What It Was Owed')).toEqual([`${chase.name} had been below zero for 60 days, so the bank took what it was owed from your other money there. ${chase.name} and ${savings.name} stay open.`]);
     expect(breaches(sim.universe)).toEqual([]);
   }, 120_000);
 });

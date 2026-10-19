@@ -412,6 +412,237 @@
   "reason": "Says why the statement day can't move again yet, since it moved once this cycle, and exactly when it can: once the next statement comes",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/credit.ts#statementWords": {
+  "status": "Rewritten",
+  "hash": "4f8831bf0f77",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g28-ui.test.ts it('PLAYER JOURNEY: the same groceries on the card each midnight …') and tests/evidence-g34-ui.test.ts read the statement notice for both autopay settings, exact",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#cardYearNight": {
+  "status": "Retained",
+  "hash": "5a8a82de57d3",
+  "on": "2026-10-19",
+  "reason": "The statement line for a debit card's yearly fee, against Bank Fees, as a bank statement names the charge",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#chargeForItem": {
+  "status": "Retained",
+  "hash": "69fd1f5b6862",
+  "on": "2026-10-19",
+  "reason": "The statement line for an overdraft fee on an item, Overdraft fee against Bank Fees, the bank's own name for the charge",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#chargeForPurchase": {
+  "status": "Retained",
+  "hash": "c81eddddc4b0",
+  "on": "2026-10-19",
+  "reason": "The statement lines for a foreign transaction fee and a debit card purchase fee, against Bank Fees, as a statement names them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#chargeReturned": {
+  "status": "Retained",
+  "hash": "fb3ac8383b08",
+  "on": "2026-10-19",
+  "reason": "The statement line for a payment returned unpaid, Returned payment fee against Bank Fees, the bank's own name for it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#closeForOverdraft": {
+  "status": "Rewritten",
+  "hash": "4f0e8ba3f9c3",
+  "on": "2026-10-19",
+  "evidence": "tests/home-account-setoff.test.ts reads Chase Took What It Was Owed opening on the account's name, and the Closed An Account variant",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#closeForOverdraft [loan]": {
+  "status": "Retained",
+  "hash": "6b79fdbc1194",
+  "on": "2026-10-19",
+  "reason": "Owed To Chase, In Collections names the charged-off debt as an account, the bank's name first, as Borrowing shows it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#collectionsOf": {
+  "status": "Retained",
+  "hash": "52e05f867cfc",
+  "on": "2026-10-19",
+  "reason": "The debt's account name ends In Collections, after the bank's name, as Owed To Chase, In Collections reads on Borrowing and statements",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#collectionsSource": {
+  "status": "Retained",
+  "hash": "103e883cd204",
+  "on": "2026-10-19",
+  "reason": "Charged off by and Charged off: are statement memos the In Collections panel reads back to tell an account's charge-off from a card's, so they are keys",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#completeSwitch": {
+  "status": "Retained",
+  "hash": "bff4fd7939ec",
+  "on": "2026-10-19",
+  "reason": "Each switch outcome says what opened, where wages, standing orders and autopay went, what stays in the old account and the one step to clear it; decision 4's words",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#frenchOverrun": {
+  "status": "Rewritten",
+  "hash": "e9d3eb501eff",
+  "on": "2026-10-19",
+  "evidence": "tests/home-account-setoff.test.ts reads BNP Paribas Wrote About Your Overrun with the rate said as what it's charged on",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#loanOffer": {
+  "status": "Rewritten",
+  "hash": "1834a97bd984",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g10-money.test.ts bank.borrow cases read the score floor and both payment-share refusals with their figures",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#monthlyCharges": {
+  "status": "Retained",
+  "hash": "e23a610db95e",
+  "on": "2026-10-19",
+  "reason": "The statement lines for a dormant account's fee, a second-chance account's and a quiet month's, against Bank Fees, as a statement names each charge",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#overdraftOffer": {
+  "status": "Rewritten",
+  "hash": "43e1937d2dac",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('an overdraft asked for under the score floor says the score the game arranges one from')",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#refundInterestTax": {
+  "status": "Retained",
+  "hash": "74955f46f5d7",
+  "on": "2026-10-19",
+  "reason": "Says the tax assessment gave back part of the tax taken on last year's interest, with the figure, and the statement line for it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#registerLending": {
+  "status": "Rewritten",
+  "hash": "199b1fbd61c7",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g11-money.test.ts, the Citi loan case, reads A Missed Loan Payment naming the loan and the empty account",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending [loan]": {
+  "status": "Retained",
+  "hash": "36c89f16cb06",
+  "on": "2026-10-19",
+  "reason": "The loan's account name, the bank's name and Personal Loan, as Borrowing and statements show it, plain and Title Case",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.arrange_overdraft>": {
+  "status": "Rewritten",
+  "hash": "b90d80fc56eb",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('an overdraft or a loan on an account that isn’t one of your checking accounts is refused in plain words')",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.borrow>": {
+  "status": "Rewritten",
+  "hash": "24689b641ff8",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('an overdraft or a loan on an account that isn’t one of your checking accounts is refused in plain words')",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.cancel_switch>": {
+  "status": "Retained",
+  "hash": "1e9af9aedd27",
+  "on": "2026-10-19",
+  "reason": "Decision 4's refusals for calling off a switch: none under way, a service that doesn't allow it, the last day it could, and the confirmation of what stays",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.debit_overdraft>": {
+  "status": "Retained",
+  "hash": "65afa5a86822",
+  "on": "2026-10-19",
+  "reason": "Says the opt-in isn't offered at this bank, or that the bank never pays a debit card purchase into an overdraft, the bank's own rule",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.open_term>": {
+  "status": "Rewritten",
+  "hash": "678042f1058e",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g10-money.test.ts asserts the checking-account refusal and the has-only-available refusal of Put It Away",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.pay_collections>": {
+  "status": "Rewritten",
+  "hash": "4c052a19d323",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g10-money.test.ts, it('closes an account overdrawn for sixty days by the clock into a debt Chase’s own …') asserts the new refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.repay_loan>": {
+  "status": "Retained",
+  "hash": "c747b8c408e4",
+  "on": "2026-10-19",
+  "reason": "Says the repayment account can't cover the payoff, with the figure, and that nothing was paid, the refusal shape for money that isn't there",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.set_loan_repayment>": {
+  "status": "Rewritten",
+  "hash": "e4caab3e429a",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts asserts both refusals of Repay From This Account, a savings account and Citi while it closes",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.stop_balance_transfer>": {
+  "status": "Retained",
+  "hash": "5e126cfe3945",
+  "on": "2026-10-19",
+  "reason": "Decision 4's refusals for stopping a balance transfer: none under way, no such step, already stopped, too late, and the confirmation saying what stays where",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.switch>": {
+  "status": "Rewritten",
+  "hash": "65a30427117d",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-09-banking.test.ts asserts You can only switch to a bank in the country you live in",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.take_overrun_loan>": {
+  "status": "Rewritten",
+  "hash": "d54becb326ee",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g18-1.test.ts asserts That isn’t one of your open checking accounts on the command",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <world.day_rollover>": {
+  "status": "Retained",
+  "hash": "5a3733e59d20",
+  "on": "2026-10-19",
+  "reason": "A term deposit's three endings each say where the money is now: renewed at its rate with its penalty-free window, moved into savings, or paid out after tax",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#scheduleLoan": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "The label of a loan's due item on the clock's own schedule, category system, which the calendar filters out, so no player reads it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#settleOverdraftInterest": {
+  "status": "Retained",
+  "hash": "ff547c6525e1",
+  "on": "2026-10-19",
+  "reason": "The statement line for overdraft interest charged as an account closes, against Overdraft Interest, a ledger name the code reads by name",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#settlePendingItems": {
+  "status": "Retained",
+  "hash": "69fd1f5b6862",
+  "on": "2026-10-19",
+  "reason": "The statement line for an overdraft fee charged once its next-day window passes, Overdraft fee against Bank Fees",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#switchApplicationRefusal": {
+  "status": "Retained",
+  "hash": "192aa298f704",
+  "on": "2026-10-19",
+  "reason": "Each says why the new bank won't take a switch: a debt it charged off, a ChexSystems report and until when, no photo ID and where to get one, age, US persons only",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/payments.ts#armPayments": {
   "status": "Retained",
   "hash": "fa7b6a2fad5b",
@@ -593,6 +824,20 @@
   "on": "2026-10-19",
   "evidence": "tests/editorial-money-screens.test.ts, it('names Chase’s plans as published …') and tests/language-money.test.ts, it('says the card’s offers …') render the panel",
   "first": "Pending"
+ },
+ "src/ui/bank/BankLending.tsx#BankLending": {
+  "status": "Rewritten",
+  "hash": "698ac2b8dc97",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g10-money.test.ts renders In Collections for an account and a card charge-off, and presses Borrow It and Put It Away for their toasts",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankLending.tsx#SWITCH_OUTCOME": {
+  "status": "Retained",
+  "hash": "fbf242f1a86e",
+  "on": "2026-10-19",
+  "reason": "How each past switch ended, in a few words for the Past Switches list: declined by the new bank, called off, complete with the old account left in debt",
+  "first": "Reviewed And Retained"
  },
  "src/ui/bank/BankMoves.tsx#BankMoves": {
   "status": "Rewritten",

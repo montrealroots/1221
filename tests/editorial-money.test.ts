@@ -4,7 +4,8 @@
  * them.
  */
 import { describe, expect, it } from 'vitest';
-import { quickSave } from '@/engine';
+import { createSave, quickSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { MS_DAY } from '@/engine/core/time';
@@ -162,4 +163,23 @@ describe('the card’s notices and refusals, in their new words', () => {
     expect(card.closedAt).toBeDefined();
     expect(bodies(sim, 'Your Card Was Charged Off')).toEqual([expect.stringMatching(/^The \$[\d,]+\.\d\d you owed on the Chase Freedom Unlimited went to collections, and the card is closed\. The charge-off stays on your credit record for seven years, paid or not, and no bank approves a card while the debt is unpaid\. You can pay it on Money, under Borrowing\.$/)]);
   }, 120_000);
+});
+
+describe('borrowing’s refusals, in their new words', () => {
+  it('an overdraft asked for under the score floor says the score the game arranges one from', () => {
+    const sim = quickSave({ startLocationId: 'fr-idf-paris', homeRegionId: 'fr-idf-paris', livesWhereBorn: true, bankId: 'fr-societe-generale' }, 'ed15-od-score');
+    sim.post({ memo: 'Wages', category: 'salary', postings: [{ accountId: sim.player.primaryAccountId!, amount: 2_000_00 }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -2_000_00 }] });
+    // TEST SETUP: a score under the floor, as a charged-off debt leaves one.
+    sim.player.credit!.score = 500;
+    expect(run(sim, 'bank.arrange_overdraft', { limit: 500_00 }).error).toBe('Your credit score is below 580, and in the game a bank doesn’t arrange an overdraft below that.');
+  });
+
+  it('an overdraft or a loan on an account that isn’t one of your checking accounts is refused in plain words', () => {
+    // A New York student at Citi, past her first wages, as tests/evidence-g10-money.test.ts quotes a Citi loan.
+    const sim = createSave(1, 'ed15-od-account', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId: 'us-citi' });
+    sim.advanceTo(Date.UTC(2026, 8, 12, 16));
+    const saver = own(sim, 'savings', 'us-citi');
+    expect(run(sim, 'bank.arrange_overdraft', { limit: 100_00, accountId: saver.id }).error).toBe('That isn’t one of your open checking accounts.');
+    expect(run(sim, 'bank.borrow', { amount: 2_000_00, months: 60, bankId: 'us-citi', intoId: saver.id, repayFromId: saver.id }).error).toBe('The loan has to be paid into, and repaid from, one of your open checking accounts.');
+  });
 });

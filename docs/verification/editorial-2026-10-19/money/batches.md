@@ -190,3 +190,64 @@ guide-quotes 0 (581 of 581, after two quotes in the guide moved with their refus
 own guide entries and `cancelRefusal` only, as after batch 1.
 
 **Screens:** the Cards and Statements tabs rendered in the tests above; the built app at the end.
+
+## Batch 3: Borrowing, Overdrafts, Collections, Term Deposits And Switching
+
+**Sources (35):** `src/engine/systems/lending.ts` (32), `src/ui/bank/BankLending.tsx` (2), and batch 2's
+`src/engine/systems/credit.ts#statementWords`, a new source for the helper the statement notice's words moved into.
+Rewritten 16, Retained 19.
+
+**Interactions read whole:** *borrowing:* the Personal Loan panel's terms, the quote, each refusal of the quote and of
+Borrow It, the toast, the loan's line, its due date, a missed payment's notice, Pay It Off; *an overdraft:* each kind's
+paragraph (per item, tacit, unarranged, secured, arranged), the offer and its refusals, Arrange It, its fees on hold, the
+French overrun's three letters, the 60-day close and its notices, In Collections and Pay It; *a term deposit:* Put It
+Away, its refusals, the toast, its three endings; *switching* (decision 4): the panel, its refusals, the confirmations,
+the outcomes, Past Switches.
+
+**What changed.**
+- *Score floors said as figures:* "Your credit record isn’t strong enough for the bank." became "Your credit score is
+  below 580, and in the game a bank doesn’t lend below that." (and "… doesn’t arrange an overdraft below that."), and a
+  bank publishing only its lowest rate lends "only with a credit score of 670 or more" for "only to a good credit
+  record". Both floors are the game's (`ESTIMATE.scoreFloor`, `scoreGood`), so "in the game".
+- *The payment-share refusal* gave no share and no figure to compare: "A payment of $176 a month is more than the bank
+  lets a loan take of $138 of wages." Now: "… is more than the 35% of your wages a loan can take: $48 of the $138 paid in
+  over the last 30 days."
+- *A missed loan payment* named neither the loan nor the account, and said "there was only $0.00": now "Your Citi
+  Personal Loan payment of $264.09 was due, and Chase Total Checking had nothing available to pay it."
+- *A set-off with nothing closed* opened "It had been below zero …" with no account; it now names the account.
+- *The French overrun letter* said "by €30.24 ($32.86) at 18.40% a year, with the charges each month brings", as if the
+  rate were the overrun's; now "by €30.24 ($32.86). The bank charges 18.40% a year on what’s overdrawn, as well as its
+  monthly charges."
+- *Checking account* in every refusal here; "switch to a bank in the country you live in".
+- *Toasts that were fragments:* "Put away." became "Your CD is open, locked until August 24, 2027."; "Borrowed." became
+  "Your $2,000 loan is in Citi Access Checking."; "Paid off." became "Your loan is paid off.".
+- *In Collections* (defect m2, fixed): "It’s on your record until it’s paid." became "The charge-off stays on your credit
+  record for seven years, paid or not. While the debt is unpaid, no bank approves a card, and Chase won’t open an account
+  for you." A debt owed to a bank abroad isn't on the record (`closeForOverdraft`'s `onRecord`), and the panel then says
+  only what the debt blocks; Mexico's years go by the debt's size, so they aren't named there.
+- *Kept:* the switch's outcome notices and refusals (decision 4: their words were already plain, each saying what
+  moved, what stayed and the one step left), the term deposit's endings, every statement memo (two of them,
+  "Charged off by " and "Charged off: ", are read back by `collectionsSource` and are keys).
+
+**Meaning-sensitive changes, and how each was checked.**
+- *35% and $48:* `ESTIMATE.loanShareOfPay` and `Math.floor(pay × share)`, whole dollars as the other figures in it;
+  the comparison (`payment + existing > pay × share`) is unchanged.
+- *"is below 580":* `score < ESTIMATE.scoreFloor`, for the overdraft and the loan alike.
+- *m2:* `markRecord` keeps a mark until `marksFallOff` takes it after `MARK_YEARS`; `bank.pay_collections` posts the
+  payment and closes the debt at zero, and touches no mark; `card.apply` declines with any collections debt, and
+  `openRefusal` at the bank owed.
+- *The term deposit's toast:* the command's own `maturesAt`; `lending.term.called` is the product's name ("CD").
+
+**Defects:** m2 fixed (`defects.md`); the two In Collections tests in `tests/evidence-g10-money.test.ts` assert the new
+sentence, and with the old one put back both fail (checked).
+
+**Tests and tool matchers updated:** defects-g18-1, evidence-g10-money (and its `formatDate` import for the toast),
+evidence-g11-money, evidence-g14-money, home-account-setoff, remaining-09-banking. New in
+`tests/editorial-money.test.ts`: the overdraft's score floor, and Arrange It and Borrow It on a savings account. The
+opening-word check failed once on `BankLending.tsx` (eight of 25 lines on "The" after the new toasts); two toasts open
+on "Your" instead. No UI tool matcher held these words.
+
+**Checks:** tsc 0; eslint 0; the affected tests 0 (128, then 40, then 53); title-case, label-sweep, plural-check,
+voice-check, tics (after the toasts), spelling, typos, doc-refs, deciders 0; guide-quotes 0 (582 of 582, after six
+quotes in the guide moved with their refusals). `text-inventory --check` 1 on my guide entries and `cancelRefusal`
+only.

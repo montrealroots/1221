@@ -289,7 +289,7 @@ describe('bank.repay_loan', () => {
     panel();
     h.toasts = [];
     press('bank.repay_loan', 'Pay It Off');
-    expect(h.toasts).toEqual(['Paid off.']);
+    expect(h.toasts).toEqual(['Your loan is paid off.']);
     expect(before - account(sim, checking.id).balance).toBe(payoff);
     const charged = posted(sim, 'Interest: Citi Personal Loan');
     expect(charged).toHaveLength(1);
@@ -535,7 +535,7 @@ describe('bank.set_payments', () => {
     expect(posted(unlinked.sim, 'Payment: Citi Personal Loan')).toEqual([]);
     expect(account(unlinked.sim, unlinked.loanId).balance).toBe(-(3_000_00 + 25_60));
     expect(lates(unlinked)).toBe(lateOff + 1);
-    expect(told(unlinked.sim, 'A Missed Loan Payment').map((n) => n.body)).toEqual(['$264.09 was due, and there was only $0.00 to pay it with. It’s on your credit record, and what’s left is still owed.']);
+    expect(told(unlinked.sim, 'A Missed Loan Payment').map((n) => n.body)).toEqual(['Your Citi Personal Loan payment of $264.09 was due, and Chase Total Checking had nothing available to pay it. It’s on your credit record, and what’s left is still owed.']);
     expect(posted(unlinked.sim, 'Returned payment fee')).toEqual([]);
   });
 
