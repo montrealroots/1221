@@ -569,7 +569,7 @@ describe('c-tutorial', () => {
     expect(kept.universe.preferences.timeSpeed).toBe('live');
     const read = kept.execute({ kind: 'tutorial.read', payload: { chapterId: CHAPTERS[0]!.id } });
     expect(read.ok).toBe(false);
-    expect(read.error).toBe('This life was begun without the guide, so everything is already open.');
+    expect(read.error).toBe('You started without the guide, so everything is already open.');
   });
 
   it('makes a guided life, paused, when Begin is pressed on the default, and refuses Sleep naming its chapter and the first', async () => {

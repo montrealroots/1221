@@ -354,7 +354,7 @@ describe('h-school', () => {
     const sim = life('g33-school-guided', { tutorial: true });
     readTo(sim, 'weather');
     const before = drawn(sim).affairs;
-    expect(before).toContain('School Locked This opens when you read “Drama School” in the guide: where your life as an actor begins. Read About It');
+    expect(before).toContain('School Locked This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale. Read About It');
     expect(before).not.toContain('Arriving');
     readTo(sim, 'school');
     expect(drawn(sim).affairs).toContain(`School Arriving, good standing, ${ordinal(rankOf(sim))} of 16 in the class. Next: Registration And Your Account`);

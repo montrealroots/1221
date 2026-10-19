@@ -1,0 +1,12 @@
+[
+ {
+  "old": "Fold It Up",
+  "new": "Show Less",
+  "where": "src/ui/guide/Help.tsx (How This Works, an entry's toggle beside Show Everything)"
+ },
+ {
+  "old": "What Reading It Opens",
+  "new": "What It Opens",
+  "where": "src/ui/guide/Guide.tsx (the guide dialog, the box under an unread chapter)"
+ }
+]

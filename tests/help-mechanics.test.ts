@@ -348,7 +348,7 @@ describe('reading help', () => {
     p.press('A Card’s Offers');
     expect(trailOf(p.html)).toBe('Contents › Rehearsing With A Partner › Search: transfer › A Card’s Offers');
     p.press('Show Everything');
-    expect(p.has('Fold It Up')).toBe(true);
+    expect(p.has('Show Less')).toBe(true);
     expect(p.html).toMatch(/<details class="help-section" open="">/);
 
     // Show Me Where: the entry’s screen and tab (Your Bank, The Cards Tab), once, the help closed and its trail kept.
@@ -417,7 +417,7 @@ describe('reading help', () => {
     const connects = /<summary>How It Connects<\/summary>([\s\S]*?)<\/details>/.exec(p.html)?.[1] ?? '';
     const eyebrows = [...connects.matchAll(/<div class="eyebrow"[^>]*>([^<]*)<\/div>/g)].map((m) => m[1]);
     expect(eyebrows).toEqual([...kinds.filter((k) => entry.connections.some((c) => c.kind === k)).map((k) => headings[k]), 'What Leads Here']);
-    p.press('Fold It Up');
+    p.press('Show Less');
 
     // An empty search suggests searches that find something.
     p.submit();
@@ -443,6 +443,28 @@ describe('reading help', () => {
     expect(h.runs).toEqual([]);
     expect(sim.now).toBe(at);
     expect(serialise(sim.universe)).toBe(before);
+    p.unmount();
+  });
+
+  // From 2026-10-19 (brief 15): the toggle names what a press does and has no pressed state, as Play and Pause have
+  // from 2026-10-13. Until then it was Show Everything and Fold It Up with `aria-pressed`, so a screen reader said
+  // “Fold It Up, pressed” with every section open: a toggle whose name changed with its state.
+  it('Show Everything and Show Less name what a press does, with no pressed state', () => {
+    const sim = student('help-toggle');
+    h.sim = sim;
+    windowAt('#/workspace/school');
+    const p = mounted(() => createElement(GuideProvider, null, createElement(HelpProvider, null, createElement(HowItWorks, { help: 'coursework.partners' }))));
+    p.press('How This Works: Rehearsing With A Partner');
+    const toggle = () => /<button[^>]*>(Show Everything|Show Less)<\/button>/.exec(p.html)?.[0] ?? '';
+    expect(toggle()).toContain('>Show Everything<');
+    expect(toggle()).not.toContain('aria-pressed');
+    p.press('Show Everything');
+    expect(p.html).toMatch(/<details class="help-section" open="">/);
+    expect(toggle()).toContain('>Show Less<');
+    expect(toggle()).not.toContain('aria-pressed');
+    p.press('Show Less');
+    expect(toggle()).toContain('>Show Everything<');
+    expect(p.html).not.toMatch(/<details class="help-section" open=""><summary>What Happens<\/summary>/);
     p.unmount();
   });
 
@@ -472,7 +494,7 @@ describe('reading help', () => {
     const part = GUIDE_BY_ID['productions.part']!;
     p.press(part.title);
     const opensIt = CHAPTERS.find((c) => part.covers.some((f) => c.opens.includes(f)))!;
-    expect(p.text).toContain(`This isn’t open yet. Reading “${opensIt.title}” in the guide opens it. Read About It`);
+    expect(p.text).toContain(`This isn’t open yet. Read “${opensIt.title}” in the guide to open it. Read About It`);
     p.press('Back');
     // Change the input: every chapter read, and nothing on the screen is Locked.
     for (const c of CHAPTERS) sim.must({ kind: 'tutorial.read', payload: { chapterId: c.id } }); // TEST SETUP
@@ -519,11 +541,11 @@ describe('reading help', () => {
       expect(p.text, c.id).toContain(`Opened ${c.title}`);
       const after = CHAPTERS[i + 1];
       if (after) {
-        expect(p.text, c.id).toContain(`It’s open now. Try it, or go straight on to “${after.title}”. The guide picks up there whenever you open it.`);
+        expect(p.text, c.id).toContain(`It’s open now. Press Try It to go and use it, or go straight on to “${after.title}”. Next time you open the guide, it starts there.`);
         p.press(`Next: ${after.title}`);
       }
     }
-    expect(p.text).toContain('That was the last chapter, and every part of the game is open. Guide, at the top of the screen, opens any chapter again whenever you want it.');
+    expect(p.text).toContain('That was the last chapter, and every part of the game is open now. To read any chapter again, press Guide at the top of the screen.');
     expect(p.has('Start Playing')).toBe(true);
     expect(h.runs).toEqual(CHAPTERS.map(() => 'tutorial.read'));
     expect(sim.universe.tutorial).toEqual({ read: CHAPTERS.map((c) => c.id), finished: true });

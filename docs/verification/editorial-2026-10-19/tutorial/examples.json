@@ -1,0 +1,502 @@
+[
+ {
+  "batch": 1,
+  "source": "src/engine/world/tutorial.ts#registerTutorial",
+  "kind": "error",
+  "before": "This life was begun without the guide, so everything is already open.",
+  "after": "You started without the guide, so everything is already open.",
+  "why": "The working reference's example 8 and the owner's: “This life was begun” was the game describing its own state in the passive. The player started the life; say so.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts and tests/evidence-g29-ui.test.ts assert the new words; the condition (no guide state) is unchanged, and the Guide button isn't shown then, so only a command reaches it."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Contents",
+  "kind": "other",
+  "before": "Everything is open on this life. The chapters are there to read in any order.",
+  "after": "Everything is already open. You can read the chapters in any order.",
+  "why": "“On this life” is one of the brief's named tics, and “are there to read” is indirect. Two short sentences: what's true, what the player can do.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts, 'on a finished guide missing chapters…', asserts the line on a finished guide."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Entry",
+  "kind": "feedback",
+  "before": "This isn’t open yet. Reading “Drama School” in the guide opens it. [Read About It]",
+  "after": "This isn’t open yet. Read “Drama School” in the guide to open it. [Read About It]",
+  "why": "A gerund for a subject described the guide's mechanics; an instruction tells the player what to do, beside the button that does it.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, '? on School’s Casting tab…', asserts it; seen on the built app."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Help.tsx#Entry",
+  "kind": "button",
+  "before": "Show Everything / Fold It Up (aria-pressed)",
+  "after": "Show Everything / Show Less (no pressed state)",
+  "why": "Show Less is the plain partner of Show Everything. The toggle also carried aria-pressed while its name changed, so a screen reader said “Fold It Up, pressed”: the label now says what a press does, as Play and Pause do (defects.md, 1).",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts, 'Show Everything and Show Less name what a press does, with no pressed state', which fails with aria-pressed put back."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Guide.tsx#GuideDialog",
+  "kind": "confirmation",
+  "before": "It’s open now. Try it, or go straight on to “What’s Coming”. The guide picks up there whenever you open it.",
+  "after": "It’s open now. Press Try It to go and use it, or go straight on to “What’s Coming”. Next time you open the guide, it starts there.",
+  "why": "It names the button beside it, Try It, rather than echoing it in lower case, and says plainly where the guide opens next time.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts reads it after every chapter of a new life's guide; follow-1440/log.txt reads it after each of the seventeen chapters on the built app."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Guide.tsx#GuideDialog",
+  "kind": "confirmation",
+  "before": "That was the last chapter, and every part of the game is open. Guide, at the top of the screen, opens any chapter again whenever you want it.",
+  "after": "That was the last chapter, and every part of the game is open now. To read any chapter again, press Guide at the top of the screen.",
+  "why": "Lead with what the player can do and the control that does it, not with the button's name as a subject.",
+  "meaningSensitive": false,
+  "verified": "tests/help-mechanics.test.ts asserts it; follow-1440/log.txt, chapter life."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/guide/Guide.tsx#GuideDialog",
+  "kind": "heading",
+  "before": "What Reading It Opens",
+  "after": "What It Opens",
+  "why": "A gerund phrase as a heading read stiffly. What It Opens says the same beside What It Opened, its read form.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g02-life.test.ts asserts it on an unfinished guide and its absence on a finished one; follow-1440/log.txt checks it on every chapter."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [coursework]",
+  "kind": "label",
+  "before": "Preparing the work your classes set, table work, how you’ll play a scene, feedback, rehearsing with a partner and working a problem through.",
+  "after": "Preparing the pieces your classes set, table work, how you’ll play a scene, your teachers’ notes, rehearsing with a partner, your classmates and working a problem through.",
+  "why": "“The work” is engine-speak for a piece; “feedback” is the glossary's word for what the screen calls your teacher's notes; and the lead left out its entry Your Class.",
+  "meaningSensitive": false,
+  "verified": "The help's contents on the built app (follow-1440/help-contents.txt); tests/help-mechanics.test.ts renders it."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [productions]",
+  "kind": "label",
+  "before": "Being cast, learning a part, the director’s notes, the nights, the Cabaret and plays to read.",
+  "after": "Being cast, learning a part, the director’s notes, how you’ll play a part, the nights, the Cabaret and plays to read.",
+  "why": "The lead named its entries in order but skipped How You’ll Play A Part.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/help-contents.txt."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [craft]",
+  "kind": "label",
+  "before": "Your Player Profile, practice, genres, practice briefs, a piece of work explained and your work so far.",
+  "after": "Your Player Profile, practice, genres, practice briefs from preparing to taping, how a piece was judged, and your work so far.",
+  "why": "“A piece of work explained” was a fragment of the entry's title; say what the entry tells you. Practice briefs cover four entries, preparing through taping.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/help-contents.txt."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [money]",
+  "kind": "label",
+  "before": "Your accounts, moving money, cards, paying, borrowing, other banks and what you’re worth.",
+  "after": "What you’re worth, your accounts, moving money, savings, paying, cards, borrowing, another bank and an account at home.",
+  "why": "It now runs in its entries' order (Your Affairs And What You’re Worth comes first) and names the savings and A Bank At Home entries it left out.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/help-contents.txt."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/index.ts#GOALS [papers]",
+  "kind": "label",
+  "before": "Health cover and the doctor, benefits and pensions, tax returns, your passport and ID, and permission to work.",
+  "after": "Health cover and the doctor, benefits and pensions, tax returns, your passport and ID, permission to work and living abroad.",
+  "why": "Residence Abroad is the group's last entry and the lead didn't name it.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/help-contents.txt."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [welcome]",
+  "kind": "tutorial",
+  "before": "A word stays plain text until the chapter that opens it has been read. A panel that isn’t open yet says Locked and names its chapter, and its Read About It button takes you there.",
+  "after": "Some words only become links once you’ve read the guide chapter that covers them. A panel you can’t use yet says Locked and names the chapter to read. Press its Read About It button to go straight there.",
+  "why": "The working reference's example 1: a passive sentence about the game's state became what the player sees and presses.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-01-welcome.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the Calendar panel says Locked and “What’s Coming”, and Read About It opened that chapter"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [welcome]",
+  "kind": "tutorial",
+  "before": "SLATE is one life, lived hour by hour in a real town. What you see is that town on that day: its local time, its season and weather, its prices, its money and its law.",
+  "after": "In SLATE you live one life, hour by hour, in a real town with its own time, seasons, weather, prices, money and laws. This guide shows you how, one part at a time, and each chapter you read opens the part of the game it explains.",
+  "why": "The first thing a new player reads now says who does what (you live it) and how the guide itself works, which the old paragraph left to later.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-01-welcome.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [calendar]",
+  "kind": "tutorial",
+  "before": "The school’s commitments aren’t yours to skip: go, or stand where you are while the clock waits. Whatever moves the clock next runs the commitment, and you’re there only if you’re awake, out of hospital and in its town; otherwise it’s missed.",
+  "after": "Only a plan of your own has a Skip It button, which lets you walk away from it. You can’t skip a class or any other commitment, so press Go, or Stand Here to wait. It happens the next time the clock moves: you’re there if you’re awake, out of hospital and in its town, and if not, you miss it.",
+  "why": "The brief's own example (“School events don’t have a Skip option.”), with the dialog's real button names. Checked against the code first: it isn't only school events. A doctor's appointment, therapy and an office visit have no Skip It either (`calendar.skip` takes only `PLAN_KIND`), so the sentence says a plan of your own is the only one that has it.",
+  "meaningSensitive": true,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-02-calendar.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the clock stopped at Registration And Your Account with Go and Stand Here and no Skip It (screenshot 04)"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [clock]",
+  "kind": "tutorial",
+  "before": "The clock in the top bar runs at the speed of real time: a minute in SLATE is a minute for you. A new life starts with it paused.",
+  "after": "Press Play, in the top bar, to start the clock, and Pause to stop it. The button always shows what pressing it will do. A new life starts with the clock paused.",
+  "why": "The chapter opened on a description; it now opens on the first action and the control's name.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-03-clock.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: Play turned to Pause, a minute later the clock read 7:31 AM, Pause turned back to Play"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [advance]",
+  "kind": "tutorial",
+  "before": "When you don’t want to wait, Advance, in the top bar, moves the clock ahead. Pick how far: One Hour, This Evening (six o’clock), Tonight (ten), Tomorrow Morning (seven), Next Event, Next Monday (nine in the morning) or One Week.",
+  "after": "To jump ahead instead of waiting, press Advance in the top bar and choose how far: One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.) or One Week.",
+  "why": "Imperative and the control first. “(ten)” and “(seven)” left the player to guess morning or night; the menu shows 6:00 PM, 10:00 PM, 7:00 AM and 9:00 AM.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-04-advance.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the menu showed each line with those times"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [advance]",
+  "kind": "tutorial",
+  "before": "Everything on the way happens, in order. If the jump passes commitments, Advance says how many first, and the clock still stops at each one and asks, as it would on its own.",
+  "after": "Everything on the way happens, in order. If the jump would pass any commitments, a dialog called On The Way first says how many, and the clock still stops at each one to ask what you want to do.",
+  "why": "Names the dialog the player will see, by its title.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-04-advance.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: Tonight showed On The Way, “passes one commitment”, then stopped at it (screenshot 03)"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [needs]",
+  "kind": "tutorial",
+  "before": "What Needs You, on Home, is where the world tells you things: groceries you couldn’t pay for, a late card payment, a teacher’s note on your work, a birthday.",
+  "after": "What Needs You, on Home, is where you find out what’s happened and what’s waiting for you: groceries you couldn’t pay for, a late card payment, a teacher’s note on your work, a birthday.",
+  "why": "“The world tells you things” personified the engine; the player finds out.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-05-needs.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the welcome notice opened, Go There was there, Mark 3 Read cleared the panel to All Clear"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [body]",
+  "kind": "tutorial",
+  "before": "Condition is how fit your body is for work today, after illness, injury and rest.",
+  "after": "Condition is how sound your body is. Illness, going hungry, heavy stress and short nights wear it down, and a night of real rest mends it.",
+  "why": "The old sentence was wrong: an injury raises stress and lowers morale but leaves condition alone (defects.md, 2). The new one names what does wear it down, as the glossary does.",
+  "meaningSensitive": true,
+  "verified": "tests/guide-chapter-facts.test.ts measures an injury (condition unchanged) and fails the old sentence; life.ts (hunger, stress over 75, nights under five hours of real rest) and health.ts (illness) read; follow-1440/log.txt, chapter body"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [sleep]",
+  "kind": "tutorial",
+  "before": "The night, and what it gives back.",
+  "after": "Going to sleep, and getting your energy back.",
+  "why": "A literary lead for a basic control. It shows under the chapter's title and on the strip under the bar.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-07-sleep.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [sleep]",
+  "kind": "tutorial",
+  "before": "In the middle of a commitment, Sleep is grayed out, and the top bar says until when.",
+  "after": "While you’re at a commitment, Sleep is grayed out, and the top bar says when you’ll be free.",
+  "why": "“Says until when” was a fragment of a thought.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-07-sleep.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: at Meeting Your Class, Sleep was grayed and the bar said “You’re at Meeting Your Class until 1:00 PM.” (screenshot 06)"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [looking-after]",
+  "kind": "tutorial",
+  "before": "The menu is in order of what each is worth now. First comes whatever is costing you every hour you leave it (hunger, going unwashed, stress past its limit), then whatever gives back the most readiness. The top line says why it’s there: Needed Now or Most Worth It.",
+  "after": "What matters most right now is at the top. Anything that costs you more every hour you leave it comes first (hunger, going unwashed, stress past its limit), then whatever would do most for your readiness. The top line is marked Needed Now or Most Worth It.",
+  "why": "Plainer: what's at the top, then why. The chip is a mark on the line, not a reason it gives.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-08-looking-after.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: the menu opened with Eat A Meal marked Most Worth It (screenshot 07); `lookAfterOptions` sorts urgent, then readiness gain"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [plans]",
+  "kind": "tutorial",
+  "before": "Open Calendar, on Home’s Calendar panel, shows the whole month. Press a day, then Put Something On It, and say what it is, when it starts and how long it takes, from half an hour to all day. Put It On adds it.",
+  "after": "Press Open Calendar, on Home’s Calendar panel, to see the whole month. Press a day, then Put Something On It. Say what it is, when it starts and how long it lasts, from half an hour to all day, then press Put It On.",
+  "why": "The steps in the order the player presses them, each with its button.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-09-plans.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph; followed: a plan, Lunch With Sam, put on a day and called off (screenshot 08)"
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [weather]",
+  "kind": "tutorial",
+  "before": "The weather is your town’s own: its climate, its season and that day’s luck. It’s the same every time you look.",
+  "after": "The weather comes from your town’s climate and the season, with some day-to-day luck, and it stays the same however often you look.",
+  "why": "A list after a colon became a sentence with a verb.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt and follow-1440/chapter-10-weather.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "Where your life as an actor begins.",
+  "after": "Classes, coursework, casting and your degree at Yale.",
+  "why": "The lead shows on the locked School line (“This opens when you read “Drama School” in the guide: …”) and on the guide's strip. It said nothing about what's there; now it lists it, without a colon, since the locked line puts one before it.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g33-ui.test.ts asserts the locked School line with the new lead; follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "If you’re unwell, press Call In Sick on Classes before the day’s first commitment begins (on a class day, at the latest when the clock stops at the classes at nine).",
+  "after": "If you’re unwell, press Call In Sick on Classes before the day’s first commitment starts (on a class day, at the latest when the clock stops at nine for your classes). You count as unwell with the flu, an injury that limits your work, or condition under 55.",
+  "why": "“Unwell” was the condition the button needs, and the chapter never said what it meant: someone well sees it grayed. The added sentence is `sickRefusal`'s rule, with the figure read from `ESTIMATE.sickBelow`.",
+  "meaningSensitive": true,
+  "verified": "systems/school.ts `sickRefusal`; follow-saves/log.txt: at nine on Monday, September 14, 2026, the clock stopped at Classes, and Call In Sick was grayed with “Not now: You’re well enough to go. Staying away would count as an unexcused absence.” (screenshot call-in-sick)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "A scene pairs you with a classmate. Pick an evening they’re free and press Ask with their name, such as Ask Zoe.",
+  "after": "A scene pairs you with a classmate. To rehearse together, choose a day and a time under Rehearsing With, at least two hours ahead, and press Ask with their name, such as Ask Zoe.",
+  "why": "It names the panel the controls are on and the rule the card itself states (at least two hours ahead). “Pick an evening they’re free” promised a free-time check the picker doesn't show: the classmate answers yes or no.",
+  "meaningSensitive": true,
+  "verified": "follow-saves/log.txt: on the brief save, Rehearsing With Jordan with its Day and Time, Ask Jordan pressed, “Jordan said yes.” (screenshot asked-a-partner)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "Shown Today, on each piece, is its readiness now: what it would come to if it were shown today, which parts are short, and the steps that would answer them.",
+  "after": "Shown Today, on each piece, tells you where it stands now: what it would come to if you showed it today, which parts are still short, and the steps that would fix them. It’s a forecast, not a result.",
+  "why": "“Readiness” is the glossary's word for a wellbeing measure, so it can't name a piece's state too. The added sentence is the glossary's own rule for Shown Today.",
+  "meaningSensitive": false,
+  "verified": "follow-saves/log.txt: each piece's Shown Today line on Coursework; follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "A missed performance, or not being in New Haven when you’re called to go on, is a grave breach: it puts you on academic warning at once, and if you’re already on warning, it dismisses you.",
+  "after": "Missing a performance, or not being in New Haven when you’re called to go on, is a serious breach: it puts you on academic warning straight away, and if you’re already on warning, you’re dismissed.",
+  "why": "Plainer words for the same rule: a formal consequence, said as one.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "A part is cast on the techniques its play needs: a voice and speech that carry and the body, and the classics and a fight where the play asks for them.",
+  "after": "A part is cast on the techniques its play asks for, which differ from play to play: Shakespeare asks most for classical text, with voice and speech, and Macbeth and Julius Caesar for stage combat too.",
+  "why": "The old sentence said every play asked for voice, speech and the body. Each play has its own `reads` (Hedda Gabler: scene study, emotional depth, character work, script analysis), so the sentence now gives real examples from `content/plays.ts`.",
+  "meaningSensitive": true,
+  "verified": "content/plays.ts, THESIS_PLAYS and the Shakespeare plays' `reads`; follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "The chair weighs every student the same way for each play: how well you fit it, what a night of it would come to from your abilities and the techniques it asks, its kind of play’s demands among them; a fifth of that by how much of yourself you gave in your last run; and a lead counting against your next lead and a small part for it.",
+  "after": "For each play, the chair weighs every student the same way: how well you fit it, meaning what a night of it would come to from your abilities and the techniques it asks for, including what its kind of play demands. A fifth of that rides on how much of yourself you gave in your last run. A lead last time counts a little against another lead, and a small part a little for one.",
+  "why": "One sentence with two semicolons became three. “A little” is what `ESTIMATE.casting.balance` is: two points either way on a fit of up to 100.",
+  "meaningSensitive": true,
+  "verified": "systems/school.ts `castScore`: fit × (0.8 + 0.2 × delivery) + balance (−2, 0, +2); follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "The standings come from the Yale Bulletin. The Bulletin has the faculty evaluate students regularly; one review a term, and its floors and its steps, are estimated.",
+  "after": "The standings come from the Yale Bulletin, which has the faculty evaluate students regularly. One review a term, the marks it asks for and its one-step drops are estimated.",
+  "why": "“Its floors and its steps” was the engine's vocabulary. The estimate is still labelled as one, apart from what the Bulletin says.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-school.test.ts asserts the new sentence exactly; follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "In the Practice column, press the exercise beside an ability or a technique, such as Comic Timing, pick a tier and a focus, and press Practice An Hour. Before the hour, it says about how much it will add, and why.",
+  "after": "To practice, press the exercise in the Practice column beside an ability or a technique, such as Comic Timing, choose a Tier and a Focus, and press Practice An Hour. Before you start, it tells you about how much the hour will add, and why.",
+  "why": "The controls by their labels, Tier and Focus, as the glossary capitalizes them.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt, chapter profile: Comic Timing… opened with Tier and Focus, the preview said what the hour would add, and Practice An Hour gave “Comic Timing: +0.25.”"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "On the brief, Break It Down, Learn The Lines and Rehearse It On Your Feet prepare it. Read It This Way chooses a reading, and you choose how to play it; from then on Work It Through works on it as on a scene.",
+  "after": "On the brief, prepare it with Break It Down, Learn The Lines and Rehearse It On Your Feet. Read It This Way chooses a reading, what you take the scene to be about, and then you choose how to play it; once you have, Work It Through works on it as it does on a class scene.",
+  "why": "Brief 15 asks every tutorial to tell a reading from a way of playing: the reading is what the scene means to you (glossary, Your Reading), how you play it is the scale you choose.",
+  "meaningSensitive": false,
+  "verified": "follow-saves/log.txt: the brief save's pane shows Break It Down, Learn The Lines, Rehearse It On Your Feet, Read It This Way, Read With, Tape It and The Genre Asks; follow-1440/chapter-12-profile.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "A self-tape asks you to know its genre too: the better of what you’ve studied and what you’ve worked in it, complete at 60.",
+  "after": "A self-tape also asks you to know its genre. Your genre knowledge is the better of your Familiarity and your Work In It (your nights on stage and self-tapes in that genre), and it counts as complete at 60.",
+  "why": "The glossary's names for the two scores, Familiarity and Work In It, as Genres labels them, so the player can find them.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-12-profile.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "A tape is judged beat by beat: each beat’s rehearsal, how far into the tape it falls, where stamina tells, and a slip in the beat before, which composure and adaptability help you recover from. Your own tape is yours, whoever reads with you.",
+  "after": "A tape is judged beat by beat: how well each beat is rehearsed, how far into the tape it comes, where your stamina starts to show, and any slip in the beat before, which composure and adaptability help you recover from. Your own result is yours alone, whoever reads with you.",
+  "why": "“Where stamina tells” and “your own tape is yours” were riddles. The game keeps your own take apart from the take with your reader (`systems/briefs.ts`, the take with its reader), which the chapter's body says is what a casting office sees.",
+  "meaningSensitive": true,
+  "verified": "systems/briefs.ts, `readerRead` and the take with its reader beside your take; follow-1440/chapter-12-profile.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "To see a doctor, choose a practice under Your Doctor on Health Cover, then press Book An Appointment. In New Haven, Yale Health Center sees a student it covers the next weekday, at no charge. A visit you keep is seen and billed; one you miss isn’t, and you can book again.",
+  "after": "You don’t book a doctor whenever you like. When you’re ill enough to need one, or a long-term condition is due for its review, you get an appointment at your practice after its usual wait, and it goes on your calendar. Your Doctor, on Health Cover, is where you choose the practice. In New Haven, Yale Health Center sees a student it covers the next weekday, at no charge. Go, and you’re seen and billed; miss it, and you aren’t, and Book An Appointment books it again.",
+  "why": "The old first sentence sent the player to a button that isn't there: Book An Appointment shows only for a visit owed, and `health.book` refuses otherwise (defects.md, 3). How This Works' doctor entry already said the game books the visit; now the chapter does too.",
+  "meaningSensitive": true,
+  "verified": "tests/guide-chapter-facts.test.ts, 'Cover, Benefits And Returns on Book An Appointment' (fails on the old chapter); follow-1440/log.txt, chapter papers: Your Doctor lists Yale Health Center, A Visit $0.00, The Next Weekday, and no Book An Appointment shows with no visit owed"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "Each piece of care brings a bill for what your plan doesn’t pay, under Care And Its Bills. Left unpaid, it becomes a medical debt, and Pay It Off settles it.",
+  "after": "Each piece of care brings a bill for your share, the part your plan doesn’t pay, under Care And Its Bills. On its due date it’s taken from your checking account, and if there isn’t enough, it becomes medical debt, which Pay It Off settles.",
+  "why": "“Left unpaid” suggested the player pays each bill by hand. The game takes it on its due date (glossary, due on), and only what can't be taken becomes medical debt. “Your share” is the glossary's word.",
+  "meaningSensitive": true,
+  "verified": "docs/GLOSSARY.md, due on (`payFromCurrent`); follow-1440/chapter-13-papers.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "Enrolling starts it, but you’re covered only from its start date, usually the first of the next month.",
+  "after": "Enrolling isn’t the same as being covered: you’re covered only from the plan’s start date, usually the first of the next month.",
+  "why": "Brief 15, section 5: applying for something and holding it, said plainly where the player could confuse them.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-13-papers.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "Out of paid work, File A Claim, on Unemployment, opens unemployment insurance where you live, if your wages qualify.",
+  "after": "If you’re out of paid work, press File A Claim, on Unemployment, to claim unemployment insurance where you live, if your past wages qualify; in Connecticut a claim pays only once you’ve left school. SNAP, on the same tab, puts food assistance on an EBT card for groceries; press its Apply button to ask for it.",
+  "why": "A student in New Haven sees no File A Claim: Connecticut treats a full-time student as unavailable for work, as the tab says. That's the chapter's “if you can't”. The chapter opens SNAP (`benefits.assistance`) and had never named it.",
+  "meaningSensitive": true,
+  "verified": "follow-1440/log.txt, chapter papers: Unemployment shows SNAP with Apply and “a claim pays only once you’ve left school”; follow-1440/chapter-13-papers.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "A UK tax year’s is settled on its own, by the next January 31.",
+  "after": "UK tax is settled separately for each UK tax year, by the next January 31.",
+  "why": "A dangling possessive (“a UK tax year’s” what?).",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts asserts the new sentence exactly"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [documents]",
+  "kind": "tutorial",
+  "before": "Under Your Passport, press Apply For One, or Renew It, and where the office sells a faster service, Apply Faster. Applying starts it: you hold the new passport only once it’s issued, and it cancels the old one, with any travel authorization issued on it.",
+  "after": "Under Your Passport, press Apply For One, or Renew It if you have one, and, where the office sells a faster service, Apply Faster or Renew It Faster. Applying only starts it: you hold the new passport once it’s issued, and it cancels the old one, along with any travel authorization issued on it.",
+  "why": "A passport holder sees Renew It Faster, not Apply Faster (`Documents.tsx`). Applying versus holding, said with “only”.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt, chapter documents; follow-1440/chapter-14-documents.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [documents]",
+  "kind": "tutorial",
+  "before": "Going Abroad says what each country asks of your citizenship: free to enter, a travel authorization first, or a visa. Pick a country to see what it asks and what you’re missing. There’s no travel in SLATE, so it’s a rule to read, not a form to fill in.",
+  "after": "Going Abroad shows what each country asks of someone with your citizenship: whether you can just go, need a travel authorization first, or need a visa. Pick a country to see what it asks for and what you’re missing. You can’t travel in the game, so this is information, not a form to fill in.",
+  "why": "Fragments after a colon became a sentence; “in SLATE” became the glossary's “in the game”.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt, chapter documents: a country picked, and what it asks or what's missing shown"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [money]",
+  "kind": "tutorial",
+  "before": "The Money line in Your Affairs on Home shows your current account and your net worth (what you have, less what you owe), and how much of it is owed.",
+  "after": "The Money line in Your Affairs on Home shows your primary checking account and your net worth (what you have, less what you owe), and, if you owe anything, how much.",
+  "why": "Checking account, the glossary's word from brief 15; and “how much of it is owed” read as if the net worth were owed. Home writes “Worth $…, after $… owed.” only when something is.",
+  "meaningSensitive": false,
+  "verified": "ui/screens/Home.tsx, the Money line; follow-1440/log.txt, chapter money: “Chase Total Checking: $90,484.00. Worth $503,527.”"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [money]",
+  "kind": "tutorial",
+  "before": "Your credit record decides whether a bank gives you a card, an overdraft or a loan, at what rate where the bank prices by it …",
+  "after": "Your credit score decides whether a bank gives you a card, an overdraft or a loan, at what rate where the bank prices by it …",
+  "why": "The glossary: the guide says credit score for the figure a bank approves from and prices by, and credit record for what a late payment goes on.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g12-1.test.ts (the Money line's sentences, the figure's “a life is made”); follow-1440/chapter-15-money.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "tutorial",
+  "before": "Move Money, on Accounts, moves money between your own accounts. Between two at the same bank it moves at once.",
+  "after": "Move Money, on Accounts, moves money between your own accounts: choose where from, where to and how much, and press Move It. Between two accounts at the same bank it moves at once.",
+  "why": "Move Money is the panel; its button is Move It. The chapter now names the control to press.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt, chapter bank: $10 moved from Chase Savings, Chase Total Checking 90,484 → 90,494, “Moved $10.”; tests/defects-g22-1.test.ts holds the at-once sentence to one bank"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "tutorial",
+  "before": "Alerts tell you when the current account ends a day under a line you set, when a payment goes over one, and when a statement is ready.",
+  "after": "Alerts tell you, in What Needs You, when a checking account ends a day below an amount you set, when a payment is over an amount you set, when a statement is ready, and, unless you turn it off, when an account can’t cover a payment due in the next few days.",
+  "why": "It left out Short For A Payment, the one alert that's on from the start, and said “a line”, a figure of speech for an amount.",
+  "meaningSensitive": true,
+  "verified": "ui/bank/BankStatements.tsx, AlertsView (Any Current Account Under, A Payment Over, Statement Ready, Short For A Payment: On); follow-1440/log.txt, chapter bank"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "tutorial",
+  "before": "… in Korea a card alone, in Canada no card, in Britain no fixed-rate deposit, and in Mexico only one not yet used.",
+  "after": "… in Korea only a card, in Canada anything but a card, in Britain anything but a fixed-rate deposit, and in Mexico only one you haven’t used.",
+  "why": "“In Canada no card” read as if nothing could be canceled there. Same rules, said the right way round.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-16-bank.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [life]",
+  "kind": "tutorial",
+  "before": "A life ends. Each year carries the chance a real year at your age carries, from the US life table, made lighter or heavier by the life expectancy where you live, for the fourteen countries it’s known for, heavier for a body worn down and lighter for one kept well. The game never says when.",
+  "after": "Every life ends. Each year carries the same chance of death as a real year at your age, from the US life table, adjusted for life expectancy where you live (known for fourteen countries), higher for a worn-down body and lower for one kept well. The game never tells you when.",
+  "why": "Says what the chance is a chance of, plainly, in one breath.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-17-life.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ }
+]
