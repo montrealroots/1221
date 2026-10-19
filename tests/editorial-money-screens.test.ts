@@ -130,3 +130,14 @@ describe('m1, on the Accounts tab: Move Money’s hint gives the month’s allow
     expect(words).toContain('You can take out €1,999.50 more this month without notice.');
   });
 });
+
+describe('a card’s published plans and rewards, in English, with the bank’s own names kept', () => {
+  it('MUFG’s plans and Global Point read as sentences, the Japanese names beside them, every figure kept', () => {
+    const sim = quickSave({ homeRegionId: 'jp-13-tokyo', startLocationId: 'jp-13-tokyo', livesWhereBorn: true, wealth: 'comfortable', bankId: 'jp-mufg' }, 'ed15-mufg-plans');
+    expect(cardsOf(sim, sim.player).map((c) => c.bankId)).toContain('jp-mufg');
+    const words = drawn(sim, BankCardOffers, 'jp-mufg');
+    // Until brief 15: "分割払い 3-24回 at 14.75-18.00%/yr (3回 ¥2.46, 12回 ¥9.84 per ¥100); 2回 free; リボ 18.00%/yr".
+    expect(words).toContain('The bank’s published plans: installments (分割払い) over 3 to 24 payments at 14.75% to 18.00% a year (¥2.46 per ¥100 over 3 payments, ¥9.84 over 12), and 2 payments free; revolving payments (リボ) at 18.00% a year.');
+    expect(words).toContain('Its published rewards: Global Point: 1 point for each ¥1,000 spent in a month, worth up to ¥5; up to 20% back at participating partner stores, with conditions, among them paying from an MUFG Bank account.');
+  });
+});

@@ -1,4 +1,18 @@
 {
+ "src/engine/content/cards.ts#CARD_LAW": {
+  "status": "Retained",
+  "hash": "d8d4e0b5c648",
+  "on": "2026-10-19",
+  "reason": "Each country's card law as it names itself, the act and article, with its source; a citation the cap line quotes",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/cards.ts#CARDS": {
+  "status": "Rewritten",
+  "hash": "2497849ab2bb",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts renders MUFG's published plans and rewards in English; tests/cards.test.ts and tests/cardoffers.test.ts read every card's terms, unchanged",
+  "first": "Pending"
+ },
  "src/engine/content/currency.ts#RATES_NOTE": {
   "status": "Retained",
   "hash": "434b8cbc68d0",

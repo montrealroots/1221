@@ -423,5 +423,44 @@ words.
 
 **Checks:** tsc 0; eslint 0; tests/guide, guide-examples-money, help-mechanics, language-crossarea-raise,
 defects-g21-1, decisions-arion 0 (60 tests); title-case, label-sweep, plural-check, voice-check, tics, spelling, typos,
-doc-refs, deciders 0; guide-quotes 0 (582 of 582). `text-inventory --check` 0 once the entries were marked (below, at
-the commit).
+doc-refs, deciders 0; guide-quotes 0 (582 of 582). `text-inventory --check` 1 at the commit on `cards.ts` alone, whose
+batch was under way; 0 after batch 7.
+
+## Batch 7: The Card Research, As The Cards Tab Shows It
+
+**Sources (2):** `src/engine/content/cards.ts`: `CARDS` (550 banks' cards) and `CARD_LAW` (62 countries' card laws).
+Rewritten 1, Retained 1.
+
+**What a player reads of it, found in the code first:** a card's name (the panel's title and its lists), its Source
+line, its plans ("The bank’s published plans: …", shown only where the card has a plan fee: 7 cards) and its rewards
+("Its published rewards: …", shown where the card has a base rate or a grocery bonus: 20 cards), and a country's law
+where the card is held to its cap ("The law here caps …. Source: <law>; <source>."). Everything else in the blobs is
+figures the rules read. Each shown field was dumped and read whole.
+
+**What changed** (13 fields, in the research's JSON; the file's round trip was checked byte for byte first, so nothing
+else moved):
+- The three Japanese plans read as English with the bank's own terms beside them: "installments (分割払い) over 3 to 24
+  payments at 14.75% to 18.00% a year (¥2.46 per ¥100 over 3 payments, ¥9.84 over 12), and 2 payments free; revolving
+  payments (リボ) at 18.00% a year" for "分割払い 3-24回 at 14.75-18.00%/yr (3回 ¥2.46, 12回 ¥9.84 per ¥100); 2回 free; リボ
+  18.00%/yr". SMBC's date "2026-03-31" became "March 31, 2026".
+- Research shorthand became sentences in the rewards of MUFG, SMBC, Resona, Japan Post Bank, Hana, KakaoBank, BBVA
+  México, Santander Spain and TD: "1 point per ¥1,000 of monthly spend" to "1 point for each ¥1,000 spent in a month";
+  "(conditions incl. MUFG Bank payment account)" to "with conditions, among them paying from an MUFG Bank account";
+  "max ₩20,000/month" to "at most ₩20,000 a month"; "5 EUR/month" to "€5 a month"; "31/01/2027" to "January 31, 2027";
+  "streaming/gaming/media" to "streaming, gaming and media".
+- BMO's plan: "of the principal, disclosed at setup" to "of the amount, told to you when you set one up".
+- *Kept:* every card's name (a product name), every Source line (a citation, as the research wrote it), the card
+  laws (each law as it names itself, with its source: "Criminal Code s. 347 …", "법정 최고금리 (statutory maximum rate), 20%
+  a year"), the plan and reward lines already in plain words (Chase's, Bank of America's, RBC's, CIBC's and the rest),
+  and the research's notes on cards no screen shows plans or rewards for (Citi's "(percentage not readable on
+  citi.com)" sits on a card without a plan fee, so no screen shows it).
+
+**Meaning-sensitive changes, and how each was checked.** Each figure, condition and cap is in the new words as in the
+old (compared field by field in the dump); "enrolled partner stores" became "participating partner stores", which
+reads the research's "enrolled" as the stores', not the player's.
+
+**Tests:** a new case in `tests/editorial-money-screens.test.ts` renders The Card’s Offers for a Tokyo life at MUFG and
+reads both lines. tests/cards.test.ts, tests/cardoffers.test.ts and the screens file 0 (36 tests, then 7).
+
+**Checks:** tsc 0; eslint 0; title-case, label-sweep, plural-check, voice-check, tics, spelling, typos, doc-refs,
+deciders, guide-quotes 0; `text-inventory --check` 0 ("The text inventory holds."). `--todo2 money`: 0 Pending.

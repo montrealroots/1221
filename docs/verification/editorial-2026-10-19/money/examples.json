@@ -728,5 +728,95 @@
   "why": "The words the Close It line uses since batch 1.",
   "meaningSensitive": false,
   "verified": "Read against `closingFeesWords` (systems/banking.ts)."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "BMO PaySmart installment plans: a monthly fee of up to 2% of the principal, disclosed at setup",
+  "after": "BMO PaySmart installment plans: a monthly fee of up to 2% of the amount, told to you when you set one up",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (ca-bmo, planWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "分割払い 3-24回 at 14.75-18.00%/yr (3回 ¥2.46, 12回 ¥9.84 per ¥100); 2回 free; リボ 18.00%/yr",
+  "after": "installments (分割払い) over 3 to 24 payments at 14.75% to 18.00% a year (¥2.46 per ¥100 over 3 payments, ¥9.84 over 12), and 2 payments free; revolving payments (リボ) at 18.00% a year",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept and the bank’s own term beside its English (jp-mufg, planWords).",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts (MUFG)"
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "分割払い 3-24回 at 14.70-17.88%/yr (3回 ¥2.46, 12回 ¥9.84 per ¥100); 2回 free; リボ 18.0%/yr for cards/リボ frames set from 2026-03-31 (15.0% before)",
+  "after": "installments (分割払い) over 3 to 24 payments at 14.70% to 17.88% a year (¥2.46 per ¥100 over 3 payments, ¥9.84 over 12), and 2 payments free; revolving payments (リボ) at 18.0% a year on cards and revolving limits set from March 31, 2026 (15.0% before)",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept and the bank’s own term beside its English (jp-smbc, planWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "Shopping リボ 18.00%/yr (standard course); 分割 12回 17.7%/yr, ¥9.9 per ¥100; 2回 free",
+  "after": "revolving payments for shopping (リボ) at 18.00% a year on the standard course; installments (分割) over 12 payments at 17.7% a year, ¥9.9 per ¥100; 2 payments free",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept and the bank’s own term beside its English (jp-mizuho, planWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "1% in Cash Back Dollars on grocery, gas and EV charging, public transit, recurring bills and streaming/gaming/media (first $5,000 a year in each), 0.5% on everything else",
+  "after": "1% in Cash Back Dollars on grocery, gas and EV charging, public transit, recurring bills and streaming, gaming and media (the first $5,000 a year in each), 0.5% on everything else",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (ca-td, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "Puntos BBVA worth 9% of each single-payment purchase in points (not on meses sin intereses); a point is worth about 7 to 10 centavos depending on where it is redeemed, so roughly 0.6%-0.9% back",
+  "after": "Puntos BBVA worth 9% of each purchase paid in one go, in points (not on meses sin intereses); a point is worth about 7 to 10 centavos depending on where it’s redeemed, so roughly 0.6% to 0.9% back",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (mx-bbva, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "Promotional 1% back on purchases for the first year (max 10 EUR net a month) when taken out in the app or web by 31/01/2027; ongoing refunds and discounts through Santander Premia (needs Cuenta Santander/Colectivos/Mundo) and the paid Plan Santander Iberia Club (5 EUR/month)",
+  "after": "1% back on purchases for the first year as a promotion (at most €10 a month, net) on a card taken out in the app or online by January 31, 2027; after that, refunds and discounts through Santander Premia (which needs a Cuenta Santander, Colectivos or Mundo account) and the paid Plan Santander Iberia Club (€5 a month)",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (es-santander, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "Global Point: 1 point per ¥1,000 of monthly spend, worth up to ¥5; up to 20% back at enrolled partner stores (conditions incl. MUFG Bank payment account)",
+  "after": "Global Point: 1 point for each ¥1,000 spent in a month, worth up to ¥5; up to 20% back at participating partner stores, with conditions, among them paying from an MUFG Bank account",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (jp-mufg, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts (MUFG)"
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "V Point: 1 point per ¥200 spent; 7% at named convenience stores/restaurants by smartphone touch payment, up to 20% with stacked programs",
+  "after": "V Point: 1 point for each ¥200 spent; 7% at named convenience stores and restaurants when you pay by touching your smartphone, up to 20% with other programs added",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (jp-smbc, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
  }
 ]

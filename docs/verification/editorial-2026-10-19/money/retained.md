@@ -94,3 +94,12 @@ files, each with its words and its reason, so the reasons can be judged as well 
   once, with the two things it decides.
 - **`src/engine/content/guide/money.ts#CHASE_BANDS`:** "90 days’ interest on a term under 6 months, 180 days’
   interest on a term under 24 months, 365 for a longer one". Kept: the penalty as the bank's own table puts it.
+
+## Batch 7
+
+- **`src/engine/content/cards.ts#CARD_LAW`:** "Criminal Code s. 347 (criminal rate: over 35% APR, since January 1, 2025);
+  Quebec Consumer Protection Act (minimum payment); …" Kept: the law as it names itself, cited in the cap line's Source
+  with the page it was read on; a citation, not the game's own words.
+- **`src/engine/content/cards.ts#CARDS` (us-chase, planWords):** "Chase Pay Over Time (formerly My Chase Plan): a fixed
+  monthly fee instead of interest; 0% during the 15-month intro period, then up to 1.72% of the plan amount per month".
+  Kept: already a plain sentence with the bank's product names and its figures.
