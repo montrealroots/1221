@@ -189,7 +189,7 @@ defineLook<Account>('account', {
       summary: accountSentence(account, sim),
       body: accountBody(account, sim),
       ways,
-      // Without the ledger's own rule in it (from brief 15, 2026-10-19): until then “…, not a figure anybody typed in.”
+      // Without the ledger’s own rule in it (from brief 15, 2026-10-19): until then “…, not a figure anybody typed in.”
       provenance: account.apr === undefined
         ? 'The balance is the sum of every payment into and out of the account.'
         : 'The balance is the sum of every payment into and out of the account. The rate is what the terms charge today, and it’s charged at each statement on any balance the last statement didn’t clear.',
