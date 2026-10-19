@@ -317,12 +317,12 @@ describe('the save slots', () => {
     // Delete pressed on slot 1: a readable save becomes its own backup on the way out.
     press(button('Delete'));
     ({ text } = shown(adapter, slots));
-    expect(text).toContain('Delete Slot 1? This ends that universe. The character, everywhere they’ve been and everything that happened to them is gone from the slot. A backup is kept, so if you change your mind you can bring it back here with Restore Backup. Keep It Delete Slot 1');
+    expect(text).toContain(`Delete Slot 1? This deletes ${sim.player.displayName}’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1`);
     // An unreadable save with no backup can't be brought back.
     const broken = { slot: 1 as const, occupied: true, hasBackup: false, error: 'That save file is damaged and can’t be read.' };
     ({ text } = shown(adapter, [broken, ...slots.slice(1)]));
     expect(text).toContain('Slot 1 Unreadable Save That save file is damaged and can’t be read. Delete');
-    expect(text).toContain('This slot has no backup, so it can’t be brought back afterwards.');
+    expect(text).toContain('This slot has no backup, so you can’t bring it back afterwards.');
   });
 
   it('says a damaged save can’t be opened, its backup the way on, and what’s wrong behind a disclosure', async () => {
@@ -344,7 +344,7 @@ describe('the save slots', () => {
     for (let i = 0; i < 200 && !h.sets.some((one) => one.value === null && h.sets.indexOf(one) > 2); i++) await new Promise((r) => setTimeout(r, 10));
     for (const one of h.sets) h.given.set(one.at, one.value);
     const { text } = shown(adapter, slots);
-    expect(text).toContain('The save in Slot 1 is damaged, so it can’t be opened. Its backup can be restored instead: press Restore Backup. What’s Wrong With It Player is in an unknown location \'xx-nowhere\'.');
+    expect(text).toContain('The save in Slot 1 is damaged, so it can’t be opened. Press Restore Backup to open its backup instead. What’s Wrong With It Player is in an unknown location \'xx-nowhere\'.');
     expect(text).not.toContain('didn’t pass validation');
   });
 
@@ -393,17 +393,17 @@ describe('the save slots', () => {
       const { kept, adapter } = device(fail);
       for (const [k, v] of ok.kept) kept.set(k, v);
       await expect(adapter.save(sim.universe)).rejects.toThrow(fail === 'full'
-        ? 'There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.'
-        : 'The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.');
+        ? 'There isn’t enough storage space on this device to save, so nothing in the slot changed. Free some space, or delete a save you no longer want, then try again.'
+        : 'SLATE couldn’t save to this device, so nothing in the slot changed. Try again in a moment.');
       expect(kept.get([...kept.keys()].find((k) => k.includes('save'))!)).toBe(before);
     }
     // The provider says it in the toast, and the top bar's save button says it failed.
-    const failing = { save: async () => { throw new PersistenceError('The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.', true); } };
+    const failing = { save: async () => { throw new PersistenceError('SLATE couldn’t save to this device, so nothing in the slot changed. Try again in a moment.', true); } };
     h.given = new Map();
     const { game } = drawn(sim, () => null, failing);
     h.sets = [];
     await game.saveNow();
-    expect(toasted().map((t) => t.message)).toEqual(['The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.']);
+    expect(toasted().map((t) => t.message)).toEqual(['SLATE couldn’t save to this device, so nothing in the slot changed. Try again in a moment.']);
     for (const one of h.sets) h.given.set(one.at, one.value);
     drawn(sim, GameShell, failing);
     expect(h.buttons.map((b) => b.text)).toContain('Save Failed: Try Again');
@@ -493,5 +493,91 @@ describe('the Calendar screen', () => {
       h.given = new Map<number, unknown>([[view, h.inits[view]], [view + 1, gone.key]]);
       expect(drawn(sim, CalendarWorkspace).text).toContain('No Plans You had nothing on that day.');
     }
+  });
+});
+
+/**
+ * From 2026-10-19 (the owner's brief 15, "Complete Natural-Language Editorial Pass, Including All Retained Text"): the
+ * words the startup sequence and opening a slot say, each held word for word in each variant, where until then only a
+ * pattern held them, or nothing did.
+ */
+describe('opening and starting, said in words', () => {
+  it('the startup sequence says what it found in each slot: damaged, with a backup or without, newer and older', async () => {
+    const { STAGES } = await import('@/ui/startup/StartupSequence');
+    const slots = [
+      { slot: 1 as const, occupied: true, hasBackup: true, error: 'That save file is damaged and can’t be read.' },
+      { slot: 2 as const, occupied: true, hasBackup: false, meta: { schemaVersion: SAVE_SCHEMA_VERSION + 1 } },
+      { slot: 3 as const, occupied: true, hasBackup: false, meta: { schemaVersion: SAVE_SCHEMA_VERSION - 1 } },
+    ];
+    const context = { warnings: [] as string[], slots: slots as never };
+    for (const stage of STAGES.filter((s) => s.id === 'validate' || s.id === 'migrations')) await stage.run(context);
+    expect(context.warnings).toEqual([
+      'Slot 1: That save file is damaged and can’t be read. You can restore its backup from the save slots.',
+      'Slot 2 was saved by a newer version of SLATE, so this version won’t open it. That keeps the save safe.',
+      'Slot 3 was saved by an older version of SLATE. When you open it, SLATE keeps a backup and then updates it.',
+    ]);
+    const without = { warnings: [] as string[], slots: [{ ...slots[0]!, hasBackup: false }] as never };
+    await STAGES.find((s) => s.id === 'validate')!.run(without);
+    expect(without.warnings).toEqual(['Slot 1: That save file is damaged and can’t be read.']);
+  });
+
+  it('opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither', async () => {
+    const { openSlot, migrate } = await import('@/engine');
+    const kept = new Map<string, string>();
+    const adapter = new LocalSaveAdapter({ getItem: async (k) => kept.get(k) ?? null, setItem: async (k, v) => { kept.set(k, v); }, removeItem: async (k) => { kept.delete(k); } });
+    const newer = quickSave({}, 'frame-open-newer');
+    newer.universe.meta.schemaVersion = SAVE_SCHEMA_VERSION + 1;
+    await adapter.save(newer.universe);
+    const before = [...kept.entries()];
+    const opened = await openSlot(adapter, newer.universe.meta.slot);
+    expect('error' in opened && opened.error).toBe(`Slot ${newer.universe.meta.slot} was saved by a newer version of SLATE, so this version won’t open it. SLATE hasn’t changed anything in it.`);
+    expect([...kept.entries()]).toEqual(before);
+    expect(migrate(JSON.parse(serialise(newer.universe))).problems).toEqual(['This save was made by a newer version of SLATE, so this version won’t open it. SLATE hasn’t changed anything in it.']);
+    // A balance that isn't the sum of its postings. TEST SETUP: one account's cached balance moved by a cent.
+    const logged = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const off = quickSave({}, 'frame-open-unbalanced');
+    const account = Object.values(off.universe.accounts).find((a) => a.ownerId === off.universe.playerId)!;
+    account.balance += 1;
+    expect(migrate(JSON.parse(serialise(off.universe))).problems).toEqual(['This save’s accounts don’t add up, so SLATE can’t update it safely and hasn’t changed anything in it. If the slot has a backup, you can restore that instead.']);
+    logged.mockRestore();
+  });
+
+  it('a life where the game has no bank keeps a checking account by that name, and a home’s money given back says what it was', async () => {
+    const { CITIES } = await import('@/engine/content/geography');
+    const { banksFor } = await import('@/engine/systems/banking');
+    const { migrate, loadSave } = await import('@/engine');
+    // A town whose country no bank table covers. TEST SETUP: the first the gazetteer lists.
+    const town = CITIES.all().find((c) => banksFor(c.id).length === 0)!;
+    expect(town).toBeDefined();
+    const far = quickSave({ startLocationId: town.id, homeRegionId: town.id }, 'frame-no-bank');
+    const own = Object.values(far.universe.accounts).filter((a) => a.ownerId === far.universe.playerId && a.kind !== 'credit_card' && !a.nominal);
+    expect(own.map((a) => a.name)).toContain('Checking Account');
+
+    // A save at 90 with a home's deposit held and rent paid ahead. TEST SETUP, as the 91 migration test sets one up.
+    const sim = quickSave({}, 'frame-home-money');
+    const deposit = sim.openAccount({ id: sim.nextId('account'), kind: 'escrow', category: 'deposit', name: 'Rent Deposit', ownerId: sim.player.id, openedAt: sim.now });
+    sim.post({ memo: 'Deposit held', category: 'rent', postings: [{ accountId: sim.player.primaryAccountId!, amount: -900_00 }, { accountId: deposit.id, amount: 900_00 }] });
+    const universe = JSON.parse(serialise(sim.universe)) as typeof sim.universe;
+    universe.meta.schemaVersion = 90;
+    Object.assign(universe.people[universe.playerId]!.payments as object, { rentCredit: 500_00 });
+    migrate(universe);
+    const opened = loadSave(universe);
+    const memos = opened.universe.transactions.map((t) => t.memo);
+    expect(memos).toContain('Home deposit returned');
+    expect(memos).toContain('Rent paid ahead, returned');
+  });
+
+  it('an empty slot with a backup says so, and a backup with no date says the date isn’t known', () => {
+    const adapter = new LocalSaveAdapter({ getItem: async () => null, setItem: async () => undefined, removeItem: async () => undefined });
+    h.calls = 0; h.inits = []; h.sets = []; h.buttons = [];
+    const html = renderToStaticMarkup(createElement(SaveSlots, {
+      adapter,
+      initialSlots: [{ slot: 1, occupied: false, hasBackup: true }, { slot: 2, occupied: false, hasBackup: true, backupDateLabel: 'March 3, 2027' }, { slot: 3, occupied: false, hasBackup: false }],
+      onNew: () => undefined, onContinue: () => undefined,
+    })).replace(/<!-- -->/g, '');
+    const text = words(html);
+    // The button, then the note under it, in that order.
+    expect(text).toMatch(/Slot 1 Empty, but there’s a backup of the save that was here\. New Save Restore Backup (B)ackup from an unknown date/);
+    expect(text).toMatch(/Slot 2 Empty, but there’s a backup of the save that was here\. New Save Restore Backup (B)ackup from March 3, 2027/);
   });
 });

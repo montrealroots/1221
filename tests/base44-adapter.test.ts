@@ -162,13 +162,13 @@ describe('talking to the backend functions', () => {
   it('says something useful when the connection simply fails', async () => {
     const { client } = fakeClient(() => { throw new Error('Network Error'); });
     const adapter = new Base44SaveAdapter(client);
-    await expect(adapter.load(1)).rejects.toThrow('Loading that save couldn’t reach the server. Check your connection, then try again.');
+    await expect(adapter.load(1)).rejects.toThrow('SLATE couldn’t reach the server while opening that save. Check your connection, then try again.');
   });
 
   it('does not mistake an empty reply for an empty slot', async () => {
     const { client } = fakeClient(() => undefined);
     const adapter = new Base44SaveAdapter(client);
-    await expect(adapter.load(1)).rejects.toThrow('Loading that save got no answer from the server. Try again in a moment.');
+    await expect(adapter.load(1)).rejects.toThrow('SLATE got no answer from the server while opening that save. Try again in a moment.');
   });
 
   it('reads all three slots from one call when asked to list them', async () => {

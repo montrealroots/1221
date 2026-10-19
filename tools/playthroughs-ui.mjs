@@ -368,7 +368,7 @@ async function deleteKeptThenContinue() {
   const d = page.getByRole('dialog', { name: 'Confirm Deletion' });
   must(await d.isVisible().catch(() => false), 'no Confirm Deletion');
   const words = clean(await d.innerText());
-  must(/^Delete Slot 1\?/.test(words) && /This ends that universe\./.test(words) && /(A backup is kept|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
+  must(/^Delete Slot 1\?/.test(words) && /This deletes (?:.+’s life from the slot|the save in this slot)\./.test(words) && /(SLATE keeps a backup|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
   said(`Confirm Deletion: ${words}`);
   await shot('confirm-deletion');
   await press(d.getByRole('button', { name: /^Keep It$/ }), 'Keep It'); await wait(600);

@@ -199,8 +199,8 @@ export class LocalSaveAdapter implements SaveAdapter {
       const full = (error as Error).name === 'QuotaExceededError';
       if (!full) console.error(error);
       throw new PersistenceError(full
-        ? 'There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.'
-        : 'The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.', true);
+        ? 'There isn’t enough storage space on this device to save, so nothing in the slot changed. Free some space, or delete a save you no longer want, then try again.'
+        : 'SLATE couldn’t save to this device, so nothing in the slot changed. Try again in a moment.', true);
     }
   }
 

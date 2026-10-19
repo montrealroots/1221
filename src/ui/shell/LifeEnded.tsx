@@ -49,7 +49,7 @@ export function LifeEnded() {
           <div className="stat">
             <span className="stat-label">Years In The World</span>
             <span className="stat-value">{years < 1 ? plural(months, 'Month') : `${years.toFixed(1)} Years`}</span>
-            <span className="stat-note">From the first morning to the last, in the world’s time</span>
+            <span className="stat-note">From the first day to the last, in game time</span>
           </div>
           <div className="stat">
             <span className="stat-label">Earned</span>
@@ -59,11 +59,11 @@ export function LifeEnded() {
           <div className="stat">
             <span className="stat-label">Left Behind</span>
             <span className="stat-value mono">{money(worth.total)}</span>
-            <span className="stat-note">What they were worth</span>
+            <span className="stat-note">Their net worth at the end</span>
           </div>
         </div>
         <p className="small muted">
-          The clock has stopped for this life. It stays in its slot until you delete it, and another can begin in any slot that’s free.
+          The clock won’t run in this save again. It stays in its slot until you delete it, and you can start a new life in any empty slot.
         </p>
         <button className="btn btn-primary" style={{ marginTop: 'var(--s4)' }} onClick={exitToMenu}>
           Back To The Slots

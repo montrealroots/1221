@@ -400,7 +400,7 @@ describe('mortality', () => {
       expect(text).toContain(`August 25, 1931 – ${dated(end)} · Aged 95 · Actress · New Haven`);
       expect(text).toContain(`Years In The World ${months} Months`);
       expect(text).toContain(`Earned ${dollars(Math.round(hours * 2300))} Wages, before tax Left Behind`);
-      expect(text).toContain(`Left Behind ${dollars(left)} What they were worth`);
+      expect(text).toContain(`Left Behind ${dollars(left)} Their net worth at the end`);
       // Nothing of the shell: no rail, no clock, no Save & Exit. The one way on is back to the slots.
       expect(text).not.toContain('Save & Exit');
       expect(text).not.toContain('Skip To Content');

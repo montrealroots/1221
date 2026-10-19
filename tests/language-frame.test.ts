@@ -153,9 +153,9 @@ describe('a life’s own words: the night, a failure to start or open', () => {
   it('says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do', async () => {
     const { startFailure, OPEN_FAILURE } = await import('@/app/SlateApp');
     const { PersistenceError } = await import('@/engine/persistence/adapter');
-    expect(startFailure(new PersistenceError('There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.', true)))
-      .toBe('That life couldn’t be saved, so it wasn’t started. There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.');
-    expect(startFailure(new TypeError('Cannot read properties of undefined (reading \'countryId\')'))).toBe('That life couldn’t be started because of an error in the game, so nothing was saved to the slot.');
+    expect(startFailure(new PersistenceError('There isn’t enough storage space on this device to save, so nothing in the slot changed. Free some space, or delete a save you no longer want, then try again.', true)))
+      .toBe('Your new life couldn’t be saved, so it hasn’t started. There isn’t enough storage space on this device to save, so nothing in the slot changed. Free some space, or delete a save you no longer want, then try again.');
+    expect(startFailure(new TypeError('Cannot read properties of undefined (reading \'countryId\')'))).toBe('Your new life couldn’t start because of an error in the game, and nothing was saved to the slot.');
     expect(OPEN_FAILURE).toBe('That save couldn’t be opened because of an error in the game. Restart SLATE to try again, or restore the slot’s backup if it has one.');
   });
 });

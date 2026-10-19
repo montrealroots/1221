@@ -12,5 +12,285 @@
   "on": "2026-10-18",
   "reason": "The names of real public holidays and observances as the published calendar data spells them in English; the calendar shows each verbatim beside its date, and a proper name isn't the game's to reword.",
   "first": "Pending"
+ },
+ "src/app/game-context.tsx#CLOCK_FAULT": {
+  "status": "Retained",
+  "hash": "c6f95e70c084",
+  "on": "2026-10-19",
+  "reason": "Says an error stopped the clock, that what already happened stands because the move is not rolled back, and that moving the clock again is the way on.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/game-context.tsx#GameProvider": {
+  "status": "Retained",
+  "hash": "558f1ca1c430",
+  "on": "2026-10-19",
+  "reason": "The fallback refusal says nothing changed when a command gives no reason of its own; the breadcrumb names are the rail’s own, Home, Calendar and Player Profile.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/game-context.tsx#LIVE_CLOCK_FAULT": {
+  "status": "Retained",
+  "hash": "582217452c07",
+  "on": "2026-10-19",
+  "reason": "Says an error stopped the clock and paused it, that what happened stands, and that pressing Play in the top bar is how to try again.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/game-context.tsx#ROUTE_LABELS": {
+  "status": "Retained",
+  "hash": "9a87b6b0c5d6",
+  "on": "2026-10-19",
+  "reason": "The rail’s destination names, the same words the rail, the breadcrumbs and the keyboard shortcuts use, so each screen keeps one name everywhere.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/game-context.tsx#useGame": {
+  "status": "Retained",
+  "hash": "096c46174044",
+  "on": "2026-10-19",
+  "reason": "A developer’s error thrown only when code renders outside the provider; no player reaches it, and it names the cause for whoever does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/app/SlateApp.tsx#OPEN_FAILURE": {
+  "status": "Retained",
+  "hash": "fbc4c36e2d68",
+  "on": "2026-10-19",
+  "reason": "Says what failed, that an error in the game caused it, and both ways on: Restart SLATE, the button right under it, or the slot’s backup.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/SlateApp.tsx#SlateApp": {
+  "status": "Retained",
+  "hash": "498962c834a9",
+  "on": "2026-10-19",
+  "reason": "A plain heading over the failure’s own sentence, and Restart SLATE, the one button there, named for exactly what it does: it reloads the game.",
+  "first": "Reviewed And Retained"
+ },
+ "src/app/SlateApp.tsx#startFailure": {
+  "status": "Rewritten",
+  "hash": "ae3d349b917a",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do', both variants word for word",
+  "first": "Pending"
+ },
+ "src/engine/index.ts#armWorldClock [life.day_rollover]": {
+  "status": "Retained",
+  "hash": "f83957f209ca",
+  "on": "2026-10-19",
+  "reason": "The label of the midnight item in the system category, which no calendar screen draws; New Day says what it is to a developer reading the timeline.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#armWorldClock [world.tick]": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "The label of the background item that runs every two days, in the system category no calendar screen draws; it names what it does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#loadSave": {
+  "status": "Retained",
+  "hash": "ede827ce7502",
+  "on": "2026-10-19",
+  "reason": "A repair of an older save’s note text that puts the capital I back where a note began with it; the replacement is the note’s own words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#loadSave [life.day_rollover]": {
+  "status": "Retained",
+  "hash": "f83957f209ca",
+  "on": "2026-10-19",
+  "reason": "The same New Day label for the midnight item, put back on an older save; no calendar screen draws a system item, and it keeps one name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#loadSave [world.tick]": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "The same World Simulation label put back on an older save, in the system category no calendar screen draws; one name for one item.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#migrate": {
+  "status": "Rewritten",
+  "hash": "3ba06f6144de",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither'; the other lines are its migration log, which no screen shows",
+  "first": "Pending"
+ },
+ "src/engine/index.ts#openSlot": {
+  "status": "Rewritten",
+  "hash": "54ce256a398b",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither', and tests/persistence.test.ts, 'refuses a save from a newer build'",
+  "first": "Pending"
+ },
+ "src/engine/index.ts#populateWorld": {
+  "status": "Retained",
+  "hash": "779c46efb0a2",
+  "on": "2026-10-19",
+  "reason": "The card’s opening balance memo says it was carried from before the life began, which is exactly what that posting is, and the spending it came from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#populateWorld [checking]": {
+  "status": "Rewritten",
+  "hash": "ed9ef8525e9d",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'a life where the game has no bank keeps a checking account by that name, and a home’s money given back says what it was'",
+  "first": "Pending"
+ },
+ "src/engine/index.ts#populateWorld [credit_card]": {
+  "status": "Retained",
+  "hash": "0395bef39412",
+  "on": "2026-10-19",
+  "reason": "A card named for its bank, or plainly Credit Card where there is none, used only where the bank’s own product has no name of its own.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#populateWorld [savings]": {
+  "status": "Retained",
+  "hash": "e1d97947ab43",
+  "on": "2026-10-19",
+  "reason": "The plain name of the savings account opened where the game has no bank, beside Checking Account, read as exactly what it is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#refreshMeta": {
+  "status": "Retained",
+  "hash": "1eecd6680581",
+  "on": "2026-10-19",
+  "reason": "The slot card’s line under the name: the title, the year at Yale, graduated or left, and the age at death, as a list of plain facts the slots also match.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#returnTheHomesMoney": {
+  "status": "Rewritten",
+  "hash": "50b805de9eb2",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'a life where the game has no bank keeps a checking account by that name, and a home’s money given back says what it was', both memos found in the opened save",
+  "first": "Pending"
+ },
+ "src/engine/index.ts#validateUniverse": {
+  "status": "Retained",
+  "hash": "31162146a2d1",
+  "on": "2026-10-19",
+  "reason": "A developer’s diagnosis, shown only behind What’s Wrong With It under the plain sentence that the save is damaged, as the brief keeps technical detail apart.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/persistence/adapter.ts#deserialise": {
+  "status": "Retained",
+  "hash": "53d7ecd485e1",
+  "on": "2026-10-19",
+  "reason": "Shown on a slot card under Unreadable Save, above Restore Backup and Delete: it says the save is damaged, or is not a SLATE save, without a parser’s error.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/persistence/base44.ts#Base44SaveAdapter": {
+  "status": "Rewritten",
+  "hash": "efeb902fb8fb",
+  "on": "2026-10-19",
+  "evidence": "tests/base44-adapter.test.ts, 'says something useful when the connection simply fails' and 'does not mistake an empty reply for an empty slot', and tests/language-frame-ui.test.ts, 'says a server that couldn’t be reached left the saves where they were, and that the next save tries again'",
+  "first": "Pending"
+ },
+ "src/engine/persistence/local.ts#BACKUP_KEY": {
+  "status": "Retained",
+  "hash": "5c85c5822a35",
+  "on": "2026-10-19",
+  "reason": "A browser storage key for a slot’s backup, which no screen shows; renaming it would orphan every backup already kept on the device.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/persistence/local.ts#KEY": {
+  "status": "Retained",
+  "hash": "24d264d4eefd",
+  "on": "2026-10-19",
+  "reason": "A browser storage key, slate.save and the slot number, which no screen shows; renaming it would lose every save already kept on the device.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/persistence/local.ts#LocalSaveAdapter": {
+  "status": "Rewritten",
+  "hash": "10b17e851ebc",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'says a save the device couldn’t write left the slot as it was, full or broken, and the toast and the button say it', and 'says what a browser that can’t keep or open saves lacks, and what to do'",
+  "first": "Pending"
+ },
+ "src/engine/persistence/local.ts#localStore": {
+  "status": "Retained",
+  "hash": "8870dee79d6e",
+  "on": "2026-10-19",
+  "reason": "Says why no save can be kept, a browser with no storage SLATE can use, and the one thing to check, whether the site may store data.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/persistence/local.ts#unpack": {
+  "status": "Retained",
+  "hash": "4d6e1875f983",
+  "on": "2026-10-19",
+  "reason": "Names the cause, a compressed save this browser cannot open, and the one real way out, opening SLATE in an up-to-date browser.",
+  "first": "Rewritten And Verified"
+ },
+ "src/main.tsx#top": {
+  "status": "Retained",
+  "hash": "f86945acdc94",
+  "on": "2026-10-19",
+  "reason": "A developer’s error for a page with no element to mount on; a working page never shows it, and it names the missing mount point exactly.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/saves/SaveSlots.tsx#BackupNote": {
+  "status": "Rewritten",
+  "hash": "c4018aac5248",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'an empty slot with a backup says so, and a backup with no date says the date isn’t known', both notes rendered under Restore Backup",
+  "first": "Pending"
+ },
+ "src/ui/saves/SaveSlots.tsx#formatPlaytime": {
+  "status": "Retained",
+  "hash": "7ccd3730eb99",
+  "on": "2026-10-19",
+  "reason": "The short form of time played, 2h 5m, in the Played stat on a slot card, where the glossary keeps a chip or stat’s short duration.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/saves/SaveSlots.tsx#SaveSlots": {
+  "status": "Rewritten",
+  "hash": "ddce45421e9d",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts: 'says what each slot holds: one empty, one a life saved by an older version, and the delete that keeps a backup or doesn’t', 'says a damaged save can’t be opened, its backup the way on, and what’s wrong behind a disclosure', and 'an empty slot with a backup says so, and a backup with no date says the date isn’t known'",
+  "first": "Pending"
+ },
+ "src/ui/shell/LifeEnded.tsx#LifeEnded": {
+  "status": "Rewritten",
+  "hash": "8473b9e50431",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g04-life.test.ts and tests/evidence2-b03.test.ts and tests/evidence-g08-life.test.ts render the ended life's screen and hold its new notes and closing line word for word",
+  "first": "Pending"
+ },
+ "src/ui/startup/StartupSequence.tsx#currentLabel": {
+  "status": "Retained",
+  "hash": "7725e05476ed",
+  "on": "2026-10-19",
+  "reason": "The one word the status line shows before the first stage begins, Starting, which is all a player needs for that half second.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/startup/StartupSequence.tsx#STAGES [migrations]": {
+  "status": "Rewritten",
+  "hash": "395307448887",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the startup sequence says what it found in each slot: damaged, with a backup or without, newer and older', the newer and older warnings word for word",
+  "first": "Pending"
+ },
+ "src/ui/startup/StartupSequence.tsx#STAGES [saves]": {
+  "status": "Retained",
+  "hash": "184216227298",
+  "on": "2026-10-19",
+  "reason": "Names the save slots the next screen shows, and its failure says plainly that SLATE could not find the saves, above the Try Again button that retries.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/startup/StartupSequence.tsx#STAGES [storage]": {
+  "status": "Retained",
+  "hash": "3dea99113675",
+  "on": "2026-10-19",
+  "reason": "The first stage label, saying in a phrase players know from any loading screen that SLATE is finding where the saves are kept.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/startup/StartupSequence.tsx#STAGES [validate]": {
+  "status": "Rewritten",
+  "hash": "ce910e4a7935",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the startup sequence says what it found in each slot: damaged, with a backup or without, newer and older', word for word with and without a backup",
+  "first": "Pending"
+ },
+ "src/ui/startup/StartupSequence.tsx#StartupSequence": {
+  "status": "Retained",
+  "hash": "84a23ef20916",
+  "on": "2026-10-19",
+  "reason": "Short status words over the bar (Ready, Startup Stopped), Try Again under a failure and Before You Continue over warnings, each naming its moment; the version line is the slot card’s own.",
+  "first": "Rewritten And Verified"
  }
 }

@@ -1,0 +1,146 @@
+[
+ {
+  "source": "src/ui/startup/StartupSequence.tsx#STAGES [migrations]",
+  "kind": "other",
+  "before": "Slot 3 was saved by an older version of SLATE. It’s updated when you open it, and a backup of it is kept first.",
+  "after": "Slot 3 was saved by an older version of SLATE. When you open it, SLATE keeps a backup and then updates it.",
+  "why": "Two passives (is updated, is kept) became one subject doing two things in the order they happen.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'the startup sequence says what it found in each slot…'; the order checked in openSlot (adapter.backup, then adapter.save)"
+ },
+ {
+  "source": "src/ui/startup/StartupSequence.tsx#STAGES [migrations]",
+  "kind": "error",
+  "before": "Slot 2 was saved by a newer version of SLATE. This version won’t open it, so it can’t be damaged.",
+  "after": "Slot 2 was saved by a newer version of SLATE, so this version won’t open it. That keeps the save safe.",
+  "why": "The cause and the refusal in one sentence, then why that's good for the player; 'so it can’t be damaged' read as if the save were indestructible.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, same test"
+ },
+ {
+  "source": "src/ui/startup/StartupSequence.tsx#STAGES [validate]",
+  "kind": "error",
+  "before": "Slot 1: That save file is damaged and can’t be read. Its backup can be restored from the save slots.",
+  "after": "Slot 1: That save file is damaged and can’t be read. You can restore its backup from the save slots.",
+  "why": "The way out said as something the player does, not a passive about the backup.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, same test, with and without a backup"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "error",
+  "before": "The save in Slot 1 is damaged, so it can’t be opened. Its backup can be restored instead: press Restore Backup.",
+  "after": "The save in Slot 1 is damaged, so it can’t be opened. Press Restore Backup to open its backup instead.",
+  "why": "The button and what it does in one direct instruction.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says a damaged save can’t be opened, its backup the way on, and what’s wrong behind a disclosure'"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "empty",
+  "before": "Empty, but a backup of the save that was here is kept.",
+  "after": "Empty, but there’s a backup of the save that was here.",
+  "why": "A passive ('is kept') about the game's storage became what the player has.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'an empty slot with a backup says so, and a backup with no date says the date isn’t known'"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "confirmation",
+  "before": "This ends that universe. The character, everywhere they’ve been and everything that happened to them is gone from the slot.",
+  "after": "This deletes Alex Rivera’s life from the slot, with everything that happened in it. (A slot that can't be read: This deletes the save in this slot.)",
+  "why": "'Universe' is the save's internal word for itself. The confirmation now names whose life is deleted, the one fact a player needs before pressing Delete Slot 1.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'says what each slot holds…', the name read from the slot's meta; tools/playthroughs-ui.mjs's Confirm Deletion check moved with it"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "confirmation",
+  "before": "A backup is kept, so if you change your mind you can bring it back here with Restore Backup. / This slot has no backup, so it can’t be brought back afterwards.",
+  "after": "SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. / This slot has no backup, so you can’t bring it back afterwards.",
+  "why": "Both variants active, with the button named as the step.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'says what each slot holds…', both variants; restorableAfterDelete unchanged"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#BackupNote",
+  "kind": "label",
+  "before": "Backup from an unrecorded date",
+  "after": "Backup from an unknown date",
+  "why": "The everyday word.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'an empty slot with a backup says so…'"
+ },
+ {
+  "source": "src/engine/persistence/base44.ts#Base44SaveAdapter",
+  "kind": "error",
+  "before": "Loading that save couldn’t reach the server. Check your connection, then try again.",
+  "after": "SLATE couldn’t reach the server while opening that save. Check your connection, then try again.",
+  "why": "The act ('Loading that save') was the one reaching the server; SLATE is the subject now, and 'opening' is the slots' own word (Continue opens a save).",
+  "meaningSensitive": false,
+  "verified": "tests/base44-adapter.test.ts, 'says something useful when the connection simply fails' (and 'does not mistake an empty reply for an empty slot' for: SLATE got no answer from the server while opening that save.)"
+ },
+ {
+  "source": "src/engine/persistence/local.ts#LocalSaveAdapter",
+  "kind": "error",
+  "before": "The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.",
+  "after": "SLATE couldn’t save to this device, so nothing in the slot changed. Try again in a moment.",
+  "why": "What happened and whether anything changed, in plain words; 'still holds what it held before' made the player work it out.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'says a save the device couldn’t write left the slot as it was…', which also checks the slot's stored text is unchanged"
+ },
+ {
+  "source": "src/app/SlateApp.tsx#startFailure",
+  "kind": "error",
+  "before": "That life couldn’t be started because of an error in the game, so nothing was saved to the slot.",
+  "after": "Your new life couldn’t start because of an error in the game, and nothing was saved to the slot.",
+  "why": "'That life' pointed at a life the player had only just made; 'your new life' is the one they pressed Begin on.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts, 'says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do'"
+ },
+ {
+  "source": "src/ui/shell/LifeEnded.tsx#LifeEnded",
+  "kind": "narration",
+  "before": "The clock has stopped for this life. It stays in its slot until you delete it, and another can begin in any slot that’s free.",
+  "after": "The clock won’t run in this save again. It stays in its slot until you delete it, and you can start a new life in any empty slot.",
+  "why": "'This life' and 'another can begin' made the game the subject; the player starts the next one.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g04-life.test.ts renders the ended life's screen"
+ },
+ {
+  "source": "src/ui/shell/LifeEnded.tsx#LifeEnded",
+  "kind": "label",
+  "before": "Years In The World: From the first morning to the last, in the world’s time / Left Behind: What they were worth",
+  "after": "From the first day to the last, in game time / Their net worth at the end",
+  "why": "Plain words under each stat; 'the world's time' was the engine's phrase for game time.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b03.test.ts and tests/evidence-g08-life.test.ts"
+ },
+ {
+  "source": "src/engine/index.ts#openSlot",
+  "kind": "error",
+  "before": "Slot 2 was saved by a newer version of SLATE, so this version won’t open it: that could damage it. It hasn’t been opened or changed.",
+  "after": "Slot 2 was saved by a newer version of SLATE, so this version won’t open it. SLATE hasn’t changed anything in it.",
+  "why": "The same refusal as the startup warning, with whether anything changed said once and actively.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither', which also checks the stored slot is byte for byte the same"
+ },
+ {
+  "source": "src/engine/index.ts#populateWorld [checking]",
+  "kind": "label",
+  "before": "Current Account",
+  "after": "Checking Account",
+  "why": "The glossary's everyday account is a checking account from brief 15.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'a life where the game has no bank keeps a checking account by that name…'"
+ },
+ {
+  "source": "src/engine/index.ts#returnTheHomesMoney",
+  "kind": "label",
+  "before": "The deposit back: the home went / Rent paid ahead, back: the home went",
+  "after": "Home deposit returned / Rent paid ahead, returned",
+  "why": "A transaction memo is read in a statement list: cryptic fragments became what the money is.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, same test, both memos found in an opened save at 90"
+ }
+]
