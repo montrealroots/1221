@@ -54,3 +54,29 @@ behind it, or the file outside the inventory that holds it, or the template that
   - **material-a** and **material-b:** the audition briefs and class scenes.
 - **The coordinator** merges them, reads all the areas together for one voice, follows the guide and the journeys on
   the built app at both widths, compares the engine's outputs with brief 14's, and writes the receipt.
+
+## How It Went
+
+- **Four areas finished on their own:** frame, papers, material-b and health.
+- **Six were stopped before they reported:** tutorial, school, profile, money, money-data and material-a. Their agents
+  couldn't be resumed, so the coordinator finished each from its clone as it stood:
+  - Tutorial, money and material-a had every source marked, and were merged as they were.
+  - Money-data's area-end runs were done but uncommitted. The coordinator committed them.
+  - School's last three batches were done but uncommitted. The coordinator ran their checks again, committed them, and
+    fixed one test they'd missed.
+  - Profile had 146 sources left. Its research marks were run whole. Three UI sources were read and marked by the
+    coordinator. Its last fixes were checked again, and its notes were written up. Each area's `batches.md` says what
+    was its own and what the coordinator did.
+- **Merging found what no area could:** sentences one area rewrote and another area's test still held. Each is in the
+  merge or the commit after it.
+- **The whole suite, after every merge:** 393 of 395 files and 4,767 of 4,769 tests. The two failures were more of the
+  same, fixed in `e0e7831d`.
+- **The cross-area review** (`crossarea.md`) read the ten areas together:
+  - on the integrated build, from saves made again on it;
+  - across every source at once;
+  - in the areas' own records.
+
+  The coordinator's list (`coordinator.md`) settles everything the areas left for others.
+- **The defects** found apart from the writing are indexed in `DEFECTS.md`.
+- **The owner's route by hand** is `PLAYTEST.md`.
+- **The receipt** is `RECEIPT.md`, written by `receipt.py` from these records.

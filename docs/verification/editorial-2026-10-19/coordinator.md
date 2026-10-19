@@ -14,7 +14,8 @@ as it came in, with what was done about it and when. Nothing here is applied unt
 - **The engine-speak ratchet** is lowered once, at the end, to every area's counts, after the cross-area review's last
     change.
 - **For the owner, from money-data's defects (3, 7 to 10).** Each changes what the game charges or does, which brief 15
-  doesn't do (section 9). The words say what the game does, so none is untrue on screen:
+  doesn't do (section 9). For two of them (Claim It Back, and Australia's unclaimed money), the words state the law and
+  the game does otherwise. That gap is the defect, and the words weren't bent to match the game:
   - card replacement fees where the bank's own words say otherwise;
   - Claim It Back where the country's law says the money can't be claimed;
   - Australia's unclaimed money taken at any balance, where the law takes A$500 or more;
