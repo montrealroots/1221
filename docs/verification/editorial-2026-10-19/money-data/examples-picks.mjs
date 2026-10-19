@@ -149,5 +149,8 @@ export const PICKS = [
     ['newyork (order)', 'src/engine/content/rents.ts', true, 'The place look prints "<measure>, <period>; source: …", so the room\'s provenance in the measure put the one-bedroom\'s "FY2026" after it. Each date now follows what it dates, in words.', 'rendered/places.txt, New York: "HUD’s Fair Market Rent, the 40th percentile rent, utilities included, fiscal year 2026; the room’s rent is SpareRoom’s, for the second quarter of 2026; source: …"'],
     ['seoul', 'src/engine/content/rents.ts', false, '"normalized to a 10 million won deposit" said plainly, with the won as the game writes them.', 'rendered/places.txt, Seoul'],
     ['mosfellsbr (span)', 'src/engine/content/rents.ts', false, 'A span of months in the glossary\'s form, "to", not an en dash.', 'rendered/places.txt, Mosfellsbær'],
+    ['kr-kakaobank.short', 'src/engine/content/roundups.ts', false, 'After "When the account is short:", a fragment with no subject ("Skipped when …, never partial and never overdrawn") became a sentence about the sweep.', 'rendered/roundups.txt, KakaoBank'],
+    ['berlin', 'src/engine/content/rents.ts', true, '"warm" is German renting\'s word for a rent with heating; the English says so, and keeps the word in brackets for a player who meets it on a listing.', 'rendered/places.txt, Berlin'],
+    ['sydney', 'src/engine/content/rents.ts', false, '"700 a week" gave a figure with no currency, in a look the player may read in dollars of another country; it\'s A$700.', 'rendered/places.txt, Sydney'],
   ].map(([key, file, ms, why, seen]) => ({ ...fromText('b6-changes.json', file, key), kind: key.includes('DROPPED') ? 'feedback' : 'label', meaningSensitive: ms, why, verified: `read on ${seen}` })),
 ];

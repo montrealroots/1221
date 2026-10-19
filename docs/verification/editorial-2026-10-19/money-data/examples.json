@@ -475,5 +475,32 @@
   "why": "A span of months in the glossary's form, \"to\", not an en dash.",
   "meaningSensitive": false,
   "verified": "read on rendered/places.txt, Mosfellsbær"
+ },
+ {
+  "source": "src/engine/content/roundups.ts (kr-kakaobank.short)",
+  "kind": "label",
+  "before": "short: 'Skipped when the balance is 1,000원 or less, never partial and never overdrawn.',",
+  "after": "short: 'It’s skipped when the balance is ₩1,000 or less, never moves just part, and never overdraws the account.',",
+  "why": "After \"When the account is short:\", a fragment with no subject (\"Skipped when …, never partial and never overdrawn\") became a sentence about the sweep.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/roundups.txt, KakaoBank"
+ },
+ {
+  "source": "src/engine/content/rents.ts (berlin)",
+  "kind": "label",
+  "before": "'IBB median asking rent, warm, about 50 square meters; the room is the Moses Mendelssohn Institut’s', '2025; room September 2026'",
+  "after": "'the IBB’s median asking rent including heating (warm), for about 50 square meters; the room’s rent is the Moses Mendelssohn Institut’s', '2025; the room, September 2026'",
+  "why": "\"warm\" is German renting's word for a rent with heating; the English says so, and keeps the word in brackets for a player who meets it on a listing.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/places.txt, Berlin"
+ },
+ {
+  "source": "src/engine/content/rents.ts (sydney)",
+  "kind": "label",
+  "before": "'NSW median weekly rent on new bonds for a one-bedroom unit, 700 a week'",
+  "after": "'the NSW median rent on new bonds for a one-bedroom unit, A$700 a week'",
+  "why": "\"700 a week\" gave a figure with no currency, in a look the player may read in dollars of another country; it's A$700.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/places.txt, Sydney"
  }
 ]
