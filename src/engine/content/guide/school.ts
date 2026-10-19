@@ -585,7 +585,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     available: `${OPENED}: an Incomplete after a term’s review, a repeat at a year’s end, an additional term after the last year’s review.`,
     // Whose each rule is, said from 2026-10-16: until then the Incomplete's coming of excused absence and its one extension
     // read as the Bulletin's, which has a student ask the instructor for one and petition for an extension.
-    short: `Each course is settled at the term’s review as passed, Incomplete or failed, and the degree needs every one passed. This is how you put an Incomplete or a failed course right. An Incomplete comes from classes you missed while excused; this is the game’s rule (the Bulletin has the student ask the instructor for one). Make it up in ${COURSE_RULES.makeUpMinutes}-minute sessions with its teachers within ${COURSE_RULES.incompleteDays} days, the Bulletin’s month, or it becomes a Permanent Incomplete. You can extend it once, by as long again: that limit on the extension the Bulletin lets the instructor grant is the game’s. A failed course is put right by repeating its year, once, with the chair’s and the dean’s approval, or after the last year by an additional term that retakes only what you didn’t pass. Repeating and the additional term are the game’s model of the faculty: the Bulletin has no rule for either.`,
+    short: `The degree needs every course passed, and each term’s review settles every course as passed, Incomplete or failed. To put an Incomplete right, make it up in sessions of ${MAKE_UP} with its teachers within ${COURSE_RULES.incompleteDays} days, the Bulletin’s month: press Make Up A Session on Standing And Craft. Left undone, it becomes a Permanent Incomplete. Ask For A Month More moves the deadline once, by as long again. To put a failed course right, ask to repeat its year at the year’s end, once, with the chair’s and the dean’s approval; or, after your last year, ask for an additional term that retakes only what you didn’t pass. Some of this is the game’s own rule, not the Bulletin’s: an Incomplete coming from classes you missed while excused (the Bulletin has the student ask the instructor for one), the limit of one extension, and the repeat and the additional term, for which the Bulletin has no rule.`,
     steps: [
       'Open School, Standing And Craft. Courses And The Degree lists each Incomplete with its sessions left and its deadline.',
       'Press Make Up A Session for each session owed. Ask For A Month More moves the deadline, once.',
@@ -646,7 +646,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     unavailable: [
       '“There’s no Incomplete in that course to make up.” or “Its deadline is at …, and there isn’t time for a session before then.”',
       '“You’re not at school.”: Make Up A Session then stops showing.',
-      '“You’re not at school.” or “It’s been extended once already.”: Ask For A Month More then stops showing.',
+      '“You’re not at school.” or “You’ve already had your one extra month.”: Ask For A Month More then stops showing.',
       '“You can ask to repeat a year only at its end, after the spring’s term review.”',
       '“You passed every course this year, so there’s nothing to repeat it for.”',
       '“In the game, the faculty don’t approve repeating year N a second time.”',
@@ -665,7 +665,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       `Letting the ${EXTENDED_STUDY.requestDays} days after the last year run out means the degree isn’t recommended: ask for one path or the other in time.`,
     ],
     next: [
-      'With an Incomplete: book its make-up sessions now, one at a time, well before the deadline.',
+      'With an Incomplete: press Make Up A Session now, a session at a time, well before the deadline.',
       'With a failed course: ask to repeat the year at its end, or for an additional term after the last year, and watch Finishing The Degree for the decision.',
       'Once a repeat is granted, plan for the year’s courses again on the Classes tab, and for the bill on Terms And Award if it runs past six terms.',
     ],

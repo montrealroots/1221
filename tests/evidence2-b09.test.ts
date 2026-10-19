@@ -459,14 +459,14 @@ describe('school.extend_incomplete', () => {
     // The twin: reminded again a week before the new date (the first reminder came on 20 May, before the extension),
     // Incomplete an hour before it, then Permanent and withheld.
     tend(twin, at(2029, 6, 19, 16));
-    expect(titled(twin, 'A Week Left: On-Camera Acting Technique').map((n) => n.body)).toEqual(['One make-up session still to do, by May 27, 2029. Press Make Up A Session on the Standing tab.']);
+    expect(titled(twin, 'A Week Left: On-Camera Acting Technique').map((n) => n.body)).toEqual(['You still have one make-up session to do, by May 27, 2029. Press Make Up A Session on the Standing tab. If you need longer, press Ask For A Month More.']);
     tend(twin, at(2029, 6, 19, 18));
-    expect(titled(twin, 'A Week Left: On-Camera Acting Technique').map((n) => n.body)).toEqual(['One make-up session still to do, by May 27, 2029. Press Make Up A Session on the Standing tab.', 'One make-up session still to do, by June 26, 2029. Press Make Up A Session on the Standing tab.']);
+    expect(titled(twin, 'A Week Left: On-Camera Acting Technique').map((n) => n.body)).toEqual(['You still have one make-up session to do, by May 27, 2029. Press Make Up A Session on the Standing tab. If you need longer, press Ask For A Month More.', 'You still have one make-up session to do, by June 26, 2029. Press Make Up A Session on the Standing tab.']);
     tend(twin, at(2029, 6, 26, 16));
     expect(twin.player.school!.courses![ON_CAMERA_KEY]!.result).toBe('incomplete');
     expect(twin.player.school!.standing).not.toBe('withheld');
     tend(twin, at(2029, 6, 26, 18));
-    expect(twin.player.school!.courses![ON_CAMERA_KEY]).toMatchObject({ result: 'permanent', why: 'an Incomplete not made up in its month' });
+    expect(twin.player.school!.courses![ON_CAMERA_KEY]).toMatchObject({ result: 'permanent', why: 'an Incomplete not made up in time' });
     expect(twin.player.school!.standing).toBe('withheld');
     expect(twin.player.school!.endedAt).toBe(at(2029, 6, 26, 17));
     expect(titled(twin, 'The Degree Isn’t Recommended')).toHaveLength(1);
@@ -479,7 +479,7 @@ describe('school.extend_incomplete', () => {
     expect(sim.player.school!.standing).toBe('withheld');
     expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
     expect(sim.execute({ kind: 'school.request_extra_term', payload: {} }).error).toBe('You’re not at school.');
-    expect(titled(sim, 'Permanent Incomplete: On-Camera Acting Technique').map((n) => n.body)).toEqual(['The month to make it up ran out, so On-Camera Acting Technique carries no credit, and the degree can’t be completed without it.']);
+    expect(titled(sim, 'Permanent Incomplete: On-Camera Acting Technique').map((n) => n.body)).toEqual(['The time to make it up ran out, so On-Camera Acting Technique carries no credit, and the degree can’t be completed without it.']);
   }, 60_000);
 
   it('DEFECT: a student who has withdrawn with an Incomplete open is refused a month more in the School’s words, before its month runs out and after; nothing goes back on the calendar, and the Standing tab offers none', () => {

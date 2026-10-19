@@ -385,7 +385,7 @@ describe('school.extend_incomplete', () => {
     expect(drew('school.extend_incomplete')).toHaveLength(3);
     expect(rowOf(after.html, 'Acting I')).toContain('Make Up A Session');
     expect(rowOf(after.html, 'Acting I')).not.toContain('Ask For A Month More');
-    expect(sim.execute({ kind: 'school.extend_incomplete', payload: { key: ACTING_I } }).error).toBe('It’s been extended once already.');
+    expect(sim.execute({ kind: 'school.extend_incomplete', payload: { key: ACTING_I } }).error).toBe('You’ve already had your one extra month.');
     expect(acting().dueBy).toBe(at(2027, 2, 9, 17));
 
     sim = reload(sim);
@@ -404,13 +404,13 @@ describe('school.extend_incomplete', () => {
     tend(sim, at(2027, 2, 2, 16));
     expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(0);
     tend(sim, at(2027, 2, 2, 18));
-    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['One make-up session still to do, by February 9, 2027. Press Make Up A Session on the Standing tab.']);
+    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['You still have one make-up session to do, by February 9, 2027. Press Make Up A Session on the Standing tab.']);
     // The new date: Incomplete an hour before, Permanent an hour after.
     tend(sim, at(2027, 2, 9, 16));
     expect(acting().result).toBe('incomplete');
     tend(sim, at(2027, 2, 9, 18));
-    expect(acting()).toMatchObject({ result: 'permanent', why: 'an Incomplete not made up in its month' });
-    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => n.body)).toEqual(['The month to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. At the year’s end you can ask to repeat the year on the Standing tab.']);
+    expect(acting()).toMatchObject({ result: 'permanent', why: 'an Incomplete not made up in time' });
+    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => n.body)).toEqual(['The time to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. At the year’s end, you can ask to repeat the year on the Standing tab.']);
 
     // Nothing again through a save; the Standing tab reads it as the degree's shortfall.
     sim = reload(sim);
@@ -418,7 +418,7 @@ describe('school.extend_incomplete', () => {
     expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(1);
     expect(titled(sim, 'Permanent Incomplete: Acting I')).toHaveLength(1);
     const lapsed = drawn(sim, SchoolWorkspace);
-    expect(lapsed.html).toContain('<strong>Acting I</strong>, Permanent Incomplete: an Incomplete not made up in its month.');
+    expect(lapsed.html).toContain('<strong>Acting I</strong>, Permanent Incomplete: an Incomplete not made up in time.');
     expect(lapsed.html).not.toContain('<strong>Acting I</strong>, Incomplete:');
     expect(lapsed.text).toMatch(/The degree still needs [^.]*Acting I[^.]*\./);
     expect(drew('school.extend_incomplete')).toHaveLength(0);
@@ -432,7 +432,7 @@ describe('school.extend_incomplete', () => {
     tend(sim, at(2027, 1, 3, 16));
     expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(0);
     tend(sim, at(2027, 1, 3, 18));
-    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['One make-up session still to do, by January 10, 2027. Press Make Up A Session on the Standing tab.']);
+    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['You still have one make-up session to do, by January 10, 2027. Press Make Up A Session on the Standing tab. If you need longer, press Ask For A Month More.']);
     tend(sim, at(2027, 1, 10, 16));
     expect(acting().result).toBe('incomplete');
     tend(sim, at(2027, 1, 10, 18));

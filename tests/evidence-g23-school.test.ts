@@ -180,7 +180,7 @@ describe('school.study_session', () => {
     expect(trustOf(mateOf())).toBe(trust + 2);
     expect(mateOf().bond).toBe(bond + 2);
     expect(personOf(mateOf()).log![0]!.what).toBe('Ran lines with you');
-    expect(notices(sim, `Ran Lines With ${first}`).map((n) => n.body)).toEqual([`${play}: your lines went from ${Math.round(lines * 100)}% to ${Math.round(after * 100)}%.`]);
+    expect(notices(sim, `Ran Lines With ${first}`).map((n) => n.body)).toEqual([`Your lines for ${play} went from ${Math.round(lines * 100)}% to ${Math.round(after * 100)}%.`]);
     // Once: a reload and a night on, nothing is run again.
     sim = reload(sim);
     tended(sim, sim.now + 12 * MS_HOUR);
@@ -229,7 +229,7 @@ describe('school.study_session', () => {
     away(again.when!);
     expect(personOf(mateOf()).incidents!.map((x) => x.kind)).toEqual(['missed', 'missed']);
     const b = untilOpen(sim, (x) => x.kind === 'boundary' && x.mate === i, at(2026, 12, 20));
-    expect(b.text).toBe(`${first} says that after the last times, they’ll only rehearse with you if you ask a day ahead.`);
+    expect(b.text).toBe(`${first} says that after the last few times, they’ll only rehearse with you if you ask a day ahead.`);
     const before = trustOf(mateOf());
     sim.must({ kind: 'school.respond', payload: { momentId: b.id, choice: 'respect' } });
     expect(personOf(mateOf()).boundary).toMatchObject({ keptSince: 0, accepted: true });

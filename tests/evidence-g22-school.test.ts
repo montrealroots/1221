@@ -708,7 +708,7 @@ describe('school.orientation (kind)', () => {
     sim.advanceTo(ex.at + 151 * 60_000);
     expect(ex.status).toBe('done');
     expect(set(sim)).toEqual(FALL.map((c) => [c, '2026-08-30']));
-    expect(titled(sim, 'The Courses And What They Ask').map((n) => n.body)).toEqual(['Each course set out what it asks. 8 courses gave you their first piece now, so you can start before classes.']);
+    expect(titled(sim, 'The Courses And What They Ask').map((n) => n.body)).toEqual(['Each course set out what it asks. Eight courses gave you their first piece now, so you can start before classes.']);
 
     const ward = twinOf(snap);
     // TEST SETUP: in hospital over the session.
@@ -744,11 +744,11 @@ describe('school.orientation (kind)', () => {
     const work = courseworkOf(sim, sim.player)!.assignments;
     const movement = work.find((x) => x.course === 'DRAM 133a/b')!;
     const context = work.find((x) => x.course === 'DRAM 873a/b')!;
-    const studios = 'You don’t know where the studios are yet. The building tour in Orientation shows you.';
-    const library = 'You don’t know where the library is yet. The building tour in Orientation shows you.';
+    const studios = 'You don’t know where the studios are yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.';
+    const library = 'You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.';
     expect(sim.execute({ kind: 'school.prepare', payload: { assignmentId: movement.id, activity: 'devise' } }).error).toBe(studios);
     expect(sim.execute({ kind: 'school.prepare', payload: { assignmentId: context.id, activity: 'research' } }).error).toBe(library);
-    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
+    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
     const before = drawn(sim, SchoolWorkspace, 'coursework');
     expect(grayed(before.html, 'Devise The Score', studios)).toHaveLength(1);
     expect(before.shown).toContain(studios);
@@ -820,7 +820,7 @@ describe('school.partner_rehearsal', () => {
     // Nothing prepared but the evening: the scene not known is what holds it back.
     expect(r.said).toBe(`${first} thinks you don’t know the scene well enough yet to play it.`);
     const shown = drawn(sim, SchoolWorkspace, 'coursework').shown;
-    expect(shown).toContain(`Rehearsed ${r.said} (Simulated: the game’s words.)`);
+    expect(shown).toContain(`Rehearsed ${r.said} (A summary of your preparation, not ${first}’s own words.)`);
     expect(shown).toContain(`Trust 54 of 100 · Came to 1 of 1 rehearsals agreed · Reliability 100%`);
 
     // The scene read first, by command, at the same evening: the lines are what holds it back now.
@@ -849,7 +849,7 @@ describe('school.partner_rehearsal', () => {
     expect(mate.bond ?? 0).toBe(0);
     expect(a.prep.partner).toBe(0);
     expect(titled(sim, `${first} Didn’t Come`)).toHaveLength(1);
-    expect(titled(sim, `${first} Didn’t Come`)[0]!.body).toMatch(new RegExp(`^You waited for ${first} to rehearse .+, and they didn’t come\\.$`));
+    expect(titled(sim, `${first} Didn’t Come`)[0]!.body).toMatch(new RegExp(`^You waited for ${first} to rehearse .+, and they didn’t come\\. It isn’t held against you, but the scene got no further\\. Ask them for another evening under Rehearsing With ${first}, or use Run It With A Reader to work on your side of it\\.$`));
     const shown = drawn(sim, SchoolWorkspace, 'coursework').shown;
     expect(shown).toContain(`${first} Didn’t Come`);
     expect(shown).toContain('Trust 50 of 100 · Came to 0 of 1 rehearsals agreed · Reliability 0%');

@@ -191,7 +191,7 @@ describe('school.orientation', () => {
     expect(cw(sim).orientation.done[task as 'tour']).toBe(sim.now);
     return r.told;
   };
-  const LIBRARY = 'You don’t know where the library is yet. The building tour in Orientation shows you.';
+  const LIBRARY = 'You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.';
 
   it('PLAYER JOURNEY: the week missed in New York, caught up in New Haven: each session takes its own minutes and opens what it arranges, once, across a reload', () => {
     const sim = student('g19-orientation');
@@ -216,7 +216,8 @@ describe('school.orientation', () => {
     expect(firstYearFall).toHaveLength(8);
     const open = cw(sim).assignments.filter((a) => a.status === 'open');
     expect(open.map((a) => a.course).sort()).toEqual(firstYearFall);
-    expect(told).toContain(`${open.length} courses gave you their first piece now`);
+    expect(open).toHaveLength(8);
+    expect(told).toContain('Eight courses gave you their first piece now');
     tended(there, on(2026, 8, 29, 9));
     const shape = (s: Simulation) => cw(s).assignments.map((a) => [a.course, a.template, a.dueOn, a.sceneId ?? '']).sort();
     expect(shape(sim)).toEqual(shape(there));
@@ -240,13 +241,13 @@ describe('school.orientation', () => {
     const talk = open.find((a) => a.template === 'context-presentation')!;
     const studioStep = { kind: 'school.prepare', payload: { assignmentId: score.id, activity: 'devise' } };
     const libraryStep = { kind: 'school.prepare', payload: { assignmentId: talk.id, activity: 'research' } };
-    expect(sim.execute(studioStep).error).toBe('You don’t know where the studios are yet. The building tour in Orientation shows you.');
-    expect(sim.execute(libraryStep).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
+    expect(sim.execute(studioStep).error).toBe('You don’t know where the studios are yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
+    expect(sim.execute(libraryStep).error).toBe('You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
     caughtUp(sim, 'tour', 120);
     const devised = sim.execute<{ moved: number }>(studioStep);
     expect(devised.ok, devised.error).toBe(true);
     expect(devised.value!.moved).toBeGreaterThan(0);
-    expect(sim.execute(libraryStep).error).not.toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
+    expect(sim.execute(libraryStep).error).not.toBe('You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
     const read = sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } });
     expect(read.ok, read.error).toBe(true);
 

@@ -1,0 +1,3 @@
+[
+ { "old": "How Hard The Work Is", "new": "How Hard The Piece Is", "where": "src/engine/systems/evaluation.ts (the difficulty limit's label, shown in a work's look)" }
+]

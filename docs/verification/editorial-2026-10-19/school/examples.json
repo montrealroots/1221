@@ -1,0 +1,242 @@
+[
+ {
+  "source": "src/engine/systems/coursework.ts#setWork",
+  "kind": "notification",
+  "before": "Trifles, the one act, the Wright kitchen. You play Mrs. Hale, and Zoe Park plays Mrs. Peters. Put Knows The Scene first: it counts for more when this piece is shown. It’s due in class on September 8, 2026.",
+  "after": "Your scene is from Trifles, the one act, the Wright kitchen. You play Mrs. Hale, and Zoe Park plays Mrs. Peters. It’s due in class on September 8, 2026. Start with Knows The Scene: this piece puts it first, so it counts for more when you show it.",
+  "why": "The working reference's example 3. What's set, when it's due, then where to start, said as advice; the heading-like fragment became a sentence. \"Puts it first\" matches the card's Put First label, and \"counts for more\" is kept because the part put first does weigh more in the result (workContext's putFirst), not only in the note.",
+  "meaningSensitive": true,
+  "verified": "rendered.txt (render.mts) NOTICE Acting I: Scene Study; tests/language-dynamic.test.ts; code read: workContext putFirst multiplies the qualities that part feeds by LEARNING.objectiveWeight",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/evaluation.ts#chiefLimit",
+  "kind": "feedback",
+  "before": "Your Vocal Expression held back Execution by 25.7 points",
+  "after": "Your vocal expression held back your execution by 26 points out of 100",
+  "why": "The working reference's example 2: a teacher names the weakness in plain words and doesn't quote a tenth; the quality is \"your execution\", and \"out of 100\" says what the points are of.",
+  "meaningSensitive": true,
+  "verified": "rendered.txt limit lines; l.by is the points the limit cost on that quality's 0-100 scale, rounded only in the sentence (pointsWords), so no figure the engine keeps moves",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/evaluation.ts#chiefLimit",
+  "kind": "feedback",
+  "before": "Lines wasn’t complete, which cost Believability 19.3 points",
+  "after": "“Lines” wasn’t complete, and that cost your believability 19 points out of 100",
+  "why": "A card's Title Case part name as a bare subject read as a plural with a singular verb (brief 14's defect 2, back through withPartLabels). Quoted, it reads as the card's name for the part; a task's own sentence-case words (\"Learning the lines\") stay bare.",
+  "meaningSensitive": false,
+  "verified": "rendered.txt NOTICE Shown: Scene Study, Working and screens.txt Shown Today; tests/editorial-school-words.test.ts",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/evaluation.ts#conditionWords",
+  "kind": "feedback",
+  "before": "Your stamina running low by the Close cost Consistency 6.2 points",
+  "after": "Running low on stamina by the close cost your consistency 6 points out of 100",
+  "why": "A gerund subject that reads naturally, and the part of the piece in lower case: segment names are generic (The Close, Beat 3, Part 2), never a proper name.",
+  "meaningSensitive": false,
+  "verified": "rendered.txt limit, condition, stamina; code read: segmentNames and beatSegments in systems/piece.ts",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#show",
+  "kind": "feedback",
+  "before": "Simulated note from Voice I: It didn’t come together today. Your Vocal Expression held back Execution by 25.7 points. Once it does, here’s a next step to try. Make one moment exact: choose where it starts and ends, and repeat it the same way twice.",
+  "after": "Simulated note from Voice I: It didn’t come together today. Your vocal expression held back your execution by 26 points out of 100. When it does come together, here’s what to try next. Make one moment exact: choose where it starts and ends, and repeat it the same way twice.",
+  "why": "\"Once it does\" pointed at nothing; problem first, then the next step. The step itself (ADVANCED) is the profile area's and is kept whole after the lead-in.",
+  "meaningSensitive": false,
+  "verified": "rendered.txt NOTICE Shown with a held limit; tests/attributes-phase-2b.test.ts F1",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#feedbackWords",
+  "kind": "feedback",
+  "before": "This is the 3rd time you’ve had this note (last in Acting I on October 8, 2026), and it’s still there.",
+  "after": "This is the third time you’ve had this note, the last in Acting I on October 8, 2026, and it’s still there.",
+  "why": "A count under ten in words, no bracket in a teacher's sentence; it still says the note is a repeat and when it was last given. \"Still there\" stays because a recurring note can have risen a little (short of LEARNING.better), so \"hasn't moved\" would be untrue.",
+  "meaningSensitive": true,
+  "verified": "tests/feedback.test.ts \"is named as one from the third time, counted\"; tests/language-dynamic.test.ts; code read: recordNote's kinds in systems/learning.ts",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#feedbackWords",
+  "kind": "feedback",
+  "before": "It held together. Here’s a next step to try. Do less: find the moments that need nothing added, and trust the text in them.",
+  "after": "It came together. Here’s what to try next. Do less: find the moments that need nothing added, and trust the text in them.",
+  "why": "The same words as its opposite (\"It didn’t come together today\"), and a plainer lead-in to the step.",
+  "meaningSensitive": false,
+  "verified": "tests/feedback.test.ts \"with nothing holding it back, gives the step beyond\"",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#feedbackWords",
+  "kind": "feedback",
+  "before": "You’d put this right on October 15, 2026, but it has slipped back.",
+  "after": "You fixed this on October 15, 2026, but it has slipped back.",
+  "why": "Plainer verb for a note taken and back again; it still says what was done and what's open again.",
+  "meaningSensitive": false,
+  "verified": "tests/language-dynamic.test.ts feedbackWords recurring with taken; rendered.txt",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#termWarning",
+  "kind": "notification",
+  "before": "So far this term, 4 of the 6 pieces due were Unready or not shown. What held most of them back was “With Your Partner”, unfinished on 3 of the 4 you showed. To work on it, use Rehearse With Your Partner, asked for an evening at least 2 hours ahead, or Run It With A Reader. One piece is set and still to be shown. This is a warning, not the term review. The faculty reviews the term on December 11, 2026. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would give you a notice of academic concern. On the Coursework tab, each open piece’s Shown Today line says how it would do if shown today and what’s holding it back.",
+  "after": "So far this term, 4 of the 6 pieces due were Unready or not shown. This is a warning, not the term review: the faculty reviews the term on December 11, 2026. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would give you a notice of academic concern. What held most of them back was “With Your Partner”, unfinished on 3 of the 4 you showed. To work on it: ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader. One piece is set and still to be shown. On the Coursework tab, each open piece’s Shown Today line says how it would do if you showed it today, and what’s holding it back.",
+  "why": "What happened, what it means against the term review (the brief's warning versus the formal consequence, said plainly), then what to do. It named Rehearse With Your Partner, a step the card never shows as a button: the partner's step is done at a rehearsal asked for under Rehearsing With.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-school-term.test.ts and tests/workload.test.ts; code read: CourseworkPane filters the partner step out of the card's buttons; needRefusal sends it to Rehearsing With",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#reshownWords",
+  "kind": "notification",
+  "before": "You showed Scene Study again on September 9, 2026, but the note on With Your Partner isn’t taken yet. With Your Partner stayed at 56%. Shown again: Working. It stays open under Your Notes.",
+  "after": "You showed Scene Study again on September 9, 2026, but you haven’t taken the note on With Your Partner yet. With Your Partner is still at 56%. It was Working again. The note stays open under Your Notes until you take it.",
+  "why": "The working reference's row 2. Active voice, a sentence for the band, and \"again\" only when the band matches the first showing's (otherwise \"It was Strong this time, after Working the first time\").",
+  "meaningSensitive": true,
+  "verified": "tests/language-dynamic.test.ts \"a note worked and the piece shown again\" (both band cases computed from a.shown.band); rendered.txt Note Taken notices",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#meetingWeight",
+  "kind": "notification",
+  "before": "Scene Study was shown at Unready, and the same note came back: 4 times now. It stays open under Your Notes. On the Coursework tab, an open piece that works on it offers other ways to tackle it, under A Note That Keeps Coming Back.",
+  "after": "You showed A Game Played Through and it was Unready, but the same note came back, for the fourth time. It stays open under Your Notes. To try something different, find an open piece on the Coursework tab that works on it, and choose a way under A Note That Keeps Coming Back.",
+  "why": "The repeated notice says it's a repeat, how many times, and what to do now, in the order a player acts on it.",
+  "meaningSensitive": false,
+  "verified": "rendered.txt MONTH Still There: Time On Its Feet; tests/language-dynamic.test.ts Still There matcher",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#rehearsalOutcome",
+  "kind": "notification",
+  "before": "You waited for Noah to rehearse Trifles, and they didn’t come.",
+  "after": "You waited for Noah to rehearse Trifles, and they didn’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With Noah, or use Run It With A Reader to work on your side of it.",
+  "why": "A notification says what it means and what to do: no trust lost by you, no preparation gained, and the two real ways on.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g22-school.test.ts \"the partner doesn’t come\"; code read: missedByThem moves no trust of yours and no prep",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#registerCoursework",
+  "kind": "notification",
+  "before": "You didn’t answer Noah about rehearsing on September 4, 2026, so that rehearsal isn’t happening.",
+  "after": "You didn’t answer Noah about rehearsing on September 4, 2026, so that rehearsal isn’t happening. Leaving them without an answer cost a little of their trust, where a no would have cost nothing.",
+  "why": "Says the consequence and the better choice next time.",
+  "meaningSensitive": true,
+  "verified": "rendered.txt MONTH Noah Didn’t Hear Back; code read: WORK.ask.unanswered is -2 trust, a declined ask moves nothing",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#needRefusal",
+  "kind": "error",
+  "before": "You don’t know where the studios are yet. The building tour in Orientation shows you.",
+  "after": "You don’t know where the studios are yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.",
+  "why": "An unavailable action gives the real way out, by the button's own label.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g18-school.test.ts tour refusals; screens.txt",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/coursework.ts#approachRefusal",
+  "kind": "error",
+  "before": "None of your recurring notes is one this piece can help with.",
+  "after": "This piece can’t help with any of your recurring notes.",
+  "why": "A clear subject and verb in place of a stacked noun phrase.",
+  "meaningSensitive": false,
+  "verified": "tests/approaches.test.ts",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/courserecord.ts#settleCourses",
+  "kind": "official",
+  "before": "You were ill for 10 of its 28 classes. To complete it, make up 3 sessions of work with its teachers by October 14, 2026, each covering a week of the course: press Make Up A Session on the Standing tab. You can ask for a month more once. If it isn’t made up in time, it becomes a Permanent Incomplete, with no credit, and the degree can’t be completed without it.",
+  "after": "You were ill for 10 of its 28 classes, so it’s an Incomplete for now. To complete it, make up three sessions with its teachers by October 14, 2026, each covering a week of the course: press Make Up A Session on the Standing tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.",
+  "why": "Says what the course now is, names the extension by its button, and keeps every date, count and condition.",
+  "meaningSensitive": true,
+  "verified": "tests/language-dynamic.test.ts \"a warning repeated ... an Incomplete\"",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/courserecord.ts#registerCourseRecord",
+  "kind": "notification",
+  "before": "The month to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. At the year’s end you can ask to repeat the year on the Standing tab.",
+  "after": "The time to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. At the year’s end, you can ask to repeat the year on the Standing tab.",
+  "why": "After Ask For A Month More the time was two months, so \"the month\" could be untrue.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g26-school.test.ts (extended, then Permanent); tests/remaining-school.test.ts",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/courserecord.ts#remedy",
+  "kind": "official",
+  "before": "The degree needs every course passed. Its year can’t be repeated within the nine semesters the Bulletin allows. After your last year’s term review, unless it puts you on academic warning, you can ask for an additional term to retake it on the Standing tab.",
+  "after": "The degree needs every course passed. You can’t repeat its year: that would go past the nine semesters the Bulletin allows. Instead, after your last year’s term review, you can ask on the Standing tab for an additional term to retake it, unless that review puts you on academic warning.",
+  "why": "The player first, the reason after the colon, the qualification at the end of the sentence that carries the next step.",
+  "meaningSensitive": true,
+  "verified": "tests/scope-school.test.ts and tests/remaining-school.test.ts EXTRA_LATER",
+  "batch": 1
+ },
+ {
+  "source": "src/ui/components/CourseworkPane.tsx#AssignmentCard",
+  "kind": "label",
+  "before": "Shown Today: if you showed it today on a good day, it would come to about 52.3 (Working).",
+  "after": "Shown Today: if you showed it today, on a good day, it would come to about 52 of 100 (Working).",
+  "why": "\"About\" with a tenth contradicted itself; a forecast in whole points of 100, the scale the feedback header uses.",
+  "meaningSensitive": false,
+  "verified": "screens.txt (screens.mts, the Coursework tab rendered); the band beside it reads the unrounded figure as before",
+  "batch": 1
+ },
+ {
+  "source": "src/ui/components/CourseworkPane.tsx#Rehearsals",
+  "kind": "label",
+  "before": "Theo isn’t sure what you’re playing for: your choices weren’t clear to them. (Simulated: the game’s words.)",
+  "after": "Theo isn’t sure what you’re playing for: your choices weren’t clear to them. (A summary of your preparation, not Theo’s own words.)",
+  "why": "The working reference's label of a simulation, and true to how it's made: peerNote reads your preparation as it stands.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g24-school.test.ts and tests/evidence-g22-school.test.ts",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/classmates.ts#registerClassmates",
+  "kind": "narration",
+  "before": "You share no open scene with Chloe, so you ran their lines. It helped them, but it didn’t move your own work.",
+  "after": "You and Chloe don’t have a scene together right now, so you ran their lines. It helped them, but not your own preparation.",
+  "why": "The working reference's row 4, word for word.",
+  "meaningSensitive": false,
+  "verified": "tests/student-experience.test.ts",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/systems/playreading.ts#registerPlayReading <plays.read>",
+  "kind": "narration",
+  "before": "Fleabag, by Phoebe Waller-Bridge, read through. It reads as a monologue for a female performer (solo). The cast as published: 1 woman and 0 men.",
+  "after": "You read Fleabag, by Phoebe Waller-Bridge, all the way through. It reads as a monologue for a female performer (solo). The published cast is 1 woman.",
+  "why": "A sentence with a subject in place of a fragment; a side with no parts is left out.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g27-ui.test.ts",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/content/guide/school.ts#SCHOOL [school.repeat]",
+  "kind": "tutorial",
+  "before": "With an Incomplete: book its make-up sessions now, one at a time, well before the deadline.",
+  "after": "With an Incomplete: press Make Up A Session now, a session at a time, well before the deadline.",
+  "why": "Nothing is booked: pressing Make Up A Session does the session at once (school.make_up moves the clock). The step names the real control.",
+  "meaningSensitive": true,
+  "verified": "guide-b1.txt (guide.mts); code read: school.make_up advances the clock by makeUpMinutes and counts the session",
+  "batch": 1
+ },
+ {
+  "source": "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.class]",
+  "kind": "tutorial",
+  "before": "Your class is the other students you study with, and how you answer them shapes how they work with you. On a class day you’re there, a classmate may bring you something …",
+  "after": "On a class day you’re there, a classmate may bring you something, on about 30% of such days and one at a time: … Answer it under Your Class on the Coursework tab within 22 hours. … If you’ve let someone down, press Make Amends beside them under Your Partners.",
+  "why": "The help leads with what happens and where to answer, and names the controls.",
+  "meaningSensitive": false,
+  "verified": "guide-b1.txt (guide.mts); tests/guide.test.ts",
+  "batch": 1
+ }
+]

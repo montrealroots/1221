@@ -859,7 +859,7 @@ describe('school.commencement', () => {
     expect(coverOn(sim.player, at(2027, 7, 31, 12))).toBe('yale');
     expect(coverOn(sim.player, at(2027, 8, 1, 12))).not.toBe('yale');
     // The library lends to students: after the degree, no copy.
-    expect(sim.execute({ kind: 'plays.read', payload: { playId: play } }).error).toBe('A copy is borrowed from the Haas Arts Library, which lends to students.');
+    expect(sim.execute({ kind: 'plays.read', payload: { playId: play } }).error).toBe('The Haas Arts Library lends only to students, so there’s no copy for you to borrow now.');
     // The Standing tab.
     const tab = drawn(sim, 'standing');
     expect(tab).toContain('class of 2029. Graduated.');

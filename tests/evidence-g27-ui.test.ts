@@ -304,13 +304,13 @@ describe('c-performerTitle', () => {
       const sim = ada('g27-read', { pronouns });
       // Before the tour (Thursday 27 August), refused in its words.
       sim.advanceTo(ET(2026, 8, 26, 18));
-      expect(sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } }).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
+      expect(sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } }).error).toBe('You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
       sim.advanceTo(ET(2026, 8, 27, 18));
       return sim.must<{ minutes: number; note: string }>({ kind: 'plays.read', payload: { playId: 'fleabag' } }).note;
     };
     // Its cast as Nick Hern Books publish it: one woman, no men.
-    expect(read('she/her')).toBe('Fleabag, by Phoebe Waller-Bridge, read through. It reads as a monologue for a female performer (solo). The cast as published: 1 woman and 0 men. There’s a part in it for you.');
-    expect(read('he/him')).toBe('Fleabag, by Phoebe Waller-Bridge, read through. It reads as a monologue for a female performer (solo). The cast as published: 1 woman and 0 men. Nothing in it is written for you now.');
+    expect(read('she/her')).toBe('You read Fleabag, by Phoebe Waller-Bridge, all the way through. It reads as a monologue for a female performer (solo). The published cast is 1 woman. There’s a part in it for you.');
+    expect(read('he/him')).toBe('You read Fleabag, by Phoebe Waller-Bridge, all the way through. It reads as a monologue for a female performer (solo). The published cast is 1 woman. Nothing in it is written for you now.');
   });
 
   it('PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused, Actress pressed, and moved with the pronouns; the slot, the Profile and Home say the title stored', () => {

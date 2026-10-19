@@ -90,7 +90,7 @@ describe('the maximum-mastery guarantee', () => {
     expect(e.limits.filter((l) => l.what === 'injury').map((l) => l.dimension)).toEqual(['execution']);
     // Each limit's cost is real: made whole, the dimension rises by it.
     for (const l of e.limits) expect(l.by).toBeGreaterThan(0);
-    expect(chiefLimit(e)).toContain(String(e.limits[0]!.by));
+    expect(chiefLimit(e)).toContain(e.limits[0]!.by < 0.5 ? 'less than a point' : `${Math.round(e.limits[0]!.by)} point`);
   });
 });
 

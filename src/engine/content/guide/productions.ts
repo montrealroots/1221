@@ -227,7 +227,8 @@ const CABARET_WEEKS = word(Math.round(YALE_CABARET.leadDays / 7));
 // --- a play to read ---------------------------------------------------------------------------------------------------
 
 const PLAY = CONTEMPORARY_PLAYS.find((p) => p.id === 'clybourne-park') ?? CONTEMPORARY_PLAYS[0]!;
-const PLAY_CAST = PLAY.cast?.f !== undefined ? `${PLAY.cast.f} ${PLAY.cast.f === 1 ? 'woman' : 'women'} and ${PLAY.cast.m} ${PLAY.cast.m === 1 ? 'man' : 'men'}` : PLAY.cast?.text ?? 'not on record';
+/** The example play's cast as the read's note says it, a side with no parts left out (`aspects`, `systems/playreading.ts`). */
+const PLAY_CAST = PLAY.cast?.f !== undefined ? [PLAY.cast.f ? `${PLAY.cast.f} ${PLAY.cast.f === 1 ? 'woman' : 'women'}` : '', PLAY.cast.m ? `${PLAY.cast.m} ${PLAY.cast.m === 1 ? 'man' : 'men'}` : ''].filter(Boolean).join(' and ') || PLAY.cast.text : PLAY.cast?.text ?? 'not on record';
 const PLAY_MINUTES = /short play|monologue/.test(PLAY.form ?? '') ? PLAYREADING.minutes.short : PLAYREADING.minutes.full;
 
 export const PRODUCTIONS: readonly GuideEntry[] = [
@@ -816,8 +817,8 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'Your Latest Notes shows the five most recent, one for each play.',
     ],
     unavailable: [
-      '“You don’t know where the library is yet. The building tour in Orientation shows you.”',
-      '“A copy is borrowed from the Haas Arts Library, which lends to students.”: after you’ve left the School.',
+      '“You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.”',
+      '“The Haas Arts Library lends only to students, so there’s no copy for you to borrow now.”: after you’ve left the School.',
       '“Read the play first. You need questions before you can research it.”',
       '“You’ve already researched its first production, and there’s nothing more on record to find.”',
       '“You’re at … until ….”, or “… starts at …: there isn’t the time before it.”',
@@ -825,7 +826,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     ],
     mistakes: [
       `Reading the same play again within ${PLAYREADING.freshDays} days: it costs ${pct(PLAYREADING.again)} of the time and trains no craft. Wait a month.`,
-      'Missing orientation’s tour: the library stays unknown to you until you catch the tour up.',
+      'Missing orientation’s tour: you don’t know where the library is until you catch up on the tour.',
       'Expecting to perform one: none of them is performed in the game. The scenes for class are public-domain plays and scenes written for the game.',
     ],
     next: [
@@ -841,7 +842,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     example: {
       setup: 'A first-year in New Haven, the tour done, with a free evening.',
       steps: [`Press Read It on ${PLAY.title}, by ${PLAY.by}.`, `${PLAY_MINUTES} minutes later, read the note.`, 'Press Research It.'],
-      result: `The note reads “${PLAY.title}, by ${PLAY.by}, read through.”, then its form, “The cast as published: ${PLAY_CAST}.”, whether there’s a part for you, and its setting. Research, ${PLAYREADING.minutes.research} minutes more, finds it first staged in ${PLAY.premiere.year} at ${PLAY.premiere.venue}${PLAY.published ? `, first published in ${PLAY.published.year} by ${PLAY.published.by}` : ''}, and who licenses it. Read again the next week, it takes ${Math.round(PLAY_MINUTES * PLAYREADING.again)} minutes and trains nothing.`,
+      result: `The note reads “You read ${PLAY.title}, by ${PLAY.by}, all the way through.”, then its form, “The published cast is ${PLAY_CAST}.”, whether there’s a part for you, and its setting. Research, ${PLAYREADING.minutes.research} minutes more, finds it first staged in ${PLAY.premiere.year} at ${PLAY.premiere.venue}${PLAY.published ? `, first published in ${PLAY.published.year} by ${PLAY.published.by}` : ''}, and who licenses it. Read again the next week, it takes ${Math.round(PLAY_MINUTES * PLAYREADING.again)} minutes and trains nothing.`,
     },
   },
 ];

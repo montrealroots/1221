@@ -19,7 +19,7 @@
  *   and the other none. And an evening running lines slept through takes trust 6 and the bond 3, and amends
  *   give back the 6 and 2 of the 3: the figures the comment on `CLASS.amends` gave a rehearsal missed, which takes 12 and
  *   5, until it was corrected later on 2026-10-13 (the defect was reported here, not fixed).
- * - `school.respond`: 'That work is finished.', which the first round couldn't reach, is reached by a withdrawal the
+ * - `school.respond`: 'That piece is finished.' (until 2026-10-19, brief 15, 'That work is finished.'), which the first round couldn't reach, is reached by a withdrawal the
  *   afternoon a classmate brings a different reading: every answer refused in those words, nothing moved, where a twin
  *   still at the School keeps hers. One test here failed on a defect found reaching it, until later on 2026-10-13: the
  *   withdrawal called off the moment's lapse with every other school item, so a moment left unanswered stayed open for
@@ -339,11 +339,11 @@ describe('school.respond', () => {
     // Her work lapses with the School; the moment, brought at nine, is still open until seven tomorrow.
     expect(work(sim, id).status).toBe('lapsed');
     expect(momentIn(sim, m.id)).toMatchObject({ status: 'open', until: at(2026, 9, 1, 7) });
-    for (const choice of ['hold', 'theirs', 'both']) expect(no(sim, 'school.respond', { momentId: m.id, choice }), choice).toBe('That work is finished.');
+    for (const choice of ['hold', 'theirs', 'both']) expect(no(sim, 'school.respond', { momentId: m.id, choice }), choice).toBe('That piece is finished.');
     expect({ trust: trustOf(mate()), bond: mate().bond ?? 0, answers: work(sim, id).answers }).toEqual(was);
     expect(work(sim, id).readsApart).toBeUndefined();
     expect(work(sim, id).tryBoth).toBeUndefined();
-    expect(no(reload(sim), 'school.respond', { momentId: m.id, choice: 'hold' })).toBe('That work is finished.');
+    expect(no(reload(sim), 'school.respond', { momentId: m.id, choice: 'hold' })).toBe('That piece is finished.');
     // The twin who stayed keeps her reading against the text: a point of trust, and the scene together read apart.
     expect(go<{ done: string }>(stays, 'school.respond', { momentId: m.id, choice: 'hold' }).done).toBe('You kept yours. Priya isn’t persuaded, and the text is on their side.');
     expect(trustOf(mateOf(stays, work(stays, id)))).toBe(was.trust - 1);

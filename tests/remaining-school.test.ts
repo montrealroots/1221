@@ -387,8 +387,8 @@ const B_STEPS: readonly Step[] = [
 const journeyB = once(() => journey('g26-l3', {}, B_STEPS, false));
 const journeyBReloaded = once(() => journey('g26-l3', {}, B_STEPS, true));
 
-const OFFERED = '. At the year’s end you can ask to repeat the year on the Standing tab.';
-const permanentBody = (name: string, tail: string) => `The month to make it up ran out, so ${name} carries no credit, and the degree can’t be completed without it${tail}`;
+const OFFERED = ' At the year’s end, you can ask to repeat the year on the Standing tab.';
+const permanentBody = (name: string, tail: string) => `The time to make it up ran out, so ${name} carries no credit, and the degree can’t be completed without it.${tail}`;
 
 // ---------------------------------------------------------------------------
 // school.repeat-room-leave
@@ -603,7 +603,7 @@ describe('school.continuity: earned results across leave, return, a repeat, an a
 // ---------------------------------------------------------------------------
 
 const STANDS = 'What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.';
-const EXTRA_LATER = '. Its year can’t be repeated within the nine semesters the Bulletin allows. After your last year’s term review, unless it puts you on academic warning, you can ask for an additional term to retake it on the Standing tab.';
+const EXTRA_LATER = ' You can’t repeat its year: that would go past the nine semesters the Bulletin allows. Instead, after your last year’s term review, you can ask on the Standing tab for an additional term to retake it, unless that review puts you on academic warning.';
 
 /**
  * sc-x3 (the scope tests' seed): Text Analysis I (Thursdays) slept through four times in Spring Term 2027, failed, the
@@ -627,7 +627,7 @@ describe('school.s6.dead-ends: no notice leaves the student without what remains
     const school = () => sim.player.school!;
     expect(school().courses!['4:DRAM 263a/b']).toMatchObject({ result: 'fail', academic: 2 });
     expect([school().standing, school().endedAt]).toEqual(['concern', undefined]);
-    expect(titled(sim, 'Not Passed: Clown').map((n) => [n.at, n.body])).toEqual([[at(2028, 12, 8, 17), `You didn’t pass Clown: you came to 7 of the 11 classes you weren’t excused from. The degree needs every course passed${EXTRA_LATER}`]]);
+    expect(titled(sim, 'Not Passed: Clown').map((n) => [n.at, n.body])).toEqual([[at(2028, 12, 8, 17), `You didn’t pass Clown: you came to 7 of the 11 classes you weren’t excused from. The degree needs every course passed.${EXTRA_LATER}`]]);
     sim = reload(sim);
     // The third year, its terms past the six the scholarship supports billed and paid as each begins (unpaid, a hold
     // stops its registration: the next test); the last spring, Spring Term 2030, to its evaluation of Friday 26 April at five.
@@ -1015,8 +1015,8 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     expect(refusedLeaving(sim, 'school.prepare', { assignmentId: 'nope', activity: 'x' })).toBe('There’s no such assignment.');
     expect(refusedLeaving(sim, 'school.approach', { assignmentId: 'nope', kind: 'drill' })).toBe('There’s no such assignment.');
     expect(refusedLeaving(sim, 'school.ask_partner', { assignmentId: 'nope', at: sim.now + 3 * MS_DAY })).toBe('There’s no such assignment.');
-    expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: 'nope', pace: 'driven' })).toBe('There’s no such work.');
-    expect(refusedLeaving(sim, 'school.prepare', { assignmentId: solo.id, activity: 'nonsense' })).toBe('That isn’t a step of this work.');
+    expect(refusedLeaving(sim, 'school.choose_playing', { assignmentId: 'nope', pace: 'driven' })).toBe('There’s no such piece.');
+    expect(refusedLeaving(sim, 'school.prepare', { assignmentId: solo.id, activity: 'nonsense' })).toBe('That isn’t a step of this piece.');
     const partnerStep = (templateById(paired.template)!.activities.find((x) => x.needs?.includes('partner')))!;
     expect(partnerStep).toBeDefined();
     if (paired.feedback && !paired.feedback.seen) paired.feedback.seen = true;
@@ -1067,7 +1067,7 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     if (paired.feedback && !paired.feedback.seen) paired.feedback.seen = true;
     (cw.notes ??= []).unshift({ key: 'dim:partner', status: 'open', first: '2026-09-08', last: '2026-10-01', given: 9, history: [] });
     expect(persistentFor(cw, paired)[0]!.dim).toBe('partner');
-    expect(refusedLeaving(sim, 'school.approach', { assignmentId: paired.id, kind: 'partner' })).toBe('That note is already about work with your partner, so this adds nothing.');
+    expect(refusedLeaving(sim, 'school.approach', { assignmentId: paired.id, kind: 'partner' })).toBe('That note is already about working with your partner, so this wouldn’t add anything.');
   }, 600_000);
 
   it('PLAYER JOURNEY with TEST SETUP: cast at the Rep and in a School production with calls in the weeks a Cabaret show would rehearse and play, the show is refused in the Bulletin’s words, on its panel and by the command (no played life was double-cast there in the second years of eight seeds searched on 2026-10-16, dc-1 to dc-8, so the two castings’ calls are put on the calendar by hand)', () => {

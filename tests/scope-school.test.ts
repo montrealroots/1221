@@ -509,7 +509,7 @@ describe('school.request_repeat', () => {
     // The first time, the year's end was offered; the second, not, as it isn't to be had. Until 2026-10-15 both offered it.
     const name = 'Text Analysis I: The Actor’s Table Work';
     expect(titled(sim, `Not Passed: ${name}`).map((n) => n.body)).toEqual([
-      `You didn’t pass ${name}: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed. At the year’s end you can ask to repeat the year on the Standing tab.`,
+      `You didn’t pass ${name}: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed. At the year’s end, you can ask to repeat the year on the Standing tab.`,
       `You didn’t pass ${name}: you came to 11 of the 15 classes you weren’t excused from. The degree needs every course passed.`,
     ]);
     // Dismissed at the same evaluation, in the faculty’s words, with nothing left to ask.
@@ -530,7 +530,7 @@ describe('school.request_repeat', () => {
     expect(fall.sort()).toEqual([['0:DRAM 113a/b', 18, 26], ['0:DRAM 153a', 9, 13], ['0:DRAM 403a/b', 9, 13]]);
     // Three Fails in a term, past the Bulletin’s two: the first review keeps them on warning, the year to be repeated.
     expect([school().standing, school().reviews!.map((r) => r.outcome)]).toEqual(['warning', ['warning']]);
-    const offered = /\. At the year’s end you can ask to repeat the year on the Standing tab\.$/;
+    const offered = /\. At the year’s end, you can ask to repeat the year on the Standing tab\.$/;
     const fallFails = sim.universe.notifications.filter((n) => n.title.startsWith('Not Passed: '));
     expect(fallFails).toHaveLength(3);
     for (const n of fallFails) expect(n.body).toMatch(offered);
@@ -558,7 +558,7 @@ describe('school.request_repeat', () => {
     expect(sleepThrough(sim, 0, 'DRAM 153a', 4)).toHaveLength(4);
     tend(sim, at(2026, 12, 11, 18));
     expect(school().courses!['0:DRAM 153a']).toMatchObject({ result: 'fail', academic: 0, attended: 9, meetings: 13, excused: 0 });
-    expect(titled(sim, 'Not Passed: Play').map((n) => [n.at, n.body])).toEqual([[at(2026, 12, 11, 17), 'You didn’t pass Play: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed. At the year’s end you can ask to repeat the year on the Standing tab.']]);
+    expect(titled(sim, 'Not Passed: Play').map((n) => [n.at, n.body])).toEqual([[at(2026, 12, 11, 17), 'You didn’t pass Play: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed. At the year’s end, you can ask to repeat the year on the Standing tab.']]);
     expect(school().standing).toBe('concern');
     // Monday 14 December, the fall evaluated: a leave begins at the spring. Not a personal one, with Play unpassed.
     tend(sim, at(2026, 12, 14, 10));
@@ -601,7 +601,7 @@ describe('school.request_repeat', () => {
     let sim = thaw(firstSpring().afterSpring1);
     const school = () => sim.player.school!;
     expect(school().standing).toBe('concern');
-    const offered = /\. At the year’s end you can ask to repeat the year on the Standing tab\.$/;
+    const offered = /\. At the year’s end, you can ask to repeat the year on the Standing tab\.$/;
     expect(titled(sim, 'Not Passed: Text Analysis I: The Actor’s Table Work').map((n) => n.body)).toEqual([expect.stringMatching(offered)]);
     tend(sim, at(2027, 8, 30, 0));
     // Four Mondays of Fall Term 2027 slept through: Mondays-only DRAM 263a/b at 9 of 13.
@@ -666,7 +666,7 @@ describe('school.request_repeat', () => {
     expect([school().standing, school().endedAt]).toEqual(['warning', undefined]);
     // From 2026-10-15: no repeat offered, which `repeatRefusal` would refuse at the year's end. From 2026-10-16 the additional
     // term the last year's end will offer is named in its place (tests/remaining-school.test.ts, “no dead-end warning”).
-    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => [n.at, n.body])).toEqual([[at(2028, 1, 9, 17), 'The month to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. Its year can’t be repeated within the nine semesters the Bulletin allows. After your last year’s term review, unless it puts you on academic warning, you can ask for an additional term to retake it on the Standing tab.']]);
+    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => [n.at, n.body])).toEqual([[at(2028, 1, 9, 17), 'The time to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. You can’t repeat its year: that would go past the nine semesters the Bulletin allows. Instead, after your last year’s term review, you can ask on the Standing tab for an additional term to retake it, unless that review puts you on academic warning.']]);
   }, 300_000);
 
   it('PLAYER JOURNEY: a first year repeated and passed, then the second fall’s Clown slept through: its Fail, at an evaluation that steps good to concern, offers no repeat, and at the second spring’s end the Standing tab has no Ask To Repeat The Year…, the command refused past the nine semesters', () => {
@@ -691,7 +691,7 @@ describe('school.request_repeat', () => {
     // year's two again and the program's two after it make ten, past the Bulletin's nine. Until 2026-10-15 it was offered.
     expect([school().standing, school().endedAt]).toEqual(['concern', undefined]);
     // From 2026-10-16 the additional term the last year's end will offer is named in its place (tests/remaining-school.test.ts).
-    expect(titled(sim, 'Not Passed: Clown').map((n) => [n.at, n.body])).toEqual([[at(2028, 12, 8, 17), 'You didn’t pass Clown: you came to 7 of the 11 classes you weren’t excused from. The degree needs every course passed. Its year can’t be repeated within the nine semesters the Bulletin allows. After your last year’s term review, unless it puts you on academic warning, you can ask for an additional term to retake it on the Standing tab.']]);
+    expect(titled(sim, 'Not Passed: Clown').map((n) => [n.at, n.body])).toEqual([[at(2028, 12, 8, 17), 'You didn’t pass Clown: you came to 7 of the 11 classes you weren’t excused from. The degree needs every course passed. You can’t repeat its year: that would go past the nine semesters the Bulletin allows. Instead, after your last year’s term review, you can ask on the Standing tab for an additional term to retake it, unless that review puts you on academic warning.']]);
     sim = reload(sim);
     // The year's end: the second spring, Spring Term 2029, played through to its evaluation of Friday 27 April at five.
     tend(sim, at(2029, 4, 27, 18));
@@ -763,7 +763,7 @@ describe('school.request_extra_term', () => {
     // The Fail's notice promises nothing the withholding at the same evaluation takes away: until 2026-10-15 it told
     // them to ask to repeat the year at its end, which `You’re not at school.` then refused.
     expect(titled(sim, 'Not Passed: Movement Invention III').map((n) => n.body)).toEqual([
-      'You didn’t pass Movement Invention III: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed. At the year’s end you can ask to repeat the year on the Standing tab.',
+      'You didn’t pass Movement Invention III: you came to 9 of the 13 classes you weren’t excused from. The degree needs every course passed. At the year’s end, you can ask to repeat the year on the Standing tab.',
       'You didn’t pass Movement Invention III: you came to 10 of the 14 classes you weren’t excused from. The degree needs every course passed.',
     ]);
     // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).

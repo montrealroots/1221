@@ -1,0 +1,772 @@
+{
+ "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.approach]": {
+  "status": "Rewritten",
+  "hash": "767452bb7671",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide.test.ts and tests/guide-examples-coursework.test.ts; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.class]": {
+  "status": "Rewritten",
+  "hash": "8926489492f0",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide.test.ts and tests/guide-examples-coursework.test.ts; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.prepare]": {
+  "status": "Rewritten",
+  "hash": "e546c19af746",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide.test.ts and tests/guide-examples-coursework.test.ts; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.table]": {
+  "status": "Rewritten",
+  "hash": "7eede058f3cc",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide.test.ts and tests/guide-examples-coursework.test.ts; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.plays]": {
+  "status": "Rewritten",
+  "hash": "e3db65e2ce64",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide-examples-productions.test.ts; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [school.repeat]": {
+  "status": "Rewritten",
+  "hash": "a2b52267bbc4",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide-examples-school.test.ts; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/systems/classmates.ts#amendsRefusal": {
+  "status": "Retained",
+  "hash": "d30404d50dc9",
+  "on": "2026-10-19",
+  "reason": "Two short refusals for Make Amends: there's no such classmate, or there's nothing between you to put right, each true and enough at that moment.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#boundaryRefusal": {
+  "status": "Retained",
+  "hash": "6a65e290a2ff",
+  "on": "2026-10-19",
+  "reason": "A classmate's own condition after being let down, with the fix in the same breath: ask for an evening at least a day ahead.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [accept]": {
+  "status": "Retained",
+  "hash": "9be6dc439c3f",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [argue]": {
+  "status": "Retained",
+  "hash": "8701805c38b6",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [both]": {
+  "status": "Retained",
+  "hash": "be882e82a9c8",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [cool]": {
+  "status": "Retained",
+  "hash": "ab13e9a9f5b9",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [help]": {
+  "status": "Retained",
+  "hash": "67060a410e29",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [hold]": {
+  "status": "Retained",
+  "hash": "48c1cdba7abb",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [no]": {
+  "status": "Retained",
+  "hash": "3650755684db",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [respect]": {
+  "status": "Retained",
+  "hash": "9be6dc439c3f",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [theirs]": {
+  "status": "Retained",
+  "hash": "14407cfa3c29",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#CHOICES [yes]": {
+  "status": "Retained",
+  "hash": "cdbf28b7d9c2",
+  "on": "2026-10-19",
+  "reason": "The answer buttons for a classmate's moment, each a short Title Case verb phrase that says the answer itself and is distinct from the buttons beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#classMoment": {
+  "status": "Retained",
+  "hash": "ceb15fa2d7c8",
+  "on": "2026-10-19",
+  "reason": "The line a classmate keeps in their memory of you after encouraging you, plain past tense, read on Your Partners as the latest thing between you.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#classMoment [apology]": {
+  "status": "Retained",
+  "hash": "1702dc71ef9f",
+  "on": "2026-10-19",
+  "reason": "A classmate's apology for missing a rehearsal, with an everyday reason in their own voice, so Accept It or Take It Coolly has something real to answer.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#classMoment [boundary]": {
+  "status": "Rewritten",
+  "hash": "b252535022b6",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g23-school.test.ts boundary moment; tests/evidence-g18-school.test.ts and tests/evidence-g24-school.test.ts (Hannah's boundary)",
+  "first": "Pending"
+ },
+ "src/engine/systems/classmates.ts#classMoment [encouragement]": {
+  "status": "Rewritten",
+  "hash": "3c6ed2d71e8a",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g24-school.test.ts (a word after class, said once after an Unready showing)",
+  "first": "Pending"
+ },
+ "src/engine/systems/classmates.ts#classMoment [help]": {
+  "status": "Retained",
+  "hash": "5133e2797254",
+  "on": "2026-10-19",
+  "reason": "A classmate's request in their own circumstances: behind on their lines, how long they need, and an everyday reason for being behind, all a player needs to answer.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#disagreement": {
+  "status": "Retained",
+  "hash": "be749f7fb33f",
+  "on": "2026-10-19",
+  "reason": "A classmate's other reading set beside yours, both quoted from the Table Work answers, so Keep Your Reading and Try Theirs are a real choice between two named answers.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#lapse": {
+  "status": "Retained",
+  "hash": "e19a7f8c255a",
+  "on": "2026-10-19",
+  "reason": "The classmate's memory of a moment you left unanswered, in plain past tense, read on Your Partners as what happened between you.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#MOMENT_TITLE": {
+  "status": "Retained",
+  "hash": "ead9f8eabb2c",
+  "on": "2026-10-19",
+  "reason": "Short Title Case titles for what a classmate brings you, each a plain noun phrase or the question they ask, heading both the notice and the Your Class panel.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/classmates.ts#PRIORITY_WORDS": {
+  "status": "Retained",
+  "hash": "44cc85131eca",
+  "on": "2026-10-19",
+  "reason": "What a classmate cares about most, four Title Case phrases after Cares Most About on Your Partners, each a plain thing a person might care about.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#registerClassmates": {
+  "status": "Rewritten",
+  "hash": "a859a414e889",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g23-school.test.ts Ran Lines With (Your lines for … went from …); tests/student-experience.test.ts with no scene shared",
+  "first": "Pending"
+ },
+ "src/engine/systems/classmates.ts#registerClassmates <school.make_amends>": {
+  "status": "Retained",
+  "hash": "b78bf303a034",
+  "on": "2026-10-19",
+  "reason": "The classmate's memory once you make amends, plain past tense, shown as the latest thing between you on Your Partners.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/classmates.ts#registerClassmates <school.respond>": {
+  "status": "Rewritten",
+  "hash": "6b1f718dccdc",
+  "on": "2026-10-19",
+  "evidence": "tests/student-experience.test.ts \"with no scene shared, runs their lines\"; tests/evidence-g18-school.test.ts boundary answers (That stops once you’ve kept … rehearsals)",
+  "first": "Pending"
+ },
+ "src/engine/systems/classmates.ts#respondRefusal": {
+  "status": "Rewritten",
+  "hash": "94e0660d0d47",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b07.test.ts \"school.respond\" (That piece is finished.), and the other refusals read in tests/student-experience.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/classmates.ts#studyEvening": {
+  "status": "Retained",
+  "hash": "2718ce2626b2",
+  "on": "2026-10-19",
+  "reason": "The invitation gives the day and the hour, and says when they're returning a favor, everything the player needs to say yes or no.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/courserecord.ts#extendRefusal": {
+  "status": "Rewritten",
+  "hash": "c1fa43147bd9",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g26-school.test.ts \"Ask For A Month More, pressed on the Standing tab, moves Acting I’s month to 9 February once\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/courserecord.ts#LAB_CODES": {
+  "status": "Retained",
+  "hash": "c774a10162f6",
+  "on": "2026-10-19",
+  "reason": "Yale's own course codes for the lab courses, as the School's Bulletin prints them; a real code a student would see on their record, not the game's to reword.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/courserecord.ts#makeUpRefusal": {
+  "status": "Retained",
+  "hash": "6a4f3f8ea223",
+  "on": "2026-10-19",
+  "reason": "Refusals behind Make Up A Session: no Incomplete there, you've left the School, or too close to the deadline, which it gives to the minute so you know what was missed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/courserecord.ts#registerCourseRecord": {
+  "status": "Rewritten",
+  "hash": "d16ad627a3c5",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g26-school.test.ts reminders and Permanent Incomplete; tests/evidence2-b09.test.ts the twin's reminders; tests/language-dynamic.test.ts the week-left reminder",
+  "first": "Pending"
+ },
+ "src/engine/systems/courserecord.ts#registerCourseRecord <school.make_up>": {
+  "status": "Retained",
+  "hash": "d5afff259b36",
+  "on": "2026-10-19",
+  "reason": "The course's result line on the Standing tab once a make-up passes it, saying plainly how it was passed: made up after an Incomplete.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/courserecord.ts#remedy": {
+  "status": "Rewritten",
+  "hash": "d9fe31a32dfc",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-school.test.ts Fail and Permanent Incomplete notices; tests/remaining-school.test.ts OFFERED and EXTRA_LATER journeys",
+  "first": "Pending"
+ },
+ "src/engine/systems/courserecord.ts#scheduleDue": {
+  "status": "Retained",
+  "hash": "2e39b860eff9",
+  "on": "2026-10-19",
+  "reason": "The calendar entry for an Incomplete's deadline and its reminder, titled with the course and what's due, the way the calendar titles its other deadlines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/courserecord.ts#settleCourses": {
+  "status": "Rewritten",
+  "hash": "3303c995a499",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts \"a warning repeated says what changed and what’s still open: an Incomplete, then a week before its deadline\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/courserecord.ts#tellFails": {
+  "status": "Rewritten",
+  "hash": "266deec6c458",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-school.test.ts school.request_repeat journeys; tests/remaining-school.test.ts \"a second fall’s Fail after the first year’s repeat can’t be repeated for\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#afterTogether": {
+  "status": "Retained",
+  "hash": "86d1afbc03c9",
+  "on": "2026-10-19",
+  "reason": "The line a classmate keeps in their memory of you, shown on Your Partners: plain past tense, naming the play where they slipped and you covered for them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#answerRefusal": {
+  "status": "Retained",
+  "hash": "ca4a900164f2",
+  "on": "2026-10-19",
+  "reason": "Plain refusals for answering a partner's request: no such request, too late, already answered, or what's on your calendar then and that you'll have to say no.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/coursework.ts#approachRefusal": {
+  "status": "Rewritten",
+  "hash": "b5aad1202252",
+  "on": "2026-10-19",
+  "evidence": "tests/approaches.test.ts \"is offered only for a note given often, one a work\"; tests/defects-g8-9.test.ts; tests/remaining-school.test.ts GUARD on the partner way; rendered.txt \"a done piece, a way at a note\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#askRefusal": {
+  "status": "Rewritten",
+  "hash": "f82cd03d1f1c",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt \"a done piece, asking the partner\" (That piece is finished.); tests/evidence-g18-school.test.ts ask_partner refusals; the other refusals kept, each a plain reason with what clashes",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#BAND_LABEL": {
+  "status": "Retained",
+  "hash": "e4bab7a0d520",
+  "on": "2026-10-19",
+  "reason": "The four bands a shown piece comes out in, each one word, the same word the card, the notices, Your Notes and the term review use for that range.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#book": {
+  "status": "Retained",
+  "hash": "f3f114facbbe",
+  "on": "2026-10-19",
+  "reason": "The calendar entry's title for a rehearsal, naming the partner by first name as the calendar names the other people you meet.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#feedbackWords": {
+  "status": "Rewritten",
+  "hash": "b632bbc0de5e",
+  "on": "2026-10-19",
+  "evidence": "tests/feedback.test.ts \"a note on the same thing, over time\" and \"a weakness that keeps coming back\"; tests/language-dynamic.test.ts repetition test; rendered.txt note lines (new, second, fourth, better, slipped back, step beyond)",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#hourWords": {
+  "status": "Retained",
+  "hash": "a6132f5370c8",
+  "on": "2026-10-19",
+  "reason": "Hours said the way a person says them, 7 in the morning, noon, 10 at night, so a classmate's refusal can end on one naturally.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/coursework.ts#mateBusy": {
+  "status": "Retained",
+  "hash": "e787624d1734",
+  "on": "2026-10-19",
+  "reason": "A classmate's own reason they can't rehearse at the hour you asked, in a short sentence with the hours said as a person says them: in class until three, calls from six.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/coursework.ts#meetingWeight": {
+  "status": "Rewritten",
+  "hash": "82eb1ab6c34d",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-school-term.test.ts \"each miss is told once, in words that say how it counts\"; tests/language-dynamic.test.ts due soonest, shown and not shown; rendered.txt MONTH Still There notice",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#needRefusal": {
+  "status": "Rewritten",
+  "hash": "e9261718a3c7",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g18-school.test.ts \"is refused a studio and the library before the building’s tour, slept through, and done once the tour is caught up by hand, through a reload\"; tests/evidence-g22-school.test.ts orientation journey; screens.txt (the grayed step's reason)",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#noteText": {
+  "status": "Rewritten",
+  "hash": "8d7108c1e5f9",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt \"a note on the partner part\" at none, one, two and three rehearsals and readers; tests/language-dynamic.test.ts partner and reader; tests/evidence-g24-school.test.ts skill note \"takes a note on a skill at the showing again\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#orient": {
+  "status": "Rewritten",
+  "hash": "f6c831b9d28c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g19-school.test.ts orientation journey; tests/evidence-g22-school.test.ts \"The Courses And What They Ask\"; rendered.txt MONTH Meeting The Acting Faculty and The Courses And What They Ask",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [classmates]": {
+  "status": "Retained",
+  "hash": "5137fb3e335a",
+  "on": "2026-10-19",
+  "reason": "The session's name on the calendar and the Orientation panel, saying in three words what happens in it: you meet the others in your class.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [expectations]": {
+  "status": "Retained",
+  "hash": "481a161c4bcd",
+  "on": "2026-10-19",
+  "reason": "The session the empty Work Set panel names as the one that sets the first pieces, titled for what each course does in it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [faculty]": {
+  "status": "Retained",
+  "hash": "deabbc2eb31a",
+  "on": "2026-10-19",
+  "reason": "The session's name on the calendar and the Orientation panel, naming who you meet by the department's own name, the acting faculty.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [register]": {
+  "status": "Retained",
+  "hash": "0e9d46bab347",
+  "on": "2026-10-19",
+  "reason": "The session's name as the calendar and the Orientation panel list it, saying plainly what happens there: you register and set up your Yale account.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#ORIENTATION [tour]": {
+  "status": "Retained",
+  "hash": "706a3c220681",
+  "on": "2026-10-19",
+  "reason": "The tour's session name lists the three places it shows you, the same studios and library that the step refusals send a player back to it for.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#orientationRefusal": {
+  "status": "Retained",
+  "hash": "07c9f76867a7",
+  "on": "2026-10-19",
+  "reason": "Short reasons beside a grayed Catch Up: the day a session was done, that it's still to come and already on your calendar, or that Orientation is over.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/coursework.ts#partnerAsks": {
+  "status": "Rewritten",
+  "hash": "90e7b0a919d4",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt MONTH Noah Asks To Rehearse and Julian Asks To Rehearse; tests/partners.test.ts \"in class, for an evening they’re free before it’s due\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#peerNote": {
+  "status": "Retained",
+  "hash": "c6159dc18442",
+  "on": "2026-10-19",
+  "reason": "A scene partner's comment after a rehearsal, in their own voice, naming the one thing of your preparation they'd notice across the room: the lines, the scene, your choices or time on its feet.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#playingRefusal": {
+  "status": "Rewritten",
+  "hash": "cf1551b749f6",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-school.test.ts GUARD \"commands the coursework screen never sends ... are refused in their words\"; rendered.txt \"no such piece, a way of playing\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#prepareRefusal": {
+  "status": "Rewritten",
+  "hash": "63839374fb0f",
+  "on": "2026-10-19",
+  "evidence": "tests/partners.test.ts \"in class, for an evening they’re free before it’s due, told, and the work waits for the answer\"; tests/evidence-g18-school.test.ts (the moment's refusal); rendered.txt \"a done piece, a step\"; screens.txt (the feedback refusal)",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#READER": {
+  "status": "Retained",
+  "hash": "2ba49bf6fb91",
+  "on": "2026-10-19",
+  "reason": "The step's button label, an imperative that sits beside the card's other steps and says exactly what you do: run your side of the scene with someone reading the other part.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#registerCoursework": {
+  "status": "Rewritten",
+  "hash": "28f2c9a447b1",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt MONTH Noah Didn’t Hear Back and Julian Didn’t Hear Back (the lapsed request's notice and the partner's memory)",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.answer_partner>": {
+  "status": "Retained",
+  "hash": "de33df771022",
+  "on": "2026-10-19",
+  "reason": "The partner's memory of a polite no, in plain past tense with the date, which Your Partners shows as what happened between you.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.approach>": {
+  "status": "Retained",
+  "hash": "8f86a27d0c7d",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for a way at a note the screen never offers, naming plainly what was asked for: a way to work on it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.ask_partner>": {
+  "status": "Retained",
+  "hash": "3be16f780fe7",
+  "on": "2026-10-19",
+  "reason": "The line a partner keeps when they decline an hour, with the hour and their own reason, read later in the Your Partners log.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.cancel_rehearsal>": {
+  "status": "Rewritten",
+  "hash": "51b41c56e707",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g18-school.test.ts \"school.cancel_rehearsal: called off with notice costs no trust and leaves nothing to make right\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.choose>": {
+  "status": "Rewritten",
+  "hash": "98d94dada031",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g18-school.test.ts \"school.choose ... is refused in its own words: before the scene is read ... and on finished work\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#registerCoursework <school.read_feedback>": {
+  "status": "Retained",
+  "hash": "c4f98dcc7519",
+  "on": "2026-10-19",
+  "reason": "Two short refusals behind Mark As Read: there's no feedback on that piece, or you've read it already, each true and all the player needs then.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/coursework.ts#rehearsalOutcome": {
+  "status": "Rewritten",
+  "hash": "3e0292e58cc4",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g22-school.test.ts \"PLAYER JOURNEY: the partner doesn’t come: trust and bond held, their notice and the screen saying so\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#remedyWords": {
+  "status": "Rewritten",
+  "hash": "1bf1e885a08f",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt \"what works on the partner part\" and the table work; screens.txt Due Soonest and Shown Today; tests/workload.test.ts; tests/language-dynamic.test.ts the term's warning",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#reshownWords": {
+  "status": "Rewritten",
+  "hash": "04ca1a8c57d3",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts \"a note worked and the piece shown again: taken, the part’s figure before and after, and not taken, still open\"; rendered.txt Note Taken and Note Not Taken Yet notices",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#revisitWords": {
+  "status": "Retained",
+  "hash": "f58069fabbf3",
+  "on": "2026-10-19",
+  "reason": "A scene coming back says when it was set, which part you played and with whom, then the one thing different this time and how to do it at Table Work.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/coursework.ts#setWork": {
+  "status": "Rewritten",
+  "hash": "b1e1a192cd38",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/rendered.txt (render.mts, the engine's notices of work set, with a scene, a partner, a revisit and none); tests/language-dynamic.test.ts \"a partner and a reader: work set with one and without, a partner note with a reader’s evenings and none\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#show": {
+  "status": "Rewritten",
+  "hash": "30b5f90e7b04",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt NOTICE Shown with \"It didn’t come together today. ... When it does come together, here’s what to try next.\"; tests/attributes-phase-2b.test.ts F1 scene note",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#sinceLast": {
+  "status": "Rewritten",
+  "hash": "58e2ee090cd0",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt NOTICE Shown: \"That’s up from Unready ...\", \"That’s down from Working ...\", \"Unready again, as the course’s last piece was on ...\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#tableWorkRefusal": {
+  "status": "Rewritten",
+  "hash": "1e59769a77bd",
+  "on": "2026-10-19",
+  "evidence": "tests/table-work-unread.test.ts \"PLAYER JOURNEY: Table Work on The Cherry Orchard not yet read draws its select grayed...\"; rendered.txt \"table work, the text not read\"",
+  "first": "Pending"
+ },
+ "src/engine/systems/coursework.ts#termWarning": {
+  "status": "Rewritten",
+  "hash": "5f3363da85a0",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-school-term.test.ts \"the missed-work term, played\"; tests/workload.test.ts warning journeys; tests/language-dynamic.test.ts none, one or several; rendered.txt MONTH A Word On Your Coursework",
+  "first": "Pending"
+ },
+ "src/engine/systems/evaluation.ts#chiefLimit": {
+  "status": "Rewritten",
+  "hash": "56cbbf9719c0",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt every limit kind in both tenses; tests/editorial-school-words.test.ts; tests/attributes-phase-2b.test.ts F1; tests/genre-identity-screens.test.ts; screens.txt Shown Today lines",
+  "first": "Pending"
+ },
+ "src/engine/systems/evaluation.ts#conditionWords": {
+  "status": "Rewritten",
+  "hash": "34a234a0c427",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/rendered.txt \"limit, condition\" lines: tired, ill, injured, concussed, stamina by the close, shaken in beat 3, past and present",
+  "first": "Pending"
+ },
+ "src/engine/systems/evaluation.ts#halfOf": {
+  "status": "Retained",
+  "hash": "740a7eb0a0e2",
+  "on": "2026-10-19",
+  "reason": "The half-year's name a save keys Journey.byTerm by, 2027 Spring, which the Profile prints as the term's heading; renaming it would split an old save's terms in two.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/evaluation.ts#judgeExact": {
+  "status": "Retained",
+  "hash": "e864ad36928a",
+  "on": "2026-10-19",
+  "reason": "Short Title Case names for what held a piece back on the day, Down With The Flu, An Injury Still Mending, shown in the work's look and turned into a sentence by chiefLimit.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/evaluation.ts#judgeExact [difficulty]": {
+  "status": "Rewritten",
+  "hash": "b80034c7149b",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/rendered.txt \"a hard piece, its limits' labels\" (render.mts, a judged piece's own limits)",
+  "first": "Pending"
+ },
+ "src/engine/systems/evaluation.ts#judgeExact [preparation]": {
+  "status": "Retained",
+  "hash": "db67a18a61cc",
+  "on": "2026-10-19",
+  "reason": "A task's own words for the way of playing still to be rehearsed, a gerund a sentence can open on: rehearsing the way you chose to play it wasn't complete.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/evaluation.ts#pointsWords": {
+  "status": "Rewritten",
+  "hash": "1c67488fb0c6",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt limit lines: \"12 points out of 100\", \"1 point out of 100\", \"less than a point\"; tests/editorial-school-words.test.ts and tests/evaluation.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/playreading.ts#aspects [cast]": {
+  "status": "Rewritten",
+  "hash": "8a0598914486",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g27-ui.test.ts (a solo play's cast, 1 woman) and tests/playreading.test.ts (3 women and 6 men)",
+  "first": "Pending"
+ },
+ "src/engine/systems/playreading.ts#aspects [form]": {
+  "status": "Retained",
+  "hash": "3aef7cfddaab",
+  "on": "2026-10-19",
+  "reason": "The read's note on a play's form, from its publisher's own description, said the way a reader would: it reads as a drama, a comedy, a monologue.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/playreading.ts#aspects [setting]": {
+  "status": "Retained",
+  "hash": "3b357cf6efad",
+  "on": "2026-10-19",
+  "reason": "The play's setting as its published facts give it, after a colon that holds whatever form the setting takes: a place, a time, or both.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/playreading.ts#copyAt": {
+  "status": "Rewritten",
+  "hash": "36a0c7e491b3",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g20-school.test.ts and tests/evidence-g21-school.test.ts (the library lends only to students); tests/evidence-g22-school.test.ts (the tour not done)",
+  "first": "Pending"
+ },
+ "src/engine/systems/playreading.ts#readRefusal": {
+  "status": "Retained",
+  "hash": "8cc68bf6d840",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for a play that isn't on the list, reached only by a command, plain and true.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/playreading.ts#registerPlayReading <plays.read>": {
+  "status": "Rewritten",
+  "hash": "ddefe22706b8",
+  "on": "2026-10-19",
+  "evidence": "tests/playreading.test.ts and tests/evidence-g20-school.test.ts (the note after a first read: You read …, by …, all the way through.)",
+  "first": "Pending"
+ },
+ "src/engine/systems/playreading.ts#registerPlayReading <plays.research>": {
+  "status": "Retained",
+  "hash": "a92f923296bd",
+  "on": "2026-10-19",
+  "reason": "Research's findings in plain sentences of fact, first staged, first published and who licenses it, with a plain isn't on record where the record is silent.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/playreading.ts#researchRefusal": {
+  "status": "Retained",
+  "hash": "b6745504b150",
+  "on": "2026-10-19",
+  "reason": "Refusals for Research It, each with its reason: read the play first, since research needs questions, or it's already researched and nothing more is on record.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/ClassMoments.tsx#ClassMoments": {
+  "status": "Rewritten",
+  "hash": "ffc5928dc430",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-class-moments.test.ts (the panel drawn with no scene shared: \"You and … don’t have a scene together right now\")",
+  "first": "Pending"
+ },
+ "src/ui/components/CourseworkPane.tsx#AnotherWay": {
+  "status": "Rewritten",
+  "hash": "bf32eedadb8a",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g18-school.test.ts \"school.approach ... draws the four ways on the Coursework tab\"; tests/language-dynamic.test.ts A Note That Keeps Coming Back; screens.txt",
+  "first": "Pending"
+ },
+ "src/ui/components/CourseworkPane.tsx#AssignmentCard": {
+  "status": "Rewritten",
+  "hash": "87280d12f65c",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/screens.txt (screens.mts, the Coursework tab rendered for a played life): Shown Today lines, Put First and the card's header",
+  "first": "Pending"
+ },
+ "src/ui/components/CourseworkPane.tsx#CourseworkPane": {
+  "status": "Rewritten",
+  "hash": "a6846da7d087",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts \"coursework: due soonest with its date, shown on its day\"; screens.txt (screens.mts, the Coursework tab rendered) Due Soonest",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/CourseworkPane.tsx#FeedbackBlock": {
+  "status": "Retained",
+  "hash": "3ff7ed633313",
+  "on": "2026-10-19",
+  "reason": "The feedback header gives the band, the score of 100 and the kind of note; the label under it says plainly the words are the game's simulation, not the named teachers'.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/CourseworkPane.tsx#FirstWeek": {
+  "status": "Retained",
+  "hash": "4a19a99b06d3",
+  "on": "2026-10-19",
+  "reason": "The Orientation panel gives the week's dates, says a missed session can be caught up with its Catch Up button, and its source line says what's taken from the school's calendar and what's estimated.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/CourseworkPane.tsx#KIND_LABEL": {
+  "status": "Retained",
+  "hash": "3604fb49404b",
+  "on": "2026-10-19",
+  "reason": "Five short labels for where a note stands, each matching the words the note itself opens with: a new note, still there, better, taken, the next step.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/CourseworkPane.tsx#NotesLedger": {
+  "status": "Rewritten",
+  "hash": "de8b9a73e4ec",
+  "on": "2026-10-19",
+  "evidence": "screens.txt (screens.mts, the Coursework tab rendered): Your Notes and its fine print",
+  "first": "Pending"
+ },
+ "src/ui/components/CourseworkPane.tsx#objectiveWhy": {
+  "status": "Rewritten",
+  "hash": "c400c192c0b7",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g24-school.test.ts \"draws the note on the Coursework tab ... and the objective a note put first, with why\"; screens.txt Put First lines",
+  "first": "Pending"
+ },
+ "src/ui/components/CourseworkPane.tsx#Partners": {
+  "status": "Retained",
+  "hash": "367a68c3af13",
+  "on": "2026-10-19",
+  "reason": "Each partner's line gives trust, rehearsals kept and what they care about, and a let-down not yet made right is said plainly beside Make Amends.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/CourseworkPane.tsx#Rehearsals": {
+  "status": "Rewritten",
+  "hash": "c1fd3a7c4429",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g22-school.test.ts kept rehearsal \"Rehearsed ... (A summary of your preparation, not ...’s own words.)\"; tests/evidence-g24-school.test.ts partner's words",
+  "first": "Pending"
+ },
+ "src/ui/components/CourseworkPane.tsx#Shown": {
+  "status": "Retained",
+  "hash": "9dbf3b57e24f",
+  "on": "2026-10-19",
+  "reason": "Work Shown lists each piece with its course, play and partner, and one Title Case status a player can scan: Not Shown, Excused, Note Taken, Shown Again Strong.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/CourseworkPane.tsx#TableWork": {
+  "status": "Rewritten",
+  "hash": "6536a8da2427",
+  "on": "2026-10-19",
+  "evidence": "screens.txt (screens.mts, the Coursework tab rendered): the Table Work fine print under the selects",
+  "first": "Pending"
+ },
+ "src/ui/components/CourseworkPane.tsx#timesWords": {
+  "status": "Rewritten",
+  "hash": "fcf4bc745f21",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/screens.txt \"named it four times\", \"given four times\" (screens.mts); tests/evidence-g18-school.test.ts \"given three times\"",
+  "first": "Pending"
+ }
+}
