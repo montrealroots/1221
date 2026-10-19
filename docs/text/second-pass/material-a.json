@@ -3380,6 +3380,174 @@
   "reason": "Strife's meeting outside the works: Harness and Roberts each quoted as Galsworthy wrote them, and each reason names the stage direction or line that settles it.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [anna-christie-1]": {
+  "status": "Retained",
+  "hash": "2af3bf9f9cad",
+  "on": "2026-10-19",
+  "reason": "Anna Christie's first act: Marthy's guess and Anna's truth told as O'Neill has them ('Me? On a dirty coal barge!'), and each reason rests on a fact of the scene.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [arms-1]": {
+  "status": "Retained",
+  "hash": "62c65e8d5163",
+  "on": "2026-10-19",
+  "reason": "Arms and the Man's first act: the chocolate cream soldier, the cloak and the unloaded pistol as Shaw has them, with each wrong answer corrected by a plain fact of the scene.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [creditors]": {
+  "status": "Rewritten",
+  "hash": "4cf0f874cd60",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's card for Creditors and finds '<where>: you play <role>' with the new where (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [ghosts-1]": {
+  "status": "Retained",
+  "hash": "66533277527a",
+  "on": "2026-10-19",
+  "reason": "Ghosts' first act: Manders's reproaches and Mrs. Alving's answer told plainly, each reason short and true to the scene (he preaches; she tells him what happened).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [hedda-2]": {
+  "status": "Retained",
+  "hash": "8ac7f3d5cdd7",
+  "on": "2026-10-19",
+  "reason": "Hedda Gabler over the photograph album: the comradeship, the du and the pistol told plainly from the play, and each reason says what Hedda or Lovborg does or refuses in the scene.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [masterbuilder-1]": {
+  "status": "Rewritten",
+  "hash": "4adcbfd46456",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for The Master Builder, the tower answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [proposal]": {
+  "status": "Rewritten",
+  "hash": "ba3647e59b4d",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's card for The Proposal and finds '<where>: you play <role>' with the new where (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [riders-sea]": {
+  "status": "Retained",
+  "hash": "16860e52af03",
+  "on": "2026-10-19",
+  "reason": "Riders to the Sea: the bundle from Donegal and the stocking known by its stitches, told in plain words, with each reason saying what the sisters do with it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [rising-moon]": {
+  "status": "Rewritten",
+  "hash": "8b865776998a",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's card for The Rising of the Moon and finds '<where>: you play <role>' with the new where (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [suppressed-2]": {
+  "status": "Retained",
+  "hash": "f01eb3efed5c",
+  "on": "2026-10-19",
+  "reason": "Suppressed Desires' second scene: the receding walls and Henrietta's faith turned on her, told plainly, with each reason naming what Stephen or Henrietta says.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [windermere-1]": {
+  "status": "Retained",
+  "hash": "4e0bf4c4a1d7",
+  "on": "2026-10-19",
+  "reason": "Lady Windermere's Fan's morning room: the roses, the imaginary husband and 'fascinating Puritan' as Wilde wrote them, each reason resting on what the two say.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-original.ts#BY": {
+  "status": "Retained",
+  "hash": "60488439df38",
+  "on": "2026-10-19",
+  "reason": "The credit line every original class scene carries, word for word as the glossary and tests/scenes.test.ts hold it, and as the brief pane, the guide and the profile say it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-bed-fourteen]": {
+  "status": "Retained",
+  "hash": "216e748f8533",
+  "on": "2026-10-19",
+  "reason": "Bed Fourteen: an original scene of a reported error, each reason resting on one of its five given facts (ten minutes, one report on file, the charge nurse's own unreported error).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-hundred-questions]": {
+  "status": "Retained",
+  "hash": "21aed6e7cf11",
+  "on": "2026-10-19",
+  "reason": "The Hundred Questions: a citizenship rehearsal whose reasons rest on its facts (six of ten, freezing out loud, his exam on Friday) and keep the comedy in the situation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-night-desk]": {
+  "status": "Retained",
+  "hash": "b1d25c3900f2",
+  "on": "2026-10-19",
+  "reason": "The Night Desk: an original scene whose reasons each name the given fact they rest on (eleven dollars, one room left, the report at seven), so the table work is checkable from the facts alone.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-office-hours]": {
+  "status": "Retained",
+  "hash": "8118e19dc9c9",
+  "on": "2026-10-19",
+  "reason": "Office Hours: a parent and a teacher, each reason resting on the given numbers (58, five reports, Friday) and the sister the teacher once taught.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-runway]": {
+  "status": "Rewritten",
+  "hash": "2709c8221101",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Runway, the lawsuit answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-the-reception]": {
+  "status": "Retained",
+  "hash": "f959814748ad",
+  "on": "2026-10-19",
+  "reason": "The Reception: two estranged friends at a funeral, each reason resting on a given fact (eleven years, the missed wedding, an answer owed tonight).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-two-time-zones]": {
+  "status": "Retained",
+  "hash": "e108a71fe35d",
+  "on": "2026-10-19",
+  "reason": "Two Time Zones: a long-distance couple's last night, each reason resting on a given fact (the six o'clock flight, the June lease, the promotion).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-what-we-keep]": {
+  "status": "Retained",
+  "hash": "50156bd7613f",
+  "on": "2026-10-19",
+  "reason": "What We Keep: siblings, records and a drawer of postcards, each reason tied to a given fact (Sunday's keys, four years of appointments, no will).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-public.ts#PUBLIC_SCENES [enemy-2]": {
+  "status": "Retained",
+  "hash": "0366641c0490",
+  "on": "2026-10-19",
+  "reason": "An Enemy of the People's second act: the brothers alone, Peter's cost and his order, quoted from Sharp exactly ('I forbid it—I, your chief'), each reason naming its moment.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-public.ts#PUBLIC_SCENES [justice-2]": {
+  "status": "Rewritten",
+  "hash": "9ea6811bb99f",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Justice, the defender answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-public.ts#PUBLIC_SCENES [strife-1]": {
+  "status": "Rewritten",
+  "hash": "0493317201af",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Strife Act One, the settled answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-public.ts#PUBLIC_SCENES [weavers-1]": {
+  "status": "Retained",
+  "hash": "0773f965d5f3",
+  "on": "2026-10-19",
+  "reason": "The Weavers' pay day: Becker and Dreissiger quoted from Morison's translation as written ('it’s not pay'), and each reason resting on the line or direction that settles it.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/content/scenes-scored.ts#SCORED_SCENES [scapin-3-2]": {
   "status": "Retained",
   "hash": "55591a47c0e6",

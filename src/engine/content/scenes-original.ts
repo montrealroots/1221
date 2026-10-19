@@ -227,7 +227,7 @@ export const ORIGINAL_SCENES: readonly Scene[] = [
         ],
         obstacle: [
           yes('betrayal', 'He went behind his partner’s back, and they both know it', 'He said yes by email, and his partner found out an hour ago.'),
-          no('lawsuit', 'The bigger company is suing them', 'It wants to hire them.'),
+          no('lawsuit', 'The bigger company is suing them', 'The bigger company wants to hire them, not sue them.'),
         ],
         tactic: [
           yes('math', 'Run the numbers, calmly, as if the decision were arithmetic', 'Four months of money left is a number he can point to.'),

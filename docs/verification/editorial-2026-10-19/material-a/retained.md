@@ -84,3 +84,14 @@ with the words kept and the reason, so the owner can judge the reasons as well a
 - **`scenes-classical.ts` [measure-2-4], Measure for Measure.** A reason for an answer the text doesn't support: "She
   would wear the marks of keen whips as rubies first." *Reason:* it answers "Bargain for better terms" with the play's
   own image, said plainly, and reads whole as the teacher's note.
+
+## Batch 8
+
+- **`scenes-original.ts` #BY.** "An original scene written for SLATE". *Reason:* the credit line every original class
+  scene carries, word for word as the glossary and `tests/scenes.test.ts` hold it, and as the brief pane, the guide and
+  the profile say it.
+- **`scenes-original.ts` [orig-night-desk], The Night Desk.** A fact: "The clerk can’t give a room away; her manager
+  reads the night’s report at seven." *Reason:* each of the scene's reasons names the given fact it rests on, so the
+  Table Work can be checked from the facts alone.
+- **`scenes-public.ts` [weavers-1], The Weavers.** Becker's objective, its reason: "“That’s what you might give to a
+  beggar; it’s not pay.”" *Reason:* Morison's translation quoted exactly, standing alone as the reason.

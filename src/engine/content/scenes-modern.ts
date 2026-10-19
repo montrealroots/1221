@@ -120,7 +120,7 @@ export const MODERN_SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'proposal', play: 'The Proposal', by: 'Anton Chekhov, tr. Julius West', year: 1889, where: 'The one act, the quarrel over Oxen Meadows', language: 'prose', size: 'short', genre: 'comedy', difficulty: 1,
+    id: 'proposal', play: 'The Proposal', by: 'Anton Chekhov, tr. Julius West', year: 1889, where: 'A one-act play, the quarrel over Oxen Meadows', language: 'prose', size: 'short', genre: 'comedy', difficulty: 1,
     summary: 'Lomov, thirty-five, nervous and in evening dress, has come to propose to his neighbor’s daughter Natalya. Before he gets to the point he mentions “my Oxen Meadows,” and she, who doesn’t know why he has come, fights him for the land until they’re shouting and her father comes in.',
     circumstances: [
       yes('visit', 'Haymaking time, in the drawing room of the Chubukovs’ country house; she has been shelling peas and he’s in evening dress and white gloves'),
@@ -276,7 +276,7 @@ export const MODERN_SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'rising-moon', play: 'The Rising of the Moon', by: 'Lady Gregory', year: 1907, where: 'The one act, the quay, once the other police have gone', language: 'prose', size: 'short', genre: 'drama', difficulty: 1,
+    id: 'rising-moon', play: 'The Rising of the Moon', by: 'Lady Gregory', year: 1907, where: 'A one-act play, on the quay once the other police have gone', language: 'prose', size: 'short', genre: 'drama', difficulty: 1,
     summary: 'A police sergeant watches the quay of a seaport town for a rebel who has broken out of jail with a hundred pounds on his head. A ragged ballad singer talks his way into keeping watch with him, sits back to back with him on a barrel, and sings him back to the songs of his youth before he shows who he is.',
     circumstances: [
       yes('quay', 'Moonlight on a seaport quay at assize time, the reward notice pasted on a barrel, steps down to the water where a boat could come in'),
@@ -328,7 +328,7 @@ export const MODERN_SCENES: readonly Scene[] = [
     ],
   },
   {
-    id: 'creditors', play: 'Creditors', by: 'August Strindberg, tr. Edwin Björkman', year: 1889, where: 'The one act, Tekla and Gustav in the hotel parlor', language: 'prose', size: 'long', genre: 'drama', difficulty: 3,
+    id: 'creditors', play: 'Creditors', by: 'August Strindberg, tr. Edwin Björkman', year: 1889, where: 'A one-act play, Tekla and Gustav in the hotel parlor', language: 'prose', size: 'long', genre: 'drama', difficulty: 3,
     summary: 'In a seaside hotel Tekla meets Gustav, the first husband she left, for the first time in years. He flatters her, recalls their marriage in that same room and draws her into a rendezvous at nine, while Adolph, her husband, listens from the next room as Gustav arranged; then Gustav tells her it was his revenge.',
     circumstances: [
       yes('hotel', 'The parlor of a summer hotel by the sea, the room they lived in when they were first married; Adolph is at the keyhole next door'),
@@ -489,7 +489,7 @@ export const MODERN_SCENES: readonly Scene[] = [
     summary: 'Hilda Wangel, a young stranger with an alpenstock, arrives at the master builder’s house. She reminds Solness of the day ten years ago at Lysanger when he hung the wreath on the church tower he had built, kissed the little girl she was, and promised to come back in ten years and carry her off and give her a kingdom. The ten years are up, and she has come for it.',
     circumstances: [
       yes('arrival', 'Solness’s house, the evening she arrives with her knapsack and alpenstock', 'She has come straight from the mountains.'),
-      no('tower', 'The day he climbs the new tower', 'That’s the last act.'),
+      no('tower', 'The day he climbs the new tower', 'He climbs the new tower in the last act.'),
       no('lysanger', 'The church at Lysanger, ten years ago', 'That’s what she remembers; the scene is now.'),
     ],
     relationship: [

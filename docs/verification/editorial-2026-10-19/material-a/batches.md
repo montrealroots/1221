@@ -409,3 +409,45 @@ exit 0.
 **Screens:** CourseworkPane's Table Work and the note for every scene, both roles and every answer, rendered by the
 material-words test; the walk of the built app at the end of the area shows the card for the scenes its saves have set
 (Arms and the Man, Othello, King Lear).
+
+## Batch 8: The Modern, Original And Public Scenes
+
+**Sources (24):** `scenes-modern.ts` 11 ([hedda-2], [arms-1], [proposal], [windermere-1], [suppressed-2],
+[rising-moon], [creditors], [anna-christie-1], [ghosts-1], [masterbuilder-1], [riders-sea]); `scenes-original.ts` 9
+(#BY, [orig-night-desk], [orig-bed-fourteen], [orig-what-we-keep], [orig-runway], [orig-hundred-questions],
+[orig-office-hours], [orig-two-time-zones], [orig-the-reception]); `scenes-public.ts` 4 ([enemy-2], [strife-1],
+[justice-2], [weavers-1]). About 12,700 words.
+
+**Rewritten (7 sources, 7 strings):**
+- **"The one act" (3):** The Proposal, The Rising of the Moon and Creditors gave their `where` as "The one act, …",
+  which the set notice reads as "The Proposal, the one act, the quarrel over Oxen Meadows. You play …" and the card
+  as "…, the one act, …: you play …". Each is now "A one-act play, …" ("The Rising of the Moon, a one-act play, on the
+  quay once the other police have gone."). The reference's own example was Trifles, in school's file; the same change
+  there is in the report.
+- **Reasons that pointed at nothing in the note (4):** The Master Builder ("He climbs the new tower in the last
+  act."), Runway ("The bigger company wants to hire them, not sue them."), Strife ("The strike is settled in the last
+  act, at five o’clock, over both their heads.") and Justice ("His own counsel is Frome, who sits down as Cleaver
+  rises.").
+
+**Kept (17 sources):** the rest, each with its own reason. #BY, "An original scene written for SLATE", stays word for
+word: `tests/scenes.test.ts` holds every original scene to it, and the brief pane, the guide and the profile say the
+same phrase. The original scenes' facts and reasons each name the given fact they rest on, so the Table Work can be
+checked from the facts alone.
+
+**Meaning-sensitive (4):** Solness climbs the tower in Act Three (the last act); Strife's settlement is made in Act
+Three at five o'clock, by the Board and the Union over Anthony's and Roberts's heads; Frome is Falder's counsel in
+Justice; Runway's facts say the larger company "has offered to hire both of them". The three `where` lines change no
+fact: each play is in one act.
+
+**Interactions read whole:** as batch 7, and the set notice's "<play>, <where>. You play …" for the three one-act
+plays (`systems/coursework.ts`, line 467), read with `whereWords`, which lowercases the leading "A".
+
+**Tests and tool matchers updated:** none. `tests/editorial-school-words.test.ts` line 42 asserts `whereWords` on the
+literal 'The one act, the Wright kitchen', not on this data, so it's untouched.
+
+**Checks (exits, `scratchpad/ma/b8/`):** `tsc -b --noEmit` 0; `eslint` on the three scene files 0; title-case 0;
+label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-refs 0; deciders 0; guide-quotes 0;
+text-inventory 0 after the marks, with `--todo2 material-a` at 0 Pending. vitest: `tests/material-words.test.ts` and
+`tests/scenes.test.ts`, 2 files, 8 tests, exit 0.
+
+**Screens:** as batch 7.
