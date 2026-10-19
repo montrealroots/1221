@@ -8,7 +8,7 @@
   "after": "Every line races the falling shutter, so each beat has to land to the second.",
   "why": "Two passives about the scene's own clock became one active sentence that says what the actor has to do: land each beat to the second.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 1,
@@ -19,7 +19,7 @@
   "after": "The two moves are a staged fight. Mark them solo at reduced speed against the reader’s called cues from off camera, with no contact and the keys on your side of the frame, so they repeat exactly on every take.",
   "why": "A staging note is an instruction to the actor: the participles (marked, repeatable) became what to do, and 'her side of the frame' became the actor's own side. Every safety term is kept.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 1,
@@ -30,7 +30,7 @@
   "after": "Reason, then force, then relief at having the keys, held together with fear as the shutter lands.",
   "why": "'Making it under' named nothing in the scene: nobody goes under the shutter. The relief is at getting the keys back, and the fear is the shutter landing, which is what the third beat's two tones hold.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 1,
@@ -96,7 +96,7 @@
   "after": "she won’t let go because he’s her only kite. You record it alone in a booth before any of it is drawn.",
   "why": "A trailing participle with no subject became a sentence that says who records it.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 1,
@@ -107,7 +107,7 @@
   "after": "Pell, the eight-year-old holding the string far below. She isn’t in the booth with you, so play to her as if she were.",
   "why": "The pane heads this You Speak To, so it names her first; 'the voice speaks to' repeated the heading, and 'the actor plays' talked about the player in the third person.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 1,
@@ -118,7 +118,7 @@
   "after": "You record alone at a microphone before the animation exists, so the whole performance, the gusts and the struggle included, has to be in what’s heard.",
   "why": "A dangling participle (the performance isn't what's recorded alone) became a sentence with the actor as its subject and the consequence after 'so'.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 1,
@@ -129,7 +129,7 @@
   "after": "Rin, her rival, already recorded on the track. Play against his lines in your headphones.",
   "why": "As High Wind's: the heading's person first, then a direct instruction to the player.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 1,
@@ -140,7 +140,7 @@
   "after": "He says she’s the best pilot in the year, and her answer comes out too fast for the drawn mouth, so she has to find it again.",
   "why": "'The flaps' is dubbing slang a player won't know; the circumstances already say 'drawn' mouths.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 1,
@@ -151,7 +151,7 @@
   "after": "It’s a dub: you record alone at a microphone, in sync with the finished animation and his recorded lines.",
   "why": "A fragment with no verb, under Techniques It Asks: Voice-Over, became a sentence saying what the work is.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 1); the two-situations overlap test in tests/briefs-content.test.ts passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 1,
@@ -349,7 +349,7 @@
   "after": "There are no written lines: you and the reader have the outline below and play it as the people would.",
   "why": "'The actor' is the player, so the brief says you.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 2,
@@ -360,7 +360,7 @@
   "after": "You improvise the scene to an outline, playing close to yourself the way a docufiction participant does.",
   "why": "A dangling participle with a one-word tail; the label before it, Techniques It Asks: Improvisation, already names the technique.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 2,
@@ -371,7 +371,7 @@
   "after": "You read three letters, from 1911, 1915 and 1923. The footage under each is already cut, and each letter has to fit its length.",
   "why": "Passive to active, and the semicolon split into two sentences.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 2,
@@ -382,7 +382,7 @@
   "after": "Her sister, the one person each letter is written to, though the documentary’s audience hears them over the footage.",
   "why": "'To whom … ; heard by' was a form letter's grammar with a fragment after the semicolon.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 2,
@@ -393,7 +393,7 @@
   "after": "You read the narration alone at a microphone, over picture.",
   "why": "The label before it already says Voice-Over; the note says what you do.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 2,
@@ -448,7 +448,7 @@
   "after": "Lean toward his eyeline beside the lens and never touch the reader. The jacket stays on your own shoulders, on your side of the frame, so the moment repeats exactly on every take.",
   "why": "The staging of staged intimacy said as instructions to the actor, the coordinator, the solo playing and 'none of it is explicit' kept as they were.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 2,
@@ -459,7 +459,7 @@
   "after": "Seated, lean toward his eyeline beside the lens and stop short. The glovebox is a prop at your knee, on your side of the frame, and when the reader calls the catch, stop your hand as if it’s held.",
   "why": "As The Second Key's: the staging as instructions, every safety condition kept.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 2); tests/briefs-content.test.ts's two-situations overlap test passed with it. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 2,
@@ -503,7 +503,7 @@
   "after": "The narration is her account the next day, so play it as voice-over in its own register: close, even, and knowing how the night ends, against a scene that doesn’t know yet. You record it off camera in the same session, to a microphone with no face to show it, and it’s laid over the opening and closing of the tape.",
   "why": "Four passives ('given', 'played', 'recorded', 'played') in two long sentences became an instruction and a fact, with 'after the fact' said as the circumstances say it, the next day.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 3,
@@ -580,7 +580,7 @@
   "after": "The floating status panel only she can see. No one answers aloud: you read its messages and react to them.",
   "why": "Under You Speak To it names the panel first. 'Written into the brief' promised text the pane doesn't show; the beats give the messages' gist, and the actor reads and reacts.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 3,
@@ -591,7 +591,7 @@
   "after": "Your voice alone at the microphone carries the whole scene, so her inner life, the panel’s messages read aloud and the turn to grief are all voice-over work.",
   "why": "'The reading of the panel' sat a few lines above Your Reading, the brief's choice, and meant something else.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 3,
@@ -602,7 +602,7 @@
   "after": "She holds a formal kneeling posture through the audience, then makes one drawn-sword form and a full bow.",
   "why": "A noun phrase became a sentence with its subject.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 3,
@@ -613,7 +613,7 @@
   "after": "For the tape, mark the form solo with a replica blade at reduced speed, angled away from the lens and the reader’s eyeline, so it repeats exactly on every take.",
   "why": "The staging note as an instruction, as the other fights now are; every safety term kept.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 3); the allows test ('names in an allows note the very choice the brief allows') passed for The Second Cake's rewritten note. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 3,
@@ -646,7 +646,7 @@
   "after": "The sparring is a staged fight, taped solo. Mark each exchange at reduced speed against the reader’s called cues from off camera, land nothing on anyone, and stop the held strike short of his eyeline on every take.",
   "why": "The staging note as an instruction, as the other fights now are; every condition kept.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 4,
@@ -657,7 +657,7 @@
   "after": "has had a slowly rising heart rate and falling blood pressure through the night, each reading still short of the level that would trigger a call.",
   "why": "'Inside the range that triggers a call' said the opposite of the scene: the readings are each defensible (the obstacle) and 'inside range' (a reading's rests), so no single one triggers a call. That's the whole problem she has.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 4,
@@ -690,7 +690,7 @@
   "after": "The viewer at home, watching the sequence. Speak to them alone, as if no one else were listening.",
   "why": "As the other voice briefs' You Speak To lines: the person first, then what to do; 'the voice speaks' repeated the heading.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 4,
@@ -713,6 +713,28 @@
   "why": "The contact's staging as an instruction, as the fights' and the embraces' now are.",
   "meaningSensitive": true,
   "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-martial_arts]",
+  "field": "why.techniques, as the pane renders it under What The Return Bow Asks",
+  "kind": "other",
+  "before": "Techniques It Asks: Stage Combat. The sparring is a staged fight taped solo: she marks each exchange at reduced speed against the reader’s called cues from off camera, nothing lands on anyone, and the held strike stops short of his eyeline on every take.",
+  "after": "Techniques It Asks: Stage Combat. The sparring is a staged fight, taped solo. Mark each exchange at reduced speed against the reader’s called cues from off camera, land nothing on anyone, and stop the held strike short of his eyeline on every take.",
+  "why": "The same edit as the line before, as the player reads it on the pane: the label, then the instruction.",
+  "meaningSensitive": true,
+  "verified": "Read on the built app (port 4289, save brief.json, Player Profile, Martial Arts, Open Its Brief) at 1440 and 390: scratchpad/ma/tools/brief-walk.mjs, its record in screens/briefs-walk-1440.json and -390.json."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-nature_documentary]",
+  "field": "reader, as the pane renders it",
+  "kind": "label",
+  "before": "You Speak To The viewer at home, watching the sequence; the voice speaks to them alone, at the microphone.",
+  "after": "You Speak To The viewer at home, watching the sequence. Speak to them alone, as if no one else were listening.",
+  "why": "As the pane shows it: the heading, then the line. The old line repeated the heading's 'speak to'.",
+  "meaningSensitive": false,
+  "verified": "Read on the built app (Player Profile, Nature Documentary, Open Its Brief) at 1440 and 390, screens/briefs-walk-*.json."
  },
  {
   "batch": 5,
@@ -778,7 +800,7 @@
   "after": "For the tape, mark the three exchanges alone at reduced speed with a replica blade, cutting to the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.",
   "why": "The staging is the actor's, not the character's: Gonroku doesn't tape anything.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 5,
@@ -800,7 +822,7 @@
   "after": "The catch of the heel is a pratfall: play it solo, with the reader off camera at the door, and work it out slowly first onto a bed or a soft mat, so it repeats safely on every take.",
   "why": "The fall's staging as an instruction; the soft landing and the slow first run are kept.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 5,
@@ -932,7 +954,7 @@
   "after": "She’s out of breath from the drag, makes three moves away from his reach and ties a tourniquet below frame, all crouched in a cramped culvert while shells land overhead.",
   "why": "A list of nouns became what she does.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 6,
@@ -943,7 +965,7 @@
   "after": "The struggle for the sidearm is three set moves. Mark them solo at reduced speed against the reader’s called cues, with a replica pistol never pointed at the lens or the reader and no contact, so it repeats safely on every take.",
   "why": "The staging as an instruction; the replica, the angle and no contact kept.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 6,
@@ -954,7 +976,7 @@
   "after": "Handle the rifle as stage-combat firearms work, with a replica never pointed at the lens or the reader: shoulder it on a mark beside his eyeline, hold it, work the lever and lower it, safely and the same way every take.",
   "why": "Four participles with no one doing them became four instructions.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 6,
@@ -965,7 +987,7 @@
   "after": "She fights three exchanges with her sword still sheathed, then lowers it across her palms in a formal bow, with control and grace.",
   "why": "A fragment of participles became what she does.",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 6,
@@ -976,7 +998,7 @@
   "after": "The fight is choreographed swordwork in three set exchanges. Mark them solo with a replica at reduced speed against the reader’s called cues, never pointing it at the lens or the reader; his blade goes wide off frame, so it repeats safely on every take.",
   "why": "As the other fights.",
   "meaningSensitive": true,
-  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6). Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
  },
  {
   "batch": 7,
@@ -1208,5 +1230,38 @@
   "why": "As above.",
   "meaningSensitive": false,
   "verified": "tests/material-words.test.ts, 'a class scene’s words, at the table and in the note > …', renders CourseworkPane for the scene and finds '<where, as whereWords gives it>: you play <role>' on the card, and for a reason finds 'Why the text doesn’t support it: <after>' and the note '<question>: <after> You played <role> in <play>.' (passed, batch 8)."
+ },
+ {
+  "batch": 8,
+  "source": "src/engine/content/scenes-modern.ts#MODERN_SCENES [proposal]",
+  "field": "where, in the notice when the piece is set (systems/coursework.ts, line 467)",
+  "kind": "notification",
+  "before": "The Proposal, the one act, the quarrel over Oxen Meadows. You play Natalya",
+  "after": "The Proposal, a one-act play, the quarrel over Oxen Meadows. You play Natalya",
+  "why": "The notice's variant of the where line.",
+  "meaningSensitive": false,
+  "verified": "Built from the template's own parts (`${scene.play}, ${whereWords(scene.where)}. You play ${role}`), whereWords read in systems/coursework.ts line 395; the card's variant is rendered by tests/material-words.test.ts."
+ },
+ {
+  "batch": 8,
+  "source": "src/engine/content/scenes-modern.ts#MODERN_SCENES [rising-moon]",
+  "field": "where, on the coursework card",
+  "kind": "label",
+  "before": "The Rising of the Moon, Lady Gregory (1907), the one act, the quay, once the other police have gone: you play The Sergeant",
+  "after": "The Rising of the Moon, Lady Gregory (1907), a one-act play, on the quay once the other police have gone: you play The Sergeant",
+  "why": "The card's variant of the where line.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, a class scene’s words, at the table and in the note: finds '<whereWords(where)>: you play <role>' on CourseworkPane's card (passed, batch 8)."
+ },
+ {
+  "batch": 8,
+  "source": "src/engine/content/scenes-public.ts#PUBLIC_SCENES [justice-2]",
+  "field": "the teacher's note for the defender answer",
+  "kind": "feedback",
+  "before": "The Relationship: That’s Frome, who sits down as Cleaver rises. You played Falder in Justice.",
+  "after": "The Relationship: His own counsel is Frome, who sits down as Cleaver rises. You played Falder in Justice.",
+  "why": "The note's variant of the reason, where the answer chosen isn't repeated: the old one had no subject.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts checks noteText(a, { kind: 'choice', question }) is exactly '<question>: <reason> You played <role> in <play>.' for every unsupported answer (passed, batch 8)."
  }
 ]
