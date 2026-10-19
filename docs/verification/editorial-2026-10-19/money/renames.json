@@ -1,0 +1,3 @@
+[
+ { "old": "Savings Covers The Current Account", "new": "Savings Covers The Checking Account", "where": "src/ui/bank/BankPayments.tsx" }
+]

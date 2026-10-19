@@ -1,0 +1,162 @@
+[
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Barclays Bank Account has been blocked since the switch, except for paying off what it owes.",
+  "after": "Barclays Bank Account is blocked, so nothing was moved. It was overdrawn when you switched banks, and it stays blocked until the overdraft is paid off. Move money into it to clear what it owes, and it closes once it’s repaid.",
+  "why": "The reference's example 4: what happened, why, and the way out. Its 'Nothing was moved.' became a clause, since a sentence opening on Nothing is over the tics budget.",
+  "meaningSensitive": true,
+  "verified": "lending.ts sets switchDebt only when the old account was overdrawn on the switch day, and closes it once its balance is back to zero; moving money in is allowed. Decision 4's bank.switch: words only."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Chase Total Checking has only $40.50, so nothing was moved.",
+  "after": "Chase Total Checking has only $40.50 available, so nothing was moved.",
+  "why": "The figure is the available balance, pending card payments already off it, and the word says so (the reference's banking restriction).",
+  "meaningSensitive": true,
+  "verified": "bank.transfer compares with from.balance; systems/pending.ts: postedBalance = balance − pendingOn. tests/language-money.test.ts."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "You can take €2,000 more out of Flexgeld this month without notice. More than that takes three months’ notice.",
+  "after": "You can take only €1,999.50 more out of Flexgeld this month without notice, so nothing was moved. To take out more, you’d have to close the account, which takes three months’ notice.",
+  "why": "The figure was rounded up past the limit (defect m1), the refusal didn't say nothing moved, and notice can only be given by closing the account.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-money.test.ts m1, failing without the fix; bank.close_savings is the only command that schedules SAVINGS_NOTICE_KIND."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/bankmoves.ts#closeRefusal",
+  "kind": "error",
+  "before": "It’s your only current account. Open another one first: you always need a current account to be paid into.",
+  "after": "It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.",
+  "why": "Checking account, the glossary's word; the reason first, then the step.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts and four other tests assert it on bank.close_current."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/bankmoves.ts#closeRefusal",
+  "kind": "error",
+  "before": "Its fees, €0.16, are more than it holds. Pay in €0.06 first.",
+  "after": "Its fees, €0.16, are more than it holds. Move €0.06 into it first.",
+  "why": "'Pay in' is a British banking verb; Move Money is the control that does it.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-money.test.ts and tests/remaining-09-banking.test.ts."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#registerBanking",
+  "kind": "notification",
+  "before": "Statement Ready: Chase Total Checking — $3,025.00 at the close.",
+  "after": "Statement Ready: Chase Total Checking — It ended the month with $3,025.00 in it. The statement is on Money, under Statements.",
+  "why": "A fragment became a sentence that says what the figure is and where the statement is. Variants: 'the quarter' for a German account; 'It ended the month overdrawn by $3.30.' below zero.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-money.test.ts reads the overdrawn and quarterly variants; tests/home-account-screens.test.ts the pounds-and-dollars one."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/payments.ts#registerPayments",
+  "kind": "notification",
+  "before": "Your €2,500.00 payment to AktivKonto didn’t go. There wasn’t enough in Flexgeld on the day.",
+  "after": "Your €2,500.00 payment to AktivKonto didn’t go through: there wasn’t enough available in Flexgeld that day. You can set it up again under How You Pay.",
+  "why": "What happened, why, and the next step: a payment set for a date is gone once it fails.",
+  "meaningSensitive": true,
+  "verified": "The scheduled item runs once and isn't rescheduled; tests/evidence-g13-money.test.ts."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#feesWords",
+  "kind": "official",
+  "before": "Closing it now charges its fees to the day, €3.12 ($3.39): October’s €6.90 for the 14 days of its 31 it’s been open, €3.12. German law charges a month’s fee only to the day an account closes.",
+  "after": "Closing it now charges €3.12 ($3.39) in fees: €3.12 of October’s €6.90 fee, for the 14 days of its 31 the account has been open. Under German law, a month’s fee is charged only up to the day an account closes.",
+  "why": "The total first, then what makes it up, the share before the fee it's a share of; the law said as the bank's rule.",
+  "meaningSensitive": true,
+  "verified": "closingFeesDue's figures unchanged; tests/remaining-09-banking.test.ts renders every variant."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#feesWords",
+  "kind": "official",
+  "before": "Closing it now charges €4.90 ($5.33), the €4.90 for last month, due on the 1st: October’s was counted at the month’s end.",
+  "after": "Closing it now charges €4.90 ($5.33): the €4.90 for October, which would come off on the 1st. October’s fee was already counted at the month’s end.",
+  "why": "At 11:30 PM on October 31 the fee due on the 1st is October's, not last month's.",
+  "meaningSensitive": true,
+  "verified": "ING's feesDue holds a fee only between the month's end at 11 PM and the 1st's rollover; tests/remaining-09-banking.test.ts, the ING journey."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#cardYearWords",
+  "kind": "official",
+  "before": "This card year began August 25, 2026, paid in advance with 950 kr, and runs to August 24, 2027. The next year is charged August 25, 2027. … Its days are counted by Reykjavík’s calendar. If the account can’t cover the year’s fee, it’s charged anyway, and the account goes below zero by the difference. Estimated: Arion’s price list and terms don’t say when in the year it’s charged.",
+  "after": "The current card year runs from August 25, 2026 to August 24, 2027, and you paid 950 kr for it in advance. The next year’s fee is charged on August 25, 2027. … The bank counts the card year’s days by the date in Reykjavík. If the account can’t cover the fee, the bank charges it anyway and the account goes overdrawn by the difference. The timing is estimated: Arion’s price list and terms don’t say when in the year it’s charged.",
+  "why": "The year as a span, the glossary's 'overdrawn', and the estimate label says what's estimated. Variant: 'and nothing was charged for it' under the age the bank spares.",
+  "meaningSensitive": true,
+  "verified": "tests/decisions-arion.test.ts renders both variants."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/bank/BankPayments.tsx#BankPayments",
+  "kind": "button",
+  "before": "Savings Covers The Current Account: On",
+  "after": "Savings Covers The Checking Account: On",
+  "why": "The glossary's word for the account, on the button too.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g11-money.test.ts presses it by name; renames.json."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "heading",
+  "before": "Your Banks — One current account",
+  "after": "Your Banks — One checking account",
+  "why": "The panel's subtitle in the glossary's word; '2 checking accounts' with more.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-09-banking.test.ts renders 'Your Banks 2 checking accounts'."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "label",
+  "before": "Your primary account is the one money comes from unless you say otherwise: your debit card’s everyday purchases come from it; cash from a machine comes out of it; bills you pay by hand come from it; a new standing order or autopay starts from it.",
+  "after": "Your primary account is the one money comes from unless you choose otherwise: your debit card’s everyday purchases, cash from a machine, bills you pay by hand and any new standing order or autopay.",
+  "why": "Four semicolon clauses repeating 'comes from it' became one list.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts renders Your Banks."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/routing.ts#closeHold",
+  "kind": "error",
+  "before": "Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Move them first.",
+  "after": "Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Move those to another account first.",
+  "why": "'Move it first' after 'wages … are paid into it' pointed at a plural with 'it'; the step now names where.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/bank.tsx#top",
+  "kind": "other",
+  "before": "Chase is a United States bank and keeps its accounts in USD. … Your primary account is here, so your everyday spending and your pay go through it.",
+  "after": "Chase is a bank in the United States, and keeps its accounts in USD. … Your primary account is here, so your debit card’s everyday purchases come from it.",
+  "why": "'a Germany bank' was possible; and pay goes to the account wages are paid into, which can be another bank's.",
+  "meaningSensitive": true,
+  "verified": "depositAccount is separate from primaryAccountId (routing.ts); tests/language-money.test.ts renders the look."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/bank.tsx#top",
+  "kind": "other",
+  "before": "It’s pending. It already counts in your available balance, and it posts on October 21, 2026.",
+  "after": "It’s pending: it’s already taken off your available balance, and it posts on October 21, 2026.",
+  "why": "The glossary's words for pending money: already taken off the available balance.",
+  "meaningSensitive": false,
+  "verified": "Read in the code; pending.ts holds a payment against the available balance."
+ }
+]

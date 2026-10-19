@@ -83,7 +83,7 @@ export function BankPayments() {
           <p className="small" style={{ margin: 0 }}>{coverText(covers)}</p>
           <div>
             <Gated feature="bank.set_payments" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_payments', { linkSavings: !pay.linkSavings })}>
-              Savings Covers The Current Account: {pay.linkSavings ? 'On' : 'Off'}
+              Savings Covers The Checking Account: {pay.linkSavings ? 'On' : 'Off'}
             </Gated>
           </div>
         </div>
@@ -161,13 +161,13 @@ const andList = (items: readonly string[]): string => (items.length < 2 ? items.
  * account's bank, that On covered nothing, which was false with savings at the bank of a loan's repayment account.
  */
 function coverText(covers: LinkCover[]): string {
-  if (!covers.some((one) => one.savings)) return `There’s no easy-access savings at ${coveredBanks(covers)}, so turning this on covers nothing until there is.`;
+  if (!covers.some((one) => one.savings)) return `You don’t have easy-access savings at ${coveredBanks(covers)}, so turning this on covers nothing until you open some there.`;
   const each = covers.map((one) => {
-    const name = one.from?.name ?? 'your current account';
+    const name = one.from?.name ?? 'your checking account';
     const pays = andList([...(one.primary ? ['the day’s spending'] : []), ...one.cards.map((card) => `the ${card.name}’s autopay`), ...one.loans.map((loan) => `the ${loan.name}`)]);
     return one.savings ? `${one.savings.name} covers ${name}, which pays ${pays}.` : `${name[0]!.toUpperCase()}${name.slice(1)}, which pays ${pays}, has no easy-access savings at ${one.from?.institution ?? 'your bank'} to cover it.`;
   });
-  return ['When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows.', ...each].join(' ');
+  return ['When this is on, a payment your checking account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows.', ...each].join(' ');
 }
 
 function ordinal(n: number): string {

@@ -333,7 +333,7 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     expect(db.balance).toBe(0);
     // Fifteen day ends overdrawn, 6 to 20 January, at 3.575342¢ (13.05% on €100): 53.630¢, 53 cents.
     // January, the month it opened, is free (Deutsche Bank's price list; until 2026-10-16 €6.90, “Pay in €7.43 first”).
-    const words = 'Its overdraft interest, €0.53, is more than it holds. Pay in €0.53 first.';
+    const words = 'Its overdraft interest, €0.53, is more than it holds. Move €0.53 into it first.';
     expect(refusal(sim, 'bank.close_current', { accountId: db.id, remainderTo: giro.id })).toBe(words);
     expect(db.closedAt).toBeUndefined();
     ok(sim, 'bank.transfer', { fromId: giro.id, toId: db.id, amount: 53 });
@@ -373,7 +373,7 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     // under the allowance, settled before it, as Germany pays at the quarter's end.
     expect(postedTo(sim, 'Interest: Flexgeld, before the set-off', flex.id)).toEqual([41]);
     expect([db.closedAt, db.balance, flex.closedAt, flex.balance]).toEqual([berlin(2026, 3, 7, 0), 0, undefined, 500_00 + 41 - 110_65]);
-    expect(titled(sim, 'Deutsche Bank Closed An Account').map((n) => n.body)).toEqual(['Deutsche Bank closed AktivKonto. It had been below zero for 60 days, so the bank took what it was owed from your other money there. Flexgeld stays open. Its standing order of €10.00 into Flexgeld on the 20th ended with it. You can set one up again on How You Pay.']);
+    expect(titled(sim, 'Deutsche Bank Closed An Account').map((n) => n.body)).toEqual(['Deutsche Bank closed AktivKonto. It had been below zero for 60 days, so the bank took what it was owed from your other money there. Flexgeld stays open. Its standing order of €10.00 into Flexgeld on the 20th stopped when it closed. You can set up a new one from another account under How You Pay, on the Payments And Cash tab.']);
     // It failed on 20 January and 20 February, said once and brought up to the later day; not on 20 March.
     expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => n.at)).toEqual([berlin(2026, 2, 20, 9)]);
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);
@@ -392,7 +392,7 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     expect([db.closedAt, flex.closedAt, flex.balance]).toEqual([berlin(2026, 3, 7, 0), berlin(2026, 3, 7, 0), 0]);
     const closed = titled(sim, 'Deutsche Bank Closed Your Account');
     expect(closed).toHaveLength(1);
-    expect(closed[0]!.body.endsWith('Your money is at Commerzbank now. Its standing order of €10.00 into Flexgeld on the 20th ended with it. You can set one up again on How You Pay.')).toBe(true);
+    expect(closed[0]!.body.endsWith('Your money is at Commerzbank now. Its standing order of €10.00 into Flexgeld on the 20th stopped when it closed. You can set up a new one from another account under How You Pay, on the Payments And Cash tab.')).toBe(true);
     expect(titled(sim, 'A Standing Order Didn’t Go')).toEqual([]);
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);
     expect(breaches(sim.universe)).toEqual([]);
@@ -430,7 +430,7 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     ok(sim, 'bank.transfer', { fromId: giro.id, toId: db.id, amount: 100_00 });
     // Seven day ends, 6 to 12 January, at 3.575342¢: 25.027¢, 25 cents.
     // January free, the month it opened (until 2026-10-16 €6.90, “Pay in €7.15 first”).
-    expect(refusal(sim, 'bank.cancel_new', { accountId: db.id })).toBe('Its overdraft interest, €0.25, is more than it holds. Pay in €0.25 first.');
+    expect(refusal(sim, 'bank.cancel_new', { accountId: db.id })).toBe('Its overdraft interest, €0.25, is more than it holds. Move €0.25 into it first.');
     ok(sim, 'bank.transfer', { fromId: giro.id, toId: db.id, amount: 25 });
     ok(sim, 'bank.cancel_new', { accountId: db.id });
     expect(postedTo(sim, 'Overdraft interest, on closing', db.id)).toEqual([-25]);
@@ -458,7 +458,7 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     expect(postedTo(sim, 'Overdraft interest, on closing', current.id)).toEqual([-3_77]);
     expect(current.balance).toBe(0);
     // The order into the saver ends with it, said in the notice; none follows on 28 October.
-    expect(titled(sim, 'Barclays Closed Your Account')[0]!.body.endsWith(`Its standing order of $100.00 into ${saver.name} on the 28th ended with it. You can set one up again on How You Pay.`)).toBe(true);
+    expect(titled(sim, 'Barclays Closed Your Account')[0]!.body.endsWith(`Its standing order of $100.00 into ${saver.name} on the 28th stopped when it closed. You can set up a new one from another account under How You Pay, on the Payments And Cash tab.`)).toBe(true);
     sim.advanceTo(at(2026, 10, 29, 12));
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);
     expect(titled(sim, 'A Standing Order Didn’t Go')).toEqual([]);
@@ -515,7 +515,7 @@ describe('banking.1: an account a bank closed stops', () => {
     sim.advanceTo(capone.fundBy! + 2 * MS_DAY);
     expect(capone.closedAt).toBeDefined();
     const closedBy = titled(sim, 'Capital One Closed 360 Checking');
-    expect(closedBy.map((n) => n.body)).toEqual(['The bank closed it because no money was paid into it within 60 days of opening. Its standing order of $50.00 into Chase Savings on the 15th ended with it. You can set one up again on How You Pay.']);
+    expect(closedBy.map((n) => n.body)).toEqual(['The bank closed it because no money was paid into it within 60 days of opening. Its standing order of $50.00 into Chase Savings on the 15th stopped when it closed. You can set up a new one from another account under How You Pay, on the Payments And Cash tab.']);
     expect(paymentsOf(sim.player).standingOrders.map((o) => o.id)).toEqual([fromCiti.id]);
     // Citi's $5 a month, for an owner of 24 with no direct deposit, on 31 October and 30 November, takes it to −$10, and
     // sixty days below zero, from 1 November, close it on 31 December.
@@ -524,7 +524,7 @@ describe('banking.1: an account a bank closed stops', () => {
     const citiNow = sim.universe.accounts[citi.id]!;
     expect(citiNow.closedAt).toBeDefined();
     expect(postedTo(sim, 'Charged off by Citi', citi.id)).toEqual([10_00]);
-    expect(titled(sim, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your credit record. You can pay it on Money, under Borrowing. Your money is at Chase now. Its standing order of $20.00 into Chase Savings on the 20th ended with it. You can set one up again on How You Pay.']);
+    expect(titled(sim, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your credit record. You can pay it on Money, under Borrowing. Your money is at Chase now. Its standing order of $20.00 into Chase Savings on the 20th stopped when it closed. You can set up a new one from another account under How You Pay, on the Payments And Cash tab.']);
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);
     const quiet = Math.max(citiNow.closedAt!, sim.universe.accounts[capone.id]!.closedAt!) + 1;
     sim.advanceTo(at(2027, 4, 2, 12));
@@ -537,8 +537,8 @@ describe('banking.1: an account a bank closed stops', () => {
     // Before the close it failed on 15 October and 15 November, the account empty, and said so (the same words unread are
     // brought up to the later day, not said twice); after it, never.
     expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => [n.at, n.body])).toEqual([
-      [at(2026, 11, 15, 9), 'Your $50.00 standing order to Chase Savings didn’t go. There wasn’t enough in 360 Checking on the day. Move money into it before the order’s next date.'],
-      [at(2026, 12, 20, 9), 'Your $20.00 standing order to Chase Savings didn’t go. There wasn’t enough in Citi Access Checking on the day. Move money into it before the order’s next date.'],
+      [at(2026, 11, 15, 9), 'Your $50.00 standing order to Chase Savings didn’t go through. There wasn’t enough available in 360 Checking that day. Move money into it before the order’s next date.'],
+      [at(2026, 12, 20, 9), 'Your $20.00 standing order to Chase Savings didn’t go through. There wasn’t enough available in Citi Access Checking that day. Move money into it before the order’s next date.'],
     ]);
     expect(breaches(sim.universe)).toEqual([]);
   }, 120_000);
@@ -629,7 +629,7 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
     ok(sim, 'bank.take_term_interest', { accountId: term.id });
     const older = loadSave(asOlderBuild(sim) as never);
     setTo(older, older.universe.accounts[giro.id]!, 3_70); // TEST SETUP: spent since.
-    expect(refusal(older, 'bank.cancel_new', { accountId: term.id })).toBe('The interest it paid into AktivKonto, €3.71, goes back out of it, and is more than it holds. Pay in €0.01 first.');
+    expect(refusal(older, 'bank.cancel_new', { accountId: term.id })).toBe('Canceling takes back the €3.71 of interest it paid into AktivKonto, which holds less than that. Move €0.01 into AktivKonto first.');
     expect(older.universe.accounts[term.id]!.closedAt).toBeUndefined();
   }, 60_000);
 
@@ -805,7 +805,7 @@ describe('banking.s7: what a New Haven student meets opening and moving money', 
     const sent = ok<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: citi.id, amount: 100_00 });
     expect(sent.arrivesAt).toBe(at(2026, 10, 8, 14));
     expect([chase.balance - before, citi.balance, inTransitOf(sim, sim.player).balance]).toEqual([-100_00, 0, 100_00]);
-    expect(refusal(sim, 'bank.transfer', { fromId: citi.id, toId: chase.id, amount: 50_00 })).toBe('Citi Access Checking has nothing in it, so nothing was moved.');
+    expect(refusal(sim, 'bank.transfer', { fromId: citi.id, toId: chase.id, amount: 50_00 })).toBe('Citi Access Checking has nothing available, so nothing was moved.');
     sim = reload(sim);
     sim.advanceTo(sent.arrivesAt + MS_HOUR);
     expect([sim.universe.accounts[citi.id]!.balance, inTransitOf(sim, sim.player).balance]).toEqual([100_00, 0]);

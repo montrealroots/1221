@@ -136,7 +136,7 @@ describe('an account the bank has blocked, on a payment’s day', () => {
     const before = { chase: chase.balance, saver: saver.balance };
     sim.advanceTo(at + 60_000);
     expect(saver.balance).toBe(before.saver);
-    expect(notices(sim, 'A Scheduled Payment Didn’t Go').join(' ')).toMatch(/paying off what it owes/);
+    expect(notices(sim, 'A Scheduled Payment Didn’t Go').join(' ')).toMatch(/stays blocked until the overdraft is paid off/);
     delete chase.switchDebt;
     chase.closingAt = at + 30 * MS_DAY;
     sim.advanceTo(at + MS_DAY + 60_000);

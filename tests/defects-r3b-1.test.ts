@@ -56,9 +56,9 @@ vi.mock('@/ui/guide/Guide', async (orig) => {
 
 const { BankPayments } = await import('@/ui/bank/BankPayments');
 
-const LINK = 'Savings Covers The Current Account';
-const NOTHING = 'covers nothing until there is';
-const LEAD = 'When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows.';
+const LINK = 'Savings Covers The Checking Account';
+const NOTHING = 'covers nothing until you open some there';
+const LEAD = 'When this is on, a payment your checking account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows.';
 
 /** How You Pay as the player sees it, as text. */
 function screen(sim: Simulation): string {
@@ -181,19 +181,19 @@ describe('PLAYER JOURNEY: the link left On when Citi is made primary, with a Cit
     expect(linkableSavings(sim, sim.player)).toBeUndefined();
     const text = screen(sim);
     expect(text).toContain(`${LINK}: On`);
-    expect(text).toContain(`There’s no easy-access savings at ${citi.institution}, so turning this on ${NOTHING}.`);
+    expect(text).toContain(`You don’t have easy-access savings at ${citi.institution}, so turning this on ${NOTHING}.`);
     expect(press(sim)).toBe(true);
     expect(screen(sim)).not.toContain(LINK);
-    expect(sim.execute({ kind: 'bank.set_payments', payload: { linkSavings: true } }).error).toBe(`There’s no savings account at ${citi.institution} to cover the current account.`);
+    expect(sim.execute({ kind: 'bank.set_payments', payload: { linkSavings: true } }).error).toBe(`There’s no savings account at ${citi.institution} to cover your checking account.`);
   });
 
   it('is refused naming both banks once the Chase savings is closed', () => {
     const { sim, chase, citi, chaseSavings } = citiLoanRepaidFromChase('r3b-link-closed', true);
     run(sim, 'bank.close_savings', { accountId: chaseSavings.id });
     expect(linkableSavings(sim, sim.player)).toBeUndefined();
-    expect(screen(sim)).toContain(`There’s no easy-access savings at ${citi.institution} or ${chase.institution}, so turning this on ${NOTHING}.`);
+    expect(screen(sim)).toContain(`You don’t have easy-access savings at ${citi.institution} or ${chase.institution}, so turning this on ${NOTHING}.`);
     expect(press(sim)).toBe(true);
     // Until group r3b it named the primary account's bank alone: “There’s no savings account at Citi to cover the current account.”
-    expect(sim.execute({ kind: 'bank.set_payments', payload: { linkSavings: true } }).error).toBe(`There’s no savings account at ${citi.institution} or ${chase.institution} to cover the current accounts your payments come from.`);
+    expect(sim.execute({ kind: 'bank.set_payments', payload: { linkSavings: true } }).error).toBe(`There’s no savings account at ${citi.institution} or ${chase.institution} to cover the checking accounts your payments come from.`);
   });
 });

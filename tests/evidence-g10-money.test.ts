@@ -814,7 +814,7 @@ describe('bank.reactivate', () => {
     sim.advanceTo(at(2028, 9, 2));
     expect(savings.accrued).toBe(stopped);
     // Every way in refused: Move Money out, cash in, and the ATM once 360 Checking is primary again.
-    expect(refused(sim, 'bank.transfer', { fromId: savings.id, toId: capital.id, amount: 100_00 })).toBe('360 Performance Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
+    expect(refused(sim, 'bank.transfer', { fromId: savings.id, toId: capital.id, amount: 100_00 })).toBe('360 Performance Savings is dormant, so nothing was moved. Reactivate it under Your Accounts Over Time, then try again.');
     sim.must({ kind: 'cash.withdraw', payload: { amount: 200_00, from: 'atm' } });
     expect(refused(sim, 'cash.deposit', { amount: 100_00, toId: savings.id, at: 'counter' })).toBe('360 Performance Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
     sim.must({ kind: 'bank.set_primary', payload: { accountId: capital.id } });

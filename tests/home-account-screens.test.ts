@@ -151,7 +151,7 @@ describe('an account kept at home, in its own money on every screen', () => {
     run(sim, 'bank.set_alerts', { statements: true, lowBalance: 50_000 });
     run(sim, 'bank.transfer', { fromId: saver.id, toId: current.id, amount: 10_000, in: 'GBP' });
     sim.advanceTo(day(sim, 9, 1, 12));
-    expect(titled(sim, `Statement Ready: ${current.name}`)).toEqual(['£100.00 ($126.58) at the close.']);
+    expect(titled(sim, `Statement Ready: ${current.name}`)).toEqual(['It ended the month with £100.00 ($126.58) in it. The statement is on Money, under Statements.']);
     expect(titled(sim, `Low Balance: ${current.name}`)[0]).toBe(`${current.name} at HSBC UK is down to £100.00 ($126.58), under the $500.00 you set.`);
   }, 120_000);
 

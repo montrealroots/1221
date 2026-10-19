@@ -323,13 +323,13 @@ describe('bank.open_current', () => {
     const chase = primaryId(sim);
     const card = cardsOf(sim, sim.player)[0]!;
     let before = untouched(sim);
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: card.id, amount: 10_00 })).toBe('Pay the opening deposit from one of your own current or savings accounts.');
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: 'account_nobody', amount: 10_00 })).toBe('Pay the opening deposit from one of your own current or savings accounts.');
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase, amount: 0 })).toBe('Enter how much to pay in.');
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', amount: -5_00 })).toBe('Enter how much to pay in.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: card.id, amount: 10_00 })).toBe('Pay the opening deposit from one of your own checking or savings accounts.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: 'account_nobody', amount: 10_00 })).toBe('Pay the opening deposit from one of your own checking or savings accounts.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase, amount: 0 })).toBe('Enter the amount of the opening deposit.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', amount: -5_00 })).toBe('Enter the amount of the opening deposit.');
     const held = acct(sim, chase).balance;
     expect(held).toBe(92_391_00);
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase, amount: held + 1 })).toBe('Chase Total Checking has only $92,391.00, so the account wasn’t opened.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase, amount: held + 1 })).toBe('Chase Total Checking has only $92,391.00 available, so the account wasn’t opened.');
     expect(untouched(sim)).toEqual(before);
     expect(card.balance).toBe(0);
 
@@ -355,7 +355,7 @@ describe('bank.open_current', () => {
     expect(first.words).toContain('There’s no switching service here. To move banks, open the new account, have your wages paid into it, move each standing order and autopay, move the money across, and then close the old account. The new account starts empty, with its own history.');
     const options = [...first.html.matchAll(/<option value="(us-[a-z-]+)"/g)].map((m) => m[1]);
     expect(options).toEqual(['us-bank-of-america', 'us-wells-fargo', 'us-citi', 'us-capital-one']);
-    expect(first.words).toContain('It decides an application in 2 business days, the top of the range it gives. It asks for an opening deposit of $100, sent from another of your accounts.');
+    expect(first.words).toContain('It decides an application within 2 business days, the longest it says it takes. It asks for an opening deposit of $100, sent from another of your accounts.');
     expect(first.words).toContain('Opening Deposit From');
     press(control('bank.open_current', 'Apply'));
 
@@ -435,8 +435,8 @@ describe('bank.set_primary', () => {
     expect(primaryId(sim)).toBe(chase);
     expect(refused(sim, 'bank.set_primary', { accountId: citi })).toBe('Citi Access Checking is closing, so it can’t be your primary account.');
     expect(refused(sim, 'bank.set_primary', { accountId: chase })).toBe('Chase Total Checking is already your primary account.');
-    expect(refused(sim, 'bank.set_primary', { accountId: savingsAt(sim, 'us-chase').id })).toBe('Only an open current account of yours can be primary.');
-    expect(refused(sim, 'bank.set_primary', { accountId: cardsOf(sim, sim.player)[0]!.id })).toBe('Only an open current account of yours can be primary.');
+    expect(refused(sim, 'bank.set_primary', { accountId: savingsAt(sim, 'us-chase').id })).toBe('Only one of your open checking accounts can be your primary account.');
+    expect(refused(sim, 'bank.set_primary', { accountId: cardsOf(sim, sim.player)[0]!.id })).toBe('Only one of your open checking accounts can be your primary account.');
     expect(primaryId(sim)).toBe(chase);
 
     // Capital One, never funded, closed by the bank at its 60 days.
@@ -444,7 +444,7 @@ describe('bank.set_primary', () => {
     const cap = run<{ accountId: string }>(other, 'bank.open_current', { bankId: 'us-capital-one' }).accountId;
     other.advanceTo(other.now + 61 * MS_DAY);
     expect(acct(other, cap).closedAt).toBeDefined();
-    expect(refused(other, 'bank.set_primary', { accountId: cap })).toBe('Only an open current account of yours can be primary.');
+    expect(refused(other, 'bank.set_primary', { accountId: cap })).toBe('Only one of your open checking accounts can be your primary account.');
     expect(acct(other, primaryId(other)).bankId).toBe('us-chase');
   });
 
@@ -454,12 +454,12 @@ describe('bank.set_primary', () => {
     const first = moves(sim);
     expect(first.words).toMatch(/Chase Total Checking at Chase, \$[\d,]+\. This is your primary account\./);
     expect(first.words).toContain('360 Checking at Capital One, $0. It’s waiting for its first deposit, due by October 23, 2026. Its debit card arrives September 2, 2026.');
-    expect(first.words).toContain('Your primary account is the one money comes from unless you say otherwise: your debit card’s everyday purchases come from it; cash from a machine comes out of it; bills you pay by hand come from it; a new standing order or autopay starts from it. Making another account primary doesn’t move anything already set up.');
+    expect(first.words).toContain('Your primary account is the one money comes from unless you choose otherwise: your debit card’s everyday purchases, cash from a machine, bills you pay by hand and any new standing order or autopay. Making another account primary doesn’t move anything already set up.');
     press(control('bank.set_primary', 'Make Primary'));
     expect(primaryId(sim)).toBe(cap);
     const after = moves(sim);
     expect(after.words).toContain('360 Checking at Capital One, $0. This is your primary account. It’s waiting for its first deposit');
-    expect(after.words).toContain('You can’t close it yet. Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Move them first.');
+    expect(after.words).toContain('You can’t close it yet. Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Move those to another account first.');
     // Make Primary is now Chase's, the only one not primary.
     expect(control('bank.set_primary', 'Make Primary').disabled).toBe(false);
   });
@@ -510,7 +510,7 @@ describe('bank.set_order_source', () => {
     // Chase, it doesn't.
     sim.advanceTo(at(2026, 10, 1, 9, 1));
     expect(transfersOf(sim, sim.player)).toEqual([]);
-    expect(refused(sim, 'bank.close_current', { accountId: cap, remainderTo: chase })).toBe('A standing order pays from it on the 28th. Move it first.');
+    expect(refused(sim, 'bank.close_current', { accountId: cap, remainderTo: chase })).toBe('A standing order pays from it on the 28th. Move that to another account first.');
     run(sim, 'bank.set_order_source', { orderId, accountId: chase });
     run(sim, 'bank.close_current', { accountId: cap, remainderTo: chase });
     expect(acct(sim, cap).closedAt).toBe(sim.now);
@@ -525,8 +525,8 @@ describe('bank.set_order_source', () => {
     expect(fromNow()).toBe(chase);
     expect(refused(sim, 'bank.set_order_source', { orderId, accountId: citi })).toBe('Citi Access Checking is closing, so a standing order can’t pay from it.');
     expect(refused(sim, 'bank.set_order_source', { orderId: 'sched_nobody', accountId: chase })).toBe('That standing order no longer exists.');
-    expect(refused(sim, 'bank.set_order_source', { orderId, accountId: savingsAt(sim, 'us-chase').id })).toBe('A standing order pays from an open current account of yours.');
-    expect(refused(sim, 'bank.set_order_source', { orderId, accountId: cardsOf(sim, sim.player)[0]!.id })).toBe('A standing order pays from an open current account of yours.');
+    expect(refused(sim, 'bank.set_order_source', { orderId, accountId: savingsAt(sim, 'us-chase').id })).toBe('A standing order has to pay from one of your open checking accounts.');
+    expect(refused(sim, 'bank.set_order_source', { orderId, accountId: cardsOf(sim, sim.player)[0]!.id })).toBe('A standing order has to pay from one of your open checking accounts.');
     expect(fromNow()).toBe(chase);
   });
 
@@ -565,7 +565,7 @@ describe('bank.set_loan_repayment', () => {
     wages(sim, chase, 5_000_00);
     const loan = run<{ loanId: string; apr: number; payment: number }>(sim, 'bank.borrow', { amount: 3_000_00, months: 24, bankId: 'us-citi', intoId: chase, repayFromId: citi });
     expect([loan.apr, loan.payment]).toEqual([0.1024, 138_77]);
-    expect(refused(sim, 'bank.close_current', { accountId: citi, remainderTo: chase })).toBe('Citi Personal Loan’s payments come from it. Move it first.');
+    expect(refused(sim, 'bank.close_current', { accountId: citi, remainderTo: chase })).toBe('Citi Personal Loan’s payments come from it. Move that to another account first.');
     expect(run<{ repayFromId: string }>(sim, 'bank.set_loan_repayment', { loanId: loan.loanId, accountId: chase }).repayFromId).toBe(chase);
     sim = reload(sim);
     expect(acct(sim, loan.loanId).repayFromId).toBe(chase);
@@ -583,7 +583,7 @@ describe('bank.set_loan_repayment', () => {
 
     // The loan keeps Chase open now: with Citi primary, Chase's close names it among what still uses it.
     run(sim, 'bank.set_primary', { accountId: citi });
-    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: citi })).toBe('Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Citi Personal Loan’s payments come from it. Move them first.');
+    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: citi })).toBe('Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Citi Personal Loan’s payments come from it. Move those to another account first.');
     run(sim, 'bank.set_primary', { accountId: chase });
     // Nothing of the loan keeps Citi open now: it closes, what it holds to Chase.
     run(sim, 'bank.close_current', { accountId: citi, remainderTo: chase });
@@ -644,7 +644,7 @@ describe('bank.close_current', () => {
   it('refuses Chase as her only current account, then as her primary, then overdrawn by $15.00 once its fee falls on it empty, until she pays it in', () => {
     const sim = student('g14-close-only');
     const chase = primaryId(sim);
-    expect(refused(sim, 'bank.close_current', { accountId: chase })).toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
+    expect(refused(sim, 'bank.close_current', { accountId: chase })).toBe('It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.');
     const cap = run<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'us-capital-one' }).accountId;
     expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('It’s your primary account. Make another account primary first.');
     run(sim, 'bank.set_primary', { accountId: cap });
@@ -654,10 +654,10 @@ describe('bank.close_current', () => {
     run(sim, 'bank.transfer', { fromId: chase, toId: cap, amount: acct(sim, chase).balance });
     sim.advanceTo(at(2026, 9, 1));
     // Chase Total Checking's $15 on 31 August, on an account at nothing.
-    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('It’s overdrawn by $15.00. The bank only closes it once that’s paid off.');
+    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('It’s overdrawn by $15.00, and the bank only closes it once that’s paid off. Move money into it first.');
     expect(acct(sim, chase).closedAt).toBeUndefined();
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: cap, toId: chase, amount: 15_00 });
-    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('It’s overdrawn by $15.00. The bank only closes it once that’s paid off.');
+    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('It’s overdrawn by $15.00, and the bank only closes it once that’s paid off. Move money into it first.');
     // Wages reach Capital One from 7 September (the change's 14 days), and the $15 has landed by then.
     sim.advanceTo(Math.max(sent.arrivesAt, at(2026, 9, 7, 8)) + MINUTE);
     expect(acct(sim, chase).balance).toBe(0);
@@ -677,7 +677,7 @@ describe('bank.close_current', () => {
     leaveAtChase(sim, cap, 2_000_00, 300_00);
     const scheduled = run<{ id: string }>(sim, 'bank.schedule_payment', { fromId: chase, toId: savings, amount: 10_00, at: at(2026, 10, 1) }).id;
     sim.advanceTo(at(2026, 9, 7, 12));
-    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('A payment set for a date uses it. Move it first.');
+    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('A payment set for a date uses it. Move that to another account first.');
     run(sim, 'bank.cancel_scheduled', { id: scheduled });
     expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('Chase Savings is still open at the same bank. Close that first.');
     // The savings' $300.00 into the current account beside it: $2,300.00, untouched since 24 August by any fee (its
@@ -729,7 +729,7 @@ describe('bank.close_current', () => {
     sim.advanceTo(closingAt + MINUTE);
     expect(acct(sim, citi).closedAt).toBeUndefined();
     expect(acct(sim, citi).closingAt).toBeUndefined();
-    expect(sim.universe.notifications.filter((n) => n.title === 'Citi Access Checking Didn’t Close').map((n) => n.body)).toEqual(['Payments that posted in the meantime left it overdrawn, so it’s still open. Pay in what’s owed, then close it again.']);
+    expect(sim.universe.notifications.filter((n) => n.title === 'Citi Access Checking Didn’t Close').map((n) => n.body)).toEqual(['Payments that posted while it was closing left it overdrawn, so it’s still open. Move money into it to clear the overdraft, then press Close It again.']);
     expect(inTransitOf(sim, sim.player).balance).toBe(0);
     sim = reload(sim);
     sim.advanceTo(closingAt + MS_DAY);
@@ -754,7 +754,7 @@ describe('bank.close_current', () => {
     leaveAtChase(sim, cap, 2_000_00, 300_00);
     run(sim, 'bank.set_primary', { accountId: cap });
     sim.advanceTo(at(2026, 8, 27, 8));
-    const shut = 'Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Move them first.';
+    const shut = 'Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Move those to another account first.';
     expect(moves(sim).words).toContain(`You can’t close it yet. ${shut}`);
     expect(control('bank.close_current', 'Close It')).toMatchObject({ disabled: true, title: shut });
 

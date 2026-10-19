@@ -338,14 +338,14 @@ export function cancelRefusal(sim: Simulation, person: Person, account: Account)
   // counted by Close It's refusal above: only a current account builds it.
   if (short > 0) {
     const what = owed > 0 && back > 0 ? `Its fees, ${m(owed)}, and the interest it was paid, ${m(back)}, are` : owed > 0 ? `Its fees, ${m(owed)}, are` : `The interest it was paid, ${m(back)}, goes back, and is`;
-    return `${what} more than it holds. Pay in ${m(short)} first.`;
+    return `${what} more than it holds. Move ${m(short)} into it first.`;
   }
   // Interest it paid into another account, a term's taken during the term, goes back out of that one (from 2026-10-15's
   // recheck, `interestBackOf`).
   for (const [id, amount] of backs) {
     const into = sim.universe.accounts[id];
     if (id === account.id || !into || amount <= into.balance) continue;
-    return `The interest it paid into ${into.name}, ${m(amount)}, goes back out of it, and is more than it holds. Pay in ${m(amount - into.balance)} first.`;
+    return `Canceling takes back the ${m(amount)} of interest it paid into ${into.name}, which holds less than that. Move ${m(amount - into.balance)} into ${into.name} first.`;
   }
   return undefined;
 }

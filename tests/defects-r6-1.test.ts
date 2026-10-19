@@ -53,8 +53,8 @@ vi.mock('@/ui/guide/Guide', async (orig) => {
 
 const { BankPayments } = await import('@/ui/bank/BankPayments');
 
-const LINK = 'Savings Covers The Current Account';
-const LEAD = 'When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows.';
+const LINK = 'Savings Covers The Checking Account';
+const LEAD = 'When this is on, a payment your checking account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows.';
 
 /** How You Pay as the player sees it, as text. */
 function screen(sim: Simulation): string {
@@ -123,7 +123,7 @@ describe('PLAYER JOURNEY: the link left On when the primary account moves to ano
     primaryWithAutopay(sim, capitalOne);
     const text = screen(sim);
     expect(text).toContain(`${LINK}: On`);
-    expect(text).toContain('There’s no easy-access savings at Capital One, so turning this on covers nothing until there is.');
+    expect(text).toContain('You don’t have easy-access savings at Capital One, so turning this on covers nothing until you open some there.');
     expect(text).not.toContain(LEAD);
     linkButton()!.onClick!();
     expect(paymentsOf(sim.player).linkSavings).toBe(false);

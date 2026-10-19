@@ -162,7 +162,7 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Accounts', () => {
     const accounts = Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && !a.nominal && !a.closedAt && a.bankId === 'us-chase');
     expect(bank.kind).toBe('Your Everyday Bank');
     expect(bank.summary).toMatch(new RegExp(`^You have \\$[\\d,.]+ here, across ${accounts.length} accounts\\.$`));
-    expect(text(bank.body)).toContain('Your primary account is here, so your everyday spending and your pay go through it.');
+    expect(text(bank.body)).toContain('Your primary account is here, so your debit card’s everyday purchases come from it.');
     expect(bank.provenance).toBe('Each balance is the total of every payment in and out of the account, added up again each time you look.');
     const checking = checkingOf(sim);
     const line = [...sim.universe.transactions].reverse().find((t) => t.postings.some((p) => p.accountId === checking.id) && (t.postsAt === undefined || t.postsAt <= sim.now))!;
@@ -180,7 +180,7 @@ describe('PLAYER JOURNEY: a New York student at Chase opens an account at anothe
     expect(words).toContain('Chase Total Checking at Chase,');
     expect(words).toContain('. This is your primary account.');
     expect(words).toContain(`Other payers take ${DEPOSIT_LEAD.days} days, which is estimated: employers say one to two pay cycles.`);
-    expect(words).toContain('Your primary account is the one money comes from unless you say otherwise: your debit card’s everyday purchases come from it;');
+    expect(words).toContain('Your primary account is the one money comes from unless you choose otherwise: your debit card’s everyday purchases,');
     expect(words).not.toMatch(/SLATE’s estimate/);
     const sent = press('bank.open_current', 'Apply');
     expect(sent).toHaveLength(1);
@@ -191,8 +191,8 @@ describe('PLAYER JOURNEY: a New York student at Chase opens an account at anothe
     const sim = nyStudent('lang14-refuse');
     const checking = checkingOf(sim);
     expect(sim.execute({ kind: 'bank.set_primary', payload: { accountId: checking.id } }).error).toBe(`${checking.name} is already your primary account.`);
-    expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checking.id } }).error).toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
-    expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-chase' } }).error).toBe('You already have a current account at Chase.');
+    expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checking.id } }).error).toBe('It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.');
+    expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-chase' } }).error).toBe('You already have a checking account at Chase.');
   });
 });
 
@@ -282,7 +282,7 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
 
   it('says how the day’s spending is paid and what savings covers, and what cash is in hand', () => {
     const sim = nyStudent('lang14-pay');
-    expect(drawn(sim, BankPayments as FunctionComponent<{ bankId: string }>)).toContain('How the day’s spending is paid, and which account each payment comes from. How This Works The Day’s Spending In Cash, Then The Debit Card On The Credit Card On The Debit Card When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows. Chase Savings covers Chase Total Checking, which pays the day’s spending and the Chase Freedom Unlimited’s autopay.');
+    expect(drawn(sim, BankPayments as FunctionComponent<{ bankId: string }>)).toContain('How the day’s spending is paid, and which account each payment comes from. How This Works The Day’s Spending In Cash, Then The Debit Card On The Credit Card On The Debit Card When this is on, a payment your checking account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows. Chase Savings covers Chase Total Checking, which pays the day’s spending and the Chase Freedom Unlimited’s autopay.');
     expect(drawn(sim, BankCash as FunctionComponent<{ bankId: string }>)).toContain('Cash You have $0.00 in cash. How This Works Amount To Take Out (USD)');
   });
 });
@@ -352,9 +352,9 @@ describe('PLAYER JOURNEY: a refused banking action says why and what to do', () 
     const [held, kept] = [checking.balance, savings.balance];
     expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: checking.id, amount: 1_00 })).toBe('From and To are the same account. Choose another account to move it to.');
     expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: 0 })).toBe('Enter how much to move.');
-    expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: held + 1_00 })).toBe(`${checking.name} has only ${formatMoney(held, 'USD')}, so nothing was moved.`);
+    expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: held + 1_00 })).toBe(`${checking.name} has only ${formatMoney(held, 'USD')} available, so nothing was moved.`);
     expect(refused(sim, 'bank.open_savings', { bankId: 'us-chase' })).toBe('You already have a savings account at Chase.');
-    expect(refused(sim, 'bank.open_savings', { bankId: 'us-citi' })).toBe('You can only open savings at a bank where you have a current account.');
+    expect(refused(sim, 'bank.open_savings', { bankId: 'us-citi' })).toBe('You can only open savings at a bank where you have a checking account.');
     expect(refused(sim, 'bank.add_standing_order', { amount: 0, day: 1, toId: savings.id })).toBe('Enter how much to pay each month.');
     expect(refused(sim, 'bank.add_standing_order', { amount: 50_00, day: 40, toId: savings.id })).toBe('Pick a day of the month, 1 to 31.');
     expect(refused(sim, 'bank.cancel_standing_order', { id: 'none' })).toBe('That standing order no longer exists.');

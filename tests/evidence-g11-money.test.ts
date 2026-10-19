@@ -451,7 +451,7 @@ describe('bank.set_alerts', () => {
     // The month's end, at 11 PM on 31 August: the current account's statement, at what it closed on.
     for (const sim of [asked, quiet]) sim.advanceTo(at(2026, 8, 31, 23, 1));
     const closedOn = primary(asked).balance;
-    expect(told(asked, 'Statement Ready: Chase Total Checking').map((n) => n.body)).toEqual([`${formatMoney(closedOn, 'USD')} at the close.`]);
+    expect(told(asked, 'Statement Ready: Chase Total Checking').map((n) => n.body)).toEqual([`It ended the month with ${formatMoney(closedOn, 'USD')} in it. The statement is on Money, under Statements.`]);
     expect(told(quiet, 'Statement Ready: Chase Total Checking')).toEqual([]);
     // The card's statement on 20 September: owing nothing, told only where it's asked; owing, told anyway.
     for (const sim of [asked, quiet]) sim.advanceTo(at(2026, 9, 20, 9, 1));
@@ -495,7 +495,7 @@ describe('bank.set_payments', () => {
     expect(account(sim, chase).balance).toBe(0);
     if (link) {
       shown(sim, createElement(BankPayments));
-      press('bank.set_payments', 'Savings Covers The Current Account: Off');
+      press('bank.set_payments', 'Savings Covers The Checking Account: Off');
       expect(paymentsOf(sim.player).linkSavings).toBe(true);
     }
     const due = sim.universe.scheduled.find((i) => i.kind === LOAN_DUE_KIND && i.status === 'pending' && i.refId === loanId)!.at;
@@ -569,12 +569,12 @@ describe('bank.set_payments', () => {
   it('is refused On once Chase Savings is closed through Close Savings, in the bank’s words, isn’t drawn on How You Pay, and goes On once savings is opened there again', () => {
     const sim = student('g11-nolink', 'us-chase');
     ok(sim, 'bank.close_savings', { accountId: savingsAt(sim, 'us-chase').id });
-    expect(refusal(sim, 'bank.set_payments', { linkSavings: true })).toBe('There’s no savings account at Chase to cover the current account.');
+    expect(refusal(sim, 'bank.set_payments', { linkSavings: true })).toBe('There’s no savings account at Chase to cover your checking account.');
     expect(paymentsOf(sim.player).linkSavings).toBe(false);
-    expect(words(shown(sim, createElement(BankPayments)))).not.toContain('Savings Covers The Current Account');
+    expect(words(shown(sim, createElement(BankPayments)))).not.toContain('Savings Covers The Checking Account');
     ok(sim, 'bank.open_savings', { bankId: 'us-chase' });
     shown(sim, createElement(BankPayments));
-    press('bank.set_payments', 'Savings Covers The Current Account: Off');
+    press('bank.set_payments', 'Savings Covers The Checking Account: Off');
     expect(paymentsOf(sim.player).linkSavings).toBe(true);
   });
 });

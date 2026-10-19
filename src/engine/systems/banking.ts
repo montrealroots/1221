@@ -35,6 +35,7 @@ import type { Person } from '../domain/model';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { currencyInfo, exchange } from '../content/currency';
 import { addMonths, dateKey, daysInMonth, formatDate, instantFromZoned, zonedParts, MONTH_NAMES, MS_DAY, type Instant } from '../core/time';
+import { spokenList } from '../core/text';
 import { bankById, bankingIn, banksIn, type Bank, type CardYear, type Product } from '../content/banks';
 import { OPENING } from '../content/bankopening';
 import { ageOn } from './mortality';
@@ -524,7 +525,7 @@ export function endedWords(sim: Simulation, ended: readonly StandingOrder[]): st
   if (ended.length === 0) return '';
   const nth = (n: number) => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; };
   const each = ended.map((o) => `${formatMoney(o.amount, saveCurrency(sim.universe))} into ${sim.universe.accounts[o.toId]?.name ?? 'your savings'} on the ${nth(o.day)}`);
-  return ` ${ended.length === 1 ? 'Its standing order' : 'Its standing orders'} of ${each.join(' and ')} ended with it. You can set ${ended.length === 1 ? 'one' : 'them'} up again on How You Pay.`;
+  return ` ${ended.length === 1 ? 'Its standing order' : 'Its standing orders'} of ${spokenList(each)} stopped when it closed. You can set up ${ended.length === 1 ? 'a new one' : 'new ones'} from another account under How You Pay, on the Payments And Cash tab.`;
 }
 
 /**
@@ -729,13 +730,13 @@ export function cardYearWords(sim: Simulation, account: Account): string | undef
   if (span && account.cardYearRule) {
     const paid = account.cardFeePaid ?? 0;
     said.push(account.cardYearRule === 'ahead'
-      ? ` This card year began ${dayWords(span.from)}, ${paid > 0 ? `paid in advance with ${own(paid)}` : 'with nothing paid for it'}, and runs to ${dayWords(span.next - 1)}. The next year is charged ${dayWords(span.next)}.`
-      : ` This card year began ${dayWords(span.from)} and runs to ${dayWords(span.next - 1)}. Its fee is charged at its end, ${dayWords(span.next)}.`);
-  } else said.push(year.paid === 'ahead' ? ' The first year is charged in advance, tonight.' : ' The first year begins tonight, and its fee is charged at its end.');
-  said.push((account.cardYearRule ?? year.paid) === 'ahead' ? ' Closing the account refunds the days left in the year.' : ' Closing the account charges for the days of the year used.');
-  if (year.place) said.push(` Its days are counted by ${year.place}’s calendar.`);
-  said.push(' If the account can’t cover the year’s fee, it’s charged anyway, and the account goes below zero by the difference.');
-  if (year.simulated) said.push(` Estimated: ${year.simulated}.`);
+      ? ` The current card year runs from ${dayWords(span.from)} to ${dayWords(span.next - 1)}${paid > 0 ? `, and you paid ${own(paid)} for it in advance` : ', and nothing was charged for it'}. The next year’s fee is charged on ${dayWords(span.next)}.`
+      : ` The current card year runs from ${dayWords(span.from)} to ${dayWords(span.next - 1)}, and its fee is charged at the end, on ${dayWords(span.next)}.`);
+  } else said.push(year.paid === 'ahead' ? ' The first year’s fee is charged in advance, tonight.' : ' The first card year begins tonight, and its fee is charged when the year ends.');
+  said.push((account.cardYearRule ?? year.paid) === 'ahead' ? ' Closing the account refunds the days left in the year.' : ' Closing the account charges only for the days of the year you’ve used.');
+  if (year.place) said.push(` The bank counts the card year’s days by the date in ${year.place}.`);
+  said.push(' If the account can’t cover the fee, the bank charges it anyway and the account goes overdrawn by the difference.');
+  if (year.simulated) said.push(` The timing is estimated: ${year.simulated}.`);
   return said.join('');
 }
 
@@ -753,8 +754,9 @@ export function closingFeesWords(sim: Simulation, account: Account, doing: 'Clos
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   const year = cardYearOf(bank);
   // The card year's share in its words, and, where it's SLATE's, the law that sizes it and the label (from brief 10).
-  const share = card && bank ? `${card.kind === 'refund' ? 'refunds' : 'charges'} ${balanceText(sim, account, card.save, account.currency ? card.held : undefined)} of its debit card’s ${own(inSaveMoney(sim, card.fee, bank.currency), card.fee)} for the year, ${card.kind === 'refund' ? `paid ahead: the ${card.days} of its ${card.of} days left` : `charged at its end: the ${card.days} of its ${card.of} days so far`}` : undefined;
-  const after = card && bank && year ? `${year.law ? ` ${year.law}, ${card.kind === 'refund' ? 'gives a fee paid ahead back in proportion' : 'owes a regular fee only in proportion to the close'}.` : ''}${year.simulated ? ` Estimated: ${year.simulated}.` : ''}` : '';
+  const fee = card && bank ? own(inSaveMoney(sim, card.fee, bank.currency), card.fee) : '';
+  const share = card && bank ? `${card.kind === 'refund' ? 'refunds' : 'charges'} ${balanceText(sim, account, card.save, account.currency ? card.held : undefined)} ${card.kind === 'refund' ? `of the ${fee} you paid in advance for its debit card’s year: the ${card.days} days of its ${card.of} still to run` : `of its debit card’s ${fee} yearly fee, which is charged at the end of the year: the ${card.days} days of its ${card.of} used so far`}` : undefined;
+  const after = card && bank && year ? `${year.law ? ` Under ${year.law}, ${card.kind === 'refund' ? 'a fee paid in advance is refunded in proportion when the account closes' : 'a regular fee is owed only in proportion to the time before the account closes'}.` : ''}${year.simulated ? ` The timing is estimated: ${year.simulated}.` : ''}` : '';
   const fees = feesWords(sim, account, due, doing, own);
   if (!fees) return share ? `${doing} it now ${share}.${after}` : undefined;
   return share ? `${fees} It ${share}.${after}` : fees;
@@ -764,17 +766,17 @@ export function closingFeesWords(sim: Simulation, account: Account, doing: 'Clos
 function feesWords(sim: Simulation, account: Account, due: ClosingFees | undefined, doing: string, own: (save: Money, held: Money | undefined) => string): string | undefined {
   if (!due || due.none === 'ended' || (due.total === 0 && (due.none === undefined || !productOf(account)?.monthlyFee))) return undefined;
   const posts = feesPostAt(account);
-  const month = `${MONTH_NAMES[zonedParts(sim.now, sim.homeZone).month - 1]}’s`;
-  // Kept for the quarter's closing, or, at ING after the month's end and before the 1st, last month's still to come off.
-  const kept = due.kept > 0 ? `${own(due.kept, due.keptHeld)} ${posts === 'next' ? 'for last month, due on the 1st' : 'kept for the quarter’s closing'}` : '';
+  const name = MONTH_NAMES[zonedParts(sim.now, sim.homeZone).month - 1]!;
+  // Kept for the quarter's closing, or, at ING after the month's end and before the 1st, the month's fee still to come off.
+  const kept = due.kept > 0 ? `${own(due.kept, due.keptHeld)} ${posts === 'next' ? `for ${name}, which would come off on the 1st` : 'held over for the quarter’s closing'}` : '';
   const total = balanceText(sim, account, due.total, due.totalHeld);
-  if (due.none === 'accrued') return `${doing} it now charges ${kept ? `${total}, the ${kept}` : 'no fees'}: ${month} was ${posts === 'month' ? 'charged' : 'counted'} at the month’s end.`;
+  if (due.none === 'accrued') return kept ? `${doing} it now charges ${total}: the ${kept}. ${name}’s fee was already counted at the month’s end.` : `${doing} it now charges no fees. ${name}’s fee was already counted at the month’s end.`;
   if (due.none !== undefined) {
-    const why = due.none === 'new' ? `${month} is free, the month it opened` : `${month} is waived so far`;
-    return kept ? `${doing} it now charges ${total}, the ${kept}; ${why}.` : `${doing} it now charges no fees: ${why}.`;
+    const why = due.none === 'new' ? `${name} is free, because the account opened this month` : `${name}’s fee is waived so far`;
+    return kept ? `${doing} it now charges ${total}: the ${kept}. ${why[0]!.toUpperCase()}${why.slice(1)}.` : `${doing} it now charges no fees: ${why}.`;
   }
-  const share = `${month} ${own(due.month, due.monthHeld)} for ${due.days === 1 ? 'the one day' : `the ${due.days} days`} of its ${due.of} it’s been open, ${own(due.share, due.shareHeld)}`;
-  return `${doing} it now charges its fees to the day, ${total}: ${kept ? `${kept}, and ` : ''}${share}. German law charges a month’s fee only to the day an account closes.`;
+  const share = `${own(due.share, due.shareHeld)} of ${name}’s ${own(due.month, due.monthHeld)} fee, for ${due.days === 1 ? 'the one day' : `the ${due.days} days`} of its ${due.of} the account has been open`;
+  return `${doing} it now charges ${total} in fees: ${kept ? `${kept}, and ` : ''}${share}. Under German law, a month’s fee is charged only up to the day an account closes.`;
 }
 
 /**
@@ -932,8 +934,13 @@ export function registerBanking(sim: Simulation): void {
       // The current account's statement, monthly, or at Germany's quarterly closing.
       if (account.kind === 'checking' && (!quarterly || month % 3 === 0)) {
         const owner = s.universe.people[account.ownerId];
-        // An account kept at home in its own money, the dollars beside (from 2026-10-16).
-        if (owner) statementReady(s, owner, account, `${balanceText(s, account)} at the close.`);
+        // An account kept at home in its own money, the dollars beside (from 2026-10-16). Said as how the period ended
+        // and where the statement is from brief 15 (2026-10-19): until then the body was "$3,025.00 at the close.".
+        const end = quarterly ? 'the quarter' : 'the month';
+        const ended = account.balance < 0
+          ? `It ended ${end} overdrawn by ${balanceText(s, account, -account.balance, account.currency ? -heldOf(account) : undefined)}.`
+          : `It ended ${end} with ${balanceText(s, account)} in it.`;
+        if (owner) statementReady(s, owner, account, `${ended} The statement is on Money, under Statements.`);
       }
       account.lowest = account.balance;
       account.monthOpen = account.balance;
@@ -948,30 +955,30 @@ export function registerBanking(sim: Simulation): void {
     const mine = bankAccountsOf(s, person);
     const from = mine.find((a) => a.id === p.fromId);
     const to = mine.find((a) => a.id === p.toId);
-    if (!from || !to) throw new CommandError('Move Money only moves money between your own current and savings accounts.');
+    if (!from || !to) throw new CommandError('Move Money only moves money between your own checking and savings accounts.');
     if (from.id === to.id) throw new CommandError('From and To are the same account. Choose another account to move it to.');
     const typed = Math.round(Number(p.amount));
     if (!(typed > 0)) throw new CommandError('Enter how much to move.');
     // In the sending account's own money where it's kept in another (from 2026-10-16): pounds typed are the pounds sent,
     // and the dollars they're worth move in the save's books.
     const save = saveCurrency(s.universe);
-    if (p.in !== undefined && p.in !== (from.currency ?? save)) throw new CommandError(`${from.name} is kept in ${from.currency ?? save}.`);
+    if (p.in !== undefined && p.in !== (from.currency ?? save)) throw new CommandError(`${from.name} holds ${from.currency ?? save}, so nothing was moved. Enter the amount in ${from.currency ?? save}.`);
     const own = from.currency !== undefined && p.in === from.currency;
-    if (own && typed > (from.held ?? 0)) throw new CommandError(`${from.name} ${(from.held ?? 0) > 0 ? `has only ${formatMoney(from.held!, from.currency!)}` : 'has nothing in it'}, so nothing was moved.`);
+    if (own && typed > (from.held ?? 0)) throw new CommandError(`${from.name} has ${(from.held ?? 0) > 0 ? `only ${formatMoney(from.held!, from.currency!)}` : 'nothing'} available, so nothing was moved.`);
     const amount = own ? (typed === from.held ? from.balance : exchange(typed, from.currency!, save) ?? typed) : typed;
     // Left open by a switch while in debt: blocked to all but repayment (from 2026-10-10).
-    if (from.switchDebt) throw new CommandError(`${from.name} has been blocked since the switch, except for paying off what it owes.`);
+    if (from.switchDebt) throw new CommandError(`${from.name} is blocked, so nothing was moved. It was overdrawn when you switched banks, and it stays blocked until the overdraft is paid off. Move money into it to clear what it owes, and it closes once it’s repaid.`);
     if (amount > from.balance) {
-      throw new CommandError(`${from.name} ${from.balance > 0 ? `has only ${formatMoney(from.balance, saveCurrency(s.universe))}` : 'has nothing in it'}, so nothing was moved.`);
+      throw new CommandError(`${from.name} has ${from.balance > 0 ? `only ${formatMoney(from.balance, saveCurrency(s.universe))}` : 'nothing'} available, so nothing was moved.`);
     }
-    if (from.dormant || to.dormant) throw new CommandError(`${(from.dormant ? from : to).name} is dormant. Reactivate it first, under Your Accounts Over Time.`);
+    if (from.dormant || to.dormant) throw new CommandError(`${(from.dormant ? from : to).name} is dormant, so nothing was moved. Reactivate it under Your Accounts Over Time, then try again.`);
     const { room, fee: withdrawalFee } = from.kind === 'savings' ? savingsDebit(s, from) : { room: from.balance, fee: 0 };
     const left = savingsLeftThisMonth(s, from);
     if (left !== undefined && amount > left) {
-      throw new CommandError(`You can take ${formatMoney(left, saveCurrency(s.universe), { cents: false })} more out of ${from.name} this month without notice. More than that takes three months’ notice.`);
+      throw new CommandError(`You can take only ${formatMoney(left, saveCurrency(s.universe))} more out of ${from.name} this month without notice, so nothing was moved. To take out more, you’d have to close the account, which takes three months’ notice.`);
     }
     // The fee comes out beside it: until 2026-09-27 a move of the whole balance left the account overdrawn by the fee.
-    if (amount > room) throw new CommandError(`With the ${formatMoney(withdrawalFee, saveCurrency(s.universe))} withdrawal fee, you can move at most ${formatMoney(room, saveCurrency(s.universe), { cents: false })} out of ${from.name}.`);
+    if (amount > room) throw new CommandError(`With the ${formatMoney(withdrawalFee, saveCurrency(s.universe))} withdrawal fee, you can move at most ${formatMoney(room, saveCurrency(s.universe))} out of ${from.name}, so nothing was moved.`);
     if (from.closingAt !== undefined || to.closingAt !== undefined) throw new CommandError(`${(from.closingAt !== undefined ? from : to).name} is closing, so money can’t move into or out of it.`);
     // Between two banks, it goes out now and arrives in the sending bank's days (`systems/bankmoves.ts`, from
     // 2026-10-10); until then it couldn't, and a bank switch moved everything at once.
@@ -995,7 +1002,7 @@ export function registerBanking(sim: Simulation): void {
     // At any bank they keep a current account with, one each (from 2026-10-10: until then one savings account in all,
     // at the primary account's bank).
     const bank = p?.bankId ? bankById(String(p.bankId)) : bankOf(s, person);
-    if (!bank || !checkingAt(s, person, bank.id)) throw new CommandError('You can only open savings at a bank where you have a current account.');
+    if (!bank || !checkingAt(s, person, bank.id)) throw new CommandError('You can only open savings at a bank where you have a checking account.');
     // Nothing new at a bank in another country (from 2026-10-16), in its words.
     const abroad = abroadRefusal(person, bank);
     if (abroad) throw new CommandError(abroad);
@@ -1008,7 +1015,7 @@ export function registerBanking(sim: Simulation): void {
     const account = bankAccountsOf(s, person).find((a) => a.id === p.accountId && a.kind === 'savings');
     if (!account) throw new CommandError('Only a savings account of yours can be closed here.');
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    if (!current || current.closedAt) throw new CommandError('There’s no current account to move the money into.');
+    if (!current || current.closedAt) throw new CommandError('You don’t have a checking account to move the money into.');
     const notice = savingsNotice(s, account);
     if (notice) throw new CommandError(`You’ve already given notice: ${account.name} closes on ${formatDate(notice.at, s.homeZone)}.`);
     // More than Germany's monthly allowance takes the law's three months' notice, and it closes then.

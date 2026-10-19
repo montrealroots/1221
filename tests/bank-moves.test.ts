@@ -69,7 +69,7 @@ describe('PLAYER JOURNEY: a second bank, opened and funded', () => {
     expect((opened.cardAt - sim.now) / MS_DAY).toBeGreaterThanOrEqual(7);
     expect(primary(sim).id).toBe(chase.id);
     // The same bank again is refused, and so is a second click.
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-capital-one' })).toMatch(/already have a current account/);
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-capital-one' })).toMatch(/already have a checking account/);
     sim = reload(sim);
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: cap.id, amount: 500_00 });
     // Out of Chase now, in neither in between, worth the same throughout.

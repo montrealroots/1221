@@ -878,7 +878,7 @@ describe('cash.deposit', () => {
     const kept = sv.balance;
     sv.dormant = true; // TEST SETUP: dormant, as thirty months untouched at Chase would make it
     expect(run(sim, 'cash.deposit', { amount: 40_00, toId: sv.id, at: 'counter' }).error).toBe('Chase Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
-    expect(run(sim, 'bank.transfer', { fromId: checking(sim).id, toId: sv.id, amount: 40_00 }).error).toBe('Chase Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
+    expect(run(sim, 'bank.transfer', { fromId: checking(sim).id, toId: sv.id, amount: 40_00 }).error).toBe('Chase Savings is dormant, so nothing was moved. Reactivate it under Your Accounts Over Time, then try again.');
     expect(sv.balance).toBe(kept);
     expect(inHand(sim)).toBe(100_00);
     must(sim, 'bank.reactivate', { accountId: sv.id });

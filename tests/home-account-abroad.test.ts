@@ -162,7 +162,7 @@ describe('the bank’s fee for a customer abroad, on its schedule, in its own mo
     expect(little).toBeLessThan(44_000);
     expect(smbc.feeOwedHeld).toBe(44_000);
     // Nor is it closed with the fee owed, as an overdrawn account isn't.
-    expect(refused(sim, 'bank.close_current', { accountId: smbc.id })).toBe('You owe its fee for customers abroad, ¥440. The bank only closes it once that’s paid.');
+    expect(refused(sim, 'bank.close_current', { accountId: smbc.id })).toBe('You owe its ¥440 fee for customers living abroad, and the bank only closes it once that’s paid. Move money into it: once it holds enough, the bank takes the fee that night.');
     expect(refused(sim, 'bank.transfer', { fromId: smbc.id, toId: chase.id, amount: 100, in: 'JPY' }))
       .toBe('SMBC stops its payments abroad while the Global Service fee can’t be taken. ¥440 of it is owed, taken the first night an account there holds it.');
     // $100 more: the night it lands both months are taken together, and payments abroad go again.
