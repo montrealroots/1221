@@ -368,5 +368,135 @@
   "why": "“Where stamina tells” and “your own tape is yours” were riddles. The game keeps your own take apart from the take with your reader (`systems/briefs.ts`, the take with its reader), which the chapter's body says is what a casting office sees.",
   "meaningSensitive": true,
   "verified": "systems/briefs.ts, `readerRead` and the take with its reader beside your take; follow-1440/chapter-12-profile.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "To see a doctor, choose a practice under Your Doctor on Health Cover, then press Book An Appointment. In New Haven, Yale Health Center sees a student it covers the next weekday, at no charge. A visit you keep is seen and billed; one you miss isn’t, and you can book again.",
+  "after": "You don’t book a doctor whenever you like. When you’re ill enough to need one, or a long-term condition is due for its review, you get an appointment at your practice after its usual wait, and it goes on your calendar. Your Doctor, on Health Cover, is where you choose the practice. In New Haven, Yale Health Center sees a student it covers the next weekday, at no charge. Go, and you’re seen and billed; miss it, and you aren’t, and Book An Appointment books it again.",
+  "why": "The old first sentence sent the player to a button that isn't there: Book An Appointment shows only for a visit owed, and `health.book` refuses otherwise (defects.md, 3). How This Works' doctor entry already said the game books the visit; now the chapter does too.",
+  "meaningSensitive": true,
+  "verified": "tests/guide-chapter-facts.test.ts, 'Cover, Benefits And Returns on Book An Appointment' (fails on the old chapter); follow-1440/log.txt, chapter papers: Your Doctor lists Yale Health Center, A Visit $0.00, The Next Weekday, and no Book An Appointment shows with no visit owed"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "Each piece of care brings a bill for what your plan doesn’t pay, under Care And Its Bills. Left unpaid, it becomes a medical debt, and Pay It Off settles it.",
+  "after": "Each piece of care brings a bill for your share, the part your plan doesn’t pay, under Care And Its Bills. On its due date it’s taken from your checking account, and if there isn’t enough, it becomes medical debt, which Pay It Off settles.",
+  "why": "“Left unpaid” suggested the player pays each bill by hand. The game takes it on its due date (glossary, due on), and only what can't be taken becomes medical debt. “Your share” is the glossary's word.",
+  "meaningSensitive": true,
+  "verified": "docs/GLOSSARY.md, due on (`payFromCurrent`); follow-1440/chapter-13-papers.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "Enrolling starts it, but you’re covered only from its start date, usually the first of the next month.",
+  "after": "Enrolling isn’t the same as being covered: you’re covered only from the plan’s start date, usually the first of the next month.",
+  "why": "Brief 15, section 5: applying for something and holding it, said plainly where the player could confuse them.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-13-papers.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "Out of paid work, File A Claim, on Unemployment, opens unemployment insurance where you live, if your wages qualify.",
+  "after": "If you’re out of paid work, press File A Claim, on Unemployment, to claim unemployment insurance where you live, if your past wages qualify; in Connecticut a claim pays only once you’ve left school. SNAP, on the same tab, is food assistance on an EBT card for groceries, and Apply applies for it.",
+  "why": "A student in New Haven sees no File A Claim: Connecticut treats a full-time student as unavailable for work, as the tab says. That's the chapter's “if you can't”. The chapter opens SNAP (`benefits.assistance`) and had never named it.",
+  "meaningSensitive": true,
+  "verified": "follow-1440/log.txt, chapter papers: Unemployment shows SNAP with Apply and “a claim pays only once you’ve left school”; follow-1440/chapter-13-papers.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
+  "kind": "tutorial",
+  "before": "A UK tax year’s is settled on its own, by the next January 31.",
+  "after": "UK tax is settled separately for each UK tax year, by the next January 31.",
+  "why": "A dangling possessive (“a UK tax year’s” what?).",
+  "meaningSensitive": false,
+  "verified": "tests/language-data-dates.test.ts asserts the new sentence exactly"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [documents]",
+  "kind": "tutorial",
+  "before": "Under Your Passport, press Apply For One, or Renew It, and where the office sells a faster service, Apply Faster. Applying starts it: you hold the new passport only once it’s issued, and it cancels the old one, with any travel authorization issued on it.",
+  "after": "Under Your Passport, press Apply For One, or Renew It if you have one, and, where the office sells a faster service, Apply Faster or Renew It Faster. Applying only starts it: you hold the new passport once it’s issued, and it cancels the old one, along with any travel authorization issued on it.",
+  "why": "A passport holder sees Renew It Faster, not Apply Faster (`Documents.tsx`). Applying versus holding, said with “only”.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt, chapter documents; follow-1440/chapter-14-documents.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [documents]",
+  "kind": "tutorial",
+  "before": "Going Abroad says what each country asks of your citizenship: free to enter, a travel authorization first, or a visa. Pick a country to see what it asks and what you’re missing. There’s no travel in SLATE, so it’s a rule to read, not a form to fill in.",
+  "after": "Going Abroad shows what each country asks of someone with your citizenship: whether you can just go, need a travel authorization first, or need a visa. Pick a country to see what it asks for and what you’re missing. You can’t travel in the game, so this is information, not a form to fill in.",
+  "why": "Fragments after a colon became a sentence; “in SLATE” became the glossary's “in the game”.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt, chapter documents: a country picked, and what it asks or what's missing shown"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [money]",
+  "kind": "tutorial",
+  "before": "The Money line in Your Affairs on Home shows your current account and your net worth (what you have, less what you owe), and how much of it is owed.",
+  "after": "The Money line in Your Affairs on Home shows your primary checking account and your net worth (what you have, less what you owe), with what you owe when there’s anything.",
+  "why": "Checking account, the glossary's word from brief 15; and “how much of it is owed” read as if the net worth were owed. Home writes “Worth $…, after $… owed.” only when something is.",
+  "meaningSensitive": false,
+  "verified": "ui/screens/Home.tsx, the Money line; follow-1440/log.txt, chapter money: “Chase Total Checking: $90,484.00. Worth $503,527.”"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [money]",
+  "kind": "tutorial",
+  "before": "Your credit record decides whether a bank gives you a card, an overdraft or a loan, at what rate where the bank prices by it …",
+  "after": "Your credit score decides whether a bank gives you a card, an overdraft or a loan, at what rate where the bank prices by it …",
+  "why": "The glossary: the guide says credit score for the figure a bank approves from and prices by, and credit record for what a late payment goes on.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g12-1.test.ts (the Money line's sentences, the figure's “a life is made”); follow-1440/chapter-15-money.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "tutorial",
+  "before": "Move Money, on Accounts, moves money between your own accounts. Between two at the same bank it moves at once.",
+  "after": "Move Money, on Accounts, moves money between your own accounts: choose where from, where to and how much, and press Move It. Between two accounts at the same bank it moves at once.",
+  "why": "Move Money is the panel; its button is Move It. The chapter now names the control to press.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt, chapter bank: $10 moved from Chase Savings, Chase Total Checking 90,484 → 90,494, “Moved $10.”; tests/defects-g22-1.test.ts holds the at-once sentence to one bank"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "tutorial",
+  "before": "Alerts tell you when the current account ends a day under a line you set, when a payment goes over one, and when a statement is ready.",
+  "after": "Alerts tell you, in What Needs You, when a checking account ends a day below an amount you set, when a payment is over an amount you set, when a statement is ready, and, unless you turn it off, when an account can’t cover a payment due in the next few days.",
+  "why": "It left out Short For A Payment, the one alert that's on from the start, and said “a line”, a figure of speech for an amount.",
+  "meaningSensitive": true,
+  "verified": "ui/bank/BankStatements.tsx, AlertsView (Any Current Account Under, A Payment Over, Statement Ready, Short For A Payment: On); follow-1440/log.txt, chapter bank"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [bank]",
+  "kind": "tutorial",
+  "before": "… in Korea a card alone, in Canada no card, in Britain no fixed-rate deposit, and in Mexico only one not yet used.",
+  "after": "… in Korea only a card, in Canada anything but a card, in Britain anything but a fixed-rate deposit, and in Mexico only one you haven’t used.",
+  "why": "“In Canada no card” read as if nothing could be canceled there. Same rules, said the right way round.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-16-bank.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [life]",
+  "kind": "tutorial",
+  "before": "A life ends. Each year carries the chance a real year at your age carries, from the US life table, made lighter or heavier by the life expectancy where you live, for the fourteen countries it’s known for, heavier for a body worn down and lighter for one kept well. The game never says when.",
+  "after": "Every life ends. Each year carries the same chance of death as a real year at your age, from the US life table, adjusted for life expectancy where you live (known for fourteen countries), higher for a worn-down body and lower for one kept well. The game never tells you when.",
+  "why": "Says what the chance is a chance of, plainly, in one breath.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-17-life.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
  }
 ]

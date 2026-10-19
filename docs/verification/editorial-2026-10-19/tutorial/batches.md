@@ -189,3 +189,72 @@ line, the Yale button, the tabs, the links, Take An Elective Shift, the Player P
 Its Brief; `10-a-practice-brief.png`) and `follow-saves/` (29 checks, 0 failed: `brief.json` for Call In Sick, a step,
 Ask Jordan, Work It Through, Plays To Read, What To Work On Next and a brief in progress; `rehearsal.json` for Casting;
 screenshots `asked-a-partner`, `work-it-through`, `call-in-sick`, `a-brief-in-progress`, `casting-a-production`).
+
+## Batch 4: Papers, Passports, Money, The Bank And A Whole Life
+
+**Sources (5, and one again):** `CHAPTERS [papers]`, `[documents]`, `[money]`, `[bank]` and `[life]`, about 5,500
+words, 3,900 of them behind The Details. And `CHAPTERS [calendar]` again, from batch 2, at the coordinator's word.
+
+**Rewritten (5):** every one. The figures and conditions stayed behind The Details; each paragraph there lost its
+semicolon chains and dangling possessives (“A UK tax year’s is settled on its own”), and said its estimates as
+estimates. In the bodies:
+- **Cover, Benefits And Returns.** The doctor's paragraph says the game books the visit, and Book An Appointment books
+  one missed again (`defects.md`, 3). A bill is taken from the checking account on its due date, and only what can't be
+  becomes medical debt. Enrolling “isn’t the same as being covered”. Unemployment says a Connecticut student's claim
+  waits until school ends, and names SNAP, which the chapter opens. Your Conditions is Your Long-Term Conditions, the
+  papers area's rename, at its word. The names under What It Opens were a list of 25 labels in no order, two of them
+  fragments (“Apply For”, “Pay”); they're 13 lines in the chapter's order.
+- **Passports And ID.** Apply Faster is “Apply Faster or Renew It Faster”, as a passport holder sees it; applying “only
+  starts it”; “in SLATE” is “in the game”; Going Abroad's fragments are a sentence; the names are in order.
+- **Money.** “Current account” is “primary checking account”; the credit paragraph says credit score for what a bank
+  approves and prices by, as the glossary does, and credit record for what a late payment goes on.
+- **Your Bank.** Every “current account” in prose is a checking account (the label Savings Covers The Current Account
+  stays: it's the money area's, being renamed). Move Money names its button, Move It. Alerts names Short For A Payment,
+  the alert that's on from the start, which the chapter had left out. The cooling-off rules are said the right way
+  round (“in Canada anything but a card”).
+- **A Whole Life.** The chance of a year being the last says what it's a chance of; the closing line is the guide
+  dialog's.
+- **What’s Coming, again.** The frame area merged its stop dialog as “You can only skip a plan of your own, so there’s
+  no Skip It button here.”; the chapter now says the same: “You can only skip a plan of your own, so there’s no Skip It
+  button for a class or an appointment. Press Go, or Stand Here to wait.”
+
+**Meaning-sensitive, and how each was checked:**
+- **The doctor.** `health.book` refuses with no visit owed; Health Cover draws Book An Appointment only for
+  `owedVisit`; `systems/health.ts` books a visit for an illness week or a review. `tests/guide-chapter-facts.test.ts`
+  holds the chapter to it. Played: a new life's Health Cover has Your Doctor and no Book An Appointment.
+- **A bill's due date.** `payFromCurrent`, as the glossary's due on row says.
+- **Unemployment.** The tab's own words, “Connecticut treats a full-time student as not available for work (CGS
+  31-235(b)), so a claim pays only once you’ve left school”, and File A Claim is drawn only when not `studying`.
+- **Alerts.** `AlertsView`: Any Current Account Under, A Payment Over, Statement Ready, Short For A Payment (on unless
+  turned off, for a payment due in the next few days).
+- **Credit score and record.** No rule changed: the glossary row's split, applied.
+- **The bank's details.** “The card’s rate is set by your record” became “your credit score sets the rate”, the same
+  figure; “in Canada no card” is “anything but a card”, the same rule.
+
+**Interactions read whole:** the locked Papers and Money lines, the lines once open, their buttons; Papers' five tabs;
+Health Cover's Your Cover, Your Doctor, The Marketplace, Your Conditions and Care And Its Bills, and what How This Works'
+doctor entry says; Unemployment's SNAP and claim; Passport And ID's passport, ID, Report Lost, Going Abroad; Permission To
+Work's OPT and Residence Abroad; the net worth look; the bank's five tabs, Move Money, Cards, How You Pay, Statements,
+The Year and Alerts; your own page from Home and from How You Are.
+
+**Tests updated:** `tests/language-data-dates.test.ts` (the UK tax year's sentence, exactly). **New:**
+`tests/guide-chapter-facts.test.ts`, 'Cover, Benefits And Returns on Book An Appointment' (two tests). The chapter's
+tests on Statements, Move Money, help with payments (`defects-g22-1`), Report Lost and a lost license
+(`defects-g27-1`) and the Money line (`defects-g12-1`) pass on the new words unchanged. **Tool matchers:** none named
+these words.
+
+**Checks:** `tsc` 0, `eslint` 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos
+0, doc-refs 0, deciders 0, guide-quotes 0; text-inventory 1 at first for engine-speak (“draws on” rose to 4 of 3: “Autopay
+also draws on easy-access savings”, now “takes from”, the old word), then 0 once marked. `vitest run` on
+`defects-g22-1`, `defects-g27-1`, `defects-g12-1`, `guide-examples-papers`, `language-data-dates`,
+`guide-chapter-facts`, `help-mechanics`, `tutorial`, `evidence-g34-ui`, `evidence-g31-ui`, `evidence-g02-life`,
+`evidence-g29-ui`, `trace-commands`, `guide-examples-start-day-body`, `defects-g1-1` and `guide`: 16 files, 192 tests,
+exit 0.
+
+**Screens verified:** `follow-1440/` and `follow-390/` (a new life, 252 checks each, 0 failed, no page errors): all
+seventeen chapters word for word, then chapters 13 to 17's routes, Papers' tabs and Health Cover, Unemployment, Passport
+And ID, the net worth look, the bank's tabs, Move Money, Statements, your own page (`11-health-cover.png`,
+`12-passport-and-id.png`, `14-bank-statements.png`, `15-your-own-page.png`); `follow-saves/` (33 checks, 0 failed: a
+life with asthma, Let It Go and Keep It Up, `your-conditions.png`). At 390 the chapters read without clipping, in a
+small window (`defects.md`, Not Mine), and the new life's top bar breaks Locked letter by letter
+(`phone/first-screen-390.png`).

@@ -76,6 +76,13 @@
   "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter advance, and follow-1440/chapter-04-advance.txt; the Advance menu, Choose An Event, One Hour, On The Way and the stop it led to",
   "first": "Pending"
  },
+ "src/engine/content/tutorial.ts#CHAPTERS [bank]": {
+  "status": "Rewritten",
+  "hash": "9704157d759e",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter bank (the five tabs, Move Money's Move It at the same bank, Cards, How You Pay, Statements, The Year and Alerts); tests/defects-g22-1.test.ts holds its Statements, Move Money and help with payments sentences",
+  "first": "Pending"
+ },
  "src/engine/content/tutorial.ts#CHAPTERS [body]": {
   "status": "Rewritten",
   "hash": "d5bce17ee4bc",
@@ -85,9 +92,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [calendar]": {
   "status": "Rewritten",
-  "hash": "5ce6124e284c",
+  "hash": "f044255f581c",
   "on": "2026-10-19",
-  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter calendar, and follow-1440/chapter-02-calendar.txt; an entry opened, and the stop at Registration And Your Account with Go and Stand Here and no Skip It",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter calendar, and the stop at Registration And Your Account with Go and Stand Here and no Skip It (chapter advance)",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
@@ -97,6 +104,20 @@
   "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter clock, and follow-1440/chapter-03-clock.txt; Play, a minute of real time, Pause",
   "first": "Pending"
  },
+ "src/engine/content/tutorial.ts#CHAPTERS [documents]": {
+  "status": "Rewritten",
+  "hash": "c55d07c991ce",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter documents (Your Passport's buttons, Report Lost and Report Stolen, Get, a document's look, Going Abroad, Apply For OPT, Residence Abroad); tests/defects-g27-1.test.ts holds its Report Lost and lost license sentences",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [life]": {
+  "status": "Rewritten",
+  "hash": "a4e2ae337901",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter life (your own page from your name and from How You Are)",
+  "first": "Pending"
+ },
  "src/engine/content/tutorial.ts#CHAPTERS [looking-after]": {
   "status": "Rewritten",
   "hash": "7ba68c694ad7",
@@ -104,11 +125,25 @@
   "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter looking-after, and follow-1440/chapter-08-looking-after.txt; the menu and its mark, and Eat A Meal done",
   "first": "Pending"
  },
+ "src/engine/content/tutorial.ts#CHAPTERS [money]": {
+  "status": "Rewritten",
+  "hash": "ba32e2f6f726",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter money (the Money line, the net worth look from Your Affairs); tests/defects-g12-1.test.ts holds its Money line and credit sentences",
+  "first": "Pending"
+ },
  "src/engine/content/tutorial.ts#CHAPTERS [needs]": {
   "status": "Rewritten",
   "hash": "2aae82967b5c",
   "on": "2026-10-19",
   "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter needs, and follow-1440/chapter-05-needs.txt; a notice opened, Go There, Mark 3 Read and All Clear",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [papers]": {
+  "status": "Rewritten",
+  "hash": "0711667daca8",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter papers (the Papers line and button, the tabs, Your Doctor, no Book An Appointment with no visit owed, SNAP and the claim), and follow-saves/log.txt (Let It Go and Keep It Up on a life with asthma, a return with File It); tests/guide-chapter-facts.test.ts and tests/language-data-dates.test.ts assert its words",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [plans]": {

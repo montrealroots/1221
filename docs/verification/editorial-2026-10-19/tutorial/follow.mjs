@@ -520,8 +520,134 @@ step.profile = async () => {
   check('Your Work So Far is on the Player Profile', /Your Work So Far/.test(await mainText()));
   // Your name at the foot of the menu opens the Player Profile too.
   await goRail('Home');
+  if (W < 600) { await press('Menu'); await wait(400); }
   const you = rail().locator('button', { hasText: /Alex|Rivera/ }).last();
   if (await you.count()) { await you.click().catch(() => {}); await wait(1000); check('pressing your name at the foot of the menu opens the Player Profile', /Player Profile|Attributes And Craft/.test(await mainText())); }
+};
+
+// 13. Cover, Benefits And Returns ------------------------------------------------------------------------------------
+step.papers = async () => {
+  const affairs = panel('Your Affairs');
+  const line = clean(await affairs.innerText().catch(() => ''));
+  check('the Papers line in Your Affairs shows what covers you', /Cover: Yale Health\./.test(line), line.slice(line.indexOf('Papers'), line.indexOf('Papers') + 120));
+  await press('Papers', affairs); await wait(1000);
+  const tabs = await tabsOf();
+  check('the Papers button opens Papers, with the tabs the chapter names', ['Tax Returns', 'Health Cover', 'Unemployment', 'Passport And ID', 'Permission To Work'].every((t) => tabs.includes(t)), tabs.join(', '));
+  await tab('Health Cover');
+  const health = await mainText();
+  check('Your Cover, on Health Cover, shows Yale Health', /Your Cover/.test(health) && /Yale Health/.test(health));
+  const doctor = await page.locator('main select').first().evaluate((el) => [...el.options].map((o) => o.textContent)).catch(() => []);
+  check('Your Doctor chooses the practice, and Yale Health Center sees a student it covers the next weekday, at no charge', doctor.some((o) => /Yale Health Center, Student Health, A Visit \$0\.00, The Next Weekday/.test(o)), doctor.join(' | '));
+  check('with no visit owed there’s no Book An Appointment: the game books a visit itself when one is needed', !(await button('Book An Appointment').count()));
+  check('The Marketplace and Care And Its Bills are on Health Cover', /The Marketplace/.test(health) && /Care And Its Bills/.test(health));
+  if (await button('Let It Go').count() || await button('Keep It Up').count()) {
+    check('a long-term condition under Your Long-Term Conditions (Your Conditions until the papers area’s rename) has Let It Go or Keep It Up', true, health.slice(health.search(/Your (Long-Term )?Conditions/), health.search(/Your (Long-Term )?Conditions/) + 160));
+    if (/Therapist/.test(health)) check('depression has a Therapist to choose and Begin A Course Of 8 Sessions', await button('Begin A Course Of 8 Sessions').count() > 0);
+  }
+  else log(`no long-term condition on this life (Your Conditions: ${health.slice(health.search(/Your (Long-Term )?Conditions/), health.search(/Your (Long-Term )?Conditions/) + 80)}); followed on the health save (follow-saves.mjs)`);
+  await shot('health-cover');
+  await tab('Unemployment');
+  const un = await mainText();
+  check('Unemployment has SNAP with Apply, and says a Connecticut claim pays only once you’ve left school', /SNAP/.test(un) && await button('Apply').count() > 0 && /a claim pays only once you’ve left school/.test(un), un.slice(un.indexOf('SNAP'), un.indexOf('SNAP') + 160));
+  await tab('Tax Returns');
+  log(`Tax Returns before the first February: ${(await mainText()).slice((await mainText()).indexOf('Tax Returns', 120), (await mainText()).indexOf('Tax Returns', 120) + 200)}`);
+};
+
+// 14. Passports And ID ------------------------------------------------------------------------------------------------
+step.documents = async () => {
+  await goRail('Papers');
+  await tab('Passport And ID');
+  const text = await mainText();
+  check('Passport And ID has Your Passport, with Renew It or Apply For One, and the faster service', /Your Passport/.test(text) && (await button('Renew It').count() || await button('Apply For One').count()) && (await button('Renew It Faster').count() || await button('Apply Faster').count()), '');
+  check('Report Lost and Report Stolen are beside a document', await page.locator('main button', { hasText: /^Report Lost/ }).count() > 0 && await page.locator('main button', { hasText: /^Report Stolen/ }).count() > 0);
+  check('Your ID offers Get with the card’s name', /Your ID/.test(text) && await page.locator('main button', { hasText: /^Get / }).count() > 0, clean(await page.locator('main button', { hasText: /^Get / }).first().innerText().catch(() => '')));
+  const row = page.locator('main table button.link').first();
+  if (await row.count()) {
+    await row.click(); await wait(600);
+    const look = page.locator('.look').last();
+    const words = clean(await look.innerText().catch(() => ''));
+    check('pressing a document you hold shows who issued it, its number’s last digits, when it was issued and runs out, and what it lets you do', words.length > 40, words.slice(0, 300));
+    await closeLook(clean(await look.locator('.look-name').innerText().catch(() => '')));
+  } else check('a document you hold is listed', false);
+  const country = page.locator('main select').filter({ has: page.locator('option', { hasText: 'Japan' }) }).first();
+  if (await country.count()) {
+    const at = (t) => t.slice(t.indexOf('United Kingdom', t.indexOf('Going Abroad')) + 14, t.indexOf('Sources And Estimates', t.indexOf('Going Abroad')));
+    const first = at(await mainText());
+    await country.selectOption({ label: 'Japan' }).catch(() => {}); await wait(500);
+    const said = at(await mainText());
+    check('Going Abroad: picking a country shows what it asks of your citizenship, or what you’re missing', said.trim().length > 20 && (said !== first || /You need a passport in force/.test(said)), `${first.slice(0, 120)} → ${said.slice(0, 160)}`);
+  } else check('Going Abroad lets you pick a country', false);
+  await shot('passport-and-id');
+  await tab('Permission To Work');
+  const work = await mainText();
+  check('Permission To Work has Apply For OPT and Residence Abroad', await button('Apply For OPT').count() > 0 && /Residence Abroad/.test(work));
+};
+
+// 15. Money -----------------------------------------------------------------------------------------------------------
+step.money = async () => {
+  const affairs = panel('Your Affairs');
+  const line = clean(await affairs.innerText().catch(() => ''));
+  check('the Money line shows your checking account and your net worth', /Checking: \$[\d,.]+\. Worth \$[\d,]+/.test(line), line.slice(line.indexOf('Money'), line.indexOf('Money') + 120));
+  const title = affairs.locator('button.link', { hasText: /^Your Affairs$/ }).first();
+  if (await title.count()) {
+    await title.click(); await wait(600);
+    const look = page.locator('.look').last();
+    const name = clean(await look.locator('.look-name').innerText().catch(() => ''));
+    const ways = await look.locator('.look-ways button.link, button.link').allInnerTexts().catch(() => []);
+    check('pressing Your Affairs, the panel’s title, shows what you’re worth, and from there each account', Boolean(name) && ways.some((w) => /Checking|Savings/.test(w)), `${name}: ${ways.slice(0, 8).join(', ')}`);
+    await closeLook(name);
+  } else check('Your Affairs, the panel’s title, is a link', false);
+};
+
+// 16. Your Bank -------------------------------------------------------------------------------------------------------
+step.bank = async () => {
+  await press('Chase', panel('Your Affairs')); await wait(1000);
+  const tabs = await tabsOf();
+  check('the button with the bank’s name opens it, with the tabs the chapter names', ['Accounts', 'Cards', 'Payments And Cash', 'Borrowing', 'Statements'].every((t) => tabs.includes(t)), tabs.join(', '));
+  await tab('Accounts');
+  const money = async () => clean(await page.locator('main').innerText().catch(() => ''));
+  const before = (await money()).match(/Chase Total Checking[\s\S]*?BALANCE \$([\d,]+)/i)?.[1];
+  const from = page.locator('#move-from');
+  if (await from.count()) {
+    const opts = await from.evaluate((el) => [...el.options].map((o) => ({ v: o.value, t: o.textContent })));
+    const savings = opts.find((o) => /Savings/.test(o.t));
+    if (savings) await from.selectOption(savings.v);
+    await wait(300);
+    await page.locator('#move-amount').fill('10'); await wait(200);
+    await press('Move It'); await wait(1200);
+    const after = (await money()).match(/Chase Total Checking[\s\S]*?BALANCE \$([\d,]+)/i)?.[1];
+    const toast = clean(await page.locator('.toast').last().innerText().catch(() => ''));
+    check('Move Money, on Accounts: where from, where to, how much, Move It; at the same bank it moves at once', Number(String(after).replace(/,/g, '')) === Number(String(before).replace(/,/g, '')) + 10, `${before} → ${after} · ${toast}`);
+  } else check('Accounts has Move Money', false);
+  await tab('Cards');
+  const cards = await money();
+  check('Cards has the credit card, Pay Card In Full and Autopay', await page.locator('main button', { hasText: /^Pay Card In Full/ }).count() > 0 && /Autopay/.test(cards));
+  check('a card can be locked and reported', await button('Lock It').count() > 0 && await button('Report It').count() > 0);
+  await tab('Payments And Cash');
+  const pay = await money();
+  check('How You Pay is on Payments And Cash, with Savings Covers The Current Account', /How You Pay/.test(pay) && /Savings Covers The Current Account/.test(pay));
+  await tab('Statements');
+  const st = await money();
+  check('Statements, its own tab, has The Year and Alerts, with Statement Ready and Short For A Payment', /The Year/.test(st) && /Alerts/.test(st) && /Statement Ready/.test(st) && /Short For A Payment/.test(st));
+  await shot('bank-statements');
+  await tab('Borrowing');
+  log(`Borrowing on a new life: ${(await money()).slice(-300)}`);
+};
+
+// 17. A Whole Life ----------------------------------------------------------------------------------------------------
+step.life = async () => {
+  await goRail('Home');
+  const name = page.locator('.page-head h1 button.link').first();
+  if (await name.count()) {
+    await name.click(); await wait(700);
+    const look = page.locator('.look').last();
+    const words = clean(await look.innerText().catch(() => ''));
+    check('pressing your name on Home opens your own page: your wellbeing, your readiness and your traits', /Readiness/i.test(words) && /(Energy|Morale|Condition)/.test(words), words.slice(0, 300));
+    await shot('your-own-page');
+    await closeLook(clean(await look.locator('.look-name').innerText().catch(() => '')));
+  } else check('your name on Home is a link', false);
+  const line = panel('How You Are').locator('p button.link').first();
+  if (await line.count()) { await line.click(); await wait(600); const n = clean(await page.locator('.look .look-name').last().innerText().catch(() => '')); check('so does the line at the top of How You Are', Boolean(n), n); await closeLook(n); }
 };
 
 // ---------------------------------------------------------------------------------------------------------------------

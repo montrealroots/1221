@@ -61,7 +61,7 @@
    "chapter": "welcome",
    "what": "the line under the greeting shows the time, the town, its time zone, the season and the weather",
    "ok": true,
-   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ☁️ 73°F Overcast"
+   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ⛅ 65°F Partly Cloudy"
   },
   {
    "chapter": "welcome",
@@ -859,7 +859,7 @@
    "chapter": "weather",
    "what": "the Weather panel shows the weather now and the next few days",
    "ok": true,
-   "seen": "Weather How This Works ⛅61°F Partly Cloudy · High 74°F · Low 56°F Humidity 57% · Wind 6 mph · Continental Thu 🌧️ Rain 73° / 62° Fri 🌧️ Rain 72° / 61° Sat ⛈️ Storm 72° / 61° Sun ☁️ Overcast 80° / 62°"
+   "seen": "Weather How This Works 🌧️61°F Rain · High 70°F · Low 59°F Humidity 72% · Wind 11 mph · Continental Thu 🌧️ Rain 74° / 63° Fri 🌧️ Rain 73° / 62° Sat 🌧️ Rain 75° / 64° Sun ⛅ Cloudy 81° / 63° Mon ⛅ Cl"
   },
   {
    "chapter": "weather",
@@ -871,7 +871,7 @@
    "chapter": "weather",
    "what": "pressing it shows more: the week, each day and each hour",
    "ok": true,
-   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 61°F and partly cloudy where you are, with a high of 74°F and a low of 56°F today. The wind is 6 mph and the humidity is 57%. Today is 7° colder than normal"
+   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 61°F and raining where you are, with a high of 70°F and a low of 59°F today. The wind is 11 mph and the humidity is 72%. Today is 6° colder than normal for"
   },
   {
    "chapter": "school",
@@ -931,7 +931,7 @@
    "chapter": "school",
    "what": "the School line in Your Affairs shows your year or arrival, your standing, your place in the class and what’s next",
    "ok": true,
-   "seen": "Your Affairs How This Works Money LOCKED This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It School Year 1, good standing, 1st of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works Papers LOCKED This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and"
+   "seen": "Your Affairs How This Works Money LOCKED This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It School Year 1, good standing, 2nd of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works Papers LOCKED This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and"
   },
   {
    "chapter": "school",
@@ -1051,7 +1051,7 @@
    "chapter": "profile",
    "what": "pressing an ability shows what it is, how it grows and where it counts",
    "ok": true,
-   "seen": "Presence: AN ACTING ABILITY Presence Close You’re at 69.3 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 69.3 30.7 to full CLASSES REACH — Classes don’t build it; performing in front of people d"
+   "seen": "Presence: AN ACTING ABILITY Presence Close You’re at 58.7 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 58.7 41.3 to full CLASSES REACH — Classes don’t build it; performing in front of people d"
   },
   {
    "chapter": "profile",
@@ -1063,7 +1063,7 @@
    "chapter": "profile",
    "what": "before the hour, it says about how much it will add",
    "ok": true,
-   "seen": "Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.23 to comedy (now 56.0), and +0.18 to disci"
+   "seen": "Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.23 to comedy (now 55.3), and +0.18 to disci"
   },
   {
    "chapter": "profile",
@@ -1117,7 +1117,7 @@
    "chapter": "papers",
    "what": "its lead is on the page",
    "ok": true,
-   "seen": "Health cover, benefits, pensions and the return."
+   "seen": "Health cover, benefits, pensions and tax returns."
   },
   {
    "chapter": "papers",
@@ -1153,7 +1153,55 @@
    "chapter": "papers",
    "what": "and offers Try It or the next chapter, in its words",
    "ok": true,
-   "seen": "Go Buy Dental Drop Dental File A Claim Claim Social Security Claim It File It Pay Your Pharmacy It’s open now. Press Try It to go and use it, or go straight on to “Passports And ID”. Next time you open the guide, it starts there. Try It Next: Passports And ID"
+   "seen": "ial Security and Claim It File It and Pay, on Tax Returns File A Police Report and Report Stolen It’s open now. Press Try It to go and use it, or go straight on to “Passports And ID”. Next time you open the guide, it starts there. Try It Next: Passports And ID"
+  },
+  {
+   "chapter": "papers",
+   "what": "the Papers line in Your Affairs shows what covers you",
+   "ok": true,
+   "seen": "Papers Cover: Yale Health. Papers How This Works"
+  },
+  {
+   "chapter": "papers",
+   "what": "the Papers button opens Papers, with the tabs the chapter names",
+   "ok": true,
+   "seen": "Tax Returns, Health Cover, Unemployment, Passport And ID, Permission To Work"
+  },
+  {
+   "chapter": "papers",
+   "what": "Your Cover, on Health Cover, shows Yale Health",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "Your Doctor chooses the practice, and Yale Health Center sees a student it covers the next weekday, at no charge",
+   "ok": true,
+   "seen": "The Practice Your Cover Uses | Fair Haven Community Health Care, A Visit $183.98, A 24-Day Wait | Yale Health Center, Student Health, A Visit $0.00, The Next Weekday"
+  },
+  {
+   "chapter": "papers",
+   "what": "with no visit owed there’s no Book An Appointment: the game books a visit itself when one is needed",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "The Marketplace and Care And Its Bills are on Health Cover",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "a long-term condition under Your Long-Term Conditions (Your Conditions until the papers area’s rename) has Let It Go or Keep It Up",
+   "ok": true,
+   "seen": "Your Conditions How This Works High Blood Pressure: Kept Up Let It Go Arthritis: Kept Up Let It Go Fill A Longer Supply, 90 Days How This Works Sources And Esti"
+  },
+  {
+   "chapter": "papers",
+   "what": "Unemployment has SNAP with Apply, and says a Connecticut claim pays only once you’ve left school",
+   "ok": true,
+   "seen": "SNAP Food assistance, onto an EBT card for groceries Apply How This Works CLAIM None Open You can apply now AT MOST $298.00 A month, less 30% of net income ON T"
   },
   {
    "chapter": "documents",
@@ -1171,7 +1219,7 @@
    "chapter": "documents",
    "what": "its lead is on the page",
    "ok": true,
-   "seen": "A passport, what each country asks to let you in, an ID card and a student’s status."
+   "seen": "Your passport and ID, what other countries ask of you, and your student status."
   },
   {
    "chapter": "documents",
@@ -1207,7 +1255,43 @@
    "chapter": "documents",
    "what": "and offers Try It or the next chapter, in its words",
    "ok": true,
-   "seen": "To Work Apply For OPT Apply For One Renew It Apply Faster Report Lost Replace It File A Police Report Residence Abroad It’s open now. Press Try It to go and use it, or go straight on to “Money”. Next time you open the guide, it starts there. Try It Next: Money"
+   "seen": "state’s ID card Report Lost and Replace It File A Police Report Permission To Work and Apply For OPT Residence Abroad It’s open now. Press Try It to go and use it, or go straight on to “Money”. Next time you open the guide, it starts there. Try It Next: Money"
+  },
+  {
+   "chapter": "documents",
+   "what": "Passport And ID has Your Passport, with Renew It or Apply For One, and the faster service",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "documents",
+   "what": "Report Lost and Report Stolen are beside a document",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "documents",
+   "what": "Your ID offers Get with the card’s name",
+   "ok": true,
+   "seen": "Get Non-Driver Identification Card"
+  },
+  {
+   "chapter": "documents",
+   "what": "pressing a document you hold shows who issued it, its number’s last digits, when it was issued and runs out, and what it lets you do",
+   "ok": true,
+   "seen": "PERMISSION TO DRIVE Class D (Operator) Driver License Close It’s in force until June 14, 2028, and its number ends 5846. New York State Department of Motor Vehicles (NY DMV) issued it on June 14, 2020. In New Haven, it would let you drive. Driving isn’t part of the game, so this is for reference. NU"
+  },
+  {
+   "chapter": "documents",
+   "what": "Going Abroad: picking a country shows what it asks of your citizenship, or what you’re missing",
+   "ok": true,
+   "seen": "You need a passport in force, and you don’t have one. Apply for one under Your Passport. Australia asks citizens of the → You need a passport in force, and you don’t have one. Apply for one under Your Passport."
+  },
+  {
+   "chapter": "documents",
+   "what": "Permission To Work has Apply For OPT and Residence Abroad",
+   "ok": true,
+   "seen": ""
   },
   {
    "chapter": "money",
@@ -1264,6 +1348,18 @@
    "seen": "our Bank Next 17 A Whole Life Later OPENED Money Money Your accounts, net worth and debts, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Your Bank”. Next time you open the guide, it starts there. Try It Next: Your Bank"
   },
   {
+   "chapter": "money",
+   "what": "the Money line shows your checking account and your net worth",
+   "ok": true,
+   "seen": "Money Chase Total Checking: $90,484.00. Worth $503,527. Chase LOCKED How This Works School Year 1, good standing, 2nd of"
+  },
+  {
+   "chapter": "money",
+   "what": "pressing Your Affairs, the panel’s title, shows what you’re worth, and from there each account",
+   "ok": true,
+   "seen": "Net Worth: Close, Chase Total Checking, Chase Freedom Unlimited, Chase Savings"
+  },
+  {
    "chapter": "bank",
    "what": "Guide, in the top bar, opens at “Your Bank”",
    "ok": true,
@@ -1279,7 +1375,7 @@
    "chapter": "bank",
    "what": "its lead is on the page",
    "ok": true,
-   "seen": "A real bank where you live, and what it does with your money."
+   "seen": "Your accounts, cards, payments and borrowing, at a real bank where you live."
   },
   {
    "chapter": "bank",
@@ -1316,6 +1412,42 @@
    "what": "and offers Try It or the next chapter, in its words",
    "ok": true,
    "seen": "Borrow, and pay a loan off Opt in or out of debit card overdrafts Pay a debt in collections Switch bank It’s open now. Press Try It to go and use it, or go straight on to “A Whole Life”. Next time you open the guide, it starts there. Try It Next: A Whole Life"
+  },
+  {
+   "chapter": "bank",
+   "what": "the button with the bank’s name opens it, with the tabs the chapter names",
+   "ok": true,
+   "seen": "Accounts, Cards, Payments And Cash, Borrowing, Statements"
+  },
+  {
+   "chapter": "bank",
+   "what": "Move Money, on Accounts: where from, where to, how much, Move It; at the same bank it moves at once",
+   "ok": true,
+   "seen": "90,484 → 90,494 · Moved $10."
+  },
+  {
+   "chapter": "bank",
+   "what": "Cards has the credit card, Pay Card In Full and Autopay",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "a card can be locked and reported",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "How You Pay is on Payments And Cash, with Savings Covers The Current Account",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "Statements, its own tab, has The Year and Alerts, with Statement Ready and Short For A Payment",
+   "ok": true,
+   "seen": ""
   },
   {
    "chapter": "life",
@@ -1364,6 +1496,18 @@
    "what": "and says it was the last chapter",
    "ok": true,
    "seen": "ENED A Whole Life You, when you press your name That was the last chapter, and every part of the game is open now. To read any chapter again, press Guide at the top of the screen. Try It Start Playing"
+  },
+  {
+   "chapter": "life",
+   "what": "pressing your name on Home opens your own page: your wellbeing, your readiness and your traits",
+   "ok": true,
+   "seen": "YOURSELF Alex Rivera Close Rested, steady and ready for a real day. Your body. 5 ft 2 in and 194 lb, with a body mass index of 35.8, in the obese range. In feet, inches and pounds, the units of the United States, where you live. On your papers. Pronouns they/them. A citizen of the United States. Ene"
+  },
+  {
+   "chapter": "life",
+   "what": "so does the line at the top of How You Are",
+   "ok": true,
+   "seen": "Alex Rivera"
   },
   {
    "chapter": "end",

@@ -204,7 +204,7 @@ describe('the guide, the tutorial and Papers say a day month first, as the game 
     expect(said('papers.doctor')).toContain('its pharmacy statutes, read on October 15, 2026');
     expect(said('papers.pensions')).toContain('68 for anyone born after April 5, 1978');
     expect(said('papers.health-cover')).toContain('Yale Delta Dental Basic runs to its September 30 whatever happens to Yale Health');
-    expect(strings(CHAPTERS.find((c) => c.id === 'papers')).join(' ')).toContain('A UK tax year’s is settled on its own, by the next January 31.');
+    expect(strings(CHAPTERS.find((c) => c.id === 'papers')).join(' ')).toContain('UK tax is settled separately for each UK tax year, by the next January 31.');
   });
 
   it('PLAYER JOURNEY: a student reads Health Cover’s dental plan and, with a UK pension claimed, the State Pension’s fine print', () => {

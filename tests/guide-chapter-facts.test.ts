@@ -6,6 +6,10 @@
  * - How You Are said condition came "after illness, injury and rest", though an injury takes stress and morale and
  *   leaves condition where it was (`mayHurt`, `systems/injury.ts`), as `docs/GLOSSARY.md`'s condition row has said
  *   since 2026-10-17.
+ * - Cover, Benefits And Returns said "To see a doctor, choose a practice under Your Doctor on Health Cover, then press
+ *   Book An Appointment", though the button books only a visit owed (one missed or called off): with none owed,
+ *   `health.book` refuses, and Health Cover doesn't show it. The game books a visit itself when an illness or a
+ *   condition's review calls for one (`systems/health.ts`), as How This Works' doctor entry says.
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
@@ -43,5 +47,28 @@ describe('How You Are on what wears condition down', () => {
     expect(said.length).toBeGreaterThan(0);
     // Only while an injury leaves condition where it was: change that, and the chapter may say it.
     if (after.condition === before.condition) for (const s of said) expect(s).not.toMatch(/\binjur/i);
+  });
+});
+
+describe('Cover, Benefits And Returns on Book An Appointment', () => {
+  /** A new life with no visit owed, asking to book one. */
+  function bookUnowed() {
+    const sim = quickSave({}, 'guide-facts-book');
+    expect(sim.player.health?.owedVisit).toBeUndefined();
+    return sim.execute({ kind: 'health.book', payload: {} });
+  }
+
+  it('books only a visit owed: with none, it’s refused and nothing is booked', () => {
+    const r = bookUnowed();
+    expect(r.ok).toBe(false);
+    expect(r.error).toBe('There’s nothing to see a doctor about.');
+  });
+
+  it('is said to book again a visit missed or called off, not any visit you want', () => {
+    const refused = !bookUnowed().ok;
+    const said = sentences('papers').filter((s) => /\bBook An Appointment\b/.test(s));
+    expect(said.length).toBeGreaterThan(0);
+    // Only while an unowed booking is refused: change that, and the chapter may offer it freely.
+    if (refused) for (const s of said) expect(s).toMatch(/\b(miss(ed)?|again|owed|call(ed)? (it )?off)\b/i);
   });
 });

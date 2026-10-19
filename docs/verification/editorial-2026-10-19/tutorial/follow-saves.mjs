@@ -206,6 +206,49 @@ await tab('Tax Returns');
 }
 await page.close();
 
+// ---------------------------------------------------------------------------------------------------------------------
+// Cover, Benefits And Returns, a long-term condition: no scenario save has one, so new lives are begun until one does
+// (a new life's conditions are drawn at its start), the guide read through, and Your Long-Term Conditions followed (Your Conditions on a build without the papers area's rename).
+// ---------------------------------------------------------------------------------------------------------------------
+chapter = 'papers';
+for (let attempt = 1; attempt <= 6; attempt++) {
+  page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  page.on('pageerror', (e) => problems.push(`new life ${attempt}: page error: ${String(e).slice(0, 200)}`));
+  await page.goto(BASE, { waitUntil: 'networkidle' });
+  await page.getByRole('button', { name: /^New Save$/ }).first().click(); await wait(1000);
+  const billed = page.getByRole('group', { name: 'Billed As' });
+  if (await billed.count()) await billed.getByRole('button', { name: 'Actress' }).click();
+  await page.locator('#born-search').fill('New York'); await wait(800);
+  await page.getByRole('listbox', { name: 'Matching Places' }).getByRole('option').first().click(); await wait(500);
+  for (let i = 0; i < 4; i++) { await page.getByRole('button', { name: /^Continue$/ }).click(); await wait(900); }
+  await page.getByRole('button', { name: /^Begin$/ }).click();
+  await page.getByRole('group', { name: 'Time Controls' }).first().waitFor({ timeout: 30000 }); await wait(2500);
+  for (let i = 0; i < 17; i++) {
+    await page.locator('[role=dialog] button', { hasText: /^I’ve Read It$/ }).first().click().catch(() => {}); await wait(350);
+    if (i < 16) { await page.locator('[role=dialog] button', { hasText: /^Next: / }).first().click().catch(() => {}); await wait(250); }
+  }
+  await closeDialogs();
+  await rail('Papers');
+  await tab('Health Cover');
+  const health = await main();
+  const letGo = button('Let It Go');
+  if (!(await letGo.count())) { log(`new life ${attempt}: no long-term condition (${health.slice(health.search(/Your (Long-Term )?Conditions/), health.search(/Your (Long-Term )?Conditions/) + 60)})`); await page.close(); continue; }
+  const which = health.slice(health.search(/Your (Long-Term )?Conditions/) + 15, health.search(/Your (Long-Term )?Conditions/) + 120);
+  log(`new life ${attempt}: ${which}`);
+  if (/Therapist/.test(health)) {
+    const begin = button('Begin A Course Of 8 Sessions');
+    check('depression: choose a Therapist where you live and press Begin A Course Of 8 Sessions', await begin.count() > 0);
+    if (await begin.count() && !(await begin.isDisabled())) { await begin.click(); await wait(1000); check('and the first session is booked', /^Your first session is /.test(await toast()), await toast()); }
+  }
+  await letGo.click(); await wait(1000);
+  check('Let It Go stops the care, and Keep It Up is offered to start it again', await button('Keep It Up').count() > 0, clean((await main()).slice((await main()).search(/Your (Long-Term )?Conditions/), (await main()).search(/Your (Long-Term )?Conditions/) + 160)));
+  await press('Keep It Up'); await wait(800);
+  check('Keep It Up starts it again', await button('Let It Go').count() > 0);
+  await shot('your-conditions');
+  await page.close();
+  break;
+}
+
 writeFileSync(join(OUT, 'log.txt'), `${lines.join('\n')}\n`);
 writeFileSync(join(OUT, 'results.json'), `${JSON.stringify({ base: BASE, problems, results }, null, 1)}\n`);
 const failed = results.filter((r) => !r.ok);
