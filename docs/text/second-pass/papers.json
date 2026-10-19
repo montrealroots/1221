@@ -1,0 +1,527 @@
+{
+ "src/engine/content/guide/documents.ts#DOCUMENTS [documents.passport-id]": {
+  "status": "Rewritten",
+  "hash": "e00d409d99a5",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure by tools in my folder (guide-documents.txt, vite-node over GUIDE_BY_ID); its quotes held by tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]": {
+  "status": "Retained",
+  "hash": "6e719027cf15",
+  "on": "2026-10-19",
+  "reason": "Residence Abroad's entry says first that the game grants none of these papers and why, then Mexico's rule for reference, with an example that changes nothing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
+  "status": "Rewritten",
+  "hash": "8e7b201617a7",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID); quotes held by tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
+  "status": "Retained",
+  "hash": "ceb8f6fd00cf",
+  "on": "2026-10-19",
+  "reason": "Each connection says what one paper is checked for by whom (a new bank, the Social Security office, the IRS's plan, a branch-only bank), in one sentence each.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [immediate]": {
+  "status": "Retained",
+  "hash": "3f9eb0c50efb",
+  "on": "2026-10-19",
+  "reason": "Two short lines that say a fee leaves your accounts the moment you apply, replace, settle or naturalize, which is when the bank changes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [optional]": {
+  "status": "Retained",
+  "hash": "72dfcdc14d59",
+  "on": "2026-10-19",
+  "reason": "Two connections that keep residence apart from US permission to work and say your birth passport stays yours, which players otherwise ask about.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [prerequisite]": {
+  "status": "Rewritten",
+  "hash": "66ff425d4328",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), How It Connects",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/documents.ts#DOCUMENTS [scheduled]": {
+  "status": "Rewritten",
+  "hash": "a22329170568",
+  "on": "2026-10-19",
+  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID), Permission To Work's How It Connects",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/documents.ts#NEW_HAVEN": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the guide's dates are written in, America/New_York, which the guide never shows as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/documents.ts#NY_MAILS": {
+  "status": "Retained",
+  "hash": "5f510aebbacb",
+  "on": "2026-10-19",
+  "reason": "Says which issuer mails a replacement out of state and on which form, so a New Yorker in New Haven knows the replacement still works.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/documents.ts#SSN_VISIT": {
+  "status": "Retained",
+  "hash": "90335b649ade",
+  "on": "2026-10-19",
+  "reason": "The Social Security visit's length in plain words, an hour, read from the rule's minutes so the guide can't drift from it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/visas.ts#AU_600": {
+  "status": "Rewritten",
+  "hash": "2028c5062c63",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/content/visas.ts#BR_EVISA": {
+  "status": "Rewritten",
+  "hash": "6da433386ed1",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/content/visas.ts#CA_TRV": {
+  "status": "Rewritten",
+  "hash": "8c129827b43f",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/content/visas.ts#US_B1B2": {
+  "status": "Rewritten",
+  "hash": "a61e85fe9520",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/content/visas.ts#VISAS": {
+  "status": "Rewritten",
+  "hash": "66a6efb40c7a",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
+  "first": "Pending"
+ },
+ "src/engine/systems/citizenship.ts#naturalizeRefusal": {
+  "status": "Retained",
+  "hash": "543738f58af9",
+  "on": "2026-10-19",
+  "reason": "Each says what naturalizing there asks (residence first, twelve months settled, five years with a green card) in one short sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/citizenship.ts#registerCitizenship": {
+  "status": "Rewritten",
+  "hash": "a732025371f7",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'naturalizing names the country it made you a citizen of' plays it for Mexico and the United Kingdom",
+  "first": "Pending"
+ },
+ "src/engine/systems/citizenship.ts#registerCitizenship <documents.naturalize>": {
+  "status": "Retained",
+  "hash": "c96a02402436",
+  "on": "2026-10-19",
+  "reason": "The money refusal with nothing charged, the ledger memo, and the calendar's Citizenship Decided, which says the application isn't a grant.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/documents.ts#issue": {
+  "status": "Rewritten",
+  "hash": "9e83afbf49e0",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a passport’s arrival names what it replaced only when it replaced something' plays a first passport and two renewals",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#mayDrive": {
+  "status": "Rewritten",
+  "hash": "be34206e0891",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a citizenship with no passport office in the game, and a town with no driving rules, say so …' asserts the refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#mayEnter": {
+  "status": "Rewritten",
+  "hash": "35c5be602cc2",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print …' (A visitor can stay up to 180 days.) and tests/documents.test.ts, which reads the stay lines",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#passportOffice": {
+  "status": "Rewritten",
+  "hash": "41425a5127ab",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a US renewal by mail says its terms in sentences under Your Passport' renders the fine print",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#passportRefusal": {
+  "status": "Rewritten",
+  "hash": "d02999309a9e",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a citizenship with no passport office in the game …' asserts Your country’s passport office isn’t in the game.",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#policeReportRefusal": {
+  "status": "Rewritten",
+  "hash": "0a68ee86f7c0",
+  "on": "2026-10-19",
+  "evidence": "tests/commands-kept.test.ts asserts You’ve already filed a police report for it.",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#registerDocuments <documents.apply_passport>": {
+  "status": "Retained",
+  "hash": "112b3679a853",
+  "on": "2026-10-19",
+  "reason": "The house refusal for a fee the bank can't meet, Your bank can’t cover $…, so nothing was charged, and the ledger memo the code writes beside it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/documents.ts#registerDocuments <documents.report_lost>": {
+  "status": "Rewritten",
+  "hash": "d2c1e382745d",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g15-papers.test.ts and tests/papers-fixes.test.ts assert the refusal You can’t report a status lost. It stays in force …",
+  "first": "Pending"
+ },
+ "src/engine/systems/documents.ts#residenceRefusal": {
+  "status": "Retained",
+  "hash": "1184e4b1d6e5",
+  "on": "2026-10-19",
+  "reason": "No screen calls it now (grep of src finds no caller; tests/residence.test.ts reads it): it names the country by name and the exact panel and tab that show any route.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/documents.ts#STARTING": {
+  "status": "Retained",
+  "hash": "8cee4a741f85",
+  "on": "2026-10-19",
+  "reason": "A research citation line of published statistics and a regulation, kept as its sources name themselves, which no player sentence quotes as prose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/documents.ts#startingDocuments": {
+  "status": "Retained",
+  "hash": "d5ed1ca0e308",
+  "on": "2026-10-19",
+  "reason": "Document names the code reads back (the F-1 match in report_lost, Driver License as the license fallback): they're keys as well as labels, and plain English.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/documents.ts#startingDocuments [license]": {
+  "status": "Retained",
+  "hash": "a86dcee9e106",
+  "on": "2026-10-19",
+  "reason": "Document names the code reads back (the F-1 match in report_lost, Driver License as the license fallback): they're keys as well as labels, and plain English.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/documents.ts#startingDocuments [visa]": {
+  "status": "Retained",
+  "hash": "6d5e4249b611",
+  "on": "2026-10-19",
+  "reason": "Document names the code reads back (the F-1 match in report_lost, Driver License as the license fallback): they're keys as well as labels, and plain English.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/identity.ts#idCardRefusal": {
+  "status": "Rewritten",
+  "hash": "6c510378e97c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g15-papers.test.ts, tests/evidence-g16-papers.test.ts and tests/remaining-09-journeys.test.ts assert the out-of-status refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/identity.ts#idReplaceRefusal": {
+  "status": "Retained",
+  "hash": "5b4e011d9482",
+  "on": "2026-10-19",
+  "reason": "Says why a lost ID card can't be replaced (not lost, not here, past its date) and points to the step that works: apply for a new card.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/identity.ts#licenseReplaceRefusal": {
+  "status": "Retained",
+  "hash": "d1dd560f9805",
+  "on": "2026-10-19",
+  "reason": "Each refusal says the obstacle and the real way out (report it lost first), and the last says plainly that the game doesn't renew a driving license.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/identity.ts#noncitizenTermNote": {
+  "status": "Rewritten",
+  "hash": "d0e0b94111eb",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-papers.test.ts (TERM_NOTE, and the full-term variant) renders Your ID’s fine print for a noncitizen",
+  "first": "Pending"
+ },
+ "src/engine/systems/identity.ts#pastItsDate": {
+  "status": "Retained",
+  "hash": "adea485c362f",
+  "on": "2026-10-19",
+  "reason": "The date a card ran out or will run out, said in the past or the future as the case is, which the two replacement refusals open with.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/identity.ts#registerIdentity": {
+  "status": "Rewritten",
+  "hash": "06ecd9ccb53e",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g16-papers.test.ts and tests/defects3-50-70.test.ts assert the arrival notice It’s arrived, and you can use it from today. (the working reference’s example 5)",
+  "first": "Pending"
+ },
+ "src/engine/systems/identity.ts#registerIdentity <documents.apply_idcard>": {
+  "status": "Retained",
+  "hash": "679a42d7d829",
+  "on": "2026-10-19",
+  "reason": "The money refusal with nothing charged, the card's own name with Limited Term for a noncitizen's, and the calendar's The ID Card Comes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/identity.ts#registerIdentity <documents.replace_idcard>": {
+  "status": "Retained",
+  "hash": "9439a4a91972",
+  "on": "2026-10-19",
+  "reason": "The house money refusal with nothing charged, and the calendar line The ID Card Comes, short and plain on a crowded day.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/identity.ts#registerIdentity <documents.replace_license>": {
+  "status": "Retained",
+  "hash": "e6e336f7cf41",
+  "on": "2026-10-19",
+  "reason": "The money refusal with nothing charged and the calendar's The License Comes, each the shortest true thing for its place.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/papervisits.ts#registerPaperVisits": {
+  "status": "Rewritten",
+  "hash": "9a24e9ac5859",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b03.test.ts plays the London enrolment missed and kept, asserting both notices’ bodies",
+  "first": "Pending"
+ },
+ "src/engine/systems/papervisits.ts#VISITS": {
+  "status": "Rewritten",
+  "hash": "991f22f3d5b6",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a visa interview missed ends the application with no step the game doesn’t offer' plays the miss",
+  "first": "Pending"
+ },
+ "src/engine/systems/permission.ts#businessDaysOn": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the code passes to the calendar, America/New_York, which no screen shows as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/permission.ts#optRefusal": {
+  "status": "Retained",
+  "hash": "30ddfc830ba5",
+  "on": "2026-10-19",
+  "reason": "Each refusal says the exact obstacle and date (from 90 days before your program ends, closed 60 days after), and that OPT follows a completed degree.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/permission.ts#registerPermission": {
+  "status": "Retained",
+  "hash": "a7ec4ef2a3ad",
+  "on": "2026-10-19",
+  "reason": "The OPT and status notices: what happened, then what it means in the game (can't work, visa canceled, Visa Waiver closed) said as the game's rule, and the next step where there is one.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/permission.ts#registerPermission [permit]": {
+  "status": "Retained",
+  "hash": "fa444ed0db6d",
+  "on": "2026-10-19",
+  "reason": "Employment Authorization, OPT: the permit's own name, which the code reads back by OPT and the guide quotes in Being Decided.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/permission.ts#registerPermission <documents.apply_opt>": {
+  "status": "Retained",
+  "hash": "772bb7251df9",
+  "on": "2026-10-19",
+  "reason": "The ledger memo's premium processing and the calendar's OPT Decided, which name the application and its day and nothing more.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/permission.ts#scheduleUsStatus": {
+  "status": "Retained",
+  "hash": "1a1611328206",
+  "on": "2026-10-19",
+  "reason": "US Status, the calendar's two-word line for the day status ends, the same words as Your US Status on the tab.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/residence.ts#MEXICO_RENEWAL": {
+  "status": "Retained",
+  "hash": "5c8e0ea2c245",
+  "on": "2026-10-19",
+  "reason": "Mexico's renewal rule and its fee, then why the game doesn't renew, shown beside a card an older save holds.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/residence.ts#MEXICO_RULE": {
+  "status": "Retained",
+  "hash": "c163b195ceda",
+  "on": "2026-10-19",
+  "reason": "Mexico's published test and fees, every figure from the rule's constants, said as Mexico's rule and not as an offer.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/residence.ts#MEXICO_UNREAD": {
+  "status": "Retained",
+  "hash": "eda68e14d89b",
+  "on": "2026-10-19",
+  "reason": "One plain sentence that says why Mexico's papers can't be had here (moving abroad isn't part of the game), after each of Mexico's rules.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/residence.ts#registerResidence <documents.settle>": {
+  "status": "Retained",
+  "hash": "cc395c6b7232",
+  "on": "2026-10-19",
+  "reason": "Britain's own name for settlement, Indefinite Leave To Remain, as the Home Office spells it, and the money refusal with nothing charged.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/residence.ts#routeRefusal": {
+  "status": "Retained",
+  "hash": "e26c01aa4250",
+  "on": "2026-10-19",
+  "reason": "Each country's own answer in a sentence of its own (Canada's paused program, Ireland's employer's offer, the professional record), plain and specific.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/residence.ts#settleRefusal": {
+  "status": "Retained",
+  "hash": "b5d0d439c52e",
+  "on": "2026-10-19",
+  "reason": "Each says what settling asks in that country (five years, money earned in Britain in your field) or that you already are, with no invented route.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/taxid.ts#registerTaxId": {
+  "status": "Rewritten",
+  "hash": "8eb3179db129",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g17-papers.test.ts asserts the notice Your Social Security Card Has Arrived and its body, and tests/papers-complete.test.ts its title",
+  "first": "Pending"
+ },
+ "src/engine/systems/taxid.ts#registerTaxId <documents.apply_ssn>": {
+  "status": "Retained",
+  "hash": "ad91f135c691",
+  "on": "2026-10-19",
+  "reason": "The calendar's Your Social Security Card Comes, saying the card is on its way on its day, which the panel's Applied for. The card comes … matches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/taxid.ts#ssnRefusal": {
+  "status": "Rewritten",
+  "hash": "de68f18c83e1",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts and tests/evidence-g17-papers.test.ts assert the registration refusal on Papers and from the command",
+  "first": "Pending"
+ },
+ "src/ui/looks/papers.tsx#KIND_WORD": {
+  "status": "Retained",
+  "hash": "3ba330715984",
+  "on": "2026-10-19",
+  "reason": "The kind line of a document's page, Travel Document or Proof Of Identity, which says what the paper is for without repeating its own name above it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/papers.tsx#PLAIN_NAME": {
+  "status": "Retained",
+  "hash": "0d7c2d17f8f6",
+  "on": "2026-10-19",
+  "reason": "The plain fallback name, Passport or ID Card, shown only where a document's own name won't read as one, so the page always has a familiar title.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/papers.tsx#top": {
+  "status": "Rewritten",
+  "hash": "374b0109f28c",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'a document reported stolen says stolen on its page, and one reported lost says lost' resolves the look",
+  "first": "Pending"
+ },
+ "src/ui/looks/papers.tsx#whatItDoes": {
+  "status": "Rewritten",
+  "hash": "e6de861cd826",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g25-1.test.ts 'names an older one, still in force, as not the one in your name' resolves the look and asserts It’s in force, but another passport …",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#DocumentList": {
+  "status": "Rewritten",
+  "hash": "bcbcf00fff81",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts (the passports held: You don’t hold any.) and the run-out license row in tests/evidence2-b05.test.ts and tests/remaining-09-journeys.test.ts, which render the table",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#IdPanel": {
+  "status": "Rewritten",
+  "hash": "67cec91a1fe3",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-papers.test.ts presses Get (the mailed Connecticut card) and tests/editorial-papers.test.ts 'Get on Your ID says a card handed over at the counter is yours now, and a free one names no fee'",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#KIND_WORD": {
+  "status": "Retained",
+  "hash": "f42966c65c02",
+  "on": "2026-10-19",
+  "reason": "The plain name of each kind of paper as the report-lost toast says it, Passport Reported Stolen And Canceled, short and unambiguous beside each row.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#PassportPane": {
+  "status": "Rewritten",
+  "hash": "59108227a324",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g25-1.test.ts 'on Papers, Going Abroad says the country would let you in, not that you may go' renders the pane (Australia would let you in for a week’s visit.); the renewal fine print in tests/editorial-papers.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel": {
+  "status": "Rewritten",
+  "hash": "c8b7551d25c6",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-papers.test.ts 'Naturalize, on a green card held five years as an older save holds one, says what was applied for and what it cost' presses it",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.naturalize>": {
+  "status": "Retained",
+  "hash": "a19e83dc5f89",
+  "on": "2026-10-19",
+  "reason": "Applied for citizenship, which says plainly that pressing Naturalize applies and doesn't yet make you a citizen, before the toast names the fee.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.renew_residence>": {
+  "status": "Retained",
+  "hash": "21677df38d7d",
+  "on": "2026-10-19",
+  "reason": "One word, Renewed, that opens the toast Renewed and paid its fee, saying what the button did before its cost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.residence>": {
+  "status": "Retained",
+  "hash": "a3e4a569ead0",
+  "on": "2026-10-19",
+  "reason": "One word, Applied, that opens the toast Applied and paid its fee, the same shape as the passport's Applied and paid.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#ResidencePanel <documents.settle>": {
+  "status": "Retained",
+  "hash": "7fb3a9b5101b",
+  "on": "2026-10-19",
+  "reason": "One word, Settled, opening the toast Settled and paid its fee, for the one step on this panel that's granted at once.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#STATUS_WORD": {
+  "status": "Retained",
+  "hash": "e0cc317e85d2",
+  "on": "2026-10-19",
+  "reason": "The glossary's four statuses for a document, Being Decided and In Force keeping applying apart from holding, exactly as the guide and the look name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/papers/Documents.tsx#TaxIdPanel": {
+  "status": "Rewritten",
+  "hash": "002b53b18d99",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts 'a document’s missing number …' and tests/evidence-g17-papers.test.ts 'PLAYER JOURNEY: Papers’ Social Security Number panel …' render the panel (None yet, the refund held up seven weeks)",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#WorkPane": {
+  "status": "Rewritten",
+  "hash": "c293a9c40e61",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g15-papers.test.ts 'documents.apply_opt > on Permission To Work, the OPT panel says its fees …' and tests/evidence-g16-papers.test.ts (the out-of-status note) render the pane",
+  "first": "Pending"
+ },
+ "src/ui/papers/Documents.tsx#WorkPane <documents.apply_opt>": {
+  "status": "Retained",
+  "hash": "1570df1f36c0",
+  "on": "2026-10-19",
+  "reason": "The two openings of the OPT toast, Applied for OPT and Applied for OPT with premium processing, each naming exactly which application was made before its fee and decision date.",
+  "first": "Rewritten And Verified"
+ }
+}

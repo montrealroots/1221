@@ -672,10 +672,10 @@ describe('documents.apply_ssn', () => {
   it('PLAYER JOURNEY: Papers’ Social Security Number panel says Not yet with the button refused until she registers; pressed, an hour at the office and the card 21 days on, the panel saying so and the button gone; Held once it comes, across a reload', () => {
     const sim = international('g17-ssn-panel');
     const first = drawn(sim, WorkPane);
-    expect(first.text).toContain('Social Security Number Not yet');
+    expect(first.text).toContain('Social Security Number None yet');
     expect(first.button('Apply At The Social Security Office')!.disabled).toBe(true);
-    expect(first.text).toContain('On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.');
-    expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.');
+    expect(first.text).toContain('On an F-1, you can get a number only with on-campus work that has started or starts within 30 days. Register at the School first: once you’re registered, the School’s work-study counts.');
+    expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} }).error).toBe('On an F-1, you can get a number only with on-campus work that has started or starts within 30 days. Register at the School first: once you’re registered, the School’s work-study counts.');
 
     sim.advanceTo(SSN_DAY());
     expect(registered(sim.player.school, courseworkOf(sim, sim.player))).toBe(true);
@@ -697,7 +697,7 @@ describe('documents.apply_ssn', () => {
     expect(hasSsn(again.player)).toBe(false);
     again.advanceTo(on(2026, 9, 20, 13) + MS_MINUTE);
     expect(hasSsn(again.player)).toBe(true);
-    expect(titled(again, 'Your Social Security Card Came').map((n) => [n.at, n.body])).toEqual([[on(2026, 9, 20, 13), 'Give the number to the School’s payroll and your bank. A bank that opens accounts online for people with a number can now open one for you online.']]);
+    expect(titled(again, 'Your Social Security Card Has Arrived').map((n) => [n.at, n.body])).toEqual([[on(2026, 9, 20, 13), 'You now have a Social Security number. A bank that opens accounts online for people with a number can now open one for you that way.']]);
     const held = drawn(again, WorkPane);
     expect(held.text).toContain('Social Security Number Held');
     expect(held.has('Apply At The Social Security Office')).toBe(false);

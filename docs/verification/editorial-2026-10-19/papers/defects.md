@@ -1,0 +1,47 @@
+# Papers: Defects Found Apart From The Writing
+
+Brief 15, the papers area. Each is a fault in what the game says or does, found while reading its words again, apart
+from the words' style. None changes a rule, a calculation, a draw or a save's shape.
+
+## Fixed, Small And Certain, Each With A Test That Fails Without It
+
+1. **Every passport's arrival said a travel authorization had ended.** `issue` (`src/engine/systems/documents.ts`)
+   ended each passport's notice with "A travel authorization issued on the passport it replaces ended with that
+   passport.", a first passport's too, where nothing was replaced. It now reads what the new passport replaces before
+   it's issued and says only what happened: nothing, "Your old passport is canceled.", or that and the authorization on
+   it. `tests/editorial-papers.test.ts`, "a passport's arrival names what it replaced only when it replaced something".
+2. **A visit's name was lowercased whole, acronyms too.** The missed-appointment notice and a document's page said
+   "the biometrics at a ukvcas service point" and "your biometrics at a uscis application support center"
+   (`src/engine/systems/papervisits.ts`, `src/ui/looks/papers.tsx`), and the kept-visit notice said it in Title Case
+   after "Done:". `visitWords` lowercases a visit's words but an acronym's. `tests/evidence2-b03.test.ts` asserts both
+   notices.
+3. **A missed visa interview promised a step the game no longer has.** Its ending said "Apply again to book another.",
+   and applying for a visa went in the scope reset of 2026-10-09. The sentence now ends at the fact.
+   `tests/editorial-papers.test.ts`, "a visa interview missed ends the application with no step the game doesn't offer".
+4. **A lien only announced, or announced and never filed, said it had been filed and recorded.** `LienFacts`
+   (`src/ui/components/LienPanels.tsx`) said "It was filed for $… when collection reached that stage, and recorded in …"
+   for every status, Notice Of Intent Sent and Not Filed included (California's notice of intent is the one that
+   reaches them). It now says the first is to be filed unless you pay or set up a plan, and the second was never filed.
+   `tests/editorial-papers.test.ts`, "California's notice of intent reads as a lien still to be filed, and one dropped as
+   never filed".
+5. **A document reported stolen said "You reported it lost".** The page's summary (`src/ui/looks/papers.tsx`) read the
+   status, which is `lost` for both, and not `stolen`. `tests/editorial-papers.test.ts`, "a document reported stolen
+   says stolen on its page".
+
+## Fixed, Accuracy Of A Sentence
+
+6. **The guide said Connecticut's ID card shows Being Decided until it comes.** Since 2026-10-17 the row shows On Its
+   Way for a card past every check (`idCardOnItsWay`), a citizen's from the day it's applied for; only a noncitizen's
+   shows Being Decided, during SAVE's check. The entry's Now line and Status list say so now.
+7. **The Social Security panel said the ITIN "holds up the return for seven weeks".** It holds up the 1040-NR's refund
+   (`RETURN.refundDays + SSN.itinWeeks * 7`), as the guide says. Fixed in the words.
+8. **The IRS plan panel said a monthly plan "is approved online".** Without a Social Security number the application
+   goes by mail, Form 9465, and is answered in `PLAN.mailDays` (30). The panel now says both (`src/ui/workspaces/PapersWorkspace.tsx`).
+9. **"Paid by you" under a plan's Each Month, beside "By direct debit".** Every plan payment is taken from your
+   accounts on its day either way (the guide says so); the note said the opposite. It reads "Not by direct debit".
+10. **A UK tax year "settles on January 31 2028",** with no comma, typed by hand. It reads "January 31, 2028".
+
+## For The Coordinator
+
+11. **`residenceRefusal` (`src/engine/systems/documents.ts`) has no caller in `src/`.** Only `tests/residence.test.ts`
+    reads it. Its words were kept, with that reason in its status. Removing it is a scope question, not a writing one.

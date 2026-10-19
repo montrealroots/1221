@@ -807,7 +807,7 @@ await step('papers: a Connecticut ID card got from Passport And ID, its fee, its
   must(!(await get.isDisabled()), `refused: ${await get.getAttribute('title')}`);
   await get.click(); await wait(1000);
   const said = await toast();
-  must(/Non-Driver Identification Card: you paid \$28\.00\. The card comes [A-Z][a-z]+ \d{1,2}, \d{4}\. It’s good until [A-Z][a-z]+ \d{1,2}, \d{4}\./.test(said), `the toast said: ${said}`);
+  must(/You applied for the Non-Driver Identification Card and paid \$28\.00\. The card comes [A-Z][a-z]+ \d{1,2}, \d{4}, and it’s good until [A-Z][a-z]+ \d{1,2}, \d{4}\./.test(said), `the toast said: ${said}`);
   await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
   await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
   await rail('Papers'); await tab('Passport And ID');

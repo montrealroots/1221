@@ -1,0 +1,218 @@
+## Passport And ID (documents.passport-id)
+
+Your passport and your state ID card prove who you are. A bank you don’t bank with yet asks to see one of them in force before it opens an account. The Social Security office asks for your passport, and so does the DMV if you’re not a US citizen. Applying for one isn’t the same as holding it: it counts only once it’s issued and arrives. On Passport And ID you apply for or renew each one, report a lost or stolen paper, and replace a license or an ID card.
+
+Where To Find It: Papers, Passport And ID, Your Passport And Your ID
+When You Can Use It: From the guide’s chapter “Passports And ID”. File A Police Report opens with “Cover, Benefits And Returns”.
+
+What To Press:
+  1. Open Papers, then the Passport And ID tab. Your Passport shows the one in force, A New One with its fee and wait, and Faster where the office offers it.
+  2. Press Apply For One, or Renew It if you hold one. Apply Faster or Renew It Faster pays for the quicker service.
+  3. Under Your ID, press Get and the card’s name, such as Get Non-Driver Identification Card.
+  4. If a passport, license, international driving permit or ID card in force is lost, press Report Lost… or Report Stolen… in its row, then Cancel It to confirm, or Keep It to back out.
+  5. In the same row, press File A Police Report where the police take one online, and Replace It for a license or an ID card.
+  6. Press a paper’s name, number or status to open it: who issued it, when it runs out, and what it lets you do today.
+
+What You Need First:
+  - A passport office for your citizenship that the game has, and no application already in.
+  - For the ID card: living where the game issues one (New York, Connecticut, California, Ontario, British Columbia, Mexico City or Ireland), with no license from there in force and no card held or on its way.
+  - If you’re not a US citizen, at a US state’s counter: being in status; being at school on an F-1, or, once school is over, holding a US permit in force such as OPT; a primary identity document in force (your passport, or OPT’s card instead); and a Social Security number, which the game issues only through work-study at school.
+  - To replace a card: report it lost first, and live where it was issued (though New York mails a license out of state).
+  - Enough in your bank for the fee.
+
+What It Costs:
+  - Time: None: applying, reporting and replacing don’t move the clock
+  - A US Passport: $165 the first time or after one is lost, ready in up to 42 days, good for 10 years. Renewed by mail on Form DS-82, it’s $130, if your most recent passport was issued within 15 years, at 16 or older, and never reported lost. $60 more gets it in 21 days
+  - Another Country’s Passport: Applied for from New Haven, so from abroad: its office’s fee and time for an applicant outside the country, where the game has them, such as the UK’s £116.50 online, Australia’s A$611 with its overseas surcharge, and Japan’s $62 at a consulate in the US. Its faster service is offered only where it’s sold abroad, which the UK’s Fast Track isn’t. Where an office’s own figure couldn’t be read, the fine print says what the game assumes: New Zealand’s GST (charged), and its urgent fee from overseas, taken as its standard fee (estimated)
+  - Connecticut’s ID Card: $28, good for 7 years, to your first birthday at least 7 years on. It’s mailed, and comes 20 business days after you apply, not counting weekends and federal holidays. If you’re not a citizen, the DMV’s SAVE check comes first, 10 federal workdays, and the card runs to your program’s end while you’re at school, or on OPT to the end printed on it, 12 months from its start. That term is assumed, because the state publishes no term for a card it doesn’t verify. If OPT is canceled for its days without work, the card stays in force to that printed end (estimated)
+  - Replacing An ID Card: Connecticut $30 in 30 days; New York $8 in 21; California $40 in 28
+  - Replacing A License: Connecticut $30 in 30 days; New York $17.50 in 21, free if it was stolen and the police have your report; California $37 in 28
+  - A Police Report: Free, and filed at once
+
+What Happens:
+  - The fee leaves your bank, and a passport you’ve applied for shows Being Decided with the day it should be ready. You don’t hold it yet.
+  - Connecticut’s ID card shows On Its Way until it comes by mail, 20 business days later. If you’re not a citizen, it shows Being Decided first, during the DMV’s SAVE check. Until it comes, you can’t show it as a photo ID.
+  - Reported lost or stolen, a paper is canceled for good, even if it turns up. A passport takes with it any visa or travel authorization issued on it, though an F-1 status continues.
+  - A police report is kept on the lost paper’s record.
+  - Replace It cancels the lost card and puts a new one, with a new number, on its way.
+  - (later) A passport is issued on its day for its term, and the one it replaces is canceled then, along with any travel authorization on it.
+  - (later) A new or replacement card arrives on its day, and you can use it from then. Until it comes, you can’t show it as a photo ID.
+
+How It Connects:
+  - [evaluation] bank.other-banks: A bank you don’t bank with yet checks your passport, license or ID card before it opens an account or takes your switch.
+  - [evaluation] documents.work: The Social Security office asks for your passport in force before it takes an application.
+  - [prerequisite] documents.work: On an F-1, Connecticut’s DMV asks for your Social Security number before it issues an ID card.
+  - [prerequisite] documents.work: If you’re not a citizen, Connecticut’s DMV asks for your passport in force, or OPT’s card, before it issues an ID card.
+  - [immediate] bank.accounts: Each fee leaves your accounts when you apply or replace.
+
+What To Do Next:
+  - If you’re not a US citizen and want a state ID card, get your Social Security number first: see Permission To Work.
+  - Keep at least one photo ID in force before you open an account at a new bank.
+
+If You Can’t:
+  - “Your country’s passport office isn’t in the game.” or “You’ve already applied, and it’s being decided.”
+  - Apply Faster shows only where the office offers a faster service to you where you are. From abroad, where it offers none, the refusal says “… offers no faster service to applicants abroad.” Where that service “is for renewals only”, it waits until you’ve held a passport from that office.
+  - Get, if you’re not a US citizen and have no passport in force and no OPT card: “The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for a passport or renew it under Your Passport first.”
+  - Get: “You hold a driving license from here, and it already serves as your ID.”, “You already hold one in force.”, “One is already on its way.”, or, if you live where the game issues no card, the list of places it does.
+  - Get, if you’re not a US citizen, at a US state’s counter: “The DMV checks lawful presence through SAVE, and you’re out of status, so it won’t issue you a card.” Out of school on an F-1 with no OPT in force: “On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.” With no Social Security number: “The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one.”, followed by where you stand. At school: “You can get one through work-study: apply for it first, under Social Security Number on Papers.” Applied for: “Yours is on its way.” Out of school with none applied for: “In the game, the number goes only to an F-1 student at school, through work-study, and the letter is never issued.”, so the card is out of reach.
+  - Report Lost… and Report Stolen… show only on a passport, a license, an international driving permit or an ID card in force. A visa, a permit or a travel authorization is a status the government holds, and losing its paper doesn’t end it.
+  - File A Police Report: “Here lost property is reported in person at a police station, not online.” or “Here a theft is reported in person at a police station, not online.”
+  - Replace It, for an ID card: “It’s replaced only where it was issued, for someone living there.” If it has run out, or runs out before a new card would come: “It ran out on …” or “It runs out on …, before a new card would come”, then “, and a replacement keeps the same date, so it can’t be replaced. Apply for a new card instead, if you can.”
+  - Replace It, for a license from elsewhere: “Its issuer replaces it only for someone living there, and no way to send one out of state was found.” Only New York’s issuer mails one out of state, on its form MV-44, so a New York license is replaced from New Haven.
+  - Replace It, for a license that has run out or runs out before a new card would come: “It ran out on …” or “It runs out on …, before a new card would come”, then that a replacement keeps the same date, and a license past its date has to be renewed instead, which the game doesn’t offer.
+  - Either way, where the game doesn’t have the issuer’s fee: “What its issuer charges to replace it isn’t in the game.”
+  - Any fee: “Your bank can’t cover …, so nothing was charged.”
+  - (mistake) Reporting a paper lost by mistake: it can’t be undone, so the second press, Cancel It, is the one that counts. Keep It backs out.
+  - (mistake) Replacing a stolen New York license before filing the police report: the free replacement reads the report, and once it’s replaced, the lost license’s row offers no report. File it first.
+  - (mistake) Letting your only photo ID lapse before switching banks: the new bank refuses until one is in force. A license from home runs out and can’t be renewed in the game, so get the ID card where you live instead.
+  - (mistake) Reporting your passport lost before getting the ID card when you’re not a citizen: the DMV asks for your passport as your identity document, so the card waits on a new passport from your office, which takes weeks from abroad.
+  - (mistake) Asking Connecticut for an ID card on an F-1 before you have your Social Security number: the DMV asks for it, and the game issues the number only through work-study at school, so apply under Permission To Work while you’re registered. A graduate on OPT who never applied is turned away for good.
+
+What Decides It:
+  - Your Citizenship: Which passport office you apply to, and its fee, wait and term
+  - Your Age: A shorter passport where the office gives one to a young adult; a lower fee to replace an ID card in New York and California from 62
+  - Where You Live: Which state’s ID card you can get, whether the police take a report online, and where a card is replaced
+  - A Photo ID In Force: A bank you don’t bank with yet checks it before it opens an account or takes your switch
+  - Status in a row reads In Force, Being Decided, On Its Way (an ID card past every check, in the mail), Reported Lost, Canceled or Run Out.
+  - A license that has run out says beside it that you can’t renew a driving license in the game, and to use a passport or ID card in force as your photo ID. A passport or ID card that has run out says to apply for a new one in its panel. A new bank asks for one in force.
+  - A passport’s own page counts the countries that would let you in on it for a week’s visit. That’s for reference only: travel isn’t part of the game, so you never cross a border.
+  - A card’s own page says “It meets REAL ID.” on a US state ID card issued to a citizen, and “It’s marked Not For Federal Identification: it isn’t REAL ID.” on one issued to someone who isn’t, as Connecticut issues it. A license you began with says “It meets REAL ID.” if it was drawn as one: at its state’s published share of REAL ID licenses, or, for a state with none published, the average of the shares that are. There are no flights in the game, so no airport check reads it.
+  - Going Abroad lists what each country asks of a short-stay visitor with your citizenship, for reference. You can’t apply for visas or travel authorizations here.
+  - In New Haven a police report is kept on the record, and nothing else there reads it. New York’s free replacement of a stolen license is the rule that reads one.
+
+A Worked Example:
+  A US citizen in New Haven loses a wallet holding a Connecticut Non-Driver Identification Card.
+  1. In the card’s row, press Report Stolen…, then Cancel It.
+  2. Press File A Police Report: New Haven’s police take one online.
+  3. Press Replace It, $30.
+  The old card is canceled, with the report kept on it. $30 leaves the bank, and the new card, with a new number, arrives 30 days later. Until then, a passport or a license in force is your photo ID. Without one, a new bank would turn you away.
+
+
+## Permission To Work (documents.work)
+
+On an F-1, you make two applications here. The first is a Social Security number, which you apply for in person at New Haven’s office. With it, the IRS decides a payment plan at once, some banks open your account online, Connecticut’s DMV can issue you an ID card, and a 1040-NR doesn’t wait on an ITIN. The second is OPT, after your degree, which keeps your US status going past its 60-day grace period. The game has no work after the degree, so OPT ends after 90 days without work.
+
+Where To Find It: Papers, Permission To Work, Social Security Number And OPT
+When You Can Use It: From the guide’s chapter “Passports And ID”. It’s for a student on an F-1: a US citizen already has a Social Security number, and OPT is only for F-1 students.
+
+What To Press:
+  1. Open Papers, then the Permission To Work tab. The Permission To Work panel shows Your Program Ends and Your US Status.
+  2. Once you’re registered at the School and have your passport in force, press Apply At The Social Security Office under Social Security Number. It takes an hour there.
+  3. From 90 days before your program ends to 60 days after, press Apply For OPT under OPT, or Apply With Premium Processing for a decision within 30 business days.
+  4. When your status is ending and you can still apply for OPT, What Needs You asks too, with Apply For OPT and Apply For OPT, Premium Processing.
+
+What You Need First:
+  - Being a student on an F-1.
+  - For the number: being registered for your program, since the School’s work-study is the on-campus work it needs; a passport in force; and an hour free, out of hospital.
+  - For OPT: your degree completed or on its way, applying inside its window, and no OPT applied for before.
+  - OPT’s fee in your accounts.
+
+What It Costs:
+  - Time: 60 minutes at the Social Security office, and the clock moves on by that much. Applying for OPT doesn’t move the clock (estimated)
+  - A Social Security Number: Free
+  - OPT: $470 filed online; premium processing costs $1,780 more
+  - How Long: The card comes in 21 days. OPT is decided in 90 days, or within 30 business days with premium processing, not counting weekends and federal holidays (estimated)
+
+What Happens:
+  - Applying for the number moves the clock an hour and puts the card on its way, with its date under Social Security Number.
+  - Applying for OPT takes the fee and lists Employment Authorization, OPT, as Being Decided. You don’t hold it until it’s approved. The status item in What Needs You is answered.
+  - While OPT is being decided, your status holds, past its grace period if need be.
+  - (later) The card arrives on its day. A bank that opens accounts online for people with a number can now open one for you.
+  - (later) If OPT is approved, it runs for 12 months from the later of your program’s end and the approval.
+  - (later) On OPT, each week without work counts. After 90 days in total, OPT ends, and your status with it, with no grace period.
+  - (later) When your permission has run out and only the grace period is left, What Needs You says Your US Status Is Ending, with its date.
+  - (later) If you stay past it, you’re out of status. In the game, that cancels your F-1 visa, ends a marketplace plan at the end of the month, closes Covered Connecticut and the DMV’s ID card to you, and closes the Visa Waiver Program to you from then on.
+
+How It Connects:
+  - [prerequisite] school.orientation: You need to be registered for your program to get the number: once you are, the School’s work-study counts as your on-campus work.
+  - [prerequisite] documents.passport-id: The Social Security office asks for your passport in force.
+  - [evaluation] taxes.return: A 1040-NR filed without a number goes in with an ITIN application, which holds up its refund 7 weeks longer.
+  - [evaluation] taxes.plan: With a number, the IRS decides a plan within a minute. Without one, it’s by mail in 30 days.
+  - [evaluation] bank.other-banks: Without a number, a bank that opens accounts for international students opens yours only in a branch.
+  - [evaluation] papers.benefits: Unemployment insurance pays a noncitizen only with permission to work in the US, such as OPT in force.
+  - [scheduled] papers.health-cover: Your status ends on a set day. Once you’re out of status, a marketplace plan ends at the end of the month.
+
+What To Do Next:
+  - Once the card comes, a new bank can open an account for you online, and Connecticut’s DMV can issue you an ID card: see Passport And ID.
+  - Near your program’s end, apply for OPT inside its window if you want your status to last past the grace period.
+
+If You Can’t:
+  - The number’s button shows only while you have no number and none on its way. A US citizen’s panel reads Held, as a US citizen.
+  - “On an F-1, you can get a number only with on-campus work that has started or starts within 30 days. Register at the School first: once you’re registered, the School’s work-study counts.”, or once school is over, “On an F-1, you can get a number only with on-campus work, and yours ended with your program.”
+  - “The office asks for your passport, and you don’t have one in force.”, or another commitment in that hour.
+  - OPT: “You can apply from …”, a date 90 days before your program ends, or “The time to apply closed on …”, 60 days after.
+  - “OPT follows a completed degree, and you left without one.”
+  - “You’ve already applied for OPT.”, once, even after it ends; and for a US citizen, “OPT is for a student on an F-1, and you’re a US citizen.”
+  - (mistake) Waiting for the card before working shifts: work-study pays without it, because the IRS lets an employer report the number as applied for.
+  - (mistake) Leaving the number until after your degree: once school is over the office refuses it, and without it Connecticut’s DMV won’t issue you an ID card, even on OPT. One applied for in your program’s last weeks still comes.
+  - (mistake) Counting on OPT’s 12 months: with no work after the degree in the game, it ends after its days without work. What it gives you here is those days in status, and with them the marketplace, and unemployment insurance if your wages qualify.
+  - (mistake) Paying for premium processing to keep your status: your status holds while either kind is being decided, so the $1,780 only buys an earlier answer. If that answer comes after your program’s end, OPT starts sooner, and with no work its days run out sooner too.
+
+What Decides It:
+  - Your Program’s End: May 31 of your class’s last year, or the day you left school without the degree
+  - How School Ended: The grace period after your program: 60 days with the degree, 15 after a withdrawal or a degree withheld, and none after a dismissal. OPT follows a completed degree: if you applied while the degree was on its way and school ends without it, OPT is denied when it’s decided, and the fee isn’t refunded
+  - Your Registration: The number needs on-campus work that has started or starts within 30 days. Once you’re registered, the School’s work-study counts
+  - Days Without Work: Counted on OPT a week at a time. After 90, OPT ends
+  - Your US Status reads Held while you study or an application is being decided; Ends with its date once school is over and nothing is being decided (on OPT, the day its days without work run out, with no grace period after); or Out Of Status.
+  - An approved OPT reads In Force with its dates, and Canceled once its days without work have run out.
+  - The game keeps no actual Social Security number, only whether you hold one, so no number is shown.
+
+A Worked Example:
+  An F-1 student in the class that began in 2026, whose program ends May 31, 2029, with no work lined up.
+  1. On March 3, 2029, press Apply For OPT.
+  2. Graduate, and stay in New Haven.
+  $470 leaves the bank. OPT is decided on June 1, 2029 and runs from June 1, 2029. With no work, it ends on August 31, 2029, past its 90 days, and your status ends with it. Without OPT, your status would have ended on July 30, 2029.
+
+
+## Residence Abroad (documents.residence)
+
+Residence Abroad lists Canada, Ireland, Mexico, Britain and the United States, apart from your own country, with your status in each: what the country asks, and why the game grants none of it. Mexico’s temporary residence asks only for savings or income, but moving abroad isn’t part of the game, so none of Mexico’s papers are granted. What an older save holds is kept: a card to its end, and an application for citizenship to its decision.
+
+Where To Find It: Papers, Permission To Work, Residence Abroad
+When You Can Use It: From the guide’s chapter “Passports And ID”. A country you’re a citizen of, by birth or naturalized, leaves the list.
+
+What To Press:
+  1. Open Papers, then Permission To Work, and find the Residence Abroad panel. Your Status There says what each country asks, or what you hold there. Mexico’s Apply, and Renew on a card held, are grayed out with the reason.
+  2. If an older save holds Britain’s Global Talent visa or a green card, press Settle or Naturalize where they show.
+
+What You Need First:
+  - There’s nothing to apply for: each country’s row says why there’s no route. For reference, Mexico’s rule asks for savings of MXN 1,344,373, or an income of MXN 79,771 a month over six months.
+  - To settle or naturalize: residence held from an older save, without a break, for the years the country asks.
+
+What It Costs:
+  - Time: None
+  - Mexico’s Fees: MXN 11,140.74 a year for the card and $56 for the consulate’s visa, MXN 13,578.96 for permanent residence and MXN 9,502.01 to naturalize. These are shown with its rule, and nothing here charges them
+
+What Happens:
+  - Your Status There gives each country’s answer, and nothing leaves your bank.
+  - Settle (Britain) or Naturalize, where an older save’s papers allow it: the fee leaves your bank, and Your Status There shows what’s granted, or the day citizenship is decided.
+  - (later) A citizenship you’ve applied for is decided on its day. It joins the one you were born with, and its country leaves the list. You keep your birth country’s passport.
+  - (later) A Mexican card an older save holds runs out at its end, and isn’t renewed.
+
+How It Connects:
+  - [immediate] bank.accounts: Settling or naturalizing, where an older save’s papers allow it, takes its fee from your accounts at once.
+  - [optional] documents.passport-id: A citizenship by naturalizing joins the one you were born with, and your passport stays your birth country’s.
+  - [optional] documents.work: Residence abroad and permission to work in the US are separate: OPT is the US route for a student.
+
+What To Do Next:
+
+If You Can’t:
+  - Mexico’s row: “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, with the card at MXN 11,140.74 a year and the consulate’s visa at US$56. Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.”
+  - A Mexican card held: “Mexico renews temporary residence a year at a time, in the card’s last 30 days, for MXN 11,140.74. Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.”
+  - Settle and Naturalize show only once they’re allowed. Mexico’s, after their four and five years, say why the game grants none.
+  - For Canada, Ireland, Britain and the United States, Your Status There says why there’s no route.
+  - Any fee: “Your bank can’t cover …, so nothing was charged.”
+  - (mistake) Saving toward Mexico’s savings test in the hope it opens something: it’s Mexico’s rule, shown for reference, and the game grants nothing on it.
+
+What Decides It:
+  - Residence Held: Counted from its first grant, each grant reaching the next with no more than a day between
+  - A Record Of Professional Work: What Britain’s Global Talent visa and a US green card are judged on. The game has none to show
+  - Your Status There gives each country’s answer in its own words: Canada’s paused program, Ireland’s need for an employer’s offer, the professional record Britain and the US would judge, and Mexico’s rule with why the game grants none.
+  - Residence you hold shows its name, and its end date if it has one.
+  - Mexico’s temporary residence would let you live there, but not work, and a life in New Haven never uses it.
+
+A Worked Example:
+  A student from a wealthy family with MXN 1,344,373, about $74,687, in the bank, which meets Mexico’s savings test.
+  1. Open Residence Abroad and read Mexico’s row.
+  Mexico’s row gives its rule, savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, and says the game grants none of its papers, because moving abroad isn’t part of the game. Apply is grayed out with those words, nothing leaves the bank, and a student without the savings sees the same row.
+

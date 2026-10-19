@@ -100,7 +100,7 @@ describe('PLAYER JOURNEY: a passport applied for and issued, and its page', () =
     expect(passportOf(sim.player, sim.now)?.id).not.toBe(older.id);
     const words = page(sim, older.id);
     expect(words).not.toMatch(/travel on/);
-    expect(words).toContain('In force, but another passport is the one in force in your name.');
+    expect(words).toContain('It’s in force, but another passport is the one in force in your name.');
   });
 });
 
@@ -141,7 +141,7 @@ describe('FIXTURE: a travel authorization held from before 2026-10-09', () => {
     expect(mayEnter(sim.player, 'AU', sim.now).ok).toBe(true);
     const shown = papers(sim);
     expect(shown).not.toContain('You may go.');
-    expect(shown).toContain('It would let you in for a week’s visit.');
+    expect(shown).toContain('Australia would let you in for a week’s visit.');
   });
 
   it('GUARD: Going Abroad says a visa or an authorization isn’t applied for here, and the rule it shows decides nothing: `mayEnter` is read by Papers and a document’s page alone, by no system of the engine (brief 11, tax.s8.visas_authorizations, 2026-10-17)', () => {

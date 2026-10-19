@@ -215,7 +215,7 @@ describe('documents.replace_license', () => {
     expect(replaced(twin).map((t) => t.memo)).toEqual(['Class D (Operator) driver license, replaced']);
     twin.advanceTo(on(2026, 9, 27));
     expect(documentsOf(twin.player).filter((d) => d.kind === 'license' && d.status === 'valid').map((d) => d.expiresAt)).toEqual([on(2026, 10, 1, 3)]);
-    expect(titled(twin, 'Class D (Operator) driver license Arrived').map((n) => n.body)).toEqual(['It’s in your hands and in force from today.']);
+    expect(titled(twin, 'Class D (Operator) driver license Arrived').map((n) => n.body)).toEqual(['It’s arrived, and you can use it from today.']);
 
     // On 30 September, 21 days would bring it on 21 October, three weeks past its date.
     sim.advanceTo(on(2026, 9, 30));

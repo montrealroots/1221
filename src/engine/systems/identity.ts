@@ -78,8 +78,8 @@ export function noncitizenTermNote(person: Person): string | undefined {
   const here = idCardHere(person);
   if (!here || !here.jurisdiction.startsWith('us-') || citizenOf(person, 'US')) return undefined;
   return NONCITIZEN_ID.toLawfulPresence
-    ? 'You’re not a US citizen, so your card runs to the end of your lawful presence: your program’s end while you’re at school, or your OPT’s end while you’re on OPT. The state publishes no term for a card it doesn’t verify, so this term is assumed. A card already issued keeps its date if the assumption is ever corrected.'
-    : 'You’re not a US citizen, and your card runs its full term to a birthday, as anyone’s does. The state publishes no term for a card it doesn’t verify, so this term is assumed. A card already issued keeps its date if the assumption is ever corrected.';
+    ? 'You’re not a US citizen, so your card runs to the end of your lawful presence: your program’s end while you’re at school, or your OPT’s end while you’re on OPT. The state doesn’t publish a term for a card it doesn’t verify, so this term is assumed in the game.'
+    : 'You’re not a US citizen, and your card runs its full term to a birthday, as anyone’s does. The state doesn’t publish a term for a card it doesn’t verify, so this term is assumed in the game.';
 }
 
 /**
@@ -155,7 +155,7 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
   if (!card.citizens && documentsOf(person).some((d) => d.kind === 'license' && d.issuer === here.jurisdiction && inForce(d, at))) return 'You hold a driving license from here, and it already serves as your ID.';
   // Not a citizen, at a US state's counter: status, enrollment and a number first.
   if (here.jurisdiction.startsWith('us-') && !citizenOf(person, 'US')) {
-    if (person.usOutOfStatus !== undefined) return 'The DMV checks lawful presence through SAVE, and you stayed past the end of your status.';
+    if (person.usOutOfStatus !== undefined) return 'The DMV checks lawful presence through SAVE, and you’re out of status, so it won’t issue you a card.';
     // An F-1 student at school shows enrollment; anyone else a US permit in force, OPT (from 2026-10-12: until then an
     // F-1 holder out of school was refused here, OPT or not, and the permit was read only for somebody with no F-1).
     const f1 = f1Of(person);
@@ -301,7 +301,7 @@ export function registerIdentity(sim: Simulation): void {
     doc.status = 'valid';
     doc.issuedAt = item.at;
     // Said, as a passport's arrival is (from 2026-10-10: until then it came in silence).
-    if (person!.id === s.universe.playerId) s.notify({ category: 'papers', title: `${doc.name} Arrived`, body: 'It’s in your hands and in force from today.', importance: 40, route: '/workspace/papers' });
+    if (person!.id === s.universe.playerId) s.notify({ category: 'papers', title: `${doc.name} Arrived`, body: 'It’s arrived, and you can use it from today.', importance: 40, route: '/workspace/papers' });
   });
 
   sim.onCommand<Record<string, never>, { expiresAt?: Instant; fee: Money; readyAt?: Instant }>('documents.apply_idcard', (_p, { sim: s }) => {

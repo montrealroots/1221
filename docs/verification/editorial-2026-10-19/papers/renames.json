@@ -1,0 +1,5 @@
+[
+ { "old": "Your Social Security Card Came", "new": "Your Social Security Card Has Arrived", "where": "src/engine/systems/taxid.ts (a notice's title)" },
+ { "old": "A Citizen", "new": "A Citizen Of <Country>", "where": "src/engine/systems/citizenship.ts (a notice's title, the country by name)" },
+ { "old": "Not yet", "new": "None yet", "where": "src/ui/papers/Documents.tsx (Social Security Number's subtitle, a status, not a control)" }
+]

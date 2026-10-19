@@ -49,8 +49,8 @@ export function ssnRefusal(sim: Simulation, person: Person): string | undefined 
   if (person.ssn?.status === 'applied') return 'You’ve already applied, and the card is on its way.';
   if (!f1Of(person)) return 'A number is only for someone allowed to work in the US.';
   const school = person.school;
-  if (!school || schoolEnded(school.standing)) return 'On an F-1, the number needs on-campus work, and that ended with your program.';
-  if (!registered(school, courseworkOf(sim, person))) return 'On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.';
+  if (!school || schoolEnded(school.standing)) return 'On an F-1, you can get a number only with on-campus work, and yours ended with your program.';
+  if (!registered(school, courseworkOf(sim, person))) return 'On an F-1, you can get a number only with on-campus work that has started or starts within 30 days. Register at the School first: once you’re registered, the School’s work-study counts.';
   if (!passportOf(person, sim.now)) return 'The office asks for your passport, and you don’t have one in force.';
   // “The Social Security office is in New Haven, at 150 Court Street.” went on 2026-10-13, reached by no play: only a
   // student registered at the School gets this far, a life is enrolled only where it begins in New Haven (`populateWorld`,
@@ -74,6 +74,6 @@ export function registerTaxId(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person || person.ssn?.status !== 'applied') return;
     person.ssn = { ...person.ssn, status: 'issued' };
-    if (person.id === s.universe.playerId) s.notify({ category: 'papers', title: 'Your Social Security Card Came', body: 'Give the number to the School’s payroll and your bank. A bank that opens accounts online for people with a number can now open one for you online.', importance: 45, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'papers', title: 'Your Social Security Card Has Arrived', body: 'You now have a Social Security number. A bank that opens accounts online for people with a number can now open one for you that way.', importance: 45, route: '/workspace/papers' });
   });
 }

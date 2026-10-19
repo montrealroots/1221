@@ -553,7 +553,7 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     ]);
     expect(said(jump)).toEqual(said(sim));
     expect(refused(sim, 'health.enroll')).toBe('The marketplace is only for citizens and people lawfully present, and you’re out of status.');
-    expect(refused(sim, 'documents.apply_idcard')).toBe('The DMV checks lawful presence through SAVE, and you stayed past the end of your status.');
+    expect(refused(sim, 'documents.apply_idcard')).toBe('The DMV checks lawful presence through SAVE, and you’re out of status, so it won’t issue you a card.');
     tend(sim, at(2027, 3, 1, 12));
     const filed = ok<{ balance: number; refundAt?: Instant; irs: number }>(sim, 'tax.file', { year: 2026 });
     // The 14% withheld at source on her taxable scholarship is more than the 1040-NR's tax: a refund, seventy days on.
@@ -596,7 +596,7 @@ describe('journeys.x4: a document running out under a payment', () => {
     tend(sim, at(2028, 6, 20, 12));
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
     const papers = drawn(sim, PapersWorkspace, 'passport');
-    expect(papers).toContain('June 14, 2028 Run Out A driving license can’t be renewed in the game. A passport or ID card in force is your photo ID: see Your Passport and Your ID.');
+    expect(papers).toContain('June 14, 2028 Run Out You can’t renew a driving license in the game. Use a passport or ID card in force as your photo ID: see Your Passport and Your ID.');
     // A new bank asks for a photo ID in force.
     const chase = account(sim, 'Chase Total Checking');
     const before = still(sim);

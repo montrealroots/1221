@@ -31,7 +31,7 @@ function graduate(seed: string, programEndsIn: number): Simulation {
 describe('a status’s paper', () => {
   it('isn’t reported lost; a passport is', () => {
     const sim = graduate('lost-status', 30);
-    expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: 'f1' } }).error).toBe('A status can’t be reported lost: it stays in force whatever happens to the paper.');
+    expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: 'f1' } }).error).toBe('You can’t report a status lost. It stays in force whatever happens to the paper.');
     expect(documentsOf(sim.player).find((d) => d.id === 'f1')!.status).toBe('valid');
     expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: 'pp' } }).ok).toBe(true);
   });
