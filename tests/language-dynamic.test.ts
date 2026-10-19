@@ -838,7 +838,7 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     const [year, month, day] = a.dueOn.split('-').map(Number) as [number, number, number];
     const dueOn = formatDate(on(year, month, day, 12), NY);
     const soonest = drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' }).split('\n').find((l) => l.startsWith('Acting I: Scene Study, due '))!;
-    expect(soonest).toMatch(new RegExp(`^Acting I: Scene Study, due ${dueOn}\\. Shown today, it would come to about \\d+ of 100 \\((Unready|Working|Strong|Exceptional)\\)\\. Still to finish: .+\\.$`));
+    expect(soonest).toMatch(new RegExp(`^Acting I: Scene Study, due ${dueOn}\\. Shown today, it would come to about \\d+\\.\\d of 100 \\((Unready|Working|Strong|Exceptional)\\)\\. Still to finish: .+\\.$`));
     sound(soonest); whole(soonest); dated(soonest);
     // Its day, and not there: not shown, counted, and what that means for the course.
     meetingWeight(sim, sim.player, 'DRAM 103a/b', { year, month, day }, on(year, month, day, 10), false, false);

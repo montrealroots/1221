@@ -60,7 +60,7 @@ export function CourseworkPane() {
           <ul className="small" data-due-soonest="" style={{ margin: 0, paddingLeft: '1.1rem' }}>
             {short.map(({ a, due, forecast, short: parts }) => {
               const t = templateById(a.template)!;
-              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}. Shown today, it would come to about {Math.round(forecast)} of 100 ({BAND_LABEL[bandFor(a, forecast)]}). Still to finish: {parts.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</li>;
+              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}. Shown today, it would come to about {forecast.toFixed(1)} of 100 ({BAND_LABEL[bandFor(a, forecast)]}). Still to finish: {parts.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</li>;
             })}
           </ul>
         </Panel>
@@ -142,13 +142,16 @@ function AssignmentCard({ a }: { a: Assignment }) {
           {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Note priority ${pct(weights[d] ?? 0)}; complete at ${pct(EVALUATION.complete.coursework)}`} />)}
         </div>
         {/* What the showing would make of it today (from 2026-10-16, `showingForecast`): until then a part at nothing that
-            "weighed 15%" said nothing of holding the dimensions that read it to a third of themselves. */}
+            "weighed 15%" said nothing of holding the dimensions that read it to a third of themselves. Brief 15's school area
+            wrote its figure, and Due Soonest's, in whole points; its final runs found a day's step on a scene that left
+            "about 52 of 100" where it was, so the work didn't show (normal at 390, step 11), and the forecast went back to a
+            tenth, as a brief's Taped Now writes its own. The score a showing gets stays whole. */}
         {(a.status === 'open' || a.status === 'revising') && (() => {
           const now = showingForecast(sim, person, a);
           const short = shortParts(person, a);
           return (
             <div className="small" data-shown-today={a.id}>
-              <strong>Shown Today:</strong> if you showed it today, on a good day, it would come to about {Math.round(now.overall)} of 100 ({BAND_LABEL[bandFor(a, now.overall)]}). {chiefLimit(withPartLabels(now, a), 'now') ? `${chiefLimit(withPartLabels(now, a), 'now')}.` : 'There’s nothing holding it back.'}
+              <strong>Shown Today:</strong> if you showed it today, on a good day, it would come to about {now.overall.toFixed(1)} of 100 ({BAND_LABEL[bandFor(a, now.overall)]}). {chiefLimit(withPartLabels(now, a), 'now') ? `${chiefLimit(withPartLabels(now, a), 'now')}.` : 'There’s nothing holding it back.'}
               {short.length > 0 && <span> Still to finish: {short.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</span>}
             </div>
           );

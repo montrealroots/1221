@@ -1213,9 +1213,9 @@ if (DIR) {
 // Coursework came, with a scene still short of it. Given a directory of saves, a missing workload save is a failure too.
 if (DIR) {
   const forecast = () => page.locator('[data-shown-today]').filter({ hasText: /Run It With A Reader/ }).first();
-  // Whole points of 100 from brief 15 (f67198f7), where this step's words were matched again and its figure, still read
-  // to a tenth, wasn't: brief 15's final runs read NaN.
-  const figure = async (id) => Number(((await page.locator(`[data-shown-today="${id}"]`).innerText()).match(/would come to about (\d+) of 100 /) ?? [])[1] ?? NaN);
+  // "of 100" from brief 15 (f67198f7), which wrote the figure in whole points for a while, and this read NaN until it
+  // was matched to them (e5fdacb7); the figure is a tenth again from brief 15's final runs, as it was before.
+  const figure = async (id) => Number(((await page.locator(`[data-shown-today="${id}"]`).innerText()).match(/would come to about (\d+\.\d) of 100 /) ?? [])[1] ?? NaN);
   let id = '';
   let shown = NaN;
   await step('[save: workload scenario] home: A Word On Your Coursework, how many, the part most often short, what answers it and the review’s day', async () => {
@@ -1239,11 +1239,11 @@ if (DIR) {
   await step('[save: workload scenario] coursework: Due Soonest first, then a scene’s Shown Today, its figure, what holds it back and the part short with its remedy', async () => {
     await tab('Coursework');
     const soonest = (await page.locator('[data-due-soonest] li').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
-    must(/^[^:]+: .+, due .+\. Shown today, it would come to about \d+ of 100 \((Unready|Working|Strong|Exceptional)\)\. Still to finish: /.test(soonest), `no Due Soonest with the piece, its day, its figure and what’s short: ${soonest || '(nothing)'}`);
+    must(/^[^:]+: .+, due .+\. Shown today, it would come to about \d+\.\d of 100 \((Unready|Working|Strong|Exceptional)\)\. Still to finish: /.test(soonest), `no Due Soonest with the piece, its day, its figure and what’s short: ${soonest || '(nothing)'}`);
     must(await forecast().count(), 'no Shown Today naming Run It With A Reader on an open scene');
     id = await forecast().getAttribute('data-shown-today');
     const words = (await forecast().innerText()).replace(/\s+/g, ' ');
-    must(/^Shown Today: if you showed it today, on a good day, it would come to about \d+ of 100 \((Unready|Working|Strong|Exceptional)\)\./.test(words), `not its figure and band: ${words}`);
+    must(/^Shown Today: if you showed it today, on a good day, it would come to about \d+\.\d of 100 \((Unready|Working|Strong|Exceptional)\)\./.test(words), `not its figure and band: ${words}`);
     must(/Still to finish: .*Run It With A Reader/.test(words), `not the part short with its remedy: ${words}`);
     shown = await figure(id);
     return `${soonest.slice(0, 140)} | ${words.slice(0, 200)}`;

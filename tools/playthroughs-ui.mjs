@@ -273,9 +273,10 @@ async function closeLook(name) {
 
 const cardOf = (id) => page.locator('section.card').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last();
 const shownToday = async (id) => clean(await page.locator(`[data-shown-today="${id}"]`).innerText({ timeout: 2000 }).catch(() => ''));
-// Whole points of 100 from brief 15 (f67198f7); until its final runs these read a figure to a tenth, and read NaN.
-const figureOf = (s) => Number((s.match(/would come to about (\d+) of 100 /) ?? [])[1] ?? NaN);
-const bandOf = (s) => (s.match(/would come to about \d+ of 100 \((\w+)\)/) ?? [])[1] ?? '';
+// "of 100" from brief 15 (f67198f7), which wrote the figure in whole points for a while; these read NaN until matched to
+// them (e5fdacb7), and the figure is a tenth again from brief 15's final runs, as it was before.
+const figureOf = (s) => Number((s.match(/would come to about (\d+\.\d) of 100 /) ?? [])[1] ?? NaN);
+const bandOf = (s) => (s.match(/would come to about \d+\.\d of 100 \((\w+)\)/) ?? [])[1] ?? '';
 /** A card's step buttons: the row under its Shown Today. */
 const stepsOf = (card) => card.locator('[data-shown-today] + div').getByRole('button');
 const whyOf = async (card) => clean(await card.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''));
@@ -659,7 +660,7 @@ async function setback() {
     must(hash().startsWith('#/workspace/school'), `Go There opened ${hash()}`);
     await tab('Coursework');
     const soonest = (await page.locator('[data-due-soonest] li').allInnerTexts()).map(clean);
-    must(soonest.length > 0 && soonest.every((s) => /, due .+\. Shown today, it would come to about \d+ of 100 \((Unready|Working|Strong|Exceptional)\)\./.test(s)), `Due Soonest: ${soonest.join(' | ').slice(0, 300)}`);
+    must(soonest.length > 0 && soonest.every((s) => /, due .+\. Shown today, it would come to about \d+\.\d of 100 \((Unready|Working|Strong|Exceptional)\)\./.test(s)), `Due Soonest: ${soonest.join(' | ').slice(0, 300)}`);
     said(`Due Soonest: ${soonest.join(' | ')}`);
     const forecast = page.locator('[data-shown-today]').filter({ hasText: /Run It With A Reader/ }).first();
     must(await forecast.count(), 'no open scene whose Shown Today names Run It With A Reader');
