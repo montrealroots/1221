@@ -44,6 +44,22 @@ as it came in, with what was done about it and when. Nothing here is applied unt
 - **Glossary:** six terms in `papers/glossary.md`: On Its Way, Answered By, Not by direct debit, Your Long-Term
   Conditions, Left Untreated, and "from a secondary source".
 
+### From The Second Material Area (merged `9d52f895`)
+
+- **School** (sent to the school area while it works):
+  - `BriefPane.tsx`, line 174, says a brief's arc of beats twice: in the rehearsal sentence and after the Tone line;
+  - `PlayingChooser.tsx`, line 46, "N transitions to play", is the count the pane calls "changes of tone between
+    beats".
+- **The first material area** (sent while it works): material-b's conventions, so the two halves agree:
+  - staging notes as instructions to the actor ("your side of the frame");
+  - a voice brief's `reader` field names who it is, under the pane's You Speak To;
+  - "Recorded alone at a microphone." made a sentence or cut;
+  - three of material-a's sentences given in material-b's form.
+- **Glossary:** "on your side of the frame", the You Speak To convention, "clowning" in technique notes, and an
+  anthology's "story" for a "segment".
+- **Engine-speak:** material's hits fell from 120 to 118. The ratchet is lowered once, at the end, from every area's
+  counts.
+
 ### Renames, To Carry Into The Guide And Tests
 
 | Area | Old | New |
