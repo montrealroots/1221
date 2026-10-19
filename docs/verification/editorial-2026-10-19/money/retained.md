@@ -45,13 +45,24 @@ files, each with its words and its reason, so the reasons can be judged as well 
 
 ## Batch 3
 
-- **`src/engine/systems/lending.ts#completeSwitch`:** "Your Monzo Current Account is open and your wages, standing orders
+- **`src/engine/systems/lending.ts#completeSwitch`:** "Your Classic Account is open and your wages, standing orders
   and autopay move to it. Barclays Bank Account stays open with £120.00, as you asked. Move it and close the account on
-  Money, under Your Banks, whenever you want." Kept: decision 4's notice says what opened, what moved, what stayed and the
-  one step left, in the order they matter.
+  Money, under Your Banks, whenever you want." Kept: decision 4's notice for a partial switch from Barclays to Lloyds says what
+  opened, what moved, what stayed and the one step left, in the order they matter. (Figures illustrative.)
 - **`src/engine/systems/lending.ts#registerLending <world.day_rollover>`:** "It moved, with its interest, into your
   easy-access savings at the same bank, where it can be taken any time." Kept: where the money is now and what that
   means, the two things the end of a term deposit has to say.
 - **`src/engine/systems/lending.ts#registerLending <bank.repay_loan>`:** "Citi Access Checking can’t cover the $1,912.40
   it takes to pay it off, so nothing was paid." Kept: the house's refusal shape for money that isn't there, the account,
   the figure and what didn't happen.
+
+## Batch 4
+
+- **`src/engine/systems/security.ts#somebodyElse`:** "Somebody tried to spend $412.00 on your debit card ending 0146. Chase
+  declined it and asked you about it. It wasn’t you, so the card is blocked, and a free replacement is on its way." Kept:
+  what happened, what the bank did, what it means for the card, in the order a bank's text message gives them.
+- **`src/engine/systems/roundups.ts#moveRoundUps`:** "Your checking account was under the minimum balance you set three
+  days running, so Citi turned Spend & Save off. What it had counted but not yet moved stays in your checking account.
+  Turn it on again under Your Accounts Over Time." Kept: the cause, what happened to the money, and how to undo it.
+- **`src/ui/bank/BankAccountLife.tsx#END_BUTTON`:** "Renew It At The End", "Move It To Savings At The End", "Pay It Out At
+  The End". Kept: three buttons that each name the action and when it happens, distinct from each other.

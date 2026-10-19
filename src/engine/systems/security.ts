@@ -292,7 +292,7 @@ export function registerSecurity(sim: Simulation): void {
 
   sim.onCommand<{ which: Which; locked: boolean; accountId?: string }, { locked: boolean }>('card.lock', (p, { sim: s }) => {
     const account = cardAccount(s, s.player, p.which, p.accountId);
-    if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
+    if (!account) throw new CommandError(p.which === 'debit' ? 'You don’t have a checking account.' : 'You don’t have a card.');
     // Until 2026-10-13 a bank whose terms locked a card only by phone was refused here; no researched bank is one, and the
     // refusal and the field it read went that day (`BankSecurity`, `content/security.ts`).
     const plastic = plasticOf(s, account, p.which);
@@ -304,7 +304,7 @@ export function registerSecurity(sim: Simulation): void {
   sim.onCommand<{ which: Which; why: 'lost' | 'stolen' | 'damaged'; rush?: boolean; accountId?: string }, { arrivesAt: Instant; fee: Money }>('card.report', (p, { sim: s }) => {
     const person = s.player;
     const account = cardAccount(s, person, p.which, p.accountId);
-    if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
+    if (!account) throw new CommandError(p.which === 'debit' ? 'You don’t have a checking account.' : 'You don’t have a card.');
     if (!['lost', 'stolen', 'damaged'].includes(p.why)) throw new CommandError('Choose why: lost, stolen or damaged.');
     const plastic = plasticOf(s, account, p.which);
     if (plastic.stopped) throw new CommandError('That card is already stopped, and a new one is on its way.');
@@ -330,7 +330,7 @@ export function registerSecurity(sim: Simulation): void {
     const person = s.player;
     const current = currentOf(s, person);
     const bank = current?.bankId ? bankById(current.bankId) : undefined;
-    if (!current || !bank) throw new CommandError('You have no current account.');
+    if (!current || !bank) throw new CommandError('You don’t have a checking account.');
     if (!SECURITY[bank.id]?.newNumberOnFraud) throw new CommandError(`${bank.name} doesn’t offer to move an account to a new number. Closing it and opening another account does the same.`);
     // The number moves at once; the exposure stays on the old one, whose attempts are declined from now on.
     current.number = accountNumber(s, person, bank, 'checking', (current.plastic?.issued ?? 1) + 1);

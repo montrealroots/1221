@@ -11,6 +11,8 @@ import type { Account } from '@/engine/core/ledger';
 import { MS_DAY } from '@/engine/core/time';
 import { CARDS, type CardProduct } from '@/engine/content/cards';
 import { cardsOf, stateOf, STATEMENT_KIND } from '@/engine/systems/credit';
+import { idleAccounts } from '@/engine/systems/accountlife';
+import { homeAccountRefusal } from '@/engine/systems/homeaccount';
 
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown>) => sim.execute({ kind, payload });
 const own = (sim: Simulation, kind: 'checking' | 'savings', bankId: string): Account =>
@@ -181,5 +183,41 @@ describe('borrowing’s refusals, in their new words', () => {
     const saver = own(sim, 'savings', 'us-citi');
     expect(run(sim, 'bank.arrange_overdraft', { limit: 100_00, accountId: saver.id }).error).toBe('That isn’t one of your open checking accounts.');
     expect(run(sim, 'bank.borrow', { amount: 2_000_00, months: 60, bankId: 'us-citi', intoId: saver.id, repayFromId: saver.id }).error).toBe('The loan has to be paid into, and repaid from, one of your open checking accounts.');
+  });
+});
+
+describe('accounts over time, cards and cash: refusals and notices in their new words', () => {
+  const ny = (seed: string) => quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, seed);
+
+  it('a new account that is the primary one can’t be canceled, and says to make another primary', () => {
+    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-td' }, 'ed15-cancel-primary');
+    const rbc = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'ca-rbc' } }).accountId]!;
+    sim.must({ kind: 'bank.set_primary', payload: { accountId: rbc.id } });
+    expect(run(sim, 'bank.cancel_new', { accountId: rbc.id }).error).toBe('You can’t cancel your primary account. Make another account primary first.');
+  });
+
+  it('savings left unused nearly three years: the bank’s letter says the years in words, and where the money would go', () => {
+    const sim = ny('ed15-escheat');
+    const saver = own(sim, 'savings', 'us-chase');
+    setTo(sim, saver, 500_00);
+    idleAccounts(sim, sim.player, (a) => (a.id === saver.id ? sim.now - (3 * 365.25 - 80) * MS_DAY : sim.now));
+    const notice = Object.values(sim.universe.decisions).find((d) => d.refType === 'unclaimed-notice' && d.refId === saver.id)!;
+    expect(notice.detail).toMatch(/^\$500\.00 in Chase Savings hasn’t been used for nearly three years\. Unless you tell the bank to keep the account by \w+ \d+, \d{4}, it goes to the state’s unclaimed-property office as unclaimed money\.$/);
+  });
+
+  it('a card locked, or cash taken out, with no checking account says so', () => {
+    const sim = ny('ed15-no-checking');
+    // TEST SETUP: no primary account, which no press reaches.
+    delete sim.player.primaryAccountId;
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'checking') a.closedAt = sim.now;
+    expect(run(sim, 'card.lock', { which: 'debit', locked: true }).error).toBe('You don’t have a checking account.');
+    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('You need a checking account to take cash out of.');
+    expect(run(sim, 'card.report', { which: 'debit', why: 'lost' }).error).toBe('You don’t have a checking account.');
+    expect(run(sim, 'bank.new_number', {}).error).toBe('You don’t have a checking account.');
+  });
+
+  it('a life outside Yale is asked where it lived before it came here, not before “this life”', () => {
+    const config = { ...newLifeConfig(), school: undefined, priorResidence: undefined };
+    expect(homeAccountRefusal(config, undefined)).toBe('You haven’t said where you lived before you came here.');
   });
 });

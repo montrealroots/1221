@@ -366,7 +366,7 @@ describe('bank.break_term', () => {
     expect(posted(sim, current, 'Fixed-Term Savings broken early')).toEqual([{ at: term.closedAt!, amount: 10_000_00 }]);
     // The £10,000 is what arrived, the charge already taken: until the third round of 2026-10-13 the notice said “less”
     // it, which read as less than £10,000 to come (defect 57 of that round).
-    expect(notices(sim, 'Your Fixed-Term Savings Closed')[0]!.body).toMatch(/^Your notice period ended: £10,000\.00 went to your current account, after a £\d+\.\d\d penalty for closing early\.$/);
+    expect(notices(sim, 'Your Fixed-Term Savings Closed')[0]!.body).toMatch(/^Your notice period ended: £10,000\.00 went to your checking account, after a £\d+\.\d\d penalty for closing early\.$/);
   });
 });
 
@@ -391,7 +391,7 @@ describe('bank.claim_unclaimed', () => {
     const letter = Object.values(sim.universe.decisions).find((d) => d.refType === 'unclaimed-notice' && d.refId === savings.id)!;
     expect(letter.detail).toContain('it goes to the state’s unclaimed-property office as unclaimed money.');
     const whole = `$${Math.round(held / 100).toLocaleString('en-US')}`;
-    expect(notices(sim, 'Unclaimed Money').map((n) => n.body)).toEqual([`${whole} left unused in Chase Savings for 3 years went to the state’s unclaimed-property office. It can be claimed back from that office.`]);
+    expect(notices(sim, 'Unclaimed Money').map((n) => n.body)).toEqual([`${whole} left unused in Chase Savings for three years went to the state’s unclaimed-property office. It can be claimed back from that office.`]);
     for (const words of [letter.detail, notices(sim, 'Unclaimed Money')[0]!.body]) expect(words).not.toMatch(/New York|Comptroller|yes, from/);
 
     const again = reload(sim);
@@ -816,9 +816,9 @@ describe('bank.reactivate', () => {
     // Every way in refused: Move Money out, cash in, and the ATM once 360 Checking is primary again.
     expect(refused(sim, 'bank.transfer', { fromId: savings.id, toId: capital.id, amount: 100_00 })).toBe('360 Performance Savings is dormant, so nothing was moved. Reactivate it under Your Accounts Over Time, then try again.');
     sim.must({ kind: 'cash.withdraw', payload: { amount: 200_00, from: 'atm' } });
-    expect(refused(sim, 'cash.deposit', { amount: 100_00, toId: savings.id, at: 'counter' })).toBe('360 Performance Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
+    expect(refused(sim, 'cash.deposit', { amount: 100_00, toId: savings.id, at: 'counter' })).toBe('360 Performance Savings is dormant, so nothing was paid in. Reactivate it under Your Accounts Over Time, then try again.');
     sim.must({ kind: 'bank.set_primary', payload: { accountId: capital.id } });
-    expect(refused(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' })).toBe('360 Checking is dormant. Reactivate it first, under Your Accounts Over Time.');
+    expect(refused(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' })).toBe('360 Checking is dormant. Reactivate it under Your Accounts Over Time to take cash out of it.');
     expect(refused(sim, 'bank.reactivate', { accountId: citi.id })).toBe('That account isn’t dormant.');
 
     // Your Accounts Over Time, as the player has it: a line and a Reactivate for each.

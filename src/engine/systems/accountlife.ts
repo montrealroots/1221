@@ -568,7 +568,7 @@ export function registerAccountLife(sim: Simulation): void {
     const done = breakTerm(s, person, account);
     // What’s paid is after the charge (`breakTerm`): until 2026-10-13 this said “£10,000.00 … less £39.41”, where
     // £10,000.00 was what arrived, the £39.41 already kept back (found by that day’s third round of defects).
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `Your notice period ended: ${formatMoney(done.paid, saveCurrency(s.universe))} went to your current account, after a ${formatMoney(done.penalty, saveCurrency(s.universe))} penalty for closing early.`, importance: 50, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `Your notice period ended: ${formatMoney(done.paid, saveCurrency(s.universe))} went to your checking account, after a ${formatMoney(done.penalty, saveCurrency(s.universe))} penalty for closing early.`, importance: 50, route: '/workspace/bank' });
   });
 
   sim.onCommand<{ accountId: string }, { paid: Money }>('bank.take_term_interest', (p, { sim: s }) => {
@@ -617,7 +617,7 @@ export function registerAccountLife(sim: Simulation): void {
       if (account.balance >= 0) { account.closedAt = s.now; ensurePrimary(s, person); }
       return { refunded: 0 };
     }
-    if (!into || into.id === account.id) throw new CommandError('Your primary current account can’t be canceled. Make another account primary first.');
+    if (!into || into.id === account.id) throw new CommandError('You can’t cancel your primary account. Make another account primary first.');
     // A current account canceled like any close, on Close It's own refusals (`closeRefusal`, from 2026-10-15): until then
     // only what still used it was asked (`linkedTo`, from 2026-10-10), so one overdrawn closed with its debt, and one
     // with money on its way, card payments pending or savings beside it closed too; found by that day's scope pass. A
@@ -698,6 +698,9 @@ export const ESCHEAT_NOTICE_DAYS = 90;
  * the bank's months untouched, and after the country's years, the balance
  * gone to the state or its scheme.
  */
+/** A count of years as prose says it: “three years”, “a year”. */
+const yearsWord = (n: number | undefined): string => (n === 1 ? 'a year' : n === undefined ? 'years' : `${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? n} years`);
+
 export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account: Account) => Instant): void {
   for (const account of Object.values(sim.universe.accounts)) {
     if (account.ownerId !== person.id || account.closedAt || !account.bankId || (account.kind !== 'checking' && account.kind !== 'savings') || account.category === 'term') continue;
@@ -720,7 +723,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
         const by = sim.now + (due - idle);
         sim.requireDecision({
           urgency: 85, category: 'bank', title: `${account.institution ?? 'Your Bank'} Is About To Hand ${account.name} To The State`,
-          detail: `${formatMoney(account.balance, saveCurrency(sim.universe))} in ${account.name} hasn’t been used for nearly ${law.years} years. Unless you tell the bank to keep the account by ${formatDate(by, sim.zone)}, it goes to ${law.to ?? 'the state'} as unclaimed money.`,
+          detail: `${formatMoney(account.balance, saveCurrency(sim.universe))} in ${account.name} hasn’t been used for nearly ${yearsWord(law.years)}. Unless you tell the bank to keep the account by ${formatDate(by, sim.zone)}, it goes to ${law.to ?? 'the state'} as unclaimed money.`,
           route: '/workspace/bank', dueAt: by, refType: 'unclaimed-notice', refId: account.id,
           actions: [{ label: 'Keep The Account', commandKind: 'bank.reactivate', payload: { accountId: account.id } }],
         });
@@ -732,7 +735,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
       account.closedAt = sim.now;
       dropPaymentsFor(sim, person, account);
       person.unclaimed = [...(person.unclaimed ?? []), { amount, to: law.to ?? 'the state', at: sim.now }];
-      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Unclaimed Money', body: `${formatMoney(amount, saveCurrency(sim.universe))} left unused in ${account.name} for ${law.years} years went to ${law.to ?? 'the state'}.${law.claimBack ? ` ${law.claimBack}` : ''}`, importance: 60, route: '/workspace/bank' });
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Unclaimed Money', body: `${formatMoney(amount, saveCurrency(sim.universe))} left unused in ${account.name} for ${yearsWord(law.years)} went to ${law.to ?? 'the state'}.${law.claimBack ? ` ${law.claimBack}` : ''}`, importance: 60, route: '/workspace/bank' });
     }
   }
 }
@@ -745,7 +748,7 @@ export function termEndOf(term: Account): TermEnd {
 export const END_WORDS: Record<TermEnd, string> = {
   renews: 'renews for the same term at the bank’s rate on the day',
   savings: 'moves, with its interest, into the bank’s easy-access savings',
-  paid_out: 'is paid, with its interest, into your current account',
+  paid_out: 'is paid, with its interest, into your checking account',
 };
 
 /** Days before a term deposit's end the bank writes: a month, or two weeks more than any notice it needs. */

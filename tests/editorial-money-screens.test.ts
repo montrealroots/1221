@@ -37,6 +37,8 @@ vi.mock('@/app/game-context', () => {
 const { BankCard } = await import('@/ui/bank/BankCard');
 const { BankCardOffers } = await import('@/ui/bank/BankCardOffers');
 const { BankStatements } = await import('@/ui/bank/BankStatements');
+const { BankSecurity } = await import('@/ui/bank/BankSecurity');
+const { BankLending } = await import('@/ui/bank/BankLending');
 
 const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ')
   .replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&amp;/g, '&').replace(/\s+/g, ' ').replace(/\s+([,.;:])/g, '$1');
@@ -81,5 +83,21 @@ describe('the Statements tab', () => {
     const words = drawn(nyStudent('ed15-alerts'), BankStatements as FunctionComponent<{ bankId: string }>);
     expect(words).toContain('Any Checking Account Under (USD)');
     expect(words).not.toContain('Current Account');
+  });
+});
+
+describe('the Accounts and Cards tabs’ term and card words', () => {
+  it('a French debit card’s spending limit is labelled an estimate in a sentence, not a fragment', () => {
+    const sim = quickSave({ homeRegionId: 'fr-idf-paris', startLocationId: 'fr-idf-paris', livesWhereBorn: true, wealth: 'comfortable', bankId: 'fr-bnp-paribas' }, 'ed15-ceiling');
+    const words = drawn(sim, BankSecurity, 'fr-bnp-paribas');
+    expect(words).toMatch(/It pays up to €[\d,.]+ (a calendar month|over any 30 days)\./);
+    expect(words).toContain('The limit shown is the lowest the bank sets, which is estimated.');
+  });
+
+  it('a TD term deposit, paid out at its end, says it goes into the checking account', () => {
+    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-td' }, 'ed15-term-end');
+    h.sim = sim;
+    const words = onScreen(renderToStaticMarkup(createElement(BankLending, { bank: bankById('ca-td')!, show: ['term'] })));
+    expect(words).toMatch(/At its end it is paid, with its interest, into your checking account, unless you choose another way the bank allows\./);
   });
 });

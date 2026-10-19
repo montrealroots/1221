@@ -37,7 +37,7 @@ export function RoundUps({ bankId }: { bankId: string }) {
   const money = (n: number) => roundUpMoney(bankId, n);
   const on = mine && Boolean(r?.on);
   const counting = here && roundUpsOn(sim, person);
-  const why = here ? roundUpRefusal(sim, person, choice) : `Round-ups at ${name} only work when a ${name} current account is your primary account.`;
+  const why = here ? roundUpRefusal(sim, person, choice) : `Round-ups at ${name} only work when a ${name} checking account is your primary account.`;
   const way = wayOf(rule, choice);
   const changed = on && !same(choice, pick(r));
   const wayNow = wayOf(rule, r);

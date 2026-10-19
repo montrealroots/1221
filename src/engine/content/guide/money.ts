@@ -573,14 +573,14 @@ export const MONEY: readonly GuideEntry[] = [
     interpret: [
       '“… is inactive: it hasn’t been used for months” is a warning. Using it makes it active again.',
       '“… is dormant: the bank has blocked it until you reactivate it.” Press Reactivate to unblock it.',
-      '“… left unused in … for … years went to ….” says where the money is. Claim It Back brings it back.',
+      '“… left unused in … for … went to ….” says where the money is. Claim It Back brings it back.',
       'Under a German current account, the line about canceling says what canceling would charge now, as Close It would.',
       'Short For A Payment names the account, the payment, its date and what the account holds, and what to do about it.',
     ],
     unavailable: [
       '“That account isn’t dormant.”',
       '“Its cooling-off period has passed, or there isn’t one here for it.”',
-      '“Your primary current account can’t be canceled. Make another account primary first.”',
+      '“You can’t cancel your primary account. Make another account primary first.”',
       'A checking account can be refused for the same reasons as Close It, shown under it with Cancel It grayed out: “It’s overdrawn by …, and the bank only closes it once that’s paid off. Move money into it first.”, “Money is on its way into or out of it. Wait until it arrives.”, a list of what still uses it, “… is still open at the same bank. Close that first.”, “Card payments are still pending on it. You can close it once they’ve posted.”, or, where its fees, with any overdraft interest, come to more than its balance, a sentence naming each that ends “… more than it holds. Move … into it first.”',
       'Any account whose interest goes back when it holds less: “The interest it was paid, …, goes back, …”, or with its fees, “Its fees, …, and the interest it was paid, …”, each ending “… more than it holds. Move … into it first.”',
       // From 2026-10-15's recheck: a term's interest taken during the term went back out of the primary account unasked.
@@ -670,7 +670,7 @@ export const MONEY: readonly GuideEntry[] = [
       '“… doesn’t round purchases up into savings.”',
       '“Round-ups go into savings at …. Open easy-access savings there first.”',
       '“Choose what to round up to: …” and the other choices, until they’re made.',
-      '“Round-ups at … only work when a … current account is your primary account.”',
+      '“Round-ups at … only work when a … checking account is your primary account.”',
     ],
     mistakes: [
       'Expecting a round-up on a whole purchase. Most banks move nothing on one.',
@@ -844,14 +844,14 @@ export const MONEY: readonly GuideEntry[] = [
       'Cash you carry counts in your worth, with what’s in the bank.',
     ],
     unavailable: [
-      '“You need a bank account to take cash out of.”',
-      '“… is dormant. Reactivate it first, under Your Accounts Over Time.”',
+      '“You need a checking account to take cash out of.”',
+      '“… is dormant. Reactivate it under Your Accounts Over Time to take cash out of it.”',
       '“Your debit card hasn’t arrived yet. You can still take cash out at the counter.”, “Your debit card is stopped. You can still take cash out at the counter.” or “Your debit card is locked. Unlock it under Your Cards, or take cash out at the counter.”',
       '“…’s customers can’t use the Post Office for cash.”',
       '“… lets you take … a day out of machines, and you’ve taken … today.”',
       '“… has only ….”, or, where the fees push it over, “… has only …, and … in cash with its fees comes to ….”',
       'On the card: “The card has … of its limit left, and this needs … with its fee.” or “The card lets you take … out as cash, and … is out already.”',
-      'Paying in: “You have only … in cash, so nothing was paid in.”, “Cash goes into your current account or savings.”, “…’s customers can’t pay cash in at the Post Office.” or “… is dormant. Reactivate it first, under Your Accounts Over Time.” At an ATM: “Your debit card is locked.”, “Your debit card is stopped.” or “Your debit card hasn’t arrived yet.”, each with “You can still pay cash in at the counter.”',
+      'Paying in: “You have only … in cash, so nothing was paid in.”, “Cash goes into your checking account or savings.”, “…’s customers can’t pay cash in at the Post Office.” or “… is dormant, so nothing was paid in. Reactivate it under Your Accounts Over Time, then try again.” At an ATM: “Your debit card is locked.”, “Your debit card is stopped.” or “Your debit card hasn’t arrived yet.”, each with “You can still pay cash in at the counter.”',
     ],
     mistakes: [
       `Taking cash from another bank’s machine in the US. At Chase that’s ${fee(CHASE_CASH.other)} plus about ${usd(OWNER)} to the owner, ${usd((CHASE_CASH.other ?? 0) + OWNER)} for one withdrawal, where Chase’s own machine is ${fee(CHASE_CASH.own)}.`,
@@ -1137,7 +1137,7 @@ export const MONEY: readonly GuideEntry[] = [
       '“Your account number isn’t known to be exposed” until a stranger has used the debit card at a bank that moves accounts. A new number then closes the old one to debits.',
     ],
     unavailable: [
-      '“You have no current account.” or “You don’t have a card.”',
+      '“You don’t have a checking account.” or “You don’t have a card.”',
       '“That card is stopped, and a new one is on its way.” and “That card is already stopped, and a new one is on its way.”',
       '“No rushed replacement was found for ….” and “… doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.”',
       '“… doesn’t offer to move an account to a new number. Closing it and opening another account does the same.”',
@@ -1442,8 +1442,8 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     unavailable: [
       '“You lived in … before …, so your account is the one here.”: you lived in America before Yale.',
-      '“There’s no research on what … does when a customer moves to America, so the game can’t offer it.”',
-      '“… opens an account from age …, and you left at ….” and “You began living there after … began.”',
+      '“The game doesn’t know what … does when a customer moves to America, so it can’t offer this account.”',
+      '“… opens an account from age …, and you left at ….” and “You moved there after Yale began.”',
       'Savings, a term deposit, a loan, an overdraft or a card at the bank there are refused, each in its own words: it opens nothing new for a customer abroad.',
       '“Yale only pays wages into an account in America.”',
       'Where a bank’s fee for sending or receiving a payment abroad isn’t published, Move Money says so and doesn’t send it.',

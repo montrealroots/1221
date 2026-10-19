@@ -1,4 +1,130 @@
 {
+ "src/engine/systems/accountlife.ts#breakQuote": {
+  "status": "Retained",
+  "hash": "9d61b70130ef",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for a bank that won't break a term deposit before its end, the bank named as the one whose rule it is",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#breakTerm": {
+  "status": "Retained",
+  "hash": "28eea0865af5",
+  "on": "2026-10-19",
+  "reason": "Statement lines for a term deposit broken early, its interest, the tax on it and the Early Withdrawal Penalty, as a bank statement names them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#cancelRefusal": {
+  "status": "Rewritten",
+  "hash": "607cccfd6069",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-money.test.ts and tests/remaining-banking.test.ts read each refusal of Cancel It, the fees and the interest going back, ending in Move … into it first",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#cancelWords": {
+  "status": "Retained",
+  "hash": "d4cf0e0af276",
+  "on": "2026-10-19",
+  "reason": "What canceling in the cooling-off period gives back, the money with or without its interest and the fees refunded or owed, for the panel's sentence",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#creditInterest": {
+  "status": "Retained",
+  "hash": "376e315a4b81",
+  "on": "2026-10-19",
+  "reason": "Interest and Tax On Interest are ledger account names the code reads back by name, posted as a term deposit pays interest during its term",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#END_WORDS": {
+  "status": "Rewritten",
+  "hash": "f8a900e1204c",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts, it('a TD term deposit, paid out at its end, says it goes into the checking account') renders the term deposit panel",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#endTerm": {
+  "status": "Retained",
+  "hash": "6c4deb0aa890",
+  "on": "2026-10-19",
+  "reason": "Statement lines for a term deposit's end, ended into the account it went to, and its interest reinvested on a renewal, as a bank names them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#idleAccounts": {
+  "status": "Rewritten",
+  "hash": "d900fc7c6be7",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('savings left unused nearly three years …') and tests/evidence-g10-money.test.ts Unclaimed Money read the years in words",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife": {
+  "status": "Rewritten",
+  "hash": "8a1079f4a42c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b04.test.ts and tests/evidence-g10-money.test.ts read Your Fixed-Term Savings Closed going to your checking account",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.break_term>": {
+  "status": "Retained",
+  "hash": "0c41c5990e26",
+  "on": "2026-10-19",
+  "reason": "Says a term deposit already closes on a date, on the notice you gave, so there is nothing more to break",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.cancel_new>": {
+  "status": "Rewritten",
+  "hash": "8a0d592792f1",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a new account that is the primary one can’t be canceled, and says to make another primary')",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.claim_unclaimed>": {
+  "status": "Retained",
+  "hash": "3c864607e767",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal with nothing held as unclaimed, and the statement line for money returned from the state's office",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.reactivate>": {
+  "status": "Retained",
+  "hash": "d23ace4b54db",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for Reactivate on an account that isn't dormant, saying exactly why nothing changed",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.set_term_end>": {
+  "status": "Retained",
+  "hash": "0cef3fb9c2d1",
+  "on": "2026-10-19",
+  "reason": "Says why a term deposit's end can't be changed: not yours, a way the bank doesn't allow, or too near the end for its days of notice",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.take_term_interest>": {
+  "status": "Retained",
+  "hash": "45361e5db4cd",
+  "on": "2026-10-19",
+  "reason": "Says a bank pays a term deposit's interest only at its end, or that nothing is earned yet, the two reasons Take The Interest does nothing",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <world.day_rollover>": {
+  "status": "Retained",
+  "hash": "101aab3fb130",
+  "on": "2026-10-19",
+  "reason": "The ends-soon notice says the date, what will happen to the money, until when it can be changed, and the penalty-free days after a renewal",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/accountlife.ts#unclaimedLaw": {
+  "status": "Retained",
+  "hash": "140ed7ad34f0",
+  "on": "2026-10-19",
+  "reason": "Names where unclaimed money goes and how to claim it back, the state's unclaimed-property office, with Connecticut's statute cited for the three years in the fine print",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/accountlife.ts#yearsWord": {
+  "status": "Rewritten",
+  "hash": "fbe0b376cab4",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('savings left unused nearly three years …') reads the years in words in the bank's letter",
+  "first": "Pending"
+ },
  "src/engine/systems/banking.ts#cardYearWords": {
   "status": "Rewritten",
   "hash": "0c6e1d23be94",
@@ -321,6 +447,41 @@
   "reason": "Says exactly why a balance can't move: no card to move from, same bank, no terms found, nothing owed, or the new limit too small with the fee, and to pay the old card down",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/cash.ts#registerCash <cash.deposit>": {
+  "status": "Rewritten",
+  "hash": "6a205ee6cd39",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g12-money.test.ts reads the checking-or-savings refusal and the dormant refusal of Pay It In",
+  "first": "Pending"
+ },
+ "src/engine/systems/cash.ts#registerCash <cash.withdraw>": {
+  "status": "Retained",
+  "hash": "c2ff671acd5e",
+  "on": "2026-10-19",
+  "reason": "Two refusals naming what the form needs, an amount and where to take it from, with the places listed, and the statement lines for cash and its fees",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/cash.ts#shortWords": {
+  "status": "Rewritten",
+  "hash": "6b21336a45d3",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-refusals.test.ts and tests/evidence-g12-money.test.ts read has only … available and has nothing available",
+  "first": "Pending"
+ },
+ "src/engine/systems/cash.ts#walletOf [cash]": {
+  "status": "Retained",
+  "hash": "7c86c81e9979",
+  "on": "2026-10-19",
+  "reason": "Cash In Hand names the money you carry as an account, as the Cash panel, statements and Home show it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/cash.ts#withdrawalQuote": {
+  "status": "Rewritten",
+  "hash": "764ca8537274",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g12-money.test.ts cash.withdraw dormant case and tests/editorial-money.test.ts no-checking case read the new refusals",
+  "first": "Pending"
+ },
  "src/engine/systems/credit.ts#afterMissed": {
   "status": "Rewritten",
   "hash": "315b294867b7",
@@ -417,6 +578,55 @@
   "hash": "4f8831bf0f77",
   "on": "2026-10-19",
   "evidence": "tests/evidence-g28-ui.test.ts it('PLAYER JOURNEY: the same groceries on the card each midnight …') and tests/evidence-g34-ui.test.ts read the statement notice for both autopay settings, exact",
+  "first": "Pending"
+ },
+ "src/engine/systems/homeaccount.ts#before": {
+  "status": "Rewritten",
+  "hash": "b2911d709f08",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a life outside Yale is asked where it lived before it came here, not before “this life”')",
+  "first": "Pending"
+ },
+ "src/engine/systems/homeaccount.ts#closesOn": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "America/New_York is a time zone id for the closing date's arithmetic, read by the clock and never shown to a player",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homeaccount.ts#countryWord": {
+  "status": "Retained",
+  "hash": "506678eabb74",
+  "on": "2026-10-19",
+  "reason": "America for the United States, as the home account's rule says it, and that country where the atlas has no name",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homeaccount.ts#homeAccountRefusal": {
+  "status": "Rewritten",
+  "hash": "a095a1d86c0c",
+  "on": "2026-10-19",
+  "evidence": "tests/home-account-creation.test.ts reads the moved-there and the game-doesn't-know refusals on Starting Point's Before Yale",
+  "first": "Pending"
+ },
+ "src/engine/systems/homeaccount.ts#openHomeAccount": {
+  "status": "Retained",
+  "hash": "437c836e40bb",
+  "on": "2026-10-19",
+  "reason": "Statement lines for a home account's opening balance, against Opening Balances, as a bank's first statement line names it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homeaccount.ts#startOf": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "America/New_York is a time zone id, the default where a start town has none, read by the clock and never shown to a player",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homeaccount.ts#whatFollows": {
+  "status": "Rewritten",
+  "hash": "6e443a49dfcc",
+  "on": "2026-10-19",
+  "evidence": "tests/home-account-creation.test.ts reads the opening float sentence and the assumed opening age on Starting Point",
   "first": "Pending"
  },
  "src/engine/systems/lending.ts#cardYearNight": {
@@ -706,6 +916,41 @@
   "evidence": "tests/defects-r3b-1.test.ts, it('is refused naming both banks once the Chase savings is closed') and tests/evidence-g11-money.test.ts assert both forms",
   "first": "Pending"
  },
+ "src/engine/systems/roundups.ts#EVERY_WORDS": {
+  "status": "Retained",
+  "hash": "54ffc1b13ccb",
+  "on": "2026-10-19",
+  "reason": "every two weeks, how often a round-up moves where the bank moves it fortnightly, said as a schedule in plain words",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/roundups.ts#move": {
+  "status": "Retained",
+  "hash": "12201c6d98dc",
+  "on": "2026-10-19",
+  "reason": "Round-ups is the statement line for a round-up moved into savings, the bank's own name for the feature",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/roundups.ts#moveRoundUps": {
+  "status": "Retained",
+  "hash": "5f91c16423bf",
+  "on": "2026-10-19",
+  "reason": "Each reason a round-up didn't move, said after because, and Citi's Spend & Save notice saying what it turned off, why, and how to turn it on again",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/roundups.ts#roundUpChoiceRefusal": {
+  "status": "Retained",
+  "hash": "88047dc84e7a",
+  "on": "2026-10-19",
+  "reason": "Each refusal names the one choice the round-up form still needs, how it counts, what to round to, the multiplier, the amount or the minimum balance",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/roundups.ts#roundUpRefusal": {
+  "status": "Retained",
+  "hash": "d9c62bdbc66a",
+  "on": "2026-10-19",
+  "reason": "Says the bank doesn't round purchases up, or that round-ups need easy-access savings there and to open some first",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/routing.ts#closeHold": {
   "status": "Rewritten",
   "hash": "370ed7b0ffb7",
@@ -740,6 +985,76 @@
   "on": "2026-10-19",
   "reason": "Yale's payroll is the one payer the wages line names apart, as Yale names its own payroll office, possessive and plain",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/security.ts#attemptOnNumber": {
+  "status": "Retained",
+  "hash": "9444b5d1807b",
+  "on": "2026-10-19",
+  "reason": "Says a debit was tried on the old number and declined, or taken with the number, where to report it, and that the account can move to a new number",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/security.ts#disputeRefusal": {
+  "status": "Retained",
+  "hash": "6050c87b7f3a",
+  "on": "2026-10-19",
+  "reason": "Says why a payment can't be reported: it isn't on your accounts, it's reported already, or the law's days from the statement have passed",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/security.ts#registerSecurity": {
+  "status": "Retained",
+  "hash": "f3cacee114e9",
+  "on": "2026-10-19",
+  "reason": "The new card's arrival with the account and its last four, and the refund for a payment you didn't make with what the law leaves you to pay",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/security.ts#registerSecurity <bank.new_number>": {
+  "status": "Rewritten",
+  "hash": "37c8d6082acd",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a card locked, or cash taken out, with no checking account says so') asserts the new-number refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/security.ts#registerSecurity <card.dispute>": {
+  "status": "Retained",
+  "hash": "4799626c1f2c",
+  "on": "2026-10-19",
+  "reason": "A Refund From The Bank is the title of the notice that a reported payment has been refunded, plain and in Title Case",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/security.ts#registerSecurity <card.lock>": {
+  "status": "Rewritten",
+  "hash": "2b297edb20ec",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a card locked, or cash taken out, with no checking account says so')",
+  "first": "Pending"
+ },
+ "src/engine/systems/security.ts#registerSecurity <card.report>": {
+  "status": "Rewritten",
+  "hash": "c2ad6b04cb98",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a card locked, or cash taken out, with no checking account says so') asserts Report It's refusal too",
+  "first": "Pending"
+ },
+ "src/engine/systems/security.ts#registerSecurity <world.day_rollover>": {
+  "status": "Retained",
+  "hash": "528730a19135",
+  "on": "2026-10-19",
+  "reason": "Says a card expires soon and the new one keeps the number and when it expires, the facts a renewal letter gives",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/security.ts#replace": {
+  "status": "Retained",
+  "hash": "1935c6fb64f2",
+  "on": "2026-10-19",
+  "reason": "Your New Card Arrives is the calendar entry for a replacement card's day, a Title Case event name saying what happens that day",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/security.ts#somebodyElse": {
+  "status": "Retained",
+  "hash": "5c6fe3a21457",
+  "on": "2026-10-19",
+  "reason": "The fraud notices say what was tried, on which card, what the bank did, and where to report a large payment that wasn't you",
+  "first": "Rewritten And Verified"
  },
  "src/engine/systems/statements.ts#cardPeriods": {
   "status": "Rewritten",
@@ -781,6 +1096,20 @@
   "hash": "ca23b81bb0af",
   "on": "2026-10-19",
   "reason": "Statement Ready and the account's name is the notice title the Alerts form's Statement Ready button turns on, the same words on both",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankAccountLife.tsx#BankAccountLife": {
+  "status": "Retained",
+  "hash": "8bbd06c1995c",
+  "on": "2026-10-19",
+  "reason": "Each line says one account's state and what to do: a term's end and until when it can change, a savings fee, inactive or dormant and Reactivate, Cancel It until its date",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/bank/BankAccountLife.tsx#END_BUTTON": {
+  "status": "Retained",
+  "hash": "2eb4ee10a9c3",
+  "on": "2026-10-19",
+  "reason": "The buttons for a term deposit's end, Renew It At The End, Move It To Savings At The End, Pay It Out At The End, each the action and when it happens",
   "first": "Reviewed And Retained"
  },
  "src/ui/bank/BankCard.tsx#CardApplication": {
@@ -825,6 +1154,13 @@
   "evidence": "tests/editorial-money-screens.test.ts, it('names Chase’s plans as published …') and tests/language-money.test.ts, it('says the card’s offers …') render the panel",
   "first": "Pending"
  },
+ "src/ui/bank/BankCash.tsx#BankCash": {
+  "status": "Retained",
+  "hash": "97f3b193f597",
+  "on": "2026-10-19",
+  "reason": "The Cash panel's lines say what's in hand, what a withdrawal costs and from where, a machine owner's fee, a cash advance's rate, and the source at the foot",
+  "first": "Rewritten And Verified"
+ },
  "src/ui/bank/BankLending.tsx#BankLending": {
   "status": "Rewritten",
   "hash": "698ac2b8dc97",
@@ -859,6 +1195,20 @@
   "on": "2026-10-19",
   "evidence": "tests/defects-r6-1.test.ts, it('stays offered so it can be turned Off, says it covers nothing, and goes once it’s Off') and tests/defects-r3b-1.test.ts render the new lines",
   "first": "Pending"
+ },
+ "src/ui/bank/BankSecurity.tsx#BankSecurity": {
+  "status": "Rewritten",
+  "hash": "b1e38524cf02",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts, it('a French debit card’s spending limit is labelled an estimate in a sentence, not a fragment') renders Your Cards",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankSecurity.tsx#WHY_WORDS": {
+  "status": "Retained",
+  "hash": "8ff82f7353ca",
+  "on": "2026-10-19",
+  "reason": "Why a card was stopped, Lost, Stolen, Damaged, Used by somebody else, Not arrived yet, the reasons a bank's form gives",
+  "first": "Reviewed And Retained"
  },
  "src/ui/bank/BankStatements.tsx#AccountStatementView": {
   "status": "Rewritten",
@@ -922,6 +1272,13 @@
   "on": "2026-10-19",
   "reason": "Each waiver condition as something done in a month, have $500 of electronic deposits paid in, keep $1,500 in it all month, joined with or as a bank lists them",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/bank/RoundUps.tsx#RoundUps": {
+  "status": "Rewritten",
+  "hash": "b7e7ac29d6f9",
+  "on": "2026-10-19",
+  "evidence": "tests/roundups.test.ts reads Round-ups at Lloyds Bank only work when a Lloyds Bank checking account is your primary account",
+  "first": "Pending"
  },
  "src/ui/looks/bank.tsx#movedWords": {
   "status": "Retained",

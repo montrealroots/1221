@@ -378,5 +378,105 @@
   "why": "The glossary's word.",
   "meaningSensitive": false,
   "verified": "tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/accountlife.ts#registerAccountLife <bank.cancel_new>",
+  "kind": "error",
+  "before": "Your primary current account can’t be canceled. Make another account primary first.",
+  "after": "You can’t cancel your primary account. Make another account primary first.",
+  "why": "The player as the subject, and no 'current account'.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/accountlife.ts#idleAccounts",
+  "kind": "official",
+  "before": "$500.00 in Chase Savings hasn’t been used for nearly 3 years. Unless you tell the bank to keep the account by …, it goes to the state’s unclaimed-property office as unclaimed money.",
+  "after": "$500.00 in Chase Savings hasn’t been used for nearly three years. Unless you tell the bank to keep the account by …, it goes to the state’s unclaimed-property office as unclaimed money.",
+  "why": "A number under ten in prose, in words.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/cash.ts#registerCash <cash.deposit>",
+  "kind": "error",
+  "before": "Chase Savings is dormant. Reactivate it first, under Your Accounts Over Time.",
+  "after": "Chase Savings is dormant, so nothing was paid in. Reactivate it under Your Accounts Over Time, then try again.",
+  "why": "The refusal shape: what stopped it, what didn't happen, the way out.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/cash.ts#withdrawalQuote",
+  "kind": "error",
+  "before": "Chase Total Checking is dormant. Reactivate it first, under Your Accounts Over Time.",
+  "after": "Chase Total Checking is dormant. Reactivate it under Your Accounts Over Time to take cash out of it.",
+  "why": "Shown before Take It Out is pressed as well as after, so it gives the step and claims nothing about a press.",
+  "meaningSensitive": false,
+  "verified": "BankCash reads withdrawalQuote for its line under the amount; tests/evidence-g12-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/cash.ts#shortWords",
+  "kind": "error",
+  "before": "Chase Total Checking has only $20.01, and $20.00 in cash with its fees comes to $25.22.",
+  "after": "Chase Total Checking has only $20.01 available, and $20.00 in cash with its fees comes to $25.22.",
+  "why": "Available, as every money refusal says it now.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-refusals.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/homeaccount.ts#whatFollows",
+  "kind": "official",
+  "before": "Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥10,200, from your savings, as far as that goes: move more in before it runs low.",
+  "after": "Its 普通預金 (Ordinary Deposit) opens with ¥10,200 from your savings, what its fees come to until you graduate in May 2029, or as much of that as there is. Move more in before it runs low.",
+  "why": "The figure first; the condition said plainly.",
+  "meaningSensitive": true,
+  "verified": "feesToGraduation is the full total, moved from savings as far as they go. tests/home-account-creation.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/homeaccount.ts#homeAccountRefusal",
+  "kind": "error",
+  "before": "There’s no research on what Banca Intesa does when a customer moves to America, so the game can’t offer it.",
+  "after": "The game doesn’t know what Banca Intesa does when a customer moves to America, so it can’t offer this account.",
+  "why": "'research' is the project's word, not the player's.",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-creation.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/homeaccount.ts#before",
+  "kind": "error",
+  "before": "You haven’t said where you lived before this life.",
+  "after": "You haven’t said where you lived before you came here.",
+  "why": "'this life' is one of the brief's named phrases.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/ui/bank/BankSecurity.tsx#BankSecurity",
+  "kind": "label",
+  "before": "Source: …. Estimated: the lowest limit the bank sets.",
+  "after": "Source: …. The limit shown is the lowest the bank sets, which is estimated.",
+  "why": "A fragment became a sentence that says what's estimated.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/accountlife.ts#END_WORDS",
+  "kind": "official",
+  "before": "At its end it is paid, with its interest, into your current account, unless you choose another way the bank allows.",
+  "after": "At its end it is paid, with its interest, into your checking account, unless you choose another way the bank allows.",
+  "why": "The glossary's word.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts (TD)."
  }
 ]

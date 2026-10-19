@@ -251,3 +251,64 @@ on "Your" instead. No UI tool matcher held these words.
 voice-check, tics (after the toasts), spelling, typos, doc-refs, deciders 0; guide-quotes 0 (582 of 582, after six
 quotes in the guide moved with their refusals). `text-inventory --check` 1 on my guide entries and `cancelRefusal`
 only.
+
+## Batch 4: Accounts Over Time, Card Security, Cash, Round-Ups And The Home Account
+
+**Sources (51):** `src/engine/systems/accountlife.ts` (17, and the new `yearsWord`), `src/engine/systems/security.ts`
+(10), `src/engine/systems/cash.ts` (5), `src/engine/systems/roundups.ts` (5), `src/engine/systems/homeaccount.ts` (7),
+`src/ui/bank/BankAccountLife.tsx` (2), `src/ui/bank/BankSecurity.tsx` (2), `src/ui/bank/BankCash.tsx` (1),
+`src/ui/bank/RoundUps.tsx` (1). Rewritten 19, Retained 32.
+
+**Interactions read whole:** *opening and closing in the cooling-off period:* Your Accounts Over Time's Cancel It line,
+its refusals (shared with Close It since batch 1), and what canceling gives back; *an account left unused:* inactive,
+dormant and its notice, Reactivate, the bank's letter before the state takes it, Keep The Account, Unclaimed Money and
+Claim It Back; *a term deposit's end:* the ends-soon notice, the end buttons, break early and its penalty; *a card
+lost:* Lock It, Report It, the new card's day, a payment that wasn't yours and its refund; *cash:* the quote under Take
+It Out, each refusal, Pay It In; *round-ups:* the form, its refusals, what's counted and moved; *the home account*
+(creation's Before Yale): each refusal and what follows from keeping it.
+
+**What changed.**
+- *Checking account* in the term deposit's end ("is paid, with its interest, into your checking account"), the
+  NatWest notice period's notice, the cash deposit refusal, the round-ups refusal, and security's three "You have no
+  current account." refusals ("You don’t have a checking account."), and cash's "You need a bank account" ("a checking
+  account": the account it reads is the primary checking account).
+- "Your primary current account can’t be canceled." became "You can’t cancel your primary account. Make another
+  account primary first."
+- *Dormant, in cash:* the deposit refusal says what didn't happen ("…, so nothing was paid in. Reactivate it under Your
+  Accounts Over Time, then try again."), as Move Money's does. The withdrawal's is read both before and after Take It
+  Out is pressed (`withdrawalQuote`), so it gives the step and no "nothing was …": "… is dormant. Reactivate it under
+  Your Accounts Over Time to take cash out of it."
+- *Available:* a withdrawal its account can't cover says "has only … available" and "has nothing available", as Move
+  Money's refusals do.
+- *Numbers under ten in words:* the bank's letter before the state takes an account says "nearly three years", and the
+  Unclaimed Money notice "for three years".
+- *The card's French spending limit:* "Estimated: the lowest limit the bank sets." became "The limit shown is the lowest
+  the bank sets, which is estimated.", a sentence that says what's estimated.
+- *The home account (creation):* "before this life" (a life outside Yale) became "before you came here"; "You began
+  living there after Yale began." became "You moved there after Yale began."; "There’s no research on what … does when
+  a customer moves to America, so the game can’t offer it." became "The game doesn’t know what … does …, so it can’t
+  offer this account."; the opening float leads with the figure ("opens with ¥10,200 from your savings, what its fees
+  come to until you graduate in May 2029, or as much of that as there is. Move more in before it runs low."), where
+  "as far as that goes: move more in" left the condition unclear.
+- *Kept:* the fraud and new-card notices, the round-ups' refusals and reasons (Citi's Spend & Save notice already said
+  "checking account", Citi's own word), the cash panel, the account-life panel's lines, the statement memos.
+
+**Meaning-sensitive changes, and how each was checked.**
+- *"or as much of that as there is":* `feesToGraduation` is the whole fees total; the opening moves it from savings as
+  far as savings go, which the old "as far as that goes" meant.
+- *"You can’t cancel your primary account":* the refusal runs where the account is the one `currentOf` returns, the
+  primary checking account.
+- *The quote's dormant line:* `withdrawalQuote` feeds the panel's line under the amount before anything is pressed and
+  the command's refusal after; a sentence true in both.
+
+**Tests and tool matchers updated:** accountlife (via the new test), editorial-money-refusals (brief 14's refusal shapes:
+two variants to "available"), evidence-g10-money, evidence-g12-money, evidence2-b04, home-account-creation, roundups.
+New in `tests/editorial-money.test.ts`: canceling the primary account, the unclaimed letter's years, a card locked or
+reported, a new number and cash taken out with no checking account, and a life outside Yale's home account question;
+in `tests/editorial-money-screens.test.ts`: the French card's limit line and TD's term deposit end. No UI tool matcher
+held these words.
+
+**Checks:** tsc 0; eslint 0; the 14 affected test files (249 tests) 0 after one cash assertion moved to "available"; the
+new files 0 (17 and 8 tests); title-case, label-sweep, plural-check, voice-check, tics, spelling, typos, doc-refs,
+deciders 0; guide-quotes 0 (582 of 582, after ten quotes in the guide moved). `text-inventory --check` 1 on my guide
+entries only (`cancelRefusal` is marked now).

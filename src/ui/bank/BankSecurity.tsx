@@ -60,7 +60,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
               {p.locked && !p.stopped && <p className="small" style={{ margin: 0 }}>Locked: nothing new can go on it until you unlock it.</p>}
               {which === 'debit' && ceiling && (
                 <p className="small" style={{ margin: 0 }}>
-                  It pays up to {money(inSaveMoney(sim, ceiling.ceiling, 'EUR'))} {ceiling.window === 'month' ? 'a calendar month' : 'over any 30 days'}. {room !== undefined ? `${money(room)} of that is left. ` : ''}Past it, a purchase goes on the credit card, or isn’t made. Source: {FRENCH_CARDS_SOURCE}. Estimated: the lowest limit the bank sets.
+                  It pays up to {money(inSaveMoney(sim, ceiling.ceiling, 'EUR'))} {ceiling.window === 'month' ? 'a calendar month' : 'over any 30 days'}. {room !== undefined ? `${money(room)} of that is left. ` : ''}Past it, a purchase goes on the credit card, or isn’t made. Source: {FRENCH_CARDS_SOURCE}. The limit shown is the lowest the bank sets, which is estimated.
                 </p>
               )}
               <div className="row gap-2" style={{ flexWrap: 'wrap' }}>

@@ -75,10 +75,10 @@ describe('a refusal for money that isn’t there: what can’t pay, the amount, 
     // TEST SETUP: enough for the cash, not for the cash and its fees.
     posted(sim, current(sim).id, 20_00 + 1 - current(sim).balance);
     // The fees are the bank's and the machine owner's, as the quote that went through counted them.
-    expect(quote(20_00).refused).toBe(`${current(sim).name} has only $20.01, and $20.00 in cash with its fees comes to ${formatMoney(20_00 + fees(free), 'USD')}.`);
+    expect(quote(20_00).refused).toBe(`${current(sim).name} has only $20.01 available, and $20.00 in cash with its fees comes to ${formatMoney(20_00 + fees(free), 'USD')}.`);
     // With nothing in it, it says so, and no sum.
     posted(sim, current(sim).id, -current(sim).balance);
-    expect(quote(20_00).refused).toBe(`${current(sim).name} has nothing in it.`);
+    expect(quote(20_00).refused).toBe(`${current(sim).name} has nothing available.`);
   });
 
   it('a state plan’s down payment, said before it’s asked for: the amount, and no word of a charge, since nothing was tried', () => {

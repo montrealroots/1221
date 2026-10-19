@@ -509,6 +509,6 @@ describe('the panel', () => {
     expect(words()).toContain(`When the account is short: ${rule.short}`);
     // A bank that isn't the primary one's: its words, and why it can't be turned on here.
     const other = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'gb-lloyds' })).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-    expect(other).toContain('Round-ups at Lloyds Bank only work when a Lloyds Bank current account is your primary account.');
+    expect(other).toContain('Round-ups at Lloyds Bank only work when a Lloyds Bank checking account is your primary account.');
   });
 });
