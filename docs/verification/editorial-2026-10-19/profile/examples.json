@@ -328,5 +328,335 @@
   "why": "\"What they saw, heard back\" was an inverted passive.",
   "meaningSensitive": false,
   "verified": "b3-looks.txt, presence's look under To practice it."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/genres.ts#GENRE_DEFS .holiday",
+  "kind": "other",
+  "before": "A holiday film is set during or built around a holiday season, most often Christmas or Thanksgiving, and trades on that season's traditions and feeling.",
+  "after": "A holiday film is set during or built around a holiday season, most often Christmas or Thanksgiving, and trades on that season’s traditions and feeling.",
+  "why": "A possessive’s straight apostrophe takes the house’s.",
+  "meaningSensitive": false,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the genre’s look under Its conventions."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/genres.ts#GENRE_DEFS .kaiju",
+  "kind": "other",
+  "before": "Kaiju ('strange beast') eiga is a subgenre of Japanese monster film featuring giant creatures, typically attacking cities.",
+  "after": "Kaiju (‘strange beast’) eiga is a subgenre of Japanese monster film featuring giant creatures, typically attacking cities.",
+  "why": "The gloss of a Japanese word, in the house’s quotation marks.",
+  "meaningSensitive": false,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the genre’s look under Its conventions."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/genres.ts#GENRE_DEFS .kitchen_sink",
+  "kind": "other",
+  "before": "Kitchen sink realism is a British cultural movement of the late 1950s and early 1960s depicting working-class lives, often through disillusioned 'angry young men'.",
+  "after": "Kitchen sink realism is a British cultural movement of the late 1950s and early 1960s depicting working-class lives, often through disillusioned ‘angry young men’.",
+  "why": "The term ‘angry young men’, quoted, in the house’s quotation marks.",
+  "meaningSensitive": false,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the genre’s look under Its conventions."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/genre-register.ts#GENRE_REGISTER .action",
+  "kind": "other",
+  "before": "Its chases and fights are staged techniques; between them the scenes turn on who holds the frame and what the threat is.",
+  "after": "Its chases are stunt work and its fights stage combat; between them, the scenes turn on who holds the frame and what the threat is.",
+  "why": "“Staged techniques” named neither the chases nor the fights; the research names stunt work, and Stage Combat is the School’s word for the fights.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the genre’s look under How its scenes are played; the action research’s claim (“fights, chases, shootouts and stunt work”) in the same render, and the Stage Combat technique’s label."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/genre-register.ts#GENRE_REGISTER .anthology",
+  "kind": "other",
+  "before": "A form, not a style: each segment is a drama, played truthfully in a few minutes.",
+  "after": "A form, not a style: each story is a drama, played truthfully in a few minutes.",
+  "why": "A segment is the engine’s word for a beat; an anthology’s parts are its stories.",
+  "meaningSensitive": false,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the genre’s look under How its scenes are played; the same render."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/content/genre-register.ts#GENRE_REGISTER .docudrama",
+  "kind": "other",
+  "before": "Recent events dramatized freely, with a documentary’s immediacy; the real people are its staged transformation.",
+  "after": "Recent events dramatized freely, with a documentary’s immediacy, by actors who must become the real people.",
+  "why": "“The real people are its staged transformation” gave a player nothing to picture. Its sense, that playing real people asks the actor to become them, is now said plainly.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the genre’s look under How its scenes are played, beside docudrama’s conventions (historical events, recent and controversial)."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/interpretation-read.ts#grainWords",
+  "kind": "feedback",
+  "before": "The way you played it suited the scene (Restrained, Suits The Scene): it gave the take 1.1 points (+1.5 on the believability, -0.4 on the connection). What your abilities and techniques cost it, apart from that: 4.2 points.",
+  "after": "The way you played it suited the scene (Restrained, Suits The Scene) and added 1.1 points to the take (+1.5 to believability, −0.4 to connection). Apart from that, your abilities and techniques cost it 4.2 points.",
+  "why": "The colon and the trailing “What … cost it, apart from that:” put the subject last; the sentence now says what the playing did, then the rest. A minus is a minus sign.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the suited variant; tests/interpretation.test.ts reads its start and its figure, as narrow as before."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/interpretation-read.ts#grainWords",
+  "kind": "feedback",
+  "before": "The way you played it worked against the scene (Expansive, Works Against The Scene): it cost the take 2.3 points (-1.5 on the believability, -0.4 on the connection). What your abilities and techniques cost it, apart from that: 3 points.",
+  "after": "The way you played it worked against the scene (Expansive, Works Against The Scene) and cost the take 2.3 points (−1.5 to believability, −0.4 to connection). Apart from that, your abilities and techniques cost it 3 points.",
+  "why": "The colon and the trailing “What … cost it, apart from that:” put the subject last; the sentence now says what the playing did, then the rest. A minus is a minus sign.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the against variant; tests/interpretation.test.ts reads its start and its figure, as narrow as before."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/interpretation-read.ts#grainWords",
+  "kind": "feedback",
+  "before": "The way you played it made no difference either way to the scene (Measured, Either Way). What your abilities and techniques cost it, apart from that: 2.5 points.",
+  "after": "The way you played it made no difference to the scene either way (Measured, Either Way). Apart from that, your abilities and techniques cost it 2.5 points.",
+  "why": "The colon and the trailing “What … cost it, apart from that:” put the subject last; the sentence now says what the playing did, then the rest. A minus is a minus sign.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the neither variant; tests/interpretation.test.ts reads its start and its figure, as narrow as before."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/interpretation-read.ts#takeGrainWords",
+  "kind": "feedback",
+  "before": "Played that way it suited the scene (Restrained, Suits The Scene), which gave it 1.1 points; your abilities and techniques cost it 4.2.",
+  "after": "Played that way, it suited the scene (Restrained, Suits The Scene) and added 1.1 points. Your abilities and techniques cost it 4.2 points.",
+  "why": "A “which” clause and a semicolon became two sentences, and the second figure says what it counts, points.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the kept suited variant; tools/acceptance-ui.mjs and tools/playthroughs-ui.mjs find the line by the new words."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/interpretation-read.ts#takeGrainWords",
+  "kind": "feedback",
+  "before": "Played that way it worked against the scene (Expansive, Works Against The Scene), which cost it 2.3 points; your abilities and techniques cost it 3.",
+  "after": "Played that way, it worked against the scene (Expansive, Works Against The Scene) and cost 2.3 points. Your abilities and techniques cost it 3 points.",
+  "why": "A “which” clause and a semicolon became two sentences, and the second figure says what it counts, points.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the kept against variant; tools/acceptance-ui.mjs and tools/playthroughs-ui.mjs find the line by the new words."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/interpretation-read.ts#takeGrainWords",
+  "kind": "feedback",
+  "before": "Played that way it made no difference either way to the scene (Measured, Either Way); your abilities and techniques cost it 2.5.",
+  "after": "Played that way, it made no difference to the scene either way (Measured, Either Way). Your abilities and techniques cost it 2.5 points.",
+  "why": "A “which” clause and a semicolon became two sentences, and the second figure says what it counts, points.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), the kept neither variant; tools/acceptance-ui.mjs and tools/playthroughs-ui.mjs find the line by the new words."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.profile]",
+  "kind": "tutorial",
+  "before": "The Player Profile is you as an actor. From the top: Identity And Background, as you made your character; Attributes And Craft, your 12 abilities from 0 to 100, with what to work on next; Techniques, 17 learned skills, each mastered at 90; Genres, each with its practice brief; Current Condition, your readiness for work today; School Journey, every piece of work judged; Your Work So Far; and Development History, each change and what made it. Looking at it changes nothing and moves no clock.",
+  "after": "The Player Profile shows you as an actor: your abilities and techniques, what to work on next, the genres you know and every piece of work judged. Press P, or Player Profile on the menu, to open it. From the top: Identity And Background, as you made your character; Attributes And Craft, your 12 abilities from 0 to 100, with what to work on next; Techniques, 17 learned skills, each mastered at 90; Genres, each with its practice brief; Readiness Today, whether anything holds your work back today; School Journey, every piece of work judged; Your Work So Far; and Development History, each change and what made it. Looking at it changes nothing and moves no clock.",
+  "why": "It opened on a metaphor (“is you as an actor”) and never said how to open the Profile; it now says what the Profile shows and how to open it, and names the renamed panel.",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.practice]",
+  "kind": "tutorial",
+  "before": "An hour on one exercise grows the ability or technique it trains, past where classes level off, all the way to full. Some exercises are named in real acting teaching, some are put together from real practice, and a few were made for the game. Each has three tiers (Foundation, Developing and Advanced) and 5 ways to spend the hour: Steady, Precision, Spaced, Variation or Live With A Partner. The same exercise again on the same day gives 50% of what the hour before gave, and only 4 hours of practice a day count. Each day you practice grows your discipline once.",
+  "after": "An hour on one exercise grows the ability or technique it trains, past where classes level off, all the way to full. Press the exercise in the Practice column on your Player Profile, choose a Tier and a Focus, and press Practice An Hour. Each exercise has three tiers (Foundation, Developing and Advanced) and 5 ways to spend the hour: Steady, Precision, Spaced, Variation or Live With A Partner. The same exercise again on the same day gives 50% of what the hour before gave, and only 4 hours of practice a day count. Each day you practice grows your discipline once. Some exercises are named in real acting teaching, some are put together from real practice, and a few were made for the game.",
+  "why": "The entry said what practice does but not what to press; the first action now comes second, and where the exercises come from moves to the end.",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.genre]",
+  "kind": "tutorial",
+  "before": "Each of the 149 genres keeps two figures of yours: Familiarity, from studying it, and Work In It, from nights on stage and self-tapes in it. Study It is 90 minutes reading a play of the kind the game has, or watching a film of the kind where it has none. The better of the two is how well you know the genre: a taped brief in it counts that as part of its preparation, every point up to 90% showing in the take, and a scene or a part from a play of its kind is prepared up to 17% faster. Loving a genre makes a day of its work a better day; it doesn’t make the work any better.",
+  "after": "Each of the 149 genres keeps two figures of yours: Familiarity, from studying it, and Work In It, from nights on stage and self-tapes in it. Press Study It beside a genre, under Genres on your Player Profile, to spend 90 minutes reading a play of its kind the game has, or watching a film of the kind where it has none. The better of the two is how well you know the genre: a taped brief in it counts that as part of its preparation, every point up to 90% showing in the take, and a scene or a part from a play of its kind is prepared up to 17% faster. Loving a genre makes a day of its work a better day; it doesn’t make the work any better.",
+  "why": "Study It is said as an action, with where it is.",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-prepare]",
+  "kind": "tutorial",
+  "before": "Every genre has a practice brief, an original scene written for the game, 298 in all: where and when it is, who the two of you are, what you want, what’s in the way, and its beats, where it turns. Three steps prepare it: Break It Down is the ground your reading stands on, Learn The Lines the lines, and Rehearse It On Your Feet plays it through aloud with the beats placed. Each moves its part a share of what’s left, and a repeat the same day goes half as far. A beat a change of tone leads into, or one held two ways at once, asks more rehearsal than the rest.",
+  "after": "Every genre has a practice brief, an original scene written for the game, 298 in all. Press Open Its Brief beside a genre to read it: where and when it is, who the two of you are, what you want, what’s in the way, and its beats, where it turns. Three steps prepare it: Break It Down is the ground your reading stands on, Learn The Lines the lines, and Rehearse It On Your Feet plays it through aloud with the beats placed. Each moves its part a share of what’s left, and a repeat the same day goes half as far. A beat a change of tone leads into, or one held two ways at once, asks more rehearsal than the rest.",
+  "why": "It now says how to open a brief before saying what’s in it.",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-choose]",
+  "kind": "tutorial",
+  "before": "Before a take, choose how you read the scene and how you’ll play it. Each brief supports two readings or more, and none is the right answer: a reading changes what the take is judged on most and which abilities it calls on, shifting the balance and adding nothing, and the beat whose tones lean its way most counts more, where one beat does. How you’ll play it comes as three choices, each between two ways or left open: Pace (Measured or Driven), Scale (Restrained or Expansive) and Structure (Set or Open). Choosing a way isn’t rehearsing it: you rehearse it on your feet before it pays off.",
+  "after": "Before you tape a brief, choose how you read the scene and how you’ll play it, in the brief under Your Reading and How You’ll Play It. Each brief supports two readings or more, and none is the right answer: a reading changes what the take is judged on most and which abilities it calls on, shifting the balance and adding nothing, and the beat whose tones lean its way most counts more, where one beat does. How you’ll play it comes as three choices, each between two ways or left open: Pace (Measured or Driven), Scale (Restrained or Expansive) and Structure (Set or Open). Choosing a way isn’t rehearsing it: you rehearse it on your feet before it pays off.",
+  "why": "“Before a take” left a new player not knowing what a take is or where the choices are.",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.brief-reader]",
+  "kind": "tutorial",
+  "before": "A take on camera is played to someone reading the other lines off camera: A Recording Of The Other Lines, or a classmate. Your own take uses none of it.",
+  "after": "A take on camera is played to someone reading the other lines off camera: A Recording Of The Other Lines, or a classmate. Your own result counts nothing the reader brings.",
+  "why": "“Uses none of it” had no clear “it”: what your own result leaves out is what the reader brings (`sharedOf` is worked out beside it and never changes it).",
+  "meaningSensitive": true,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.work]",
+  "kind": "tutorial",
+  "before": "The line at the foot says the piece was worked out again from what it was judged on, and to what: the same figure, whatever has changed since.",
+  "after": "The line at the foot judges the piece again from its record and gives the figure: the same, whatever has changed since.",
+  "why": "The guide now says it as the game’s line does (“Judged again from its record”).",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.identity]",
+  "kind": "tutorial",
+  "before": "“You play it measured: 5 of 5 choices on pace.”",
+  "after": "“You tend to play it measured: 5 of your 5 choices of pace.”",
+  "why": "The guide’s quote of a habit is the game’s new line, word for word (guide-quotes reads it).",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [optional]",
+  "kind": "tutorial",
+  "before": "Current Condition shows the readiness today’s work meets, from how you are.",
+  "after": "Readiness Today shows how ready you are for today’s work, from how you are.",
+  "why": "The panel’s new name, and the readiness said of you rather than of the work.",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [evaluation]",
+  "kind": "tutorial",
+  "before": "Every piece of work judged afterward uses what practice grew at its new level.",
+  "after": "Every piece of work judged afterward is judged with your abilities and techniques where practice left them.",
+  "why": "“Uses what practice grew at its new level” had two subjects for “its”.",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [evaluation]",
+  "kind": "tutorial",
+  "before": "Knowing the genre is a part of a take’s preparation, read by its interpretation, complete at 90%.",
+  "after": "Knowing the genre is part of a take’s preparation: it counts toward the take’s interpretation, and is complete at 90%.",
+  "why": "“Read by its interpretation” was the formula’s shape (the Interpretation quality’s prep list, `tasks.ts`); it now says it counts toward that quality.",
+  "meaningSensitive": true,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/guide/craft.ts#CRAFT [craft.profile]",
+  "kind": "tutorial",
+  "before": "Each ability and technique your recent work called on, forecast: what 20 hours of its exercise, a session a day at an ordinary day’s focus, would bring your recent work played again with you as you are now (knowing each genre as you know it today), and where those hours would take it. It grows as an hour of practice grows it, slower as it rises to three quarters of full and steady from there. The most worthwhile comes first, the latest pieces counting most",
+  "after": "Each ability and technique your recent work called on, forecast: what 20 hours of its exercise, a session a day at an ordinary day’s focus, would bring your recent work, judged again as you are now (knowing each genre as you know it today), and where those hours would take it. It grows as an hour of practice grows it, slower as it rises to three quarters of full and steady from there. The most worthwhile comes first, the latest pieces counting most",
+  "why": "The guide uses the advice’s new phrase, judged again as you are now.",
+  "meaningSensitive": false,
+  "verified": "b5-guide.txt (render-guide.ts.txt); tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85; guide-quotes 0"
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/genre-demands.json#action_comedy",
+  "kind": "other",
+  "before": "The tool that read the page summarized it, and its remarks on Jackie Chan may be the summary’s own gloss, so the research didn’t name Physical Comedy.",
+  "after": "The page was read through an automatic summary, and its remarks on Jackie Chan may be the summary’s own, so the research didn’t name Physical Comedy.",
+  "why": "\"The tool that read the page summarized it\" described how the research was done; the player is told what that means for the claim, in plain words.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), printed after the rebuild by tools/build-attribute-content.mjs, the genre's look under Still uncertain."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/genre-demands.json#political_drama",
+  "kind": "other",
+  "before": "This is one writer’s style on one show, not the genre. Heightened Language was considered (the 'meter' claim), but that rests on a search summary and on one writer, so it isn’t applied. 'Quiet calculation of characters wielding power' is unsupported.",
+  "after": "This is one writer’s style on one show, not the genre. Heightened Language was considered (the 'meter' claim), but that rests on a search summary and on one writer, so the research didn’t name it. 'Quiet calculation of characters wielding power' is unsupported.",
+  "why": "\"It isn’t applied\" was the builder’s word; the look already says which requirements apply, so this says the research didn’t name it.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), printed after the rebuild by tools/build-attribute-content.mjs, the genre's look under Still uncertain."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/genre-demands.json#horror",
+  "kind": "other",
+  "before": "StageMilk is an acting-advice site written by practitioners, not a textbook or a union source. Screaming is vocal stamina, which isn’t one of the requirements the game can ask for; Voice-Led Performance wasn’t applied, because the source is about screaming on camera, not performing with the voice alone. The Mandy, StarNow and Backstage articles on horror acting couldn’t be opened, and weren’t read. On review (October 10, 2026), one advice site generalizing exertion and some fight work to all horror wasn’t enough to make it a requirement of the whole genre.",
+  "after": "StageMilk is an acting-advice site written by practitioners, not a textbook or a union source. Screaming is vocal stamina, which isn’t one of the requirements the game can ask for. The research didn’t name Voice-Led Performance, because the source is about screaming on camera, not performing with the voice alone. The Mandy, StarNow and Backstage articles on horror acting couldn’t be opened, and weren’t read. On review (October 10, 2026), one advice site generalizing exertion and some fight work to all horror wasn’t enough to make it a requirement of the whole genre.",
+  "why": "A semicolon list ending in \"wasn’t applied\" became two sentences, the second saying what the research didn’t name and why.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), printed after the rebuild by tools/build-attribute-content.mjs, the genre's look under Still uncertain."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/genre-demands.json#mystery",
+  "kind": "other",
+  "before": "This is one director on one comic whodunit. Nothing found says what mystery asks of actors generally; 'withholding and layering' remains the researcher’s own reading. Shannon’s ad-libs don’t establish improvisation as a convention of the form.",
+  "after": "This is one director on one comic whodunit. Nothing found says what mystery asks of actors generally; 'withholding and layering' remains an unsourced reading. Shannon’s ad-libs don’t establish improvisation as a convention of the form.",
+  "why": "\"The researcher’s own reading\" pointed at a person the player never meets; an unsourced reading says the same of the claim.",
+  "meaningSensitive": true,
+  "verified": "b4-genres.txt (render-genres.ts.txt), printed after the rebuild by tools/build-attribute-content.mjs, the genre's look under Still uncertain."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/genre-demands.json#vampire",
+  "kind": "other",
+  "before": "TV Tropes isn’t credible enough to support a requirement. The Stan Winston School page on Interview with the Vampire returned no text when opened. Fang work is minor prosthetics, not heavy Physical Transformation.",
+  "after": "TV Tropes isn’t credible enough to support a requirement. The Stan Winston School page on Interview with the Vampire showed no text when opened. Fang work is minor prosthetics, not heavy Physical Transformation.",
+  "why": "\"Returned no text\" is how a fetch reports; a page that showed no text when opened is what happened.",
+  "meaningSensitive": false,
+  "verified": "b4-genres.txt (render-genres.ts.txt), printed after the rebuild by tools/build-attribute-content.mjs, the genre's look under Still uncertain."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/genre-demands.json#social_realism",
+  "kind": "other",
+  "before": "The Into Film page returned no text when opened. One director’s method stands in for the genre. On review (October 10, 2026), one director’s method wasn’t enough to make it a requirement of the whole genre.",
+  "after": "The Into Film page showed no text when opened. One director’s method stands in for the genre. On review (October 10, 2026), one director’s method wasn’t enough to make it a requirement of the whole genre.",
+  "why": "The same: \"returned no text\" became \"showed no text when opened\".",
+  "meaningSensitive": false,
+  "verified": "b4-genres.txt (render-genres.ts.txt), printed after the rebuild by tools/build-attribute-content.mjs, the genre's look under Still uncertain."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/genre-demands.json#art_house",
+  "kind": "other",
+  "before": "In the modernist strand of art cinema (Bresson, Antonioni), directors hold actors' physical and vocal expressivity so far down that framing, editing and sound carry the characters' inner life. Bresson called his performers 'models', not actors, and repeated lines until the 'acting' was gone.",
+  "after": "In the modernist strand of art cinema (Bresson, Antonioni), directors hold actors’ physical and vocal expressivity so far down that framing, editing and sound carry the characters’ inner life. Bresson called his performers 'models', not actors, and repeated lines until the 'acting' was gone.",
+  "why": "Two plural possessives outside the quotations take the house’s apostrophe; the quotations keep their own marks.",
+  "meaningSensitive": false,
+  "verified": "b4-genres.txt (render-genres.ts.txt), printed after the rebuild by tools/build-attribute-content.mjs, the genre's look under What it asks of an actor."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/genre-demands.json#conspiracy_thriller",
+  "kind": "other",
+  "before": "Only critics' writing on one film was found: The Conversation, the high point of the 1970s paranoia thriller, is praised for Hackman’s subdued, interior performance of rising paranoia.",
+  "after": "Only critics’ writing on one film was found: The Conversation, the high point of the 1970s paranoia thriller, is praised for Hackman’s subdued, interior performance of rising paranoia.",
+  "why": "A plural possessive takes the house’s apostrophe.",
+  "meaningSensitive": false,
+  "verified": "b4-genres.txt (render-genres.ts.txt), printed after the rebuild by tools/build-attribute-content.mjs, the genre's look under What it asks of an actor."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/genre-demands.json#dance",
+  "kind": "other",
+  "before": "The conservatory glossary defines the genre as combining dance and cinematography, with the dancers' performances as its subject; BFI names trained dancers (Talley Beatty, Tudor’s ballet dancers) as its performers.",
+  "after": "The conservatory glossary defines the genre as combining dance and cinematography, with the dancers’ performances as its subject; BFI names trained dancers (Talley Beatty, Tudor’s ballet dancers) as its performers.",
+  "why": "The why line shown for an applied requirement: its possessive takes the house’s apostrophe, the quotation untouched.",
+  "meaningSensitive": false,
+  "verified": "b4-genres.txt (render-genres.ts.txt), printed after the rebuild by tools/build-attribute-content.mjs, the genre's look under Why it’s applied."
  }
 ]

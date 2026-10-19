@@ -224,3 +224,205 @@ tier and focus pairs, tired, and after two hours; four hours pressed through the
 hour found in every focus and gap, a tier below and above, past mastery and at full; the four ways at a note; the seven
 next steps as a note says them; Your Work So Far on adv-t-10. `b3-looks.txt`: the ability looks again, for the changed
 exercise line.
+
+
+## Batch 4: A Genre's Conventions, How Its Scenes Are Played, And A Way Of Playing It
+
+**Sources read (345):** `content/genres.ts` (149, each genre's conventions), `content/genre-register.ts` (149, how its
+scenes are played), `content/contemporary.ts` (29, the contemporary plays), `content/film-genres.ts` (1, the names),
+`systems/register.ts` (3), `content/interpretation.ts` (8), `content/approaches.ts` (2), `systems/interpretation.ts` (2),
+`systems/interpretation-read.ts` (2). About 7,100 words.
+
+**The interaction read whole:** a genre from the Genres table into its look (its summary, what it asks, Its
+conventions, How its scenes are played and where that comes from, the research's small print, the source), for every
+one of the 149; then, in a brief, the ways of playing it with why each suits the scene or works against it; then what a
+take's look and The Last Take say the way it was played did.
+
+**Rewritten:**
+- **Fifteen conventions** (absurdist, chanbara, cosmic horror, dance, grindhouse, holiday, isekai, kaiju, kitchen sink,
+  medical drama, mumblecore, political drama, psychological thriller, slapstick, yakuza): a straight apostrophe or
+  quotation mark in each, now the house's ("that season’s traditions", "Kaiju (‘strange beast’) eiga"). No word moved.
+- **Three registers.** Action's "Its chases and fights are staged techniques" named neither: "Its chases are stunt work
+  and its fights stage combat". Anthology's "each segment is a drama" (a segment is the engine's word for a beat): "each
+  story is a drama". Docudrama's "the real people are its staged transformation": "by actors who must become the real
+  people".
+- **What the way you played it did** (`grainWords`, on The Last Take; `takeGrainWords`, on a kept take), all six
+  variants. "It gave the take 1.1 points (+1.5 on the believability, -0.4 on the connection). What your abilities and
+  techniques cost it, apart from that: 4.2 points." is "and added 1.1 points to the take (+1.5 to believability, −0.4 to
+  connection). Apart from that, your abilities and techniques cost it 4.2 points.", with a minus sign for the hyphen; the
+  kept take's "which gave it 1.1 points; your abilities and techniques cost it 4.2." is two sentences, the second saying
+  points.
+
+**Kept, and why (each source's reason is in `docs/text/second-pass/profile.json`):** the other 134 conventions, each a
+plain definition paraphrasing its source, which a rewrite would drift from; the other 146 registers, each a sentence on
+what the genre's scenes turn on, followed by where that comes from; the 29 contemporary plays, catalog facts as their
+publishers give them; the genre names; a concern's sentence, where a register comes from, and the note beside a take's
+chief limit (`register.ts`); the reasons a way of playing suits a scene, the three axes and the six ways, and the For
+It and Against It labels.
+
+**Meaning-sensitive, and how each was held:**
+- **The two grain sentences** print the same fields in the same places (`g.points`, `g.ability`, each dimension's
+  points); a negative now prints its magnitude after a minus sign, and zero prints bare, as before.
+  `tests/interpretation.test.ts` reads both openings and their figures, its regexes moved to the new words and no
+  looser.
+- **Action's register** is what action's research names ("fights, chases, shootouts and stunt work") and the School's
+  Stage Combat technique; the concerns it explains (command, tension) didn't move.
+- **Docudrama's register** keeps the sense the garbled clause had, that the real people are played by actors who must
+  become them, beside its conventions (historical events, recent and controversial).
+
+**Tests and tool matchers updated:** `tests/interpretation.test.ts` (the two grain regexes);
+`tools/acceptance-ui.mjs` and `tools/playthroughs-ui.mjs` (the kept take's grain line, found by its new words).
+
+**Checks:** `npx tsc -b --noEmit` 0. eslint on the four changed `.ts` files 0 (the two `.mjs` tools aren't in the
+project's lint, which is `.ts` and `.tsx`; both parse with `node --check`). `npx vitest run` (two forks) on the 23
+files that read the genres, their looks, the registers, the ways of playing and the grain: 710 of 710, exit 0; after
+the action and docudrama registers moved, the six genre-look files again, 67 of 67, exit 0. title-case, label-sweep,
+plural-check, voice-check, tics (no count moved), spelling, typos, doc-refs, deciders and guide-quotes 0;
+text-inventory 1 before marking.
+
+**Screens verified:** `b4-genres.txt` (from `render-genres.ts.txt`): every genre's look on a new life, all 149, and the
+six grain variants. It was printed once batches 6 and 7 had rebuilt the research's small print, so it shows theirs too.
+
+
+## Batch 5: The Guide's Chapter "You As An Actor"
+
+**Sources read (19):** `content/guide/craft.ts`, every entry (The Player Profile, Practice, Genres, Preparing A Brief, A
+Reading And A Way To Play It, Who Reads With You, Taping A Brief, A Piece Of Work, Explained, Your Work So Far), the
+connections between them by kind, and the names its examples use. About 10,400 words.
+
+**The interaction read whole:** each entry as the guide shows it, field by field (where, short, steps, needs, costs,
+reads, now, later, interpret, unavailable, mistakes, next, connections, example), against the screen it describes as
+batches 1 to 4 left it.
+
+**Rewritten:**
+- **The Player Profile:** it opened "The Player Profile is you as an actor." and never said how to open it; it now says
+  what the Profile shows and that P or Player Profile on the menu opens it, names Readiness Today, uses the advice's
+  "judged again as you are now", and its First Line value says what the advice now says ("led the advice on what to
+  train", "with where to find it", "worth your time"). Its quote of the empty state is the game's.
+- **Practice:** its short gives the first thing to press (the exercise in the Practice column, a Tier and a Focus,
+  Practice An Hour), and where the exercises come from moves to its end; its step says "how it compares with an
+  ordinary hour", as the preview now does.
+- **Genres, Preparing A Brief, A Reading And A Way To Play It:** each short says where its control is (Study It beside a
+  genre, Open Its Brief, Your Reading and How You’ll Play It in the brief), and "Before a take" is "Before you tape a
+  brief". The Genres example quotes the genre look's new summary.
+- **Who Reads With You:** "Your own take uses none of it." had no clear "it": "Your own result counts nothing the reader
+  brings.", here and in its connection.
+- **A Piece Of Work, Explained:** "worked out again" is "judged again", three times, as the piece's foot line now says.
+- **Your Work So Far:** its quote of a habit is the game's new line.
+- **The connections:** Readiness Today's; practice's ("uses what practice grew at its new level" had two subjects for
+  "its"); the genre's ("read by its interpretation", the formula's shape, is "it counts toward the take’s
+  interpretation").
+
+**Kept, and why:** Taping A Brief, which walks a take from Tape It to The Last Take with every figure its example plays;
+the prerequisite, immediate and history connections, each one short sentence with its figure; the chapter's opening and
+locked lines; the readers' names and the ways a reader plays the other part.
+
+**Meaning-sensitive, and how each was held:** every figure in the guide is computed from the rules it describes, and
+`tests/guide-examples-craft.test.ts` plays each worked example through the commands and checks its words.
+"Counts nothing the reader brings" is `sharedOf`, worked out beside your own result and never changing it. The genre's
+connection is the Interpretation quality's preparation list, which reads the genre (`content/tasks.ts`).
+
+**Tests and tool matchers updated:** none in this batch; the guide's quotes moved with batches 1 to 3, where their
+tests did.
+
+**Checks:** `npx tsc -b --noEmit` 0. eslint on `craft.ts` 0. `npx vitest run` on the five files that read the guide
+(`guide-examples-craft`, `guide`, `help-mechanics`, `tutorial`, `language-dynamic`): 85 of 85, exit 0, before and again
+after the last three connections moved. guide-quotes 0, 580 of 580 quotes found in the game; the other checks 0;
+text-inventory 1 before marking.
+
+**Screens verified:** `b5-guide.txt` (from `render-guide.ts.txt`): the nine entries field by field, as the guide draws
+them.
+
+
+## Batches 6 And 7: The Research's Small Print On Each Genre
+
+**Sources read:** `content/genre-demands.json`, one source a genre: in batch 6, Absurdist to Historical Fiction (65
+genres, about 13,700 words); in batch 7, Holiday to Zombie (84 genres, about 13,700 words). Each holds what the
+genre's look shows of the research: what it asks of an actor (the claim), why each requirement is applied, where it
+belongs to a strand and not the whole genre, what its source says in its own words and how sure the research is, and
+what's still uncertain. The file is built by `tools/build-attribute-content.mjs` from the research
+(`docs/research/attributes/research-genre-demands.json`) and the edits in `genre-demands-words.txt`, so every change
+here is a "- old" and "+ new" pair in that file's brief 15 block, and the JSON is the builder's output.
+
+**The interaction read whole:** a genre's look from What it asks of an actor down to Still uncertain, for every genre,
+in a print of exactly those fields (21,652 words as the look shows them), then each applied genre's Why it’s applied
+lines.
+
+**Rewritten:**
+- **Batch 6 (eight genres).** Action Comedy's uncertainty began "The tool that read the page summarized it", how the
+  research was done: "The page was read through an automatic summary, and its remarks on Jackie Chan may be the
+  summary’s own". A plural possessive outside a quotation takes the house's apostrophe in Action Comedy's claim, Art
+  House's (twice), Conspiracy Thriller's, Dance's source line and its why line, Docufiction's and Documentary's source
+  lines, Gangster's uncertainty and Giallo's source line.
+- **Batch 7 (seven genres).** "Isn't applied" and "wasn't applied", the builder's words, are "the research didn't
+  name", the phrase the other genres' small print already uses: Political Drama's, and Horror's, whose semicolon list
+  is two sentences. Mystery's "the researcher’s own reading" (a person the player never meets) is "an unsourced
+  reading". Social Realism's and Vampire's "returned no text when opened", a fetch's report, is "showed no text when
+  opened". Possessives as above in Slice Of Life's and Yakuza's claims and Social Realism's source line.
+
+**Kept, and why:** the other 134 genres' small print, and everything else in the fifteen: each is the research's own
+careful claim, its source quoted in the source's words, its confidence and what it couldn't settle, and a plainer
+sentence would claim more than the research found. The quotations keep the straight marks the research recorded them
+in; batch 4's conventions took the house's marks only for glosses ("‘strange beast’"), never for a source's words.
+
+**Meaning-sensitive, and how each was held:** no claim, confidence, requirement or tag moved: the edits touch the
+claim, source and uncertainty sentences only, and the builder writes the tags, the confidences and the strands from the
+research as before (`node tools/build-attribute-content.mjs`: 149 genres, 396 edits, the 18 changed lines all in those
+three fields and the one why line). Before the brief 15 block was added, the builder reproduced the committed JSON
+exactly. "The research didn't name it" keeps "considered" where the research did consider it (Political Drama).
+
+**Tests and tool matchers updated:** none; no test or tool quotes these sentences.
+
+**Checks (one run for both batches, after the one rebuild):** `npx tsc -b --noEmit` 0. `npx vitest run` on the 15
+files that read the genre looks, the demands, their coverage and their dates (`looks`, `language-genre-look`,
+`genre-identity-screens`, `genre-identity`, `genre-coverage`, `remaining-genres`, `defects-g30-1`, `evidence2-b08`,
+`briefs-content`, `guide-examples-craft`, `decisions-judge`, `engagement`, `evidence-g27-ui`, `language-data-dates`,
+`remaining-judge`): 646 of 646, exit 0. The other checks as in batch 4's run, 0; text-inventory 1 before marking.
+
+**Screens verified:** `b4-genres.txt`, printed after the rebuild: every genre's look, its small print included.
+
+## The Area's End, Finished By The Coordinator
+
+The area was stopped at 18:48 on 2026-10-19, during its walk at 390 of the built app after its last fixes, and couldn't
+be resumed. The coordinator finished it from this clone, as it stood.
+
+**What the walk at 1440 found, and the fixes the area made before it was stopped:**
+- **Your Work So Far's evidence** repeated the figure its line had just given: Range's was "Kinds of work on your
+  record: 9". It now names the kinds. On the nonfiler save at 1440, Range reads "9 kinds of work judged, 4 genres
+  worked in, 8 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An
+  Improvisation, Partnered Physical Work, A Night On Stage, A Clown Turn and A Song." Taking Direction's "Worked 5,
+  answered 4" reads "From: 9 notes given, 5 worked on and 4 answered." The habit line's "Takes of briefs: N" reads "N
+  takes of briefs", but no walked save has enough takes to show it (`systems/artistry.ts`).
+- **The advice's forecast assumptions** said "taped" of every piece, but the pieces are every kind of work judged: a
+  class showing and a night on stage as well as a tape. "Fully prepared when taped" is "fully prepared". "Taped
+  underprepared and count as taped" is "underprepared and are counted as they were". "Counted as taped" is "counted as
+  it was" (`systems/next-steps.ts`). `tests/decisions-advice.test.ts` gained an assertion on the words. A mutation back
+  to "taped underprepared but counts" fails it (`b8-assume-mut`, exit 1). Restored, it passes (exit 0).
+- **The tests that read both** (`decisions-advice`, `defects-g8-11`, `defects-g8-14`, `defects-g8-15`, `defects-r8-1`,
+  `evidence-g23-school`, `evidence-g26-school`, `evidence-g32-ui`, `evidence2-b11`, `guide-examples-craft`,
+  `remaining-genres`, `advice`, `language-dynamic`): 13 files, 245 of 245. eslint on the four files: 0. The build: 0.
+- **The walk:** `after-1440/`, on that build, six saves, 25 screens each, none failed. The walk at 390 stopped three
+  saves in. It isn't kept here. The coordinator's final walk covers both widths.
+
+**What the coordinator did:**
+- **Batches 6 and 7's marks.** The area's marking script (one status a genre, 149 of them, each reason naming its
+  genre, its finding and its confidence) had written 8 when the area stopped. The coordinator ran it whole.
+- **Three sources no batch had read.** The coordinator read them:
+  - The composure panel (`ui/components/AttributesPanel.tsx`) is Rewritten. "How fast it moves here is estimated."
+    became "How fast it changes in the game is estimated.", money-data's form for a source's "here". Composure can move
+    either way, so the line says "changes", not "grows".
+  - The Profile's abilities table and the genres table (`ProfileWorkspace.tsx`, `AbilitiesPanel` and `GenresPanel`)
+    are Retained. Each heading and column names what it holds. The two paragraphs under them say how an ability grows,
+    where it stops and why, and how a genre's brief, Familiarity and Mastered work. Each says it once, with the press
+    to make.
+- **The walk fixes' two sources** were marked Rewritten again (`identityOf`, `assumesOf`), on the tests above.
+- **Batches 4 to 6's examples** were checked before they were added. Each one's earlier words are at the base, and its
+  new words are in the code or in the area's rendered print (`b4-genres.txt`, `b5-guide.txt`).
+
+**Checks on the area's final words, run by the coordinator in this clone:**
+- Typecheck: 0. eslint on every `.ts` and `.tsx` the area changed: 0.
+- The gate's text checks, all but the completion matrix: 0 each. `text-inventory --todo2 profile`: 0 Pending.
+- The tests the area touched, plus every genre, advice, attribute, ability, look, practice, interpretation, approach,
+  craft, identity, mastery, demand, register, engagement and judge file: 43 files, 591 of 591.
+
+The whole suite and the walk at both widths run on the merged tree, with every area's words together.

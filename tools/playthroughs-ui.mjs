@@ -873,7 +873,7 @@ async function specialist() {
     firstTake = Number((said1.match(/Taped: (\d+\.\d)/) ?? [])[1] ?? NaN);
     must(!Number.isNaN(firstTake), `no result said: ${said1}`);
     const text = clean(await briefPane().innerText());
-    const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
+    const grain = text.match(/Played that way, it suited the scene \([^)]*\) and added [\d.]+ points\. Your abilities and techniques cost it [\d.]+ points\./)?.[0];
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.search(/The Last Take/i), text.search(/The Last Take/i) + 400)}`);
     must(/held back [A-Z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
     must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t the one row in the takes table');

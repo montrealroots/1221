@@ -213,17 +213,18 @@ function assumesOf(sim: Simulation, person: Person, first: Recommendation): stri
   const listed = (xs: readonly string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')}, and ${xs.at(-1)}` : xs[0] ?? '');
   const was = (n: number) => (n === 1 ? 'was' : 'were');
   const own: string[] = [];
-  const count = (n: number) => (n === 1 ? 'counts' : 'count');
-  if (a.complete) own.push(`${a.complete} ${was(a.complete)} fully prepared when taped`);
-  if (a.short) own.push(`${a.short} ${was(a.short)} taped underprepared and ${count(a.short)} as taped`);
-  if (a.prepared.length) own.push(`${a.prepared.length} ${was(a.prepared.length)} taped underprepared but ${count(a.prepared.length)} as fully prepared`);
+  // The pieces are every kind of work judged, a class showing and a night on stage as well as a tape, so they aren't
+  // all “taped”; and “count as taped” is said as a player would say it (from 2026-10-19, brief 15).
+  if (a.complete) own.push(`${a.complete} ${was(a.complete)} fully prepared`);
+  if (a.short) own.push(`${a.short} ${was(a.short)} underprepared and ${a.short === 1 ? 'is counted as it was' : 'are counted as they were'}`);
+  if (a.prepared.length) own.push(`${a.prepared.length} ${was(a.prepared.length)} underprepared but ${a.prepared.length === 1 ? 'is' : 'are'} counted as fully prepared`);
   // One piece is “it”, not “1 was” (from 2026-10-19, brief 15).
   const out = [`What the forecast assumes of your last ${a.pieces === 1 ? 'piece' : `${a.pieces} pieces`}: ${a.pieces === 1 ? own[0]!.replace(/^1 /, 'it ') : listed(own)}.`];
   if (a.prepared.length) {
     const label = (task: string, part: string) => (TASK_PROFILES[task]?.prepLabel?.[part] ?? (part === 'approach' ? 'Rehearsing how you play it' : part)).toLowerCase();
     for (const p of a.prepared) out.push(`In ${p.what}, ${list(p.parts.map((x, i) => `${label(p.task, x.part)} ${p.parts.length > 1 && i > 0 ? '' : 'stood '}at ${Math.round(x.share * 100)}%`))} of the way to complete.`);
     const taped = exactOf(trainingForecast(sim, person, person.work ?? [], [first.target], true).get(first.target));
-    out.push(`The forecast counts ${a.prepared.length === 1 ? 'that piece' : 'those pieces'} as fully prepared, since ${a.prepared.length === 1 ? 'its' : 'their'} own preparation held ${a.prepared.length === 1 ? 'it' : 'each'} back most.${taped !== undefined ? ` Counted as taped, ${first.forecast!.hours} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exactOf(first.forecast)!.toFixed(2)}.` : ''}`);
+    out.push(`The forecast counts ${a.prepared.length === 1 ? 'that piece' : 'those pieces'} as fully prepared, since ${a.prepared.length === 1 ? 'its' : 'their'} own preparation held ${a.prepared.length === 1 ? 'it' : 'each'} back most.${taped !== undefined ? ` Counted as ${a.prepared.length === 1 ? 'it was' : 'they were'}, ${first.forecast!.hours} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exactOf(first.forecast)!.toFixed(2)}.` : ''}`);
   }
   out.push(a.genreCount === 1 ? `${a.pieces === 1 ? 'Its genre is counted' : 'One of them depends on knowing a genre, counted'} as you know it today: ${a.genreShort ? 'it’s short of complete' : 'it’s complete'}${a.genreBetter ? ', and you know it better than when you taped it' : ''}.` : a.genreCount ? `Each genre is counted as you know it today: of the ${a.genreCount} pieces’ genres, ${a.genreShort} ${a.genreShort === 1 ? 'is' : 'are'} short of complete and ${a.genreBetter} ${a.genreBetter === 1 ? 'is' : 'are'} known better than when you taped them.` : `${a.pieces === 1 ? 'It doesn’t' : 'None of them'} depend${a.pieces === 1 ? '' : 's'} on knowing a genre.`);
   return out.join(' ');

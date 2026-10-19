@@ -32,7 +32,7 @@
 
 import type { Person } from '../domain/model';
 import { BRIEF_BY_ID } from '../content/briefs';
-import { DIMENSION_LABEL, type Dimension } from '../content/tasks';
+import { DIMENSION_LABEL, TASK_PROFILES, type Dimension } from '../content/tasks';
 import { AXES, APPROACH_EFFECT } from '../content/approaches';
 import { ADJUSTMENTS, type AdjustmentId } from '../content/workbook';
 import type { Axis, AxisValue } from '../content/material';
@@ -165,14 +165,19 @@ export function identityOf(person: Person): Identity {
       if (top) lean.set(top[0], (lean.get(top[0]) ?? 0) + 1);
     }
     const [d, n] = [...lean.entries()].sort((x, y) => y[1] - x[1])[0] ?? [];
-    if (d && n && n / takes.length >= ARTISTRY.habitShare) habits.push({ label: `Readings Toward ${DIMENSION_LABEL[d]}`, line: `The readings you choose lean toward ${DIMENSION_LABEL[d].toLowerCase()}: ${n} of ${takes.length} takes.`, evidence: [`Takes of briefs: ${takes.length}`] });
+    if (d && n && n / takes.length >= ARTISTRY.habitShare) habits.push({ label: `Readings Toward ${DIMENSION_LABEL[d]}`, line: `The readings you choose lean toward ${DIMENSION_LABEL[d].toLowerCase()}: ${n} of ${takes.length} takes.`, evidence: [`${takes.length} takes of briefs`] });
   }
 
   // Versatility: kinds of work, genres worked in, features met.
-  const kinds = Object.entries(j.totals ?? {}).filter(([, t]) => (t?.n ?? 0) > 0).length;
+  const kindIds = Object.entries(j.totals ?? {}).filter(([, t]) => (t?.n ?? 0) > 0).map(([k]) => k);
+  const kinds = kindIds.length;
+  // Its evidence names the kinds, where it was “Kinds of work on your record: 4”, the figure the line had just given
+  // (from 2026-10-19, brief 15).
+  const kindNames = kindIds.map((k) => TASK_PROFILES[k]?.label ?? k);
+  const named = kindNames.length > 1 ? `${kindNames.slice(0, -1).join(', ')} and ${kindNames.at(-1)}` : kindNames[0] ?? 'Your work record';
   const genres = Object.values(person.engagement?.byGenre ?? {}).filter((g) => (g.practice ?? 0) > 0).length;
   const met = Object.keys(FEATURE_LABEL).length - unfamiliar.length;
-  const versatility: Line = { label: 'Range', line: `${kinds} kinds of work judged, ${genres} genres worked in, ${met} of ${Object.keys(FEATURE_LABEL).length} kinds of material met.`, evidence: [`Kinds of work on your record: ${kinds}`] };
+  const versatility: Line = { label: 'Range', line: `${kinds} kinds of work judged, ${genres} genres worked in, ${met} of ${Object.keys(FEATURE_LABEL).length} kinds of material met.`, evidence: [named] };
 
   // Response to direction, for life.
   let direction: Line | undefined;
@@ -180,7 +185,7 @@ export function identityOf(person: Person): Identity {
   if (dir && dir.given >= 3) {
     const way = (Object.entries(dir.ways) as [AdjustmentId | 'callback', number][]).sort((a, b) => b[1] - a[1])[0];
     const wayLabel = way ? (way[0] === 'callback' ? 'a callback taken as asked' : ADJUSTMENTS[way[0] as AdjustmentId]?.label.toLowerCase() ?? way[0]) : undefined;
-    direction = { label: 'Taking Direction', line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered || 'none'}${wayLabel ? `. The way you reach for most: ${wayLabel} (${way![1]})` : ''}.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] };
+    direction = { label: 'Taking Direction', line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered || 'none'}${wayLabel ? `. The way you reach for most: ${wayLabel} (${way![1]})` : ''}.`, evidence: [`${dir.given} notes given, ${dir.worked} worked on and ${dir.answered} answered`] };
   }
 
   // Reliability: calls kept, partners not stood up. The calls are the whole program's, the terms before this one's
@@ -198,7 +203,7 @@ export function identityOf(person: Person): Identity {
   // Collaboration: work played with others.
   let collaboration: Line | undefined;
   const tog = j.together;
-  if (tog && tog.n >= 3) collaboration = { label: 'Playing With Others', line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average${tog.slips ? `; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}` : ''}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] };
+  if (tog && tog.n >= 3) collaboration = { label: 'Playing With Others', line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average${tog.slips ? `; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}` : ''}.`, evidence: [`${tog.n} scenes, takes and nights with others`] };
 
   return { pieces, early, strengths, weaknesses, familiar, unfamiliar, habits, versatility, ...(direction ? { direction } : {}), ...(reliability ? { reliability } : {}), ...(collaboration ? { collaboration } : {}), ...(recurring ? { recurring } : {}), ...(untried ? { untried } : {}), ...(habit ? { habit } : {}) };
 }

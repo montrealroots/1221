@@ -1552,7 +1552,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     const said = await briefButton(/^Tape It/);
     must(/Taped: \d+\.\d/.test(said), `no take: ${said}`);
     const text = (await briefPane().innerText()).replace(/\s+/g, ' ');
-    const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
+    const grain = text.match(/Played that way, it suited the scene \([^)]*\) and added [\d.]+ points\. Your abilities and techniques cost it [\d.]+ points\./)?.[0];
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.indexOf('The Last Take'), text.indexOf('The Last Take') + 400)}`);
     const advice = text.match(/(\d+) hours of its exercise(?:, an hour a day,)? would take it from \d+ to about \d+\. On your recent work, judged again as you are now, that’s forecast to be worth about [\d.]+ points? a piece/)?.[0];
     must(advice, 'What To Work On isn’t forecast');
