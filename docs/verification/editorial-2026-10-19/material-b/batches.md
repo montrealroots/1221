@@ -402,4 +402,7 @@ the pane are 390 and 290 wide with nothing scrolling sideways, and each note wra
 (`screens/*-390.png`; two desktop shots kept). Only the pane's quality table scrolls inside its own frame, as it did
 before.
 
-**The whole suite:** see below.
+**The whole suite:** `npx vitest run > m15b/full-suite.txt 2>&1; echo "exit=$?" >> …` (scratchpad), on the final words:
+**exit 0, 391 of 391 test files, 4,713 of 4,713 tests passed**, 5,058 s on a machine shared with nine other areas. It
+ran on the tree committed as the area's end (`12e6757e`): every edit was in place before it started, and the commits after
+it changed no source.
