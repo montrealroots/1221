@@ -13,6 +13,7 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
 import { THIRTEEN } from '@/engine/content/banks-thirteen';
+import { unclaimedLaw } from '@/engine/systems/accountlife';
 const BANKS = THIRTEEN.flatMap((c) => c.banks.map((b) => ({ id: b.id, iso: c.iso })));
 
 const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation }));
@@ -64,6 +65,15 @@ describe('money-data render', () => {
       let sim: Simulation;
       try { sim = lifeAt(bank.id, bank.iso); } catch (e) { for (const p of want) out[p]!.push(`=== ${bank.id}: no life (${(e as Error).message})`); continue; }
       const held = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.universe.playerId && a.kind === 'checking')?.bankId;
+      if (want.includes('accountlife')) {
+        // TEST SETUP, for Your Accounts Over Time's words only: a term deposit opened through its command, where the bank
+        // offers one; the savings marked inactive, and dormant where the bank has a dormancy rule; and money the country
+        // took as unclaimed. The words a state draws are what this reads, not how the state is reached.
+        sim.execute({ kind: 'bank.open_term', payload: { amount: 100_000, bankId: bank.id } });
+        const savings = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.universe.playerId && a.kind === 'savings' && a.bankId === bank.id && a.category !== 'term');
+        if (savings) { savings.inactive = true; savings.dormant = true; }
+        sim.player.unclaimed = [{ amount: 12_345, to: unclaimedLaw(bank.iso)?.to ?? 'the state', at: sim.now }];
+      }
       for (const p of want) {
         h.sim = sim;
         const Panel = await PANELS[p]!();

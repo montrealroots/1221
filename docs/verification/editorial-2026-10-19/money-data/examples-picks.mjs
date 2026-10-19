@@ -1,6 +1,8 @@
-/** The examples examples.mjs writes, batch by batch. */
+/** The before-and-after pairs that `examples.mjs` writes to examples.json, batch by batch. */
 const SEC = { file: 'b1-security-changes.json', sourceFile: 'src/engine/content/security.ts' };
 const SEEN = 'read on Your Cards, rendered/security.txt (render-panels.test.ts)';
+const LIFE = { file: 'b2-accountlife-changes.json', sourceFile: 'src/engine/content/accountlife.ts' };
+const SEEN2 = 'read on Your Accounts Over Time with a term deposit and a dormant savings account, rendered/accountlife.txt (render-panels.test.ts)';
 export const PICKS = [
   // Batch 1: security.ts
   { ...SEC, export: 'FRAUD_LAW', key: 'US', field: 'debitWords', kind: 'official', meaningSensitive: true,
@@ -39,4 +41,33 @@ export const PICKS = [
   { ...SEC, export: 'SECURITY', key: 'mx-banorte', field: 'source', kind: 'label', meaningSensitive: false,
     why: 'A source line printed ".," where a note on the live site met the next part. The note now joins the reading it explains.',
     verified: `${SEEN}, Banorte's Sources And Estimates` },
+
+  // Batch 2: accountlife.ts
+  { ...LIFE, export: 'ACCOUNT_LIFE', key: 'us-chase', field: 'penaltyWords', kind: 'official', meaningSensitive: true,
+    why: 'A list of terms in shorthand ("term under 6 months, 90 days\' interest…; …: at least 7 days\' interest") became sentences about the amount you take out, in the order a player asks: what it costs, the limit, the first-week rule, where it comes from.',
+    verified: `${SEEN2}, Chase; each band against ACCOUNT_LIFE['us-chase'].penaltyDays (6 months 90, 24 months 180, then 365), penaltyCapped and penaltyFirstWeekDays 7` },
+  { ...LIFE, export: 'ACCOUNT_LIFE', key: 'ie-ptsb', field: 'penaltyWords', kind: 'official', meaningSensitive: true,
+    why: 'The charge was printed as a formula with letters ("1% x A x T/365 or A x T x D%/365 (A = …)"). The same two charges in words, the greater of them, and the €20 floor.',
+    verified: `${SEEN2}, PTSB; 1% x A x T/365 is 1% a year on the amount for the days left, A x T x D%/365 the rate difference a year on it` },
+  { ...LIFE, export: 'ACCOUNT_LIFE', key: 'mx-banorte', field: 'dormancyWords', kind: 'official', meaningSensitive: true,
+    why: 'A semicolon chain in parentheses became the three things a player needs in order: when the bank moves it, that it\'s still theirs there, and when it goes for good. Shared by Mexico\'s four banks.',
+    verified: `${SEEN2}, Banorte; the 3 and 3 years against UNCLAIMED.MX.years (6) and dormantMonths (36)` },
+  { ...LIFE, export: 'ACCOUNT_LIFE', key: 'kr-kb-kookmin', field: 'maturityWords', kind: 'official', meaningSensitive: true,
+    why: 'Korean terms left untranslated (만기후이율) and "base x50%" shorthand. The Korean stays beside its English, once, so a player can find it on the bank\'s page.',
+    verified: `${SEEN2}, KB Kookmin` },
+  { ...LIFE, export: 'ACCOUNT_LIFE', key: 'jp-smbc', field: 'dormancyWords', kind: 'official', meaningSensitive: true,
+    why: 'Japanese terms with no English, "≥ ¥10,000", "Then:" and a note on where the research found the rule ("rule cited from Japan Post Bank\'s page") became sentences; the provenance is kept, said as the game\'s note.',
+    verified: `${SEEN2}, SMBC` },
+  { ...LIFE, export: 'UNCLAIMED', key: 'MX', field: 'to', kind: 'notification', meaningSensitive: true,
+    why: 'The field is a destination, printed as "… went to <it> after years unused." and in the bank\'s question and notice. A clause had been put there, so the screen read "went to after 3 years without movement the balance goes to …". It names the recipient now; the steps moved to claimBack.',
+    verified: `${SEEN2}, Banorte's unclaimed line; systems/accountlife.ts prints it in "it goes to … as unclaimed money" and "… went to …"` },
+  { ...LIFE, export: 'UNCLAIMED', key: 'CA', field: 'claimBack', kind: 'notification', meaningSensitive: false,
+    why: 'Printed after a full stop, it began "yes, claim from …", in lower case. Every country\'s now reads as sentences after "… went to … after years unused."',
+    verified: `${SEEN2}, RBC's unclaimed line` },
+  { ...LIFE, export: 'ACCOUNT_LIFE', key: 'us-citi', field: 'source', kind: 'label', meaningSensitive: false,
+    why: 'A bare day after a web address read as the page\'s date. It\'s the day the page was read, as the glossary\'s Source line says it.',
+    verified: `${SEEN2}, Citi: "Source: the bank’s terms, https://online.citi.com/JRS/popups/ao/CDAA.pdf, read September 26, 2026."` },
+  { ...LIFE, export: 'ACCOUNT_LIFE', key: 'jp-mufg', field: 'penaltyWords', kind: 'official', meaningSensitive: true,
+    why: 'A rate table in shorthand ("<6 months = …; 6m-1y = … ×70%") said as bands in words, with the product\'s Japanese name kept as the bank writes it and glossed once.',
+    verified: `${SEEN2}, MUFG; the bands against EARLY_RATE['jp-mufg'] (systems/accountlife.ts: under 6 months the ordinary rate, then 70%)` },
 ];

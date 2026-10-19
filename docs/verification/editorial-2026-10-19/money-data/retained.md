@@ -25,3 +25,14 @@ holds many fields; where a source was rewritten in part, the fields kept inside 
 - **The source lines** (72 of 73): each is a citation, the documents and pages read with their dates and the day they
   were read, at the foot of Your Cards behind Sources And Estimates. A player checks a figure against them, so their
   titles, numbers and addresses stay as the bank publishes them.
+
+## `content/accountlife.ts`
+
+- **ASB, `dormancyWords`:** "Under the Unclaimed Money Act, if 5 or more years pass since you last transacted and ASB
+  has had no other contact with you, ASB tries to reach you. Without new activity by the deadline the accounts are
+  closed and the money transferred to Inland Revenue." Already second person, in the order things happen, naming the
+  law and where the money goes.
+- **The US's `to`, `claimBack` and `source`:** never shown, because `unclaimedLaw` puts words about any state in
+  their place (`systems/accountlife.ts`); the research is where the three years came from, and stays as the record.
+- **Germany's `to` and `claimBack`:** never shown, since Germany has no `years` and `idleAccounts` moves nothing there;
+  the research's account of why stays as written.

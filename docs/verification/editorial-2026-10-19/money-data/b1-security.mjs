@@ -6,7 +6,9 @@
  * ("The law on the debit card: …", "The law on the credit card: …", "The law on a payment you report as not yours:
  * …"), and the source line. Applied with `apply-gen.mjs`; the before of each is in `b1-security-changes.json`.
  */
-export default {
+import { readDaysFor } from './read-days.mjs';
+
+const edits = {
   SECURITY: {
     'us-chase': {
       lostCardWords: 'Once you report a card lost or stolen, Chase declines anything new on it and sends a replacement with a new number. For a credit card, the account itself stays open and keeps its age on your credit record.',
@@ -346,3 +348,11 @@ export default {
     },
   },
 };
+
+// Each law's source line ends on the day it was read (batch 2, `read-days.mjs`): "read September 26, 2026", not a bare
+// day after a web address. The banks' own source lines already say which day was read.
+for (const [name, entries] of Object.entries(readDaysFor('src/engine/content/security.ts', { FRAUD_LAW: [] }))) {
+  for (const [key, fields] of Object.entries(entries)) edits[name][key] = { ...edits[name][key], ...fields };
+}
+
+export default edits;

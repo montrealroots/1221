@@ -126,3 +126,105 @@ The bank's notes now speak to the player as the panel above them does. The laws 
 
 Your Cards at all 60 banks, `rendered/security.txt`, scanned for a field name, `undefined`, a doubled stop and a space
 before punctuation: none.
+
+## Batch 2: `content/accountlife.ts` (2 sources, 10,567 words), and the laws' source lines
+
+### What the screen shows
+
+Your Accounts Over Time (`ui/bank/BankAccountLife.tsx`), for the bank whose screen it is:
+- `penaltyWords`, after what breaking a term deposit costs: "The bank’s terms: …" (`breakQuote`, `systems/accountlife.ts`);
+- `maturityWords`, under a term deposit: "The bank’s terms at the end: …";
+- `dormancyWords`, beside an inactive or dormant account: "The bank’s terms: …";
+- `source`: "Source: the bank’s terms, …."
+
+And each country's (`UNCLAIMED`, through `unclaimedLaw`):
+- `to`, in "… went to <to> after years unused.", in the bank's question ("Unless you tell the bank to keep the account by
+  …, it goes to <to> as unclaimed money.") and in the ledger's lines ("Unclaimed, to <to>", "Unclaimed money returned
+  from <to>");
+- `claimBack`, after the first and in the notice;
+- `source`: "The country’s rules: …."
+
+Not shown:
+- the US's `to`, `claimBack` and `source`, which `unclaimedLaw` replaces with words about any state;
+- Germany's `to` and `claimBack`, since with no `years` nothing moves (`idleAccounts`);
+- `atEnd`, `endChoices` and the numbers, which the engine reads and the screen says in its own words (`END_WORDS`).
+
+### What changed and what stayed
+
+270 fields rewritten, 1 kept (ASB's `dormancyWords`), and the US's and Germany's unshown fields left:
+- **Shorthand to sentences.** The research's notes ("term under 6 months, 90 days' interest; …", "<6m = ordinary
+  savings rate; 6m-1y = … ×70%", "1% x A x T/365 (A = amount withdrawn …)", "≥ ¥10,000", "Then: 10 years …") became
+  sentences about the player's deposit, with every band, rate, floor, cap and day kept, in the order a player asks: what
+  it costs, the limits, then the exceptions.
+- **Japanese and Korean terms** that stood alone ("만기후이율", "休眠預金等活用法", "거래중지계좌") are glossed in English,
+  with the term kept once beside it so a player can find it on the bank's own page. Product names stay as the banks
+  write them (スーパー定期, KB Star 정기예금, Fastvaxtareikningur, Festgeld).
+- **Quotations** stay word for word in their marks ("cannot be redeemed before its maturity date", “la regulación
+  aplicable no permite la cancelación anticipada”), with the game's English beside a Spanish or Japanese one, as the
+  game's.
+- **Sources outside the bank** said as such: "third-party press report", "(third-party)" and "unverified" became "by a
+  press report from outside the bank", "a guide from outside the bank … that couldn't be checked against Santander's
+  own terms".
+- **A destination is a destination.** `UNCLAIMED.to` is printed as a noun in three sentences and two ledger lines, but
+  the research had put a clause there: Mexico's read "went to after 3 years without movement the balance goes to the
+  bank's 'cuenta global' …", Iceland's "went to no state unclaimed-money scheme found; …". Each `to` names the
+  recipient now (the Beneficencia Pública, the bank, the Caisse des Dépôts, Inland Revenue). The conditions moved
+  whole into `claimBack`, which had begun "yes, …" in lower case after a full stop and now reads as sentences.
+- **Source lines say which day.** Each bank's and country's source line ended on a bare day after a web address
+  ("…/CDAA.pdf, September 26, 2026"), and read as the page's own date. It's the day the research read it, so it now
+  says "read September 26, 2026", as the glossary's Source line does (`read-days.mjs`). The 13 laws' source lines on
+  Your Cards had the same bare day, and were changed with them (`b1-security.mjs`, the FRAUD_LAW source re-marked).
+- "Chequing", "current account" and "sight account" in the game's own words are "checking account". A bank's product
+  name keeps its own (Personal Current Account, Guide to your Current Account).
+
+### Meaning-sensitive changes, and how each was checked
+
+- **Each penalty band** against the bank's numbers where the engine reads them: Chase's `penaltyDays` (6 months 90,
+  24 months 180, then 365; capped; first week 7), Bank of America's, Wells Fargo's, Citi's, Capital One's, Lloyds' (12
+  months 90, 24 months 180), NatWest's and HSBC's (90, capped), and MUFG's against `EARLY_RATE` (under 6 months the
+  ordinary rate, then 70%). The words keep the bank's own wider rules; the engine's figure is the screen's sentence
+  above them.
+- **PTSB's formula**: 1% x A x T/365 is 1% a year on the amount for the days left; A x T x D%/365 is the rate
+  difference a year on it. The greater, at least €20. Said so.
+- **"Remaining" against "elapsed".** NAB's and BNZ's cuts run on the share of the term still to run, CommBank's,
+  Westpac's and ANZ's on the share that has run. Each says which, as its research did in capitals.
+- **Each `to`** keeps its recipient exactly, and nothing of the old clause was dropped: each condition is in `claimBack`
+  (Canada's "for federally regulated banks", Britain's "if the bank chooses to transfer", Ireland's September 30 and
+  March 31, France's 3 years after a death and 27 years, Japan's January 1, 2009, Korea's lapse at 5 years, Australia's
+  A$500, New Zealand's "in limited cases less").
+- **Iceland's** `to` is "the bank": with no state scheme, a lapsed claim leaves the money where it is, which the
+  claim-back sentence says.
+- **The PTSB sentence** was first written "For an Interest First account": `tests/evidence3-person.test.ts`'s
+  i-stale-claims check reads "an interest" as the removed interests and failed it. It says "On Interest First
+  accounts", as the research did, and the check passes.
+- No number, id or key moved: `apply-gen.mjs` writes only the named string fields, and the tests that play the
+  penalties, notices, dormancy and unclaimed money pass unchanged.
+
+### Interactions read whole
+
+Your Accounts Over Time at each bank with a term deposit opened through `bank.open_term` and its savings dormant
+(`rendered/accountlife.txt`): the term's line and the game's sentence about its end, then the bank's terms at the end;
+what breaking it costs, then the bank's terms; the end buttons; the round-ups; the dormant account and Reactivate; the
+cancel lines; the unclaimed line and Claim It Back; the source line. With them, the bank's question before the money
+goes and the notice after it (`systems/accountlife.ts`), and the guide's Your Accounts Over Time entries
+(`content/guide/money.ts`, the money area's), which take their figures from the same data.
+
+### Tests and tool matchers
+
+- `tests/evidence-g10-money.test.ts`: Citi's penalty words ("The bank’s terms: The penalty is simple interest on the
+  amount you take out: 90 days’ for a CD of 1 year or less") and Capital One's dormancy words ("The bank’s terms: An
+  account goes dormant after 24 months with no transactions."), each the same `toContain`.
+- No tool matcher held these words.
+
+### Checks
+
+- `npx tsc -b --noEmit`: exit 0 (`b2-tsc.txt`). `npx eslint` on the changed files: exit 0 (`b2-eslint.txt`).
+- `npx vitest run` on the 15 test files that touch the account-life data, Your Accounts Over Time or Your Cards: 258 of
+  258, exit 0 (`b2-tests.txt`), after the one failure above was put right.
+- The text checks (`checks.sh`): exit 0 each (`b2-checks.txt`); typos first failed on "The examples examples.mjs" in a
+  comment of this folder's, mended. Engine-speak stayed at 332.
+
+### Screens verified
+
+Your Accounts Over Time at all 60 banks (`rendered/accountlife.txt`) and Your Cards again (`rendered/security.txt`),
+both with the new source lines.

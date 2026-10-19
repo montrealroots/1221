@@ -60,3 +60,51 @@ numbers don't follow:
   for it."
 - **Here:** the notes shown only under one card now start with that card (batches.md, batch 1). A field per card would
   settle it; that's a change to the data's shape, so it's left.
+
+## 6. Unclaimed money's destination printed as a clause (fixed, in words)
+
+- **Where:** `content/accountlife.ts`, `UNCLAIMED.<country>.to` and `claimBack`, printed in "… went to <to> after years
+  unused. <claimBack>" (`ui/bank/BankAccountLife.tsx`), in the bank's question and notice and in two ledger lines
+  (`systems/accountlife.ts`).
+- **What:** Mexico's read "went to after 3 years without movement the balance goes to the bank's 'cuenta global' …",
+  Iceland's "went to no state unclaimed-money scheme found; …", and every `claimBack` began "yes, …" after a full stop.
+- **How found:** reading each field in the sentence that prints it, then drawing the panel with money unclaimed
+  (`rendered/accountlife.txt`).
+- **Fixed:** each `to` is the recipient; its conditions moved whole into `claimBack`, which reads as sentences.
+
+## 7. Claim It Back where the country's law says the money can't be claimed (left to the coordinator)
+
+- **Where:** `systems/accountlife.ts`, `bank.claim_unclaimed`, and its button on Your Accounts Over Time.
+- **What:** the command gives back any money held as unclaimed, in every country. The data's own words say Mexico's
+  can't be claimed once it reaches the Beneficencia Pública, Spain's has no route back, and Iceland's claim is gone
+  once it lapses. The words say so beside a button that does it anyway.
+- **How found:** reading `claimBack` beside the command it sits by.
+- **Not fixed:** a change to what the command does, outside this area's files.
+
+## 8. Australia's unclaimed money: any balance goes, where the law takes A$500 or more (left)
+
+- **Where:** `systems/accountlife.ts`, `idleAccounts`: after `years`, any balance over 0 goes. `UNCLAIMED.AU` (and
+  ANZ's and Westpac's own words) say the Commonwealth takes a balance of A$500 or more; ANZ may close a smaller one.
+- **Not fixed:** a rule change; the words say A$500.
+
+## 9. Term deposit penalties estimated where the bank publishes a rule (left)
+
+- **Where:** `systems/accountlife.ts`, `breakQuote`. A bank with no `penaltyDays` and no `EARLY_RATE` is charged the
+  interest earned so far, and the screen calls it estimated. Several of those banks publish their rule, which the
+  screen shows beside the estimate: Landsbankinn's 2% of the amount, CommBank's, Westpac's, NAB's and ANZ's cuts by
+  the share of the term, plus A$30 at CommBank and ANZ; PTSB's charge; Sabadell's 1% a year; BBVA's.
+- **Not fixed:** the screen labels the figure as estimated, so nothing is said that isn't true. Modelling each is a
+  change to the rules.
+
+## 10. BMO's notice for a change at the end may be the other way round (a question)
+
+- **Where:** `ACCOUNT_LIFE['ca-bmo']`: `endNoticeDays: 21`, which the screen reads as "the bank needs 21 days' notice"
+  (no change in the last 21 days). The bank's words in the data: instructions "can be changed only in writing within 21
+  days before maturity", which can be read as only in the last 21 days.
+- **Not changed:** the words keep the bank's phrase; which reading BMO's terms mean needs its terms read again.
+
+## 11. "Current account" in the game's sentence about a term deposit's end (the money area's)
+
+- **Where:** `systems/accountlife.ts`, `END_WORDS.paid_out`: "it is paid, with its interest, into your current
+  account." (`rendered/accountlife.txt`, Arion).
+- **Suggested:** "it’s paid, with its interest, into your checking account." (the glossary's word from brief 15).

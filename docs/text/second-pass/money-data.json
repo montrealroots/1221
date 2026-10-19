@@ -1,9 +1,23 @@
 {
+ "src/engine/content/accountlife.ts#ACCOUNT_LIFE": {
+  "status": "Rewritten",
+  "hash": "aab7505e3357",
+  "on": "2026-10-19",
+  "evidence": "Your Accounts Over Time drawn at all 60 banks with a term deposit and a dormant savings account by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accountlife.txt); tests/evidence-g10-money.test.ts asserts Citi's penalty and Capital One's dormancy words on the screen",
+  "first": "Pending"
+ },
+ "src/engine/content/accountlife.ts#UNCLAIMED": {
+  "status": "Rewritten",
+  "hash": "65e9075795b4",
+  "on": "2026-10-19",
+  "evidence": "The unclaimed-money line drawn for each of the 13 countries by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accountlife.txt), with its claim-back sentence and the country's source line",
+  "first": "Pending"
+ },
  "src/engine/content/security.ts#FRAUD_LAW": {
   "status": "Rewritten",
-  "hash": "217c92c7fdb4",
+  "hash": "0e4394124a82",
   "on": "2026-10-19",
-  "evidence": "Your Cards drawn at a bank in each of the 13 countries by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/security.txt); tests/language-money.test.ts asserts the US debit card law's opening on Chase's screen",
+  "evidence": "Your Cards drawn at a bank in each of the 13 countries by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/security.txt), the law sources now ending 'read September 26, 2026'; tests/language-money.test.ts asserts the US debit card law's opening",
   "first": "Pending"
  },
  "src/engine/content/security.ts#SECURITY": {

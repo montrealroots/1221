@@ -1314,5 +1314,96 @@
   "field": "suspectWords",
   "before": "If Kiwibank notices unusual spending it may send a text or email asking whether the customer made the transaction; if it can't reach them and fraud looks likely, it may temporarily block the card until they speak.",
   "after": "If Kiwibank notices unusual spending, it may text or email to ask whether you made the payment. If it can’t reach you and fraud looks likely, it may block the card until you speak to it."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "US",
+  "field": "source",
+  "before": "https://www.consumerfinance.gov/rules-policy/regulations/1005/6/; https://www.consumerfinance.gov/rules-policy/regulations/1005/11/; https://www.consumerfinance.gov/rules-policy/regulations/1026/12/; https://bjs.ojp.gov/document/vit21.pdf, September 26, 2026",
+  "after": "https://www.consumerfinance.gov/rules-policy/regulations/1005/6/; https://www.consumerfinance.gov/rules-policy/regulations/1005/11/; https://www.consumerfinance.gov/rules-policy/regulations/1026/12/; https://bjs.ojp.gov/document/vit21.pdf, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "CA",
+  "field": "source",
+  "before": "https://www.canada.ca/en/financial-consumer-agency/services/industry/laws-regulations/debit-card-code-conduct.html; https://laws-lois.justice.gc.ca/eng/acts/B-1.01/section-627.33.html; https://www.canada.ca/en/financial-consumer-agency/services/rights-responsibilities/protection-unauthorized-transactions.html; https://www150.statcan.gc.ca/n1/pub/89-652-x/89-652-x2023001-eng.htm, September 26, 2026",
+  "after": "https://www.canada.ca/en/financial-consumer-agency/services/industry/laws-regulations/debit-card-code-conduct.html; https://laws-lois.justice.gc.ca/eng/acts/B-1.01/section-627.33.html; https://www.canada.ca/en/financial-consumer-agency/services/rights-responsibilities/protection-unauthorized-transactions.html; https://www150.statcan.gc.ca/n1/pub/89-652-x/89-652-x2023001-eng.htm, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "MX",
+  "field": "source",
+  "before": "https://leyes-mx.com/ley_para_la_transparencia_y_ordenamiento_de_los_servicios_financieros/23.htm; https://www.gob.mx/condusef/prensa/cargos-no-reconocidos-en-tarjeta-de-debito-se-restituiran-en-dos-dias-habiles-bancarios?idiom=es; https://www.gob.mx/condusef/articulos/cargos-no-reconocidos?idiom=es; https://www.cnbv.gob.mx/Inclusi%C3%B3n/Anexos%20Inclusin%20Financiera/Reporte_ENIF2024.pdf, September 26, 2026",
+  "after": "https://leyes-mx.com/ley_para_la_transparencia_y_ordenamiento_de_los_servicios_financieros/23.htm; https://www.gob.mx/condusef/prensa/cargos-no-reconocidos-en-tarjeta-de-debito-se-restituiran-en-dos-dias-habiles-bancarios?idiom=es; https://www.gob.mx/condusef/articulos/cargos-no-reconocidos?idiom=es; https://www.cnbv.gob.mx/Inclusi%C3%B3n/Anexos%20Inclusin%20Financiera/Reporte_ENIF2024.pdf, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "GB",
+  "field": "source",
+  "before": "https://www.legislation.gov.uk/uksi/2017/752/regulation/74; https://www.legislation.gov.uk/uksi/2017/752/regulation/76; https://www.legislation.gov.uk/uksi/2017/752/regulation/77; https://www.legislation.gov.uk/ukpga/1974/39/section/84; UK Finance Annual Fraud Report 2026, September 26, 2026",
+  "after": "https://www.legislation.gov.uk/uksi/2017/752/regulation/74; https://www.legislation.gov.uk/uksi/2017/752/regulation/76; https://www.legislation.gov.uk/uksi/2017/752/regulation/77; https://www.legislation.gov.uk/ukpga/1974/39/section/84; UK Finance Annual Fraud Report 2026, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "IE",
+  "field": "source",
+  "before": "https://www.irishstatutebook.ie/eli/2018/si/6/made/en/print; https://www.cso.ie/en/releasesandpublications/ep/p-cv/crimeandvictimisation2025/personalcrime/, September 26, 2026",
+  "after": "https://www.irishstatutebook.ie/eli/2018/si/6/made/en/print; https://www.cso.ie/en/releasesandpublications/ep/p-cv/crimeandvictimisation2025/personalcrime/, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "IS",
+  "field": "source",
+  "before": "https://www.althingi.is/lagas/nuna/2021114.html; Eurostat isoc_cisci_pb, September 26, 2026",
+  "after": "https://www.althingi.is/lagas/nuna/2021114.html; Eurostat isoc_cisci_pb, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "FR",
+  "field": "source",
+  "before": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035430527; https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072026/LEGISCTA000020860778/; https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035430562; SSMSI VRS 2023, September 26, 2026",
+  "after": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035430527; https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072026/LEGISCTA000020860778/; https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035430562; SSMSI VRS 2023, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "DE",
+  "field": "source",
+  "before": "https://www.gesetze-im-internet.de/bgb/__675v.html; https://www.gesetze-im-internet.de/bgb/__675u.html; https://www.gesetze-im-internet.de/bgb/__676b.html; Eurostat isoc_cisci_pb, September 26, 2026",
+  "after": "https://www.gesetze-im-internet.de/bgb/__675v.html; https://www.gesetze-im-internet.de/bgb/__675u.html; https://www.gesetze-im-internet.de/bgb/__676b.html; Eurostat isoc_cisci_pb, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "ES",
+  "field": "source",
+  "before": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-16036; Eurostat isoc_cisci_pb, September 26, 2026",
+  "after": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-16036; Eurostat isoc_cisci_pb, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "JP",
+  "field": "source",
+  "before": "https://laws.e-gov.go.jp/api/1/lawdata/417AC1000000094 (Act No. 94 of 2005, arts. 3–5 and the two-year rule), September 26, 2026",
+  "after": "https://laws.e-gov.go.jp/api/1/lawdata/417AC1000000094 (Act No. 94 of 2005, arts. 3–5 and the two-year rule), read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "KR",
+  "field": "source",
+  "before": "https://www.law.go.kr (여신전문금융업법 제16조; 시행령 제6조의9; 전자금융거래법 제9조, 제10조), September 26, 2026",
+  "after": "https://www.law.go.kr (여신전문금융업법 제16조; 시행령 제6조의9; 전자금융거래법 제9조, 제10조), read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "AU",
+  "field": "source",
+  "before": "https://download.asic.gov.au/media/lloeicwb/epayments-code-published-02-june-2022.pdf; https://www.abs.gov.au/statistics/people/crime-and-justice/personal-fraud/latest-release, September 26, 2026",
+  "after": "https://download.asic.gov.au/media/lloeicwb/epayments-code-published-02-june-2022.pdf; https://www.abs.gov.au/statistics/people/crime-and-justice/personal-fraud/latest-release, read September 26, 2026"
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "NZ",
+  "field": "source",
+  "before": "https://nzba.org.nz/wp-content/uploads/2025/11/Code-of-Banking-Practice-A4-print.pdf; https://www.justice.govt.nz/justice-sector-policy/research-data/nzcvs/nzcvs-cycle-8-resources-and-results/, September 26, 2026",
+  "after": "https://nzba.org.nz/wp-content/uploads/2025/11/Code-of-Banking-Practice-A4-print.pdf; https://www.justice.govt.nz/justice-sector-policy/research-data/nzcvs/nzcvs-cycle-8-resources-and-results/, read September 26, 2026"
  }
 ]
