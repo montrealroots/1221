@@ -8,7 +8,7 @@
 [welcome] ok   I’ve Read It is offered
 [welcome] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own
 [welcome] ok   and offers Try It or the next chapter, in its words — he date, the town, its region and country, its money, the season and the daylight, when you press them It’s open now. Press Try It to go and use it, or go straight on to “What’s Coming”. Next time you open the guide, it starts there. Try It Next: What’s Coming
-[welcome] ok   the line under the greeting shows the time, the town, its time zone, the season and the weather — Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ⛈️ 72°F Thunderstorm
+[welcome] ok   the line under the greeting shows the time, the town, its time zone, the season and the weather — Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ⛅ 72°F Partly Cloudy
 [welcome] ok   Where You Are is on Home
 [welcome] ok   pressing the town’s name opens it just below — New Haven: WHERE YOU LIVE New Haven Close This is where you live. It’s 7:30 AM, and 130K people live here. 130K people live here, in Connecticut, and the climate is contin
 [welcome] ok   with links inside for its region, its country and its money — Close | Connecticut | United States | Dollar | Daylight
@@ -150,9 +150,9 @@
 [weather] ok   I’ve Read It is offered
 [weather] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
 [weather] ok   and offers Try It or the next chapter, in its words — A Whole Life Later OPENED Weather Weather The sky, the week, each day and each hour, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Drama School”. Next time you open the guide, it starts there. Try It Next: Drama School
-[weather] ok   the Weather panel shows the weather now and the next few days — Weather How This Works ☁️63°F Overcast · High 77°F · Low 59°F Humidity 58% · Wind 13 mph · Continental Thu 🌧️ Rain 75° / 64° Fri 🌧️ Rain 77° / 66° Sat 🌧️ Rain 84° / 73° Sun ⛈️ Storm 83° / 65° Mon �
+[weather] ok   the Weather panel shows the weather now and the next few days — Weather How This Works ☁️72°F Overcast · High 81°F · Low 70°F Humidity 72% · Wind 9 mph · Continental Thu ⛈️ Storm 93° / 75° Fri ⛅ Cloudy 97° / 79° Sat ⛅ Cloudy 93° / 75° Sun ⛅ Cloudy 95° / 77° Mon 🌧
 [weather] ok   today’s weather and the days are links — 20 links
-[weather] ok   pressing it shows more: the week, each day and each hour — Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 63°F and overcast where you are, with a high of 77°F and a low of 59°F today. The wind is 13 mph and the humidity is 58%. Today is 4° colder than normal for
+[weather] ok   pressing it shows more: the week, each day and each hour — Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 72°F and overcast where you are, with a high of 81°F and a low of 70°F today. The wind is 9 mph and the humidity is 72%. Today is 5° warmer than normal for
 [school] ok   Guide, in the top bar, opens at “Drama School” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
 [school] ok   Chapter 11 Of 17 shows “Drama School” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
 [school] ok   its lead is on the page — Classes, coursework, casting and your degree at Yale.
@@ -185,10 +185,10 @@
 [profile] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
 [profile] ok   and offers Try It or the next chapter, in its words — r Work So Far An ability, a genre and a piece of work, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Cover, Benefits And Returns”. Next time you open the guide, it starts there. Try It Next: Cover, Benefits And Returns
 [profile] ok   Player Profile, in the menu, lists the twelve abilities
-[profile] ok   pressing an ability shows what it is, how it grows and where it counts — Presence: AN ACTING ABILITY Presence Close You’re at 71.6 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 71.6 28.4 to full CLASSES REACH — Classes don’t build it; performing in front of people d
+[profile] ok   pressing an ability shows what it is, how it grows and where it counts — Presence: AN ACTING ABILITY Presence Close You’re at 60.8 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 60.8 39.2 to full CLASSES REACH — Classes don’t build it; performing in front of people d
 [profile] ok   the exercise beside a technique, such as Comic Timing, offers a Tier, a Focus and Practice An Hour — Tier 1, Focus 1
-[profile] ok   before the hour, it says about how much it will add — Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.23 to comedy (now 54.8), and +0.18 to disci
-[profile] ok   Practice An Hour practices for an hour and says what it added — Comic Timing: +0.23.
+[profile] ok   before the hour, it says about how much it will add — Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.24 to comedy (now 52.4), and +0.18 to disci
+[profile] ok   Practice An Hour practices for an hour and says what it added — Comic Timing: +0.24.
 [profile] ok   under Genres, Study It reads a play or watches a film of the genre — Absurdist: an hour and a half with a film of its kind. Familiarity 8.0 of 100.
 [profile] ok   Open Its Brief shows where and when, the two of you, what you want and what’s in the way — Skip To Content Menu 🎬 9:10 AM · August 26, 2026 Play Sleep Look After Yourself ▾ Advance ▾ Guide (5 Left) Not Saved Yet Save & Exit GUIDE · 13 OF 17 Cover, Benefits And Returns Read Home › Player Pr
 [profile] ok   and the brief offers Break It Down, Learn The Lines, Rehearse It On Your Feet, Read With and Tape It
@@ -210,7 +210,7 @@
 [papers] ok   Your Doctor chooses the practice, and Yale Health Center sees a student it covers the next weekday, at no charge — The Practice Your Cover Uses | Fair Haven Community Health Care, A Visit $183.98, A 24-Day Wait | Yale Health Center, Student Health, A Visit $0.00, The Next Weekday
 [papers] ok   with no visit owed there’s no Book An Appointment: the game books a visit itself when one is needed
 [papers] ok   The Marketplace and Care And Its Bills are on Health Cover
-[papers] no long-term condition on this life (Your Conditions: Your Conditions You wear prescription lenses How This Works Sources And Estimate); followed on the health save (follow-saves.mjs)
+[papers] no long-term condition on this life (Your Conditions: ); followed on the health save (follow-saves.mjs)
 [papers] screenshot 11-health-cover.png
 [papers] ok   Unemployment has SNAP with Apply, and says a Connecticut claim pays only once you’ve left school — SNAP Food assistance, onto an EBT card for groceries Apply How This Works CLAIM None Open You can apply now AT MOST $298.00 A month, less 30% of net income ON T
 [papers] Tax Returns before the first February: Tax Returns Health Cover Unemployment Passport And ID Permission To Work No Returns Yet How This Works Each February, last year’s return is ready here if you owe tax, are due a refund, or had income o
@@ -226,8 +226,8 @@
 [documents] ok   Passport And ID has Your Passport, with Renew It or Apply For One, and the faster service
 [documents] ok   Report Lost and Report Stolen are beside a document
 [documents] ok   Your ID offers Get with the card’s name — Get Non-Driver Identification Card
-[documents] ok   pressing a document you hold shows who issued it, its number’s last digits, when it was issued and runs out, and what it lets you do — PERMISSION TO DRIVE Class D (Operator) Driver License Close It’s in force until June 14, 2028, and its number ends 5846. New York State Department of Motor Vehicles (NY DMV) issued it on June 14, 2020. In New Haven, it would let you drive. Driving isn’t part of the game, so this is for reference. NU
-[documents] ok   Going Abroad: picking a country shows what it asks of your citizenship, or what you’re missing — You need a passport in force, and you don’t have one. Apply for one under Your Passport. Australia asks citizens of the → You need a passport in force, and you don’t have one. Apply for one under Your Passport.
+[documents] ok   pressing a document you hold shows who issued it, its number’s last digits, when it was issued and runs out, and what it lets you do — TRAVEL DOCUMENT U.S. Passport Book Close It’s in force until January 20, 2030, and its number ends 5846. The United States issued it on January 20, 2020. It’s the passport in force in your name. Of the 15 countries the game has entry rules for, 11 would let you in on it today for a week’s visit. Tra
+[documents] ok   Going Abroad: picking a country shows what it asks of your citizenship, or what you’re missing — Australia asks citizens of the United States for ETA (Electronic Travel Authority, subclass 601): A$20.00, applied for → It would let you in for a week’s visit. Up to 90 days as a visitor.
 [documents] screenshot 12-passport-and-id.png
 [documents] ok   Permission To Work has Apply For OPT and Residence Abroad
 [money] ok   Guide, in the top bar, opens at “Money” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
@@ -267,7 +267,7 @@
 [life] ok   I’ve Read It is offered
 [life] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
 [life] ok   and says it was the last chapter — ENED A Whole Life You, when you press your name That was the last chapter, and every part of the game is open now. To read any chapter again, press Guide at the top of the screen. Try It Start Playing
-[life] ok   pressing your name on Home opens your own page: your wellbeing, your readiness and your traits — YOURSELF Alex Rivera Close Rested, steady and ready for a real day. Your body. 5 ft 10 in and 180 lb, with a body mass index of 25.9, in the overweight range. In feet, inches and pounds, the units of the United States, where you live. On your papers. Pronouns they/them. A citizen of the United State
+[life] ok   pressing your name on Home opens your own page: your wellbeing, your readiness and your traits — YOURSELF Alex Rivera Close Rested, steady and ready for a real day. Your body. 5 ft 1 in and 138 lb, with a body mass index of 26.1, in the overweight range. In feet, inches and pounds, the units of the United States, where you live. On your papers. Pronouns they/them. A citizen of the United States
 [life] screenshot 15-your-own-page.png
 [life] ok   so does the line at the top of How You Are — Alex Rivera
 [end] ok   with every chapter read, nothing is locked — 0 locked

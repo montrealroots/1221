@@ -404,7 +404,7 @@
   "source": "src/engine/content/tutorial.ts#CHAPTERS [papers]",
   "kind": "tutorial",
   "before": "Out of paid work, File A Claim, on Unemployment, opens unemployment insurance where you live, if your wages qualify.",
-  "after": "If you’re out of paid work, press File A Claim, on Unemployment, to claim unemployment insurance where you live, if your past wages qualify; in Connecticut a claim pays only once you’ve left school. SNAP, on the same tab, is food assistance on an EBT card for groceries, and Apply applies for it.",
+  "after": "If you’re out of paid work, press File A Claim, on Unemployment, to claim unemployment insurance where you live, if your past wages qualify; in Connecticut a claim pays only once you’ve left school. SNAP, on the same tab, puts food assistance on an EBT card for groceries; press its Apply button to ask for it.",
   "why": "A student in New Haven sees no File A Claim: Connecticut treats a full-time student as unavailable for work, as the tab says. That's the chapter's “if you can't”. The chapter opens SNAP (`benefits.assistance`) and had never named it.",
   "meaningSensitive": true,
   "verified": "follow-1440/log.txt, chapter papers: Unemployment shows SNAP with Apply and “a claim pays only once you’ve left school”; follow-1440/chapter-13-papers.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
@@ -444,7 +444,7 @@
   "source": "src/engine/content/tutorial.ts#CHAPTERS [money]",
   "kind": "tutorial",
   "before": "The Money line in Your Affairs on Home shows your current account and your net worth (what you have, less what you owe), and how much of it is owed.",
-  "after": "The Money line in Your Affairs on Home shows your primary checking account and your net worth (what you have, less what you owe), with what you owe when there’s anything.",
+  "after": "The Money line in Your Affairs on Home shows your primary checking account and your net worth (what you have, less what you owe), and, if you owe anything, how much.",
   "why": "Checking account, the glossary's word from brief 15; and “how much of it is owed” read as if the net worth were owed. Home writes “Worth $…, after $… owed.” only when something is.",
   "meaningSensitive": false,
   "verified": "ui/screens/Home.tsx, the Money line; follow-1440/log.txt, chapter money: “Chase Total Checking: $90,484.00. Worth $503,527.”"

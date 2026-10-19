@@ -39,9 +39,7 @@
 [needs] ok   Dismiss takes the question off the list — Your 2026 Tax Return in 2 months You owe $7,221.63, on $41,670.59 of income. Fil → What Needs You No questions are waiting on you. Mark 205 Read How This Works A Deep Cut It takes 5 days to mend. It happened at work, so workers’ compensation p
 [papers] ok   what the question was about still stands: the return is on Tax Returns, with File It — Home › Papers YOUR AFFAIRS Papers Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work. Tax Returns Health Cover Unemployment Passport And ID Permission To Work 2026 Return Due April 15, 2027 File It How This Works Acting Wages, With Residuals $40,000.00 Wor
 [papers] screenshot 06-a-return-to-file.png
-[papers] new life 1:  You wear prescription lenses How This Works Depression: Kept Up Let It Go High Blood Pressure: Kept Up L
-[papers] ok   depression: choose a Therapist where you live and press Begin A Course Of 8 Sessions
-[papers] ok   and the first session is booked — Your first session is August 31, 2026.
-[papers] ok   Let It Go stops the care, and Keep It Up is offered to start it again — Your Conditions You wear prescription lenses How This Works Depression: Left Alone Keep It Up High Blood Pressure: Kept Up Let It Go Therapy with Yale Mental He
+[papers] new life 1:  You wear prescription lenses How This Works Asthma: Kept Up Let It Go Fill A Longer Supply, 90 Days How 
+[papers] ok   Let It Go stops the care, and Keep It Up is offered to start it again — Your Conditions You wear prescription lenses How This Works Asthma: Left Alone Keep It Up Sources And Estimates A Dental Plan Yale Delta Dental Basic: $312.72 a
 [papers] ok   Keep It Up starts it again
 [papers] screenshot 07-your-conditions.png

@@ -127,7 +127,7 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [money]": {
   "status": "Rewritten",
-  "hash": "ba32e2f6f726",
+  "hash": "9a908e55dca4",
   "on": "2026-10-19",
   "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter money (the Money line, the net worth look from Your Affairs); tests/defects-g12-1.test.ts holds its Money line and credit sentences",
   "first": "Pending"
@@ -141,9 +141,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [papers]": {
   "status": "Rewritten",
-  "hash": "0711667daca8",
+  "hash": "dd3bc6298bc1",
   "on": "2026-10-19",
-  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter papers (the Papers line and button, the tabs, Your Doctor, no Book An Appointment with no visit owed, SNAP and the claim), and follow-saves/log.txt (Let It Go and Keep It Up on a life with asthma, a return with File It); tests/guide-chapter-facts.test.ts and tests/language-data-dates.test.ts assert its words",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter papers (the Papers line and button, the tabs, Your Doctor, no Book An Appointment with no visit owed, SNAP and its Apply, the claim), and follow-saves/log.txt (Let It Go and Keep It Up on a life with asthma, a return with File It); tests/guide-chapter-facts.test.ts and tests/language-data-dates.test.ts assert its words",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [plans]": {

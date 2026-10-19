@@ -61,7 +61,7 @@
    "chapter": "welcome",
    "what": "the line under the greeting shows the time, the town, its time zone, the season and the weather",
    "ok": true,
-   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ⛅ 65°F Partly Cloudy"
+   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ☁️ 68°F Overcast"
   },
   {
    "chapter": "welcome",
@@ -859,7 +859,7 @@
    "chapter": "weather",
    "what": "the Weather panel shows the weather now and the next few days",
    "ok": true,
-   "seen": "Weather How This Works 🌧️61°F Rain · High 70°F · Low 59°F Humidity 72% · Wind 11 mph · Continental Thu 🌧️ Rain 74° / 63° Fri 🌧️ Rain 73° / 62° Sat 🌧️ Rain 75° / 64° Sun ⛅ Cloudy 81° / 63° Mon ⛅ Cl"
+   "seen": "Weather How This Works ☁️69°F Overcast · High 77°F · Low 66°F Humidity 73% · Wind 17 mph · Continental Thu ☁️ Overcast 81° / 63° Fri ⛅ Cloudy 80° / 62° Sat ⛅ Cloudy 70° / 52° Sun 🌧️ Rain 68° / 57° Mo"
   },
   {
    "chapter": "weather",
@@ -871,7 +871,7 @@
    "chapter": "weather",
    "what": "pressing it shows more: the week, each day and each hour",
    "ok": true,
-   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 61°F and raining where you are, with a high of 70°F and a low of 59°F today. The wind is 11 mph and the humidity is 72%. Today is 6° colder than normal for"
+   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 69°F and overcast where you are, with a high of 77°F and a low of 66°F today. The wind is 17 mph and the humidity is 73%. Today is about normal for the date"
   },
   {
    "chapter": "school",
@@ -931,7 +931,7 @@
    "chapter": "school",
    "what": "the School line in Your Affairs shows your year or arrival, your standing, your place in the class and what’s next",
    "ok": true,
-   "seen": "Your Affairs How This Works Money LOCKED This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It School Year 1, good standing, 2nd of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works Papers LOCKED This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and"
+   "seen": "Your Affairs How This Works Money LOCKED This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It School Year 1, good standing, 7th of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works Papers LOCKED This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and"
   },
   {
    "chapter": "school",
@@ -1051,7 +1051,7 @@
    "chapter": "profile",
    "what": "pressing an ability shows what it is, how it grows and where it counts",
    "ok": true,
-   "seen": "Presence: AN ACTING ABILITY Presence Close You’re at 58.7 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 58.7 41.3 to full CLASSES REACH — Classes don’t build it; performing in front of people d"
+   "seen": "Presence: AN ACTING ABILITY Presence Close You’re at 67.2 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 67.2 32.8 to full CLASSES REACH — Classes don’t build it; performing in front of people d"
   },
   {
    "chapter": "profile",
@@ -1063,13 +1063,13 @@
    "chapter": "profile",
    "what": "before the hour, it says about how much it will add",
    "ok": true,
-   "seen": "Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.23 to comedy (now 55.3), and +0.18 to disci"
+   "seen": "Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.26 to comedy (now 48.6), and +0.18 to disci"
   },
   {
    "chapter": "profile",
    "what": "Practice An Hour practices for an hour and says what it added",
    "ok": true,
-   "seen": "Comic Timing: +0.23."
+   "seen": "Comic Timing: +0.26."
   },
   {
    "chapter": "profile",
@@ -1190,12 +1190,6 @@
    "what": "The Marketplace and Care And Its Bills are on Health Cover",
    "ok": true,
    "seen": ""
-  },
-  {
-   "chapter": "papers",
-   "what": "a long-term condition under Your Long-Term Conditions (Your Conditions until the papers area’s rename) has Let It Go or Keep It Up",
-   "ok": true,
-   "seen": "Your Conditions How This Works High Blood Pressure: Kept Up Let It Go Arthritis: Kept Up Let It Go Fill A Longer Supply, 90 Days How This Works Sources And Esti"
   },
   {
    "chapter": "papers",
@@ -1351,7 +1345,7 @@
    "chapter": "money",
    "what": "the Money line shows your checking account and your net worth",
    "ok": true,
-   "seen": "Money Chase Total Checking: $90,484.00. Worth $503,527. Chase LOCKED How This Works School Year 1, good standing, 2nd of"
+   "seen": "Money Chase Total Checking: $90,484.00. Worth $503,527. Chase LOCKED How This Works School Year 1, good standing, 7th of"
   },
   {
    "chapter": "money",
@@ -1501,7 +1495,7 @@
    "chapter": "life",
    "what": "pressing your name on Home opens your own page: your wellbeing, your readiness and your traits",
    "ok": true,
-   "seen": "YOURSELF Alex Rivera Close Rested, steady and ready for a real day. Your body. 5 ft 2 in and 194 lb, with a body mass index of 35.8, in the obese range. In feet, inches and pounds, the units of the United States, where you live. On your papers. Pronouns they/them. A citizen of the United States. Ene"
+   "seen": "YOURSELF Alex Rivera Close Rested, steady and ready for a real day. Your body. 5 ft 7 in and 191 lb, with a body mass index of 30.0, in the obese range. In feet, inches and pounds, the units of the United States, where you live. On your papers. Pronouns they/them. A citizen of the United States. Ene"
   },
   {
    "chapter": "life",

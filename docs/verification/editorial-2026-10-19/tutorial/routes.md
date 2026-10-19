@@ -104,3 +104,28 @@ rename in another area changes the chapter that names it: the coordinator carrie
   Full, Autopay, Make It The Everyday Card, The Year, Alerts, How You Pay, Cash, and in the details Savings Covers The
   Current Account (which the money area is renaming), Send The Credit To My Account, Move My Account To A New Number,
   Break It Early, Reactivate, Pay It, In Collections, Take The Loan, Close It.
+
+## The Final Runs
+
+On the build of the area's last commit (`walk/exits.txt`):
+
+| Run | Checks | Failed | Page errors |
+|---|---|---|---|
+| `follow.mjs`, 1440 wide (`follow-1440/`) | 251 | 0 | 0 |
+| `follow.mjs`, 390 wide (`follow-390/`) | 252 | 0 | 0 |
+| `follow-saves.mjs` (`follow-saves/`) | 31 | 0 | 0 |
+
+The counts differ by a check or two between runs because each new life is drawn afresh: one has a passport and one
+doesn't, one has a long-term condition and one doesn't, and the follower checks what that life has. The 1440 and 390
+logs' line “followed on the health save” means `follow-saves.mjs`'s new life with asthma (the script's words were
+corrected after the run: no scenario save has a long-term condition).
+
+**The text walk** (`tools/text-walk.mjs`, five scenario saves, 1440 and 390 wide: 25 screens each) and
+**`tools/text-render-check.mjs`** on both: 45,122 strings read, 0 faults (`walk/render-check.txt`).
+
+**`tools/tutorial-routes.mjs`** on the two walks and its own capture of the guide's chapters and the menus
+(`walk/tutorial-routes.md`): of 1,652 labels the chapters and entries name, 4 are nowhere on this build. One is this
+area's, **Your Long-Term Conditions**: the papers area's new name for the heading, merged at the coordinator's, not in
+this clone, so the chapter uses it at the papers area's word. The other three are How This Works' entries `taxes.plan`,
+`taxes.lien` and `taxes.pay` (Connecticut DRS Installment Agreement, Connecticut DRS’s Lien, Pay Connecticut): the papers
+area's.

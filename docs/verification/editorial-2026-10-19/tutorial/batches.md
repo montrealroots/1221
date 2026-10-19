@@ -258,3 +258,25 @@ And ID, the net worth look, the bank's tabs, Move Money, Statements, your own pa
 life with asthma, Let It Go and Keep It Up, `your-conditions.png`). At 390 the chapters read without clipping, in a
 small window (`defects.md`, Not Mine), and the new life's top bar breaks Locked letter by letter
 (`phone/first-screen-390.png`).
+
+## After Batch 4: Three Sentences Read Again, And The Area's Final Checks
+
+**Read again (2 sources, re-marked):** proofreading the last chapters as a player read them, three sentences still
+read like a form. In Cover, Benefits And Returns, “SNAP … is food assistance on an EBT card for groceries, and Apply
+applies for it.” is “SNAP, on the same tab, puts food assistance on an EBT card for groceries; press its Apply button to
+ask for it.”, and “Reporting a document lost opens with the next chapter.” is “Report Lost itself opens with the next
+chapter.” In Money, “with what you owe when there’s anything” is “and, if you owe anything, how much.”
+`tests/defects-g12-1.test.ts` still holds the Money line's sentence to naming neither the card nor the record.
+
+**The second pass:** every one of the area's 47 sources has a second-pass status: 26 Rewritten, 21 Retained, 0 Pending,
+0 Blocked (`node tools/text-inventory.mjs`). The area's engine-speak is 0, as it was at the start.
+
+**The built app, once more, on the last commit's build** (`routes.md`, The Final Runs): `follow.mjs` at 1440 (251
+checks) and 390 (252), `follow-saves.mjs` (31), none failed, no page errors; the text walk of five saves at both widths
+and `text-render-check.mjs`, 45,122 strings, 0 faults; `tutorial-routes.mjs`, 4 labels nowhere on this build, one of
+them this area's at the papers area's word.
+
+**Checks on the last commit:** `tsc` 0, `eslint` 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0,
+spelling 0, typos 0, text-inventory 0, doc-refs 0, deciders 0, guide-quotes 0. `vitest run` on `defects-g12-1`,
+`help-mechanics`, `guide-chapter-facts`, `language-data-dates` and `defects-g27-1`: 35 tests, exit 0. The whole suite:
+below.

@@ -61,7 +61,7 @@
    "chapter": "welcome",
    "what": "the line under the greeting shows the time, the town, its time zone, the season and the weather",
    "ok": true,
-   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ⛈️ 72°F Thunderstorm"
+   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ⛅ 72°F Partly Cloudy"
   },
   {
    "chapter": "welcome",
@@ -865,7 +865,7 @@
    "chapter": "weather",
    "what": "the Weather panel shows the weather now and the next few days",
    "ok": true,
-   "seen": "Weather How This Works ☁️63°F Overcast · High 77°F · Low 59°F Humidity 58% · Wind 13 mph · Continental Thu 🌧️ Rain 75° / 64° Fri 🌧️ Rain 77° / 66° Sat 🌧️ Rain 84° / 73° Sun ⛈️ Storm 83° / 65° Mon \ud83c"
+   "seen": "Weather How This Works ☁️72°F Overcast · High 81°F · Low 70°F Humidity 72% · Wind 9 mph · Continental Thu ⛈️ Storm 93° / 75° Fri ⛅ Cloudy 97° / 79° Sat ⛅ Cloudy 93° / 75° Sun ⛅ Cloudy 95° / 77° Mon 🌧"
   },
   {
    "chapter": "weather",
@@ -877,7 +877,7 @@
    "chapter": "weather",
    "what": "pressing it shows more: the week, each day and each hour",
    "ok": true,
-   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 63°F and overcast where you are, with a high of 77°F and a low of 59°F today. The wind is 13 mph and the humidity is 58%. Today is 4° colder than normal for"
+   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 72°F and overcast where you are, with a high of 81°F and a low of 70°F today. The wind is 9 mph and the humidity is 72%. Today is 5° warmer than normal for"
   },
   {
    "chapter": "school",
@@ -1057,7 +1057,7 @@
    "chapter": "profile",
    "what": "pressing an ability shows what it is, how it grows and where it counts",
    "ok": true,
-   "seen": "Presence: AN ACTING ABILITY Presence Close You’re at 71.6 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 71.6 28.4 to full CLASSES REACH — Classes don’t build it; performing in front of people d"
+   "seen": "Presence: AN ACTING ABILITY Presence Close You’re at 60.8 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 60.8 39.2 to full CLASSES REACH — Classes don’t build it; performing in front of people d"
   },
   {
    "chapter": "profile",
@@ -1069,13 +1069,13 @@
    "chapter": "profile",
    "what": "before the hour, it says about how much it will add",
    "ok": true,
-   "seen": "Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.23 to comedy (now 54.8), and +0.18 to disci"
+   "seen": "Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.24 to comedy (now 52.4), and +0.18 to disci"
   },
   {
    "chapter": "profile",
    "what": "Practice An Hour practices for an hour and says what it added",
    "ok": true,
-   "seen": "Comic Timing: +0.23."
+   "seen": "Comic Timing: +0.24."
   },
   {
    "chapter": "profile",
@@ -1279,13 +1279,13 @@
    "chapter": "documents",
    "what": "pressing a document you hold shows who issued it, its number’s last digits, when it was issued and runs out, and what it lets you do",
    "ok": true,
-   "seen": "PERMISSION TO DRIVE Class D (Operator) Driver License Close It’s in force until June 14, 2028, and its number ends 5846. New York State Department of Motor Vehicles (NY DMV) issued it on June 14, 2020. In New Haven, it would let you drive. Driving isn’t part of the game, so this is for reference. NU"
+   "seen": "TRAVEL DOCUMENT U.S. Passport Book Close It’s in force until January 20, 2030, and its number ends 5846. The United States issued it on January 20, 2020. It’s the passport in force in your name. Of the 15 countries the game has entry rules for, 11 would let you in on it today for a week’s visit. Tra"
   },
   {
    "chapter": "documents",
    "what": "Going Abroad: picking a country shows what it asks of your citizenship, or what you’re missing",
    "ok": true,
-   "seen": "You need a passport in force, and you don’t have one. Apply for one under Your Passport. Australia asks citizens of the → You need a passport in force, and you don’t have one. Apply for one under Your Passport."
+   "seen": "Australia asks citizens of the United States for ETA (Electronic Travel Authority, subclass 601): A$20.00, applied for → It would let you in for a week’s visit. Up to 90 days as a visitor."
   },
   {
    "chapter": "documents",
@@ -1501,7 +1501,7 @@
    "chapter": "life",
    "what": "pressing your name on Home opens your own page: your wellbeing, your readiness and your traits",
    "ok": true,
-   "seen": "YOURSELF Alex Rivera Close Rested, steady and ready for a real day. Your body. 5 ft 10 in and 180 lb, with a body mass index of 25.9, in the overweight range. In feet, inches and pounds, the units of the United States, where you live. On your papers. Pronouns they/them. A citizen of the United State"
+   "seen": "YOURSELF Alex Rivera Close Rested, steady and ready for a real day. Your body. 5 ft 1 in and 138 lb, with a body mass index of 26.1, in the overweight range. In feet, inches and pounds, the units of the United States, where you live. On your papers. Pronouns they/them. A citizen of the United States"
   },
   {
    "chapter": "life",

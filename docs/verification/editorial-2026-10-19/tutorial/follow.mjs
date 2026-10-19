@@ -544,7 +544,7 @@ step.papers = async () => {
     check('a long-term condition under Your Long-Term Conditions (Your Conditions until the papers area’s rename) has Let It Go or Keep It Up', true, health.slice(health.search(/Your (Long-Term )?Conditions/), health.search(/Your (Long-Term )?Conditions/) + 160));
     if (/Therapist/.test(health)) check('depression has a Therapist to choose and Begin A Course Of 8 Sessions', await button('Begin A Course Of 8 Sessions').count() > 0);
   }
-  else log(`no long-term condition on this life (Your Conditions: ${health.slice(health.search(/Your (Long-Term )?Conditions/), health.search(/Your (Long-Term )?Conditions/) + 80)}); followed on the health save (follow-saves.mjs)`);
+  else log(`no long-term condition on this life (Your Conditions: ${health.slice(health.search(/Your (Long-Term )?Conditions/), health.search(/Your (Long-Term )?Conditions/) + 80)}); followed on a new life that has one (follow-saves.mjs)`);
   await shot('health-cover');
   await tab('Unemployment');
   const un = await mainText();
