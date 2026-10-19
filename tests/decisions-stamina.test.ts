@@ -538,7 +538,7 @@ describe('W10: a night kept under the ruleset before is shown as it was', () => 
     expect(replay(was, TASK_PROFILES.performance!)).toBeUndefined();
     expect(workloadWords(was)).toBeUndefined();
     const look = resolveLook(opened, { kind: 'work', id: was.inputs.key }) as { provenance: string };
-    expect(look.provenance).toBe('The rules have changed since it was judged, so it isn’t worked out again. Its result stands as it was.');
+    expect(look.provenance).toBe('The rules have changed since it was judged, so it can’t be judged again. Its result stands.');
     // The next night: today's ruleset, with its workload.
     tended(opened, nights[1]!.at - MS_HOUR);
     const { record } = playNight(opened, nights[1]!);

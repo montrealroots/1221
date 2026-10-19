@@ -41,14 +41,15 @@ export function grainRead(e: Pick<Evaluation, 'task' | 'dimensions' | 'limits' |
 /** The grain in a sentence: what the way it was played came to against the scene, and beside it what the craft cost. */
 export function grainWords(g: GrainRead | undefined): string {
   if (!g) return '';
-  const where = g.on.map((x) => `${x.points > 0 ? '+' : ''}${x.points} on the ${DIMENSION_LABEL[x.dimension].toLowerCase()}`).join(', ');
+  // Signed as the advice signs a change, with a minus sign, not a hyphen (from 2026-10-19, brief 15).
+  const where = g.on.map((x) => `${x.points > 0 ? '+' : x.points < 0 ? '−' : ''}${Math.abs(x.points)} to ${DIMENSION_LABEL[x.dimension].toLowerCase()}`).join(', ');
   const why = [...new Set(g.on.map((x) => x.why))].join('; ');
-  const lead = g.points > 0 ? `The way you played it suited the scene (${why}): it gave the take ${g.points} points (${where})` : g.points < 0 ? `The way you played it worked against the scene (${why}): it cost the take ${Math.abs(g.points)} points (${where})` : `The way you played it made no difference either way to the scene (${why})`;
-  return `${lead}. What your abilities and techniques cost it, apart from that: ${g.ability} points.`;
+  const lead = g.points > 0 ? `The way you played it suited the scene (${why}) and added ${g.points} points to the take (${where})` : g.points < 0 ? `The way you played it worked against the scene (${why}) and cost the take ${Math.abs(g.points)} points (${where})` : `The way you played it made no difference to the scene either way (${why})`;
+  return `${lead}. Apart from that, your abilities and techniques cost it ${g.ability} points.`;
 }
 
 /** A kept take's grain in a sentence (`Take.grain`), from what it kept: the same account after a reload. */
 export function takeGrainWords(g: { points: number; ability: number; why: string }): string {
-  const lead = g.points > 0 ? `Played that way it suited the scene (${g.why}), which gave it ${g.points} points` : g.points < 0 ? `Played that way it worked against the scene (${g.why}), which cost it ${Math.abs(g.points)} points` : `Played that way it made no difference either way to the scene (${g.why})`;
-  return `${lead}; your abilities and techniques cost it ${g.ability}.`;
+  const lead = g.points > 0 ? `Played that way, it suited the scene (${g.why}) and added ${g.points} points` : g.points < 0 ? `Played that way, it worked against the scene (${g.why}) and cost ${Math.abs(g.points)} points` : `Played that way, it made no difference to the scene either way (${g.why})`;
+  return `${lead}. Your abilities and techniques cost it ${g.ability} points.`;
 }

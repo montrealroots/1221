@@ -235,7 +235,7 @@ beforeEach(() => {
 // ---------------------------------------------------------------------------
 
 describe('p-condition: Current Condition on the Player Profile', () => {
-  const condition = (sim: Simulation) => between(drawn(sim, ProfileWorkspace).text, 'Current Condition', 'Sources And Estimates');
+  const condition = (sim: Simulation) => between(drawn(sim, ProfileWorkspace).text, 'Readiness Today', 'Sources And Estimates');
 
   it('PLAYER JOURNEY: a rested afternoon reads Readiness 88, 88 at this hour’s fit, For Work Sufficient with nothing holding it back, and Energy, Stress 95, 15; drawing it changes nothing', () => {
     const sim = ada('g32-condition');
@@ -246,7 +246,7 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     expect(Math.round(byHand(sim.player.wellbeing))).toBe(88);
     const before = asSaved(sim);
     const { html } = drawn(sim, ProfileWorkspace);
-    expect(condition(sim)).toBe('Current Condition Your readiness for work today Readiness 88 88 at this hour For Work Sufficient Today, nothing holds your work back Energy, Stress 95, 15 No sleep owed');
+    expect(condition(sim)).toBe('Readiness Today Whether anything holds your work back today Readiness 88 88 at this hour For Work Sufficient Today, nothing holds your work back Energy, Stress 95, 15 No sleep owed');
     expect(html).toContain('<span class="stat-label">For Work</span><span class="stat-value">Sufficient</span>');
     expect(asSaved(sim)).toBe(before);
   });
@@ -289,7 +289,7 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     const hour = zonedParts(sim.now, NY).hour;
     expect(hour >= 12 && hour < 17, 'an hour that suits everybody the same').toBe(true);
     const { html } = drawn(sim, ProfileWorkspace);
-    expect(condition(sim)).toBe(`Current Condition Your readiness for work today Readiness ${ready} ${ready} at this hour For Work Held Back Under 60: tiredness holds your work back Energy, Stress ${Math.round(w.energy)}, ${Math.round(w.stress)} ${Math.round(w.sleepDebt) ? `${Math.round(w.sleepDebt)} ${Math.round(w.sleepDebt) === 1 ? 'hour' : 'hours'} of sleep owed` : 'No sleep owed'}`);
+    expect(condition(sim)).toBe(`Readiness Today Whether anything holds your work back today Readiness ${ready} ${ready} at this hour For Work Held Back Under 60: tiredness holds your work back Energy, Stress ${Math.round(w.energy)}, ${Math.round(w.stress)} ${Math.round(w.sleepDebt) ? `${Math.round(w.sleepDebt)} ${Math.round(w.sleepDebt) === 1 ? 'hour' : 'hours'} of sleep owed` : 'No sleep owed'}`);
     expect(html).toContain('<span class="stat-label">For Work</span><span class="stat-value warning">Held Back</span>');
     // Kept up to ten, then a night's sleep to seven.
     while (zonedParts(sim.now, NY).hour < 22) sim.advanceTo(sim.now + MS_HOUR);
@@ -338,6 +338,14 @@ describe('p-condition: Current Condition on the Player Profile', () => {
     delete healthOf(sim.player).fluUntil;
     hurt('cut'); // TEST SETUP: a deep cut limits nothing.
     expect(forWork()).toBe('For Work Sufficient Today, nothing holds your work back');
+  });
+
+  it('a life with no craft draws the Profile’s empty state, which says why, and none of its panels (brief 15)', () => {
+    const sim = ada('g32-no-craft');
+    delete sim.player.craft; // TEST SETUP: every life begins at the school; one without its training is drawn to read the words.
+    const { text } = drawn(sim, ProfileWorkspace);
+    expect(text).toContain('You didn’t start at drama school, so there are no acting abilities or techniques to show.');
+    expect(text).not.toContain('Readiness Today');
   });
 });
 

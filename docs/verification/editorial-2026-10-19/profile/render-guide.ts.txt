@@ -1,0 +1,23 @@
+/**
+ * Prints every entry of the craft guide as the rules fill it, field by field in the order a player reads them, for
+ * brief 15's profile area. Kept as .txt so the lint and the typecheck leave it be: copy it out as a .ts, then from the
+ * clone run npx vite-node <that file> -- <out.txt>
+ */
+import { writeFileSync } from 'node:fs';
+import { CRAFT } from '@/engine/content/guide/craft';
+
+const out: string[] = [];
+for (const e of CRAFT) {
+  out.push(`## ${e.title} (${e.id})`);
+  out.push(`  where: ${e.where.label}; available: ${e.available}`);
+  out.push(`  short: ${e.short}`);
+  const list = (k: string, xs: readonly string[]) => { if (xs.length) out.push(`  ${k}:\n${xs.map((x) => `    - ${x}`).join('\n')}`); };
+  list('steps', e.steps); list('needs', e.needs);
+  out.push(`  costs: ${e.costs.map((c) => `${c.label}: ${c.value}${c.estimate ? ' (estimated)' : ''}`).join('; ')}`);
+  list('reads', e.reads.map((c) => `${c.label}: ${c.value}${c.estimate ? ' (estimated)' : ''}`));
+  list('now', e.now); list('later', e.later); list('interpret', e.interpret); list('unavailable', e.unavailable); list('mistakes', e.mistakes); list('next', e.next);
+  list('connections', e.connections.map((c) => `${c.to} (${c.kind}): ${c.why}`));
+  out.push(`  example: ${e.example.setup}\n    steps: ${e.example.steps.join(' / ')}\n    result: ${e.example.result}`);
+}
+writeFileSync(process.argv[2] ?? 'guide.txt', `${out.join('\n')}\n`);
+console.log(`${CRAFT.length} entries written`);

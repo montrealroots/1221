@@ -375,7 +375,7 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     type Limit = { kind: string; what: string; label: string; by: number; whole: number };
     const why = (limit: Limit) => recommendations(() => 50, () => 100, [{ at: 1, limits: [limit], inputs: { abilities: { focus: 50 } } }], (id) => ({ id: `ex-${id}` }), matchedTier, 12).map((r) => r.why).join(' ');
     for (const [whole, said] of [[1, '1 point'], [2.5, '2.5 points']] as const) {
-      expect(why({ kind: 'preparation', what: 'memorization', label: 'Lines', by: 4, whole })).toContain(`Coming to your work short on lines cost about ${said} off the whole a piece. That’s preparation, not training.`);
+      expect(why({ kind: 'preparation', what: 'memorization', label: 'Lines', by: 4, whole })).toContain(`Coming to your work short on lines cost about ${said} off the whole a piece. That’s preparation, not training: prepare that part further before you show or tape the next piece.`);
       expect(why({ kind: 'condition', what: 'injury', label: 'An Injury Still Mending', by: 4, whole })).toContain(`An Injury Still Mending cost about ${said} off the whole a piece. Come to the work rested and well`);
       expect(why({ kind: 'condition', what: 'stamina', label: 'Stamina, By Beat 2', by: 4, whole })).toContain(`Tiring through the later moments of a piece cost about ${said} off the whole a piece.`);
       expect(why({ kind: 'fit', what: 'tempo', label: 'Played Against The Scene', by: 4, whole })).toContain(`Playing it a way that didn’t fit cost about ${said} off the whole a piece.`);
@@ -1018,7 +1018,7 @@ describe('a new player, an advanced one and a finished school journey: the Profi
       if (stage === 'new') {
         expect(affairs).toMatch(/^School Arriving, good standing, \d+(?:st|nd|rd|th) of 16 in the class\. Next: Registration And Your Account, August 24, 2026 at 10:00 AM\.$/);
         expect(profileSchool).toEqual(['School', 'Year 1', 'Class of 2029, good standing']);
-        expect(screens.profile).toContain('None of your work has been judged yet. What to work on comes from what holds judged work back, so it starts after your first showing, night on stage or self-tape.');
+        expect(screens.profile).toContain('None of your work has been judged yet. After your first showing, night on stage or self-tape, this will say what to work on next, from what held that work back.');
         expect(head).toBe('MFA in Acting, class of 2029. Arriving for the fall term.');
         expect(screens.school).toContain('Attendance This Term\nNone Yet');
         expect(screens.school).toContain('Coursework This Term\nNone Yet');

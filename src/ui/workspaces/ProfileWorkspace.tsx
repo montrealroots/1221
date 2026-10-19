@@ -49,7 +49,7 @@ import { CARRIES_A_BALANCE, cardOf } from '@/engine/systems/credit';
  */
 function riskWords(person: Person, sim: Simulation): string {
   const side = person.personality.riskTolerance > CARRIES_A_BALANCE ? `over ${CARRIES_A_BALANCE}` : `${CARRIES_A_BALANCE} or under`;
-  if (!cardOf(sim, person)) return `${side}, which decides where a card’s autopay starts, but you hold no card`;
+  if (!cardOf(sim, person)) return `${side}, which decides where a card’s autopay starts, but you don’t have a card`;
   return person.personality.riskTolerance > CARRIES_A_BALANCE
     ? `over ${CARRIES_A_BALANCE}, so your card’s autopay began on the minimum payment`
     : `${CARRIES_A_BALANCE} or under, so your card’s autopay began on the whole statement`;
@@ -145,7 +145,7 @@ export function ProfileWorkspace() {
   const person = useWorld((s) => s.player);
   // Locked, it's WorkspaceRouter's LockedScreen, with the way into its chapter (from 2026-10-12; until then an Empty
   // here with nothing to press).
-  if (!person.craft) return <Empty title="Your Profile" body="This life began outside drama school, so there are no acting abilities or techniques to show." />;
+  if (!person.craft) return <Empty title="Your Profile" body="You didn’t start at drama school, so there are no acting abilities or techniques to show." />;
   return (
     <>
       <LookRegion className="page-head">
@@ -192,7 +192,7 @@ function IdentityPanel() {
             <Stat label="School" value={school ? (school.standing === 'graduated' ? 'Graduated' : school.standing === 'dismissed' || school.standing === 'withheld' || school.standing === 'withdrawn' ? 'Left' : `Year ${yearOfStudy(person)}`) : 'None'} note={school ? `Class of ${school.classOf}, ${STANDING_LABEL[school.standing].toLowerCase()}` : undefined} />
             <Stat label="Living In" value={CITIES.get(person.currentLocationId)?.name ?? '—'} />
           </div>
-          {person.background && <p className="small" style={{ margin: 0 }}><strong>In their own words.</strong> {person.background}</p>}
+          {person.background && <p className="small" style={{ margin: 0 }}><strong>In your own words.</strong> {person.background}</p>}
           {said.length > 0 && <p className="small" style={{ margin: 0 }}><strong>Race and ethnicity, as given.</strong> {said.join(', ')}.</p>}
           {/* The traits in a region of their own, so each opens under them once "How You Are" is read (from 2026-10-12:
               until then the panel had no region and Open drew them as plain names, so none of them opened). */}
@@ -289,7 +289,7 @@ function NextWork() {
   const recs = adviceFor(sim, person);
   // Nothing judged yet isn't nothing held back (from 2026-10-12: until then a new student read that their recent work
   // wasn’t held back by anything).
-  if (!(person.work ?? []).length) return <p className="small" style={{ margin: 0 }}>None of your work has been judged yet. What to work on comes from what holds judged work back, so it starts after your first showing, night on stage or self-tape.</p>;
+  if (!(person.work ?? []).length) return <p className="small" style={{ margin: 0 }}>None of your work has been judged yet. After your first showing, night on stage or self-tape, this will say what to work on next, from what held that work back.</p>;
   if (!recs.length) return <p className="small" style={{ margin: 0 }}>Your recent work wasn’t held back by any ability or technique with room to grow. What’s left is new material and new ways of playing it.</p>;
   return (
     <div className="col gap-1">
@@ -373,7 +373,7 @@ function AbilitiesPanel() {
           </table>
         </LookRegion>
         <p className="small" style={{ margin: 0 }}>
-          <strong>Stamina is your fitness.</strong> Full is the fittest a body your age can be, {one(staminaFull)} now, and no work asks more of it. A workout builds it and holds it for {FITNESS.heldDays} days, and so does a class that works the body as hard (Movement Invention, stage combat). Two a week keep it (Hickson &amp; Rosenkoetter, 1981). After that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, where an everyday life keeps it (Mujika &amp; Padilla, 2000, on detraining); that rate is estimated. A second workout on the same day builds half as much. It’s the one ability that fades without use: the others keep what they’ve earned.
+          <strong>Stamina is your fitness.</strong> Full is the fittest a body your age can be, {one(staminaFull)} now, and no work asks more of it. A workout builds it and holds it for {FITNESS.heldDays} days, and so does a class that works the body as hard (Movement Invention, stage combat). After that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, where an everyday life keeps it (Mujika &amp; Padilla, 2000, on detraining); that rate is estimated. Two workouts a week keep it up (Hickson &amp; Rosenkoetter, 1981). A second workout on the same day builds half as much. It’s the one ability that fades without use: the others keep what they’ve earned.
         </p>
         <Fine>Classes and coursework grow an ability up to its reach. Practice takes it past that, all the way to full, where it stops. The same exercise again on the same day gives half as much, and after {PRACTICE.dailyHours} hours in a day, practice stops counting (Ericsson et al., 1993). An ability at its full is marked Mastered. Stamina loses the mark when its fitness falls; the others keep what they’ve earned.</Fine>
       </div>
@@ -443,7 +443,7 @@ function GenresPanel() {
         {/* In a region of its own, so a genre named here opens under it once the chapter that opens a genre is read (from
             2026-10-12: until then it stood outside any region and Open drew the loved genres and the one suggested as
             plain names, so none of them opened, whatever was read). */}
-        <LookRegion><p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested.id)}>{GENRE_BY_ID[suggested.id]!.label}</Open> {suggested.why === 'part' ? 'is the kind of play your next part is in, and the one of its kinds you know least.' : 'is the one you love and know least, and no part asks for a kind yet.'}</> : null}</p></LookRegion>
+        <LookRegion><p className="small" style={{ margin: 0 }}>You love: {(person.genres ?? []).length ? (person.genres ?? []).map((id, i) => <span key={id}>{i ? ', ' : ''}<Open subject={at('genre', id)}>{GENRE_BY_ID[id]?.label ?? id}</Open></span>) : 'none chosen'}.{suggested ? <> <Open subject={at('genre', suggested.id)}>{GENRE_BY_ID[suggested.id]!.label}</Open> {suggested.why === 'part' ? 'is worth studying next: your next part is in a play of that kind, and it’s the one of the play’s kinds you know least.' : 'is worth studying next: of the genres you love, it’s the one you know least.'}</> : null}</p></LookRegion>
         {open && (
           <div className="card col gap-2" style={{ padding: 'var(--space-3, 12px)' }}>
             <div className="row gap-2" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
@@ -484,7 +484,7 @@ function GenresPanel() {
           </table>
         </LookRegion>
         {list.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + PAGE)}>{`Show ${Math.min(PAGE, list.length - limit)} More`}</button>}
-        <Fine>Every genre has a practice brief, an original scene written for the game. Open it to read the scene, prepare it, choose a reading and how to play it, and tape it. What a genre asks for is a technique its brief stages, shown before you begin; once that technique is mastered, at {MASTERED}, it asks nothing more. A taped brief also asks you to know the genre: the better of what you’ve studied and what you’ve worked in it, complete at {Math.round(BRIEF.complete.genre * 100)}. Study It builds it. Loving a genre makes a day of work in it better and limits nothing. Material you’ve met before (its features, not its genre) makes a brief quicker to prepare. A genre is marked Mastered once a take of its brief is judged at full mastery: every ability and technique the take calls on at full, its preparation complete, and you well enough on the day.</Fine>
+        <Fine>Every genre has a practice brief, an original scene written for the game. Press Open Its Brief to read the scene, prepare it, choose a reading and how to play it, and tape it. What a genre asks for is a technique its brief stages, shown before you begin; once that technique is mastered, at {MASTERED}, it asks nothing more. A taped brief also asks you to know the genre: the better of what you’ve studied and what you’ve worked in it, complete at {Math.round(BRIEF.complete.genre * 100)}. Study It builds it. Loving a genre makes a day of work in it better and limits nothing. Material you’ve met before (its features, not its genre) makes a brief quicker to prepare. A genre is marked Mastered once a take of its brief is judged at full mastery: every ability and technique the take calls on at full, its preparation complete, and you well enough on the day.</Fine>
       </div>
     </Panel>
   );
@@ -497,7 +497,7 @@ function ConditionPanel() {
   const w = person.wellbeing;
   const sufficient = c.readiness >= EVALUATION.sufficientReadiness;
   return (
-    <Panel title="Current Condition" subtitle="Your readiness for work today">
+    <Panel title="Readiness Today" subtitle="Whether anything holds your work back today">
       <div className="col gap-3">
         <div className="grid grid-3">
           <Stat label="Readiness" value={String(Math.round(readiness(person)))} note={`${Math.round(c.readiness)} at this hour`} />

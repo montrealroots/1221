@@ -596,7 +596,7 @@ describe('work records + journey', () => {
     const exercise = EXERCISES.find((e) => e.trains === what)!;
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const each = r1(top.points);
-    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise(?:, a session a day,)? would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}\\. On your recent work, replayed with you as you are now, that’s forecast to be worth about ${esc(String(each))} points? a piece`));
+    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise(?:, an hour a day,)? would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}\\. On your recent work, judged again as you are now, that’s forecast to be worth about ${esc(String(each))} points? a piece`));
   });
 
   it('PLAYER JOURNEY: Taking Direction reads, for life, the notes on the craft a run gave and those the work answered', () => {
@@ -624,7 +624,7 @@ describe('work records + journey', () => {
     const answered = onCraft.filter((n) => n.taken === true).length;
     expect(onCraft.length).toBeGreaterThanOrEqual(3);
     expect(journeyOf(sim.player).direction).toMatchObject({ given: onCraft.length, answered });
-    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered}`);
+    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered || 'none'}`);
   });
 
   it('names a strength at 4 over the mean and not at 3.9', () => {

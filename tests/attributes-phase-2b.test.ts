@@ -573,20 +573,20 @@ grows.emotionalDepth = [
   { says: 'the Sense Memory exercise', holds: grew('emotionalDepth', /^practice:sense-memory$/) },
 ];
 does.emotionalDepth = [
-  { says: 'Your believability in everything you perform (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage)', holds: () => { for (const t of ['scene', 'song', 'improvisation', 'clown', 'camera', 'tape', 'tapeOnFeet', 'audition', 'performance']) readsIn('emotionalDepth', t, ['believability']); } },
-  { says: 'most of all when the material is grave', holds: () => expect(effectOn(like(BASE, { beats: beatsOf(3, 'grave') }), 'emotionalDepth')).toBeGreaterThan(effectOn(like(BASE, { beats: beatsOf(3, 'comic') }), 'emotionalDepth') + 0.3) },
-  { says: 'your connection with a partner in a fight or an intimacy scene', holds: () => readsIn('emotionalDepth', 'partnered', ['connection']) },
+  { says: 'How believable you are in everything you perform: a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition and a night on stage', holds: () => { for (const t of ['scene', 'song', 'improvisation', 'clown', 'camera', 'tape', 'tapeOnFeet', 'audition', 'performance']) readsIn('emotionalDepth', t, ['believability']); } },
+  { says: 'It matters most when the material is grave', holds: () => expect(effectOn(like(BASE, { beats: beatsOf(3, 'grave') }), 'emotionalDepth')).toBeGreaterThan(effectOn(like(BASE, { beats: beatsOf(3, 'comic') }), 'emotionalDepth') + 0.3) },
+  { says: 'It also shapes your connection with a partner in a fight or an intimacy scene', holds: () => readsIn('emotionalDepth', 'partnered', ['connection']) },
 ];
 
 grows.presence = [
   { says: 'Every night in front of an audience, a little at a time', holds: () => { expect(grownBy('presence', /^nerves:performance$/)).toBeGreaterThan(0); expect(DEVELOPED.at.nightPresence).toBeCloseTo(ATTRIBUTES.presenceGain * (100 - DEVELOPED.at.presenceBefore!) * DEVELOPED.at.lift!, 9); } },
   { says: 'more on a remarkable night', holds: grew('presence', /^night$/) },
-  { says: 'the exercise A Showing For Classmates', holds: grew('presence', /^practice:showing-for-classmates$/) },
+  { says: 'The exercise A Showing For Classmates builds it too', holds: grew('presence', /^practice:showing-for-classmates$/) },
   { says: 'part of what Graded Exposure and Clown Practice build carries over to it', holds: grew('presence', /^transfer:graded-exposure$/, /^transfer:clown-practice$/) },
 ];
 does.presence = [
   { says: 'Your connection on stage and in an audition, a clown turn, a scene and a taped brief', holds: () => { for (const t of ['performance', 'audition', 'clown', 'scene', 'tape', 'tapeOnFeet']) readsIn('presence', t, ['connection']); } },
-  { says: 'more the less of a partner you have to play off', holds: () => expect(exactEffectOn(like(BASE, { partner: 0 }), 'presence')).toBeGreaterThan(exactEffectOn(like(BASE, { partner: 3 }), 'presence') + 0.3) },
+  { says: 'It matters more the less of a partner you have to play off', holds: () => expect(exactEffectOn(like(BASE, { partner: 0 }), 'presence')).toBeGreaterThan(exactEffectOn(like(BASE, { partner: 3 }), 'presence') + 0.3) },
   { says: 'more on a night in front of an audience than in a scene, an audition or a taped brief', holds: () => { const night = meanEffect(PIECES_BY_TASK.performance!, 'presence'); for (const t of ['scene', 'audition', 'tape', 'tapeOnFeet']) expect(night, t).toBeGreaterThan(meanEffect(PIECES_BY_TASK[t]!, 'presence')); } },
 ];
 
@@ -598,15 +598,15 @@ grows.listening = [
   { says: 'The Repetition Exercise', holds: grew('listening', /^practice:repetition$/) },
 ];
 does.listening = [
-  { says: 'Your responsiveness and connection in partnered physical work and on stage', holds: () => { readsIn('listening', 'partnered', ['responsiveness', 'connection']); readsIn('listening', 'performance', ['responsiveness', 'connection']); } },
-  { says: 'more the more the piece depends on a partner and on timing', holds: () => { expect(exactEffectOn(like(BASE, { partner: 3 }), 'listening')).toBeGreaterThan(exactEffectOn(like(BASE, { partner: 0 }), 'listening')); expect(exactEffectOn(like(BASE, { timing: 3 }), 'listening')).toBeGreaterThan(exactEffectOn(like(BASE, { timing: 0 }), 'listening')); } },
-  { says: 'how much an evening rehearsing with a partner or a reader gets done', holds: () => {
+  { says: 'How responsive and connected you are in a fight or an intimacy scene with a partner, and on stage', holds: () => { readsIn('listening', 'partnered', ['responsiveness', 'connection']); readsIn('listening', 'performance', ['responsiveness', 'connection']); } },
+  { says: 'It matters more the more a piece depends on your partner and on timing', holds: () => { expect(exactEffectOn(like(BASE, { partner: 3 }), 'listening')).toBeGreaterThan(exactEffectOn(like(BASE, { partner: 0 }), 'listening')); expect(exactEffectOn(like(BASE, { timing: 3 }), 'listening')).toBeGreaterThan(exactEffectOn(like(BASE, { timing: 0 }), 'listening')); } },
+  { says: 'It also sets how much you get done in an evening rehearsing with a partner or a reader', holds: () => {
     // With a reader: the evening's own move, by the ratio of the two speeds (as block 4 plays it).
     expect(stepRatio('listening', (sim) => { const a = assignment(sim, 'scene-study', { familiarity: 0.6, memorization: 0.6 }); prepared(sim, a, READER.id); return partnerPart(a); })).toBeCloseTo(speedRatio(20, 80), 6);
     // With the partner: an evening asked for and kept (TEST SETUP: the partner as reliable as one comes).
     expect(stepRatio('listening', (sim) => { const a = assignment(sim, 'scene-study', { familiarity: 0.6, memorization: 0.6 }); mateRecord(sim.player.school!.classmates[0]!).reliability = 1; const when = askedFor(sim, a); tended(sim, when + 3 * MS_HOUR); expect(a.rehearsals[0]!.status).toBe('kept'); return a.prep.partner; })).toBeCloseTo(speedRatio(20, 80), 6);
   } },
-  { says: 'how much rehearsing a brief on its feet with its reader gets done', holds: () => expect(stepRatio('listening', (sim) => { recordOf(sim.player, BASE.id).prep.memorization = 0.5; return prepareBrief(sim, sim.player, BASE, 'rehearse').moved; })).toBeCloseTo(speedRatio(20, 80), 2) },
+  { says: 'when you rehearse a brief on its feet with its reader', holds: () => expect(stepRatio('listening', (sim) => { recordOf(sim.player, BASE.id).prep.memorization = 0.5; return prepareBrief(sim, sim.player, BASE, 'rehearse').moved; })).toBeCloseTo(speedRatio(20, 80), 2) },
 ];
 
 grows.imagination = [
@@ -618,14 +618,14 @@ grows.imagination = [
 ];
 does.imagination = [
   { says: 'Your interpretation in every kind of work that asks for one', holds: () => { for (const t of Object.values(TASK_PROFILES).filter((x) => x.dims.interpretation)) readsIn('imagination', t.id, ['interpretation']); } },
-  { says: 'more where the language is heightened or verse, a beat plays two tones at once, or the piece is lyric or grotesque', holds: () => {
+  { says: 'It matters more where the language is heightened or verse, where a beat plays two tones at once, or where the piece is lyric or grotesque', holds: () => {
     const plain = dimEffectOn(like(BASE, { language: 'everyday', beats: beatsOf(3, 'grave') }), 'imagination', 'interpretation');
     for (const over of [{ language: 'heightened' as const }, { language: 'verse' as const }]) expect(dimEffectOn(like(BASE, { ...over, beats: beatsOf(3, 'grave') }), 'imagination', 'interpretation'), over.language).toBeGreaterThan(plain);
     expect(dimEffectOn(like(BASE, { language: 'everyday', beats: [...beatsOf(2, 'grave'), { what: 'A beat.', tones: ['grave', 'comic'] }] }), 'imagination', 'interpretation')).toBeGreaterThan(plain);
     for (const tone of ['lyric', 'grotesque'] as const) expect(dimEffectOn(like(BASE, { language: 'everyday', beats: beatsOf(3, tone as never) }), 'imagination', 'interpretation'), tone).toBeGreaterThan(plain);
   } },
-  { says: 'a little of your believability', holds: () => { for (const t of ['scene', 'tape', 'performance']) { readsIn('imagination', t, ['believability']); for (const j of PIECES_BY_TASK[t]!.slice(0, 10)) { const d = (a: AbilityId) => dimsOf(j(plus(EVEN, a, 10))).believability! - dimsOf(j(EVEN)).believability!; expect(d('imagination'), t).toBeLessThan(d('emotionalDepth')); } } } },
-  { says: 'how much a session of table work or of breaking down a brief gets done', holds: () => {
+  { says: 'It adds a little to your believability', holds: () => { for (const t of ['scene', 'tape', 'performance']) { readsIn('imagination', t, ['believability']); for (const j of PIECES_BY_TASK[t]!.slice(0, 10)) { const d = (a: AbilityId) => dimsOf(j(plus(EVEN, a, 10))).believability! - dimsOf(j(EVEN)).believability!; expect(d('imagination'), t).toBeLessThan(d('emotionalDepth')); } } } },
+  { says: 'sets how much you get done in a session of table work or of breaking down a brief', holds: () => {
     expect(stepRatio('imagination', (sim) => prepared(sim, assignment(sim, 'song'), 'song-text'))).toBeCloseTo(speedRatio(20, 80), 6);
     expect(stepRatio('imagination', (sim) => prepareBrief(sim, sim.player, BASE, 'read').moved)).toBeCloseTo(speedRatio(20, 80), 2);
   } },
@@ -636,15 +636,15 @@ grows.focus = [
   { says: 'the Circles Of Attention exercise', holds: grew('focus', /^practice:concentration$/) },
 ];
 does.focus = [
-  { says: 'How much a session getting to know your coursework’s material gets done', holds: () => expect(stepRatio('focus', (sim) => prepared(sim, assignment(sim, 'scene-study'), 'read'))).toBeCloseTo(speedRatio(20, 80), 6) },
-  { says: 'your interpretation and execution in written work', holds: () => readsIn('focus', 'written', ['interpretation', 'execution']) },
-  { says: 'your execution in voice work, a self-tape and a taped brief', holds: () => { for (const t of ['voice', 'camera', 'tape', 'tapeOnFeet']) readsIn('focus', t, ['execution']); } },
+  { says: 'How much you get done in a session getting to know your coursework’s material', holds: () => expect(stepRatio('focus', (sim) => prepared(sim, assignment(sim, 'scene-study'), 'read'))).toBeCloseTo(speedRatio(20, 80), 6) },
+  { says: 'In written work it counts toward your interpretation and execution', holds: () => readsIn('focus', 'written', ['interpretation', 'execution']) },
+  { says: 'in voice work, a self-tape and a taped brief toward your execution', holds: () => { for (const t of ['voice', 'camera', 'tape', 'tapeOnFeet']) readsIn('focus', t, ['execution']); } },
   { says: 'more where the material depends on timing, is comic, or is in heightened or verse language', holds: () => {
     const plain = dimEffectOn(like(BASE, { timing: 0, language: 'everyday', beats: beatsOf(3, 'grave') }), 'focus', 'execution');
     for (const over of [{ timing: 3 as const }, { beats: beatsOf(3, 'comic') }, { language: 'heightened' as const }, { language: 'verse' as const }]) expect(dimEffectOn(like(BASE, { timing: 0, language: 'everyday', beats: beatsOf(3, 'grave'), ...over }), 'focus', 'execution'), JSON.stringify(over).slice(0, 40)).toBeGreaterThan(plain);
   } },
-  { says: 'your consistency in any piece you play Restrained, holding the inner line through it', holds: () => { const b = like(BASE, { stakes: 0 }); expect(dimEffectOn(b, 'focus', 'consistency')).toBe(0); expect(dimEffectOn(b, 'focus', 'consistency', { scale: 'restrained' })).toBeGreaterThan(0); } },
-  { says: 'your consistency in movement work and partnered physical work', holds: () => { readsIn('focus', 'movement', ['consistency']); readsIn('focus', 'partnered', ['consistency']); } },
+  { says: 'It keeps you consistent in any piece you play Restrained, holding the inner line through it', holds: () => { const b = like(BASE, { stakes: 0 }); expect(dimEffectOn(b, 'focus', 'consistency')).toBe(0); expect(dimEffectOn(b, 'focus', 'consistency', { scale: 'restrained' })).toBeGreaterThan(0); } },
+  { says: 'in movement work and in a fight or an intimacy scene with a partner', holds: () => { readsIn('focus', 'movement', ['consistency']); readsIn('focus', 'partnered', ['consistency']); } },
   { says: 'Focus on the day is something else: it’s your readiness at that hour, and this ability doesn’t change it.', holds: () => {
     const sim = life('p2b-a4-dayfocus'); freeAndRested(sim);
     const day = () => focusAt(sim, sim.player, sim.now);
@@ -660,20 +660,20 @@ grows.memory = [
   { says: 'learning a part for a production', holds: grew('memory', /^learn-part$/) },
 ];
 does.memory = [
-  { says: 'How much a session learning lines gets done (for a scene, a brief or a part)', holds: () => {
+  { says: 'How much you get done in a session learning lines, for a scene, a brief or a part', holds: () => {
     expect(stepRatio('memory', (sim) => prepared(sim, assignment(sim, 'scene-study', { familiarity: 0.6 }), 'learn'))).toBeCloseTo(speedRatio(20, 80), 6);
     expect(stepRatio('memory', (sim) => prepareBrief(sim, sim.player, BASE, 'lines').moved)).toBeCloseTo(speedRatio(20, 80), 2);
     expect(stepRatio('memory', (sim) => { cast(sim); const before = procOf(sim).lines; expect(sim.execute({ kind: 'school.learn_part', payload: {} }).ok).toBe(true); return procOf(sim).lines - before; })).toBeCloseTo(speedRatio(20, 80), 6);
   } },
-  { says: 'your execution wherever you speak a part’s lines (a scene, a self-tape, a taped brief, an audition, a night on stage)', holds: () => { for (const t of ['scene', 'camera', 'tape', 'tapeOnFeet', 'audition', 'performance']) readsIn('memory', t, ['execution']); } },
-  { says: 'more the longer the text: a medium or long brief, verse, and a whole part on a night', holds: () => {
+  { says: 'It also counts toward your execution wherever you speak a part’s lines: a scene, a self-tape, a taped brief, an audition, a night on stage', holds: () => { for (const t of ['scene', 'camera', 'tape', 'tapeOnFeet', 'audition', 'performance']) readsIn('memory', t, ['execution']); } },
+  { says: 'It matters more the longer the text, so a medium or long brief, verse and a whole part on a night ask more of it', holds: () => {
     const short = exactEffectOn(like(BASE, { size: 'short' }), 'memory');
     expect(exactEffectOn(like(BASE, { size: 'medium' }), 'memory')).toBeGreaterThan(short);
     expect(exactEffectOn(like(BASE, { size: 'long' }), 'memory')).toBeGreaterThan(exactEffectOn(like(BASE, { size: 'medium' }), 'memory'));
     expect(dimEffectOn(like(BASE, { language: 'verse' }), 'memory', 'execution')).toBeGreaterThan(dimEffectOn(like(BASE, { language: 'everyday' }), 'memory', 'execution'));
     expect(meanEffect(PIECES_BY_TASK.performance!, 'memory')).toBeGreaterThan(meanEffect(PIECES_BY_TASK.scene!, 'memory'));
   } },
-  { says: 'more the longer your part is on stage', holds: () => { const m = PLAY_MATERIAL.find((x) => x.id === 'Major Barbara')!; expect(meanEffect([nightOfPart(m, 'lead')], 'memory')).toBeGreaterThan(meanEffect([nightOfPart(m, 'featured')], 'memory')); } },
+  { says: 'a part asks more of it the longer you’re on stage', holds: () => { const m = PLAY_MATERIAL.find((x) => x.id === 'Major Barbara')!; expect(meanEffect([nightOfPart(m, 'lead')], 'memory')).toBeGreaterThan(meanEffect([nightOfPart(m, 'featured')], 'memory')); } },
 ];
 
 grows.adaptability = [
@@ -683,9 +683,9 @@ grows.adaptability = [
 ];
 does.adaptability = [
   { says: 'Your responsiveness in every kind of work judged on it', holds: () => { for (const t of Object.values(TASK_PROFILES).filter((x) => x.dims.responsiveness)) readsIn('adaptability', t.id, ['responsiveness']); } },
-  { says: 'staying believable through a change of tone', holds: () => expect(dimEffectOn(like(BASE, { beats: turning(4) }), 'adaptability', 'believability')).toBeGreaterThan(dimEffectOn(like(BASE, { beats: beatsOf(4, 'grave') }), 'adaptability', 'believability')) },
-  { says: 'recovering from a slip and covering a partner’s', holds: () => { recovers('adaptability'); covers('adaptability'); } },
-  { says: 'how much a session revising after a note gets done, so you take the note sooner', holds: () => {
+  { says: 'It keeps you believable through a change of tone', holds: () => expect(dimEffectOn(like(BASE, { beats: turning(4) }), 'adaptability', 'believability')).toBeGreaterThan(dimEffectOn(like(BASE, { beats: beatsOf(4, 'grave') }), 'adaptability', 'believability')) },
+  { says: 'helps you recover from a slip and cover a partner’s', holds: () => { recovers('adaptability'); covers('adaptability'); } },
+  { says: 'It sets how much you get done in a session revising after a note, so you take the note sooner', holds: () => {
     expect(stepRatio('adaptability', (sim) => prepared(sim, revising(sim), 'revise'))).toBeCloseTo(speedRatio(20, 80), 6);
     // Steps to the note taken, at a tired day's focus and a rested one's: never more with more adaptability, fewer where a step falls short.
     const steps = (adaptability: number, energy: number) => { const sim = life('p2b-a4-revise'); freeAndRested(sim); setAbility(sim, 'adaptability', adaptability); const a = revising(sim); let n = 0; while (!noteTaken(sim.player, a, '2026-09-21') && n < 12) { freeAndRested(sim); sim.player.wellbeing.energy = energy; prepared(sim, a, 'revise'); n += 1; } return n; };
@@ -693,21 +693,21 @@ does.adaptability = [
     for (const [lo, hi] of pairs) expect(hi).toBeLessThanOrEqual(lo);
     expect(pairs.some(([lo, hi]) => hi < lo), JSON.stringify(pairs)).toBe(true);
   } },
-  { says: 'how much working a director’s note on the blocking into your part gets done', holds: () => expect(stepRatio('adaptability', (sim) => { cast(sim); const proc = procOf(sim); proc.notes.push({ at: sim.now, text: 'The blocking isn’t set in you.', focus: { kind: 'blocking' } } as never); expect(sim.execute({ kind: 'school.work_note', payload: {} }).ok).toBe(true); return proc.blocking - 0.5; })).toBeCloseTo(speedRatio(20, 80), 3) },
+  { says: 'how much you get done working a director’s note on the blocking into your part', holds: () => expect(stepRatio('adaptability', (sim) => { cast(sim); const proc = procOf(sim); proc.notes.push({ at: sim.now, text: 'The blocking isn’t set in you.', focus: { kind: 'blocking' } } as never); expect(sim.execute({ kind: 'school.work_note', payload: {} }).ok).toBe(true); return proc.blocking - 0.5; })).toBeCloseTo(speedRatio(20, 80), 3) },
 ];
 
 grows.composure = [
   { says: 'A little with every night in front of an audience and every solo showing, as performance anxiety falls with exposure', holds: () => { expect(DEVELOPED.at.nightComposure).toBeCloseTo(ATTRIBUTES.composureGain.performance * (100 - DEVELOPED.at.composureBefore!) * DEVELOPED.at.lift!, 9); expect(DEVELOPED.at.soloComposure).toBeGreaterThan(0); } },
-  { says: 'the Graded Exposure exercise', holds: grew('composure', /^practice:graded-exposure$/) },
+  { says: 'The Graded Exposure exercise builds it', holds: grew('composure', /^practice:graded-exposure$/) },
   { says: 'part of what Circles Of Attention and A Showing For Classmates build carries over to it', holds: grew('composure', /^transfer:concentration$/, /^transfer:showing-for-classmates$/) },
 ];
 does.composure = [
-  { says: 'Your consistency under pressure, more the more is riding on the piece (a brief’s stakes)', holds: () => { for (const t of ['scene', 'song', 'camera', 'tape', 'audition', 'performance']) readsIn('composure', t, ['consistency']); expect(effectOn(like(BASE, { stakes: 3 }), 'composure')).toBeGreaterThan(effectOn(like(BASE, { stakes: 0 }), 'composure') + 0.3); } },
+  { says: 'Your consistency under pressure. It matters more the more is riding on a piece (a brief’s stakes)', holds: () => { for (const t of ['scene', 'song', 'camera', 'tape', 'audition', 'performance']) readsIn('composure', t, ['consistency']); expect(effectOn(like(BASE, { stakes: 3 }), 'composure')).toBeGreaterThan(effectOn(like(BASE, { stakes: 0 }), 'composure') + 0.3); } },
   { says: 'more on a night in front of an audience than in a scene shown in class', holds: () => expect(meanEffect(PIECES_BY_TASK.performance!, 'composure')).toBeGreaterThan(meanEffect(PIECES_BY_TASK.scene!, 'composure')) },
-  { says: 'a little of your believability when the stakes are high', holds: () => { expect(dimEffectOn(like(BASE, { stakes: 0, beats: beatsOf(3, 'grave') }), 'composure', 'believability')).toBe(0); expect(dimEffectOn(like(BASE, { stakes: 3, beats: beatsOf(3, 'grave') }), 'composure', 'believability')).toBeGreaterThan(0); } },
-  { says: 'your believability in any piece you play Restrained, where calm lets a held-back feeling come through', holds: () => { const b = like(BASE, { stakes: 0, beats: beatsOf(3, 'grave') }); expect(dimEffectOn(b, 'composure', 'believability', { scale: 'restrained' })).toBeGreaterThan(0); } },
-  { says: 'recovering from a slip', holds: () => recovers('composure') },
-  { says: 'how much stress your nerves add before a performance', holds: () => { const sim = life('p2b-a4-nerves'); const at = (c: number) => { setAbility(sim, 'composure', c); sim.player.wellbeing.stress = 0; nerves(sim, sim.player, 'performance'); return sim.player.wellbeing.stress; }; expect(at(90)).toBeLessThan(at(30)); } },
+  { says: 'When the stakes are high it adds a little to your believability', holds: () => { expect(dimEffectOn(like(BASE, { stakes: 0, beats: beatsOf(3, 'grave') }), 'composure', 'believability')).toBe(0); expect(dimEffectOn(like(BASE, { stakes: 3, beats: beatsOf(3, 'grave') }), 'composure', 'believability')).toBeGreaterThan(0); } },
+  { says: 'In any piece you play Restrained it adds to your believability too, since calm lets a held-back feeling come through', holds: () => { const b = like(BASE, { stakes: 0, beats: beatsOf(3, 'grave') }); expect(dimEffectOn(b, 'composure', 'believability', { scale: 'restrained' })).toBeGreaterThan(0); } },
+  { says: 'It helps you recover from a slip', holds: () => recovers('composure') },
+  { says: 'sets how much stress your nerves add before a performance', holds: () => { const sim = life('p2b-a4-nerves'); const at = (c: number) => { setAbility(sim, 'composure', c); sim.player.wellbeing.stress = 0; nerves(sim, sim.player, 'performance'); return sim.player.wellbeing.stress; }; expect(at(90)).toBeLessThan(at(30)); } },
 ];
 
 grows.vocal = [
@@ -731,33 +731,33 @@ grows.discipline = [
   { says: 'turning up to every call', holds: grew('discipline', /^call$/) },
 ];
 does.discipline = [
-  { says: 'How much you gain from classes, nights on stage, preparation and practice, a tenth more with discipline at 100 and a tenth less at 0', holds: () => {
+  { says: 'How much you gain from classes, nights on stage, preparation and practice: a tenth more with discipline at 100 and a tenth less at 0', holds: () => {
     const lift = (grow: (sim: Simulation) => number) => { const at = (d: number) => { const sim = life('p2b-a4-lift'); freeAndRested(sim); setAbility(sim, 'discipline', d); return grow(sim); }; return at(100) / at(0); };
     for (const source of ['class:TEST', 'night:TEST']) expect(lift((sim) => { const s = sim.player.craft!.scene; grewFrom(sim, sim.player, source, 1, [['scene', 1]]); return sim.player.craft!.scene - s; }), source).toBeCloseTo(1.1 / 0.9, 9);
     expect(lift((sim) => { const a = assignment(sim, 'scene-study'); const f = abilityOf(sim, sim.player, 'focus'); prepared(sim, a, 'read'); return abilityOf(sim, sim.player, 'focus') - f; })).toBeCloseTo(1.1 / 0.9, 9);
     expect(lift((sim) => { const r = sim.execute<{ gained: number }>({ kind: 'practice.exercise', payload: { exercise: 'concentration' } }); expect(r.ok, r.error).toBe(true); return r.value!.gained; })).toBeCloseTo(1.1 / 0.9, 9);
   } },
   { says: '(but not the fitness a workout builds)', holds: () => { const at = (d: number) => { const sim = life('p2b-a4-workout'); freeAndRested(sim); setAbility(sim, 'discipline', d); const f = sim.player.wellbeing.fitness; expect(sim.execute({ kind: 'life.look_after', payload: { action: 'exercise' } }).ok).toBe(true); return sim.player.wellbeing.fitness - f; }; expect(at(100)).toBe(at(0)); } },
-  { says: 'your consistency in every kind of work judged on it', holds: () => { for (const t of Object.values(TASK_PROFILES).filter((x) => x.dims.consistency && x.id !== 'audition')) readsIn('discipline', t.id, ['consistency']); } },
-  { says: 'in an audition only when its scene has many beats, since there your nerves are what’s tested', holds: () => {
+  { says: 'It keeps your work consistent wherever consistency is judged', holds: () => { for (const t of Object.values(TASK_PROFILES).filter((x) => x.dims.consistency && x.id !== 'audition')) readsIn('discipline', t.id, ['consistency']); } },
+  { says: 'In an audition it counts only when the scene has many beats, since there your nerves are what’s tested', holds: () => {
     // An audition shown on a scene of three units (A Doll's House, its third act) reads none; on six (The Seagull, its fourth), three beats past three.
     expect(movedBy(auditionOn('dollhouse-3'), 'discipline')).not.toContain('consistency');
     expect(movedBy(auditionOn('seagull-4'), 'discipline')).toContain('consistency');
     expect(movedBy(auditionOn('dollhouse-3'), 'composure')).toContain('consistency');
   } },
   { says: 'more the more beats a piece has and on a night of a run', holds: () => { expect(effectOn(like(BASE, { beats: beatsOf(6, 'grave') }), 'discipline')).toBeGreaterThan(effectOn(like(BASE, { beats: beatsOf(3, 'grave') }), 'discipline') + 0.2); expect(meanEffect(PIECES_BY_TASK.performance!, 'discipline')).toBeGreaterThan(meanEffect(PIECES_BY_TASK.scene!, 'discipline')); } },
-  { says: 'your execution in physical work set to a score', holds: () => { expect(dimEffectOn(like(BASE, { physical: 0 }), 'discipline', 'execution')).toBe(0); expect(dimEffectOn(like(BASE, { physical: 3 }), 'discipline', 'execution')).toBeGreaterThan(0); } },
-  { says: 'your execution in written work', holds: () => readsIn('discipline', 'written', ['execution']) },
+  { says: 'It also counts toward your execution in physical work set to a score', holds: () => { expect(dimEffectOn(like(BASE, { physical: 0 }), 'discipline', 'execution')).toBe(0); expect(dimEffectOn(like(BASE, { physical: 3 }), 'discipline', 'execution')).toBeGreaterThan(0); } },
+  { says: 'in written work', holds: () => readsIn('discipline', 'written', ['execution']) },
 ];
 
 grows.stamina = [
   { says: 'Workouts', holds: grew('stamina', /^workout/) },
   { says: 'more on a run when the weather’s fine', holds: () => expect(DEVELOPED.at.run! / DEVELOPED.at.indoors!).toBeCloseTo(TRAINING.run / TRAINING.indoors, 9) },
-  { says: 'it holds for three days after each one', holds: () => expect(DEVELOPED.at.heldFor).toBe(FITNESS.heldDays) },
-  { says: 'then it slowly falls, as fitness does', holds: () => expect(DEVELOPED.at.fellADay).toBeCloseTo(FITNESS.perDay, 9) },
+  { says: 'It holds for three days after each one', holds: () => expect(DEVELOPED.at.heldFor).toBe(FITNESS.heldDays) },
+  { says: 'then slowly falls, as fitness does', holds: () => expect(DEVELOPED.at.fellADay).toBeCloseTo(FITNESS.perDay, 9) },
 ];
 does.stamina = [
-  { says: 'In a piece judged moment by moment (a scene, a brief, a night on stage), how well you hold up in its later moments', holds: () => {
+  { says: 'How well you hold up through the later moments of a piece judged moment by moment (a scene, a brief, a night on stage)', holds: () => {
     for (const t of ['scene', 'tape', 'performance']) for (const j of PIECES_BY_TASK[t]!.slice(0, 12)) {
       const seg = (p: Performer) => j(p).piece!.segments.map((s) => s.drain);
       const lo = seg(EVEN), hi = seg(plus(EVEN, 'stamina', 30)), full = seg({ ...EVEN, ability: (a) => (a === 'stamina' ? 100 : 50) });
@@ -769,7 +769,7 @@ does.stamina = [
     }
   } },
   { says: 'more the longer the piece and the more physical and vocal work it asks', holds: () => { const light = like(BASE, { size: 'short', physical: 0, vocal: 0 }); for (const over of [{ size: 'long' as const }, { physical: 3 as const }, { vocal: 3 as const }]) expect(exactEffectOn(like(light, over), 'stamina'), JSON.stringify(over)).toBeGreaterThan(exactEffectOn(light, 'stamina')); } },
-  { says: 'on a night, how much its workload asks (the production’s running time, your part’s share of it and how intense it is), with less strain just after an interval', holds: () => {
+  { says: 'On a night, how much it’s asked depends on the workload: the production’s running time, your part’s share of it and how intense it is, with less strain just after an interval', holds: () => {
     const rt = RUNNING_TIMES['Hedda Gabler']!;
     const w = (over: Partial<typeof rt>, size: Participation = 'supporting', m = { physical: 1, vocal: 1 }) => nightLoad({ ...rt, ...over }, m, size).workload;
     expect(w({ minutes: rt.minutes + 60 })).toBeGreaterThan(w({}));
@@ -782,8 +782,8 @@ does.stamina = [
     const halves = [{ label: 'a', tones: [], weight: 1, turnInto: false, blend: false }, { label: 'b', tones: [], weight: 1, turnInto: false, blend: false }];
     expect(segmentShares(n, halves)[1]!).toBeLessThan(segmentShares(straight, halves)[1]!);
   } },
-  { says: 'the energy a night costs you afterward, up to half of it spared at full stamina', holds: () => { const n = nightLoad(RUNNING_TIMES['Hedda Gabler']!, { physical: 1, vocal: 1 }, 'lead'); expect(eveningCost(n, 1, 100).energy).toBeCloseTo(eveningCost(n, 0, 100).energy / 2, 9); expect(eveningCost(n, 0.5, 100).energy).toBeLessThan(eveningCost(n, 0, 100).energy); } },
-  { says: 'in work shown whole, without a scene (voice work, a song, movement, a fight), your consistency', holds: () => { for (const t of ['voice-sequence', 'song', 'movement-score', 'fight-sequence']) expect(movedBy(templateWork(t), 'stamina'), t).toEqual(['consistency']); } },
+  { says: 'At full stamina it spares up to half the energy a night costs you afterward', holds: () => { const n = nightLoad(RUNNING_TIMES['Hedda Gabler']!, { physical: 1, vocal: 1 }, 'lead'); expect(eveningCost(n, 1, 100).energy).toBeCloseTo(eveningCost(n, 0, 100).energy / 2, 9); expect(eveningCost(n, 0.5, 100).energy).toBeLessThan(eveningCost(n, 0, 100).energy); } },
+  { says: 'In work shown whole, without a scene (voice work, a song, movement, a fight), it keeps you consistent', holds: () => { for (const t of ['voice-sequence', 'song', 'movement-score', 'fight-sequence']) expect(movedBy(templateWork(t), 'stamina'), t).toEqual(['consistency']); } },
 ];
 
 /** TEST SETUP: a scene shown and its note on the partner part read, the work back for revision, as a showing leaves it. */
@@ -1316,7 +1316,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     for (const r of prep) {
       expect(r.focus).toBe('preparation');
       expect(r.exercise).toBeUndefined();
-      expect(r.why).toMatch(/^Coming to your work short on .+ cost about (?:1 point|(?!1 )[\d.]+ points) off the whole a piece\. That’s preparation, not training\.$/);
+      expect(r.why).toMatch(/^Coming to your work short on .+ cost about (?:1 point|(?!1 )[\d.]+ points) off the whole a piece\. That’s preparation, not training: prepare that part further before you show or tape the next piece\.$/);
       expect(cold.next).toContain(`${r.label}. ${r.why}`);
     }
     const ready = taped('p2b-f3-cold', LONG, preparedFully);

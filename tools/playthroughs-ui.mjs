@@ -873,7 +873,7 @@ async function specialist() {
     firstTake = Number((said1.match(/Taped: (\d+\.\d)/) ?? [])[1] ?? NaN);
     must(!Number.isNaN(firstTake), `no result said: ${said1}`);
     const text = clean(await briefPane().innerText());
-    const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
+    const grain = text.match(/Played that way, it suited the scene \([^)]*\) and added [\d.]+ points\. Your abilities and techniques cost it [\d.]+ points\./)?.[0];
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.search(/The Last Take/i), text.search(/The Last Take/i) + 400)}`);
     must(/held back your [a-z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
     must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t the one row in the takes table');
@@ -887,9 +887,9 @@ async function specialist() {
     const first = clean(await work.locator('p').first().innerText());
     const assumes = clean(await work.locator('[data-assumes]').innerText().catch(() => ''));
     const attention = clean(await work.locator('[data-attention]').innerText().catch(() => ''));
-    must(/\d+ hours of its exercise(?:, a session a day,)? would take it from \d+ to about \d+\. On your recent work, replayed with you as you are now, that’s forecast to be worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
+    must(/\d+ hours of its exercise(?:, an hour a day,)? would take it from \d+ to about \d+\. On your recent work, judged again as you are now, that’s forecast to be worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
     must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes: ${assumes || 'nothing'}`);
-    must(/deserves? attention|^Neither preparation nor training/.test(attention), `what deserves attention: ${attention || 'nothing'}`);
+    must(/(is|are) worth your time now|^Neither preparation nor training/.test(attention), `what deserves attention: ${attention || 'nothing'}`);
     const ex = work.locator('button', { hasText: /…$/ }).first();
     trains = (await ex.count()) ? clean(await ex.innerText()).replace(/…$/, '') : '';
     said(`${first} / ${assumes} / ${attention} / its exercise: ${trains || 'none offered here'}`);

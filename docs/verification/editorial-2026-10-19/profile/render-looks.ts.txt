@@ -1,0 +1,71 @@
+/**
+ * Prints what the Player Profile's looks say, drawn as the game draws them, for brief 15’s profile area (the editorial pass), as brief 14’s did:
+ * every ability's look on a first-year in New York (and a life that never trained), a genre's look for each kind of
+ * demand (applied, belonging to a role, low confidence, none) before and after study and a brief taped, and a piece
+ * of work's look. Kept as .txt so the lint and the typecheck leave it be: copy it out as a .ts, then from the clone run npx vite-node <that file> -- <out.txt>
+ */
+import { writeFileSync } from 'node:fs';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import type { Simulation } from '@/engine/core/simulation';
+import { ABILITY_DEFS } from '@/engine/content/abilities';
+import { GENRE_DEMANDS, applied } from '@/engine/content/demands';
+import { BRIEF_BY_ID, briefsOf } from '@/engine/content/briefs';
+import '@/ui/looks/all';
+import { resolveLook, type Looked } from '@/ui/looks/registry';
+import { at } from '@/ui/looks/subject';
+import { BAND_WORD, sourceWords } from '@/ui/looks/actor';
+
+const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ')
+  .replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+const out: string[] = [];
+const show = (sim: Simulation, kind: string, id: string, title: string) => {
+  const l = resolveLook(sim, at(kind, id)) as Looked | { gone: string };
+  if (!l || 'gone' in l) { out.push(`## ${title}\n  gone: ${(l as { gone?: string })?.gone}`); return; }
+  out.push(`## ${title}\n  name: ${l.name}\n  kind: ${l.kind}\n  summary: ${l.summary}\n  body: ${onScreen(renderToStaticMarkup(createElement('div', null, l.body)))}\n  ways: ${(l.ways ?? []).map((w) => `${w.label} (${w.detail})`).join(' | ')}\n  provenance: ${l.provenance}`);
+};
+const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+import { occupiedAt } from '@/engine/systems/life';
+/** TEST SETUP, as tests/attributes-phase-2b.test.ts has it: what's under way let finish, the day's commitments cleared, the player rested. */
+function freeAndRested(sim: Simulation): void {
+  for (let busy = occupiedAt(sim, sim.now); busy; busy = occupiedAt(sim, sim.now)) sim.advanceTo(busy.at + busy.durationMinutes! * 60_000);
+  for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.requiresPlayer && !item.payload.kept) sim.timeline.cancel(item.id, sim.now);
+  const w = sim.player.wellbeing; w.energy = 100; w.stress = 0; w.morale = 80; w.nourishment = 90; w.hygiene = 100; w.sleepDebt = 0;
+  sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
+}
+const go = (sim: Simulation, kind: string, payload: Record<string, unknown>) => { freeAndRested(sim); const r = sim.execute({ kind, payload }); if (!r.ok) out.push(`  (${kind} refused: ${r.error})`); return r; };
+
+const sim = life('p14-looks');
+for (const d of ABILITY_DEFS) show(sim, 'ability', d.id, `Ability: ${d.label}`);
+// A genre of each kind of demand, before anything is done in it.
+const kinds = Object.keys(GENRE_DEMANDS);
+const pick = {
+  applied: kinds.find((g) => applied(g) && (GENRE_DEMANDS[g]?.tags.length ?? 0) > 0),
+  definition: kinds.find((g) => applied(g) && GENRE_DEMANDS[g]?.basis === 'definition'),
+  belongs: kinds.find((g) => !applied(g) && GENRE_DEMANDS[g]?.belongsTo),
+  low: kinds.find((g) => !applied(g) && !GENRE_DEMANDS[g]?.belongsTo && (GENRE_DEMANDS[g]?.tags.length ?? 0) > 0),
+  none: kinds.find((g) => (GENRE_DEMANDS[g]?.tags.length ?? 0) === 0),
+};
+for (const [k, g] of Object.entries(pick)) if (g) show(sim, 'genre', g, `Genre (${k}, before any work): ${g}`);
+// Drama studied twice and its brief taped: the summary with figures, and the take's own look.
+go(sim, 'genre.study', { genre: 'drama' });
+const b = BRIEF_BY_ID['brief-drama'] ?? briefsOf('drama')[0]!;
+go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id, scale: 'restrained' });
+for (const step of ['read', 'lines', 'rehearse']) go(sim, 'brief.prepare', { brief: b.id, step });
+go(sim, 'practice.self_tape', { genre: 'drama' });
+show(sim, 'genre', 'drama', 'Genre (drama, studied once and its brief taped)');
+const w = sim.player.work?.at(-1);
+if (w) show(sim, 'work', w.inputs.key, `Work: ${w.what}`);
+for (const d of ABILITY_DEFS.slice(0, 2)) show(sim, 'ability', d.id, `Ability after the take: ${d.label}`);
+show(sim, 'work', 'no-such-work', 'Work that is gone');
+show(sim, 'genre', 'no-such-genre', 'Genre that is not one');
+// A life that never trained as an actor.
+const outside = createSave(1, 'p14-outside', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Bo', lastName: 'Lee', pronouns: 'he/him' });
+const p = outside.universe.people[outside.universe.playerId]!;
+delete (p as { craft?: unknown }).craft;
+show(outside, 'ability', 'presence', 'Ability, a life that never trained: Presence');
+out.push(`## Development sources, as the history and Last Change say them\n${['class:DRAM 153a', 'class:DRAM 103a/b', 'class:TEST', 'prepare:familiarity', 'prepare:memorization', 'prepare:interpretation', 'prepare:partner', 'prepare:revision', 'prepare:rehearsal', 'practice:sense-memory', 'transfer', 'brief:interpretation', 'brief:memorization', 'nerves:performance', 'rehearsal:summer', 'rehearsal:cabaret', 'lab:showing', 'coursework:practice', 'practice-day', 'call', 'night', 'work-note', 'workout:run', 'read:x', 'interest:x'].map((k) => `  ${k} -> ${sourceWords(k)}`).join('\n')}\n  bands: ${Object.values(BAND_WORD).join(', ')}`);
+writeFileSync(process.argv[2] ?? 'looks.txt', `${out.join('\n\n')}\n`);
+console.log(`${out.length} looks written`);

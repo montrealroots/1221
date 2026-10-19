@@ -422,9 +422,9 @@ describe('the craft guide’s worked examples, played', () => {
     expect(r.known).toBeGreaterThanOrEqual(BRIEF.complete.genre);
     expect(ex.result).toContain(`it passes ${pct(BRIEF.complete.genre)} on day ${r.days}, at ${one(r.at)}`);
     // What the genre’s look says, word for word as the example quotes it.
-    const said = /a part in a play of its kind is learned \d+% faster/.exec(r.summary)?.[0];
+    const said = /a scene or a part from a play of its kind \d+% quicker to prepare/.exec(r.summary)?.[0];
     expect(said).toBeDefined();
-    expect(ex.result).toContain(`the genre’s look says ${said}`);
+    expect(ex.result).toContain(`the genre’s look says it makes ${said}`);
   });
 
   it('Preparing A Brief: two days of the three steps, each beat against what it asks, and the hours', () => {
@@ -525,7 +525,7 @@ describe('the craft guide’s worked examples, played', () => {
     expect(r.look.summary).toContain(`Judged ${one(r.w.overall)} of 100, ${band(r.w.overall)}`);
     expect(r.look.summary).toContain(`${chiefLimit(r.w)}.`);
     expect(r.again.overall).toBe(r.w.overall);
-    expect(r.look.provenance).toContain(`Worked out again from what it was judged on, it comes to ${one(r.w.overall)}`);
+    expect(r.look.provenance).toContain(`Judged again from its record, it comes to ${one(r.w.overall)}`);
     // Part By Part, as the look draws it, is the take as played, with its draw: each part’s row and the continuity.
     for (const s of r.again.piece!.segments) expect(r.body).toMatch(new RegExp(`${s.label} [A-Z][A-Za-z ]* ${one(s.overall)} ${pct(s.part)} of ${pct(s.required)} `));
     expect(r.body).toContain(`from part to part: ${one(r.again.piece!.continuity)}.`);
@@ -561,7 +561,7 @@ describe('the craft guide’s worked examples, played', () => {
     // The choices more it took to name the habit, as the step and the result count them, and the words the example quotes.
     expect(ex.steps[2]).toContain(`for the pace on ${plural(r.more, 'more piece')}.`);
     expect(ex.result).toContain(`Chosen on the ${r.more} more, it’s named one`);
-    const quoted = /“(You play it [^”]+)”/.exec(ex.result)?.[1];
+    const quoted = /“(You tend to play it [^”]+)”/.exec(ex.result)?.[1];
     expect(r.atLast.habits.map((x) => x.line)).toContain(quoted);
   });
 });

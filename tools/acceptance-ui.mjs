@@ -760,7 +760,7 @@ await step('interruption: an advance past a commitment stops at it and asks; Sta
  * above didn't read: health cover as a student meets it, stamina spent and recovered, and a document got and kept
  * across a save. Each is read on the screen the walkthrough sends a player to.
  */
-const condition = () => page.locator('section.card', { has: page.getByRole('heading', { name: 'Current Condition', exact: true }) }).first();
+const condition = () => page.locator('section.card', { has: page.getByRole('heading', { name: 'Readiness Today', exact: true }) }).first();
 // The label is drawn in capitals by the stylesheet, and innerText reads it so.
 const energyNow = async () => Number((await statIn(condition(), 'Energy, Stress')).match(/^Energy, Stress (\d+),/i)?.[1] ?? NaN);
 const staminaRow = async () => (await page.locator('tr', { has: page.getByRole('button', { name: /^Stamina$/ }) }).first().locator('td').allInnerTexts()).map((t) => t.replace(/\s+/g, ' ').trim());
@@ -782,7 +782,7 @@ await step('stamina and recovery: Work Out spends Energy and builds Stamina on t
   await advance('Tomorrow Morning');
   await rail('Player Profile');
   const e0 = await energyNow(); const s0 = await staminaRow();
-  must(Number.isFinite(e0) && s0.length > 1, `Current Condition or the Stamina row unread: ${e0}, ${s0.join(' | ')}`);
+  must(Number.isFinite(e0) && s0.length > 1, `Readiness Today or the Stamina row unread: ${e0}, ${s0.join(' | ')}`);
   await page.getByRole('button', { name: /^Look After Yourself/ }).first().click(); await wait(300);
   const workout = page.getByRole('menuitem', { name: /^Work Out/ }).first();
   must(await workout.count(), 'no Work Out in Look After Yourself');
@@ -1419,7 +1419,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     const assumes = (await briefPane().locator('[data-assumes]').first().innerText().catch(() => '')).trim();
     const attention = (await briefPane().locator('[data-attention]').first().innerText().catch(() => '')).trim();
     must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
-    must(/deserves? attention|^Neither preparation nor training/.test(attention), `the attention said: ${attention || 'nothing'}`);
+    must(/(is|are) worth your time now|^Neither preparation nor training/.test(attention), `the attention said: ${attention || 'nothing'}`);
     return `${assumes.slice(0, 200)} / ${attention.slice(0, 200)}`;
   });
   await step('[save: brief scenario] brief: the weakness trained from the brief, an hour of practice', async () => {
@@ -1552,9 +1552,9 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     const said = await briefButton(/^Tape It/);
     must(/Taped: \d+\.\d/.test(said), `no take: ${said}`);
     const text = (await briefPane().innerText()).replace(/\s+/g, ' ');
-    const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
+    const grain = text.match(/Played that way, it suited the scene \([^)]*\) and added [\d.]+ points\. Your abilities and techniques cost it [\d.]+ points\./)?.[0];
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.indexOf('The Last Take'), text.indexOf('The Last Take') + 400)}`);
-    const advice = text.match(/(\d+) hours of its exercise(?:, a session a day,)? would take it from \d+ to about \d+\. On your recent work, replayed with you as you are now, that’s forecast to be worth about [\d.]+ points? a piece/)?.[0];
+    const advice = text.match(/(\d+) hours of its exercise(?:, an hour a day,)? would take it from \d+ to about \d+\. On your recent work, judged again as you are now, that’s forecast to be worth about [\d.]+ points? a piece/)?.[0];
     must(advice, 'What To Work On isn’t forecast');
     await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);

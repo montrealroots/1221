@@ -1,0 +1,3 @@
+[
+ { "old": "Current Condition", "new": "Readiness Today", "where": "src/ui/workspaces/ProfileWorkspace.tsx (the Player Profile's panel title; its subtitle was \"Your readiness for work today\" and is \"Whether anything holds your work back today\")" }
+]
