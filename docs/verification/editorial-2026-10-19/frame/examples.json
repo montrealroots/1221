@@ -466,5 +466,32 @@
   "why": "Marked, as the Calendar screen now says it.",
   "meaningSensitive": false,
   "verified": "looks-b4.txt, Your Own Plans"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .US",
+  "kind": "official",
+  "before": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+  "after": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
+  "why": "The researcher's shorthand under Going Abroad, said as sentences with every fact kept; CBP's initials and a British spelling went.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone'"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .JP",
+  "kind": "official",
+  "before": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+  "after": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
+  "why": "'See uncertain' pointed at the research's list, which no screen shows; the uncertainty is now said in the note.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts, 'keeps a note’s first word whole…' and 'says each rule in sentences…'"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .NZ",
+  "kind": "official",
+  "before": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+  "after": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
+  "why": "A label-and-semicolons note became a sentence; the levy is named for what it is.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts, 'says each rule in sentences…'"
  }
 ]

@@ -440,7 +440,7 @@ How This Works
 Contents › The Weather Search How This Works Search 
 The Weather
 Show Everything 
-The Weather panel on Home shows the weather in your town: now, today’s high and low, humidity and wind, and the next five days. Press any figure for more: a day opens into its hours, and the sky into the week ahead. The weather changes one thing in the game: whether a workout is a run. It’s worked out from your town’s climate, the season and a little chance, so it’s the same every time you look.
+The Weather panel on Home shows the weather in your town: now, today’s high and low, humidity and wind, and the next five days. Press any figure for more: a day opens into its hours, and the sky into the week ahead. The weather changes one thing in the game: whether a workout is a run. It comes from your town’s climate, the season and a little chance, and it’s the same every time you look.
 Where To Find It
 Home, The Weather Panel.
 When You Can Use It

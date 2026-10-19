@@ -76,6 +76,118 @@
   "reason": "The standard names of climate types, Oceanic, Continental, Subarctic, as atlases name them, shown beside the weather.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/entry.ts#ENTRY .AU": {
+  "status": "Rewritten",
+  "hash": "0f0986379ead",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .BR": {
+  "status": "Rewritten",
+  "hash": "67093b400f6a",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .CA": {
+  "status": "Rewritten",
+  "hash": "8c3bb66fe6c3",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .DE": {
+  "status": "Rewritten",
+  "hash": "c0b419de7615",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .ES": {
+  "status": "Rewritten",
+  "hash": "549ebbdb8ecd",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .FR": {
+  "status": "Rewritten",
+  "hash": "8000e3c5e805",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .GB": {
+  "status": "Rewritten",
+  "hash": "4a9117f4b9a8",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .IE": {
+  "status": "Rewritten",
+  "hash": "324bc0266fad",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .IS": {
+  "status": "Rewritten",
+  "hash": "ecec54962111",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .JP": {
+  "status": "Rewritten",
+  "hash": "2dcd38b44091",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .KR": {
+  "status": "Rewritten",
+  "hash": "de4e904d692b",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .LV": {
+  "status": "Rewritten",
+  "hash": "ea150433b041",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .MX": {
+  "status": "Rewritten",
+  "hash": "b374937084c5",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .NZ": {
+  "status": "Rewritten",
+  "hash": "a2363c24ea16",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .US": {
+  "status": "Rewritten",
+  "hash": "d2b18ccd0ede",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY_UNCERTAIN": {
+  "status": "Retained",
+  "hash": "2721041afa4a",
+  "on": "2026-10-19",
+  "reason": "The research’s own list of what it could not confirm, in its words, which no screen shows; each note now says the doubt that applies to it.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/content/ethnicity.ts#ETHNICITIES [american-indian]": {
   "status": "Retained",
   "hash": "8514eaaa4518",
@@ -176,7 +288,7 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.weather]": {
   "status": "Rewritten",
-  "hash": "c828ef89d05c",
+  "hash": "1f9dd966fc36",
   "on": "2026-10-19",
   "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Weather",
   "first": "Pending"

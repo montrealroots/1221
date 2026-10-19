@@ -460,7 +460,7 @@ export const DAY: readonly GuideEntry[] = [
     questions: ['What’s the weather doing?', 'Does the weather change anything?', 'Will it rain tomorrow?', 'Why is it the same every time I look?', 'When does the flu come round?'],
     where: { route: '/home', label: 'Home, The Weather Panel' },
     available: `From ${chapter('weather')}.`,
-    short: 'The Weather panel on Home shows the weather in your town: now, today’s high and low, humidity and wind, and the next five days. Press any figure for more: a day opens into its hours, and the sky into the week ahead. The weather changes one thing in the game: whether a workout is a run. It’s worked out from your town’s climate, the season and a little chance, so it’s the same every time you look.',
+    short: 'The Weather panel on Home shows the weather in your town: now, today’s high and low, humidity and wind, and the next five days. Press any figure for more: a day opens into its hours, and the sky into the week ahead. The weather changes one thing in the game: whether a workout is a run. It comes from your town’s climate, the season and a little chance, and it’s the same every time you look.',
     steps: [
       'Read the Weather panel on Home: the temperature now and the condition, the high and the low, humidity, wind and the climate, and five days after today.',
       'Press the temperature or the condition to open the sky: the wind, the humidity, how the day sits against the date’s normal, and What It’s Usually Like.',

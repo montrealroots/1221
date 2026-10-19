@@ -164,10 +164,22 @@ describe('the entry rules’ notes, as the Papers screen’s fine print shows th
   it('keeps a note’s first word whole, and says a country’s own citizen is one', async () => {
     const { ENTRY } = await import('@/engine/content/entry');
     // Until 2026-10-17 the builder took "Visa exempt" off "Visa exemption", and Japan's rule read "Ion for short-term stay".
-    expect(ENTRY.JP!.citizens.US!.note).toBe('Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).');
+    expect(ENTRY.JP!.citizens.US!.note).toBe('No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.');
     expect(Object.values(ENTRY).flatMap((d) => Object.values(d.citizens)).filter((r) => /^Ion\b/.test(r.note))).toEqual([]);
     expect(ENTRY.US!.citizens.US).toMatchObject({ status: 'citizen', note: 'You’re one of its citizens.' });
     expect(Object.values(ENTRY).flatMap((d) => Object.values(d.citizens)).filter((r) => r.note === 'Own nationals.')).toEqual([]);
+  });
+
+  // From 2026-10-19 (brief 15): the research's shorthand said as sentences (`tools/entry-notes.mjs`). Until then a note
+  // pointed at "see uncertain", a list no screen shows, named agencies by their initials alone, and ran on semicolons.
+  it('says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', async () => {
+    const { ENTRY } = await import('@/engine/content/entry');
+    const notes = Object.values(ENTRY).flatMap((d) => Object.values(d.citizens)).map((r) => r.note);
+    expect(notes.filter((n) => /see uncertain|\bCBP\b|\bMOFA\b|authoris|scrutinis|;/.test(n))).toEqual([]);
+    expect(ENTRY.US!.citizens.GB!.note).toBe('Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.');
+    expect(ENTRY.FR!.citizens.GB!.note).toBe('Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026. UK nationals have been treated as non-EU nationals since January 1, 2021.');
+    expect(ENTRY.NZ!.citizens.US!.note).toBe('No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.');
+    expect(ENTRY.DE!.citizens.FR!.note).toBe('Free movement within the EU and EEA.');
   });
 });
 

@@ -294,3 +294,39 @@ looks for six lives, by brief 14's `../../language-2026-10-17/frame/render-looks
 sentence of the calendar entry opened on "Nothing"), spelling 0, typos 0, text-inventory 0 once marked, doc-refs 0,
 deciders 0, guide-quotes 0. `npx vitest run` on the 19 files that hold these words: 19 files, 260 tests, exit 0.
 
+## Batch 5: The Entry Rules Under Going Abroad
+
+**Sources (16, in 1 file):** `src/engine/content/entry.ts`, 15 destinations and the research's uncertainties: 7,471
+words, of which the screen shows each citizen's note and source under Papers, Passport And ID, Going Abroad
+(`ui/papers/Documents.tsx`, the fine print under the country picked), and an authorization's or a visa's name inside a
+refusal (`systems/documents.ts`, `mayEnter`). `processing`, `statedDate`, `passport.rule`, `authority` and
+`ENTRY_UNCERTAIN` reach no screen (grep for each reader).
+
+**How it was worked:** the file is generated (`tools/build-entry.mjs`) from the research, which keeps its own words.
+The 38 distinct notes were rewritten once each in `tools/entry-notes.mjs`, keyed by the note as the generator leaves
+it, and the generator runs it last, so regenerating gives the same words. 210 notes in the file changed.
+
+**Rewritten (15):** each destination's notes, as sentences: agencies by name where their initials stood alone (US
+Customs and Border Protection, Japan's foreign ministry), British spellings American ("authorization"), "see
+uncertain" (a pointer at a list no screen shows) replaced by saying in the note what wasn't confirmed, and the
+semicolon lists split. Every figure, date, program, form and fee is kept: 90 days in any 180, subclass 444, USD
+80.90, NZD 100, the Appendix ETA National List's sections.
+
+**Kept (1):** `ENTRY_UNCERTAIN`, the research's own list of what it couldn't confirm, which no screen shows.
+
+**Meaning-sensitive, and how each was checked:** each rewrite was read against its research note side by side (the
+map holds both), for every number, date and condition. Where the research hedged ("see uncertain"), the note says the
+detail wasn't confirmed. Authorization names, which `documents.ts` matches against a held document's name, weren't
+touched.
+
+**Tests:** `tests/language-frame.test.ts`, "keeps a note’s first word whole…" (Japan's note, updated) and a new test,
+"says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone",
+which reads every note and fails on the research's shorthand.
+
+**Checks:** tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos 0,
+doc-refs 0, deciders 0, guide-quotes 0, and `node tools/entry-notes.mjs` 0 (no note left in the research's words).
+text-inventory failed once, on engine-speak: batch 4's weather overview had said "It’s worked out from your town’s
+climate", one "worked out from" over the ratchet's none, which batch 4's checks didn't show because they read the
+inventory's exit while its sources were still Pending. It now says "It comes from your town’s climate, the season and
+a little chance", the entry was drawn again (`help-b4.txt`) and marked again, and the inventory holds, engine-speak
+back at 332. `npx vitest run tests/language-frame.test.ts`: 8 tests, exit 0.
