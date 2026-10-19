@@ -101,8 +101,8 @@ export const BRIEFS_C: readonly Brief[] = [
       timing: 'Each hiding move lands on one of her lines, so the gags live or die by where they’re placed.',
       physical: 'The scene is a body hiding an object in plain sight: the shuffle, the sit, the hand over the lettering.',
       partner: 'Every move follows where she looks.',
-      techniques: 'Comedy carries the timing of his cover stories against her questions, and clowning the physical business of hiding the cake in frame, staged with a box so it repeats safely on every take.',
-      allows: 'The cake has to be out of her eyeline on exactly the lines the brief places, so it can only be played set: the hiding business fixed and the same every time.',
+      techniques: 'Comic timing carries his cover stories against her questions, and clowning carries the physical business of hiding the cake in frame. Stage it with a box so it repeats safely on every take.',
+      allows: 'The cake has to be out of her eyeline on exactly the right lines, so it can only be played set: the hiding business fixed and the same every time.',
       beats: 'Three escalations of one problem, each bigger and sillier than the last, ending on a reversal.',
     },
     readings: [
@@ -131,13 +131,13 @@ export const BRIEFS_C: readonly Brief[] = [
       timing: 'The small talk is a duel of pauses, and any hesitation answers his question.',
       partner: 'She reads him line by line for what he knows.',
       vocal: 'Two voices in one session: the scene’s, live and guarded, and the narration’s, level and finished.',
-      techniques: 'The narration is an account given after the fact, so it’s played as voice-over in its own register, close and even and knowing how the night ends, against a scene that doesn’t know yet. It’s recorded off camera in the same session and laid over the opening and closing of the tape, so it’s played to a microphone with no face to show it.',
+      techniques: 'The narration is her account the next day, so play it as voice-over in its own register: close, even, and knowing how the night ends, against a scene that doesn’t know yet. You record it off camera in the same session, to a microphone with no face to show it, and it’s laid over the opening and closing of the tape.',
       beats: 'Narration, a guarded duel, a near miss, and narration that keeps the ending back.',
     },
     readings: [
       { id: 'cool', label: 'Cool Under The Lamp', reading: 'Vera is as cool as the voice that narrates her, and the danger shows only in what she leaves unsaid.', rests: 'The narration is flat and after the fact, and she covers his question with a joke.', lean: { consistency: 1.2, believability: 1.05 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'believability', ability: 'focus', weight: 0.4 }] },
       { id: 'liked', label: 'She Liked Him', reading: 'The fear is tangled with the fact that she liked him all week, and the narration is her trying to forgive herself for it.', rests: 'He’s been friendly every night and she looked forward to it; the narration won’t say whether she was right.', lean: { believability: 1.2, connection: 1.15 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'connection', ability: 'listening', weight: 0.4 }] },
-      { id: 'two', label: 'Two Women', reading: 'The narrator and the operator are played as two people, the one who knows and the one who doesn’t, and the tape is the gap between them.', rests: 'The tape opens and closes with narration given the next day, recorded apart from the scene.', lean: { interpretation: 1.2, execution: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.5 }, { dim: 'execution', ability: 'vocal', weight: 0.5 }] },
+      { id: 'two', label: 'Two Women', reading: 'She plays the narrator and the operator as two people, the one who knows and the one who doesn’t, and the tape is the gap between them.', rests: 'The tape opens and closes with narration given the next day, recorded apart from the scene.', lean: { interpretation: 1.2, execution: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.5 }, { dim: 'execution', ability: 'vocal', weight: 0.5 }] },
     ],
   },
   {
@@ -184,8 +184,8 @@ export const BRIEFS_C: readonly Brief[] = [
     allows: { structure: ['open'] },
     why: {
       partner: 'What she says to Josh depends on how far he’s taking it as a joke.',
-      improvisation: 'The brief gives the beats and the objective and no lines: every word is found in the take.',
-      techniques: 'The lines are improvised inside the outline of beats, the way the form is made, so the scene asks for improvisation. The camera she holds is the on-camera work every self-tape asks for.',
+      improvisation: 'The brief gives the beats and the objective but no lines, so you find every word as you tape.',
+      techniques: 'You improvise the lines inside the outline of beats, the way found footage is made, so the scene asks for improvisation. The camera she holds is the on-camera work every self-tape asks for.',
       allows: 'With no written lines, each take’s words come live from what the reader says, so it can only be played open, never fixed and repeated.',
       beats: 'A home video, a discovery played down for her mother’s sake, an argument, and a silence she has to fill.',
     },
@@ -284,12 +284,12 @@ export const BRIEFS_C: readonly Brief[] = [
     language: 'everyday', timing: 3, physical: 1, partner: 2, vocal: 1, improvisation: 0,
     why: {
       timing: 'The order has to be slipped in between his lines at the speed of ordinary talk.',
-      partner: 'Every word to the phone is checked against his face.',
+      partner: 'She checks every word she says into the phone against his face.',
       beats: 'Chat gone sinister, a trick played funny and frightened at once, then the trick found out.',
     },
     readings: [
       { id: 'nerve', label: 'A Contest Of Nerve', reading: 'Cheryl is tougher than he expects, and the scene is a contest of nerve she means to win.', rests: 'She works the night shift alone and invents the pizza order on the spot.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'focus', weight: 0.6 }, { dim: 'consistency', ability: 'composure', weight: 0.5 }] },
-      { id: 'terror', label: 'Shaking Hands', reading: 'She’s terrified from the first knock, and the comedy of the pizza order comes from how badly she lies.', rests: 'She has never been scared on the shift before, and the order is improvised with him watching her hands.', lean: { believability: 1.25, responsiveness: 1.05 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'responsiveness', ability: 'listening', weight: 0.4 }] },
+      { id: 'terror', label: 'Shaking Hands', reading: 'She’s terrified from the first knock, and the comedy of the pizza order comes from how badly she lies.', rests: 'She has never been scared on the shift before, and she makes up the order with him watching her hands.', lean: { believability: 1.25, responsiveness: 1.05 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'responsiveness', ability: 'listening', weight: 0.4 }] },
     ],
   },
   {
@@ -458,7 +458,7 @@ export const BRIEFS_C: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 3, vocal: 1, improvisation: 0,
     why: {
       timing: 'Each step waits on his next word.',
-      physical: 'A slow, controlled walk backward with the laptop, held steady enough that he can still see.',
+      physical: 'She walks slowly backward with the laptop, holding it steady enough that he can still see.',
       partner: 'She can see only his face, so every choice comes from what he says and how he looks.',
       beats: 'Ordinary talk, a sudden stillness, a long walk, and a turn the brief leaves open.',
     },
@@ -500,7 +500,7 @@ export const BRIEFS_C: readonly Brief[] = [
     circumstances: 'A hillside pasture in another world, at dawn. Last night she fell asleep at her desk during year-end payroll; this morning she woke in a stranger’s small body, in a field of sheep with two tails each, with a glowing panel of numbers hanging in the air in front of her. The villagers will come up the hill for their shepherd within the hour.',
     relationship: 'The panel is the only thing here that speaks her language, and it answers in cheerful, useless messages.',
     you: 'Dolores Whitcomb, fifty-two, a payroll clerk with thirty years’ experience, now speaking with a nine-year-old’s voice.',
-    reader: 'No one answers aloud: she speaks to the floating status panel, whose messages are written into the brief for her to read and react to.',
+    reader: 'The floating status panel only she can see. No one answers aloud: you read its messages and react to them.',
     objective: 'Work out the rules of this world before the villagers come for her.',
     obstacle: 'The panel answers every question with a cheerful note about her progress, and nothing she knows seems to apply here.',
     beats: [
@@ -513,7 +513,7 @@ export const BRIEFS_C: readonly Brief[] = [
     techniques: { voiceover: 2 },
     why: {
       vocal: 'The voice has to carry thirty years of a working adult’s life inside a child’s instrument, with every change of mind heard and none of it seen.',
-      techniques: 'A voice alone at the microphone carries the whole scene, so the interior life, the reading of the panel and the turn to grief are all voice-over work.',
+      techniques: 'Your voice alone at the microphone carries the whole scene, so her inner life, the panel’s messages read aloud and the turn to grief are all voice-over work.',
       beats: 'An audit played for laughs, a joke on herself, the loss under it, and a decision.',
     },
     readings: [
@@ -541,9 +541,9 @@ export const BRIEFS_C: readonly Brief[] = [
     why: {
       language: 'Both speak the formal period register of an audience before an official, with set phrases of petition, refusal and thanks, so the lines are heightened from first to last.',
       timing: 'The draw, the cut and the return to the sheath are set to a count, and the petition resumes on the breath after.',
-      physical: 'A formal kneeling posture held through the audience, then one drawn-sword form and a full bow.',
+      physical: 'She holds a formal kneeling posture through the audience, then makes one drawn-sword form and a full bow.',
       partner: 'Each refusal is his, and she has to answer it in his own courtesy.',
-      techniques: 'Classical text work carries the formal register and its set phrases, with weight and never modernized. Stage combat carries the one drawn-sword form, which his doubt makes her show. On the tape the form is marked solo with a replica blade at reduced speed, angled away from the lens and the reader’s eyeline, and repeats exactly on every take.',
+      techniques: 'Classical text work carries the formal register and its set phrases, with weight and never modernized. Stage combat carries the one drawn-sword form, which his doubt makes her show. For the tape, mark the form solo with a replica blade at reduced speed, angled away from the lens and the reader’s eyeline, so it repeats exactly on every take.',
       beats: 'A petition, a refusal in the same courtesy, an answer made with the sword in place of words, and the petition again.',
     },
     readings: [
@@ -571,7 +571,7 @@ export const BRIEFS_C: readonly Brief[] = [
       timing: 'The verse and chorus come in on the music’s cues, so the talk has to fit around the intro.',
       partner: 'Each line she sings is aimed at what he does at the edge of the floor.',
       vocal: 'She sings a verse and a chorus in her own voice, over a backing track or unaccompanied, and talks over the intro.',
-      techniques: 'The song is sung as the character, a music teacher in her forties singing a pop song from her youth to one person, never as an impression of its original singer.',
+      techniques: 'Sing the song as the character, a music teacher in her forties singing a pop song from her youth to one person, never as an impression of its original singer.',
       beats: 'Teasing, a song offered half as a joke, then the same song meant.',
     },
     readings: [
@@ -624,7 +624,7 @@ export const BRIEFS_C: readonly Brief[] = [
     why: {
       partner: 'She knows more than he thinks, and what she lets on decides each of his turns.',
       vocal: 'The speech of the town is in every line, and the feeling of the scene has to come through it.',
-      techniques: 'The lines are written in the regional working-class speech of the town, “Mam” and “our kid” among it, and the accent is played as the way Dennis and his mother talk, with the dignity it’s owed, never as color or a joke.',
+      techniques: 'The lines are written in the regional working-class speech of the town, “Mam” and “our kid” among it. Play the accent as the way Dennis and his mother talk, with the dignity it’s owed, never as color or a joke.',
       beats: 'A cover story, the truth, a mother who takes his side, and a secret kept from the man coming in.',
     },
     readings: [
