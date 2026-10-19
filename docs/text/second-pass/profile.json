@@ -1,0 +1,184 @@
+{
+ "src/engine/content/abilities.ts#ABILITY_DEFS [adaptability]": {
+  "status": "Rewritten",
+  "hash": "ac7f288e9e0d",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [composure]": {
+  "status": "Rewritten",
+  "hash": "8a90a017bc8c",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [discipline]": {
+  "status": "Rewritten",
+  "hash": "673324da2035",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [emotionalDepth]": {
+  "status": "Rewritten",
+  "hash": "09e9ac99e0d0",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [focus]": {
+  "status": "Rewritten",
+  "hash": "13b668fe8884",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [imagination]": {
+  "status": "Rewritten",
+  "hash": "015abfedf1e2",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [listening]": {
+  "status": "Rewritten",
+  "hash": "ee41973a1beb",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [memory]": {
+  "status": "Rewritten",
+  "hash": "19b2172be0f6",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [physical]": {
+  "status": "Rewritten",
+  "hash": "fe905b848c23",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [presence]": {
+  "status": "Rewritten",
+  "hash": "be2a9f8ee3c7",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [stamina]": {
+  "status": "Rewritten",
+  "hash": "d43c8e469e6b",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/abilities.ts#ABILITY_DEFS [vocal]": {
+  "status": "Rewritten",
+  "hash": "b22df330725d",
+  "on": "2026-10-19",
+  "evidence": "tests/attributes-phase-2b.test.ts A4 (the GUARD and every clause's own check, each new clause held by the check that held the old one), and every ability's look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/attributes-matrix.ts#attributesMatrix": {
+  "status": "Retained",
+  "hash": "d1542e93680a",
+  "on": "2026-10-19",
+  "reason": "Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/attributes-matrix.ts#attributesMatrix carry()": {
+  "status": "Retained",
+  "hash": "96845f38e57b",
+  "on": "2026-10-19",
+  "reason": "Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/attributes-matrix.ts#attributesMatrix effect()": {
+  "status": "Retained",
+  "hash": "375f74211635",
+  "on": "2026-10-19",
+  "reason": "Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/attributes-matrix.ts#HEAD": {
+  "status": "Retained",
+  "hash": "3f7ddbc3b7cb",
+  "on": "2026-10-19",
+  "reason": "Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/attributes-matrix.ts#ORDINARY": {
+  "status": "Retained",
+  "hash": "379dfacc129d",
+  "on": "2026-10-19",
+  "reason": "Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/attributes-matrix.ts#SAVED": {
+  "status": "Retained",
+  "hash": "aa813f3bc854",
+  "on": "2026-10-19",
+  "reason": "Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/demands.ts#DEMAND_LABEL": {
+  "status": "Retained",
+  "hash": "568f11a49444",
+  "on": "2026-10-19",
+  "reason": "Twelve short Title Case names for what a genre asks, Fights And Stunts to Physical Transformation, each the plain industry phrase shown in the Genres table's It Asks For column and the genre look",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/genre-coverage.ts#genreCoverage": {
+  "status": "Retained",
+  "hash": "d919edbb67ef",
+  "on": "2026-10-19",
+  "reason": "Lines of docs/GENRE-COVERAGE.md, a maintainers' document written by tools/genre-coverage.ts and checked by tests/genre-coverage.test.ts; no screen imports it, and its terse reasons are written for whoever audits the genres' demands",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/genre-coverage.ts#NO_TECHNIQUE": {
+  "status": "Retained",
+  "hash": "82fd9a7986ba",
+  "on": "2026-10-19",
+  "reason": "Lines of docs/GENRE-COVERAGE.md, a maintainers' document written by tools/genre-coverage.ts and checked by tests/genre-coverage.test.ts; no screen imports it, and its terse reasons are written for whoever audits the genres' demands",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/reference.ts#Registry": {
+  "status": "Retained",
+  "hash": "ea85ee40e620",
+  "on": "2026-10-19",
+  "reason": "Two developer errors thrown when a content table is built wrong (a duplicate id, a missing record); no player can reach them, and they name the registry and the id a developer needs",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/attributes.ts#alreadyApplied": {
+  "status": "Retained",
+  "hash": "ecc9306fb2d3",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for an action pressed twice that says it's already done and that nothing was charged or changed again, which is all the player needs and is true for every caller",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/actor.tsx#BAND_WORD": {
+  "status": "Retained",
+  "hash": "3c7dcf0bad01",
+  "on": "2026-10-19",
+  "reason": "The band names exactly as the School screen and the Profile show them, Unready to Exceptional for a piece and An Off Night to Remarkable for a night, each a plain capitalized word the player already knows from their notes",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/actor.tsx#sourceWords": {
+  "status": "Rewritten",
+  "hash": "d67f79f63ccf",
+  "on": "2026-10-19",
+  "evidence": "every development source printed through sourceWords in docs/verification/editorial-2026-10-19/profile/b1-looks.txt (render-looks.ts.txt)",
+  "first": "Pending"
+ },
+ "src/ui/looks/actor.tsx#top": {
+  "status": "Rewritten",
+  "hash": "b9828c5e60cb",
+  "on": "2026-10-19",
+  "evidence": "tests/guide-examples-craft.test.ts (the genre summary and the piece's foot line) and tests/decisions-stamina.test.ts (the old ruleset's line, exactly); every ability, genre and work look drawn in docs/verification/editorial-2026-10-19/profile/b1-looks.txt",
+  "first": "Pending"
+ }
+}

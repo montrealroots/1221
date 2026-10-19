@@ -555,7 +555,7 @@ export const CRAFT: readonly GuideEntry[] = [
     example: {
       setup: `A genre never studied, its brief open, Knowing The Genre at ${pct(UNSTUDIED / 100)} of the ${pct(BRIEF.complete.genre)} that completes it.`,
       steps: ['Press Study It.', 'Press it again the same evening.'],
-      result: `The first study takes familiarity to ${one(FIRST_STUDY)}, and the second the same day only to ${one(SECOND_STUDY)}. Studied once a day from the start instead, it passes ${pct(BRIEF.complete.genre)} on day ${DAYS_TO_KNOW.days}, at ${one(DAYS_TO_KNOW.at)}: the brief’s Knowing The Genre is complete, and the genre’s look says a part in a play of its kind is learned ${pct(SPEED_KNOWN)} faster.`,
+      result: `The first study takes familiarity to ${one(FIRST_STUDY)}, and the second the same day only to ${one(SECOND_STUDY)}. Studied once a day from the start instead, it passes ${pct(BRIEF.complete.genre)} on day ${DAYS_TO_KNOW.days}, at ${one(DAYS_TO_KNOW.at)}: the brief’s Knowing The Genre is complete, and the genre’s look says it makes a scene or a part from a play of its kind ${pct(SPEED_KNOWN)} quicker to prepare.`,
     },
   },
   {

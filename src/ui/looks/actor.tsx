@@ -74,7 +74,7 @@ export function sourceWords(source: string): string {
   if (kind === 'transfer') return 'Carried over from a related skill';
   if (kind === 'brief') return `A practice brief: ${rest === 'interpretation' ? 'the breakdown' : rest === 'memorization' ? 'the lines' : rest ?? 'its preparation'}`;
   if (kind === 'workbook') return 'Working a problem through';
-  if (kind === 'nerves') return 'The nerves of a performance';
+  if (kind === 'nerves') return 'Nerves before a performance';
   // A production’s rehearsal call, a lab and its showing, and a coursework activity had none until 2026-10-13, and showed
   // as "rehearsal", "lab" and "coursework" (found by the review of that day).
   // The Yale Cabaret’s said by its name since later that day; it showed as its key, “cabaret”, found by its evidence pass.
@@ -118,7 +118,7 @@ defineLook<TheAbility>('ability', {
     const kin = ABILITY_KIN[id] ?? [];
     const ways: Way[] = [
       ...kin.map((k) => ({ to: at('skill', k), label: TECHNIQUE_LABEL[k], detail: 'A related technique: the classes that grow one grow both' })),
-      ...(person.work ?? []).filter((w) => w.inputs.abilities[id] !== undefined).slice(-3).reverse().map((w) => ({ to: at('work', w.inputs.key), label: w.what, detail: `${w.taskLabel}, ${one(w.overall)}: judged with yours at ${one(w.inputs.abilities[id]!)}` })),
+      ...(person.work ?? []).filter((w) => w.inputs.abilities[id] !== undefined).slice(-3).reverse().map((w) => ({ to: at('work', w.inputs.key), label: w.what, detail: `${w.taskLabel}, ${one(w.overall)} of 100, with yours at ${one(w.inputs.abilities[id]!)}` })),
     ];
     return {
       name: def.label,
@@ -179,7 +179,7 @@ defineLook<TheGenre>('genre', {
     return {
       name: GENRE_BY_ID[id]!.label,
       kind: loved ? 'A Genre You Love' : 'A Genre',
-      summary: g ? `Familiarity ${one(g.familiarity)}, work in it ${one(g.practice)}. The better of the two is how well you know it: a part in a play of its kind is learned ${Math.round((speed - 1) * 100)}% faster, and it counts as Knowing The Genre when you prepare a brief in it.` : `You haven’t studied it or worked in it yet. ${def.conventions}`,
+      summary: g ? `Familiarity ${one(g.familiarity)}, work in it ${one(g.practice)}. The better of the two is how well you know the genre: it makes a scene or a part from a play of its kind ${Math.round((speed - 1) * 100)}% quicker to prepare, and it counts as Knowing The Genre when you prepare a brief in it.` : 'You haven’t studied it or worked in it yet. Study it, or tape its brief, to get to know it.',
       body: (
         <>
           <div className="grid grid-3">
@@ -202,7 +202,7 @@ defineLook<TheGenre>('genre', {
                 {applied(id) && demand.tags.length
                   ? <>A self-tape in it calls for {demand.tags.map((t, i) => <span key={t.tag}>{i ? ', ' : ''}{TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]]} (yours: {one(person.craft?.[DEMAND_TECHNIQUE[t.tag]] ?? 0)} of {MASTERED})</span>)}.{demand.basis === 'definition' ? ' This follows from how the genre is defined, not from a source that says so.' : ''} A night of a play of its kind, or a class scene from one, calls for its own material’s techniques instead.</>
                   : demand.belongsTo ? `What the research found (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ') || 'no technique'}) belongs to ${demand.belongsTo}, not to the genre as a whole, so the genre adds no requirement of its own.`
-                  : demand.tags.length ? `The research holds this (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}) with low confidence, so the game doesn’t treat it as a requirement of the genre. The small print below says why.` : 'The research found no requirement of its own.'}
+                  : demand.tags.length ? `The research holds this (${demand.tags.map((t) => DEMAND_LABEL[t.tag]).join(', ')}) with low confidence, so the game doesn’t treat it as a requirement of the genre. The small print below says why.` : 'The research found nothing it asks beyond what any self-tape asks.'}
               </p>
               {/* The small print in three paragraphs, each under the words it opens with (from 2026-10-17, brief 14's json
                   area, D1 to D3): until then one paragraph, about 2,000 characters for adventure, some forty lines at 390
@@ -221,7 +221,7 @@ defineLook<TheGenre>('genre', {
               <ul className="small">{concernsOf(id).map((c) => <li key={c}>{concernWords(c)}</li>)}</ul>
             </>
           )}
-          <p className="small"><strong>To study it.</strong> Press Study It beside it under Genres on your Player Profile. {play ? `You’ll read ${play.title}${play.by ? `, by ${play.by}` : ''}, a play of its kind.` : 'You’ll watch a film of its kind.'} Its brief is finished work: you tape it, and it’s judged beat by beat like any taped brief, on what its own material asks.</p>
+          <p className="small"><strong>To study it.</strong> Press Study It beside it under Genres on your Player Profile. {play ? `You’ll read ${play.title}${play.by ? `, by ${play.by}` : ''}, a play of its kind.` : 'You’ll watch a film of its kind.'} To tape its brief, press Open Its Brief beside it instead: the tape is judged beat by beat like any taped brief, on what its own material asks.</p>
           <p className="xs dim">Source for its definition: {def.source}.{demand ? ` Source for what it asks: ${demand.source}.` : ''}</p>
           <p className="small">{loved ? 'You love it, so a day of work in it is a better day. Loving it doesn’t make the work faster or limit it.' : 'Loving a genre makes a day of work in it better. It doesn’t make you better at it.'}</p>
         </>
@@ -284,7 +284,7 @@ defineLook<TheWorkDone>('work', {
         </>
       ),
       ways: abilities.map((a) => ({ to: at('ability', a), label: abilityDef(a).label, detail: `Yours was ${one(w.inputs.abilities[a]!)}` })),
-      provenance: again ? `Worked out again from what it was judged on, it comes to ${one(again.overall)}.` : w.inputs.levels ? 'The rules have changed since it was judged, so it isn’t worked out again. Its result stands as it was.' : 'It was judged before results kept their details, so it can’t be worked out again.',
+      provenance: again ? `Judged again from its record, it comes to ${one(again.overall)}.` : w.inputs.levels ? 'The rules have changed since it was judged, so it can’t be judged again. Its result stands.' : 'It was judged before the game kept a result’s details, so it can’t be judged again.',
     };
   },
 });

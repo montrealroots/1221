@@ -1,0 +1,122 @@
+[
+ {
+  "batch": 1,
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [listening]",
+  "kind": "other",
+  "before": "Your responsiveness and connection in partnered physical work and on stage, more the more the piece depends on a partner and on timing; how much an evening rehearsing with a partner or a reader gets done; and how much rehearsing a brief on its feet with its reader gets done.",
+  "after": "How responsive and connected you are in a fight or an intimacy scene with a partner, and on stage. It matters more the more a piece depends on your partner and on timing. It also sets how much you get done in an evening rehearsing with a partner or a reader, and when you rehearse a brief on its feet with its reader.",
+  "why": "The working reference's example 6. One fragment with \"more the more\" and a semicolon chain became three sentences, one effect each. The reference's \"scenes with a partner\" wasn't used: the task this clause names is Partnered Physical Work, a fight or a moment of intimacy (content/tasks.ts), so the sentence says that.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts, A4's GUARD and 'every effect each ability’s affects sentence names, it has, clause by clause': each new clause held by the check that held the old one (readsIn partnered and performance; the brief's partner and timing levels; stepSpeed for an evening and for a brief rehearsed with its reader). The look as drawn: docs/verification/editorial-2026-10-19/profile/b1-looks.txt."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [stamina]",
+  "kind": "other",
+  "before": "In a piece judged moment by moment (a scene, a brief, a night on stage), how well you hold up in its later moments, more the longer the piece and the more physical and vocal work it asks; on a night, how much its workload asks (the production’s running time, your part’s share of it and how intense it is), with less strain just after an interval; the energy a night costs you afterward, up to half of it spared at full stamina; and in work shown whole, without a scene (voice work, a song, movement, a fight), your consistency.",
+  "after": "How well you hold up through the later moments of a piece judged moment by moment (a scene, a brief, a night on stage), more the longer the piece and the more physical and vocal work it asks. On a night, how much it’s asked depends on the workload: the production’s running time, your part’s share of it and how intense it is, with less strain just after an interval. At full stamina it spares up to half the energy a night costs you afterward. In work shown whole, without a scene (voice work, a song, movement, a fight), it keeps you consistent.",
+  "why": "A 90-word fragment of four semicolon clauses, its subject saved for the end (\"…, your consistency\"), became four sentences that each start with what stamina does.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4: the drain by segment on scenes, tapes and nights; nightLoad's workload by running time, share and intensity and the interval; eveningCost at stamina 0, 0.5 and 1; the four whole-shown templates moved in consistency alone."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [discipline]",
+  "kind": "other",
+  "before": "How much you gain from classes, nights on stage, preparation and practice, a tenth more with discipline at 100 and a tenth less at 0 (but not the fitness a workout builds); your consistency in every kind of work judged on it, more the more beats a piece has and on a night of a run, and in an audition only when its scene has many beats, since there your nerves are what’s tested; your execution in physical work set to a score; and your execution in written work.",
+  "after": "How much you gain from classes, nights on stage, preparation and practice: a tenth more with discipline at 100 and a tenth less at 0 (but not the fitness a workout builds). It keeps your work consistent wherever consistency is judged, more the more beats a piece has and on a night of a run. In an audition it counts only when the scene has many beats, since there your nerves are what’s tested. It also counts toward your execution in physical work set to a score, and in written work.",
+  "why": "\"Every kind of work judged on it\" left \"it\" pointing at discipline, where it meant consistency. Four sentences now, and the audition's exception has its own.",
+  "meaningSensitive": true,
+  "verified": "tests/attributes-phase-2b.test.ts A4: every task with a consistency dimension but the audition reads discipline there; the audition only on a scene of many beats; physical work set to a score and written work in execution."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [presence]",
+  "kind": "other",
+  "before": "It was set once, at the start: from 55 to 80 for a student the faculty chose.",
+  "after": "It was set when your life began, somewhere from 55 to 80 and most often near the middle, as it is for every student the school admits.",
+  "why": "\"For a student the faculty chose\" was the code's comment read aloud. The draw is two uniforms averaged, so most land near the middle, and classmates are drawn the same way.",
+  "meaningSensitive": true,
+  "verified": "Read against ATTRIBUTES.presence ({ from: 55, span: 25 }) and attributesOf's draw, (next() + next()) / 2, in systems/attributes.ts, and presenceFor for classmates. Drawn on the look in b1-looks.txt."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/abilities.ts#ABILITY_DEFS [memory]",
+  "kind": "other",
+  "before": "It started with the rest of your training, as your techniques did. Older saves called it Memorization.",
+  "after": "It was set with your techniques when the school admitted you. Older saves called it Memorization.",
+  "why": "\"The rest of your training\" named nothing the player has seen. The four abilities kept in the craft are drawn with the techniques at admission.",
+  "meaningSensitive": true,
+  "verified": "Read against admittedClass in systems/school.ts (one draw, every craft skill, at admission) and CRAFT_ABILITY. Drawn in b1-looks.txt."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Familiarity 8.0, work in it 9.2. The better of the two is how well you know it: a part in a play of its kind is learned 2% faster, and it counts as Knowing The Genre when you prepare a brief in it.",
+  "after": "Familiarity 8.0, work in it 9.2. The better of the two is how well you know the genre: it makes a scene or a part from a play of its kind 2% quicker to prepare, and it counts as Knowing The Genre when you prepare a brief in it.",
+  "why": "It said a part only. genreSpeed speeds a class scene from a play of the kind too (coursework.ts, at least by this much), as the look's own Preparation figure just below it says.",
+  "meaningSensitive": true,
+  "verified": "Read against genreSpeed's callers (production.ts lines, coursework.ts preparation). tests/guide-examples-craft.test.ts 'Genres: a study, a second the same day…' reads the summary by a regex as narrow as before and the guide's quote of it; b1-looks.txt shows drama studied once."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "empty",
+  "before": "You haven’t studied it or worked in it yet. A film genre whose plots feature travel, typically sending protagonists away from home to distant or exotic places to fulfill a goal such as a quest or search.",
+  "after": "You haven’t studied it or worked in it yet. Study it, or tape its brief, to get to know it.",
+  "why": "The summary repeated the conventions word for word, and the body says them again a line below under Its conventions. Now it says what to do.",
+  "meaningSensitive": false,
+  "verified": "b1-looks.txt: every genre look before any work (adventure and four others), the conventions said once."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Its brief is finished work: you tape it, and it’s judged beat by beat like any taped brief, on what its own material asks.",
+  "after": "To tape its brief, press Open Its Brief beside it instead: the tape is judged beat by beat like any taped brief, on what its own material asks.",
+  "why": "\"Its brief is finished work\" was a note to a developer. Under To study it, the player needs to know studying and taping are two things, and which button does the second.",
+  "meaningSensitive": false,
+  "verified": "The button is Open Its Brief beside Study It in the Genres table (ProfileWorkspace.tsx). b1-looks.txt, every genre look."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "other",
+  "before": "Worked out again from what it was judged on, it comes to 50.2.",
+  "after": "Judged again from its record, it comes to 50.2.",
+  "why": "\"Worked out again from what it was judged on\" is the engine's replay described from inside. The other two variants read the same way now: \"…so it can’t be judged again. Its result stands.\"",
+  "meaningSensitive": true,
+  "verified": "replay() judges the kept inputs again (systems/evaluation.ts). tests/guide-examples-craft.test.ts ('A Piece Of Work, Explained…') and tests/decisions-stamina.test.ts (the old ruleset's line, exactly)."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/actor.tsx#top",
+  "kind": "label",
+  "before": "A Taped Brief, 50.2: judged with yours at 57.0",
+  "after": "A Taped Brief, 50.2 of 100, with yours at 57.0",
+  "why": "A link beside an ability: the piece, its score and your level then. \"Judged with yours at\" made the reader work out whose what.",
+  "meaningSensitive": false,
+  "verified": "b1-looks.txt, 'Ability after the take: Emotional Depth', its ways."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/actor.tsx#sourceWords",
+  "kind": "label",
+  "before": "The nerves of a performance",
+  "after": "Nerves before a performance",
+  "why": "The history's line for composure and presence grown by `nerves:performance`: what happened, not a title.",
+  "meaningSensitive": false,
+  "verified": "b1-looks.txt's list of development sources; the source is written by nerves() before a performance (systems/attributes.ts)."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/components/AttributesPanel.tsx#AttributesPanel",
+  "kind": "other",
+  "before": "A little comes with every night in front of an audience, and the Graded Exposure exercise trains it.",
+  "after": "It grows a little with every night in front of an audience and every solo showing. To train it, practice Graded Exposure under Attributes And Craft on your Player Profile.",
+  "why": "On the School screen the exercise was named with nowhere to find it. It also left out the solo showing, which the ability's own look names.",
+  "meaningSensitive": false,
+  "verified": "Graded Exposure is composure's exercise (exerciseFor), in the Practice column under Attributes And Craft. Read on the built app's School screen at the end of the area."
+ }
+]
