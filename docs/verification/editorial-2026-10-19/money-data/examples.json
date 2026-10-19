@@ -187,5 +187,86 @@
   "why": "A rate table in shorthand (\"<6 months = …; 6m-1y = … ×70%\") said as bands in words, with the product's Japanese name kept as the bank writes it and glossed once.",
   "meaningSensitive": true,
   "verified": "read on Your Accounts Over Time with a term deposit and a dormant savings account, rendered/accountlife.txt (render-panels.test.ts), MUFG; the bands against EARLY_RATE['jp-mufg'] (systems/accountlife.ts: under 6 months the ordinary rate, then 70%)"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING (ca-bmo.pendingWords)",
+  "kind": "official",
+  "before": "Couldn't find a figure on BMO Canada's own pages; its Canadian help pages didn't load. The 3 and 5 business-day debit hold figures that turn up in searches come from BMO's U.S. site, so they aren't used here.",
+  "after": "BMO Canada’s own pages don’t give a figure: its Canadian help pages didn’t load when they were read. The 3- and 5-business-day debit holds that searches turn up are from BMO’s US site, so the game doesn’t use them.",
+  "why": "After \"A card payment:\", it opened on a fragment with no subject, \"Couldn't find a figure…\", the research talking to itself. It now says what BMO's pages do and don't give, and why the game doesn't use the US figures.",
+  "meaningSensitive": false,
+  "verified": "read on Statements, rendered/statements.txt (render-panels.test.ts), BMO, followed by the screen's \"How long a card payment stays pending is estimated: the bank doesn’t say.\""
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING (jp-mufg.pendingWords)",
+  "kind": "official",
+  "before": "MUFG Debit takes the money at once, and when a purchase is canceled the refund depends on how the merchant processes it: up to about a month and a half for Visa debit and about two months for JCB debit. Until the merchant's cancelation goes through, the amount can be taken twice, and the duplicate comes back within that same window. (31 is about 45 calendar days in business days.)",
+  "after": "MUFG Debit takes the money at once, and when a purchase is canceled the refund depends on how the merchant processes it: up to about a month and a half for Visa debit and about two months for JCB debit. Until the merchant’s cancelation goes through, the amount can be taken twice, and the duplicate comes back within that same window.",
+  "why": "It ended \"(31 is about 45 calendar days in business days.)\": a note on a number that isn't in the data any more (MUFG's pendingDays is 0) and that the player never sees.",
+  "meaningSensitive": true,
+  "verified": "read on Statements, rendered/statements.txt (render-panels.test.ts), MUFG; PENDING['jp-mufg'] holds pendingDays 0 and no 31"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING (ie-bank-of-ireland.valueDating)",
+  "kind": "official",
+  "before": "Yes. Bank of Ireland's terms promise a record of every transaction showing its debit or credit value date. An incoming payment received on a banking day before cut-off, with no currency conversion, is credited the same banking day, and SEPA instant transfers are credited on any calendar day. Card purchases reduce the balance immediately but only reach the statement once fully processed; a lodged check shows on the statement the day it's paid in even though it hasn't cleared.",
+  "after": "Bank of Ireland’s terms promise a record of every transaction showing its debit or credit value date. An incoming payment received on a banking day before cut-off, with no currency conversion, is credited the same banking day, and SEPA instant transfers are credited on any calendar day. Card purchases reduce the balance immediately but only reach the statement once fully processed; a lodged check shows on the statement the day it’s paid in even though it hasn’t cleared.",
+  "why": "Shown after \"Value dates:\", it began \"Yes.\", the answer to a question the player was never asked.",
+  "meaningSensitive": false,
+  "verified": "read on Statements, rendered/statements.txt (render-panels.test.ts), Bank of Ireland"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING (de-commerzbank.pendingWords)",
+  "kind": "official",
+  "before": "Commerzbank shows card payments and cash withdrawals in advance as \"vorgemerkte Umsaetze\" in online banking and the app, and lists booked, outstanding and reserved amounts separately, but its pages don't say how long a reservation lasts.",
+  "after": "Commerzbank shows card payments and cash withdrawals in advance as “vorgemerkte Umsätze” in online banking and the app, and lists booked, outstanding and reserved amounts separately, but its pages don’t say how long a reservation lasts.",
+  "why": "The German the screen shows as Commerzbank's own words is spelled as the bank spells it, \"vorgemerkte Umsätze\", not \"Umsaetze\".",
+  "meaningSensitive": false,
+  "verified": "read on Statements, rendered/statements.txt (render-panels.test.ts), Commerzbank"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING (ie-ptsb.valueDating)",
+  "kind": "official",
+  "before": "PTSB credits funds received before the cut-off on a business day to the account that day, and they start earning interest from the date received. Funds after cut-off count as the next business day. The cut-off is 6pm, with 5pm for checks and 4pm for international payments. PTSB's full terms PDF was blocked, so what the statement shows wasn't confirmed.",
+  "after": "PTSB credits funds received before the cut-off on a business day to the account that day, and they start earning interest from the date received. Funds after cut-off count as the next business day. The cut-off is 6 p.m., or 5 p.m. for checks and 4 p.m. for international payments. PTSB’s full terms couldn’t be opened, so what its statement shows isn’t confirmed.",
+  "why": "\"6pm\" as the game writes a time in a sentence, and \"PTSB's full terms PDF was blocked\" said as what the player needs: the terms couldn't be opened, so what the statement shows isn't confirmed.",
+  "meaningSensitive": false,
+  "verified": "read on Statements, rendered/statements.txt (render-panels.test.ts), PTSB"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING (fr-lcl.pendingWords)",
+  "kind": "official",
+  "before": "Payments are debited from the account immediately unless a monthly deferred debit has been agreed. A hotel or car-rental booking can set an amount aside that counts against the monthly spending limit without being debited. Deferred-debit card payments are debited in one go on the last business day of the month; in 2026 statements close a day earlier, for example Jan 29 and Feb 26. LCL doesn't say how many days a purchase stays pending.",
+  "after": "Payments are debited from the account immediately unless a monthly deferred debit has been agreed. A hotel or car-rental booking can set an amount aside that counts against the monthly spending limit without being debited. Deferred-debit card payments are debited in one go on the last business day of the month; in 2026 statements close a day earlier, for example on January 29 and February 26. LCL doesn’t say how many days a purchase stays pending.",
+  "why": "\"Jan 29 and Feb 26\" in the game's date form; the dates step reads only a short month with a year, so these were left.",
+  "meaningSensitive": false,
+  "verified": "read on Statements, rendered/statements.txt (render-panels.test.ts), LCL"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING (is-landsbankinn.pendingWords)",
+  "kind": "official",
+  "before": "An authorization sets the amount aside for as long as the authorization response is valid, and merchants must send each card transaction for settlement without delay and never later than three days after it's made. The 3 is the bank's deadline for merchants in its acquiring terms (calendar days, not business days); it doesn't publish a cardholder-side figure.",
+  "after": "An authorization sets the amount aside for as long as it’s valid, and merchants must send each card payment for settlement without delay, and no later than three days after it’s made. Those three days are calendar days, the deadline Landsbankinn sets merchants in its terms for taking cards; it publishes no figure for cardholders.",
+  "why": "\"The 3 is the bank's deadline for merchants in its acquiring terms\" named a number by its digit and a contract by its trade name. It says what the three days are, whose deadline they are, and that they're calendar days.",
+  "meaningSensitive": true,
+  "verified": "read on Statements, rendered/statements.txt (render-panels.test.ts), Landsbankinn"
+ },
+ {
+  "source": "src/engine/content/pending.ts#PENDING (us-wells-fargo.source)",
+  "kind": "label",
+  "before": "Wells Fargo Deposit Account Agreement, effective July 28, 2026 (wellsfargo.com/assets/pdf/small-business/agreement.pdf, covers consumer and business), How we process and post transactions; wellsfargo.com/help/online-banking/activity-faqs/; Wells Fargo Active Cash Credit Card Account Agreement, June 23, 2026 (wellsfargo.com/credit-cards/agreements/active-cash-agreement/), September 26, 2026",
+  "after": "Wells Fargo Deposit Account Agreement, effective July 28, 2026 (wellsfargo.com/assets/pdf/small-business/agreement.pdf, covers consumer and business), How we process and post transactions; wellsfargo.com/help/online-banking/activity-faqs/; Wells Fargo Active Cash Credit Card Account Agreement, June 23, 2026 (wellsfargo.com/credit-cards/agreements/active-cash-agreement/), read September 26, 2026",
+  "why": "Two days ended the source line, the agreement's and a bare one; the second is the day the page was read, and says so.",
+  "meaningSensitive": false,
+  "verified": "read on Statements, rendered/statements.txt (render-panels.test.ts), Wells Fargo: \"…active-cash-agreement/), read September 26, 2026.\""
+ },
+ {
+  "source": "src/engine/content/cash.ts#CASH (us-chase.source)",
+  "kind": "label",
+  "before": "https://www.chase.com/content/dam/chase-ux/documents/personal/checking/clear-simple-guide-total.pdf, September 26, 2026",
+  "after": "https://www.chase.com/content/dam/chase-ux/documents/personal/checking/clear-simple-guide-total.pdf, read September 26, 2026",
+  "why": "The fee guide's address then a bare day read as the guide's date; it's the day it was read.",
+  "meaningSensitive": false,
+  "verified": "read on Payments And Cash, rendered/cash.txt; tests/language-data-dates.test.ts holds it to /, read September 26, 2026$/ and to the screen"
  }
 ]

@@ -14,6 +14,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
 import { THIRTEEN } from '@/engine/content/banks-thirteen';
 import { unclaimedLaw } from '@/engine/systems/accountlife';
+import { cardsOf, stateOf } from '@/engine/systems/credit';
 const BANKS = THIRTEEN.flatMap((c) => c.banks.map((b) => ({ id: b.id, iso: c.iso })));
 
 const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation }));
@@ -73,6 +74,10 @@ describe('money-data render', () => {
         const savings = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.universe.playerId && a.kind === 'savings' && a.bankId === bank.id && a.category !== 'term');
         if (savings) { savings.inactive = true; savings.dormant = true; }
         sim.player.unclaimed = [{ amount: 12_345, to: unclaimedLaw(bank.iso)?.to ?? 'the state', at: sim.now }];
+      }
+      if (want.includes('card')) {
+        // TEST SETUP, for the card's words only: credit a payment freed, held while it clears, as `credit.ts` holds it.
+        for (const card of cardsOf(sim, sim.player)) stateOf(sim.player, card).paymentHolds = [{ amount: 5_000, until: sim.now + 3 * 86_400_000 }];
       }
       for (const p of want) {
         h.sim = sim;

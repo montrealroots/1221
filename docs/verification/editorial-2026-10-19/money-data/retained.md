@@ -36,3 +36,15 @@ holds many fields; where a source was rewritten in part, the fields kept inside 
   their place (`systems/accountlife.ts`); the research is where the three years came from, and stays as the record.
 - **Germany's `to` and `claimBack`:** never shown, since Germany has no `years` and `idleAccounts` moves nothing there;
   the research's account of why stays as written.
+
+## `content/pending.ts`
+
+- **Chase, `pendingWords`:** "When Chase approves a debit card purchase it holds that much of your available balance,
+  generally for three business days. The merchant can take several days longer to collect, so the purchase may post
+  after the hold has already dropped off." It explains the one thing a player sees on Statements, a pending line that
+  vanishes and comes back, in the order it happens.
+- **Capital One, `postingOrder`:** after "Overnight:", it gives the bank's real order, group by group, in plain words,
+  including the ties' direction; the precision is the point, since it decides which payment an overdraft hits.
+- **ANZ New Zealand, `pendingWords`:** "A hold that you don't end up spending won't be processed and drops off after a
+  day or two. A card verification hold won't be processed either and disappears from your account in five days." Two
+  short sentences that answer the question a player has about a hold they don't recognize.

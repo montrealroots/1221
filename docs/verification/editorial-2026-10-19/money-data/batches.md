@@ -228,3 +228,67 @@ goes and the notice after it (`systems/accountlife.ts`), and the guide's Your Ac
 
 Your Accounts Over Time at all 60 banks (`rendered/accountlife.txt`) and Your Cards again (`rendered/security.txt`),
 both with the new source lines.
+
+## Batch 3: `content/pending.ts` (1 source, 7,006 words) and `content/cash.ts` (1 source, 1,540 words)
+
+### What the screen shows
+
+- **Statements** (`ui/bank/BankStatements.tsx`, `PendingTerms`), under a checking or savings account at the bank:
+  `pendingWords` ("A card payment: …"), `postingOrder` ("Overnight: …"), `valueDating` ("Value dates: …") and `source`
+  ("Source: …."), then the screen's "How long a card payment stays pending is estimated: the bank doesn’t say." where
+  `pendingDays` is missing.
+- **The card** (`ui/bank/BankCard.tsx`): `paymentHoldWords` after "… of the credit your payment freed up is on hold
+  until …, while the payment clears from another bank."
+- **Payments And Cash** (`ui/bank/BankCash.tsx`): the cash `source` only ("Source: …."). Its other fields are numbers
+  the engine reads and the panel says in its own words.
+
+### What changed and what stayed
+
+Brief 14 had written these as plain sentences, and most of them stay: Chase's hold, the five US banks' overnight
+posting orders, the Canadian, Australian and New Zealand holds, and most of the European value dates were read and kept.
+What changed (84 fields in `pending.ts`, 60 in `cash.ts`):
+- **The research's notes to itself.** "Couldn't find a figure on BMO Canada's own pages", "Couldn't find a figure from
+  Santander México itself", "Couldn't find a hold length … from Banorte itself" opened with no subject after "A card
+  payment:". "(31 is about 45 calendar days in business days.)" (MUFG, Resona) and "(42 is …)" (Japan Post Bank)
+  explained a number the data no longer holds (their `pendingDays` is 0). "Not stated on the ING pages read.", "Yes."
+  (Bank of Ireland's value dates), "PDFs weren't reachable (404)", "blocked a direct fetch", "PTSB's full terms PDF was
+  blocked". Each now says what the bank's pages give and don't, in a sentence with the bank as its subject.
+- **Forms the game writes another way:** "Jan 29 and Feb 26" (the dates step reads a short month only with a year),
+  "6pm" and "8:30pm" ("6 p.m."), "(J+1 to J+2)" French clearing notation beside the words that already said it,
+  "vorgemerkte Umsaetze" (the bank writes "Umsätze").
+- **Every source line** of both files ends "read September 26, 2026" (`read-days.mjs`), not on a bare day after an
+  address.
+
+### Meaning-sensitive changes, and how each was checked
+
+- **The removed "(31 is …)" notes.** `PENDING['jp-mufg']`, `['jp-resona']` and `['jp-japan-post-bank']` hold
+  `pendingDays: 0` and no 31 or 42 anywhere (`dump-gen.mjs`); the sentences before the notes keep their 45 days and two
+  months.
+- **Landsbankinn's three days** stay three calendar days, the merchants' deadline, and the words say so; the game holds
+  a pending payment 3 days (`pendingDays: 3`).
+- **BMO's** US figures stay excluded, as the research excluded them, and the words now say the game doesn't use them,
+  which the screen's estimate line after them confirms.
+
+### Interactions read whole
+
+Statements at each bank: the period's lines with their pending payments ("Groceries · Pending, posts …"), Available
+Now and Posted Balance, then the bank's terms and source, then the estimate line. The card with a payment from another
+bank on hold: the hold sentence and the bank's words after it. Payments And Cash: the withdrawal's cost and its source.
+
+### Tests and tool matchers
+
+- `tests/language-data-dates.test.ts`: Chase's cash source line held to `/, read September 26, 2026$/`, as exactly as
+  `/, September 26, 2026$/` held it.
+- No tool matcher held these words.
+
+### Checks
+
+- `npx tsc -b --noEmit`: exit 0 (`b3-tsc.txt`). `npx eslint` on the changed files: exit 0 (`b3-eslint.txt`).
+- `npx vitest run` on the 33 test files that touch pending payments, cash, Statements or Payments And Cash: 422 of
+  422, exit 0 (`b3-tests.txt`).
+- The text checks (`checks.sh`): exit 0 each (`b3-checks.txt`). Engine-speak stayed at 332.
+
+### Screens verified
+
+Statements, the card with a payment hold, and Payments And Cash at all 60 banks (`rendered/statements.txt`,
+`rendered/card.txt`, `rendered/cash.txt`).

@@ -2,6 +2,9 @@
 const SEC = { file: 'b1-security-changes.json', sourceFile: 'src/engine/content/security.ts' };
 const SEEN = 'read on Your Cards, rendered/security.txt (render-panels.test.ts)';
 const LIFE = { file: 'b2-accountlife-changes.json', sourceFile: 'src/engine/content/accountlife.ts' };
+const PEND = { file: 'b3-pending-changes.json', sourceFile: 'src/engine/content/pending.ts' };
+const CASHF = { file: 'b3-cash-changes.json', sourceFile: 'src/engine/content/cash.ts' };
+const SEEN3 = 'read on Statements, rendered/statements.txt (render-panels.test.ts)';
 const SEEN2 = 'read on Your Accounts Over Time with a term deposit and a dormant savings account, rendered/accountlife.txt (render-panels.test.ts)';
 export const PICKS = [
   // Batch 1: security.ts
@@ -70,4 +73,33 @@ export const PICKS = [
   { ...LIFE, export: 'ACCOUNT_LIFE', key: 'jp-mufg', field: 'penaltyWords', kind: 'official', meaningSensitive: true,
     why: 'A rate table in shorthand ("<6 months = …; 6m-1y = … ×70%") said as bands in words, with the product\'s Japanese name kept as the bank writes it and glossed once.',
     verified: `${SEEN2}, MUFG; the bands against EARLY_RATE['jp-mufg'] (systems/accountlife.ts: under 6 months the ordinary rate, then 70%)` },
+
+  // Batch 3: pending.ts and cash.ts
+  { ...PEND, export: 'PENDING', key: 'ca-bmo', field: 'pendingWords', kind: 'official', meaningSensitive: false,
+    why: 'After "A card payment:", it opened on a fragment with no subject, "Couldn\'t find a figure…", the research talking to itself. It now says what BMO\'s pages do and don\'t give, and why the game doesn\'t use the US figures.',
+    verified: `${SEEN3}, BMO, followed by the screen's "How long a card payment stays pending is estimated: the bank doesn’t say."` },
+  { ...PEND, export: 'PENDING', key: 'jp-mufg', field: 'pendingWords', kind: 'official', meaningSensitive: true,
+    why: 'It ended "(31 is about 45 calendar days in business days.)": a note on a number that isn\'t in the data any more (MUFG\'s pendingDays is 0) and that the player never sees.',
+    verified: `${SEEN3}, MUFG; PENDING['jp-mufg'] holds pendingDays 0 and no 31` },
+  { ...PEND, export: 'PENDING', key: 'ie-bank-of-ireland', field: 'valueDating', kind: 'official', meaningSensitive: false,
+    why: 'Shown after "Value dates:", it began "Yes.", the answer to a question the player was never asked.',
+    verified: `${SEEN3}, Bank of Ireland` },
+  { ...PEND, export: 'PENDING', key: 'de-commerzbank', field: 'pendingWords', kind: 'official', meaningSensitive: false,
+    why: 'The German the screen shows as Commerzbank\'s own words is spelled as the bank spells it, "vorgemerkte Umsätze", not "Umsaetze".',
+    verified: `${SEEN3}, Commerzbank` },
+  { ...PEND, export: 'PENDING', key: 'ie-ptsb', field: 'valueDating', kind: 'official', meaningSensitive: false,
+    why: '"6pm" as the game writes a time in a sentence, and "PTSB\'s full terms PDF was blocked" said as what the player needs: the terms couldn\'t be opened, so what the statement shows isn\'t confirmed.',
+    verified: `${SEEN3}, PTSB` },
+  { ...PEND, export: 'PENDING', key: 'fr-lcl', field: 'pendingWords', kind: 'official', meaningSensitive: false,
+    why: '"Jan 29 and Feb 26" in the game\'s date form; the dates step reads only a short month with a year, so these were left.',
+    verified: `${SEEN3}, LCL` },
+  { ...PEND, export: 'PENDING', key: 'is-landsbankinn', field: 'pendingWords', kind: 'official', meaningSensitive: true,
+    why: '"The 3 is the bank\'s deadline for merchants in its acquiring terms" named a number by its digit and a contract by its trade name. It says what the three days are, whose deadline they are, and that they\'re calendar days.',
+    verified: `${SEEN3}, Landsbankinn` },
+  { ...PEND, export: 'PENDING', key: 'us-wells-fargo', field: 'source', kind: 'label', meaningSensitive: false,
+    why: 'Two days ended the source line, the agreement\'s and a bare one; the second is the day the page was read, and says so.',
+    verified: `${SEEN3}, Wells Fargo: "…active-cash-agreement/), read September 26, 2026."` },
+  { ...CASHF, export: 'CASH', key: 'us-chase', field: 'source', kind: 'label', meaningSensitive: false,
+    why: 'The fee guide\'s address then a bare day read as the guide\'s date; it\'s the day it was read.',
+    verified: 'read on Payments And Cash, rendered/cash.txt; tests/language-data-dates.test.ts holds it to /, read September 26, 2026$/ and to the screen' },
 ];

@@ -13,6 +13,20 @@
   "evidence": "The unclaimed-money line drawn for each of the 13 countries by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accountlife.txt), with its claim-back sentence and the country's source line",
   "first": "Pending"
  },
+ "src/engine/content/cash.ts#CASH": {
+  "status": "Rewritten",
+  "hash": "51e762c76a8d",
+  "on": "2026-10-19",
+  "evidence": "Payments And Cash drawn at all 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/cash.txt); tests/language-data-dates.test.ts asserts Chase's cash source line on the screen",
+  "first": "Pending"
+ },
+ "src/engine/content/pending.ts#PENDING": {
+  "status": "Rewritten",
+  "hash": "8691d14f24a1",
+  "on": "2026-10-19",
+  "evidence": "Statements drawn at all 60 banks, and the card with a payment hold, by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/statements.txt, rendered/card.txt); tests/language-data-dates.test.ts asserts Chase's source on Statements",
+  "first": "Pending"
+ },
  "src/engine/content/security.ts#FRAUD_LAW": {
   "status": "Rewritten",
   "hash": "0e4394124a82",

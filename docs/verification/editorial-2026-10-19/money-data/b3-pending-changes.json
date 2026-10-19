@@ -1,0 +1,590 @@
+[
+ {
+  "export": "PENDING",
+  "key": "ca-bmo",
+  "field": "pendingWords",
+  "before": "Couldn't find a figure on BMO Canada's own pages; its Canadian help pages didn't load. The 3 and 5 business-day debit hold figures that turn up in searches come from BMO's U.S. site, so they aren't used here.",
+  "after": "BMO Canada’s own pages don’t give a figure: its Canadian help pages didn’t load when they were read. The 3- and 5-business-day debit holds that searches turn up are from BMO’s US site, so the game doesn’t use them."
+ },
+ {
+  "export": "PENDING",
+  "key": "ca-bmo",
+  "field": "source",
+  "before": "bmo.com/en-ca/main/personal/credit-cards/credit-card-faqs (did not load); bmo.com/en-us/main/personal/checking-accounts/debit-mastercard (U.S., excluded), September 26, 2026",
+  "after": "bmo.com/en-ca/main/personal/credit-cards/credit-card-faqs (did not load); bmo.com/en-us/main/personal/checking-accounts/debit-mastercard (U.S., excluded), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "mx-santander",
+  "field": "pendingWords",
+  "before": "Couldn't find a figure from Santander México itself. Its help pages returned errors, and the figures in searches came from third parties.",
+  "after": "Santander México’s own pages don’t give a figure: its help pages returned errors when they were read, and the figures searches turn up are from other sites."
+ },
+ {
+  "export": "PENDING",
+  "key": "mx-santander",
+  "field": "source",
+  "before": "santander.com.mx help pages: Consulta de saldos y movimientos (HTTP 403), September 26, 2026",
+  "after": "santander.com.mx help pages: Consulta de saldos y movimientos (HTTP 403), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "mx-banorte",
+  "field": "pendingWords",
+  "before": "Couldn't find a hold length for pending charges from Banorte itself. Its FAQ page didn't load.",
+  "after": "Banorte’s own pages don’t say how long a pending charge is held: its FAQ page didn’t load when it was read."
+ },
+ {
+  "export": "PENDING",
+  "key": "mx-banorte",
+  "field": "source",
+  "before": "banorte.com/Personal/Canales-Banorte/Horarios-y-tarifas.html; banorte.com Preguntas Frecuentes Tarjeta Universal (did not load), September 26, 2026",
+  "after": "banorte.com/Personal/Canales-Banorte/Horarios-y-tarifas.html; banorte.com Preguntas Frecuentes Tarjeta Universal (did not load), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "is-landsbankinn",
+  "field": "pendingWords",
+  "before": "An authorization sets the amount aside for as long as the authorization response is valid, and merchants must send each card transaction for settlement without delay and never later than three days after it's made. The 3 is the bank's deadline for merchants in its acquiring terms (calendar days, not business days); it doesn't publish a cardholder-side figure.",
+  "after": "An authorization sets the amount aside for as long as it’s valid, and merchants must send each card payment for settlement without delay, and no later than three days after it’s made. Those three days are calendar days, the deadline Landsbankinn sets merchants in its terms for taking cards; it publishes no figure for cardholders."
+ },
+ {
+  "export": "PENDING",
+  "key": "is-landsbankinn",
+  "field": "source",
+  "before": "Skilmálar Landsbankans um færsluhirðingu (1546, from January 11, 2023), definition of authorization and the three-day submission clause; Almennir skilmálar um stofnun og notkun innlánsreikninga (1529, from November 13, 2017), September 26, 2026",
+  "after": "Skilmálar Landsbankans um færsluhirðingu (1546, from January 11, 2023), definition of authorization and the three-day submission clause; Almennir skilmálar um stofnun og notkun innlánsreikninga (1529, from November 13, 2017), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "is-arion",
+  "field": "pendingWords",
+  "before": "Arion's public pages and FAQs don't say how long a card purchase stays pending, and its current card terms PDFs weren't reachable (404).",
+  "after": "Arion’s public pages and FAQs don’t say how long a card purchase stays pending, and its current card terms couldn’t be opened when they were read."
+ },
+ {
+  "export": "PENDING",
+  "key": "is-arion",
+  "field": "valueDating",
+  "before": "Deposits generally earn interest from the moment the money is credited to the account, and the last interest day is the day before a withdrawal is debited. So incoming transfers are value-dated the day they arrive, and debits the day before they're booked. Taken from the March 2017 deposit terms, which have since been replaced; the current version wasn't reachable.",
+  "after": "Deposits generally earn interest from the moment the money is credited to the account, and the last interest day is the day before a withdrawal is debited. So incoming transfers are value-dated the day they arrive, and debits the day before they’re booked. This is from Arion’s deposit terms of March 2017, since replaced; the current version couldn’t be opened."
+ },
+ {
+  "export": "PENDING",
+  "key": "is-arion",
+  "field": "source",
+  "before": "arionbanki.is debit card pages (EN/IS); Almennir skilmálar innlánsreikninga Arion banka, March 16, 2017 (superseded), September 26, 2026",
+  "after": "arionbanki.is debit card pages (EN/IS); Almennir skilmálar innlánsreikninga Arion banka, March 16, 2017 (superseded), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-bnp-paribas",
+  "field": "pendingWords",
+  "before": "Card payments are debited once BNP Paribas receives them from the merchant's bank through clearing, and BNP gives no number of days. On an immediate-debit card you need enough money in the account from the purchase until it's debited. On a deferred-debit card, payments up to the 28th (or the next business day) are debited together on the last business day of the month, and they show in the meantime under upcoming operations. The deferred-debit dates come from a search summary of BNP's page, which blocked a direct fetch.",
+  "after": "Card payments are debited once BNP Paribas receives them from the merchant’s bank through clearing, and it gives no number of days. On an immediate-debit card you need enough money in the account from the purchase until it’s debited. On a deferred-debit card, payments up to the 28th (or the next business day) are debited together on the last business day of the month, and they show in the meantime under upcoming operations. The deferred-debit dates are from a search summary of BNP Paribas’s page, which couldn’t be opened directly."
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-bnp-paribas",
+  "field": "source",
+  "before": "BNP Paribas Convention de compte de dépôt, annexe contrat carte (April 2021) §6.4–6.5, §9; BNP Paribas Conditions et tarifs particuliers, 'Dates de valeur'; mabanque.bnpparibas 'Débit différé classic' (search summary; page returned 403); Légifrance CMF art. L133-14, September 26, 2026",
+  "after": "BNP Paribas Convention de compte de dépôt, annexe contrat carte (April 2021) §6.4–6.5, §9; BNP Paribas Conditions et tarifs particuliers, 'Dates de valeur'; mabanque.bnpparibas 'Débit différé classic' (search summary; page returned 403); Légifrance CMF art. L133-14, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-lcl",
+  "field": "pendingWords",
+  "before": "Payments are debited from the account immediately unless a monthly deferred debit has been agreed. A hotel or car-rental booking can set an amount aside that counts against the monthly spending limit without being debited. Deferred-debit card payments are debited in one go on the last business day of the month; in 2026 statements close a day earlier, for example Jan 29 and Feb 26. LCL doesn't say how many days a purchase stays pending.",
+  "after": "Payments are debited from the account immediately unless a monthly deferred debit has been agreed. A hotel or car-rental booking can set an amount aside that counts against the monthly spending limit without being debited. Deferred-debit card payments are debited in one go on the last business day of the month; in 2026 statements close a day earlier, for example on January 29 and February 26. LCL doesn’t say how many days a purchase stays pending."
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-lcl",
+  "field": "valueDating",
+  "before": "None of the LCL sources read give a value-date schedule; the 2026 tariff extract available was only four pages. French law (L133-14) says a credit can't be value-dated later than the business day the bank receives the funds, and a debit can't be value-dated earlier than the day it's debited.",
+  "after": "None of LCL’s terms that were read give a value-date schedule; the only 2026 tariff extract available was four pages long. French law (L133-14) says a credit can’t be value-dated later than the business day the bank receives the funds, and a debit can’t be value-dated earlier than the day it’s debited."
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-lcl",
+  "field": "source",
+  "before": "lcl.fr FAQ 'SOS cartes'; LCL Carte Visa Cléo Dispositions Générales (December 7, 2023) §5.4; lcl.fr FAQ 'Gérer mes comptes'; Légifrance CMF L133-14, September 26, 2026",
+  "after": "lcl.fr FAQ 'SOS cartes'; LCL Carte Visa Cléo Dispositions Générales (December 7, 2023) §5.4; lcl.fr FAQ 'Gérer mes comptes'; Légifrance CMF L133-14, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-la-banque-postale",
+  "field": "pendingWords",
+  "before": "The bank told MoneyVox that an ordinary card payment in France, going through the standard clearing system, is cleared and received a day or two after the purchase (J+1 to J+2), and that entries post to the online statement each evening around 10:30 to 11 p.m. Its help center says upcoming operations are shown only as a guide and may not go through, or may post on a different date.",
+  "after": "The bank told MoneyVox that an ordinary card payment in France, going through the standard clearing system, is cleared and received a day or two after the purchase, and that entries post to the online statement each evening around 10:30 to 11 p.m. Its help center says upcoming operations are shown only as a guide and may not go through, or may post on a different date."
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-la-banque-postale",
+  "field": "valueDating",
+  "before": "The 2026 tariff brochure only gives a value date for checks, which are credited the business day after the service center receives them (J+1). French law (L133-14) says card debits can't be value-dated earlier than the day they're debited, and incoming transfers no later than the day the funds arrive.",
+  "after": "The 2026 tariff brochure only gives a value date for checks, which are credited the business day after the service center receives them. French law (L133-14) says card debits can’t be value-dated earlier than the day they’re debited, and incoming transfers no later than the day the funds arrive."
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-la-banque-postale",
+  "field": "source",
+  "before": "La Banque Postale FAQ 'Que comprend la liste des opérations à venir'; LBP Tarifs particuliers au 1er janvier 2026; MoneyVox 'Pourquoi un achat par carte bancaire met-il plusieurs jours…' (LBP statement); Légifrance CMF L133-14, September 26, 2026",
+  "after": "La Banque Postale FAQ 'Que comprend la liste des opérations à venir'; LBP Tarifs particuliers au 1er janvier 2026; MoneyVox 'Pourquoi un achat par carte bancaire met-il plusieurs jours…' (LBP statement); Légifrance CMF L133-14, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "de-deutsche-bank",
+  "field": "valueDating",
+  "before": "Statements carry a value date (Wertstellung). The price list sets debits (Belastungen) at the day of the debit and outgoing transfers at the day the bank executes them, and incoming transfers at the day the money reaches the bank, credited at most one business day after it arrives (instant transfers at once). Card payments follow the debit rule, so the value date is the day the charge is booked, not the day of purchase. Anything falling on a non-business day is value-dated the next business day. The documents read don't cite section 675t BGB by name, but the rules match it.",
+  "after": "Statements carry a value date (Wertstellung). The price list sets debits (Belastungen) at the day of the debit and outgoing transfers at the day the bank executes them, and incoming transfers at the day the money reaches the bank, credited at most one business day after it arrives (instant transfers at once). Card payments follow the debit rule, so the value date is the day the charge is booked, not the day of purchase. Anything falling on a non-business day is value-dated the next business day. Deutsche Bank’s documents don’t cite section 675t BGB by name, but the rules match it."
+ },
+ {
+  "export": "PENDING",
+  "key": "de-deutsche-bank",
+  "field": "source",
+  "before": "Deutsche Bank, Bedingungen fuer Debitkarten (Stand January 2025), sec. 8 Sperrung eines verfuegbaren Geldbetrags; Preis- und Leistungsverzeichnis der Deutsche Bank AG (September 23, 2026), Wertstellungen and 2.3 Ueberweisungseingaenge, September 26, 2026",
+  "after": "Deutsche Bank, Bedingungen fuer Debitkarten (Stand January 2025), sec. 8 Sperrung eines verfuegbaren Geldbetrags; Preis- und Leistungsverzeichnis der Deutsche Bank AG (September 23, 2026), Wertstellungen and 2.3 Ueberweisungseingaenge, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "de-commerzbank",
+  "field": "pendingWords",
+  "before": "Commerzbank shows card payments and cash withdrawals in advance as \"vorgemerkte Umsaetze\" in online banking and the app, and lists booked, outstanding and reserved amounts separately, but its pages don't say how long a reservation lasts.",
+  "after": "Commerzbank shows card payments and cash withdrawals in advance as “vorgemerkte Umsätze” in online banking and the app, and lists booked, outstanding and reserved amounts separately, but its pages don’t say how long a reservation lasts."
+ },
+ {
+  "export": "PENDING",
+  "key": "de-commerzbank",
+  "field": "valueDating",
+  "before": "Commerzbank's own explainer says statements show both a booking date and a value date (Valuta), and the two needn't match. Its example: a transfer executed on Friday, booked on Monday, carries a Tuesday value date; payments after the cut-off are processed the next business day. The current price list defers value-dating rules to other documents and didn't state a card-specific rule, and PSD2 or section 675t BGB isn't cited on the pages read.",
+  "after": "Commerzbank’s own explainer says statements show both a booking date and a value date (Valuta), and the two needn’t match. Its example: a transfer executed on Friday, booked on Monday, carries a Tuesday value date; payments after the cut-off are processed the next business day. Its current price list leaves value dates to other documents and gives no rule for cards, and its pages don’t cite PSD2 or section 675t BGB."
+ },
+ {
+  "export": "PENDING",
+  "key": "de-commerzbank",
+  "field": "source",
+  "before": "commerzbank.de/service/wie-sehe-ich-meinen-kontostand; commerzbank.de/privatkunden/wissen/ratgeber/grundwissen/banking/valuta-buchung-wertstellung; Commerzbank Preis- und Leistungsverzeichnis and Preisaushang (Stand September 15, 2026), September 26, 2026",
+  "after": "commerzbank.de/service/wie-sehe-ich-meinen-kontostand; commerzbank.de/privatkunden/wissen/ratgeber/grundwissen/banking/valuta-buchung-wertstellung; Commerzbank Preis- und Leistungsverzeichnis and Preisaushang (Stand September 15, 2026), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "de-postbank",
+  "field": "pendingWords",
+  "before": "Postbank says a card payment stays among the reserved transactions (vorgemerkte Umsaetze) until it's posted to the checking account, and that it already counts against the balance. Its debit card terms say a blocked amount is released without delay once the exact amount is known or the payment order arrives. No day count could be confirmed on Postbank's own pages.",
+  "after": "Postbank says a card payment stays among the reserved transactions (vorgemerkte Umsätze) until it’s posted to the checking account, and that it already counts against the balance. Its debit card terms say a blocked amount is released without delay once the exact amount is known or the payment order arrives. Postbank’s own pages don’t confirm a number of days."
+ },
+ {
+  "export": "PENDING",
+  "key": "de-postbank",
+  "field": "valueDating",
+  "before": "Statements carry a value date. Postbank's price list (sec. 10) value-dates incoming transfers on the day the money arrives, cash deposits on the deposit day, and outgoing transfers, direct debits and checks on the day the money leaves the account. The credit card is a charge card: each monthly statement falls due when it's issued and is debited in one sum from the linked checking account. PSD2 or section 675t BGB isn't cited.",
+  "after": "Statements carry a value date. Postbank’s price list (sec. 10) value-dates incoming transfers on the day the money arrives, cash deposits on the deposit day, and outgoing transfers, direct debits and checks on the day the money leaves the account. The credit card is a charge card: each monthly statement falls due when it’s issued and is debited in one sum from the linked checking account. Postbank doesn’t cite PSD2 or section 675t BGB."
+ },
+ {
+  "export": "PENDING",
+  "key": "de-postbank",
+  "field": "source",
+  "before": "Postbank Preis- und Leistungsverzeichnis 923 959 000 07.26, sec. 10 Wertstellung; Postbank Bedingungen Debitkarten 923 933 018 01.25, sec. 8; Postbank Kreditkarten Besondere Bedingungen 923 933 017; postbank.de Umsaetze filtern help page, September 26, 2026",
+  "after": "Postbank Preis- und Leistungsverzeichnis 923 959 000 07.26, sec. 10 Wertstellung; Postbank Bedingungen Debitkarten 923 933 018 01.25, sec. 8; Postbank Kreditkarten Besondere Bedingungen 923 933 017; postbank.de Umsaetze filtern help page, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "de-ing",
+  "field": "valueDating",
+  "before": "Not stated on the ING pages read. ING says a deposit that's never collected, such as a hotel or rental-car hold, drops off the reserved list after a few days, and that foreign-currency and partly canceled payments can differ.",
+  "after": "ING’s pages don’t give its value dates. They say a deposit that’s never collected, such as a hotel or rental-car hold, drops off the reserved list after a few days, and that foreign-currency and partly canceled payments can differ."
+ },
+ {
+  "export": "PENDING",
+  "key": "de-ing",
+  "field": "source",
+  "before": "ing.de/wissen/vorgemerkte-umsaetze (Vorgemerkte Umsaetze beanstanden), September 26, 2026",
+  "after": "ing.de/wissen/vorgemerkte-umsaetze (Vorgemerkte Umsaetze beanstanden), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "ie-bank-of-ireland",
+  "field": "valueDating",
+  "before": "Yes. Bank of Ireland's terms promise a record of every transaction showing its debit or credit value date. An incoming payment received on a banking day before cut-off, with no currency conversion, is credited the same banking day, and SEPA instant transfers are credited on any calendar day. Card purchases reduce the balance immediately but only reach the statement once fully processed; a lodged check shows on the statement the day it's paid in even though it hasn't cleared.",
+  "after": "Bank of Ireland’s terms promise a record of every transaction showing its debit or credit value date. An incoming payment received on a banking day before cut-off, with no currency conversion, is credited the same banking day, and SEPA instant transfers are credited on any calendar day. Card purchases reduce the balance immediately but only reach the statement once fully processed; a lodged check shows on the statement the day it’s paid in even though it hasn’t cleared."
+ },
+ {
+  "export": "PENDING",
+  "key": "ie-bank-of-ireland",
+  "field": "source",
+  "before": "bankofireland.com/help-centre/faq/do-i-owe-for-the-transactions-listed-in-in-progress-or-for-completed-transactions; Bank of Ireland Basic Bank Account Terms and Conditions 09.26 (clauses 14.5, 15.12, 15.14, 30.3); bankofireland.com/help-centre/faq/time-day-incoming-credits-come-current-account, September 26, 2026",
+  "after": "bankofireland.com/help-centre/faq/do-i-owe-for-the-transactions-listed-in-in-progress-or-for-completed-transactions; Bank of Ireland Basic Bank Account Terms and Conditions 09.26 (clauses 14.5, 15.12, 15.14, 30.3); bankofireland.com/help-centre/faq/time-day-incoming-credits-come-current-account, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "ie-ptsb",
+  "field": "valueDating",
+  "before": "PTSB credits funds received before the cut-off on a business day to the account that day, and they start earning interest from the date received. Funds after cut-off count as the next business day. The cut-off is 6pm, with 5pm for checks and 4pm for international payments. PTSB's full terms PDF was blocked, so what the statement shows wasn't confirmed.",
+  "after": "PTSB credits funds received before the cut-off on a business day to the account that day, and they start earning interest from the date received. Funds after cut-off count as the next business day. The cut-off is 6 p.m., or 5 p.m. for checks and 4 p.m. for international payments. PTSB’s full terms couldn’t be opened, so what its statement shows isn’t confirmed."
+ },
+ {
+  "export": "PENDING",
+  "key": "ie-ptsb",
+  "field": "source",
+  "before": "ptsb.ie/legal-information/our-policies-other-important-information/business-days-and-cut-off-time (search excerpt); ptsb.ie help-and-support/help-with-banking/transacting-on-your-account and contactless-visa-debit-card-faq (search excerpts; site returned 403 to direct fetches), September 26, 2026",
+  "after": "ptsb.ie/legal-information/our-policies-other-important-information/business-days-and-cut-off-time (search excerpt); ptsb.ie help-and-support/help-with-banking/transacting-on-your-account and contactless-visa-debit-card-faq (search excerpts; site returned 403 to direct fetches), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "gb-natwest",
+  "field": "paymentHoldWords",
+  "before": "NatWest says a payment to the credit card should update the balance within 15 minutes in the app and Online Banking. Between 6:30pm and 2:30am a cleared pending transaction may briefly be left out of the balance and available spend.",
+  "after": "NatWest says a payment to the credit card should update the balance within 15 minutes in the app and Online Banking. Between 6:30 p.m. and 2:30 a.m. a cleared pending transaction may briefly be left out of the balance and available spend."
+ },
+ {
+  "export": "PENDING",
+  "key": "gb-natwest",
+  "field": "source",
+  "before": "natwest.com support pages/help-with-your-card/transactions/pending-transactions; natwest.com/current-accounts/bank-account-guides/pending-transactions.html; natwest.com support pages 'Are pending transactions included in the credit card balance', September 26, 2026",
+  "after": "natwest.com support pages/help-with-your-card/transactions/pending-transactions; natwest.com/current-accounts/bank-account-guides/pending-transactions.html; natwest.com support pages 'Are pending transactions included in the credit card balance', read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "nz-asb",
+  "field": "paymentHoldWords",
+  "before": "A credit card payment made before 8:30pm is processed overnight (after 8:30pm, the next night) and shows as pending until then; ASB doesn't describe holding back the freed credit after that.",
+  "after": "A credit card payment made before 8:30 p.m. is processed overnight (after 8:30 p.m., the next night) and shows as pending until then; ASB doesn’t describe holding back the freed credit after that."
+ },
+ {
+  "export": "PENDING",
+  "key": "nz-asb",
+  "field": "source",
+  "before": "asb.co.nz/help/pending-transactions-on-my-credit-card.html; asb.co.nz/blog/2013/08/frequently-asked-questions-about-pending-transactions.html; asb.co.nz/help/when-are-credit-card-payments-processed.html (pages returned 403; read via search snippets), September 26, 2026",
+  "after": "asb.co.nz/help/pending-transactions-on-my-credit-card.html; asb.co.nz/blog/2013/08/frequently-asked-questions-about-pending-transactions.html; asb.co.nz/help/when-are-credit-card-payments-processed.html (pages returned 403; read via search snippets), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "jp-mufg",
+  "field": "pendingWords",
+  "before": "MUFG Debit takes the money at once, and when a purchase is canceled the refund depends on how the merchant processes it: up to about a month and a half for Visa debit and about two months for JCB debit. Until the merchant's cancelation goes through, the amount can be taken twice, and the duplicate comes back within that same window. (31 is about 45 calendar days in business days.)",
+  "after": "MUFG Debit takes the money at once, and when a purchase is canceled the refund depends on how the merchant processes it: up to about a month and a half for Visa debit and about two months for JCB debit. Until the merchant’s cancelation goes through, the amount can be taken twice, and the duplicate comes back within that same window."
+ },
+ {
+  "export": "PENDING",
+  "key": "jp-mufg",
+  "field": "source",
+  "before": "MUFG FAQ 615 (faq01.bk.mufg.jp/faq/show/615); Mitsubishi UFJ NICOS FAQ 'When does my available credit come back after the debit?' (faq.cr.mufg.jp/mufgcard/detail?id=47), September 26, 2026",
+  "after": "MUFG FAQ 615 (faq01.bk.mufg.jp/faq/show/615); Mitsubishi UFJ NICOS FAQ 'When does my available credit come back after the debit?' (faq.cr.mufg.jp/mufgcard/detail?id=47), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "jp-resona",
+  "field": "pendingWords",
+  "before": "If a shop doesn't send cancelation data, Resona's Visa debit refunds the charge automatically about 45 days after the debit; the authorization lapses if no sales data arrives within 45 days. You can call to ask for an earlier refund, but it isn't guaranteed. (31 is about 45 calendar days in business days.)",
+  "after": "If a shop doesn’t send cancelation data, Resona’s Visa debit refunds the charge automatically about 45 days after the debit; the authorization lapses if no sales data arrives within 45 days. You can call to ask for an earlier refund, but it isn’t guaranteed."
+ },
+ {
+  "export": "PENDING",
+  "key": "jp-resona",
+  "field": "source",
+  "before": "Resona 'Visa debit cancellations and refunds' (resonabank.co.jp/kojin/visa_debit/modal/cancel.html, via search excerpt; page returned 403); Resona Visa debit 'How payment works' (resonabank.co.jp/kojin/visa_debit/support/, via search excerpt), September 26, 2026",
+  "after": "Resona 'Visa debit cancellations and refunds' (resonabank.co.jp/kojin/visa_debit/modal/cancel.html, via search excerpt; page returned 403); Resona Visa debit 'How payment works' (resonabank.co.jp/kojin/visa_debit/support/, via search excerpt), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "jp-japan-post-bank",
+  "field": "pendingWords",
+  "before": "Japan Post Bank refunds a Yucho Debit return once it receives the merchant's refund data, and when a return or cancelation leaves a double debit, the duplicate comes back later and can take up to about two months depending on the merchant. (42 is about two months in business days.)",
+  "after": "Japan Post Bank refunds a Yucho Debit return once it receives the merchant’s refund data, and when a return or cancelation leaves a double debit, the duplicate comes back later and can take up to about two months depending on the merchant."
+ },
+ {
+  "export": "PENDING",
+  "key": "jp-japan-post-bank",
+  "field": "source",
+  "before": "Japan Post Bank FAQ 10989 on double debits (faq.jp-bank.japanpost.jp/faq_detail.html?id=10989); FAQ 10443 on refunds not received (faq_detail.html?id=10443), September 26, 2026",
+  "after": "Japan Post Bank FAQ 10989 on double debits (faq.jp-bank.japanpost.jp/faq_detail.html?id=10989); FAQ 10443 on refunds not received (faq_detail.html?id=10443), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "us-chase",
+  "field": "source",
+  "before": "Chase Deposit Account Agreement, effective June 14, 2026 (chase.com/content/dam/chase-ux/documents/personal/checking/deposit-account-agreement.pdf), Posting Order and Debit Card Authorizations and holds; Chase Cardmember Agreement COL00067 (chase.com/content/dam/chase-ux/feed/cmaonline/Chase/COL00067.pdf), Paying Us Back; chase.com/personal/credit-cards/education/basics/pending-transactions, September 26, 2026",
+  "after": "Chase Deposit Account Agreement, effective June 14, 2026 (chase.com/content/dam/chase-ux/documents/personal/checking/deposit-account-agreement.pdf), Posting Order and Debit Card Authorizations and holds; Chase Cardmember Agreement COL00067 (chase.com/content/dam/chase-ux/feed/cmaonline/Chase/COL00067.pdf), Paying Us Back; chase.com/personal/credit-cards/education/basics/pending-transactions, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "us-bank-of-america",
+  "field": "source",
+  "before": "Bank of America Deposit Agreement and Disclosures, effective May 15, 2026 (bankofamerica.com/salesservices/deposits/resources/deposit-agreements/), processing and posting order and debit card authorization holds; Example BankAmericard Credit Card Agreement (bankofamerica.com/content/documents/creditcard/bankamericard_english.pdf); bankofamerica.com/credit-cards/credit-card-payments-statements-faq/, September 26, 2026",
+  "after": "Bank of America Deposit Agreement and Disclosures, effective May 15, 2026 (bankofamerica.com/salesservices/deposits/resources/deposit-agreements/), processing and posting order and debit card authorization holds; Example BankAmericard Credit Card Agreement (bankofamerica.com/content/documents/creditcard/bankamericard_english.pdf); bankofamerica.com/credit-cards/credit-card-payments-statements-faq/, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "us-wells-fargo",
+  "field": "source",
+  "before": "Wells Fargo Deposit Account Agreement, effective July 28, 2026 (wellsfargo.com/assets/pdf/small-business/agreement.pdf, covers consumer and business), How we process and post transactions; wellsfargo.com/help/online-banking/activity-faqs/; Wells Fargo Active Cash Credit Card Account Agreement, June 23, 2026 (wellsfargo.com/credit-cards/agreements/active-cash-agreement/), September 26, 2026",
+  "after": "Wells Fargo Deposit Account Agreement, effective July 28, 2026 (wellsfargo.com/assets/pdf/small-business/agreement.pdf, covers consumer and business), How we process and post transactions; wellsfargo.com/help/online-banking/activity-faqs/; Wells Fargo Active Cash Credit Card Account Agreement, June 23, 2026 (wellsfargo.com/credit-cards/agreements/active-cash-agreement/), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "us-citi",
+  "field": "source",
+  "before": "Citibank Consumer Deposit Account Agreement, effective November 20, 2025 (citi.com/content/dam/cfs/mobile/assets/JRS/popups/ao/CDAA.pdf), 7.2.3 Posting Order and Authorizations; citi.com/banking/personal-banking-guide/basic-finance/how-to-remove-hold-on-bank-account-funds; Citi Card Agreement CMA_GenericADA-9 (citi.com/CRD/PDF/CMA/cardAgreement/CMA_GenericADA-9.pdf); citi.com/credit-cards/understanding-credit-cards/how-long-does-a-credit-card-payment-take-to-post, September 26, 2026",
+  "after": "Citibank Consumer Deposit Account Agreement, effective November 20, 2025 (citi.com/content/dam/cfs/mobile/assets/JRS/popups/ao/CDAA.pdf), 7.2.3 Posting Order and Authorizations; citi.com/banking/personal-banking-guide/basic-finance/how-to-remove-hold-on-bank-account-funds; Citi Card Agreement CMA_GenericADA-9 (citi.com/CRD/PDF/CMA/cardAgreement/CMA_GenericADA-9.pdf); citi.com/credit-cards/understanding-credit-cards/how-long-does-a-credit-card-payment-take-to-post, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "us-capital-one",
+  "field": "source",
+  "before": "Capital One 360 Checking Key account terms, revised February 2024 (ecm.capitalone.com/WCM/bank/pdfs/360-checking-pew.pdf); capitalone.com/bank/disclosures/checking-accounts/online-checking-account/ (May 20, 2026); capitalone.com/help-center/checking-savings/pending-transactions/; capitalone.com/help-center/credit-cards/card-pending-transactions/; capitalone.com/help-center/credit-cards/understanding-payment-holds/, September 26, 2026",
+  "after": "Capital One 360 Checking Key account terms, revised February 2024 (ecm.capitalone.com/WCM/bank/pdfs/360-checking-pew.pdf); capitalone.com/bank/disclosures/checking-accounts/online-checking-account/ (May 20, 2026); capitalone.com/help-center/checking-savings/pending-transactions/; capitalone.com/help-center/credit-cards/card-pending-transactions/; capitalone.com/help-center/credit-cards/understanding-payment-holds/, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "ca-rbc",
+  "field": "source",
+  "before": "rbcroyalbank.com/credit-cards/cardholders.html; rbcroyalbank.com/credit-cards/cardholders/credit-card-transaction-help.html; rbcroyalbank.com/credit-cards/cardholders/frequently-asked-questions/payments.html, September 26, 2026",
+  "after": "rbcroyalbank.com/credit-cards/cardholders.html; rbcroyalbank.com/credit-cards/cardholders/credit-card-transaction-help.html; rbcroyalbank.com/credit-cards/cardholders/frequently-asked-questions/payments.html, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "ca-td",
+  "field": "source",
+  "before": "TD help: How and when do Pending Transactions get posted to my TD Credit Card? (td.intelliresponse.com id 7622); TD help: Why does TD place a hold on some TD Credit Card payments? (id 7442), September 26, 2026",
+  "after": "TD help: How and when do Pending Transactions get posted to my TD Credit Card? (td.intelliresponse.com id 7622); TD help: Why does TD place a hold on some TD Credit Card payments? (id 7442), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "ca-scotiabank",
+  "field": "source",
+  "before": "help.scotiabank.com: How do pending transactions work?; help.scotiabank.com: When will the amount of my payments to my credit card or line of credit be available to use?, September 26, 2026",
+  "after": "help.scotiabank.com: How do pending transactions work?; help.scotiabank.com: When will the amount of my payments to my credit card or line of credit be available to use?, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "ca-cibc",
+  "field": "source",
+  "before": "cibc.com/en/personal-banking/credit-cards/real-time-credit-card-transactions.html; cibc.com/en/personal-banking/smart-advice/manage-your-shopping.html, September 26, 2026",
+  "after": "cibc.com/en/personal-banking/credit-cards/real-time-credit-card-transactions.html; cibc.com/en/personal-banking/smart-advice/manage-your-shopping.html, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "mx-bbva",
+  "field": "source",
+  "before": "bbva.mx/educacion-financiera/banca-digital/cuenta-digital-que-es-saldo-retenido.html, September 26, 2026",
+  "after": "bbva.mx/educacion-financiera/banca-digital/cuenta-digital-que-es-saldo-retenido.html, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "mx-banamex",
+  "field": "source",
+  "before": "Banamex official X account replies (x.com/banamex/status/1957557467576988115; x.com/banamex/status/2016897524640973004); banamex.com/es/centro-de-ayuda/tarjetas/operaciones-con-tarjeta-de-credito.htm, September 26, 2026",
+  "after": "Banamex official X account replies (x.com/banamex/status/1957557467576988115; x.com/banamex/status/2016897524640973004); banamex.com/es/centro-de-ayuda/tarjetas/operaciones-con-tarjeta-de-credito.htm, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "gb-barclays",
+  "field": "source",
+  "before": "barclays.co.uk/help/payments/payment-information/not-debited; barclaycard.co.uk/personal/help/spending-transactions/pending-transactions; barclaycard.co.uk/personal/help/paying-bill/process-payment-online, September 26, 2026",
+  "after": "barclays.co.uk/help/payments/payment-information/not-debited; barclaycard.co.uk/personal/help/spending-transactions/pending-transactions; barclaycard.co.uk/personal/help/paying-bill/process-payment-online, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "gb-lloyds",
+  "field": "source",
+  "before": "lloydsbank.com help-guidance/everyday-banking/statements/search-transactions and unrecognised-transactions (via search excerpts; pages returned errors when fetched); lloydsbank.com/credit-cards/ways-to-pay-your-credit-card.html, September 26, 2026",
+  "after": "lloydsbank.com help-guidance/everyday-banking/statements/search-transactions and unrecognised-transactions (via search excerpts; pages returned errors when fetched); lloydsbank.com/credit-cards/ways-to-pay-your-credit-card.html, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "gb-hsbc",
+  "field": "source",
+  "before": "hsbc.co.uk/financial-fitness/everyday-budgeting/understanding-your-balance; hsbc.co.uk/help/card-support/credit-card-repayment-options, September 26, 2026",
+  "after": "hsbc.co.uk/financial-fitness/everyday-budgeting/understanding-your-balance; hsbc.co.uk/help/card-support/credit-card-repayment-options, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "gb-santander",
+  "field": "source",
+  "before": "retail.santander.co.uk Santander Help 'View pending authorisations' (help00000109); santander.co.uk/personal/support/credit-cards/your-credit-card-repayments, September 26, 2026",
+  "after": "retail.santander.co.uk Santander Help 'View pending authorisations' (help00000109); santander.co.uk/personal/support/credit-cards/your-credit-card-repayments, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "gb-nationwide",
+  "field": "source",
+  "before": "nationwide.co.uk/help/payments/pending-transactions; nationwide.co.uk/credit-cards/help/check-card-balance, September 26, 2026",
+  "after": "nationwide.co.uk/help/payments/pending-transactions; nationwide.co.uk/credit-cards/help/check-card-balance, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "ie-aib",
+  "field": "source",
+  "before": "aib.ie/help-and-guidance/aib-debit-card-faqs; aib.ie/help-and-guidance/about-my-balances; AIB Terms and Conditions for Current, Demand Deposit and Masterplan Accounts (Table 1, Table 3); AIB Personal Credit Card Terms and Conditions (conditions 8, 36-38), September 26, 2026",
+  "after": "aib.ie/help-and-guidance/aib-debit-card-faqs; aib.ie/help-and-guidance/about-my-balances; AIB Terms and Conditions for Current, Demand Deposit and Masterplan Accounts (Table 1, Table 3); AIB Personal Credit Card Terms and Conditions (conditions 8, 36-38), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "is-islandsbanki",
+  "field": "source",
+  "before": "islandsbanki.is news 'Breytingar á debetkortagreiðslum' and 'Breytt sýn á debetkortafærslur' (2023); 'Kortaheimildir og páskar'; Skilmálar debetkorta EY-9092; Skilmálar kreditkorta EY-9096 (March 30, 2026) §8.4; Almennir skilmálar innlánsreikninga EY-9587 (April 22, 2024), September 26, 2026",
+  "after": "islandsbanki.is news 'Breytingar á debetkortagreiðslum' and 'Breytt sýn á debetkortafærslur' (2023); 'Kortaheimildir og páskar'; Skilmálar debetkorta EY-9092; Skilmálar kreditkorta EY-9096 (March 30, 2026) §8.4; Almennir skilmálar innlánsreikninga EY-9587 (April 22, 2024), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-societe-generale",
+  "field": "source",
+  "before": "SG Conditions Générales des cartes de débit (June 2026) e.3, g.4; SG Tarifs au 1er avril 2026 (sg-bt-2026.pdf) §3.4; MoneyVox 'Pourquoi un achat par carte bancaire met-il plusieurs jours…' (SG spokesperson); Légifrance CMF L133-14, September 26, 2026",
+  "after": "SG Conditions Générales des cartes de débit (June 2026) e.3, g.4; SG Tarifs au 1er avril 2026 (sg-bt-2026.pdf) §3.4; MoneyVox 'Pourquoi un achat par carte bancaire met-il plusieurs jours…' (SG spokesperson); Légifrance CMF L133-14, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "fr-credit-agricole",
+  "field": "source",
+  "before": "Crédit Agricole Île-de-France 'Principales conditions tarifaires' April 2026 (MoneyVox mirror of the bank's brochure); credit-agricole.fr magazine 'Carte à débit différé' (search summary); Légifrance CMF L133-14, September 26, 2026",
+  "after": "Crédit Agricole Île-de-France 'Principales conditions tarifaires' April 2026 (MoneyVox mirror of the bank's brochure); credit-agricole.fr magazine 'Carte à débit différé' (search summary); Légifrance CMF L133-14, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "de-berliner-sparkasse",
+  "field": "source",
+  "before": "Berliner Sparkasse Preis- und Leistungsverzeichnis July 15, 2026; Berliner Sparkasse Kreditkartenbedingungen (Fassung Maerz 2026), nos. 4, 7, 9; berliner-sparkasse.de Buchungszeiten FAQ, September 26, 2026",
+  "after": "Berliner Sparkasse Preis- und Leistungsverzeichnis July 15, 2026; Berliner Sparkasse Kreditkartenbedingungen (Fassung Maerz 2026), nos. 4, 7, 9; berliner-sparkasse.de Buchungszeiten FAQ, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "es-santander",
+  "field": "source",
+  "before": "bancosantander.es card FAQs; wcm.bancosantander.es Documento de informacion precontractual Cuenta Santander (no hold or value-date terms for cards found), September 26, 2026",
+  "after": "bancosantander.es card FAQs; wcm.bancosantander.es Documento de informacion precontractual Cuenta Santander (no hold or value-date terms for cards found), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "es-bbva",
+  "field": "source",
+  "before": "bbva.es card documents refused automated access (HTTP 403); bbva.es help pages searched, with no hold duration found, September 26, 2026",
+  "after": "bbva.es card documents refused automated access (HTTP 403); bbva.es help pages searched, with no hold duration found, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "es-caixabank",
+  "field": "source",
+  "before": "CaixaBank Condiciones generales de tarjetas (c15B.pdf); caixabank.es FAQ Avanzar pago tarjeta de credito; caixabank.es FAQ Saldo retenido en mi cuenta, September 26, 2026",
+  "after": "CaixaBank Condiciones generales de tarjetas (c15B.pdf); caixabank.es FAQ Avanzar pago tarjeta de credito; caixabank.es FAQ Saldo retenido en mi cuenta, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "es-sabadell",
+  "field": "source",
+  "before": "Banco Sabadell Condiciones generales del contrato de tarjeta modelo BS06/21CGT, secs. 3.1, 8, 9 and special conditions; bancsabadell.com blog Saldo retenido, September 26, 2026",
+  "after": "Banco Sabadell Condiciones generales del contrato de tarjeta modelo BS06/21CGT, secs. 3.1, 8, 9 and special conditions; bancsabadell.com blog Saldo retenido, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "es-bankinter",
+  "field": "source",
+  "before": "Bankinter Informacion precontractual Tarjeta Combo; Bankinter INE Tarjeta Visa Clasica; bankinter.com card FAQs (HTTP 403). None states hold periods or value dates., September 26, 2026",
+  "after": "Bankinter Informacion precontractual Tarjeta Combo; Bankinter INE Tarjeta Visa Clasica; bankinter.com card FAQs (HTTP 403). None states hold periods or value dates., read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "jp-smbc",
+  "field": "source",
+  "before": "SMBC Debit FAQ 'When does money come back after a return or cancellation?' (faq-debit.smbc-card.com); Sumitomo Mitsui Card 'Paying by transfer' (smbc-card.com/mem/oshiharai/rinji.jsp); Sumitomo Mitsui Card Hitotoki 'Statements and when they post' (smbc-card.com/mem/hitotoki/card_use/detailed_statement.jsp), September 26, 2026",
+  "after": "SMBC Debit FAQ 'When does money come back after a return or cancellation?' (faq-debit.smbc-card.com); Sumitomo Mitsui Card 'Paying by transfer' (smbc-card.com/mem/oshiharai/rinji.jsp); Sumitomo Mitsui Card Hitotoki 'Statements and when they post' (smbc-card.com/mem/hitotoki/card_use/detailed_statement.jsp), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "jp-mizuho",
+  "field": "source",
+  "before": "Mizuho FAQ 7929 (faq.mizuhobank.co.jp/faq/show/7929); JCB FAQ 516 on credit after repayment (j-faq.jcb.co.jp/faq/show/516); JCB FAQ 293 on statement posting (j-faq.jcb.co.jp/faq/show/293), September 26, 2026",
+  "after": "Mizuho FAQ 7929 (faq.mizuhobank.co.jp/faq/show/7929); JCB FAQ 516 on credit after repayment (j-faq.jcb.co.jp/faq/show/516); JCB FAQ 293 on statement posting (j-faq.jcb.co.jp/faq/show/293), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "kr-kb-kookmin",
+  "field": "source",
+  "before": "KB Kookmin Card 'Payment methods' guide (card.kbcard.com/SVC/DVIEW/HSGMCXCRSCSC0103); KB Kookmin Card corporate check card page (mbiz.kbcard.com/CXEHMPGCD0004.cms, via search excerpt), September 26, 2026",
+  "after": "KB Kookmin Card 'Payment methods' guide (card.kbcard.com/SVC/DVIEW/HSGMCXCRSCSC0103); KB Kookmin Card corporate check card page (mbiz.kbcard.com/CXEHMPGCD0004.cms, via search excerpt), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "kr-shinhan",
+  "field": "source",
+  "before": "Shinhan Card 'Card usage guide' (shinhancard.com/pconts/html/helpdesk/useGuide/credit/MOBFM12502R01.html, via search excerpt: a same-day cancellation restores the limit at once, a later one once the sales cancellation completes, one to three days after the cancellation; the page itself wouldn't render), September 26, 2026",
+  "after": "Shinhan Card 'Card usage guide' (shinhancard.com/pconts/html/helpdesk/useGuide/credit/MOBFM12502R01.html, via search excerpt: a same-day cancellation restores the limit at once, a later one once the sales cancellation completes, one to three days after the cancellation; the page itself wouldn't render), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "kr-hana",
+  "field": "source",
+  "before": "Hana Card 'Payment guide' (hanacard.co.kr/OSA15000000N.web), September 26, 2026",
+  "after": "Hana Card 'Payment guide' (hanacard.co.kr/OSA15000000N.web), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "kr-nh",
+  "field": "source",
+  "before": "NH NongHyup Card, NH Travlry check card product page (card.nonghyup.com/servlet/IpCc2021R.act?CD_WRS_SQNO=90010517), September 26, 2026",
+  "after": "NH NongHyup Card, NH Travlry check card product page (card.nonghyup.com/servlet/IpCc2021R.act?CD_WRS_SQNO=90010517), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "kr-kakaobank",
+  "field": "source",
+  "before": "KakaoBank FAQ (card section), blog.kakaobank.com/82 and m.kakaobank.com FAQ, via search excerpt; pages didn't render, September 26, 2026",
+  "after": "KakaoBank FAQ (card section), blog.kakaobank.com/82 and m.kakaobank.com FAQ, via search excerpt; pages didn't render, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "au-commbank",
+  "field": "source",
+  "before": "commbank.com.au/support/disputing-a-transaction/dispute-pending-transaction.html; commbank.com.au support: How do pending transactions affect my balance?, September 26, 2026",
+  "after": "commbank.com.au/support/disputing-a-transaction/dispute-pending-transaction.html; commbank.com.au support: How do pending transactions affect my balance?, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "au-westpac",
+  "field": "source",
+  "before": "westpac.com.au/faq/pt-what-is-pending-transaction/; westpac.com.au/faq/pending-transactions/, September 26, 2026",
+  "after": "westpac.com.au/faq/pt-what-is-pending-transaction/; westpac.com.au/faq/pending-transactions/, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "au-nab",
+  "field": "source",
+  "before": "nab.com.au/help-support/transaction-dispute, September 26, 2026",
+  "after": "nab.com.au/help-support/transaction-dispute, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "au-anz",
+  "field": "source",
+  "before": "anz.com.au/plus/support/money-transactions/transaction-disputes/pending-transactions/; anz.com.au/support/business/internet-banking/getting-started/glossary/; anz.com.au/personal/bank-accounts/manage-my-accounts/faqs/, September 26, 2026",
+  "after": "anz.com.au/plus/support/money-transactions/transaction-disputes/pending-transactions/; anz.com.au/support/business/internet-banking/getting-started/glossary/; anz.com.au/personal/bank-accounts/manage-my-accounts/faqs/, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "nz-anz",
+  "field": "source",
+  "before": "help.anz.co.nz a_id/310 Credit card transaction information (now redirects to anz.co.nz/banking-with-anz/ways-to-bank/guides/cards/; figures from search snippet), September 26, 2026",
+  "after": "help.anz.co.nz a_id/310 Credit card transaction information (now redirects to anz.co.nz/banking-with-anz/ways-to-bank/guides/cards/; figures from search snippet), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "nz-bnz",
+  "field": "source",
+  "before": "bnz.co.nz/support/credit-cards/security/pending-transactions (covers credit cards and Flexi Debit Visa), September 26, 2026",
+  "after": "bnz.co.nz/support/credit-cards/security/pending-transactions (covers credit cards and Flexi Debit Visa), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "nz-westpac",
+  "field": "source",
+  "before": "westpac.co.nz/personal/life-money/managing-your-money/understanding-pending-transactions/; westpac.co.nz/help/why-hasnt-my-payment-appeared-on-my-credit-card-balance/ (403 and timeout; read via search snippets), September 26, 2026",
+  "after": "westpac.co.nz/personal/life-money/managing-your-money/understanding-pending-transactions/; westpac.co.nz/help/why-hasnt-my-payment-appeared-on-my-credit-card-balance/ (403 and timeout; read via search snippets), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "nz-kiwibank",
+  "field": "source",
+  "before": "kiwibank.co.nz/help/cards/dispute-a-transaction/; kiwibank.co.nz/documents/guide-view-accounts-balances/ (timeouts; read via search snippets), September 26, 2026",
+  "after": "kiwibank.co.nz/help/cards/dispute-a-transaction/; kiwibank.co.nz/documents/guide-view-accounts-balances/ (timeouts; read via search snippets), read September 26, 2026"
+ }
+]

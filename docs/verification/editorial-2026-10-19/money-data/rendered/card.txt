@@ -3,7 +3,7 @@ Chase Freedom Unlimited
 ···9931 
 How This Works 
 Owed $0 
-Left To Spend $65,217 Of a $65,217 limit 
+Left To Spend $65,167 Of a $65,217 limit 
 Rate 0% A year, on a balance carried 
 0% a year on any balance you carry during the introductory months, then 18.46%. Chase sets a new card’s rate between 18.24% and 27.74% from your credit record when it opens. Yours was set at 18.46% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 18.46%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -12,6 +12,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 21 days after each one.
 The minimum payment is 1% of the statement plus the month’s interest, or $40 if that’s more.
 Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself. If an autopay bounces and leaves the payment short, that fee is all you’re charged, with no returned payment fee on top. If it’s still short at the next due date, thirty days late, it goes on your credit record and the limit is cut.
+$50 of the credit your payment freed up is on hold until August 27, 2026, while the payment clears from another bank. After you make a payment, it can take Chase up to 15 days to give you back the available credit the payment freed up.
 Pay Card In Full ($0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -32,7 +33,7 @@ Bank of America Customized Cash Rewards credit card
 ···9931 
 How This Works 
 Owed $0 
-Left To Spend $65,217 Of a $65,217 limit 
+Left To Spend $65,167 Of a $65,217 limit 
 Rate 0% A year, on a balance carried 
 0% a year on any balance you carry during the introductory months, then 17.72%. Bank of America sets a new card’s rate between 17.49% and 27.49% from your credit record when it opens. Yours was set at 17.72% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 17.72%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -41,6 +42,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 25 days after each one.
 The minimum payment is 1% of the statement plus the month’s interest, or $35 if that’s more.
 Paying less than the minimum by the due date costs $30 the first time, and $41 if it happens again within 6 billing periods, but never more than the minimum itself. If an autopay bounces and leaves the payment short, that fee is all you’re charged, with no returned payment fee on top. If it’s still short at the next due date, thirty days late, it goes on your credit record and the limit is cut.
+$50 of the credit your payment freed up is on hold until August 27, 2026, while the payment clears from another bank. The card agreement doesn't set a hold on the credit a payment frees up. It only says a payment that doesn't follow the payment instructions may take up to five days to be credited, and the payments FAQ says balances and available funds can take up to 2 business days to update after a payment.
 Pay Card In Full ($0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -61,7 +63,7 @@ Wells Fargo Active Cash Card
 ···9931 
 How This Works 
 Owed $0 
-Left To Spend $65,217 Of a $65,217 limit 
+Left To Spend $65,167 Of a $65,217 limit 
 Rate 18.97% A year, on a balance carried 
 18.97% a year on any balance you carry. Wells Fargo sets a new card’s rate between 18.74% and 28.74% from your credit record when it opens. Yours was set at 18.97% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 18.97%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -69,6 +71,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 25 days after each one.
 The minimum payment is 1% of the statement plus the month’s interest, or $25 if that’s more.
 Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself. If an autopay bounces and leaves the payment short, that fee is all you’re charged, with no returned payment fee on top. If it’s still short at the next due date, thirty days late, it goes on your credit record and the limit is cut.
+$50 of the credit your payment freed up is on hold until August 27, 2026, while the payment clears from another bank. Wells Fargo's card agreement says it may hold back some of your available credit until your payment clears, but it doesn't say for how many days.
 Pay Card In Full ($0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -89,7 +92,7 @@ Citi Double Cash Card
 ···9931 
 How This Works 
 Owed $0 
-Left To Spend $65,217 Of a $65,217 limit 
+Left To Spend $65,167 Of a $65,217 limit 
 Rate 18.72% A year, on a balance carried 
 18.72% a year on any balance you carry. Citi sets a new card’s rate between 18.49% and 28.74% from your credit record when it opens. Yours was set at 18.72% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 18.72%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -97,6 +100,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 1% of the statement plus the month’s interest, or $35 if that’s more.
 Paying less than the minimum by the due date costs $29 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself. If an autopay bounces and leaves the payment short, that fee is all you’re charged, with no returned payment fee on top. If it’s still short at the next due date, thirty days late, it goes on your credit record and the limit is cut.
+$50 of the credit your payment freed up is on hold until August 27, 2026, while the payment clears from another bank. Citi's card agreement doesn't say it holds back credit after a payment. Its guidance page only says some issuers hold payments for a while, especially large or new ones, before updating available credit.
 Pay Card In Full ($0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -117,7 +121,7 @@ Platinum from Capital One
 ···9931 
 How This Works 
 Owed $0 
-Left To Spend $65,217 Of a $65,217 limit 
+Left To Spend $65,167 Of a $65,217 limit 
 Rate 28.99% A year, on a balance carried 
 28.99% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -125,6 +129,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or $25 if that’s more.
 Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself. If an autopay bounces and leaves the payment short, that fee is all you’re charged, with no returned payment fee on top. If it’s still short at the next due date, thirty days late, it goes on your credit record and the limit is cut.
+$50 of the credit your payment freed up is on hold until August 27, 2026, while the payment clears from another bank. Sometimes Capital One needs time to confirm a payment from your bank before it adds the money back to your available credit. This payment hold lasts about 3 to 9 days, though it's often quicker.
 Pay Card In Full ($0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -145,7 +150,7 @@ RBC Cash Back Mastercard
 ···9931 
 How This Works 
 Owed C$0 
-Left To Spend C$29,783 Of a C$29,783 limit 
+Left To Spend C$29,733 Of a C$29,783 limit 
 Rate 20.99% A year, on a balance carried 
 20.99% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -154,6 +159,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 21 days after each one.
 The minimum payment is 0% of the statement plus the month’s interest, or C$10 if that’s more.
 Paying less than the minimum by the due date costs C$0. It also goes on your credit record, and the limit is cut.
+C$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (C$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -174,7 +180,7 @@ TD Cash Back Visa Card
 ···9931 
 How This Works 
 Owed C$0 
-Left To Spend C$29,783 Of a C$29,783 limit 
+Left To Spend C$29,733 Of a C$29,783 limit 
 Rate 21.99% A year, on a balance carried 
 21.99% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -182,6 +188,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 21 days after each one.
 The minimum payment is 2% of the statement, or C$34 if that’s more.
 Paying less than the minimum by the due date costs C$44. It also goes on your credit record, and the limit is cut.
+C$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. TD may hold a credit card payment that isn't cash so it can verify where the money came from and that it cleared. The hold lasts up to 5 business days, counting the day of the payment.
 Pay Card In Full (C$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -202,7 +209,7 @@ Scotia Momentum No-Fee Visa Card
 ···9931 
 How This Works 
 Owed C$0 
-Left To Spend C$29,783 Of a C$29,783 limit 
+Left To Spend C$29,733 Of a C$29,783 limit 
 Rate 20.99% A year, on a balance carried 
 20.99% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -210,6 +217,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or C$34 if that’s more.
 Paying less than the minimum by the due date costs C$44. It also goes on your credit record, and the limit is cut.
+C$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. A payment to a Scotiabank credit card or line of credit may be held for up to 5 days before it shows in your available credit. Automated payments from another bank get the hold; paying from a Scotiabank account doesn't.
 Pay Card In Full (C$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -230,7 +238,7 @@ BMO CashBack Mastercard
 ···9931 
 How This Works 
 Owed C$0 
-Left To Spend C$29,783 Of a C$29,783 limit 
+Left To Spend C$29,733 Of a C$29,783 limit 
 Rate 21.99% A year, on a balance carried 
 21.99% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -239,6 +247,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 21 days after each one.
 The minimum payment is 0% of the statement plus the month’s interest, or C$10 if that’s more.
 Paying less than the minimum by the due date costs C$0. It also goes on your credit record, and the limit is cut.
+C$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (C$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -259,7 +268,7 @@ CIBC Dividend Visa Card
 ···9931 
 How This Works 
 Owed C$0 
-Left To Spend C$29,783 Of a C$29,783 limit 
+Left To Spend C$29,733 Of a C$29,783 limit 
 Rate 21.99% A year, on a balance carried 
 21.99% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -268,6 +277,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 21 days after each one.
 The minimum payment is 0% of the statement plus the month’s interest, or C$10 if that’s more.
 Paying less than the minimum by the due date costs C$0. It also goes on your credit record, and the limit is cut.
+C$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Only payments from a CIBC account show up in your available credit right away. A payment from another bank counts as unverified and usually posts within 5 to 7 business days while CIBC makes sure the money was there.
 Pay Card In Full (C$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -288,7 +298,7 @@ Tarjeta Azul BBVA
 ···9931 
 How This Works 
 Owed MX$0 
-Left To Spend MX$391,304 Of a MX$391,304 limit 
+Left To Spend MX$391,254 Of a MX$391,304 limit 
 Rate 59.52% A year, on a balance carried 
 59.52% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -296,6 +306,7 @@ The yearly fee is MX$748, on your December statement.
 Statements come on the 20th, and payment is due 20 days after each one.
 The minimum payment is 1.5% of the statement plus the month’s interest, and never under MX$4,891, 1.25% of the limit, as Mexico’s central bank sets it.
 Paying less than the minimum by the due date costs MX$490. It also goes on your credit record, and the limit is cut.
+MX$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (MX$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -316,7 +327,7 @@ Banorte Credit Card
 ···9931 
 How This Works 
 Owed MX$0 
-Left To Spend MX$391,304 Of a MX$391,304 limit 
+Left To Spend MX$391,254 Of a MX$391,304 limit 
 Rate 21.99% A year, on a balance carried 
 21.99% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -324,6 +335,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or MX$450 if that’s more, and never under MX$4,891, 1.25% of the limit, as Mexico’s central bank sets it.
 Paying less than the minimum by the due date costs MX$576. It also goes on your credit record, and the limit is cut.
+MX$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Payments made through Banorte Móvil and online banking show up immediately. Payments made by phone banking or at authorized agents show up between midnight and 10 p.m.; after that, they're applied at 5 a.m. the next business day.
 Pay Card In Full (MX$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -344,7 +356,7 @@ Tarjeta de Credito LikeU
 ···9931 
 How This Works 
 Owed MX$0 
-Left To Spend MX$391,304 Of a MX$391,304 limit 
+Left To Spend MX$391,254 Of a MX$391,304 limit 
 Rate 66.35% A year, on a balance carried 
 66.35% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -352,6 +364,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 1.5% of the statement plus the month’s interest, and never under MX$4,891, 1.25% of the limit, as Mexico’s central bank sets it.
 Paying less than the minimum by the due date costs MX$410. It also goes on your credit record, and the limit is cut.
+MX$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (MX$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -372,7 +385,7 @@ Tarjeta de Credito Clasica Banamex
 ···9931 
 How This Works 
 Owed MX$0 
-Left To Spend MX$391,304 Of a MX$391,304 limit 
+Left To Spend MX$391,254 Of a MX$391,304 limit 
 Rate 63.78% A year, on a balance carried 
 63.78% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -380,6 +393,7 @@ The yearly fee is MX$815, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 1.5% of the statement plus the month’s interest, and never under MX$4,891, 1.25% of the limit, as Mexico’s central bank sets it.
 Paying less than the minimum by the due date costs MX$399. It also goes on your credit record, and the limit is cut.
+MX$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Banamex says card payments made at supermarkets, convenience stores and its ATMs are applied online and show up right away. It doesn't say how long a payment from another bank takes.
 Pay Card In Full (MX$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -400,7 +414,7 @@ Barclaycard Forward
 ···9931 
 How This Works 
 Owed £0 
-Left To Spend £17,174 Of a £17,174 limit 
+Left To Spend £17,124 Of a £17,174 limit 
 Rate 33.9% A year, on a balance carried 
 33.9% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -408,6 +422,7 @@ No yearly fee was found for it, so none is charged in the game.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 3% of the statement plus the month’s interest, or £5 if that’s more.
 Paying less than the minimum by the due date costs £12. It also goes on your credit record, and the limit is cut. Barclays then takes what was missed from your other accounts with it.
+£50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Barclaycard says a successful debit card payment to the card is credited to the account within two hours, and shows on the online statement within two working days. It doesn't describe any hold on the freed credit.
 Pay Card In Full (£0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -428,7 +443,7 @@ Lloyds Bank 0% Purchase and Balance Transfer Credit Card
 ···9931 
 How This Works 
 Owed £0 
-Left To Spend £17,174 Of a £17,174 limit 
+Left To Spend £17,124 Of a £17,174 limit 
 Rate 0% A year, on a balance carried 
 0% a year on any balance you carry during the introductory months, then 24.9%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -436,6 +451,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or £20 if that’s more.
 Paying less than the minimum by the due date costs £25. It also goes on your credit record, and the limit is cut. Lloyds Bank then takes what was missed from your other accounts with it.
+£50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (£0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -456,7 +472,7 @@ The NatWest Credit Card
 ···9931 
 How This Works 
 Owed £0 
-Left To Spend £17,174 Of a £17,174 limit 
+Left To Spend £17,124 Of a £17,174 limit 
 Rate 14.32% A year, on a balance carried 
 14.32% a year on any balance you carry. NatWest sets a new card’s rate between 12.9% and 18.9% from your credit record when it opens. Yours was set at 14.32% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 14.32%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -464,6 +480,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 25 days after each one.
 The minimum payment is 1% of the statement plus the month’s interest.
 Paying less than the minimum by the due date costs £25. It also goes on your credit record, and the limit is cut. NatWest then takes what was missed from your other accounts with it.
+£50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. NatWest says a payment to the credit card should update the balance within 15 minutes in the app and Online Banking. Between 6:30 p.m. and 2:30 a.m. a cleared pending transaction may briefly be left out of the balance and available spend.
 Pay Card In Full (£0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -484,7 +501,7 @@ HSBC Classic Credit Card
 ···9931 
 How This Works 
 Owed £0 
-Left To Spend £17,174 Of a £17,174 limit 
+Left To Spend £17,124 Of a £17,174 limit 
 Rate 29.9% A year, on a balance carried 
 29.9% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -492,6 +509,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 1% of the statement plus the month’s interest, or £5 if that’s more.
 Paying less than the minimum by the due date costs £12. It also goes on your credit record, and the limit is cut. HSBC UK then takes what was missed from your other accounts with it.
+£50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. HSBC says money paid to the card is normally credited immediately, subject to its standard checks, and the card balance updates the next working day. A Direct Debit is collected three days before the due date and shows as pending for those three days.
 Pay Card In Full (£0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -512,7 +530,7 @@ Santander Everyday No Balance Transfer Fee Credit Card
 ···9931 
 How This Works 
 Owed £0 
-Left To Spend £17,174 Of a £17,174 limit 
+Left To Spend £17,124 Of a £17,174 limit 
 Rate 24.9% A year, on a balance carried 
 24.9% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -520,6 +538,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 26 days after each one.
 The minimum payment is 1% of the statement plus the month’s interest, or £5 if that’s more.
 Paying less than the minimum by the due date costs £12. It also goes on your credit record, and the limit is cut. Santander UK then takes what was missed from your other accounts with it.
+£50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (£0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -540,7 +559,7 @@ Nationwide Member Credit Card
 ···9931 
 How This Works 
 Owed £0 
-Left To Spend £17,174 Of a £17,174 limit 
+Left To Spend £17,124 Of a £17,174 limit 
 Rate 0% A year, on a balance carried 
 0% a year on any balance you carry during the introductory months, then 24.9%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -548,6 +567,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 1% of the statement plus the month’s interest, or £25 if that’s more.
 Paying less than the minimum by the due date costs £0. It also goes on your credit record, and the limit is cut. Nationwide Building Society then takes what was missed from your other accounts with it.
+£50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (£0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -568,7 +588,7 @@ AIB Click Visa Card
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Rate 9.11% A year, on a balance carried 
 9.11% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -576,6 +596,7 @@ The yearly fee is €30, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 3% of the statement, or €6 if that’s more.
 Paying less than the minimum by the due date costs €7. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. AIB gives payment value on the business day it receives a payment to the card, or the calendar day for an instant transfer, and money from an instant transfer is available to use that same calendar day. A merchant's pre-authorization can reduce available credit until the merchant tells AIB to release it.
 Pay Card In Full (€0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -596,7 +617,7 @@ Bank of Ireland Classic Credit Card
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Rate 16.12% A year, on a balance carried 
 16.12% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -604,6 +625,7 @@ The yearly fee is €30, on your December statement.
 Statements come on the 20th, and payment is due 25 days after each one.
 The minimum payment is 2.5% of the statement, or €5 if that’s more.
 Paying less than the minimum by the due date costs €8. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -624,7 +646,7 @@ PTSB ICE Visa Credit Card
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Rate 16.5% A year, on a balance carried 
 16.5% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -632,6 +654,7 @@ The yearly fee is €30, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2.5% of the statement, or €5 if that’s more.
 Paying less than the minimum by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -652,7 +675,7 @@ Almennt kreditkort
 ···9931 
 How This Works 
 Owed 0 kr 
-Left To Spend 3,000,000 kr Of a 3,000,000 kr limit 
+Left To Spend 2,999,950 kr Of a 3,000,000 kr limit 
 Rate 15.7% A year, on a balance carried 
 15.7% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -660,6 +683,7 @@ The yearly fee is 3,700 kr, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or 3,450 kr if that’s more.
 Paying less than the minimum by the due date costs 950 kr. It also goes on your credit record, and the limit is cut.
+50 kr of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (0 kr) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -680,7 +704,7 @@ Almennt kort
 ···9931 
 How This Works 
 Owed 0 kr 
-Left To Spend 3,000,000 kr Of a 3,000,000 kr limit 
+Left To Spend 2,999,950 kr Of a 3,000,000 kr limit 
 Rate 15.75% A year, on a balance carried 
 15.75% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -688,6 +712,7 @@ The yearly fee is 3,990 kr, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or 3,450 kr if that’s more.
 Paying less than the minimum by the due date costs 950 kr. It also goes on your credit record, and the limit is cut.
+50 kr of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (0 kr) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -708,7 +733,7 @@ Almennt kort án fríðinda
 ···9931 
 How This Works 
 Owed 0 kr 
-Left To Spend 3,000,000 kr Of a 3,000,000 kr limit 
+Left To Spend 2,999,950 kr Of a 3,000,000 kr limit 
 Rate 15.75% A year, on a balance carried 
 15.75% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -716,6 +741,7 @@ The yearly fee is 2,400 kr, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or 3,450 kr if that’s more.
 Paying less than the minimum by the due date costs 950 kr. It also goes on your credit record, and the limit is cut.
+50 kr of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Paying the credit card bill before the due date, or paying into the card, frees up room on the limit. The bank doesn't mention any delay before that room can be used.
 Pay Card In Full (0 kr) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -736,12 +762,13 @@ Carte Visa Classic à débit différé
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: BNP Paribas takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €50, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -762,12 +789,13 @@ CB Visa à débit différé
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: SG takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €50, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -788,12 +816,13 @@ Carte Visa Cléo
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: LCL takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €52, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -814,12 +843,13 @@ Mastercard à débit différé
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: Crédit Agricole Paris Île-de-France takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €45, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -840,12 +870,13 @@ Carte Visa Classic à débit différé
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: La Banque Postale takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €48, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -866,12 +897,13 @@ Deutsche Bank MasterCard Standard
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: Deutsche Bank takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €39, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -892,12 +924,13 @@ Commerzbank ClassicKreditkarte
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: Commerzbank takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €40, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -918,12 +951,13 @@ Postbank Mastercard
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: Postbank takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €29, on your December statement.
 Statements come on the 20th, and payment is due 28 days after each one.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -944,7 +978,7 @@ ING Deutschland Credit Card
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Rate 21.99% A year, on a balance carried 
 21.99% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -952,6 +986,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or €23 if that’s more.
 Paying less than the minimum by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -972,12 +1007,13 @@ Berliner Sparkasse Visa Card
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: Berliner Sparkasse takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €39, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. The credit card terms say payments received are set off the same day as charges ("taggleich"), so there's no stated hold; the credit comes back when the payment lands.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -998,7 +1034,7 @@ Tarjeta Crédito Santander
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Rate 18% A year, on a balance carried 
 18% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1006,6 +1042,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 3% of the statement, or €25 if that’s more.
 Paying less than the minimum by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1026,7 +1063,7 @@ Tarjeta de crédito Aqua Más
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Rate 19.8% A year, on a balance carried 
 19.8% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1034,6 +1071,7 @@ The yearly fee is €43, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 3% of the statement, or €12 if that’s more.
 Paying less than the minimum by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1054,7 +1092,7 @@ MyCard
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Rate 20.4% A year, on a balance carried 
 20.4% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1062,6 +1100,7 @@ The yearly fee is €48, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 0.85% of the statement plus the month’s interest, or €5 if that’s more.
 Paying less than the minimum by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Paying early ("avance de pago") frees the credit at once because it's an online transfer, though the payment only shows on the card 24 hours later. On the 2-day plan the full limit is available again once the 48-hour debit clears.
 Pay Card In Full (€0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1082,7 +1121,7 @@ Tarjeta de crédito Visa Classic
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Rate 18% A year, on a balance carried 
 18% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1090,6 +1129,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or €23 if that’s more.
 Paying less than the minimum by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1110,12 +1150,13 @@ Tarjeta de crédito Bankinter
 ···9931 
 How This Works 
 Owed €0 
-Left To Spend €20,000 Of a €20,000 limit 
+Left To Spend €19,950 Of a €20,000 limit 
 Kind Charge Paid in full each month 
 This is a charge card: Bankinter takes the whole statement from your current account each month. It can’t carry a balance, and it charges 21.99% a year on anything the account can’t cover.
 The yearly fee is €50, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs €29. It also goes on your credit record, and the limit is cut.
+€50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (€0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1136,7 +1177,7 @@ Apply For This Card
 ···9931 
 How This Works 
 Owed ¥0 
-Left To Spend ¥3,260,870 Of a ¥3,260,870 limit 
+Left To Spend ¥3,260,820 Of a ¥3,260,870 limit 
 Rate 18% A year, on a balance carried 
 18% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1144,6 +1185,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 25 days after each one.
 The minimum payment follows the revolving course: ¥5,000 for each ¥100,000 owed.
 Paying less than the minimum by the due date costs ¥4,800. It also goes on your credit record, and the limit is cut.
+¥50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Mitsubishi UFJ NICOS restores shopping credit on the payment date itself. For cash advances and card loans it's restored once NICOS confirms the payment, which is about four business days after the payment date and varies by bank.
 Pay Card In Full (¥0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1164,7 +1206,7 @@ Apply For This Card
 ···9931 
 How This Works 
 Owed ¥0 
-Left To Spend ¥3,260,870 Of a ¥3,260,870 limit 
+Left To Spend ¥3,260,820 Of a ¥3,260,870 limit 
 Rate 18% A year, on a balance carried 
 18% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1172,6 +1214,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 25 days after each one.
 The minimum payment follows the revolving course: ¥5,000 of what’s owed plus the month’s interest.
 Paying less than the minimum by the due date costs ¥4,800. It also goes on your credit record, and the limit is cut.
+¥50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Sumitomo Mitsui Card says a payment made by bank transfer takes up to two business days to show up in the available credit.
 Pay Card In Full (¥0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1192,7 +1235,7 @@ Apply For This Card
 ···9931 
 How This Works 
 Owed ¥0 
-Left To Spend ¥3,260,870 Of a ¥3,260,870 limit 
+Left To Spend ¥3,260,820 Of a ¥3,260,870 limit 
 Rate 13.42% A year, on a balance carried 
 13.42% a year on any balance you carry. Mizuho Bank sets a new card’s rate between 12% and 18% from your credit record when it opens. Yours was set at 13.42% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 13.42%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1200,6 +1243,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 25 days after each one.
 The minimum payment is 2% of the statement, or ¥3,750 if that’s more.
 Paying less than the minimum by the due date costs ¥4,800. It also goes on your credit record, and the limit is cut.
+¥50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. JCB, which issues Mizuho's JCB cards, restores shopping credit on the payment date. An early repayment by bank transfer shows up about two business days after the transfer, and cash-advance payments take three to seven business days.
 Pay Card In Full (¥0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1220,7 +1264,7 @@ Apply For This Card
 ···9931 
 How This Works 
 Owed ¥0 
-Left To Spend ¥3,260,870 Of a ¥3,260,870 limit 
+Left To Spend ¥3,260,820 Of a ¥3,260,870 limit 
 Rate 15.71% A year, on a balance carried 
 15.71% a year on any balance you carry. Resona Bank sets a new card’s rate between 15% and 18% from your credit record when it opens. Yours was set at 15.71% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 15.71%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1228,6 +1272,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due 27 days after each one.
 The minimum payment is 2% of the statement, or ¥3,750 if that’s more.
 Paying less than the minimum by the due date costs ¥4,800. It also goes on your credit record, and the limit is cut.
+¥50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (¥0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1248,7 +1293,7 @@ JP BANK カード 一般カード
 ···9931 
 How This Works 
 Owed ¥0 
-Left To Spend ¥3,260,870 Of a ¥3,260,870 limit 
+Left To Spend ¥3,260,820 Of a ¥3,260,870 limit 
 Rate 18% A year, on a balance carried 
 18% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1256,6 +1301,7 @@ The yearly fee is ¥1,375, on your December statement.
 Statements come on the 20th, and payment is due 26 days after each one.
 The minimum payment is 2% of the statement, or ¥3,750 if that’s more.
 Paying less than the minimum by the due date costs ¥4,800. It also goes on your credit record, and the limit is cut.
+¥50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (¥0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1276,7 +1322,7 @@ KB국민 My WE:SH 카드
 ···9931 
 How This Works 
 Owed ₩0 
-Left To Spend ₩29,347,826 Of a ₩29,347,826 limit 
+Left To Spend ₩29,347,776 Of a ₩29,347,826 limit 
 Rate 8.99% A year, on a balance carried 
 8.99% a year on any balance you carry. KB Kookmin Bank sets a new card’s rate between 5.6% and 19.95% from your credit record when it opens. Yours was set at 8.99% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 8.99%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1284,6 +1330,7 @@ The yearly fee is ₩15,000, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment follows the revolving course: a share of the statement set by your credit grade.
 Paying less than the minimum by the due date costs ₩43,200. It also goes on your credit record, and the limit is cut.
+₩50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. KB Kookmin Card says that with instant-withdrawal payment, the card balance comes out of the linked account on the payment date and the credit limit can take up to one business day after the withdrawal to be restored.
 Pay Card In Full (₩0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1304,7 +1351,7 @@ Apply For This Card
 ···9931 
 How This Works 
 Owed ₩0 
-Left To Spend ₩29,347,826 Of a ₩29,347,826 limit 
+Left To Spend ₩29,347,776 Of a ₩29,347,826 limit 
 Rate 8.83% A year, on a balance carried 
 8.83% a year on any balance you carry. Shinhan Bank sets a new card’s rate between 5.4% and 19.9% from your credit record when it opens. Yours was set at 8.83% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 8.83%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1312,6 +1359,7 @@ The yearly fee is ₩15,000, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment follows the revolving course: a share of the statement set by your credit grade.
 Paying less than the minimum by the due date costs ₩43,200. It also goes on your credit record, and the limit is cut.
+₩50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (₩0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1332,7 +1380,7 @@ Apply For This Card
 ···9931 
 How This Works 
 Owed ₩0 
-Left To Spend ₩29,347,826 Of a ₩29,347,826 limit 
+Left To Spend ₩29,347,776 Of a ₩29,347,826 limit 
 Rate 8.46% A year, on a balance carried 
 8.46% a year on any balance you carry. Hana Bank sets a new card’s rate between 4.9% and 19.95% from your credit record when it opens. Yours was set at 8.46% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 8.46%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1340,6 +1388,7 @@ The yearly fee is ₩12,000, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or ₩33,750 if that’s more.
 Paying less than the minimum by the due date costs ₩43,200. It also goes on your credit record, and the limit is cut.
+₩50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Hana Card says that if the payment account is at a bank other than Hana Bank, the limit is restored after the payment is confirmed on the next business day. It names no wait for a Hana Bank account, which is where a Hana Bank customer pays from.
 Pay Card In Full (₩0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1360,7 +1409,7 @@ NH농협카드
 ···9931 
 How This Works 
 Owed ₩0 
-Left To Spend ₩29,347,826 Of a ₩29,347,826 limit 
+Left To Spend ₩29,347,776 Of a ₩29,347,826 limit 
 Rate 9.97% A year, on a balance carried 
 9.97% a year on any balance you carry. NH NongHyup Bank sets a new card’s rate between 6.9% and 19.9% from your credit record when it opens. Yours was set at 9.97% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 9.97%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1368,6 +1417,7 @@ No yearly fee was found for it, so none is charged in the game.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or ₩33,750 if that’s more.
 Paying less than the minimum by the due date costs ₩43,200. It also goes on your credit record, and the limit is cut.
+₩50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (₩0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1388,12 +1438,13 @@ Apply For This Card
 ···9931 
 How This Works 
 Owed ₩0 
-Left To Spend ₩29,347,826 Of a ₩29,347,826 limit 
+Left To Spend ₩29,347,776 Of a ₩29,347,826 limit 
 Kind Charge Paid in full each month 
 This is a charge card: KakaoBank takes the whole statement from your current account each month. It can’t carry a balance, and it charges 20% a year on anything the account can’t cover.
 The yearly fee is ₩18,000, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 Paying less than the statement by the due date costs ₩43,200. It also goes on your credit record, and the limit is cut.
+₩50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (₩0) Close The Card 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1414,7 +1465,7 @@ CommBank Low Rate credit card
 ···9931 
 How This Works 
 Owed A$0 
-Left To Spend A$33,261 Of a A$33,261 limit 
+Left To Spend A$33,211 Of a A$33,261 limit 
 Rate 12.17% A year, on a balance carried 
 12.17% a year on any balance you carry. Commonwealth Bank sets a new card’s rate between 10.99% and 15.99% from your credit record when it opens. Yours was set at 12.17% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 12.17%.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1422,6 +1473,7 @@ The yearly fee is A$72, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or A$25 if that’s more.
 Paying less than the minimum by the due date costs A$20. It also goes on your credit record, and the limit is cut.
+A$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (A$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1442,7 +1494,7 @@ Westpac Low Rate card
 ···9931 
 How This Works 
 Owed A$0 
-Left To Spend A$33,261 Of a A$33,261 limit 
+Left To Spend A$33,211 Of a A$33,261 limit 
 Rate 13.74% A year, on a balance carried 
 13.74% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1450,6 +1502,7 @@ The yearly fee is A$84, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or A$38 if that’s more.
 Paying less than the minimum by the due date costs A$20. It also goes on your credit record, and the limit is cut.
+A$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (A$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1470,7 +1523,7 @@ NAB Low Rate Card
 ···9931 
 How This Works 
 Owed A$0 
-Left To Spend A$33,261 Of a A$33,261 limit 
+Left To Spend A$33,211 Of a A$33,261 limit 
 Rate 13.49% A year, on a balance carried 
 13.49% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1478,6 +1531,7 @@ The yearly fee is A$99, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or A$25 if that’s more.
 Paying less than the minimum by the due date costs A$20. It also goes on your credit record, and the limit is cut.
+A$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (A$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1498,7 +1552,7 @@ ANZ Low Rate
 ···9931 
 How This Works 
 Owed A$0 
-Left To Spend A$33,261 Of a A$33,261 limit 
+Left To Spend A$33,211 Of a A$33,261 limit 
 Rate 13.74% A year, on a balance carried 
 13.74% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1506,6 +1560,7 @@ The yearly fee is A$58, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or A$25 if that’s more.
 Paying less than the minimum by the due date costs A$20. It also goes on your credit record, and the limit is cut.
+A$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (A$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1526,7 +1581,7 @@ ANZ Low Rate Visa
 ···9931 
 How This Works 
 Owed NZ$0 
-Left To Spend NZ$36,087 Of a NZ$36,087 limit 
+Left To Spend NZ$36,037 Of a NZ$36,087 limit 
 Rate 13.9% A year, on a balance carried 
 13.9% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1534,6 +1589,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or NZ$42 if that’s more.
 Paying less than the minimum by the due date costs NZ$6. It also goes on your credit record, and the limit is cut.
+NZ$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (NZ$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1554,7 +1610,7 @@ ASB Visa Light
 ···9931 
 How This Works 
 Owed NZ$0 
-Left To Spend NZ$36,087 Of a NZ$36,087 limit 
+Left To Spend NZ$36,037 Of a NZ$36,087 limit 
 Rate 13.5% A year, on a balance carried 
 13.5% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1562,6 +1618,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or NZ$42 if that’s more.
 Paying less than the minimum by the due date costs NZ$53. It also goes on your credit record, and the limit is cut.
+NZ$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. A credit card payment made before 8:30 p.m. is processed overnight (after 8:30 p.m., the next night) and shows as pending until then; ASB doesn’t describe holding back the freed credit after that.
 Pay Card In Full (NZ$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1582,7 +1639,7 @@ BNZ Lite Visa
 ···9931 
 How This Works 
 Owed NZ$0 
-Left To Spend NZ$36,087 Of a NZ$36,087 limit 
+Left To Spend NZ$36,037 Of a NZ$36,087 limit 
 Rate 13.5% A year, on a balance carried 
 13.5% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1590,6 +1647,7 @@ The yearly fee is NZ$10, on your December statement.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or NZ$25 if that’s more.
 Paying less than the minimum by the due date costs NZ$2. It also goes on your credit record, and the limit is cut.
+NZ$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank.
 Pay Card In Full (NZ$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1610,7 +1668,7 @@ Westpac Fee Free Mastercard
 ···9931 
 How This Works 
 Owed NZ$0 
-Left To Spend NZ$36,087 Of a NZ$36,087 limit 
+Left To Spend NZ$36,037 Of a NZ$36,087 limit 
 Rate 12.9% A year, on a balance carried 
 12.9% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1618,6 +1676,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 2% of the statement, or NZ$5 if that’s more.
 Paying less than the minimum by the due date costs NZ$53. It also goes on your credit record, and the limit is cut.
+NZ$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. Payments are normally credited the day they're processed, and a Westpac One transfer is applied on the day you make it. Any delay is backdated to the processing date for interest.
 Pay Card In Full (NZ$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
@@ -1638,7 +1697,7 @@ Kiwibank Zero Visa
 ···9931 
 How This Works 
 Owed NZ$0 
-Left To Spend NZ$36,087 Of a NZ$36,087 limit 
+Left To Spend NZ$36,037 Of a NZ$36,087 limit 
 Rate 12.9% A year, on a balance carried 
 12.9% a year on any balance you carry.
 Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.
@@ -1646,6 +1705,7 @@ No yearly fee.
 Statements come on the 20th, and payment is due on the 15th of the next month.
 The minimum payment is 5% of the statement, or NZ$10 if that’s more.
 Paying less than the minimum by the due date costs NZ$53. It also goes on your credit record, and the limit is cut.
+NZ$50 of the credit your payment freed up is on hold until January 8, 2026, while the payment clears from another bank. A payment to a Kiwibank credit card updates the available balance automatically, but if it's made outside ordinary business hours the update to the available or owing balance can be delayed by up to two business days.
 Pay Card In Full (NZ$0) Close The Card Autopay: The Whole Statement 
 Statement Day 1st 2nd 3rd 4th 5th 6th 7th 8th 9th 10th 11th 12th 13th 14th 15th 16th 17th 18th 19th 20th 21st 22nd 23rd 24th 25th 26th 27th 28th 
 Change The Day 
