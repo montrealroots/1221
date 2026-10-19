@@ -14,7 +14,7 @@ import { quickSave, type Simulation } from '../../../../src/engine';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '../../../../src/engine/core/time';
 import { aidRefusal, applyRefusal, hardshipRefusal, healthMonth, healthOf, mayEnroll, prepayRefusal } from '../../../../src/engine/systems/health';
 import { earningsOf } from '../../../../src/engine/systems/earnings';
-import { loadCountryCities } from '../../../../src/engine/content/geography';
+import { CITIES, loadCountryCities } from '../../../../src/engine/content/geography';
 
 const [OUT = 'render2.txt'] = process.argv.slice(2).filter((a) => a !== '--');
 const lines: string[] = [];
@@ -158,6 +158,13 @@ scene('New Haven: Pay It Off with no checking account to pay from', () => {
   delete (sim.player as { primaryAccountId?: string }).primaryAccountId;
   say(`  Pay It Off: ${run(sim, 'health.pay_bill', { amount: 100_00 })}`);
   say(`  Pay It Off, nothing entered: ${run(sim, 'health.pay_bill', { amount: 0 })}`);
+});
+
+// Brief 15: a city's note, calibrated and derived, which no screen shows today but a city carries.
+scene('A city’s note, calibrated (Los Angeles) and derived (the first derived city)', () => {
+  say(`  Los Angeles: ${CITIES.get('us-ca-losangeles')?.note}`);
+  const derived = CITIES.all().find((c) => c.confidence === 'low');
+  say(`  ${derived?.name}: ${derived?.note}`);
 });
 
 scene('The city list for a country that can’t be loaded', () => {

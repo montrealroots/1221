@@ -142,11 +142,11 @@ words "Above 91, it settles back toward 91 each midnight." With the new guard it
 
 ## Batch 2: Care, Cover, Bills, Appointments, Injuries And Therapy
 
-**Sources (71, about 2,830 words):** `src/engine/systems/health.ts` (52), `appointments.ts` (6), `injury.ts` (6),
+**Sources (74, about 2,830 words):** `src/engine/systems/health.ts` (47), `appointments.ts` (6), `injury.ts` (6),
 `therapy.ts` (3), `clinics.ts` (2), `mortality.ts` (3); `src/engine/content/clinics.ts` (2), `carevisits.ts` (4),
-`injury.ts` (1). The inventory's listing showed 47 sources for `health.ts`; it has 52, and all 52 were read and marked.
+`injury.ts` (1).
 
-**Rewritten (16):**
+**Rewritten (14):**
 - in `health.ts`: `healthMonth`, `renewProgram`, `applyRenewal`, `noticeOfNoncompliance`, `grantPending`, `applyRefusal`,
   `dueWords`, `careFor`, `repriceCare`, `registerHealth` and `registerHealth <health.pay_bill>`;
 - in `appointments.ts`: `registerAppointments` and `<health.cancel_appointment>`;
@@ -155,7 +155,7 @@ words "Above 91, it settles back toward 91 each midnight." With the new guard it
 **Blocked (1):** `appointments.ts#bookIn`, the booking notice. The papers guide quotes it whole and a test holds the two
 equal (defects.md, 4, with the words suggested).
 
-**Retained (54):** every other source. The reasons are in `docs/text/second-pass/health.json`, and a sample is in
+**Retained (59):** every other source. The reasons are in `docs/text/second-pass/health.json`, and a sample is in
 `retained.md`.
 - Most are refusals that already name their one obstacle, and official notices that already keep their dates and rules.
 - The rest are labels: real names (practices, pharmacies, therapists, programs) and calendar or ledger lines.
@@ -268,3 +268,63 @@ How they were changed:
   gone, and Pay It Off with no checking account and with nothing entered.
 - The notices in the scenario saves keep the words of the day they were written. So the new notice words were read in
   the tests that play each case, which assert them whole, and in that render.
+
+## Batch 3: The World's Reference Data And The Engine's Own Messages
+
+**Sources (70, about 30,380 words):** `src/engine/content/world-data.ts` (4), `geography.ts` (61);
+`src/engine/core/invariants.ts` (1), `deciders.ts` (2), `rng.ts` (1), `performer.ts` (1). It's over the fifteen
+thousand words a batch takes, but nearly all of it is one source: `COUNTRY_TABLE`, `REGION_TABLE` and `CITY_TABLE`,
+each a GeoNames table kept as a single tab-separated string. A source can't be split, so it was read here, by the fields
+a screen shows.
+
+**Rewritten (3):** `geography.ts#city`, `#deriveCity` and `#loadCountryCities`.
+
+**Retained (67):**
+- **The gazetteer tables and the town counts,** read by the fields a screen shows:
+  - `place.tsx` shows a country's name, capital (by its town's own name), continent, population and area.
+  - It shows the currency name, title-cased (`titleCaseLabel`), and the calling code ("+44", or Not On File).
+  - It shows the languages through `languageNames`.
+  - The picker lists the towns and says "N towns and cities on record" (`LocationPicker.tsx`, `cityCount`).
+  - Every currency name the table holds was listed. All are GeoNames' and kept, but Cambodia's "Riels" (defects.md, 5).
+- **The 56 cities:** each named as the gazetteer spells it, with its time zone id, never shown, and its tags, which
+  make Home's place line.
+- **The continent names and the country aliases** a search matches.
+- **The developer-facing messages:**
+  - the ledger invariants, which only tests call (`grep -rn "breaches(" src` finds no caller outside it);
+  - the deciders' startup errors and the random pick's empty-list errors, both thrown to a developer.
+- **Actor and Actress,** the performer nouns a player chooses.
+
+**What changed:**
+- **The town list that can't be loaded** now says "you can only pick from the towns already listed" where it said "only
+  the towns already listed can be picked". It's still the creation picker's error, with the same way out.
+- **A city's note** had "administrative parentage" and "SLATE calibrations": jargon, and the word the glossary
+  replaces with "estimated".
+  - It now says "Its location, time zone, region and country are public reference data. Its costs are estimated."
+  - For a derived city: "… estimated from its country and its population, not looked up."
+  - No screen shows a city's note today (`grep -rn "\.note\b" src/ui` finds no city's), but the city carries it as the
+    record of where its figures come from. It was cheap and safe to bring into the glossary's words.
+
+**Meaning-sensitive changes:** none. The derived note's basis, country and population, is `deriveCity`'s own (it reads
+both).
+
+**Interactions read whole:**
+- **Creation's location picker:** the country list (the gazetteer's names), then a country's town count, then its towns
+  loading, then the error if they don't.
+- **A place's look:** its sentence, then its tags, then its facts tiles. The look is the frame area's.
+  - The tags read badly after "What it’s known for", where adjectives meet a noun frame.
+  - The sentence is the frame area's to change, and the suggestion is in defects.md, 6.
+
+**Tests and matchers updated:** none held these words (`grep` over `tests/` and `tools/`).
+
+**Examples:** three pairs, one for each rewrite. Every other source in the batch was kept for the reason recorded, so
+there are no more pairs that are true to make.
+
+**Checks:**
+- `npx eslint src/engine/content/geography.ts` and the render script: 0.
+- `text-inventory --check` 0, `tics --check` 0, `voice-check --check` 0, `label-sweep` 0, `title-case --check` 0,
+  `spelling` 0, `typos` 0, `doc-refs --check` 0, `deciders --check` 0, `npx vite-node tools/geo-check.mjs` 0.
+- `guide-quotes --check` 1, on the one papers quote from batch 2 alone.
+- The whole suite, the build and the text walk are below, under The Area's End.
+
+**Renders:** `care-after-2.txt` (render-care.ts) shows the town list's error, played with a failing fetch, and Los
+Angeles's and a derived city's notes.

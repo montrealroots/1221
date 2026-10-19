@@ -52,5 +52,9 @@
   Pay It Off: You have no checking account to pay it from.
   Pay It Off, nothing entered: Enter an amount to pay.
 
+===== A city’s note, calibrated (Los Angeles) and derived (the first derived city)
+  Los Angeles: Its location, time zone, region and country are public reference data. Its costs are estimated.
+  Shanghai: Its location, time zone, region and country are public reference data. Its costs are estimated from its country and its population, not looked up.
+
 ===== The city list for a country that can’t be loaded
-  This country’s full list of towns couldn’t be loaded, so for now only the towns already listed can be picked. Check your connection, then choose another country and come back to this one.
+  This country’s full list of towns couldn’t be loaded, so for now you can only pick from the towns already listed. Check your connection, then choose another country and come back to this one.

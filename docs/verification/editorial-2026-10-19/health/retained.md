@@ -55,3 +55,19 @@ can be judged as well as the rewrites. Every reason is in `docs/text/second-pass
 13. **`src/engine/systems/health.ts#hardshipRefusal`.** "None of the months it checked, December 2026, had a stay in
     hospital, the one hardship the game counts."
     - It names the months checked, what was missing, and that the game counts only that hardship.
+
+## Batch 3
+
+14. **`src/engine/content/world-data.ts#COUNTRY_TABLE`.** "gb GB United Kingdom London EU GBP … Pound 44 en-GB,cy-GB,gd".
+    - GeoNames' table as published.
+    - Cambodia's place look reads its fields as "The capital is Phnom Penh", the currency title-cased, a calling code
+      of "+855" and the languages by name.
+    - Each is a real fact kept exact, and the file is generated, not edited. Cambodia's "Riels" is the exception, listed
+      in defects.md, 5.
+15. **`src/engine/content/geography.ts#CALIBRATED_CITIES [us-az-phoenix]`.** "Phoenix", "America/Phoenix", "no daylight
+    saving".
+    - The city's name as the gazetteer spells it, and its time zone id, never shown.
+    - A true tag, which Home's place line shows as "No Daylight Saving".
+    - The place look's sentence around the tags is another area's (defects.md, 6).
+16. **`src/engine/core/performer.ts#PERFORMER_NOUN`.** "Actor", "Actress".
+    - The word a player chooses at creation to be called, shown on the top bar and the last page of a life.

@@ -367,5 +367,32 @@
   "why": "Call It Off is pressed on an appointment the player can see, so “no such” read as an error in the game. The real case is a stale panel, so it says the appointment is gone.",
   "meaningSensitive": false,
   "verified": "care-after-2.txt (render-care.ts), Call It Off on an appointment that isn't booked"
+ },
+ {
+  "source": "src/engine/content/geography.ts#loadCountryCities",
+  "kind": "error",
+  "before": "This country’s full list of towns couldn’t be loaded, so for now only the towns already listed can be picked. Check your connection, then choose another country and come back to this one.",
+  "after": "This country’s full list of towns couldn’t be loaded, so for now you can only pick from the towns already listed. Check your connection, then choose another country and come back to this one.",
+  "why": "The passive “can be picked” is now active, with the player as subject. The failure and the way out stay as they were.",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), the town list with a failing fetch"
+ },
+ {
+  "source": "src/engine/content/geography.ts#city",
+  "kind": "other",
+  "before": "Location, time zone and administrative parentage are public reference data. Cost figures are SLATE calibrations.",
+  "after": "Its location, time zone, region and country are public reference data. Its costs are estimated.",
+  "why": "“Administrative parentage” was jargon, and “SLATE calibrations” is what the glossary's “estimated” replaces. No screen shows a city's note today, but it's the city's own record of where its figures come from.",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), Los Angeles's note"
+ },
+ {
+  "source": "src/engine/content/geography.ts#deriveCity",
+  "kind": "other",
+  "before": "Location, time zone and administrative parentage are public reference data. The cost figures are derived from the country and the population, not looked up.",
+  "after": "Its location, time zone, region and country are public reference data. Its costs are estimated from its country and its population, not looked up.",
+  "why": "The same two fixes, and “derived” said as estimated, the glossary's word. The basis, country and population, is kept (deriveCity reads both).",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), the first derived city's note"
  }
 ]

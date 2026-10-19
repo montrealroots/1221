@@ -62,6 +62,433 @@
   "reason": "The self-pay price lines as each provider labels them, the Bupa private GP and the Farmacias Similares consulta among them, in their own words.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ae-du-dubai]": {
+  "status": "Retained",
+  "hash": "78ef136f5db4",
+  "on": "2026-10-19",
+  "reason": "Dubai as the gazetteer spells it, the name a player picks and reads on every screen; Asia/Dubai is its time zone id, never shown; its tags (no income tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [au-nsw-sydney]": {
+  "status": "Retained",
+  "hash": "802445c51d59",
+  "on": "2026-10-19",
+  "reason": "Sydney as the gazetteer spells it, the name a player picks and reads on every screen; Australia/Sydney is its time zone id, never shown; its tags (southern hemisphere, production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [au-qld-goldcoast]": {
+  "status": "Retained",
+  "hash": "863cd8243326",
+  "on": "2026-10-19",
+  "reason": "Gold Coast as the gazetteer spells it, the name a player picks and reads on every screen; Australia/Brisbane is its time zone id, never shown; its tags (no daylight saving) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [au-vic-melbourne]": {
+  "status": "Retained",
+  "hash": "589994e65eed",
+  "on": "2026-10-19",
+  "reason": "Melbourne as the gazetteer spells it, the name a player picks and reads on every screen; Australia/Melbourne is its time zone id, never shown; its tags (southern hemisphere) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ca-bc-vancouver]": {
+  "status": "Retained",
+  "hash": "7a56c4ba83e4",
+  "on": "2026-10-19",
+  "reason": "Vancouver as the gazetteer spells it, the name a player picks and reads on every screen; America/Vancouver is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ca-on-toronto]": {
+  "status": "Retained",
+  "hash": "63955c831bca",
+  "on": "2026-10-19",
+  "reason": "Toronto as the gazetteer spells it, the name a player picks and reads on every screen; America/Toronto is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ca-qc-montreal]": {
+  "status": "Retained",
+  "hash": "9dc614466063",
+  "on": "2026-10-19",
+  "reason": "Montreal as the gazetteer spells it, the name a player picks and reads on every screen; America/Toronto is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [de-be-berlin]": {
+  "status": "Retained",
+  "hash": "ad37e977ec6d",
+  "on": "2026-10-19",
+  "reason": "Berlin as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Berlin is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [es-cat-barcelona]": {
+  "status": "Retained",
+  "hash": "c65d2f401162",
+  "on": "2026-10-19",
+  "reason": "Barcelona as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Madrid is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [es-md-madrid]": {
+  "status": "Retained",
+  "hash": "87ef567d99e4",
+  "on": "2026-10-19",
+  "reason": "Madrid as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Madrid is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [fr-idf-paris]": {
+  "status": "Retained",
+  "hash": "427d53b78164",
+  "on": "2026-10-19",
+  "reason": "Paris as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Paris is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [fr-paca-cannes]": {
+  "status": "Retained",
+  "hash": "a2d0b4b955e1",
+  "on": "2026-10-19",
+  "reason": "Cannes as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Paris is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ie-lei-dublin]": {
+  "status": "Retained",
+  "hash": "3055f4136418",
+  "on": "2026-10-19",
+  "reason": "Dublin as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Dublin is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [it-laz-rome]": {
+  "status": "Retained",
+  "hash": "f1d9b269641e",
+  "on": "2026-10-19",
+  "reason": "Rome as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Rome is its time zone id, never shown; its tags (historic studios) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [jp-13-tokyo]": {
+  "status": "Retained",
+  "hash": "e7e415c408dc",
+  "on": "2026-10-19",
+  "reason": "Tokyo as the gazetteer spells it, the name a player picks and reads on every screen; Asia/Tokyo is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [kr-11-seoul]": {
+  "status": "Retained",
+  "hash": "ea75c8b413e7",
+  "on": "2026-10-19",
+  "reason": "Seoul as the gazetteer spells it, the name a player picks and reads on every screen; Asia/Seoul is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [mx-cmx-mexicocity]": {
+  "status": "Retained",
+  "hash": "e913362a1212",
+  "on": "2026-10-19",
+  "reason": "Mexico City as the gazetteer spells it, the name a player picks and reads on every screen; America/Mexico_City is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [nz-akl-auckland]": {
+  "status": "Retained",
+  "hash": "9e21454132ef",
+  "on": "2026-10-19",
+  "reason": "Auckland as the gazetteer spells it, the name a player picks and reads on every screen; Pacific/Auckland is its time zone id, never shown; its tags (southern hemisphere) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [nz-wgn-wellington]": {
+  "status": "Retained",
+  "hash": "49f67bad2c82",
+  "on": "2026-10-19",
+  "reason": "Wellington as the gazetteer spells it, the name a player picks and reads on every screen; Pacific/Auckland is its time zone id, never shown; its tags (southern hemisphere) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [uk-eng-london]": {
+  "status": "Retained",
+  "hash": "f812b14374bf",
+  "on": "2026-10-19",
+  "reason": "London as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [uk-eng-manchester]": {
+  "status": "Retained",
+  "hash": "90fd5330f349",
+  "on": "2026-10-19",
+  "reason": "Manchester as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [uk-sct-glasgow]": {
+  "status": "Retained",
+  "hash": "4adc4ae90b5a",
+  "on": "2026-10-19",
+  "reason": "Glasgow as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-az-phoenix]": {
+  "status": "Retained",
+  "hash": "1f6218fc4251",
+  "on": "2026-10-19",
+  "reason": "Phoenix as the gazetteer spells it, the name a player picks and reads on every screen; America/Phoenix is its time zone id, never shown; its tags (no daylight saving) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-burbank]": {
+  "status": "Retained",
+  "hash": "8c52466a1683",
+  "on": "2026-10-19",
+  "reason": "Burbank as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-losangeles]": {
+  "status": "Retained",
+  "hash": "27a5ce5ba988",
+  "on": "2026-10-19",
+  "reason": "Los Angeles as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown; its tags (entertainment capital) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-sandiego]": {
+  "status": "Retained",
+  "hash": "ef56739d684d",
+  "on": "2026-10-19",
+  "reason": "San Diego as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-sanfrancisco]": {
+  "status": "Retained",
+  "hash": "11b195109b82",
+  "on": "2026-10-19",
+  "reason": "San Francisco as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-santamonica]": {
+  "status": "Retained",
+  "hash": "793137138e12",
+  "on": "2026-10-19",
+  "reason": "Santa Monica as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-co-denver]": {
+  "status": "Retained",
+  "hash": "0cbd6f149847",
+  "on": "2026-10-19",
+  "reason": "Denver as the gazetteer spells it, the name a player picks and reads on every screen; America/Denver is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-fl-miami]": {
+  "status": "Retained",
+  "hash": "450d20777146",
+  "on": "2026-10-19",
+  "reason": "Miami as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ga-atlanta]": {
+  "status": "Retained",
+  "hash": "9670cd0c6a0f",
+  "on": "2026-10-19",
+  "reason": "Atlanta as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-hi-honolulu]": {
+  "status": "Retained",
+  "hash": "58a096876f2e",
+  "on": "2026-10-19",
+  "reason": "Honolulu as the gazetteer spells it, the name a player picks and reads on every screen; Pacific/Honolulu is its time zone id, never shown; its tags (no daylight saving) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-il-chicago]": {
+  "status": "Retained",
+  "hash": "aecc81b8cb48",
+  "on": "2026-10-19",
+  "reason": "Chicago as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-la-neworleans]": {
+  "status": "Retained",
+  "hash": "bec506eeb2cc",
+  "on": "2026-10-19",
+  "reason": "New Orleans as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ma-boston]": {
+  "status": "Retained",
+  "hash": "4c9b2ddf7f23",
+  "on": "2026-10-19",
+  "reason": "Boston as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-nc-wilmington]": {
+  "status": "Retained",
+  "hash": "465f799ec02f",
+  "on": "2026-10-19",
+  "reason": "Wilmington as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-nm-santafe]": {
+  "status": "Retained",
+  "hash": "5f71b838960a",
+  "on": "2026-10-19",
+  "reason": "Santa Fe as the gazetteer spells it, the name a player picks and reads on every screen; America/Denver is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-nv-lasvegas]": {
+  "status": "Retained",
+  "hash": "63577627c8f2",
+  "on": "2026-10-19",
+  "reason": "Las Vegas as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown; its tags (no state income tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ny-newyork]": {
+  "status": "Retained",
+  "hash": "37ee498a8260",
+  "on": "2026-10-19",
+  "reason": "New York as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown; Manhattan is its other name a search matches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-or-portland]": {
+  "status": "Retained",
+  "hash": "0f3ed5ce06ee",
+  "on": "2026-10-19",
+  "reason": "Portland as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown; its tags (no sales tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-tn-nashville]": {
+  "status": "Retained",
+  "hash": "f6d765d80be7",
+  "on": "2026-10-19",
+  "reason": "Nashville as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown; its tags (no state income tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-tx-austin]": {
+  "status": "Retained",
+  "hash": "1da860ff03d6",
+  "on": "2026-10-19",
+  "reason": "Austin as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-tx-dallas]": {
+  "status": "Retained",
+  "hash": "f085597b5c1a",
+  "on": "2026-10-19",
+  "reason": "Dallas as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-wa-seattle]": {
+  "status": "Retained",
+  "hash": "4133e3dffc05",
+  "on": "2026-10-19",
+  "reason": "Seattle as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown; its tags (no state income tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#city": {
+  "status": "Rewritten",
+  "hash": "6dc3b5e7f7ae",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/care-after-2.txt, rendered by render-care.ts: Los Angeles's note",
+  "first": "Pending"
+ },
+ "src/engine/content/geography.ts#CONTINENT_NAMES": {
+  "status": "Retained",
+  "hash": "5c133ac08f8c",
+  "on": "2026-10-19",
+  "reason": "The seven continents by their everyday English names, which the place look shows under a country's capital.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#COUNTRY_ALIASES": {
+  "status": "Retained",
+  "hash": "1c1d8cb108f2",
+  "on": "2026-10-19",
+  "reason": "Other names a player may type for a country, Britain, Holland, DR Congo, matched to the gazetteer's own name and never shown in place of it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#deriveCity": {
+  "status": "Rewritten",
+  "hash": "3c41279586aa",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/care-after-2.txt, rendered by render-care.ts: the first derived city's note",
+  "first": "Pending"
+ },
+ "src/engine/content/geography.ts#loadCountryCities": {
+  "status": "Rewritten",
+  "hash": "414c275aa7ac",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/care-after-2.txt, rendered by render-care.ts: the town list for a country that can't be loaded, played with a failing fetch",
+  "first": "Pending"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [ca-02-sechelt]": {
+  "status": "Retained",
+  "hash": "e43e53b2e477",
+  "on": "2026-10-19",
+  "reason": "Sechelt as the gazetteer spells it, the name a player picks and reads on every screen; America/Vancouver is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [ca-02-victoria]": {
+  "status": "Retained",
+  "hash": "a0ee54a616b2",
+  "on": "2026-10-19",
+  "reason": "Victoria as the gazetteer spells it, the name a player picks and reads on every screen; America/Vancouver is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [ca-08-millbrook]": {
+  "status": "Retained",
+  "hash": "bb1337e6fc6d",
+  "on": "2026-10-19",
+  "reason": "Millbrook as the gazetteer spells it, the name a player picks and reads on every screen; America/Toronto is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [ie-l-naas]": {
+  "status": "Retained",
+  "hash": "a507a60a5210",
+  "on": "2026-10-19",
+  "reason": "Naas as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Dublin is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [is-39-mosfellsbr]": {
+  "status": "Retained",
+  "hash": "f68ba755401d",
+  "on": "2026-10-19",
+  "reason": "Mosfellsbær as the gazetteer spells it, the name a player picks and reads on every screen; Atlantic/Reykjavik is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [mx-15-toluca]": {
+  "status": "Retained",
+  "hash": "ccf8a4da4926",
+  "on": "2026-10-19",
+  "reason": "Toluca as the gazetteer spells it, the name a player picks and reads on every screen; America/Mexico_City is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [uk-nir-belfast]": {
+  "status": "Retained",
+  "hash": "06492dc80a49",
+  "on": "2026-10-19",
+  "reason": "Belfast as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [uk-sct-edinburgh]": {
+  "status": "Retained",
+  "hash": "4d92aa0b60ec",
+  "on": "2026-10-19",
+  "reason": "Edinburgh as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [us-ca-bakersfield]": {
+  "status": "Retained",
+  "hash": "474c832c696b",
+  "on": "2026-10-19",
+  "reason": "Bakersfield as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [us-ct-litchfield]": {
+  "status": "Retained",
+  "hash": "5426a85d77d7",
+  "on": "2026-10-19",
+  "reason": "Litchfield as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [us-ct-newhaven]": {
+  "status": "Retained",
+  "hash": "2f8c5cc7487b",
+  "on": "2026-10-19",
+  "reason": "New Haven as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [us-ny-hudson]": {
+  "status": "Retained",
+  "hash": "181cee9dc95c",
+  "on": "2026-10-19",
+  "reason": "Hudson as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/content/guide/body.ts#BODY [body.how]": {
   "status": "Rewritten",
   "hash": "2af175939757",
@@ -131,6 +558,69 @@
   "on": "2026-10-19",
   "reason": "Each age band's line follows the fitness figure and says, in plain everyday words, what age does to training and to a night's rest at that age, true to the band's own rates.",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/content/world-data.ts#CITY_COUNTS": {
+  "status": "Retained",
+  "hash": "49f2f2284c40",
+  "on": "2026-10-19",
+  "reason": "How many towns each country's list holds, which the location picker says as a figure, N towns and cities on record, counted from the published gazetteer.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/world-data.ts#CITY_TABLE": {
+  "status": "Retained",
+  "hash": "ac28fbafc3e3",
+  "on": "2026-10-19",
+  "reason": "GeoNames' largest towns by their own names, with coordinates, time zone and population, which the picker lists and the place look describes, each spelled as its country does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/world-data.ts#COUNTRY_TABLE": {
+  "status": "Retained",
+  "hash": "308fc8f9c0e6",
+  "on": "2026-10-19",
+  "reason": "GeoNames' country table as published: the place look shows a country's name, capital, currency name, calling code, languages by name, population and area, each a real fact kept exact.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/world-data.ts#REGION_TABLE": {
+  "status": "Retained",
+  "hash": "108cc8f9bc61",
+  "on": "2026-10-19",
+  "reason": "GeoNames' first-level regions by their own names and codes, as each country names its states and provinces, shown as a town's region in the picker and the place look.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/deciders.ts#defineDecider": {
+  "status": "Retained",
+  "hash": "643f6ab04c96",
+  "on": "2026-10-19",
+  "reason": "Errors a developer sees at startup when two deciders share a name or one reads nothing, never shown to a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/deciders.ts#sweepOne": {
+  "status": "Retained",
+  "hash": "8870b7906b5c",
+  "on": "2026-10-19",
+  "reason": "An error a developer sees when a decider reads a field it didn't declare, raised in the deciders check and never on a player's screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/invariants.ts#breaches": {
+  "status": "Retained",
+  "hash": "c9bee3613c2e",
+  "on": "2026-10-19",
+  "reason": "Ledger and schedule faults named for a developer's test failure, posting not whole cents and the rest, which no screen shows a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/performer.ts#PERFORMER_NOUN": {
+  "status": "Retained",
+  "hash": "628580f0ff5c",
+  "on": "2026-10-19",
+  "reason": "The two words a player chooses at creation to be called, Actor or Actress, shown on the top bar and the last page of a life.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/rng.ts#makeRng": {
+  "status": "Retained",
+  "hash": "a3e645ce7c54",
+  "on": "2026-10-19",
+  "reason": "Two programming errors for a random pick from an empty list, thrown to a developer's console and never shown to a player.",
+  "first": "Reviewed And Retained"
  },
  "src/engine/systems/appointments.ts#bookIn": {
   "status": "Blocked",
