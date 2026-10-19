@@ -134,7 +134,7 @@ const ES_TERM: Term = { rate: 0.0202, months: 12, called: 'Depósito a plazo fij
 export const LENDING: Readonly<Record<string, Lending>> = {
   // --- United States
   'us-chase': {
-    overdraft: { kind: 'per_item', fee: 34_00, maxPerDay: 3, graceUpTo: 50_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 5_00, ties: 'high', source: 'chase.com standard overdraft practice; Chase Debit Card Coverage, opted into or not; Chase Overdraft Assist, chase.com overdraft FAQs: no fee overdrawn by $50 or less at the end of the business day, or brought back to that by 11 PM ET the next business day; Chase Deposit Account Agreement eff. June 14, 2026: no fee on an item of $5 or less, debits posted by time, ties highest first' },
+    overdraft: { kind: 'per_item', fee: 34_00, maxPerDay: 3, graceUpTo: 50_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 5_00, ties: 'high', source: 'chase.com standard overdraft practice; Chase Debit Card Coverage, opted into or not; Chase Overdraft Assist, chase.com overdraft FAQs: no fee overdrawn by $50 or less at the end of the business day, or brought back to that by 11 PM ET the next business day; Chase Deposit Account Agreement effective June 14, 2026: no fee on an item of $5 or less, debits posted by time, ties highest first' },
     term: { rate: 0.035, months: 7, called: 'CD', source: 'Chase 7-month CD, via fortune.com, September 24, 2026' },
   },
   'us-bank-of-america': {
@@ -142,7 +142,7 @@ export const LENDING: Readonly<Record<string, Lending>> = {
     term: { rate: 0.0375, months: 7, called: 'CD', source: 'Bank of America 7-month CD, via fortune.com, September 24, 2026' },
   },
   'us-wells-fargo': {
-    overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 10_00, ties: 'low', source: 'wellsfargo.com overdraft services; Debit Card Overdraft Service, opted into or not; Extra Day Grace Period: no fees if the balance is back by 11:59 PM ET the next business day; Wells Fargo Deposit Account Agreement eff. July 28, 2026: no fee on an item of $10 or less, items posted by time, ties lowest first' },
+    overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 10_00, ties: 'low', source: 'wellsfargo.com overdraft services; Debit Card Overdraft Service, opted into or not; Extra Day Grace Period: no fees if the balance is back by 11:59 PM ET the next business day; Wells Fargo Deposit Account Agreement effective July 28, 2026: no fee on an item of $10 or less, items posted by time, ties lowest first' },
     loan: { from: 0.0674, to: 0.2674, minAmount: 3_000_00, maxAmount: 100_000_00, minMonths: 12, maxMonths: 84, customerMonths: 12, source: 'wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (read October 10, 2026)' },
     term: { rate: 0.0389, months: 11, called: 'CD', source: 'Wells Fargo 11-month CD, via fortune.com, September 24, 2026' },
   },
@@ -235,7 +235,7 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   // --- France
   'fr-bnp-paribas': {
-    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.184, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; 18.40% past an arranged overdraft, or with none (15.90% and 2.50 more), via changer-la-banque.com' },
+    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.184, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; 18.40% past an arranged overdraft, or with none (15.90% plus 2.50 points), via changer-la-banque.com' },
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-societe-generale': {
@@ -367,7 +367,7 @@ export const SWITCHING: Readonly<Record<string, { workingDays: number; scheme: s
   IE: { workingDays: 10, scheme: 'Switching Code', source: 'Central Bank of Ireland, Code of Conduct on the Switching of Payment Accounts (2016): the new account active within 10 working days of the switch date' },
   DE: { workingDays: 12, scheme: 'Kontowechselhilfe', source: 'Zahlungskontengesetz §§ 20–26: 2, 5 and 5 business days, 12 in all' },
   FR: { workingDays: 22, scheme: 'mobilité bancaire', source: 'service-public.gouv.fr F33881, Code monétaire et financier L312-1-7: 22 working days from the signed mandate, free' },
-  ES: { workingDays: 13, scheme: 'traslado de cuentas de pago', source: 'Real Decreto-ley 19/2017, art. 13: 2 and 5 business days, then a switch date at least 6 later; 13 is the steps added up, not a single stated limit' },
-  IS: { workingDays: 12, scheme: 'account switching under Act 5/2023', source: 'Act 5/2023, transposing Directive 2014/92/EU (in the EEA by Joint Committee Decision 171/2021): 2, 5 and 5 business days; read through a translation, and 12 is the steps added up' },
+  ES: { workingDays: 13, scheme: 'traslado de cuentas de pago', source: 'Real Decreto-ley 19/2017, art. 13: 2 and 5 business days, then a switch date at least 6 later; the game’s 13 adds the steps up, as the law states no single limit' },
+  IS: { workingDays: 12, scheme: 'account-switching service of Act 5/2023', source: 'Act 5/2023, transposing Directive 2014/92/EU (in the EEA by Joint Committee Decision 171/2021): 2, 5 and 5 business days, read through a translation; the game’s 12 adds the steps up' },
   NZ: { workingDays: 5, scheme: 'NZBA switching process', source: 'New Zealand Bankers\' Association: an account switched in 5 working days; no formal code was found' },
 };

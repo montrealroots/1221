@@ -1,0 +1,14 @@
+node tools/title-case.mjs --check => exit=0
+node tools/label-sweep.mjs => exit=0
+node tools/plural-check.mjs => exit=0
+node tools/voice-check.mjs --check => exit=0
+node tools/tics.mjs --check => exit=0
+node tools/spelling.mjs => exit=0
+node tools/typos.mjs => exit=0
+node tools/text-inventory.mjs --check => exit=0
+all: 4153 sources, 35634 strings, 559042 words, 332 engine-speak hits; second pass: Rewritten 28, Retained 97, Pending 4028, Blocked 0; first pass: Rewritten And Verified 1265, Reviewed And Retained 2859, Pending 29, Blocked 0
+The text inventory holds.
+node tools/doc-refs.mjs --check => exit=0
+node tools/deciders.mjs --check => exit=0
+node tools/guide-quotes.mjs --check => exit=0
+node tools/research-dates.mjs => exit=0

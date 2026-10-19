@@ -268,5 +268,86 @@
   "why": "The fee guide's address then a bare day read as the guide's date; it's the day it was read.",
   "meaningSensitive": false,
   "verified": "read on Payments And Cash, rendered/cash.txt; tests/language-data-dates.test.ts holds it to /, read September 26, 2026$/ and to the screen"
+ },
+ {
+  "source": "src/engine/content/banks-thirteen.ts (us-wells-fargo.current.source)",
+  "kind": "label",
+  "before": "$5,000 in linked Wells Fargo accounts (kept here as an average), or ages 17 to 24; the military direct-deposit waiver has no one to apply to'",
+  "after": "$5,000 in linked Wells Fargo accounts (the game takes it as an average), or ages 17 to 24; the military direct-deposit waiver applies to no one in the game'",
+  "why": "\"(kept here as an average)\" and \"has no one to apply to\" were the research speaking about the game. Both say what the game does: it takes the linked balance as an average, and the military waiver applies to no one in it.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/accounts.txt, Wells Fargo’s Everyday Checking under Sources And Estimates; waiver.linkedAverageAtLeast in the data is the average"
+ },
+ {
+  "source": "src/engine/content/banks-thirteen.ts (ca-cibc.savings.source)",
+  "kind": "label",
+  "before": "0.30% up to $99,999.99 and 0.60% from $100,000, applied here to the whole balance at its tier; the 4.60% three-month bonus and the Smart Interest top-up not modeled'",
+  "after": "0.30% up to $99,999.99 and 0.60% from $100,000, which the game applies to the whole balance at its tier; it leaves out the 4.60% three-month bonus and the Smart Interest top-up'",
+  "why": "\"applied here … not modeled\" said as the game's: it applies the tier's rate to the whole balance and leaves out the bonus and top-up.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/accounts.txt, CIBC; tiers: [{ from: 100_000_00, rate: 0.006 }] in the data applies to the whole balance"
+ },
+ {
+  "source": "src/engine/content/banks-thirteen.ts (fr-societe-generale.current.source)",
+  "kind": "label",
+  "before": "(€2.55 a month here)",
+  "after": "(€2.55 a month in the game)",
+  "why": "\"(€2.55 a month here)\" left the player to guess where \"here\" was. It's the game's monthly share of a quarterly fee, and says so.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/accounts.txt, SG; monthlyFee 2_55 is €7.65 / 3"
+ },
+ {
+  "source": "src/engine/content/banks-thirteen.ts (is-landsbankinn.current.source)",
+  "kind": "label",
+  "before": "the current account pays 0.50%; fees not found'",
+  "after": "the checking account pays 0.50%; no fees were found'",
+  "why": "\"the current account\" in the game's own words is the glossary's checking account from this brief; \"fees not found\" became a sentence.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/accounts.txt, Landsbankinn"
+ },
+ {
+  "source": "src/engine/content/banks-thirteen.ts (kr-hana.current.source)",
+  "kind": "label",
+  "before": "0.10% base; up to 1.90% on ₩2 million with salary, not modeled'",
+  "after": "0.10% base; the game leaves out the up to 1.90% on ₩2 million with a salary'",
+  "why": "\"not modeled\" at the end of a clause said as what the game leaves out.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/accounts.txt, Hana Bank"
+ },
+ {
+  "source": "src/engine/content/banks-lending.ts (SWITCHING.IS.scheme)",
+  "kind": "label",
+  "before": "scheme: 'account switching under Act 5/2023'",
+  "after": "scheme: 'account-switching service of Act 5/2023'",
+  "why": "The screen prints it after \"Through the\" and \"The\": \"Through the account switching under Act 5/2023\" didn't read as the name of anything. It names a service now.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/lending.txt and rendered/moves.txt, Arion: \"Through the account-switching service of Act 5/2023: 12 working days, …\""
+ },
+ {
+  "source": "src/engine/content/banks-lending.ts (SWITCHING.ES.source)",
+  "kind": "label",
+  "before": "then a switch date at least 6 later; 13 is the steps added up, not a single stated limit'",
+  "after": "then a switch date at least 6 later; the game’s 13 adds the steps up, as the law states no single limit'",
+  "why": "\"13 is the steps added up, not a single stated limit\" said as the game's figure and why: the law gives the steps, not a total.",
+  "meaningSensitive": true,
+  "verified": "read on rendered/lending.txt, Santander (Spain); workingDays: 13 is 2 + 5 + 6"
+ },
+ {
+  "source": "src/engine/content/banks-lending.ts (fr-bnp-paribas.overdraft.source)",
+  "kind": "label",
+  "before": "or with none (15.90% and 2.50 more)",
+  "after": "or with none (15.90% plus 2.50 points)",
+  "why": "\"15.90% and 2.50 more\" left \"more\" without a unit: it's percentage points.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/lending.txt, BNP Paribas"
+ },
+ {
+  "source": "src/engine/content/bankopening.ts (TRANSFERS.GB.source)",
+  "kind": "label",
+  "before": "A fraud hold of up to four business days (2024) isn\\'t kept'",
+  "after": "The game leaves out a fraud hold of up to four business days (2024)'",
+  "why": "\"… isn't kept\" is the research's phrase for what the game leaves out, and says so now.",
+  "meaningSensitive": false,
+  "verified": "read on rendered/moves.txt, a British bank’s Sources And Estimates"
  }
 ]

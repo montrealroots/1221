@@ -292,3 +292,81 @@ bank on hold: the hold sentence and the bank's words after it. Payments And Cash
 
 Statements, the card with a payment hold, and Payments And Cash at all 60 banks (`rendered/statements.txt`,
 `rendered/card.txt`, `rendered/cash.txt`).
+
+## Batch 4: `content/banks-thirteen.ts` (63 sources), `banks-lending.ts` (52) and `bankopening.ts` (2)
+
+### What the screen shows
+
+- **The Accounts tab** (`ui/workspaces/BankWorkspace.tsx`): each product's name, and its source as "Source: <source>,
+  <the day>." under Sources And Estimates; the bank's other charges (`OtherCharges`: the debit card's yearly fee, a
+  returned payment, an unused account and a quiet month, each with "Source: …"); Iceland's interest-tax note ("… It's
+  paid here on June 1."); each country's interest-tax source. The other countries' interest-tax notes aren't shown
+  (`OtherCharges` prints a note only where the tax comes back, which is Iceland).
+- **Borrowing** (`ui/bank/BankLending.tsx`): each overdraft's, loan's and term deposit's source; a term deposit's name
+  (`called`) as the panel's title; Citi's and Capital One's `overdraft` sentence where there are no terms; the
+  switching service's name ("Through the <scheme>: …") and source.
+- **Opening at another bank** (`ui/bank/BankMoves.tsx`): the opening rules' and the transfers' sources, and the
+  switching service's name.
+- `NOT_FOUND`, "no published rate found", is a product's source where no rate was found, and the Accounts tab reads it
+  back (`/no published rate/i.test(product.source)`), so it's a key.
+
+### What changed and what stayed
+
+Most of these are citations: the page read and what it gives, in the bank's own units (APY, AER, EAR, TIN, TAEG), at
+the foot of a panel. They stay. 27 edits changed what the research had said about the game inside them, in its own
+words ("not modeled", "kept here as an average", "(€2.55 a month here)", "has no one to apply to", "isn't kept",
+"applied here"), into the glossary's: "the game leaves out …", "(… a month in the game)", "the game takes it as an
+average". Besides:
+- **"eff."** spelled out;
+- **"2.50 more"** given its unit, percentage points;
+- **"the current account"** in the game's own words is the checking account; and
+- **Iceland's switching scheme**, printed after "Through the", is named as a service: "the account-switching service of
+  Act 5/2023".
+
+Kept, by country, with reasons in the status: every bank's product names, as the banks spell them, and the source
+lines that are already plain citations. The 12 market averages (`FR_LOAN` … `ES_TERM`) and the lending lines each name
+whose figure they are.
+
+### Meaning-sensitive changes, and how each was checked
+
+- **"In the game" for a monthly share:** each "(… a month in the game)" is the data's `monthlyFee` for a fee charged
+  by the quarter, half-year or year: SG €7.65/3 = €2.55, LCL €10/3 = €3.33, Crédit Agricole €18/12 = €1.50, La Banque
+  Postale €25.20/12 = €2.10, CaixaBank €60/3 = €20, Bankinter €22.50/6 = €3.75.
+- **Commerzbank's** "(in the game, €50,000 in the account)" is its `waiver.balanceAtLeast: 50_000_00`. **Wells
+  Fargo's** average is `linkedAverageAtLeast`. **NatWest's** 1.25% on all of it is its `rate: 0.0125` with no tiers.
+  **CIBC's** whole-balance tier is its `tiers`.
+- **Spain's 13 working days** are 2 + 5 + 6, the law's steps; **Iceland's 12** are 2 + 5 + 5.
+- **Iceland's scheme name** is read only to be printed (`grep -rn "\.scheme"` in src: BankLending.tsx and
+  BankMoves.tsx), never compared.
+- No number moved: `apply-text.mjs` changes string literals only, and each edit's old text had to be found once.
+
+### Interactions read whole
+
+The Accounts tab at each bank: each account's balance, rate sentence and fee sentence, then its Sources And Estimates;
+Open An Account At Another Bank, with what the new bank needs and how long money takes, then its sources; Borrowing,
+with the overdraft's terms, the loan and the term deposit, then their sources; the switching service and its days
+(`rendered/accounts.txt`, `rendered/lending.txt`, `rendered/moves.txt`).
+
+### Tests and tool matchers
+
+None held these words.
+
+### Checks
+
+- `npx tsc -b --noEmit`: exit 0 (`b4-tsc.txt`). `npx eslint` on the changed files: exit 0 (`b4-eslint.txt`).
+- `npx vitest run` on the 29 test files that touch the three files, Borrowing, opening or switching: 392 of 392, exit 0
+  (`b4-tests.txt`).
+- The text checks: exit 0 each (`b4-checks.txt`). Engine-speak stayed at 332.
+
+### Screens verified
+
+The Accounts tab, Borrowing and opening at another bank, at all 60 banks (`rendered/accounts.txt`,
+`rendered/lending.txt`, `rendered/moves.txt`).
+
+### How the statuses were marked
+
+`mark.mjs` runs `tools/text-inventory.mjs --mark2` once for each entry of `b4-marks.mjs`, in order: each country's
+banks Retained by a pattern, with a reason naming their products and what their source lines give, then each source
+the edits changed (found as the ones whose first pass had gone to Pending) marked Rewritten. A run takes about ten
+seconds on the shared machine, so a status for each of the 117 sources one by one would have taken twenty minutes; the
+reasons are written for the group they cover.

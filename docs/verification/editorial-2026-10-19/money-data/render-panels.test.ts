@@ -6,13 +6,14 @@
  * (comma separated) and BANKS the banks (all, or a comma-separated list); both default to all.
  */
 import { describe, it, vi } from 'vitest';
-import { createElement, type FunctionComponent } from 'react';
+import { createElement, type FunctionComponent, type ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
 import { THIRTEEN } from '@/engine/content/banks-thirteen';
+import { bankById } from '@/engine/content/banks';
 import { unclaimedLaw } from '@/engine/systems/accountlife';
 import { cardsOf, stateOf } from '@/engine/systems/credit';
 const BANKS = THIRTEEN.flatMap((c) => c.banks.map((b) => ({ id: b.id, iso: c.iso })));
@@ -47,17 +48,24 @@ const lifeAt = (bankId: string, iso: string): Simulation => iso === 'US'
   ? createSave(1, `md15-${bankId}`, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId })
   : quickSave({ startLocationId: CITY[iso], homeRegionId: CITY[iso], livesWhereBorn: true, wealth: 'comfortable', bankId }, `md15-${bankId}`);
 
-const PANELS: Record<string, () => Promise<FunctionComponent<{ bankId: string }>>> = {
-  security: async () => (await import('@/ui/bank/BankSecurity')).BankSecurity as FunctionComponent<{ bankId: string }>,
-  accountlife: async () => (await import('@/ui/bank/BankAccountLife')).BankAccountLife as FunctionComponent<{ bankId: string }>,
-  statements: async () => (await import('@/ui/bank/BankStatements')).BankStatements as FunctionComponent<{ bankId: string }>,
-  cash: async () => (await import('@/ui/bank/BankCash')).BankCash as FunctionComponent<{ bankId: string }>,
-  card: async () => (await import('@/ui/bank/BankCard')).BankCard as FunctionComponent<{ bankId: string }>,
+type Drawn = (bankId: string) => Promise<ReactElement>;
+const byBank = (load: () => Promise<FunctionComponent<{ bankId: string }>>): Drawn => async (bankId) => createElement(await load(), { bankId });
+const PANELS: Record<string, Drawn> = {
+  security: byBank(async () => (await import('@/ui/bank/BankSecurity')).BankSecurity as FunctionComponent<{ bankId: string }>),
+  accountlife: byBank(async () => (await import('@/ui/bank/BankAccountLife')).BankAccountLife as FunctionComponent<{ bankId: string }>),
+  statements: byBank(async () => (await import('@/ui/bank/BankStatements')).BankStatements as FunctionComponent<{ bankId: string }>),
+  cash: byBank(async () => (await import('@/ui/bank/BankCash')).BankCash as FunctionComponent<{ bankId: string }>),
+  card: byBank(async () => (await import('@/ui/bank/BankCard')).BankCard as FunctionComponent<{ bankId: string }>),
+  roundups: byBank(async () => (await import('@/ui/bank/RoundUps')).RoundUps as FunctionComponent<{ bankId: string }>),
+  // The Accounts tab as the workspace opens on it, the Borrowing and term deposit panels, and opening at another bank.
+  accounts: async () => createElement((await import('@/ui/workspaces/BankWorkspace')).BankWorkspace),
+  lending: async (bankId) => createElement((await import('@/ui/bank/BankLending')).BankLending, { bank: bankById(bankId)!, show: ['borrowing', 'term', 'switch'] }),
+  moves: async () => createElement((await import('@/ui/bank/BankMoves')).BankMoves),
 };
 
 describe('money-data render', () => {
   it('draws each panel at each bank', async () => {
-    const want = (process.env.RENDER ?? Object.keys(PANELS).join(',')).split(',');
+    const want = (process.env.RENDER ?? Object.keys(PANELS).join(',')).split(',').filter((p) => PANELS[p]);
     const banks = (process.env.BANKS ?? 'all') === 'all' ? BANKS.filter((b) => CITY[b.iso]) : BANKS.filter((b) => process.env.BANKS!.split(',').includes(b.id));
     const dir = 'docs/verification/editorial-2026-10-19/money-data/rendered';
     mkdirSync(dir, { recursive: true });
@@ -81,9 +89,8 @@ describe('money-data render', () => {
       }
       for (const p of want) {
         h.sim = sim;
-        const Panel = await PANELS[p]!();
         let words: string;
-        try { words = onScreen(renderToStaticMarkup(createElement(Panel, { bankId: bank.id }))); } catch (e) { words = `(threw: ${(e as Error).message})`; }
+        try { words = onScreen(renderToStaticMarkup(await PANELS[p]!(bank.id))); } catch (e) { words = `(threw: ${(e as Error).message})`; }
         out[p]!.push(`=== ${bank.id} (the life banks at ${held})\n${words}`);
       }
     }

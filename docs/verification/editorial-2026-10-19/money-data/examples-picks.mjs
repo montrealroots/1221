@@ -6,6 +6,15 @@ const PEND = { file: 'b3-pending-changes.json', sourceFile: 'src/engine/content/
 const CASHF = { file: 'b3-cash-changes.json', sourceFile: 'src/engine/content/cash.ts' };
 const SEEN3 = 'read on Statements, rendered/statements.txt (render-panels.test.ts)';
 const SEEN2 = 'read on Your Accounts Over Time with a term deposit and a dormant savings account, rendered/accountlife.txt (render-panels.test.ts)';
+import { readFileSync } from 'node:fs';
+
+/** A hand-kept file's change, by its key in the batch's change record: its before and after, verbatim. */
+const fromText = (changes, file, key) => {
+  const c = JSON.parse(readFileSync(new URL(changes, import.meta.url), 'utf8')).find((x) => x.file === file && x.key === key);
+  if (!c) throw new Error(`no change ${key} in ${changes}`);
+  return { source: `${file} (${key})`, before: c.before, after: c.after };
+};
+
 export const PICKS = [
   // Batch 1: security.ts
   { ...SEC, export: 'FRAUD_LAW', key: 'US', field: 'debitWords', kind: 'official', meaningSensitive: true,
@@ -102,4 +111,17 @@ export const PICKS = [
   { ...CASHF, export: 'CASH', key: 'us-chase', field: 'source', kind: 'label', meaningSensitive: false,
     why: 'The fee guide\'s address then a bare day read as the guide\'s date; it\'s the day it was read.',
     verified: 'read on Payments And Cash, rendered/cash.txt; tests/language-data-dates.test.ts holds it to /, read September 26, 2026$/ and to the screen' },
+
+  // Batch 4: banks-thirteen.ts, banks-lending.ts, bankopening.ts (hand-kept; picked by key from b4-banks-changes.json)
+  ...[
+    ['us-wells-fargo.current.source', 'src/engine/content/banks-thirteen.ts', true, '"(kept here as an average)" and "has no one to apply to" were the research speaking about the game. Both say what the game does: it takes the linked balance as an average, and the military waiver applies to no one in it.', 'rendered/accounts.txt, Wells Fargo’s Everyday Checking under Sources And Estimates; waiver.linkedAverageAtLeast in the data is the average'],
+    ['ca-cibc.savings.source', 'src/engine/content/banks-thirteen.ts', true, '"applied here … not modeled" said as the game\'s: it applies the tier\'s rate to the whole balance and leaves out the bonus and top-up.', 'rendered/accounts.txt, CIBC; tiers: [{ from: 100_000_00, rate: 0.006 }] in the data applies to the whole balance'],
+    ['fr-societe-generale.current.source', 'src/engine/content/banks-thirteen.ts', true, '"(€2.55 a month here)" left the player to guess where "here" was. It\'s the game\'s monthly share of a quarterly fee, and says so.', 'rendered/accounts.txt, SG; monthlyFee 2_55 is €7.65 / 3'],
+    ['is-landsbankinn.current.source', 'src/engine/content/banks-thirteen.ts', false, '"the current account" in the game\'s own words is the glossary\'s checking account from this brief; "fees not found" became a sentence.', 'rendered/accounts.txt, Landsbankinn'],
+    ['kr-hana.current.source', 'src/engine/content/banks-thirteen.ts', false, '"not modeled" at the end of a clause said as what the game leaves out.', 'rendered/accounts.txt, Hana Bank'],
+    ['SWITCHING.IS.scheme', 'src/engine/content/banks-lending.ts', false, 'The screen prints it after "Through the" and "The": "Through the account switching under Act 5/2023" didn\'t read as the name of anything. It names a service now.', 'rendered/lending.txt and rendered/moves.txt, Arion: "Through the account-switching service of Act 5/2023: 12 working days, …"'],
+    ['SWITCHING.ES.source', 'src/engine/content/banks-lending.ts', true, '"13 is the steps added up, not a single stated limit" said as the game\'s figure and why: the law gives the steps, not a total.', 'rendered/lending.txt, Santander (Spain); workingDays: 13 is 2 + 5 + 6'],
+    ['fr-bnp-paribas.overdraft.source', 'src/engine/content/banks-lending.ts', false, '"15.90% and 2.50 more" left "more" without a unit: it\'s percentage points.', 'rendered/lending.txt, BNP Paribas'],
+    ['TRANSFERS.GB.source', 'src/engine/content/bankopening.ts', false, '"… isn\'t kept" is the research\'s phrase for what the game leaves out, and says so now.', 'rendered/moves.txt, a British bank’s Sources And Estimates'],
+  ].map(([key, file, ms, why, seen]) => ({ ...fromText('b4-banks-changes.json', file, key), kind: 'label', meaningSensitive: ms, why, verified: `read on ${seen}` })),
 ];

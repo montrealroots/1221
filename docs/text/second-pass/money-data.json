@@ -13,6 +13,825 @@
   "evidence": "The unclaimed-money line drawn for each of the 13 countries by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accountlife.txt), with its claim-back sentence and the country's source line",
   "first": "Pending"
  },
+ "src/engine/content/bankopening.ts#OPENING": {
+  "status": "Rewritten",
+  "hash": "18be9441efce",
+  "on": "2026-10-19",
+  "evidence": "Open An Account At Another Bank drawn at each bank by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/moves.txt), its Sources And Estimates read",
+  "first": "Pending"
+ },
+ "src/engine/content/bankopening.ts#TRANSFERS": {
+  "status": "Rewritten",
+  "hash": "95534c011d72",
+  "on": "2026-10-19",
+  "evidence": "Open An Account At Another Bank drawn at each bank by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/moves.txt), its Sources And Estimates read",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-lending.ts#DE_LOAN": {
+  "status": "Retained",
+  "hash": "67709328dc8f",
+  "on": "2026-10-19",
+  "reason": "The market averages used where a country’s banks publish no loan rate: the Banque de France’s, the ECB’s and the Banco de España’s, each named with its month, so Borrowing says whose figure it is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#DE_TERM": {
+  "status": "Retained",
+  "hash": "6cfb3717b116",
+  "on": "2026-10-19",
+  "reason": "The market averages used where a country’s banks publish no term deposit rate, named as each country names the product (Dépôt à terme, Festgeld, Depósito a plazo fijo) with whose figure it is and its month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#ES_LOAN": {
+  "status": "Retained",
+  "hash": "8312ea1596b9",
+  "on": "2026-10-19",
+  "reason": "The market averages used where a country’s banks publish no loan rate: the Banque de France’s, the ECB’s and the Banco de España’s, each named with its month, so Borrowing says whose figure it is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#ES_TERM": {
+  "status": "Retained",
+  "hash": "b624232ff243",
+  "on": "2026-10-19",
+  "reason": "The market averages used where a country’s banks publish no term deposit rate, named as each country names the product (Dépôt à terme, Festgeld, Depósito a plazo fijo) with whose figure it is and its month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#FR_LOAN": {
+  "status": "Retained",
+  "hash": "ad00fdfa988e",
+  "on": "2026-10-19",
+  "reason": "The market averages used where a country’s banks publish no loan rate: the Banque de France’s, the ECB’s and the Banco de España’s, each named with its month, so Borrowing says whose figure it is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#FR_TERM": {
+  "status": "Retained",
+  "hash": "844176aa2e8d",
+  "on": "2026-10-19",
+  "reason": "The market averages used where a country’s banks publish no term deposit rate, named as each country names the product (Dépôt à terme, Festgeld, Depósito a plazo fijo) with whose figure it is and its month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .au-anz": {
+  "status": "Retained",
+  "hash": "bddd6a70d8ce",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .au-commbank": {
+  "status": "Retained",
+  "hash": "08d125aa0e75",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .au-nab": {
+  "status": "Retained",
+  "hash": "7d2e29602757",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .au-westpac": {
+  "status": "Retained",
+  "hash": "99093259542a",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .ca-bmo": {
+  "status": "Retained",
+  "hash": "8da70e36bc3c",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .ca-cibc": {
+  "status": "Retained",
+  "hash": "c640814a6cbf",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .ca-rbc": {
+  "status": "Retained",
+  "hash": "eaeade8ad51f",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .ca-scotiabank": {
+  "status": "Retained",
+  "hash": "a4872dd429eb",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .ca-td": {
+  "status": "Retained",
+  "hash": "686f34fc4623",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .de-deutsche-bank": {
+  "status": "Retained",
+  "hash": "2aa909c1c622",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .de-ing": {
+  "status": "Retained",
+  "hash": "6588b20d45fe",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .gb-barclays": {
+  "status": "Retained",
+  "hash": "9a2a01fcce37",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .gb-hsbc": {
+  "status": "Retained",
+  "hash": "1552d85902b1",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .gb-natwest": {
+  "status": "Retained",
+  "hash": "53caab095bfd",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .ie-aib": {
+  "status": "Retained",
+  "hash": "6d36031a56e7",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .ie-bank-of-ireland": {
+  "status": "Retained",
+  "hash": "46f57eff87c9",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .ie-ptsb": {
+  "status": "Retained",
+  "hash": "16fb5b7f4b39",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .is-arion": {
+  "status": "Retained",
+  "hash": "f176454af480",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .is-islandsbanki": {
+  "status": "Retained",
+  "hash": "7acd80bf8337",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .is-landsbankinn": {
+  "status": "Retained",
+  "hash": "f30745d765f1",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .jp-japan-post-bank": {
+  "status": "Retained",
+  "hash": "1f7e270a9002",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .jp-mizuho": {
+  "status": "Retained",
+  "hash": "e9780174864c",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .jp-mufg": {
+  "status": "Retained",
+  "hash": "0bbcc60575d0",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .jp-resona": {
+  "status": "Retained",
+  "hash": "cf556aa2993d",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .jp-smbc": {
+  "status": "Retained",
+  "hash": "45f9baf833fb",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .kr-hana": {
+  "status": "Retained",
+  "hash": "94b7026d43fe",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .kr-kakaobank": {
+  "status": "Retained",
+  "hash": "ab2045030901",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .kr-kb-kookmin": {
+  "status": "Retained",
+  "hash": "2382e6b8d90e",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .kr-nh": {
+  "status": "Retained",
+  "hash": "6a0b8c6b59da",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .kr-shinhan": {
+  "status": "Retained",
+  "hash": "41543a68d005",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .nz-anz": {
+  "status": "Retained",
+  "hash": "08e92208d7fa",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .nz-asb": {
+  "status": "Retained",
+  "hash": "08e92208d7fa",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .nz-bnz": {
+  "status": "Retained",
+  "hash": "8a0d03eaa6a0",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .nz-kiwibank": {
+  "status": "Retained",
+  "hash": "8a0d03eaa6a0",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .nz-westpac": {
+  "status": "Retained",
+  "hash": "08e92208d7fa",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .us-bank-of-america": {
+  "status": "Retained",
+  "hash": "047ba832c783",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .us-capital-one": {
+  "status": "Retained",
+  "hash": "9fd0daf7cfa5",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .us-chase": {
+  "status": "Retained",
+  "hash": "90de231be800",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .us-citi": {
+  "status": "Retained",
+  "hash": "36a8d61e5d24",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING .us-wells-fargo": {
+  "status": "Retained",
+  "hash": "4fb84df5e8d6",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING [arranged]": {
+  "status": "Retained",
+  "hash": "f7bb1d3d8b8f",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#LENDING [per_item]": {
+  "status": "Rewritten",
+  "hash": "4a98ac42e979",
+  "on": "2026-10-19",
+  "evidence": "Borrowing, term deposits and switching drawn at each bank by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/lending.txt)",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-lending.ts#LENDING [secured]": {
+  "status": "Retained",
+  "hash": "155bf48fa7ce",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING [tacit]": {
+  "status": "Retained",
+  "hash": "3124a9a2398f",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-lending.ts#LENDING [unarranged]": {
+  "status": "Retained",
+  "hash": "8f560bf27024",
+  "on": "2026-10-19",
+  "reason": "Each bank’s overdraft, personal loan and term deposit source line: the page or price list read, the rate, fee and limits in the bank’s own terms (EAR, APR, TAEG, TIN), and whether a figure is from another site, said once at the foot of Borrowing, with the bank’s own product names (CD, GIC, Festgeld).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-lending.ts#SWITCHING": {
+  "status": "Rewritten",
+  "hash": "580c296d01a4",
+  "on": "2026-10-19",
+  "evidence": "Borrowing, term deposits and switching drawn at each bank by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/lending.txt); the Iceland scheme's name read in \"Through the account-switching service of Act 5/2023\" there and in rendered/moves.txt",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#ARION_CARD_YEAR": {
+  "status": "Retained",
+  "hash": "c2d05cf7fd82",
+  "on": "2026-10-19",
+  "reason": "Arion’s card year in the words the screen shows: Reykjavík, Iceland’s Act on Payment Services, art. 57, and the reason the timing is estimated, that Arion’s price list and terms don’t say when in the year the fee is charged.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#NOT_FOUND": {
+  "status": "Retained",
+  "hash": "9f9a7f6a3f23",
+  "on": "2026-10-19",
+  "reason": "“no published rate found” is read back by the Accounts tab, which tests a product’s source for /no published rate/ (BankWorkspace.tsx), so it’s a key, and the screen says it to the player in its own sentence.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN": {
+  "status": "Rewritten",
+  "hash": "21395ec2380c",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates; Iceland's interest-tax note read on Arion's and Landsbankinn's Accounts tab, and Mexico's and Germany's notes, which no screen shows, read in the file",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [au-anz]": {
+  "status": "Retained",
+  "hash": "2501583a4e95",
+  "on": "2026-10-19",
+  "reason": "The Australian banks’ product names as they spell them (Everyday Account Smart Access, Westpac Choice, NAB Classic Banking and their savers), with source lines giving the monthly fee, the deposit that waives it, and each saver’s base rate and the condition for its bonus month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [au-commbank]": {
+  "status": "Retained",
+  "hash": "9165d5d43494",
+  "on": "2026-10-19",
+  "reason": "The Australian banks’ product names as they spell them (Everyday Account Smart Access, Westpac Choice, NAB Classic Banking and their savers), with source lines giving the monthly fee, the deposit that waives it, and each saver’s base rate and the condition for its bonus month.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [au-nab]": {
+  "status": "Retained",
+  "hash": "f91c03a1d2c6",
+  "on": "2026-10-19",
+  "reason": "The Australian banks’ product names as they spell them (Everyday Account Smart Access, Westpac Choice, NAB Classic Banking and their savers), with source lines giving the monthly fee, the deposit that waives it, and each saver’s base rate and the condition for its bonus month.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [au-westpac]": {
+  "status": "Retained",
+  "hash": "7b9a749a553e",
+  "on": "2026-10-19",
+  "reason": "The Australian banks’ product names as they spell them (Everyday Account Smart Access, Westpac Choice, NAB Classic Banking and their savers), with source lines giving the monthly fee, the deposit that waives it, and each saver’s base rate and the condition for its bonus month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [ca-bmo]": {
+  "status": "Rewritten",
+  "hash": "3b4ccc7d73c8",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [ca-cibc]": {
+  "status": "Rewritten",
+  "hash": "ec67ca172e13",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [ca-rbc]": {
+  "status": "Retained",
+  "hash": "b42944cb4244",
+  "on": "2026-10-19",
+  "reason": "The Canadian banks’ product names as each bank spells them (RBC Signature No Limit Banking, TD Unlimited Chequing, Preferred Package and their savings), with source lines naming the page, the monthly fee and the balance that waives it, and canada.ca’s rule on a returned payment in its own figures.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [ca-scotiabank]": {
+  "status": "Rewritten",
+  "hash": "9168548b9950",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [ca-td]": {
+  "status": "Retained",
+  "hash": "444b9914fda9",
+  "on": "2026-10-19",
+  "reason": "The Canadian banks’ product names as each bank spells them (RBC Signature No Limit Banking, TD Unlimited Chequing, Preferred Package and their savings), with source lines naming the page, the monthly fee and the balance that waives it, and canada.ca’s rule on a returned payment in its own figures.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [de-berliner-sparkasse]": {
+  "status": "Retained",
+  "hash": "58f43146e1d4",
+  "on": "2026-10-19",
+  "reason": "The German banks’ product names as they spell them (AktivKonto, Giro plus, Girokonto, Giro Digital, Flexgeld, Extra-Konto), with source lines giving each fee, the condition that cuts or waives it, the day the price list was read, and the Sparkassen-Card’s yearly price and refund rule.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [de-commerzbank]": {
+  "status": "Rewritten",
+  "hash": "1ed7c55d877e",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [de-deutsche-bank]": {
+  "status": "Retained",
+  "hash": "bf9488890829",
+  "on": "2026-10-19",
+  "reason": "The German banks’ product names as they spell them (AktivKonto, Giro plus, Girokonto, Giro Digital, Flexgeld, Extra-Konto), with source lines giving each fee, the condition that cuts or waives it, the day the price list was read, and the Sparkassen-Card’s yearly price and refund rule.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [de-ing]": {
+  "status": "Retained",
+  "hash": "37b4bdcb737e",
+  "on": "2026-10-19",
+  "reason": "The German banks’ product names as they spell them (AktivKonto, Giro plus, Girokonto, Giro Digital, Flexgeld, Extra-Konto), with source lines giving each fee, the condition that cuts or waives it, the day the price list was read, and the Sparkassen-Card’s yearly price and refund rule.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [de-postbank]": {
+  "status": "Retained",
+  "hash": "6d6b433b1f9a",
+  "on": "2026-10-19",
+  "reason": "The German banks’ product names as they spell them (AktivKonto, Giro plus, Girokonto, Giro Digital, Flexgeld, Extra-Konto), with source lines giving each fee, the condition that cuts or waives it, the day the price list was read, and the Sparkassen-Card’s yearly price and refund rule.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [es-bankinter]": {
+  "status": "Rewritten",
+  "hash": "67248b89c818",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [es-bbva]": {
+  "status": "Retained",
+  "hash": "6e7697abb22c",
+  "on": "2026-10-19",
+  "reason": "The Spanish banks’ product names as they spell them (Cuenta Santander, Cuenta Online Sin Comisiones, Cuenta Ahorro Sabadell), with source lines giving each fee’s waiver in the bank’s own term, the nómina, and each account’s TIN and TAE.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [es-caixabank]": {
+  "status": "Rewritten",
+  "hash": "79728a5ac857",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [es-sabadell]": {
+  "status": "Retained",
+  "hash": "c408568a3e0b",
+  "on": "2026-10-19",
+  "reason": "The Spanish banks’ product names as they spell them (Cuenta Santander, Cuenta Online Sin Comisiones, Cuenta Ahorro Sabadell), with source lines giving each fee’s waiver in the bank’s own term, the nómina, and each account’s TIN and TAE.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [es-santander]": {
+  "status": "Retained",
+  "hash": "71d2881f3fff",
+  "on": "2026-10-19",
+  "reason": "The Spanish banks’ product names as they spell them (Cuenta Santander, Cuenta Online Sin Comisiones, Cuenta Ahorro Sabadell), with source lines giving each fee’s waiver in the bank’s own term, the nómina, and each account’s TIN and TAE.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [fr-bnp-paribas]": {
+  "status": "Retained",
+  "hash": "92c4dd78da0a",
+  "on": "2026-10-19",
+  "reason": "BNP Paribas’s Compte de dépôt and Livret A as the bank names them, with source lines giving its €2.60 account fee, free from 18 to 24, and the Livret A’s tax-free 1.7% paid once a year at the end of December, each with the page it comes from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [fr-credit-agricole]": {
+  "status": "Rewritten",
+  "hash": "295080439012",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [fr-la-banque-postale]": {
+  "status": "Rewritten",
+  "hash": "0e4b5f4fa237",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [fr-lcl]": {
+  "status": "Rewritten",
+  "hash": "7b556398a773",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [fr-societe-generale]": {
+  "status": "Rewritten",
+  "hash": "265ccc415cbe",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-barclays]": {
+  "status": "Retained",
+  "hash": "7ece0e10f6ca",
+  "on": "2026-10-19",
+  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-hsbc]": {
+  "status": "Retained",
+  "hash": "ae4a0d7c953e",
+  "on": "2026-10-19",
+  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-lloyds]": {
+  "status": "Retained",
+  "hash": "5ad9e82f2cef",
+  "on": "2026-10-19",
+  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-nationwide]": {
+  "status": "Retained",
+  "hash": "0e6960026676",
+  "on": "2026-10-19",
+  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-natwest]": {
+  "status": "Rewritten",
+  "hash": "674946ce1284",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [gb-santander]": {
+  "status": "Retained",
+  "hash": "d24002186111",
+  "on": "2026-10-19",
+  "reason": "The British banks’ product names as they spell them (Barclays Bank Account, Classic Account, FlexAccount and their savers), with short source lines that name the bank’s page, its AER and the day it applies from, at the foot of the Accounts tab.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [ie-aib]": {
+  "status": "Rewritten",
+  "hash": "312c525799e3",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [ie-bank-of-ireland]": {
+  "status": "Retained",
+  "hash": "67be86ab8249",
+  "on": "2026-10-19",
+  "reason": "Bank of Ireland’s and PTSB’s product names, Personal Current Account, Explore Account and Demand Deposit Account, as the banks spell them, with source lines giving each monthly fee and AER and, for PTSB, that there have been no waivers since 2023.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [ie-ptsb]": {
+  "status": "Retained",
+  "hash": "e9c2a44809d0",
+  "on": "2026-10-19",
+  "reason": "Bank of Ireland’s and PTSB’s product names, Personal Current Account, Explore Account and Demand Deposit Account, as the banks spell them, with source lines giving each monthly fee and AER and, for PTSB, that there have been no waivers since 2023.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [is-arion]": {
+  "status": "Retained",
+  "hash": "c9dcfd766f6b",
+  "on": "2026-10-19",
+  "reason": "Arion’s product names, Veltureikningur and Vöxtur, as the bank spells them, its rate table’s four tiers given in full in the source line, and its debit card’s price, per-purchase fee and age rule with the day the price list was read.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [is-islandsbanki]": {
+  "status": "Rewritten",
+  "hash": "63c89986ae6c",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [is-landsbankinn]": {
+  "status": "Rewritten",
+  "hash": "b45497b6fb88",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [jp-japan-post-bank]": {
+  "status": "Retained",
+  "hash": "af8404ae6f53",
+  "on": "2026-10-19",
+  "reason": "The Japanese banks’ accounts named as the banks write them, 普通預金 and 通常貯金, each with its English in brackets, and source lines giving the rate now and the one from November, the months interest is paid, and the unused-account fees with what spares the game’s accounts.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [jp-mizuho]": {
+  "status": "Retained",
+  "hash": "88a6c051b417",
+  "on": "2026-10-19",
+  "reason": "The Japanese banks’ accounts named as the banks write them, 普通預金 and 通常貯金, each with its English in brackets, and source lines giving the rate now and the one from November, the months interest is paid, and the unused-account fees with what spares the game’s accounts.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [jp-mufg]": {
+  "status": "Retained",
+  "hash": "27454d77d3d7",
+  "on": "2026-10-19",
+  "reason": "The Japanese banks’ accounts named as the banks write them, 普通預金 and 通常貯金, each with its English in brackets, and source lines giving the rate now and the one from November, the months interest is paid, and the unused-account fees with what spares the game’s accounts.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [jp-resona]": {
+  "status": "Retained",
+  "hash": "3b86ba6a4482",
+  "on": "2026-10-19",
+  "reason": "The Japanese banks’ accounts named as the banks write them, 普通預金 and 通常貯金, each with its English in brackets, and source lines giving the rate now and the one from November, the months interest is paid, and the unused-account fees with what spares the game’s accounts.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [jp-smbc]": {
+  "status": "Retained",
+  "hash": "ed75f6e0e482",
+  "on": "2026-10-19",
+  "reason": "The Japanese banks’ accounts named as the banks write them, 普通預金 and 通常貯金, each with its English in brackets, and source lines giving the rate now and the one from November, the months interest is paid, and the unused-account fees with what spares the game’s accounts.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [kr-hana]": {
+  "status": "Rewritten",
+  "hash": "b7036a4ad40f",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [kr-kakaobank]": {
+  "status": "Retained",
+  "hash": "08ac499de097",
+  "on": "2026-10-19",
+  "reason": "The Korean banks’ accounts named as the banks write them, each with “everyday account” or “savings box” in English beside it, and source lines of a few words giving each rate, the page it’s from and that there’s no maintenance fee.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [kr-kb-kookmin]": {
+  "status": "Retained",
+  "hash": "57d4e6057af2",
+  "on": "2026-10-19",
+  "reason": "The Korean banks’ accounts named as the banks write them, each with “everyday account” or “savings box” in English beside it, and source lines of a few words giving each rate, the page it’s from and that there’s no maintenance fee.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [kr-nh]": {
+  "status": "Retained",
+  "hash": "c463ac008e0f",
+  "on": "2026-10-19",
+  "reason": "The Korean banks’ accounts named as the banks write them, each with “everyday account” or “savings box” in English beside it, and source lines of a few words giving each rate, the page it’s from and that there’s no maintenance fee.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [kr-shinhan]": {
+  "status": "Retained",
+  "hash": "8143ce023c03",
+  "on": "2026-10-19",
+  "reason": "The Korean banks’ accounts named as the banks write them, each with “everyday account” or “savings box” in English beside it, and source lines of a few words giving each rate, the page it’s from and that there’s no maintenance fee.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [mx-banamex]": {
+  "status": "Retained",
+  "hash": "fdf0b2afbcde",
+  "on": "2026-10-19",
+  "reason": "The Mexican banks’ product names as they spell them (Libretón Básico Cuenta Digital, Cuenta Enlace Personal, Débito LikeU, Ahorro Fácil), and source lines that say what each page gives, a quoted “sin intereses”, the quiet-month fee with its VAT, and which page couldn’t be read.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [mx-banorte]": {
+  "status": "Retained",
+  "hash": "b8c1af8fc63a",
+  "on": "2026-10-19",
+  "reason": "The Mexican banks’ product names as they spell them (Libretón Básico Cuenta Digital, Cuenta Enlace Personal, Débito LikeU, Ahorro Fácil), and source lines that say what each page gives, a quoted “sin intereses”, the quiet-month fee with its VAT, and which page couldn’t be read.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [mx-bbva]": {
+  "status": "Retained",
+  "hash": "253980dd9f1f",
+  "on": "2026-10-19",
+  "reason": "The Mexican banks’ product names as they spell them (Libretón Básico Cuenta Digital, Cuenta Enlace Personal, Débito LikeU, Ahorro Fácil), and source lines that say what each page gives, a quoted “sin intereses”, the quiet-month fee with its VAT, and which page couldn’t be read.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [mx-santander]": {
+  "status": "Retained",
+  "hash": "57e8710dab33",
+  "on": "2026-10-19",
+  "reason": "The Mexican banks’ product names as they spell them (Libretón Básico Cuenta Digital, Cuenta Enlace Personal, Débito LikeU, Ahorro Fácil), and source lines that say what each page gives, a quoted “sin intereses”, the quiet-month fee with its VAT, and which page couldn’t be read.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [nz-anz]": {
+  "status": "Retained",
+  "hash": "f4abd470809f",
+  "on": "2026-10-19",
+  "reason": "The New Zealand banks’ product names as they spell them (ANZ Go, ASB Streamline, YouMoney, Westpac Everyday, Free Up and their savers), with source lines of a few words naming the page and the rate it gives.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [nz-asb]": {
+  "status": "Retained",
+  "hash": "561f4f68c560",
+  "on": "2026-10-19",
+  "reason": "The New Zealand banks’ product names as they spell them (ANZ Go, ASB Streamline, YouMoney, Westpac Everyday, Free Up and their savers), with source lines of a few words naming the page and the rate it gives.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [nz-bnz]": {
+  "status": "Retained",
+  "hash": "4f0bf639b870",
+  "on": "2026-10-19",
+  "reason": "The New Zealand banks’ product names as they spell them (ANZ Go, ASB Streamline, YouMoney, Westpac Everyday, Free Up and their savers), with source lines of a few words naming the page and the rate it gives.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [nz-kiwibank]": {
+  "status": "Retained",
+  "hash": "375e7164b314",
+  "on": "2026-10-19",
+  "reason": "The New Zealand banks’ product names as they spell them (ANZ Go, ASB Streamline, YouMoney, Westpac Everyday, Free Up and their savers), with source lines of a few words naming the page and the rate it gives.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [nz-westpac]": {
+  "status": "Retained",
+  "hash": "ee11356eaa62",
+  "on": "2026-10-19",
+  "reason": "The New Zealand banks’ product names as they spell them (ANZ Go, ASB Streamline, YouMoney, Westpac Everyday, Free Up and their savers), with source lines of a few words naming the page and the rate it gives.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [us-bank-of-america]": {
+  "status": "Retained",
+  "hash": "0e21a6f62e6a",
+  "on": "2026-10-19",
+  "reason": "The US banks’ product names as each bank spells them (Chase Total Checking, Advantage Plus Banking, Citi Access Checking, 360 Checking and their savings), source lines naming the page each fee, waiver and APY was read on, and Citi’s and Capital One’s one-sentence overdraft notes, which say plainly that no fee is charged.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [us-capital-one]": {
+  "status": "Retained",
+  "hash": "161d1c1d9638",
+  "on": "2026-10-19",
+  "reason": "The US banks’ product names as each bank spells them (Chase Total Checking, Advantage Plus Banking, Citi Access Checking, 360 Checking and their savings), source lines naming the page each fee, waiver and APY was read on, and Citi’s and Capital One’s one-sentence overdraft notes, which say plainly that no fee is charged.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [us-chase]": {
+  "status": "Retained",
+  "hash": "5b4d36e5b46b",
+  "on": "2026-10-19",
+  "reason": "The US banks’ product names as each bank spells them (Chase Total Checking, Advantage Plus Banking, Citi Access Checking, 360 Checking and their savings), source lines naming the page each fee, waiver and APY was read on, and Citi’s and Capital One’s one-sentence overdraft notes, which say plainly that no fee is charged.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [us-citi]": {
+  "status": "Retained",
+  "hash": "35d7f8402842",
+  "on": "2026-10-19",
+  "reason": "The US banks’ product names as each bank spells them (Chase Total Checking, Advantage Plus Banking, Citi Access Checking, 360 Checking and their savings), source lines naming the page each fee, waiver and APY was read on, and Citi’s and Capital One’s one-sentence overdraft notes, which say plainly that no fee is charged.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/banks-thirteen.ts#THIRTEEN [us-wells-fargo]": {
+  "status": "Rewritten",
+  "hash": "4c8d9e015aa3",
+  "on": "2026-10-19",
+  "evidence": "The Accounts tab drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/accounts.txt), the source line read under Sources And Estimates",
+  "first": "Pending"
+ },
  "src/engine/content/cash.ts#CASH": {
   "status": "Rewritten",
   "hash": "51e762c76a8d",
