@@ -27,16 +27,16 @@
   "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-a.txt",
   "first": "Pending"
  },
- "src/engine/content/briefs/second-a.ts#SECOND_A [brief-action-2]": {
+ "src/engine/content/briefs/second-a.ts#SECOND_A [brief-action_comedy-2]": {
   "status": "Rewritten",
-  "hash": "4c318d7af9f0",
+  "hash": "b40c6d726972",
   "on": "2026-10-19",
   "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-a.txt",
   "first": "Pending"
  },
- "src/engine/content/briefs/second-a.ts#SECOND_A [brief-action_comedy-2]": {
+ "src/engine/content/briefs/second-a.ts#SECOND_A [brief-action-2]": {
   "status": "Rewritten",
-  "hash": "b40c6d726972",
+  "hash": "4c318d7af9f0",
   "on": "2026-10-19",
   "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-a.txt",
   "first": "Pending"
@@ -71,9 +71,9 @@
  },
  "src/engine/content/briefs/second-a.ts#SECOND_A [brief-anthology-2]": {
   "status": "Rewritten",
-  "hash": "35e48faf4c76",
+  "hash": "7037d3747295",
   "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-a.txt",
+  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-a.txt, and the built app's pane was read with the scratchpad's brief-shot (docs/verification/editorial-2026-10-19/material-b/screens/)",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-a.ts#SECOND_A [brief-apocalyptic-2]": {
@@ -1247,9 +1247,9 @@
  },
  "src/engine/content/briefs/second-c.ts#SECOND_C [brief-gothic_horror-3]": {
   "status": "Rewritten",
-  "hash": "88aefef8f0ed",
+  "hash": "7e4b697e138c",
   "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-c.txt",
+  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-c.txt, and the built app's pane was read with the scratchpad's brief-shot (docs/verification/editorial-2026-10-19/material-b/screens/)",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-c.ts#SECOND_C [brief-grindhouse-2]": {
@@ -1301,16 +1301,16 @@
   "reason": "The Toast For Daniela: six index cards, a borrowed suit and a grandmother who stops him at the second card, each specific; the partner reason says where every version is aimed, at her.",
   "first": "Reviewed And Retained"
  },
- "src/engine/content/briefs/second-c.ts#SECOND_C [brief-horror-2]": {
+ "src/engine/content/briefs/second-c.ts#SECOND_C [brief-horror_comedy-2]": {
   "status": "Rewritten",
-  "hash": "5294c81cc003",
+  "hash": "e2f1c5e8e601",
   "on": "2026-10-19",
   "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-c.txt",
   "first": "Pending"
  },
- "src/engine/content/briefs/second-c.ts#SECOND_C [brief-horror_comedy-2]": {
+ "src/engine/content/briefs/second-c.ts#SECOND_C [brief-horror-2]": {
   "status": "Rewritten",
-  "hash": "e2f1c5e8e601",
+  "hash": "5294c81cc003",
   "on": "2026-10-19",
   "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-c.txt",
   "first": "Pending"

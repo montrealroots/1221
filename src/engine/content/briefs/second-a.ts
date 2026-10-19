@@ -236,7 +236,7 @@ export const SECOND_A: readonly Brief[] = [
   {
     id: 'brief-anthology-2', title: 'The Last Thing Handed In', kinds: ['anthology'], medium: 'voice', size: 'short', stakes: 1,
     logline: 'The narrator who opens and closes every story in an anthology film set at a railway lost-property office reaches the last one, and the object handed in is one she lost herself.',
-    circumstances: 'An anthology film of six stories, each beginning when an object is handed in at a railway lost-property office and ending when its owner claims it. The same unseen narrator opens and closes each one in four rhymed lines. This is the last story: the object is a child’s red glove, and the narrator lost it on a platform forty years ago and has kept its pair ever since. You record it alone at a microphone.',
+    circumstances: 'An anthology film of six stories, each beginning when an object is handed in at a railway lost-property office and ending when its owner claims it. The same unseen narrator opens and closes each one in four rhymed lines. This is the last story: the object is a child’s red glove, and the narrator lost it on a platform forty years ago and has kept its pair ever since.',
     relationship: 'Until now the narrator has never been a character in the film; the audience knows only her voice, and the glove is the first thing in six stories that belongs to her.',
     you: 'The narrator, a woman in her fifties whose name the film never gives.',
     reader: 'The audience, as in the five stories before, and in the close, the glove on the counter.',

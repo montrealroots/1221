@@ -291,7 +291,7 @@ export const SECOND_C: readonly Brief[] = [
   {
     id: 'brief-gothic_horror-3', title: 'Entries For The Twelfth Of November', kinds: ['gothic_horror'], medium: 'voice', size: 'medium', stakes: 2,
     logline: 'Alone at a microphone, a governess reads the entries she wrote in her journal through one night in a house where something walks the corridor, as she wrote them, hour by hour.',
-    circumstances: 'A remote house on a fen in the 1850s, the night of the twelfth of November, told as the journal kept that night. The family is away; she was left with the two children and a manservant who won’t come upstairs after dark. Each entry is headed with its hour. You record it alone at a microphone and read it as the journal it is, each entry written at the time, not knowing how the night will end.',
+    circumstances: 'A remote house on a fen in the 1850s, the night of the twelfth of November, told as the journal kept that night. The family is away; she was left with the two children and a manservant who won’t come upstairs after dark. Each entry is headed with its hour. You record it alone at a microphone, as the journal it is: each entry written at the time, not knowing how the night will end.',
     relationship: 'The journal is written to her sister in Bristol, the one person she tells the truth, who may never read it.',
     you: 'Miss Clara Ashdown, twenty-six, a governess four months in the house, educated, practical and very frightened.',
     reader: 'Her absent sister, to whom the journal is written, and twice, whatever is on the other side of the door. There’s no reader.',

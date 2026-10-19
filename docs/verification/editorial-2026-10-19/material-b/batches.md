@@ -343,3 +343,63 @@ tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0; vitest (mat
 text-inventory 1 before the marks and 0 after.
 
 **Screens verified:** BriefPane for all 24 briefs of the file, rendered and kept in `rendered/second-f.txt`.
+
+## Follow-Ups, From Reading The Whole Area And The Built App
+
+Made after the six batches, each to a source already rewritten in its batch, and each source marked again after its last
+edit (`--mark2 … Rewritten`, its evidence naming the built app's pane):
+- **brief-gothic_horror-3** (`second-c.ts`, circumstances). The batch's "You record it alone at a microphone and read it as
+  the journal it is" put "read it as" into the text, a shape the engine-speak ratchet counts (material went from 118 to
+  119). Now "You record it alone at a microphone, as the journal it is: …", and material is back at 118.
+- **brief-martial_arts-2** (`second-d.ts`, circumstances). It was the one brief still saying "On the tape …" where every
+  other now says "For the tape, …", and "he’s off camera calling every attack" made the character the caller; the reader
+  calls them, as its techniques note says. Now "For the tape, the deck is a bare floor, and the reader is off camera
+  calling every attack."
+- **brief-anthology-2** (`second-a.ts`, circumstances) and the `reader` of **brief-nature_documentary-2**,
+  **brief-parody-2** and **brief-political_thriller-2** (`second-d.ts`). Read on the built app, each ended on "You record
+  (it) alone at a/the microphone." directly under the pane's own line "…, recorded alone at a microphone." The sentence
+  added nothing the pane hadn't just said, so it went; the other voice briefs' closing sentences stay, because each adds
+  something (the picture, the headphones, the countdown, the track).
+
+`examples.json` keeps one pair per changed string, from the baseline's words to the final ones: 261 pairs for the 261
+strings that differ from `6d111b49` (48, 42, 55, 39, 33 and 44 by file).
+
+## The Area's End
+
+**Statuses:** all 492 sources, through `tools/text-inventory.mjs --mark2 --by material-b`, one call per source, each after
+the source's last edit: **118 Rewritten, 374 Retained, 0 Pending, 0 Blocked** (`--todo2 material-b`: 0 left). By file:
+second-a 24 and 61, second-b 20 and 58, second-c 20 and 66, second-d 16 and 65, second-e 21 and 57, second-f 17 and 67.
+`text-inventory --check` 0. Engine-speak in material fell from 120 to 118 (a segment, and "the take’s sound").
+
+**Only words changed:** `m15b/skeleton.py` (scratchpad) blanks every string literal of each file and compares it with the
+baseline `6d111b49`: identical for all six. The changed strings sit only under `circumstances`, `relationship`,
+`reader`, `beats[].what`, `why.*`, `readings[].reading` and `readings[].rests`. No title, label, id, level, tone, lean,
+draw, `allows` value or list order moved.
+
+**Checks on the final tree** (scratchpad `m15b/final-checks/`): tsc 0, eslint (all six files) 0, title-case 0,
+label-sweep 0, plural-check 0, voice-check 0, tics 0 (the not-but tic at 8 of 8 and the aphorism at 8 of 12, as at the
+baseline; every long list still opens more than one way), spelling 0, typos 0, text-inventory 0, doc-refs 0, deciders 0,
+guide-quotes 0.
+
+**Build:** `npm run build` 0, twice: once when the six batches were done, and again after the follow-ups.
+
+**The walks:** the build served on port 4290 (`vite preview --strictPort`, checked with `curl … | cmp - dist/index.html`,
+stopped by its PID), then `tools/text-walk.mjs` over the 15 scenario saves in `b15-saves/` at 1440 and at 390
+(`after-1440/`, `after-390/`, 25 screens a save, both exits 0). Every screen's text and controls are identical to the
+before-walks' (`b15-before/walk-1440/`, `walk-390/`), 375 of 375 at each width: the walk opens the rail's screens and
+tabs, and none of them shows a brief's pane, so nothing it reaches changed. The walks ran on the first build; the
+follow-ups changed only brief text, which no walked screen shows. `tools/text-render-check.mjs` over both walks:
+137,624 strings, 0 distinct faults, exit 0.
+
+**The briefs on the built app:** because the walk never opens a brief, a scratch script (scratchpad
+`m15b/brief-shot.mjs`) loaded the `brief` save on the final build, went to Player Profile, typed the genre in the Genres
+panel's search, pressed Open Its Brief, chose the brief in Which Brief, and recorded the pane's text and two screenfuls,
+at 1440 and at 390, for 12 briefs across all six files: The Safe Behind The Ring, The Spillway Walk, The Last Thing
+Handed In, The Night Register, Berth Fifteen, Room Three Opens At Seven, First Night On The Tier, The Enchanted Folding
+Chair, The Hammer Spring, Episode Two Hundred, Column Nine and The Song For Act Two (`screens/briefs-1440.json`,
+`briefs-390.json`). Every new string of those briefs is on the pane at both widths and no old one is; at 390 the page and
+the pane are 390 and 290 wide with nothing scrolling sideways, and each note wraps inside the pane
+(`screens/*-390.png`; two desktop shots kept). Only the pane's quality table scrolls inside its own frame, as it did
+before.
+
+**The whole suite:** see below.

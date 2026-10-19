@@ -213,10 +213,10 @@
   "field": "circumstances",
   "kind": "narration",
   "before": "This is the final segment: the object is a child’s red glove, and the narrator lost it on a platform forty years ago and has kept its pair ever since. Recorded alone at a microphone.",
-  "after": "This is the last story: the object is a child’s red glove, and the narrator lost it on a platform forty years ago and has kept its pair ever since. You record it alone at a microphone.",
-  "why": "The film is \"six stories\" everywhere else in the brief, so \"segment\" was a second word for the same thing; the closing fragment becomes a sentence.",
+  "after": "This is the last story: the object is a child’s red glove, and the narrator lost it on a platform forty years ago and has kept its pair ever since.",
+  "why": "The film is \"six stories\" everywhere else in the brief, so \"segment\" was a second word for the same thing; the closing fragment becomes a sentence. Then, read on the built app: Read on the built app, the closing sentence repeated the pane's line above it (\"recorded alone at a microphone\"), and added nothing the other voice briefs' closing sentences add (the picture, the headphones, the countdown).",
   "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts renders BriefPane for this brief and finds the new words whole",
+  "verified": "tests/material-words.test.ts renders BriefPane for this brief and finds the new words whole; read on the built app",
   "batch": 1
  },
  {
@@ -1258,8 +1258,8 @@
   "field": "circumstances",
   "kind": "narration",
   "before": "Recorded alone at a microphone and read as the journal it is, each entry written at the time, not knowing how the night will end.",
-  "after": "You record it alone at a microphone and read it as the journal it is, each entry written at the time, not knowing how the night will end.",
-  "why": "The circumstances closed on a passive fragment; it says who records it and how to read it.",
+  "after": "You record it alone at a microphone, as the journal it is: each entry written at the time, not knowing how the night will end.",
+  "why": "The circumstances closed on a passive fragment; it says who records it and how to read it. (Then, in the same batch, \"and read it as the journal it is\" became \"as the journal it is\": the ratchet counts \"read it as\" as engine-speak.)",
   "meaningSensitive": false,
   "verified": "tests/material-words.test.ts renders BriefPane for this brief and finds the new words whole",
   "batch": 3
@@ -2008,17 +2008,6 @@
   "before": "The voice speaks to the researcher who will hear the file in the morning, a young man she has met once and has been trying to sound sensible for.",
   "after": "She’s speaking to the researcher who will hear the file in the morning, a young man she has met once and has been trying to sound sensible for.",
   "why": "\"The voice speaks to\" made her a voice under The Two Of You; she speaks.",
-  "meaningSensitive": false,
-  "verified": "tests/material-words.test.ts renders BriefPane for this brief and finds the new words whole",
-  "batch": 4
- },
- {
-  "source": "src/engine/content/briefs/second-d.ts#SECOND_D [brief-martial_arts-2]",
-  "field": "circumstances",
-  "kind": "narration",
-  "before": "On the tape the deck is a bare floor, and he’s off camera calling every attack.",
-  "after": "For the tape, the deck is a bare floor, and the reader is off camera calling every attack.",
-  "why": "Every other brief's staging sentence now opens \"For the tape,\"; this one said \"On the tape\", and \"he’s off camera\" made the character the one calling the attacks, when the reader calls them (the brief's techniques note says so).",
   "meaningSensitive": false,
   "verified": "tests/material-words.test.ts renders BriefPane for this brief and finds the new words whole",
   "batch": 4
@@ -2869,5 +2858,16 @@
   "meaningSensitive": false,
   "verified": "tests/material-words.test.ts renders BriefPane for this brief and finds the new words whole",
   "batch": 6
+ },
+ {
+  "source": "src/engine/content/briefs/second-d.ts#SECOND_D [brief-martial_arts-2]",
+  "field": "circumstances",
+  "kind": "narration",
+  "before": "On the tape the deck is a bare floor, and he’s off camera calling every attack.",
+  "after": "For the tape, the deck is a bare floor, and the reader is off camera calling every attack.",
+  "why": "Every other brief's staging sentence now opens \"For the tape,\"; this one said \"On the tape\", and \"he’s off camera\" made the character the one calling the attacks, when the reader calls them (the brief's techniques note says so).",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts renders BriefPane for this brief and finds the new words whole",
+  "batch": 4
  }
 ]
