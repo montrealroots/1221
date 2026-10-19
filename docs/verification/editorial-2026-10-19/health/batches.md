@@ -139,3 +139,132 @@ words "Above 91, it settles back toward 91 each midnight." With the new guard it
 - That file holds every scenario save's player looks, eleven wellbeing bands, the conditions each way, an injury, three
   pronouns and eight ages.
 - The built app is walked at the end of the area.
+
+## Batch 2: Care, Cover, Bills, Appointments, Injuries And Therapy
+
+**Sources (71, about 2,830 words):** `src/engine/systems/health.ts` (52), `appointments.ts` (6), `injury.ts` (6),
+`therapy.ts` (3), `clinics.ts` (2), `mortality.ts` (3); `src/engine/content/clinics.ts` (2), `carevisits.ts` (4),
+`injury.ts` (1). The inventory's listing showed 47 sources for `health.ts`; it has 52, and all 52 were read and marked.
+
+**Rewritten (16):**
+- in `health.ts`: `healthMonth`, `renewProgram`, `applyRenewal`, `noticeOfNoncompliance`, `grantPending`, `applyRefusal`,
+  `dueWords`, `careFor`, `repriceCare`, `registerHealth` and `registerHealth <health.pay_bill>`;
+- in `appointments.ts`: `registerAppointments` and `<health.cancel_appointment>`;
+- in `injury.ts`: `mayHurt`.
+
+**Blocked (1):** `appointments.ts#bookIn`, the booking notice. The papers guide quotes it whole and a test holds the two
+equal (defects.md, 4, with the words suggested).
+
+**Retained (54):** every other source. The reasons are in `docs/text/second-pass/health.json`, and a sample is in
+`retained.md`.
+- Most are refusals that already name their one obstacle, and official notices that already keep their dates and rules.
+- The rest are labels: real names (practices, pharmacies, therapists, programs) and calendar or ledger lines.
+
+**What changed, in kind:**
+- **The bill sentence, everywhere care is billed:**
+  - "You owe $50.00. It’s taken from your checking account on November 25, 2026, and if there isn’t enough then, it
+    becomes medical debt.", the working reference's words.
+  - It's said in a doctor's visit, a stay, the emergency room and an injury's care, which says "You owe $699.13 for
+    its care."
+- **The unpaid bill:**
+  - It now leads with what happened ("Your bank couldn’t cover a $699.13 medical bill when it came due, so it’s now
+    medical debt.").
+  - What the bill was for comes in a sentence of its own, so a bill's name with commas can't run into the verb.
+  - The action follows, with the button.
+  - An injury's bill is named "A sprained ankle’s care", where "a sprained ankle: its care" couldn't sit in a sentence.
+- **Instructions now lead with the action and the button:** "To appeal, press Appeal It …", "To book again, press Book
+  An Appointment …", "To clear it, press Pay It Off …".
+- **Wrong subjects corrected:**
+  - "December 2026 met its work rules" is now "you met its work rules in December 2026".
+  - "December 2026 didn’t show …" is now "HUSKY D still couldn’t find … in December 2026", in the same words as the
+    notice of noncompliance it answers, with "still" for the repeat.
+- **Repricing:** "care you had from … is billed again as that cover pays" is now three sentences: the care was priced
+  again, what you owe more or less, and where a credit goes.
+- **One title said the opposite of its notice:** "Appeal Upheld" is now "Appeal Lost" (defects.md, 3; renames.json).
+- **Checking account,** in the two health sentences that said current account.
+- **Two refusals made useful:** "Say how much." became "Enter an amount to pay.", and "No such appointment." became
+  "That appointment isn’t booked any more."
+
+**Meaning-sensitive changes, and how each was checked:**
+1. **"It’s taken from your checking account on …, and if there isn’t enough then, it becomes medical debt."**
+   - `BILL_KIND`, on the bill's `dueAt`, calls `payFromCurrent`: the checking account, with its overdraft and linked
+     savings. If that fails, it posts the bill to Owed For Medical Care.
+   - "Isn't enough" covers all three sources, as "your bank couldn't cover" does in the unpaid notice.
+   - The date is `dueAt` in the zone Papers shows, as before.
+2. **"So you owe the full $183.98 unless an appeal overturns it."**
+   - `full` is the larger of the share and the uninsured price (`careFor`), billed as such.
+   - An appeal won brings it back to the share (`APPEAL_KIND`).
+3. **Care Credited's "It comes off anything still unpaid or owed as debt, and the rest goes back to your bank":**
+   `repriceCare` takes a credit off the open bill first, then off the medical debt, then refunds the rest to
+   `payeeAccount`. The order is kept.
+4. **"Your marketplace plan ends when HUSKY D begins."** `grantPending` sets the plan's `until` to the later of its own
+   start and HUSKY D's `from` (45 CFR 155.430(d)(2)(v)).
+5. **"At your renewal you’re neither":** the branch is `!admitted`, `medicaidStatus` false at the renewal's hour, for a
+   member who is neither a citizen nor five years a green card holder.
+6. **"You don’t need to send anything about your pay, income, time at the School, age or SNAP: those come from the
+   records."**
+   - No command sends any of them.
+   - `WORK_DECIDED_KIND` reads the months again "as the records stand" (`engagement`).
+   - The one thing a player can add is the hospital hardship (`health.request_hardship`).
+7. **"Appeal Lost":** the branch is `upheld`, the plan keeping its denial. Papers' row says Denial Upheld for the same
+   outcome. Nothing else reads the title (`grep -rn "Appeal Upheld" src tools` found only this line).
+8. **"To book again at Fair Haven Community Health Care, press Book An Appointment …":** the practice named is
+   `clinicFor(person, 'visit', item.at)`, the one `book` uses next. The words only moved.
+9. **The injury bill's name:**
+   - Only displays and ledger memos carry it. No code compares a bill's `what`: `grep -rn "\.what ===" src` finds an
+     appointment's check for a specialist and other records' fields (an evaluation's limits, the work record), none of a
+     bill's.
+   - The tests that matched it by name now match the new one.
+
+**Interactions read whole:**
+- **An injury:** the injury notice, then Call In Sick on School (the line it names), then the care, then the bill on
+  Papers, then the due date, then paid or the unpaid notice, then Pay It Off and its refusals.
+  - Every step now says checking account, the bill's date and its button.
+  - The person look's Mending line and the injury look (batch 1) say the same days and limits.
+- **A doctor's appointment:** booked (the booking notice, Blocked), then missed ("To book again, press …"), then not
+  seen at a members-only practice, then visited (A Doctor’s Visit, with the bill sentence), then Call It Off on an
+  appointment that's gone.
+- **A prescription filled:** the monthly fill (`fillMedicine`'s ledger line), then the extra supply's refusals, then the
+  prescription that ran out and its renewal visit.
+  - Each already says what blocks it and the way out, so they're kept.
+- **Health cover chosen:** Enroll's reasons (`mayEnroll`, `marketplaceOpen`), then Apply For HUSKY D and its refusal,
+  then the notice of noncompliance, then Request A Hardship Exception's refusals, then the decision (approved, denied,
+  renewed, changed or ended), then Your Health Cover Ended.
+  - The decision now uses the notice's own words, with "still".
+  - "You met its work rules in …" reads the same in the renewal and the approval.
+
+**Tests updated** (to the new words, as exactly as before; no title changed, none loosened; 61 lines, then 21 for the
+unpaid notice and the bill's name):
+- `tests/evidence-g01-life.test.ts`, `evidence-g02-life`, `evidence-g03-life`, `evidence-g05-life`, `evidence-g07-life`;
+- `evidence2-b02`, `evidence2-b03`, `evidence3-lifepapers`, `evidence3-home`;
+- `need-paths`, `defects4`, `defects-g8-4`;
+- `remaining-09-hardship`, `remaining-09-journeys`, `remaining-health-billing`, `remaining-health-eligibility`;
+- `scope-cover`, `scope-health`, `commands-kept`.
+
+How they were changed:
+- The script `b2tests.py` (in the session's notes, not kept) applied one exact pattern per sentence, literal or escaped
+  as each assertion was written, and skipped test titles.
+- Each changed line was read in the diff.
+- `tests/evidence-g01-life.test.ts`'s negative assertion `not.toContain('Your share of its care')` became
+  `not.toContain('You owe')`: the new opening of the same clause.
+
+**Tool matchers:** none held these words (`grep` over `tools/` for each old phrase).
+
+**Checks:**
+- `npx vitest run` over the 26 files that hold these words:
+  - The first run had 52 failures, all on the old words.
+  - After the updates: 211 of 211, then 130 of 130, then 85 of 85 with `tests/claims`, `evidence-g04-life` and
+    `leave`.
+- `npx tsc -b --noEmit` 0.
+- `npx eslint` over the four source files and 22 test files: 0.
+- `title-case` 0, `label-sweep` 0, `plural-check` 0, `voice-check` 0, `tics` 0, `spelling` 0, `typos` 0.
+- `text-inventory --check` 0, `doc-refs --check` 0, `deciders --check` 0.
+- `guide-quotes --check` 1, on one quote alone, expected: `src/engine/content/guide/papers.ts:345` quotes "Your
+  application waits on its notice: answer it by …", the old refusal of a second HUSKY D application. That's the papers
+  area's file, so it's listed for the coordinator.
+
+**Screens and renders:**
+- `care-after-2.txt` (render-care.ts) shows the renewal's age and SNAP variants, Call It Off on an appointment that's
+  gone, and Pay It Off with no checking account and with nothing entered.
+- The notices in the scenario saves keep the words of the day they were written. So the new notice words were read in
+  the tests that play each case, which assert them whole, and in that render.

@@ -853,7 +853,7 @@ describe('health.appeal', () => {
     expect(paidFor(sim, bill).amount).toBe(full);
     expect(memos(sim, 'Appeal won')).toEqual([]);
     // The clinic named as it is written (from 2026-10-13: until then all of it was made small).
-    expect(titled(sim, 'Appeal Upheld').map((n) => n.body)).toEqual(['The plan kept its denial for a checkup, Fair Haven Community Health Care, so the full bill stands.']);
+    expect(titled(sim, 'Appeal Lost').map((n) => n.body)).toEqual(['The plan kept its denial for a checkup, Fair Haven Community Health Care, so the full bill stands.']);
     expect(bill.what).toBe('A checkup, Fair Haven Community Health Care');
     expect(paperRow(sim, bill)).toContain('Denial Upheld');
   });

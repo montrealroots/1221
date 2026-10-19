@@ -249,7 +249,7 @@ describe('health.book', () => {
     // 10,513 cents, times 1.75 = 18,397.75, $183.98, due in 30 days, the plan paying none (no `covered`).
     tended(sim, at(2026, 9, 28, 12));
     const kept = titled(sim, 'A Doctor’s Visit', at(2026, 9, 28, 10));
-    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $183.98, due on October 28, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']]);
+    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. You owe $183.98. It’s taken from your checking account on October 28, 2026, and if there isn’t enough then, it becomes medical debt.']]);
     expect(healthOf(sim.player).bills.filter((b) => b.at === at(2026, 9, 28, 10)).map((b) => [b.what, b.amount, b.dueAt, b.covered])).toEqual([['A doctor’s visit, Fair Haven Community Health Care', 18_398, at(2026, 10, 28, 10), undefined]]);
     expect(appointmentsOf(sim.player).filter((a) => a.what === 'A doctor’s visit')).toEqual([]);
     expect(healthOf(sim.player).chronic!.hypertension!.prescribedAt).toBe(at(2026, 9, 28, 10));
@@ -391,7 +391,7 @@ describe('health.choose_clinic', () => {
     expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the usual wait where you live.']);
     // Bupa's pay-as-you-go GP is private, and the NHS doesn't pay it: its 15-minute visit's £79 (`SELF_PAY`). Until
     // 2026-10-13 this held "Nothing to pay." for it, as at Soho Square, the choice moving only the name.
-    expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). Your share is £79.00, due on February 25, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']);
+    expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). You owe £79.00. It’s taken from your checking account on February 25, 2026, and if there isn’t enough then, it becomes medical debt.']);
     expect(didnt.kept).toEqual(['A doctor’s visit, Soho Square General Practice. There’s nothing to pay.']);
   });
 
@@ -709,7 +709,7 @@ describe('health.pay_bill', () => {
     broke(sim);
     const bill = billCare(sim, sim.player, 'A care bill', 900_00, sim.now);
     tended(sim, at(2026, 9, 24, 12));
-    expect(titled(sim, 'A Medical Bill Went Unpaid').map((n) => n.body)).toEqual(['$900.00 for a care bill couldn’t be paid from your current account on its due date, so it’s medical debt now. Pay It Off, on Papers under Health Cover, clears it.']);
+    expect(titled(sim, 'A Medical Bill Went Unpaid').map((n) => n.body)).toEqual(['Your bank couldn’t cover a $900.00 medical bill when it came due, so it’s now medical debt. The bill was for a care bill. To clear it, press Pay It Off on Papers, under Health Cover.']);
     expect(-medicalDebtOf(sim, sim.player)!.balance).toBe(900_00);
     return { sim, bill };
   };
@@ -761,7 +761,7 @@ describe('health.pay_bill', () => {
     // TEST SETUP: $1,000 in savings, and the current account as it was left, drawn to its overdraft's limit.
     posted(sim, savings(sim).id, 1_000_00);
     const was = { current: current(sim).balance, savings: savings(sim).balance };
-    expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 0 } })).toMatchObject({ ok: false, error: 'Say how much.' });
+    expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 0 } })).toMatchObject({ ok: false, error: 'Enter an amount to pay.' });
     // In words that say what to do from 2026-10-16; until then “Chase Total Checking can’t cover it.”
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00 } })).toMatchObject({ ok: false, error: 'Chase Total Checking has nothing to pay it with, so nothing was paid. Move money into it first, on your bank’s Move Money.' });
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00, fromId: savings(sim).id } })).toMatchObject({ ok: true, value: { paid: 100_00 } });

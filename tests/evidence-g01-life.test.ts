@@ -557,10 +557,10 @@ describe('life.look_after:wash', () => {
  * took the label’s capitals, “A Sprained Ankle: its care”.
  */
 const HURT: Record<string, { label: string; bill: string; days: [number, number] }> = {
-  strain: { label: 'A Pulled Muscle', bill: 'A pulled muscle: its care', days: [17, 22] },
-  back: { label: 'A Back Strain', bill: 'A back strain: its care', days: [28, 42] },
-  sprain: { label: 'A Sprained Ankle', bill: 'A sprained ankle: its care', days: [5, 10] },
-  fracture: { label: 'A Broken Bone', bill: 'A broken bone: its care', days: [42, 84] },
+  strain: { label: 'A Pulled Muscle', bill: 'A pulled muscle’s care', days: [17, 22] },
+  back: { label: 'A Back Strain', bill: 'A back strain’s care', days: [28, 42] },
+  sprain: { label: 'A Sprained Ankle', bill: 'A sprained ankle’s care', days: [5, 10] },
+  fracture: { label: 'A Broken Bone', bill: 'A broken bone’s care', days: [42, 84] },
 };
 /**
  * The first minute from now a workout started would end on a hurting roll. A search of the injury stream ahead, which
@@ -595,7 +595,7 @@ describe('life.look_after:exercise', () => {
     expect(notices(sim, hurt.label)[0]!.body.startsWith(`It takes ${days} days to mend`)).toBe(true);
     // Yale Health pays a student's care in full: no bill, and the notice names no cost.
     expect(healthOf(sim.player).bills).toHaveLength(0);
-    expect(notices(sim, hurt.label)[0]!.body).not.toContain('Your share of its care');
+    expect(notices(sim, hurt.label)[0]!.body).not.toContain('You owe');
 
     const words = `Not with ${hurt.label.toLowerCase()}; it has ${days} days yet to mend.`;
     Object.assign(sim.player.wellbeing, { energy: 90 }); // TEST SETUP: rested, so only the injury stands in the way
@@ -637,7 +637,7 @@ describe('life.look_after:exercise', () => {
     expect(bill.dueAt).toBe(sim.now + 30 * MS_DAY);
     expect(bill.amount).toBeGreaterThan(0);
     const dollars = `$${(bill.amount / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    expect(notices(sim, hurt.label)[0]!.body).toContain(`Your share of its care is ${dollars}, due on ${formatDate(bill.dueAt, sim.zone)}, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`);
+    expect(notices(sim, hurt.label)[0]!.body).toContain(`You owe ${dollars} for its care. It’s taken from your checking account on ${formatDate(bill.dueAt, sim.zone)}, and if there isn’t enough then, it becomes medical debt.`);
     expect(sim.universe.scheduled.filter((i) => i.label === `Medical Bill Due: ${hurt.bill}` && i.at === bill.dueAt)).toHaveLength(1);
     // Refused while it mends; reloaded, still one bill.
     expect(lookAfter(sim, 'exercise').error).toMatch(/^Not with /);

@@ -143,6 +143,23 @@ scene('Dublin, where no wait is published: Book An Appointment', () => {
   say(`  Book An Appointment: ${run(sim, 'health.book')}`);
 });
 
+// Brief 15: Call It Off pressed on an appointment that's gone (a stale panel), which no test asserts word for word.
+scene('Dublin: Call It Off on an appointment that isn’t booked', () => {
+  const sim = life('ie-lei-dublin', 'h2-dublin-off');
+  say(`  Call It Off: ${run(sim, 'health.cancel_appointment', { appointmentId: 'a-gone' })}`);
+});
+
+// Brief 15: Pay It Off with a medical debt and no checking account to pay from, which no test asserts word for word. The
+// debt is put on the record as an unpaid bill posts it, and the primary account unset (TEST SETUP, this throwaway life).
+scene('New Haven: Pay It Off with no checking account to pay from', () => {
+  const sim = life('us-ct-newhaven', 'h2-nh-nochecking');
+  const debt = sim.openAccount({ id: sim.nextId('account'), kind: 'loan', category: 'medical', name: 'Owed For Medical Care', ownerId: sim.player.id, institution: 'Your Providers', openedAt: sim.now } as never);
+  sim.post({ memo: 'Medical bill unpaid: A doctor’s visit', category: 'health', postings: [{ accountId: debt.id, amount: -100_00 }, { accountId: sim.nominalAccount('expense', 'Medical Care').id, amount: 100_00 }] } as never);
+  delete (sim.player as { primaryAccountId?: string }).primaryAccountId;
+  say(`  Pay It Off: ${run(sim, 'health.pay_bill', { amount: 100_00 })}`);
+  say(`  Pay It Off, nothing entered: ${run(sim, 'health.pay_bill', { amount: 0 })}`);
+});
+
 scene('The city list for a country that can’t be loaded', () => {
   const real = globalThis.fetch;
   globalThis.fetch = (async () => ({ ok: false, status: 503 })) as never;

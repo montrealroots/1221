@@ -527,7 +527,7 @@ describe('the marketplace, offered on income the clock paid (health.enroll, heal
     sim.advanceTo(visit.at + MS_HOUR);
     const bill = healthOf(sim.player).bills.find((b) => b.at === visit.at)!;
     expect(bill).toMatchObject({ amount: UNINSURED, denied: { share: SHARE } });
-    expect(titled(sim, 'A Claim Denied')[0]!.body).toContain(', so the bill is $183.98 unless an appeal overturns it.');
+    expect(titled(sim, 'A Claim Denied')[0]!.body).toContain(', so you owe the full $183.98 unless an appeal overturns it.');
     drawn(sim, PapersWorkspace, { 'tab:/workspace/papers': 'health' });
     expect(press('health.appeal')).toEqual(['Appealed: decided in 60 days.']);
     const decision = pendingOf(sim, APPEAL_KIND)[0]!;
@@ -623,7 +623,7 @@ describe('health.enroll: a program’s renewal, reached by the clock', () => {
     later.advanceTo(at(2027, 12, 1, 9));
     expect(healthOf(later.player).program!.until).toBe(at(2027, 12, 1, 0));
     expect(coverOn(later.player, later.now)).toBeUndefined();
-    expect(titled(later, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 11, 5, 0), 'No month from April to September 2027 showed $580.00 of income, time at the School or an exception, and none was shown by November 4, 2027, so HUSKY D ends on November 30, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']]);
+    expect(titled(later, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 11, 5, 0), 'HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027, and nothing was shown by November 4, 2027, so HUSKY D ends on November 30, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']]);
   }, 180_000);
 });
 
@@ -720,7 +720,7 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     expect(healthOf(moved.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2027, 11, 1, 0, 30), band: 'low', renewAt: at(2028, 5, 1, 0) });
     expect(coverOn(moved.player, moved.now)).toBe('medicaid');
     // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
-    expect(titled(moved, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and October 2027 met its work rules with $580.00 or more of income.']);
+    expect(titled(moved, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and you met its work rules in October 2027, with $580.00 or more of income.']);
     expect(titled(moved, 'A Notice Of Noncompliance')).toEqual([]);
     expect(titled(moved, 'Your Public Cover Ends')).toEqual([]);
     expect(titled(moved, 'Your Health Cover Ended').filter((n) => n.at >= at(2026, 11, 1, 0))).toEqual([]);
@@ -730,11 +730,11 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     const idle = twin(false);
     expect(healthOf(idle.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2027, 11, 1, 0, 30), band: 'low', renewAt: at(2028, 5, 1, 0) });
     expect(coverOn(idle.player, idle.now)).toBe('medicaid');
-    expect(titled(idle, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and October 2027 met its work rules with $580.00 or more of income.']);
+    expect(titled(idle, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and you met its work rules in October 2027, with $580.00 or more of income.']);
     expect(titled(idle, 'A Notice Of Noncompliance')).toEqual([]);
     // Home draws it as she met it, by the $930.00 her savings earned (brief 12, 2026-10-17): no hours of work, which she has none of.
     const idleHome = drawn(idle, Home).text;
-    expect(idleHome).toContain('Your Public Cover Changed At Renewal Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and October 2027 met its work rules with $580.00 or more of income.');
+    expect(idleHome).toContain('Your Public Cover Changed At Renewal Last month’s income is within HUSKY D’s limit, and HUSKY D replaces Covered Connecticut, so you’re renewed into HUSKY D from November 1, 2027, with no gap in cover and no premium, and you met its work rules in October 2027, with $580.00 or more of income.');
     expect(idleHome).not.toMatch(/hours’ work|half-time/);
 
     const low = twin('low');
@@ -745,11 +745,11 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     expect(healthOf(low.player).program).toMatchObject({ kind: 'essential', from: at(2026, 11, 1, 0) });
     expect(healthOf(low.player).program!.until).toBeUndefined();
     expect(titled(low, 'Your Public Cover Changed At Renewal')).toEqual([]);
-    expect(titled(low, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from May to October 2027, and last month’s income moves you from Covered Connecticut to HUSKY D. You stay covered while you answer, until December 5, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, Covered Connecticut ends on December 31, 2027, and you’ll be told on December 6, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.']);
+    expect(titled(low, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual(['HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from May to October 2027, and last month’s income moves you from Covered Connecticut to HUSKY D. You stay covered while you answer, until December 5, 2027. You don’t need to send anything about your pay, income, time at the School, age or SNAP: those come from the records. A stay in hospital in those months also counts if you ask for it: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, Covered Connecticut ends on December 31, 2027, and you’ll be told on December 6, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.']);
     low.advanceTo(at(2027, 12, 6, 9));
     expect(coverOn(low.player, low.now)).toBe('essential');
     expect(healthOf(low.player).program!.until).toBe(at(2028, 1, 1, 0));
-    expect(titled(low, 'Your Public Cover Ends').map((n) => n.body)).toEqual(['No month from May to October 2027 showed $580.00 of income, time at the School or an exception, and none was shown by December 5, 2027, so Covered Connecticut ends on December 31, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']);
+    expect(titled(low, 'Your Public Cover Ends').map((n) => n.body)).toEqual(['HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in any month from May to October 2027, and nothing was shown by December 5, 2027, so Covered Connecticut ends on December 31, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']);
   }, 900_000);
 
   // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: on HUSKY D from 1 November 2026 on September’s $900.00, her October 2027 is $2,046.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 November 2027 with no gap, and no work is asked”): HUSKY D begins on the first

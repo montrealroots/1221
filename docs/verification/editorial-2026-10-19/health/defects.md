@@ -21,3 +21,24 @@ Brief 15, 2026-10-19. Functional faults found while reading the health area's so
    - **The fix:** each branch now gives the line ("Under 63, …", "Above 62, …"), so a steady mood just under it reads
      true. The branch itself is unchanged.
    - **Test:** `tests/evidence-g06-life.test.ts` asserts the 20 and 90 variants.
+3. **A lost appeal was titled "Appeal Upheld".**
+   - **What:** when a plan kept its denial, the notice was titled "Appeal Upheld". An upheld appeal is one that
+     succeeded, so the title said the opposite of its body ("The plan kept its denial …, so the full bill stands.").
+   - **Where:** Papers already called the outcome Denial Upheld (`PapersWorkspace.tsx`), so the two disagreed.
+   - **How it was found:** reading `registerHealth` against Papers' bill row.
+   - **The fix:** the title is "Appeal Lost", beside "Appeal Won" (renames.json). The outcome, `'upheld'`, is unchanged.
+   - **Tests:** `tests/evidence-g02-life.test.ts`, `tests/evidence-g05-life.test.ts`, `tests/evidence3-lifepapers.test.ts`
+     and `tests/evidence2-b02.test.ts` find the notice by its new title. Under the old title they find none. Their test
+     titles, which quote "Appeal Upheld", are kept as the coverage audit cites them.
+
+## For The Coordinator
+
+4. **The booking notice is still telegraphic, and can't change alone.**
+   - **Where:** `appointments.ts`, `bookIn`, which writes "A doctor’s visit: booked at … for …, the usual wait where you
+     live."
+   - **What's missing:** it says what was booked but not what to do next.
+   - **Why it's blocked:** the papers guide's papers.doctor example quotes it whole, and
+     `tests/guide-examples-papers.test.ts` holds the two equal.
+   - **Suggested:** the same sentence, then "Be there then, or press Call It Off on Papers, under Health Cover." Change
+     the quote in `src/engine/content/guide/papers.ts` (papers.doctor, steps[0]) in the same commit. Its status is
+     Blocked until then.

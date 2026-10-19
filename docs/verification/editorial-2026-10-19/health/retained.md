@@ -29,3 +29,29 @@ can be judged as well as the rewrites. Every reason is in `docs/text/second-pass
    live."
    - It says which units a body is shown in, and why, in one sentence.
    - The country takes its article (`theCountry`).
+
+## Batch 2
+
+7. **`src/engine/systems/health.ts#onsetMonth`.** Title "Diagnosed: Asthma"; body "A doctor found it this month. Its care
+   starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It
+   Go, on Papers, under Health Cover."
+   - A notification in the brief's order: what happened, what it costs, and where to act, with the button's name.
+8. **`src/engine/systems/health.ts#fluMeans`.** "It lasts until December 19, 2026, and it has cost you some condition
+   and energy. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes."
+   - It says when the flu ends, what it took, and the two things that change that week.
+   - "Work Out waits" is the guide's own phrase for that menu line.
+9. **`src/engine/systems/injury.ts#trainingRefusal`.** "Not with a sprained ankle; it has 5 days yet to mend."
+   - It sits beside a training button and names the injury and the days left.
+   - Four guide entries in three other areas quote it, and it reads as speech, not as an error code.
+10. **`src/engine/systems/health.ts#prepayRefusal`.** "Prescriptions are free from age 60."
+    - Each of the four refusals of England's prepayment certificate gives one reason, with the figure where there is
+      one.
+11. **`src/engine/systems/therapy.ts#registerTherapy`.** "After 8 sessions with Yale Mental Health & Counseling, your depression
+    has lifted. It no longer needs care, and it no longer takes from your morale."
+    - It says what happened and both things that change because of it.
+12. **`src/engine/content/clinics.ts#CLINICS`.** "St Thomas' Hospital Emergency Department (A&E)", "Farmacias del Ahorro,
+    La Espiga".
+    - Real places by their own names and addresses, kept as each publishes them, so a player could find them.
+13. **`src/engine/systems/health.ts#hardshipRefusal`.** "None of the months it checked, December 2026, had a stay in
+    hospital, the one hardship the game counts."
+    - It names the months checked, what was missing, and that the game counts only that hardship.

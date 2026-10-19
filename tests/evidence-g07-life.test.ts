@@ -697,8 +697,8 @@ describe('injuries', () => {
     // Urgent care and two sessions of therapy at an uninsured patient's price, $331.17 and $183.98 each (CARE.price's
     // $180 and $100, × 1.75 uninsured, grown to 2026).
     // Named in sentence case, as every other bill is, from 2026-10-13: until then “A Sprained Ankle: its care”.
-    expect(bills[0]).toMatchObject({ what: 'A sprained ankle: its care', at: midnight, amount: 699_13, dueAt: Date.UTC(2026, 1, 5, 5) });
-    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('It takes 10 days to mend, and you can’t work out until then. Your share of its care is $699.13, due on February 5, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.');
+    expect(bills[0]).toMatchObject({ what: 'A sprained ankle’s care', at: midnight, amount: 699_13, dueAt: Date.UTC(2026, 1, 5, 5) });
+    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('It takes 10 days to mend, and you can’t work out until then. You owe $699.13 for its care. It’s taken from your checking account on February 5, 2026, and if there isn’t enough then, it becomes medical debt.');
     sim.advanceTo(Date.UTC(2026, 0, 6, 15)); // 10:00 AM
     clearCalendar(sim); // TEST SETUP
     sim.player.wellbeing.energy = 90; // TEST SETUP
@@ -706,15 +706,15 @@ describe('injuries', () => {
     const again = reload(sim);
     setBalance(again, again.player.primaryAccountId!, 2_000_00); // TEST SETUP: enough in checking when it falls due
     again.advanceTo(Date.UTC(2026, 1, 5, 5) - 1000);
-    expect(healthOf(again.player).bills.find((b) => b.what === 'A sprained ankle: its care')!.paid).toBeUndefined();
+    expect(healthOf(again.player).bills.find((b) => b.what === 'A sprained ankle’s care')!.paid).toBeUndefined();
     again.advanceTo(Date.UTC(2026, 1, 5, 5) + 1000);
-    expect(healthOf(again.player).bills.find((b) => b.what === 'A sprained ankle: its care')!.paid).toBe(true);
-    const paid = again.universe.transactions.filter((t) => t.memo === 'Medical bill: A sprained ankle: its care');
+    expect(healthOf(again.player).bills.find((b) => b.what === 'A sprained ankle’s care')!.paid).toBe(true);
+    const paid = again.universe.transactions.filter((t) => t.memo === 'Medical bill: A sprained ankle’s care');
     expect(paid).toHaveLength(1);
     expect(paid[0]!.at).toBe(Date.UTC(2026, 1, 5, 5));
     expect(paid[0]!.postings.find((x) => x.accountId === again.player.primaryAccountId)!.amount).toBe(-699_13);
     again.advanceTo(Date.UTC(2026, 1, 20));
-    expect(again.universe.transactions.filter((t) => t.memo === 'Medical bill: A sprained ankle: its care')).toHaveLength(1);
+    expect(again.universe.transactions.filter((t) => t.memo === 'Medical bill: A sprained ankle’s care')).toHaveLength(1);
   });
 
   it('PLAYER JOURNEY: a work-study crew shift that pulls a muscle is work: workers’ compensation pays the care, nothing is billed, and training is refused', () => {
@@ -809,7 +809,7 @@ describe('chronic', () => {
     expect(kept.player.wellbeing.condition).toBeCloseTo(before[0]!.condition, 6);
     const er = notices(letGo, 'The Emergency Room');
     expect(er).toHaveLength(1);
-    expect(er[0]!.body).toBe('The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department. Classes you miss while you’re there are excused. Your share is $50.00, due on October 7, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.');
+    expect(er[0]!.body).toBe('The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department. Classes you miss while you’re there are excused. You owe $50.00. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt.');
     // Connecticut's median 189 minutes in the department (CMS), and the emergency's toll of 20 on condition and energy.
     expect(healthOf(letGo.player).inHospitalUntil).toBe(week + 189 * 60_000);
     expect(letGo.player.wellbeing.condition).toBeCloseTo(before[1]!.condition - 20, 6);

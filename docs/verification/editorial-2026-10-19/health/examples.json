@@ -223,5 +223,149 @@
   "why": "“In its spring” read like a season of the course's own. It's the spring term.",
   "meaningSensitive": false,
   "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the Looking After Yourself entry's Straight Away"
+ },
+ {
+  "source": "src/engine/systems/health.ts#dueWords",
+  "kind": "official",
+  "before": "A doctor’s visit, Fair Haven Community Health Care. Your share is $183.98, due on October 24, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.",
+  "after": "A doctor’s visit, Fair Haven Community Health Care. You owe $183.98. It’s taken from your checking account on October 24, 2026, and if there isn’t enough then, it becomes medical debt.",
+  "why": "The working reference's own example. It says the amount first, then the date it's taken, from the glossary's checking account, then what follows if it can't be paid, with no passive “can’t be paid”.",
+  "meaningSensitive": true,
+  "verified": "tests/scope-health.test.ts asserts the notice whole. Checked against BILL_KIND (payFromCurrent on dueAt, else medical debt)"
+ },
+ {
+  "source": "src/engine/systems/injury.ts#mayHurt",
+  "kind": "notification",
+  "before": "It takes 10 days to mend, and you can’t work out until then. Your share of its care is $699.13, due on February 5, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.",
+  "after": "It takes 10 days to mend, and you can’t work out until then. You owe $699.13 for its care. It’s taken from your checking account on February 5, 2026, and if there isn’t enough then, it becomes medical debt.",
+  "why": "The same bill sentence as a doctor's visit, in the same words, for an injury's care.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g07-life.test.ts, an everyday sprain played uninsured in New Haven"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth",
+  "kind": "notification",
+  "before": "$699.13 for a sprained ankle: its care couldn’t be paid from your current account on its due date, so it’s medical debt now. Pay It Off, on Papers under Health Cover, clears it.",
+  "after": "Your bank couldn’t cover a $699.13 medical bill when it came due, so it’s now medical debt. The bill was for a sprained ankle’s care. To clear it, press Pay It Off on Papers, under Health Cover.",
+  "why": "What happened comes first, then what the bill was for (in a sentence of its own, so a bill's name with commas can't run into the verb), then the action with its button. The injury's bill is now “a sprained ankle’s care”.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence2-b02.test.ts, the drained twin's sprain; tests/evidence-g05-life.test.ts, a stay in hospital"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth",
+  "kind": "notification",
+  "before": "title “Appeal Upheld”, body “The plan kept its denial for a checkup, Fair Haven Community Health Care, so the full bill stands.”",
+  "after": "title “Appeal Lost”, body unchanged",
+  "why": "An appeal “upheld” means one that succeeded. This notice is for the one that failed, and Papers calls the outcome Denial Upheld. “Appeal Lost” is the plain opposite of the notice “Appeal Won” (renames.json).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g02-life.test.ts and tests/evidence3-lifepapers.test.ts, an appeal played to its upheld outcome"
+ },
+ {
+  "source": "src/engine/systems/health.ts#careFor",
+  "kind": "notification",
+  "before": "Your plan denied the claim for a doctor’s visit, One Medical, Flatiron, so the bill is $183.98 unless an appeal overturns it. You can appeal within 180 days with Appeal It, on Papers, under Health Cover.",
+  "after": "Your plan denied the claim for a doctor’s visit, One Medical, Flatiron, so you owe the full $183.98 unless an appeal overturns it. To appeal, press Appeal It on Papers, under Health Cover, within 180 days.",
+  "why": "It says what the denial means for the player (you owe the full amount), and the next step leads with the action and the button.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g05-life.test.ts asserts the notice whole"
+ },
+ {
+  "source": "src/engine/systems/health.ts#repriceCare",
+  "kind": "notification",
+  "before": "Yale Health Affiliate cover, back to the day student cover ended: care you had from January 20, 2027 is billed again as that cover pays, $336.96 less, taken off what was open or owed, with the rest back in your bank.",
+  "after": "Yale Health Affiliate cover, back to the day student cover ended: the care you’ve had since January 20, 2027 has been priced again. You owe $336.96 less. It comes off anything still unpaid or owed as debt, and the rest goes back to your bank.",
+  "why": "“Billed again as that cover pays” was hard to parse. Now the repricing, the change in what you owe, and where the credit goes are three plain sentences. The order the code applies a credit (open bill, then debt, then refund) is kept.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-health-billing.test.ts, Affiliate cover bought back to the day student cover ended"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth",
+  "kind": "official",
+  "before": "December 2026 didn’t show $580.00 of income, time at the School or an exception, and none was shown by February 7, 2027, so your application for HUSKY D is denied. …",
+  "after": "HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in December 2026, and nothing was shown by February 7, 2027, so your application is denied. …",
+  "why": "A month that “didn’t show” anything was the engine talking. The decision now uses the same words as the notice of noncompliance it answers (“HUSKY D couldn’t find …”), with “still” for the repeat (the brief, section 8).",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-health-eligibility.test.ts, an application left unanswered to its decision"
+ },
+ {
+  "source": "src/engine/systems/health.ts#noticeOfNoncompliance",
+  "kind": "official",
+  "before": "Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover.",
+  "after": "You don’t need to send anything about your pay, income, time at the School, age or SNAP: those come from the records. A stay in hospital in those months also counts if you ask for it: press Request A Hardship Exception on Papers, under Health Cover.",
+  "why": "A notice asks for an answer, and the old passive left the player wondering what to send. Now it says nothing is needed for those, and the one thing they can ask for.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-09-hardship.test.ts and tests/need-paths.test.ts assert the notice whole. The decision re-reads the months from the records (WORK_DECIDED_KIND)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#applyRenewal",
+  "kind": "official",
+  "before": "HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules because people your age are exempt.",
+  "after": "HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and you met its work rules in June 2027, because people your age are exempt.",
+  "why": "The person meets the rules, not the month. The month becomes when.",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), the under-19 and SNAP renewals; tests/defects-g8-4.test.ts the income variant"
+ },
+ {
+  "source": "src/engine/systems/health.ts#grantPending",
+  "kind": "official",
+  "before": "HUSKY D covers you from December 1, 2026, with no premium. December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.",
+  "after": "HUSKY D covers you from December 1, 2026, with no premium. You met its work rules in December 2026, through a stay in hospital you asked to count. Your marketplace plan ends when HUSKY D begins.",
+  "why": "“Ends as it begins” had no clear subject for “it”. The marketplace plan ends where HUSKY D starts (45 CFR 155.430(d)(2)(v), m.until set to HUSKY D's from).",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-health-eligibility.test.ts, a hardship granted on an application with a marketplace plan held"
+ },
+ {
+  "source": "src/engine/systems/health.ts#renewProgram",
+  "kind": "official",
+  "before": "From October 1, 2026, HUSKY D is only for US citizens and people who’ve held a green card for five years, and renewal checks that, so HUSKY D ends on September 30, 2027.",
+  "after": "From October 1, 2026, HUSKY D is only for US citizens and people who’ve held a green card for five years, and at your renewal you’re neither, so HUSKY D ends on September 30, 2027.",
+  "why": "“And renewal checks that, so …” left out the finding. It now says what the renewal found about you.",
+  "meaningSensitive": false,
+  "verified": "tests/defects4.test.ts, an F-1 member's renewal after 1 October 2026"
+ },
+ {
+  "source": "src/engine/systems/health.ts#healthMonth",
+  "kind": "notification",
+  "before": "Covered Connecticut is only for people with no other qualifying cover, and Yale Health’s student cover covers you again.",
+  "after": "You have Yale Health’s student cover again, and Covered Connecticut is only for people with no other qualifying cover.",
+  "why": "What happened comes first, then the rule it trips, without “cover covers”.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-cover.test.ts, a student back from leave with Covered Connecticut"
+ },
+ {
+  "source": "src/engine/systems/health.ts#applyRefusal",
+  "kind": "error",
+  "before": "Your application waits on its notice: answer it by February 7, 2027.",
+  "after": "You’ve already applied. Answer its notice of noncompliance by February 7, 2027.",
+  "why": "It now says why the button is refused (you've applied), names the notice, and gives the real next step with its date.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-health-eligibility.test.ts, Apply For HUSKY D pressed twice"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#registerAppointments",
+  "kind": "notification",
+  "before": "A doctor’s visit: Yale Health sees Yale students it covers, and it doesn’t cover you now. You weren’t seen at Yale Health Center, Student Health. If you book again, with Book An Appointment on Papers under Health Cover, it’s at Fair Haven Community Health Care.",
+  "after": "A doctor’s visit: you weren’t seen at Yale Health Center, Student Health. Yale Health sees Yale students it covers, and it doesn’t cover you now. To book again at Fair Haven Community Health Care, press Book An Appointment on Papers, under Health Cover.",
+  "why": "The notice now goes in order: what happened, why, what to do. The conditional with its parenthetical became one instruction with the button.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-health.test.ts, a member uncovered on a personal leave"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#registerAppointments",
+  "kind": "notification",
+  "before": "A doctor’s visit: you weren’t there, so you weren’t seen. Book again with Book An Appointment, on Papers under Health Cover.",
+  "after": "A doctor’s visit: you weren’t there, so you weren’t seen. To book again, press Book An Appointment on Papers, under Health Cover.",
+  "why": "The instruction now leads with what it's for and names the button as one, as the other health notices do.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g05-life.test.ts, a visit slept through"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#registerAppointments <health.cancel_appointment>",
+  "kind": "error",
+  "before": "No such appointment.",
+  "after": "That appointment isn’t booked any more.",
+  "why": "Call It Off is pressed on an appointment the player can see, so “no such” read as an error in the game. The real case is a stale panel, so it says the appointment is gone.",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), Call It Off on an appointment that isn't booked"
  }
 ]

@@ -283,7 +283,7 @@ function deniedOnTheMarketplace() {
   sim.advanceTo(visit.at + MS_HOUR);
   const bill = healthOf(sim.player).bills.find((b) => b.at === visit.at)!;
   expect(bill).toMatchObject({ what: `A doctor’s visit, ${CLINIC}`, amount: UNINSURED, dueAt: visit.at + 30 * MS_DAY, denied: { share: SHARE } });
-  expect(titled(sim, 'A Claim Denied')[0]!.body).toContain(', so the bill is $183.98 unless an appeal overturns it.');
+  expect(titled(sim, 'A Claim Denied')[0]!.body).toContain(', so you owe the full $183.98 unless an appeal overturns it.');
   drawn(sim);
   expect(press('health.appeal')).toEqual(['Appealed: decided in 60 days.']);
   expect(bill.denied!.appealedAt).toBe(sim.now);
@@ -316,7 +316,7 @@ describe('health.appeal_decided', () => {
     const won = titled(sim, 'Appeal Won');
     expect(won).toHaveLength(1);
     expect(won[0]!.body).toMatch(/^The plan reversed its denial for a doctor’s visit, .+\. You owe only your share, \$45\.00\.$/);
-    expect(titled(sim, 'Appeal Upheld')).toEqual([]);
+    expect(titled(sim, 'Appeal Lost')).toEqual([]);
     expect(billRow(sim, 'Visit', bill.at)).toContain('$45.00 Settled Denial Overturned');
     // Reloaded and played on a month: decided once, refunded once.
     const again = reload(sim);
@@ -336,8 +336,8 @@ describe('health.appeal_decided', () => {
     expect(bill.paid).toBe(true);
     expect(appealWon(sim)).toEqual([]);
     expect(billPaid(sim).reduce((s, t) => s + toPlayer(sim, t), 0)).toBe(-UNINSURED);
-    expect(titled(sim, 'Appeal Upheld')).toHaveLength(1);
-    expect(titled(sim, 'Appeal Upheld')[0]!.body).toMatch(/^The plan kept its denial for a doctor’s visit, .+\.$/);
+    expect(titled(sim, 'Appeal Lost')).toHaveLength(1);
+    expect(titled(sim, 'Appeal Lost')[0]!.body).toMatch(/^The plan kept its denial for a doctor’s visit, .+\.$/);
     expect(titled(sim, 'Appeal Won')).toEqual([]);
     expect(billRow(sim, 'Visit', bill.at)).toContain('$183.98 Settled Denial Upheld');
   });
@@ -390,7 +390,7 @@ describe('health.appeal_decided', () => {
     const { sim, force, decidedAt } = deniedOnTheMarketplace();
     force('health.appeal', null, [0.99]); // TEST SETUP: the decision's draw forced to overturn
     sim.advanceTo(decidedAt + MS_HOUR);
-    expect(titled(sim, 'A Claim Denied')[0]!.body).toBe(`Your plan denied the claim for a doctor’s visit, ${CLINIC}, so the bill is $183.98 unless an appeal overturns it. You can appeal within 180 days with Appeal It, on Papers, under Health Cover.`);
+    expect(titled(sim, 'A Claim Denied')[0]!.body).toBe(`Your plan denied the claim for a doctor’s visit, ${CLINIC}, so you owe the full $183.98 unless an appeal overturns it. To appeal, press Appeal It on Papers, under Health Cover, within 180 days.`);
     expect(titled(sim, 'Appeal Won')[0]!.body).toBe(`The plan reversed its denial for a doctor’s visit, ${CLINIC}. You owe only your share, $45.00.`);
   });
 });
@@ -481,7 +481,7 @@ describe('health.appointment', () => {
     const second = sim.universe.scheduled.find((i) => i.kind === APPOINTMENT_KIND && i.at === again.at)!;
     expect(second.status).toBe('missed');
     expect(healthOf(sim.player).owedVisit).toBe(VISIT);
-    expect(titled(sim, 'Missed The Doctor').map((n) => n.body)).toEqual([`${VISIT}: you weren’t there, so you weren’t seen. Book again with Book An Appointment, on Papers under Health Cover.`]);
+    expect(titled(sim, 'Missed The Doctor').map((n) => n.body)).toEqual([`${VISIT}: you weren’t there, so you weren’t seen. To book again, press Book An Appointment on Papers, under Health Cover.`]);
     expect(visitsLogged(sim)).toEqual([]);
 
     // Reloaded, and out of hospital on Thursday 17 September: Papers says it's owed, and Book An Appointment books it at
@@ -519,7 +519,7 @@ function stayBilled() {
   const bill = healthOf(sim.player).bills.find((b) => b.at === week.at)!;
   expect(bill).toMatchObject({ amount: STAY_COPAY, dueAt: at(2026, 10, 7, 9), hospital: true });
   expect(bill.what).toMatch(/^A stay in hospital, Yale New Haven Hospital/);
-  expect(titled(sim, 'In Hospital')[0]!.body).toBe(`${bill.what}, for 3 days. Classes you miss while you’re there are excused. Your share is $200.00, due on October 7, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.`);
+  expect(titled(sim, 'In Hospital')[0]!.body).toBe(`${bill.what}, for 3 days. Classes you miss while you’re there are excused. You owe $200.00. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt.`);
   return { sim, bill };
 }
 const billMemo = (what: string) => `Medical bill: ${what}`;
@@ -559,7 +559,7 @@ describe('health.bill', () => {
     expect(healthOf(sim.player).debtSince).toBe(bill.dueAt);
     const unpaid = titled(sim, 'A Medical Bill Went Unpaid');
     expect(unpaid).toHaveLength(1);
-    expect(unpaid[0]!.body).toMatch(/^\$200\.00 for a stay in hospital, .+ couldn’t be paid from your current account on its due date, so it’s medical debt now\. Pay It Off, on Papers under Health Cover, clears it\.$/);
+    expect(unpaid[0]!.body).toMatch(/^Your bank couldn’t cover a \$200\.00 medical bill when it came due, so it’s now medical debt\. The bill was for a stay in hospital, .+\. To clear it, press Pay It Off on Papers, under Health Cover\.$/);
     expect(troubles(sim, sim.player)).toContainEqual({ kind: 'medical', amount: STAY_COPAY });
     expect(drawn(sim).text).toContain('Medical Debt $200.00');
     expect(billRow(sim, 'Hospital', bill.at)).toContain('$200.00 Owed As Debt');
@@ -588,7 +588,7 @@ describe('health.bill', () => {
     sim.advanceTo(bill.dueAt + MS_HOUR);
     const name = bill.what.replace(/^A stay in hospital, /, '');
     expect(name).toMatch(/^Yale New Haven Hospital/);
-    expect(titled(sim, 'A Medical Bill Went Unpaid')[0]!.body).toBe(`$200.00 for a stay in hospital, ${name} couldn’t be paid from your current account on its due date, so it’s medical debt now. Pay It Off, on Papers under Health Cover, clears it.`);
+    expect(titled(sim, 'A Medical Bill Went Unpaid')[0]!.body).toBe(`Your bank couldn’t cover a $200.00 medical bill when it came due, so it’s now medical debt. The bill was for a stay in hospital, ${name}. To clear it, press Pay It Off on Papers, under Health Cover.`);
   });
 });
 
@@ -692,7 +692,7 @@ describe('health.month', () => {
     expect(titled(idle, 'A Notice Of Noncompliance')).toHaveLength(1);
     idle.advanceTo(at(2027, 9, 30, 12));
     expect(coverOn(idle.player, idle.now)).toBe('medicaid');
-    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 9, 5, 0), 'No month from February to July 2027 showed $580.00 of income, time at the School or an exception, and none was shown by September 4, 2027, so HUSKY D ends on September 30, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']]);
+    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 9, 5, 0), 'HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in any month from February to July 2027, and nothing was shown by September 4, 2027, so HUSKY D ends on September 30, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']]);
     idle.advanceTo(at(2027, 10, 1, 2));
     expect(coverOn(idle.player, idle.now)).toBeUndefined();
     expect(healthOf(idle.player).program!.until).toBe(at(2027, 10, 1, 0));
@@ -710,7 +710,7 @@ describe('health.month', () => {
     expect(healthOf(working.player).program!.until).toBeUndefined();
     expect(titled(working, 'A Notice Of Noncompliance')).toEqual([]);
     // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
-    expect(titled(working, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed. Its next renewal is on February 1, 2028. Last month’s income is within its limit, and July 2027 met its work rules with $580.00 or more of income.']);
+    expect(titled(working, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed. Its next renewal is on February 1, 2028. Last month’s income is within its limit, and you met its work rules in July 2027, with $580.00 or more of income.']);
     const workingScreen = drawn(working).text;
     expect(workingScreen).toContain('Your Cover How This Works This Month HUSKY D');
     // HUSKY D asks no copays.
@@ -787,7 +787,7 @@ describe('health.therapy_session', () => {
     expect(bills[0]!.inDebt).toBe(true);
     // Only the first bill has fallen due: the debt is its $240.
     expect(medicalDebtOf(sim, sim.player)!.balance).toBe(-ADNA_FEE);
-    expect(titled(sim, 'A Medical Bill Went Unpaid').map((n) => n.body)).toEqual([expect.stringMatching(/^\$240\.00 for .+, a session couldn’t be paid from your current account on its due date, so it’s medical debt now\. Pay It Off, on Papers under Health Cover, clears it\.$/)]);
+    expect(titled(sim, 'A Medical Bill Went Unpaid').map((n) => n.body)).toEqual([expect.stringMatching(/^Your bank couldn’t cover a \$240\.00 medical bill when it came due, so it’s now medical debt\. The bill was for .+, a session\. To clear it, press Pay It Off on Papers, under Health Cover\.$/)]);
     expect(billRow(sim, 'Adna', first)).toContain('$240.00 Owed As Debt');
   });
 
@@ -951,7 +951,7 @@ describe('health.week', () => {
     expect(healthOf(ill.sim.player).inHospitalUntil).toBe(at(2026, 9, 10, 9));
     expect(well.sim.player.wellbeing.condition - ill.sim.player.wellbeing.condition).toBeCloseTo(40, 9);
     expect(well.sim.player.wellbeing.energy - ill.sim.player.wellbeing.energy).toBeCloseTo(40, 9);
-    expect(titled(ill.sim, 'In Hospital')[0]!.body).toMatch(/^A stay in hospital, .+, for 3 days\. Classes you miss while you’re there are excused\. Your share is \$200\.00, due on October 7, 2026, when it’s taken from your current account\. If it can’t be paid then, it becomes medical debt\.$/);
+    expect(titled(ill.sim, 'In Hospital')[0]!.body).toMatch(/^A stay in hospital, .+, for 3 days\. Classes you miss while you’re there are excused\. You owe \$200\.00\. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt\.$/);
     expect(healthOf(ill.sim.player).bills.filter((b) => b.at === ill.week).map((b) => b.amount)).toEqual([200_00]);
     const tally = (sim: Simulation) => ({ ...sim.player.school!.tally });
     const [ti, tw] = [tally(ill.sim), tally(well.sim)];
@@ -972,7 +972,7 @@ describe('health.week', () => {
     expect(healthOf(ill.sim.player).inHospitalUntil).toBe(ill.week + 189 * 60_000);
     expect(well.sim.player.wellbeing.condition - ill.sim.player.wellbeing.condition).toBeCloseTo(20, 9);
     expect(well.sim.player.wellbeing.energy - ill.sim.player.wellbeing.energy).toBeCloseTo(20, 9);
-    expect(titled(ill.sim, 'The Emergency Room')[0]!.body).toMatch(/^The emergency room, .+\. Classes you miss while you’re there are excused\. Your share is \$50\.00, due on October 7, 2026, when it’s taken from your current account\. If it can’t be paid then, it becomes medical debt\.$/);
+    expect(titled(ill.sim, 'The Emergency Room')[0]!.body).toMatch(/^The emergency room, .+\. Classes you miss while you’re there are excused\. You owe \$50\.00\. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt\.$/);
     expect(healthOf(ill.sim.player).bills.filter((b) => b.at === ill.week).map((b) => b.amount)).toEqual([50_00]);
   });
 
