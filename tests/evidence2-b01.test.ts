@@ -350,7 +350,7 @@ function statusEnding(seed: string): { sim: Simulation; decisionId: string; ends
   const t0 = sim.now;
   expect(t0).toBe(EDT(2026, 8, 24, 7, 30));
   sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
-  expect(titled(sim, 'You Withdrew From The School').map((n) => n.body).join(' ')).toContain('fifteen days’ grace');
+  expect(titled(sim, 'You Withdrew From The School').map((n) => n.body).join(' ')).toContain('fifteen-day grace period');
   sim.advanceTo(t0 + 2 * MS_MINUTE);
   const rows = openDecisions(sim).filter((d) => d.title === 'Your US Status Is Ending');
   expect(rows).toHaveLength(1);

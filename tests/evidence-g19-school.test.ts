@@ -626,7 +626,7 @@ describe('school.work_note', () => {
       if (prior.outcome === 'learned') expect(n.text).toContain(`which ${worse ? 'made it worse' : 'didn’t move it'}: worth knowing, and not the answer.`);
     }
 
-    // The closing: the calls as the calendar has them, the notes as they were given, taken and answered in the work.
+    // The closing: the calls as the calendar has them, the notes as they were given and taken (with those answered in the work, until 2026-10-19).
     tended(sim, callsOf(sim).nights.at(-1)!.at + 4 * MS_HOUR);
     const { calls } = callsOf(sim);
     const given = notes.filter((n) => n.taken !== undefined);
@@ -634,10 +634,10 @@ describe('school.work_note', () => {
     expect(untaken.some((n) => n.focus.kind === 'craft')).toBe(true);
     const looking = titled(sim, `Looking Back: ${TITLE}`);
     expect(looking).toHaveLength(1);
-    const answered = notes.filter((n) => n.focus.kind === 'craft' && n.taken).length;
     const learned = notes.filter((n) => n.outcome === 'learned').length;
+    const W = ['none', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
     const [done, took, dress] = [calls.filter((c) => c.status === 'done').length, given.filter((n) => n.taken).length, proc(sim).dress];
-    expect(looking[0]!.body).toContain(`${TITLE}: ${done === calls.length ? `you answered all ${calls.length} calls` : `you answered ${done || 'none'} of your ${calls.length} calls`}. The director gave you ${given.length} notes. You took ${took || 'none'}${took && answered ? `, ${answered === took ? 'all' : answered} of them answered in the work` : ''}${learned ? `, and worked on ${learned} that didn’t move` : ''}. The dress rehearsal was ${dress === 'off' ? 'an off night' : dress}.`);
+    expect(looking[0]!.body).toContain(`${TITLE}: ${done === calls.length ? `you answered all ${calls.length} calls` : `you answered ${done || 'none'} of your ${calls.length} calls`}. The director gave you ${W[given.length] ?? given.length} notes, and you took ${took === given.length ? 'all of them' : W[took] ?? took}${learned ? `. You worked on ${W[learned] ?? learned} more, but ${learned === 1 ? 'it didn’t' : 'they didn’t'} move` : ''}. The dress rehearsal was ${dress === 'off' ? 'an off night' : dress}.`);
     expect(looking[0]!.body).toContain('What’s still open goes with you into class.');
     // Each craft note not taken, in the class's ledger as the part of a scene's preparation that answers it.
     const ledger = notesOf(courseworkOf(sim, sim.player)!);

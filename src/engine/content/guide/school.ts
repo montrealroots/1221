@@ -468,7 +468,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     questions: ['How do I take a leave of absence?', 'What happens to my health cover on leave?', 'How do I come back from a leave?', 'Can I appeal a leave the dean imposed?', 'What happens if I withdraw?', 'Why must I register again?'],
     where: { route: ROUTE, tab: TAB.standing, label: 'School, Standing And Craft, A Leave Of Absence' },
     available: `${OPENED}; a leave once your first term has begun, a withdrawal while you’re at school.`,
-    short: `A leave of absence takes you out of the program for a time and brings you back with the class a year below yours. Ask for a medical or a personal leave, and the chair and the dean decide within ${LEAVE_RULES.decideWorkingDays} working days. On leave you have no aid, classes, calls or assigned shifts. Yale Health goes on for a medical leave, and on a personal one you can buy Affiliate cover. Give notice ${LEAVE_RULES.noticeWeeks} weeks before the term you return, or the leave ends in dismissal, then register again. Withdrawing gives up your place for good.`,
+    short: `A leave of absence takes you out of the program for a time and brings you back with the class a year below yours. Ask for a medical or a personal leave, and the chair and the dean decide within ${LEAVE_RULES.decideWorkingDays} working days. On leave you have no aid, classes, calls or assigned shifts. Yale Health goes on for a medical leave, and on a personal one you can buy Affiliate cover. Give notice of your return ${LEAVE_RULES.noticeWeeks} weeks before the term you come back to, or the leave ends in dismissal, then press Register when you’re back. Withdrawing gives up your place for good.`,
     steps: [
       'Open School, Standing And Craft. Under A Leave Of Absence, choose the Kind, Medical or Personal, then the Length and the Reason.',
       // A leave the dean imposed has no Call Off from 2026-10-16: until then one granted from the next term drew it, and was called off.
@@ -512,7 +512,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       `Notice is due ${LEAVE_RULES.noticeWeeks} weeks before the return term, with a reminder two weeks before that. Give it and you’re back at the term’s start in the class a year below, and must register; without it, the leave ends in dismissal.`,
       `You can buy Affiliate cover for a personal leave until ${AFFILIATE_BY(LEAVE_RULES.affiliateBy.fall)} for a fall leave or ${AFFILIATE_BY(LEAVE_RULES.affiliateBy.spring)} for a spring one, or ${LEAVE_RULES.affiliateDays} days from asking, whichever is later.`,
       `Yale Health’s assessment comes ${MANDATORY_LEAVE.assessWorkingDays} working days after its concern is raised, and takes ${MANDATORY_LEAVE.assessMinutes} minutes. If you’re neither in New Haven and awake for it nor in hospital, it recommends a leave on that alone: the Bulletin names not coming as a reason in itself. If it recommends a leave, the dean decides the next working day. If you came and you’re managing by then, nothing is imposed; if you didn’t come, the leave is imposed however well you are. You then have ${MANDATORY_LEAVE.appealDays} days to appeal, decided in ${MANDATORY_LEAVE.appealDecideWorkingDays} working days.`,
-      `If you withdraw within fifteen days of a term’s first class day, Yale Health’s cover ends: ${WITHDRAWN_EARLY}. If you withdraw later, Yale Health covers you for thirty days more. On an F-1, you have ${STATUS_GRACE_DAYS.withdrawn} days’ grace and no OPT.`,
+      `If you withdraw within fifteen days of a term’s first class day, Yale Health’s cover ends: ${WITHDRAWN_EARLY}. If you withdraw later, Yale Health covers you for thirty days more. On an F-1, you have a grace period of ${STATUS_GRACE_DAYS.withdrawn} days and no OPT.`,
     ],
     interpret: [
       'Your Leave shows a leave while it’s With The Chair And The Dean, Granted, Not Yet Begun, or On Leave. From and Back For give the terms. Once it’s over, Leaves Before keeps it with how it ended.',
@@ -531,13 +531,13 @@ export const SCHOOL: readonly GuideEntry[] = [
       '“The School doesn’t normally grant a leave to take on a professional commitment.”',
       '“On an F-1, a personal leave ends your status …”',
       `“A medical leave needs a Yale Health physician’s written recommendation, and nothing in the last ${LEAVE_RULES.medicalLookbackDays} days would lead to one …”`,
-      `“You’ve had … of leave; the Bulletin allows ${LEAVE_RULES.maxTerms} in all.”`,
+      `“You’ve had … of leave, and the Bulletin allows ${WORDS[LEAVE_RULES.maxTerms]} in all.”`,
       'Notice: “Its deadline has passed.”, or after a medical leave, why a physician can’t clear you yet.',
       // On leave from 2026-10-17 (brief 11): until then Register was drawn on a leave and registered her for the term she'd left.
       'Register: “A financial hold stops registration: … is owed on your Yale account. Pay it on the Terms And Award tab.”, or on leave “You’re on leave: you register for the term you come back to, when it begins.”',
       // The bank's refusal from 2026-10-16, when Affiliate cover began to be paid from the savings beside the current account
       // too; until then it was “Your bank can’t cover it.”, and this list left it out.
-      'Affiliate cover: “The School pays for your Affiliate cover.” on a medical leave, “It could only be bought until …”, or, as it’s paid in full, “Your current account and the savings beside it can cover only … of it now.”, going on “It’s paid in full, so move money into your current account first.”, or “Your current account and the savings beside it can’t cover any of it. Move money into your current account first.”',
+      'Affiliate cover: “The School pays for your Affiliate cover.” on a medical leave, “It could only be bought until …”, or, as it’s paid in full, “Your checking account and your savings can cover only … of it now, so nothing was paid.”, going on “It’s paid in full, so move money into your checking account first.”, or “Your checking account and your savings can’t cover any of it, so nothing was paid. Move money into your checking account first.”',
       'Appeal: “Only a leave the dean imposed can be appealed.” or “The appeal had to be in by …”.',
       'Call It Off, on a leave the dean imposed: “The dean imposed this leave, so it isn’t yours to call off”, and while it can still be appealed, “appeal it in writing to the dean by …”.',
     ],
@@ -551,7 +551,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     next: [
       'While you wait for the decision, keep going to classes: nothing changes until the leave begins.',
       'On a personal leave, buy Affiliate cover before its deadline, then give notice of return as soon as you know you’re coming back.',
-      'Back for the return term, register on Standing And Craft before classes, then check Your Week on the Classes tab.',
+      'Back for the return term, press Register on Standing And Craft before classes, then check Your Week on the Classes tab.',
     ],
     related: ['school.repeat', 'school.money', 'papers.health-cover', 'documents.work', 'school.standing'],
     connections: [
@@ -705,14 +705,14 @@ export const SCHOOL: readonly GuideEntry[] = [
     ],
     needs: [
       // Until 2026-10-16 the savings beside the current account counted only where linked to it.
-      'To pay: something owed, no more than is owed, and that much in your current account and the easy-access savings beside it, since Yale takes a payment from a checking or savings account.',
+      'To pay: something owed, no more than is owed, and that much in your checking account and your easy-access savings, since Yale takes a payment from a checking or savings account.',
       `For an aid review: ${SIX} terms enrolled, or a repeat or an additional term granted. Each student gets one review.`,
       'For conversion: need found by Yale’s assessment, not being on leave, and hours to convert.',
     ],
     costs: [
       { label: `A Term Past ${upper(SIX)}`, value: `${usd(SEVENTH.tuition)} tuition and ${usd(SEVENTH.healthPlan)} for Yale Health in ${season(SEVENTH_TERM)}, due in ${EXTENDED_STUDY.dueDays} days`, estimate: true },
       { label: 'Late Fee', value: `${usd(EXTENDED_STUDY.lateFee)} a month while it’s owed, up to ${usd(EXTENDED_STUDY.lateFeeTermCap)} a term` },
-      { label: 'Paying', value: 'From your current account, then the easy-access savings at its bank, at once, with no time taken' },
+      { label: 'Paying', value: 'From your checking account, then your easy-access savings, at once, with no time taken' },
       { label: 'Grant Aid', value: `${usd(WORK_STUDY.hourly)} for each hour converted, up to ${WORK_LIMITS.convertibleHours} hours a year, taxed as a scholarship` },
       { label: 'Asking For Conversion', value: 'No time and no money. The grant comes at the processing it’s booked for' },
     ],
@@ -751,7 +751,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     unavailable: [
       // Until 2026-10-16 the last was “Your bank can’t cover it.”, said with savings at the bank that could: a payment to
       // Yale reached savings only where linked (`fromBankToYale`, systems/leave.ts).
-      '“Your Yale account owes no balance.”, “Enter an amount to pay.”, “… is owed. Pay that or less.”, “Your current account and the savings beside it can cover only … of it now.”, going on “Pay that or less, or move money into your current account first.”, or “Your current account and the savings beside it can’t cover any of it. Move money into your current account first.”',
+      '“Your Yale account owes no balance.”, “Enter an amount to pay.”, “… is owed. Pay that or less.”, “Your checking account and your savings can cover only … of it now, so nothing was paid.”, going on “Pay that or less, or move money into your checking account first.”, or “Your checking account and your savings can’t cover any of it, so nothing was paid. Move money into your checking account first.”',
       '“Support past six terms is reviewed once a seventh is coming: you’re within the six.”',
       '“It’s with the aid office, decided by …” or “The aid office has reviewed your support.”',
       '“Converting hours to grant aid is only for students on financial aid, and the aid office found no need for you.”',

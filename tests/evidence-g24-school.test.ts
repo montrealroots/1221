@@ -524,7 +524,7 @@ describe('standing/term evaluation', () => {
     // Grew under half what the rested twin and the class did, from the same start.
     expect(review!.growth * 2).toBeLessThan(rested.growth);
     expect(review!.growth * 2).toBeLessThan(review!.classGrowth);
-    expect(review!.reason).toContain(`Your craft grew ${review!.growth.toFixed(1)} points, and the class’s middle student’s grew ${review!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class.`);
+    expect(review!.reason).toContain(`Your craft grew ${review!.growth.toFixed(1)} points this term, and the middle student in your class grew ${review!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class.`);
     expect(rested.reason).not.toContain('behind the class');
   });
 
@@ -539,7 +539,7 @@ describe('standing/term evaluation', () => {
     expect(review!.growth).toBe(0);
     expect(review!.classGrowth).toBeGreaterThan(0.5);
     expect(review).toMatchObject({ term: 0, standing: 'good', attendance: 1 });
-    expect(review!.reason).toContain(`Your craft grew 0.0 points, and the class’s middle student’s grew ${review!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s in line with the class.`);
+    expect(review!.reason).toContain(`Your craft grew 0.0 points this term, and the middle student in your class grew ${review!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s in line with the class.`);
   });
 
   it('judges a run played after its term’s evaluation at the next, once: its nights with the term’s own at their mean are the term’s work, short, in its words', () => {

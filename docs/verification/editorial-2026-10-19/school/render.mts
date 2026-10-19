@@ -16,7 +16,7 @@ import { approachRefusal, askRefusal, courseworkOf, feedbackWords, mateBusy, mee
 import { chiefLimit, evaluate, type Limit } from '@/engine/systems/evaluation';
 import { TASK_PROFILES } from '@/engine/content/tasks';
 import { evenCraft } from '@/engine/systems/school';
-import { directorsNote, shortTermWords, teachersNotes, type SchoolRecord } from '@/engine/systems/school';
+import { directorsNote, evaluate as termReview, shortTermWords, teachersNotes, type SchoolRecord } from '@/engine/systems/school';
 
 const out: string[] = [];
 const say = (head: string, s: string | undefined) => out.push(`${head}: ${s ?? '(nothing)'}`);
@@ -145,4 +145,14 @@ hard.player.craft = evenCraft(40);
 const parts = new Set(Object.values(TASK_PROFILES.scene!.dims).flatMap((d) => d!.prep ?? []));
 const judged = evaluate(hard, hard.player, { task: TASK_PROFILES.scene!, techniques: { scene: 2, character: 1 }, prep: Object.fromEntries([...parts].map((k) => [k, 0.9])), required: Object.fromEntries([...parts].map((k) => [k, 0.9])), difficulty: 1, condition: { readiness: 85 }, key: 'render:hard' });
 say('a hard piece, its limits\' labels', [...new Set(judged.limits.map((l) => `${l.kind}: ${l.label}`))].join(' | '));
+// 8. A Cabaret show joined, then a term review that finds the term short from academic concern: the warning, and the show left.
+const cab = createSave(1, 'school-render-cabaret', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+cab.advanceTo(instantFromZoned({ year: 2026, month: 9, day: 7, hour: 12 }, zone));
+const joined = cab.execute({ kind: 'school.cabaret', payload: {} });
+say('the Cabaret joined', joined.ok ? 'yes' : joined.error);
+cab.player.school!.standing = 'concern';
+Object.assign(cab.player.school!.tally, { classDays: 40, attended: 0, excused: 0 });
+const before = new Set(cab.universe.notifications.map((n) => n.id));
+termReview(cab, cab.player, 0);
+for (const n of cab.universe.notifications) if (!before.has(n.id)) out.push(`REVIEW ${n.title}\n    ${n.body}`);
 console.log(out.join('\n'));

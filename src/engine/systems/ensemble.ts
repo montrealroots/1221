@@ -124,6 +124,10 @@ export function sharedWords(personal: number, shared: SharedResult): string {
   if (shared.parts.agree < 1) why.push('your readings were still apart');
   if (shared.slip) why.push(`${first} slipped in ${shared.slip.at.toLowerCase()}${shared.slip.covered >= 0.5 ? ', and you covered most of it' : ''}`);
   const said = why.length ? `: ${why.join('; ')}` : '';
-  if (Math.abs(gap) < 1) return `Together it came to ${shared.overall}, about what your own work did${said}.`;
-  return gap < 0 ? `Together it came to ${shared.overall}, ${-gap} under your own work${said}. Your own result stands as it is.` : `Together it came to ${shared.overall}, ${gap} over your own work: ${first} lifted it.`;
+  // In whole points of 100, as a teacher says them (from 2026-10-19, brief 15); the gap that decides which is said is the
+  // engine's own, to a tenth, as before.
+  const of = (x: number) => `${Math.round(x)} of 100`;
+  const pts = (x: number) => (Math.round(x) === 1 ? 'a point' : `${Math.round(x)} points`);
+  if (Math.abs(gap) < 1) return `Together it came to ${of(shared.overall)}, about what your own work did${said}.`;
+  return gap < 0 ? `Together it came to ${of(shared.overall)}, ${pts(-gap)} under your own work${said}. Your own result stands as it is.` : `Together it came to ${of(shared.overall)}, ${pts(gap)} over your own work: ${first} lifted it.`;
 }

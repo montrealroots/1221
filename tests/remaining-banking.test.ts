@@ -747,11 +747,11 @@ describe('banking.s7.school: a payment to Yale comes from the current account an
     expect(accountOwed(sim, sim.player)).toBe(0);
     // $45,217.00 left in savings and nothing in checking: $70,000.00 owed is more.
     charge(sim, 70_000_00);
-    expect(refusal(sim, 'school.pay_balance', {})).toBe('Your current account and the savings beside it can cover only $45,217.00 of it now. Pay that or less, or move money into your current account first.');
+    expect(refusal(sim, 'school.pay_balance', {})).toBe('Your checking account and your savings can cover only $45,217.00 of it now, so nothing was paid. Pay that or less, or move money into your checking account first.');
     expect(accountOwed(sim, sim.player)).toBe(70_000_00);
     expect(ok<{ owed: number }>(sim, 'school.pay_balance', { amount: 45_217_00 })).toEqual({ owed: 24_783_00, held: false });
     expect(savings.balance).toBe(0);
-    expect(refusal(sim, 'school.pay_balance', { amount: 1_00 })).toBe('Your current account and the savings beside it can’t cover any of it. Move money into your current account first.');
+    expect(refusal(sim, 'school.pay_balance', { amount: 1_00 })).toBe('Your checking account and your savings can’t cover any of it, so nothing was paid. Move money into your checking account first.');
     sim = reload(sim);
     expect(accountOwed(sim, sim.player)).toBe(24_783_00);
     expect(sim.universe.transactions.filter((t) => t.memo === 'Payment: Yale Student Account').map((t) => t.postings.find((q) => q.accountId === yaleAccount(sim, sim.player)!.id)!.amount)).toEqual([20_000_00, 45_217_00]);

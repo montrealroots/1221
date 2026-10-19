@@ -839,7 +839,7 @@ describe('c-wealth', () => {
     const owing = (sim: Simulation) => mine(sim, 'loan').filter((a) => a.name === 'Bills Owed').reduce((n, a) => n - a.balance, 0);
     const said = (sim: Simulation) => notices(sim, 'Fall Term 2026 Begins').map((n) => n.body.split('your family’s means rule it out, so ')[1]);
     expect(said(paid)).toEqual(['this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
-    expect(said(owed)).toEqual(['this term’s Yale Health plan, $1,882.00, and living costs are yours. Your bank couldn’t cover the plan: it’s owed, and comes out of your bank the first day there’s money for it.']);
+    expect(said(owed)).toEqual(['this term’s Yale Health plan, $1,882.00, and living costs are yours. Your bank couldn’t cover the plan, so it’s owed: it comes out of your bank the first day there’s money for it.']);
     expect([owing(paid), owing(owed)]).toEqual([0, 1_882_00]);
     // The next midnight, what's owed is paid back, out of savings as far as checking can't.
     for (const sim of [paid, owed]) sim.advanceTo(EDT(2026, 8, 25, 0, 1));

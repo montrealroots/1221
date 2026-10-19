@@ -13,3 +13,9 @@ change to one is in the area's report.
 | **That piece is finished.** | The refusal for a step, an answer or a request on a piece already done. | That work is finished. |
 | **The time to make it up ran out** | An Incomplete's deadline passed, whether or not it was extended. | The month to make it up ran out |
 | **you don’t have a scene together right now** | Running lines with a classmate you share no open piece with. | You share no open scene with |
+| **the Standing And Craft tab** | The School screen's tab by its label, in every notice that sends you there. | the Standing tab |
+| **counted absent** | What not being registered does to a class day's attendance. | today’s classes didn’t count your attendance |
+| **1 hour and 40 minutes** (a running time in a sentence) | The glossary's duration form inside a sentence, as the workload says the evening. | 1 h 40 |
+| **averaged 78 of 100** (a figure of 100 on a screen) | A night's or a run's result on its 0 to 100 scale, written "of 100" as the glossary writes trust; tests/looks.test.ts keeps "out of 100" off the screens. | 78 out of 100 |
+| **press Give Notice Of Return on the Standing And Craft tab** | The leave's notices name the button and its tab, as the refusals do. | on the Standing tab, Tell the registrar |
+| **the faculty won’t recommend the degree** | What follows when the thirty days pass with nothing asked, in the words of the notice that ends it ("The faculty didn’t recommend the degree"). | the degree is withheld |

@@ -327,7 +327,7 @@ describe('school.shift', () => {
     expect(sim.player.school!.workStudy.owedHours).toBe(0);
     const told = titled(sim, 'A Shift You Couldn’t Work');
     expect(told).toHaveLength(1);
-    expect(told[0]!.body).toBe('Work-study starts with registration, when the I-9 is done. Register on the School screen.');
+    expect(told[0]!.body).toBe('You can’t work a shift until you’ve registered, which completes your I-9. Catch up on Registration And Your Account under Orientation, on the Coursework tab.');
     expect(titled(sim, 'You Missed A Work-Study Shift')).toEqual([]);
     // Nothing bought for it, nothing to pay.
     expect(sim.player.school!.ppe).toBeUndefined();
@@ -637,7 +637,7 @@ describe('school.evaluation', () => {
     const spring = (s: Simulation) => s.player.school!.history.find((r) => r.term === 1)!;
     expect(spring(reach).growth).toBe(0);
     expect(spring(reach).standing).toBe('good');
-    expect(spring(reach).reason).toContain('Your craft grew 0.0 points, and the class’s middle student’s grew');
+    expect(spring(reach).reason).toContain('Your craft grew 0.0 points this term, and the middle student in your class grew');
     expect(spring(reach).reason).toContain('Allowing for how much room each of you had to grow, that’s in line with the class.');
     expect(reach.player.school!.standing).toBe('good');
     expect(spring(held).standing).toBe('concern');
@@ -888,7 +888,7 @@ describe('school.commencement', () => {
     expect(sim.player.school!.standing).toBe('withheld');
     expect(sim.player.school!.endedAt).toBe(day);
     // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
-    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The degree needs every course passed, and Acting VI wasn’t. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.']);
+    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The degree needs every course passed, and Acting VI wasn’t. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. You can still practice, and tape the practice briefs on your Profile, outside the School.']);
     expect(titled(sim, 'Your MFA Is Conferred')).toEqual([]);
     expect(sim.player.school!.awaitingDegree).toBeUndefined();
   });

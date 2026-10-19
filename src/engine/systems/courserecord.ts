@@ -119,7 +119,7 @@ export function settleCourses(sim: Simulation, person: Person, term: number, sho
     settled.push(r);
   }
   if (person.id === sim.universe.playerId) {
-    for (const r of settled.filter((x) => x.result === 'incomplete')) sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill for ${r.excused} of its ${r.meetings} classes, so it’s an Incomplete for now. To complete it, make up ${sessionsWords(r.owed ?? 0)} with its teachers by ${formatDate(r.dueBy!, sim.zone)}, each covering a week of the course: press Make Up A Session on the Standing tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
+    for (const r of settled.filter((x) => x.result === 'incomplete')) sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill for ${r.excused} of its ${r.meetings} classes, so it’s an Incomplete for now. To complete it, make up ${sessionsWords(r.owed ?? 0)} with its teachers by ${formatDate(r.dueBy!, sim.zone)}, each covering a week of the course: press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
   }
   return settled;
 }
@@ -158,8 +158,8 @@ export function tellFails(sim: Simulation, person: Person, term: number, ended: 
  * additional term for it (played: tests/remaining-school.test.ts, a second fall's Fail after a first year's repeat).
  */
 function remedy(r: CourseRecord, room: (academic: number) => boolean, later: () => boolean): string {
-  if (repeatOpen(r, room)) return 'At the year’s end, you can ask to repeat the year on the Standing tab.';
-  if (later()) return 'You can’t repeat its year: that would go past the nine semesters the Bulletin allows. Instead, after your last year’s term review, you can ask on the Standing tab for an additional term to retake it, unless that review puts you on academic warning.';
+  if (repeatOpen(r, room)) return 'At the year’s end, you can ask to repeat the year on the Standing And Craft tab.';
+  if (later()) return 'You can’t repeat its year: that would go past the nine semesters the Bulletin allows. Instead, after your last year’s term review, you can ask on the Standing And Craft tab for an additional term to retake it, unless that review puts you on academic warning.';
   return 'There’s no way left to retake it: neither a repeat of its year nor an additional term fits in the nine semesters the Bulletin allows.';
 }
 
@@ -277,7 +277,7 @@ export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation
     const r = person?.school ? coursesOf(person.school)[String(item.payload.key)] : undefined;
     if (!person || !r || r.result !== 'incomplete') return;
     if (item.payload.remind === true) {
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `A Week Left: ${r.name}`, body: `You still have ${sessionsWords((r.owed ?? 0) - (r.madeUp ?? 0), 'make-up session')} to do, by ${formatDate(r.dueBy!, s.zone)}. Press Make Up A Session on the Standing tab.${extendRefusal(s, person, String(item.payload.key)) ? '' : ' If you need longer, press Ask For A Month More.'}`, importance: 75, route: '/workspace/school' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `A Week Left: ${r.name}`, body: `You still have ${sessionsWords((r.owed ?? 0) - (r.madeUp ?? 0), 'make-up session')} to do, by ${formatDate(r.dueBy!, s.zone)}. Press Make Up A Session on the Standing And Craft tab.${extendRefusal(s, person, String(item.payload.key)) ? '' : ' If you need longer, press Ask For A Month More.'}`, importance: 75, route: '/workspace/school' });
       return;
     }
     r.result = 'permanent';

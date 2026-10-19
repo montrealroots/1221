@@ -366,7 +366,7 @@ describe('Yale’s living-expense scholarship, the term’s account (c-family)',
     expect(into(paid[0]!, checking(need).id)).toBe(13_318_50);
     expect(checking(need).balance - fall.need.before).toBe(13_318_50);
     expect(earningsOf(need.player).years[2026]!.scholarship).toBe(14_014_00);
-    expect(titled(need, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Your living-expense scholarship of $15,200.50 met this term’s Yale Health plan, $1,882.00, and $13,318.50 is in your Chase Total Checking. Tuition, $20,375.00 a term, is covered by the tuition scholarship.']);
+    expect(titled(need, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Your living-expense scholarship of $15,200.50 paid this term’s Yale Health plan, $1,882.00, and $13,318.50 is in your Chase Total Checking.']);
     expect(memos(rich, /^Living-expense scholarship/)).toHaveLength(0);
     expect(checking(rich).balance - fall.rich.before).toBe(-1_882_00);
     expect(earningsOf(rich.player).years[2026]?.scholarship ?? 0).toBe(0);

@@ -238,5 +238,285 @@
   "meaningSensitive": false,
   "verified": "guide-b1.txt (guide.mts); tests/guide.test.ts",
   "batch": 1
+ },
+ {
+  "source": "src/engine/systems/school.ts#enroll",
+  "kind": "notification",
+  "before": "You’re one of the 16 actors in the MFA in Acting at the David Geffen School of Drama at Yale University, chosen from this year’s auditions with the 15 others you’ll be cast beside and against. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.",
+  "after": "You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.",
+  "why": "One long sentence that ran the class and the casting together became two; the dates are kept.",
+  "meaningSensitive": false,
+  "verified": "rendered.txt NOTICE Welcome To The Class Of 2029 (render.mts)",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#evaluate",
+  "kind": "official",
+  "before": "You came to 85% of the classes, calls and shifts asked of you. Your craft grew 0.1 points, and the class’s middle student’s grew 0.1. Allowing for how much room each of you had to grow, that’s in line with the class.",
+  "after": "You came to 85% of the classes, calls and shifts asked of you. Your craft grew 0.1 points this term, and the middle student in your class grew 0.1. Allowing for how much room each of you had to grow, that’s in line with the class.",
+  "why": "A double possessive (\"the class’s middle student’s\") made plain; the figures are the review's, kept to a tenth as the Standing And Craft tab shows them.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b08.test.ts and tests/evidence3-school.test.ts",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#evaluate",
+  "kind": "official",
+  "before": "What held most of them back was “With Your Partner”, unfinished on 3 of them. Rehearse With Your Partner, asked for an evening at least 2 hours ahead, or Run It With A Reader works on it.",
+  "after": "What held most of them back was “With Your Partner”, unfinished on 3 of them. To work on it: ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader.",
+  "why": "The review says the cause the way the warning does, and the remedy no longer names a button the card doesn't show.",
+  "meaningSensitive": true,
+  "verified": "code read: shortCause and remedyWords, shared with termWarning; tests/scope-school.test.ts",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#setStanding",
+  "kind": "official",
+  "before": "You’re on academic warning, given at a formal meeting with the chair of Acting and an associate dean, as the Bulletin sets out.",
+  "after": "You’ve been placed on academic warning at a formal meeting with the chair of Acting and an associate dean, as the Bulletin sets out.",
+  "why": "\"Given at\" hung off the standing; the sentence now says what happened to you and where.",
+  "meaningSensitive": false,
+  "verified": "tests/language-dynamic.test.ts standings",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#setStanding",
+  "kind": "official",
+  "before": "What you did here stands: … and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.",
+  "after": "What you did here stands: … and hours you worked are still paid. You can still practice, and tape the practice briefs on your Profile, outside the School.",
+  "why": "\"Go on\" said nothing a player could act on; it now says what you can still do.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-school.test.ts STANDS; code read: practiceRefusal and tapeRefusal read the craft, not the School",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#registerSchool",
+  "kind": "notification",
+  "before": "You haven’t registered, so today’s classes didn’t count your attendance. Register on the School screen. Registering late takes the chair’s written permission, which the game assumes you have.",
+  "after": "You haven’t registered, so you were counted absent from today’s classes. Press Register on the Standing And Craft tab. Registering late takes the chair’s written permission, which the game assumes you have.",
+  "why": "\"Register on the School screen\" named no control; the School screen has a Register button only on Standing And Craft (after a leave or a hold), and in a first term the way is Orientation's registration session, which the notice now names in that case.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g26-school.test.ts and tests/remaining-school.test.ts; code read: registered(), school.reregister in StudyPlanPanels' LeavePanel",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#registerSchool",
+  "kind": "notification",
+  "before": "Acting I, Voice I: an unexcused absence. The faculty count it at the term review.",
+  "after": "You missed Acting I and Voice I today, unexcused. The faculty count it at the term review. If you’re unwell, call in sick before classes start.",
+  "why": "What happened in a sentence, and the next step: calling in sick only excuses a day before its classes have run (sickRefusal).",
+  "meaningSensitive": true,
+  "verified": "code read: sickRefusal refuses once today's classes are over; tests/school.test.ts",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#registerSchool",
+  "kind": "notification",
+  "before": "Two missed calls in a term take you out of the casting pool.",
+  "after": "You missed a rehearsal call. One more missed call this term would take you out of the casting pool.",
+  "why": "The notice said a rule and not what happened. It now counts what's left, and says so differently for a player already out of the pool, whom the old words would have warned of something done.",
+  "meaningSensitive": true,
+  "verified": "code read: missedCallsOut returns early when castable is false, so this notice reached students already out",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#registerSchool",
+  "kind": "official",
+  "before": "The MFA in Acting is conferred at Yale’s December conferral, your last courses retaken in an additional term; the diploma is mailed in about 6 weeks.",
+  "after": "Your MFA in Acting is conferred at Yale’s December conferral, after the courses you retook in an additional term. The diploma is mailed in about six weeks.",
+  "why": "Two sentences for two facts, and the count in words.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g26-school.test.ts",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#teachersNotes",
+  "kind": "feedback",
+  "before": "Real progress this term: you’re pulling ahead of the class in speech, and accents and dialects.",
+  "after": "Real progress this term: you’re pulling ahead of the class in speech and in accents and dialects.",
+  "why": "A skill with its own \"and\" next to another read as three things; each now keeps its \"in\" (and \"your\" in \"Keep at your speech and your accents and dialects\").",
+  "meaningSensitive": false,
+  "verified": "rendered.txt teacher's notes (render.mts)",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#cast",
+  "kind": "notification",
+  "before": "The chair of Acting has cast you as …, from its first rehearsal call. Once cast, you play the part through the run, and a missed call counts against you.",
+  "after": "The chair of Acting has cast you as …, from its first rehearsal call. You play the part through the run, and its calls are on your calendar. A missed call counts against you: two in a term take you out of the casting pool.",
+  "why": "Where to find the calls, and what a missed one actually does.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-g8-12.test.ts; code read: ESTIMATE.missedCallsOut",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/production.ts#reflect",
+  "kind": "notification",
+  "before": "…: you answered all … calls. The director gave you 3 notes. You took 2, all of them answered in the work. (Simulated: the game’s summary, not the director’s words.)",
+  "after": "…: you answered all … calls. The director gave you three notes, and you took two. (A summary of your run, not the director’s own words.)",
+  "why": "\"Answered in the work\" told the player nothing they could use; the label is the working reference's row 3.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g19-school.test.ts Looking Back",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/ensemble.ts#sharedWords",
+  "kind": "feedback",
+  "before": "Together it came to 70, 10 over your own work: Ruth lifted it.",
+  "after": "Together it came to 70 of 100, 10 points over your own work: Ruth lifted it.",
+  "why": "Whole points of 100, as the feedback header gives the band's score; which sentence is said still reads the engine's own gap.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g31-1.test.ts",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/workload.ts#workloadWords",
+  "kind": "label",
+  "before": "The evening runs 1 h 40 straight through (estimated). As a lead, you’re on stage for about …% of its 1 h 40 of playing. … so its workload is ….…… of a possible 8. By the final curtain, tiring takes …% off the parts of your performance it affects, with your stamina as it is and readiness at …. The evening costs … energy.",
+  "after": "With your stamina as it is and readiness at …, tiring takes …% off the parts of your performance it affects by the final curtain, and the evening costs … energy. The evening runs 1 hour and 40 minutes, straight through (estimated). As a lead, you’re on stage for about …% of its 1 hour and 40 minutes of playing. … so its workload is …. … of a possible 8.",
+  "why": "What it does to your night first, then how it's worked out; durations as the glossary says them in a sentence (1 hour and 40 minutes, not 1 h 40); the intensity, an intermediate figure, left to the workload it makes, which is given to a tenth.",
+  "meaningSensitive": false,
+  "verified": "tests/decisions-stamina.test.ts (the Carlotta night's workload, before the curtain and after it)",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/school.ts#registerSchool <school.withdraw>",
+  "kind": "official",
+  "before": "It was by the fifteenth day of classes, so Yale Health’s cover ends today, and its $1,882.00 premium is refunded. … As an F-1 student you have fifteen days’ grace, and OPT isn’t open to you.",
+  "after": "Because it was within the first fifteen days of classes, Yale Health’s cover ends today, and its $1,882.00 premium is refunded. … As an F-1 student, you have a fifteen-day grace period, and OPT isn’t open to you.",
+  "why": "The glossary's grace period, and the condition said as a reason.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g16-papers.test.ts and tests/evidence-g33-ui.test.ts",
+  "batch": 2
+ },
+ {
+  "source": "src/engine/systems/leave.ts#tellOutsideTheCover",
+  "kind": "notification",
+  "before": "A doctor’s visit on March 4, 2027 at Fair Haven Community Health Care: booked while Yale Health didn’t cover you, it stays where it was booked, and Yale Health pays for a visit only at its own Health Center. Call it off under Your Doctor on Papers, then Book An Appointment, and you’re seen there.",
+  "after": "You booked a doctor’s visit on March 4, 2027 at Fair Haven Community Health Care while Yale Health didn’t cover you, so it stays where you booked it. Yale Health pays only for a visit at its own Health Center. To be covered, call it off under Your Doctor on Papers, then press Book An Appointment to be seen there.",
+  "why": "The player is the one who booked it, so the sentence says so; the rule gets its own sentence, and the way to be covered says why you'd do it.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-09-journeys.test.ts (the whole body, toBe)",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#leaveLengths",
+  "kind": "refusal",
+  "before": "You’ve had 2 terms of leave; the Bulletin allows 3 in all.",
+  "after": "You’ve had two terms of leave, and the Bulletin allows three in all.",
+  "why": "Small counts in words, as a sentence says them, and the semicolon an \"and\".",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-school.test.ts (the refusal and the Leave panel's Length list)",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#bankShortWords",
+  "kind": "refusal",
+  "before": "Your current account and the savings beside it can cover only $45,217.00 of it now. Pay that or less, or move money into your current account first.",
+  "after": "Your checking account and your savings can cover only $45,217.00 of it now, so nothing was paid. Pay that or less, or move money into your checking account first.",
+  "why": "The glossary's checking account; \"the savings beside it\" was odd and not the rule (drawFromBank draws on any savings); and the refusal now says the one thing a player wants to know first, that nothing was paid.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g25-school.test.ts and tests/remaining-banking.test.ts (toBe); code read: fromBankToYale draws with fromSavings true, and a refused command posts nothing",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#billUnsupportedTerm",
+  "kind": "notification",
+  "before": "the term’s living scholarship meets its $2,377.37 Yale Health fee and pays $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by",
+  "after": "the term’s living scholarship pays its $2,377.37 Yale Health fee and $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by",
+  "why": "\"Meets\" and \"pays\" were two verbs for one act; one verb carries both amounts.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g8-2.test.ts (toContain)",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#facultyReview",
+  "kind": "official",
+  "before": "… The faculty reviewed it and kept you, on academic warning: the year is to be repeated, which you ask for at its end.",
+  "after": "… The faculty reviewed it and kept you on academic warning, to repeat the year: ask to repeat it at the year’s end, on the Standing And Craft tab.",
+  "why": "The passive \"is to be repeated, which you ask for\" hid that the player has to ask; it now says what to do, when and where.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g26-school.test.ts (toEqual); code read: repeatRefusal opens at the year's end only",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#cancelRepeatWarning",
+  "kind": "confirmation",
+  "before": "Calling it off withholds the degree now: its thirty days ended on May 27, 2029. Confirm to go ahead.",
+  "after": "If you call it off, the faculty won’t recommend the degree: its thirty days ended on May 27, 2029. Confirm to go ahead.",
+  "why": "Said as a consequence of your choice, in the words the end itself uses (\"The faculty didn’t recommend the degree\").",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g26-school.test.ts (toBe)",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#cancelRepeatWarning",
+  "kind": "confirmation",
+  "before": "Calling it off leaves the degree withheld if you don’t ask again by May 27, 2029.",
+  "after": "If you call it off and don’t ask again by May 27, 2029, the faculty won’t recommend the degree.",
+  "why": "The condition first, then what follows, as a person warns you.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g26-school.test.ts (the panel's warning, toContain)",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#registerLeave",
+  "kind": "official",
+  "before": "The chair and the dean granted it: from Fall Term 2027 you take year 1’s courses again, and what you did the first time stays on your record. The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 terms will be billed to your Yale account. The Bulletin sets no rule for repeating a course; the decision is the game’s.",
+  "after": "The chair and the dean granted it: from Fall Term 2027 you take year 1’s courses again, and what you did the first time stays on your record. The tuition scholarship supports six terms, and with the year again the degree takes eight terms: two will be billed to your Yale account. The Bulletin sets no rule for repeating a course; the decision is the game’s.",
+  "why": "\"Takes 8: 2 terms\" read as a ratio; the counts in words, with the noun where it belongs.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g26-school.test.ts (toEqual)",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#offerRepeat",
+  "kind": "notification",
+  "before": "Taming The Cyclops isn’t passed, and the degree needs every course. By May 26, 2030 you can ask for an additional term, Spring Term 2031, to retake it, on the Standing tab. A term past the sixth has no tuition support unless the aid office grants it. If you don’t ask, the degree is withheld.",
+  "after": "You haven’t passed Taming The Cyclops, and the degree needs every course. By May 26, 2030, you can ask on the Standing And Craft tab for an additional term, Spring Term 2031, to retake it. A term past the sixth has no tuition support unless the aid office grants it. If you don’t ask, the faculty won’t recommend the degree.",
+  "why": "Said to the player, the courses listed with an \"and\" when there are several, the tab by its name, and the end in the words it comes in.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g26-school.test.ts and tests/remaining-school.test.ts (the ask, with the tab)",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#startLeave",
+  "kind": "notification",
+  "before": "Acting I, Speech And Accents I, Alexander Technique I, Text And Context Across The Repertory, The Body As Source I, Voice I, Play, Acting Intimacy And Combat For The Stage, Drama 50: The Theatrical Event are left unfinished, to be taken again when you’re back. … Give notice of your return by June 28, 2027, with a Yale Health physician’s clearance, on the Standing tab. Without it, the leave ends in dismissal.",
+  "after": "You leave nine courses unfinished, to take again when you’re back: Acting I, Speech And Accents I, Alexander Technique I, Text And Context Across The Repertory, The Body As Source I, Voice I, Play, Acting Intimacy And Combat For The Stage and Drama 50: The Theatrical Event. … Give notice of your return by June 28, 2027, with a Yale Health physician’s clearance: press Give Notice Of Return on the Standing And Craft tab. Without it, the leave ends in dismissal.",
+  "why": "Nine course names before the verb lost the sentence; the count comes first and the list, with its \"and\", after. The notice names the button.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/editorial-2026-10-19/school/leave.txt (leave.mts, tests/leave.test.ts's medical leave played)",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#registerLeave",
+  "kind": "notification",
+  "before": "Tell the registrar you’re coming back by June 28, 2027, with a Yale Health physician’s clearance, on the Standing tab.",
+  "after": "Give notice of your return by June 28, 2027, with a Yale Health physician’s clearance: press Give Notice Of Return on the Standing And Craft tab. Without it, the leave ends in dismissal.",
+  "why": "The reminder in the leave's own words and button, and what's at stake if it's missed, as the leave's first notice said it.",
+  "meaningSensitive": false,
+  "verified": "docs/verification/editorial-2026-10-19/school/leave.txt (Two Weeks To Give Notice)",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#returnFromLeave",
+  "kind": "notification",
+  "before": "Welcome back for Fall Term 2027. Register on the Standing tab before classes: until you do, classes don’t count your attendance. You’re in year 1 again, with the courses you left, in the class of 2030.",
+  "after": "Welcome back for Fall Term 2027. Press Register on the Standing And Craft tab before classes: until you do, you’re counted absent from them. You’re in year 1 again, with the courses you left, in the class of 2030.",
+  "why": "\"Classes don’t count your attendance\" undersold it: an unregistered day counts as an absence, as Not Registered says.",
+  "meaningSensitive": true,
+  "verified": "docs/verification/editorial-2026-10-19/school/leave.txt (Back From Your Leave); code read: registerSchool counts the day absent when registered() is false",
+  "batch": 3
+ },
+ {
+  "source": "src/engine/systems/leave.ts#considerWelfare",
+  "kind": "notification",
+  "before": "With …, Yale Health has asked to assess whether you can go on with your studies for now, on …. It’s an individual assessment of how you’re managing and what the School can adjust for you, not of any diagnosis; it can end with nothing changed, with modifications, or with a recommendation of a medical leave that the dean decides. You can ask for a medical leave yourself first. Not coming to the assessment is itself a ground the Bulletin names for a leave.",
+  "after": "After …, Yale Health has asked to see you on …, to assess whether you can go on with your studies for now. It looks at how you’re managing and what the School can adjust for you, not at any diagnosis. It can end with nothing changed, with modifications, or with a recommendation of a medical leave, which the dean decides. You can ask for a medical leave yourself first. If you don’t come, the Bulletin counts that as a ground for a leave in itself.",
+  "why": "The date by the meeting it belongs to, one fact a sentence, and the last warning said to the player.",
+  "meaningSensitive": false,
+  "verified": "tests/school-paths.test.ts (not at any diagnosis) and tests/evidence-g25-school.test.ts",
+  "batch": 3
  }
 ]

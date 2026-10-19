@@ -1,0 +1,190 @@
+=== school.leave: Leave, Withdrawal And Coming Back
+Where To Find It: School, Standing And Craft, A Leave Of Absence
+When You Can Use It: From the guide’s chapter “Drama School”; a leave once your first term has begun, a withdrawal while you’re at school.
+
+A leave of absence takes you out of the program for a time and brings you back with the class a year below yours. Ask for a medical or a personal leave, and the chair and the dean decide within 5 working days. On leave you have no aid, classes, calls or assigned shifts. Yale Health goes on for a medical leave, and on a personal one you can buy Affiliate cover. Give notice of your return 8 weeks before the term you come back to, or the leave ends in dismissal, then press Register when you’re back. Withdrawing gives up your place for good.
+
+What To Press
+  - Open School, Standing And Craft. Under A Leave Of Absence, choose the Kind, Medical or Personal, then the Length and the Reason.
+  - Press Ask For A Leave…, read what it would do, and press Ask. Until the leave begins, Call Off The Leave… and then Call It Off keeps you as you are. A leave the dean imposed isn’t yours to call off: you appeal it instead.
+  - On leave, press Give Notice Of Return before its date. On a personal leave, press Buy Affiliate Cover… and then Buy It before its deadline to keep Yale Health.
+  - Back for the return term, press Register before classes.
+  - If the dean imposed a medical leave, press Appeal To The Dean while the appeal is open, from the dean’s decision, before the leave begins or during it.
+  - To leave for good, press Withdraw From The School…, read what it does, and press Withdraw. Stay backs out.
+
+What You Need First
+  - Your first term begun, and no leave already asked for, granted or under way.
+  - For a personal leave: a term completed, every course current (no Incomplete or failed course open), and not being on an F-1. Asked by the 10th day of a term’s classes, it begins when granted; after that, with the next term.
+  - For a medical leave: something a Yale Health physician would see in the last 30 days (an illness, an injury, care or a stay in hospital), or condition under 55 now.
+  - Leave left to take: the Bulletin allows 3 terms in all, and a leave’s length must bring you back in the season you left.
+  - To come back from a medical leave: a physician’s clearance, so out of hospital, not laid up, past the flu and well enough.
+
+Costs
+  - Asking: Free. It’s decided within 5 working days, or by the term it begins with if that comes first (estimated)
+  - Affiliate Cover: $5,416 a term for a personal leave, paid all at once, less the term’s Yale Health fee where the leave began after the first day of classes. The School pays on a medical leave
+  - Aid Returned: Where need was found (a family of Nothing, Scraping, Modest or Comfortable means), a leave begun mid-term charges the term’s living-expense scholarship back to your Yale account on the rebate schedule: all of it within the first 10%, half to 25%, a quarter to 50% of the term’s classes, and none after. It’s due 30 days after the leave begins, as a term’s bill is (estimated)
+  - Withdrawing: Free. Within fifteen days of a term’s first class day, a Yale Health premium paid from your bank comes back
+
+What Happens
+  - Asking puts the request with the chair and the dean, and the decision goes on your calendar.
+  - Calling it off ends the request, and you stay as you are.
+  - Once you’ve given notice, you’re expected back, and the return term begins for you.
+  - Once you buy Affiliate cover, Yale Health covers you back to the day student cover ended, and care you had in between is billed again as Yale Health pays it.
+  - Registering lets classes count you again and lets you work shifts.
+  - Withdrawing ends your place today: classes, calls, shifts and coursework stop, the hours you worked are still paid, and your class goes on without you.
+
+Later
+  - Once granted, a leave begins that day or with its term. Courses in progress are left unfinished, to take again; castings and any Cabaret show end. On a personal leave, Yale Health’s student cover ends the day it begins, or, if it begins by the end of the first day of classes, back at the insurance term’s start, with the term’s fee refunded.
+  - A personal leave is decided on where you stand at the decision: with an Incomplete or a course not passed by then, it’s refused.
+  - Notice is due 8 weeks before the return term, with a reminder two weeks before that. Give it and you’re back at the term’s start in the class a year below, and must register; without it, the leave ends in dismissal.
+  - You can buy Affiliate cover for a personal leave until September 15 for a fall leave or January 31 for a spring one, or 30 days from asking, whichever is later.
+  - Yale Health’s assessment comes 2 working days after its concern is raised, and takes 60 minutes. If you’re neither in New Haven and awake for it nor in hospital, it recommends a leave on that alone: the Bulletin names not coming as a reason in itself. If it recommends a leave, the dean decides the next working day. If you came and you’re managing by then, nothing is imposed; if you didn’t come, the leave is imposed however well you are. You then have 7 days to appeal, decided in 5 working days.
+  - If you withdraw within fifteen days of a term’s first class day, Yale Health’s cover ends: in a fall it’s canceled back to the insurance term’s start, August 1, and care since is billed as uninsured; a spring’s insurance term, from February 1, begins after the fifteenth day, so there it ends that day and nothing is canceled back. If you withdraw later, Yale Health covers you for thirty days more. On an F-1, you have a grace period of 15 days and no OPT.
+
+Reading What Comes Back
+  - Your Leave shows a leave while it’s With The Chair And The Dean, Granted, Not Yet Begun, or On Leave. From and Back For give the terms. Once it’s over, Leaves Before keeps it with how it ended.
+  - A Length marked (Not Possible) says why under the choices: one or three terms would bring you back to the second halves of year-long courses.
+  - An appeal succeeds only if you’re cleared and at least 50% of the term’s classes are still ahead; the leave stands while it’s heard. A leave granted from the next term, the dean having decided after the term’s review, has all of its term ahead: if you’re cleared, it’s overturned and called off before it begins, and you go on with that term as before. The Bulletin sets the appeal (in writing, within 7 days); the game decides it.
+  - Used, at the foot of the panel, counts the terms of leave you’ve had out of 3. Leaves Before keeps every leave and how it ended.
+  - Yale Health’s assessment shows above the leave while it’s scheduled or being decided. Whether you came is kept with its finding: not coming is a finding in itself, “You didn’t come to the assessment, which the Bulletin names as a ground of its own.”, and an appeal is the way back from the leave it brings.
+
+If You Can’t
+  - “You can’t take a leave before your first term has begun.”
+  - “Your request is with the chair and the dean, decided by …”, “Your leave is granted, from …” or “You’re on leave.”
+  - “Your request to repeat the year is being decided.”, “Your terms are done. All that’s left is the degree.” or “Your terms in the program are done.”
+  - “You can take a personal leave only after you’ve completed one term.”
+  - “For a personal leave you need to be current with your requirements…”, naming the Incomplete to make up or the course not passed.
+  - “The School doesn’t normally grant a leave to take on a professional commitment.”
+  - “On an F-1, a personal leave ends your status …”
+  - “A medical leave needs a Yale Health physician’s written recommendation, and nothing in the last 30 days would lead to one …”
+  - “You’ve had … of leave, and the Bulletin allows three in all.”
+  - Notice: “Its deadline has passed.”, or after a medical leave, why a physician can’t clear you yet.
+  - Register: “A financial hold stops registration: … is owed on your Yale account. Pay it on the Terms And Award tab.”, or on leave “You’re on leave: you register for the term you come back to, when it begins.”
+  - Affiliate cover: “The School pays for your Affiliate cover.” on a medical leave, “It could only be bought until …”, or, as it’s paid in full, “Your checking account and your savings can cover only … of it now, so nothing was paid.”, going on “It’s paid in full, so move money into your checking account first.”, or “Your checking account and your savings can’t cover any of it, so nothing was paid. Move money into your checking account first.”
+  - Appeal: “Only a leave the dean imposed can be appealed.” or “The appeal had to be in by …”.
+  - Call It Off, on a leave the dean imposed: “The dean imposed this leave, so it isn’t yours to call off”, and while it can still be appealed, “appeal it in writing to the dean by …”.
+
+Common Mistakes
+  - Missing the notice date means dismissal, and a dismissal is final. Give notice as soon as you know, and after a medical leave, be well enough to be cleared by then.
+  - A personal leave without Affiliate cover leaves you uninsured, and care in that time is billed as uninsured until you buy it.
+  - Withdrawing can’t be undone: the Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.
+  - A leave is refused while a request to repeat the year is being decided, or once your terms are done. Settle those first.
+  - Sleeping through Yale Health’s assessment, or being away from New Haven when it’s due: on that alone it recommends a leave, and the dean imposes it however well you are. Only an appeal undoes it.
+
+What To Do Next
+  - While you wait for the decision, keep going to classes: nothing changes until the leave begins.
+  - On a personal leave, buy Affiliate cover before its deadline, then give notice of return as soon as you know you’re coming back.
+  - Back for the return term, press Register on Standing And Craft before classes, then check Your Week on the Classes tab.
+
+What Decides It
+  - When It Begins: A medical leave, when granted. A personal leave, when granted if asked before classes or by the 10th class day, and after that with the next term. Either, with the next term once the term’s review is past
+  - Its Length: One, two or three terms, back in the season you left, since the acting courses run fall to spring (estimated)
+  - A Physician’s View: Illness, injury, care or a hospital stay in the last 30 days, or condition under 55 (estimated)
+  - Your Status: On an F-1, a personal leave is refused, and a medical leave extends the I-20 a year
+  - Yale Health’s Concern: 2 hospital stays in 28 days, or 60% of at least 12 class days missed ill, checked on each class day you miss ill (estimated)
+
+How It Connects
+  - papers.health-cover (immediate): A personal leave ends Yale Health’s student cover, and Affiliate cover keeps it.
+  - school.money (immediate): A leave begun mid-term charges part of the term’s living-expense scholarship back to your Yale account.
+  - school.standing (scheduled): Without notice of return by its date, the leave ends in dismissal.
+  - school.repeat (history): Courses left on a leave stay on your record as Left On Leave, and you take them again when you’re back.
+  - body.how (prerequisite): A medical leave needs a reason a physician would see, and coming back needs condition 55 or more.
+  - documents.work (immediate): On an F-1, a medical leave extends the I-20 a year once it begins, and withdrawing leaves 15 days’ grace and no OPT.
+  - productions.casting (immediate): A leave ends the term’s castings and any Cabaret show; what you played stays credited.
+
+A Worked Example
+  A first-year in the spring of 2027, no need found and every course passed, asks on the fifth class day for a personal leave.
+  - Kind Personal, Length Two Terms, Reason Personal; Ask For A Leave…, then Ask.
+  - The chair and the dean grant it 5 working days later, and it begins that day.
+  - Buy Affiliate Cover…: 2 terms at $5,416, less the $1,882 Yale Health fee you paid for the term.
+  - Give Notice Of Return by November 8, 2027.
+  The spring’s courses are left to take again, the cover costs $8,950, and you’re back on January 3, 2028 with the class of 2030, registering before classes. Without the notice, the leave would have ended in dismissal on November 8.
+
+=== school.money: What You Owe The School
+Where To Find It: School, Terms And Award, Your Yale Account
+When You Can Use It: From the guide’s chapter “Drama School”: the account once anything is billed to it, a review with a seventh term coming, conversion for a student on aid.
+
+Your Yale account is what you owe the School. The tuition scholarship pays tuition for 6 terms, so the account usually owes nothing. It’s charged for a term past those 6, for a scholarship returned on a leave, and for late fees, and Pay From Your Bank settles it. Unpaid past its due date, it brings a financial hold, which stops registration and the diploma, and a late fee each month. Ask For An Aid Review asks the aid office to support a term past 6, and a student on aid can ask to convert work-study hours missed ill into grant aid.
+
+What To Press
+  - Open School, Terms And Award. Your Yale Account shows what each term bills and credits and, once anything is billed, Owed On Your Yale Account, Financial Hold and Terms Enrolled.
+  - Type an amount in Pay (Blank Pays It All), or leave it blank, and press Pay From Your Bank.
+  - With a seventh term coming, press Ask For An Aid Review.
+  - On Shifts And Pay, press Ask For Conversion To Grant Aid when Convertible To Grant Aid shows hours.
+
+What You Need First
+  - To pay: something owed, no more than is owed, and that much in your checking account and your easy-access savings, since Yale takes a payment from a checking or savings account.
+  - For an aid review: six terms enrolled, or a repeat or an additional term granted. Each student gets one review.
+  - For conversion: need found by Yale’s assessment, not being on leave, and hours to convert.
+
+Costs
+  - A Term Past Six: $22,407.28 tuition and $2,377.37 for Yale Health in the fall of 2029, due in 30 days (estimated)
+  - Late Fee: $125 a month while it’s owed, up to $375 a term
+  - Paying: From your checking account, then your easy-access savings, at once, with no time taken
+  - Grant Aid: $23 for each hour converted, up to 150 hours a year, taxed as a scholarship
+  - Asking For Conversion: No time and no money. The grant comes at the processing it’s booked for
+
+What Happens
+  - A payment moves from your bank onto the account at once. Paid in full, a hold lifts, and a degree waiting on it is conferred.
+  - An aid review goes to the aid office, and is decided in 5 working days.
+  - A conversion is booked for the next processing, on the 15th of January or May.
+
+Later
+  - If anything is still owed 30 days after a term is billed, or after a leave returns a scholarship to it, the account goes on a financial hold with a $125 late fee, then another each month while it’s owed, up to $375 a term.
+  - Under a hold at a term’s start, you must register again once it’s paid; until then classes don’t count you and you can’t work shifts. With need found, the term’s living-expense scholarship pays the account first, and only what’s left reaches your bank: a hold it clears lifts then, and “The Financial Hold Is Lifted” says so.
+  - Under a hold at Commencement, the diploma waits until it’s paid.
+  - The aid review’s answer is applied when the next term begins. With an exception, the term’s tuition isn’t billed and it runs as one of the first six; with need found, living aid goes on either way and pays the term’s Yale Health fee. A term billed before the answer isn’t credited back.
+  - Converted hours are paid into your bank as grant aid on the processing day. For a nonresident on an F-1, 14% is withheld for tax.
+  - A credit on the account (a leave’s tuition rebate or Yale Health fee refunded, or a scholarship restored on appeal) that leaves nothing owed lifts a hold as a payment does, and “The Financial Hold Is Lifted” says so. A credit left over is refunded to your bank.
+
+Reading What Comes Back
+  - Owed On Your Yale Account shows a warning when anything is owed, and Financial Hold gives the day it began.
+  - The table lists the account’s last twelve entries, each a charge, a payment or a credit.
+  - Convertible To Grant Aid reads Not On Aid where no need was found; otherwise it shows the hours, and what they’d come to.
+  - Each Term ends Paid To Your Bank where need was found and Paid From Your Bank where it wasn’t, including a term past six where the aid office granted an exception. A term past six without one shows On Your Yale Account: its tuition, and its Yale Health fee too unless the review kept your living aid, which then pays the fee and the tuition before any of it reaches your bank, as Applied To Your Yale Account shows, and the term ends Paid To Your Bank with what’s left, if anything.
+  - Terms Enrolled counts the terms you’ve been enrolled in, the figure the degree’s 9 semesters are counted against. A leave’s terms aren’t among them.
+  - A hold’s notice, and a held diploma’s, says to pay on the Terms And Award tab, where Your Yale Account and Pay From Your Bank are.
+  - A scholarship returned on a leave is due 30 days after the leave begins, as a term’s bill is, and the “Your Leave Has Begun” notice gives the date. Unpaid by then, it brings the hold and the late fee.
+  - The figures here are the dollars Yale bills; the screen shows them in your save’s money.
+
+If You Can’t
+  - “Your Yale account owes no balance.”, “Enter an amount to pay.”, “… is owed. Pay that or less.”, “Your checking account and your savings can cover only … of it now, so nothing was paid.”, going on “Pay that or less, or move money into your checking account first.”, or “Your checking account and your savings can’t cover any of it, so nothing was paid. Move money into your checking account first.”
+  - “Support past six terms is reviewed once a seventh is coming: you’re within the six.”
+  - “It’s with the aid office, decided by …” or “The aid office has reviewed your support.”
+  - “Converting hours to grant aid is only for students on financial aid, and the aid office found no need for you.”
+  - “You can’t while you’re on leave: a student on leave has no aid.”
+  - “Your request is already in for the next processing.”
+  - “There are no hours to convert. …”; before May, “There are no hours to convert yet. …”; and from May 15 to January 14, when the next processing is January’s, “There are no hours to convert at January’s processing. …”.
+
+Common Mistakes
+  - Leaving a term’s bill, or a scholarship a leave returned, past its 30 days: the hold stops registration at the next term and the diploma at the end. Pay before it’s due.
+  - Asking for the aid review once the seventh term has begun: that term is already billed and isn’t credited back. Ask as soon as the extra term is granted.
+  - A shift you missed by staying away can’t be converted: only hours missed ill or hurt, or never assigned, can.
+
+What To Do Next
+  - When a term is billed, pay it on Terms And Award before its due date, or plan the money to.
+  - With a seventh term granted, ask for the aid review straight away.
+  - On aid, check Convertible To Grant Aid on Shifts And Pay after a shift missed ill, and ask for the conversion.
+
+What Decides It
+  - The Balance: The sum of the account’s entries: what was charged, less what was paid or credited
+  - Need: Yale’s assessment of your family’s means: the family you chose when you created the life, beside your background. Nothing, Scraping, Modest or Comfortable: need is found, and the living-expense scholarship, $15,200.50 a term in 2026–27, pays the term’s Yale Health plan, $1,882, and the rest, $13,318.50, into your bank each fall and spring; hours missed ill can be converted, and a leave begun mid-term returns part of the scholarship. Wealthy or Inherited: the family’s means rule need out, so there’s no living aid and no hours to convert, and the plan comes from your bank
+  - Your Family’s Money: What each family puts in your name on the first morning: Nothing, $43 in checking and $0 in savings; Scraping, $1,348 in checking and $326 in savings; Modest, $5,217 in checking and $7,065 in savings; Comfortable, $19,565 in checking and $45,652 in savings; Wealthy, $92,391 in checking and $413,043 in savings; Inherited, $260,870 in checking and $2,608,696 in savings
+  - The Aid Office: Makes an exception to six terms of tuition support only where you’ve had a medical leave, and keeps living aid, which pays the term’s Yale Health fee, only where need was found (estimated)
+  - Hours To Convert: Assigned hours excused ill or hurt this year; and hours never assigned, counted in May until its processing, once the spring’s shifts are done, and paid only at May’s processing, never January’s; up to 150 less any already converted. A repeated year counts as a year of its own: its hours are counted and converted separately from the first time
+
+How It Connects
+  - school.repeat (prerequisite): A repeated year or an additional term past six terms is what bills tuition to the account.
+  - school.leave (evaluation): The aid office grants tuition past six terms only to a student who has had a medical leave.
+  - school.shifts (prerequisite): Assigned hours excused ill or hurt are the hours conversion turns into grant aid.
+  - bank.accounts (immediate): Payments come out of your bank, and grant aid and refunds go into it.
+  - taxes.return (history): Grant aid is a taxable scholarship, kept for the year’s tax return.
+  - school.standing (scheduled): A hold at a term’s start means registering again before classes count you.
+
+A Worked Example
+  A repeated third year puts you in a seventh term, the fall of 2029, with no aid review asked for.
+  - The term begins: $22,407.28 tuition and $2,377.37 for Yale Health go on your Yale account, due in 30 days.
+  - You pay $10,000 from your bank, leaving $14,784.65.
+  - The due date passes.
+  A financial hold begins with a $125 late fee, and another comes each month to $375 for the term. Paying the rest lifts the hold at once.
+

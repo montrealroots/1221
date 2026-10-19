@@ -137,3 +137,177 @@ Tool matchers:
 
 `screens.txt`: the Coursework tab of a played life (Orientation, Due Soonest, eight cards with Shown Today, Table Work,
 Rehearsing With, Feedback, A Note That Keeps Coming Back). The built app is walked once the area's text is done.
+
+## Batch 2: The Term Review, Standing, Casting, The School's Notices, Productions And The Workload
+
+### Sources Reviewed
+
+All of `systems/school.ts` (57, one new: `registerWay`), `content/school.ts` (32), `systems/production.ts` (7),
+`systems/ensemble.ts` (2), `systems/piece.ts` (2), `systems/workload.ts` (4, one new: `minutesWords`),
+`content/workload.ts` (2) and `ui/components/RehearsalProcess.tsx` (4); and four of batch 1's sources read again where
+"the Standing tab" became the tab's own label (`courserecord.ts`'s three notices, `coursework.ts`'s `orient`). 110
+sources: 24 rewritten (with the four read again), 86 kept.
+
+### Rewritten
+
+- **The term review** (`evaluate`): the cause and its steps in the warning's words ("To work on it: ask your partner
+  …"), where the remedy had been capitalized into the subject of "works on it" and named a button the card doesn't show;
+  "the middle student in your class grew" for "the class’s middle student’s grew".
+- **Standing** (`setStanding`): "You’ve been placed on academic warning at a formal meeting …"; what stands after the
+  School ends now says what you can still do ("You can still practice, and tape the practice briefs on your Profile,
+  outside the School.").
+- **The welcome** (`enroll`), **casting** (`cast`: where the calls are and what two missed ones do), **the teachers'
+  notes** (two skills where one has its own "and" keep their "in" or "your"), **leaving a Cabaret show** (counts in
+  words, and the calls you won't make "don't count as missed").
+- **The School's notices** (`registerSchool`): Not Registered and A Shift You Couldn't Work name the real way to
+  register (`registerWay`: Register on Standing And Craft after a leave or a hold, otherwise Orientation's registration
+  session caught up on the Coursework tab), where they said "Register on the School screen"; You Missed Classes in a
+  sentence, with the next step (call in sick before classes start); Sent Home From Work-Study in the refusal shape;
+  You Missed A Rehearsal Call says what happened and how many more take you out of the pool, or that you're already out;
+  the December conferral and Not Conferred In December in two sentences each; the Summer Is Yours says nothing calls on
+  you; the withdrawal's "grace period" and its reason; the Term Begins notice puts tuition first in both branches.
+- **Looking Back** (`reflect`): counts in words, "answered in the work" gone, and the working reference's label "(A
+  summary of your run, not the director’s own words.)"; RehearsalProcess's The Nights Together in the same words.
+- **The scene together** (`sharedWords`): whole points of 100.
+- **The workload** (`workloadWords`): what it does to your night first, then how it's worked out; durations as the
+  glossary says them in a sentence; the intensity, an intermediate figure, left out.
+- **The Standing And Craft tab**, by its label, in the policy line and batch 1's Incomplete and Fail notices.
+
+### Kept
+
+86 sources: the standings, terms, names and the School's real names and sources, the Cabaret's and Summer Cabaret's
+refusals, the director's notes in the director's voice, the production's refusals, the workload's sources. A sample is
+in `retained.md`.
+
+### Meaning-Sensitive Changes, And How Each Was Checked
+
+- **Where to register.** Read `registered()`, `school.reregister` (StudyPlanPanels' LeavePanel, on Standing And Craft)
+  and `orientationRefusal`: `mustRegister` is set after a leave or a hold, and otherwise the only way is Orientation's
+  session, which can be caught up while Orientation isn't behind. `registerWay` reads the same flag.
+- **The missed call.** `missedCallsOut` returns early when `castable` is false, so the rehearsal-call notice reached
+  students already out of the pool; the count left is `missedCallsOut - (calls - answered)`, as the rule reads it.
+- **Call in sick before classes.** `sickRefusal` refuses once the day's classes have run.
+- **Practice after the School.** `practiceRefusal` and `tapeRefusal` read the craft, not the School.
+- **The workload's figures.** Each figure in the sentence is the one it was; the intensity is left out of the words
+  only, and the workload is printed to a tenth.
+- **Looking Back.** Every note taken counts toward "you took"; the craft notes' separate count only fed the dropped
+  clause, so no figure the panel kept is gone.
+
+### Interactions Read Whole
+
+- A term's review from attendance to the notice: the warning before it (batch 1), the review's reason, the standing's
+  notice, the Fails and Incompletes, the Cabaret left on a warning (rendered end to end, `rendered.txt` REVIEW lines).
+- Registration: the welcome, Orientation's session, Not Registered, a shift that can't be worked, a hold, Register.
+- Casting, its calls, a missed call, out of the pool, Not Cast This Term, the director's notes, Looking Back.
+
+### Tests And Tools Updated
+
+`tests/decisions-stamina`, `defects-g31-1`, `defects-g8-12`, `evidence-g16-papers`, `evidence-g19-school`,
+`evidence-g21-school`, `evidence-g24-school`, `evidence-g26-school`, `evidence-g33-ui`, `evidence2-b01`, `evidence2-b08`,
+`evidence2-b09`, `evidence2-b10`, `evidence3-person`, `evidence3-school`, `language-dynamic`, `need-paths`,
+`remaining-09-journeys`, `remaining-school`, `scope-school`. Two of these (`evidence2-b08`'s play-reading note and
+`remaining-school`'s check of whose rules the repeat entry names) held batch 1's words and failed after batch 1's
+commit, which hadn't run them again after its last guide and play-reading edits; they pass from this batch. No tool
+matcher held this batch's words.
+
+### Checks
+
+| Check | Exit |
+|---|---|
+| `npx tsc -b --noEmit` | 0 |
+| `npx eslint` (the changed files) `--max-warnings=0` | 0 |
+| `npx vitest run` (84 test files that hold or render these sources, then the four that failed, again) | 0 |
+| `title-case`, `label-sweep`, `plural-check`, `voice-check`, `tics`, `spelling`, `typos` | 0 each |
+| `node tools/text-inventory.mjs --check` | 0 once marked |
+| `doc-refs`, `deciders`, `guide-quotes` | 0 each |
+
+### Screens Verified
+
+`rendered.txt`: the welcome, the teacher's notes, a review that puts you on warning and takes you out of a Cabaret show.
+`screens.txt` from batch 1 is unchanged by this batch. The built app is walked at the area's end.
+
+## Batch 3: Leaves, The Yale Account, Repeating And The Degree's Last Steps
+
+Begun before batch 2 was committed, so the two are committed together; each has its own record here.
+
+### Sources Reviewed
+
+All of `systems/leave.ts` (43 sources), and the two school guide entries that quote its refusals, read whole:
+`school.leave` and `school.money`. 45 sources: 14 rewritten, 31 kept.
+
+### Rewritten
+
+- **The checking account** (`bankShortWords`): "Your checking account and your savings can’t cover any of it, so nothing
+  was paid." for "Your current account and the savings beside it …", the glossary's word from this brief, and the
+  refusal's shape (what can't pay, the amount, what didn't happen). It said "the savings beside it"; the payment to Yale
+  draws on savings whether linked or not (`fromBankToYale` passes `fromSavings`), so "linked" would have been untrue
+  and plain "your savings" is what's so.
+- **Where to press** (`startLeave`, `returnFromLeave`, `joinCohort`, `facultyReview`, `offerRepeat`, the dean's
+  decision, the additional term, Two Weeks To Give Notice): each names its control on its tab, Give Notice Of Return,
+  Register and Appeal To The Dean on Standing And Craft, Ask For An Aid Review on Terms And Award, where they said "on
+  the Standing tab", "Tell the registrar" or "ask for its review".
+- **Degree not recommended** (`offerRepeat`, `cancelRepeatWarning`): "the faculty won’t recommend the degree", the
+  glossary's words, for "the degree is withheld" and "Calling it off withholds the degree".
+- **Yale Health** (`considerWelfare`: the assessment's notice as five plain sentences; `tellOutsideTheCover`: the player
+  booked it, so it stays there, and what to press to be covered).
+- **Counts and ordinals in words** (`leaveLengths`, `billUnsupportedTerm`'s "this is your seventh", the repeat's
+  "takes eight terms: two will be billed"), and "pays its Yale Health fee and …" for "meets its … and pays".
+- **The two guide entries**: their quotes moved to the new words; "a grace period of 15 days"; "press Register".
+- **The courses a leave leaves unfinished** (`startLeave`): "You leave nine courses unfinished, to take again when
+  you’re back: Acting I, …, Acting Intimacy And Combat For The Stage and Drama 50: The Theatrical Event." for nine names
+  joined by commas before the verb ("…, Drama 50: The Theatrical Event are left unfinished"), found playing the leave
+  (`leave.mts`).
+- **One count in words** (`countWords`): school.ts's helper is exported and leave.ts uses it, where batch 3 had begun a
+  copy of its own; the Standing And Craft tab's repeat panel (batch 4) says its terms with the same one.
+
+### Kept
+
+31 sources: the refusals for leaves, the additional term, a repeat, Affiliate cover, appeals and Register, each naming
+its rule and, where there is one, the way out; the assessment's findings; the account's ledger lines.
+
+### Meaning-Sensitive Changes, And How Each Was Checked
+
+- **Savings.** `fromBankToYale` calls `drawFromBank(…, fromSavings = true)`, so the payment reaches savings whatever the
+  link; the words say "your savings".
+- **Nothing was paid.** Both callers (`payBalanceRefusal` behind Pay From Your Bank, `school.buy_affiliate`) refuse
+  after the press, with nothing posted.
+- **The controls.** Give Notice Of Return, Register and Appeal To The Dean are in StudyPlanPanels' LeavePanel and
+  RepeatPanel, drawn on Standing And Craft (`SchoolWorkspace`); Ask For An Aid Review in YaleAccountPanel, on Terms And
+  Award.
+- **Not recommended.** `withheld` is the standing the guide and the Standing And Craft tab call Degree Not Recommended.
+
+### Interactions Read Whole
+
+A leave asked, granted, begun, the notice to give, the return and registration; the dean's imposed leave and its appeal;
+Yale Health's assessment; a term past six billed, the hold and paying it; the last year's offer to repeat or take an
+additional term, and calling a repeat off.
+
+### Tests And Tools Updated
+
+`tests/defects-g8-2` (Affiliate cover's "pays its … and …", and the call-off warning), `defects-r3-1` (the leave
+lengths, the count in words from `LEAVE_RULES.maxTerms` as before), `evidence-g25-school`, `evidence-g26-school`,
+`evidence2-b09`, `remaining-09-journeys`, `remaining-banking`, `remaining-school`, `school-paths` (the assessment's
+"not at any diagnosis") and `student-experience` (Your Degree Isn’t Complete). Each assertion holds the new words as
+exactly as it held the old. No tool matcher held this batch's words.
+
+One test failed on batch 2's words, not this batch's: `tests/looks.test.ts` keeps "out of 100" off the screens, and
+batch 2's The Nights Together had written it; it reads "averaged 78 of 100" now, as `docs/GLOSSARY.md` writes trust, and
+`RehearsalProcess` was marked again with it. The engine's teacher's notes keep "points out of 100", which no rule of the
+screens' covers and a sentence says naturally.
+
+### Checks
+
+| Check | Exit |
+|---|---|
+| `npx tsc -b --noEmit` | 0 |
+| `npx eslint` (every changed file) `--max-warnings=0` | 0 |
+| `npx vitest run` (38 files that hold or render the leave's words: 5 failed on words not yet moved; then those five and six more touched, 11 files, 168 tests) | 0 |
+| `title-case`, `label-sweep`, `plural-check`, `voice-check`, `tics`, `spelling`, `typos` | 0 each |
+| `node tools/text-inventory.mjs --check` | 0 once marked |
+| `doc-refs`, `deciders`, `guide-quotes` (581 quoted, 581 said) | 0 each |
+
+### Screens Verified
+
+`leave.txt` (`leave.mts`): a medical leave played through commands, its notices as the player reads them: Your Leave
+Has Begun, Two Weeks To Give Notice, Back From Your Leave, The Class Of 2030. `guide-b3.txt`: the two guide entries
+printed with their figures. The built app is walked at the area's end.

@@ -387,7 +387,7 @@ const B_STEPS: readonly Step[] = [
 const journeyB = once(() => journey('g26-l3', {}, B_STEPS, false));
 const journeyBReloaded = once(() => journey('g26-l3', {}, B_STEPS, true));
 
-const OFFERED = ' At the year’s end, you can ask to repeat the year on the Standing tab.';
+const OFFERED = ' At the year’s end, you can ask to repeat the year on the Standing And Craft tab.';
 const permanentBody = (name: string, tail: string) => `The time to make it up ran out, so ${name} carries no credit, and the degree can’t be completed without it.${tail}`;
 
 // ---------------------------------------------------------------------------
@@ -602,8 +602,8 @@ describe('school.continuity: earned results across leave, return, a repeat, an a
 // school.s6.dead-ends
 // ---------------------------------------------------------------------------
 
-const STANDS = 'What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.';
-const EXTRA_LATER = ' You can’t repeat its year: that would go past the nine semesters the Bulletin allows. Instead, after your last year’s term review, you can ask on the Standing tab for an additional term to retake it, unless that review puts you on academic warning.';
+const STANDS = 'What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. You can still practice, and tape the practice briefs on your Profile, outside the School.';
+const EXTRA_LATER = ' You can’t repeat its year: that would go past the nine semesters the Bulletin allows. Instead, after your last year’s term review, you can ask on the Standing And Craft tab for an additional term to retake it, unless that review puts you on academic warning.';
 
 /**
  * sc-x3 (the scope tests' seed): Text Analysis I (Thursdays) slept through four times in Spring Term 2027, failed, the
@@ -635,7 +635,7 @@ describe('school.s6.dead-ends: no notice leaves the student without what remains
     tend(sim, onDay(classPeriod(7).to, 18));
     expect(enrolledTerms(school())).toEqual([0, 1, 2, 3, 4, 5, 6, 7]);
     expect(school().repeatBy).toBeDefined();
-    expect(titled(sim, 'Your Degree Isn’t Complete').map((n) => n.body)[0]).toContain('you can ask for an additional term, Fall Term 2030, to retake it, on the Standing tab');
+    expect(titled(sim, 'Your Degree Isn’t Complete').map((n) => n.body)[0]).toContain('you can ask on the Standing And Craft tab for an additional term, Fall Term 2030, to retake it.');
     const panel = drawn(sim, RepeatPanel);
     expect(panel.text).not.toContain('Ask To Repeat The Year…');
     expect(panel.text).toContain('Or an additional term, Fall Term 2030, to retake Clown alone');
@@ -697,7 +697,7 @@ describe('school.d-not-registered-hold: a term begun under a financial hold', ()
     // with the late fee's cap for the first, $375: $49,944.30.
     expect(accountOwed(sim, sim.player)).toBe(49_944_30);
     expect(onDay(spring, 9) < sim.now).toBe(true);
-    expect(titled(sim, 'Not Registered').map((n) => n.body)).toEqual(['You haven’t registered, so today’s classes didn’t count your attendance. A financial hold stops registration: $49,944.30 is owed on your Yale account. Pay it on the Terms And Award tab, then register on the Standing tab.']);
+    expect(titled(sim, 'Not Registered').map((n) => n.body)).toEqual(['You haven’t registered, so you were counted absent from today’s classes. A financial hold stops registration: $49,944.30 is owed on your Yale account. Pay it on the Terms And Award tab, then press Register on the Standing And Craft tab.']);
     expect(refused(sim, 'school.reregister')).toBe('A financial hold stops registration: $49,944.30 is owed on your Yale account. Pay it on the Terms And Award tab.');
     sim.must({ kind: 'school.pay_balance', payload: {} });
     sim.must({ kind: 'school.reregister', payload: {} });
@@ -975,8 +975,8 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     expect(drew('school.return_notice')).toEqual([]);
     const back = thaw(a.marks['term 3 begins']!);
     flu(back);
-    expect(refusedLeaving(back, 'school.request_leave', { kind: 'medical', reason: 'illness', terms: 2 })).toBe('You’ve had 2 terms of leave; the Bulletin allows 3 in all.');
-    expect(drawn(back, LeavePanel).text).toContain('Two terms: You’ve had 2 terms of leave; the Bulletin allows 3 in all.');
+    expect(refusedLeaving(back, 'school.request_leave', { kind: 'medical', reason: 'illness', terms: 2 })).toBe('You’ve had two terms of leave, and the Bulletin allows three in all.');
+    expect(drawn(back, LeavePanel).text).toContain('Two terms: You’ve had two terms of leave, and the Bulletin allows three in all.');
   }, 900_000);
 
   it('GUARD: a notice of return after its deadline, which no save reaches (the deadline’s own item dismisses at its hour; TEST SETUP: that item called off by hand), is refused “Its deadline has passed.”', () => {
@@ -1108,9 +1108,9 @@ describe('school.s6.policy: SLATE’s design not presented as Yale’s policy, n
     expect(standing.interpret!.join(' ')).toContain('One review a term at the end of its classes, what it asks, and a standing that moves one step at a time are the game’s reading');
     expect(standing.interpret!.join(' ')).toContain('The notices that tell you your standing are the game’s words for the faculty’s decision, not the School’s or its staff’s.');
     const repeat = GUIDE_BY_ID['school.repeat']!;
-    expect(repeat.short).toContain('An Incomplete comes from classes you missed while excused; this is the game’s rule (the Bulletin has the student ask the instructor for one)');
-    expect(repeat.short).toContain('that limit on the extension the Bulletin lets the instructor grant is the game’s');
-    expect(repeat.short).toContain('Repeating and the additional term are the game’s model of the faculty: the Bulletin has no rule for either.');
+    expect(repeat.short).toContain('Some of this is the game’s own rule, not the Bulletin’s: an Incomplete coming from classes you missed while excused (the Bulletin has the student ask the instructor for one)');
+    expect(repeat.short).toContain('the limit of one extension');
+    expect(repeat.short).toContain('and the repeat and the additional term, for which the Bulletin has no rule.');
     expect(repeat.reads!.find((f) => f.label === 'An Incomplete')).toMatchObject({ estimate: true });
     expect(repeat.later!.join(' ')).toContain('the review and its outcomes are the game’s model of the faculty');
     const { CHAPTER_BY_ID } = await import('@/engine/content/tutorial');

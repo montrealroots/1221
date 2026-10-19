@@ -320,7 +320,7 @@ describe('abilities+techniques', () => {
       const script = s.player.craft!.script;
       const since = keptSince(s);
       const r = s.must<{ minutes: number; note: string }>({ kind: 'plays.read', payload: { playId: 'proof' } });
-      expect(r.note.startsWith('Proof, by ')).toBe(true);
+      expect(r.note.startsWith('You read Proof, by ')).toBe(true);
       return { s, rise: s.player.attrs!.imagination! - was, script: s.player.craft!.script - script, kept: since().filter((x) => x.source === 'read:proof') };
     };
     const asPlayed = read();
@@ -646,10 +646,10 @@ describe('standing/term evaluation', () => {
     expect(b!.classGrowth).toBeGreaterThan(2 * b!.growth);
     expect(a!.classGrowth).toBeLessThan(2 * a!.growth);
     expect(a!.standing).toBe('good');
-    expect(a!.reason).toBe(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${a!.growth.toFixed(1)} points, and the class’s middle student’s grew ${a!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.`);
+    expect(a!.reason).toBe(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${a!.growth.toFixed(1)} points this term, and the middle student in your class grew ${a!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.`);
     // Behind the class, and nothing else short: a concern for the pace alone.
     expect(b!.standing).toBe('concern');
-    expect(b!.reason).toBe(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${b!.growth.toFixed(1)} points, and the class’s middle student’s grew ${b!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.`);
+    expect(b!.reason).toBe(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${b!.growth.toFixed(1)} points this term, and the middle student in your class grew ${b!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.`);
     expect(driven.player.school!.standing).toBe('concern');
     // The Standing tab, as the player has it.
     const { text } = drawn(driven, SchoolWorkspace, 'standing');

@@ -399,10 +399,10 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const note = (taken: boolean) => ({ at: sim.now, text: 'Find the turn.', focus: { kind: 'lines' as const }, taken });
     const run = (calls: number, of: number, notes: ReturnType<typeof note>[], together?: { sum: number; n: number; slips: number; covered: number }) =>
       reflect(sim, sim.player, { process: { lines: 0, blocking: 0, calls, of, blockingMissed: 0, notes, trained: 0, ...(together ? { together } : {}) } }, 'The Seagull')!;
-    expect(run(1, 1, [note(true)])).toBe('The Seagull: you answered your one call. The director gave you 1 note, and you took it.');
+    expect(run(1, 1, [note(true)])).toBe('The Seagull: you answered your one call. The director gave you one note, and you took it.');
     expect(run(0, 3, [])).toBe('The Seagull: you answered none of your 3 calls. The director gave you no notes.');
     const many = run(5, 6, [note(true), note(false)], { sum: 312, n: 4, slips: 1, covered: 1 });
-    expect(many).toBe('The Seagull: you answered 5 of your 6 calls. The director gave you 2 notes. You took 1. With the company, your nights averaged 78 out of 100, with a slip by others, which you covered. What’s still open goes with you into class.');
+    expect(many).toBe('The Seagull: you answered 5 of your 6 calls. The director gave you two notes, and you took one. With the company, your nights averaged 78 out of 100, with a slip by others, which you covered. What’s still open goes with you into class.');
     for (const s of [many]) { sound(s); whole(s); }
   });
 });
@@ -1135,7 +1135,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
       settleCourses(sim, sim.player, courses[key]!.term, () => ({ due: 0, notShown: 0 }));
       const due = formatDate(courses[key]!.dueBy!, sim.zone);
       const first = titled(sim, 'Incomplete: Acting I')[0]!;
-      expect(first.body).toBe(`You were ill for 10 of its 28 classes, so it’s an Incomplete for now. To complete it, make up three sessions with its teachers by ${due}, each covering a week of the course: press Make Up A Session on the Standing tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`);
+      expect(first.body).toBe(`You were ill for 10 of its 28 classes, so it’s an Incomplete for now. To complete it, make up three sessions with its teachers by ${due}, each covering a week of the course: press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`);
       // Made up, one evening at a time, as the Standing tab's Make Up A Session does it.
       for (let i = 1; i <= made; i += 1) {
         tended(sim, on(2026, 9, 14 + i, 18));
@@ -1144,7 +1144,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
       tended(sim, courses[key]!.dueBy! - 7 * MS_DAY + MS_HOUR);
       const week = titled(sim, 'A Week Left: Acting I');
       expect(week).toHaveLength(1);
-      expect(week[0]!.body).toBe(`You still have ${left} to do, by ${due}. Press Make Up A Session on the Standing tab. If you need longer, press Ask For A Month More.`);
+      expect(week[0]!.body).toBe(`You still have ${left} to do, by ${due}. Press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More.`);
       for (const s of [first.body, week[0]!.body]) { sound(s); whole(s); dated(s); }
     }
   });

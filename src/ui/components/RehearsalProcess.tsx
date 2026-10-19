@@ -81,8 +81,8 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
         </div>
       )}
       {p?.dress && <div className="small">The dress rehearsal: {DRESS_WORD[p.dress] ?? p.dress}.</div>}
-      {p?.together && p.together.n > 0 && <div className="small"><strong>The Nights Together.</strong> With the company the nights have come to {Math.round(p.together.sum / p.together.n)} on average{p.together.slips ? `, ${p.together.slips} with a slip in the company${p.together.covered ? `, ${p.together.covered} of them covered by you` : ''}` : ''}. How the show went together shapes how a night leaves you feeling; your own night is your result.</div>}
-      {p?.reflection && <div className="small"><strong>Looking Back.</strong> {p.reflection.text} <span className="xs dim">Simulated: the game’s summary, not the director’s words.</span></div>}
+      {p?.together && p.together.n > 0 && <div className="small"><strong>The Nights Together.</strong> With the company, your nights have averaged {Math.round(p.together.sum / p.together.n)} of 100{p.together.slips ? `, ${p.together.slips === 1 ? 'one' : p.together.slips} with a slip by someone else${p.together.covered ? `, ${p.together.covered === p.together.slips ? (p.together.slips === 1 ? 'which you covered' : 'all of which you covered') : `${p.together.covered} of which you covered`}` : ''}` : ''}. How the show goes together changes how a night leaves you feeling, but your own night is your result.</div>}
+      {p?.reflection && <div className="small"><strong>Looking Back.</strong> {p.reflection.text} <span className="xs dim">A summary of your run, not the director’s own words.</span></div>}
       {last && (
         <div className="small col gap-1">
           <div className="row-between" style={{ alignItems: 'flex-start' }}>
@@ -107,7 +107,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
               <span className="dim">{chosen?.words}</span>
             </label>
           )}
-          <div className="xs dim">Simulated notes: the game’s words, not a director’s.</div>
+          <div className="xs dim">These notes are simulated: the game’s words, not a real director’s.</div>
         </div>
       )}
       {p && p.notes.length > 1 && <div className="xs dim">{`Notes taken: ${p.notes.filter((n) => n.taken).length} of ${p.notes.filter((n) => n.taken !== undefined).length}.${p.notes.some((n) => n.outcome === 'learned') ? ` Worked and learned from without moving: ${p.notes.filter((n) => n.outcome === 'learned').length}.` : ''}`}</div>}

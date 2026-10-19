@@ -34,12 +34,264 @@
   "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide-examples-productions.test.ts; tools/guide-quotes.mjs --check",
   "first": "Pending"
  },
+ "src/engine/content/guide/school.ts#SCHOOL [school.leave]": {
+  "status": "Rewritten",
+  "hash": "a98416cda0f5",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b3.txt (guide.mts, the entry printed with its figures); tests/guide-examples-school.test.ts; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [school.money]": {
+  "status": "Rewritten",
+  "hash": "86e880f090f3",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b3.txt (guide.mts, the entry printed with its figures); tests/guide-examples-school.test.ts; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
  "src/engine/content/guide/school.ts#SCHOOL [school.repeat]": {
   "status": "Rewritten",
   "hash": "a2b52267bbc4",
   "on": "2026-10-19",
   "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide-examples-school.test.ts; tools/guide-quotes.mjs --check",
   "first": "Pending"
+ },
+ "src/engine/content/school.ts#COST_2026_27": {
+  "status": "Retained",
+  "hash": "386c7694a7c6",
+  "on": "2026-10-19",
+  "reason": "The source line for tuition and Yale Health's rates, naming the Bulletin and Yale Health's published student rates page.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#COURSES": {
+  "status": "Retained",
+  "hash": "31dbe7a2d9fa",
+  "on": "2026-10-19",
+  "reason": "Yale's own course codes, titles and teachers, as the School's Bulletin lists them; real names a student would see, not the game's to reword.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#EXTENDED_STUDY": {
+  "status": "Retained",
+  "hash": "f1abbdb0c3e8",
+  "on": "2026-10-19",
+  "reason": "The source line for repeating a year and the additional term, the Bulletin's pages, as a citation reads.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/school.ts#LABS": {
+  "status": "Retained",
+  "hash": "899d31fb76d7",
+  "on": "2026-10-19",
+  "reason": "The labs by the names the Bulletin gives them, Drama 50, The New Play Lab and You Are The Creator.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#LEAVE_RULES": {
+  "status": "Retained",
+  "hash": "44c1bf26b8d8",
+  "on": "2026-10-19",
+  "reason": "The source line for leaves, the Bulletin's pages and Yale Health's Affiliate rates, as a citation reads.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/school.ts#MANDATORY_LEAVE": {
+  "status": "Retained",
+  "hash": "d9a850884090",
+  "on": "2026-10-19",
+  "reason": "The source line for a leave the dean imposes, the Bulletin's page, as a citation reads.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/school.ts#SCHOOL_POLICIES": {
+  "status": "Rewritten",
+  "hash": "446f10ab8d6e",
+  "on": "2026-10-19",
+  "evidence": "The Standing And Craft tab's Policies panel (SchoolWorkspace PoliciesPanel), read in tests/evidence-g19-school.test.ts and tests/language-dynamic.test.ts; its Incomplete line names the tab by its label",
+  "first": "Pending"
+ },
+ "src/engine/content/school.ts#SEAGULL_2027": {
+  "status": "Retained",
+  "hash": "f5da703b2386",
+  "on": "2026-10-19",
+  "reason": "Yale Rep's real production, its title, writer, adapter and roles, as the Rep announced it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILL_WORDS": {
+  "status": "Retained",
+  "hash": "f3208321a20c",
+  "on": "2026-10-19",
+  "reason": "The techniques as a sentence names them, on-camera work, comic timing, voice-over work, so a teacher's note can say them naturally mid-sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/school.ts#SKILLS [accents]": {
+  "status": "Retained",
+  "hash": "140715fdb03a",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [audition]": {
+  "status": "Retained",
+  "hash": "e9277d85c550",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [character]": {
+  "status": "Retained",
+  "hash": "90f4ef292da8",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [classical]": {
+  "status": "Retained",
+  "hash": "887ae3cf7b92",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [clown]": {
+  "status": "Retained",
+  "hash": "62b31dba7fe5",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [coldReading]": {
+  "status": "Retained",
+  "hash": "8efc55ed3d45",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [combat]": {
+  "status": "Retained",
+  "hash": "70b5a89f165d",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [comedy]": {
+  "status": "Retained",
+  "hash": "11381a199ae9",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [dance]": {
+  "status": "Retained",
+  "hash": "1b9f359ce480",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [emotion]": {
+  "status": "Retained",
+  "hash": "4c9eeb47b916",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [improv]": {
+  "status": "Retained",
+  "hash": "7643ad3455c8",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [intimacy]": {
+  "status": "Retained",
+  "hash": "dccc8dc62e56",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [memorization]": {
+  "status": "Retained",
+  "hash": "89c8a2851d17",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [movement]": {
+  "status": "Retained",
+  "hash": "36beac6e1aef",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [scene]": {
+  "status": "Retained",
+  "hash": "5ae10f398497",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [screen]": {
+  "status": "Retained",
+  "hash": "5e7fec4489a5",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [script]": {
+  "status": "Retained",
+  "hash": "3ab628066703",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [singing]": {
+  "status": "Retained",
+  "hash": "0c972426654f",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [speech]": {
+  "status": "Retained",
+  "hash": "d00d85949cca",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [voice]": {
+  "status": "Retained",
+  "hash": "8c411a78d08a",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#SKILLS [voiceover]": {
+  "status": "Retained",
+  "hash": "fc1da3b658d8",
+  "on": "2026-10-19",
+  "reason": "The School's techniques by the names the Standing And Craft tab and the Profile give them, each the plain name of a craft a drama school teaches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#WORK_STUDY": {
+  "status": "Retained",
+  "hash": "da4cfd90f16f",
+  "on": "2026-10-19",
+  "reason": "The source line for work-study's hours and pay, naming the Bulletin's General Policies and the School's financial aid page.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/school.ts#YALE_DRAMA": {
+  "status": "Retained",
+  "hash": "dcd0d85ac3bc",
+  "on": "2026-10-19",
+  "reason": "The School's real name, its officers' names and titles, and its sources, as Yale publishes them; real names aren't the game's to reword.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/workload.ts#RUNNING_TIMES": {
+  "status": "Retained",
+  "hash": "e1fcc562880d",
+  "on": "2026-10-19",
+  "reason": "Each running time's source as its theater or its listing gives it, kept as the published figure and venue so a player can check where it came from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/workload.ts#UNNAMED_RUNNING": {
+  "status": "Retained",
+  "hash": "d21ab9660fb1",
+  "on": "2026-10-19",
+  "reason": "The source line where no theater publishes a running time, saying plainly what was searched, what was found and that the figure is estimated.",
+  "first": "Rewritten And Verified"
  },
  "src/engine/systems/classmates.ts#amendsRefusal": {
   "status": "Retained",
@@ -246,9 +498,9 @@
  },
  "src/engine/systems/courserecord.ts#registerCourseRecord": {
   "status": "Rewritten",
-  "hash": "d16ad627a3c5",
+  "hash": "9aed8abebb19",
   "on": "2026-10-19",
-  "evidence": "tests/evidence-g26-school.test.ts reminders and Permanent Incomplete; tests/evidence2-b09.test.ts the twin's reminders; tests/language-dynamic.test.ts the week-left reminder",
+  "evidence": "tests/evidence-g26-school.test.ts and tests/evidence2-b09.test.ts (A Week Left, on the Standing And Craft tab)",
   "first": "Pending"
  },
  "src/engine/systems/courserecord.ts#registerCourseRecord <school.make_up>": {
@@ -260,9 +512,9 @@
  },
  "src/engine/systems/courserecord.ts#remedy": {
   "status": "Rewritten",
-  "hash": "d9fe31a32dfc",
+  "hash": "668ea46274c5",
   "on": "2026-10-19",
-  "evidence": "tests/scope-school.test.ts Fail and Permanent Incomplete notices; tests/remaining-school.test.ts OFFERED and EXTRA_LATER journeys",
+  "evidence": "tests/scope-school.test.ts and tests/remaining-school.test.ts (repeat the year on the Standing And Craft tab)",
   "first": "Pending"
  },
  "src/engine/systems/courserecord.ts#scheduleDue": {
@@ -274,9 +526,9 @@
  },
  "src/engine/systems/courserecord.ts#settleCourses": {
   "status": "Rewritten",
-  "hash": "3303c995a499",
+  "hash": "cab8e2fd1ae9",
   "on": "2026-10-19",
-  "evidence": "tests/language-dynamic.test.ts \"a warning repeated says what changed and what’s still open: an Incomplete, then a week before its deadline\"",
+  "evidence": "tests/language-dynamic.test.ts \"a warning repeated ... an Incomplete\" (Make Up A Session on the Standing And Craft tab)",
   "first": "Pending"
  },
  "src/engine/systems/courserecord.ts#tellFails": {
@@ -372,9 +624,9 @@
  },
  "src/engine/systems/coursework.ts#orient": {
   "status": "Rewritten",
-  "hash": "f6c831b9d28c",
+  "hash": "19a62dc3db18",
   "on": "2026-10-19",
-  "evidence": "tests/evidence-g19-school.test.ts orientation journey; tests/evidence-g22-school.test.ts \"The Courses And What They Ask\"; rendered.txt MONTH Meeting The Acting Faculty and The Courses And What They Ask",
+  "evidence": "docs/verification/editorial-2026-10-19/school/rendered.txt MONTH Meeting The Acting Faculty (It’s all on the Standing And Craft tab); tests/evidence-g19-school.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/coursework.ts#ORIENTATION [classmates]": {
@@ -566,6 +818,20 @@
   "evidence": "tests/remaining-school-term.test.ts \"the missed-work term, played\"; tests/workload.test.ts warning journeys; tests/language-dynamic.test.ts none, one or several; rendered.txt MONTH A Word On Your Coursework",
   "first": "Pending"
  },
+ "src/engine/systems/ensemble.ts#sharedOf": {
+  "status": "Retained",
+  "hash": "c3c3ba8e6baf",
+  "on": "2026-10-19",
+  "reason": "The name for the scene played together, The Scene, as the feedback and the look head it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/ensemble.ts#sharedWords": {
+  "status": "Rewritten",
+  "hash": "bdc3fb7abd72",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g31-1.test.ts \"the reader named in the words\" (Together it came to 70 of 100, 10 points over your own work)",
+  "first": "Pending"
+ },
  "src/engine/systems/evaluation.ts#chiefLimit": {
   "status": "Rewritten",
   "hash": "56cbbf9719c0",
@@ -614,6 +880,321 @@
   "on": "2026-10-19",
   "evidence": "rendered.txt limit lines: \"12 points out of 100\", \"1 point out of 100\", \"less than a point\"; tests/editorial-school-words.test.ts and tests/evaluation.test.ts",
   "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#accountDue": {
+  "status": "Retained",
+  "hash": "fde90af7a5af",
+  "on": "2026-10-19",
+  "reason": "The hold's notice gives the amount owed and any late fee, what a hold stops, and the tab to pay it on.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#aidReviewRefusal": {
+  "status": "Retained",
+  "hash": "77fdb3ab41b1",
+  "on": "2026-10-19",
+  "reason": "Each tells the player where an aid review stands: with the aid office until its date, done once, or not due while they're within the six supported terms.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#assess": {
+  "status": "Retained",
+  "hash": "c2f9600135f1",
+  "on": "2026-10-19",
+  "reason": "The assessment's three findings, each with the date or reason it rests on, in plain sentences the dean's decision then quotes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#bankShortWords": {
+  "status": "Rewritten",
+  "hash": "034961574d14",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-banking.test.ts and tests/evidence-g26-school.test.ts (Your checking account and your savings can cover only … of it now, so nothing was paid); tests/evidence-g25-school.test.ts (Affiliate cover)",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#billUnsupportedTerm": {
+  "status": "Rewritten",
+  "hash": "dc805449cfdc",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g8-2.test.ts (A Term Without Tuition Support: the term’s living scholarship pays its … Yale Health fee and …)",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#cancelRepeatWarning": {
+  "status": "Rewritten",
+  "hash": "79b058bd4fc8",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g26-school.test.ts (If you call it off …, the faculty won’t recommend the degree)",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#clearedToReturn": {
+  "status": "Retained",
+  "hash": "80bf474093b7",
+  "on": "2026-10-19",
+  "reason": "Why a physician can't clear you yet, each tied to your state: in hospital, laid up until a date, down with the flu, or not well enough, so the player knows what has to change.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#considerWelfare": {
+  "status": "Rewritten",
+  "hash": "865081fd70c8",
+  "on": "2026-10-19",
+  "evidence": "tests/school-paths.test.ts (Yale Health Asks To See You: not at any diagnosis) and tests/evidence-g25-school.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#creditAccount": {
+  "status": "Retained",
+  "hash": "862c5fe0e8c1",
+  "on": "2026-10-19",
+  "reason": "A credit on the Yale account and any refund to your bank, with both amounts, as an account statement would give them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#disqualified": {
+  "status": "Retained",
+  "hash": "d58a37125ad1",
+  "on": "2026-10-19",
+  "reason": "The Bulletin's disqualification rule as it applies, with your count and the rule's, in one plain sentence each.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#extraRefusal": {
+  "status": "Retained",
+  "hash": "8369c2b71aca",
+  "on": "2026-10-19",
+  "reason": "Each refusal for an additional term names its rule, the review not yet past, every course passed, the semesters, a disqualification, so the player knows whether to wait or not.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#facultyReview": {
+  "status": "Rewritten",
+  "hash": "7b832518f548",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g26-school.test.ts (A Faculty Review: On Warning, to repeat the year: ask to repeat it at the year’s end)",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#followFormerClasses": {
+  "status": "Retained",
+  "hash": "f4d31fb1b964",
+  "on": "2026-10-19",
+  "reason": "The notice when the class you left graduates, naming three of them and saying what you shared stays on your record, plain and kind.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#holdsOverNothing": {
+  "status": "Retained",
+  "hash": "6c91430e939d",
+  "on": "2026-10-19",
+  "reason": "A credit that clears the account, said plainly: it owes nothing, and why.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#joinCohort": {
+  "status": "Rewritten",
+  "hash": "b2502859f922",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/leave.txt (leave.mts, a medical leave played through commands): The Class Of 2030, listed on the Standing And Craft tab; tests/journey-class-left-behind.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#LEAVE_REASONS [medical]": {
+  "status": "Retained",
+  "hash": "06ff939fc6c7",
+  "on": "2026-10-19",
+  "reason": "The reasons a medical leave can be asked for, as the Reason menu lists them: Illness, Injury, Mental Health, each a plain word a student would choose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#LEAVE_REASONS [personal]": {
+  "status": "Retained",
+  "hash": "0bdc2ab17487",
+  "on": "2026-10-19",
+  "reason": "The reasons for a personal leave as the Reason menu lists them, Family, Money, Personal, A Professional Commitment, plain and distinct.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#leaveLengths": {
+  "status": "Rewritten",
+  "hash": "da5aa0f71c67",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-school.test.ts (the third term refused: You’ve had two terms of leave, and the Bulletin allows three in all; and the Leave panel's Length list)",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#leaveRefusal": {
+  "status": "Retained",
+  "hash": "05bbf832efab",
+  "on": "2026-10-19",
+  "reason": "Each refusal for a leave names its rule, the term not begun, a request already in, the repeat being decided, an F-1's status, a term to complete or a course to make up first.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#liftHold": {
+  "status": "Retained",
+  "hash": "b17f8a994c4d",
+  "on": "2026-10-19",
+  "reason": "The notice when a hold lifts, with what paid it first, then that registration and the diploma are open again.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#offerRepeat": {
+  "status": "Rewritten",
+  "hash": "550746b43721",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g26-school.test.ts and tests/scope-school.test.ts (Your Degree Isn’t Complete: You haven’t passed …; if you don’t ask, the faculty won’t recommend the degree)",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#payBalance": {
+  "status": "Retained",
+  "hash": "9ad31e941bb0",
+  "on": "2026-10-19",
+  "reason": "The payment's ledger line and its toast, Your Yale account is paid, plain and true.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#payBalanceRefusal": {
+  "status": "Retained",
+  "hash": "440ec5b73240",
+  "on": "2026-10-19",
+  "reason": "Refusals for Pay From Your Bank: nothing owed, no amount, or more than is owed with the figure that is, each saying what to enter.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#registerLeave": {
+  "status": "Rewritten",
+  "hash": "34286b01ca67",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g25-school.test.ts (the dean's medical leave: press Appeal To The Dean); tests/evidence-g26-school.test.ts (You’ll Repeat The Year, eight terms: two will be billed; An Additional Term Granted); docs/verification/editorial-2026-10-19/school/leave.txt (leave.mts, a medical leave played through commands): Two Weeks To Give Notice",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#registerLeave <school.appeal_leave>": {
+  "status": "Retained",
+  "hash": "49f73db0379d",
+  "on": "2026-10-19",
+  "reason": "Refusals for an appeal: only an imposed leave, already appealed on a date, or past the date it had to be in by.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#registerLeave <school.buy_affiliate>": {
+  "status": "Retained",
+  "hash": "4e1c0c1d5c6d",
+  "on": "2026-10-19",
+  "reason": "Refusals and the confirmation for Affiliate cover, with the price for the leave's terms and any fee credited, and the ledger lines as a statement shows them.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#registerLeave <school.cancel_leave>": {
+  "status": "Retained",
+  "hash": "7558c8acadec",
+  "on": "2026-10-19",
+  "reason": "Refusals for calling off a leave, each with the real way out: on leave you come back at its end or withdraw, an imposed leave is appealed by a date, and a confirmation says what calling it off keeps.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#registerLeave <school.cancel_repeat>": {
+  "status": "Retained",
+  "hash": "92192e67083c",
+  "on": "2026-10-19",
+  "reason": "Refusals for calling off a repeat request, and the notice when its thirty days ran out, each saying plainly what follows for the degree.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#registerLeave <school.request_aid_review>": {
+  "status": "Retained",
+  "hash": "ae2290353af8",
+  "on": "2026-10-19",
+  "reason": "The not-at-school refusal and the review's calendar title, The Aid Office’s Review, both plain.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#registerLeave <school.request_extra_term>": {
+  "status": "Retained",
+  "hash": "be2072570d35",
+  "on": "2026-10-19",
+  "reason": "The not-at-school refusal and the decision's calendar title, both plain.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#registerLeave <school.request_leave>": {
+  "status": "Retained",
+  "hash": "3bf88c385451",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal when no reason is chosen, naming the field to fill.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#registerLeave <school.reregister>": {
+  "status": "Retained",
+  "hash": "a90bc258759a",
+  "on": "2026-10-19",
+  "reason": "Refusals for Register, each saying what to do instead: register when the term you return to begins, already registered, or pay the hold on the Terms And Award tab first.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#registerLeave <school.return_notice>": {
+  "status": "Retained",
+  "hash": "49627cfea31c",
+  "on": "2026-10-19",
+  "reason": "Refusals for Give Notice Of Return: not on leave, already given on a date, or its deadline passed, each one fact.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#repeatRefusal": {
+  "status": "Retained",
+  "hash": "19b51c0d51f2",
+  "on": "2026-10-19",
+  "reason": "Each refusal for repeating a year names its rule, at the year's end only, every course passed, a second repeat, the semesters, so the player knows why.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#requestLeave": {
+  "status": "Retained",
+  "hash": "b85959ca4dd3",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for a length the menu never offers, and the decision's calendar title, both plain.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#requestRepeat": {
+  "status": "Retained",
+  "hash": "833803f51f04",
+  "on": "2026-10-19",
+  "reason": "The decision's calendar title, Repeating The Year: The Decision, as the calendar names the School's other decisions.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#rescind": {
+  "status": "Retained",
+  "hash": "6b009f826d6f",
+  "on": "2026-10-19",
+  "reason": "Ledger lines for a scholarship restored on appeal and the term review put back on the calendar, as a statement and the calendar name them.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#rescindable": {
+  "status": "Retained",
+  "hash": "c143ec1e8805",
+  "on": "2026-10-19",
+  "reason": "Why an appeal can't overturn a leave, too much of the term gone, the term over, or not cleared and why, each one fact.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/leave.ts#returnFromLeave": {
+  "status": "Rewritten",
+  "hash": "f2f097e40eb3",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/leave.txt (leave.mts, a medical leave played through commands): Back From Your Leave, Press Register on the Standing And Craft tab before classes; tests/leave.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#startLeave": {
+  "status": "Rewritten",
+  "hash": "a28b67b96dd1",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/leave.txt (leave.mts, a medical leave played through commands): Your Leave Has Begun, the nine courses after their count and Give Notice Of Return on the Standing And Craft tab; tests/remaining-09-journeys.test.ts and tests/defects-g8-3.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#tellOutsideTheCover": {
+  "status": "Rewritten",
+  "hash": "915beec23e9a",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-09-journeys.test.ts (Your Appointment Is Outside Yale Health: You booked a doctor’s visit … while Yale Health didn’t cover you)",
+  "first": "Pending"
+ },
+ "src/engine/systems/leave.ts#welfareTrigger": {
+  "status": "Retained",
+  "hash": "7ceae9d76c8b",
+  "on": "2026-10-19",
+  "reason": "What raised Yale Health's concern, stays in hospital or class days missed ill, counted in figures the assessment's notice then names.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/leave.ts#yaleAccount [loan]": {
+  "status": "Retained",
+  "hash": "8a0567b71c4c",
+  "on": "2026-10-19",
+  "reason": "The Yale account's name and its holder, as the School's own billing names them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/piece.ts#judgePieceExact": {
+  "status": "Retained",
+  "hash": "78074f0f95a8",
+  "on": "2026-10-19",
+  "reason": "Title Case labels for what tired or shook you in a part of a piece, shown in a work's look; the teacher's note says them as a sentence.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/piece.ts#segmentNames": {
+  "status": "Retained",
+  "hash": "e85badd79799",
+  "on": "2026-10-19",
+  "reason": "Plain names for the parts of a scene or a night, The Opening, The Middle, The Close, The First Half, that a note can point to.",
+  "first": "Reviewed And Retained"
  },
  "src/engine/systems/playreading.ts#aspects [cast]": {
   "status": "Rewritten",
@@ -670,6 +1251,482 @@
   "on": "2026-10-19",
   "reason": "Refusals for Research It, each with its reason: read the play first, since research needs questions, or it's already researched and nothing more is on record.",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/production.ts#noteText": {
+  "status": "Retained",
+  "hash": "544bcf8ae5b7",
+  "on": "2026-10-19",
+  "reason": "A director's note that comes back says it does, and what you tried for it, then and now, and whether it helped, in the director's voice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/production.ts#noteWords": {
+  "status": "Retained",
+  "hash": "039e306ae365",
+  "on": "2026-10-19",
+  "reason": "The director's notes in the director's own voice, specific to the part of the play and with what to do: be off book, find what turns it, decide who they are to you.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/production.ts#ownWorkRefusal": {
+  "status": "Retained",
+  "hash": "7426b9e89875",
+  "on": "2026-10-19",
+  "reason": "Refusals for the actor's own work on a part, each naming why: already known, no blocking missed, no note, or the note asks for the part played another way and where to change it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/production.ts#partPlayingRefusal": {
+  "status": "Retained",
+  "hash": "cc81d10e9cd2",
+  "on": "2026-10-19",
+  "reason": "Two short refusals for choosing how to play a part: not cast in anything there, or the run is over, each the one fact needed.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/production.ts#reflect": {
+  "status": "Rewritten",
+  "hash": "4b2b56db4303",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g19-school.test.ts Looking Back (the notes given and taken, in words); the label after it the working reference's own row",
+  "first": "Pending"
+ },
+ "src/engine/systems/production.ts#registerProduction <school.work_note>": {
+  "status": "Retained",
+  "hash": "668cab9e7205",
+  "on": "2026-10-19",
+  "reason": "Refusals for a way at a director's note: not one of its ways, none left untried, or keep or put back the change tried first, each telling the player what to do.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/production.ts#STAGE_LABEL": {
+  "status": "Retained",
+  "hash": "391da9cd704e",
+  "on": "2026-10-19",
+  "reason": "The stages of a production's rehearsals by the names theaters use, Read-Through, Blocking Rehearsal, Technical Rehearsal and the rest, as the calendar shows each call.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#bondWord": {
+  "status": "Retained",
+  "hash": "1f6e89ebbf93",
+  "on": "2026-10-19",
+  "reason": "Three plain words for where a classmate stands with you, Friend, Close Friend and Rival, shown beside their name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#bookPayday": {
+  "status": "Retained",
+  "hash": "bdabf1b113fd",
+  "on": "2026-10-19",
+  "reason": "The calendar entry for a work-study payday, titled as the calendar titles paydays.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#breach": {
+  "status": "Retained",
+  "hash": "16f0519ed59f",
+  "on": "2026-10-19",
+  "reason": "The reason a breach gives, in the School's own phrase for it, which the Academic Warning or the dismissal notice then carries.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#buyPpe": {
+  "status": "Retained",
+  "hash": "9f74d35a6caf",
+  "on": "2026-10-19",
+  "reason": "The ledger line for the equipment, naming what was bought and why, as a statement line would.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#CABARET_RUN": {
+  "status": "Retained",
+  "hash": "8e505ddbe6e3",
+  "on": "2026-10-19",
+  "reason": "The part a Cabaret show gives, as the casting list and the Profile's credits name it, A Part In A Cabaret Show, plain about what it is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#cabaretRefusal": {
+  "status": "Retained",
+  "hash": "3bf142b6ee1a",
+  "on": "2026-10-19",
+  "reason": "Each refusal for a Cabaret show gives its exact reason in the School's terms, academic warning, a leave, the season not begun, no week clear, double-casting, and where there is one, when to ask again.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#cabaretSeason": {
+  "status": "Retained",
+  "hash": "f15058bf8907",
+  "on": "2026-10-19",
+  "reason": "The Cabaret's season as the theater numbers it, Yale Cabaret, Season 59, a real organization's own name for its year.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#cast": {
+  "status": "Rewritten",
+  "hash": "eb91ef800fc4",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g8-12.test.ts (the Cast notice); rendered.txt (render.mts)",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#CEILING": {
+  "status": "Retained",
+  "hash": "cde030180b68",
+  "on": "2026-10-19",
+  "reason": "A research citation kept with the rule it supports, the papers' authors, titles and journals as published, not text the game rewords.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#classCabaret": {
+  "status": "Retained",
+  "hash": "c5431ee2ae83",
+  "on": "2026-10-19",
+  "reason": "The calendar entry when a Cabaret show closes, titled with the show's name and what happens, as the calendar titles other runs ending.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#companyPart": {
+  "status": "Retained",
+  "hash": "af5d1202438b",
+  "on": "2026-10-19",
+  "reason": "Parts in a new piece or the company, as the School's cast lists name a part without a named role.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#companyRead": {
+  "status": "Retained",
+  "hash": "aad80575cc06",
+  "on": "2026-10-19",
+  "reason": "The name the screens give the Rep's company as a group, The Company, short and plain.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#conferIfReady": {
+  "status": "Retained",
+  "hash": "f69dff0be090",
+  "on": "2026-10-19",
+  "reason": "The conferral's notice names what was made up and confers the degree by its full name and class, the School's own wording for a degree given without the ceremony.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#conversionRefusal": {
+  "status": "Retained",
+  "hash": "42f99f3e624e",
+  "on": "2026-10-19",
+  "reason": "Each refusal for converting work-study hours says which hours count and when, January's processing or May's, so a player knows whether to ask again later.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#directorsNote": {
+  "status": "Retained",
+  "hash": "83f6045dde3d",
+  "on": "2026-10-19",
+  "reason": "A director's closing note on a run, in their own voice, praise or what to work on next, with the house as a director would say it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#drawCohort": {
+  "status": "Retained",
+  "hash": "f041ef618571",
+  "on": "2026-10-19",
+  "reason": "Keys for the classmates' random draws, never shown to a player; kept so a save's draws stay where they were.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#enroll": {
+  "status": "Rewritten",
+  "hash": "a454988eed6d",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/rendered.txt (render.mts) NOTICE and MONTH Welcome To The Class Of 2029",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#evaluate": {
+  "status": "Rewritten",
+  "hash": "dc40fad5784c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b08.test.ts and tests/evidence3-school.test.ts (the review's reason); tests/scope-school.test.ts The Degree Isn’t Recommended",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#FAMILY": {
+  "status": "Retained",
+  "hash": "f73330bb91b2",
+  "on": "2026-10-19",
+  "reason": "Classmates' family names, common American surnames chosen so no real student is named, shown with their given names on every screen that lists the class.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#formerCompanyRun": {
+  "status": "Retained",
+  "hash": "9c94011323ac",
+  "on": "2026-10-19",
+  "reason": "A part in the Rep's company as the casting list names it, In The Company, the same words the Rep's own cast list uses for an actor without a named role.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#formerProductions": {
+  "status": "Retained",
+  "hash": "56db77984812",
+  "on": "2026-10-19",
+  "reason": "The part a classmate had in the Rep's company, as the class's casting list names it beside the other parts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#GIVEN_ACTOR": {
+  "status": "Retained",
+  "hash": "3a7cfb368c4c",
+  "on": "2026-10-19",
+  "reason": "Classmates' given names, common American names chosen so no real student is named; a name is the player's way of telling classmates apart.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#GIVEN_ACTRESS": {
+  "status": "Retained",
+  "hash": "6f6d283bbe87",
+  "on": "2026-10-19",
+  "reason": "Classmates' given names, common American names chosen so no real student is named; a name is the player's way of telling classmates apart.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#leaveCabaret": {
+  "status": "Rewritten",
+  "hash": "86dbc443a986",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/rendered.txt REVIEW Out Of The Cabaret Show (render.mts, a show joined and a review that puts you on warning); tests/student-experience.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#missedCallsOut": {
+  "status": "Retained",
+  "hash": "d7810dda6eaf",
+  "on": "2026-10-19",
+  "reason": "The notice says how many calls were missed, who took you out of the casting pool, what you still play, and exactly what puts you back in.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#NIGHT_WORD_TITLE": {
+  "status": "Retained",
+  "hash": "9f650622ac10",
+  "on": "2026-10-19",
+  "reason": "The four ways a night on stage can go, as a notice's title names them, An Off Night, Solid, Strong, Remarkable, plain words a director would use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#partLabel": {
+  "status": "Retained",
+  "hash": "b7564617d4c4",
+  "on": "2026-10-19",
+  "reason": "The labels for a festival or a new play where no title is known, The Festival and A New Play, plain stand-ins the casting notice can name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#partsFor": {
+  "status": "Retained",
+  "hash": "9c94011323ac",
+  "on": "2026-10-19",
+  "reason": "A part in the company as the casting list names it, the same words as the cast list's.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#partWords": {
+  "status": "Retained",
+  "hash": "6eb0e4bf2c9e",
+  "on": "2026-10-19",
+  "reason": "The Cabaret's own name kept capitalized when a part reads mid-sentence, a part in a Cabaret show, since it's the School's name for the venue.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#planWeek": {
+  "status": "Retained",
+  "hash": "be96b5486dbd",
+  "on": "2026-10-19",
+  "reason": "Calendar entries for the week, Classes, Work-Study Shift and The School Week Ahead, each a plain Title Case name for what's on the calendar.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#ppeRefusal": {
+  "status": "Retained",
+  "hash": "d3ada12fb370",
+  "on": "2026-10-19",
+  "reason": "Refusals for the work-study equipment: only work-study students need it, or you already bought it on a named day, each the one fact a player needs.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#readRuns": {
+  "status": "Retained",
+  "hash": "986997f5773b",
+  "on": "2026-10-19",
+  "reason": "The heading for the runs on your record before a casting, plain words for what the list is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#registerSchool": {
+  "status": "Rewritten",
+  "hash": "bd6fa11bd0a7",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-school.test.ts and tests/evidence-g26-school.test.ts (Not Registered, with and without a hold); tests/evidence-g21-school.test.ts (A Shift You Couldn’t Work); tests/remaining-09-journeys.test.ts and tests/need-paths.test.ts (a term begins); tests/evidence-g26-school.test.ts (December conferral)",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#registerSchool [summer]": {
+  "status": "Retained",
+  "hash": "4b6208368745",
+  "on": "2026-10-19",
+  "reason": "The Summer Cabaret's show titles on the calendar, the company's name with the show's number, as the company itself numbers them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#registerSchool <school.buy_ppe>": {
+  "status": "Retained",
+  "hash": "dcebd6e10732",
+  "on": "2026-10-19",
+  "reason": "The one refusal for money that isn't there, in the shape every screen uses: what can't be covered, the amount, and that nothing was charged.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#registerSchool <school.cabaret>": {
+  "status": "Retained",
+  "hash": "046803617517",
+  "on": "2026-10-19",
+  "reason": "Calendar entries for a Cabaret show's calls, titled Yale Cabaret and the call, as the calendar titles the School's other calls.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#registerSchool <school.request_conversion>": {
+  "status": "Retained",
+  "hash": "3be26704e5e4",
+  "on": "2026-10-19",
+  "reason": "The calendar entry for the aid office's processing, titled with what it will do, Work-Study Hours Converted To Grant Aid.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#registerSchool <school.summer_cabaret>": {
+  "status": "Retained",
+  "hash": "cdf9a0d4f232",
+  "on": "2026-10-19",
+  "reason": "The Summer Cabaret's calendar entries and stipend line, each titled with the company's own name and the call or payment.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#registerSchool <school.take_shift>": {
+  "status": "Retained",
+  "hash": "8d2cd71383c5",
+  "on": "2026-10-19",
+  "reason": "The elective shift's calendar name, what and where, and its refusals saying exactly why no evening is free, Yale's weekly cap or the term's end.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#registerSchool <school.withdraw>": {
+  "status": "Rewritten",
+  "hash": "dd72bcb14930",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g16-papers.test.ts, tests/evidence-g33-ui.test.ts and tests/remaining-09-journeys.test.ts (You Withdrew From The School, an F-1's grace period); tests/student-experience.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#registerSchool closeRun()": {
+  "status": "Retained",
+  "hash": "725ff89dd53c",
+  "on": "2026-10-19",
+  "reason": "The director's note at a run's close, with the one thing that held the nights back, and an understudy who never went on told plainly that the work in the room isn't lost.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#registerWay": {
+  "status": "Rewritten",
+  "hash": "74942e8060f3",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g26-school.test.ts (Not Registered after a hold: Press Register on the Standing And Craft tab) and tests/evidence-g21-school.test.ts (A Shift You Couldn’t Work: Catch up on Registration And Your Account)",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#repProduction": {
+  "status": "Retained",
+  "hash": "22ea68a60224",
+  "on": "2026-10-19",
+  "reason": "A Yale Rep production as the School names a season's show, by its month, where the Rep's own title isn't in the game.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#scheduleLabs": {
+  "status": "Retained",
+  "hash": "1d7f14642516",
+  "on": "2026-10-19",
+  "reason": "The calendar entry for a lab showing, titled with the lab and Your Showing, as the calendar titles other calls.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#schoolProduction": {
+  "status": "Retained",
+  "hash": "04b43ed64480",
+  "on": "2026-10-19",
+  "reason": "The School's productions by their own names, the Directors' Thesis, the Langston Hughes and Carlotta festivals and the Shakespeare project, as the School's season lists them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#setStanding": {
+  "status": "Rewritten",
+  "hash": "0d0b875f6c03",
+  "on": "2026-10-19",
+  "evidence": "rendered.txt REVIEW Academic Warning (render.mts); tests/remaining-school.test.ts STANDS (a dismissal and a withheld degree); tests/language-dynamic.test.ts standings; tests/evidence2-b09.test.ts and tests/scope-school.test.ts The Degree Isn’t Recommended",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#shiftRefusal": {
+  "status": "Retained",
+  "hash": "f84c59a57b28",
+  "on": "2026-10-19",
+  "reason": "Two refusals for an elective shift: not at school, or on leave with no shifts until you're back, each saying when it changes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#shortTermWords": {
+  "status": "Retained",
+  "hash": "529c4ad7bf82",
+  "on": "2026-10-19",
+  "reason": "What the next review would do to your standing, said as the action it takes: give you a notice of concern, put you on warning, dismiss you, not recommend your degree.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#sickRefusal": {
+  "status": "Retained",
+  "hash": "f2600a9fa70a",
+  "on": "2026-10-19",
+  "reason": "Each refusal behind Call In Sick says exactly why it's grayed: already called in, nothing at school today, the classes over so it would excuse nothing, or well enough to go and what staying away would count as.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#STANDING_LABEL": {
+  "status": "Retained",
+  "hash": "64e0136c4521",
+  "on": "2026-10-19",
+  "reason": "The standings by the names the Bulletin and the Standing And Craft tab give them, the same words the term review's notices use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#STIPEND_MEMO": {
+  "status": "Retained",
+  "hash": "f9feeec27378",
+  "on": "2026-10-19",
+  "reason": "The ledger line for the Summer Cabaret's weekly stipend, naming who pays and for what, as a bank statement would show it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#summerRefusal": {
+  "status": "Retained",
+  "hash": "ebeeed12431c",
+  "on": "2026-10-19",
+  "reason": "Refusals for the Summer Cabaret, each naming the rule that stops it: good standing, not on leave, a year still to go, already in it, or the company already formed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/school.ts#teachersNotes": {
+  "status": "Rewritten",
+  "hash": "d8aa553319a2",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/rendered.txt teacher's notes (render.mts), ahead, in step and behind, with Speech And Accents I's two skills; tests/casting.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#termBegins": {
+  "status": "Retained",
+  "hash": "f523a6344867",
+  "on": "2026-10-19",
+  "reason": "The calendar entry and notice title for a term's start, a plain Title Case heading such as The Fall Term Begins.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#termGrowth": {
+  "status": "Retained",
+  "hash": "f2f721899265",
+  "on": "2026-10-19",
+  "reason": "How your growth compares with the class's, ahead of, in line with or behind, said plainly inside the term review's sentence.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#termLabel": {
+  "status": "Retained",
+  "hash": "fab087f00315",
+  "on": "2026-10-19",
+  "reason": "The two terms by the names the School's calendar gives them, Fall and Spring, used in every heading and notice that names a term.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#termWords": {
+  "status": "Retained",
+  "hash": "bd8f843cd3c5",
+  "on": "2026-10-19",
+  "reason": "A term as a sentence names it, the fall term of 2026, used inside ledger lines and notices where a heading's form would read stiffly.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/workload.ts#minutesWords": {
+  "status": "Rewritten",
+  "hash": "c002f5c54796",
+  "on": "2026-10-19",
+  "evidence": "tests/decisions-stamina.test.ts (1 hour and 40 minutes, straight through)",
+  "first": "Pending"
+ },
+ "src/engine/systems/workload.ts#runningOf": {
+  "status": "Retained",
+  "hash": "1e1942d5bba1",
+  "on": "2026-10-19",
+  "reason": "The prefix that marks a Cabaret production by its name, Yale Cabaret, read to find its running time.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/workload.ts#SIZE_WORDS": {
+  "status": "Retained",
+  "hash": "139abb667f90",
+  "on": "2026-10-19",
+  "reason": "A part's size as a sentence says it, a lead, a supporting part, a featured part, a solo piece.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/workload.ts#workloadWords": {
+  "status": "Rewritten",
+  "hash": "1e994874d536",
+  "on": "2026-10-19",
+  "evidence": "tests/decisions-stamina.test.ts \"says the workload before the curtain under A Night Now and in the night’s record after it\"",
+  "first": "Pending"
  },
  "src/ui/components/ClassMoments.tsx#ClassMoments": {
   "status": "Rewritten",
@@ -767,6 +1824,34 @@
   "hash": "fcf4bc745f21",
   "on": "2026-10-19",
   "evidence": "docs/verification/editorial-2026-10-19/school/screens.txt \"named it four times\", \"given four times\" (screens.mts); tests/evidence-g18-school.test.ts \"given three times\"",
+  "first": "Pending"
+ },
+ "src/ui/components/RehearsalProcess.tsx#DRESS_WORD": {
+  "status": "Retained",
+  "hash": "70ac2351b5e2",
+  "on": "2026-10-19",
+  "reason": "The dress rehearsal's result in four plain words, An Off Run, Solid, Strong, Remarkable, the same scale as a night's.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/RehearsalProcess.tsx#noteState": {
+  "status": "Retained",
+  "hash": "f182f1d1ecdb",
+  "on": "2026-10-19",
+  "reason": "A note's state beside it, Worked On or Not Taken, two short labels a player can scan down the list of notes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/RehearsalProcess.tsx#OUTCOME_WORD": {
+  "status": "Retained",
+  "hash": "9911e38d930b",
+  "on": "2026-10-19",
+  "reason": "What came of a director's note, beside it in the notes so far: taken and better, tried and learned from, or not taken, each short and distinct.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/RehearsalProcess.tsx#RehearsalProcess": {
+  "status": "Rewritten",
+  "hash": "05013e5be8d9",
+  "on": "2026-10-19",
+  "evidence": "tests/decisions-stamina.test.ts and tests/rehearsal-notes-history.test.ts (the panel rendered); tests/looks.test.ts (a figure of 100 written as one: The Nights Together averaged N of 100, as docs/GLOSSARY.md writes trust)",
   "first": "Pending"
  }
 }

@@ -1589,7 +1589,7 @@ function orient(sim: Simulation, person: Person, task: OrientationTask): string 
       return `You met the ${school.classmates.length} others in your class: you’ll partner them in scenes, rehearse with them and be cast beside them.`;
     }
     // The faculty set out what the School asks (`SCHOOL_POLICIES`, from 2026-10-10), which the Standing tab keeps.
-    case 'faculty': return `You met the acting faculty, with the chair, ${YALE_DRAMA.actingChair.name}. First-year courses are taught by ${spokenList([...new Set(COURSES.filter((c) => c.year === 1).map((c) => c.teachers))])}. They set out what the School asks of you: come to every class, rehearsal and call, and tell your teachers and the chair when you’re ill. They also explained Pass/Fail courses, making up an Incomplete within a month, the casting pool, the Cabaret and work-study. It’s all on the Standing tab.`;
+    case 'faculty': return `You met the acting faculty, with the chair, ${YALE_DRAMA.actingChair.name}. First-year courses are taught by ${spokenList([...new Set(COURSES.filter((c) => c.year === 1).map((c) => c.teachers))])}. They set out what the School asks of you: come to every class, rehearsal and call, and tell your teachers and the chair when you’re ill. They also explained Pass/Fail courses, making up an Incomplete within a month, the casting pool, the Cabaret and work-study. It’s all on the Standing And Craft tab.`;
     case 'tour': return 'You were shown the studios you can book to rehearse in, the theaters, and the Haas Family Arts Library.';
     case 'expectations': {
       const first = ORIENTATION_2026.classesBegin;

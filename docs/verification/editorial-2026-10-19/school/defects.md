@@ -42,6 +42,30 @@ fixed in its words or its assembly, with the test that holds the new words.
    comma. Now "(expansive; Trifles doesn’t take it: it can only be played set, the same way every time)". Found by
    `render.mts`.
 
+10. **"Register on the School screen."** `systems/school.ts`, Not Registered and A Shift You Couldn't Work: the School
+    screen has no Register control except Standing And Craft's, shown only after a leave or a hold (`mustRegister`); in
+    a first term the way is Orientation's Registration And Your Account, caught up on the Coursework tab. The notices now
+    name whichever applies (`registerWay`). Found reading `registered()` beside the notice. Held by
+    `tests/evidence-g26-school.test.ts` and `tests/evidence-g21-school.test.ts`.
+11. **A missed-call warning to a student already out of the pool.** You Missed A Rehearsal Call said "Two missed calls in
+    a term take you out of the casting pool." to every student, but `missedCallsOut` returns early once `castable` is
+    false, so a student already out heard a warning of something already done. Now it counts the calls left, or says
+    you're already out. Found reading `missedCallsOut`.
+12. **"The Standing tab."** The tab is labeled Standing And Craft; eleven sentences in this area's files named it "the
+    Standing tab". Batches 1 and 2 changed theirs; `leave.ts` and the school guide's follow in their batches.
+13. **"In speech, and accents and dialects."** `teachersNotes` joined two skills, one with its own "and", into what read
+    as three. Found by `render.mts`.
+14. **"1 h 40" in a sentence.** `workloadWords` printed durations in the short form the glossary keeps for lists and
+    chips. Now "1 hour and 40 minutes".
+15. **"Classes don’t count your attendance."** `leave.ts` Back From Your Leave told a student back from a leave that until
+    they registered, classes didn't count their attendance. An unregistered class day counts as an absence
+    (`registerSchool` counts it against them and says so in Not Registered), so the words promised less harm than there
+    was. Now "until you do, you’re counted absent from them"; found reading the leave's notices against Not Registered,
+    and seen in `leave.txt`. The Leave panel's Register line said the same (batch 4).
+16. **"The savings beside it."** `leave.ts` `bankShortWords` said the checking account "and the savings beside it" can't
+    cover a Yale payment. The payment draws on savings (`fromBankToYale` passes `fromSavings`), so it's "your savings"
+    now, with the glossary's checking account.
+
 ## Functional Defects
 
-None found in batch 1's sources.
+None found in batches 1 to 3's sources.

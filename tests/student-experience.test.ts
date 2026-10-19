@@ -179,7 +179,7 @@ describe('each course passed, incomplete or failed, and what the degree needs', 
     // From 2026-10-10 a first-year course never retaken is offered an additional term of its season before the degree
     // is withheld; until then it was withheld at once.
     expect(evaluate(sim, sim.player, 5)!.standing).not.toBe('withheld');
-    expect(sim.universe.notifications.find((n) => n.title === 'Your Degree Isn’t Complete')!.body).toMatch(/Acting I isn’t passed.*additional term/);
+    expect(sim.universe.notifications.find((n) => n.title === 'Your Degree Isn’t Complete')!.body).toMatch(/You haven’t passed Acting I.*additional term/);
   });
 
   it('an Incomplete at Commencement keeps them from it, and the degree comes when it’s made up, or is withheld when its month runs out', () => {
