@@ -706,7 +706,7 @@ describe('creation’s pickers and Before Yale, said in words', () => {
     expect(text).toMatch(/and your card stays with Chase\. Your [^.]+ opens with nothing in it\./);
     // MUFG, whose current account opens with its fees to graduation: the line doesn't say it opens with nothing.
     text = step(life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-mufg' }));
-    expect(text).toContain('Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥10,200, from your savings');
+    expect(text).toContain('Its 普通預金 (Ordinary Deposit) opens with ¥10,200 from your savings, what its fees come to until you graduate in May 2029');
     expect(text).toContain('Your savings stay at MUFG Bank. Your everyday money is in your account here, and your card stays with Chase.');
     expect(text).not.toContain('opens with nothing in it');
     expect(text).toContain('If you lived outside America just before Yale, say where, and whether you kept a bank account there.');

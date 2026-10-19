@@ -78,9 +78,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [bank]": {
   "status": "Rewritten",
-  "hash": "5f41f6d6255a",
+  "hash": "0ba2a890c959",
   "on": "2026-10-19",
-  "evidence": "the money area's rename carried in at its merge: Savings Covers The Checking Account, the label BankPayments.tsx now shows; tests/help-mechanics.test.ts renders every paragraph and passes on the merge, and tests/guide-chapter-facts.test.ts holds the chapter's names",
+  "evidence": "the coordinator's edit after tests/evidence3-person.test.ts (i-stale-claims) read 'that interest' as the removed interests: 'On an F-1 the US doesn’t tax it', the interest the sentence before names; the money rename carried in at the money merge; tests/help-mechanics.test.ts renders every paragraph",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [body]": {
