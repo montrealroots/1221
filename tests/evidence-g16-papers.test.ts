@@ -630,7 +630,7 @@ describe('documents.us_status', () => {
     const t0 = Date.UTC(2027, 1, 1, 16);
     sim.advanceTo(t0);
     expect(run(sim, 'school.withdraw', { confirm: true }).ok).toBe(true);
-    expect(titled(sim, 'You Withdrew From The School')[0]!.body).toContain('As an F-1 student you have fifteen days’ grace, and OPT isn’t open to you.');
+    expect(titled(sim, 'You Withdrew From The School')[0]!.body).toContain('As an F-1 student, you have a fifteen-day grace period, and OPT isn’t open to you.');
     // Looked at a minute on, inside the grace, where she's told her status is ending; then at its end, fifteen days on,
     // 16 February 2027 at 11 AM in New Haven. Until 2026-10-13 the withdrawal moved the look straight to the grace's end,
     // and this test held that, where she was found out of status without a word.

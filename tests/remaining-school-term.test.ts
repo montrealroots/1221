@@ -245,7 +245,7 @@ describe('the missed-work term, played', () => {
     expect(dayKey(warnings[0]!.at)).toBe(when!.day);
     expect(zonedParts(warnings[0]!.at, NY).hour).toBe(9);
     expect(warnings[0]!.body).toMatch(new RegExp(`^So far this term, ${when!.unready} of the ${WARNING_AFTER} pieces due were Unready or not shown\\. `));
-    expect(warnings[0]!.body).toContain('This is a warning, not the term review. The faculty reviews the term on December 11, 2026. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would give you a notice of academic concern.');
+    expect(warnings[0]!.body).toContain('This is a warning, not the term review: the faculty reviews the term on December 11, 2026. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would give you a notice of academic concern.');
     expect(courseworkOf(sim, sim.player)!.warned).toEqual([0]);
   }, 300_000);
 
@@ -261,7 +261,7 @@ describe('the missed-work term, played', () => {
       const course = pieces.filter((x) => x.course === a.course && firstDay(x) !== undefined && firstDay(x)! <= a.dueOn);
       const notShown = course.filter((x) => !x.shown).length;
       expect(notShown).toBeGreaterThanOrEqual(1);
-      expect(n.body).toBe(`You weren’t in class when it was due, and it can’t be shown later. The term review counts it as Unready. A course isn’t passed if half or more of the pieces due in the term weren’t shown: in ${courseName(a.course)}, that’s ${notShown} of ${course.length} so far.`);
+      expect(n.body).toBe(`You weren’t in class when it was due, and it can’t be shown later, so the term review counts it as Unready. You don’t pass a course if half or more of its pieces due in the term aren’t shown. In ${courseName(a.course)}, that’s ${notShown} of ${course.length} so far.`);
     }
     expect(sim.universe.notifications.filter((n) => n.title.startsWith('Not Shown Again: '))).toHaveLength(1);
     // Called in sick on its day: it went on to its course's next meeting and was shown there, counted from then.

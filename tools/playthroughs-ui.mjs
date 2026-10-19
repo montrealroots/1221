@@ -638,9 +638,9 @@ async function setback() {
     trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json';
     const { body } = await readNotice(/^A Word On Your Coursework$/);
     must(/So far this term, \d+ of the \d+ pieces (you’ve shown|due) were Unready/.test(body), `no count: ${body.slice(0, 200)}`);
-    must(/What held most of them back was [^,]+, unfinished on [^.]+\. To work on it, use .*Run It With A Reader.*\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
+    must(/What held most of them back was [^,]+, unfinished on [^.]+\. To work on it: .*Run It With A Reader.*\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
     must(/(One piece is|\d+ pieces are) set and still to be shown/.test(body), `no pieces still to be shown: ${body.slice(0, 300)}`);
-    must(/This is a warning, not the term review\. The faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, .* the review would (give you a notice of academic concern|put you on academic warning|keep you on academic warning|dismiss you from the School|not recommend your degree)\./.test(body), `no review day: ${body.slice(0, 400)}`);
+    must(/This is a warning, not the term review: the faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, .* the review would (give you a notice of academic concern|put you on academic warning|keep you on academic warning|dismiss you from the School|not recommend your degree)\./.test(body), `no review day: ${body.slice(0, 400)}`);
     await shot('warning-on-home');
   });
   await step('the warning opened in place: its look, who sent it and when, and Close', ['drill-down'], async () => {
@@ -658,7 +658,7 @@ async function setback() {
     must(hash().startsWith('#/workspace/school'), `Go There opened ${hash()}`);
     await tab('Coursework');
     const soonest = (await page.locator('[data-due-soonest] li').allInnerTexts()).map(clean);
-    must(soonest.length > 0 && soonest.every((s) => /, due .+\. Shown today, it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\./.test(s)), `Due Soonest: ${soonest.join(' | ').slice(0, 300)}`);
+    must(soonest.length > 0 && soonest.every((s) => /, due .+\. Shown today, it would come to about \d+ of 100 \((Unready|Working|Strong|Exceptional)\)\./.test(s)), `Due Soonest: ${soonest.join(' | ').slice(0, 300)}`);
     said(`Due Soonest: ${soonest.join(' | ')}`);
     const forecast = page.locator('[data-shown-today]').filter({ hasText: /Run It With A Reader/ }).first();
     must(await forecast.count(), 'no open scene whose Shown Today names Run It With A Reader');
@@ -875,7 +875,7 @@ async function specialist() {
     const text = clean(await briefPane().innerText());
     const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.search(/The Last Take/i), text.search(/The Last Take/i) + 400)}`);
-    must(/held back [A-Z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
+    must(/held back your [a-z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
     must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t the one row in the takes table');
     said(grain);
     return said1;

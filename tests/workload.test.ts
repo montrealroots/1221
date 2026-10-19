@@ -45,12 +45,12 @@ describe('school workload, said before it’s held against you', () => {
     // Its figures are the term's own at the moment it was given: at least the mark less the margin, Unready.
     // Nothing was prepared, so each piece was short on every part: that's said, and not one part named by its tie (from
     // 2026-10-17, `shortCause`; until then "Most often short on them: …, on 1 of the 6 shown", brief 13's journey J15).
-    const said = /^So far this term, (\d+) of the (\d+) pieces you’ve shown were Unready\. Every part of each one was unfinished, so it’s the preparation as a whole, not one part\. Work through each piece’s steps\./.exec(ws[0]!.body)!;
+    const said = /^So far this term, (\d+) of the (\d+) pieces you’ve shown were Unready\. This is a warning, not the term review: the faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would [^.]+\. None of them had a single part finished, so it’s the preparation as a whole, not one part\. Work through each piece’s steps before it’s due\./.exec(ws[0]!.body)!;
     expect(said).not.toBeNull();
     expect(ws[0]!.body).not.toContain('What held most of them back');
     expect(shown.filter((a) => a.shown!.band === 'unready').every((a) => shortParts(sim.player, a).length === Object.keys(templateById(a.template)!.dims).filter((d) => d in weightsOf(a)).length)).toBe(true);
     expect(Number(said[1])).toBeGreaterThanOrEqual((ESTIMATE.coursework.unready - TERM_CHECK.margin) * Number(said[2]));
-    expect(ws[0]!.body).toContain(`The faculty reviews the term on ${formatDate(instantFromZoned({ ...classPeriod(term).to, hour: 17 }, NY), NY)}`);
+    expect(ws[0]!.body).toContain(`the faculty reviews the term on ${formatDate(instantFromZoned({ ...classPeriod(term).to, hour: 17 }, NY), NY)}`);
     // Once a term, and still once after a reload and a week more.
     sim = loadSave(deserialise(serialise(sim.universe)));
     expect(courseworkOf(sim, sim.player)!.warned).toEqual([term]);
@@ -87,7 +87,7 @@ describe('school workload, said before it’s held against you', () => {
     // Interpretation reads the choices answered too, not only its step, so only the partner part is asserted here.
     expect(shortParts(sim.player, a)).toContain('partner');
     expect(remedyWords(a, 'partner')).toContain(READER.label);
-    expect(chiefLimit(without)).toMatch(/wasn’t complete, which cost /);
+    expect(chiefLimit(without)).toMatch(/wasn’t complete, and that cost /);
     // The same piece with the partner part at what completes it: the forecast rises, and nothing is short.
     a.reader = EVALUATION.complete.coursework;
     const withIt = showingForecast(sim, sim.player, a);
@@ -120,7 +120,7 @@ describe('school workload, said before it’s held against you', () => {
     tended(sim, at(2027, 1, 2));
     const concern = sim.universe.notifications.find((n) => n.title === 'A Notice Of Academic Concern');
     expect(concern, 'a term with every piece unprepared draws a concern').toBeDefined();
-    expect(concern!.body).toMatch(/pieces due in class were Unready or not shown\. That’s short of what the program asks\. Every part of each one was unfinished\./);
+    expect(concern!.body).toMatch(/pieces due in class were Unready or not shown\. That’s short of what the program asks\. None of them had a single part finished\./);
     expect(concern!.body).not.toContain('What held most of them back');
   }, 300_000);
 });
@@ -220,7 +220,8 @@ describe('school workload, found by the sweep (2026-10-16)', () => {
     expect(shortCause(sim.player, termTally(cw.assignments, term).unreadyShown)).toEqual({ kind: 'scattered' });
     termWarning(sim, sim.player, picked[0]!);
     expect(warnings(sim)).toHaveLength(1);
-    expect(warnings(sim)[0]!.body).toContain(`So far this term, ${need} of the ${termTally(cw.assignments, term).shown} pieces you’ve shown were Unready. Each was short on a different part, so there’s no single pattern. Each one’s feedback says what held it back.`);
+    expect(warnings(sim)[0]!.body).toContain(`So far this term, ${need} of the ${termTally(cw.assignments, term).shown} pieces you’ve shown were Unready. This is a warning, not the term review: `);
+    expect(warnings(sim)[0]!.body).toContain(' Each fell short on a different part, so there’s no one thing to fix. Each piece’s feedback says what held it back.');
     expect(warnings(sim)[0]!.body).not.toContain('What held most of them back');
   }, 180_000);
 

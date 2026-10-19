@@ -85,7 +85,8 @@ import type { Person } from '../domain/model';
 import { abilityFull, abilityOf, abilityDef, type AbilityId } from './attributes';
 import { MASTERED, TECHNIQUES, TECHNIQUE_LABEL } from '../content/abilities';
 import { type Dimension, type DimensionSpec, type TaskProfile, DIMENSION_LABEL, EVALUATION, RULESET } from '../content/tasks';
-import type { Skill } from '../content/school';
+import { SKILL_WORDS, type Skill } from '../content/school';
+import { plural } from '../core/text';
 import { judgePiece, type PieceResult, type PieceSpec } from './piece';
 import { GRAIN } from '../content/interpretation';
 
@@ -445,7 +446,7 @@ export function judgeExact(seed: string, performer: Performer, ctx: EvalContext)
       const whole = terms.map((x, j) => (j === i ? { ...x, n: 1 } : x));
       limits.push({ kind: t.kind, what: t.what, label: t.label, dimension: d, by: cost(dimensionQuality(whole, diff, prepared, condition, dr, f, spread).quality) });
     }
-    if (now.capacity < 1 && ctx.difficulty > 0) limits.push({ kind: 'difficulty', what: 'difficulty', label: 'How Hard The Work Is', dimension: d, by: cost(dimensionQuality(terms, diff - ctx.difficulty, prepared, condition, dr, f, spread).quality) });
+    if (now.capacity < 1 && ctx.difficulty > 0) limits.push({ kind: 'difficulty', what: 'difficulty', label: 'How Hard The Piece Is', dimension: d, by: cost(dimensionQuality(terms, diff - ctx.difficulty, prepared, condition, dr, f, spread).quality) });
     // What the way it's played came to against the scene: the dimension again without its share of difficulty.
     const without = g ? dimensionQuality(terms, ctx.difficulty, prepared, condition, dr, f, spread).quality : now.quality;
     if (g && g.d > 0) limits.push({ kind: 'suitability', what: 'grain', label: g.label, dimension: d, by: cost(without) });
@@ -646,32 +647,62 @@ export function bandOfQuality(q: number): 'unready' | 'working' | 'strong' | 'ex
   return q >= b.exceptional ? 'exceptional' : q >= b.strong ? 'strong' : q >= b.working ? 'working' : 'unready';
 }
 
-/** A condition's label as the subject of a sentence: “Shaken By A Slip In The Middle” as being shaken by a slip in the middle. */
+/**
+ * A condition's label as the subject of a sentence: “Shaken By A Slip In The Middle” as being shaken by a slip in the
+ * middle. A part of a piece is named by `segmentNames` and `beatSegments` (“The Close”, “Beat 3”, “Part 2”), none of them
+ * a proper name, so it reads in lower case (from 2026-10-19, brief 15: until then only “The” was, and “by the Close”).
+ */
 function conditionWords(l: Pick<Limit, 'what' | 'label'>): string {
-  const part = (s: string) => s.replace(/^The /, 'the ');
-  if (l.what === 'fatigue') return `Tiredness (${l.label.toLowerCase()})`;
+  const part = (s: string) => s.toLowerCase();
+  if (l.what === 'fatigue') {
+    // “Readiness At 61, Under 80”, said as a sentence says it (from 2026-10-19, brief 15: until then “Tiredness
+    // (readiness at 61, under 80)”); a label from an older save that doesn't read so says only the tiredness.
+    const m = /^Readiness At (\d+), Under (\d+)$/.exec(l.label);
+    return m ? `Being tired (readiness ${m[1]}, below ${m[2]})` : 'Being tired';
+  }
   if (l.what === 'illness') return 'Being down with the flu';
   if (l.what === 'injury') return `Working with ${l.label.charAt(0).toLowerCase()}${l.label.slice(1).toLowerCase()}`;
-  if (l.what === 'stamina') return `Your stamina running low${l.label.startsWith('Stamina, By ') ? ` by ${part(l.label.slice('Stamina, By '.length))}` : ''}`;
+  if (l.what === 'stamina') return `Running low on stamina${l.label.startsWith('Stamina, By ') ? ` by ${part(l.label.slice('Stamina, By '.length))}` : ''}`;
   if (l.what === 'shaken') return `Being shaken by a slip${l.label.startsWith('Shaken By A Slip In ') ? ` in ${part(l.label.slice('Shaken By A Slip In '.length))}` : ''}`;
   return l.label;
 }
+
+/** Points a limit cost a quality, as a teacher says them: whole points of 100, not the engine's tenths. */
+const pointsWords = (by: number): string => (by < 0.5 ? 'less than a point' : `${plural(Math.round(by), 'point')} out of 100`);
+
+/** An ability or a technique, as a sentence names it: “vocal expression”, “on-camera work”. */
+const skillWords = (l: Pick<Limit, 'kind' | 'what' | 'label'>): string => (l.kind === 'technique' ? SKILL_WORDS[l.what as Skill] ?? l.label.toLowerCase() : l.label.toLowerCase());
+
+/**
+ * A part of the preparation as the subject of a sentence: a task's own words as they are (“Learning the lines”), and a
+ * card's Title Case label in quotes, as a name (“Lines”), so that “Lines wasn’t complete” doesn't read as a plural.
+ */
+const partWords = (label: string): string => (/^[A-Z][^ ]*( [A-Z][^ ]*)*$/.test(label) ? `“${label}”` : label);
+
+/**
+ * A way of playing that doesn't fit, said in brackets: its side in lower case, then its reason (`misfitOf`, “Expansive:
+ * …”) after a semicolon, since the reason can hold a colon of its own, and without its own full stop.
+ */
+const fitWords = (label: string): string => label.replace(/\.$/, '').replace(/^(\w+): (The )?/, (_, side: string, the?: string) => `${side.toLowerCase()}; ${the ? 'the ' : ''}`);
 
 /**
  * The first limit worth saying, in words built from the result: of a piece shown (`past`), or of one as it would be shown
  * now (`now`, a forecast). From 2026-10-17 (brief 14) the two read in their own tense, and each quality by the name the
  * screen gives it; until then a forecast said “wasn’t complete”, a condition opened on its Title Case label, and “the
- * choices wasn’t complete” could be printed.
+ * choices wasn’t complete” could be printed. From 2026-10-19 (brief 15) a teacher's words: the quality and the ability in
+ * lower case, as “your execution”, and the cost in whole points out of 100 (the limit's own `by`, rounded only in the
+ * sentence), where until then it read “Your Vocal Expression held back Execution by 25.7 points”.
  */
 export function chiefLimit(e: Pick<Evaluation, 'limits'>, tense: 'past' | 'now' = 'past'): string | undefined {
   const l = e.limits[0];
   if (!l) return undefined;
   const now = tense === 'now';
-  const cost = `${now ? 'which costs' : 'which cost'} ${DIMENSION_LABEL[l.dimension]} ${l.by} points`;
-  if (l.kind === 'preparation') return `${l.label} ${now ? 'isn’t' : 'wasn’t'} complete, ${cost}`;
-  if (l.kind === 'condition') return `${conditionWords(l)} ${now ? 'costs' : 'cost'} ${DIMENSION_LABEL[l.dimension]} ${l.by} points`;
+  const quality = `your ${DIMENSION_LABEL[l.dimension].toLowerCase()}`;
+  const cost = `${now ? 'and that costs' : 'and that cost'} ${quality} ${pointsWords(l.by)}`;
+  if (l.kind === 'preparation') return `${partWords(l.label)} ${now ? 'isn’t' : 'wasn’t'} complete, ${cost}`;
+  if (l.kind === 'condition') return `${conditionWords(l)} ${now ? 'costs' : 'cost'} ${quality} ${pointsWords(l.by)}`;
   if (l.kind === 'difficulty') return `The piece ${now ? 'asks' : 'asked'} more than your craft can give yet, ${cost}`;
-  if (l.kind === 'fit') return `The way you ${now ? 'are playing it doesn’t' : 'played it didn’t'} fit (${l.label}), ${cost}`;
-  if (l.kind === 'suitability') return `The way you ${now ? 'are playing it doesn’t' : 'played it didn’t'} suit the scene (${l.label}), ${cost}`;
-  return `Your ${l.label} ${now ? 'holds' : 'held'} back ${DIMENSION_LABEL[l.dimension]} by ${l.by} points`;
+  if (l.kind === 'fit') return `The way you ${now ? 'are playing it doesn’t' : 'played it didn’t'} fit the piece (${fitWords(l.label)}), ${cost}`;
+  if (l.kind === 'suitability') return `The way you ${now ? 'are playing it doesn’t' : 'played it didn’t'} suit the scene (${l.label.toLowerCase()}), ${cost}`;
+  return `Your ${skillWords(l)} ${now ? 'holds' : 'held'} back ${quality} by ${pointsWords(l.by)}`;
 }

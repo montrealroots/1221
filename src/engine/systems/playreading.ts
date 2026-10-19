@@ -66,11 +66,11 @@ export function copyAt(person: Person): { library: string } | { no: string } {
     // “A copy is at the Haas Arts Library, in New Haven.” went on 2026-10-13, reached by no play: a life is enrolled only
     // where it begins in New Haven (`populateWorld`, `engine/index.ts`), and nothing has moved a person since the scope
     // reset of 2026-10-09.
-    if (cw && !cw.orientation.done.tour && !cw.orientation.behind) return { no: 'You don’t know where the library is yet. The building tour in Orientation shows you.' };
+    if (cw && !cw.orientation.done.tour && !cw.orientation.behind) return { no: 'You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.' };
     return { library: 'The Haas Arts Library' };
   }
   // After the school a town's library card lent one (`systems/reading.ts`), until the cards went in the scope reset of 2026-10-09.
-  return { no: 'A copy is borrowed from the Haas Arts Library, which lends to students.' };
+  return { no: 'The Haas Arts Library lends only to students, so there’s no copy for you to borrow now.' };
 }
 
 /** Whether there's a part in it for this person by the published cast: yes, no or not on record. */
@@ -87,8 +87,9 @@ function aspects(person: Person, p: ContemporaryPlay, at: Instant, zone: string)
   if (p.form) out.push({ id: 'form', words: `It reads as ${/^[aeiou]/.test(p.form) ? 'an' : 'a'} ${p.form}.` });
   if (p.cast) {
     const fit = partFor(person, p, at, zone);
-    const counted = p.cast.f !== undefined ? `${p.cast.f} ${p.cast.f === 1 ? 'woman' : 'women'} and ${p.cast.m} ${p.cast.m === 1 ? 'man' : 'men'}` : p.cast.text;
-    out.push({ id: 'cast', words: `The cast as published: ${counted}${p.cast.minAge ? `, every part at least ${p.cast.minAge}` : ''}. ${fit === 'yes' ? 'There’s a part in it for you.' : fit === 'no' ? 'Nothing in it is written for you now.' : ''}`.trim() });
+    // A side with no parts left out (from 2026-10-19, brief 15: until then a solo play's read “1 woman and 0 men”).
+    const counted = p.cast.f !== undefined ? [p.cast.f ? `${p.cast.f} ${p.cast.f === 1 ? 'woman' : 'women'}` : '', p.cast.m ? `${p.cast.m} ${p.cast.m === 1 ? 'man' : 'men'}` : ''].filter(Boolean).join(' and ') || p.cast.text : p.cast.text;
+    out.push({ id: 'cast', words: `The published cast is ${counted}${p.cast.minAge ? `, every part ${p.cast.minAge} or older` : ''}. ${fit === 'yes' ? 'There’s a part in it for you.' : fit === 'no' ? 'Nothing in it is written for you now.' : ''}`.trim() });
   }
   if (p.setting) out.push({ id: 'setting', words: `It’s set: ${p.setting}.` });
   return out;
@@ -138,7 +139,7 @@ export function registerPlayReading(sim: Simulation): void {
     const seen = aspects(person, p, s.now, s.zone);
     let words: string;
     if (!before) {
-      words = [`${p.title}, by ${p.by}, read through.`, ...seen.map((x) => x.words)].join(' ');
+      words = [`You read ${p.title}, by ${p.by}, all the way through.`, ...seen.map((x) => x.words)].join(' ');
       study.noticed = seen.map((x) => x.id);
     } else {
       const when = `You read it again. Your last read was ${formatDate(before.lastAt, s.zone)}.`;

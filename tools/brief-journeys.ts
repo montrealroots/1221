@@ -227,7 +227,7 @@ const result = {
   // concern behind it; how many different notes there were, the longest run of one, and how many times one note came
   // again on a take of another genre.
   notes: (() => {
-    const note = (t: (typeof log.takes)[number]) => (t.chief ?? 'Nothing').replace(/ by [\d.]+ points$/, '').replace(/ [\d.]+ points$/, '');
+    const note = (t: (typeof log.takes)[number]) => (t.chief ?? 'Nothing').replace(/ by (?:\d+ points? out of 100|less than a point)$/, '').replace(/ (?:\d+ points? out of 100|less than a point)$/, '');
     const ns = log.takes.map(note);
     let run = 0; let best = 0; let acrossGenres = 0;
     ns.forEach((n, i) => { run = i > 0 && n === ns[i - 1] ? run + 1 : 1; best = Math.max(best, run); if (i > 0 && n === ns[i - 1] && log.takes[i]!.genre !== log.takes[i - 1]!.genre) acrossGenres += 1; });

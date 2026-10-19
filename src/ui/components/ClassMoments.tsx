@@ -41,7 +41,7 @@ export function ClassMoments() {
             <div key={m.id} className="col gap-1">
               <div className="small"><strong>{mate.name}: {MOMENT_TITLE[m.kind]}.</strong> {m.text} <span className="xs dim">Answer by {formatTime(m.until, zone())}, {formatDate(m.until, zone())}.</span></div>
               {m.kind === 'study' && (shared.length === 0
-                ? <div className="xs dim">You share no open scene with {mate.name.split(' ')[0]}, so you’d run their lines. That helps them, but it doesn’t move your own work.</div>
+                ? <div className="xs dim">You and {mate.name.split(' ')[0]} don’t have a scene together right now, so you’d run their lines. That helps them, but not your own preparation.</div>
                 : shared.length === 1
                   ? <div className="xs dim">You’d run {play(shared[0]!.id)}, the scene you share.</div>
                   : (

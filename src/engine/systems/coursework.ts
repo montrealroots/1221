@@ -393,6 +393,8 @@ const andList = (xs: readonly string[]): string => (xs.length < 2 ? xs[0] ?? '' 
 const hourWords = (h: number): string => (h === 12 ? 'noon' : h === 0 || h === 24 ? 'midnight' : h < 12 ? `${h} in the morning` : h < 17 ? `${h - 12} in the afternoon` : h < 21 ? `${h - 12} in the evening` : `${h - 12} at night`);
 /** A scene's place, as it reads inside a sentence: “The one act, the Wright kitchen” as “the one act, the Wright kitchen”. */
 export const whereWords = (where: string): string => where.replace(/^(The|A|An|Their|His|Her|Before|Outside|Inside|In|On|At|By) (?=[a-z])/, (w) => w.toLowerCase());
+/** A count under ten in words, as prose says it: two, seven, 12. */
+const smallWords = (n: number): string => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
 /** How many times, in words: once, twice, 3 times. */
 const timesWords = (n: number): string => (n === 1 ? 'once' : n === 2 ? 'twice' : `${n} times`);
 
@@ -464,10 +466,12 @@ export function setWork(sim: Simulation, person: Person, course: string, day: Sc
     const c = courseOf(course);
     const scene = a.sceneId ? sceneById(a.sceneId) : undefined;
     const partner = a.partner !== undefined ? school.classmates[a.partner]!.name : undefined;
-    const what = scene ? `${scene.play}, ${whereWords(scene.where)}. You play ${scene.roles[a.role!].name}${partner ? `, and ${partner} plays ${scene.roles[a.role === 0 ? 1 : 0]!.name}` : ''}` : a.repPlay ? `${t.deliverable} (${a.repPlay})` : t.deliverable;
+    const what = scene ? `Your scene is from ${scene.play}, ${whereWords(scene.where)}. You play ${scene.roles[a.role!].name}${partner ? `, and ${partner} plays ${scene.roles[a.role === 0 ? 1 : 0]!.name}` : ''}` : a.repPlay ? `${t.deliverable} (${a.repPlay})` : t.deliverable;
     const again = a.revisit && scene ? ` ${revisitWords(a, scene.roles[a.revisit.role].name, school.classmates[a.revisit.partner ?? -1]?.name)}` : '';
-    const focus = a.objective ? ` Put ${objectiveLabel(t, a.objective)} first: it counts for more when this piece is shown.` : '';
-    sim.notify({ category: 'school', title: `${c?.name ?? course}: ${t.title}`, body: `${what}.${again}${focus} It’s due in class on ${formatDate(at(parse(dueOn), 12), zone())}.`, importance: 55, route: '/workspace/school' });
+    // Where to start, after when it's due (from 2026-10-19, brief 15): the part this piece puts first counts for more in
+    // its result (`workContext`, `putFirst`), so it's the advice to start there, not an order the steps must follow.
+    const focus = a.objective ? ` Start with ${objectiveLabel(t, a.objective)}: this piece puts it first, so it counts for more when you show it.` : '';
+    sim.notify({ category: 'school', title: `${c?.name ?? course}: ${t.title}`, body: `${what}.${again} It’s due in class on ${formatDate(at(parse(dueOn), 12), zone())}.${focus}`, importance: 55, route: '/workspace/school' });
   }
   return a;
 }
@@ -495,8 +499,8 @@ function needRefusal(sim: Simulation, person: Person, need: Need): string | unde
   // a life is enrolled only where it begins in New Haven (`populateWorld`, `engine/index.ts`), and nothing has moved a
   // person since the scope reset of 2026-10-09.
   switch (need) {
-    case 'studio': return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know where the studios are yet. The building tour in Orientation shows you.';
-    case 'library': return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know where the library is yet. The building tour in Orientation shows you.';
+    case 'studio': return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know where the studios are yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.';
+    case 'library': return cw.orientation.done.tour || cw.orientation.behind ? undefined : 'You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.';
     // On its feet: the energy, below (`SPENT`). Clothes to move in were the wardrobe's to have until 2026-10-09.
     case 'feet': return undefined;
     case 'partner': return 'Work with your partner happens at a rehearsal you both agree to. Ask them for an evening under Rehearsing With on this piece.';
@@ -516,22 +520,22 @@ export function persistentFor(cw: Coursework, a: Assignment): { key: string; dim
 /** Why a way at a weakness can't be chosen for this work, or nothing. */
 export function approachRefusal(sim: Simulation, person: Person, a: Assignment | undefined, kind: Approach): string | undefined {
   if (!a) return 'There’s no such assignment.';
-  if (a.status !== 'open' && a.status !== 'revising') return 'That work is finished.';
+  if (a.status !== 'open' && a.status !== 'revising') return 'That piece is finished.';
   if (a.approach) return `You’ve already chosen ${APPROACHES[a.approach.kind].label.toLowerCase()} for this piece.`;
   const cw = courseworkOf(sim, person)!;
   const weak = persistentFor(cw, a)[0];
-  if (!weak) return 'None of your recurring notes is one this piece can help with.';
+  if (!weak) return 'This piece can’t help with any of your recurring notes.';
   if (kind === 'objective' && !(Object.keys(OBJECTIVE_DIM) as Objective[]).some((o) => OBJECTIVE_DIM[o] === weak.dim && (o !== 'listening' || a.partner !== undefined))) return 'This piece can’t put that part first.';
   if (kind === 'partner') {
     if (a.partner === undefined) return 'This piece has no partner.';
-    if (weak.dim === 'partner') return 'That note is already about work with your partner, so this adds nothing.';
+    if (weak.dim === 'partner') return 'That note is already about working with your partner, so this wouldn’t add anything.';
     if (trustOf(person.school!.classmates[a.partner]!) < WORK.trust.wary) return `${person.school!.classmates[a.partner]!.name.split(' ')[0]} would rather work alone, after last time.`;
   }
   // Where the table work is the answers alone (`interpretationOf`), a drill or the partner's work on it moves nothing the
   // showing reads: refused from 2026-10-12. Until then both could be chosen, and both moved a figure the showing didn't
   // read. Put It First and A Smaller Piece still act on the answers, by weight and by scale.
   const t = templateById(a.template)!;
-  if ((kind === 'drill' || kind === 'partner') && weak.dim === 'interpretation' && t.material !== 'none' && !t.activities.some((x) => x.dim === 'interpretation')) return 'On this piece the table work is your answers to its questions, so a drill or your partner can’t change it. Change an answer under Table Work.';
+  if ((kind === 'drill' || kind === 'partner') && weak.dim === 'interpretation' && t.material !== 'none' && !t.activities.some((x) => x.dim === 'interpretation')) return 'On this piece, Table Work is your answers to its questions, so a drill or your partner can’t change it. Change an answer under Table Work instead.';
   return undefined;
 }
 
@@ -574,18 +578,18 @@ export function activitiesOf(a: Assignment): readonly Activity[] {
  * Why table work on a text can't be done yet: it's done on a text you know, read to 30% (from 2026-10-16 one rule, read by
  * `school.choose` and by the Table Work select, which said nothing of it until then and took an answer it then refused).
  */
-export const tableWorkRefusal = (a: Pick<Assignment, 'prep'>): string | undefined => (a.prep.familiarity < 0.3 ? 'Read the text first. You can only do table work on a text you know.' : undefined);
+export const tableWorkRefusal = (a: Pick<Assignment, 'prep'>): string | undefined => (a.prep.familiarity < 0.3 ? 'Read the text first. You can answer the Table Work questions once you know it.' : undefined);
 
 export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | undefined, activityId: string): string | undefined {
   if (!a) return 'There’s no such assignment.';
-  if (a.status !== 'open' && a.status !== 'revising') return 'That work is finished.';
+  if (a.status !== 'open' && a.status !== 'revising') return 'That piece is finished.';
   const t = templateById(a.template)!;
   const act = activitiesOf(a).find((x) => x.id === activityId);
-  if (!act) return 'That isn’t a step of this work.';
+  if (!act) return 'That isn’t a step of this piece.';
   if (act.dim === 'revision' && t.revised && a.status !== 'revising') return 'You can revise once it’s been shown and you have a note to work on.';
   if (a.feedback && !a.feedback.seen) return 'There’s new feedback on this piece. Read it, then press Mark As Read.';
-  if (a.asks?.some((k) => k.status === 'open')) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} has asked to rehearse. Answer them first.`;
-  if (momentsOf(courseworkOf(sim, person)!).some((m) => m.status === 'open' && m.assignmentId === a.id)) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} reads the scene differently from you. Answer them first.`;
+  if (a.asks?.some((k) => k.status === 'open')) { const first = person.school!.classmates[a.partner!]!.name.split(' ')[0]; return `${first} has asked to rehearse. Answer them first, under Rehearsing With ${first}.`; }
+  if (momentsOf(courseworkOf(sim, person)!).some((m) => m.status === 'open' && m.assignmentId === a.id)) return `${person.school!.classmates[a.partner!]!.name.split(' ')[0]} reads the scene differently from you. Answer them first, under Your Class.`;
   for (const need of act.needs ?? []) { const no = needRefusal(sim, person, need); if (no) return no; }
   // A step that builds on the table work reads it as the showing does (`interpretationOf`, from 2026-10-12): until then
   // it read `prep.interpretation`, which nothing in Table Work moves, so Write It Up never opened from the answers. A
@@ -909,7 +913,7 @@ export function noteText(a: Assignment, focus: Focus, level?: number, partnerNam
     const base = t.notes[focus.dim] ?? `${t.dims[focus.dim]?.label ?? focus.dim} needed more work.`;
     // With a reader's evenings, or the way to one, from 2026-10-16 (`READER`): a partner who doesn't come isn't the end of it.
     const read = a.steps[READER.id] ?? 0;
-    const withReader = read ? ` You ran it with a reader ${timesWords(read)}.` : ` ${READER.label} lets you work on your side of it without them.`;
+    const withReader = read ? ` You ran it with a reader ${timesWords(read)}.` : ` To work on your side of it without them, use ${READER.label}.`;
     const kept = a.rehearsals.filter((r) => r.status === 'kept').length;
     const with_ = focus.dim === 'partner' && partnerName ? ` ${kept ? `You and ${partnerName.split(' ')[0]} had rehearsed together ${timesWords(kept)}.` : `You and ${partnerName.split(' ')[0]} hadn’t rehearsed together.`}${withReader}` : '';
     const measured = level !== undefined ? ` (${t.dims[focus.dim]?.label ?? focus.dim}: ${Math.round(level * 100)}% prepared.)` : '';
@@ -920,7 +924,7 @@ export function noteText(a: Assignment, focus: Focus, level?: number, partnerNam
     const picked = qo?.options.find((o) => o.id === a.answers[focus.question]);
     return `${qo?.q.label ?? 'A choice'}: ${picked?.why ?? 'the text doesn’t support that reading.'}${as}`;
   }
-  if (focus.kind === 'skill') return `It asked for more ${SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()} than you have yet. That’s what to build in class over the next few weeks.`;
+  if (focus.kind === 'skill') return `This piece asked for more ${SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()} than you have yet. Keep building it in class over the next few weeks.`;
   return ADVANCED[focus.challenge];
 }
 
@@ -931,17 +935,20 @@ export function noteText(a: Assignment, focus: Focus, level?: number, partnerNam
  */
 export function feedbackWords(kind: NoteKind, body: string, before?: { on: string; course: string; level?: number; given?: number; taken?: string }, level?: number): string {
   const when = before ? formatDate(at(parse(before.on), 12), zone()) : '';
-  if (kind === 'advanced') return `It held together. Here’s a next step to try. ${body}`;
+  if (kind === 'advanced') return `It came together. Here’s what to try next. ${body}`;
   if (kind === 'partial' && before) return `This has improved since ${when}${before.level !== undefined && level !== undefined ? ` (${Math.round(before.level * 100)}% then, ${Math.round(level * 100)}% now)` : ''}, but it isn’t there yet. ${body}`;
-  if (kind === 'recurring' && before?.taken) return `You’d put this right on ${formatDate(at(parse(before.taken), 12), zone())}, but it has slipped back. ${body}`;
+  if (kind === 'recurring' && before?.taken) return `You fixed this on ${formatDate(at(parse(before.taken), 12), zone())}, but it has slipped back. ${body}`;
   // From the third time, how many: a weakness that keeps coming back is named as one (from a measured run, where one note came seventeen times in a year).
+  // Said as the note it was last time and still is, not as a new finding (from 2026-10-19, brief 15); a rise short of
+  // `LEARNING.better` is still recurring, so it says the note is still there, not that nothing moved.
   if (kind === 'recurring' && before) return before.given !== undefined && before.given >= 2
-    ? `This is the ${ordinal(before.given + 1)} time you’ve had this note (last in ${before.course} on ${when}), and it’s still there. ${body}`
-    : `You had the same note in ${before.course} on ${when}, and it’s still there. ${body}`;
+    ? `This is the ${ordinal(before.given + 1)} time you’ve had this note, the last in ${before.course} on ${when}, and it’s still there. ${body}`
+    : `You had this note in ${before.course} on ${when} too, and it’s still there. ${body}`;
   return body;
 }
 
-const ordinal = (n: number): string => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; };
+/** A place in an order: first to ninth in words, as prose says them, then 10th, 11th, 22nd. */
+const ordinal = (n: number): string => ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth'][n] ?? (() => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; })();
 
 /**
  * How hard a piece of work is, by its par (`EvalContext.difficulty`): the showcase's 62 asks what a professional's
@@ -1052,7 +1059,7 @@ export function playingPreview(sim: Simulation, person: Person, a: Assignment, o
  * and was shown at 44.4 left open against 44.2 with the choice.
  */
 export function playingRefusal(a: Assignment | undefined): string | undefined {
-  if (!a) return 'There’s no such work.';
+  if (!a) return 'There’s no such piece.';
   if (a.status !== 'open' && a.status !== 'revising') return 'It’s already been shown.';
   const t = templateById(a.template);
   if (!t || t.material === 'none') return 'There’s no scene in this piece, so there’s no way of playing it to choose.';
@@ -1147,7 +1154,7 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   // Prepared, and still Unready or Working: what the evaluation says held it back, the day or the craft, not "it held
   // together" (from 2026-10-10: until then the words came from the preparation alone, and contradicted the band).
   const held = kind === 'advanced' && (band === 'unready' || band === 'working') ? chiefLimit(withPartLabels(judged, a)) : undefined;
-  const text = held ? `It didn’t come together today. ${held}. Once it does, here’s a next step to try. ${body}` : feedbackWords(kind, body, prior, pick?.level);
+  const text = held ? `It didn’t come together today. ${held}. When it does come together, here’s what to try next. ${body}` : feedbackWords(kind, body, prior, pick?.level);
   a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
   a.shown = showing;
   return showing;
@@ -1234,13 +1241,13 @@ export function urgentWork(sim: Simulation, person: Person): { a: Assignment; du
  */
 export function remedyWords(a: Assignment, dim: PrepDim): string {
   const acts = activitiesOf(a).filter((x) => x.dim === dim);
-  if (dim === 'partner') {
-    const ask = acts.find((x) => x.id !== READER.id);
-    return `${ask ? `${ask.label}, asked for an evening at least ${WORK.rehearsal.aheadHours} hours ahead` : 'an evening with your partner'}, or ${READER.label}`;
-  }
+  // The partner's own step isn't a button on the card (it's done at a rehearsal they agree to, `needRefusal`), so it's
+  // said as the ask under Rehearsing With (from 2026-10-19, brief 15: until then it named Rehearse With Your Partner,
+  // which the card never shows).
+  if (dim === 'partner') return `ask your partner for an evening under Rehearsing With, at least ${smallWords(WORK.rehearsal.aheadHours)} hours ahead, or ${READER.label}`;
   const labels = [...new Set(acts.map((x) => x.label))];
-  if (dim === 'interpretation' && templateById(a.template)?.material !== 'none' && questionsFor(a).length) labels.push('an answer the text supports for each Table Work question');
-  return labels.length > 1 ? `${labels.slice(0, -1).join(', ')} or ${labels.at(-1)}` : labels[0] ?? 'its own step';
+  if (dim === 'interpretation' && templateById(a.template)?.material !== 'none' && questionsFor(a).length) labels.push('answer each Table Work question the way the text supports');
+  return labels.length > 1 ? `${labels.slice(0, -1).join(', ')} or ${labels.at(-1)}` : labels[0] ?? 'the steps on its card';
 }
 
 /**
@@ -1333,15 +1340,17 @@ export function termWarning(sim: Simulation, person: Person, a: Assignment): voi
   (cw.warned ??= []).push(a.term);
   const top = shortCause(person, tally.unreadyShown);
   const of = tally.unreadyShown.length === 1 ? 'the one you showed' : `${top?.kind === 'part' ? top.n : 0} of the ${tally.unreadyShown.length} you showed`;
-  const cause = top?.kind === 'part' ? ` What held most of them back was “${top.label}”, unfinished on ${of}. To work on it, use ${top.remedy}.`
-    : top?.kind === 'every' ? ' Every part of each one was unfinished, so it’s the preparation as a whole, not one part. Work through each piece’s steps.'
-      : top?.kind === 'scattered' ? ' Each was short on a different part, so there’s no single pattern. Each one’s feedback says what held it back.' : ' Each one’s feedback says what held it back.';
+  const cause = top?.kind === 'part' ? ` What held most of them back was “${top.label}”, unfinished on ${of}. To work on it: ${top.remedy}.`
+    : top?.kind === 'every' ? ' None of them had a single part finished, so it’s the preparation as a whole, not one part. Work through each piece’s steps before it’s due.'
+      : top?.kind === 'scattered' ? ' Each fell short on a different part, so there’s no one thing to fix. Each piece’s feedback says what held it back.' : ' Each piece’s feedback says what held it back.';
   const set = tally.work.filter((x) => !x.shown && (x.status === 'open' || x.status === 'revising')).length;
   const counted = tally.notShown ? `So far this term, ${tally.unready} of the ${tally.shown} pieces due were Unready or not shown` : `So far this term, ${tally.unready} of the ${tally.shown} pieces you’ve shown were Unready`;
   const review = at(classPeriod(a.term).to, 17);
   const share = mark === 0.5 ? 'half' : `${Math.round(mark * 100)}%`;
   const school = person.school as SchoolRecord;
-  sim.notify({ category: 'school', title: 'A Word On Your Coursework', body: `${counted}.${cause} ${set ? `${set === 1 ? 'One piece is' : `${set} pieces are`} set and still to be shown.` : 'Everything set so far has been shown.'} This is a warning, not the term review. The faculty reviews the term on ${formatDate(review, zone())}. If ${share} or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would ${shortTermWords(school, a.term)}. On the Coursework tab, each open piece’s Shown Today line says how it would do if shown today and what’s holding it back.`, importance: 75, route: '/workspace/school' });
+  // What happened, what it means against the review, then what to do (from 2026-10-19, brief 15): until then the cause
+  // and its steps came first and the warning's own meaning after them, in one paragraph of seven sentences.
+  sim.notify({ category: 'school', title: 'A Word On Your Coursework', body: `${counted}. This is a warning, not the term review: the faculty reviews the term on ${formatDate(review, zone())}. If ${share} or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would ${shortTermWords(school, a.term)}.${cause} ${set ? `${set === 1 ? 'One piece is' : `${smallWords(set).replace(/^\w/, (c) => c.toUpperCase())} pieces are`} set and still to be shown.` : 'Everything set so far has been shown.'} On the Coursework tab, each open piece’s Shown Today line says how it would do if you showed it today, and what’s holding it back.`, importance: 75, route: '/workspace/school' });
 }
 
 /** Whether a note was taken by its revision: the part risen enough, the choice now supported, or the note worked on. */
@@ -1402,7 +1411,7 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
       // evaluation reads them.
       if (mine) {
         const so = cw.assignments.filter((x) => x.course === course && x.term === due.term && (x.shown || x.status === 'missed'));
-        sim.notify({ category: 'school', title: `Not Shown: ${courseOf(course)?.name}`, body: `You weren’t in class when it was due, and it can’t be shown later. The term review counts it as Unready. A course isn’t passed if half or more of the pieces due in the term weren’t shown: in ${courseOf(course)?.name ?? course}, that’s ${so.filter((x) => !x.shown).length} of ${so.length} so far.`, importance: 60, route: '/workspace/school' });
+        sim.notify({ category: 'school', title: `Not Shown: ${courseOf(course)?.name}`, body: `You weren’t in class when it was due, and it can’t be shown later, so the term review counts it as Unready. You don’t pass a course if half or more of its pieces due in the term aren’t shown. In ${courseOf(course)?.name ?? course}, that’s ${so.filter((x) => !x.shown).length} of ${so.length} so far.`, importance: 60, route: '/workspace/school' });
       }
       termWarning(sim, person, due);
       return 1;
@@ -1436,7 +1445,7 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
       const quiet = (rec as NoteRecord & { notifiedAt?: number }).notifiedAt;
       if (quiet === undefined || when - quiet >= LEARNING.quietDays * MS_DAY) {
         (rec as NoteRecord & { notifiedAt?: number }).notifiedAt = when;
-        sim.notify({ category: 'school', title: `Still There: ${noteSubject(rec.key)}`, body: `${t.title} was shown at ${BAND_LABEL[showing.band]}, and the same note came back: ${rec.given} times now. It stays open under Your Notes. On the Coursework tab, an open piece that works on it offers other ways to tackle it, under A Note That Keeps Coming Back.`, importance: 30, route: '/workspace/school' });
+        sim.notify({ category: 'school', title: `Still There: ${noteSubject(rec.key)}`, body: `You showed ${t.title} and it was ${BAND_LABEL[showing.band]}, but the same note came back, for the ${ordinal(rec.given)} time. It stays open under Your Notes. To try something different, find an open piece on the Coursework tab that works on it, and choose a way under A Note That Keeps Coming Back.`, importance: 30, route: '/workspace/school' });
       }
     } else if (mine) sim.notify({ category: 'school', title: `Shown: ${t.title}${roundLabel}, ${BAND_LABEL[showing.band]}`, body: `${sinceLast(cw, due, showing.band)}${showing.strengths.length ? `${showing.strengths.join('. ')}. ` : ''}${due.feedback ? `Simulated note from ${due.feedback.course}: ${due.feedback.text}` : ''}`, importance: 60, route: '/workspace/school' });
     // After the showing's own notice (from 2026-10-16, later: until then the warning came before it, from `show`).
@@ -1481,9 +1490,9 @@ function sinceLast(cw: Coursework, a: Assignment, band: Band): string {
   const rank: Record<Band, number> = { unready: 0, working: 1, strong: 2, exceptional: 3 };
   const was = prev.shown!.band;
   const on = formatDate(prev.shown!.at, zone());
-  if (rank[band] > rank[was]) return `Up from ${BAND_LABEL[was]} on the course’s last piece, shown ${on}. `;
-  if (rank[band] < rank[was]) return `Down from ${BAND_LABEL[was]} on the course’s last piece, shown ${on}. `;
-  return `${BAND_LABEL[band]} again, as on the course’s last piece, shown ${on}. `;
+  if (rank[band] > rank[was]) return `That’s up from ${BAND_LABEL[was]} on the course’s last piece, on ${on}. `;
+  if (rank[band] < rank[was]) return `That’s down from ${BAND_LABEL[was]} on the course’s last piece, on ${on}. `;
+  return `${BAND_LABEL[band]} again, as the course’s last piece was on ${on}. `;
 }
 
 /**
@@ -1499,8 +1508,11 @@ function reshownWords(person: Person, a: Assignment, onDay: string, applied: boo
   const from = f?.kind === 'dim' && a.revision ? Math.round(a.revision.before * 100) : undefined;
   const to = f?.kind === 'dim' ? Math.round((preparedParts(person, a, onDay)[f.dim] ?? 0) * 100) : undefined;
   const part = f?.kind === 'dim' ? t.dims[f.dim]?.label ?? f.dim : '';
-  const moved = from === undefined || to === undefined ? '' : from === to ? ` ${part} stayed at ${to}%.` : ` ${part} went from ${from}% to ${to}%.`;
-  const band = a.revision?.band ? ` Shown again: ${BAND_LABEL[a.revision.band]}.` : '';
+  const moved = from === undefined || to === undefined ? '' : from === to ? ` ${part} is still at ${to}%.` : ` ${part} went from ${from}% to ${to}%.`;
+  // The band against the first showing's (from 2026-10-19, brief 15): “again” only where it's the same.
+  const first = a.shown?.band;
+  const again = a.revision?.band;
+  const band = !again ? '' : first === again ? ` It was ${BAND_LABEL[again]} again.` : first ? ` It was ${BAND_LABEL[again]} this time, after ${BAND_LABEL[first]} the first time.` : ` It was ${BAND_LABEL[again]}.`;
   const shown = `You showed ${t.title} again on ${formatDate(at(parse(onDay), 12), zone())}`;
   if (!about) return applied ? `${shown}, and worked in the next step you were given.${band}` : `${shown}, but the next step you were given doesn’t show in it yet.${band}`;
   // Taken by the revision's own work with the part itself no further on (`noteTaken`'s third way), it says so: until
@@ -1508,7 +1520,7 @@ function reshownWords(person: Person, a: Assignment, onDay: string, applied: boo
   const byRevision = applied && from !== undefined && to !== undefined && to <= from;
   return applied
     ? `${shown}, and ${byRevision ? `worked ${about} into the revision` : `took ${about}`}.${moved}${band}`
-    : `${shown}, but ${about} isn’t taken yet.${moved}${band} It stays open under Your Notes.`;
+    : `${shown}, but you haven’t taken ${about} yet.${moved}${band} The note stays open under Your Notes until you take it.`;
 }
 
 /** The revised work's band: judged as a showing is, without a new note (the note given stands until the next work). */
@@ -1577,12 +1589,12 @@ function orient(sim: Simulation, person: Person, task: OrientationTask): string 
       return `You met the ${school.classmates.length} others in your class: you’ll partner them in scenes, rehearse with them and be cast beside them.`;
     }
     // The faculty set out what the School asks (`SCHOOL_POLICIES`, from 2026-10-10), which the Standing tab keeps.
-    case 'faculty': return `You met the acting faculty, with the chair, ${YALE_DRAMA.actingChair.name}. First-year courses are taught by ${spokenList([...new Set(COURSES.filter((c) => c.year === 1).map((c) => c.teachers))])}. They set out what the School asks: attendance at every class, rehearsal and call; telling your teachers and the chair when you’re ill; Pass/Fail courses, and an Incomplete made up within a month; the casting pool, the Cabaret and work-study. It’s all kept on the Standing tab.`;
+    case 'faculty': return `You met the acting faculty, with the chair, ${YALE_DRAMA.actingChair.name}. First-year courses are taught by ${spokenList([...new Set(COURSES.filter((c) => c.year === 1).map((c) => c.teachers))])}. They set out what the School asks of you: come to every class, rehearsal and call, and tell your teachers and the chair when you’re ill. They also explained Pass/Fail courses, making up an Incomplete within a month, the casting pool, the Cabaret and work-study. It’s all on the Standing And Craft tab.`;
     case 'tour': return 'You were shown the studios you can book to rehearse in, the theaters, and the Haas Family Arts Library.';
     case 'expectations': {
       const first = ORIENTATION_2026.classesBegin;
       const set = COURSES.filter((c) => c.year === 1 && c.terms.includes('fall')).map((c) => setWork(sim, person, c.code, plus(first, -1))).filter(Boolean);
-      return `Each course set out what it asks.${set.length ? ` ${set.length === 1 ? 'One course' : `${set.length} courses`} gave you ${set.length === 1 ? 'its' : 'their'} first piece now, so you can start before classes.` : ''}`;
+      return `Each course set out what it asks.${set.length ? ` ${set.length === 1 ? 'One course' : `${smallWords(set.length).replace(/^\w/, (c) => c.toUpperCase())} courses`} gave you ${set.length === 1 ? 'its' : 'their'} first piece now, so you can start before classes.` : ''}`;
     }
   }
 }
@@ -1609,7 +1621,7 @@ export function orientationRefusal(sim: Simulation, person: Person, task: Orient
 /** Why a partner can't be asked to rehearse at a moment, or nothing; and if they'd rather not, why. */
 export function askRefusal(sim: Simulation, person: Person, a: Assignment | undefined, when: Instant): { refused?: string; declines?: string } {
   if (!a) return { refused: 'There’s no such assignment.' };
-  if (a.status !== 'open' && a.status !== 'revising') return { refused: 'That work is finished.' };
+  if (a.status !== 'open' && a.status !== 'revising') return { refused: 'That piece is finished.' };
   if (a.partner === undefined) return { refused: 'This piece has no partner.' };
   const mate = person.school!.classmates[a.partner]!;
   const first = mate.name.split(' ')[0];
@@ -1680,7 +1692,7 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
     r.status = 'missedByThem';
     m.stoodUp = (m.stoodUp ?? 0) + 1;
     remember(sim, mate, `They didn’t come to rehearse ${what}`);
-    if (mine) sim.notify({ category: 'school', title: `${first} Didn’t Come`, body: `You waited for ${first} to rehearse ${what}, and they didn’t come.`, importance: 50, route: '/workspace/school' });
+    if (mine) sim.notify({ category: 'school', title: `${first} Didn’t Come`, body: `You waited for ${first} to rehearse ${what}, and they didn’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With ${first}, or use ${READER.label} to work on your side of it.`, importance: 50, route: '/workspace/school' });
     return;
   }
   r.status = 'kept';
@@ -1777,7 +1789,7 @@ export function partnerAsks(sim: Simulation, person: Person, course: string, day
     sim.schedule({ at: k.until, kind: ASK_KIND, label: `Answer ${mate.name.split(' ')[0]}`, category: 'school', priority: 33, requiresPlayer: false, payload: { personId: person.id, assignmentId: a.id, askId: k.id } });
     const first = mate.name.split(' ')[0];
     const what = sceneById(a.sceneId ?? '')?.play ?? templateById(a.template)!.title;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `${first} Asks To Rehearse`, body: `${first} asks to rehearse ${what} on ${formatDate(when, zone())} at ${formatTime(when, zone())}. Answer by ${formatTime(k.until, zone())} that day.`, importance: 60, route: '/workspace/school' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `${first} Asks To Rehearse`, body: `${first} asks to rehearse ${what} on ${formatDate(when, zone())} at ${formatTime(when, zone())}. Answer by ${formatTime(k.until, zone())} that day, under Rehearsing With ${first} on the Coursework tab. Saying no costs nothing.`, importance: 60, route: '/workspace/school' });
     return;
   }
 }
@@ -1867,7 +1879,7 @@ export function registerCoursework(sim: Simulation): void {
   sim.onCommand<{ assignmentId: string; question: Question['id']; option: string }, { supported: boolean }>('school.choose', (p, { sim: s }) => {
     const person = s.player;
     const a = assignmentById(s, person, String(p?.assignmentId));
-    if (!a || (a.status !== 'open' && a.status !== 'revising')) throw new CommandError(a ? 'That work is finished.' : 'There’s no such assignment.');
+    if (!a || (a.status !== 'open' && a.status !== 'revising')) throw new CommandError(a ? 'That piece is finished.' : 'There’s no such assignment.');
     const qo = questionsFor(a).find(({ q }) => q.id === p.question);
     if (!qo) throw new CommandError('That isn’t a question this piece asks.');
     const option = qo.options.find((o) => o.id === p.option);
@@ -1929,7 +1941,7 @@ export function registerCoursework(sim: Simulation): void {
     const mate = person.school!.classmates[a.partner!]!;
     moveTrust(mate, WORK.ask.unanswered);
     remember(s, mate, 'Asked you to rehearse, and heard nothing back');
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `${mate.name.split(' ')[0]} Didn’t Hear Back`, body: `You didn’t answer ${mate.name.split(' ')[0]} about rehearsing on ${formatDate(k.at, zone())}, so that rehearsal isn’t happening.`, importance: 40, route: '/workspace/school' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `${mate.name.split(' ')[0]} Didn’t Hear Back`, body: `You didn’t answer ${mate.name.split(' ')[0]} about rehearsing on ${formatDate(k.at, zone())}, so that rehearsal isn’t happening. Leaving them without an answer cost a little of their trust, where a no would have cost nothing.`, importance: 40, route: '/workspace/school' });
   });
 
   sim.onCommand<{ assignmentId: string; rehearsalId: string }, { late: boolean }>('school.cancel_rehearsal', (p, { sim: s }) => {
@@ -1942,7 +1954,7 @@ export function registerCoursework(sim: Simulation): void {
     const late = r.at - s.now < MS_DAY;
     const mate = person.school!.classmates[a.partner!]!;
     if (late) { moveTrust(mate, WORK.trust.lateCancel); noteIncident(mate, s.now, 'lateCancel'); }
-    remember(s, mate, late ? 'You called off a rehearsal at short notice' : 'You moved a rehearsal, with notice');
+    remember(s, mate, late ? 'You called off a rehearsal at short notice' : 'You called off a rehearsal, with notice');
     return { late };
   });
 

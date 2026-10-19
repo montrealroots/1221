@@ -49,13 +49,13 @@ describe('the reader named in the words', () => {
   });
 
   it('names the recording by the thing itself wherever the words name the reader', () => {
-    expect(sharedWords(60, shared('A Recording'))).toBe('Together it came to 70, 10 over your own work: the recording lifted it.');
+    expect(sharedWords(60, shared('A Recording'))).toBe('Together it came to 70 of 100, 10 points over your own work: the recording lifted it.');
     const under = sharedWords(80, shared('A Recording', { parts: { prep: 0.3, timing: 0.6, agree: 1, reliability: 1 }, slip: { at: 'Beat 2', by: 0.1, covered: 0.8 } }));
-    expect(under).toBe('Together it came to 70, 10 under your own work: the recording came less prepared than you; the recording slipped in beat 2, and you covered most of it. Your own result stands as it is.');
+    expect(under).toBe('Together it came to 70 of 100, 10 points under your own work: the recording came less prepared than you; the recording slipped in beat 2, and you covered most of it. Your own result stands as it is.');
   });
 
   it('keeps a classmate’s first name', () => {
-    expect(sharedWords(60, shared('Ruth Banks'))).toBe('Together it came to 70, 10 over your own work: Ruth lifted it.');
+    expect(sharedWords(60, shared('Ruth Banks'))).toBe('Together it came to 70 of 100, 10 points over your own work: Ruth lifted it.');
     expect(sharedWords(80, shared('Ruth Banks', { parts: { prep: 0.3, timing: 0.6, agree: 1, reliability: 1 } }))).toMatch(/: Ruth came less prepared than you\./);
   });
 });

@@ -107,7 +107,7 @@ export function settleCourses(sim: Simulation, person: Person, term: number, sho
       r.why = `you came to ${r.attended} of the ${counted} classes you weren’t excused from`;
     } else if (work.due >= 2 && work.notShown * 2 >= work.due) {
       r.result = 'fail';
-      r.why = `${work.notShown} of its ${work.due} pieces of work weren’t shown`;
+      r.why = `${work.notShown} of its ${work.due} pieces weren’t shown`;
     } else if (r.attended / r.meetings < COURSE_RULES.passFloor) {
       r.result = 'incomplete';
       // A session makes up a week of the course's meetings.
@@ -119,7 +119,7 @@ export function settleCourses(sim: Simulation, person: Person, term: number, sho
     settled.push(r);
   }
   if (person.id === sim.universe.playerId) {
-    for (const r of settled.filter((x) => x.result === 'incomplete')) sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill for ${r.excused} of its ${r.meetings} classes. To complete it, make up ${r.owed === 1 ? 'one session' : `${r.owed} sessions`} of work with its teachers by ${formatDate(r.dueBy!, sim.zone)}, each covering a week of the course: press Make Up A Session on the Standing tab. You can ask for a month more once. If it isn’t made up in time, it becomes a Permanent Incomplete, with no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
+    for (const r of settled.filter((x) => x.result === 'incomplete')) sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill for ${r.excused} of its ${r.meetings} classes, so it’s an Incomplete for now. To complete it, make up ${sessionsWords(r.owed ?? 0)} with its teachers by ${formatDate(r.dueBy!, sim.zone)}, each covering a week of the course: press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
   }
   return settled;
 }
@@ -146,7 +146,7 @@ export function tellFails(sim: Simulation, person: Person, term: number, ended: 
   // dismissed. `room` doesn't settle it alone: a retake of a first year's course counts thirteen semesters, a second's
   // eleven, but a third's nine, which the nine allow (tests/scope-school.test.ts's played Movement Invention III, read
   // in play that day). A mutation removing the clause survived that day, and it was removed.
-  for (const r of Object.values(coursesOf(school)).filter((x) => x.term === term && x.result === 'fail')) sim.notify({ category: 'school', title: `Not Passed: ${r.name}`, body: `You didn’t pass ${r.name}: ${r.why}. The degree needs every course passed${ended ? '.' : remedy(r, room, later)}`, importance: 85, route: '/workspace/school' });
+  for (const r of Object.values(coursesOf(school)).filter((x) => x.term === term && x.result === 'fail')) sim.notify({ category: 'school', title: `Not Passed: ${r.name}`, body: `You didn’t pass ${r.name}: ${r.why}. The degree needs every course passed.${ended ? '' : ` ${remedy(r, room, later)}`}`, importance: 85, route: '/workspace/school' });
 }
 
 /**
@@ -158,9 +158,9 @@ export function tellFails(sim: Simulation, person: Person, term: number, ended: 
  * additional term for it (played: tests/remaining-school.test.ts, a second fall's Fail after a first year's repeat).
  */
 function remedy(r: CourseRecord, room: (academic: number) => boolean, later: () => boolean): string {
-  if (repeatOpen(r, room)) return '. At the year’s end you can ask to repeat the year on the Standing tab.';
-  if (later()) return '. Its year can’t be repeated within the nine semesters the Bulletin allows. After your last year’s term review, unless it puts you on academic warning, you can ask for an additional term to retake it on the Standing tab.';
-  return ', and neither a repeat of its year nor an additional term is left within the nine semesters the Bulletin allows.';
+  if (repeatOpen(r, room)) return 'At the year’s end, you can ask to repeat the year on the Standing And Craft tab.';
+  if (later()) return 'You can’t repeat its year: that would go past the nine semesters the Bulletin allows. Instead, after your last year’s term review, you can ask on the Standing And Craft tab for an additional term to retake it, unless that review puts you on academic warning.';
+  return 'There’s no way left to retake it: neither a repeat of its year nor an additional term fits in the nine semesters the Bulletin allows.';
 }
 
 /**
@@ -173,6 +173,9 @@ function repeatOpen(r: CourseRecord, room: (academic: number) => boolean): boole
   const academic = r.academic ?? r.term;
   return room(academic % 2 === 0 ? academic + 1 : academic);
 }
+
+/** Sessions, counted as prose says them: one session, two sessions, 12 sessions. */
+const sessionsWords = (n: number, noun = 'session'): string => `${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? n} ${n === 1 ? noun : `${noun}s`}`;
 
 /** An Incomplete's reminder a week before its deadline, and the deadline. */
 function scheduleDue(sim: Simulation, person: Person, r: CourseRecord): void {
@@ -191,7 +194,7 @@ export function extendRefusal(_sim: Simulation, person: Person, key: string): st
   // School’s end had called off went back on their calendar; found by that day’s evidence pass). `endedAt` is set exactly
   // when the School ends (`setStanding`), which it was already doing when the course record came in.
   if (person.school!.endedAt !== undefined) return 'You’re not at school.';
-  if (r.extended) return 'It’s been extended once already.';
+  if (r.extended) return 'You’ve already had your one extra month.';
   // “Its month has run out.” went on 2026-10-13: at school the deadline makes the course a Permanent Incomplete at its
   // hour, a leave keeps the deadline (`kept`, `systems/leave.ts`), and only the School’s end calls it off, refused above.
   return undefined;
@@ -274,11 +277,11 @@ export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation
     const r = person?.school ? coursesOf(person.school)[String(item.payload.key)] : undefined;
     if (!person || !r || r.result !== 'incomplete') return;
     if (item.payload.remind === true) {
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `A Week Left: ${r.name}`, body: `${(r.owed ?? 0) - (r.madeUp ?? 0) === 1 ? 'One make-up session' : `${(r.owed ?? 0) - (r.madeUp ?? 0)} make-up sessions`} still to do, by ${formatDate(r.dueBy!, s.zone)}. Press Make Up A Session on the Standing tab.`, importance: 75, route: '/workspace/school' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `A Week Left: ${r.name}`, body: `You still have ${sessionsWords((r.owed ?? 0) - (r.madeUp ?? 0), 'make-up session')} to do, by ${formatDate(r.dueBy!, s.zone)}. Press Make Up A Session on the Standing And Craft tab.${extendRefusal(s, person, String(item.payload.key)) ? '' : ' If you need longer, press Ask For A Month More.'}`, importance: 75, route: '/workspace/school' });
       return;
     }
     r.result = 'permanent';
-    r.why = 'an Incomplete not made up in its month';
+    r.why = 'an Incomplete not made up in time';
     // A degree waiting on it is withheld with it (`onPermanent`), which ends the School and every request with it, so the
     // year’s end is offered only where none waits; read before `onPermanent` takes the wait away (from 2026-10-13: until
     // then a student whose degree it withheld was told to ask to repeat the year, which nothing then let them ask; found
@@ -288,8 +291,8 @@ export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation
     // year, or in any year after a repeat, was told to ask, as the Fail notice was).
     // What's left otherwise, an additional term or nothing, as the Fail's notice says it (`remedy`, from 2026-10-16). A
     // degree waiting on it is withheld at once, and that notice says what stands.
-    const ask = person.school!.awaitingDegree ? '.' : remedy(r, (a) => room(person, a), () => later(person));
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `Permanent Incomplete: ${r.name}`, body: `The month to make it up ran out, so ${r.name} carries no credit, and the degree can’t be completed without it${ask}`, importance: 85, route: '/workspace/school' });
+    const ask = person.school!.awaitingDegree ? '' : ` ${remedy(r, (a) => room(person, a), () => later(person))}`;
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `Permanent Incomplete: ${r.name}`, body: `The time to make it up ran out, so ${r.name} carries no credit, and the degree can’t be completed without it.${ask}`, importance: 85, route: '/workspace/school' });
     onPermanent(s, person, r);
   });
 }

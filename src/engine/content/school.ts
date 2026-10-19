@@ -390,7 +390,7 @@ export const SCHOOL_SEASON = {
  */
 export const SCHOOL_POLICIES: readonly { rule: string; page: string }[] = [
   { rule: 'Attendance is required at every class, rehearsal and call. If you’re running late for a call, tell the stage manager at least thirty minutes ahead.', page: 'p.149' },
-  { rule: 'If you’re ill, email your teachers and copy the program chair, and make up the work you missed on the schedule each teacher sets. In the game, press Call In Sick, and make up an Incomplete on the Standing tab.', page: 'p.149' },
+  { rule: 'If you’re ill, email your teachers and copy the program chair, and make up the work you missed on the schedule each teacher sets. In the game, press Call In Sick, and make up an Incomplete on the Standing And Craft tab.', page: 'p.149' },
   { rule: 'Every acting course is Pass/Fail. An Incomplete is due within a month of the term’s end, or it becomes a Permanent Incomplete with no credit.', page: 'pp.26, 152' },
   { rule: 'Casting is the chair’s. Missed calls, or a want of collaboration, discipline or reliability in class or production, may take an actor out of the casting pool. The game counts two missed calls in a term, labs and rehearsals together.', page: 'p.146' },
   { rule: 'Failing to be available as an understudy is a grave breach of professionalism, and may be grounds for dismissal.', page: 'p.146' },

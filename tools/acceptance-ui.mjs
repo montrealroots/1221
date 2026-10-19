@@ -1224,8 +1224,8 @@ if (DIR) {
     // The words as the sweep of 2026-10-16 left them: the count as the review counts it ("due … Unready or not shown"
     // where a piece was missed), and the part most often short "on N of the M shown". Until then this matched the
     // warning's earlier words, and the sweep's first run here failed on them.
-    must(/So far this term, \d+ of the \d+ pieces (you’ve shown were Unready|due were Unready or not shown)\. What held most of them back was [^,]+, unfinished on (\d+ of the \d+|the one) you showed\. To work on it, use .+\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
-    must(/This is a warning, not the term review\. The faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then/.test(words), `no review day: ${words.slice(0, 300)}`);
+    must(/So far this term, \d+ of the \d+ pieces (you’ve shown were Unready|due were Unready or not shown)\. This is a warning, not the term review: the faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would [^.]+\. What held most of them back was [^,]+, unfinished on (\d+ of the \d+|the one) you showed\. To work on it: .+\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
+    must(/This is a warning, not the term review: the faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then/.test(words), `no review day: ${words.slice(0, 300)}`);
     await item.getByRole('button', { name: /^Go There$/ }).click(); await wait(1200);
     must(new URL(page.url()).hash.startsWith('#/workspace/school'), `Go There opened ${new URL(page.url()).hash}`);
     return words.slice(0, 220);
@@ -1233,11 +1233,11 @@ if (DIR) {
   await step('[save: workload scenario] coursework: Due Soonest first, then a scene’s Shown Today, its figure, what holds it back and the part short with its remedy', async () => {
     await tab('Coursework');
     const soonest = (await page.locator('[data-due-soonest] li').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
-    must(/^[^:]+: .+, due .+\. Shown today, it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\. Still to finish: /.test(soonest), `no Due Soonest with the piece, its day, its figure and what’s short: ${soonest || '(nothing)'}`);
+    must(/^[^:]+: .+, due .+\. Shown today, it would come to about \d+ of 100 \((Unready|Working|Strong|Exceptional)\)\. Still to finish: /.test(soonest), `no Due Soonest with the piece, its day, its figure and what’s short: ${soonest || '(nothing)'}`);
     must(await forecast().count(), 'no Shown Today naming Run It With A Reader on an open scene');
     id = await forecast().getAttribute('data-shown-today');
     const words = (await forecast().innerText()).replace(/\s+/g, ' ');
-    must(/^Shown Today: if you showed it today on a good day, it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\./.test(words), `not its figure and band: ${words}`);
+    must(/^Shown Today: if you showed it today, on a good day, it would come to about \d+ of 100 \((Unready|Working|Strong|Exceptional)\)\./.test(words), `not its figure and band: ${words}`);
     must(/Still to finish: .*Run It With A Reader/.test(words), `not the part short with its remedy: ${words}`);
     shown = await figure(id);
     return `${soonest.slice(0, 140)} | ${words.slice(0, 200)}`;
@@ -1409,7 +1409,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     // Headings render in capitals; their words are what count.
     must(/The Last Take/i.test(text), 'no last take');
     must(/A first take of it\./.test(text), 'its purpose isn’t said');
-    must(/held back [A-Z]|wasn’t complete|didn’t fit|didn’t suit/.test(text), 'what held it back isn’t said');
+    must(/held back your [a-z]|wasn’t complete|didn’t fit|didn’t suit/.test(text), 'what held it back isn’t said');
     must(/What To Work On/i.test(text), 'no weakness named');
     must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t in the takes table');
     return `${said} / ${text.match(/What To Work On\n[^\n]+/i)?.[0]?.slice(0, 160)}`;
@@ -1516,7 +1516,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
       must(!Number.isNaN(first), `no result said: ${said}`);
       const text = await briefPane().innerText();
       must(/The Last Take/i.test(text), 'no last take');
-      must(/held back [A-Z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
+      must(/held back your [a-z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
       const note = text.match(/[^\n.]*asks for it/)?.[0] ?? '(no concern behind the limit)';
       await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
       await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);

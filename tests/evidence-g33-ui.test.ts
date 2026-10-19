@@ -823,7 +823,7 @@ describe('n-decision-us-status', () => {
     const sim = londoner('g33-probe-withdraw');
     sim.advanceTo(at(2026, 9, 1, 12));
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
-    expect(titled(sim, 'You Withdrew From The School')[0]!.body).toContain('As an F-1 student you have fifteen days’ grace, and OPT isn’t open to you.');
+    expect(titled(sim, 'You Withdrew From The School')[0]!.body).toContain('As an F-1 student, you have a fifteen-day grace period, and OPT isn’t open to you.');
     sim.advanceTo(at(2026, 9, 17, 12));
     expect(sim.player.usOutOfStatus).toBe(at(2026, 9, 16, 12));
     expect(titled(sim, 'Out Of Status')).toHaveLength(1);

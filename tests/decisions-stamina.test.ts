@@ -496,20 +496,20 @@ describe('W9: bounded, and said', () => {
     const html = () => renderToStaticMarkup(createElement(RehearsalProcess, { casting: casting(), which: 'school' } as never)).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
     const before = html();
     expect(before).toContain('The Evening’s Workload.');
-    expect(before).toContain('The evening runs 1 h 40 straight through (estimated).');
+    expect(before).toContain('The evening runs 1 hour and 40 minutes, straight through (estimated).');
     const size = casting().size!;
     const W = workloadOf(100, size, 0, 0);
-    expect(before).toContain(`you’re on stage for about ${Math.round(SHARE[size] * 100)}% of its 1 h 40 of playing`);
-    expect(before).toContain(`so its workload is ${W.toFixed(2)} of a possible 8.`);
+    expect(before).toContain(`you’re on stage for about ${Math.round(SHARE[size] * 100)}% of its 1 hour and 40 minutes of playing`);
+    expect(before).toContain(`so its workload is ${W.toFixed(1)} of a possible 8.`);
     expect(before).toContain('The running time: Estimated');
     // After the curtain, the night's record says it, as its look shows it.
     const { record } = playNight(sim, nights[0]!);
     const said = workloadWords(record)!;
     const st = staminaOf(record), r = record.inputs.condition.readiness;
-    expect(said).toContain(`so its workload is ${W.toFixed(2)}`);
-    expect(said).toContain(`The evening costs ${Math.round(energyOf(W, st, r))} energy`);
+    expect(said).toContain(`so its workload is ${W.toFixed(1)}`);
+    expect(said).toContain(`the evening costs ${Math.round(energyOf(W, st, r))} energy`);
     const share = (W / FULL);
-    expect(said).toContain(`By the final curtain, tiring takes ${Math.round(drainOf(share, st, r) * 100)}% off the parts of your performance it affects`);
+    expect(said).toContain(`tiring takes ${Math.round(drainOf(share, st, r) * 100)}% off the parts of your performance it affects by the final curtain`);
     const look = resolveLook(sim, { kind: 'work', id: record.inputs.key });
     const body = renderToStaticMarkup(createElement('div', null, (look as unknown as { body: never }).body)).replace(/<!-- -->/g, '');
     expect(body).toContain(said);

@@ -43,7 +43,7 @@ describe('running lines with a classmate', () => {
     expect(by('mine-b')).toBeGreaterThan(0);
     expect(by('mine-a')).toBe(0);
     expect(by('theirs')).toBe(0);
-    expect(sim.universe.notifications.find((n) => n.title.startsWith('Ran Lines With'))?.body).toMatch(/your lines went from 0% to \d+%/);
+    expect(sim.universe.notifications.find((n) => n.title.startsWith('Ran Lines With'))?.body).toMatch(/Your lines for .+ went from 0% to \d+%/);
   });
 
   it('with no scene shared, runs their lines: it helps them, moves nothing of yours, and says so', () => {
@@ -54,11 +54,11 @@ describe('running lines with a classmate', () => {
     const before = cw.assignments.map((a) => a.prep.memorization);
     const when = at(2026, 9, 3, 19);
     momentsOf(cw).push({ id: 'm-none', mate: 2, kind: 'study', at: sim.now, until: sim.now + MS_DAY, status: 'open', when, text: 'Run lines?' } as never);
-    expect(sim.must<{ done: string }>({ kind: 'school.respond', payload: { momentId: 'm-none', choice: 'yes' } }).done).toMatch(/share no open scene/);
+    expect(sim.must<{ done: string }>({ kind: 'school.respond', payload: { momentId: 'm-none', choice: 'yes' } }).done).toMatch(/don’t have a scene together right now/);
     tended(sim, when + 2 * MS_HOUR);
     const after = courseworkOf(sim, sim.player)!.assignments.slice(0, before.length).map((a) => a.prep.memorization);
     expect(after).toEqual(before);
-    expect(sim.universe.notifications.find((n) => n.title.startsWith('Ran Lines With'))?.body).toMatch(/it didn’t move your own work/);
+    expect(sim.universe.notifications.find((n) => n.title.startsWith('Ran Lines With'))?.body).toMatch(/but not your own preparation/);
   });
 });
 
@@ -179,7 +179,7 @@ describe('each course passed, incomplete or failed, and what the degree needs', 
     // From 2026-10-10 a first-year course never retaken is offered an additional term of its season before the degree
     // is withheld; until then it was withheld at once.
     expect(evaluate(sim, sim.player, 5)!.standing).not.toBe('withheld');
-    expect(sim.universe.notifications.find((n) => n.title === 'Your Degree Isn’t Complete')!.body).toMatch(/Acting I isn’t passed.*additional term/);
+    expect(sim.universe.notifications.find((n) => n.title === 'Your Degree Isn’t Complete')!.body).toMatch(/You haven’t passed Acting I.*additional term/);
   });
 
   it('an Incomplete at Commencement keeps them from it, and the degree comes when it’s made up, or is withheld when its month runs out', () => {
@@ -228,7 +228,7 @@ describe('an Incomplete’s month', () => {
     expect(r.owed).toBe(4);
     const due = r.dueBy!;
     expect(sim.must<{ dueBy: number }>({ kind: 'school.extend_incomplete', payload: { key: '0:DRAM 103a/b' } }).dueBy).toBe(due + 30 * MS_DAY);
-    expect(sim.execute({ kind: 'school.extend_incomplete', payload: { key: '0:DRAM 103a/b' } }).error).toMatch(/once already/);
+    expect(sim.execute({ kind: 'school.extend_incomplete', payload: { key: '0:DRAM 103a/b' } }).error).toMatch(/your one extra month/);
     sim.advanceTo(due + MS_DAY);
     expect(r.result).toBe('incomplete');
   });

@@ -388,7 +388,7 @@ describe('plays.read', () => {
     sim.must({ kind: 'plays.read', payload: { playId: 'sweat' } });
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
     expect(sim.player.school!.standing).toBe('withdrawn');
-    const no = 'A copy is borrowed from the Haas Arts Library, which lends to students.';
+    const no = 'The Haas Arts Library lends only to students, so there’s no copy for you to borrow now.';
     expect(say(sim, 'plays.read', { playId: 'fleabag' }).error).toBe(no);
     expect(say(sim, 'plays.read', { playId: 'sweat' }).error).toBe(no);
     expect(say(sim, 'plays.research', { playId: 'sweat' }).error).toBe(no);
@@ -405,7 +405,7 @@ describe('plays.read', () => {
     const button = reads(first)[row]!;
     expect(button.text).toBe('Read It');
     const t0 = sim.now;
-    const note = 'Sweat, by Lynn Nottage, read through. It reads as a drama, based on interviews with residents. The cast as published: 3 women and 6 men. There’s a part in it for you. It’s set: Reading, Pennsylvania, the time not given.';
+    const note = 'You read Sweat, by Lynn Nottage, all the way through. It reads as a drama, based on interviews with residents. The published cast is 3 women and 6 men. There’s a part in it for you. It’s set: Reading, Pennsylvania, the time not given.';
     expect(press(button)).toEqual([note]);
     expect(sim.now - t0).toBe(120 * 60_000);
     expect(sim.player.plays!.sweat!.reads).toBe(1);
