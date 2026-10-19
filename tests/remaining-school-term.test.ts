@@ -245,7 +245,7 @@ describe('the missed-work term, played', () => {
     expect(dayKey(warnings[0]!.at)).toBe(when!.day);
     expect(zonedParts(warnings[0]!.at, NY).hour).toBe(9);
     expect(warnings[0]!.body).toMatch(new RegExp(`^So far this term, ${when!.unready} of the ${WARNING_AFTER} pieces due were Unready or not shown\\. `));
-    expect(warnings[0]!.body).toContain('This is a warning, not the term review: the faculty reviews the term on December 11, 2026. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would give you a notice of academic concern.');
+    expect(warnings[0]!.body).toContain('This is a warning. The term review is on December 11, 2026. If half or more of the term’s pieces are Unready or not shown by then, the review would give you a notice of academic concern.');
     expect(courseworkOf(sim, sim.player)!.warned).toEqual([0]);
   }, 300_000);
 

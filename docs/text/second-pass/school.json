@@ -2696,9 +2696,9 @@
  },
  "src/engine/systems/coursework.ts#termWarning": {
   "status": "Rewritten",
-  "hash": "5f3363da85a0",
+  "hash": "150577c0a7a2",
   "on": "2026-10-19",
-  "evidence": "tests/remaining-school-term.test.ts \"the missed-work term, played\"; tests/workload.test.ts warning journeys; tests/language-dynamic.test.ts none, one or several; rendered.txt MONTH A Word On Your Coursework",
+  "evidence": "brief 15's final runs: the health journey's language check (tools/playthroughs-ui.mjs) read the warning at 121 words in one block, past its wall of text; the review said in two short sentences and the last names only what Shown Today adds, 119 words at its longest (tests/language-dynamic.test.ts), read on the built app in the reruns",
   "first": "Pending"
  },
  "src/engine/systems/ensemble.ts#sharedOf": {

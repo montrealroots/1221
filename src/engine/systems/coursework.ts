@@ -1352,8 +1352,12 @@ export function termWarning(sim: Simulation, person: Person, a: Assignment): voi
   const share = mark === 0.5 ? 'half' : `${Math.round(mark * 100)}%`;
   const school = person.school as SchoolRecord;
   // What happened, what it means against the review, then what to do (from 2026-10-19, brief 15): until then the cause
-  // and its steps came first and the warning's own meaning after them, in one paragraph of seven sentences.
-  sim.notify({ category: 'school', title: 'A Word On Your Coursework', body: `${counted}. This is a warning, not the term review: the faculty reviews the term on ${formatDate(review, zone())}. If ${share} or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would ${shortTermWords(school, a.term)}.${cause} ${set ? `${set === 1 ? 'One piece is' : `${smallWords(set).replace(/^\w/, (c) => c.toUpperCase())} pieces are`} set and still to be shown.` : 'Everything set so far has been shown.'} On the Coursework tab, each open piece’s Shown Today line says how it would do if you showed it today, and what’s holding it back.`, importance: 75, route: '/workspace/school' });
+  // and its steps came first and the warning's own meaning after them, in one paragraph of seven sentences. In brief 15's
+  // final runs the health journey read it as 121 words in one block, past the playthroughs' wall of text (120), and at
+  // its longest it ran to 144; it runs to 119 now (`tests/language-dynamic.test.ts`). Until then it said "the faculty reviews the term on", "the term falls short of what the
+  // program asks, and the review would", and that Shown Today said "how it would do if you showed it today", which the
+  // line's own name says.
+  sim.notify({ category: 'school', title: 'A Word On Your Coursework', body: `${counted}. This is a warning. The term review is on ${formatDate(review, zone())}. If ${share} or more of the term’s pieces are Unready or not shown by then, the review would ${shortTermWords(school, a.term)}.${cause} ${set ? `${set === 1 ? 'One piece is' : `${smallWords(set).replace(/^\w/, (c) => c.toUpperCase())} pieces are`} set and still to be shown.` : 'Everything set so far has been shown.'} On the Coursework tab, each open piece’s Shown Today line says what’s holding it back.`, importance: 75, route: '/workspace/school' });
 }
 
 /** Whether a note was taken by its revision: the part risen enough, the choice now supported, or the note worked on. */

@@ -741,7 +741,9 @@ await step('interruption: an advance past a commitment stops at it and asks; Sta
   if (!(await d.count())) skip('nothing on the way to Next Monday');
   const title = ((await d.innerText()).split('\n')[0] ?? '').slice(0, 60);
   if (/^On The Way/.test(title)) {
-    must(/and the clock stops at\s+each one/.test(await d.innerText()), 'On The Way doesn’t say the clock stops');
+    // Brief 15's words (4afe124c): the stop said per commitment, the pronoun agreeing with the count. Until brief 15's final
+    // runs this matched brief 14's "and the clock stops at each one", and failed on the new words.
+    must(/passes (?:one commitment\.\s+The clock stops at\s+it|\w+ commitments\.\s+The clock stops at\s+each one)\s+so\s+you can choose/.test(await d.innerText()), 'On The Way doesn’t say the clock stops');
     await d.getByRole('button', { name: /^Advance$/ }).first().click(); await wait(1500);
   }
   const due = page.locator('[role=dialog]:visible').last();
@@ -1211,7 +1213,9 @@ if (DIR) {
 // Coursework came, with a scene still short of it. Given a directory of saves, a missing workload save is a failure too.
 if (DIR) {
   const forecast = () => page.locator('[data-shown-today]').filter({ hasText: /Run It With A Reader/ }).first();
-  const figure = async (id) => Number(((await page.locator(`[data-shown-today="${id}"]`).innerText()).match(/would come to about (\d+\.\d)/) ?? [])[1] ?? NaN);
+  // Whole points of 100 from brief 15 (f67198f7), where this step's words were matched again and its figure, still read
+  // to a tenth, wasn't: brief 15's final runs read NaN.
+  const figure = async (id) => Number(((await page.locator(`[data-shown-today="${id}"]`).innerText()).match(/would come to about (\d+) of 100 /) ?? [])[1] ?? NaN);
   let id = '';
   let shown = NaN;
   await step('[save: workload scenario] home: A Word On Your Coursework, how many, the part most often short, what answers it and the review’s day', async () => {
@@ -1224,8 +1228,10 @@ if (DIR) {
     // The words as the sweep of 2026-10-16 left them: the count as the review counts it ("due … Unready or not shown"
     // where a piece was missed), and the part most often short "on N of the M shown". Until then this matched the
     // warning's earlier words, and the sweep's first run here failed on them.
-    must(/So far this term, \d+ of the \d+ pieces (you’ve shown were Unready|due were Unready or not shown)\. This is a warning, not the term review: the faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the term falls short of what the program asks, and the review would [^.]+\. What held most of them back was [^,]+, unfinished on (\d+ of the \d+|the one) you showed\. To work on it: .+\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
-    must(/This is a warning, not the term review: the faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then/.test(words), `no review day: ${words.slice(0, 300)}`);
+    // From brief 15's final runs the review is two short sentences; until then "This is a warning, not the term review: the
+    // faculty reviews the term on …" and "the term falls short of what the program asks, and the review would".
+    must(/So far this term, \d+ of the \d+ pieces (you’ve shown were Unready|due were Unready or not shown)\. This is a warning\. The term review is on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the review would [^.]+\. What held most of them back was [^,]+, unfinished on (\d+ of the \d+|the one) you showed\. To work on it: .+\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
+    must(/This is a warning\. The term review is on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then/.test(words), `no review day: ${words.slice(0, 300)}`);
     await item.getByRole('button', { name: /^Go There$/ }).click(); await wait(1200);
     must(new URL(page.url()).hash.startsWith('#/workspace/school'), `Go There opened ${new URL(page.url()).hash}`);
     return words.slice(0, 220);
@@ -1710,7 +1716,8 @@ await step('home account: a London-raised F-1 keeps HSBC UK through Before Yale,
   await overflow('money move abroad');
   await page.getByRole('button', { name: /^Move It/ }).first().click(); await wait(800);
   const sent = await toast();
-  must(/Sent \$100(\.00)?\. It arrives/.test(sent), `the toast said: ${sent}`);
+  // From brief 15 the toast names where the money went; until its final runs this matched "Sent $100. It arrives".
+  must(/Sent \$100(\.00)? to HSBC Bank Account\. It arrives [A-Z][a-z]+ \d{1,2}, \d{4}\./.test(sent), `the toast said: ${sent}`);
   await rail('Home');
   const line = (await page.locator('body').innerText()).match(/Chase Total Checking: [^\n]*/)?.[0] ?? '';
   must(/at HSBC UK/.test(line) && /£/.test(line) && /\$/.test(line), `Home's money line said: ${line}`);

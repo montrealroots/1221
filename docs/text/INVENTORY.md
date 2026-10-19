@@ -12,7 +12,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 47 | 417 | 11700 | 0 | 26 | 21 | 0 | 0 |
 | Home And Its Retained Actions | 17 | 165 | 786 | 0 | 3 | 14 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 615 | 3689 | 55712 | 176 | 114 | 501 | 0 | 0 |
-| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 627 | 6172 | 66224 | 7 | 127 | 500 | 0 | 0 |
+| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 627 | 6172 | 66199 | 7 | 127 | 500 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 761 | 6555 | 151321 | 13 | 260 | 501 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 469 | 4523 | 56353 | 3 | 74 | 395 | 0 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 102 | 786 | 8119 | 0 | 27 | 75 | 0 | 0 |
@@ -21,7 +21,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 40 | 174 | 663 | 0 | 4 | 36 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 994 | 9182 | 153738 | 114 | 209 | 785 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4177 | 35893 | 566347 | 321 | 916 | 3261 | 0 | 0 |
+| **All** | 4177 | 35893 | 566322 | 321 | 916 | 3261 | 0 | 0 |
 
 ## The Second Pass, By Area
 
@@ -35,7 +35,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | money-data | 522 | 99446 | 162 | 360 | 0 | 0 |
 | papers | 469 | 56353 | 74 | 395 | 0 | 0 |
 | profile | 615 | 55712 | 114 | 501 | 0 | 0 |
-| school | 599 | 63206 | 123 | 476 | 0 | 0 |
+| school | 599 | 63181 | 123 | 476 | 0 | 0 |
 | tutorial | 47 | 11700 | 26 | 21 | 0 | 0 |
 
 ## The First Pass, By Subsystem
@@ -1477,7 +1477,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/coursework.ts#playingRefusal` | 4 | 0 | Rewritten | school | tests/remaining-school.test.ts GUARD "commands the coursework screen never sends ... are refused in their words"; rendered.txt "no such piece, a way of playing" | Pending |
 | `src/engine/systems/coursework.ts#show` | 7 | 0 | Rewritten | school | rendered.txt NOTICE Shown with "It didn’t come together today. ... When it does come together, here’s what to try next."; tests/attributes-phase-2b.test.ts F1 scene note | Pending |
 | `src/engine/systems/coursework.ts#remedyWords` | 3 | 0 | Rewritten | school | rendered.txt "what works on the partner part" and the table work; screens.txt Due Soonest and Shown Today; tests/workload.test.ts; tests/language-dynamic.test.ts the term's warning | Pending |
-| `src/engine/systems/coursework.ts#termWarning` | 14 | 0 | Rewritten | school | tests/remaining-school-term.test.ts "the missed-work term, played"; tests/workload.test.ts warning journeys; tests/language-dynamic.test.ts none, one or several; rendered.txt MONTH A Word On Your Coursework | Pending |
+| `src/engine/systems/coursework.ts#termWarning` | 14 | 0 | Rewritten | school | brief 15's final runs: the health journey's language check (tools/playthroughs-ui.mjs) read the warning at 121 words in one block, past its wall of text; the review said in two short sentences and the last names only what Shown Today adds, 119 words at its longest (tests/language-dynamic.test.ts), read on the built app in the reruns | Pending |
 | `src/engine/systems/coursework.ts#meetingWeight` | 13 | 0 | Rewritten | school | tests/remaining-school-term.test.ts "each miss is told once, in words that say how it counts"; tests/language-dynamic.test.ts due soonest, shown and not shown; rendered.txt MONTH Still There notice | Pending |
 | `src/engine/systems/coursework.ts#sinceLast` | 3 | 0 | Rewritten | school | rendered.txt NOTICE Shown: "That’s up from Unready ...", "That’s down from Working ...", "Unready again, as the course’s last piece was on ..." | Pending |
 | `src/engine/systems/coursework.ts#reshownWords` | 15 | 0 | Rewritten | school | tests/language-dynamic.test.ts "a note worked and the piece shown again: taken, the part’s figure before and after, and not taken, still open"; rendered.txt Note Taken and Note Not Taken Yet notices | Pending |

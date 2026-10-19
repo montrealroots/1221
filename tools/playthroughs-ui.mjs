@@ -273,8 +273,9 @@ async function closeLook(name) {
 
 const cardOf = (id) => page.locator('section.card').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last();
 const shownToday = async (id) => clean(await page.locator(`[data-shown-today="${id}"]`).innerText({ timeout: 2000 }).catch(() => ''));
-const figureOf = (s) => Number((s.match(/would come to about (\d+\.\d)/) ?? [])[1] ?? NaN);
-const bandOf = (s) => (s.match(/would come to about \d+\.\d \((\w+)\)/) ?? [])[1] ?? '';
+// Whole points of 100 from brief 15 (f67198f7); until its final runs these read a figure to a tenth, and read NaN.
+const figureOf = (s) => Number((s.match(/would come to about (\d+) of 100 /) ?? [])[1] ?? NaN);
+const bandOf = (s) => (s.match(/would come to about \d+ of 100 \((\w+)\)/) ?? [])[1] ?? '';
 /** A card's step buttons: the row under its Shown Today. */
 const stepsOf = (card) => card.locator('[data-shown-today] + div').getByRole('button');
 const whyOf = async (card) => clean(await card.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''));
@@ -368,7 +369,7 @@ async function deleteKeptThenContinue() {
   const d = page.getByRole('dialog', { name: 'Confirm Deletion' });
   must(await d.isVisible().catch(() => false), 'no Confirm Deletion');
   const words = clean(await d.innerText());
-  must(/^Delete Slot 1\?/.test(words) && /This deletes (?:.+’s life from the slot|the save in this slot)\./.test(words) && /(SLATE keeps a backup|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
+  must(/^Delete Slot 1\?/.test(words) && /This deletes (?:.+’s life from the slot, with everything that happened in it|the save in this slot)\./.test(words) && /(SLATE keeps a backup|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
   said(`Confirm Deletion: ${words}`);
   await shot('confirm-deletion');
   await press(d.getByRole('button', { name: /^Keep It$/ }), 'Keep It'); await wait(600);
@@ -639,8 +640,8 @@ async function setback() {
     const { body } = await readNotice(/^A Word On Your Coursework$/);
     must(/So far this term, \d+ of the \d+ pieces (you’ve shown|due) were Unready/.test(body), `no count: ${body.slice(0, 200)}`);
     must(/What held most of them back was [^,]+, unfinished on [^.]+\. To work on it: .*Run It With A Reader.*\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
-    must(/(One piece is|\d+ pieces are) set and still to be shown/.test(body), `no pieces still to be shown: ${body.slice(0, 300)}`);
-    must(/This is a warning, not the term review: the faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, .* the review would (give you a notice of academic concern|put you on academic warning|keep you on academic warning|dismiss you from the School|not recommend your degree)\./.test(body), `no review day: ${body.slice(0, 400)}`);
+    must(/(One piece is|(?:Two|Three|Four|Five|Six|Seven|Eight|Nine|\d+) pieces are) set and still to be shown/.test(body), `no pieces still to be shown: ${body.slice(0, 300)}`);
+    must(/This is a warning\. The term review is on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the review would (give you a notice of academic concern|put you on academic warning|keep you on academic warning|dismiss you from the School|not recommend your degree)\./.test(body), `no review day: ${body.slice(0, 400)}`);
     await shot('warning-on-home');
   });
   await step('the warning opened in place: its look, who sent it and when, and Close', ['drill-down'], async () => {

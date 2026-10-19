@@ -26,7 +26,8 @@ import type { Simulation } from '@/engine/core/simulation';
 import { newLifeFrom, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { deserialise } from '@/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, formatDate, formatRelative, instantFromZoned, type Instant } from '@/engine/core/time';
-import { mateRecord, setWork, termWarning, weightsOf } from '@/engine/systems/coursework';
+import { mateRecord, questionsFor, setWork, termWarning, weightsOf } from '@/engine/systems/coursework';
+import { TEMPLATES } from '@/engine/content/coursework';
 import { personOf } from '@/engine/systems/classmates';
 import { healthOf } from '@/engine/systems/health';
 import { trainingRefusal } from '@/engine/systems/injury';
@@ -231,11 +232,46 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const many = warned('dyn-warn-many', 3, 0, 2);
     expect(many.body).toContain('Two pieces are set and still to be shown.');
     for (const { sim, body } of [none, one, many]) {
-      expect(body).toContain(`the faculty reviews the term on ${formatDate(on(2026, 12, 11, 17), NY)}.`);
+      expect(body).toContain(`This is a warning. The term review is on ${formatDate(on(2026, 12, 11, 17), NY)}.`);
       expect(body).toContain('the review would give you a notice of academic concern.');
       sound(body); whole(body); dated(body); agrees(body, ['piece']);
       expect(sim.player.school!.standing).toBe('good');
     }
+  });
+
+  it('the term’s coursework warning at its longest stays inside the playthroughs’ wall of text, 120 words', () => {
+    // Brief 15's final runs: the health journey read this warning at 121 words in one block (`tools/playthroughs-ui.mjs`
+    // fails a block of more than 120). Its longest cause is a part short, the partner part, whose remedy is the longest
+    // of any part's in every template (measured on 2026-10-19), with the count of pieces not shown, two pieces still set
+    // and the review's longest words. Played here on one scene; two of its words vary and are counted at their longest:
+    // the part's label (the longest partner label any template has) and the pieces it was short on, "the one you showed"
+    // here and "3 of the 3 you showed" where several share a label. TEST SETUP as above: Scene Study first, prepared but
+    // for its partner part (its Table Work answered as the text supports) and shown Unready, two pieces missed, two set.
+    const sim = student('dyn-warn-long');
+    const courses = ['DRAM 113a/b', 'DRAM 103a/b', 'DRAM 123a/b', 'DRAM 133a/b', 'DRAM 143a/b', 'DRAM 873a/b', 'DRAM 403a/b', 'DRAM 153a'];
+    const set = courses.map((c, i) => setWork(sim, sim.player, c, { year: 2026, month: 9, day: 1 + i })!);
+    const scene = set[1]!;
+    expect(scene.template).toBe('scene-study');
+    const order = [scene, ...set.filter((a) => a !== scene)];
+    for (const d of Object.keys(scene.prep) as (keyof typeof scene.prep)[]) scene.prep[d] = 1;
+    scene.prep.partner = 0;
+    for (const { q, options } of questionsFor(scene)) scene.answers[q.id] = options.find((o) => o.supported)!.id;
+    order.forEach((a, i) => {
+      if (i === 0) { a.shown = { band: 'unready', score: 0.3, at: sim.now, strengths: [] }; a.status = 'done'; }
+      else if (i < 3) a.status = 'missed';
+      else if (i < 6) { a.shown = { band: 'working', score: 0.55, at: sim.now, strengths: [] }; a.status = 'done'; }
+      else a.status = 'open';
+    });
+    termWarning(sim, sim.player, scene);
+    const body = titled(sim, 'A Word On Your Coursework')[0]!.body;
+    expect(body).toMatch(/^So far this term, 3 of the 6 pieces due were Unready or not shown\./);
+    const label = body.match(/What held most of them back was “([^”]+)”, unfinished on the one you showed\. To work on it: ask your partner for an evening under Rehearsing With, at least/)?.[1];
+    expect(label).toBe('With Your Partner');
+    expect(body).toContain('Two pieces are set and still to be shown.');
+    expect(body).toContain('the review would give you a notice of academic concern.');
+    const count = (t: string) => t.split(/\s+/).filter(Boolean).length;
+    const longestLabel = Math.max(...TEMPLATES.map((t) => t.dims.partner?.label).filter((l): l is string => Boolean(l)).map(count));
+    expect(count(body) - count(label!) + longestLabel - count('the one you showed') + count('3 of the 3 you showed')).toBeLessThanOrEqual(120);
   });
 
   it('a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several', () => {

@@ -1,0 +1,16 @@
+ok   1. the save slots, emptied first: New Save offered  [ ]
+ok   2. creation: Continue grayed with what the step needs listed; the five steps; Review names the choices; Begin  [August 24, 2026 7:30 AM]
+ok   3. the guide: controls locked until its chapters are read; read, none locked  [August 24, 2026 7:30 AM]
+ok   4. Home, the first morning: Welcome To The Class Of 2029 read; its look opened and closed  [August 24, 2026 7:30 AM]
+ok   5. Home: How You Are’s sentence opened into your own look, Readiness inside it, the outer Close shutting both  [August 24, 2026 7:30 AM]
+ok   6. Tomorrow Morning, asked before the orientation: On The Way names it, Cancel leaves the clock  [August 24, 2026 7:30 AM]
+ok   7. Tomorrow Morning, taken: On The Way’s Advance, the orientation’s stop and Go, Tuesday morning; Registration And Your Account on Home  [August 25, 2026 7:00 AM]
+ok   8. the orientation week: each morning to the weekend, each stop gone to  [August 29, 2026 7:00 AM]
+ok   9. the work set: the courses’ notices on Home; Go There opens School; Coursework lists each piece with its day  [August 29, 2026 7:00 AM]
+ok   10. the first step of preparation on the scene: its minutes, the clock and its part’s figure; a step refused, its reason on the card  [August 29, 2026 7:40 AM]
+FAIL 11. to the first showing: each day every step the scene allows, a partner answered, each stop gone to; Shown Today rises on each day of work: August 29, 2026 11:55 AM: 10 steps done and Shown Today NaN → NaN  [August 29, 2026 11:55 AM]
+FAIL 12. the showing: “Shown: …” on Home, Go There, the scene’s feedback with its band and score; Working or better; steps refused until it’s read: no notice /^Shown: Scene Study, (Unready|Working|Strong|Exceptional)$/ among Home's: Welcome To The Class Of 2029 You’re one of 16 actors startin | Acting I: Scene Study Your scene is from The Rising of the M | Voice I: A Voice Sequence The breath and resonance sequence  | Speech And Accents I: Sound Changes And A Text A text transc | The Body As Source I: A Movement Score A short movement scor |   [August 29, 2026 11:55 AM]
+ok   13. Papers and Money by the rail, and School’s tab kept on the way back  [August 29, 2026 11:55 AM]
+FAIL 14. Save & Exit; Delete asked and kept; Continue: the same moment, the scene’s showing as it was: Confirm Deletion says: Delete Slot 1? This deletes Alex Rivera’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1  [August 29, 2026 ]
+
+normal at 390: 11 of 14 passed; six missing: save-continue; 0 errors; 0 overflows
