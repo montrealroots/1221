@@ -24,10 +24,10 @@ export const BRIEFS_A: readonly Brief[] = [
     techniques: { combat: 1 },
     why: {
       physical: 'The scene is a struggle staged to the shutter’s timer: the getting up, the two moves, the drop to the gap.',
-      timing: 'Every line is said against the shutter’s descent, so the beats are placed to the second.',
+      timing: 'Every line races the falling shutter, so each beat has to land to the second.',
       partner: 'What she tries depends on what he does with the keys.',
-      techniques: 'The two moves are a staged fight, marked solo at reduced speed against the reader’s called cues from off camera, with no contact and the keys on her side of the frame, repeatable on every take.',
-      beats: 'Reason, then force, then the relief of making it under, held with the fear of the landing shutter.',
+      techniques: 'The two moves are a staged fight. Mark them solo at reduced speed against the reader’s called cues from off camera, with no contact and the keys on your side of the frame, so they repeat exactly on every take.',
+      beats: 'Reason, then force, then relief at having the keys, held together with fear as the shutter lands.',
     },
     readings: [
       { id: 'clock', label: 'Against The Clock', reading: 'The shutter is the scene: every choice she makes is about time, and the intruder is in the way of it.', rests: 'The shutter is coming down on its timer, and her colleague is behind it.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.6 }, { dim: 'consistency', ability: 'composure', weight: 0.5 }] },
@@ -80,7 +80,7 @@ export const BRIEFS_A: readonly Brief[] = [
       timing: 'The jokes land on the rhythm of the scuffle and the speeches beyond the door: each whispered line has a gap it must fit.',
       physical: 'The scene is a chase across a small kitchen with a cake tier that mustn’t be dropped, and it ends with her straightening her apron at the door.',
       partner: 'Every move she makes answers where he goes next.',
-      techniques: 'The scuffle is staged combat, marked solo at reduced speed against the reader’s called cues from off camera, with the tray and the rolling pin kept on her side of the frame and his fall played off it. The comedy is in where the whispered fury falls against the speeches next door, so the scene asks for comic timing.',
+      techniques: 'The scuffle is staged combat. Mark it solo at reduced speed against the reader’s called cues from off camera, keep the tray and the rolling pin on your side of the frame, and let his fall happen off frame. The comedy is in where her whispered fury lands against the speeches next door, so the scene asks for comic timing.',
       beats: 'Comic all the way: the joke builds from a whisper to a tray to a rolling pin, and nobody gets hurt.',
     },
     readings: [
@@ -105,9 +105,9 @@ export const BRIEFS_A: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     techniques: { combat: 1 },
     why: {
-      physical: 'Thirst, a struggle at the well-head and a body three weeks into a journey: the scene is played from the dry mouth out.',
+      physical: 'Play it from the dry mouth out: she’s parched, three weeks into the desert, and has to fight for the case at the well-head.',
       partner: 'She knows him, and her bargaining is aimed at the man she trusted for two weeks.',
-      techniques: 'The struggle at the well-head is a staged fight, marked solo at reduced speed against the reader’s called cues from off camera, with no contact and the case on her side of the frame, repeatable on every take.',
+      techniques: 'The struggle at the well-head is a staged fight. Mark it solo at reduced speed against the reader’s called cues from off camera, with no contact and the case on your side of the frame, so it repeats exactly on every take.',
       beats: 'A bargain, a struggle at the well, then the turn: what she came for was never the case.',
     },
     readings: [
@@ -135,17 +135,17 @@ export const BRIEFS_A: readonly Brief[] = [
       beats: 'A routine interview, a moment of music she hasn’t heard in thirty years, then a decision made quietly on paper.',
     },
     readings: [
-      { id: 'ordinary', label: 'Just Another File', reading: 'For her this world is ordinary and the rules are simply the rules; the music is what cracks the routine.', rests: 'Twenty years in the service, and the patrol has already logged it: the form on her desk is routine, and every broadcast comes through the state wire set.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'composure', weight: 0.6 }, { dim: 'consistency', ability: 'discipline', weight: 0.4 }] },
+      { id: 'ordinary', label: 'Just Another File', reading: 'For her this world is ordinary and the rules are simply the rules, until the music cracks the routine.', rests: 'She has twenty years in the service, the patrol has already logged it, and every broadcast comes through the state wire set.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'composure', weight: 0.6 }, { dim: 'consistency', ability: 'discipline', weight: 0.4 }] },
       { id: 'memory', label: 'She Built One Too', reading: 'She sees herself at sixteen across the desk, and the scene is her deciding to protect that girl.', rests: 'She built a receiver herself at his age, and the dance band is music she knows.', lean: { interpretation: 1.2, connection: 1.1 }, draws: [{ dim: 'interpretation', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'connection', ability: 'listening', weight: 0.4 }] },
     ],
   },
   {
     id: 'brief-animated', title: 'High Wind', kinds: ['animated'], medium: 'voice', size: 'short',
     logline: 'A paper kite who has always bragged about how high he flies has to talk the girl holding his string into letting him go before the storm drags her off the hill.',
-    circumstances: 'A grassy hilltop in a gale, as the storm comes in off the sea. The kite has climbed higher than ever, the string is cutting the girl’s hands, and she won’t let go because he’s her only kite. Recorded alone in a booth before any of it is drawn.',
+    circumstances: 'A grassy hilltop in a gale, as the storm comes in off the sea. The kite has climbed higher than ever, the string is cutting the girl’s hands, and she won’t let go because he’s her only kite. You record it alone in a booth before any of it is drawn.',
     relationship: 'Best friends in the way a kite and its flyer are: she made him from a newspaper and a broken umbrella last spring.',
     you: 'Flap, the kite, small, boastful and much braver than he sounds.',
-    reader: 'The voice speaks to Pell, the eight-year-old holding the string far below, whose lines aren’t in the booth; the actor plays to her as if she were.',
+    reader: 'Pell, the eight-year-old holding the string far below. She isn’t in the booth with you, so play to her as if she were.',
     objective: 'Make her let go of the string.',
     obstacle: 'She loves him, she’s stubborn, and he can only reach her with his voice over the wind.',
     beats: [
@@ -157,7 +157,7 @@ export const BRIEFS_A: readonly Brief[] = [
     techniques: { voiceover: 2 },
     why: {
       vocal: 'The kite has no body on the day: the height, the wind and the courage are all in the voice.',
-      techniques: 'Recorded alone at a microphone before the animation exists, the whole performance, the gusts and the struggle included, goes into what’s heard.',
+      techniques: 'You record alone at a microphone before the animation exists, so the whole performance, the gusts and the struggle included, has to be in what’s heard.',
       beats: 'Bragging, a fright he tries to hide behind the bragging, then a goodbye that’s quiet in a gale.',
     },
     readings: [
@@ -171,12 +171,12 @@ export const BRIEFS_A: readonly Brief[] = [
     circumstances: 'A dubbing booth. On the screen, a flight academy’s rooftop at sunset, gliders tied down in a rising wind; the animation is finished and every line must land on the lip movements already in it. In the story, she has just failed her final flight and has been sent home.',
     relationship: 'Rivals since their first day, who have never once admitted they’re friends.',
     you: 'Haru, an apprentice pilot of seventeen, who laughs when she’s about to cry.',
-    reader: 'The voice speaks to Rin, her rival, already recorded on the track; the actor plays against his lines in the headphones.',
+    reader: 'Rin, her rival, already recorded on the track. Play against his lines in your headphones.',
     objective: 'Say goodbye without letting him see it matters.',
     obstacle: 'He won’t accept it, and every line has to fit a mouth that opens and closes on the picture’s timing, not hers.',
     beats: [
       { what: 'She jokes about the failed landing, fitting each quip to the drawn laugh.', tones: ['comic'] },
-      { what: 'He says she’s the best pilot in the year, and her answer comes out too fast for the flaps; she has to find it again.', tones: ['comic', 'grave'] },
+      { what: 'He says she’s the best pilot in the year, and her answer comes out too fast for the drawn mouth, so she has to find it again.', tones: ['comic', 'grave'] },
       { what: 'She admits she wanted to fly against him forever, as the drawn sun goes down.', tones: ['lyric'] },
     ],
     language: 'everyday', timing: 3, physical: 0, partner: 1, vocal: 2, improvisation: 0,
@@ -185,7 +185,7 @@ export const BRIEFS_A: readonly Brief[] = [
     why: {
       timing: 'Every line fits mouth movements that already exist, so where each word falls is fixed by the picture.',
       vocal: 'The laugh that turns to tears is carried by the voice alone, and the volume rises with the wind on the track.',
-      techniques: 'A dub recorded alone at a microphone, synced to finished animation and his recorded lines.',
+      techniques: 'It’s a dub: you record alone at a microphone, in sync with the finished animation and his recorded lines.',
       allows: 'The animation is finished, so every line has to land where the drawn lips already move. It can only be played set, the same way every time.',
       beats: 'Bravado, a crack she has to fit back into the picture, then the plain admission.',
     },
@@ -197,7 +197,7 @@ export const BRIEFS_A: readonly Brief[] = [
   {
     id: 'brief-anthology', title: 'Seat Fourteen', kinds: ['anthology'], medium: 'camera', size: 'short',
     logline: 'One story of several set in the same seat on a night bus: an old man recognizes the woman beside him as the girl he stood up fifty years ago.',
-    circumstances: 'The last bus across the city, a little after midnight, in seat fourteen, the seat every story in the film is set in. He got on at the hospital. She asked if the seat was free. This segment has five minutes to begin and end.',
+    circumstances: 'The last bus across the city, a little after midnight, in seat fourteen, the seat every story in the film is set in. He got on at the hospital. She asked if the seat was free. This story has five minutes to begin and end.',
     relationship: 'They were going to meet under a station clock in their twenties. He never came, and they haven’t seen each other since.',
     you: 'Teodor, in his late seventies, coming home from a checkup.',
     reader: 'Ada, the woman in the next seat, who hasn’t recognized him.',
@@ -215,7 +215,7 @@ export const BRIEFS_A: readonly Brief[] = [
     },
     readings: [
       { id: 'secret', label: 'Keeping The Secret', reading: 'He never lets her know, and the scene is the pleasure and pain of hearing her life from a stranger’s seat.', rests: 'He wants to find out without telling her who he is.', lean: { consistency: 1.2, believability: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.4 }] },
-      { id: 'tale', label: 'A Story With An Ending', reading: 'He plays it as a short story he knows is ending, and the last stop is a punchline he can accept.', rests: 'The segment has five minutes to begin and end, and he gets off at her stop instead of his.', lean: { interpretation: 1.2, execution: 1.05 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.6 }, { dim: 'execution', ability: 'focus', weight: 0.4 }] },
+      { id: 'tale', label: 'A Story With An Ending', reading: 'He plays it as a short story he knows is ending, and the last stop is a punchline he can accept.', rests: 'His story has five minutes to begin and end, and he gets off at her stop instead of his.', lean: { interpretation: 1.2, execution: 1.05 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.6 }, { dim: 'execution', ability: 'focus', weight: 0.4 }] },
     ],
   },
   {
@@ -287,7 +287,7 @@ export const BRIEFS_A: readonly Brief[] = [
     why: {
       timing: 'Each instruction is answered as it comes, and the rhythm of the reader’s even voice against the body’s answer is the piece.',
       physical: 'The piece is all physical tasks, the same twelve three times, so how the body does them is everything there is to see.',
-      improvisation: 'The text gives the tasks and not the meaning: how each repetition is played is found on the take.',
+      improvisation: 'The text gives the tasks but not their meaning, so you find how to play each repetition as you tape it.',
       beats: 'Plain, then strange, then tender: the same actions turning through three tones without a word changing.',
     },
     readings: [
@@ -316,7 +316,7 @@ export const BRIEFS_A: readonly Brief[] = [
       physical: 'She dances the time step in a space too small for it, in the wrong costume.',
       partner: 'He counts, corrects and steadies her, and she takes her courage from his voice.',
       vocal: 'She sings under her breath in the wings and then out to a full house, and the scene needs both.',
-      techniques: 'The number is sung and danced in the scene itself: eight bars of an original finale and a short time step, part of the show being put on.',
+      techniques: 'She sings and dances the number in the scene itself: eight bars of an original finale and a short time step from the show.',
       beats: 'Panic played for laughs over real fear, a frantic rehearsal, and the moment she becomes the lead.',
     },
     readings: [
@@ -358,14 +358,14 @@ export const BRIEFS_A: readonly Brief[] = [
     objective: 'Get through the sign-off as herself, with nothing for the new owners to cut.',
     obstacle: 'She hasn’t written a farewell, Otto is crying in the booth, and the people listening have been with her for twenty years.',
     beats: [
-      { what: 'Business: the last records, the weather, the habits from the pack in place.', tones: ['grave'] },
+      { what: 'She runs the show as usual: the last records, the weather, every habit from the pack in place.', tones: ['grave'] },
       { what: 'She tells a story about her first night on the air, and laughs her two-note laugh.', tones: ['comic', 'lyric'] },
       { what: 'She signs off the way she always did, word for word, and stays at the microphone after the light goes out.', tones: ['grave'] },
     ],
     language: 'everyday', timing: 1, physical: 2, partner: 1, vocal: 2, improvisation: 0,
     techniques: { character: 2 },
     why: {
-      physical: 'The documented habits, the earring, the lean to the microphone, are reproduced and kept through the scene.',
+      physical: 'Keep her documented habits, the touch of the earring and the lean to the microphone, all the way through the scene.',
       vocal: 'Her laugh and her microphone voice are documented and have to be heard as hers.',
       techniques: 'Playing a person from a research pack means taking on her documented voice, movement and mannerisms: a character transformation, portrayed and not impersonated.',
       beats: 'Routine, a memory that brings her laugh out, and an ending played the same way she ended every night.',
@@ -420,7 +420,7 @@ export const BRIEFS_A: readonly Brief[] = [
     why: {
       partner: 'She works him with what she knows about him, and each beat turns on whether he looks at her.',
       vocal: 'She speaks on the clinic steps so the whole block can hear, and lets the list of names do the shouting.',
-      beats: 'A plain report, a list of names that brings the street out, and a block that a city walked away from deciding it will look after its own.',
+      beats: 'A plain report, a list of names that brings the street out, and a block the city walked away from deciding to look after its own.',
     },
     readings: [
       { id: 'block', label: 'Her Block', reading: 'She speaks for a street the city abandoned, and the authority is the neighbors’ as much as hers.', rests: 'The city cut the funding and the police don’t come, so the block keeps the clinic open itself, and it comes out onto the stoops behind her.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'presence', weight: 0.7 }, { dim: 'consistency', ability: 'composure', weight: 0.4 }] },
@@ -549,9 +549,9 @@ export const BRIEFS_A: readonly Brief[] = [
     why: {
       timing: 'The talk is spare and formal, with long held silences before the draw, and the duel itself is timed to the breath.',
       physical: 'The duel is three choreographed exchanges, played in a tired body in the snow, and the bows and stillness before it are physical too.',
-      partner: 'The two men read each other’s intent in every pause, and the duel is the end of that reading.',
+      partner: 'The two men read each other’s intent in every pause, and the duel settles what each of them has seen.',
       language: 'The lines are in the formal register of a period encounter between a former teacher and an officer on duty.',
-      techniques: 'The duel is choreographed swordplay built from fixed forms, memorized and repeated exactly on every take. On the tape it’s marked solo at reduced speed with a replica blade, against the reader’s called cues from off camera, never pointed at the lens or the reader.',
+      techniques: 'The duel is choreographed swordplay built from fixed forms, memorized and repeated exactly on every take. For the tape, mark it solo at reduced speed with a replica blade, against the reader’s called cues from off camera, and never point the blade at the lens or the reader.',
       beats: 'Courtesy, grief held under it, then a fight that ends the only way he can bear.',
     },
     readings: [
@@ -583,7 +583,7 @@ export const BRIEFS_A: readonly Brief[] = [
       beats: 'Urgency, a near miss that’s tense and absurd at once, then trust given to a stranger.',
     },
     readings: [
-      { id: 'breath', label: 'No Breath Left', reading: 'The run is in her body, and the scene is played from the exhaustion out.', rests: 'She has been running for three blocks and has no breath to explain with.', lean: { execution: 1.2, believability: 1.1 }, draws: [{ dim: 'execution', ability: 'stamina', weight: 0.6 }, { dim: 'believability', ability: 'physical', weight: 0.4 }] },
+      { id: 'breath', label: 'No Breath Left', reading: 'The run is still in her body, and she plays every line from the exhaustion out.', rests: 'She has been running for three blocks and has no breath to explain with.', lean: { execution: 1.2, believability: 1.1 }, draws: [{ dim: 'execution', ability: 'stamina', weight: 0.6 }, { dim: 'believability', ability: 'physical', weight: 0.4 }] },
       { id: 'persuade', label: 'Winning The Stranger', reading: 'She reads him fast and finds the one thing that will make him say yes.', rests: 'He has been told never to let anyone into the back, and she gives him the package.', lean: { responsiveness: 1.2, connection: 1.1 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.6 }, { dim: 'connection', ability: 'listening', weight: 0.5 }] },
     ],
   },
