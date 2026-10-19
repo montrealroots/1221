@@ -8,7 +8,7 @@
 [welcome] ok   I’ve Read It is offered
 [welcome] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own
 [welcome] ok   and offers Try It or the next chapter, in its words — he date, the town, its region and country, its money, the season and the daylight, when you press them It’s open now. Press Try It to go and use it, or go straight on to “What’s Coming”. Next time you open the guide, it starts there. Try It Next: What’s Coming
-[welcome] ok   the line under the greeting shows the time, the town, its time zone, the season and the weather — Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ☁️ 75°F Overcast
+[welcome] ok   the line under the greeting shows the time, the town, its time zone, the season and the weather — Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ☁️ 73°F Overcast
 [welcome] ok   Where You Are is on Home
 [welcome] ok   pressing the town’s name opens it just below — New Haven: WHERE YOU LIVE New Haven Close This is where you live. It’s 7:30 AM, and 130K people live here. 130K people live here, in Connecticut, and the climate is contin
 [welcome] ok   with links inside for its region, its country and its money — Close | Connecticut | United States | Dollar | Daylight
@@ -149,20 +149,31 @@
 [weather] ok   I’ve Read It is offered
 [weather] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
 [weather] ok   and offers Try It or the next chapter, in its words — A Whole Life Later OPENED Weather Weather The sky, the week, each day and each hour, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Drama School”. Next time you open the guide, it starts there. Try It Next: Drama School
-[weather] ok   the Weather panel shows the weather now and the next few days — Weather How This Works ☁️74°F Overcast · High 88°F · Low 70°F Humidity 58% · Wind 14 mph · Continental Thu ⛈️ Storm 87° / 69° Fri 🌧️ Rain 70° / 59° Sat 🌧️ Rain 75° / 64° Sun ⛈️ Storm 74° / 56° Mon ⛅
+[weather] ok   the Weather panel shows the weather now and the next few days — Weather How This Works ⛅61°F Partly Cloudy · High 74°F · Low 56°F Humidity 57% · Wind 6 mph · Continental Thu 🌧️ Rain 73° / 62° Fri 🌧️ Rain 72° / 61° Sat ⛈️ Storm 72° / 61° Sun ☁️ Overcast 80° / 62°
 [weather] ok   today’s weather and the days are links — 20 links
-[weather] ok   pressing it shows more: the week, each day and each hour — Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 74°F and overcast where you are, with a high of 88°F and a low of 70°F today. The wind is 14 mph and the humidity is 58%. Today is 6° warmer than normal for
+[weather] ok   pressing it shows more: the week, each day and each hour — Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 61°F and partly cloudy where you are, with a high of 74°F and a low of 56°F today. The wind is 6 mph and the humidity is 57%. Today is 7° colder than normal
 [school] ok   Guide, in the top bar, opens at “Drama School” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
 [school] ok   Chapter 11 Of 17 shows “Drama School” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
-[school] ok   its lead is on the page — Where your life as an actor begins.
-[school] ok   all 18 paragraphs are on the page, word for word
-[school] ok   The Details opens onto its 10 paragraph(s), word for word
+[school] ok   its lead is on the page — Classes, coursework, casting and your degree at Yale.
+[school] ok   all 17 paragraphs are on the page, word for word
+[school] ok   The Details opens onto its 11 paragraph(s), word for word
 [school] ok   What It Opens lists every name
 [school] screenshot 09-chapter-school.png
 [school] ok   I’ve Read It is offered
 [school] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
 [school] ok   and offers Try It or the next chapter, in its words — Learn The Part, Catch Up The Blocking and Work On The Note Plays To Read: Read It and Research It It’s open now. Press Try It to go and use it, or go straight on to “You As An Actor”. Next time you open the guide, it starts there. Try It Next: You As An Actor
-[school] its steps are followed by follow-saves.mjs or named in routes.md
+[school] ok   the School line in Your Affairs shows your year or arrival, your standing, your place in the class and what’s next — Your Affairs How This Works Money LOCKED This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It School Year 1, good standing, 1st of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works Papers LOCKED This 
+[school] ok   the Yale button opens the School screen, with the tabs the chapter names — Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, Terms And Award
+[school] ok   Standing And Craft shows your craft, Composure beside it and Coursework This Term — GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye
+[school] ok   on the School screen, the school’s name is a link — David Geffen School of Drama at Yale University
+[school] ok   on the School screen, a technique is a link — Scene Study
+[school] ok   on the School screen, a course is a link — Acting I
+[school] ok   Classes shows the week, nine to three on class days — GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale Uni
+[school] Call In Sick on a new life’s first morning: not offered (nothing at school to miss yet, or orientation only); followed on the brief save (follow-saves.mjs)
+[school] ok   Take An Elective Shift, on Shifts And Pay, signs you up for an evening front of house — Front of house, August 31, 2026 at 7:00 PM.
+[school] Casting on a new life: GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Year 1 of 3, good standing. Standing And C
+[school] ok   Casting is there to show your part, and the Cabaret — GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye
+[school] ok   Coursework holds Plays To Read — GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye
 [profile] ok   Guide, in the top bar, opens at “You As An Actor” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
 [profile] ok   Chapter 12 Of 17 shows “You As An Actor” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
 [profile] ok   its lead is on the page — Your abilities, your practice, and the genres you work in.
@@ -172,7 +183,17 @@
 [profile] ok   I’ve Read It is offered
 [profile] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
 [profile] ok   and offers Try It or the next chapter, in its words — r Work So Far An ability, a genre and a piece of work, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Cover, Benefits And Returns”. Next time you open the guide, it starts there. Try It Next: Cover, Benefits And Returns
-[profile] its steps are followed by follow-saves.mjs or named in routes.md
+[profile] ok   Player Profile, in the menu, lists the twelve abilities
+[profile] ok   pressing an ability shows what it is, how it grows and where it counts — Presence: AN ACTING ABILITY Presence Close You’re at 69.3 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 69.3 30.7 to full CLASSES REACH — Classes don’t build it; performing in front of people d
+[profile] ok   the exercise beside a technique, such as Comic Timing, offers a Tier, a Focus and Practice An Hour — Tier 1, Focus 1
+[profile] ok   before the hour, it says about how much it will add — Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.23 to comedy (now 56.0), and +0.18 to disci
+[profile] ok   Practice An Hour practices for an hour and says what it added — Comic Timing: +0.23.
+[profile] ok   under Genres, Study It reads a play or watches a film of the genre — Absurdist: an hour and a half with a film of its kind. Familiarity 8.0 of 100.
+[profile] ok   Open Its Brief shows where and when, the two of you, what you want and what’s in the way — Skip To Content 🎬 SLATE 9:10 AM · August 26, 2026 EDT Play Sleep Look After Yourself ▾ Advance ▾ Guide (5 Left) Not Saved Yet Save & Exit Home 1 YOU Player Profile YOUR TRAINING School YOU Alex River
+[profile] ok   and the brief offers Break It Down, Learn The Lines, Rehearse It On Your Feet, Read With and Tape It
+[profile] screenshot 10-a-practice-brief.png
+[profile] ok   Your Work So Far is on the Player Profile
+[profile] ok   pressing your name at the foot of the menu opens the Player Profile
 [papers] ok   Guide, in the top bar, opens at “Cover, Benefits And Returns” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
 [papers] ok   Chapter 13 Of 17 shows “Cover, Benefits And Returns” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
 [papers] ok   its lead is on the page — Health cover, benefits, pensions and the return.
@@ -209,7 +230,7 @@
 [bank] ok   all 12 paragraphs are on the page, word for word
 [bank] ok   The Details opens onto its 16 paragraph(s), word for word
 [bank] ok   What It Opens lists every name
-[bank] screenshot 10-chapter-bank.png
+[bank] screenshot 11-chapter-bank.png
 [bank] ok   I’ve Read It is offered
 [bank] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
 [bank] ok   and offers Try It or the next chapter, in its words — Borrow, and pay a loan off Opt in or out of debit card overdrafts Pay a debt in collections Switch bank It’s open now. Press Try It to go and use it, or go straight on to “A Whole Life”. Next time you open the guide, it starts there. Try It Next: A Whole Life
@@ -224,4 +245,4 @@
 [life] ok   and says it was the last chapter — ENED A Whole Life You, when you press your name That was the last chapter, and every part of the game is open now. To read any chapter again, press Guide at the top of the screen. Try It Start Playing
 [life] its steps are followed by follow-saves.mjs or named in routes.md
 [end] ok   with every chapter read, nothing is locked — 0 locked
-[end] screenshot 11-home-everything-open.png
+[end] screenshot 12-home-everything-open.png

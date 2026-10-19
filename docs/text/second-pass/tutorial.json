@@ -118,6 +118,20 @@
   "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt, chapter plans, and follow-1440/chapter-09-plans.txt; Open Calendar, a day, Put Something On It, Put It On and Call It Off",
   "first": "Pending"
  },
+ "src/engine/content/tutorial.ts#CHAPTERS [profile]": {
+  "status": "Rewritten",
+  "hash": "4decfb2f274c",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt (chapter profile: the twelve abilities, an ability's look, Comic Timing’s Tier, Focus and Practice An Hour, Study It, Open Its Brief, your name at the menu's foot) and follow-saves/log.txt (What To Work On Next, a brief in progress)",
+  "first": "Pending"
+ },
+ "src/engine/content/tutorial.ts#CHAPTERS [school]": {
+  "status": "Rewritten",
+  "hash": "274893a61fce",
+  "on": "2026-10-19",
+  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph; tests/remaining-school.test.ts and tests/evidence-g33-ui.test.ts assert its words; read word for word and followed on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt (chapter school: the School line, the Yale button, the tabs, the links, Take An Elective Shift) and follow-saves/log.txt (Call In Sick at the nine o’clock stop, a step, Ask Jordan, Work It Through, Read It and Research It, Casting in rehearsal)",
+  "first": "Pending"
+ },
  "src/engine/content/tutorial.ts#CHAPTERS [sleep]": {
   "status": "Rewritten",
   "hash": "f9ceca1c134d",

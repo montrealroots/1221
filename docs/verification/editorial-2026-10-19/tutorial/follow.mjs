@@ -434,6 +434,96 @@ step.weather = async () => {
   }
 };
 
+// 11. Drama School: what a new life can reach in its first days (the coursework, a partner, casting: follow-saves.mjs) --
+const tabsOf = async () => (await page.getByRole('tab').allInnerTexts().catch(() => [])).map((x) => clean(x.split('\n')[0]));
+async function tab(name) {
+  const t = page.getByRole('tab', { name: new RegExp(`^${name}`) }).first();
+  if (!(await t.count())) return false;
+  await t.click().catch(() => {}); await wait(900);
+  return true;
+}
+const mainText = async () => clean(await page.locator('main').innerText().catch(() => ''));
+step.school = async () => {
+  const affairs = panel('Your Affairs');
+  const line = clean(await affairs.innerText().catch(() => ''));
+  check('the School line in Your Affairs shows your year or arrival, your standing, your place in the class and what’s next', /good standing/.test(line) && /of 16 in the class/.test(line) && /Next:/.test(line), line);
+  await press('Yale', affairs); await wait(1000);
+  const tabs = await tabsOf();
+  check('the Yale button opens the School screen, with the tabs the chapter names', ['Standing And Craft', 'Classes', 'Coursework', 'Casting', 'Shifts And Pay', 'Terms And Award'].every((t) => tabs.includes(t)), tabs.join(', '));
+  await tab('Standing And Craft');
+  const standing = await mainText();
+  check('Standing And Craft shows your craft, Composure beside it and Coursework This Term', /Composure/.test(standing) && /Coursework This Term/i.test(standing), standing.slice(0, 200));
+  for (const [what, text, on] of [['the school’s name', 'David Geffen School of Drama at Yale University', 'Standing And Craft'], ['a technique', 'Scene Study', 'Standing And Craft'], ['a course', 'Acting I', 'Classes']]) {
+    await tab(on);
+    const l = page.locator('main button.link', { hasText: text }).first();
+    if (await l.count()) { await l.click(); await wait(500); const name = clean(await page.locator('.look .look-name').last().innerText().catch(() => '')); check(`on the School screen, ${what} is a link`, Boolean(name), name); await closeLook(name); }
+    else check(`on the School screen, ${what} is a link`, false, 'none');
+  }
+  await tab('Classes');
+  const classes = await mainText();
+  check('Classes shows the week, nine to three on class days', /nine to three on class days/.test(classes), classes.slice(0, 160));
+  log(`Call In Sick on a new life’s first morning: ${(await button('Call In Sick').count()) ? 'offered' : 'not offered (nothing at school to miss yet, or orientation only)'}; followed on the brief save (follow-saves.mjs)`);
+  await tab('Shifts And Pay');
+  const take = button('Take An Elective Shift');
+  if (await take.count()) {
+    await take.click(); await wait(900);
+    const toast = clean(await page.locator('.toast').last().innerText().catch(() => ''));
+    check('Take An Elective Shift, on Shifts And Pay, signs you up for an evening front of house', /^Front of house, /.test(toast), toast);
+  } else check('Take An Elective Shift is on Shifts And Pay', false, (await mainText()).slice(0, 200));
+  await tab('Casting');
+  const casting = await mainText();
+  log(`Casting on a new life: ${casting.slice(0, 240)}`);
+  check('Casting is there to show your part, and the Cabaret', /Cabaret/.test(casting), casting.slice(0, 200));
+  await tab('Coursework');
+  const work = await mainText();
+  check('Coursework holds Plays To Read', /Plays To Read/.test(work), work.slice(0, 200));
+};
+
+// 12. You As An Actor -------------------------------------------------------------------------------------------------
+step.profile = async () => {
+  await goRail('Player Profile');
+  const text = await mainText();
+  const abilities = ['Emotional Depth', 'Presence', 'Listening And Responsiveness', 'Imagination', 'Focus', 'Memory', 'Adaptability', 'Composure', 'Vocal Expression', 'Physical Expression', 'Discipline', 'Stamina'];
+  check('Player Profile, in the menu, lists the twelve abilities', abilities.every((a) => text.includes(a)), abilities.filter((a) => !text.includes(a)).join(', '));
+  const presence = await openLink('Presence', page.locator('main'));
+  check('pressing an ability shows what it is, how it grows and where it counts', presence.ok && /how it grows/i.test(presence.text) && /where it counts/i.test(presence.text), `${presence.name}: ${presence.text.slice(0, 240)}`);
+  if (presence.ok) await closeLook(presence.name);
+  const comic = page.locator('main button', { hasText: /^Comic Timing…$/ }).first();
+  if (await comic.count()) {
+    await comic.click(); await wait(500);
+    const tier = await page.locator('main label', { hasText: /^Tier/ }).count();
+    const focus = await page.locator('main label', { hasText: /^Focus/ }).count();
+    const go = button('Practice An Hour');
+    check('the exercise beside a technique, such as Comic Timing, offers a Tier, a Focus and Practice An Hour', tier > 0 && focus > 0 && await go.count() > 0, `Tier ${tier}, Focus ${focus}`);
+    const said = clean(await go.locator('xpath=..').innerText().catch(() => ''));
+    check('before the hour, it says about how much it will add', /\+?\d|about/i.test(said), said.slice(0, 300));
+    await go.click().catch(() => {}); await wait(1200);
+    const toast = clean(await page.locator('.toast').last().innerText().catch(() => ''));
+    check('Practice An Hour practices for an hour and says what it added', /^Comic Timing: \+\d/.test(toast), toast);
+  } else check('the Practice column has Comic Timing', false, 'no Comic Timing…');
+  const study = button('Study It');
+  if (await study.count()) {
+    await study.click(); await wait(1200);
+    const toast = clean(await page.locator('.toast').last().innerText().catch(() => ''));
+    check('under Genres, Study It reads a play or watches a film of the genre', toast.length > 0, toast);
+  } else check('Genres has Study It', false);
+  const brief = button('Open Its Brief');
+  if (await brief.count()) {
+    await brief.click(); await wait(1200);
+    const pane = await bodyText();
+    const labels = ['Break It Down', 'Learn The Lines', 'Rehearse It On Your Feet', 'Read With', 'Tape It'];
+    check('Open Its Brief shows where and when, the two of you, what you want and what’s in the way', /Where And When/i.test(pane) && /The Two Of You/i.test(pane) && /What You Want/i.test(pane) && /What’s In The Way/i.test(pane), pane.slice(0, 200));
+    check('and the brief offers Break It Down, Learn The Lines, Rehearse It On Your Feet, Read With and Tape It', labels.every((l) => pane.includes(l)), labels.filter((l) => !pane.includes(l)).join(', '));
+    await shot('a-practice-brief');
+    await closeDialogs();
+  } else check('Genres has Open Its Brief', false);
+  check('Your Work So Far is on the Player Profile', /Your Work So Far/.test(await mainText()));
+  // Your name at the foot of the menu opens the Player Profile too.
+  await goRail('Home');
+  const you = rail().locator('button', { hasText: /Alex|Rivera/ }).last();
+  if (await you.count()) { await you.click().catch(() => {}); await wait(1000); check('pressing your name at the foot of the menu opens the Player Profile', /Player Profile|Attributes And Craft/.test(await mainText())); }
+};
+
 // ---------------------------------------------------------------------------------------------------------------------
 for (const [i, c] of CHAPTERS.entries()) {
   chapter = c.id;

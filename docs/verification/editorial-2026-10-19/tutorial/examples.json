@@ -248,5 +248,125 @@
   "why": "A list after a colon became a sentence with a verb.",
   "meaningSensitive": false,
   "verified": "follow-1440/log.txt and follow-1440/chapter-10-weather.txt (read word for word in the guide dialog on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "Where your life as an actor begins.",
+  "after": "Classes, coursework, casting and your degree at Yale.",
+  "why": "The lead shows on the locked School line (“This opens when you read “Drama School” in the guide: …”) and on the guide's strip. It said nothing about what's there; now it lists it, without a colon, since the locked line puts one before it.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g33-ui.test.ts asserts the locked School line with the new lead; follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "If you’re unwell, press Call In Sick on Classes before the day’s first commitment begins (on a class day, at the latest when the clock stops at the classes at nine).",
+  "after": "If you’re unwell, press Call In Sick on Classes before the day’s first commitment starts (on a class day, at the latest when the clock stops at nine for your classes). You count as unwell with the flu, an injury that limits your work, or condition under 55.",
+  "why": "“Unwell” was the condition the button needs, and the chapter never said what it meant: someone well sees it grayed. The added sentence is `sickRefusal`'s rule, with the figure read from `ESTIMATE.sickBelow`.",
+  "meaningSensitive": true,
+  "verified": "systems/school.ts `sickRefusal`; follow-saves/log.txt: at nine on Monday, September 14, 2026, the clock stopped at Classes, and Call In Sick was grayed with “Not now: You’re well enough to go. Staying away would count as an unexcused absence.” (screenshot call-in-sick)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "A scene pairs you with a classmate. Pick an evening they’re free and press Ask with their name, such as Ask Zoe.",
+  "after": "A scene pairs you with a classmate. To rehearse together, choose a day and a time under Rehearsing With, at least two hours ahead, and press Ask with their name, such as Ask Zoe.",
+  "why": "It names the panel the controls are on and the rule the card itself states (at least two hours ahead). “Pick an evening they’re free” promised a free-time check the picker doesn't show: the classmate answers yes or no.",
+  "meaningSensitive": true,
+  "verified": "follow-saves/log.txt: on the brief save, Rehearsing With Jordan with its Day and Time, Ask Jordan pressed, “Jordan said yes.” (screenshot asked-a-partner)"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "Shown Today, on each piece, is its readiness now: what it would come to if it were shown today, which parts are short, and the steps that would answer them.",
+  "after": "Shown Today, on each piece, tells you where it stands now: what it would come to if you showed it today, which parts are still short, and the steps that would fix them. It’s a forecast, not a result.",
+  "why": "“Readiness” is the glossary's word for a wellbeing measure, so it can't name a piece's state too. The added sentence is the glossary's own rule for Shown Today.",
+  "meaningSensitive": false,
+  "verified": "follow-saves/log.txt: each piece's Shown Today line on Coursework; follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "A missed performance, or not being in New Haven when you’re called to go on, is a grave breach: it puts you on academic warning at once, and if you’re already on warning, it dismisses you.",
+  "after": "Missing a performance, or not being in New Haven when you’re called to go on, is a serious breach: it puts you on academic warning straight away, and if you’re already on warning, you’re dismissed.",
+  "why": "Plainer words for the same rule: a formal consequence, said as one.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "A part is cast on the techniques its play needs: a voice and speech that carry and the body, and the classics and a fight where the play asks for them.",
+  "after": "A part is cast on the techniques its play asks for, which differ from play to play: Shakespeare asks most for classical text, with voice and speech, and Macbeth and Julius Caesar for stage combat too.",
+  "why": "The old sentence said every play asked for voice, speech and the body. Each play has its own `reads` (Hedda Gabler: scene study, emotional depth, character work, script analysis), so the sentence now gives real examples from `content/plays.ts`.",
+  "meaningSensitive": true,
+  "verified": "content/plays.ts, THESIS_PLAYS and the Shakespeare plays' `reads`; follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "The chair weighs every student the same way for each play: how well you fit it, what a night of it would come to from your abilities and the techniques it asks, its kind of play’s demands among them; a fifth of that by how much of yourself you gave in your last run; and a lead counting against your next lead and a small part for it.",
+  "after": "For each play, the chair weighs every student the same way: how well you fit it, meaning what a night of it would come to from your abilities and the techniques it asks for, including what its kind of play demands. A fifth of that rides on how much of yourself you gave in your last run. A lead last time counts a little against another lead, and a small part a little for one.",
+  "why": "One sentence with two semicolons became three. “A little” is what `ESTIMATE.casting.balance` is: two points either way on a fit of up to 100.",
+  "meaningSensitive": true,
+  "verified": "systems/school.ts `castScore`: fit × (0.8 + 0.2 × delivery) + balance (−2, 0, +2); follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [school]",
+  "kind": "tutorial",
+  "before": "The standings come from the Yale Bulletin. The Bulletin has the faculty evaluate students regularly; one review a term, and its floors and its steps, are estimated.",
+  "after": "The standings come from the Yale Bulletin, which has the faculty evaluate students regularly. One review a term, the marks it asks for and its one-step drops are estimated.",
+  "why": "“Its floors and its steps” was the engine's vocabulary. The estimate is still labelled as one, apart from what the Bulletin says.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-school.test.ts asserts the new sentence exactly; follow-1440/chapter-11-school.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "In the Practice column, press the exercise beside an ability or a technique, such as Comic Timing, pick a tier and a focus, and press Practice An Hour. Before the hour, it says about how much it will add, and why.",
+  "after": "To practice, press the exercise in the Practice column beside an ability or a technique, such as Comic Timing, choose a Tier and a Focus, and press Practice An Hour. Before you start, it tells you about how much the hour will add, and why.",
+  "why": "The controls by their labels, Tier and Focus, as the glossary capitalizes them.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/log.txt, chapter profile: Comic Timing… opened with Tier and Focus, the preview said what the hour would add, and Practice An Hour gave “Comic Timing: +0.25.”"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "On the brief, Break It Down, Learn The Lines and Rehearse It On Your Feet prepare it. Read It This Way chooses a reading, and you choose how to play it; from then on Work It Through works on it as on a scene.",
+  "after": "On the brief, prepare it with Break It Down, Learn The Lines and Rehearse It On Your Feet. Read It This Way chooses a reading, what you take the scene to be about, and then you choose how to play it; once you have, Work It Through works on it as it does on a class scene.",
+  "why": "Brief 15 asks every tutorial to tell a reading from a way of playing: the reading is what the scene means to you (glossary, Your Reading), how you play it is the scale you choose.",
+  "meaningSensitive": false,
+  "verified": "follow-saves/log.txt: the brief save's pane shows Break It Down, Learn The Lines, Rehearse It On Your Feet, Read It This Way, Read With, Tape It and The Genre Asks; follow-1440/chapter-12-profile.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "A self-tape asks you to know its genre too: the better of what you’ve studied and what you’ve worked in it, complete at 60.",
+  "after": "A self-tape also asks you to know its genre. Your genre knowledge is the better of your Familiarity and your Work In It (your nights on stage and self-tapes in that genre), and it counts as complete at 60.",
+  "why": "The glossary's names for the two scores, Familiarity and Work In It, as Genres labels them, so the player can find them.",
+  "meaningSensitive": false,
+  "verified": "follow-1440/chapter-12-profile.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/tutorial.ts#CHAPTERS [profile]",
+  "kind": "tutorial",
+  "before": "A tape is judged beat by beat: each beat’s rehearsal, how far into the tape it falls, where stamina tells, and a slip in the beat before, which composure and adaptability help you recover from. Your own tape is yours, whoever reads with you.",
+  "after": "A tape is judged beat by beat: how well each beat is rehearsed, how far into the tape it comes, where your stamina starts to show, and any slip in the beat before, which composure and adaptability help you recover from. Your own result is yours alone, whoever reads with you.",
+  "why": "“Where stamina tells” and “your own tape is yours” were riddles. The game keeps your own take apart from the take with your reader (`systems/briefs.ts`, the take with its reader), which the chapter's body says is what a casting office sees.",
+  "meaningSensitive": true,
+  "verified": "systems/briefs.ts, `readerRead` and the take with its reader beside your take; follow-1440/chapter-12-profile.txt (read word for word on the built app); tests/help-mechanics.test.ts renders every paragraph"
  }
 ]

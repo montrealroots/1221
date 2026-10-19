@@ -123,3 +123,69 @@ sources once marked. `vitest run` on `help-mechanics`, `guide-chapter-facts`, `d
 details opened (`chapter-01-welcome.txt` to `chapter-10-weather.txt`), then followed: 208 checks, 0 failed, no page
 errors (`log.txt`, `results.json`). Screens kept: `03-on-the-way.png`, `04-a-commitment-stops-the-clock.png`,
 `05-sleep-dialog.png`, `06-sleep-grayed-at-a-commitment.png`, `07-look-after-menu.png`, `08-plan-call-it-off.png`.
+
+## Batch 3: Drama School And You As An Actor
+
+**Sources (2):** `CHAPTERS [school]` (18 paragraphs and 10 details, about 2,400 words) and `CHAPTERS [profile]` (14
+and 5, about 1,600 words), the two longest chapters a student reads.
+
+**Rewritten (2):**
+- **Drama School.** The lead names what's there (“Classes, coursework, casting and your degree at Yale.”), since it
+  shows on the locked School line and on the strip. Each paragraph starts with what to press or what happens; work-study
+  comes before casting, as a first term meets them; the tuition paragraph went behind The Details. Call In Sick says
+  what counts as unwell. Rehearsing With is named with its rule (a day and a time at least two hours ahead). Shown Today
+  is “where it stands now … It’s a forecast, not a result”, not “its readiness”, the glossary's word for a wellbeing
+  measure. “A grave breach” is “a serious breach”, “withheld” is “the faculty don’t recommend the degree”, and “its
+  floors and its steps” is “the marks it asks for and its one-step drops”.
+- **You As An Actor.** Each control by its label (Tier, Focus, Practice An Hour, Open Its Brief); the genre knowledge
+  sentence names Familiarity and Work In It; the brief's paragraph tells a reading from a way of playing it; “finished
+  work … as the work asks” and “each thing your work depends on” lost “the work”; “your own tape is yours” says what it
+  means.
+
+**Kept:** nothing in these two whole; individual sentences that already read well stayed word for word inside them
+(“Four different things make you better …” lost only “and they aren’t the same”; “The note is the game’s, written as
+your course’s teachers would say it.”, which `tests/remaining-school.test.ts` holds).
+
+**Meaning-sensitive, and how each was checked:**
+- **Call In Sick.** “You count as unwell with the flu, an injury that limits your work, or condition under 55” is
+  `sickRefusal` (the 55 read from `ESTIMATE.sickBelow`). Played on the brief save: at nine on Monday, September 14,
+  2026, the clock stopped at Classes, and Call In Sick was grayed with “Not now: You’re well enough to go. Staying away
+  would count as an unexcused absence.”
+- **Asking a partner.** The old “pick an evening they’re free” promised a check the picker doesn't make. The card's own
+  rule is “an evening at least 2 hours ahead”, and the picker offers a Day and a Time. Played: Ask Jordan, “Jordan said
+  yes.”
+- **Casting.** The old sentence said every part was cast on “a voice and speech that carry and the body, and the
+  classics and a fight where the play asks for them”. Each play has its own `reads` (`content/plays.ts`); the new one
+  gives Shakespeare's and Macbeth's and Julius Caesar's. The weights paragraph was checked against `castScore`: the fit,
+  a fifth of it scaled by the last run's delivery, and two points either way for the last part's size, which the
+  chapter now calls “a little”.
+- **The term review's estimate.** The new sentence keeps the estimate apart from the Bulletin, as the old one did;
+  `tests/remaining-school.test.ts` asserts it exactly.
+- **The degree.** “Before the degree is withheld” is “after that, the faculty don’t recommend the degree”: the
+  `withheld` standing's label is Degree Not Recommended (`STANDING_LABEL`), and the glossary keeps “withheld” off screen.
+- **The reader.** “Your own result is yours alone, whoever reads with you”: `systems/briefs.ts` keeps your take apart
+  from the take with your reader.
+
+**Interactions read whole:** the locked School line; the School line once open and its Yale button; the School screen's
+six tabs, its links (the school, a course, a technique); Classes and Call In Sick, grayed with its reason; a piece on
+Coursework, its parts, Shown Today, a step, Table Work, How You’ll Play It, Rehearsing With and Ask, Run It With A
+Reader, Work It Through and a problem's ways; Plays To Read, Read It, Research It; Shifts And Pay and Take An Elective
+Shift; Casting in a production's rehearsals (Why This Cast, Learn The Part, Catch Up The Blocking, Work On The Note, A
+Night Now, The Evening’s Workload, Join The Summer Company); the Player Profile, an ability's look, the Practice column
+and its exercise, Study It, Open Its Brief and the brief's pane.
+
+**Tests updated:** `tests/remaining-school.test.ts` (the review's estimate, exactly), `tests/evidence-g33-ui.test.ts`
+(the locked School line with the new lead). **Tool matchers:** none named these words.
+
+**Checks:** `tsc` 0, `eslint` 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0 (one “it is now” in the
+first draft, which `--fix` would have made “it’s now”; the sentence was turned round), tics 0 (one “, which is” tacked
+on in the casting paragraph, turned into “meaning”), spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0 (580
+quoted sentences, all said), text-inventory 0 once marked. `vitest run` on `evidence-g33-ui`, `help-mechanics`,
+`tutorial`, `evidence-g34-ui`, `evidence-g31-ui`, `guide-examples-craft`, `defects-r8-1`, `defects-g3-1`,
+`defects-g2-1`, `evidence2-b13` and `guide`: 11 files, 150 tests, exit 0; `remaining-school`: 33 tests, exit 0.
+
+**Screens verified:** `follow-1440/` (a new life, 228 checks, 0 failed: both chapters word for word, then the School
+line, the Yale button, the tabs, the links, Take An Elective Shift, the Player Profile and its practice, Study It, Open
+Its Brief; `10-a-practice-brief.png`) and `follow-saves/` (29 checks, 0 failed: `brief.json` for Call In Sick, a step,
+Ask Jordan, Work It Through, Plays To Read, What To Work On Next and a brief in progress; `rehearsal.json` for Casting;
+screenshots `asked-a-partner`, `work-it-through`, `call-in-sick`, `a-brief-in-progress`, `casting-a-production`).

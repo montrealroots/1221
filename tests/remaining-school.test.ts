@@ -1117,7 +1117,7 @@ describe('school.s6.policy: SLATE’s design not presented as Yale’s policy, n
     // From 2026-10-17 (brief 14) the review's rules are behind the chapter's details, and "SLATE's reading" is the
     // glossary's "estimated", kept apart from the standings the Bulletin gives.
     const school = [...CHAPTER_BY_ID.school!.body, ...(CHAPTER_BY_ID.school!.more ?? [])].join(' ');
-    expect(school).toContain('The standings come from the Yale Bulletin. The Bulletin has the faculty evaluate students regularly; one review a term, and its floors and its steps, are estimated.');
+    expect(school).toContain('The standings come from the Yale Bulletin, which has the faculty evaluate students regularly. One review a term, the marks it asks for and its one-step drops are estimated.');
     expect(school).toContain('The note is the game’s, written as your course’s teachers would say it.');
   });
 

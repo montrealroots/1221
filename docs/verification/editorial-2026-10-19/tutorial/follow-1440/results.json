@@ -61,7 +61,7 @@
    "chapter": "welcome",
    "what": "the line under the greeting shows the time, the town, its time zone, the season and the weather",
    "ok": true,
-   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ☁️ 75°F Overcast"
+   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ☁️ 73°F Overcast"
   },
   {
    "chapter": "welcome",
@@ -859,7 +859,7 @@
    "chapter": "weather",
    "what": "the Weather panel shows the weather now and the next few days",
    "ok": true,
-   "seen": "Weather How This Works ☁️74°F Overcast · High 88°F · Low 70°F Humidity 58% · Wind 14 mph · Continental Thu ⛈️ Storm 87° / 69° Fri 🌧️ Rain 70° / 59° Sat 🌧️ Rain 75° / 64° Sun ⛈️ Storm 74° / 56° Mon ⛅"
+   "seen": "Weather How This Works ⛅61°F Partly Cloudy · High 74°F · Low 56°F Humidity 57% · Wind 6 mph · Continental Thu 🌧️ Rain 73° / 62° Fri 🌧️ Rain 72° / 61° Sat ⛈️ Storm 72° / 61° Sun ☁️ Overcast 80° / 62°"
   },
   {
    "chapter": "weather",
@@ -871,7 +871,7 @@
    "chapter": "weather",
    "what": "pressing it shows more: the week, each day and each hour",
    "ok": true,
-   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 74°F and overcast where you are, with a high of 88°F and a low of 70°F today. The wind is 14 mph and the humidity is 58%. Today is 6° warmer than normal for"
+   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 61°F and partly cloudy where you are, with a high of 74°F and a low of 56°F today. The wind is 6 mph and the humidity is 57%. Today is 7° colder than normal"
   },
   {
    "chapter": "school",
@@ -889,17 +889,17 @@
    "chapter": "school",
    "what": "its lead is on the page",
    "ok": true,
-   "seen": "Where your life as an actor begins."
+   "seen": "Classes, coursework, casting and your degree at Yale."
   },
   {
    "chapter": "school",
-   "what": "all 18 paragraphs are on the page, word for word",
+   "what": "all 17 paragraphs are on the page, word for word",
    "ok": true,
    "seen": ""
   },
   {
    "chapter": "school",
-   "what": "The Details opens onto its 10 paragraph(s), word for word",
+   "what": "The Details opens onto its 11 paragraph(s), word for word",
    "ok": true,
    "seen": ""
   },
@@ -926,6 +926,66 @@
    "what": "and offers Try It or the next chapter, in its words",
    "ok": true,
    "seen": "Learn The Part, Catch Up The Blocking and Work On The Note Plays To Read: Read It and Research It It’s open now. Press Try It to go and use it, or go straight on to “You As An Actor”. Next time you open the guide, it starts there. Try It Next: You As An Actor"
+  },
+  {
+   "chapter": "school",
+   "what": "the School line in Your Affairs shows your year or arrival, your standing, your place in the class and what’s next",
+   "ok": true,
+   "seen": "Your Affairs How This Works Money LOCKED This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It School Year 1, good standing, 1st of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works Papers LOCKED This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and"
+  },
+  {
+   "chapter": "school",
+   "what": "the Yale button opens the School screen, with the tabs the chapter names",
+   "ok": true,
+   "seen": "Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, Terms And Award"
+  },
+  {
+   "chapter": "school",
+   "what": "Standing And Craft shows your craft, Composure beside it and Coursework This Term",
+   "ok": true,
+   "seen": "GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye"
+  },
+  {
+   "chapter": "school",
+   "what": "on the School screen, the school’s name is a link",
+   "ok": true,
+   "seen": "David Geffen School of Drama at Yale University"
+  },
+  {
+   "chapter": "school",
+   "what": "on the School screen, a technique is a link",
+   "ok": true,
+   "seen": "Scene Study"
+  },
+  {
+   "chapter": "school",
+   "what": "on the School screen, a course is a link",
+   "ok": true,
+   "seen": "Acting I"
+  },
+  {
+   "chapter": "school",
+   "what": "Classes shows the week, nine to three on class days",
+   "ok": true,
+   "seen": "GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale Uni"
+  },
+  {
+   "chapter": "school",
+   "what": "Take An Elective Shift, on Shifts And Pay, signs you up for an evening front of house",
+   "ok": true,
+   "seen": "Front of house, August 31, 2026 at 7:00 PM."
+  },
+  {
+   "chapter": "school",
+   "what": "Casting is there to show your part, and the Cabaret",
+   "ok": true,
+   "seen": "GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye"
+  },
+  {
+   "chapter": "school",
+   "what": "Coursework holds Plays To Read",
+   "ok": true,
+   "seen": "GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye"
   },
   {
    "chapter": "profile",
@@ -980,6 +1040,66 @@
    "what": "and offers Try It or the next chapter, in its words",
    "ok": true,
    "seen": "r Work So Far An ability, a genre and a piece of work, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Cover, Benefits And Returns”. Next time you open the guide, it starts there. Try It Next: Cover, Benefits And Returns"
+  },
+  {
+   "chapter": "profile",
+   "what": "Player Profile, in the menu, lists the twelve abilities",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "pressing an ability shows what it is, how it grows and where it counts",
+   "ok": true,
+   "seen": "Presence: AN ACTING ABILITY Presence Close You’re at 69.3 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 69.3 30.7 to full CLASSES REACH — Classes don’t build it; performing in front of people d"
+  },
+  {
+   "chapter": "profile",
+   "what": "the exercise beside a technique, such as Comic Timing, offers a Tier, a Focus and Practice An Hour",
+   "ok": true,
+   "seen": "Tier 1, Focus 1"
+  },
+  {
+   "chapter": "profile",
+   "what": "before the hour, it says about how much it will add",
+   "ok": true,
+   "seen": "Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.23 to comedy (now 56.0), and +0.18 to disci"
+  },
+  {
+   "chapter": "profile",
+   "what": "Practice An Hour practices for an hour and says what it added",
+   "ok": true,
+   "seen": "Comic Timing: +0.23."
+  },
+  {
+   "chapter": "profile",
+   "what": "under Genres, Study It reads a play or watches a film of the genre",
+   "ok": true,
+   "seen": "Absurdist: an hour and a half with a film of its kind. Familiarity 8.0 of 100."
+  },
+  {
+   "chapter": "profile",
+   "what": "Open Its Brief shows where and when, the two of you, what you want and what’s in the way",
+   "ok": true,
+   "seen": "Skip To Content 🎬 SLATE 9:10 AM · August 26, 2026 EDT Play Sleep Look After Yourself ▾ Advance ▾ Guide (5 Left) Not Saved Yet Save & Exit Home 1 YOU Player Profile YOUR TRAINING School YOU Alex River"
+  },
+  {
+   "chapter": "profile",
+   "what": "and the brief offers Break It Down, Learn The Lines, Rehearse It On Your Feet, Read With and Tape It",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "Your Work So Far is on the Player Profile",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "pressing your name at the foot of the menu opens the Player Profile",
+   "ok": true,
+   "seen": ""
   },
   {
    "chapter": "papers",
