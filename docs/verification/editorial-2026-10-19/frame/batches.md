@@ -190,7 +190,7 @@ dismissed and opened on its own; a notice opened, Go There, and Mark N Read; No 
 owed; a Locked screen reached from the rail; the Look After Yourself menu from its lines to the toast; How You Are's
 summary at each threshold.
 
-**Rewritten (6):**
+**Rewritten (5; the question's look and the notice's are one source, `attention.tsx#top`):**
 - **A question opened:** "the game checks every two days" and "the save keeps it" were the engine's bookkeeping. Now:
   "If you don’t, it closes by itself within two days after its date, March 3, 2027. You can still open it here for 180
   days after it closes." A closed one, "You can still open it here until …". One gone, "so there’s nothing left to
@@ -204,7 +204,7 @@ summary at each threshold.
 - **How You Are:** "Feeling low, though the day itself is going fine." for "Flat. The work is fine, the feeling isn’t."
 - **Look After Yourself:** "Indoors, since the weather’s no good for a run".
 
-**Kept (65):** the shell's labels, the rail and its lines, the tab names, the fault sentences (each already says what
+**Kept (66; the commit message said 65 and 6 rewritten, counting the two looks apart):** the shell's labels, the rail and its lines, the tab names, the fault sentences (each already says what
 happened, what changed and the way on), What Needs You's refusals, the question look's state sentences, the place
 labels, the background items' labels, Home's money and papers lines, and Look After Yourself's refusals. Three of the
 kept lines are quoted elsewhere and read well enough to stay: "… starts at 9:00 AM: there isn’t the time before it."
@@ -330,3 +330,38 @@ climate", one "worked out from" over the ratchet's none, which batch 4's checks 
 inventory's exit while its sources were still Pending. It now says "It comes from your town’s climate, the season and
 a little chance", the entry was drawn again (`help-b4.txt`) and marked again, and the inventory holds, engine-speak
 back at 332. `npx vitest run tests/language-frame.test.ts`: 8 tests, exit 0.
+
+## The End Of The Area
+
+**Every source has a second-pass status.** `node tools/text-inventory.mjs --todo2 frame`: 0 Pending. The frame area
+now holds 490 sources (the 487 at the start, `WEALTH_LABEL` new in batch 2, and the page head and the holiday names
+marked before this pass): Rewritten 75, Retained 415, Pending 0, Blocked 0. Of the 488 this pass read, 74 were
+rewritten (12, 27, 5, 15 and 15 by batch) and 414 kept, each with its reason in `docs/text/second-pass/frame.json`.
+Engine-speak is at 332, where it started.
+
+**The whole suite, once** (`npx vitest run`): 391 files, 4,723 tests, exit 0, in 35 minutes on the shared machine
+(the baseline's 4,713 and the frame's ten new tests). It began after batch 5's notes were in, and before batch 5's
+one-sentence fix to the weather entry, which no test reads.
+
+**The built app**, built in this clone (`npm run build`, exit 0) and served on port 4281, the page checked to be this
+build (`curl -sf http://localhost:4281/ | cmp - dist/index.html`, exit 0), stopped by its process id after:
+- **The text walk** (`tools/text-walk.mjs`) of three scenario saves (decision, missed-plan, rehearsal) at 1440 and
+  390: 25 screens each, exit 0 (`after-1440/`, `after-390/`).
+- **The render check** (`tools/text-render-check.mjs after-1440 after-390`): 28,808 strings read, 0 faults, exit 0.
+- **The frame walk** (`frame-walk.mjs`, this folder: brief 14's taken further) at 1440 and 390 (`walk/`): the startup
+  sequence over a save from this version, one marked newer and one marked older; Before You Continue; the slots;
+  Delete Slot 1? and Keep It; Continue on the newer save; creation from Identity to Review; Home; the Advance menu; On
+  The Way for a week; the Sleep dialog; the Calendar. 15 screens each, none overflowing the page's width, none failed.
+  Every rewritten sentence those screens can show was found on them: the newer and older warnings, the delete
+  dialog's two lines, the refused newer save, creation's header, the dispositions, the traits' list, Your Money, the
+  family labels, the guide's choices and the paused clock, On The Way for five commitments, and the Calendar's
+  subtitle. The damaged-slot warning isn't on these screens (no slot was damaged), and is held by its test.
+- **At 390,** the delete dialog, On The Way and the dispositions read without clipping or a button past the edge
+  (`walk/frame-390-delete.png`, `-on-the-way.png`, `-creation-dispositions-traits.png`, and the startup warnings,
+  the slots, the Review and the Sleep dialog beside them).
+
+**Not exercised on the built app:** the damaged and unreadable slots (their tests hold them), a server's save failures
+(Base44 isn't deployed here), the Before Yale variants (their test renders them), the place picker's empty country,
+the stop dialog itself (the walk stops at On The Way, and the stop's two variants are rendered by their tests), the
+day entries' and the getting-started entries' Help dialogs (drawn by `render-help.mjs` through the real dialog), and
+Going Abroad's fine print (its test reads every note).
