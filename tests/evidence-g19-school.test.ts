@@ -938,7 +938,7 @@ describe('school.cabaret', () => {
     expect(you.from).toContainEqual({ what: SEASON, source: 'cabaret', nights: 5, delivery, weight });
     // A fifth of the fit by the delivery, as the chair reads it.
     expect(Math.abs(you.score - (you.fit * (0.8 + 0.2 * delivery) + you.balance))).toBeLessThanOrEqual(0.15);
-    expect(drawn(sim, 'casting').shown).toContain(`${SEASON}, the Yale Cabaret, 5 nights (${Math.round(delivery * 100)}%, counted ×2.5)`);
+    expect(drawn(sim, 'casting').shown).toContain(`${SEASON}, the Yale Cabaret, 5 nights (${Math.round(delivery * 100)}%, counted as 2.5 nights)`);
     // Never joined: nothing to read, everything delivered.
     expect(never.player.school!.lastWork?.from ?? []).toEqual([]);
     expect(never.player.school!.castRead!.rows.find((r) => r.you)!.delivery).toBe(1);

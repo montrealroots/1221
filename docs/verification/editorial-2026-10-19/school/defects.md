@@ -66,6 +66,16 @@ fixed in its words or its assembly, with the test that holds the new words.
     cover a Yale payment. The payment draws on savings (`fromBankToYale` passes `fromSavings`), so it's "your savings"
     now, with the glossary's checking account.
 
+17. **Garbled reasons in What It Asks.** `content/material.ts`: The Bacchae's physical work read "Bound, the Stranger
+    has; his curl is cut and his staff taken on stage."; Medea's "Before her house, the women of Corinth by."; Much
+    Ado's "At the church the comedy turns the comedy grave."; A Marriage Proposal's "As The Proposal’s scene". Each
+    made whole (batch 5), seen in `material.txt`.
+18. **"Of the whole piece."** `systems/workbook.ts`: a problem's cost read "costs Connection … points, … of the whole
+    piece", which put the second figure as a share of the first; it's the points the whole piece loses. Now "and the
+    whole piece …" (batch 5).
+19. **"Classes don’t count you."** The school guide's orientation and money entries said an unregistered student's
+    classes don't count them; they count them absent, as defect 15. Batch 6.
+
 ## Functional Defects
 
-None found in batches 1 to 3's sources.
+None found in the area's sources.

@@ -260,7 +260,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Fit', value: 'What a night of the play would come to with no luck either way: your abilities and the techniques it asks, adjusted for the play’s material (its kinds of play, where the game has no profile of it), preparation complete and a good enough day. Stamina and discipline count as full for everyone, since the game doesn’t simulate the class’s bodies and habits', estimate: true },
-      { label: 'Delivered', value: `How much of yourself you brought to your runs since the last casting: each night’s preparation and your condition that day, each run counted by its nights up to ${R.nightsCap}, a Cabaret or Summer run at ${pct(R.weight.cabaret)} of a School production’s, and your record before at ${pct(R.carry)} of its weight. A classmate’s is the share of calls they keep, ${pct(WORK.reliability.from)} to ${pct(WORK.reliability.to)}`, estimate: true },
+      { label: 'Delivered', value: `How much of yourself you brought to your runs since the last casting: each night’s preparation and your condition that day, each run counted by its nights up to ${R.nightsCap}, a Cabaret or Summer run’s nights counting ${pct(R.weight.cabaret)} as much as a School production’s, and your record before counting ${pct(R.carry)} as much as it did. A classmate’s is the share of calls they keep, ${pct(WORK.reliability.from)} to ${pct(WORK.reliability.to)}`, estimate: true },
       { label: 'Balance', value: `Your last School production’s part: a lead ${C.balance.lead}, a supporting part ${C.balance.supporting}, a featured part +${C.balance.featured}`, estimate: true },
       { label: 'Read', value: `The fit, with ${pct(C.delivery)} of it scaled by Delivered, plus the balance. Best read first, each takes the biggest part still open written for an actor, an actress or either; with none left, In The Company`, estimate: true },
       { label: 'Which Production', value: 'The first spring, the Carlotta Festival for the whole class. In the second and third years’ falls, a directors’ thesis for the upper half of the read and the Langston Hughes Festival for the rest; the second spring, a thesis or the Carlotta; the last spring, a Shakespeare Repertory Project by place in the read', estimate: true },
@@ -270,7 +270,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'The cast list goes up as the term begins: every rehearsal call and performance goes on your calendar, from the first call, and a notice names your part.',
       `When the list goes up, a lead of your own lifts your morale ${CAST_LIST.ownLead}, a friend’s lead ${CAST_LIST.friendLead}, and a rival’s adds ${CAST_LIST.rivalLead} stress, each by your nature.`,
       `Each classmate in your cast comes ${BONDS.shared} closer for the weeks you share, or ${BONDS.leadTaken} less close where a lead written for either of you went to the other, by your warmth or how much a slight hurts you.`,
-      `The runs the chair read are marked as read: the next casting reads what you play after this one, with this read carried at ${pct(R.carry)} of its weight.`,
+      `The runs the chair read are marked as read: the next casting reads what you play after this one, with this read counting ${pct(R.carry)} as much as it does now.`,
     ],
     later: [
       'The School and the Rep never call you to two places at once: a School rehearsal gives way to a Rep rehearsal, performance or run-through, and ends where a Rep night on call begins; a Rep night on call gives way to your own School performance, and a School performance to a Rep performance in a role.',
@@ -454,7 +454,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'Once another note comes, the settled one moves under The Director’s Notes So Far, below the last note: each earlier note with what came of it, and the way it was worked with its figure before, after and at the next call.',
       'At the next work-through, if the same note comes again: “Better since the last note.” if it was taken, and “Still:” if it wasn’t; either way, if you worked on it a way, the way you tried with its figure then and now.',
       'When the run closes, the notes still open go into your notes from the courses: what you want as the choices, listening and a relationship as the work with your partner, lines as the lines, a skill as that skill, the rest as rehearsal on your feet. A note on the director’s request stays with the part.',
-      'Looking Back, at the closing, counts the notes taken and those answered in the work.',
+      'Looking Back, at the closing, counts the notes you took and those you worked on that didn’t move.',
     ],
     interpret: [
       'The note names its place, “in the second half”, “by the close”; a note on the whole part says “the whole play”.',

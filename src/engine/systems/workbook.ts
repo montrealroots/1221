@@ -105,7 +105,7 @@ export function problemsOf(p: WorkPiece): Problem[] {
       // by more than `segmentGap`, and the same drain came as two problems, the segment’s first, whose ways don’t include
       // breathing (tests/guide-examples-productions.test.ts, the director’s note on tiring).
       if (c?.kind === 'condition' && c.what === 'stamina') return;
-      out.push({ id: `segment:${i}`, kind: 'segment', segment: i, label: `${s.label} Holds It Back`, why: `${s.label} comes to ${s.overall}, against ${e.overall} for the whole piece.${c ? ` What costs it most: ${c.label.toLowerCase()}, in ${DIMENSION_LABEL[c.dimension]}.` : ''}`, measure: s.overall, gap: e.overall - s.overall });
+      out.push({ id: `segment:${i}`, kind: 'segment', segment: i, label: `${s.label} Holds It Back`, why: `${s.label} comes to ${s.overall}, against ${e.overall} for the whole piece.${c ? ` What costs it most: ${c.label.toLowerCase()}, in its ${DIMENSION_LABEL[c.dimension].toLowerCase()}.` : ''}`, measure: s.overall, gap: e.overall - s.overall });
     }
   });
   const stamina = e.limits.find((l) => l.what === 'stamina');
@@ -117,18 +117,18 @@ export function problemsOf(p: WorkPiece): Problem[] {
   if (top && (top.whole ?? 0) >= WORKBOOK.named) {
     // Worked where the piece is weakest: the lowest segment, played another way, can draw on something else.
     const at = segs.length ? segs.reduce((b, s, i) => (s.overall < segs[b]!.overall ? i : b), 0) : undefined;
-    out.push({ id: `limit:${top.what}`, kind: 'limit', ...(at !== undefined ? { segment: at } : {}), label: `${top.label} Holds It Back`, why: `Your ${top.label} costs ${DIMENSION_LABEL[top.dimension]} ${top.by} points, ${top.whole} of the whole piece.${at !== undefined ? ` The piece is weakest in ${segs[at]!.label.toLowerCase()}, at ${segs[at]!.overall}.` : ''} Working on it trains it a little, and playing one part of the scene another way can lean on a different ability.`, measure: e.overall, gap: top.whole ?? 0 });
+    out.push({ id: `limit:${top.what}`, kind: 'limit', ...(at !== undefined ? { segment: at } : {}), label: `${top.label} Holds It Back`, why: `Your ${top.label.toLowerCase()} costs your ${DIMENSION_LABEL[top.dimension].toLowerCase()} ${top.by} points, and the whole piece ${top.whole}.${at !== undefined ? ` The piece is weakest in ${segs[at]!.label.toLowerCase()}, at ${segs[at]!.overall}.` : ''} Working on it trains it a little, and playing one part of the scene another way can lean on a different ability.`, measure: e.overall, gap: top.whole ?? 0 });
   }
   // A part of preparation short, other than the segments' own and the objective's: its own step answers it. Its label is
   // a button's, in Title Case (from 2026-10-12: until then only its first letter was raised, and Work It Through offered
   // "Knowing the genre: Not There Yet").
   for (const l of e.limits.filter((x) => x.kind === 'preparation' && !ignored(x) && x.what !== spec.part && x.what !== p.objective?.part && x.what !== 'way' && (x.whole ?? 0) >= 0.5)) {
     if (out.some((x) => x.id === `prep:${l.what}`)) continue;
-    out.push({ id: `prep:${l.what}`, kind: 'prep', label: `${titleCaseLabel(l.label)}: Not There Yet`, why: `It costs ${DIMENSION_LABEL[l.dimension]} ${l.by} points, ${l.whole} of the whole piece. Its own preparation step works on it.`, measure: e.overall, gap: l.whole ?? 0 });
+    out.push({ id: `prep:${l.what}`, kind: 'prep', label: `${titleCaseLabel(l.label)}: Not There Yet`, why: `It costs your ${DIMENSION_LABEL[l.dimension].toLowerCase()} ${l.by} points, and the whole piece ${l.whole}. Its own preparation step works on it.`, measure: e.overall, gap: l.whole ?? 0 });
   }
   if (p.objective) {
     const obj = e.limits.find((l) => l.kind === 'preparation' && l.what === p.objective!.part);
-    if (obj && (obj.whole ?? 0) >= 0.5) out.push({ id: 'objective', kind: 'objective', label: 'What You Want Isn’t Clear Yet', why: `${p.objective.label} is at ${pct(p.objective.get())}, which costs ${DIMENSION_LABEL[obj.dimension]} ${obj.by} points.`, measure: e.overall, gap: obj.whole ?? 0 });
+    if (obj && (obj.whole ?? 0) >= 0.5) out.push({ id: 'objective', kind: 'objective', label: 'What You Want Isn’t Clear Yet', why: `${p.objective.label} is at ${pct(p.objective.get())}, which costs your ${DIMENSION_LABEL[obj.dimension].toLowerCase()} ${obj.by} points.`, measure: e.overall, gap: obj.whole ?? 0 });
   }
   if (p.together && p.partner) {
     const t = p.together(e);

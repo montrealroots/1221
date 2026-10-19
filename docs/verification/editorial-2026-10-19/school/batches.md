@@ -311,3 +311,196 @@ screens' covers and a sentence says naturally.
 `leave.txt` (`leave.mts`): a medical leave played through commands, its notices as the player reads them: Your Leave
 Has Begun, Two Weeks To Give Notice, Back From Your Leave, The Class Of 2030. `guide-b3.txt`: the two guide entries
 printed with their figures. The built app is walked at the area's end.
+
+## Batch 4: The School Screen, Its Study Plan Panels, The Brief And How You'll Play It
+
+### Sources Reviewed
+
+The School screen's tabs (`SchoolWorkspace.tsx`, 20 sources), the leave, repeat, Yale account, work limits and classes
+panels on them (`StudyPlanPanels.tsx`, 8), the practice brief's pane and the chooser and work-through it shares with the
+coursework card (`BriefPane.tsx` 6, `PlayingChooser.tsx` 5, `WorkThrough.tsx` 3), and the school's and a classmate's
+own pages (`looks/school.tsx` 4, `looks/classmate.tsx` 1). 47 sources: 14 rewritten, 33 kept. Each tab was read as it
+draws for a life in its first spring (`school-tabs.mts`, rendered before and after).
+
+### Rewritten
+
+- **The figures under Your Standing** (`StandingPane`): growth "The middle student in your class grew 0.6", in the term
+  review's words, for "The class’s middle: 0.6"; the coursework note as a sentence that says what it counts; and
+  Attendance counts lists only what was asked ("35 of 35 class days and 7 of 7 assigned shifts", no "0 of 0 calls").
+- **Why This Cast and the casting note** (`CastReadPanel`, `CastingPane`): the chair's read in its order (fit, a fifth
+  of it scaled by delivery, then the balance), a run's weight as nights ("counted as 2.5 nights" for "counted ×2.5"),
+  "a student who’s cast is expected to play the part" for "a student cast fulfills it", and "judged" for "banded".
+- **Lists with their "and"** (`CoursesPanel`, `RepeatPanel`, `LeavePanel`, the play's skills): `spokenList` where names
+  were joined by commas alone.
+- **The leave, the dean's leave and the repeat** (`StudyPlanPanels`): "counted absent", the appeal in two sentences,
+  "the faculty won’t recommend the degree", and "takes eight terms: two would be billed", from batch 3's notices.
+- **Withdrawing and the terms** (`WithdrawControl`, `TermsPane`): a fifteen-day grace period; the living scholarship
+  "pays its health fee and what the account owes"; tuition "covered in full".
+- **The brief's beats, said once** (`BriefPane`, `MaterialDemands`, at material-b's suggestion once that area was
+  merged): the rehearsal line under Where It Turns no longer repeats the beats' arc, which What It Asks gives after
+  its Tone line (`briefMaterial` passes it as the turns' reason); and that line counts "5 changes of tone to play", the
+  pane's own name for the count, for "5 transitions to play".
+- **Small ones**: the Cabaret's "Out of the show from {date}, on academic warning", the cap's "turned down" for
+  "refused" (an engine-speak hit gone), and How You'll Play It's "the same as with nothing chosen" when the two figures
+  are equal.
+
+### Kept
+
+33 sources: the tabs' headers and labels, the timetable, the Cabaret's and Summer Cabaret's panels, the work-study
+figures, the plays to read; the brief's reader choice and study line (the pane's forecast stays to a tenth, because
+the tape's own result is given to a tenth beside it); the chooser's and the work-through's labels; the school's and a classmate's pages. Their reasons are
+in `retained.md`'s sample and the second-pass file.
+
+### Meaning-Sensitive Changes, And How Each Was Checked
+
+- **The chair's read.** `playFit` returns fit × (1 − 0.2 + 0.2 × delivery) + balance (`systems/school.ts`): four fifths
+  of the fit stand, a fifth scales with delivery, and the balance is added. The new sentence says that order.
+- **Counted as nights.** `readRuns` weighs a run by min(nights, 8) × its source's share (a Cabaret's half), and the
+  record before by its own weight × the carry: every weight is nights.
+- **Counted absent.** As batch 3: `registerSchool` counts an unregistered class day as an absence.
+- **Only what was asked.** The attendance line leaves out a count only when nothing of it was asked (`t.calls`,
+  `t.shifts`, `t.classDays` zero); the review's figure is unchanged (`termTally`).
+
+### Interactions Read Whole
+
+Each tab of the School screen in its first spring: Standing And Craft (with the leave, courses, repeat and classes
+panels), Classes, Casting (Why This Cast, the run, How You'll Play It), Shifts And Pay, Terms And Award.
+
+### Tests And Tools Updated
+
+`tests/evidence-g19-school` (counted as 2.5 nights), `evidence-g25-school` (the dean's appeal, Register's counted
+absent), `evidence-g26-school` and `evidence2-b09` (the repeat panel), `remaining-09-journeys` (the ended coursework
+note, "fell short", and its list of present-tense words, "falls short"). No tool matcher held these words.
+
+### Checks
+
+| Check | Exit |
+|---|---|
+| `npx tsc -b --noEmit` | 0 |
+| `npx eslint` (the changed files, and the verification scripts) `--max-warnings=0` | 0 |
+| `npx vitest run`: the five files of 47 that render these screens which had finished when the run was narrowed (`attributes-phase-2b`, `remaining-school`, `language-dynamic`, `evidence-g26-school`, `evidence-g24-school`); then 28 files with batch 5's (328 tests); `decisions-advice` in the clone, whose harness reads git (30); and, after material-b's two suggestions, the 10 files that render the brief pane and the chooser (134) | 0 |
+| `title-case`, `label-sweep`, `plural-check`, `voice-check`, `tics`, `spelling`, `typos` | 0 each |
+| `node tools/text-inventory.mjs --check` | 0 once marked |
+| `doc-refs`, `deciders`, `guide-quotes` | 0 each |
+
+The first run of the 47 was stopped partway: at this machine's load it would have taken three hours, and the whole
+suite runs at the area's end. Two of its failures were the run's own: `remaining-09-journeys` held the old coursework
+note (moved, above), and `decisions-advice`'s harness reads the commit, which the snapshot it ran in didn't have.
+
+### Screens Verified
+
+`school-tabs.txt` (`school-tabs.mts` with `tabs.vite.config.ts`, which reads the kept tab without the subscription a
+server render lacks): the six tabs, before and after. `material.txt`: What It Asks.
+
+## Batch 5: The Courses' Pieces, The Scenes And Plays' Material, Briefs And Work It Through
+
+### Sources Reviewed
+
+Every course's piece and the class scenes (`content/coursework.ts`, 68 sources), the scenes' and plays' material and
+its reasons (`content/material.ts`, 98), the kinds of work (`content/tasks.ts`, 16), Work It Through's ways and problems
+(`content/workbook.ts` 6, `systems/workbook.ts` 12), the brief's steps and refusals (`systems/briefs.ts`, 13), and
+`systems/workpieces.ts` (4), `systems/material.ts` (1), `content/concerns.ts` (1) and `content/replacements.ts` (1). 220
+sources, read whole: 17 rewritten, 203 kept. Kept sources that share one reason (the scenes, the templates, the
+material) were marked together with it; the rewritten ones then each with their own evidence.
+
+### Rewritten
+
+- **Garbled sentences** in the material's reasons: The Bacchae's "Bound, the Stranger has;", Medea's "the women of
+  Corinth by", Much Ado's "the comedy turns the comedy grave", A Marriage Proposal's missing "in", and The Seagull's
+  "the present-tense despair".
+- **Quotations in curly quotes** (`material.ts`, `concerns.ts`): eleven reasons quoted the plays in straight quotes;
+  the words are the plays' and stay.
+- **A scene's and a template's note** (`coursework.ts`): "Those are the first scenes", and the audition's Lines note,
+  "The lines of the two pieces weren’t secure", for "The pieces weren’t secure".
+- **Work It Through's problems** (`workbook.ts`): "Your composure costs your connection … points, and the whole piece
+  …" for "Your Composure costs Connection … points, … of the whole piece", the labels lowercased mid-sentence as
+  batch 1's teacher's note says them, and "of the whole piece", which read as a share, said as the cost it is. The
+  preparation, objective and part problems the same way.
+- **One spelling**: Stanislavski, as the concerns' other four citations have it.
+
+### Kept
+
+The class scenes (each choice with the line that confirms or rules it out), the courses' pieces and their notes in the
+teacher's voice, the material's reasons (from the text's own events), the kinds of work, the brief's steps, reader
+styles, purposes and refusals, Work It Through's ways and refusals. The concerns' citations name the project's research
+by topic, which the source notes do throughout the game; they stay.
+
+### Meaning-Sensitive Changes, And How Each Was Checked
+
+- **"… points, and the whole piece …".** `Limit.by` is what the limit costs its quality, and `Limit.whole` what it costs
+  the overall (`evaluation.ts`); the old "… of the whole piece" put the second figure as if it were a share of the
+  first.
+
+### Interactions Read Whole
+
+What It Asks for each rewritten scene and play (`material.mts`), and the Work It Through list as practice briefs build
+it, one problem of each kind (`b5.mts`).
+
+### Tests And Tools Updated
+
+None held these words. Evidence for the rewritten reasons and problems is the render (`material.txt`, `b5.txt`): the
+inventory refuses a code read as evidence, rightly, and the first marks that gave one were marked again with the
+render.
+
+### Checks
+
+| Check | Exit |
+|---|---|
+| `npx tsc -b --noEmit` | 0 |
+| `npx eslint` (the changed files and `b5.mts`, `material.mts`) `--max-warnings=0` | 0 |
+| `npx vitest run` (with batch 4's, 28 files: `workbook`, `guide-examples-coursework`, `guide-examples-productions`, `guide-examples-craft`, `defects-g8-9`, `defects-g8-11`, `material-words`, `genre-identity-screens`, `scenes`, `material`, `briefs` among them; 328 tests) | 0 |
+| `title-case`, `label-sweep`, `plural-check`, `voice-check`, `tics`, `spelling`, `typos` | 0 each |
+| `node tools/text-inventory.mjs --check` | 0 once marked |
+| `doc-refs`, `deciders`, `guide-quotes` | 0 each |
+
+### Screens Verified
+
+`material.txt` and `b5.txt`.
+
+## Batch 6: The Guide's School, Coursework And Productions Entries
+
+### Sources Reviewed
+
+The rest of the three guide files: `guide/school.ts` (22 sources, with `school.money` read again), `guide/coursework.ts`
+(18) and `guide/productions.ts` (21). 62 marks: 7 rewritten, 55 kept. The entries batches 1 and 3 rewrote were read
+again against what batches 2 to 5 changed.
+
+### Rewritten
+
+- **What the game now says, said the same way here**: an unregistered day "counts you absent" (orientation, money, the
+  hold's paragraph in standing), "press Register on the Standing And Craft tab", a grace period of 15 days, what stays
+  after a dismissal as the notice now says it, and Looking Back's notes "you worked on that didn’t move".
+- **Engine-speak gone** (two hits): Calling In Sick's "is refused, because" as "You can’t call in after …: the classes
+  have already counted you"; the casting row's "of its weight" and "carried at 50% of its weight" as "counting 50% as
+  much as …".
+
+### Kept
+
+55 sources: the entries' steps, conditions, figures, refusals quoted in the game's words, and their worked examples;
+the small helpers (months, clock, chapter lines). A guide entry is written to explain a rule; where it was accurate and
+plain it stays. Questions and synonyms that say "withheld" stay: a player searches in their own words.
+
+### Meaning-Sensitive Changes, And How Each Was Checked
+
+- **Counting as much as.** `R.weight.cabaret` and `R.carry` are 0.5 (`ESTIMATE.casting.record`), multiplying a run's
+  nights and the record before; "counting 50% as much as" is the same arithmetic.
+
+### Interactions Read Whole
+
+The six rewritten entries printed with their figures (`guide-b6.txt`).
+
+### Tests And Tools Updated
+
+None held these words; `guide-quotes` holds every quote the entries make (581 of 581).
+
+### Checks
+
+| Check | Exit |
+|---|---|
+| `npx tsc -b --noEmit`, `npx eslint` (the two guide files) | 0 |
+| `npx vitest run` (`guide-examples-coursework`, `guide-examples-productions`, `guide-examples-craft` in the 28 files above) | 0 |
+| the text tools and `text-inventory --check` | 0 each |
+
+### Screens Verified
+
+`guide-b6.txt`. The guide's screens are in the walk at the area's end.

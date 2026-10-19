@@ -499,7 +499,7 @@ describe('school.appeal_leave', () => {
     const before = zonedParts(f1Before, zone);
     expect(zonedParts(f1Of(sim.player)!.expiresAt!, zone)).toMatchObject({ year: before.year + 1, month: before.month, day: before.day });
     const shown = drawn(sim, LeavePanel);
-    expect(shown.text).toContain('Imposed by the dean on Yale Health’s recommendation: You didn’t come to the assessment, which the Bulletin names as a ground of its own. You can appeal in writing to the dean until September 28, 2026;');
+    expect(shown.text).toContain('Imposed by the dean on Yale Health’s recommendation: You didn’t come to the assessment, which the Bulletin names as a ground of its own. You can appeal in writing to the dean until September 28, 2026. The leave stands while the appeal is heard,');
     const appeal = pressed('school.appeal_leave');
     expect(appeal).toHaveLength(1);
     appeal[0]!.onClick!();
@@ -589,7 +589,7 @@ describe('school.reregister', () => {
     expect(school.mustRegister).toBe(true);
     expect(registered(school, courseworkOf(sim, sim.player))).toBe(false);
     let shown = drawn(sim, LeavePanel);
-    expect(shown.text).toContain('Register for Spring Term 2028: until you do, classes don’t count your attendance and you can’t work shifts. A financial hold stops it until your Yale account is paid.');
+    expect(shown.text).toContain('Register for Spring Term 2028: until you do, you’re counted absent from classes and can’t work shifts. A financial hold stops it until your Yale account is paid.');
     expect(button(shown.html, 'Register')).toContain('disabled=""');
     // The first class day, Monday 10 January: classes don't count the student.
     tended(sim, at(2028, 1, 10, 16));
@@ -640,7 +640,7 @@ describe('school.reregister', () => {
     expect(registered(school, courseworkOf(sim, sim.player))).toBe(false);
     expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe('A financial hold stops registration: $1,125.00 is owed on your Yale account. Pay it on the Terms And Award tab.');
     const shown = drawn(sim, LeavePanel);
-    expect(shown.text).toContain('Register for Spring Term 2027: until you do, classes don’t count your attendance and you can’t work shifts. A financial hold stops it until your Yale account is paid.');
+    expect(shown.text).toContain('Register for Spring Term 2027: until you do, you’re counted absent from classes and can’t work shifts. A financial hold stops it until your Yale account is paid.');
     expect(button(shown.html, 'Register')).toContain('disabled=""');
     tended(sim, at(2027, 1, 11, 16));
     expect(classesOn(sim, '2027-01-11')).toEqual(['missed']);

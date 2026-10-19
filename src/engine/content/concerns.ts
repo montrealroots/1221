@@ -63,7 +63,7 @@ export const CONCERNS: Readonly<Record<Concern, ConcernDef>> = {
   sincerity: {
     label: 'Played Straight',
     words: 'Meant completely: the feeling played with full conviction, never winked at, however large or strange the material.',
-    principle: 'Truth and belief, the "magic if" (Stanislavski, topic 1); the genre claims are advice to play sentiment, or absurdity, with complete earnestness.',
+    principle: 'Truth and belief, the “magic if” (Stanislavski, topic 1); the genre claims are advice to play sentiment, or absurdity, with complete earnestness.',
     lean: { believability: 1.15, connection: 1.05 },
     inputs: { believability: [{ ability: 'emotionalDepth', weight: 0.4 }], connection: [{ ability: 'presence', weight: 0.4 }] },
     parts: ['interpretation', 'memorization'],
@@ -90,7 +90,7 @@ export const CONCERNS: Readonly<Record<Concern, ConcernDef>> = {
   spontaneity: {
     label: 'Caught Live',
     words: 'Behavior that looks unrehearsed: real listening, the next line taken from what the other person just did.',
-    principle: 'Naturalism, the Moscow Art Theater’s and Stanislavsky’s realistic acting (topic 10); the genre claims are non-professional casting, improvised dialogue and withheld scripts.',
+    principle: 'Naturalism, the Moscow Art Theater’s and Stanislavski’s realistic acting (topic 10); the genre claims are non-professional casting, improvised dialogue and withheld scripts.',
     lean: { connection: 1.15, responsiveness: 1.1 },
     inputs: { connection: [{ ability: 'listening', weight: 0.5 }], responsiveness: [{ ability: 'adaptability', weight: 0.3 }] },
     parts: ['rehearsal'],
@@ -117,7 +117,7 @@ export const CONCERNS: Readonly<Record<Concern, ConcernDef>> = {
   invention: {
     label: 'Belief In What Isn’t There',
     words: 'An invented world made concrete: the creature, the machine or the magic played as specifically as a cup of tea.',
-    principle: 'Imagination and the "magic if" (Stanislavski, topics 1 and 9); the science-fiction claim, that playing against things not there takes imagination and specificity.',
+    principle: 'Imagination and the “magic if” (Stanislavski, topics 1 and 9); the science-fiction claim, that playing against things not there takes imagination and specificity.',
     lean: { believability: 1.1, interpretation: 1.1 },
     inputs: { believability: [{ ability: 'imagination', weight: 0.5 }], interpretation: [{ ability: 'imagination', weight: 0.3 }] },
     parts: ['interpretation'],

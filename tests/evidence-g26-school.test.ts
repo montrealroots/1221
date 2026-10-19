@@ -490,7 +490,7 @@ describe('school.request_repeat', () => {
     // eighth, Fall Term 2029 and Spring Term 2030, are billed past six at 2029–30’s tuition, 2026–27’s $40,750.00 grown
     // 3.22% a year three times, half a year’s each: $22,407.28 twice. Until 2026-10-13 the year’s two alone were
     // counted, six terms, and nothing was said of billing; found by the guide audit of that day.
-    expect(asking.text).toContain('the degree reads the pass. The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 would be billed to your Yale account, about $44,814.56 in tuition alone.');
+    expect(asking.text).toContain('the degree reads the pass. The tuition scholarship supports six terms, and with the year again the degree takes eight terms: two would be billed to your Yale account, about $44,814.56 in tuition alone.');
     const ask = drew('school.request_repeat');
     expect(ask.map((a) => a.label)).toEqual(['Ask']);
     ask[0]!.onClick!();
@@ -598,7 +598,7 @@ describe('school.request_repeat', () => {
     // first year's repeat on the record, the panel shows a refusal only where no repeat was ever asked (`!r`).
     expect(titled(last, 'Your Degree Isn’t Complete').map((n) => n.body)[0]).toMatch(/you can ask on the Standing And Craft tab for an additional term, Spring Term 2031, to retake it\./);
     const panel = drawn(last, RepeatPanel);
-    expect(panel.text).toContain('Your last year wasn’t passed. Ask by May 26, 2030, or the degree is withheld.');
+    expect(panel.text).toContain('Your last year wasn’t passed. Ask by May 26, 2030, or the faculty won’t recommend the degree.');
     expect(panel.text).toContain('Or an additional term, Spring Term 2031, to retake Taming The Cyclops alone');
     expect(panel.text).not.toContain('Ask To Repeat The Year…');
     expect(drew('school.request_repeat')).toHaveLength(0);
@@ -922,7 +922,7 @@ describe('school.pay_balance', () => {
     expect(school().leaves!.at(-1)!.status).toBe('returned');
     expect(school().mustRegister).toBe(true);
     const register = drawn(sim, LeavePanel);
-    expect(register.text).toContain('Register for Spring Term 2028: until you do, classes don’t count your attendance and you can’t work shifts.');
+    expect(register.text).toContain('Register for Spring Term 2028: until you do, you’re counted absent from classes and can’t work shifts.');
     expect(register.text).not.toContain('A financial hold stops it');
     expect(drew('school.reregister').map((c) => c.disabled)).toEqual([false]);
     // The term's scholarship, by hand: 2027–28's living-expense scholarship, $16,128.08, less its plan, $2,034.44, is

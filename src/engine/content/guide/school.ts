@@ -278,10 +278,10 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Your standing drops one step at a review, and one term that meets everything asked takes it back to good standing from a notice of concern or academic warning.',
       `A grave breach puts you on ${STANDING_LABEL.warning} at once, or dismisses you if you’re on it already, and stops that term’s review putting you back in good standing: on its own it leaves you on the warning it brought, and with anything else short the review dismisses you. Be in New Haven for every performance and every night on call.`,
       `A rehearsal, a run-through or a lab missed without an excuse is a missed call. When the term’s missed calls reach ${ESTIMATE.missedCallsOut}, you’re out of the casting pool until a review finds you in good standing, and a notice says so. A missed performance counts among them, and is a grave breach as well.`,
-      'A dismissal is final: the Bulletin doesn’t readmit a dismissed student. Its notice, like the notice that the degree isn’t recommended, says what stays: every course and its result on your record, the productions you played on your Profile, the hours you worked paid, and practice and the practice briefs, which go on outside the School.',
+      'A dismissal is final: the Bulletin doesn’t readmit a dismissed student. Its notice, like the notice that the degree isn’t recommended, says what stays: every course and its result on your record, the productions you played on your Profile, the hours you worked paid; and that you can still practice, and tape the practice briefs, outside the School.',
       // Said from 2026-10-16: until then the Not Registered notice told a student under a hold to register, which the hold refused.
       // And from 2026-10-16 (brief 09's journeys) a term's living-expense scholarship pays the account first, lifting a hold it clears.
-      'A term that begins under a financial hold doesn’t count your classes until you register, and the hold stops you registering. Pay your Yale account on the Terms And Award tab first, then register on the Standing tab, or the term’s classes go by as unexcused absences. A term’s living-expense scholarship pays what the account owes before any of it reaches your bank, and a hold it clears lifts as the term begins. The Not Registered notice says what’s owed.',
+      'A term that begins under a financial hold counts you absent from classes until you register, and the hold stops you registering. Pay your Yale account on the Terms And Award tab first, then press Register on the Standing And Craft tab, or the term’s classes go by as unexcused absences. A term’s living-expense scholarship pays what the account owes before any of it reaches your bank, and a hold it clears lifts as the term begins. The Not Registered notice says what’s owed.',
     ],
     next: [
       'Be awake and in New Haven at nine on each class day, and press Call In Sick on the Classes tab when you’re unwell.',
@@ -359,7 +359,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       LOCKED,
     ],
     mistakes: [
-      'Calling in after the classes are over, on a day with nothing else at school, is refused, because the classes have already counted you. Call in first thing.',
+      'You can’t call in after the classes are over on a day with nothing else at school: the classes have already counted you. Call in first thing.',
       'Counting on a sick day for a rehearsal booked with a classmate on a day with nothing else at school: Call In Sick needs something else at school, so the rehearsal stands unless you’re in hospital, laid up, or too hurt to train for partner work in a studio. Call it off on the Coursework tab a day or more ahead, or it’s short notice and costs their trust.',
       'A sick day excuses the absence but doesn’t make you well. Rest and sleep do, and too many excused meetings leave a course Incomplete.',
     ],
@@ -437,7 +437,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       'At something else, or due somewhere before it would end: it names what, and when.',
     ],
     mistakes: [
-      `Sleeping through ${SESSION.register.label} costs the most: classes don’t count you until you catch it up. Catch it up before ${CLASSES_BEGIN}.`,
+      `Sleeping through ${SESSION.register.label} costs the most: classes count you absent until you catch it up. Catch it up before ${CLASSES_BEGIN}.`,
       'Catching up takes the session’s whole length, so leave room for it.',
     ],
     next: [
@@ -560,7 +560,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       { to: 'school.standing', kind: 'scheduled', why: 'Without notice of return by its date, the leave ends in dismissal.' },
       { to: 'school.repeat', kind: 'history', why: 'Courses left on a leave stay on your record as Left On Leave, and you take them again when you’re back.' },
       { to: 'body.how', kind: 'prerequisite', why: `A medical leave needs a reason a physician would see, and coming back needs condition ${ESTIMATE.sickBelow} or more.` },
-      { to: 'documents.work', kind: 'immediate', why: `On an F-1, a medical leave extends the I-20 a year once it begins, and withdrawing leaves ${STATUS_GRACE_DAYS.withdrawn} days’ grace and no OPT.` },
+      { to: 'documents.work', kind: 'immediate', why: `On an F-1, a medical leave extends the I-20 a year once it begins, and withdrawing leaves a grace period of ${STATUS_GRACE_DAYS.withdrawn} days and no OPT.` },
       { to: 'productions.casting', kind: 'immediate', why: 'A leave ends the term’s castings and any Cabaret show; what you played stays credited.' },
     ],
     example: {
@@ -730,7 +730,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     ],
     later: [
       `If anything is still owed ${EXTENDED_STUDY.dueDays} days after a term is billed, or after a leave returns a scholarship to it, the account goes on a financial hold with a ${usd(EXTENDED_STUDY.lateFee)} late fee, then another each month while it’s owed, up to ${usd(EXTENDED_STUDY.lateFeeTermCap)} a term.`,
-      'Under a hold at a term’s start, you must register again once it’s paid; until then classes don’t count you and you can’t work shifts. With need found, the term’s living-expense scholarship pays the account first, and only what’s left reaches your bank: a hold it clears lifts then, and “The Financial Hold Is Lifted” says so.',
+      'Under a hold at a term’s start, you must register again once it’s paid; until then you’re counted absent from classes and can’t work shifts. With need found, the term’s living-expense scholarship pays the account first, and only what’s left reaches your bank: a hold it clears lifts then, and “The Financial Hold Is Lifted” says so.',
       'Under a hold at Commencement, the diploma waits until it’s paid.',
       `The aid review’s answer is applied when the next term begins. With an exception, the term’s tuition isn’t billed and it runs as one of the first ${SIX}; with need found, living aid goes on either way and pays the term’s Yale Health fee. A term billed before the answer isn’t credited back.`,
       `Converted hours are paid into your bank as grant aid on the processing day. For a nonresident on an F-1, ${pct(NONRESIDENT_SCHOLARSHIP_RATE)} is withheld for tax.`,

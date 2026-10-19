@@ -19,3 +19,6 @@ change to one is in the area's report.
 | **averaged 78 of 100** (a figure of 100 on a screen) | A night's or a run's result on its 0 to 100 scale, written "of 100" as the glossary writes trust; tests/looks.test.ts keeps "out of 100" off the screens. | 78 out of 100 |
 | **press Give Notice Of Return on the Standing And Craft tab** | The leave's notices name the button and its tab, as the refusals do. | on the Standing tab, Tell the registrar |
 | **the faculty won’t recommend the degree** | What follows when the thirty days pass with nothing asked, in the words of the notice that ends it ("The faculty didn’t recommend the degree"). | the degree is withheld |
+| **the middle student in your class grew …** | The class's median growth, said as the term review says it. | the class’s middle |
+| **counted as 2.5 nights** | How much a run counts toward what you delivered: its nights, up to eight, a Cabaret's at half. | counted ×2.5 |
+| **a fifteen-day grace period** | An F-1's days in the country after withdrawing, the glossary's grace period. | fifteen days’ grace |

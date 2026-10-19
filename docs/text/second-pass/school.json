@@ -1,4 +1,501 @@
 {
+ "src/engine/content/concerns.ts#CONCERNS": {
+  "status": "Rewritten",
+  "hash": "000c563ec4ad",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/b5.txt (rendered by b5.mts, played through commands on practice briefs): the concerns' sources printed, the two “magic if” quotations in curly quotes and Stanislavski spelled one way through the list",
+  "first": "Pending"
+ },
+ "src/engine/content/coursework.ts#alone": {
+  "status": "Retained",
+  "hash": "ddebe6ed6eab",
+  "on": "2026-10-19",
+  "reason": "Rehearse Alone, with its refusal naming the lines as what has to come first, so the player knows which step to press.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#learn": {
+  "status": "Retained",
+  "hash": "252f4fcec465",
+  "on": "2026-10-19",
+  "reason": "Learn Lines, with its refusal saying the scene comes first because you learn lines from a scene you know.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/coursework.ts#QUESTIONS [circumstances]": {
+  "status": "Retained",
+  "hash": "80c632bc7ca6",
+  "on": "2026-10-19",
+  "reason": "The five questions of table work by the names acting teachers use, given circumstances, the relationship, your objective, the obstacle and a choice to play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#QUESTIONS [objective]": {
+  "status": "Retained",
+  "hash": "bfe0de037c8b",
+  "on": "2026-10-19",
+  "reason": "The five questions of table work by the names acting teachers use, given circumstances, the relationship, your objective, the obstacle and a choice to play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#QUESTIONS [obstacle]": {
+  "status": "Retained",
+  "hash": "8b6901933528",
+  "on": "2026-10-19",
+  "reason": "The five questions of table work by the names acting teachers use, given circumstances, the relationship, your objective, the obstacle and a choice to play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#QUESTIONS [relationship]": {
+  "status": "Retained",
+  "hash": "59ad56cb6bfb",
+  "on": "2026-10-19",
+  "reason": "The five questions of table work by the names acting teachers use, given circumstances, the relationship, your objective, the obstacle and a choice to play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#QUESTIONS [tactic]": {
+  "status": "Retained",
+  "hash": "31be9a029e09",
+  "on": "2026-10-19",
+  "reason": "The five questions of table work by the names acting teachers use, given circumstances, the relationship, your objective, the obstacle and a choice to play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#read": {
+  "status": "Retained",
+  "hash": "4f5530a54e47",
+  "on": "2026-10-19",
+  "reason": "The first step of a scene, Read The Scene, named as the action a student takes, the same on every card that has it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#revise": {
+  "status": "Retained",
+  "hash": "cd8c7e3f7dc3",
+  "on": "2026-10-19",
+  "reason": "Work On The Note, the step a revised piece adds, named as what the student does with the teacher's note.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [cherry-orchard-4]": {
+  "status": "Retained",
+  "hash": "cd07113e3068",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [dollhouse-3]": {
+  "status": "Retained",
+  "hash": "1304281ffed0",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [earnest-2]": {
+  "status": "Retained",
+  "hash": "20e5c516cbd8",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [julie]": {
+  "status": "Retained",
+  "hash": "da7d5b54c2fd",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [macbeth-1-7]": {
+  "status": "Rewritten",
+  "hash": "6d52d9eae32a",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts (every scene's answers shown with their reasons, each reason a sentence): Those are the first scenes; this is the night of Duncan’s visit, for That’s the first scenes",
+  "first": "Pending"
+ },
+ "src/engine/content/coursework.ts#SCENES [machinal-2]": {
+  "status": "Retained",
+  "hash": "c81bf7719e4d",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [muchado-4-1]": {
+  "status": "Retained",
+  "hash": "945c1ec13f0f",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [playboy-3]": {
+  "status": "Retained",
+  "hash": "7ab57495c8c3",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [pygmalion-4]": {
+  "status": "Retained",
+  "hash": "45b6bb0d0f3c",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [romeo-2-2]": {
+  "status": "Retained",
+  "hash": "aa90176152ed",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [seagull-4]": {
+  "status": "Retained",
+  "hash": "3e88af4a11b9",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [trifles]": {
+  "status": "Retained",
+  "hash": "3a70bebfa4ee",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SCENES [vanya-2]": {
+  "status": "Retained",
+  "hash": "6b8751fd8648",
+  "on": "2026-10-19",
+  "reason": "Each class scene's choices are the play's own: every answer comes with the line or moment that confirms it, and every wrong one with the fact in the text that rules it out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#SHOWCASE_SCENE": {
+  "status": "Retained",
+  "hash": "f8e0dfaf6e56",
+  "on": "2026-10-19",
+  "reason": "The showcase scene's parts and its notes in the teacher's voice, each naming what agents would see fall short in three minutes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [alexander-practice]": {
+  "status": "Retained",
+  "hash": "a312e5621f39",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [audition-pair]": {
+  "status": "Rewritten",
+  "hash": "36a46d930b24",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/b5.txt (rendered by b5.mts, played through commands on practice briefs): the audition's three notes, the Lines one now The lines of the two pieces weren’t secure",
+  "first": "Pending"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [build]": {
+  "status": "Retained",
+  "hash": "de8af62e00de",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [classical-scene]": {
+  "status": "Retained",
+  "hash": "bf3ab370cabe",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [clown-turn]": {
+  "status": "Retained",
+  "hash": "8d7ab4dbdee5",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [context-presentation]": {
+  "status": "Retained",
+  "hash": "e4b991a45250",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [daily]": {
+  "status": "Retained",
+  "hash": "277375947be7",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [devise]": {
+  "status": "Retained",
+  "hash": "ba2803d200cc",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [drill]": {
+  "status": "Retained",
+  "hash": "fe8db55322a4",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [fight-sequence]": {
+  "status": "Retained",
+  "hash": "8ebf0f197c00",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [find-turn]": {
+  "status": "Retained",
+  "hash": "7187abde207b",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [greek-scene]": {
+  "status": "Retained",
+  "hash": "721d06723f9c",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [intimacy-practice]": {
+  "status": "Retained",
+  "hash": "fc1ad95e6b29",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [learn-fight]": {
+  "status": "Retained",
+  "hash": "bf46c33e14f6",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [learn-sequence]": {
+  "status": "Retained",
+  "hash": "5b28a98e654b",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [learn-song]": {
+  "status": "Retained",
+  "hash": "dc6a02ab39aa",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [learn-text]": {
+  "status": "Retained",
+  "hash": "141e552fbff1",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [movement-score]": {
+  "status": "Retained",
+  "hash": "49c369ad1682",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [play-game]": {
+  "status": "Retained",
+  "hash": "7cbcf7845b35",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [play-turn]": {
+  "status": "Retained",
+  "hash": "4ea9a859e943",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [practice]": {
+  "status": "Retained",
+  "hash": "2c7421a6c168",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [prepare-talk]": {
+  "status": "Retained",
+  "hash": "26c4b41a835a",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [protocol]": {
+  "status": "Retained",
+  "hash": "8e649c129a2e",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [read-play]": {
+  "status": "Retained",
+  "hash": "a03b107ab945",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [read]": {
+  "status": "Retained",
+  "hash": "a03b107ab945",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [record]": {
+  "status": "Retained",
+  "hash": "37182507f5cd",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [rehearse-score]": {
+  "status": "Retained",
+  "hash": "50ac22f226d9",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [research]": {
+  "status": "Retained",
+  "hash": "9c0a7a85b67d",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [review]": {
+  "status": "Retained",
+  "hash": "5d72cbc6324e",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [scan]": {
+  "status": "Retained",
+  "hash": "87a926face6b",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [scene-study]": {
+  "status": "Retained",
+  "hash": "14c8e755ffb7",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [score]": {
+  "status": "Retained",
+  "hash": "daa4c2c33b70",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [self-tape]": {
+  "status": "Retained",
+  "hash": "295d6680fb96",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [shadow]": {
+  "status": "Retained",
+  "hash": "a462ad5eaa06",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [simulated-rehearsal]": {
+  "status": "Retained",
+  "hash": "073e8b181012",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [sing]": {
+  "status": "Retained",
+  "hash": "12e491c42129",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [song-text]": {
+  "status": "Retained",
+  "hash": "77c2f66ec17b",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [song]": {
+  "status": "Retained",
+  "hash": "b9cfc5b4a9d9",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [speech-drill]": {
+  "status": "Retained",
+  "hash": "419912fc230e",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [table-work]": {
+  "status": "Retained",
+  "hash": "2e8e519c21b8",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [transcribe]": {
+  "status": "Retained",
+  "hash": "4d9c15393a40",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [voice-sequence]": {
+  "status": "Retained",
+  "hash": "c7c0bd74206c",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [voice-text]": {
+  "status": "Retained",
+  "hash": "2230b0bad080",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#TEMPLATES [write]": {
+  "status": "Retained",
+  "hash": "4291e30ae52d",
+  "on": "2026-10-19",
+  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/coursework.ts#withPartner": {
+  "status": "Retained",
+  "hash": "4e4ba1cb73fb",
+  "on": "2026-10-19",
+  "reason": "Rehearse With Your Partner, the step's name in the words the partner panel and the guide use for an evening together.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/coursework.ts#CHAPTER": {
+  "status": "Retained",
+  "hash": "7c457d6af80e",
+  "on": "2026-10-19",
+  "reason": "The words for an entry's own chapter, its chapter, used where the guide names the chapter an entry sits in.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/coursework.ts#clock": {
+  "status": "Retained",
+  "hash": "a9977ef67589",
+  "on": "2026-10-19",
+  "reason": "A time of day in the glossary's form, 7 p.m., as the calendar and the notices write it.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.approach]": {
   "status": "Rewritten",
   "hash": "767452bb7671",
@@ -12,6 +509,27 @@
   "on": "2026-10-19",
   "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide.test.ts and tests/guide-examples-coursework.test.ts; tools/guide-quotes.mjs --check",
   "first": "Pending"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.feedback]": {
+  "status": "Retained",
+  "hash": "e98043b0bef8",
+  "on": "2026-10-19",
+  "reason": "Feedback and Your Notes: the bands with their figures, what a note names, Taken and Better, Mark As Read, and a worked example of a note taken.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.partners]": {
+  "status": "Retained",
+  "hash": "fb780a563052",
+  "on": "2026-10-19",
+  "reason": "Rehearsing with a partner: asking, their trust and day, calling off, a reader, a slip, and the refusals in their own words, each with its figure.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.playing]": {
+  "status": "Retained",
+  "hash": "18d0fa78d543",
+  "on": "2026-10-19",
+  "reason": "How You'll Play It: each aspect, what Fully Prepared means, a change of mind's cost and the refusals quoted, each with its figure and a worked example.",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.prepare]": {
   "status": "Rewritten",
@@ -27,12 +545,355 @@
   "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide.test.ts and tests/guide-examples-coursework.test.ts; tools/guide-quotes.mjs --check",
   "first": "Pending"
  },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.workbook]": {
+  "status": "Retained",
+  "hash": "ba6ac5809c9a",
+  "on": "2026-10-19",
+  "reason": "Work It Through: the forecast, a problem and its evidence, each way's minutes and what it moves, keeping or putting back, and what is never luck.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [evaluation]": {
+  "status": "Retained",
+  "hash": "c8404c5c6808",
+  "on": "2026-10-19",
+  "reason": "How a showing and the term's review read a piece's band, its answers and its partner, each with the figure the review uses.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [history]": {
+  "status": "Retained",
+  "hash": "d8dc7781fbb6",
+  "on": "2026-10-19",
+  "reason": "What a showing leaves on your record, Your Work So Far's strengths and habits and the notes that keep coming back.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [immediate]": {
+  "status": "Retained",
+  "hash": "da5a6f039142",
+  "on": "2026-10-19",
+  "reason": "What follows at once from a coursework step, rehearsing the choice, training, trust, morale, each with its figure where the game has one.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [optional]": {
+  "status": "Retained",
+  "hash": "c739cc420faa",
+  "on": "2026-10-19",
+  "reason": "The coursework ways a player can take or leave, Work It Through and playing a part its own way, each with what it does.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [prerequisite]": {
+  "status": "Retained",
+  "hash": "1660720ff5d2",
+  "on": "2026-10-19",
+  "reason": "What each coursework entry needs first, the tour, a read to 30%, a partner met, each a condition a player can meet.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#COURSEWORK [scheduled]": {
+  "status": "Retained",
+  "hash": "63d89848d003",
+  "on": "2026-10-19",
+  "reason": "What a coursework step puts on the calendar and when it's judged, each tied to the class or the rehearsal it comes at.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#LOCKED": {
+  "status": "Retained",
+  "hash": "806bd8bcc49d",
+  "on": "2026-10-19",
+  "reason": "Why an entry is locked on a guided life and what opens it, the chapter to read named in quotes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/coursework.ts#NOTE_TEXT": {
+  "status": "Retained",
+  "hash": "1321cdc494a4",
+  "on": "2026-10-19",
+  "reason": "A teacher's note as the guide quotes it, its body, the part and how far it's prepared, and the role you played.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/coursework.ts#OPENED": {
+  "status": "Retained",
+  "hash": "77c908860e39",
+  "on": "2026-10-19",
+  "reason": "The line naming the guide chapter an entry opens from, the chapter's title in quotes as the guide quotes titles.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/coursework.ts#points": {
+  "status": "Retained",
+  "hash": "908453fb40a5",
+  "on": "2026-10-19",
+  "reason": "A small figure in words, half a point or a point, where the guide's sentences give a step's size.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/coursework.ts#TABLE_SHORT": {
+  "status": "Retained",
+  "hash": "e82592885e56",
+  "on": "2026-10-19",
+  "reason": "The table work's problem label as Work It Through shows it, a part's name and Not There Yet.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/coursework.ts#TURN": {
+  "status": "Retained",
+  "hash": "d9333b9f3a03",
+  "on": "2026-10-19",
+  "reason": "The middle part of a scene, named The Middle as the scene's parts are named on the card.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/productions.ts#axisFact": {
+  "status": "Retained",
+  "hash": "0fb2cdf42314",
+  "on": "2026-10-19",
+  "reason": "What each way of playing favors and uses, and why a part's table leaves stamina out, said once for the guide's playing entry.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#clock": {
+  "status": "Retained",
+  "hash": "a9977ef67589",
+  "on": "2026-10-19",
+  "reason": "A time of day in the glossary's form, 3 p.m., as the calendar and the notices write it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/productions.ts#hoursOf": {
+  "status": "Retained",
+  "hash": "fbe207bf46b9",
+  "on": "2026-10-19",
+  "reason": "A call's length in words, an hour, an hour and a half, two and a half hours, as a sentence says it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/productions.ts#LOCKED": {
+  "status": "Retained",
+  "hash": "806bd8bcc49d",
+  "on": "2026-10-19",
+  "reason": "Why an entry is locked on a guided life and what opens it, the chapter to read named in quotes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/productions.ts#MONTHS": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The twelve months by name, used to write the guide's dates as the rest of the game writes them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/productions.ts#OPENED": {
+  "status": "Retained",
+  "hash": "77c908860e39",
+  "on": "2026-10-19",
+  "reason": "The line naming the guide chapter an entry opens from, with the chapter's title in quotes as the guide quotes titles.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/productions.ts#PLAY_CAST": {
+  "status": "Retained",
+  "hash": "b77a99c1e22b",
+  "on": "2026-10-19",
+  "reason": "What the guide says when a play's cast size isn't on record, in the words the plays to read list uses.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [evaluation]": {
+  "status": "Retained",
+  "hash": "525c72a59bef",
+  "on": "2026-10-19",
+  "reason": "How a production's nights and calls are judged and counted at the term's review, each tied to the part of the night it reads.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [history]": {
+  "status": "Retained",
+  "hash": "25f1ed0adb2c",
+  "on": "2026-10-19",
+  "reason": "What a production leaves on your record and Profile, each kept where the player can find it again.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [immediate]": {
+  "status": "Retained",
+  "hash": "83e0b70be87d",
+  "on": "2026-10-19",
+  "reason": "What follows at once from a production's step, the calendar, bonds, morale, training, each with its figure where the game has one.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [optional]": {
+  "status": "Retained",
+  "hash": "5ce52e06ccac",
+  "on": "2026-10-19",
+  "reason": "The production steps a player can take or leave, each with what it gives, so nobody mistakes an option for a requirement.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [prerequisite]": {
+  "status": "Retained",
+  "hash": "aa7ccc94cd6a",
+  "on": "2026-10-19",
+  "reason": "What each production entry needs first, the casting pool, a part with its run to come, a call kept, each a condition a player can meet.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.cabaret]": {
+  "status": "Retained",
+  "hash": "a4b602d6b4e2",
+  "on": "2026-10-19",
+  "reason": "The Yale Cabaret and the Summer Cabaret, joining, their calls and pay, and who can't take part, each with the date or figure the game uses.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.casting]": {
+  "status": "Rewritten",
+  "hash": "835ca7725714",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); Delivered's row, a Cabaret or Summer run’s nights counting 50% as much as a School production’s and your record before counting 50% as much as it did, for \"at 50% of its weight\"; tools/guide-quotes.mjs --check and tests/guide-examples-productions.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.nights]": {
+  "status": "Retained",
+  "hash": "64a38ee1640c",
+  "on": "2026-10-19",
+  "reason": "A night on stage: preparation, condition, nerves, the company and what a night grows, each with its figure and the result's words as the screens give them.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]": {
+  "status": "Rewritten",
+  "hash": "d73231c0e790",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); Looking Back counts the notes you took and those you worked on that didn’t move, as the director's closing says them since batch 2 (production.ts reflect); tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.part]": {
+  "status": "Retained",
+  "hash": "b66964411a19",
+  "on": "2026-10-19",
+  "reason": "Learning a part: the lines, the blocking and the book, each with its time, what moves it and the refusals quoted as the game says them.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.playing]": {
+  "status": "Retained",
+  "hash": "60ef5ea9a25f",
+  "on": "2026-10-19",
+  "reason": "Choosing how to play a part, against the director's request and the play's material, each rule with its figure and the refusals in the game's words.",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.plays]": {
   "status": "Rewritten",
   "hash": "e3db65e2ce64",
   "on": "2026-10-19",
   "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide-examples-productions.test.ts; tools/guide-quotes.mjs --check",
   "first": "Pending"
+ },
+ "src/engine/content/guide/productions.ts#PRODUCTIONS [scheduled]": {
+  "status": "Retained",
+  "hash": "6fc2b171c5f5",
+  "on": "2026-10-19",
+  "reason": "What a production puts on the calendar and when it comes, each call and the summer's Friday stipend, with its time.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/productions.ts#W_TITLE": {
+  "status": "Retained",
+  "hash": "59da0cf8bc11",
+  "on": "2026-10-19",
+  "reason": "The worked example's play title, Woyzeck, the same word the casting and the part screens show.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/productions.ts#WOYZECK": {
+  "status": "Retained",
+  "hash": "59da0cf8bc11",
+  "on": "2026-10-19",
+  "reason": "The play the guide's worked example uses, named by its title as the plays to read list names it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#BY_TERM": {
+  "status": "Retained",
+  "hash": "eee3b5261574",
+  "on": "2026-10-19",
+  "reason": "The phrase for a term's end, the end of the, which the guide's sentence goes on with the term's name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#clock": {
+  "status": "Retained",
+  "hash": "a9977ef67589",
+  "on": "2026-10-19",
+  "reason": "A time of day in the glossary's form, 9 a.m., as the calendar and the notices write it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#FAMILY_MONEY": {
+  "status": "Retained",
+  "hash": "cd4184fc056a",
+  "on": "2026-10-19",
+  "reason": "What a family puts in your name, said with the glossary's checking and savings, each with its amount.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#LENGTH_WORD": {
+  "status": "Retained",
+  "hash": "956e24c18d1d",
+  "on": "2026-10-19",
+  "reason": "A leave's three lengths as the Length list on Standing And Craft names them, One Term to Three Terms.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#LOCKED": {
+  "status": "Retained",
+  "hash": "806bd8bcc49d",
+  "on": "2026-10-19",
+  "reason": "Why an entry is locked on a guided life and what opens it, the chapter to read named in quotes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#MAKE_UP": {
+  "status": "Retained",
+  "hash": "90335b649ade",
+  "on": "2026-10-19",
+  "reason": "A make-up session's length in words, an hour, as the guide's sentences give a duration.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#MONTHS": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The twelve months by name, used to write the guide's dates as the rest of the game writes them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#OPENED": {
+  "status": "Retained",
+  "hash": "77c908860e39",
+  "on": "2026-10-19",
+  "reason": "The line naming the guide chapter an entry opens from, the chapter's title in quotes as the guide quotes titles.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#REBATE": {
+  "status": "Retained",
+  "hash": "aba3f81e555e",
+  "on": "2026-10-19",
+  "reason": "The rebate schedule's phrase, within the first, which the guide's sentence goes on with the days.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [evaluation]": {
+  "status": "Retained",
+  "hash": "c0a355db10d3",
+  "on": "2026-10-19",
+  "reason": "What the term's review reads from each School step, attendance, a run's nights, coursework, a failed course, each with its rule.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [history]": {
+  "status": "Retained",
+  "hash": "c1c5731fc956",
+  "on": "2026-10-19",
+  "reason": "What a School step leaves on your record and your tax return, each kept where the player will meet it again.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [immediate]": {
+  "status": "Rewritten",
+  "hash": "d03a6e95d3d3",
+  "on": "2026-10-19",
+  "evidence": "code read: the leave's connection to Permission To Work, withdrawing leaves a grace period of fifteen days and no OPT, the glossary's grace period as the withdrawal notice says it; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [optional]": {
+  "status": "Retained",
+  "hash": "b92d88a8bcae",
+  "on": "2026-10-19",
+  "reason": "The School steps a player can take or leave, a leave and converting hours, each with what it changes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [prerequisite]": {
+  "status": "Retained",
+  "hash": "b128a25d7bd3",
+  "on": "2026-10-19",
+  "reason": "What each School entry needs first, unwell to call in, registered to be counted, a classmate met, each a condition a player can meet.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [scheduled]": {
+  "status": "Retained",
+  "hash": "b383e570d4cd",
+  "on": "2026-10-19",
+  "reason": "What a School step puts on the calendar and when it comes, each excused call or hold tied to the day it falls on.",
+  "first": "Rewritten And Verified"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.leave]": {
   "status": "Rewritten",
@@ -43,9 +904,16 @@
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.money]": {
   "status": "Rewritten",
-  "hash": "86e880f090f3",
+  "hash": "d81dd0341154",
   "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b3.txt (guide.mts, the entry printed with its figures); tests/guide-examples-school.test.ts; tools/guide-quotes.mjs --check",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); under a hold at a term’s start you’re counted absent from classes and can’t work shifts until you register, as the Leave panel and Not Registered say it; tools/guide-quotes.mjs --check and tests/guide-examples-school.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [school.orientation]": {
+  "status": "Rewritten",
+  "hash": "dcd57045cfe6",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); Sleeping through registration costs the most: classes count you absent until you catch it up, as Not Registered says it; tools/guide-quotes.mjs --check and tests/guide-examples-school.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.repeat]": {
@@ -54,6 +922,741 @@
   "on": "2026-10-19",
   "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide-examples-school.test.ts; tools/guide-quotes.mjs --check",
   "first": "Pending"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [school.shifts]": {
+  "status": "Retained",
+  "hash": "9afcca6c3ec1",
+  "on": "2026-10-19",
+  "reason": "Work-study shifts: assigned and elective hours, the weekly cap, pay on Friday, the equipment and an injury's risk, each with the school's figure.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [school.sick]": {
+  "status": "Rewritten",
+  "hash": "5fb8fe0e88f5",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); You can’t call in after the classes are over on a day with nothing else at school: the classes have already counted you, for \"is refused, because\", the reason and the next step kept; tools/guide-quotes.mjs --check",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/school.ts#SCHOOL [school.standing]": {
+  "status": "Rewritten",
+  "hash": "fc2c71e24fee",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); what stays after a dismissal said as the notice says it (you can still practice, and tape the practice briefs, outside the School), and the hold's paragraph with counted absent and press Register on the Standing And Craft tab; tools/guide-quotes.mjs --check and tests/guide-examples-school.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/school.ts#season": {
+  "status": "Retained",
+  "hash": "0d326d7f428c",
+  "on": "2026-10-19",
+  "reason": "A term named as the fall or the spring of a year, the way the School's notices name a term in a sentence.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#SHARE_WORD": {
+  "status": "Retained",
+  "hash": "e4da8b9961af",
+  "on": "2026-10-19",
+  "reason": "A rebate's share in words, all of it or a quarter, as the guide says how much of a scholarship goes back.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/school.ts#WITHDRAWN_EARLY": {
+  "status": "Retained",
+  "hash": "c80e68ba931e",
+  "on": "2026-10-19",
+  "reason": "What happens to Yale Health's cover when you withdraw early, fall or spring, each said with its date and what's billed after.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [A Doll’s House]": {
+  "status": "Retained",
+  "hash": "45e950890fad",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [A Marriage Proposal]": {
+  "status": "Rewritten",
+  "hash": "fc03caec91b1",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [A Midsummer Night’s Dream]": {
+  "status": "Retained",
+  "hash": "41f34137e94c",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [An Enemy Of The People]": {
+  "status": "Retained",
+  "hash": "cdab983094c6",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [As You Like It]": {
+  "status": "Retained",
+  "hash": "5afd66cee978",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Blood Wedding]": {
+  "status": "Retained",
+  "hash": "cf9a8622d61f",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Ghosts]": {
+  "status": "Retained",
+  "hash": "a9ef4a731258",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Hedda Gabler]": {
+  "status": "Retained",
+  "hash": "22a17b6b000b",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Julius Caesar]": {
+  "status": "Retained",
+  "hash": "cf4607c89119",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Macbeth]": {
+  "status": "Retained",
+  "hash": "e0e6c7e94efe",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Major Barbara]": {
+  "status": "Retained",
+  "hash": "6daab16aec68",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Measure For Measure]": {
+  "status": "Retained",
+  "hash": "1b6f3de3abd0",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Miss Julie]": {
+  "status": "Retained",
+  "hash": "ba92b6d4ff85",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Mrs Warren’s Profession]": {
+  "status": "Retained",
+  "hash": "203d9a1863ae",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Much Ado About Nothing]": {
+  "status": "Rewritten",
+  "hash": "7ed8749261a9",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Riders To The Sea]": {
+  "status": "Retained",
+  "hash": "c5b7cbe02ccd",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Salomé]": {
+  "status": "Retained",
+  "hash": "ae9ad9abbb4e",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Spring Awakening]": {
+  "status": "Retained",
+  "hash": "60a70bcd1b95",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Tartuffe]": {
+  "status": "Retained",
+  "hash": "3255218ffbf0",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [The Bear]": {
+  "status": "Rewritten",
+  "hash": "d0d763e812e9",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [The Cherry Orchard]": {
+  "status": "Retained",
+  "hash": "547c35a36dcb",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [The Importance Of Being Earnest]": {
+  "status": "Retained",
+  "hash": "a524b611be78",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [The Playboy Of The Western World]": {
+  "status": "Rewritten",
+  "hash": "05d8b0a8f6f0",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [The Wild Duck]": {
+  "status": "Retained",
+  "hash": "a0832296b91b",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [The Winter’s Tale]": {
+  "status": "Retained",
+  "hash": "40944f44db3a",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Three Sisters]": {
+  "status": "Retained",
+  "hash": "3409c53da6e8",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Trifles]": {
+  "status": "Retained",
+  "hash": "ae5aa728e863",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Twelfth Night]": {
+  "status": "Retained",
+  "hash": "2fafdceb95e3",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Uncle Vanya]": {
+  "status": "Retained",
+  "hash": "45bf69f1caec",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#PLAY_MATERIAL [Woyzeck]": {
+  "status": "Retained",
+  "hash": "6ab34e9c903c",
+  "on": "2026-10-19",
+  "reason": "Each line says from the play's own events why a night of it asks what it does, short enough to sit after the feature's level in What It Asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [agamemnon-855]": {
+  "status": "Retained",
+  "hash": "f890383ea11b",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [anna-christie-1]": {
+  "status": "Retained",
+  "hash": "feb97396b63c",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [antigone-441]": {
+  "status": "Retained",
+  "hash": "4a3ded6c8171",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [arms-1]": {
+  "status": "Retained",
+  "hash": "211244b1ee7f",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [asyoulike-3-2]": {
+  "status": "Retained",
+  "hash": "8b6dfb309e67",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [bacchae-451]": {
+  "status": "Rewritten",
+  "hash": "c99e73fc9330",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); quotations in curly quotes, as the house writes them, and each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [caesar-2-1]": {
+  "status": "Retained",
+  "hash": "7f1bf1f98430",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [caesar-3-2]": {
+  "status": "Retained",
+  "hash": "5c2c1e837dd0",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [caesar-4-3]": {
+  "status": "Retained",
+  "hash": "2a86ccbfc1a3",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [cherry-orchard-4]": {
+  "status": "Retained",
+  "hash": "a7a6afd2d61f",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [creditors]": {
+  "status": "Retained",
+  "hash": "8c35b1e3bb7d",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [dollhouse-3]": {
+  "status": "Retained",
+  "hash": "7ebf945c91e5",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [dream-3-2]": {
+  "status": "Retained",
+  "hash": "da16d6a1785d",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [dream-5-1]": {
+  "status": "Retained",
+  "hash": "f627d214c0e7",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [earnest-2]": {
+  "status": "Retained",
+  "hash": "ac84c062b979",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [electra-328]": {
+  "status": "Retained",
+  "hash": "1fa5e6706ff0",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [enemy-2]": {
+  "status": "Retained",
+  "hash": "2e14b566e6cb",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [enemy-4]": {
+  "status": "Retained",
+  "hash": "2d3692fe6805",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [faustus-3]": {
+  "status": "Retained",
+  "hash": "1210bfd9badb",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [ghosts-1]": {
+  "status": "Retained",
+  "hash": "1149a2566ceb",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [hamlet-3-1]": {
+  "status": "Rewritten",
+  "hash": "a9bf3f8c4726",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); quotations in curly quotes, as the house writes them, and each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [hamlet-3-4]": {
+  "status": "Retained",
+  "hash": "1b70daaf0335",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [hedda-2]": {
+  "status": "Retained",
+  "hash": "bd19dd817c70",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [henry5-4-3]": {
+  "status": "Retained",
+  "hash": "1c98fe8d32a0",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [julie]": {
+  "status": "Retained",
+  "hash": "156ceafff53b",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [justice-2]": {
+  "status": "Retained",
+  "hash": "9980df5cf9d8",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [lear-4-7]": {
+  "status": "Retained",
+  "hash": "4a2e102d63d2",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [macbeth-1-7]": {
+  "status": "Rewritten",
+  "hash": "a9bc117323ac",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); quotations in curly quotes, as the house writes them, and each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [machinal-2]": {
+  "status": "Retained",
+  "hash": "d82618874d7b",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [malfi-1]": {
+  "status": "Retained",
+  "hash": "a3338a1a9b44",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [masterbuilder-1]": {
+  "status": "Retained",
+  "hash": "ff0e91ff49a3",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [measure-2-4]": {
+  "status": "Rewritten",
+  "hash": "25010244f9ca",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); quotations in curly quotes, as the house writes them, and each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [medea-446]": {
+  "status": "Rewritten",
+  "hash": "d24a749b0f24",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); quotations in curly quotes, as the house writes them, and each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [muchado-4-1]": {
+  "status": "Rewritten",
+  "hash": "ff0a2b3c6002",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); quotations in curly quotes, as the house writes them, and each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [oedipus-1]": {
+  "status": "Retained",
+  "hash": "8af176c99228",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [oedipus-300]": {
+  "status": "Retained",
+  "hash": "62f8644a9bc6",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [orig-bed-fourteen]": {
+  "status": "Retained",
+  "hash": "e1e36ffb9568",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [orig-hundred-questions]": {
+  "status": "Retained",
+  "hash": "c7746ca2bbd8",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [orig-night-desk]": {
+  "status": "Retained",
+  "hash": "0f02c85c3b9c",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [orig-office-hours]": {
+  "status": "Retained",
+  "hash": "67bde94971fe",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [orig-runway]": {
+  "status": "Retained",
+  "hash": "6d9e4ae9e0a0",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [orig-the-reception]": {
+  "status": "Retained",
+  "hash": "4882a99bef2b",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [orig-two-time-zones]": {
+  "status": "Retained",
+  "hash": "4b46d881e6e8",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [orig-what-we-keep]": {
+  "status": "Retained",
+  "hash": "d932d83f2d9e",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [othello-4-3]": {
+  "status": "Retained",
+  "hash": "5c9a5033f570",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [playboy-3]": {
+  "status": "Retained",
+  "hash": "f3ae2dd04ea2",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [proposal]": {
+  "status": "Retained",
+  "hash": "93eefa145677",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [pygmalion-4]": {
+  "status": "Retained",
+  "hash": "c87c4050ecbf",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [richard3-1-2]": {
+  "status": "Retained",
+  "hash": "4c1e6c5706ef",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [riders-sea]": {
+  "status": "Retained",
+  "hash": "38257c3b32c7",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [rising-moon]": {
+  "status": "Retained",
+  "hash": "17639270d935",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [romeo-2-2]": {
+  "status": "Retained",
+  "hash": "60b8f4f633e1",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [scandal-2-1]": {
+  "status": "Retained",
+  "hash": "5f9aec30b019",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [scapin-3-2]": {
+  "status": "Retained",
+  "hash": "a0724575f45d",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [seagull-4]": {
+  "status": "Rewritten",
+  "hash": "1a88495bbece",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); quotations in curly quotes, as the house writes them, and each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [shrew-2-1]": {
+  "status": "Retained",
+  "hash": "fd9b12e1eee0",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [stoops-2]": {
+  "status": "Retained",
+  "hash": "378c88482775",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [strife-1]": {
+  "status": "Retained",
+  "hash": "c058cc2976cc",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [strife-2-2]": {
+  "status": "Retained",
+  "hash": "0c691af1aa6b",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [suppressed-2]": {
+  "status": "Retained",
+  "hash": "0d1b17911993",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [trifles]": {
+  "status": "Retained",
+  "hash": "50ebd8b3fa29",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [twelfth-1-5]": {
+  "status": "Rewritten",
+  "hash": "4cb39c45aa1f",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts: What It Asks, as MaterialDemands draws it); quotations in curly quotes, as the house writes them, and each sentence read whole",
+  "first": "Pending"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [twelfth-2-4]": {
+  "status": "Retained",
+  "hash": "b0111c1624e5",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [vanya-2]": {
+  "status": "Retained",
+  "hash": "39186a5aad82",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [wayoftheworld-4]": {
+  "status": "Retained",
+  "hash": "ae9247cad191",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [weavers-1]": {
+  "status": "Retained",
+  "hash": "a7feb1a8e448",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SCENE_MATERIAL [windermere-1]": {
+  "status": "Retained",
+  "hash": "d13c51fe6dd9",
+  "on": "2026-10-19",
+  "reason": "Each line says from the scene's own events why it asks what it does of a feature, a circumstance or its tones, so the rating can be checked against the play.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/material.ts#SELF_TAPE_MATERIAL [self-tape]": {
+  "status": "Retained",
+  "hash": "42670f3949fb",
+  "on": "2026-10-19",
+  "reason": "What a self-tape asks, with the source for a close shot magnifying (Michael Caine, Acting in Film) and a reader off camera in place of a partner.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/replacements.ts#LICENSE_REPLACEMENT": {
+  "status": "Retained",
+  "hash": "4bcd6fd6dead",
+  "on": "2026-10-19",
+  "reason": "The papers a police station gives for a lost or stolen license in Mexico and Ireland, in their own names, as an office would ask for them.",
+  "first": "Reviewed And Retained"
  },
  "src/engine/content/school.ts#COST_2026_27": {
   "status": "Retained",
@@ -279,6 +1882,160 @@
   "reason": "The School's real name, its officers' names and titles, and its sources, as Yale publishes them; real names aren't the game's to reword.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/tasks.ts#COURSEWORK_PREP": {
+  "status": "Retained",
+  "hash": "d6652f693668",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tasks.ts#DIMENSION_LABEL": {
+  "status": "Retained",
+  "hash": "d11cf0528306",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#DIMENSION_MEANS": {
+  "status": "Retained",
+  "hash": "22b129f19fa2",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [audition]": {
+  "status": "Retained",
+  "hash": "e29345557183",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [camera]": {
+  "status": "Retained",
+  "hash": "39ec1ed14c5f",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [clown]": {
+  "status": "Retained",
+  "hash": "6e3dc4aaa90c",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [improvisation]": {
+  "status": "Retained",
+  "hash": "1b3374d53b3a",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [movement]": {
+  "status": "Retained",
+  "hash": "90d6223509d2",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [partnered]": {
+  "status": "Retained",
+  "hash": "5a09b6181b8f",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [performance]": {
+  "status": "Retained",
+  "hash": "002dcd4bcdc2",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [scene]": {
+  "status": "Retained",
+  "hash": "bfc4d49efa19",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [song]": {
+  "status": "Retained",
+  "hash": "a4c018a71746",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [tape]": {
+  "status": "Retained",
+  "hash": "bb9f258306eb",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [tapeOnFeet]": {
+  "status": "Retained",
+  "hash": "f6d38cdb569d",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [voice]": {
+  "status": "Retained",
+  "hash": "d8e367a1ff33",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [written]": {
+  "status": "Retained",
+  "hash": "d3c5d35d1da5",
+  "on": "2026-10-19",
+  "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/workbook.ts#ADJUSTMENTS [beat-way]": {
+  "status": "Retained",
+  "hash": "f18c27449312",
+  "on": "2026-10-19",
+  "reason": "The six ways to work a problem, each named as an action and said with what it does, Work It Slowly to Run It With Your Partner.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/workbook.ts#ADJUSTMENTS [breathe]": {
+  "status": "Retained",
+  "hash": "696e42d4500b",
+  "on": "2026-10-19",
+  "reason": "The six ways to work a problem, each named as an action and said with what it does, Work It Slowly to Run It With Your Partner.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/workbook.ts#ADJUSTMENTS [objective]": {
+  "status": "Retained",
+  "hash": "141b1587d9b0",
+  "on": "2026-10-19",
+  "reason": "The six ways to work a problem, each named as an action and said with what it does, Work It Slowly to Run It With Your Partner.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/workbook.ts#ADJUSTMENTS [run-into]": {
+  "status": "Retained",
+  "hash": "f16a0e30aa9c",
+  "on": "2026-10-19",
+  "reason": "The six ways to work a problem, each named as an action and said with what it does, Work It Slowly to Run It With Your Partner.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/workbook.ts#ADJUSTMENTS [with-partner]": {
+  "status": "Retained",
+  "hash": "328d142503d2",
+  "on": "2026-10-19",
+  "reason": "The six ways to work a problem, each named as an action and said with what it does, Work It Slowly to Run It With Your Partner.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/workbook.ts#ADJUSTMENTS [work-beat]": {
+  "status": "Retained",
+  "hash": "f5ee311d4f39",
+  "on": "2026-10-19",
+  "reason": "The six ways to work a problem, each named as an action and said with what it does, Work It Slowly to Run It With Your Partner.",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/content/workload.ts#RUNNING_TIMES": {
   "status": "Retained",
   "hash": "e1fcc562880d",
@@ -291,6 +2048,97 @@
   "hash": "d21ab9660fb1",
   "on": "2026-10-19",
   "reason": "The source line where no theater publishes a running time, saying plainly what was searched, what was found and that the figure is estimated.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/briefs.ts#BRIEF": {
+  "status": "Retained",
+  "hash": "24fce5fd42d6",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#callbackFor": {
+  "status": "Retained",
+  "hash": "5e5a503d661a",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#chooseReader": {
+  "status": "Retained",
+  "hash": "e325370449f0",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#chooseRefusal": {
+  "status": "Retained",
+  "hash": "679ac69a9c7a",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#hourRefusal": {
+  "status": "Retained",
+  "hash": "ac3318c17c60",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#prepareRefusal": {
+  "status": "Retained",
+  "hash": "87f58666759d",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/briefs.ts#PURPOSE_WORDS": {
+  "status": "Retained",
+  "hash": "1c24c2bdbe32",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#READER_PLAYS": {
+  "status": "Retained",
+  "hash": "f04e68fe24e7",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#readerRead": {
+  "status": "Retained",
+  "hash": "e325370449f0",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#readerRefusal": {
+  "status": "Retained",
+  "hash": "9a97e4bf266f",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#suggestions": {
+  "status": "Retained",
+  "hash": "9af66414ecfd",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/briefs.ts#tapeBrief": {
+  "status": "Retained",
+  "hash": "efe9edc6d917",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/briefs.ts#tapeRefusal": {
+  "status": "Retained",
+  "hash": "3062a66c96ca",
+  "on": "2026-10-19",
+  "reason": "The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first.",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/classmates.ts#amendsRefusal": {
@@ -1182,6 +3030,13 @@
   "reason": "The Yale account's name and its holder, as the School's own billing names them.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/material.ts#misfitOf": {
+  "status": "Retained",
+  "hash": "476eba79aff6",
+  "on": "2026-10-19",
+  "reason": "Why a choice doesn't fit, naming who doesn't take it, the material or the director, and the reason from the text.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/systems/piece.ts#judgePieceExact": {
   "status": "Retained",
   "hash": "78074f0f95a8",
@@ -1700,6 +3555,90 @@
   "reason": "A term as a sentence names it, the fall term of 2026, used inside ledger lines and notices where a heading's form would read stiffly.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/workbook.ts#discoveriesOf": {
+  "status": "Retained",
+  "hash": "7badb3917ccf",
+  "on": "2026-10-19",
+  "reason": "Work It Through's problems and refusals: each problem with its figure and the whole piece's, each refusal saying what to settle first.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/workbook.ts#identifyRefusal": {
+  "status": "Retained",
+  "hash": "8a9a8a0b88ba",
+  "on": "2026-10-19",
+  "reason": "Work It Through's problems and refusals: each problem with its figure and the whole piece's, each refusal saying what to settle first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/workbook.ts#problemsOf": {
+  "status": "Retained",
+  "hash": "c370f3ae42b0",
+  "on": "2026-10-19",
+  "reason": "Work It Through's problems and refusals: each problem with its figure and the whole piece's, each refusal saying what to settle first.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/workbook.ts#problemsOf [limit]": {
+  "status": "Rewritten",
+  "hash": "46935072f97c",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/b5.txt (rendered by b5.mts, played through commands on practice briefs): Emotional Depth Holds It Back: Your emotional depth costs your believability 19.7 points, and the whole piece 3.3",
+  "first": "Pending"
+ },
+ "src/engine/systems/workbook.ts#problemsOf [objective]": {
+  "status": "Rewritten",
+  "hash": "1c5b37a07fd2",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/b5.txt (rendered by b5.mts, played through commands on practice briefs): What You Want Isn’t Clear Yet: The Breakdown And Your Reading is at 66%, which costs your believability 5.1 points",
+  "first": "Pending"
+ },
+ "src/engine/systems/workbook.ts#problemsOf [partner]": {
+  "status": "Retained",
+  "hash": "514b58838bf3",
+  "on": "2026-10-19",
+  "reason": "Work It Through's problems and refusals: each problem with its figure and the whole piece's, each refusal saying what to settle first.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/workbook.ts#problemsOf [prep]": {
+  "status": "Rewritten",
+  "hash": "8255a8a0feb0",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/b5.txt (rendered by b5.mts, played through commands on practice briefs): Knowing The Genre: Not There Yet: It costs your interpretation 9.5 points, and the whole piece 0.8",
+  "first": "Pending"
+ },
+ "src/engine/systems/workbook.ts#problemsOf [segment]": {
+  "status": "Rewritten",
+  "hash": "c1f3ca3d5417",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/b5.txt (rendered by b5.mts, played through commands on practice briefs): Beat 3 Holds It Back: Beat 3 comes to 49.4, against 52.4 for the whole piece. What costs it most: physical expression, in its execution",
+  "first": "Pending"
+ },
+ "src/engine/systems/workbook.ts#problemsOf [stamina]": {
+  "status": "Retained",
+  "hash": "d07967afe7c9",
+  "on": "2026-10-19",
+  "reason": "Work It Through's problems and refusals: each problem with its figure and the whole piece's, each refusal saying what to settle first.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/workbook.ts#settleRefusal": {
+  "status": "Retained",
+  "hash": "5db4c40a9eda",
+  "on": "2026-10-19",
+  "reason": "Work It Through's problems and refusals: each problem with its figure and the whole piece's, each refusal saying what to settle first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/workbook.ts#tryRefusal": {
+  "status": "Retained",
+  "hash": "200ab81f4785",
+  "on": "2026-10-19",
+  "reason": "Work It Through's problems and refusals: each problem with its figure and the whole piece's, each refusal saying what to settle first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/workbook.ts#wayRefusal": {
+  "status": "Retained",
+  "hash": "c7a487c90412",
+  "on": "2026-10-19",
+  "reason": "Work It Through's problems and refusals: each problem with its figure and the whole piece's, each refusal saying what to settle first.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/systems/workload.ts#minutesWords": {
   "status": "Rewritten",
   "hash": "c002f5c54796",
@@ -1727,6 +3666,76 @@
   "on": "2026-10-19",
   "evidence": "tests/decisions-stamina.test.ts \"says the workload before the curtain under A Night Now and in the night’s record after it\"",
   "first": "Pending"
+ },
+ "src/engine/systems/workpieces.ts#away": {
+  "status": "Retained",
+  "hash": "ac3318c17c60",
+  "on": "2026-10-19",
+  "reason": "The work-through's refusals for a brief, a scene and a part, each naming the step that comes first or where you are instead.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/workpieces.ts#briefWork": {
+  "status": "Retained",
+  "hash": "02aca6cec73a",
+  "on": "2026-10-19",
+  "reason": "The work-through's refusals for a brief, a scene and a part, each naming the step that comes first or where you are instead.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/workpieces.ts#partWork": {
+  "status": "Retained",
+  "hash": "34e800ffead2",
+  "on": "2026-10-19",
+  "reason": "The work-through's refusals for a brief, a scene and a part, each naming the step that comes first or where you are instead.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/workpieces.ts#sceneWork": {
+  "status": "Retained",
+  "hash": "468171f3c085",
+  "on": "2026-10-19",
+  "reason": "The work-through's refusals for a brief, a scene and a part, each naming the step that comes first or where you are instead.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/BriefPane.tsx#BriefPane": {
+  "status": "Rewritten",
+  "hash": "ec032f109362",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts (every brief's pane rendered, its beats' reason shown, now once, after the Tone line of What It Asks) and tests/genre-identity-screens.test.ts; at material-b's suggestion",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/BriefPane.tsx#BriefPane step()": {
+  "status": "Retained",
+  "hash": "bf5f6c56918c",
+  "on": "2026-10-19",
+  "reason": "A step's message: its minutes and how much further the part went, the two things that changed when it was pressed.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/BriefPane.tsx#ReaderChoice": {
+  "status": "Retained",
+  "hash": "16a5f1c9689c",
+  "on": "2026-10-19",
+  "reason": "Who reads opposite you, with a recording offered as the alternative and what each brings: a classmate's preparation, or a recording's cue that never slips.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/BriefPane.tsx#readerPlaysWords": {
+  "status": "Retained",
+  "hash": "72c31e2dc401",
+  "on": "2026-10-19",
+  "reason": "How the reader plays the other part and what playing opposite it asks of you, in the qualities' and abilities' own words, lower case in the sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/BriefPane.tsx#studiedWords": {
+  "status": "Retained",
+  "hash": "cf4d1b2317b5",
+  "on": "2026-10-19",
+  "reason": "An hour and a half of study, the work studied and the familiarity it came to of 100, the one figure the study changes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/BriefPane.tsx#TONE": {
+  "status": "Retained",
+  "hash": "8133ed02ddd4",
+  "on": "2026-10-19",
+  "reason": "A beat's four tones, Comic, Grave, Lyric and Grotesque, the same words the scene's tone column and the guide use.",
+  "first": "Reviewed And Retained"
  },
  "src/ui/components/ClassMoments.tsx#ClassMoments": {
   "status": "Rewritten",
@@ -1826,6 +3835,41 @@
   "evidence": "docs/verification/editorial-2026-10-19/school/screens.txt \"named it four times\", \"given four times\" (screens.mts); tests/evidence-g18-school.test.ts \"given three times\"",
   "first": "Pending"
  },
+ "src/ui/components/PlayingChooser.tsx#FEATURE_WORD": {
+  "status": "Retained",
+  "hash": "5135996a24b2",
+  "on": "2026-10-19",
+  "reason": "The scene's features by name, Timing, Physical Work, Playing Off The Partner, Vocal Demand and Freedom To Improvise, as the guide names them too.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/PlayingChooser.tsx#LANGUAGE_WORD": {
+  "status": "Retained",
+  "hash": "10a19c1070d4",
+  "on": "2026-10-19",
+  "reason": "The scene's language as everyday speech, heightened prose or verse, the three a teacher would name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/PlayingChooser.tsx#LEVEL": {
+  "status": "Retained",
+  "hash": "dd4fefb9f7da",
+  "on": "2026-10-19",
+  "reason": "How much a scene asks of a feature, None, Some, Much or Built On It, four steps a player can compare at a glance.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/PlayingChooser.tsx#MaterialDemands": {
+  "status": "Rewritten",
+  "hash": "3e78d523b49e",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/material.txt (rendered by material.mts): Tone: grave to lyric to grave, 5 changes of tone to play, the brief pane's own name for the count; tests/material-words.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/components/PlayingChooser.tsx#PlayingChooser": {
+  "status": "Rewritten",
+  "hash": "c99580d0d31e",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): playing it this way would come to 54.9, the same as with nothing chosen (the casting tab's How You’ll Play It)",
+  "first": "Pending"
+ },
  "src/ui/components/RehearsalProcess.tsx#DRESS_WORD": {
   "status": "Retained",
   "hash": "70ac2351b5e2",
@@ -1853,5 +3897,257 @@
   "on": "2026-10-19",
   "evidence": "tests/decisions-stamina.test.ts and tests/rehearsal-notes-history.test.ts (the panel rendered); tests/looks.test.ts (a figure of 100 written as one: The Nights Together averaged N of 100, as docs/GLOSSARY.md writes trust)",
   "first": "Pending"
+ },
+ "src/ui/components/StudyPlanPanels.tsx#at9": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "The School's time zone, America/New_York, an IANA name the code reads to date a return at nine in New Haven; no player reads it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/StudyPlanPanels.tsx#ClassesPanel": {
+  "status": "Retained",
+  "hash": "fdb10859622d",
+  "on": "2026-10-19",
+  "reason": "The classes you've belonged to, where each is now, what they played without you and what you shared, said of each class in turn.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/StudyPlanPanels.tsx#DeanLeave": {
+  "status": "Rewritten",
+  "hash": "8c03ec15f4ac",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g25-school.test.ts (You can appeal in writing to the dean until September 28, 2026. The leave stands while the appeal is heard,)",
+  "first": "Pending"
+ },
+ "src/ui/components/StudyPlanPanels.tsx#LeavePanel": {
+  "status": "Rewritten",
+  "hash": "4c9e91420a0c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g25-school.test.ts and tests/evidence-g26-school.test.ts (Register for Spring Term 2028: until you do, you’re counted absent from classes and can’t work shifts)",
+  "first": "Pending"
+ },
+ "src/ui/components/StudyPlanPanels.tsx#RepeatPanel": {
+  "status": "Rewritten",
+  "hash": "28979e3585d9",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g26-school.test.ts and tests/evidence2-b09.test.ts (Ask by May 26, 2030, or the faculty won’t recommend the degree; the degree takes eight terms: two would be billed)",
+  "first": "Pending"
+ },
+ "src/ui/components/StudyPlanPanels.tsx#STATUS": {
+  "status": "Retained",
+  "hash": "c505dd1f6c83",
+  "on": "2026-10-19",
+  "reason": "A leave's or a request's state in the words its notices use: with the chair and the dean, granted, refused, on leave, returned or ended.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/StudyPlanPanels.tsx#WorkLimitsBlock": {
+  "status": "Rewritten",
+  "hash": "17241ddca6d3",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): the Shifts And Pay tab's cap, a booking past it is turned down, and a shift that would pass it is worked to the cap",
+  "first": "Pending"
+ },
+ "src/ui/components/StudyPlanPanels.tsx#YaleAccountPanel": {
+  "status": "Retained",
+  "hash": "836914a26924",
+  "on": "2026-10-19",
+  "reason": "What's owed on the Yale account, the hold and what it stops, the terms enrolled, paying from the bank and the aid review, each with its date or figure.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/WorkThrough.tsx#Segments": {
+  "status": "Retained",
+  "hash": "6e7706ee9294",
+  "on": "2026-10-19",
+  "reason": "Part by part: each part's tone, result, rehearsal and what happened, a slip by how much and what cost it most, and how continuity comes from the parts.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/components/WorkThrough.tsx#TONE": {
+  "status": "Retained",
+  "hash": "8133ed02ddd4",
+  "on": "2026-10-19",
+  "reason": "A part's four tones, Comic, Grave, Lyric and Grotesque, the words the brief's beats use, so the two tables agree.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/WorkThrough.tsx#WorkThrough": {
+  "status": "Retained",
+  "hash": "1b6ef8da2890",
+  "on": "2026-10-19",
+  "reason": "Working a problem: the forecast's problems worst first, the way tried, keep it or put it back, and what was found, each message saying what changed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/classmate.tsx#top": {
+  "status": "Retained",
+  "hash": "e1d291b140eb",
+  "on": "2026-10-19",
+  "reason": "A classmate's page: their trust of 100, how often they've come, the work you share and how far each part stands, and what they care about, said to you.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/school.tsx#STANDING_SAID": {
+  "status": "Retained",
+  "hash": "dfeb66646031",
+  "on": "2026-10-19",
+  "reason": "The three standings said in a sentence, in good standing, with a notice of academic concern, on academic warning, as a person says them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/school.tsx#STATUS_WORD": {
+  "status": "Retained",
+  "hash": "46194af662f2",
+  "on": "2026-10-19",
+  "reason": "A piece's state in the card's own words: Open, To Show Again, Shown, Missed, Not Shown Before The Term Ended, Excused.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/school.tsx#top": {
+  "status": "Retained",
+  "hash": "6aac5a8eb6f8",
+  "on": "2026-10-19",
+  "reason": "The school's, a course's, a skill's and a piece's own pages, each saying where you stand in it in a sentence and what it trains, with the source of each fact.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/school.tsx#YEAR_WORD": {
+  "status": "Retained",
+  "hash": "61f6a912be14",
+  "on": "2026-10-19",
+  "reason": "The three years as First, Second and Third, the words the school's page uses for the year you're in.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#CabaretPanel": {
+  "status": "Rewritten",
+  "hash": "6199e1685da7",
+  "on": "2026-10-19",
+  "evidence": "code read: leaveCabaret's three reasons (academic warning, a leave of absence, leaving the School) each read after \"Out of the show from {date}, on\"; the panel otherwise as docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring) draws it",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#CastingPane": {
+  "status": "Rewritten",
+  "hash": "cf0b02dcbee1",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): the casting Fine, a student who’s cast is expected to play the part, and how much of yourself you delivered in the last runs; code read: readOf scales a fifth of the fit by delivery (school.ts playFit)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#CastReadPanel": {
+  "status": "Rewritten",
+  "hash": "779b7817dba7",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): The play asks for Scene Study, Script Analysis, Character Work and Cold Reading, and the chair's read in one sentence; tests/evidence-g19-school.test.ts (the Yale Cabaret, 5 nights, counted as 2.5 nights) and tests/evidence-g24-school.test.ts (delivered comes from)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#ClassesPane": {
+  "status": "Retained",
+  "hash": "9240a8a2aeb5",
+  "on": "2026-10-19",
+  "reason": "The week's timetable, Call In Sick with what it excuses, and a line on the term's dates, its breaks and what counts as an absence, each with its rule.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#CoursesPanel": {
+  "status": "Rewritten",
+  "hash": "b3753dd09acd",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g26-school.test.ts (The degree still needs … Acting I …) and tests/remaining-09-journeys.test.ts (courses passed so far, and the ended record); the list now has its \"and\" (spokenList)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#KIND_WORDS": {
+  "status": "Retained",
+  "hash": "10a04da01ce3",
+  "on": "2026-10-19",
+  "reason": "What the chair cast you in, named as the School names each kind of production: a directors' thesis, the two festivals, a Shakespeare project, the Rep.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#NIGHT_WORD": {
+  "status": "Retained",
+  "hash": "610f0b622a03",
+  "on": "2026-10-19",
+  "reason": "A night's four results in the words the director's notes and the dress rehearsal use: Remarkable, Strong, Solid and Off.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#nightsLine": {
+  "status": "Retained",
+  "hash": "94bcf128b3f0",
+  "on": "2026-10-19",
+  "reason": "A run's nights by how they went, strongest first, and the director's closing note, the line the Casting tab and the Summer Cabaret panel share.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#PlaysToRead": {
+  "status": "Retained",
+  "hash": "b03ef7dcb37f",
+  "on": "2026-10-19",
+  "reason": "The plays to read with their copies, a part for you or not, and Read It and Research It, labels a player can scan down the list.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#PoliciesPanel": {
+  "status": "Retained",
+  "hash": "2081cbdc3407",
+  "on": "2026-10-19",
+  "reason": "The panel's name and the day orientation set it out, so a player who missed the session still sees what the School asks and where it came from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#SchoolTabs": {
+  "status": "Retained",
+  "hash": "5c2be6d1ac0e",
+  "on": "2026-10-19",
+  "reason": "The tab list's accessible name, School, and each pane's test id, which a screen reader names and a player never reads as words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#SchoolWorkspace": {
+  "status": "Retained",
+  "hash": "ad8f07c76ecc",
+  "on": "2026-10-19",
+  "reason": "The header says where the student is in a word or two, and the year with its standing as the Profile's School Journey says it, so the two screens agree.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#SLOTS": {
+  "status": "Retained",
+  "hash": "345e37a4d4bc",
+  "on": "2026-10-19",
+  "reason": "The timetable's three class times, 9 a.m., 11 a.m. and 1 p.m., in the clock form the glossary gives for times on a screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#SOURCE_WORD": {
+  "status": "Retained",
+  "hash": "4c083ed57b24",
+  "on": "2026-10-19",
+  "reason": "Where a run was played, named as Why This Cast lists the runs your delivery comes from: a School production, Yale Rep, the two Cabarets.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane": {
+  "status": "Rewritten",
+  "hash": "ee85c8a65953",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): the growth note (The middle student in your class grew 0.6), the coursework note, Attendance counts 35 of 35 class days and 7 of 7 assigned shifts, the craft note; tests/language-dynamic.test.ts (Attendance counts 1 of 1 class day) and tests/remaining-09-journeys.test.ts (half or more fell short of what’s asked, once the School has ended)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#SummerPanel": {
+  "status": "Retained",
+  "hash": "59f5c1a3b43b",
+  "on": "2026-10-19",
+  "reason": "The Summer Cabaret's company, its three shows, the pay and the join button's message, with what's estimated said once, in the Fine print where a player looks for it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#TermsPane": {
+  "status": "Rewritten",
+  "hash": "017aff0f318c",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): Tuition is covered in full for every student’s six terms, by the David Geffen gift; the past-six sentence in billUnsupportedTerm's words (pays its health fee and what the account owes), as tests/remaining-banking.test.ts holds them",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#WEEKDAYS": {
+  "status": "Retained",
+  "hash": "ab5228746f2b",
+  "on": "2026-10-19",
+  "reason": "The five class days as the timetable's row heads, Monday to Friday, written in full as a schedule shows them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#WithdrawControl": {
+  "status": "Rewritten",
+  "hash": "d19e42042586",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g8-4.test.ts (Withdrawing gives up your place today) and the withdrawal notice's own words, a fifteen-day grace period (tests/evidence-g33-ui.test.ts)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/SchoolWorkspace.tsx#WorkPane": {
+  "status": "Retained",
+  "hash": "03de30482ff3",
+  "on": "2026-10-19",
+  "reason": "The work-study hours, Friday's pay with its rate, the protective equipment and how a missed shift counts, each with the school's own figure.",
+  "first": "Rewritten And Verified"
  }
 }

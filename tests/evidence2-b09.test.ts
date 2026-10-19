@@ -614,7 +614,7 @@ describe('school.request_extra_term', () => {
     expect(school.extraRequest).toBeUndefined();
     expect(pendingOf(sim, EXTRA_DECIDE_KIND)).toHaveLength(0);
     const panel = drawn(sim, RepeatPanel);
-    expect(panel.text).toContain('Your last year wasn’t passed. Ask by May 26, 2030, or the degree is withheld.');
+    expect(panel.text).toContain('Your last year wasn’t passed. Ask by May 26, 2030, or the faculty won’t recommend the degree.');
     expect(panel.text).not.toContain('Or an additional term');
     expect(drew('school.request_extra_term')).toHaveLength(0);
     tend(sim, at(2030, 5, 26, 18));

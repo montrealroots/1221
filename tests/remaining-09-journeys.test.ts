@@ -130,7 +130,7 @@ const still = (sim: Simulation) => JSON.stringify([sim.now, sim.universe.transac
 // journeys.known-graduated-school-page
 // ---------------------------------------------------------------------------
 
-const STALE = ['Only the terms to come stand between you and the degree.', 'courses passed so far', 'You’re in the casting pool.', 'You need 90% or more', 'is short of what’s asked', 'Not Cast Yet', 'Nothing is set yet'];
+const STALE = ['Only the terms to come stand between you and the degree.', 'courses passed so far', 'You’re in the casting pool.', 'You need 90% or more', 'falls short of what’s asked', 'Not Cast Yet', 'Nothing is set yet'];
 
 describe('journeys.known-graduated-school-page: the School page once the School has ended', () => {
   it('DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs, before and after a reload: the degree conferred at Commencement on Monday 21 May 2029, every course passed, the last term’s figures with their floors in the past, no casting and no work ahead (until 2026-10-16 “Only the terms to come stand between you and the degree.”, “so far”, “In the casting pool.”, each floor ahead, Not Cast Yet and Nothing set yet)', () => {
@@ -154,7 +154,7 @@ describe('journeys.known-graduated-school-page: the School page once the School 
       expect(standing).toContain('Attendance Last Term');
       expect(standing).toContain('90% was the minimum');
       expect(standing).toContain('half its pace was the minimum');
-      expect(standing).toContain('Once 3 or more are due, half or more was short of what’s asked');
+      expect(standing).toContain('Once 3 or more are due, half or more fell short of what’s asked');
       const casting = drawn(s, SchoolWorkspace, 'casting');
       expect(casting).toContain('No Casting Ahead');
       expect(casting).toContain('The chair casts students at the School, and your degree is conferred, so there’s no casting now. The productions you played stay on your Profile.');

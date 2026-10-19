@@ -43,7 +43,9 @@ export function MaterialDemands({ material }: { material: MaterialProfile }) {
         <li><strong>{LANGUAGE_WORD[material.language]}</strong>{material.medium === 'camera' ? ', on camera' : ''}{material.why.language ? `: ${material.why.language}` : ''}</li>
         {features.map((f) => <li key={f}><strong>{FEATURE_WORD[f]}: {LEVEL[material[f]]}</strong>{material.why[f] ? `. ${material.why[f]}` : ''}</li>)}
         {circumstances.map(([c, level]) => <li key={c} data-circumstance={c}><strong>{CIRCUMSTANCE_AFFINITY[c].label}: {LEVEL[level]}</strong>{material.why[c] ? `. ${material.why[c]}` : ''}</li>)}
-        <li><strong>{material.tones.length > 1 ? `Tone: ${material.tones.join(' to ')}` : `Tone: ${material.tones[0]}`}</strong>, {transitionsOf(material)} transition{transitionsOf(material) === 1 ? '' : 's'} to play{material.why.tones ? `. ${material.why.tones}` : material.why.turns ? `. ${material.why.turns}` : ''}</li>
+        {/* The count by the brief pane's own name for it, changes of tone (from 2026-10-19, brief 15, at material-b's
+            suggestion): until then “N transitions to play”. */}
+        <li><strong>{material.tones.length > 1 ? `Tone: ${material.tones.join(' to ')}` : `Tone: ${material.tones[0]}`}</strong>, {transitionsOf(material)} change{transitionsOf(material) === 1 ? '' : 's'} of tone to play{material.why.tones ? `. ${material.why.tones}` : material.why.turns ? `. ${material.why.turns}` : ''}</li>
         {tech.length > 0 && <li><strong>Techniques It Asks: {tech.join(', ')}</strong>{material.why.techniques ? `. ${material.why.techniques}` : ''}</li>}
         {material.allows && <li><strong>It Only Takes: {Object.values(material.allows).flat().map((v) => APPROACH_EFFECT[v as AxisValue].label).join(', ')}</strong>{material.why.allows ? `. ${material.why.allows}` : ''}</li>}
       </ul>
@@ -122,7 +124,7 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
         {(Object.keys(AXES) as Axis[]).map((axis) => draft[axis] && <button key={axis} type="button" className="btn btn-sm btn-ghost" onClick={() => { const next = { ...draft }; delete next[axis]; setDraft(next); }}>Leave The {AXES[axis].label} Open</button>)}
       </div>
       <p className="small" style={{ margin: 0 }}>
-        Fully prepared and on a good day, playing it this way would come to {now.overall.toFixed(1)}, against {open.toFixed(1)} with nothing chosen.
+        Fully prepared and on a good day, playing it this way would come to {now.overall.toFixed(1)}, {now.overall.toFixed(1) === open.toFixed(1) ? 'the same as' : `against ${open.toFixed(1)}`} with nothing chosen.
         {current && sidesOf(current).length > 0 ? ` You’ve rehearsed your current choice to ${Math.round(current.prep * 100)}% so far (it’s complete at ${Math.round(requiredFor(sidesOf(current), material, sceneRead) * 100)}%). Work on your feet rehearses it.` : ' Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.'}
         {draftSides.length > 0 ? ` This choice is complete once it’s rehearsed to ${Math.round(completeAt * 100)}%: ${completeAt < PLAYING.complete ? 'it suits the scene, so it asks less' : completeAt > PLAYING.complete ? 'it goes against the scene, so it asks more' : 'the scene neither favors nor resists it'}.` : ''}
         {changed && current && sidesOf(current).length > 0 ? ` If you change it, you keep ${Math.round(PLAYING.keptOnChange * 100)}% of that rehearsal.` : ''}
