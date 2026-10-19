@@ -245,6 +245,14 @@ Status is a word or a chip: **Locked**, **Real**, **Pending**, **Saved**.
 Weather is a word: **Cloudy**, **Storm**. Play and pause are the words Play
 and Pause.
 
+The weather keeps a picture beside its word, the one exception
+(`WEATHER_EMOJI` in `systems/weather.ts`): it's the place a picture reads
+faster than a word, and every forecast uses one. It never stands for the word,
+and a screen reader is never given it (`aria-hidden`).
+`tests/interface.test.ts` holds both. Brief 15's tutorial area reported the
+picture on Home against this section's first paragraph. The code was right,
+and this paragraph was missing until 2026-10-19.
+
 ## Voice
 
 Narration is second person, present tense, plain. It knows what the

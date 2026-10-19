@@ -1,0 +1,37 @@
+{
+ "opened": {
+  "pageHeight": 967,
+  "pageScrolls": false,
+  "bodyScrolls": true,
+  "dialogHeight": 709
+ },
+ "bar": [
+  {
+   "text": "Play LOCKED",
+   "w": 75,
+   "h": 45
+  },
+  {
+   "text": "Sleep LOCKED",
+   "w": 75,
+   "h": 45
+  },
+  {
+   "text": "Look After Yourself ▾ LOCKED",
+   "w": 124,
+   "h": 62
+  },
+  {
+   "text": "Advance ▾ LOCKED",
+   "w": 69,
+   "h": 62
+  }
+ ],
+ "overlap": {
+  "clockRight": 378,
+  "clockBottom": 30,
+  "groupLeft": 12,
+  "groupTop": 39,
+  "overlaps": false
+ }
+}

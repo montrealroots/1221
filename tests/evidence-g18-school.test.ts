@@ -549,7 +549,7 @@ describe('school.choose', () => {
     Object.assign(a.prep, { memorization: 0.9, rehearsal: 0.9, partner: 0.9 });
     toMeeting(sim, a.dueOn);
     expect(a.feedback?.focus).toEqual({ kind: 'choice', question: odd.q.id });
-    expect(a.feedback?.text).toContain(`${odd.q.label}: ${against.why}`);
+    expect(a.feedback?.text).toContain(`${odd.q.label}: you answered “${against.text},” but the text doesn’t support it. ${against.why}`);
     const key = `choice:${odd.q.id}`;
     expect(notesOf(cwOf(sim)).find((n) => n.key === key)).toMatchObject({ status: 'open', given: 1 });
     // Shown again at the next meeting with the answer as it was: not taken there.

@@ -2500,9 +2500,9 @@
  },
  "src/engine/systems/coursework.ts#noteText": {
   "status": "Rewritten",
-  "hash": "8d7108c1e5f9",
+  "hash": "e7961ecd0eb5",
   "on": "2026-10-19",
-  "evidence": "rendered.txt \"a note on the partner part\" at none, one, two and three rehearsals and readers; tests/language-dynamic.test.ts partner and reader; tests/evidence-g24-school.test.ts skill note \"takes a note on a skill at the showing again\"",
+  "evidence": "the coordinator's change at the first material area's report: a Table Work note names the answer it's about before the reason; tests/material-words.test.ts holds every scene's unsupported answers in the new form, and tests/evidence-g18-school.test.ts and evidence-g24-school play a term to the note (62 tests pass)",
   "first": "Pending"
  },
  "src/engine/systems/coursework.ts#orient": {

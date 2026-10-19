@@ -203,7 +203,7 @@ exchange rate and the game are Core's.
 | **statement**, **due date** | A card's monthly statement, and the date its payment is due. | |
 | **late fee** | What paying less than the minimum by the due date costs. | "a payment short of the minimum costs" |
 | **credit record**, **credit score** | The record each month's report keeps, and its figure, scored 300 to 850. The guide says credit score for the figure a bank approves from (620) and prices by, and credit record for what a late payment goes on. | "your record" alone where the card's record could be meant |
-| **charged off**, **collections** | A debt the bank stopped pursuing itself and sent to collections; on your record until paid. | |
+| **charged off**, **collections** | A debt the bank stopped pursuing itself and sent to collections. The charge-off stays on your credit record for its country's years, paid or not (seven in the US); while the debt is unpaid, no bank approves a card. | "on your record until paid", which `marksFallOff` never did (the money area's m2) |
 | **standing order**, **payment set for a date**, **autopay** | A monthly payment of your own into savings; a one-off payment on a day you choose; a card's automatic payment from a checking account. | "scheduled payment" (kept as the notice's title) |
 | **notice period** | The months a German savings account needs before it closes, past what a month lets out; the days a bank needs to end a term deposit early. Not a notice (Core). | "the notice ran out" |
 | **dormant**, **reactivate** | An account unused for the bank's months is blocked until you press Reactivate. | "untouched … blocked until it's used again" |

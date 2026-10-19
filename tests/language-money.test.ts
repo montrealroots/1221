@@ -280,6 +280,15 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
     expect(words).toContain('The law on the debit card: If you report a lost or stolen debit card within two business days');
   });
 
+  it('says a rush the bank doesn’t charge for costs nothing more, where it said “$0.00 more” (from 2026-10-19, brief 15)', () => {
+    // Citi rushes a card for no fee (`SECURITY['us-citi'].rushFee` 0): money-data's report, the money area's screen.
+    h.sim = createSave(1, 'lang15-citi', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId: 'us-citi' });
+    h.clicks = [];
+    const words = onScreen(renderToStaticMarkup(createElement(BankSecurity as FunctionComponent<{ bankId: string }>, { bankId: 'us-citi' })));
+    expect(words).toContain('A rushed one costs nothing more.');
+    expect(words).not.toContain('$0.00 more');
+  });
+
   it('says how the day’s spending is paid and what savings covers, and what cash is in hand', () => {
     const sim = nyStudent('lang14-pay');
     expect(drawn(sim, BankPayments as FunctionComponent<{ bankId: string }>)).toContain('How the day’s spending is paid, and which account each payment comes from. How This Works The Day’s Spending In Cash, Then The Debit Card On The Credit Card On The Debit Card When this is on, a payment your checking account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows. Chase Savings covers Chase Total Checking, which pays the day’s spending and the Chase Freedom Unlimited’s autopay.');

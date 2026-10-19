@@ -106,7 +106,8 @@ describe('a class scene’s words, at the table and in the note', () => {
         }
         for (const { q, options } of qs) for (const o of options.filter((x) => !x.supported)) {
           a.answers[q.id] = o.id;
-          expect(noteText(a, { kind: 'choice', question: q.id }), `${s.id}/${o.id}: the note`).toBe(`${q.label}: ${o.why} You played ${s.roles[role].name} in ${s.play}.`);
+          // The answer named, then the reason (from 2026-10-19, brief 15: until then the reason alone, which pointed back at it).
+          expect(noteText(a, { kind: 'choice', question: q.id }), `${s.id}/${o.id}: the note`).toBe(`${q.label}: you answered “${o.text},” but the text doesn’t support it. ${o.why} You played ${s.roles[role].name} in ${s.play}.`);
         }
       }
       const own = [s.summary, ...(s.facts ?? []), ...[s.circumstances, s.relationship, ...s.roles.flatMap((r) => [r.objective, r.obstacle, r.tactic])].flat().flatMap((o) => [o.text, o.why ?? ''])].filter(Boolean);

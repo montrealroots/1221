@@ -13,6 +13,13 @@ as it came in, with what was done about it and when. Nothing here is applied unt
     so it's left for the owner.
 - **The engine-speak ratchet** is lowered once, at the end, to every area's counts, after the cross-area review's last
     change.
+- **For the owner, from money-data's defects (3, 7 to 10).** Each changes what the game charges or does, which brief 15
+  doesn't do (section 9). The words say what the game does, so none is untrue on screen:
+  - card replacement fees where the bank's own words say otherwise;
+  - Claim It Back where the country's law says the money can't be claimed;
+  - Australia's unclaimed money taken at any balance, where the law takes A$500 or more;
+  - term deposit penalties estimated where a bank publishes its rule;
+  - BMO's notice period, which may run the other way.
 
 ## Settled
 
@@ -28,8 +35,10 @@ Each item as the area reported it, and what was done.
   the reference's example 8.
 - **"The payment didn't go through."** Frame and health both kept it, so `guide/body.ts`'s quote holds. guide-quotes
   passes, 581 of 581.
-- **"What it's known for:"** on the place look (`ui/looks/place.tsx`) stays. The frame area suggested "In short:", but
-  the label names what the list is ("What it's known for: theater, film and nightlife."), and "In short:" wouldn't.
+- **"What it's known for:"** on the place look (`ui/looks/place.tsx`) is "In short:". The coordinator first kept it,
+  then read the health area's report (its defects, 6): a city's tags are adjectives as often as things, and "What it's
+  known for: no daylight saving, desert and affordable." made one a thing. "In short:" suits both, as Home's place line
+  does.
 - **The glossary rows** are in `docs/GLOSSARY.md`, with every area's.
 
 ### From The Papers Area
@@ -67,6 +76,31 @@ Each item as the area reported it, and what was done.
   - Before Yale's reordered sentence.
   Also: money's cash refusal ("available"), school's term review, and a comment's apostrophe in the money looks. Each
   is fixed in its merge or the commit after it, as each commit message says.
+
+### Read Again In The Areas' Defects, At The Cross-Area Review
+
+The areas' defects files hold what each left to the coordinator. Each item is settled here:
+- **A Table Work note named the reason, not the answer** (material-a's defects, 3; school's file). It now reads
+  "Given Circumstances: you answered “The night of the ball, while the auction is on in town,” but the text doesn’t
+  support it. That’s the third act; this is the day they leave." The comma sits inside the quotation marks, as US
+  English writes it, and the full stop doesn't end on the answer. `tests/material-words.test.ts` holds every scene's
+  unsupported answers in that form, and two school tests play a term to the note.
+- **The glossary's charged off row** said "on your record until paid" (money's m2). It says the record keeps it for its
+  country's years, paid or not.
+- **A free rush said "costs $0.00 more"** (money-data's defects, 4; Citi and Resona). It says "costs nothing more",
+  which is true whether or not the card itself costs something. `tests/language-money.test.ts` draws a Citi life's Your
+  Cards, and the test fails with the old words.
+- **The weather's picture on Home** (the tutorial area's report) is the one exception `systems/weather.ts` keeps on
+  purpose, beside the word and hidden from a screen reader. `docs/STYLE.md`'s Pictures now says so. The code was right.
+- **At 390 wide**, two faults (the tutorial area's report, with screenshots):
+  - the top bar squeezed a locked control's Locked one letter to a line, and the clock ran over Guide;
+  - the guide dialog left a long chapter about 250 pixels to read in.
+
+  `src/styles/app.css`: a locked time control says Locked under its name; under 480 pixels the guide and Save & Exit
+  take a row of their own; and at the guide's phone width the chapter scrolls with the dialog. Checked on the built app
+  at 390 (`coordinator-phone/`).
+- **Left Alone** was already Left Untreated (the papers area). **Current account in a term deposit's end** was already
+  checking account (the money area).
 
 ### The Renames, Carried Into The Guide And Tests
 

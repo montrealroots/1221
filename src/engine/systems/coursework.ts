@@ -922,7 +922,10 @@ export function noteText(a: Assignment, focus: Focus, level?: number, partnerNam
   if (focus.kind === 'choice') {
     const qo = questionsFor(a).find(({ q }) => q.id === focus.question);
     const picked = qo?.options.find((o) => o.id === a.answers[focus.question]);
-    return `${qo?.q.label ?? 'A choice'}: ${picked?.why ?? 'the text doesn’t support that reading.'}${as}`;
+    // The answer the note is about, named (from 2026-10-19, brief 15's coordinator, at the first material area's report):
+    // until then the note gave the reason alone, and most reasons point back at the answer ("That’s the fourth act.").
+    if (!qo || !picked) return `${qo?.q.label ?? 'A choice'}: the text doesn’t support that reading.${as}`;
+    return `${qo.q.label}: you answered “${picked.text},” but the text doesn’t support it.${picked.why ? ` ${picked.why}` : ''}${as}`;
   }
   if (focus.kind === 'skill') return `This piece asked for more ${SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()} than you have yet. Keep building it in class over the next few weeks.`;
   return ADVANCED[focus.challenge];

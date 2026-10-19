@@ -1555,9 +1555,9 @@
  },
  "src/ui/bank/BankSecurity.tsx#BankSecurity": {
   "status": "Rewritten",
-  "hash": "b1e38524cf02",
+  "hash": "349eab06ffbc",
   "on": "2026-10-19",
-  "evidence": "tests/editorial-money-screens.test.ts, it('a French debit card’s spending limit is labelled an estimate in a sentence, not a fragment') renders Your Cards",
+  "evidence": "the coordinator's change at money-data's report: a rush the bank doesn't charge for costs nothing more, not $0.00 more (Citi, Resona); tests/language-money.test.ts draws a Citi life's Your Cards and fails with the old words",
   "first": "Pending"
  },
  "src/ui/bank/BankSecurity.tsx#WHY_WORDS": {

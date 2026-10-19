@@ -733,7 +733,7 @@ describe('notes and feedback', () => {
     for (const { q, options } of questionsFor(third)) go(sim, 'school.choose', { assignmentId: third.id, question: q.id, option: (q.id === odd.q.id ? against : options.find((o) => o.supported)!).id });
     toMeeting(sim, third.dueOn);
     expect(work(sim, third.id).feedback).toMatchObject({ focus: { kind: 'choice', question: odd.q.id }, kind: 'recurring' });
-    expect(work(sim, third.id).feedback!.text).toContain(`${odd.q.label}: ${against.why}`);
+    expect(work(sim, third.id).feedback!.text).toContain(`${odd.q.label}: you answered “${against.text},” but the text doesn’t support it. ${against.why}`);
     expect(notesOf(cwOf(sim)).find((x) => x.key === key)).toMatchObject({ status: 'open', given: 2 });
   });
 
