@@ -55,7 +55,7 @@ export const BRIEFS_F: readonly Brief[] = [
       timing: 'She speaks during the hold on one breath, so the lines are cut to how long the breath lasts, and the trains overhead set the rest.',
       partner: 'She plays off where he is and what he does with the bag, and every plea is aimed at him.',
       vocal: 'The middle beat is spoken on the end of a held breath, and the tunnel and the trains make her lift her voice without shouting.',
-      techniques: 'The struggle for the bag is a short staged fight marked solo at reduced speed against the reader’s called cues, with the bag on her side of frame and no contact made, so it repeats safely on every take.',
+      techniques: 'The struggle for the bag is a short staged fight. Mark it solo at reduced speed against the reader’s called cues, with the bag on your side of the frame and no contact, so it repeats safely on every take.',
       beats: 'A plea, the power used on him, the fight when it fails, then a goodbye that keeps the loss and the love together.',
     },
     readings: [
@@ -157,9 +157,9 @@ export const BRIEFS_F: readonly Brief[] = [
     why: {
       language: 'The lines are period banter, formal in address and pointed in wit, and the flourish has to sound like her own.',
       timing: 'The jokes are timed to the passes of the blades, and the scene has to run to the bell.',
-      physical: 'Circling and three passes, ending with his blade sent wide, played on a stone stair with the footwork of a trained fencer.',
+      physical: 'She circles him and makes three passes, ending with his blade sent wide, on a stone stair, with a trained fencer’s footwork.',
       partner: 'Every exchange of words and blades depends on the reader’s lines and the cues he calls.',
-      techniques: 'The swordplay is three set passes marked solo with a replica blade at reduced speed against the reader’s called cues, never pointed at the lens or the reader, and his blade goes wide off frame, so it repeats safely on every take.',
+      techniques: 'The swordplay is three set passes. Mark them solo with a replica blade at reduced speed against the reader’s called cues, never pointing it at the lens or the reader; his blade goes wide off frame, so it repeats safely on every take.',
       beats: 'Banter, then the fight played with a grin and real danger at once, then a graceful surrender.',
     },
     readings: [
@@ -209,9 +209,9 @@ export const BRIEFS_F: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 3, partner: 2, vocal: 1, improvisation: 0,
     techniques: { combat: 2 },
     why: {
-      physical: 'A heavy-sword fight on a moving surface, played on a flat floor with the weight of the blade and the sway of the bridge in her feet.',
+      physical: 'It’s a heavy-sword fight on a moving surface, played on a flat floor with the weight of the blade and the sway of the bridge in her feet.',
       partner: 'The bargaining and the toll come from him, and she has to take the horror of it in before she moves.',
-      techniques: 'The fight is two staged broadsword exchanges marked solo with a replica at reduced speed against the reader’s called cues, never pointed at the lens or the reader, and he falls off frame, so it repeats safely on every take.',
+      techniques: 'The fight is two staged broadsword exchanges. Mark them solo with a replica at reduced speed against the reader’s called cues, never pointing it at the lens or the reader; he falls off frame, so it repeats safely on every take.',
       beats: 'A bargain, a price that turns the stomach, the fight, then pity for the man she beat.',
     },
     readings: [
@@ -390,7 +390,7 @@ export const BRIEFS_F: readonly Brief[] = [
     why: {
       timing: 'The jokes in the eulogy have to land as jokes, timed against her stopwatch, and the last story has to fall apart at the same place every take.',
       partner: 'Her pencil decides what he defends, and her suggestion gives him the ending.',
-      techniques: 'He tells his mother’s stories for laughs and they must be funny, so comic timing is played under the grief and through it.',
+      techniques: 'He tells his mother’s stories for laughs and they have to be funny, so play the comic timing under the grief and through it.',
       beats: 'A comic reading, a defense that holds the laugh and the loss at once, the break into grief, then a turn back to comedy as the way to say goodbye.',
     },
     readings: [
@@ -401,7 +401,7 @@ export const BRIEFS_F: readonly Brief[] = [
   {
     id: 'brief-true_crime', title: 'The Register At The Starlite', kinds: ['true_crime'], medium: 'camera', size: 'medium',
     logline: 'Thirty years after a young woman went missing from a roadside motel, the clerk who last saw her is interviewed for a documentary and shown the guest register.',
-    circumstances: 'The case is invented for this scene: no real crime, person or place stands behind it. In this dramatization, a living room in a small desert town, set up with lights for a documentary interview. The clerk has told her story to police, reporters and two juries. The producer has just put a photocopy of the night’s guest register on the table.',
+    circumstances: 'The case is invented for this scene: no real crime, person or place stands behind it. In this dramatization, it’s a living room in a small desert town, set up with lights for a documentary interview. The clerk has told her story to police, reporters and two juries. The producer has just put a photocopy of the night’s guest register on the table.',
     relationship: 'Strangers: the producer has read every word the clerk ever said, and the clerk has met a dozen producers.',
     you: 'Della Underwood, seventy, the night clerk at the motel in 1994, who has told this story so often it tells itself.',
     reader: 'The documentary producer, quiet, off camera behind the lens.',
@@ -466,9 +466,9 @@ export const BRIEFS_F: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 3, partner: 3, vocal: 1, improvisation: 0,
     techniques: { combat: 2 },
     why: {
-      physical: 'The breath of the drag, three moves away from his reach, and a tourniquet tied below frame, all crouched in a cramped culvert while shells land overhead.',
+      physical: 'She’s out of breath from the drag, makes three moves away from his reach and ties a tourniquet below frame, all crouched in a cramped culvert while shells land overhead.',
       partner: 'They share no language, so everything passes through what each sees the other do.',
-      techniques: 'The struggle for the sidearm is three set moves marked solo at reduced speed against the reader’s called cues, with a replica pistol never pointed at the lens or the reader and no contact made, so it repeats safely on every take.',
+      techniques: 'The struggle for the sidearm is three set moves. Mark them solo at reduced speed against the reader’s called cues, with a replica pistol never pointed at the lens or the reader and no contact, so it repeats safely on every take.',
       beats: 'A rescue, a fight for her life, the moment of trust, then care held quiet under the shelling.',
     },
     readings: [
@@ -523,7 +523,7 @@ export const BRIEFS_F: readonly Brief[] = [
       timing: 'The standoff is held on silence, and how long she holds the lever’s click before speaking is the scene.',
       physical: 'The rifle is up, steady and handled the whole scene, until she lowers it.',
       partner: 'His step and his story are what move her, and she watches his hands throughout.',
-      techniques: 'The rifle is handled as stage-combat firearms work with a replica, never pointed at the lens or the reader: shouldered on a mark beside his eyeline, held, the lever worked and lowered, safely and the same way every take.',
+      techniques: 'Handle the rifle as stage-combat firearms work, with a replica never pointed at the lens or the reader: shoulder it on a mark beside his eyeline, hold it, work the lever and lower it, safely and the same way every take.',
       beats: 'A warning, his honest case, the standoff, then a bargain that ends with a dry joke about the second well.',
     },
     readings: [
@@ -575,9 +575,9 @@ export const BRIEFS_F: readonly Brief[] = [
     why: {
       language: 'They speak in the formal courtesies of the martial code, and the formality is how they keep from saying what they feel.',
       timing: 'Courtesy, fight and bow are all placed to rhythm: the pour, the three exchanges and the bow.',
-      physical: 'Three exchanges fought with a sheathed sword, then the sword lowered across her palms in a formal bow, played with control and grace.',
+      physical: 'She fights three exchanges with her sword still sheathed, then lowers it across her palms in a formal bow, with control and grace.',
       partner: 'She answers his attacks and his accusations, never starting either.',
-      techniques: 'The fight is choreographed swordwork, three set exchanges marked solo with a replica at reduced speed against the reader’s called cues, never pointed at the lens or the reader, and his blade goes wide off frame, so it repeats safely on every take.',
+      techniques: 'The fight is choreographed swordwork in three set exchanges. Mark them solo with a replica at reduced speed against the reader’s called cues, never pointing it at the lens or the reader; his blade goes wide off frame, so it repeats safely on every take.',
       beats: 'Courtesy, a fight she refuses to win by drawing, then honor shown in a bow where a blow could have been.',
     },
     readings: [

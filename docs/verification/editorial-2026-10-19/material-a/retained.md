@@ -63,3 +63,12 @@ with the words kept and the reason, so the owner can judge the reasons as well a
   scene works and gives each beat one clear piece of business (the face that falls so far it's funny, the hatband).
 - **`briefs-e.ts` [right], She’s Right.** It rests on: "The brief never says who sent the message, only that it came
   from her number." *Reason:* here "the brief never says" is the point, the one open fact the reading stands on.
+
+## Batch 6
+
+- **`briefs-f.ts` [brief-true_crime], The Register At The Starlite.** Circumstances (first sentence): "The case is
+  invented for this scene: no real crime, person or place stands behind it." *Reason:* a true-crime brief says plainly
+  that nothing real stands behind it, before a word of the scene, as Truth in the text asks.
+- **`briefs-f.ts` [scale], Something Enormous.** "The scene is the size of what she sees. She plays to the eyeline of a
+  performer in a creature suit on a miniature set, the way the genre’s actors do, and the wonder carries the argument."
+  *Reason:* it says how the genre's actors actually work, as a playable note.

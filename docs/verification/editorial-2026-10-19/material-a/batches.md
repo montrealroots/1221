@@ -166,11 +166,11 @@ take" each.
 
 ## Batch 3: Briefs, Fairy Tale To Legal Drama
 
-**Sources (77):** `briefs/briefs-c.ts`, 26 briefs (brief-fairy_tale, brief-family, brief-fantasy, brief-farce,
+**Sources (77):** `briefs/briefs-c.ts`, 25 briefs (brief-fairy_tale, brief-family, brief-fantasy, brief-farce,
 brief-film_noir, brief-folk_horror, brief-found_footage, brief-gangster, brief-giallo, brief-gothic_horror,
 brief-grindhouse, brief-hangout, brief-heist, brief-historical_drama, brief-historical_fiction, brief-holiday,
 brief-hood_film, brief-horror, brief-horror_comedy, brief-isekai, brief-jidaigeki, brief-jukebox_musical, brief-kaiju,
-brief-kitchen_sink, brief-legal_drama) and 51 reading ids (riddle, forgive, deal, scared, craft, brother, wonder,
+brief-kitchen_sink, brief-legal_drama) and 52 reading ids (riddle, forgive, deal, scared, craft, brother, wonder,
 calm, panic, cool, liked, two, polite, slow, mom, live, king, lesson, sleuth, dread, inquiry, longing, nerve, terror,
 easy, unsaid, recall, reason, duty, sister, true, learned, sincere, light, brothers, own, trust, training, straight,
 hustle, audit, nobody, forms, grief, dare, apology, line, awe, angry, son, counsel, promise). About 9,200 words.
@@ -312,3 +312,49 @@ label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-r
 text-inventory 0 after the marks. vitest: material-words and briefs-content, 2 files, 454 tests, exit 0.
 
 **Screens:** BriefPane for each brief, rendered by the material-words test.
+
+## Batch 6: Briefs, Stoner Comedy To Zombie
+
+**Sources (72):** `briefs/briefs-f.ts`, 24 briefs (brief-stoner_comedy, brief-superhero, brief-supernatural,
+brief-surrealist, brief-survival, brief-swashbuckler, brief-sword_and_sandal, brief-sword_and_sorcery,
+brief-techno_thriller, brief-teen, brief-thriller, brief-time_travel, brief-tokusatsu, brief-tragedy,
+brief-tragicomedy, brief-true_crime, brief-vampire, brief-war, brief-werewolf, brief-western, brief-whodunit,
+brief-wuxia, brief-yakuza, brief-zombie) and 48 reading ids (host, dawning, sister (two readings: Sister First and His
+Father’s Sister), cost, skeptic, welcome, straight, dream, procedure, body, daughter, play, stall, servant, father,
+blade, mirror, expert, town, righteous, caught, steady, fraying, weary, puzzle, scale, recruit, duty, performer, dam,
+rote, guilt, brother, hunger, medic, mother, planner, fear, iron, neighbor, sleuth, danger, code, grief, elder,
+regret, route, friend). About 8,700 words.
+
+**Rewritten (8 sources, 12 strings):** brief-superhero, brief-swashbuckler, brief-sword_and_sorcery,
+brief-tragicomedy, brief-true_crime, brief-war, brief-western, brief-wuxia. By kind:
+- **Staged fights as instructions (6):** Holding Breath, The Customs House Stair, The Bridge Toll, The Culvert, The Teahouse
+  Oath ("Mark them solo with a replica at reduced speed against the reader’s called cues, never pointing it at the lens
+  or the reader; his blade goes wide off frame, so it repeats safely on every take.") and The Well At Cutbank's rifle
+  ("Handle the rifle as stage-combat firearms work, … shoulder it on a mark beside his eyeline, hold it, work the lever
+  and lower it …").
+- **Fragments made sentences (4):** the physical notes of The Customs House Stair, The Bridge Toll, The Culvert and The
+  Teahouse Oath, each a list of nouns or participles that now says what she does.
+- **A passive direction (1):** Three Minutes' "comic timing is played under the grief" is "play the comic timing under
+  the grief and through it".
+- **A fragment in the circumstances (1):** The Register At The Starlite's "In this dramatization, a living room …" got
+  its verb.
+
+**Kept (64 sources):** the rest. The Interview In The Wet Office's and The Last Stop's "On the tape …" set descriptions
+are kept as descriptions.
+
+**Meaning-sensitive (6):** the six staging notes. Each keeps every condition it had: solo, reduced speed, the reader's
+called cues, a replica never pointed at the lens or the reader, no contact, the prop on the actor's side of the frame,
+the blade or the fall going off frame, and the repetition on every take.
+
+**Interactions read whole:** each brief's pane; the allows brief (The Night Hatch) with its It Only Takes: Restrained
+note, which is kept.
+
+**Tests and tool matchers updated:** none. The Well At Cutbank's old phrasing is shared by material-b's `second-f.ts`
+line 535, listed in the report.
+
+**Checks (exits, `scratchpad/ma/b6/`):** `tsc -b --noEmit` 0; `eslint briefs-f.ts --max-warnings=0` 0; title-case 0;
+label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-refs 0; deciders 0; guide-quotes 0;
+text-inventory 0 after the marks. vitest: material-words and briefs-content, 2 files, 454 tests, exit 0.
+
+**Screens:** BriefPane for each brief, rendered by the material-words test; on the built app, the briefs walk at the
+end of the area (below).

@@ -845,5 +845,137 @@
   "why": "'Has to be placed' said nothing to do; the beat has to land exactly.",
   "meaningSensitive": false,
   "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-superhero]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The struggle for the bag is a short staged fight marked solo at reduced speed against the reader’s called cues, with the bag on her side of frame and no contact made, so it repeats safely on every take.",
+  "after": "The struggle for the bag is a short staged fight. Mark it solo at reduced speed against the reader’s called cues, with the bag on your side of the frame and no contact, so it repeats safely on every take.",
+  "why": "The staging note as an instruction, as in every other fight; every condition kept.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-swashbuckler]",
+  "field": "why.physical",
+  "kind": "other",
+  "before": "Circling and three passes, ending with his blade sent wide, played on a stone stair with the footwork of a trained fencer.",
+  "after": "She circles him and makes three passes, ending with his blade sent wide, on a stone stair, with a trained fencer’s footwork.",
+  "why": "A fragment after 'Physical: High.' became a sentence with its subject.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-swashbuckler]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The swordplay is three set passes marked solo with a replica blade at reduced speed against the reader’s called cues, never pointed at the lens or the reader, and his blade goes wide off frame, so it repeats safely on every take.",
+  "after": "The swordplay is three set passes. Mark them solo with a replica blade at reduced speed against the reader’s called cues, never pointing it at the lens or the reader; his blade goes wide off frame, so it repeats safely on every take.",
+  "why": "The staging as an instruction, the replica, the speed, the cues and the angle kept.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-sword_and_sorcery]",
+  "field": "why.physical",
+  "kind": "other",
+  "before": "A heavy-sword fight on a moving surface, played on a flat floor with the weight of the blade and the sway of the bridge in her feet.",
+  "after": "It’s a heavy-sword fight on a moving surface, played on a flat floor with the weight of the blade and the sway of the bridge in her feet.",
+  "why": "A noun phrase became a sentence; the image is kept.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-sword_and_sorcery]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The fight is two staged broadsword exchanges marked solo with a replica at reduced speed against the reader’s called cues, never pointed at the lens or the reader, and he falls off frame, so it repeats safely on every take.",
+  "after": "The fight is two staged broadsword exchanges. Mark them solo with a replica at reduced speed against the reader’s called cues, never pointing it at the lens or the reader; he falls off frame, so it repeats safely on every take.",
+  "why": "As The Customs House Stair's.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-tragicomedy]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "He tells his mother’s stories for laughs and they must be funny, so comic timing is played under the grief and through it.",
+  "after": "He tells his mother’s stories for laughs and they have to be funny, so play the comic timing under the grief and through it.",
+  "why": "A passive became the direction it is.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-true_crime]",
+  "field": "circumstances",
+  "kind": "narration",
+  "before": "In this dramatization, a living room in a small desert town, set up with lights for a documentary interview.",
+  "after": "In this dramatization, it’s a living room in a small desert town, set up with lights for a documentary interview.",
+  "why": "A fragment between two full sentences got its verb.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-war]",
+  "field": "why.physical",
+  "kind": "other",
+  "before": "The breath of the drag, three moves away from his reach, and a tourniquet tied below frame, all crouched in a cramped culvert while shells land overhead.",
+  "after": "She’s out of breath from the drag, makes three moves away from his reach and ties a tourniquet below frame, all crouched in a cramped culvert while shells land overhead.",
+  "why": "A list of nouns became what she does.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-war]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The struggle for the sidearm is three set moves marked solo at reduced speed against the reader’s called cues, with a replica pistol never pointed at the lens or the reader and no contact made, so it repeats safely on every take.",
+  "after": "The struggle for the sidearm is three set moves. Mark them solo at reduced speed against the reader’s called cues, with a replica pistol never pointed at the lens or the reader and no contact, so it repeats safely on every take.",
+  "why": "The staging as an instruction; the replica, the angle and no contact kept.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-western]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The rifle is handled as stage-combat firearms work with a replica, never pointed at the lens or the reader: shouldered on a mark beside his eyeline, held, the lever worked and lowered, safely and the same way every take.",
+  "after": "Handle the rifle as stage-combat firearms work, with a replica never pointed at the lens or the reader: shoulder it on a mark beside his eyeline, hold it, work the lever and lower it, safely and the same way every take.",
+  "why": "Four participles with no one doing them became four instructions.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-wuxia]",
+  "field": "why.physical",
+  "kind": "other",
+  "before": "Three exchanges fought with a sheathed sword, then the sword lowered across her palms in a formal bow, played with control and grace.",
+  "after": "She fights three exchanges with her sword still sheathed, then lowers it across her palms in a formal bow, with control and grace.",
+  "why": "A fragment of participles became what she does.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-wuxia]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The fight is choreographed swordwork, three set exchanges marked solo with a replica at reduced speed against the reader’s called cues, never pointed at the lens or the reader, and his blade goes wide off frame, so it repeats safely on every take.",
+  "after": "The fight is choreographed swordwork in three set exchanges. Mark them solo with a replica at reduced speed against the reader’s called cues, never pointing it at the lens or the reader; his blade goes wide off frame, so it repeats safely on every take.",
+  "why": "As the other fights.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 6)."
  }
 ]
