@@ -44,7 +44,7 @@ const RECENT_WORDS = 'thirty days';
 
 /** What the world calls each sort of account, in its plain name (from 2026-10-17: until then “What You Spend From”, “A Line Of Credit” and the like). Never the engine’s word for it. */
 const ACCOUNT_KIND: Readonly<Record<AccountKind, string>> = {
-  checking: 'Current Account',
+  checking: 'Checking Account',
   savings: 'Savings Account',
   cash: 'Cash In Hand',
   credit_card: 'Credit Card',
@@ -189,9 +189,10 @@ defineLook<Account>('account', {
       summary: accountSentence(account, sim),
       body: accountBody(account, sim),
       ways,
+      // Without the ledger's own rule in it (from brief 15, 2026-10-19): until then “…, not a figure anybody typed in.”
       provenance: account.apr === undefined
-        ? 'The balance is added up from every payment in and out of the account, not a figure anybody typed in.'
-        : 'The balance is added up from every payment in and out. The rate is what the terms charge today, and it’s charged at each statement on any balance the last statement didn’t clear.',
+        ? 'The balance is the sum of every payment into and out of the account.'
+        : 'The balance is the sum of every payment into and out of the account. The rate is what the terms charge today, and it’s charged at each statement on any balance the last statement didn’t clear.',
     };
   },
 });
@@ -251,7 +252,7 @@ function tailFor(kind: AccountKind, spendsFromIt: boolean): string {
     // Until 2026-10-12 the last of it was "for what’s owed the landlord": what went unpaid has been Bills Owed since
     // the home went on 2026-10-09, and savings is drawn on for it each night (`settleArrears`, `systems/spending.ts`).
     case 'savings':
-      return 'It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.';
+      return 'It’s money set aside. Where you’ve linked it, it pays what the checking account can’t, and it pays off anything left unpaid.';
     case 'brokerage':
       return 'What it’s worth moves with the market.';
     case 'escrow':
@@ -372,7 +373,10 @@ defineLook<Holdings>('networth', {
         },
       ],
       ways,
-      provenance: 'Added up from your accounts each time you look, and stored nowhere. Every payment behind it has a matching entry on the other side, and the books balance to the cent.',
+      // Without the bookkeeping (from brief 15, 2026-10-19): until then “Added up from your accounts each time you look,
+      // and stored nowhere. Every payment behind it has a matching entry on the other side, and the books balance to the
+      // cent.”
+      provenance: 'It’s added up from all your accounts each time you look, so it’s right to the cent.',
     };
   },
 });
@@ -553,7 +557,7 @@ function debtBody(owing: Owing, cur: string, sim: Simulation) {
       <p className="small">{said.join(' ')}</p>
       <p className="small">
         {limits > 0
-          ? `You’re using ${used}% of the ${formatMoney(limits, cur)} of credit open to you. Above 30%, each month’s credit report takes points off your record, and more the more you use.`
+          ? `You’re using ${used}% of the ${formatMoney(limits, cur)} of credit open to you. Above 30%, each month’s credit report takes points off your credit score, and the more you use, the more it takes.`
           : 'None of it is on a card or a credit line, so there’s no limit to use up.'}
       </p>
       <div className="grid grid-3">

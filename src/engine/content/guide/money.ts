@@ -412,7 +412,7 @@ export const MONEY: readonly GuideEntry[] = [
     example: {
       setup: `${CHECKING.name} holds ${usd(800_00)}, and ${SAVINGS.name} has held ${usd(100_00)} all month.`,
       steps: [`In Move Money, choose ${CHECKING.name} in From and ${SAVINGS.name} in To.`, 'Type 250 and press Move It.'],
-      result: `“Moved ${usd(250_00)}.” Checking holds ${usd(550_00)} and savings ${usd(350_00)} at once. Savings was at ${usd(100_00)} earlier this month, so this month’s ${usd(SAVINGS.monthlyFee ?? 0)} fee is still charged at the month’s end, leaving ${usd(350_00 - (SAVINGS.monthlyFee ?? 0))}. That’s over ${usd(SAVINGS.waiver?.balanceAtLeast ?? 0)}, so next month’s fee is waived if you leave it there.`,
+      result: `“Moved ${usd(250_00)} to ${SAVINGS.name}.” Checking holds ${usd(550_00)} and savings ${usd(350_00)} at once. Savings was at ${usd(100_00)} earlier this month, so this month’s ${usd(SAVINGS.monthlyFee ?? 0)} fee is still charged at the month’s end, leaving ${usd(350_00 - (SAVINGS.monthlyFee ?? 0))}. That’s over ${usd(SAVINGS.waiver?.balanceAtLeast ?? 0)}, so next month’s fee is waived if you leave it there.`,
     },
   },
   {

@@ -1033,7 +1033,7 @@ describe('cash.withdraw', () => {
     setBalance(sim, account, 0); // TEST SETUP
     must(sim, 'card.lock', { which: 'credit', locked: true });
     hungry(sim); // TEST SETUP
-    expect(eat(sim).error).toBe('The bank and the card can’t pay it. Cash in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card.');
+    expect(eat(sim).error).toBe('Your bank and card can’t cover it. Your cash in hand would, but it isn’t spent while The Day’s Spending is on a card. Set it to In Cash, Then The Debit Card, under How You Pay.');
     expect(inHand(sim)).toBe(100_00 - MEAL);
     // Behind a stopped debit card, anybody's meal comes out of the cash.
     must(sim, 'card.report', { which: 'debit', why: 'lost' });

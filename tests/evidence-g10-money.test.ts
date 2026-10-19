@@ -472,7 +472,7 @@ describe('bank.debit_overdraft', () => {
     expect(o.pendingItems).toBeUndefined();
     expect(fees(out, o)).toEqual([]);
     // In `spendRefusal`'s words: with no opt-in the overdraft isn't counted, and the locked card has no room.
-    expect(notices(out, 'No Money For Food Today').map((n) => n.body)).toContain('A day’s groceries cost $10.00, and there’s nothing left to pay with. It’s what’s in the cupboard today, and not enough of it.');
+    expect(notices(out, 'No Money For Food Today').map((n) => n.body)).toContain('A day’s groceries cost $10.00, and there’s nothing left to pay with. You’re eating what’s left in the cupboard today, and it isn’t enough.');
   });
 
   it('at Wells Fargo: opted in, the $10.00 groceries overdraw the account with no fee, as it charges none on an item of $10 or less; opted out, they aren’t bought', () => {

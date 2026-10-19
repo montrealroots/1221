@@ -66,3 +66,20 @@ files, each with its words and its reason, so the reasons can be judged as well 
   Turn it on again under Your Accounts Over Time." Kept: the cause, what happened to the money, and how to undo it.
 - **`src/ui/bank/BankAccountLife.tsx#END_BUTTON`:** "Renew It At The End", "Move It To Savings At The End", "Pay It Out At
   The End". Kept: three buttons that each name the action and when it happens, distinct from each other.
+
+## Batch 5
+
+- **`src/ui/workspaces/BankWorkspace.tsx#closingWords`:** "It holds more than the €1,999.50 you can take out this month
+  without notice, so closing it gives three months’ notice, as the law requires. The money moves to AktivKonto then."
+  Kept: why closing takes notice, the figure to the cent, and where the money goes, in one panel line beside Close It.
+- **`src/ui/workspaces/BankWorkspace.tsx#interestWords`:** "Pays 0.5% a year (0.501% APY). Interest builds up daily and
+  is paid at each quarter’s close: the end of March, June, September and December. The bank keeps back 26.375% for tax
+  on interest past the first €1,000 each year, and €1,000 of that allowance is left this year." Kept: the rate as the
+  bank's terms state it, when it's paid, and the tax with what's left of the allowance.
+- **`src/ui/looks/money.tsx#accountSentence`:** "You owe $41.10 on it at Chase, which leaves $458.90 of its $500.00
+  limit free to use." Kept: what's owed and what's left to use, the two figures a card's look is opened for.
+- **`src/engine/systems/obligations.ts#obligationsAhead`:** "Move money into it, pay the card by hand, or have autopay pay
+  from another account." Kept: the three ways out of Short For A Payment for a card's autopay, each a control the
+  player has.
+- **`src/engine/core/ledger.ts#Ledger`:** "Transaction … doesn’t balance: postings sum to … cents, expected 0." Kept: the
+  ledger's integrity errors are thrown only on a bug in the game, never in play; a player doesn't read them.

@@ -2,7 +2,7 @@
 
 Each: what, where, how it was found, and what was done. A wrong number or condition in a sentence counts.
 
-## m1. Two Move Money refusals named a limit rounded to whole units (fixed)
+## m1. Two Move Money refusals, and the hint above them, named a limit rounded to whole units (fixed)
 
 `src/engine/systems/banking.ts`, `bank.transfer`: "You can take €2,000 more out of Flexgeld this month without notice."
 and "With the C$2.00 withdrawal fee, you can move at most C$99 out of RBC High Interest eSavings." Both wrote the limit
@@ -12,6 +12,11 @@ figure: with €1,999.50 left the refusal said €2,000, and with C$98.50 of roo
 would let out. Found reading the refusals' figures while rewriting them. Now the figure is written to the cent, as the
 house writes a refusal's figure. `tests/editorial-money.test.ts`, "m1", fails without the fix (it reads "€2,000" and
 "C$99").
+
+A third instance, found in batch 5: Move Money's hint under the fields, "You can take out €2,000 more this month without
+notice." (`src/ui/workspaces/BankWorkspace.tsx`), wrote the same allowance with the screen's whole-unit `money`. It now
+writes it to the cent; `tests/editorial-money-screens.test.ts`, "m1, on the Accounts tab", reads "€1,999.50" with €0.50
+gone out and fails with the old figure ("€2,000").
 
 ## m2. A charge-off is said to stay on the record "until it’s paid" (the panel: fixed in batch 3; the glossary: the coordinator)
 

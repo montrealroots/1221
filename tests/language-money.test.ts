@@ -233,7 +233,7 @@ describe('PLAYER JOURNEY: Other Charges and the sources line, at banks around th
   it('says the debit card’s yearly fee and age, its timing, and its estimate after the source', () => {
     const words = drawn(lifeAt('is-39-mosfellsbr', 'is-arion', 'lang14-arion'), BankWorkspace);
     expect(words).toContain('The debit card costs 950 kr a year and 19 kr a purchase, or nothing at 23 and under. It’s paid for the year ahead, and what’s left of the year is refunded if the account closes. Source: Arion’s price list');
-    expect(words).toMatch(/ or nothing at 23 and under\. It’s (paid for the year ahead, and what’s left of the year is refunded|charged at the end of each card year, and the days used so far are charged) if the account closes\. Source: Arion’s price list[^.]*\. Estimated: Arion’s price list and terms don’t say when in the year it’s charged\./);
+    expect(words).toMatch(/ or nothing at 23 and under\. It’s (paid for the year ahead, and what’s left of the year is refunded|charged at the end of each card year, and the days used so far are charged) if the account closes\. Source: Arion’s price list[^.]*\. The timing is estimated: Arion’s price list and terms don’t say when in the year it’s charged\./);
     expect(words).toMatch(/ It’s paid here on [A-Z][a-z]+ \d{1,2}\. The day is estimated\./);
   });
 
@@ -311,9 +311,9 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Borrowing, Statement
     const account = () => resolveLook(sim, lookAt('account', savings.id)) as Looked;
     setBalance(sim, savings, 250_00);
     expect(account().kind).toBe('Savings Account');
-    expect(account().summary).toBe('You have $250.00 in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.');
+    expect(account().summary).toBe('You have $250.00 in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the checking account can’t, and it pays off anything left unpaid.');
     setBalance(sim, savings, 0);
-    expect(account().summary).toBe('There’s nothing in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.');
+    expect(account().summary).toBe('There’s nothing in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the checking account can’t, and it pays off anything left unpaid.');
     setBalance(sim, savings, -3_30);
     expect(account().summary).toBe('It’s $3.30 overdrawn at Chase, and every day it stays overdrawn can cost you.');
     expect((resolveLook(sim, lookAt('account', checking.id)) as Looked).summary).toMatch(/^You have \$[\d,.]+ in it at Chase\. It’s your primary account, so the day’s spending comes out of it\.$/);
@@ -326,7 +326,7 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Borrowing, Statement
       expect(owed && 'gone' in owed ? owed.gone : '').toBe('You don’t owe anyone anything, so there’s nothing to show here.');
     }
     const worth = resolveLook(sim, lookAt('networth', sim.player.id)) as Looked;
-    expect(worth.provenance).toBe('Added up from your accounts each time you look, and stored nowhere. Every payment behind it has a matching entry on the other side, and the books balance to the cent.');
+    expect(worth.provenance).toBe('It’s added up from all your accounts each time you look, so it’s right to the cent.');
     expect(text(worth.body)).toContain('is your primary account, where the day’s spending comes from.');
   });
 });

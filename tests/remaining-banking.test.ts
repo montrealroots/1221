@@ -826,6 +826,8 @@ describe('banking.s7: what a New Haven student meets opening and moving money', 
     press('Move It');
     expect(h.answers.filter((a) => a.kind === 'bank.transfer')).toEqual([{ kind: 'bank.transfer', ok: true, error: undefined }]);
     expect(savings.balance - before).toBe(25_00);
+    // The message names where it went (from brief 15, 2026-10-19: until then “Moved $25.”).
+    expect(h.toasts).toEqual(['Moved $25 to Chase Savings.']);
     drawn(sim, createElement(BankWorkspace));
     const move = h.buttons.filter((b) => b.text === 'Move It');
     expect(move.map((b) => b.disabled)).toEqual([true]);

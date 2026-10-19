@@ -871,7 +871,7 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     spendAll(sim);
     tended(sim, on(2026, 10, 10, 12));
     const short = sim.universe.notifications.find((n) => n.title === 'Short For A Payment: Chase Total Checking')!;
-    expect(short.body).toMatch(/^The Chase Freedom Unlimited’s autopay, \$\d+\.\d{2}, comes from Chase Total Checking at Chase on October 11, 2026, and it holds \$\d+\.\d{2}\. Move money into it, pay the card by hand, or have autopay pay from another account\.$/);
+    expect(short.body).toMatch(/^The Chase Freedom Unlimited’s autopay, \$\d+\.\d{2}, comes from Chase Total Checking at Chase on October 11, 2026, and it has \$\d+\.\d{2} available\. Move money into it, pay the card by hand, or have autopay pay from another account\.$/);
     expect(drawn(sim, Home)).toContain('Card Payment Due in ');
     spendAll(sim);
     tended(sim, on(2026, 10, 12, 12));

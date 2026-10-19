@@ -17,3 +17,5 @@ areas began; these are the words this area's screens now use with it, and the ph
 | **published**, of a research summary | "Its published rewards:", "The bank’s published plans:": the research's summary of a bank's published terms, not a quotation of them. | "In the bank’s words:", "in its words" (for text that isn't a quotation) |
 | **Until It Closed** | A closed account's or card's last statement period, in the Period list: "September 2026, Until It Closed". | "To Its Closing" |
 | **The law here caps …** | A card held to the country's cap: "The law here caps the rate at 35%, and the card is held to that.", the law's citation in the Source line. | the citation as the sentence's subject |
+| **Moved … to …**, **Sent … to …** | Move Money's confirmation names the account it went to: "Moved $25 to Chase Savings.", "Sent £1,000.00 to Chase Total Checking. It arrives September 2, 2026." | "Moved $25." |
+| **has … available**, in Short For A Payment | "…, and it has $12.00 available.": the account's available balance, which is what the payment can take. | "and it holds $12.00" |

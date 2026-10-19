@@ -301,7 +301,7 @@ const PLAYS: Record<string, () => void> = {
     const moved = must<{ moved: number; arrivesAt?: number }>(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: count(steps[1]!, 'Type ', ' and press') * 100 });
     expect(moved.arrivesAt).toBeUndefined();
     // The message, as the bank screen words it (`ui/workspaces/BankWorkspace.tsx`).
-    expect(result).toContain(`“Moved ${formatMoney(moved.moved, cur, { cents: false })}.”`);
+    expect(result).toContain(`“Moved ${formatMoney(moved.moved, cur, { cents: false })} to ${savings.name}.”`);
     expect(checking.balance).toBe(sum(result, 'Checking holds ', ' and savings'));
     expect(savings.balance).toBe(sum(result, 'and savings ', ' at once'));
 

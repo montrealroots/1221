@@ -478,5 +478,135 @@
   "why": "The glossary's word.",
   "meaningSensitive": false,
   "verified": "tests/editorial-money-screens.test.ts (TD)."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "confirmation",
+  "before": "Moved $25.",
+  "after": "Moved $25 to Chase Savings.",
+  "why": "The confirmation names where the money went, so a player with three accounts doesn't have to look.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts (Move Money pressed once) reads the toast."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "confirmation",
+  "before": "Sent £1,000.00. It arrives September 2, 2026.",
+  "after": "Sent £1,000.00 to Chase Total Checking. It arrives September 2, 2026.",
+  "why": "As Moved: the account named, the arrival day kept.",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-transfers.test.ts reads the toast."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "label",
+  "before": "You can take out €2,000 more this month without notice.",
+  "after": "You can take out €1,999.50 more this month without notice.",
+  "why": "Defect m1's third instance: the hint rounded the allowance left to whole euros, more than Move It would then let out.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-money-screens.test.ts (m1, on the Accounts tab), mutation-checked."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "label",
+  "before": "…, and what it holds moves to your current account then.",
+  "after": "…, and what it holds moves to your checking account then.",
+  "why": "The glossary's word, where no account is named.",
+  "meaningSensitive": false,
+  "verified": "Read in the code; the named account is the usual case."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#OtherCharges",
+  "kind": "official",
+  "before": "… Source: Arion’s price list …. Estimated: Arion’s price list and terms don’t say when in the year it’s charged.",
+  "after": "… Source: Arion’s price list …. The timing is estimated: Arion’s price list and terms don’t say when in the year it’s charged.",
+  "why": "Says what's estimated, as the debit card's year line on the account panel does (batch 1).",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (Arion)."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#ACCOUNT_KIND",
+  "kind": "label",
+  "before": "Current Account",
+  "after": "Checking Account",
+  "why": "The glossary's word; the frame area's report named this label, and its own account name is Checking Account.",
+  "meaningSensitive": false,
+  "verified": "tsc; the look's kind line is read in the built app's walk."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#top",
+  "kind": "other",
+  "before": "Added up from your accounts each time you look, and stored nowhere. Every payment behind it has a matching entry on the other side, and the books balance to the cent.",
+  "after": "It’s added up from all your accounts each time you look, so it’s right to the cent.",
+  "why": "The old provenance showed the player the bookkeeping (where it's stored, double entry); what matters is that it's current and exact.",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts reads the net worth look's provenance."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#top",
+  "kind": "other",
+  "before": "The balance is added up from every payment in and out of the account, not a figure anybody typed in.",
+  "after": "The balance is the sum of every payment into and out of the account.",
+  "why": "\"Not a figure anybody typed in\" is the house's ledger rule, not something a player needs told.",
+  "meaningSensitive": false,
+  "verified": "Read; `Ledger` keeps each balance as the sum of its postings."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#tailFor",
+  "kind": "label",
+  "before": "It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.",
+  "after": "It’s money set aside. Where you’ve linked it, it pays what the checking account can’t, and it pays off anything left unpaid.",
+  "why": "The glossary's word.",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (the savings look, above and at zero)."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#debtBody",
+  "kind": "label",
+  "before": "Above 30%, each month’s credit report takes points off your record, and more the more you use.",
+  "after": "Above 30%, each month’s credit report takes points off your credit score, and the more you use, the more it takes.",
+  "why": "\"Credit score\" is the glossary's word for the number that falls; \"more the more\" read as a stumble.",
+  "meaningSensitive": true,
+  "verified": "`systems/credit.ts` scores utilization above 30% by tenths; the sentence doesn't name a figure."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/systems/spending.ts#CASH_UNSPENT",
+  "kind": "error",
+  "before": "The bank and the card can’t pay it. Cash in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card.",
+  "after": "Your bank and card can’t cover it. Your cash in hand would, but it isn’t spent while The Day’s Spending is on a card. Set it to In Cash, Then The Debit Card, under How You Pay.",
+  "why": "What failed, why the cash didn’t help, and the setting that would spend it, with where it is. Not “only spent when”: a locked or stopped debit card spends it too, though that case has its own words.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-r1-1.test.ts (the meal and groceries with cash unspent) and tests/evidence-g12-money.test.ts."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/systems/spending.ts#buyTheDaysFood",
+  "kind": "notification",
+  "before": "A day’s groceries cost $10.00, and there’s nothing left to pay with. It’s what’s in the cupboard today, and not enough of it.",
+  "after": "A day’s groceries cost $10.00, and there’s nothing left to pay with. You’re eating what’s left in the cupboard today, and it isn’t enough.",
+  "why": "Says what it means for the player plainly: they eat, but not enough.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-r1-1.test.ts and tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/systems/obligations.ts#accountAlerts",
+  "kind": "notification",
+  "before": "The Chase Freedom Unlimited’s autopay, $41.10, comes from Chase Total Checking at Chase on October 11, 2026, and it holds $12.00. …",
+  "after": "The Chase Freedom Unlimited’s autopay, $41.10, comes from Chase Total Checking at Chase on October 11, 2026, and it has $12.00 available. …",
+  "why": "The figure is what's available, pending card payments off it, which is what the payment can take (`inReach`).",
+  "meaningSensitive": true,
+  "verified": "tests/language-dynamic.test.ts reads Short For A Payment."
  }
 ]

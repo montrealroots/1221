@@ -312,3 +312,67 @@ held these words.
 new files 0 (17 and 8 tests); title-case, label-sweep, plural-check, voice-check, tics, spelling, typos, doc-refs,
 deciders 0; guide-quotes 0 (582 of 582, after ten quotes in the guide moved). `text-inventory --check` 1 on my guide
 entries only (`cancelRefusal` is marked now).
+
+## Batch 5: The Bank Screen's Frame, The Money Looks, The Day's Spending And Payment Alerts
+
+**Sources (43):** `src/ui/workspaces/BankWorkspace.tsx` (9), `src/ui/looks/money.tsx` (15),
+`src/engine/systems/spending.ts` (10), `src/engine/systems/obligations.ts` (2), `src/engine/core/ledger.ts` (1),
+`src/engine/core/money.ts` (1), `src/engine/content/currency.ts` (2), `src/engine/systems/banknumber.ts` (1),
+`src/engine/systems/earnings.ts` (2). Rewritten 9, Retained 34.
+
+**Interactions read whole, in order, across files:**
+- *Moving money, done:* Move Money's subtitle, From and To, the hint under the fields (free withdrawals, Germany's
+  allowance), the toast, and the guide's Moving Money example, which quotes the toast.
+- *Closing savings:* the line beside Close It (`closingWords`), the toast, the notice line once notice is given.
+- *The day's spending refused:* the meal and groceries refusals (`spendRefusal`), No Money For Food Today, and the guide's
+  How You Pay entry, which tells the player when cash is spent.
+- *Short For A Payment and Low Balance:* the alert, its remedy (`obligationsAhead`), and the guide's Keeping An Account
+  entry.
+- *The looks:* an account, net worth, what's owed and where it went, each in its variants (owed, overdrawn, empty,
+  holding; one debt and several; no accounts).
+
+**What changed.**
+- "Current account" became "checking account": the account look's kind, **Checking Account** (`renames.json`, from the
+  frame area's report), savings' tail ("pays what the checking account can’t"), and Move Money's two fallbacks ("moves
+  to your checking account then").
+- Move Money's confirmation names where the money went: "Moved $25 to Chase Savings.", "Sent £1,000.00 to Chase Total
+  Checking. It arrives September 2, 2026." The guide's example quotes it.
+- Defect m1's third instance: the hint "You can take out €2,000 more this month without notice." with €1,999.50 left
+  now gives €1,999.50 (`defects.md`).
+- Other Charges says what's estimated: "The timing is estimated: Arion’s price list and terms don’t say when in the year
+  it’s charged.", as the account panel's card year line does since batch 1.
+- The looks' provenance lines no longer show the bookkeeping: "It’s added up from all your accounts each time you look,
+  so it’s right to the cent." for "Added up from your accounts each time you look, and stored nowhere. Every payment
+  behind it has a matching entry on the other side, and the books balance to the cent."; "The balance is the sum of
+  every payment into and out of the account." for "…, not a figure anybody typed in."
+- Credit Used: "takes points off your credit score, and the more you use, the more it takes." for "takes points off
+  your record, and more the more you use."
+- The day's spending with cash unspent: "Your bank and card can’t cover it. Your cash in hand would, but it isn’t spent
+  while The Day’s Spending is on a card. Set it to In Cash, Then The Debit Card, under How You Pay." It says what
+  failed, why the cash didn't help and where the setting is.
+- No Money For Food Today ends "You’re eating what’s left in the cupboard today, and it isn’t enough." for "It’s what’s
+  in the cupboard today, and not enough of it."
+- Short For A Payment: "…, and it has $12.00 available." for "and it holds $12.00", the available balance being what
+  the payment can take.
+- *Kept:* the fee and waiver lines, the interest sentence, the sources line, the head line's sums, the account numbers in
+  each country's format, the currency symbols, the spending categories, the ledger's integrity errors (never shown in
+  play), the locale and time zone codes.
+
+**Meaning-sensitive changes, and how each was checked.**
+- *"isn’t spent while The Day’s Spending is on a card":* `spendRefusal` returns these words only where the debit card
+  works, the day isn't paid in cash, and cash would cover what the bank and card can't. A locked or stopped debit card
+  spends the cash too, but has its own words before these, so "only spent when …" would have overstated it.
+- *"has … available":* `accountAlerts` compares the payment with `inReach(account)`; the figure is `balanceText`, the
+  account's available balance.
+- *The credit score sentence:* `credit.ts` takes points by tenths of utilization past 30%; the words give no figure.
+
+**Tests and tool matchers updated:** defects-r1-1 (cash unspent, the cupboard sentence), evidence-g10-money and
+evidence-g12-money (the same), guide-examples-money (the Moved quote, now with the account), home-account-transfers (the
+Sent toast), language-dynamic (Short For A Payment), language-money (Arion's timing, the savings look, the net worth
+provenance). Added: remaining-banking's one-press Move Money test now reads the toast; a new m1 test in
+`tests/editorial-money-screens.test.ts` renders Move Money with From on Deutsche Bank's Flexgeld after €0.50 out and
+fails with the old figure. No UI tool matcher held these words.
+
+**Checks:** tsc 0; eslint 0 on the changed files; the affected test files 0 (149 tests, then 31 and 60 on reruns);
+title-case, label-sweep, plural-check, voice-check, tics, spelling, typos, doc-refs, deciders 0; guide-quotes 0 (582 of
+582). `text-inventory --check` 1 on my guide entries only, which batch 6 reads.

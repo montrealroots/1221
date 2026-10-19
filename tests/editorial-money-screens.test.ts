@@ -15,7 +15,18 @@ import { cardsOf } from '@/engine/systems/credit';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
+  /** FIXTURE: what a screen's first useStates start at, in place of their own initial values (Move Money's From). */
+  states: [] as unknown[],
 }));
+
+vi.mock('react', async (orig) => {
+  const real = await orig<typeof import('react')>();
+  const useState = ((initial: unknown) => {
+    const [value, set] = real.useState(initial);
+    return h.states.length ? [h.states.shift(), set] : [value, set];
+  }) as typeof real.useState;
+  return { ...real, default: { ...real, useState }, useState };
+});
 
 vi.mock('@/ui/kept', async (orig) => {
   const real = await orig<typeof import('@/ui/kept')>();
@@ -39,6 +50,7 @@ const { BankCardOffers } = await import('@/ui/bank/BankCardOffers');
 const { BankStatements } = await import('@/ui/bank/BankStatements');
 const { BankSecurity } = await import('@/ui/bank/BankSecurity');
 const { BankLending } = await import('@/ui/bank/BankLending');
+const { BankWorkspace } = await import('@/ui/workspaces/BankWorkspace');
 
 const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ')
   .replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&amp;/g, '&').replace(/\s+/g, ' ').replace(/\s+([,.;:])/g, '$1');
@@ -99,5 +111,22 @@ describe('the Accounts and Cards tabs’ term and card words', () => {
     h.sim = sim;
     const words = onScreen(renderToStaticMarkup(createElement(BankLending, { bank: bankById('ca-td')!, show: ['term'] })));
     expect(words).toMatch(/At its end it is paid, with its interest, into your checking account, unless you choose another way the bank allows\./);
+  });
+});
+
+describe('m1, on the Accounts tab: Move Money’s hint gives the month’s allowance to the cent', () => {
+  it('Deutsche Bank savings with €1,999.50 of the month’s €2,000 left says €1,999.50 under Move Money, not €2,000', () => {
+    const sim = quickSave({ homeRegionId: 'de-be-berlin', startLocationId: 'de-be-berlin', livesWhereBorn: true, wealth: 'comfortable', bankId: 'de-deutsche-bank' }, 'ed15-m1-hint');
+    const mine = Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && !a.closedAt && a.bankId === 'de-deutsche-bank' && a.category !== 'term');
+    const saver = mine.find((a) => a.kind === 'savings')!;
+    const current = mine.find((a) => a.kind === 'checking')!;
+    expect(sim.execute({ kind: 'bank.transfer', payload: { fromId: saver.id, toId: current.id, amount: 50 } }).ok).toBe(true);
+    // Move Money's From set to the savings, as the player chooses it.
+    h.states = [saver.id];
+    h.sim = sim;
+    const words = onScreen(renderToStaticMarkup(createElement(BankWorkspace)));
+    h.states = [];
+    // Until brief 15 the hint was written in whole euros, €2,000, which Move It then refused.
+    expect(words).toContain('You can take out €1,999.50 more this month without notice.');
   });
 });

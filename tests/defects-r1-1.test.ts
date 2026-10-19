@@ -84,7 +84,7 @@ describe('cash in hand, for somebody who pays the day by card', () => {
       expect(meal).toBeLessThan(100_00);
       expect(purchaseMayOverdraw(sim, sim.player)).toBe(false);
       expect(overdraftHeadroom(sim, sim.player)).toBeGreaterThan(meal);
-      const words = 'The bank and the card can’t pay it. Cash in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card.';
+      const words = 'Your bank and card can’t cover it. Your cash in hand would, but it isn’t spent while The Day’s Spending is on a card. Set it to In Cash, Then The Debit Card, under How You Pay.';
       expect(menuLine(sim, 'eat').refused).toBe(words);
       expect(menuLine(sim, 'order').refused).toBe(words);
       const clock = sim.now;
@@ -131,7 +131,7 @@ describe('the morning’s groceries, not bought', () => {
     const unspent = aCentAndCash('debit', 'r1-groceries-cash');
     cardRoomTo(unspent, 0);
     expect(buyTheDaysFood(unspent, unspent.player)).toBe(false);
-    expect(said(unspent)).toMatch(/^A day’s groceries cost \$\d+\.\d\d\. The bank and the card can’t pay it\. Cash in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card\. It’s what’s in the cupboard today/);
+    expect(said(unspent)).toMatch(/^A day’s groceries cost \$\d+\.\d\d\. Your bank and card can’t cover it\. Your cash in hand would, but it isn’t spent while The Day’s Spending is on a card\. Set it to In Cash, Then The Debit Card, under How You Pay\. You’re eating what’s left in the cupboard today/);
     expect(walletOf(unspent, unspent.player)!.balance).toBe(100_00);
     expect(arrearsOf(unspent, unspent.player)).toBe(0);
     // The debit card locked with plenty behind it.
@@ -141,13 +141,13 @@ describe('the morning’s groceries, not bought', () => {
     cardRoomTo(locked, 0);
     plasticOf(locked, primary(locked), 'debit').locked = true;
     expect(buyTheDaysFood(locked, locked.player)).toBe(false);
-    expect(said(locked)).toMatch(/\. Your debit card is locked, and there isn’t enough on the credit card or in cash\. It’s what’s/);
+    expect(said(locked)).toMatch(/\. Your debit card is locked, and there isn’t enough on the credit card or in cash\. You’re eating what’s/);
     // Nothing anywhere.
     const broke = aCentAndCash('debit', 'r1-groceries-broke');
     setTo(broke, walletOf(broke, broke.player)!, 0);
     cardRoomTo(broke, 0);
     expect(buyTheDaysFood(broke, broke.player)).toBe(false);
-    expect(said(broke)).toMatch(/, and there’s nothing left to pay with\. It’s what’s in the cupboard today, and not enough of it\.$/);
+    expect(said(broke)).toMatch(/, and there’s nothing left to pay with\. You’re eating what’s left in the cupboard today, and it isn’t enough\.$/);
   });
 });
 
