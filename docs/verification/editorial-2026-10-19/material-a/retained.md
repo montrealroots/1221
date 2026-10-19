@@ -20,3 +20,16 @@ with the words kept and the reason, so the owner can judge the reasons as well a
 - **`plays.ts` #THESIS_PLAYS.** "Hedda Gabler", "Henrik Ibsen", "Hedda Tesman", "Judge Brack" and the rest. *Reason:*
   the plays' real titles, authors and characters; a title is also matched by exact text against the casting a save
   holds (`school.ts`, `p.title === c.play`), so it's a key.
+
+## Batch 2
+
+- **`briefs-b.ts` [brief-experimental], The Glass Of Water.** Circumstances: "The exchange is six lines long. It’s played
+  four times in one take. Your lines never change; the reader changes one of theirs each time, chosen in advance and
+  unknown to you." *Reason:* it states its rules exactly, so an experiment with no story is still playable. The "take"
+  is the tape's own, a single unbroken one.
+- **`briefs-b.ts` [still], All In The Folding.** "He gives nothing away, and the whole scene is played in the folding of
+  the shirts." It rests on: "Fear makes a source a risk, and he keeps folding after he understands." *Reason:* one
+  physical action carries the whole reading, resting on the scene's own rule about fear.
+- **`briefs-b.ts` [brief-costume_drama], Quarter Day.** Obstacle: "The custom of the house forbids her to sit until
+  invited, or to name a sum first, and Mrs. Ashworth knows it and offers a glowing reference in place of the money."
+  *Reason:* 1847's rules for a governess are set out plainly and the scene is made from them.

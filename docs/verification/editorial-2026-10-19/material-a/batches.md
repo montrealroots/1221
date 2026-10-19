@@ -43,7 +43,7 @@ searched in `src tests tools docs/GLOSSARY.md docs/STYLE.md` before the batch's 
 
 ## Batch 1: Briefs, Absurdist To Comedy, And The Plays
 
-**Sources (81):** `briefs/briefs-a.ts` 74 (27 briefs and 47 reading ids: brief-action, brief-absurdist,
+**Sources (81):** `briefs/briefs-a.ts` 74 (25 briefs and 49 reading ids: brief-action, brief-absurdist,
 brief-action_comedy, brief-adventure, brief-alternate_history, brief-animated, brief-anime, brief-anthology,
 brief-apocalyptic, brief-art_house, brief-avant_garde, brief-backstage_musical, brief-biker, brief-biographical,
 brief-black_comedy, brief-blaxploitation, brief-body_horror, brief-buddy_comedy, brief-buddy_cop, brief-caper,
@@ -92,7 +92,7 @@ they're keys as well as names; `SIZE_WORD`'s leading "A " is read back by `Schoo
 - The voice briefs: "whose lines aren’t in the booth" is "She isn’t in the booth with you": the brief is recorded alone
   (`medium: 'voice'`, the circumstances).
 
-**Interactions read whole:** a brief's pane top to bottom, as above, for each of the 27 briefs: the header line ("A
+**Interactions read whole:** a brief's pane top to bottom, as above, for each of the 25 briefs: the header line ("A
 practice brief for …: an original scene written for SLATE, taped to a reader off camera" or "recorded alone at a
 microphone"), The Scene, Where It Turns, What It Asks, Your Reading, How You'll Play It, Read With and The Take. The
 new staging notes now read as the same kind of instruction as the pane's own controls below them, and the You Speak To
@@ -110,3 +110,56 @@ guide-quotes 0; text-inventory 1 before the marks (the 14 rewritten sources Pend
 
 **Screens:** BriefPane for every brief of the batch, rendered by the material-words test. The built app is read once at
 the end of the area (below).
+
+## Batch 2: Briefs, Coming Of Age To Exploitation
+
+**Sources (74):** `briefs/briefs-b.ts`, 25 briefs (brief-coming_of_age, brief-concert_film,
+brief-conspiracy_thriller, brief-cosmic_horror, brief-costume_drama, brief-courtroom_drama, brief-creature_feature,
+brief-crime, brief-cyberpunk, brief-dance, brief-dark_fantasy, brief-detective, brief-disaster, brief-docudrama,
+brief-docufiction, brief-documentary, brief-domestic_drama, brief-drama, brief-dystopian, brief-eco_horror, brief-epic,
+brief-erotic_thriller, brief-espionage, brief-experimental, brief-exploitation) and 49 reading ids (growing, loyal, decided, grieving, hunter, hunted, detached, holding, form,
+pride, craft, care, expert, afraid, protector, business, system, person, legacy, farewell, bargainer, mother, chess,
+sympathy, professional, strangers, witness (two readings: The Record Corrected and What She Saw), memory, ordinary,
+open, letters, narration, tired, partners, guarded, listening, liar, pleader, scientist, courtier, son, control,
+danger, still, father, precision, reaction, revenge, player). About 8,400 words, each read whole in the source.
+
+**Rewritten (15 sources, 19 strings):** growing, loyal, brief-concert_film, pride, brief-creature_feature,
+brief-docudrama, brief-docufiction, ordinary, brief-documentary, tired, guarded, listening, brief-epic,
+brief-erotic_thriller, brief-exploitation. By kind:
+- **Staging notes as instructions (3):** The Count-In ("For the tape, stand at a mic stand and play to his eyeline
+  beside the lens."), The Second Key's and Closed For The Season's staged intimacy ("Seated, lean toward his eyeline
+  beside the lens and stop short. … when the reader calls the catch, stop your hand as if it’s held."). The
+  coordinator, the solo playing and "None of it is explicit" are kept word for word.
+- **"The actor" is you (3):** The Inquiry Room's physical and vocal notes ("so build that age into how she sits, stands
+  and turns to the reader"), Closing Day's circumstances.
+- **"The brief has her" and "her objective is" (5):** four readings rested on the brief's paperwork rather than the
+  scene ("the brief has her sit only in the last beat"); each now says what she does or wants.
+- **Fragments and danglers (5):** Closing Day's and Letters From The Lock's techniques notes (the label before each
+  already names the technique, so the note says what you do), Letters From The Lock's You Speak To line ("to whom … ;
+  heard by …"), The Ford Before Winter's vocal note, The Boat Shed's second beat.
+- **English a person says (3):** The Hand Held Out's "offers to have worked for free" is the beat's own "he’d have
+  worked the week for free"; Letters From The Lock's "Three letters are read" is "You read three letters"; Hearing Him
+  Out's passive.
+
+**Kept (59 sources):** the rest, each with a reason naming the brief or reading and what it does well.
+
+**Meaning-sensitive (2):** the two staged-intimacy notes. Each keeps every condition it had: agreed in advance with an
+intimacy coordinator, played solo, the eyeline beside the lens, never touching the reader, the prop (jacket, glovebox)
+on the actor's side of the frame, the reader calling the catch, and nothing explicit. The Second Key's "so it repeats
+on every take" is "so the moment repeats exactly on every take": "it" had no clear referent once the sentence split.
+
+**Interactions read whole:** each brief's pane as in batch 1. The voice brief (Letters From The Lock) was read with its
+header ("recorded alone at a microphone") and its You Speak To heading; the improvised brief (Closing Day) with its
+It Only Takes: Open note, which already said "It can only be played open, found fresh from the reader each time" and
+is kept.
+
+**Tests and tool matchers updated:** none; no test or tool held the old words. Two shared phrasings were found in
+material-b's `second-b.ts` (lines 55 and 422) and are listed in the report.
+
+**Checks (exits, `scratchpad/ma/b2/`):** `tsc -b --noEmit` 0; `eslint briefs-b.ts --max-warnings=0` 0; title-case 0;
+label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-refs 0; deciders 0; guide-quotes 0;
+text-inventory 0 after the marks. vitest: material-words and briefs-content, 2 files, 454 tests, exit 0 (run twice,
+the second after the last edit). Engine-speak unchanged at 329: the two staged-intimacy notes keep their one "every
+take" each.
+
+**Screens:** BriefPane for each brief, rendered by the material-words test.

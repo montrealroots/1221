@@ -27,8 +27,8 @@ export const BRIEFS_B: readonly Brief[] = [
       beats: 'A comic start he can’t control, the turn when she admits it, then a boy holding two true things at once.',
     },
     readings: [
-      { id: 'growing', label: 'The Hand Held Out', reading: 'The scene is the moment he stops being a kid around her: the last beat is the first adult thing he does.', rests: 'He offers to have worked for free and still holds his hand out for the money.', lean: { interpretation: 1.2, believability: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.5 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }] },
-      { id: 'loyal', label: 'Still Her Right Hand', reading: 'He keeps trying to make her excuses work for her, and he’s on her side until the very last line.', rests: 'She was the one who hired him, and his objective is to leave still thinking well of her.', lean: { connection: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
+      { id: 'growing', label: 'The Hand Held Out', reading: 'The scene is the moment he stops being a kid around her: the last beat is the first adult thing he does.', rests: 'He says he’d have worked the week for free, and he still holds his hand out for the money.', lean: { interpretation: 1.2, believability: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.5 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }] },
+      { id: 'loyal', label: 'Still Her Right Hand', reading: 'He keeps trying to make her excuses work for her, and he’s on her side until the very last line.', rests: 'She hired him when nobody else would, and he wants to leave still thinking well of her.', lean: { connection: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
     ],
   },
   {
@@ -47,7 +47,7 @@ export const BRIEFS_B: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 0, partner: 2, vocal: 1, improvisation: 0,
     why: {
-      timing: 'The drummer’s count runs under the whole exchange, called by the reader, and she has to land the last line before four. On the tape she stands at a mic stand and plays to his eyeline beside the lens.',
+      timing: 'The drummer’s count runs under the whole exchange, called by the reader, and she has to land the last line before four. For the tape, stand at a mic stand and play to his eyeline beside the lens.',
       partner: 'She plays against an anger he has to keep off his face for the cameras, and she has to read whether he’ll nod.',
       beats: 'A comic exchange through stage smiles, the plain reason that stops it, then a look at the front row as the count runs out.',
     },
@@ -128,7 +128,7 @@ export const BRIEFS_B: readonly Brief[] = [
     },
     readings: [
       { id: 'form', label: 'Within The Form', reading: 'She wins by being more correct than her mistress, and every courtesy she offers is a pressure.', rests: 'The custom forbids her to sit or to name a sum first, and she keeps to it until the last beat.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'discipline', weight: 0.6 }, { dim: 'consistency', ability: 'physical', weight: 0.4 }] },
-      { id: 'pride', label: 'Nine Months Of Pride', reading: 'The forms are a cage she has kept to for two years, and naming the sum is the first time she says what she thinks.', rests: 'She hasn’t been paid since midsummer, and the brief has her name the sum only at the end.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'interpretation', ability: 'imagination', weight: 0.4 }] },
+      { id: 'pride', label: 'Nine Months Of Pride', reading: 'The forms are a cage she has kept to for two years, and naming the sum is the first time she says what she thinks.', rests: 'She hasn’t been paid since midsummer, and she names the sum only at the end.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'interpretation', ability: 'imagination', weight: 0.4 }] },
     ],
   },
   {
@@ -167,7 +167,7 @@ export const BRIEFS_B: readonly Brief[] = [
     obstacle: 'He’s responsible for the boats inside, he thinks she’s overreacting, and something in the shed has gone quiet.',
     beats: [
       { what: 'She asks him calmly to step back from the door, and he jokes that it’s a seal with a grudge.', tones: ['comic', 'grave'] },
-      { what: 'A sound from inside the shed, heard only by the two of them, and she stops arguing.', tones: ['grave'] },
+      { what: 'They both hear a sound from inside the shed, and she stops arguing.', tones: ['grave'] },
       { what: 'She takes the keys from his hand, gently, and tells him to walk with her and not run.', tones: ['grave'] },
     ],
     language: 'everyday', timing: 2, physical: 1, partner: 2, vocal: 1, improvisation: 0,
@@ -348,8 +348,8 @@ export const BRIEFS_B: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 2, partner: 2, vocal: 2, improvisation: 0,
     techniques: { character: 2 },
     why: {
-      physical: 'Agnes is eighty-one, with a stick and a stiff back, and the actor has to build that age into how she sits, stands and turns to the reader.',
-      vocal: 'Her voice is an old woman’s, with a hearing aid and the habits of a switchboard operator, and the actor builds it for the scene.',
+      physical: 'Agnes is eighty-one, with a stick and a stiff back, so build that age into how she sits, stands and turns to the reader.',
+      vocal: 'Build her voice for the scene: an old woman’s, with a hearing aid and a switchboard operator’s habits.',
       partner: 'She answers counsel’s questions, and his hurry is what she has to slow down.',
       techniques: 'The role asks for character work: building an invented woman’s age, posture and voice so the reconstruction reads as testimony from the record.',
       beats: 'A comic start where she corrects him, the grave correction of the record, then the night itself.',
@@ -362,7 +362,7 @@ export const BRIEFS_B: readonly Brief[] = [
   {
     id: 'brief-docufiction', title: 'Closing Day', kinds: ['docufiction'], medium: 'camera', size: 'short',
     logline: 'On its last day of trading, the owner of a corner shop serves one regular customer, with an outline in place of a script and every line found in the moment.',
-    circumstances: 'A small corner shop on its last afternoon. The shelves are half empty, and the owner is selling off what’s left at cost. The camera watches as a documentary would. There are no written lines: the actor and the reader have the outline below and play it as the people would.',
+    circumstances: 'A small corner shop on its last afternoon. The shelves are half empty, and the owner is selling off what’s left at cost. The camera watches as a documentary would. There are no written lines: you and the reader have the outline below and play it as the people would.',
     relationship: 'Shopkeeper and regular. He has come in every day for fourteen years for the same paper and the same mints.',
     you: 'The shop owner, played close to yourself, at the end of thirty years behind the counter.',
     reader: 'The regular customer, improvising too.',
@@ -379,22 +379,22 @@ export const BRIEFS_B: readonly Brief[] = [
     why: {
       partner: 'Every line is found from what the reader says, so the scene exists only between the two of them.',
       improvisation: 'There’s no script: the dialogue is improvised from the outline, the way real people would talk.',
-      techniques: 'The scene is improvised to an outline, playing close to yourself the way a docufiction participant does: improvisation.',
+      techniques: 'You improvise the scene to an outline, playing close to yourself the way a docufiction participant does.',
       allows: 'The brief gives an outline and no lines, so there’s no set text to fix. It can only be played open, found fresh from the reader each time.',
       beats: 'An ordinary sale, a question with no answer ready, then a gift taken without a line.',
     },
     readings: [
-      { id: 'ordinary', label: 'Just Another Day', reading: 'She keeps it ordinary to the end, and the feeling leaks through the routine.', rests: 'Her objective is to get through the sale without making it a goodbye.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'composure', weight: 0.5 }, { dim: 'consistency', ability: 'focus', weight: 0.4 }] },
+      { id: 'ordinary', label: 'Just Another Day', reading: 'She keeps it ordinary to the end, and the feeling leaks through the routine.', rests: 'She wants to get through the last sale without making it a goodbye.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'composure', weight: 0.5 }, { dim: 'consistency', ability: 'focus', weight: 0.4 }] },
       { id: 'open', label: 'Taken By Surprise', reading: 'She lets the regular lead, and the gift is a surprise she meets for real on camera.', rests: 'There are no written lines, and he brings something she doesn’t know about.', lean: { responsiveness: 1.25, connection: 1.1 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.7 }, { dim: 'connection', ability: 'listening', weight: 0.5 }] },
     ],
   },
   {
     id: 'brief-documentary', title: 'Letters From The Lock', kinds: ['documentary'], medium: 'voice', size: 'short',
     logline: 'A voice reads a canal lock-keeper’s wife’s letters to her sister, as narration under a documentary’s archive footage.',
-    circumstances: 'A recording booth. The documentary is about a canal that closed in 1923, and the letters, written for SLATE as an invented woman’s, are read over footage of the locks and barges. Three letters are read, from 1911, 1915 and 1923; the footage under each is already cut, and each letter has to fit its length.',
+    circumstances: 'A recording booth. The documentary is about a canal that closed in 1923, and the letters, written for SLATE as an invented woman’s, are read over footage of the locks and barges. You read three letters, from 1911, 1915 and 1923. The footage under each is already cut, and each letter has to fit its length.',
     relationship: 'Sisters who wrote every month for twelve years and met twice in that time.',
     you: 'The voice of Clara Hesketh, the lock-keeper’s wife, from her twenties to her thirties.',
-    reader: 'Her sister, to whom the letters are written; heard by the documentary’s audience over the footage.',
+    reader: 'Her sister, the one person each letter is written to, though the documentary’s audience hears them over the footage.',
     objective: 'Read the letters so the audience hears a woman writing to her sister, and only then a documentary’s narration.',
     obstacle: 'There’s no picture of her and no one to play off, the footage dictates the timing, and the letters have to age twelve years in three minutes.',
     beats: [
@@ -407,7 +407,7 @@ export const BRIEFS_B: readonly Brief[] = [
     why: {
       vocal: 'The voice carries everything: twelve years of her life, held to a microphone with no face to help it.',
       timing: 'Each letter is read to footage that’s already cut, so it has to fit its length.',
-      techniques: 'The scene is a narration read alone at a microphone over picture: voice-over work.',
+      techniques: 'You read the narration alone at a microphone, over picture.',
       beats: 'A witty young letter, a wartime one with worry under the news, then a last letter that’s a goodbye to the place.',
     },
     readings: [
@@ -435,7 +435,7 @@ export const BRIEFS_B: readonly Brief[] = [
       beats: 'A small argument with a big one under it, the honest answer, then the thing said and taken back.',
     },
     readings: [
-      { id: 'tired', label: 'Too Tired To Pretend', reading: 'She’s too exhausted to keep it under the surface, and the truth comes out because she can’t stop it.', rests: 'She’s back from a double shift, still in her coat, and the brief has her say it plainly.', lean: { believability: 1.2, interpretation: 1.05 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'believability', ability: 'stamina', weight: 0.3 }] },
+      { id: 'tired', label: 'Too Tired To Pretend', reading: 'She’s too exhausted to keep it under the surface, and the truth comes out because she can’t stop it.', rests: 'She’s back from a double shift, still in her coat, and in the last beat she says it plainly.', lean: { believability: 1.2, interpretation: 1.05 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'believability', ability: 'stamina', weight: 0.3 }] },
       { id: 'partners', label: 'Eighteen Years Of Care', reading: 'She protects the marriage first, and the argument is how they reach each other.', rests: 'They don’t shout, and she ends by saying she’ll do it anyway.', lean: { connection: 1.2, responsiveness: 1.15 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
     ],
   },
@@ -459,8 +459,8 @@ export const BRIEFS_B: readonly Brief[] = [
       beats: 'A polite errand, a laugh that undoes her, then the question she came not to ask.',
     },
     readings: [
-      { id: 'guarded', label: 'Guarded To The Last', reading: 'She keeps her coat on in every sense: the feeling is all under the surface, and sitting down costs her everything.', rests: 'She came to leave quickly, and the brief has her sit only in the last beat.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'consistency', ability: 'composure', weight: 0.5 }] },
-      { id: 'listening', label: 'Hearing Him Out', reading: 'She came to give the key back and stays because she wants to know: the scene is played off him, and it moves when he does.', rests: 'He knew her father at the end, and he talks about him as someone she didn’t know.', lean: { connection: 1.2, responsiveness: 1.15 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
+      { id: 'guarded', label: 'Guarded To The Last', reading: 'She keeps her coat on in every sense: the feeling is all under the surface, and sitting down costs her everything.', rests: 'She came to leave quickly, and she sits down only in the last beat.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'consistency', ability: 'composure', weight: 0.5 }] },
+      { id: 'listening', label: 'Hearing Him Out', reading: 'She came to give the key back and stays because she wants to know: she plays the scene off him, and it moves when he does.', rests: 'He knew her father at the end, and he talks about him as someone she didn’t know.', lean: { connection: 1.2, responsiveness: 1.15 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
     ],
   },
   {
@@ -530,7 +530,7 @@ export const BRIEFS_B: readonly Brief[] = [
     why: {
       language: 'He speaks in the court’s formal address, and the scene turns when he leaves it for a plain word.',
       partner: 'Each of her questions tests him, and his answers come from what she reveals.',
-      vocal: 'A formal report to a sovereign in a tent with an army outside; the voice has to carry the occasion.',
+      vocal: 'It’s a formal report to a sovereign, in a tent with an army outside, and his voice has to carry the occasion.',
       beats: 'A formal report, a memory of his father, then the plain refusal.',
     },
     readings: [
@@ -558,7 +558,7 @@ export const BRIEFS_B: readonly Brief[] = [
       physical: 'The embrace is the scene’s turn, a set of choreographed moves held through dialogue: the lean in, the hand to the pocket, the stillness when she finds the key.',
       partner: 'They’re reading each other’s every move, and the scene changes with every touch and line.',
       timing: 'The search happens inside the embrace, and the key is found on a set moment.',
-      techniques: 'The embrace is staged intimacy, agreed in advance with an intimacy coordinator and played solo. She leans toward his eyeline beside the lens and never touches the reader, and the jacket stays on her own shoulders, on her side of the frame, so it repeats on every take. None of it is explicit.',
+      techniques: 'The embrace is staged intimacy, agreed in advance with an intimacy coordinator and played solo. Lean toward his eyeline beside the lens and never touch the reader. The jacket stays on your own shoulders, on your side of the frame, so the moment repeats exactly on every take. None of it is explicit.',
       beats: 'Careful talk, an embrace that’s attraction and search at once, then a discovery that changes the danger.',
     },
     readings: [
@@ -635,7 +635,7 @@ export const BRIEFS_B: readonly Brief[] = [
       physical: 'The kiss and the reach for the glovebox are the scene’s action, choreographed and held in a car seat.',
       partner: 'She has to read whether he believes her every second, and he catches her in the end.',
       timing: 'The reach has to be placed inside the kiss, and the catch lands on a set moment the reader calls.',
-      techniques: 'The kiss is staged intimacy, agreed in advance with an intimacy coordinator and played solo. Seated, she leans toward his eyeline beside the lens and stops short. The glovebox is a prop at her knee, on her side of the frame, and when the reader calls the catch her hand stops as if held. None of it is explicit: the scene is about power and danger.',
+      techniques: 'The kiss is staged intimacy, agreed in advance with an intimacy coordinator and played solo. Seated, lean toward his eyeline beside the lens and stop short. The glovebox is a prop at your knee, on your side of the frame, and when the reader calls the catch, stop your hand as if it’s held. None of it is explicit: the scene is about power and danger.',
       beats: 'A broad come-on played back too broadly, a kiss that’s a theft, then the catch.',
     },
     readings: [
