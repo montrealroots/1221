@@ -301,3 +301,45 @@ tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0; vitest (mat
 text-inventory 1 before the marks and 0 after.
 
 **Screens verified:** BriefPane for all 25 briefs of the file, rendered and kept in `rendered/second-e.txt`.
+
+## Batch 6: `second-f.ts`
+
+**Sources (84):** 24 briefs and 60 reading sources ([father], [home] and [knows] hold two readings each):
+[brief-stoner_comedy-2] [impression] [honest] [adrift] [brief-superhero-2] [public] [bakery] [brief-supernatural-2]
+[father] [lonely] [dread] [brief-surrealist-2] [home] [wish] [name] [brief-survival-2] [mechanic] [afraid]
+[brief-swashbuckler-2] [blade] [rogue] [respect] [brief-sword_and_sandal-2] [devout] [shrewd] [boy]
+[brief-sword_and_sorcery-3] [word] [faith] [silence] [brief-techno_thriller-2] [script] [friend] [doubt] [brief-teen-2]
+[poet] [hustle] [brief-thriller-2] [knows] [believe] [either] [brief-time_travel-2] [sister] [clock] [brief-tokusatsu-2]
+[hero] [cadets] [suit] [brief-tragedy-2] [certain] [teacher] [brief-tragicomedy-3] [half] [listeners] [line]
+[brief-true_crime-2] [record] [reckoning] [brief-vampire-2] [gentleman] [hunger] [decent] [brief-war-2] [hunted] [book]
+[brief-werewolf-2] [charm] [feather] [brief-western-2] [craft] [street] [decision] [brief-whodunit-2] [ear] [help]
+[brief-wuxia-2] [eager] [student] [brief-yakuza-3] [form] [room] [between] [brief-zombie-2] [nurse].
+
+**Rewritten (17 sources, 44 strings):** 17 briefs (stoner_comedy-2, superhero-2, surrealist-2, swashbuckler-2,
+sword_and_sorcery-3, teen-2, time_travel-2, tokusatsu-2, tragedy-2, tragicomedy-3, true_crime-2, war-2, werewolf-2,
+western-2, whodunit-2, wuxia-2, yakuza-3); no reading needed it. By kind: 11 techniques notes (the firearms and blade
+staging made instructions; three voice briefs that never named the Voice-Over their heading lists; teen-2's "spoken
+technique" for the heading's Speech; tragicomedy-3's techniques that "carried" the bit); 10 circumstances; 5 voice
+`reader` fields; 4 verbless beats; and 14 other reasons.
+
+**Kept (67):** seven briefs whole (supernatural-2, survival-2, sword_and_sandal-2, techno_thriller-2, thriller-2,
+vampire-2, zombie-2) and all 60 readings.
+
+**Meaning-sensitive, and how each was checked:**
+- The firearms notes (war-2, western-2): "no blank fired", the unloaded replica, the mark off frame and "never toward the
+  lens or the reader" are kept in each.
+- wuxia-2's techniques said "so it repeats" of "the forms"; the instruction now says "so they repeat".
+- tragedy-2's tremor "reads the same on every take" now "looks the same": reads was the judge's verb.
+- werewolf-2's staging spoke of "the actor" twice; it speaks to the actor, the plain clothes under the sack kept.
+- Only string values changed (`m15b/skeleton.py`).
+
+**Interactions read whole:** each pane top to bottom; the allows note and misfit line for tokusatsu-2 (set). Rendered:
+`rendered/second-f.txt`.
+
+**Tests and tool matchers updated:** none held the old words.
+
+**Checks** (scratchpad `m15b/b6-checks/`): tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0,
+tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0; vitest (material-words, briefs-content) 0, 454 tests.
+text-inventory 1 before the marks and 0 after.
+
+**Screens verified:** BriefPane for all 24 briefs of the file, rendered and kept in `rendered/second-f.txt`.

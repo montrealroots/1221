@@ -29,7 +29,7 @@ export const SECOND_F: readonly Brief[] = [
       timing: 'The laughs are in his delays, a pause held a beat too long or an answer that lands on the question before last, and he has to place each one on purpose against whatever the reader has just asked.',
       physical: 'The brownies are played in his body, small and exact: the slow blink, a hand that forgets it’s holding a mug, a lean toward a screen that seems to lean back. All of it is seated and inside the frame.',
       partner: 'Every laugh starts from something the father says, and Callum has to take it in a moment late and visibly.',
-      improvisation: 'The father’s small talk is left to the reader to vary from take to take, inside the brief’s four turns, so Callum answers questions he hasn’t heard before and keeps the scene’s shape.',
+      improvisation: 'The reader varies the father’s small talk from take to take, inside the brief’s four turns, so Callum answers questions he hasn’t heard before and keeps the scene’s shape.',
       techniques: 'It’s played for laughs, with comic timing held inside a real, rising panic. The small talk changes each take, and he has to improvise his answers in character, live.',
       beats: 'A rehearsed start, the brownies arriving in the middle of a sentence, an answer too honest to be funny and too long not to be, then the confession and the laugh that lets him off.',
     },
@@ -58,9 +58,9 @@ export const SECOND_F: readonly Brief[] = [
     techniques: { combat: 1, comedy: 1 },
     why: {
       timing: 'The jokes land between his questions and her answers, and the reenactment runs on his called cues.',
-      physical: 'The fight is told again with her whole body, the duck, the grab and the throw, played at half speed and far too big for a meeting room.',
+      physical: 'She tells the fight again with her whole body, the duck, the grab and the throw, at half speed and far too big for a meeting room.',
       partner: 'He’s patient and even, so every question he asks lands at full weight, and she has to take each one in before she answers it.',
-      techniques: 'The reenactment is stage combat: three marked moves played solo at half speed against the reader’s called cues, with no one in front of her and nothing thrown, so it repeats safely on every take. Her pride meeting his form is played for laughs, a job for comic timing.',
+      techniques: 'The reenactment is stage combat: mark its three moves solo at half speed against the reader’s called cues, with no one in front of you and nothing thrown, so it repeats safely on every take. Her pride meeting his form is played for laughs, a job for comic timing.',
       beats: 'A hero’s version, the reenactment, the moment it stops being funny, then a plain question from a woman who has stopped performing.',
     },
     readings: [
@@ -96,7 +96,7 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-surrealist-2', title: 'The Third Day Of Applause', kinds: ['surrealist'], medium: 'camera', size: 'long', stakes: 0, readerPlays: 'steady',
     logline: 'A violinist whose audience hasn’t stopped applauding in three days tries every remedy her stage manager can think of to make them stop, and finds the one that works.',
-    circumstances: 'The wings of a concert hall, on the third day after her recital ended. The audience has been on its feet since Sunday night, and every time she goes out to bow the ovation grows. Ushers pass sandwiches along the front rows. The stage manager keeps the house lights down and his clipboard up, as if this were any encore. On the tape the applause is imagined; when she goes out to bow she steps to a mark and plays to the house as an eyeline off frame, and her violin rests on a chair on her side of the frame.',
+    circumstances: 'The wings of a concert hall, on the third day after her recital ended. The audience has been on its feet since Sunday night, and every time she goes out to bow the ovation grows. Ushers pass sandwiches along the front rows. The stage manager keeps the house lights down and his clipboard up, as if this were any encore. For the tape, the applause is imagined: when she goes out to bow, step to a mark and play to the house as an eyeline off frame, with the violin resting on a chair on your side of the frame.',
     relationship: 'Colleagues of a kind: he has called her to the stage for eleven seasons, and she has never once asked his first name.',
     you: 'Margit Holloway, forty-six, a concert violinist, gracious in public and stiff in every joint from three days of bowing.',
     reader: 'The stage manager, unhurried and practical, who treats a three-day ovation as a scheduling problem.',
@@ -169,9 +169,9 @@ export const SECOND_F: readonly Brief[] = [
     why: {
       language: 'The lines are period courtesy sharpened into wit on both sides, and the old man’s formality is a weapon of its own.',
       timing: 'Her jokes and his bows are timed against the passes, and the watch changing at one sets the clock.',
-      physical: 'Three passes in a narrow cellar between the racks, a disarm played on her own side, then a duelist’s stance held with no blade at all.',
+      physical: 'She fights three passes in a narrow cellar between the racks, plays a disarm on her own side, then holds a duelist’s stance with no blade at all.',
       partner: 'He presses her harder with each pass and each courtesy, and she has to read him to find her next trick and, in the end, her offer.',
-      techniques: 'The fencing is stage combat: three set passes marked solo with a replica rapier at reduced speed against the reader’s called cues, never pointed at the lens or the reader. The disarm is played by her own hand and the replica lowered to the floor at her side, so it repeats safely on every take. Her charm and her bluffs are played for laughs against his patience, a job for comic timing.',
+      techniques: 'The fencing is stage combat: mark three set passes solo with a replica rapier at reduced speed against the reader’s called cues, never pointed at the lens or the reader. Play the disarm with your own hand and lower the replica to the floor at your side, so it repeats safely on every take. Her charm and her bluffs are played for laughs against his patience, a job for comic timing.',
       beats: 'Tricks that fail, a fight she loses, a question that reaches him, then a recruitment where an arrest should be.',
     },
     readings: [
@@ -217,7 +217,7 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-sword_and_sorcery-3', title: 'The Oath In The Old Tongue', kinds: ['sword_and_sorcery'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'withholding',
     logline: 'A border captain come to swear her company to a sorceress-queen must speak the oath in a tongue nobody else in the hall understands, and win a first-blood bout against the queen’s champion, while the queen says nothing at all.',
-    circumstances: 'The hall of an ice-walled palace in a northern country on no real map, at the turn of the year. The captain’s company of two hundred has nowhere left to winter; the queen will take them only if their captain swears in the old tongue of the throne, word for word, and proves her blade on the queen’s champion to first blood. The oath leaves one word to the one who swears it. For the tape the oath is a passage in an invented tongue given with the brief and learned exactly, and the bout is two set exchanges marked solo with a replica sword, the champion imagined off frame.',
+    circumstances: 'The hall of an ice-walled palace in a northern country on no real map, at the turn of the year. The captain’s company of two hundred has nowhere left to winter; the queen will take them only if their captain swears in the old tongue of the throne, word for word, and proves her blade on the queen’s champion to first blood. The oath leaves one word to the one who swears it. For the tape, learn the oath exactly, a passage in an invented tongue given with the brief, and mark the bout’s two set exchanges solo with a replica sword, the champion imagined off frame.',
     relationship: 'They have never met. The queen’s army burned the captain’s home village twenty years ago, in a war she was too young to fight in.',
     you: 'Captain Ysolde Marr, forty-two, a soldier of the borderlands, who learned the oath from a book on the road and has never said it aloud to anyone who understood it.',
     reader: 'The queen, on her dais off camera, who answers with a gesture or not at all.',
@@ -235,10 +235,10 @@ export const SECOND_F: readonly Brief[] = [
     why: {
       language: 'The oath is an invented tongue said word for word, set in court speech as formal and old as it: the feeling has to come through words she barely owns.',
       timing: 'The oath has a cadence the court knows, and the bout’s two exchanges are set to the queen’s raised hand and the reader’s called cues.',
-      physical: 'A soldier’s bow, the two exchanges of a first-blood bout and a kneel held through the last line, in armor she has worn on the road for a month.',
+      physical: 'She makes a soldier’s bow, fights the two exchanges of a first-blood bout and holds a kneel through the last line, in armor she has worn on the road for a month.',
       partner: 'The queen answers with a gesture or nothing, so everything Ysolde plays is read off a raised hand or a silence.',
       vocal: 'The oath is spoken to a hall, every word placed and carried, in a tongue whose sounds she learned from a book.',
-      techniques: 'The bout is two set exchanges marked solo with a replica sword at reduced speed on the reader’s called cues toward an off-camera eyeline, never at the lens or the reader, and it stops at first blood, so it repeats safely on every take.',
+      techniques: 'The bout is two set exchanges with a replica sword. Mark them solo at reduced speed on the reader’s called cues toward an off-camera eyeline, never at the lens or the reader; the bout stops at first blood, so it repeats safely on every take.',
       beats: 'A plain report, an oath given whole, a bout to first blood, a line she can’t say, then her own word for it.',
     },
     readings: [
@@ -295,7 +295,7 @@ export const SECOND_F: readonly Brief[] = [
       language: 'Her poem has its own rhythm and imagery, a heightened voice set inside an everyday scene, and the change from her rushed excuses to its lines is the turn she plays.',
       vocal: 'The poem is spoken aloud at full voice, in a hallway built for echoes, by a girl who has only ever heard it in her head.',
       partner: 'He’s bored and gives her little, so every flicker of interest she gets from him is something she has to notice and use.',
-      techniques: 'A spoken-word poem performed whole asks for spoken technique: breath, pace and each line placed so it lands.',
+      techniques: 'A spoken-word poem performed whole asks for speech work: breath, pace and each line placed so it lands.',
       beats: 'Excuses, the dare inside his offer, the poem, then a comic exit from someone who has just been brave.',
     },
     readings: [
@@ -333,10 +333,10 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-time_travel-2', title: 'Ninety Seconds To Nineteen', kinds: ['time_travel'], medium: 'voice', size: 'short', stakes: 2,
     logline: 'Given one ninety-second message to send thirty years back, a woman records it for her nineteen-year-old self, knowing the machine silences any word that would change what happens.',
-    circumstances: 'A recording booth at a research institute, in a future that has learned to send sound backward but not people. Each volunteer gets one message of ninety seconds, left for a younger self on the answering machine of a room she rented, on a night she chooses. Any word that would change the course of events comes through as a tone, and the booth plays the tone back to her as she records. Recorded alone at a microphone, with the countdown on a screen in front of her.',
+    circumstances: 'A recording booth at a research institute, in a future that has learned to send sound backward but not people. Each volunteer gets one message of ninety seconds, left for a younger self on the answering machine of a room she rented, on a night she chooses. Any word that would change the course of events comes through as a tone, and the booth plays the tone back to her as she records. You record it alone at a microphone, with the countdown on a screen in front of you.',
     relationship: 'Herself at forty-nine and herself at nineteen, who will hear this alone in a rented room and think it’s a prank.',
     you: 'Corinne Lachance, forty-nine, a structural engineer, who rehearsed this message for a year and threw the script away this morning.',
-    reader: 'The voice speaks to Corinne at nineteen, who will play it once, on her answering machine, on the night she nearly quit her engineering course; the actor plays to her as if she were in the room.',
+    reader: 'Corinne at nineteen, who will play it once, on her answering machine, on the night she nearly quit her engineering course. Play to her as if she were in the room.',
     objective: 'Get her younger self through that night without changing anything that matters.',
     obstacle: 'Every warning she tries is silenced by the machine, and she has only ninety seconds and one take.',
     beats: [
@@ -349,8 +349,8 @@ export const SECOND_F: readonly Brief[] = [
     techniques: { voiceover: 2 },
     why: {
       timing: 'The message has to fit ninety seconds to the second, and the tone cuts in at fixed points she plays into and recovers from, the same way every take.',
-      vocal: 'A whole life is carried by the voice alone, close to the microphone, from a laugh to a goodbye, and it has to sound like one person talking to herself across thirty years.',
-      techniques: 'Recorded alone at a microphone against a countdown, with the tone cutting in on the track, every turn in her has to be heard, since none of it is seen.',
+      vocal: 'The voice alone carries a whole life, close to the microphone, from a laugh to a goodbye, and it has to sound like one person talking to herself across thirty years.',
+      techniques: 'It’s voice-over: you record it alone at a microphone against a countdown, with the tone cutting in on the track, and none of it is seen, so every turn in her has to be heard.',
       beats: 'Proof made into a joke, warnings silenced twice, small good news, then a goodbye that beats the clock.',
     },
     readings: [
@@ -364,12 +364,12 @@ export const SECOND_F: readonly Brief[] = [
     circumstances: 'A dubbing studio. On the screen, the series’ final fight, filmed months ago: a suit performer in the hero’s armor and another in the rival’s black armor, on a miniature rooftop set under practical sparks. In tokusatsu the masked hero’s lines are recorded afterward, usually by the actor who plays him unmasked, to the suit performer’s movements, so the voice has to fit a body it doesn’t own. In the story, the hero has his rival beaten and won’t strike the last blow.',
     relationship: 'Hero and rival were cadets in the same academy before the rival went over to the other side, and have fought each other for fifty episodes.',
     you: 'Sota Hanabusa, twenty-four, who becomes the armored hero Hoshikage, voiced in armor by the actor who plays him unmasked.',
-    reader: 'The voice speaks to Jin, the rival, whose lines are already on the track; the actor plays against them in the headphones and to the suit on the screen.',
+    reader: 'Jin, the rival, whose lines are already on the track. Play against them in your headphones and to the suit on the screen.',
     objective: 'Get Jin to stand down and come home without striking the last blow.',
     obstacle: 'Jin begs him to finish it, and every word has to land inside a suited body’s movements that were fixed months ago.',
     beats: [
-      { what: 'The transformation call, over the footage of the armor locking on, sized to the pose and held to the last spark.', tones: ['grave'] },
-      { what: 'The last exchange of blows, every strike and breath fitted to the suit performer’s moves on the screen.', tones: ['grave'] },
+      { what: 'He gives the transformation call over the footage of the armor locking on, sized to the pose and held to the last spark.', tones: ['grave'] },
+      { what: 'He voices the last exchange of blows, every strike and breath fitted to the suit performer’s moves on the screen.', tones: ['grave'] },
       { what: 'On the screen the hero lowers his fist, and he tells Jin he won’t, keeping the voice steady inside a body still heaving.', tones: ['lyric', 'grave'] },
       { what: 'Jin asks why, and the hero answers with the old cadet joke only the two of them know.', tones: ['comic', 'lyric'] },
     ],
@@ -379,7 +379,7 @@ export const SECOND_F: readonly Brief[] = [
     why: {
       timing: 'Every cry, breath and line is fitted to a suit performer’s movements already on the screen, so where each sound falls is fixed by the picture.',
       vocal: 'The call, the efforts of the fight and the quiet mercy are all the voice has, carried from a full-voiced cry to a near whisper inside one take.',
-      techniques: 'Post-synced voice work recorded alone at a microphone to finished footage and a rival already on the track, with the body’s effort put into breath and voice.',
+      techniques: 'It’s post-synced voice-over, recorded alone at a microphone to finished footage and a rival already on the track: put the body’s effort into breath and voice.',
       allows: 'The footage is finished and the suit’s moves are fixed, so every sound has to land where the body already moves. It can only be played set, the same way every time.',
       beats: 'A transformation called at full size, a fight in breath and effort, mercy spoken inside a heaving body, then a joke between two old cadets.',
     },
@@ -392,7 +392,7 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-tragedy-2', title: 'The Steady Hand', kinds: ['tragedy'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'pressing',
     logline: 'A celebrated heart surgeon who has hidden a tremor for a year insists on doing tonight’s operation on a child herself, and the young surgeon who has covered for her all year tries to stop her before she goes in.',
-    circumstances: 'The scrub room outside an operating theater at a teaching hospital, near midnight. A nine-year-old has come in with a rare defect of the heart that only one surgeon in the city has repaired before, and she’s that surgeon. For a year her resident has quietly finished the fine work whenever her hand shook, and signed nothing. Tonight’s repair is all fine work, and the team is waiting inside. On the tape the sink is dry: she scrubs with an empty brush and holds her hands up as if they were wet.',
+    circumstances: 'The scrub room outside an operating theater at a teaching hospital, near midnight. A nine-year-old has come in with a rare defect of the heart that only one surgeon in the city has repaired before, and she’s that surgeon. For a year her resident has quietly finished the fine work whenever her hand shook, and signed nothing. Tonight’s repair is all fine work, and the team is waiting inside. For the tape, the sink is dry: scrub with an empty brush and hold your hands up as if they were wet.',
     relationship: 'Mentor and protégé: she trained him, chose him and trusted him with the one secret that could end them both.',
     you: 'Dr. Miriam Castellanos, fifty-eight, the hospital’s most admired surgeon, proud, exact and certain her hands will hold for one more night.',
     reader: 'Dr. Owen Mbatha, thirty-two, her senior resident, who loves the work and loves her, and has decided he won’t cover for her again.',
@@ -407,7 +407,7 @@ export const SECOND_F: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 2, partner: 3, vocal: 1, improvisation: 0,
     why: {
-      physical: 'She scrubs through the scene with a dry brush, her hands held up the way a surgeon holds them, and the tremor shown in the third beat is controlled exactly so it reads the same on every take.',
+      physical: 'She scrubs through the scene with a dry brush, her hands held up the way a surgeon holds them. Control the tremor in the third beat exactly, so it looks the same on every take.',
       partner: 'He presses her harder than he ever has, and she has to hear every argument fully before she refuses it.',
       beats: 'A lesson given, his refusal laughed off, the secret shown, a memory of who she was, then a choice that takes them both through the door.',
     },
@@ -426,25 +426,25 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-tragicomedy-3', title: 'Episode Two Hundred', kinds: ['tragicomedy'], medium: 'voice', size: 'long', stakes: 3,
     logline: 'Recording alone, a radio host makes the last episode of the comedy show she made with her late partner for eleven years, playing both halves of their oldest running bit.',
-    circumstances: 'A small studio at a community radio station on a Sunday night. For eleven years Bea and Lou made a weekly comedy show for the station; Lou died in the summer, and the station asked Bea for one last episode for the listeners. Their oldest bit was an argument between two neighbors over a fence, Bea as one and Lou as the other. Tonight she plays both. Recorded alone at a microphone, live to tape, as the episode goes out.',
+    circumstances: 'A small studio at a community radio station on a Sunday night. For eleven years Bea and Lou made a weekly comedy show for the station; Lou died in the summer, and the station asked Bea for one last episode for the listeners. Their oldest bit was an argument between two neighbors over a fence, Bea as one and Lou as the other. Tonight she plays both. You record it alone at a microphone, live to tape, as the episode goes out.',
     relationship: 'Partners on air for eleven years and friends for thirty; off the air they argued about everything, on it only about the fence.',
     you: 'Bea Rourke, sixty-two, quick, dry and set on getting through it without the listeners hearing her cry.',
-    reader: 'No reader: the voice speaks to the listeners, and in the bit, as each neighbor, to the other.',
+    reader: 'The listeners, and in the bit, each neighbor to the other. There’s no reader.',
     objective: 'Give the listeners the show Lou would have wanted, and get to the end of it.',
     obstacle: 'The bit was built for two voices and two kinds of timing, Lou’s half is the funnier, and every line of it is his.',
     beats: [
-      { what: 'The show’s opening as always: the theme hummed, the weather, and a complaint about the station’s coffee.', tones: ['comic'] },
+      { what: 'She opens the show as always: the theme hummed, the weather, and a complaint about the station’s coffee.', tones: ['comic'] },
       { what: 'She says, briefly and without fuss, that Lou won’t be on tonight.', tones: ['grave'] },
-      { what: 'The fence bit: both neighbors in both voices, faster and faster, a double act’s timing from one mouth.', tones: ['comic'] },
+      { what: 'She plays the fence bit, both neighbors in both voices, faster and faster, a double act’s timing from one mouth.', tones: ['comic'] },
       { what: 'In Lou’s voice, his neighbor says the line he always ended on, and she can’t answer it in her own.', tones: ['comic', 'grave'] },
       { what: 'She thanks the listeners for eleven years and signs off the way the two of them always did, alone.', tones: ['lyric', 'comic'] },
     ],
     language: 'everyday', timing: 3, physical: 0, partner: 0, vocal: 3, improvisation: 0,
     techniques: { comedy: 2, character: 1 },
     why: {
-      timing: 'A double act’s timing played by one voice: each switch between the neighbors has to land as fast as Lou would have answered.',
-      vocal: 'Two neighbors from one mouth, her own voice and Lou’s character kept apart, live to tape, with no second take.',
-      techniques: 'Comedy carries the bit’s timing, and it has to be as funny for the listeners as it always was. Character work carries Lou’s neighbor, a voice and a rhythm that were his and are hers to keep tonight.',
+      timing: 'One voice plays a double act’s timing: each switch between the neighbors has to land as fast as Lou would have answered.',
+      vocal: 'She voices two neighbors from one mouth, her own and Lou’s character kept apart, live to tape, with no second take.',
+      techniques: 'The bit’s timing asks for comedy, and it has to be as funny for the listeners as it always was. Lou’s neighbor asks for character work: a voice and a rhythm that were his and are hers to keep tonight.',
       beats: 'The usual opening, a plain word about Lou, the bit at full speed, the line she can’t answer, then the sign-off.',
     },
     readings: [
@@ -456,10 +456,10 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-true_crime-2', title: 'A Correction, Episode Nine', kinds: ['true_crime'], medium: 'voice', size: 'medium', stakes: 3,
     logline: 'The host of a true-crime podcast records a correction to her most popular season, which named a man as the likely killer, now that the evidence has cleared him.',
-    circumstances: 'The case and the podcast are invented for this scene: no real crime, person or show stands behind them. A small home studio at night, foam on the walls and a microphone on an arm. Her season about a 2009 disappearance drew millions of listeners and named a neighbor, Leonard Fisk, as the man she believed did it. This week another man’s confession was confirmed by the evidence. Listeners have spent two years at Fisk’s door. Recorded alone at a microphone, from a script she wrote this afternoon.',
+    circumstances: 'The case and the podcast are invented for this scene: no real crime, person or show stands behind them. A small home studio at night, foam on the walls and a microphone on an arm. Her season about a 2009 disappearance drew millions of listeners and named a neighbor, Leonard Fisk, as the man she believed did it. This week another man’s confession was confirmed by the evidence. Listeners have spent two years at Fisk’s door. You record it alone at a microphone, from a script she wrote this afternoon.',
     relationship: 'A host and an audience of millions who trusted her, and a man she has never met whose life she took apart on air.',
     you: 'Joanna Merriman, forty-one, a former local reporter whose podcast made her famous, who believed every word she said.',
-    reader: 'The voice speaks to the podcast’s listeners and, by the end, to Leonard Fisk, who may or may not be listening.',
+    reader: 'The podcast’s listeners and, by the end, Leonard Fisk, who may or may not be listening.',
     objective: 'Undo, as far as words can, what her show did to an innocent man.',
     obstacle: 'Her listeners loved the story she told, a correction is duller than an accusation, and her own voice keeps slipping back into the show’s storytelling tone.',
     beats: [
@@ -472,7 +472,7 @@ export const SECOND_F: readonly Brief[] = [
     techniques: { voiceover: 2 },
     why: {
       vocal: 'The scene is a voice catching itself: the show’s practiced storytelling tone against the plain one she has to find, close to the microphone, with no face to help.',
-      techniques: 'Recorded alone at a microphone, a narrator’s voice turned against its own habits, so every shift from performance to plain speech has to be heard.',
+      techniques: 'It’s voice-over recorded alone at a microphone, a narrator’s voice turned against its own habits, so every shift from performance to plain speech has to be heard.',
       beats: 'A familiar opening abandoned, a correction read straight, an apology off the script, then a request that may cost her the show.',
     },
     readings: [
@@ -532,7 +532,7 @@ export const SECOND_F: readonly Brief[] = [
       physical: 'She works crouched in a cramped tower: the handset, the map, the rifle brought up and fired on cues, the recoil and the duck back, then stillness while the shells come in.',
       partner: 'The voice on the radio gives her only numbers, and she has to keep the procedure exact against it while everything else breaks down.',
       vocal: 'Everything is whispered under enemy feet and still held clear for the radio, so the voice has to stay quiet and exact at once.',
-      techniques: 'The rifle is handled as stage-combat firearms work with a replica, never pointed at the lens or the reader: brought up to a mark off frame, two shots marked with no blank fired, the recoil played, then lowered, the same way every take.',
+      techniques: 'The rifle is stage-combat firearms work with a replica: bring it up to a mark off frame, never toward the lens or the reader, mark two shots with no blank fired, play the recoil, then lower it, the same way every take.',
       beats: 'Procedure in a whisper, a fight at the hatch, her own town given as numbers, then the order that brings it down.',
     },
     readings: [
@@ -544,7 +544,7 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-werewolf-2', title: 'The Hen House', kinds: ['werewolf'], medium: 'camera', size: 'short', readerPlays: 'unpredictable',
     logline: 'A young man wakes in a stranger’s hen house the morning after the full moon, wrapped in a feed sack, and has to talk the old farmer holding the phone out of calling the police.',
-    circumstances: 'A hen house on a hillside smallholding at sunrise, feathers everywhere and six hens missing. The farmer found him asleep in the straw an hour ago, wrapped in a feed sack and nothing else, and has been standing in the doorway with the phone ever since. The hens are imagined; a few feathers are props on the actor’s side of the frame, and the actor wears plain clothes under the sack.',
+    circumstances: 'A hen house on a hillside smallholding at sunrise, feathers everywhere and six hens missing. The farmer found him asleep in the straw an hour ago, wrapped in a feed sack and nothing else, and has been standing in the doorway with the phone ever since. The hens are imagined. A few feathers are props on your side of the frame, and you wear plain clothes under the sack.',
     relationship: 'Strangers: the farmer has lived alone on this hill for forty years, and the young man is the first intruder in his hen house who wasn’t a fox.',
     you: 'Felix Odell, twenty-three, a trainee librarian, polite, aching in every joint, and with no memory of the night.',
     reader: 'Lyle Haverstock, eighty, a widowed farmer, unafraid and hard to read, amused one minute and reaching for the phone the next, and very fond of his hens.',
@@ -573,7 +573,7 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-western-2', title: 'The Hammer Spring', kinds: ['western'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'pressing',
     logline: 'A gunsmith in a cattle town is asked to mend a young cowhand’s revolver in time for the gunfight he has agreed to at sundown, and has an hour to decide whether to fix it.',
-    circumstances: 'A gunsmith’s shop on the main street of a Kansas cattle town in the summer of 1878, late afternoon. Last night in the saloon a hired gun goaded the boy into a challenge, and half the town heard him accept. His late father’s revolver has a broken hammer spring, and the spring that would mend it lies in her drawer. On the tape the revolver is an unloaded replica, and it never leaves her side of the counter.',
+    circumstances: 'A gunsmith’s shop on the main street of a Kansas cattle town in the summer of 1878, late afternoon. Last night in the saloon a hired gun goaded the boy into a challenge, and half the town heard him accept. His late father’s revolver has a broken hammer spring, and the spring that would mend it lies in her drawer. For the tape, the revolver is an unloaded replica, and it never leaves your side of the counter.',
     relationship: 'A gunsmith and a young customer who used to come in with his father on Saturdays to watch her work.',
     you: 'Hester Vane, forty-eight, who learned the trade from her husband and has kept the shop alone since he was shot dead in the street over a card game.',
     reader: 'Wes Corliss, nineteen, a cowhand from a ranch outside town, scared, too proud to say so, and pressing her to hurry.',
@@ -588,9 +588,9 @@ export const SECOND_F: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     techniques: { combat: 2 },
     why: {
-      physical: 'The revolver is opened and checked part by part on the counter, the draw is shown once at speed, and the spring is held still in her fingers through the longest silence in the scene.',
+      physical: 'She opens and checks the revolver part by part on the counter, shows the draw once at speed, and holds the spring still in her fingers through the longest silence in the scene.',
       partner: 'He presses her to hurry, and every plea he makes moves her closer to the lie or further from it.',
-      techniques: 'The draw is stage-combat firearms work with an unloaded replica: drawn from the holster to a mark off frame, never pointed at the lens or the reader, held and returned at a speed she can repeat safely on every take.',
+      techniques: 'The draw is stage-combat firearms work with an unloaded replica: draw it from the holster to a mark off frame, never toward the lens or the reader, then hold it and return it at a speed you can repeat safely on every take.',
       beats: 'A scolding over a neglected gun, a draw that shows him what he’s facing, a decision held in two fingers, then a lie that keeps him alive and his name clean.',
     },
     readings: [
@@ -602,10 +602,10 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-whodunit-2', title: 'The Note Under The Storm', kinds: ['whodunit'], medium: 'voice', size: 'long',
     logline: 'For a radio mystery, a piano tuner gathers the household in the music room and names the killer from what she heard through the wall on the night of the storm.',
-    circumstances: 'A recording studio, for an audio drama in the old radio manner. In the story: the music room of a country house the morning after a storm, a week after the death of its owner, a composer. Six people sit in the room, and their lines are already on the track. The detective is the house’s piano tuner, who was working in the next room that night and heard everything. Recorded alone at a microphone, where every suspect has to be told apart by how she speaks to them.',
+    circumstances: 'A recording studio, for an audio drama in the old radio manner. In the story: the music room of a country house the morning after a storm, a week after the death of its owner, a composer. Six people sit in the room, and their lines are already on the track. The detective is the house’s piano tuner, who was working in the next room that night and heard everything. You record it alone at a microphone, where every suspect has to be told apart by how she speaks to them.',
     relationship: 'A tradeswoman the family barely noticed, and six people who never thought to lower their voices near her.',
     you: 'Winifred Osei, sixty-six, a piano tuner with perfect pitch and forty years of listening through walls.',
-    reader: 'The voice speaks to the six suspects in the music room, whose lines are on the track, and to the listener at home, who should be able to follow her by ear alone.',
+    reader: 'The six suspects in the music room, whose lines are on the track, and the listener at home, who should be able to follow her by ear alone.',
     objective: 'Name the killer so clearly that no one in the room, or listening at home, can doubt it.',
     obstacle: 'Her evidence is only what she heard, the family thinks of her as hired help, and one of them has just told her to go back to her tuning fork.',
     beats: [
@@ -621,7 +621,7 @@ export const SECOND_F: readonly Brief[] = [
     why: {
       timing: 'A summation is a run of reveals, each placed for the listener at home, and her pauses have to hold six people on the track.',
       partner: 'Six recorded voices break in at set points, and she answers each in its own way without losing the thread.',
-      vocal: 'Six people told apart by the voice alone, a storm described in sound, a phrase hummed back exactly: the case lives in what can be heard.',
+      vocal: 'She tells six people apart by voice alone, describes a storm in sound and hums a phrase back exactly: the case lives in what can be heard.',
       techniques: 'It’s an audio drama recorded alone at a microphone against six voices on the track, so every change of address and every clue has to reach a listener who can’t see.',
       beats: 'Order brought to the room, a voice for each suspect, the sound under the storm, a wrong answer dismantled, the name, then a tradeswoman going back to her work.',
     },
@@ -648,9 +648,9 @@ export const SECOND_F: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 3, partner: 2, vocal: 0, improvisation: 0,
     techniques: { combat: 1 },
     why: {
-      physical: 'The forms are performed solo, twice: once proudly with a copied mistake, and once slowly, corrected, with the difference visible in her feet and wrists.',
+      physical: 'She performs the forms solo, twice: once proudly with a copied mistake, and once slowly, corrected, with the difference visible in her feet and wrists.',
       partner: 'The swordswoman gives her almost nothing, and Anran has to hear one sentence of correction as everything she has been waiting for.',
-      techniques: 'The forms are a set sequence of cuts and turns with a broom handle for a sword, performed solo with no one near and never toward the lens or the reader, so it repeats safely on every take.',
+      techniques: 'The forms are a set sequence of cuts and turns with a broom handle for a sword: perform them solo with no one near and never toward the lens or the reader, so they repeat safely on every take.',
       beats: 'An eager pitch, a performance that’s brave and wrong, a correction that changes the form, then a bow done right in defeat.',
     },
     readings: [
@@ -666,7 +666,7 @@ export const SECOND_F: readonly Brief[] = [
   {
     id: 'brief-yakuza-3', title: 'The Cups At The Ferry House', kinds: ['yakuza'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'pressing',
     logline: 'Asked by two feuding families to conduct their truce, an old go-between has to carry the ceremony through to the last cup while the younger boss does everything he can to make it fail.',
-    circumstances: 'The upstairs room of a ferry house in an invented harbor town, closed for the night, a low table set with a sake bottle and two cups on a stand. After a year of feuding and two funerals, the families have asked Kanemoto, who belongs to neither, to conduct the exchange of cups that ends it, in the set order he learned forty years ago. The older boss sits quietly; the younger, who lost a brother in the feud, has come to be insulted. For the tape the go-between kneels at the table with the bottle and the cups on his side of the frame, and the younger boss is read off camera.',
+    circumstances: 'The upstairs room of a ferry house in an invented harbor town, closed for the night, a low table set with a sake bottle and two cups on a stand. After a year of feuding and two funerals, the families have asked Kanemoto, who belongs to neither, to conduct the exchange of cups that ends it, in the set order he learned forty years ago. The older boss sits quietly; the younger, who lost a brother in the feud, has come to be insulted. For the tape, kneel at the table with the bottle and the cups on your side of the frame; the reader plays the younger boss off camera.',
     relationship: 'He has known both families for decades and owes neither anything; the younger boss was a boy carrying tea the last time Kanemoto did this.',
     you: 'Kanemoto Isao, seventy, a retired go-between called back once more, who speaks seldom and is listened to when he does.',
     reader: 'Sugino Ryota, the younger boss, thirty-four, quick, grieving and looking for a way to walk out with his honor whole.',
@@ -683,9 +683,9 @@ export const SECOND_F: readonly Brief[] = [
     language: 'heightened', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     why: {
       language: 'The ceremony is spoken in its set words, an old formal register the families keep for this alone, and he steps outside it only once.',
-      timing: 'Each pour, turn and bow comes in its set order, and the silences after Sugino’s provocations are held exactly as long as the room needs.',
-      physical: 'Formal kneeling throughout, and the pouring, turning and setting of the cups done as a set sequence, every movement watched by both families.',
-      partner: 'Every test Sugino makes is answered without breaking the form, and Kanemoto shapes his one step outside it to what Sugino has just refused.',
+      timing: 'Each pour, turn and bow comes in its set order, and he holds the silences after Sugino’s provocations exactly as long as the room needs.',
+      physical: 'He kneels formally throughout, and pours, turns and sets the cups as a set sequence, every movement watched by both families.',
+      partner: 'He answers every test Sugino makes without breaking the form, and shapes his one step outside it to what Sugino has just refused.',
       beats: 'An opening, a jibe answered inside the form, a name let stand in silence, the cups, one plain word outside the form, then the close.',
     },
     readings: [
