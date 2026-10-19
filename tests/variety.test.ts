@@ -38,7 +38,7 @@ describe('an hour’s feedback, from the record', () => {
     sim.player.craft.voice = 100;
     const r = practiceHour(sim, sim.player, EXERCISE_BY_ID['voice-work']!);
     expect(r.gained).toBe(0);
-    expect(r.feedback).toMatch(/it’s full\. What’s left is new material/);
+    expect(r.feedback).toMatch(/It’s at its full, whatever the focus\. What’s left is new material/);
     expect(r.feedback).not.toMatch(/rose/);
   });
 });

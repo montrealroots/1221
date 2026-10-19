@@ -248,5 +248,85 @@
   "why": "The Profile speaks to the player everywhere else (\"Traits you chose\", \"As you made your character\"); the background is the one the player wrote.",
   "meaningSensitive": false,
   "verified": "tests/evidence-g31-ui.test.ts, exactly, present and absent."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/practice.ts#practicePreview",
+  "kind": "label",
+  "before": "About +0.18 to focus (now 55.0), and +0.18 to discipline for a day of practice kept. It’s more or less than an ordinary hour because the Advanced tier isn’t your level (×0.8); your discipline makes it ×1.015. The higher it is, the less an hour adds.",
+  "after": "About +0.18 to focus (now 55.0), and +0.18 to discipline for a day of practice kept. Compared with an ordinary hour: the Advanced tier isn’t your level (×0.8); your discipline makes it ×1.015. The higher your level, the less an hour adds.",
+  "why": "\"More or less than\" also means \"about\", so the sentence read as a hedge; \"the higher it is\" pointed at nothing. The factors are the same, in the same order.",
+  "meaningSensitive": false,
+  "verified": "b3-practice.txt: the preview at five tier and focus pairs, tired, and after two hours pressed; each factor is still one the hour's own formula multiplies by (terms in practicePreview)."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/practice.ts#practiceFeedback",
+  "kind": "feedback",
+  "before": "Steady or not, it’s full. What’s left is new material.",
+  "after": "It’s at its full, whatever the focus. What’s left is new material.",
+  "why": "\"Steady or not\" named the focus chosen as if the player had argued for it.",
+  "meaningSensitive": false,
+  "verified": "tests/variety.test.ts ('says a target at its full gains nothing more…'), by a regex as narrow as before; b3-practice.txt, at full."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/learning.ts#ADVANCED",
+  "kind": "feedback",
+  "before": "It held together. Here’s a next step to try. Make one moment exact: choose where it starts and ends, and repeat it the same way twice.",
+  "after": "It held together. Here’s a next step to try. Make one moment exact. Choose where it starts and ends, and repeat it the same way twice.",
+  "why": "A teacher's next step said as two instructions, not a heading and a colon. It's also the shape the working reference's example 2 gives the note (\"try this next: make one moment exact. Choose where…\"), so the school area's assembly reads right either way.",
+  "meaningSensitive": false,
+  "verified": "b3-practice.txt, all seven steps as a note says them; noteText in systems/coursework.ts returns the step as it is."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/learning.ts#ADVANCED",
+  "kind": "feedback",
+  "before": "Go back to the words: one image or one repeated word you’ve played past, and what it tells you.",
+  "after": "Go back to the words. Find one image or one repeated word you’ve played past, and see what it tells you.",
+  "why": "The second half had no verb.",
+  "meaningSensitive": false,
+  "verified": "b3-practice.txt."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/learning.ts#APPROACHES",
+  "kind": "button",
+  "before": "Put It First: it comes first, and counts for more when the work is shown.",
+  "after": "Put It First: it comes first, and counts for more when the piece is shown.",
+  "why": "The glossary's word for a piece of coursework is the piece; \"the work\" is the engine's.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g18-school.test.ts: the button's title, its toast and the pane's line, exactly."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/artistry.ts#identityOf",
+  "kind": "other",
+  "before": "You play it driven: 4 of 5 choices on pace.",
+  "after": "You tend to play it driven: 4 of your 5 choices of pace.",
+  "why": "A habit is a tendency, under How You Tend To Play It; \"choices on pace\" read as a typo.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b11.test.ts and tests/defects-g8-15.test.ts exactly; tests/guide-examples-craft.test.ts reads the guide's quote of it against the line."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/artistry.ts#identityOf",
+  "kind": "other",
+  "before": "Of 17 notes and requests on your craft, you answered 0.",
+  "after": "Of 17 notes and requests on your craft, you answered none.",
+  "why": "The zero variant, said in words.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b11.test.ts (exactly) and tests/evidence-g23-school.test.ts; adv-t-10's Your Work So Far in b3-practice.txt."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/practice.ts#EXERCISES",
+  "kind": "other",
+  "before": "A Showing For Classmates: A prepared speech performed to a few classmates in a studio, and what they saw, heard back.",
+  "after": "A Showing For Classmates: A prepared speech performed to a few classmates in a studio, then hearing what they saw.",
+  "why": "\"What they saw, heard back\" was an inverted passive.",
+  "meaningSensitive": false,
+  "verified": "b3-looks.txt, presence's look under To practice it."
  }
 ]

@@ -561,7 +561,7 @@ describe('the craft guide’s worked examples, played', () => {
     // The choices more it took to name the habit, as the step and the result count them, and the words the example quotes.
     expect(ex.steps[2]).toContain(`for the pace on ${plural(r.more, 'more piece')}.`);
     expect(ex.result).toContain(`Chosen on the ${r.more} more, it’s named one`);
-    const quoted = /“(You play it [^”]+)”/.exec(ex.result)?.[1];
+    const quoted = /“(You tend to play it [^”]+)”/.exec(ex.result)?.[1];
     expect(r.atLast.habits.map((x) => x.line)).toContain(quoted);
   });
 });

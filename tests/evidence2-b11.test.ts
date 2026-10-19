@@ -460,7 +460,7 @@ describe('p-journey-history', () => {
     const genres = Object.values(p.engagement?.byGenre ?? {}).filter((g) => (g.practice ?? 0) > 0).length;
     section('Range', [{ line: `${kinds} kinds of work judged, ${genres} genres worked in, ${12 - unmet.length} of 12 kinds of material met.`, evidence: [`Kinds of work on your record: ${kinds}`] }]);
     const dir = j.direction!;
-    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered}.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] }]);
+    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered || 'none'}.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] }]);
     const school = p.school as unknown as { tally: { calls: number; answered: number }; callsBefore?: { calls: number; answered: number } };
     const calls = (school.callsBefore?.calls ?? 0) + school.tally.calls;
     const answered = (school.callsBefore?.answered ?? 0) + school.tally.answered;
@@ -482,7 +482,7 @@ describe('p-journey-history', () => {
     // Each of the sections the first round didn't read is there, and the habit nobody chose isn't.
     for (const title of ['What Your Work Shows Most', 'What Keeps Holding It Back', 'Material You Know', 'Not met yet:', 'Range', 'Taking Direction', 'Reliability', 'Playing With Others']) expect(shown, title).toContain(title);
     expect(shown).not.toContain('How You Tend To Play It');
-    expect(shown).toContain('Taking Direction Of 9 notes and requests on your craft, you answered 0. From: Worked 0, answered 0.');
+    expect(shown).toContain('Taking Direction Of 9 notes and requests on your craft, you answered none. From: Worked 0, answered 0.');
     expect(shown).toContain('Reliability 68 of 68 calls answered; 0 rehearsals with a partner kept.');
     expect(between(drawn(reload(sim), ProfileWorkspace).text, 'Your Work So Far', 'Sources And Estimates')).toBe(shown);
   });
@@ -496,8 +496,8 @@ describe('p-journey-history', () => {
       });
       return between(drawn(sim, ProfileWorkspace).text, 'Your Work So Far', 'Sources And Estimates');
     };
-    expect(chose('b11-habit-5', ['driven', 'driven', 'driven', 'driven', 'driven'])).toContain('How You Tend To Play It You play it driven: 5 of 5 choices on pace. From: Ways chosen: Measured 0, Driven 5; Shown in work: Measured 0, Driven 0.');
-    expect(chose('b11-habit-41', ['driven', 'measured', 'driven', 'driven', 'driven'])).toContain('How You Tend To Play It You play it driven: 4 of 5 choices on pace. From: Ways chosen: Measured 1, Driven 4; Shown in work: Measured 0, Driven 0.');
+    expect(chose('b11-habit-5', ['driven', 'driven', 'driven', 'driven', 'driven'])).toContain('How You Tend To Play It You tend to play it driven: 5 of your 5 choices of pace. From: Ways chosen: Measured 0, Driven 5; Shown in work: Measured 0, Driven 0.');
+    expect(chose('b11-habit-41', ['driven', 'measured', 'driven', 'driven', 'driven'])).toContain('How You Tend To Play It You tend to play it driven: 4 of your 5 choices of pace. From: Ways chosen: Measured 1, Driven 4; Shown in work: Measured 0, Driven 0.');
     expect(chose('b11-habit-4', ['driven', 'driven', 'driven', 'driven'])).not.toContain('How You Tend To Play It');
     expect(chose('b11-habit-32', ['driven', 'measured', 'driven', 'measured', 'driven'])).not.toContain('How You Tend To Play It');
   });

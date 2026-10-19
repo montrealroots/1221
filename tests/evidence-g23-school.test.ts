@@ -624,7 +624,7 @@ describe('work records + journey', () => {
     const answered = onCraft.filter((n) => n.taken === true).length;
     expect(onCraft.length).toBeGreaterThanOrEqual(3);
     expect(journeyOf(sim.player).direction).toMatchObject({ given: onCraft.length, answered });
-    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered}`);
+    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered || 'none'}`);
   });
 
   it('names a strength at 4 over the mean and not at 3.9', () => {

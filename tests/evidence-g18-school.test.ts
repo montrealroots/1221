@@ -523,11 +523,11 @@ describe('school.approach', () => {
     expect(first(buttons('school.approach', 'A Smaller Piece Of It'))).toMatchObject({ disabled: false });
     expect(first(buttons('school.approach', 'Work On It With Your Partner'))).toMatchObject({ disabled: true, title: 'Hannah would rather work alone, after last time.' });
     const put = first(buttons('school.approach', 'Put It First'));
-    expect(put).toMatchObject({ disabled: false, title: 'it comes first, and counts for more when the work is shown' });
-    expect(press(put)).toEqual(['Put It First: it comes first, and counts for more when the work is shown.']);
+    expect(put).toMatchObject({ disabled: false, title: 'it comes first, and counts for more when the piece is shown' });
+    expect(press(put)).toEqual(['Put It First: it comes first, and counts for more when the piece is shown.']);
     expect(work(sim, id).approach?.kind).toBe('objective');
     expect(cwOf(sim).assignments.filter((a) => a.approach).map((a) => a.id)).toEqual([id]);
-    expect(drawn(sim).text).toContain('Another Way At It: Put It First. For lines: it comes first, and counts for more when the work is shown. It won’t take the note on its own.');
+    expect(drawn(sim).text).toContain('Another Way At It: Put It First. For lines: it comes first, and counts for more when the piece is shown. It won’t take the note on its own.');
   });
 });
 

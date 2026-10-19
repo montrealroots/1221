@@ -152,7 +152,7 @@ export function identityOf(person: Person): Identity {
     if (n < ARTISTRY.habitAt) continue;
     const [side, k] = na >= nb ? [a, na] : [b, nb];
     if (k / n >= ARTISTRY.habitShare) {
-      habits.push({ label: `${APPROACH_EFFECT[side].label} ${AXES[axis].label}`, line: `You play it ${APPROACH_EFFECT[side].label.toLowerCase()}: ${k} of ${n} choices on ${AXES[axis].label.toLowerCase()}.`, evidence: [`Ways chosen: ${APPROACH_EFFECT[a].label} ${na}, ${APPROACH_EFFECT[b].label} ${nb}`, `Shown in work: ${APPROACH_EFFECT[a].label} ${chosen[a]?.shown ?? 0}, ${APPROACH_EFFECT[b].label} ${chosen[b]?.shown ?? 0}`] });
+      habits.push({ label: `${APPROACH_EFFECT[side].label} ${AXES[axis].label}`, line: `You tend to play it ${APPROACH_EFFECT[side].label.toLowerCase()}: ${k} of your ${n} choices of ${AXES[axis].label.toLowerCase()}.`, evidence: [`Ways chosen: ${APPROACH_EFFECT[a].label} ${na}, ${APPROACH_EFFECT[b].label} ${nb}`, `Shown in work: ${APPROACH_EFFECT[a].label} ${chosen[a]?.shown ?? 0}, ${APPROACH_EFFECT[b].label} ${chosen[b]?.shown ?? 0}`] });
       habit ??= { axis, side };
     }
   }
@@ -180,7 +180,7 @@ export function identityOf(person: Person): Identity {
   if (dir && dir.given >= 3) {
     const way = (Object.entries(dir.ways) as [AdjustmentId | 'callback', number][]).sort((a, b) => b[1] - a[1])[0];
     const wayLabel = way ? (way[0] === 'callback' ? 'a callback taken as asked' : ADJUSTMENTS[way[0] as AdjustmentId]?.label.toLowerCase() ?? way[0]) : undefined;
-    direction = { label: 'Taking Direction', line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered}${wayLabel ? `. The way you reach for most: ${wayLabel} (${way![1]})` : ''}.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] };
+    direction = { label: 'Taking Direction', line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered || 'none'}${wayLabel ? `. The way you reach for most: ${wayLabel} (${way![1]})` : ''}.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] };
   }
 
   // Reliability: calls kept, partners not stood up. The calls are the whole program's, the terms before this one's

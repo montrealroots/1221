@@ -180,3 +180,47 @@ shape of the standing (the same lead, another taking over, one led before), an u
 the next hour, what it assumes with one genre and several, the verdict, the line beside a brief. The Profile's stamina
 paragraph and Genres fine print, and Readiness Today, are read on the built app at the end of the area, where
 `AbilitiesPanel` and `GenresPanel` are marked.
+
+## Batch 3: Practice, Notes, Studying A Genre, Your Work So Far
+
+**Sources read (44):** `content/practice.ts` (30: the exercises, each exercise's design, the tiers and the focuses),
+`systems/practice.ts` (6), `systems/learning.ts` (4), `systems/engagement.ts` (3), `systems/artistry.ts` (1). About
+2,400 words.
+
+**The interaction read whole:** an exercise from its button in the Practice column, its challenge and tier, the Focus
+control and its line, the preview, Practice An Hour, what the hour found, the four-hour refusal; a note that keeps coming
+back and the four other ways at it; the teacher's next step once a piece holds together; Your Work So Far's lines.
+
+**Rewritten:** the preview's "It’s more or less than an ordinary hour because" (also an idiom for "about") is "Compared
+with an ordinary hour:", and "The higher it is" is "The higher your level"; what the hour found at full ("Steady or not,
+it’s full"); the seven next steps a teacher gives beyond the work, each as instructions, not a heading and a colon, the
+shape the working reference's example 2 gives the note; Put It First's "the work" (the piece); a habit on Your Work So
+Far ("You tend to play it driven: 4 of your 5 choices of pace"), and taking direction's zero ("you answered none"); one
+exercise's description.
+
+**Kept, and why:** the other 29 exercises' descriptions; all 27 exercise designs, each a concrete studio task in three
+tiers (each with its own reason in `docs/text/second-pass/profile.json`); the tiers and the five focuses; the refusals
+(the hospital, asleep and at-a-commitment ones are shared word for word with six other systems in other areas, so they
+stay as they are here: see the report); past mastery; the note subjects; a study's film. An exercise's `source` line is
+shown nowhere but the maintainers' attributes matrix, so its "SLATE’s own drill" was left as a developer's note.
+
+**Meaning-sensitive, and how each was held:** the preview's factors are each a factor the hour's formula multiplies by,
+in the same order (`terms`); nothing in a next step's advice moved, only its punctuation and two verbs.
+
+**Tests and tool matchers updated:** `tests/evidence-g18-school.test.ts` (Put It First, three places),
+`tests/evidence2-b11.test.ts` (the habit twice, taking direction twice), `tests/defects-g8-15.test.ts` (the habit),
+`tests/evidence-g23-school.test.ts` (taking direction), `tests/variety.test.ts` (at full, a regex as narrow as before),
+`tests/guide-examples-craft.test.ts` (the regex the guide's quote is found by); the guide's quote of the habit in
+`content/guide/craft.ts` (marked in batch 5).
+
+**Checks:** `npx tsc -b --noEmit` 0. eslint on the 11 changed files 0. `npx vitest run` on the 30 files that read
+practice, notes, the ways at a note, studying and Your Work So Far: 418 of 420 at first, the two failures assertions on
+the old words (the guide's quoted habit, the full line), then those two files 16 of 16, exit 0. title-case, label-sweep,
+plural-check, voice-check, tics (no count moved), spelling, typos, doc-refs, deciders and guide-quotes 0; text-inventory
+1 before marking.
+
+**Screens verified:** `b3-practice.txt` (from `render-practice.ts.txt`): the Focus control's lines; the preview at five
+tier and focus pairs, tired, and after two hours; four hours pressed through the command and the fifth refused; what the
+hour found in every focus and gap, a tier below and above, past mastery and at full; the four ways at a note; the seven
+next steps as a note says them; Your Work So Far on adv-t-10. `b3-looks.txt`: the ability looks again, for the changed
+exercise line.

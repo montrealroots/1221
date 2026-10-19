@@ -146,6 +146,216 @@
   "reason": "Lines of docs/GENRE-COVERAGE.md, a maintainers' document written by tools/genre-coverage.ts and checked by tests/genre-coverage.test.ts; no screen imports it, and its terse reasons are written for whoever audits the genres' demands",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .adjustments": {
+  "status": "Retained",
+  "hash": "d617c4810c2c",
+  "on": "2026-10-19",
+  "reason": "Two adjustments, then five called out, then a turn from comic to grave: short, specific tiers that say how hard each hour pushes the choice",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .audition-pieces": {
+  "status": "Retained",
+  "hash": "d6c1115628c5",
+  "on": "2026-10-19",
+  "reason": "One piece timed, two back to back, both again after a redirection: what an audition room asks, in three short tiers",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .character-work": {
+  "status": "Retained",
+  "hash": "917fdaae3428",
+  "on": "2026-10-19",
+  "reason": "A psychological gesture, an imaginary center and a walk, an animal study carried into a scene: Chekhov's and the studio's tools named as an actor knows them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .clown-practice": {
+  "status": "Retained",
+  "hash": "a0b3d9c14e5f",
+  "on": "2026-10-19",
+  "reason": "An entrance with the nose, the flop played and recovered, a turn built on what the room gives back: the clown teacher's exercises, short and concrete",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .cold-reading": {
+  "status": "Retained",
+  "hash": "6b7e921492af",
+  "on": "2026-10-19",
+  "reason": "Sides read once and played, with a redirection, then on camera with an eyeline to a reader: the cold read as casting rooms run it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .combat-drill": {
+  "status": "Retained",
+  "hash": "328c8a0d3a99",
+  "on": "2026-10-19",
+  "reason": "Footwork and falls slowly, unarmed technique at half speed, a sequence at speed with a partner: safety before speed, the stage combat order",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .comic-timing": {
+  "status": "Retained",
+  "hash": "43d072c06fb1",
+  "on": "2026-10-19",
+  "reason": "A joke's rhythm repeated until it lands, an epigram duel, an escalating quarrel on the cue: three tiers that each name the comic skill they train",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .concentration": {
+  "status": "Retained",
+  "hash": "178a139ba43d",
+  "on": "2026-10-19",
+  "reason": "Stanislavski's circles in three concrete steps, one object, the small circle against a distraction, then public solitude, named in the terms an acting class uses",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .copy-reading": {
+  "status": "Retained",
+  "hash": "88fc97cfa56d",
+  "on": "2026-10-19",
+  "reason": "Narration plainly, commercial copy in three reads, character voices one after another: the voice-over booth's tasks, named as the work is booked",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .dance-class": {
+  "status": "Retained",
+  "hash": "31653c153d45",
+  "on": "2026-10-19",
+  "reason": "Barre, center work, a combination at tempo: the order of every dance class, named in its own three words",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .dialect-drill": {
+  "status": "Retained",
+  "hash": "a464f56c259c",
+  "on": "2026-10-19",
+  "reason": "A dialect's sounds on single words, then a transcribed text, then a scene held under emotion: the order a dialect coach works in, said plainly",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .given-circumstances": {
+  "status": "Retained",
+  "hash": "f95efdf3edd9",
+  "on": "2026-10-19",
+  "reason": "The tiers climb from who, where and when to two readings argued from the text, plain steps that say what the hour asks of the actor's imagination",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .graded-exposure": {
+  "status": "Retained",
+  "hash": "937dbcbc7275",
+  "on": "2026-10-19",
+  "reason": "Nerves settling with exposure, from one listener to a handful to a room of strangers twice in an evening: the graded steps the exercise is named for",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .improv-session": {
+  "status": "Retained",
+  "hash": "504231d28053",
+  "on": "2026-10-19",
+  "reason": "Yes, and, then status games, then a long-form scene with a turn the group finds: the improv class's progression in its own terms",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .intimacy-study": {
+  "status": "Retained",
+  "hash": "862a33f01626",
+  "on": "2026-10-19",
+  "reason": "Boundaries and the check-in, a short moment choreographed, the moment played at full emotion with the choreography held: consent named first, as the practice does",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .movement-work": {
+  "status": "Retained",
+  "hash": "877ca2e71ff9",
+  "on": "2026-10-19",
+  "reason": "Laban's efforts one at a time, combined in a walk, then a wordless scene: three tiers in the movement studio's own words",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .recall-drill": {
+  "status": "Retained",
+  "hash": "5945572aa3af",
+  "on": "2026-10-19",
+  "reason": "Lines kept by meaning, then a scene recalled the next day, then a long speech under interruption: each tier a task the player can picture",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .repetition": {
+  "status": "Retained",
+  "hash": "c9f0ec736100",
+  "on": "2026-10-19",
+  "reason": "Meisner's exercise as a studio teaches it, from mechanical repetition to repetition with an activity and a knock at the door, each tier named as an actor would know it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .scene-work": {
+  "status": "Retained",
+  "hash": "8c512f9e5c04",
+  "on": "2026-10-19",
+  "reason": "A scene broken into beats, each beat an action played, then actions changing on what the partner does: the units-and-objectives method in plain steps",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .script-analysis": {
+  "status": "Retained",
+  "hash": "2bb92dea6c6b",
+  "on": "2026-10-19",
+  "reason": "One act's events, the through-line, two scenes compared for what they turn on: script analysis as a class teaches it, three short tiers",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .self-tape-practice": {
+  "status": "Retained",
+  "hash": "effdfc55feaf",
+  "on": "2026-10-19",
+  "reason": "A wide shot then a close one, eyeline and stillness, a scene taped twice and smaller the second time: what self-tape practice is, frame by frame",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .sense-memory": {
+  "status": "Retained",
+  "hash": "1c53e3abdc64",
+  "on": "2026-10-19",
+  "reason": "Its challenge, real feeling from imagined detail and not from pushing, and three tiers that grow from a cup's weight to a private moment carried into a speech, each a concrete studio task",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .showing-for-classmates": {
+  "status": "Retained",
+  "hash": "9125ee3bb103",
+  "on": "2026-10-19",
+  "reason": "Being watched without closing down, from two classmates to the year and their notes and a piece played again after them: tiers that grow the audience",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .singing-practice": {
+  "status": "Retained",
+  "hash": "9cf5bb78094b",
+  "on": "2026-10-19",
+  "reason": "Scales and breath, a song phrase by phrase, the song acted with its turns played: notes and acting together, as its challenge says",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .speech-drill": {
+  "status": "Retained",
+  "hash": "fa0ef2146366",
+  "on": "2026-10-19",
+  "reason": "Articulation drills, a text for clarity, a text at size in a large room: three plain steps toward clarity at size",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .verse-speaking": {
+  "status": "Retained",
+  "hash": "e6d753885513",
+  "on": "2026-10-19",
+  "reason": "A sonnet's scansion, a soliloquy's antithesis and turn, shared lines with no pause between: verse work in the terms a classical text class uses",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISE_DESIGN .voice-work": {
+  "status": "Retained",
+  "hash": "55d6cb0ffe16",
+  "on": "2026-10-19",
+  "reason": "Breath on the floor, then resonators and range, then a speech sized to a large room: the voice teacher's order, each tier a plain line",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/practice.ts#EXERCISES": {
+  "status": "Rewritten",
+  "hash": "9d13a067786c",
+  "on": "2026-10-19",
+  "evidence": "the ability looks rendered by render-looks.ts.txt in docs/verification/editorial-2026-10-19/profile/b3-looks.txt, where the one changed line, A Showing For Classmates, reads on presence's look under To practice it",
+  "first": "Pending"
+ },
+ "src/engine/content/practice.ts#FOCUS": {
+  "status": "Retained",
+  "hash": "95f8765919c7",
+  "on": "2026-10-19",
+  "reason": "The Focus control's five choices, each with one short line saying what the hour does and when it pays, read under the control as the player picks one",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/practice.ts#TIER": {
+  "status": "Retained",
+  "hash": "e1dea11d0680",
+  "on": "2026-10-19",
+  "reason": "Foundation, Developing and Advanced, three plain tier names shown in the Tier control with Your Level marked and said in the advice and the hour's feedback",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/content/reference.ts#Registry": {
   "status": "Retained",
   "hash": "ea85ee40e620",
@@ -153,12 +363,40 @@
   "reason": "Two developer errors thrown when a content table is built wrong (a duplicate id, a missing record); no player can reach them, and they name the registry and the id a developer needs",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/artistry.ts#identityOf": {
+  "status": "Rewritten",
+  "hash": "20c93e11f034",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b11.test.ts and tests/defects-g8-15.test.ts (the habit line exactly), tests/evidence-g23-school.test.ts (taking direction), tests/guide-examples-craft.test.ts, and Your Work So Far on adv-t-10 in docs/verification/editorial-2026-10-19/profile/b3-practice.txt",
+  "first": "Pending"
+ },
  "src/engine/systems/attributes.ts#alreadyApplied": {
   "status": "Retained",
   "hash": "ecc9306fb2d3",
   "on": "2026-10-19",
   "reason": "A one-line refusal for an action pressed twice that says it's already done and that nothing was charged or changed again, which is all the player needs and is true for every caller",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/engagement.ts#hourRefusal": {
+  "status": "Retained",
+  "hash": "ac3318c17c60",
+  "on": "2026-10-19",
+  "reason": "The refusals every hour away from the work shares with practice and the other areas, asleep, at a commitment until a time, in the hospital, said the same everywhere",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/engagement.ts#study": {
+  "status": "Retained",
+  "hash": "9190801211ff",
+  "on": "2026-10-19",
+  "reason": "What a study was spent on when no play of the kind exists, a film of its kind, said into the toast after Study It as plainly as a play's title is",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/engagement.ts#studyRefusal": {
+  "status": "Retained",
+  "hash": "d022072acab0",
+  "on": "2026-10-19",
+  "reason": "A refusal for a genre that doesn't exist, reached only by a command, that says so in five words",
+  "first": "Reviewed And Retained"
  },
  "src/engine/systems/experience.ts#FEATURE_LABEL": {
   "status": "Retained",
@@ -187,6 +425,34 @@
   "on": "2026-10-19",
   "evidence": "every training line of four played tuning cases in docs/verification/editorial-2026-10-19/profile/b2-advice.txt (render-advice.ts.txt)",
   "first": "Pending"
+ },
+ "src/engine/systems/learning.ts#ADVANCED": {
+  "status": "Rewritten",
+  "hash": "7002a2ac4f85",
+  "on": "2026-10-19",
+  "evidence": "every next step rendered as a note says it, after It held together, by render-practice.ts.txt in docs/verification/editorial-2026-10-19/profile/b3-practice.txt",
+  "first": "Pending"
+ },
+ "src/engine/systems/learning.ts#APPROACHES": {
+  "status": "Rewritten",
+  "hash": "af3c24c8ef5a",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g18-school.test.ts asserts Put It First's words exactly, in its button's title, its toast and the coursework pane drawn",
+  "first": "Pending"
+ },
+ "src/engine/systems/learning.ts#DIM_SUBJECT": {
+  "status": "Retained",
+  "hash": "932ecffdae6d",
+  "on": "2026-10-19",
+  "reason": "The note subjects as the coursework card names its parts, Knowing The Material, Lines, The Choices, Time On Its Feet, Work With Your Partner, Working A Note",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/learning.ts#noteSubject": {
+  "status": "Retained",
+  "hash": "8ba0eb6cc186",
+  "on": "2026-10-19",
+  "reason": "A choice's note subject is A Choice with its question's name, and the step beyond is The Next Step: short Title Case names the notes list shows",
+  "first": "Reviewed And Retained"
  },
  "src/engine/systems/next-steps.ts#agoOf": {
   "status": "Rewritten",
@@ -257,6 +523,48 @@
   "on": "2026-10-19",
   "evidence": "tests/decisions-advice.test.ts and tests/advice.test.ts on played cases, tools/advice-harness.ts S3 and H checks over the tuning set (docs/verification/editorial-2026-10-19/profile/advice/tuning.json), and docs/verification/editorial-2026-10-19/profile/b2-advice.txt",
   "first": "Pending"
+ },
+ "src/engine/systems/practice.ts#focusRefusal": {
+  "status": "Retained",
+  "hash": "e7c8c58e4204",
+  "on": "2026-10-19",
+  "reason": "A refusal for a focus the control never offers, reachable only by a command, that says in five words there's no such way to practice",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/practice.ts#pastMastery": {
+  "status": "Retained",
+  "hash": "9b9cfdfec00d",
+  "on": "2026-10-19",
+  "reason": "One sentence saying that past 90 no piece asks more of a technique, so an hour there changes no result: the fact the player needs before spending one",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/practice.ts#practiceFeedback": {
+  "status": "Rewritten",
+  "hash": "d43e3b6e3138",
+  "on": "2026-10-19",
+  "evidence": "tests/variety.test.ts (a target at its full, by a regex as narrow as before), and every variant of what the hour found in docs/verification/editorial-2026-10-19/profile/b3-practice.txt",
+  "first": "Pending"
+ },
+ "src/engine/systems/practice.ts#practicePreview": {
+  "status": "Rewritten",
+  "hash": "2c17b9f03732",
+  "on": "2026-10-19",
+  "evidence": "the preview at each tier, focus and tired, and after two hours pressed, in docs/verification/editorial-2026-10-19/profile/b3-practice.txt (render-practice.ts.txt)",
+  "first": "Pending"
+ },
+ "src/engine/systems/practice.ts#practiceRefusal": {
+  "status": "Retained",
+  "hash": "0829d4893d9c",
+  "on": "2026-10-19",
+  "reason": "Each refusal names what stops the hour now and the way out: asleep, at a commitment until a time, four hours already so practice again tomorrow, too tired so sleep first",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/practice.ts#registerPractice <practice.exercise>": {
+  "status": "Retained",
+  "hash": "ed440b7536f3",
+  "on": "2026-10-19",
+  "reason": "A refusal for a tier the control never offers, reached only by a command, saying plainly there's no such tier",
+  "first": "Reviewed And Retained"
  },
  "src/ui/looks/actor.tsx#BAND_WORD": {
   "status": "Retained",

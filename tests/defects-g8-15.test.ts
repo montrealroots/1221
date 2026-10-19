@@ -73,7 +73,7 @@ describe('a habit', () => {
     for (const b of others) go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id, pace: 'measured' });
     expect(chosen(sim, 'measured')).toBe(ARTISTRY.habitAt);
     const line = identityOf(sim.player).habits.find((h) => h.label === 'Measured Pace');
-    expect(line?.line).toBe(`You play it measured: ${ARTISTRY.habitAt} of ${ARTISTRY.habitAt} choices on pace.`);
+    expect(line?.line).toBe(`You tend to play it measured: ${ARTISTRY.habitAt} of your ${ARTISTRY.habitAt} choices of pace.`);
     expect(line?.evidence).toEqual([`Ways chosen: Measured ${ARTISTRY.habitAt}, Driven 0`, 'Shown in work: Measured 4, Driven 0']);
     expect(identityOf(sim.player).habit).toEqual({ axis: 'pace', side: 'measured' });
   });
