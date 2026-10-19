@@ -328,3 +328,48 @@ there are no more pairs that are true to make.
 
 **Renders:** `care-after-2.txt` (render-care.ts) shows the town list's error, played with a failing fetch, and Los
 Angeles's and a derived city's notes.
+
+## The Area's End
+
+**Second-pass statuses:** 171 of 171 sources have one: 29 Rewritten, 141 Retained, 1 Blocked, 0 Pending
+(`node tools/text-inventory.mjs`, `--todo2 health` shows 0).
+
+**The whole suite, once** (`suite-exits.txt`):
+- 4,713 of 4,715 tests passed in 391 files. The machine was shared, so the run took 83 minutes on two forks. Two failed:
+  - `tests/defects-g4-1.test.ts`, "Readiness on your own page …", held batch 1's old Readiness way as a regex,
+    `/judged work/`, which the batch 1 grep missed (it searched the literal phrase). It's now
+    `/your work goes when it’s judged/`, as narrow.
+  - `tests/evidence-g06-life.test.ts`, "Readiness at 100 …", the test added below. The suite ran that file in the minute
+    it was being mutation-checked, with the fix taken out on purpose, so it failed as it should.
+- Both files, and the five that hold the looks' words, were then run again: 159 of 159.
+
+**The built app** (`npm run build`, 0; served on port 4288 and checked as this build with `cmp` against
+`dist/index.html`):
+- **`tools/text-walk.mjs`** at 1440 and 390 over the fifteen scenario saves (`after-1440/`, `after-390/`, 25 screens
+  each).
+  - It ran again over a health save written on this code (`after-notices-1440/`, `after-notices-390/`), so the notices
+    have today's words. That save's sprained ankle is a Yale student's, paid in full: "Its care, a visit to urgent care
+    and 2 sessions of physical therapy, costs you nothing."
+  - Its screens hold few of this area's words: Papers' Health Cover, the How You Are bars. They read the same as the
+    walk before this pass (`b15-before/`): no line of this area's changed on a walked screen.
+- **`tools/text-render-check.mjs`**:
+  - 137,624 strings read, 0 faults, over `after-1440` and `after-390`;
+  - 8,986 strings, 0 faults, over the notices' walk.
+- **The looks walk.** The text walk opens no look, so `looks-walk.mjs` opened the player's own page from Home's How You
+  Are, then each measure, Readiness, and an injury, in the health save and dir1, at 1440 and 390 (`looks-walk/`).
+  - The built app showed every rewrite of batch 1 as it reads in `looks-final.txt`.
+  - It also found one more fault, fixed: Readiness at 100 said "As good as a day gets" over a way that said "At 63, and
+    pulling readiness down." (defects.md, 7).
+  - The build was made again with that fix and the looks walked again. The way now reads "At 63, short of its best."
+- **At 390** (the screenshots in `looks-walk/390/`): the person page wraps cleanly in one column. Each way's detail is
+  two or three lines under its label, and no line, label or button is clipped or pushed past the edge. The longest way,
+  Readiness's, is four lines.
+- The text walk ran on the build before the last fix. That fix changed only a look's way, which no walked screen shows.
+
+**The checks at the end:**
+- `tsc -b --noEmit` 0, `eslint` 0.
+- `title-case` 0, `label-sweep` 0, `plural-check` 0, `voice-check` 0, `tics` 0, `spelling` 0, `typos` 0.
+- `text-inventory --check` 0, `doc-refs` 0, `deciders` 0, `traceability` 0, `wired` 0, `coverage` 0.
+- `guide-quotes --check` 1, on the papers area's one quote (`guide/papers.ts:345`), as expected.
+- `completion-matrix --check` 1. It's the coordinator's to run: rows measured before this pass's code changes now read
+  as measured before the code they read last changed (batch 2).

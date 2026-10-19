@@ -1184,9 +1184,9 @@
  },
  "src/ui/looks/wellbeing.tsx#top": {
   "status": "Rewritten",
-  "hash": "743bbefca43b",
+  "hash": "6a0ea1d6a950",
   "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition; tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts, tests/scope-people.test.ts and tests/evidence-g07-life.test.ts assert the person, injury and condition words",
+  "evidence": "looks-final.txt (render-looks.ts) and the built app's looks-walk/ (looks-walk.mjs, port 4288); tests/evidence-g06-life.test.ts asserts Readiness at 100 and under it, and tests/evidence-g33-ui.test.ts the person page",
   "first": "Pending"
  },
  "src/ui/looks/wellbeing.tsx#WHAT": {

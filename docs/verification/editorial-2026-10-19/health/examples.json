@@ -394,5 +394,14 @@
   "why": "The same two fixes, and “derived” said as estimated, the glossary's word. The basis, country and population, is kept (deriveCity reads both).",
   "meaningSensitive": false,
   "verified": "care-after-2.txt (render-care.ts), the first derived city's note"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "100. As good as a day gets, even with nourishment short of your best. / Nourishment: At 63, and pulling readiness down.",
+  "after": "100. As good as a day gets, even with nourishment short of your best. / Nourishment: At 63, short of its best.",
+  "why": "At the ceiling, readiness clamps at 100, so the way contradicted the summary above it. Found on the built app's looks walk (dir1). Under 100 the way still says it's pulling readiness down.",
+  "meaningSensitive": true,
+  "verified": "looks-walk/dir1.json on the built app before the fix. tests/evidence-g06-life.test.ts ‘Readiness at 100 …’ fails without the fix"
  }
 ]

@@ -186,7 +186,7 @@ describe('Readiness on your own page', () => {
     const way = found.ways!.find((w) => w.label === 'Readiness')!;
     expect(way.detail).not.toMatch(/audition|day’s work/);
     expect(way.detail).toMatch(/a rehearsal, an hour of practice or a workout builds/);
-    expect(way.detail).toMatch(/judged work/);
+    expect(way.detail).toMatch(/your work goes when it’s judged/);
   });
 });
 

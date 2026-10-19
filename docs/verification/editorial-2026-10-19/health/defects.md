@@ -59,3 +59,16 @@ Brief 15, 2026-10-19. Functional faults found while reading the health area's so
      adjectives read well.
    - **Suggested:** the sentence, not the tags, should change, to one that suits nouns and adjectives alike, such as
      "In short: no daylight saving, desert and affordable."
+
+## Fixed At The Area's End
+
+Found on the built app after the three batches, numbered on from the list above so the batches' references hold.
+
+7. **Readiness at its ceiling still named a measure "pulling readiness down".**
+   - **What:** brief 14 made the summary say "As good as a day gets, even with nourishment short of your best." when
+     `readiness` clamps at 100. The way under it still said "At 63, and pulling readiness down.", and at 100 it pulls
+     nothing.
+   - **How it was found:** the built app's looks walk (`looks-walk.mjs`, the dir1 save, at 1440).
+   - **The fix:** at the ceiling the way says "At 63, short of its best."
+   - **Test:** `tests/evidence-g06-life.test.ts`, "Readiness at 100 says a measure short of its best is short of it, not
+     pulling readiness down; under 100 it is". It fails with the old way's words and passes with the fix.

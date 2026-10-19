@@ -84,6 +84,7 @@ import { END_KIND } from '@/engine/systems/mortality';
 import { CARE } from '@/engine/content/safetynet';
 import { fluByWeek, weekOfYear } from '@/engine/systems/seasons';
 import { at as subject } from '@/ui/looks/subject';
+import { resolveLook } from '@/ui/looks/registry';
 import '@/ui/looks/all';
 
 const h = vi.hoisted(() => ({
@@ -487,6 +488,19 @@ describe('condition', () => {
     above.player.wellbeing.condition = 95; // TEST SETUP
     expect(dial(at, 'condition').says).toBe('91. As sound as rest can make you at your fitness. The lower it is, the likelier a year is to be your last.');
     expect(dial(above, 'condition').says).toBe('95. As sound as rest can make you at your fitness. Above 91, it settles back toward 91 each midnight. The lower it is, the likelier a year is to be your last.');
+  });
+
+  // Until 2026-10-19 (brief 15) Readiness at its ceiling said “As good as a day gets, even with nourishment short of your
+  // best.” over a way that said “At 63, and pulling readiness down.”: `readiness` clamps at 100, so it pulled nothing.
+  it('Readiness at 100 says a measure short of its best is short of it, not pulling readiness down; under 100 it is', () => {
+    const base = lifeAt('g06-ready-top', nh(8, 24, 23));
+    const [top, under] = [reload(base), reload(base)];
+    Object.assign(top.player.wellbeing, { energy: 100, stress: 0, sleepDebt: 0, morale: 100, condition: 100, hygiene: 100, nourishment: 63 }); // TEST SETUP
+    Object.assign(under.player.wellbeing, { energy: 60, stress: 30, sleepDebt: 0, morale: 60, condition: 100, hygiene: 100, nourishment: 30 }); // TEST SETUP
+    const ways = (sim: Simulation) => ((resolveLook(sim, subject('readiness', sim.player.id)) as { ways?: { label: string; detail: string }[] }).ways ?? []);
+    expect(look(top, 'readiness', top.player.id).says).toBe('100. As good as a day gets, even with nourishment short of your best.');
+    expect(ways(top)).toEqual([{ to: subject('dial', `${top.player.id}/nourishment`), label: 'Nourishment', detail: 'At 63, short of its best.' }]);
+    expect(ways(under).find((w) => w.label === 'Nourishment')!.detail).toBe('At 30, and pulling readiness down.');
   });
 
   it('a worn body gets 0.9 of a night’s energy at half what rest can mend it to, and its morale settles 45 × 47/99.8 of the night’s pull lower; the look says 90%', () => {

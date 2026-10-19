@@ -431,7 +431,10 @@ defineLook<Ready>('readiness', {
       ways: ready.drags.map((d) => ({
         to: at('dial', `${ready.person.id}/${d.key}`),
         label: d.name,
-        detail: `${d.key === 'sleepDebt' ? `${plural(Math.round(d.value), 'hour')} owed` : `At ${Math.round(d.value)}`}, and pulling readiness down.`,
+        // At the ceiling a measure short of its best takes nothing off the figure shown (`readiness` clamps at 100), so it
+        // isn’t said to pull it down (from 2026-10-19, brief 15: until then the summary said “As good as a day gets” over a
+        // way that said “At 63, and pulling readiness down.”).
+        detail: `${d.key === 'sleepDebt' ? `${plural(Math.round(d.value), 'hour')} owed` : `At ${Math.round(d.value)}`}${ready.value >= 99.5 ? ', short of its best.' : ', and pulling readiness down.'}`,
       })),
       provenance: `Seven of the eight measures, all but fitness, from 5 to 100. It sets how much a class, a lab, a rehearsal, an hour of practice or a workout builds, and under ${EVALUATION.sufficientReadiness} it costs ${p.them} in judged work.`,
     };
