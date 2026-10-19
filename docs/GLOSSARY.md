@@ -5,6 +5,10 @@ in the game (and the code it names, so a writer can check the meaning), and the 
 than one part of the game is here, in Core, and only the coordinator of a pass changes it. A term only one part uses is
 in that part's section. Code identifiers keep their names; only what's shown changes.
 
+Brief 15 (2026-10-19, `docs/verification/briefs-2026-10-16/15-complete-natural-language-editorial-pass.txt`) kept
+this file as its standard. Where a row's word was correct but stiff, the second pass changed the row and kept the old
+word in Instead Of. The first such change is checking account, below, in Money.
+
 Written 2026-10-17 for the owner's brief 14. Where the game said something else until then, the "Instead Of" column
 keeps it. The sections below Core were assembled the same day from each area's `glossary.md`
 (`docs/verification/language-2026-10-17/<area>/`), one row for each term: a term two areas both wrote is in Core, or in
@@ -148,9 +152,9 @@ exchange rate and the game are Core's.
 
 | Say | What It Means | Instead Of |
 |---|---|---|
-| **current account** | The everyday account wages are paid into and spending comes from (`kind: 'checking'`). A bank's own name for it is used beside it (Chase Total Checking, AktivKonto). | checking account in prose, "what you spend from" |
-| **primary account** | The current account money comes from unless you say otherwise: the debit card's everyday purchases, cash from a machine, bills paid by hand, a new standing order or autopay (`primaryAccountId`, `PRIMARY_DOES`). Making another account primary moves nothing already set up. | "the account the day comes out of", "Primary." alone |
-| **savings**, **easy-access savings** | A savings account at a bank where you keep a current account, one per bank. Easy-access, as against a term deposit. | "what you put aside" |
+| **checking account** | The everyday account wages are paid into and spending comes from (`kind: 'checking'`). A bank's own name for it is used beside it (Chase Total Checking, AktivKonto). From 2026-10-19 (brief 15): the game is written in US English, and the owner's own example said checking account. Until then this row said current account, with checking account the word to avoid. | current account, "what you spend from" |
+| **primary account** | The checking account money comes from unless you say otherwise: the debit card's everyday purchases, cash from a machine, bills paid by hand, a new standing order or autopay (`primaryAccountId`, `PRIMARY_DOES`). Making another account primary moves nothing already set up. | "the account the day comes out of", "Primary." alone |
+| **savings**, **easy-access savings** | A savings account at a bank where you keep a checking account, one per bank. Easy-access, as against a term deposit. | "what you put aside" |
 | **term deposit** (and the bank's own name: CD, Fixed-Term Savings) | Money locked away at a fixed rate for the bank's term (`category: 'term'`). | |
 | **balance** | What an account holds now, added up from every payment in and out of it. An overdrawn balance is shown with a minus sign (−$3.30) and the word Overdrawn, to the cent; Home's Money line writes a negative worth the same way (−$227). | "the sum of the postings", -$3 |
 | **posted balance** | Only the payments that have gone through; the available balance (Core) has pending card payments taken off too. | "completed items" |
@@ -161,7 +165,7 @@ exchange rate and the game are Core's.
 | **late fee** | What paying less than the minimum by the due date costs. | "a payment short of the minimum costs" |
 | **credit record**, **credit score** | The record each month's report keeps, and its figure, scored 300 to 850. The guide says credit score for the figure a bank approves from (620) and prices by, and credit record for what a late payment goes on. | "your record" alone where the card's record could be meant |
 | **charged off**, **collections** | A debt the bank stopped pursuing itself and sent to collections; on your record until paid. | |
-| **standing order**, **payment set for a date**, **autopay** | A monthly payment of your own into savings; a one-off payment on a day you choose; a card's automatic payment from a current account. | "scheduled payment" (kept as the notice's title) |
+| **standing order**, **payment set for a date**, **autopay** | A monthly payment of your own into savings; a one-off payment on a day you choose; a card's automatic payment from a checking account. | "scheduled payment" (kept as the notice's title) |
 | **notice period** | The months a German savings account needs before it closes, past what a month lets out; the days a bank needs to end a term deposit early. Not a notice (Core). | "the notice ran out" |
 | **dormant**, **reactivate** | An account unused for the bank's months is blocked until you press Reactivate. | "untouched … blocked until it's used again" |
 
@@ -224,7 +228,7 @@ stamina, morale, health, wellbeing and readiness are Core's; out of status is Pa
 | **what your plan doesn't cover** | The same, said of a month's care for a long-term condition. | at what the plan leaves |
 | **paid this year** | Care And Its Bills' subtitle: what you've paid for care this year, and, for a plan with a most a year, of how much ("$20.00 of $9,100.00 paid this year"). HUSKY D and Covered Connecticut have no most, and say only what's been paid. | "$20.00 of $0.00 paid this year" |
 | **medical debt** | A bill unpaid at its due date, owed to Your Providers in the Owed For Medical Care account. | |
-| **due on**, **your share is … due on …** | A bill's date (`dueAt`, 30 days after the care): on it the bill is taken from your current account, with its overdraft and any savings linked to it (`payFromCurrent`), or, if it can't be paid, it becomes medical debt. A notice names the date, as Papers does. | due in 30 days |
+| **due on**, **your share is … due on …** | A bill's date (`dueAt`, 30 days after the care): on it the bill is taken from your checking account, with its overdraft and any savings linked to it (`payFromCurrent`), or, if it can't be paid, it becomes medical debt. A notice names the date, as Papers does. | due in 30 days |
 | **financial assistance** (a hospital's) | A Connecticut hospital's discount on a bill, by income against the poverty line (`CHARITY`, `health.apply_aid`): taken off an uninsured bill when it's billed, or off a bill you put in for it with Apply For Assistance. The Assistance column says Free Care, N% Off, Over The Limit or Assistance Taken Off. "Charity care" stays among How This Works' search words. | charity, charity care, the hospital's charity, Charity Taken Off |
 | **Your Doctor**, **Your Pharmacy**, **The Practice Your Cover Uses**, **Any Pharmacy, At The Typical Price** | The practice and chain care is had at, and the choice before you pick one. | As Your Cover Has It, At The Median |
 | **workers' compensation** | What pays an injury at work: its care, and a share of the week's wage while you're laid up. | |

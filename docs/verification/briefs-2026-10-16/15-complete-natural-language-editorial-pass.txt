@@ -1,0 +1,284 @@
+SLATE: Complete Natural-Language Editorial Pass, Including All Retained Text
+
+Overhaul the current game’s player-facing writing so it sounds natural, direct, and polished.
+
+The previous sweep improved accuracy and tutorial structure, but too much wording still sounds stiff, indirect, or like internal engine documentation. A source being marked “Reviewed And Retained” does not establish that it reads well.
+
+I explicitly authorize rewriting all previously retained text, all previously rewritten text, and any player-facing text added afterward.
+
+Do not stop at a sample, a style guide, or an automated inventory report. Implement the editorial pass throughout the retained game.
+
+1. Establish The Current Baseline
+
+Read the repository instructions, latest handoff, writing guidelines, glossary, text inventory, and previous language reports. Verify the actual current branch and source state.
+
+Preserve unrelated changes, gameplay behavior, saved data, and the existing scope. Do not restore removed systems, add connectors, or modify decision #4’s protected functionality or statuses.
+
+This instruction supersedes previous editorial conventions wherever they preserve unnatural player-facing wording.
+
+Keep Title Case for headings, navigation, and buttons under my established rules. Use natural sentence capitalization in paragraphs and dialogue.
+
+2. Reopen Every Player-Facing Source For Editorial Review
+
+Include:
+
+* Startup, save management, creation, and onboarding.
+* Home, calendars, schedules, and time controls.
+* School, coursework, rehearsals, productions, feedback, and evaluations.
+* Attributes, techniques, genres, mastery, preparation, and training advice.
+* Money, banking, payments, statements, fees, and restrictions.
+* Papers, applications, documents, taxes, and status notices.
+* Health, treatment, coverage, stamina, energy, and recovery.
+* Tutorials, guides, tooltips, drill-downs, and contextual help.
+* Notifications, dialogue, confirmations, errors, and recovery instructions.
+* Buttons, placeholders, empty states, accessibility labels, and dynamic text.
+* Data files and templates that generate visible text.
+
+Use the existing inventory as the baseline, but verify that it covers the actual sources. Record omissions rather than assuming the inventory is exhaustive.
+
+Previous review status grants no exemption. Add a separate second-pass status so the earlier history remains intact.
+
+Rewrite any text that fails the new standard. Retain already effective text with a specific reason; do not rewrite good sentences merely to increase the change count.
+
+3. Apply This Writing Standard
+
+SLATE should speak to the player like a finished game.
+
+Use:
+
+* Familiar words.
+* Direct instructions.
+* Clear subjects and verbs.
+* Natural contractions where appropriate.
+* Specific consequences.
+* Concise explanations with optional deeper detail.
+* Consistent terminology.
+* A voice appropriate to the speaker and situation.
+
+Avoid:
+
+* Engine terminology exposed as ordinary narration.
+* Awkward passive constructions.
+* Cryptic fragments.
+* Overly literary explanations of basic controls.
+* Repeated references to “this life,” “the work reads,” or “the game judges” where ordinary language would be clearer.
+* Forced slang, exaggerated enthusiasm, or unnecessary filler.
+* Replacing one obscure phrase with another.
+
+Examples of the intended direction:
+
+“A word stays plain text until the chapter that opens it has been read.”
+→ “Some links are locked until you complete the related tutorial.”
+
+“The school’s commitments aren’t yours to skip.”
+→ “School events don’t have a Skip option.”
+
+“This life was begun without the guide.”
+→ “You started without the tutorial.”
+
+“Checking is short.”
+→ “You don’t have enough available money in your checking account.”
+
+These examples establish the voice. Before using them, verify that each preserves the actual behavior and established terminology.
+
+Do not merely replace a blacklist of words. Read the entire sentence and the interaction around it.
+
+4. Create A Working Reference, Then Apply It
+
+At the start, write representative examples from actual current text covering:
+
+* A tutorial.
+* Instructor feedback.
+* A notification.
+* A banking restriction.
+* A document application.
+* An attribute explanation.
+* A repeated recommendation.
+* An error message.
+
+Record the original, replacement, context, and reason. Use the style demonstrated in this instruction as the working standard and proceed without waiting for another approval.
+
+Include those examples in progress updates so I can steer the voice while work continues.
+
+Update the repository’s style guide and glossary so future agency and career features inherit the same standard.
+
+5. Make Tutorials Easy To Follow
+
+Teach tasks in the order the player performs them.
+
+Each relevant tutorial should explain:
+
+* What the feature is for.
+* Where to find it.
+* Which actual control to select.
+* What is required first.
+* What happens next.
+* What the result means.
+* What connects to it.
+* What to do if the action is unavailable.
+
+Start with a short explanation and actionable steps. Put formulas, exceptions, and advanced conditions behind optional details.
+
+Do not bury the first action beneath several paragraphs of background.
+
+Use exact interface labels. If a label is renamed, update every tutorial, reference, accessibility label, and relevant test consistently.
+
+Distinguish clearly between:
+
+* Choosing an interpretation and rehearsing it.
+* Current readiness and fully prepared potential.
+* Attributes, techniques, and genre knowledge.
+* Health, stamina, and current energy.
+* Pending and available money.
+* Applying for a document and receiving it.
+* A warning and a formal consequence.
+
+Verify instructions by following them in the built game. Finding a label in code is only partial evidence; identify any route not exercised.
+
+6. Give Each Kind Of Text Its Own Appropriate Voice
+
+Instructor Feedback:
+
+* Sound like a teacher responding to the actual performance.
+* Name a specific strength or weakness.
+* Give an actionable next step where appropriate.
+* Do not invent observations, dialogue, or knowledge unsupported by the simulation.
+
+Tutorials:
+
+* Explain clearly and patiently.
+* Avoid assuming the player understands engine terminology.
+* Use examples that match actual mechanics.
+
+Banking And Official Notices:
+
+* Be straightforward and professional.
+* Preserve amounts, dates, requirements, and conditions.
+* Label estimates and simulation assumptions accurately.
+
+Notifications:
+
+* Lead with what happened.
+* Explain the consequence.
+* Offer a relevant next action.
+
+Buttons:
+
+* Name the action clearly.
+* Keep labels concise and distinguishable.
+* Do not rely on surrounding prose to explain an ambiguous button.
+
+Errors:
+
+* Explain what failed.
+* Accurately state whether anything changed or was charged.
+* Give a legitimate recovery step.
+* Keep technical diagnostics available separately.
+
+7. Review Complete Interactions
+
+Do not approve sentences only in isolation.
+
+Read the sequence from entry to completion:
+
+* The feature description.
+* The selected action.
+* Any prerequisite or refusal.
+* The confirmation.
+* The immediate result.
+* The later notification.
+* The relevant tutorial and drill-down.
+
+Remove redundant explanations, inconsistent terminology, abrupt voice changes, and missing next steps.
+
+Verify that the player receives important information at the moment it is useful.
+
+8. Make Repetition Context-Aware
+
+Repeated messages must acknowledge relevant history:
+
+* What the player already attempted.
+* What improved.
+* What remains unresolved.
+* Why the recommendation still applies.
+* What action is useful now.
+
+Do not repeat a weakness as if it were discovered for the first time.
+
+Do not invent new circumstances for variety or rotate to worse advice. Stable labels and recurring requirements should remain consistent.
+
+Review dynamic messages across meaningful variants, including singular/plural, missing optional information, names, pronouns, dates, amounts, deadlines, and changed statuses.
+
+9. Preserve Meaning And Mechanics
+
+This is primarily an editorial pass.
+
+Do not alter calculations, progression, eligibility, deadlines, costs, or outcomes to make wording easier.
+
+For consequential text, verify its meaning against the implementation. Preserve necessary qualifications without making the opening sentence unreadable.
+
+Keep code identifiers and saved fields stable where possible. Rename display labels independently.
+
+If the review reveals a functional defect, record it separately. Fix necessary in-scope defects with regression tests rather than hiding them through different wording.
+
+Do not silently rewrite authentic quotations as if the new words were the original source. Clearly distinguish quoted material from SLATE’s explanations.
+
+10. Use A Real Editorial Acceptance Standard
+
+For each source, assess:
+
+* Naturalness.
+* Immediate clarity.
+* Mechanical accuracy.
+* Consistency with the glossary.
+* Fit for its speaker and context.
+* Usefulness of its next-step guidance.
+* Readability in the actual interface.
+
+Do not award a self-declared “10/10” or treat a green automated check as proof of good prose.
+
+A retained source must pass these same standards. “Already reviewed,” “grammatically correct,” and “contains no flagged words” are insufficient reasons.
+
+Inspect all eight major areas again after integration to catch different voices introduced by separate batches.
+
+11. Validate In The Built Game
+
+Exercise complete journeys covering:
+
+* New-player onboarding.
+* School preparation, showing, feedback, and improvement.
+* Attributes, genres, interpretation, and advice.
+* A setback and recovery.
+* Banking with a restriction or pending state.
+* Papers and document processing.
+* Health-related interruption.
+* Saving, exiting, and continuing.
+
+Check desktop and mobile for text walls, wrapping, clipping, button size, and accessibility.
+
+Update intentional text assertions without weakening behavioral checks. Prefer stable selectors where appropriate.
+
+Run the required final gate, build, and affected interface tests. Compare relevant engine outputs to confirm that editorial changes did not alter gameplay.
+
+Report routes not exercised and any limitations of automated checking.
+
+12. Deliver The Complete Pass
+
+Provide:
+
+* The second-pass inventory with every source accounted for.
+* Totals for rewritten, retained, pending, and blocked sources.
+* Representative before-and-after examples from every subsystem.
+* Specific reasons for retained text.
+* Verified tutorial journeys.
+* Dynamic-text and repeated-message results.
+* Gameplay defects discovered separately from editorial changes.
+* Test commands, commits, and outcomes.
+* A short manual review route for me.
+* Updated writing guidance and handoff.
+
+Do not call this complete while identified player-facing sources remain unreviewed.
+
+Commit and push the work and prepare the appropriate PR. Follow established merge and deployment authorization rules.
+
+Keep working through the full sweep. The goal is language that players understand naturally and immediately, while preserving SLATE’s depth and accuracy. My hands-on review will determine whether the finished voice meets my expectations.

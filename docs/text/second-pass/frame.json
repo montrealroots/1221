@@ -1,0 +1,16 @@
+{
+ "index.html#head": {
+  "status": "Rewritten",
+  "hash": "a7f345b8a8d7",
+  "on": "2026-10-18",
+  "evidence": "The built app's page head after npm run build (dist/index.html) holds the new description; the title SLATE stays.",
+  "first": "Pending"
+ },
+ "public/holidays#names": {
+  "status": "Retained",
+  "hash": "9f3838c1376f",
+  "on": "2026-10-18",
+  "reason": "The names of real public holidays and observances as the published calendar data spells them in English; the calendar shows each verbatim beside its date, and a proper name isn't the game's to reword.",
+  "first": "Pending"
+ }
+}
