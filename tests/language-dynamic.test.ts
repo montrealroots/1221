@@ -375,11 +375,11 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     type Limit = { kind: string; what: string; label: string; by: number; whole: number };
     const why = (limit: Limit) => recommendations(() => 50, () => 100, [{ at: 1, limits: [limit], inputs: { abilities: { focus: 50 } } }], (id) => ({ id: `ex-${id}` }), matchedTier, 12).map((r) => r.why).join(' ');
     for (const [whole, said] of [[1, '1 point'], [2.5, '2.5 points']] as const) {
-      expect(why({ kind: 'preparation', what: 'memorization', label: 'Lines', by: 4, whole })).toContain(`Coming to your work short on lines cost about ${said} off the whole a piece. That’s preparation, not training: prepare that part further before you show or tape the next piece.`);
-      expect(why({ kind: 'condition', what: 'injury', label: 'An Injury Still Mending', by: 4, whole })).toContain(`An Injury Still Mending cost about ${said} off the whole a piece. Come to the work rested and well`);
-      expect(why({ kind: 'condition', what: 'stamina', label: 'Stamina, By Beat 2', by: 4, whole })).toContain(`Tiring through the later moments of a piece cost about ${said} off the whole a piece.`);
-      expect(why({ kind: 'fit', what: 'tempo', label: 'Played Against The Scene', by: 4, whole })).toContain(`Playing it a way that didn’t fit cost about ${said} off the whole a piece.`);
-      expect(why({ kind: 'ability', what: 'focus', label: 'Focus', by: 4, whole })).toContain(`It cost your recent work about ${said} off the whole a piece`);
+      expect(why({ kind: 'preparation', what: 'memorization', label: 'Lines', by: 4, whole })).toContain(`Coming to your work short on lines cost each piece about ${said} off the whole. That’s preparation, not training: prepare that part further before you show or tape the next piece.`);
+      expect(why({ kind: 'condition', what: 'injury', label: 'An Injury Still Mending', by: 4, whole })).toContain(`An Injury Still Mending cost each piece about ${said} off the whole. Come to the work rested and well`);
+      expect(why({ kind: 'condition', what: 'stamina', label: 'Stamina, By Beat 2', by: 4, whole })).toContain(`Tiring through a piece’s later moments cost each one about ${said} off the whole.`);
+      expect(why({ kind: 'fit', what: 'tempo', label: 'Played Against The Scene', by: 4, whole })).toContain(`Playing it a way that didn’t fit cost each piece about ${said} off the whole.`);
+      expect(why({ kind: 'ability', what: 'focus', label: 'Focus', by: 4, whole })).toContain(`It cost each of your recent pieces about ${said} off the whole`);
     }
     // A forecast's count of the recent pieces that call on it: the verb agrees with the count that leads.
     const forecast = (pieces: number, of?: number) => recommendations(() => 50, () => 100, [], (id) => ({ id: `ex-${id}` }), matchedTier, 12, undefined, undefined, new Map([['focus', { points: 0.8, from: 50, to: 55, hours: 20, pieces, ...(of !== undefined ? { of } : {}) }]]))[0]!.why;

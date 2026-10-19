@@ -278,11 +278,11 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     const since = ex ? lastPracticed?.(ex.id) : undefined;
     const focus = since !== undefined && since >= 1 && since <= 7 ? 'spaced' : 'steady';
     const each = Math.round(points * 10) / 10;
-    out.push({ target: what, label: c.label, ...(ex ? { exercise: ex.id, tier: matchedTier(now) } : {}), focus, points: each, why: `It cost your recent work about ${each} ${each === 1 ? 'point' : 'points'} off the whole a piece, the latest pieces counting most. It’s at ${Math.round(now)} of ${Math.round(full)}. ${focus === 'spaced' ? SPACED_NOW : STEADY_FIRST}` });
+    out.push({ target: what, label: c.label, ...(ex ? { exercise: ex.id, tier: matchedTier(now) } : {}), focus, points: each, why: `It cost each of your recent pieces about ${each} ${each === 1 ? 'point' : 'points'} off the whole, the latest counting most. It’s at ${Math.round(now)} of ${Math.round(full)}. ${focus === 'spaced' ? SPACED_NOW : STEADY_FIRST}` });
   }
   for (const [what, c] of prepCost) {
     if (c.points < RECOMMEND.floor) continue;
-    out.push({ target: `prep:${what}`, label: c.label, focus: 'preparation', points: Math.round(c.points * 10) / 10, why: `Coming to your work short on ${c.label.toLowerCase()} cost about ${pointsWords(Math.round(c.points * 10) / 10)} off the whole a piece. That’s preparation, not training: prepare that part further before you show or tape the next piece.` });
+    out.push({ target: `prep:${what}`, label: c.label, focus: 'preparation', points: Math.round(c.points * 10) / 10, why: `Coming to your work short on ${c.label.toLowerCase()} cost each piece about ${pointsWords(Math.round(c.points * 10) / 10)} off the whole. That’s preparation, not training: prepare that part further before you show or tape the next piece.` });
   }
   for (const [k, c] of dayCost) {
     if (c.points < RECOMMEND.floor) continue;
@@ -293,8 +293,8 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     // first found in, "Stamina, By Beat 2 cost about 2.7 points of the whole a piece: come to the work rested and well, or
     // find places to breathe in it", at fitness 15 on long taped briefs: rest restores energy, and a brief's drain reads
     // none of it.
-    if (k === 'condition:stamina') { out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `Tiring through the later moments of a piece cost about ${pointsWords(each)} off the whole a piece. Stamina is your fitness, and Work Out, under Look After Yourself, builds it. Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness.` }); continue; }
-    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: c.kind === 'fit' ? `Playing it a way that didn’t fit cost about ${pointsWords(each)} off the whole a piece. Choose a way the material or the direction allows.` : `${c.label} cost about ${pointsWords(each)} off the whole a piece. Come to the work rested and well, or find places to breathe in it.` });
+    if (k === 'condition:stamina') { out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `Tiring through a piece’s later moments cost each one about ${pointsWords(each)} off the whole. Stamina is your fitness, and Work Out, under Look After Yourself, builds it. Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness.` }); continue; }
+    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: c.kind === 'fit' ? `Playing it a way that didn’t fit cost each piece about ${pointsWords(each)} off the whole. Choose a way the material or the direction allows.` : `${c.label} cost each piece about ${pointsWords(each)} off the whole. Come to the work rested and well, or find places to breathe in it.` });
   }
   // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't. From
   // brief 10 at full precision (`exact`), what the hours are forecast to bring, which is what's said and what's played
