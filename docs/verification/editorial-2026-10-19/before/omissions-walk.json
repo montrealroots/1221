@@ -1,0 +1,4563 @@
+{
+ "written": "by tools/text-omissions.mjs",
+ "walks": [
+  "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b15-before/walk-1440",
+  "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b15-before/walk-390"
+ ],
+ "lines": 3706,
+ "held": 3057,
+ "outside": [],
+ "assembled": [
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 105 KB",
+   "seen": [
+    "brief: Save Slots",
+    "health: Save Slots"
+   ]
+  },
+  {
+   "line": "SLATE 1.1.0 · Saved To This Device",
+   "seen": [
+    "brief: Save Slots",
+    "decision: Save Slots",
+    "dir1: Save Slots"
+   ]
+  },
+  {
+   "line": "Shown: Scene Study, Working",
+   "seen": [
+    "brief: Home",
+    "brief: Home, notice: How This Works",
+    "brief: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "New Haven, Connecticut · United States",
+   "seen": [
+    "brief: Home",
+    "brief: Home, notice: How This Works",
+    "brief: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Your home. 130K people.",
+   "seen": [
+    "brief: Home",
+    "brief: Home, notice: How This Works",
+    "brief: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "12h 41m of daylight",
+   "seen": [
+    "brief: Home",
+    "brief: Home, notice: How This Works",
+    "brief: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Overcast · High 80°F · Low 62°F",
+   "seen": [
+    "brief: Home",
+    "brief: Home, notice: How This Works",
+    "brief: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Humidity 62% · Wind 16 mph · Continental",
+   "seen": [
+    "brief: Home",
+    "brief: Home, notice: How This Works",
+    "brief: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Daylight6:27 AM – 7:08 PM12h 41m of daylight",
+   "seen": [
+    "brief: Home",
+    "brief: Home, notice: How This Works",
+    "brief: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 3 weeks ago. It's first of your 27 unread notices.",
+   "seen": [
+    "brief: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 1 day and 7 hours ago. It's second of your 27 unread notices.",
+   "seen": [
+    "brief: Home, notice: 1d 7h ago",
+    "brief: Home"
+   ]
+  },
+  {
+   "line": "Class of 2029, good standing",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "WHAT TO WORK ON NEXT",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "ABILITY NOW FULL CLASSES REACH TODAY IT SHAPES LAST CHANGE PRACTICE",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "TECHNIQUE NOW CLASSES REACH MASTERED PRACTICE",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "Audition Technique 55.5 81.5 34.5 To Go Audition Pieces…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "Character Work 59.1 84.4 30.9 To Go Character Work…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "Classical Text 47.2 73.2 42.8 To Go Verse Speaking…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "Cold Reading 51.4 77.4 38.6 To Go Cold Reading…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "Comedy 55.1 81.1 34.9 To Go Comic Timing…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "Intimacy 58.9 84.7 31.1 To Go Intimacy Practice…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "Scene Study 50.6 75.8 39.4 To Go Scene Work…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "Script Analysis 56.3 81.6 33.7 To Go Script Analysis…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "Singing 55.2 81.2 34.8 To Go Singing Practice…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "Speech 52.8 78.5 37.2 To Go Speech Drill…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "Stage Combat 48.0 73.8 42.0 To Go Combat Drill…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "Voice-Over 52.5 78.5 37.5 To Go Copy Reading…",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "You love: none chosen.",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "GENRE IT ASKS FOR FAMILIARITY WORK IN IT STUDY, OR ITS BRIEF",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "Year 1 of 3, good standing",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "HALF-YEAR A SCENE SHOWN A WRITTEN ANALYSIS MOVEMENT WORK VOICE WORK",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "2026 Fall 2 at 54.9 1 at 69.2 1 at 66.1 1 at 65.5",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "All Of It 2 at 54.9, best 55.1 1 at 69.2, best 69.2 1 at 66.1, best 66.1 1 at 65.5, best 65.5",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "WORK WHAT WHOLE BAND WHEN",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "decision: Player Profile"
+   ]
+  },
+  {
+   "line": "September 11, 2026: Imagination +0.007, Coursework: making your choices",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "September 11, 2026: Imagination +0.014, Coursework: making your choices",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "September 11, 2026: Memory +0.079, A lab",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "September 11, 2026: Script Analysis +0.072, A lab",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "September 11, 2026: Character Work +0.069, A lab",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "September 11, 2026: Scene Study +0.080, A lab",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "September 11, 2026: Vocal Expression +0.101, Class: Voice I (DRAM 113a/b)",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "September 10, 2026: Imagination +0.014, Coursework: making your choices",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "September 10, 2026: Focus +0.015, Coursework: knowing the material",
+   "seen": [
+    "brief: Player Profile",
+    "brief: Ada Cole",
+    "health: Player Profile"
+   ]
+  },
+  {
+   "line": "MFA in Acting, class of 2029. Year 1 of 3, good standing.",
+   "seen": [
+    "brief: School",
+    "brief: School, Classes",
+    "brief: School, Coursework"
+   ]
+  },
+  {
+   "line": "You need 90% or more",
+   "seen": [
+    "brief: School",
+    "decision: School",
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "A LEAVE OF ABSENCE",
+   "seen": [
+    "brief: School",
+    "decision: School",
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "One Term (Not Possible)",
+   "seen": [
+    "brief: School",
+    "decision: School",
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "Three Terms (Not Possible)",
+   "seen": [
+    "brief: School",
+    "decision: School",
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "COURSES AND THE DEGREE",
+   "seen": [
+    "brief: School",
+    "decision: School",
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "Acting I: 5 of 5 classes attended.",
+   "seen": [
+    "brief: School",
+    "health: School"
+   ]
+  },
+  {
+   "line": "Voice I: 4 of 4 classes attended.",
+   "seen": [
+    "brief: School",
+    "health: School"
+   ]
+  },
+  {
+   "line": "Play: 2 of 2 classes attended.",
+   "seen": [
+    "brief: School",
+    "health: School"
+   ]
+  },
+  {
+   "line": "You and 15 classmates, 0 to 100",
+   "seen": [
+    "brief: School",
+    "decision: School",
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "SKILL YOU YOU CAN REACH CLASS BEST CLASS MEDIAN YOUR PLACE",
+   "seen": [
+    "brief: School",
+    "decision: School",
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "Your Week, Fall Term 2026",
+   "seen": [
+    "brief: School, Classes",
+    "dir1: School, Classes",
+    "dir2: School, Classes"
+   ]
+  },
+  {
+   "line": "DAY 9 A.M. 11 A.M. 1 P.M.",
+   "seen": [
+    "brief: School, Classes",
+    "decision: School, Classes",
+    "dir1: School, Classes"
+   ]
+  },
+  {
+   "line": "CODE COURSE TAUGHT BY TRAINS A WEEK TERMS",
+   "seen": [
+    "brief: School, Classes",
+    "decision: School, Classes",
+    "dir1: School, Classes"
+   ]
+  },
+  {
+   "line": "DRAM 153a Play Justine Williams Improvisation, Emotional Depth 1 Fall",
+   "seen": [
+    "brief: School, Classes",
+    "decision: School, Classes",
+    "dir1: School, Classes"
+   ]
+  },
+  {
+   "line": "DRAM 143a/b · Due September 14, 2026 · Skills: Physical Expression",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework",
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 61%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 39%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 32%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 27%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 41%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 873a/b · Due September 16, 2026 · Skills: Script Analysis",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 30%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 45%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 26%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 153a · Due September 17, 2026 · Skills: Improvisation, Emotional Depth",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework",
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 50%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Acting I: Scene Study",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 103a/b · Due September 21, 2026 · Skills: Scene Study, Character Work, Emotional Depth",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 9%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 33%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework",
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 18%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 22%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "WHAT THE CHERRY ORCHARD ASKS",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "HOW YOU'LL PLAY IT",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "decision: School, Casting"
+   ]
+  },
+  {
+   "line": "ASPECT CHOICE THE SCENE ABILITIES IT USES FULLY PREPARED",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "decision: School, Casting"
+   ]
+  },
+  {
+   "line": "Its 2 Turns: for it",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Its Timing: for it",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 63.1",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 60.3",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 133a/b · Due September 24, 2026 · Skills: Physical Expression, Dance",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 31%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "REHEARSED IN THE BODY",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 69%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 403a/b · Due September 25, 2026 · Skills: Intimacy, Physical Expression",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework",
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 43%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 17%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 113a/b · Due September 25, 2026 · Skills: Vocal Expression",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 78%; complete at 90%",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "September 8, 2026: You showed Trifles together (Working)",
+   "seen": [
+    "brief: School, Coursework",
+    "dir1: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "two characters Not Yet",
+   "seen": [
+    "brief: School, Coursework",
+    "decision: School, Coursework",
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "The Opening Isn't Secure",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework",
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "Ask Jordan to rehearse, 90 minutes",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework",
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Ask Nadia to rehearse, 90 minutes",
+   "seen": [
+    "brief: School, Coursework",
+    "health: School, Coursework"
+   ]
+  },
+  {
+   "line": "Ask Mateo to rehearse, 90 minutes",
+   "seen": [
+    "brief: School, Coursework"
+   ]
+  },
+  {
+   "line": "STUDENT PRODUCTION PART LAST RUN TO YOU",
+   "seen": [
+    "brief: School, Casting",
+    "decision: School, Casting",
+    "dir1: School, Casting"
+   ]
+  },
+  {
+   "line": "HOURS EXCUSED THIS YEAR",
+   "seen": [
+    "brief: School, Shifts And Pay",
+    "decision: School, Shifts And Pay",
+    "dir1: School, Shifts And Pay"
+   ]
+  },
+  {
+   "line": "CONVERTIBLE TO GRANT AID",
+   "seen": [
+    "brief: School, Shifts And Pay",
+    "decision: School, Shifts And Pay",
+    "dir1: School, Shifts And Pay"
+   ]
+  },
+  {
+   "line": "ELECTIVE HOURS ASKED FOR",
+   "seen": [
+    "brief: School, Shifts And Pay",
+    "decision: School, Shifts And Pay",
+    "dir1: School, Shifts And Pay"
+   ]
+  },
+  {
+   "line": "6 hours at $23.00 an hour",
+   "seen": [
+    "brief: School, Shifts And Pay",
+    "decision: School, Shifts And Pay",
+    "dir1: School, Shifts And Pay"
+   ]
+  },
+  {
+   "line": "EACH TERM BILLED CREDITED",
+   "seen": [
+    "brief: School, Terms And Award",
+    "decision: School, Terms And Award",
+    "dir1: School, Terms And Award"
+   ]
+  },
+  {
+   "line": "New Limit (USD), Now $65,217",
+   "seen": [
+    "brief: Money, Cards",
+    "decision: Money, Cards",
+    "dir1: Money, Cards"
+   ]
+  },
+  {
+   "line": "Debit card ending 0146, expires August 24, 2030",
+   "seen": [
+    "brief: Money, Cards",
+    "decision: Money, Cards",
+    "health: Money, Cards"
+   ]
+  },
+  {
+   "line": "Chase Freedom Unlimited ending 9931, expires July 20, 2029",
+   "seen": [
+    "brief: Money, Cards",
+    "decision: Money, Cards",
+    "dir1: Money, Cards"
+   ]
+  },
+  {
+   "line": "Chase Freedom Unlimited ending 9931",
+   "seen": [
+    "brief: Money, Cards",
+    "decision: Money, Cards",
+    "dir1: Money, Cards"
+   ]
+  },
+  {
+   "line": "PAYMENTS SET FOR A DATE",
+   "seen": [
+    "brief: Money, Payments And Cash",
+    "decision: Money, Payments And Cash",
+    "dir1: Money, Payments And Cash"
+   ]
+  },
+  {
+   "line": "You have $0.00 in cash.",
+   "seen": [
+    "brief: Money, Payments And Cash",
+    "decision: Money, Payments And Cash",
+    "dir1: Money, Payments And Cash"
+   ]
+  },
+  {
+   "line": "Chase Freedom Unlimited ···9931, Chase",
+   "seen": [
+    "brief: Money, Statements",
+    "decision: Money, Statements",
+    "dir1: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts September 15, 2026",
+   "seen": [
+    "brief: Money, Statements",
+    "health: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts September 14, 2026",
+   "seen": [
+    "brief: Money, Statements",
+    "health: Money, Statements"
+   ]
+  },
+  {
+   "line": "TAX TAKEN OFF IT",
+   "seen": [
+    "brief: Money, Statements",
+    "decision: Money, Statements",
+    "dir1: Money, Statements"
+   ]
+  },
+  {
+   "line": "Walmart Pharmacy, A Generic $4.00 Uninsured",
+   "seen": [
+    "brief: Papers, Health Cover",
+    "decision: Papers, Health Cover",
+    "dir1: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "Costco Pharmacy, A Generic $4.10 Uninsured",
+   "seen": [
+    "brief: Papers, Health Cover",
+    "decision: Papers, Health Cover",
+    "dir1: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "Kroger Pharmacy, A Generic $5.00 Uninsured",
+   "seen": [
+    "brief: Papers, Health Cover",
+    "decision: Papers, Health Cover",
+    "dir1: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "CVS Pharmacy, A Generic $12.50 Uninsured",
+   "seen": [
+    "brief: Papers, Health Cover",
+    "decision: Papers, Health Cover",
+    "dir1: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "CARE WHEN YOUR SHARE DUE ASSISTANCE PLAN PAID",
+   "seen": [
+    "brief: Papers, Health Cover",
+    "decision: Papers, Health Cover",
+    "dir1: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "A Prescription, A Generic August 31, 2026 $10.00 Settled",
+   "seen": [
+    "brief: Papers, Health Cover",
+    "decision: Papers, Health Cover",
+    "health: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "ON THE EBT CARD",
+   "seen": [
+    "brief: Papers, Unemployment",
+    "decision: Papers, Unemployment",
+    "dir1: Papers, Unemployment"
+   ]
+  },
+  {
+   "line": "Up to 42 days; good for 10 years",
+   "seen": [
+    "brief: Papers, Passport And ID",
+    "decision: Papers, Passport And ID",
+    "health: Papers, Passport And ID"
+   ]
+  },
+  {
+   "line": "COUNTRY YOUR STATUS THERE",
+   "seen": [
+    "brief: Papers, Permission To Work",
+    "decision: Papers, Permission To Work",
+    "dir1: Papers, Permission To Work"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 652 KB",
+   "seen": [
+    "decision: Save Slots"
+   ]
+  },
+  {
+   "line": "The Seagull: Understudy Rehearsal",
+   "seen": [
+    "decision: Home",
+    "decision: Home, notice: How This Works",
+    "decision: Home, notice: Your 2026 Tax Return"
+   ]
+  },
+  {
+   "line": "10h 26m of daylight",
+   "seen": [
+    "decision: Home",
+    "decision: Home, notice: How This Works",
+    "decision: Home, notice: Your 2026 Tax Return"
+   ]
+  },
+  {
+   "line": "Overcast · High 49°F · Low 31°F",
+   "seen": [
+    "decision: Home",
+    "decision: Home, notice: How This Works",
+    "decision: Home, notice: Your 2026 Tax Return"
+   ]
+  },
+  {
+   "line": "Humidity 56% · Wind 9 mph · Continental",
+   "seen": [
+    "decision: Home",
+    "decision: Home, notice: How This Works",
+    "decision: Home, notice: Your 2026 Tax Return"
+   ]
+  },
+  {
+   "line": "The 2026 return is due April 15, 2027, $7,222 to pay.",
+   "seen": [
+    "decision: Home",
+    "decision: Home, notice: How This Works",
+    "decision: Home, notice: Your 2026 Tax Return"
+   ]
+  },
+  {
+   "line": "Daylight6:52 AM – 5:18 PM10h 26m of daylight",
+   "seen": [
+    "decision: Home",
+    "decision: Home, notice: How This Works",
+    "decision: Home, notice: Your 2026 Tax Return"
+   ]
+  },
+  {
+   "line": "Close Your 2026 Tax Return",
+   "seen": [
+    "decision: Home, notice: Your 2026 Tax Return"
+   ]
+  },
+  {
+   "line": "Character Work 63.7 84.4 26.3 To Go Character Work…",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "Intimacy 60.2 84.7 29.8 To Go Intimacy Practice…",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 55.9 75.8 34.1 To Go Scene Work…",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 60.6 81.6 29.4 To Go Script Analysis…",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "Speech 55.8 78.5 34.2 To Go Speech Drill…",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "Stage Combat 49.6 73.8 40.4 To Go Combat Drill…",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "HALF-YEAR A SCENE SHOWN A WRITTEN ANALYSIS MOVEMENT WORK VOICE WORK AN IMPROVISATION PARTNERED PHYSICAL WORK",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole",
+    "dir1: Player Profile"
+   ]
+  },
+  {
+   "line": "2026 Fall 14 at 60.6 8 at 68.9 12 at 58.3 12 at 61.1 4 at 65.3 3 at 63.5",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole",
+    "leave: Player Profile"
+   ]
+  },
+  {
+   "line": "2027 Spring 6 at 56.8 4 at 70.2 3 at 63.4 4 at 62.8 — —",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 20 at 59.5, best 62.8 12 at 69.3, best 72.1 15 at 59.3, best 66.1 16 at 61.5, best 67.0 4 at 65.3, best 66.8 3 at 63.5, best 64.3",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "WHAT YOUR WORK SHOWS MOST",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole",
+    "dir1: Player Profile"
+   ]
+  },
+  {
+   "line": "WHAT KEEPS HOLDING IT BACK",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole",
+    "dir1: Player Profile"
+   ]
+  },
+  {
+   "line": "February 11, 2027: Memory +0.004, Coursework: learning the lines",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 11, 2027: Memory +0.007, Coursework: learning the lines",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 11, 2027: Memory +0.016, Coursework: learning the lines",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 11, 2027: Vocal Expression +0.076, Class: Voice I (DRAM 113a/b)",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 10, 2027: Memory +0.006, Coursework: learning the lines",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 10, 2027: Memory +0.013, Coursework: learning the lines",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 10, 2027: Memory +0.013, Coursework: Learn Lines",
+   "seen": [
+    "decision: Player Profile",
+    "decision: Ada Cole"
+   ]
+  },
+  {
+   "line": "Acting I: 14 of 14 classes attended.",
+   "seen": [
+    "decision: School"
+   ]
+  },
+  {
+   "line": "Voice I: 9 of 9 classes attended.",
+   "seen": [
+    "decision: School"
+   ]
+  },
+  {
+   "line": "TERM STANDING ATTENDANCE GROWTH CLASS GROWTH COURSEWORK WHY",
+   "seen": [
+    "decision: School",
+    "dir2: School",
+    "direction: School"
+   ]
+  },
+  {
+   "line": "Your Week, Spring Term 2027",
+   "seen": [
+    "decision: School, Classes",
+    "direction: School, Classes",
+    "lien: School, Classes"
+   ]
+  },
+  {
+   "line": "DRAM 143a/b · Due February 12, 2027 · Skills: Physical Expression",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 403a/b · Due February 12, 2027 · Skills: Stage Combat, Intimacy",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRILLED WITH YOUR PARTNER",
+   "seen": [
+    "decision: School, Coursework",
+    "leave: School, Coursework",
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 75 of 100 · Came to 7 of 8 rehearsals agreed · Reliability 80%",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 103a/b · Due February 15, 2027 · Skills: Scene Study, Character Work, Emotional Depth",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 0%; complete at 90%",
+   "seen": [
+    "decision: School, Coursework",
+    "leave: School, Coursework",
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 57%; complete at 90%",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "WHAT THE IMPORTANCE OF BEING EARNEST ASKS",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "Tone: comic, 1 transition to play",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "Its Turn: for it",
+   "seen": [
+    "decision: School, Coursework",
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 62.1",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 62.6",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 65 of 100 · Came to 3 of 4 rehearsals agreed · Reliability 77%",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 29%; complete at 90%",
+   "seen": [
+    "decision: School, Coursework",
+    "leave: School, Coursework",
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 16%; complete at 90%",
+   "seen": [
+    "decision: School, Coursework",
+    "leave: School, Coursework",
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 55%; complete at 90%",
+   "seen": [
+    "decision: School, Coursework",
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 873a/b · Due February 23, 2027 · Skills: Script Analysis",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 133a/b · Due February 25, 2027 · Skills: Physical Expression, Dance",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 113a/b · Due March 4, 2027 · Skills: Vocal Expression",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 163b · Due March 4, 2027 · Skills: Script Analysis",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 24%; complete at 90%",
+   "seen": [
+    "decision: School, Coursework",
+    "leave: School, Coursework",
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 60%; complete at 90%",
+   "seen": [
+    "decision: School, Coursework",
+    "leave: School, Coursework",
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "February 2, 2027, Julian Okafor: An Apology · Accept It",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "January 19, 2027, Chloe Tanaka: An Apology · Accept It",
+   "seen": [
+    "decision: School, Coursework"
+   ]
+  },
+  {
+   "line": "STUDENT FIT DELIVERED BALANCE READ PART",
+   "seen": [
+    "decision: School, Casting",
+    "direction: School, Casting",
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "GROWTH FROM A NIGHT",
+   "seen": [
+    "decision: School, Casting",
+    "direction: School, Casting",
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "THE PART NOW, MOVEMENT BY MOVEMENT",
+   "seen": [
+    "decision: School, Casting",
+    "direction: School, Casting",
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "PART TONE RESULT ITS REHEARSAL STAMINA WHAT HAPPENED",
+   "seen": [
+    "decision: School, Casting",
+    "direction: School, Casting",
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 54.5",
+   "seen": [
+    "decision: School, Casting"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 55.3",
+   "seen": [
+    "decision: School, Casting"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts February 16, 2027",
+   "seen": [
+    "decision: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts February 12, 2027",
+   "seen": [
+    "decision: Money, Statements"
+   ]
+  },
+  {
+   "line": "Pharmacy: a prescription, a generic",
+   "seen": [
+    "decision: Money, Statements",
+    "rehearsal: Money, Statements"
+   ]
+  },
+  {
+   "line": "WHO IT'S OWED TO",
+   "seen": [
+    "decision: Papers",
+    "lien: Papers",
+    "missed-plan: Papers"
+   ]
+  },
+  {
+   "line": "OWED TO CONNECTICUT DRS",
+   "seen": [
+    "decision: Papers",
+    "lien: Papers",
+    "missed-plan: Papers"
+   ]
+  },
+  {
+   "line": "Payments To Connecticut DRS",
+   "seen": [
+    "decision: Papers"
+   ]
+  },
+  {
+   "line": "A Prescription, A Generic February 8, 2027 $10.00 Settled",
+   "seen": [
+    "decision: Papers, Health Cover",
+    "lien: Papers, Health Cover",
+    "missed-plan: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "The Dentist, A Cleaning November 30, 2026 $222.58 Settled",
+   "seen": [
+    "decision: Papers, Health Cover",
+    "leave: Papers, Health Cover",
+    "lien: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "A Prescription, A Generic September 14, 2026 $10.00 Settled",
+   "seen": [
+    "decision: Papers, Health Cover",
+    "leave: Papers, Health Cover",
+    "lien: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 280 KB",
+   "seen": [
+    "dir1: Save Slots"
+   ]
+  },
+  {
+   "line": "Term Review, Fall Term 2026",
+   "seen": [
+    "dir1: Home",
+    "dir1: Home, notice: How This Works",
+    "dir1: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "11h 3m of daylight",
+   "seen": [
+    "dir1: Home",
+    "dir1: Home, notice: How This Works",
+    "dir1: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Overcast · High 66°F · Low 48°F",
+   "seen": [
+    "dir1: Home",
+    "dir1: Home, notice: How This Works",
+    "dir1: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Humidity 62% · Wind 9 mph · Continental",
+   "seen": [
+    "dir1: Home",
+    "dir1: Home, notice: How This Works",
+    "dir1: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Daylight7:05 AM – 6:08 PM11h 3m of daylight",
+   "seen": [
+    "dir1: Home",
+    "dir1: Home, notice: How This Works",
+    "dir1: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 8 weeks ago. It's first of your 91 unread notices.",
+   "seen": [
+    "dir1: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 1 day and 22 hours ago. It's second of your 91 unread notices.",
+   "seen": [
+    "dir1: Home, notice: 1d 22h ago",
+    "dir1: Home"
+   ]
+  },
+  {
+   "line": "Audition Technique 51.7 77.7 38.3 To Go Audition Pieces…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole",
+    "dir2: Player Profile"
+   ]
+  },
+  {
+   "line": "Character Work 53.3 76.5 36.7 To Go Character Work…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "Classical Text 52.8 78.8 37.2 To Go Verse Speaking…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole",
+    "dir2: Player Profile"
+   ]
+  },
+  {
+   "line": "Cold Reading 49.0 75.0 41.0 To Go Cold Reading…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole",
+    "dir2: Player Profile"
+   ]
+  },
+  {
+   "line": "Comedy 54.1 80.1 35.9 To Go Comic Timing…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole",
+    "dir2: Player Profile"
+   ]
+  },
+  {
+   "line": "Intimacy 55.2 80.5 34.8 To Go Intimacy Practice…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 49.3 72.3 40.7 To Go Scene Work…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 52.2 75.6 37.8 To Go Script Analysis…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "Singing 56.1 82.1 33.9 To Go Singing Practice…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole",
+    "dir2: Player Profile"
+   ]
+  },
+  {
+   "line": "Speech 53.2 78.0 36.8 To Go Speech Drill…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "Stage Combat 55.3 80.7 34.7 To Go Combat Drill…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "Voice-Over 51.2 77.2 38.8 To Go Copy Reading…",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole",
+    "dir2: Player Profile"
+   ]
+  },
+  {
+   "line": "2026 Fall 6 at 58.9 4 at 58.6 6 at 53.4 6 at 52.9 2 at 64.3 1 at 63.5",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 6 at 58.9, best 60.2 4 at 58.6, best 68.0 6 at 53.4, best 64.4 6 at 52.9, best 62.6 2 at 64.3, best 64.6 1 at 63.5, best 63.5",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2026: Focus +0.004, Coursework: knowing the material",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2026: Focus +0.008, Coursework: knowing the material",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2026: Focus +0.016, Coursework: knowing the material",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2026: Adaptability +0.019, Coursework: the revision",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 16, 2026: Adaptability +0.002, Coursework: the revision",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 16, 2026: Adaptability +0.004, Coursework: the revision",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 16, 2026: Adaptability +0.009, Coursework: the revision",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 16, 2026: Adaptability +0.018, Coursework: the revision",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 16, 2026: Imagination +0.018, Coursework: making your choices",
+   "seen": [
+    "dir1: Player Profile",
+    "dir1: Ada Cole"
+   ]
+  },
+  {
+   "line": "Acting I: 18 of 18 classes attended.",
+   "seen": [
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "Voice I: 14 of 14 classes attended.",
+   "seen": [
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "Play: 7 of 7 classes attended.",
+   "seen": [
+    "dir1: School"
+   ]
+  },
+  {
+   "line": "DRAM 103a/b · Due October 19, 2026 · Skills: Scene Study, Character Work, Emotional Depth",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 23%; complete at 90%",
+   "seen": [
+    "dir1: School, Coursework",
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 62.3",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 59.4",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 55 of 100 · Came to 2 of 4 rehearsals agreed · Reliability 85%",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 873a/b · Due October 28, 2026 · Skills: Script Analysis",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 113a/b · Due October 30, 2026 · Skills: Vocal Expression",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 403a/b · Due October 30, 2026 · Skills: Intimacy, Physical Expression",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 57 of 100 · Came to 2 of 2 rehearsals agreed · Reliability 83%",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 143a/b · Due November 2, 2026 · Skills: Physical Expression",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 133a/b · Due November 4, 2026 · Skills: Physical Expression, Dance",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 153a · Due November 5, 2026 · Skills: Improvisation, Emotional Depth",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 60 of 100 · Came to 3 of 4 rehearsals agreed · Reliability 86%",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "September 16, 2026, Jordan Brooks: An Apology · Accept It",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Short notice: Mateo will mind",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "You have Rehearsal With Mateo then.",
+   "seen": [
+    "dir1: School, Coursework"
+   ]
+  },
+  {
+   "line": "Debit card ending 1656, expires August 24, 2030",
+   "seen": [
+    "dir1: Money, Cards",
+    "dir2: Money, Cards",
+    "direction: Money, Cards"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts October 20, 2026",
+   "seen": [
+    "dir1: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts October 19, 2026",
+   "seen": [
+    "dir1: Money, Statements"
+   ]
+  },
+  {
+   "line": "A Prescription, A Generic September 7, 2026 $10.00 Settled",
+   "seen": [
+    "dir1: Papers, Health Cover",
+    "dir2: Papers, Health Cover",
+    "direction: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "A Prescription, A Brand August 31, 2026 $30.00 Settled",
+   "seen": [
+    "dir1: Papers, Health Cover",
+    "dir2: Papers, Health Cover",
+    "direction: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "US51125846, runs out May 22, 2031",
+   "seen": [
+    "dir1: Papers, Passport And ID",
+    "dir2: Papers, Passport And ID",
+    "direction: Papers, Passport And ID"
+   ]
+  },
+  {
+   "line": "DOCUMENT NUMBER ISSUED RUNS OUT STATUS",
+   "seen": [
+    "dir1: Papers, Passport And ID",
+    "dir2: Papers, Passport And ID",
+    "direction: Papers, Passport And ID"
+   ]
+  },
+  {
+   "line": "PassportIn ForceUS51125846, runs out May 22, 2031",
+   "seen": [
+    "dir1: Papers, Passport And ID",
+    "dir2: Papers, Passport And ID",
+    "direction: Papers, Passport And ID"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 495 KB",
+   "seen": [
+    "dir2: Save Slots"
+   ]
+  },
+  {
+   "line": "The Spring Term Begins",
+   "seen": [
+    "dir2: Home",
+    "dir2: Home, notice: How This Works",
+    "dir2: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "9h 13m of daylight",
+   "seen": [
+    "dir2: Home",
+    "dir2: Home, notice: How This Works",
+    "dir2: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Overcast · High 58°F · Low 40°F",
+   "seen": [
+    "dir2: Home",
+    "dir2: Home, notice: How This Works",
+    "dir2: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Humidity 60% · Wind 12 mph · Continental",
+   "seen": [
+    "dir2: Home",
+    "dir2: Home, notice: How This Works",
+    "dir2: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Daylight7:17 AM – 4:30 PM9h 13m of daylight",
+   "seen": [
+    "dir2: Home",
+    "dir2: Home, notice: How This Works",
+    "dir2: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 4 months ago. It's first of your 161 unread notices.",
+   "seen": [
+    "dir2: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 3 weeks ago. It's second of your 161 unread notices.",
+   "seen": [
+    "dir2: Home, notice: 3 weeks ago",
+    "dir2: Home"
+   ]
+  },
+  {
+   "line": "Close Shown: Scene Study, Working",
+   "seen": [
+    "dir2: Home, notice: 3 weeks ago",
+    "dir2: Home"
+   ]
+  },
+  {
+   "line": "Character Work 55.0 76.5 35.0 To Go Character Work…",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "Intimacy 55.8 80.5 34.2 To Go Intimacy Practice…",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 51.1 72.3 38.9 To Go Scene Work…",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 53.4 75.6 36.6 To Go Script Analysis…",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "Speech 54.6 78.0 35.4 To Go Speech Drill…",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "Stage Combat 55.9 80.7 34.1 To Go Combat Drill…",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "2026 Fall 15 at 60.1 8 at 61.8 12 at 57.9 12 at 57.6 4 at 64.5 3 at 64.6",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 15 at 60.1, best 62.3 8 at 61.8, best 68.1 12 at 57.9, best 64.9 12 at 57.6, best 64.9 4 at 64.5, best 65.5 3 at 64.6, best 65.8",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "December 11, 2026: Vocal Expression +0.088, Class: Voice I (DRAM 113a/b)",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "December 10, 2026: Adaptability +0.046, Class: Play (DRAM 153a)",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "December 10, 2026: Emotional Depth +0.079, Class: Play (DRAM 153a)",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "December 10, 2026: Improvisation +0.092, Class: Play (DRAM 153a)",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "December 10, 2026: Vocal Expression +0.089, Class: Voice I (DRAM 113a/b)",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "December 9, 2026: Imagination +0.040, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "dir2: Player Profile",
+    "dir2: Ada Cole"
+   ]
+  },
+  {
+   "line": "Acting I: Scene Study, Anna Christie, with Julian Bennett · Working",
+   "seen": [
+    "dir2: School, Coursework"
+   ]
+  },
+  {
+   "line": "Acting I: Scene Study, Suppressed Desires, with Lucia Kim · Working · Note Taken, Shown Again Working",
+   "seen": [
+    "dir2: School, Coursework"
+   ]
+  },
+  {
+   "line": "December 3, 2026, Owen Mendez: An Apology · Accept It",
+   "seen": [
+    "dir2: School, Coursework"
+   ]
+  },
+  {
+   "line": "December 9, 2026: You showed Anna Christie together (Working)",
+   "seen": [
+    "dir2: School, Coursework"
+   ]
+  },
+  {
+   "line": "November 17, 2026: You showed Suppressed Desires together (Working)",
+   "seen": [
+    "dir2: School, Coursework"
+   ]
+  },
+  {
+   "line": "0 hours at $23.00 an hour",
+   "seen": [
+    "dir2: School, Shifts And Pay",
+    "direction: School, Shifts And Pay",
+    "health: School, Shifts And Pay"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts January 4, 2027",
+   "seen": [
+    "dir2: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts December 31, 2026",
+   "seen": [
+    "dir2: Money, Statements"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 906 KB",
+   "seen": [
+    "direction: Save Slots"
+   ]
+  },
+  {
+   "line": "Shown: Table Work, Strong",
+   "seen": [
+    "direction: Home",
+    "direction: Home, notice: How This Works",
+    "direction: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "13h 40m of daylight",
+   "seen": [
+    "direction: Home",
+    "direction: Home, notice: How This Works",
+    "direction: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Thunderstorm · High 68°F · Low 50°F",
+   "seen": [
+    "direction: Home",
+    "direction: Home, notice: How This Works",
+    "direction: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Humidity 59% · Wind 8 mph · Continental",
+   "seen": [
+    "direction: Home",
+    "direction: Home, notice: How This Works",
+    "direction: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Daylight5:59 AM – 7:39 PM13h 40m of daylight",
+   "seen": [
+    "direction: Home",
+    "direction: Home, notice: How This Works",
+    "direction: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 8 months ago. It's first of your 298 unread notices.",
+   "seen": [
+    "direction: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 4 months ago. It's second of your 298 unread notices.",
+   "seen": [
+    "direction: Home, notice: Cast: Carlotta Festival Of New Plays",
+    "direction: Home"
+   ]
+  },
+  {
+   "line": "Character Work 59.5 76.5 30.5 To Go Character Work…",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "Intimacy 56.9 80.5 33.1 To Go Intimacy Practice…",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 55.9 72.3 34.1 To Go Scene Work…",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 58.1 75.6 31.9 To Go Script Analysis…",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "Speech 56.8 78.0 33.2 To Go Speech Drill…",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "Stage Combat 57.1 80.7 32.9 To Go Combat Drill…",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "HALF-YEAR A SCENE SHOWN A WRITTEN ANALYSIS MOVEMENT WORK VOICE WORK AN IMPROVISATION PARTNERED PHYSICAL WORK A NIGHT ON STAGE",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole",
+    "lien: Player Profile"
+   ]
+  },
+  {
+   "line": "2026 Fall 15 at 60.1 8 at 61.8 12 at 57.9 12 at 57.6 4 at 64.5 3 at 64.6 —",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "2027 Spring 18 at 59.7 12 at 67.3 12 at 62.5 12 at 60.9 — 3 at 65.7 1 at 45.2",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 33 at 59.9, best 62.9 20 at 65.1, best 69.7 24 at 60.2, best 64.9 24 at 59.3, best 65.5 4 at 64.5, best 65.5 6 at 65.2, best 66.3 1 at 45.2, best 45.2",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 23, 2027: Vocal Expression +0.075, Class: Voice I (DRAM 113a/b)",
+   "seen": [
+    "direction: Player Profile",
+    "direction: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 5, 2027, Theo Nguyen: An Apology · Accept It",
+   "seen": [
+    "direction: School, Coursework"
+   ]
+  },
+  {
+   "line": "April 19, 2027: You showed Office Hours together (Working)",
+   "seen": [
+    "direction: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 53.8",
+   "seen": [
+    "direction: School, Casting"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 54.5",
+   "seen": [
+    "direction: School, Casting"
+   ]
+  },
+  {
+   "line": "New Limit (USD), Now $78,260",
+   "seen": [
+    "direction: Money, Cards",
+    "lien: Money, Cards",
+    "missed-plan: Money, Cards"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts April 27, 2027",
+   "seen": [
+    "direction: Money, Statements",
+    "rehearsal: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts April 26, 2027",
+   "seen": [
+    "direction: Money, Statements",
+    "rehearsal: Money, Statements"
+   ]
+  },
+  {
+   "line": "It came in just now. It's first of your 28 unread notices.",
+   "seen": [
+    "health: Home, notice: A Sprained Ankle"
+   ]
+  },
+  {
+   "line": "It came in 3 weeks ago. It's second of your 28 unread notices.",
+   "seen": [
+    "health: Home, notice: Welcome To The Class Of 2029",
+    "health: Home"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 915 KB",
+   "seen": [
+    "leave: Save Slots"
+   ]
+  },
+  {
+   "line": "Yale Rep's March Production: Understudy Rehearsal",
+   "seen": [
+    "leave: Home",
+    "leave: Home, notice: How This Works",
+    "leave: Home, notice: Back From Your Leave"
+   ]
+  },
+  {
+   "line": "10h 54m of daylight",
+   "seen": [
+    "leave: Home",
+    "leave: Home, notice: How This Works",
+    "leave: Home, notice: Back From Your Leave"
+   ]
+  },
+  {
+   "line": "Partly Cloudy · High 48°F · Low 30°F",
+   "seen": [
+    "leave: Home",
+    "leave: Home, notice: How This Works",
+    "leave: Home, notice: Back From Your Leave"
+   ]
+  },
+  {
+   "line": "Humidity 62% · Wind 11 mph · Continental",
+   "seen": [
+    "leave: Home",
+    "leave: Home, notice: How This Works",
+    "leave: Home, notice: Back From Your Leave"
+   ]
+  },
+  {
+   "line": "Daylight6:38 AM – 5:32 PM10h 54m of daylight",
+   "seen": [
+    "leave: Home",
+    "leave: Home, notice: How This Works",
+    "leave: Home, notice: Back From Your Leave"
+   ]
+  },
+  {
+   "line": "It came in 7 weeks ago. It's first of your 258 unread notices.",
+   "seen": [
+    "leave: Home, notice: Back From Your Leave"
+   ]
+  },
+  {
+   "line": "It came in 13 months ago. It's second of your 258 unread notices.",
+   "seen": [
+    "leave: Home, notice: Your Leave Has Begun",
+    "leave: Home"
+   ]
+  },
+  {
+   "line": "Class of 2030, good standing",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "Character Work 64.8 84.4 25.2 To Go Character Work…",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "Intimacy 60.5 84.7 29.5 To Go Intimacy Practice…",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole",
+    "missed-plan: Player Profile"
+   ]
+  },
+  {
+   "line": "Scene Study 57.1 75.8 32.9 To Go Scene Work…",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 61.8 81.6 28.2 To Go Script Analysis…",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "Speech 56.5 78.5 33.5 To Go Speech Drill…",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "Stage Combat 50.0 73.8 40.0 To Go Combat Drill…",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole",
+    "missed-plan: Player Profile"
+   ]
+  },
+  {
+   "line": "2027 Spring 3 at 56.2 1 at 69.1 1 at 61.6 1 at 67.0 — —",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "2028 Spring 9 at 61.4 5 at 70.6 4 at 61.5 5 at 64.1 — 1 at 61.9",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 26 at 60.4, best 62.8 14 at 69.5, best 72.1 17 at 59.2, best 66.1 18 at 62.3, best 68.1 4 at 65.3, best 66.8 4 at 63.1, best 64.3",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 22, 2028: Memory +0.014, Coursework: learning the lines",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 22, 2028: Memory +0.014, Coursework: Learn Lines",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 22, 2028: Focus +0.003, Coursework: knowing the material",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 22, 2028: Focus +0.007, Coursework: knowing the material",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 22, 2028: Focus +0.014, Coursework: knowing the material",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 22, 2028: Imagination +0.031, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "February 22, 2028: Emotional Depth +0.062, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "leave: Player Profile",
+    "leave: Ada Cole"
+   ]
+  },
+  {
+   "line": "MFA in Acting, class of 2030. Year 1 of 3, good standing.",
+   "seen": [
+    "leave: School",
+    "leave: School, Classes",
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "Two Terms (Not Possible)",
+   "seen": [
+    "leave: School"
+   ]
+  },
+  {
+   "line": "Acting I: 19 of 19 classes attended.",
+   "seen": [
+    "leave: School"
+   ]
+  },
+  {
+   "line": "Voice I: 12 of 12 classes attended.",
+   "seen": [
+    "leave: School"
+   ]
+  },
+  {
+   "line": "Your Week, Spring Term 2028",
+   "seen": [
+    "leave: School, Classes"
+   ]
+  },
+  {
+   "line": "DRAM 133a/b · Due February 23, 2028 · Skills: Physical Expression, Dance",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 113a/b · Due February 24, 2028 · Skills: Vocal Expression",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 163b · Due February 24, 2028 · Skills: Script Analysis",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "WHAT ARMS AND THE MAN ASKS",
+   "seen": [
+    "leave: School, Coursework",
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Tone: comic, 2 transitions to play",
+   "seen": [
+    "leave: School, Coursework",
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 143a/b · Due February 25, 2028 · Skills: Physical Expression",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 103a/b · Due February 28, 2028 · Skills: Scene Study, Character Work, Emotional Depth",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 67%; complete at 90%",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "WHAT BED FOURTEEN ASKS",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 66.9",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 62.9",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "Its Partner: for it",
+   "seen": [
+    "leave: School, Coursework",
+    "leave: School, Casting",
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 873a/b · Due March 1, 2028 · Skills: Script Analysis",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 403a/b · Due March 17, 2028 · Skills: Stage Combat, Intimacy",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "February 22, 2028: You showed Anna Christie together (Working)",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "January 25, 2028: You showed Machinal together (Working)",
+   "seen": [
+    "leave: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 55.1",
+   "seen": [
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 55.9",
+   "seen": [
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "Yale Rep's March Production, by Bernard Shaw",
+   "seen": [
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "WHAT MRS WARREN'S PROFESSION ASKS",
+   "seen": [
+    "leave: School, Casting",
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Tone: grave, 2 transitions to play",
+   "seen": [
+    "leave: School, Casting",
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 54.0",
+   "seen": [
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 53.1",
+   "seen": [
+    "leave: School, Casting"
+   ]
+  },
+  {
+   "line": "Spring Term 2027, On Leave",
+   "seen": [
+    "leave: School, Terms And Award"
+   ]
+  },
+  {
+   "line": "Fall Term 2027, On Leave",
+   "seen": [
+    "leave: School, Terms And Award"
+   ]
+  },
+  {
+   "line": "New Limit (USD), Now $93,912",
+   "seen": [
+    "leave: Money, Cards",
+    "nonfiler: Money, Cards",
+    "workload: Money, Cards"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts February 24, 2028",
+   "seen": [
+    "leave: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts February 23, 2028",
+   "seen": [
+    "leave: Money, Statements"
+   ]
+  },
+  {
+   "line": "A Prescription, A Generic January 24, 2028 $10.00 Settled",
+   "seen": [
+    "leave: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "A Prescription, A Generic December 13, 2027 $0.00 Settled",
+   "seen": [
+    "leave: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "A Prescription, A Brand June 21, 2027 $0.00 Settled",
+   "seen": [
+    "leave: Papers, Health Cover",
+    "withdraw: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "A Prescription, A Generic April 5, 2027 $0.00 Settled",
+   "seen": [
+    "leave: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "A Prescription, A Generic February 8, 2027 $0.00 Settled",
+   "seen": [
+    "leave: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 963 KB",
+   "seen": [
+    "lien: Save Slots"
+   ]
+  },
+  {
+   "line": "The Fall Term Begins",
+   "seen": [
+    "lien: Home",
+    "lien: Home, notice: How This Works",
+    "lien: Home, notice: A Connecticut Tax Lien Is Filed"
+   ]
+  },
+  {
+   "line": "15h 8m of daylight",
+   "seen": [
+    "lien: Home",
+    "lien: Home, notice: How This Works",
+    "lien: Home, notice: A Connecticut Tax Lien Is Filed"
+   ]
+  },
+  {
+   "line": "Overcast · High 86°F · Low 68°F",
+   "seen": [
+    "lien: Home",
+    "lien: Home, notice: How This Works",
+    "lien: Home, notice: A Connecticut Tax Lien Is Filed"
+   ]
+  },
+  {
+   "line": "Humidity 61% · Wind 17 mph · Continental",
+   "seen": [
+    "lien: Home",
+    "lien: Home, notice: How This Works",
+    "lien: Home, notice: A Connecticut Tax Lien Is Filed"
+   ]
+  },
+  {
+   "line": "Daylight5:17 AM – 8:25 PM15h 8m of daylight",
+   "seen": [
+    "lien: Home",
+    "lien: Home, notice: How This Works",
+    "lien: Home, notice: A Connecticut Tax Lien Is Filed"
+   ]
+  },
+  {
+   "line": "It came in 9 hours and 16 minutes ago. It's first of your 310 unread notices.",
+   "seen": [
+    "lien: Home, notice: A Connecticut Tax Lien Is Filed"
+   ]
+  },
+  {
+   "line": "It came in 9 hours and 16 minutes ago. It's second of your 310 unread notices.",
+   "seen": [
+    "lien: Home, notice: Connecticut DRS Intends To Levy",
+    "lien: Home"
+   ]
+  },
+  {
+   "line": "Character Work 66.7 84.4 23.3 To Go Character Work…",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "tax: Player Profile"
+   ]
+  },
+  {
+   "line": "Cold Reading 51.6 77.4 38.4 To Go Cold Reading…",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "nonfiler: Player Profile"
+   ]
+  },
+  {
+   "line": "Intimacy 60.9 84.7 29.1 To Go Intimacy Practice…",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "nonfiler: Player Profile"
+   ]
+  },
+  {
+   "line": "Scene Study 59.6 75.8 30.4 To Go Scene Work…",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "tax: Player Profile"
+   ]
+  },
+  {
+   "line": "Script Analysis 63.7 81.6 26.3 To Go Script Analysis…",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "tax: Player Profile"
+   ]
+  },
+  {
+   "line": "Speech 57.3 78.5 32.7 To Go Speech Drill…",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "rehearsal: Player Profile"
+   ]
+  },
+  {
+   "line": "Stage Combat 50.4 73.8 39.6 To Go Combat Drill…",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "rehearsal: Player Profile"
+   ]
+  },
+  {
+   "line": "2026 Fall 14 at 60.6 8 at 68.9 12 at 58.3 12 at 61.1 4 at 65.3 3 at 63.5 —",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "missed-plan: Player Profile"
+   ]
+  },
+  {
+   "line": "2027 Spring 18 at 57.6 12 at 71.0 12 at 52.9 12 at 65.3 — 3 at 47.9 5 at 43.4",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "tax: Player Profile"
+   ]
+  },
+  {
+   "line": "All Of It 32 at 58.9, best 63.4 20 at 70.1, best 72.6 24 at 55.6, best 66.1 24 at 63.2, best 69.4 4 at 65.3, best 66.8 6 at 55.7, best 64.3 5 at 43.4, best 47.7",
+   "seen": [
+    "lien: Player Profile",
+    "lien: Ada Cole",
+    "tax: Player Profile"
+   ]
+  },
+  {
+   "line": "April 14, 2027, Nadia Donovan: An Apology · Accept It",
+   "seen": [
+    "lien: School, Coursework",
+    "rehearsal: School, Coursework",
+    "tax: School, Coursework"
+   ]
+  },
+  {
+   "line": "April 19, 2027: You showed Runway together (Unready)",
+   "seen": [
+    "lien: School, Coursework",
+    "rehearsal: School, Coursework",
+    "tax: School, Coursework"
+   ]
+  },
+  {
+   "line": "Open A Chase Savings",
+   "seen": [
+    "lien: Money",
+    "tax: Money"
+   ]
+  },
+  {
+   "line": "Chase Savings ···3136, Chase (Closed)",
+   "seen": [
+    "lien: Money, Statements",
+    "tax: Money, Statements"
+   ]
+  },
+  {
+   "line": "OWED TO THE IRS",
+   "seen": [
+    "lien: Papers",
+    "missed-plan: Papers",
+    "tax: Papers"
+   ]
+  },
+  {
+   "line": "A Prescription, A Generic April 5, 2027 $10.00 Settled",
+   "seen": [
+    "lien: Papers, Health Cover",
+    "nonfiler: Papers, Health Cover",
+    "rehearsal: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 799 KB",
+   "seen": [
+    "missed-plan: Save Slots"
+   ]
+  },
+  {
+   "line": "The Seagull: On Call",
+   "seen": [
+    "missed-plan: Home",
+    "missed-plan: Home, notice: How This Works",
+    "missed-plan: Home, notice: 23h 9m ago"
+   ]
+  },
+  {
+   "line": "12h 14m of daylight",
+   "seen": [
+    "missed-plan: Home",
+    "missed-plan: Home, notice: How This Works",
+    "missed-plan: Home, notice: 23h 9m ago"
+   ]
+  },
+  {
+   "line": "Overcast · High 45°F · Low 34°F",
+   "seen": [
+    "missed-plan: Home",
+    "missed-plan: Home, notice: How This Works",
+    "missed-plan: Home, notice: 23h 9m ago"
+   ]
+  },
+  {
+   "line": "Humidity 71% · Wind 19 mph · Continental",
+   "seen": [
+    "missed-plan: Home",
+    "missed-plan: Home, notice: How This Works",
+    "missed-plan: Home, notice: 23h 9m ago"
+   ]
+  },
+  {
+   "line": "Daylight6:51 AM – 7:05 PM12h 14m of daylight",
+   "seen": [
+    "missed-plan: Home",
+    "missed-plan: Home, notice: How This Works",
+    "missed-plan: Home, notice: 23h 9m ago"
+   ]
+  },
+  {
+   "line": "You're at Classes until 3:00 PM.",
+   "seen": [
+    "missed-plan: Home",
+    "missed-plan: Home, notice: How This Works",
+    "missed-plan: Home, notice: 23h 9m ago"
+   ]
+  },
+  {
+   "line": "It came in 23 hours and 9 minutes ago. It's first of your 265 unread notices.",
+   "seen": [
+    "missed-plan: Home, notice: 23h 9m ago"
+   ]
+  },
+  {
+   "line": "It came in 4 weeks ago. It's second of your 265 unread notices.",
+   "seen": [
+    "missed-plan: Home, notice: Your IRS Payment Plan Is Approved"
+   ]
+  },
+  {
+   "line": "Character Work 65.0 84.4 25.0 To Go Character Work…",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 57.4 75.8 32.6 To Go Scene Work…",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 62.0 81.6 28.0 To Go Script Analysis…",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "Speech 56.7 78.5 33.3 To Go Speech Drill…",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "2027 Spring 13 at 59.2 8 at 70.7 8 at 62.5 7 at 63.5 — 1 at 62.9 1 at 47.7",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 27 at 59.9, best 63.4 16 at 69.8, best 72.6 20 at 60.0, best 66.1 19 at 62.0, best 67.4 4 at 65.3, best 66.8 4 at 63.4, best 64.3 1 at 47.7, best 47.7",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "March 23, 2027: Imagination +0.030, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "March 23, 2027: Emotional Depth +0.060, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "March 23, 2027: Character Work +0.056, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "March 23, 2027: Scene Study +0.061, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "March 22, 2027: Imagination +0.005, Coursework: making your choices",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "March 22, 2027: Imagination +0.011, Coursework: making your choices",
+   "seen": [
+    "missed-plan: Player Profile",
+    "missed-plan: Ada Cole"
+   ]
+  },
+  {
+   "line": "Acting I: 28 of 28 classes attended.",
+   "seen": [
+    "missed-plan: School"
+   ]
+  },
+  {
+   "line": "Voice I: 16 of 16 classes attended.",
+   "seen": [
+    "missed-plan: School"
+   ]
+  },
+  {
+   "line": "DRAM 103a/b · Due March 24, 2027 · Skills: Scene Study, Character Work, Emotional Depth",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 40%; complete at 90%",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Not now: You're at Classes until 3:00 PM.",
+   "seen": [
+    "missed-plan: School, Coursework",
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 61.5",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 60.6",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 90 of 100 · Came to 9 of 10 rehearsals agreed · Reliability 94%",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "FEEDBACK: WORKING, 60 OF 100 · THE NEXT STEP",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 113a/b · Due March 25, 2027 · Skills: Vocal Expression",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 403a/b · Due March 26, 2027 · Skills: Stage Combat, Intimacy",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 67 of 100 · Came to 6 of 8 rehearsals agreed · Reliability 83%",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 163b · Due April 1, 2027 · Skills: Script Analysis",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 143a/b · Due April 5, 2027 · Skills: Physical Expression",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 38%; complete at 90%",
+   "seen": [
+    "missed-plan: School, Coursework",
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 133a/b · Due April 7, 2027 · Skills: Physical Expression, Dance",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 873a/b · Due April 7, 2027 · Skills: Script Analysis",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Help Now: You're at Classes until 3:00 PM.",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "March 16, 2027, Caleb Abara: An Apology · Accept It",
+   "seen": [
+    "missed-plan: School, Coursework",
+    "withdraw: School, Coursework"
+   ]
+  },
+  {
+   "line": "February 22, 2027, Ethan Haddad: An Apology · Accept It",
+   "seen": [
+    "missed-plan: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 55.3",
+   "seen": [
+    "missed-plan: School, Casting"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 56.0",
+   "seen": [
+    "missed-plan: School, Casting"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts March 25, 2027",
+   "seen": [
+    "missed-plan: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts March 24, 2027",
+   "seen": [
+    "missed-plan: Money, Statements"
+   ]
+  },
+  {
+   "line": "Paid Chase Freedom Unlimited",
+   "seen": [
+    "missed-plan: Money, Statements"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 1.2 MB",
+   "seen": [
+    "nonfiler: Save Slots"
+   ]
+  },
+  {
+   "line": "Yale Rep's October Production: On Call",
+   "seen": [
+    "nonfiler: Home",
+    "nonfiler: Home, notice: How This Works",
+    "nonfiler: Home, notice: A Bill From Connecticut DRS"
+   ]
+  },
+  {
+   "line": "Connecticut DRS Assessed Your 2026 Return",
+   "seen": [
+    "nonfiler: Home",
+    "nonfiler: Home, notice: How This Works",
+    "nonfiler: Home, notice: A Bill From Connecticut DRS"
+   ]
+  },
+  {
+   "line": "Partly Cloudy · High 57°F · Low 39°F",
+   "seen": [
+    "nonfiler: Home",
+    "nonfiler: Home, notice: How This Works",
+    "nonfiler: Home, notice: A Bill From Connecticut DRS"
+   ]
+  },
+  {
+   "line": "Humidity 61% · Wind 15 mph · Continental",
+   "seen": [
+    "nonfiler: Home",
+    "nonfiler: Home, notice: How This Works",
+    "nonfiler: Home, notice: A Bill From Connecticut DRS"
+   ]
+  },
+  {
+   "line": "It came in 3 days and 7 hours ago. It's first of your 378 unread notices.",
+   "seen": [
+    "nonfiler: Home, notice: A Bill From Connecticut DRS"
+   ]
+  },
+  {
+   "line": "It came in 5 weeks ago. It's second of your 378 unread notices.",
+   "seen": [
+    "nonfiler: Home, notice: Connecticut DRS Assessed Your 2026 Return",
+    "nonfiler: Home"
+   ]
+  },
+  {
+   "line": "Close Connecticut DRS Assessed Your 2026 Return",
+   "seen": [
+    "nonfiler: Home, notice: Connecticut DRS Assessed Your 2026 Return",
+    "nonfiler: Home"
+   ]
+  },
+  {
+   "line": "Character Work 68.9 84.4 21.1 To Go Character Work…",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "Classical Text 49.1 73.2 40.9 To Go Verse Speaking…",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "Comedy 55.6 81.1 34.4 To Go Comic Timing…",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 62.5 75.8 27.5 To Go Scene Work…",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 65.5 81.6 24.5 To Go Script Analysis…",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "Singing 56.0 81.2 34.0 To Go Singing Practice…",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "Speech 58.3 78.5 31.7 To Go Speech Drill…",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "Stage Combat 51.1 73.8 38.9 To Go Combat Drill…",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "Year 2 of 3, good standing",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole",
+    "workload: Player Profile"
+   ]
+  },
+  {
+   "line": "HALF-YEAR A SCENE SHOWN A WRITTEN ANALYSIS MOVEMENT WORK VOICE WORK AN IMPROVISATION PARTNERED PHYSICAL WORK A NIGHT ON STAGE A CLOWN TURN A SONG",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "2026 Fall 14 at 60.6 8 at 68.9 12 at 58.3 12 at 61.1 4 at 65.3 3 at 63.5 — — —",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "2027 Spring 18 at 57.6 12 at 71.0 12 at 52.9 12 at 65.3 — 3 at 47.9 5 at 43.4 — —",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "2027 Fall 6 at 54.6 2 at 72.7 3 at 55.6 5 at 56.7 2 at 67.0 1 at 51.6 9 at 53.2 1 at 61.7 1 at 23.1",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 38 at 58.2, best 63.5 22 at 70.4, best 73.6 27 at 55.6, best 67.2 29 at 62.1, best 69.4 6 at 65.9, best 67.5 7 at 55.1, best 64.3 14 at 49.7, best 55.2 1 at 61.7, best 61.7 1 at 23.1, best 23.1",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2027: Focus +0.013, Coursework: knowing the material",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2027: Imagination +0.001, Coursework: making your choices",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2027: Imagination +0.003, Coursework: making your choices",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2027: Imagination +0.006, Coursework: making your choices",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2027: Imagination +0.012, Coursework: making your choices",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2027: Memory +0.007, Coursework: learning the lines",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "October 17, 2027: Memory +0.015, Coursework: learning the lines",
+   "seen": [
+    "nonfiler: Player Profile",
+    "nonfiler: Ada Cole"
+   ]
+  },
+  {
+   "line": "MFA in Acting, class of 2029. Year 2 of 3, good standing.",
+   "seen": [
+    "nonfiler: School",
+    "nonfiler: School, Classes",
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Clown: 5 of 5 classes attended.",
+   "seen": [
+    "nonfiler: School"
+   ]
+  },
+  {
+   "line": "Voice II: 14 of 14 classes attended.",
+   "seen": [
+    "nonfiler: School"
+   ]
+  },
+  {
+   "line": "Your Week, Fall Term 2027",
+   "seen": [
+    "nonfiler: School, Classes",
+    "withdraw: School, Classes",
+    "workload: School, Classes"
+   ]
+  },
+  {
+   "line": "DRAM 293b The Greeks Evan Yionoulis Classical Text, Vocal Expression 3 Spring",
+   "seen": [
+    "nonfiler: School, Classes",
+    "withdraw: School, Classes",
+    "workload: School, Classes"
+   ]
+  },
+  {
+   "line": "DRAM 203a/b · Due October 18, 2027 · Skills: Classical Text, Scene Study, Vocal Expression",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "SCANSION AND TABLE WORK",
+   "seen": [
+    "nonfiler: School, Coursework",
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 21%; complete at 90%",
+   "seen": [
+    "nonfiler: School, Coursework",
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Its Verse: for it",
+   "seen": [
+    "nonfiler: School, Coursework",
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 56.8",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 56.3",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 77 of 100 · Came to 8 of 9 rehearsals agreed · Reliability 80%",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 273a · Due October 26, 2027 · Skills: Physical Expression, Dance",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 233a/b · Due October 28, 2027 · Skills: Physical Expression, Dance",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 405a/b · Due October 28, 2027 · Skills: Stage Combat, Intimacy",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 68 of 100 · Came to 4 of 4 rehearsals agreed · Reliability 91%",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 213a/b · Due October 28, 2027 · Skills: Vocal Expression",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 413a/b · Due October 29, 2027 · Skills: Singing, Emotional Depth",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "MUSIC AND WORDS LEARNED",
+   "seen": [
+    "nonfiler: School, Coursework",
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 243a/b · Due October 29, 2027 · Skills: Physical Expression",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 163a · Due November 3, 2027 · Skills: Script Analysis",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "WHAT THE IMPOSTURES OF SCAPIN ASKS",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 353a · Due November 3, 2027 · Skills: Improvisation, Emotional Depth",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 92 of 100 · Came to 9 of 11 rehearsals agreed · Reliability 79%",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "September 23, 2027, Jordan Castillo: An Apology · Accept It",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "October 17, 2027: You rehearsed Othello together",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "September 21, 2027: You showed Twelfth Night together (Working)",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "You have Rehearsal With Jordan then.",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Short notice: Jordan will mind",
+   "seen": [
+    "nonfiler: School, Coursework"
+   ]
+  },
+  {
+   "line": "Blood Wedding, Fall Term 2027",
+   "seen": [
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Chloe Tanaka 61.6 85% -2 57.8 The Bride",
+   "seen": [
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Aaliyah Bennett 58.0 91% 0 56.9 The Mother",
+   "seen": [
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Mateo Sullivan 55.2 94% +2 56.5 The Bridegroom",
+   "seen": [
+    "nonfiler: School, Casting"
+   ]
+  },
+  {
+   "line": "Hannah Rivera 57.1 82% 0 55.0 Leonardo's Wife",
+   "seen": [
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Ethan Haddad 55.0 80% +2 54.7 The Moon",
+   "seen": [
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "WHAT BLOOD WEDDING ASKS",
+   "seen": [
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Tone: lyric to grave, 3 transitions to play",
+   "seen": [
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Yale Rep's October Production, by Bernard Shaw",
+   "seen": [
+    "nonfiler: School, Casting",
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 56.5",
+   "seen": [
+    "nonfiler: School, Casting"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 55.7",
+   "seen": [
+    "nonfiler: School, Casting"
+   ]
+  },
+  {
+   "line": "Chloe Tanaka Blood Wedding The Bride 56 in Blood Wedding Friend",
+   "seen": [
+    "nonfiler: School, Casting"
+   ]
+  },
+  {
+   "line": "Aaliyah Bennett Blood Wedding The Mother 54 in Blood Wedding",
+   "seen": [
+    "nonfiler: School, Casting"
+   ]
+  },
+  {
+   "line": "You Blood Wedding Leonardo",
+   "seen": [
+    "nonfiler: School, Casting"
+   ]
+  },
+  {
+   "line": "Mateo Sullivan Blood Wedding The Bridegroom 54 in Blood Wedding Friend",
+   "seen": [
+    "nonfiler: School, Casting"
+   ]
+  },
+  {
+   "line": "Hannah Rivera Blood Wedding Leonardo's Wife 50 in Blood Wedding Friend",
+   "seen": [
+    "nonfiler: School, Casting"
+   ]
+  },
+  {
+   "line": "Ethan Haddad Blood Wedding The Moon 46 in Blood Wedding Friend",
+   "seen": [
+    "nonfiler: School, Casting"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts October 20, 2027",
+   "seen": [
+    "nonfiler: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts October 19, 2027",
+   "seen": [
+    "nonfiler: Money, Statements"
+   ]
+  },
+  {
+   "line": "New Glasses October 11, 2027 $160.73 November 10, 2027",
+   "seen": [
+    "nonfiler: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "A Prescription, A Brand June 21, 2027 $30.00 Settled",
+   "seen": [
+    "nonfiler: Papers, Health Cover",
+    "workload: Papers, Health Cover"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 901 KB",
+   "seen": [
+    "rehearsal: Save Slots"
+   ]
+  },
+  {
+   "line": "Partly Cloudy · High 64°F · Low 46°F",
+   "seen": [
+    "rehearsal: Home",
+    "rehearsal: Home, notice: How This Works",
+    "rehearsal: Home, notice: A Back Strain"
+   ]
+  },
+  {
+   "line": "Humidity 54% · Wind 7 mph · Continental",
+   "seen": [
+    "rehearsal: Home",
+    "rehearsal: Home, notice: How This Works",
+    "rehearsal: Home, notice: A Back Strain"
+   ]
+  },
+  {
+   "line": "It came in 4 weeks ago. It's first of your 299 unread notices.",
+   "seen": [
+    "rehearsal: Home, notice: A Back Strain"
+   ]
+  },
+  {
+   "line": "It came in 5 months ago. It's second of your 299 unread notices.",
+   "seen": [
+    "rehearsal: Home, notice: A Deep Cut",
+    "rehearsal: Home"
+   ]
+  },
+  {
+   "line": "Close A Deep Cut",
+   "seen": [
+    "rehearsal: Home, notice: A Deep Cut",
+    "rehearsal: Home",
+    "workload: Home, notice: A Deep Cut"
+   ]
+  },
+  {
+   "line": "Character Work 66.4 84.4 23.6 To Go Character Work…",
+   "seen": [
+    "rehearsal: Player Profile",
+    "rehearsal: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 58.9 75.8 31.1 To Go Scene Work…",
+   "seen": [
+    "rehearsal: Player Profile",
+    "rehearsal: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 63.4 81.6 26.6 To Go Script Analysis…",
+   "seen": [
+    "rehearsal: Player Profile",
+    "rehearsal: Ada Cole"
+   ]
+  },
+  {
+   "line": "2027 Spring 18 at 57.6 12 at 71.0 12 at 52.9 12 at 65.4 — 3 at 47.9 1 at 47.7",
+   "seen": [
+    "rehearsal: Player Profile",
+    "rehearsal: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 32 at 58.9, best 63.5 20 at 70.2, best 72.6 24 at 55.6, best 66.1 24 at 63.2, best 69.4 4 at 65.3, best 66.8 6 at 55.7, best 64.3 1 at 47.7, best 47.7",
+   "seen": [
+    "rehearsal: Player Profile",
+    "rehearsal: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 23, 2027: Vocal Expression +0.069, Class: Voice I (DRAM 113a/b)",
+   "seen": [
+    "rehearsal: Player Profile",
+    "rehearsal: Ada Cole"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 55.8",
+   "seen": [
+    "rehearsal: School, Casting"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 56.6",
+   "seen": [
+    "rehearsal: School, Casting"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 45 KB",
+   "seen": [
+    "roundups: Save Slots"
+   ]
+  },
+  {
+   "line": "13h 20m of daylight",
+   "seen": [
+    "roundups: Home",
+    "roundups: Home, notice: How This Works",
+    "roundups: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Humidity 58% · Wind 13 mph · Continental",
+   "seen": [
+    "roundups: Home",
+    "roundups: Home, notice: How This Works",
+    "roundups: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "Daylight6:13 AM – 7:33 PM13h 20m of daylight",
+   "seen": [
+    "roundups: Home",
+    "roundups: Home, notice: How This Works",
+    "roundups: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 4 days and 9 hours ago. It's first of your 15 unread notices.",
+   "seen": [
+    "roundups: Home, notice: Welcome To The Class Of 2029"
+   ]
+  },
+  {
+   "line": "It came in 6 hours and 50 minutes ago. It's second of your 15 unread notices.",
+   "seen": [
+    "roundups: Home, notice: Acting I: Scene Study",
+    "roundups: Home"
+   ]
+  },
+  {
+   "line": "Close Acting I: Scene Study",
+   "seen": [
+    "roundups: Home, notice: Acting I: Scene Study",
+    "roundups: Home"
+   ]
+  },
+  {
+   "line": "Character Work 58.4 84.4 31.6 To Go Character Work…",
+   "seen": [
+    "roundups: Player Profile",
+    "roundups: Ada Cole"
+   ]
+  },
+  {
+   "line": "Intimacy 58.7 84.7 31.3 To Go Intimacy Practice…",
+   "seen": [
+    "roundups: Player Profile",
+    "roundups: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 49.8 75.8 40.2 To Go Scene Work…",
+   "seen": [
+    "roundups: Player Profile",
+    "roundups: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 55.6 81.6 34.4 To Go Script Analysis…",
+   "seen": [
+    "roundups: Player Profile",
+    "roundups: Ada Cole"
+   ]
+  },
+  {
+   "line": "Speech 52.5 78.5 37.5 To Go Speech Drill…",
+   "seen": [
+    "roundups: Player Profile",
+    "roundups: Ada Cole"
+   ]
+  },
+  {
+   "line": "Stage Combat 47.8 73.8 42.2 To Go Combat Drill…",
+   "seen": [
+    "roundups: Player Profile",
+    "roundups: Ada Cole"
+   ]
+  },
+  {
+   "line": "August 28, 2026: Focus +0.010, Coursework: knowing the material",
+   "seen": [
+    "roundups: Player Profile",
+    "roundups: Ada Cole"
+   ]
+  },
+  {
+   "line": "August 28, 2026: Focus +0.019, Coursework: knowing the material",
+   "seen": [
+    "roundups: Player Profile",
+    "roundups: Ada Cole"
+   ]
+  },
+  {
+   "line": "DRAM 103a/b · Due September 8, 2026 · Skills: Scene Study, Character Work, Emotional Depth",
+   "seen": [
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 14%; complete at 90%",
+   "seen": [
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 19%; complete at 90%",
+   "seen": [
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Tone: grave, 1 transition to play",
+   "seen": [
+    "roundups: School, Coursework",
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 62.7",
+   "seen": [
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 59.9",
+   "seen": [
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 873a/b · Due September 8, 2026 · Skills: Script Analysis",
+   "seen": [
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 133a/b · Due September 10, 2026 · Skills: Physical Expression, Dance",
+   "seen": [
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 113a/b · Due September 11, 2026 · Skills: Vocal Expression",
+   "seen": [
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Ask Zoe to rehearse, 90 minutes",
+   "seen": [
+    "roundups: School, Coursework"
+   ]
+  },
+  {
+   "line": "Debit card ending 8419, expires August 24, 2030",
+   "seen": [
+    "roundups: Money, Cards"
+   ]
+  },
+  {
+   "line": "Citi Double Cash Card ending 9931, expires July 20, 2029",
+   "seen": [
+    "roundups: Money, Cards"
+   ]
+  },
+  {
+   "line": "Citi Double Cash Card ending 9931",
+   "seen": [
+    "roundups: Money, Cards"
+   ]
+  },
+  {
+   "line": "Citi Double Cash Card ···9931, Citi",
+   "seen": [
+    "roundups: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts September 1, 2026",
+   "seen": [
+    "roundups: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts August 31, 2026",
+   "seen": [
+    "roundups: Money, Statements"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 948 KB",
+   "seen": [
+    "tax: Save Slots"
+   ]
+  },
+  {
+   "line": "14h 46m of daylight",
+   "seen": [
+    "tax: Home",
+    "tax: Home, notice: How This Works",
+    "tax: Home, notice: A Bill From Connecticut DRS"
+   ]
+  },
+  {
+   "line": "Partly Cloudy · High 78°F · Low 60°F",
+   "seen": [
+    "tax: Home",
+    "tax: Home, notice: How This Works",
+    "tax: Home, notice: A Bill From Connecticut DRS"
+   ]
+  },
+  {
+   "line": "Daylight5:25 AM – 8:11 PM14h 46m of daylight",
+   "seen": [
+    "tax: Home",
+    "tax: Home, notice: How This Works",
+    "tax: Home, notice: A Bill From Connecticut DRS"
+   ]
+  },
+  {
+   "line": "It came in 9 days and 7 hours ago. It's first of your 307 unread notices.",
+   "seen": [
+    "tax: Home, notice: A Bill From Connecticut DRS"
+   ]
+  },
+  {
+   "line": "It came in 8 weeks ago. It's second of your 307 unread notices.",
+   "seen": [
+    "tax: Home, notice: A Back Strain",
+    "tax: Home"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts May 27, 2027",
+   "seen": [
+    "tax: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts May 26, 2027",
+   "seen": [
+    "tax: Money, Statements"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 992 KB",
+   "seen": [
+    "withdraw: Save Slots"
+   ]
+  },
+  {
+   "line": "13h 31m of daylight",
+   "seen": [
+    "withdraw: Home",
+    "withdraw: Home, notice: How This Works",
+    "withdraw: Home, notice: You Withdrew From The School"
+   ]
+  },
+  {
+   "line": "Partly Cloudy · High 84°F · Low 66°F",
+   "seen": [
+    "withdraw: Home",
+    "withdraw: Home, notice: How This Works",
+    "withdraw: Home, notice: You Withdrew From The School"
+   ]
+  },
+  {
+   "line": "Humidity 62% · Wind 6 mph · Continental",
+   "seen": [
+    "withdraw: Home",
+    "withdraw: Home, notice: How This Works",
+    "withdraw: Home, notice: You Withdrew From The School"
+   ]
+  },
+  {
+   "line": "Daylight6:09 AM – 7:39 PM13h 31m of daylight",
+   "seen": [
+    "withdraw: Home",
+    "withdraw: Home, notice: How This Works",
+    "withdraw: Home, notice: You Withdrew From The School"
+   ]
+  },
+  {
+   "line": "It came in 5 months ago. It's first of your 286 unread notices.",
+   "seen": [
+    "withdraw: Home, notice: You Withdrew From The School"
+   ]
+  },
+  {
+   "line": "It came in 5 months ago. It's second of your 286 unread notices.",
+   "seen": [
+    "withdraw: Home, notice: A Back Strain",
+    "withdraw: Home"
+   ]
+  },
+  {
+   "line": "Character Work 65.6 84.4 24.4 To Go Character Work…",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "Intimacy 60.7 84.7 29.3 To Go Intimacy Practice…",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 58.0 75.8 32.0 To Go Scene Work…",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 62.6 81.6 27.4 To Go Script Analysis…",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "Speech 57.0 78.5 33.0 To Go Speech Drill…",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "Stage Combat 50.2 73.8 39.8 To Go Combat Drill…",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "2027 Spring 16 at 59.5 10 at 70.8 10 at 57.8 9 at 64.6 — 2 at 63.5 1 at 47.7",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 30 at 60.0, best 63.5 18 at 70.0, best 72.6 22 at 58.1, best 66.1 21 at 62.6, best 69.4 4 at 65.3, best 66.8 5 at 63.5, best 64.3 1 at 47.7, best 47.7",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 7, 2027: Imagination +0.029, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 7, 2027: Emotional Depth +0.059, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 7, 2027: Character Work +0.054, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 7, 2027: Scene Study +0.058, Class: Acting I (DRAM 103a/b)",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 6, 2027: Imagination +0.005, Coursework: making your choices",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 6, 2027: Imagination +0.010, Coursework: making your choices",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 6, 2027: Memory +0.007, Coursework: learning the lines",
+   "seen": [
+    "withdraw: Player Profile",
+    "withdraw: Ada Cole"
+   ]
+  },
+  {
+   "line": "April 7, 2027: You showed Runway together (Working)",
+   "seen": [
+    "withdraw: School, Coursework"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts August 26, 2027",
+   "seen": [
+    "withdraw: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts August 25, 2027",
+   "seen": [
+    "withdraw: Money, Statements"
+   ]
+  },
+  {
+   "line": "Version 1.1.0 · Save Format 94 · 1.0 MB",
+   "seen": [
+    "workload: Save Slots"
+   ]
+  },
+  {
+   "line": "Yale Rep's October Production: Understudy Rehearsal",
+   "seen": [
+    "workload: Home",
+    "workload: Home, notice: How This Works",
+    "workload: Home, notice: A Back Strain"
+   ]
+  },
+  {
+   "line": "12h 13m of daylight",
+   "seen": [
+    "workload: Home",
+    "workload: Home, notice: How This Works",
+    "workload: Home, notice: A Back Strain"
+   ]
+  },
+  {
+   "line": "Partly Cloudy · High 77°F · Low 59°F",
+   "seen": [
+    "workload: Home",
+    "workload: Home, notice: How This Works",
+    "workload: Home, notice: A Back Strain"
+   ]
+  },
+  {
+   "line": "Humidity 54% · Wind 12 mph · Continental",
+   "seen": [
+    "workload: Home",
+    "workload: Home, notice: How This Works",
+    "workload: Home, notice: A Back Strain"
+   ]
+  },
+  {
+   "line": "Daylight6:37 AM – 6:51 PM12h 13m of daylight",
+   "seen": [
+    "workload: Home",
+    "workload: Home, notice: How This Works",
+    "workload: Home, notice: A Back Strain"
+   ]
+  },
+  {
+   "line": "It came in 6 months ago. It's first of your 323 unread notices.",
+   "seen": [
+    "workload: Home, notice: A Back Strain"
+   ]
+  },
+  {
+   "line": "It came in 10 months ago. It's second of your 323 unread notices.",
+   "seen": [
+    "workload: Home, notice: A Deep Cut",
+    "workload: Home"
+   ]
+  },
+  {
+   "line": "Character Work 67.8 84.4 22.2 To Go Character Work…",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "Classical Text 48.3 73.2 41.7 To Go Verse Speaking…",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "Comedy 55.4 81.1 34.6 To Go Comic Timing…",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "Intimacy 60.8 84.7 29.2 To Go Intimacy Practice…",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "Scene Study 60.8 75.8 29.2 To Go Scene Work…",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "Script Analysis 64.7 81.6 25.3 To Go Script Analysis…",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "Singing 55.5 81.2 34.5 To Go Singing Practice…",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "Speech 57.8 78.5 32.2 To Go Speech Drill…",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "Stage Combat 50.6 73.8 39.4 To Go Combat Drill…",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "2026 Fall 14 at 46.4 8 at 69.8 12 at 62.2 12 at 64.6 4 at 31.3 3 at 42.5 —",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "2027 Spring 18 at 48.5 12 at 70.9 12 at 53.7 12 at 66.1 — 3 at 35.0 5 at 43.0",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "2027 Fall 4 at 42.0 1 at 71.6 — 2 at 66.5 1 at 26.3 — —",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "All Of It 36 at 47.0, best 62.1 21 at 70.5, best 72.5 24 at 57.9, best 66.1 26 at 65.5, best 69.4 5 at 30.3, best 47.6 6 at 38.8, best 55.0 5 at 43.0, best 47.1",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "September 21, 2027: Adaptability +0.015, Coursework: the revision",
+   "seen": [
+    "workload: Player Profile",
+    "workload: Ada Cole"
+   ]
+  },
+  {
+   "line": "Clown: 3 of 3 classes attended.",
+   "seen": [
+    "workload: School"
+   ]
+  },
+  {
+   "line": "Voice II: 6 of 6 classes attended.",
+   "seen": [
+    "workload: School"
+   ]
+  },
+  {
+   "line": "DRAM 273a · Due September 28, 2027 · Skills: Physical Expression, Dance",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 405a/b · Due September 30, 2027 · Skills: Stage Combat, Intimacy",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 213a/b · Due September 30, 2027 · Skills: Vocal Expression",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 233a/b · Due September 30, 2027 · Skills: Physical Expression, Dance",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 413a/b · Due October 1, 2027 · Skills: Singing, Emotional Depth",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 243a/b · Due October 1, 2027 · Skills: Physical Expression",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 203a/b · Due October 4, 2027 · Skills: Classical Text, Scene Study, Vocal Expression",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Note priority 13%; complete at 90%",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "WHAT KING LEAR ASKS",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 59.2",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 59.5",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Trust 60 of 100 · Came to 2 of 2 rehearsals agreed · Reliability 81%",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 163a · Due October 13, 2027 · Skills: Script Analysis",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "WHAT OFFICE HOURS ASKS",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "DRAM 353a · Due October 13, 2027 · Skills: Improvisation, Emotional Depth",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "September 14, 2027, Jordan Castillo: An Apology · Accept It",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "September 21, 2027: You showed Twelfth Night together (Unready)",
+   "seen": [
+    "workload: School, Coursework"
+   ]
+  },
+  {
+   "line": "Its 3 Turns: for it",
+   "seen": [
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 51.2",
+   "seen": [
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 54.2",
+   "seen": [
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Emotional Depth, Composure, Focus 54.8",
+   "seen": [
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Presence, Vocal Expression, Physical Expression 54.1",
+   "seen": [
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "You Blood Wedding The Bridegroom",
+   "seen": [
+    "workload: School, Casting"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts September 24, 2027",
+   "seen": [
+    "workload: Money, Statements"
+   ]
+  },
+  {
+   "line": "Groceries · Pending, posts September 23, 2027",
+   "seen": [
+    "workload: Money, Statements"
+   ]
+  }
+ ]
+}
