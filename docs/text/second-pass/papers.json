@@ -76,6 +76,160 @@
   "reason": "The Social Security visit's length in plain words, an hour, read from the rule's minutes so the guide can't drift from it.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/guide/papers.ts#BENCH_WORDS": {
+  "status": "Retained",
+  "hash": "9a44c3a7b273",
+  "on": "2026-10-19",
+  "reason": "The benchmark premium for each year the rules hold, said with its year, so a life begun in 2026 reads its own.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#CHAINS": {
+  "status": "Retained",
+  "hash": "a0739eaa08d1",
+  "on": "2026-10-19",
+  "reason": "Each pharmacy chain with its generic's cash price, short names in a list the costs line reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#CT_FLOOR_WORDS": {
+  "status": "Retained",
+  "hash": "09f0ed187691",
+  "on": "2026-10-19",
+  "reason": "Connecticut's weekly floor by year, the later year's said as estimated by the statute's index, where it differs.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/papers.ts#EMERGENCY_ROOM": {
+  "status": "Retained",
+  "hash": "9788f46689e7",
+  "on": "2026-10-19",
+  "reason": "The town's emergency department by its own name, or the town's hospital, where an emergency is had.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#FROM_CURRENT": {
+  "status": "Rewritten",
+  "hash": "a3dadd549527",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID): where a bill or a premium is taken from, the checking account first, as the glossary now names it",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#MONTHS": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The months' names the guide's dates are written with, so every date reads as the game writes one.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [evaluation]": {
+  "status": "Rewritten",
+  "hash": "c26581d576da",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (your cover decides your share each time you have care)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [history]": {
+  "status": "Retained",
+  "hash": "648d7a5db6ac",
+  "on": "2026-10-19",
+  "reason": "Each history connection says what's kept for later: Yale Health's bill with the School's charges, a premium for the tax credit, a claim as income.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [immediate]": {
+  "status": "Rewritten",
+  "hash": "6653d8900019",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (a visit you keep is billed for your share)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [optional]": {
+  "status": "Retained",
+  "hash": "fc4e06469743",
+  "on": "2026-10-19",
+  "reason": "Each optional connection says what the other tab or entry holds, in the tab's own terms, so the player knows where to look.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.benefits]": {
+  "status": "Rewritten",
+  "hash": "243c83c7d557",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.conditions]": {
+  "status": "Rewritten",
+  "hash": "5e731c1be28a",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
+  "status": "Rewritten",
+  "hash": "69309ae87363",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
+  "status": "Rewritten",
+  "hash": "e84ce1f0b482",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
+  "status": "Retained",
+  "hash": "6cdc73d92262",
+  "on": "2026-10-19",
+  "reason": "Papers' entry says what the screen holds, its five tabs by name, the three ways to reach it, and that moving between tabs changes nothing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [papers.pensions]": {
+  "status": "Retained",
+  "hash": "854fdfeca5db",
+  "on": "2026-10-19",
+  "reason": "Pensions' entry gives the forty credits, the claiming ages and the cut or rise, and says plainly that a school life's record stops near a few credits, so Claim never shows.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [prerequisite]": {
+  "status": "Retained",
+  "hash": "2d3da8701dd4",
+  "on": "2026-10-19",
+  "reason": "Each prerequisite says what has to be true first in one sentence: the chapter read, Yale Health ended, the stipend in the base period.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#PAPERS [scheduled]": {
+  "status": "Rewritten",
+  "hash": "ba56db431cf8",
+  "on": "2026-10-19",
+  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID), How It Connects (a long-term condition left untreated takes its toll)",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/papers.ts#PRACTICE": {
+  "status": "Retained",
+  "hash": "aae7e7690819",
+  "on": "2026-10-19",
+  "reason": "The town's first practice by its own name, or a plain fallback, as the doctor's entry names where a visit goes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#SNAP_FULL": {
+  "status": "Retained",
+  "hash": "8607c9472184",
+  "on": "2026-10-19",
+  "reason": "SNAP's most for a month, from its own table, the figure the benefits entry gives.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#YALE_PRACTICE": {
+  "status": "Retained",
+  "hash": "e1faaf1accf2",
+  "on": "2026-10-19",
+  "reason": "Yale Health's practice by its own name, or Yale Health, as the entry names where a student is seen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/papers.ts#YALE_SOON": {
+  "status": "Retained",
+  "hash": "1074be4669e2",
+  "on": "2026-10-19",
+  "reason": "How soon Yale Health sees a student, the next weekday, said in words from the practice's own wait.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/content/guide/taxes.ts#NEW_HAVEN": {
   "status": "Retained",
   "hash": "91a5e4a639ea",
@@ -152,6 +306,783 @@
   "on": "2026-10-19",
   "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
   "first": "Pending"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_EXCHANGES": {
+  "status": "Retained",
+  "hash": "4e8c04e02cbf",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .au-nsw": {
+  "status": "Retained",
+  "hash": "b0986d64fcaf",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .br": {
+  "status": "Retained",
+  "hash": "7f3ca04f5c34",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .ca-bc": {
+  "status": "Retained",
+  "hash": "b6635e39f8ac",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .ca-on": {
+  "status": "Retained",
+  "hash": "a4c26c8e7a7a",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .de": {
+  "status": "Retained",
+  "hash": "1cce4307f0a1",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .es": {
+  "status": "Retained",
+  "hash": "94a67cdef360",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .fr": {
+  "status": "Retained",
+  "hash": "a00a8097e6c2",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .gb": {
+  "status": "Retained",
+  "hash": "7418a2b0a7ce",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .gb-nir": {
+  "status": "Retained",
+  "hash": "9684f672566e",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .ie": {
+  "status": "Retained",
+  "hash": "fa675d1426c6",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .is": {
+  "status": "Retained",
+  "hash": "fbff9fe851b8",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .jp": {
+  "status": "Retained",
+  "hash": "bad98325fbf0",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .kr": {
+  "status": "Retained",
+  "hash": "e613d9203375",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .lv": {
+  "status": "Retained",
+  "hash": "2a337b8dcfeb",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .mx-cmx": {
+  "status": "Retained",
+  "hash": "364d9819f0de",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .nz": {
+  "status": "Retained",
+  "hash": "2c3241178606",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .us-ca": {
+  "status": "Retained",
+  "hash": "b21d3639f3fa",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .us-ct": {
+  "status": "Retained",
+  "hash": "326f08ddabe4",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS .us-ny": {
+  "status": "Retained",
+  "hash": "58e2e268d713",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [application]": {
+  "status": "Retained",
+  "hash": "cacbd0230e97",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [aptitude]": {
+  "status": "Retained",
+  "hash": "b610ea163134",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [class5]": {
+  "status": "Retained",
+  "hash": "090f8acb1105",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [class7-50]": {
+  "status": "Retained",
+  "hash": "5abddf1f9328",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [class7]": {
+  "status": "Retained",
+  "hash": "1c6f7a813901",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [cnh]": {
+  "status": "Retained",
+  "hash": "7057b35d4a68",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [code]": {
+  "status": "Retained",
+  "hash": "5505dd2a1a32",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [course]": {
+  "status": "Retained",
+  "hash": "a095b1c2e80f",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [dkt]": {
+  "status": "Retained",
+  "hash": "099c1b244ec4",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [driving]": {
+  "status": "Retained",
+  "hash": "ca8a190f826d",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [dt]": {
+  "status": "Retained",
+  "hash": "985deddedd94",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [edt]": {
+  "status": "Retained",
+  "hash": "ec28a83a4b9e",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [exam]": {
+  "status": "Retained",
+  "hash": "a9b0e2c4cf07",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [eyes]": {
+  "status": "Retained",
+  "hash": "694928577995",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [firstaid]": {
+  "status": "Retained",
+  "hash": "660140675000",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [full]": {
+  "status": "Retained",
+  "hash": "35226a4b031b",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [full2027]": {
+  "status": "Retained",
+  "hash": "2dd905acf1a0",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [full25]": {
+  "status": "Retained",
+  "hash": "59a16dc72cc7",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [g]": {
+  "status": "Retained",
+  "hash": "f6aaadf9f4b7",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [g1]": {
+  "status": "Retained",
+  "hash": "925f802bcc78",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [g2]": {
+  "status": "Retained",
+  "hash": "7a1d9a072630",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [hpt]": {
+  "status": "Retained",
+  "hash": "46ec7d434a2c",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [knowledge]": {
+  "status": "Retained",
+  "hash": "2d62d2cf3e2d",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [learner]": {
+  "status": "Retained",
+  "hash": "be0a4041d24a",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [lessons]": {
+  "status": "Retained",
+  "hash": "5829f9c49a91",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [license]": {
+  "status": "Retained",
+  "hash": "d7be3dcca95d",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [logbook]": {
+  "status": "Retained",
+  "hash": "aa5156372087",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [medical]": {
+  "status": "Retained",
+  "hash": "b229ee6a0a3c",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [neph]": {
+  "status": "Retained",
+  "hash": "033d39049dbe",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [p2]": {
+  "status": "Retained",
+  "hash": "cd6c2953903d",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [permit]": {
+  "status": "Retained",
+  "hash": "933671dab131",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [practical]": {
+  "status": "Retained",
+  "hash": "60b69fcfe140",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [practice]": {
+  "status": "Retained",
+  "hash": "7db751604c14",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [provisional]": {
+  "status": "Retained",
+  "hash": "ecfb9cecd51a",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [restricted]": {
+  "status": "Retained",
+  "hash": "84d3bde879cf",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [road]": {
+  "status": "Retained",
+  "hash": "5488e3d9bb79",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [safety]": {
+  "status": "Retained",
+  "hash": "232177216b61",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [school]": {
+  "status": "Retained",
+  "hash": "676a8de3b0c1",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [school3]": {
+  "status": "Retained",
+  "hash": "2df37a554d0f",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [skill]": {
+  "status": "Retained",
+  "hash": "3c20372850c8",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [tasa]": {
+  "status": "Retained",
+  "hash": "56ba53501e09",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [test]": {
+  "status": "Retained",
+  "hash": "48c714d6c471",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [theory]": {
+  "status": "Retained",
+  "hash": "1d7e57c9b353",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [toxicology]": {
+  "status": "Retained",
+  "hash": "cb076796d991",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [training]": {
+  "status": "Retained",
+  "hash": "e9358a138765",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#LICENSE_PATHS [written]": {
+  "status": "Retained",
+  "hash": "7322417ce6c9",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#PASS_RATES [road]": {
+  "status": "Retained",
+  "hash": "aef0d88dbda8",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#PASS_RATES [theory]": {
+  "status": "Retained",
+  "hash": "c53032c3d6a5",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licensepaths.ts#passRate": {
+  "status": "Retained",
+  "hash": "41779aaed45e",
+  "on": "2026-10-19",
+  "reason": "No reader: since driving went in the scope reset of 2026-10-09 nothing imports LICENSE_PATHS, PASS_RATES or LICENSE_EXCHANGES (only the LicenseStage type), so no player meets these words; deleting them is a scope decision, noted in defects.md.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .au-nsw": {
+  "status": "Retained",
+  "hash": "295005761fd8",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .br": {
+  "status": "Retained",
+  "hash": "f01e7217f4a2",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .ca-bc": {
+  "status": "Retained",
+  "hash": "c8f8d177e580",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .ca-on": {
+  "status": "Retained",
+  "hash": "c73a45151d58",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .de": {
+  "status": "Retained",
+  "hash": "c2e2c7d19a2f",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .es": {
+  "status": "Retained",
+  "hash": "36127654cd7b",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .fr": {
+  "status": "Retained",
+  "hash": "adddd7bfd332",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .gb": {
+  "status": "Retained",
+  "hash": "15e64331fc6b",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/licenses.ts#LICENSES .gb-nir": {
+  "status": "Retained",
+  "hash": "c92646488153",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .ie": {
+  "status": "Retained",
+  "hash": "ab63091048c9",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .is": {
+  "status": "Retained",
+  "hash": "21464a041a46",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .jp": {
+  "status": "Retained",
+  "hash": "3a02e7c85b97",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .kr": {
+  "status": "Retained",
+  "hash": "76c5750fd7f4",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .lv": {
+  "status": "Retained",
+  "hash": "b2b87a123c43",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .mx-cmx": {
+  "status": "Retained",
+  "hash": "f10e99c42ed7",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .nz": {
+  "status": "Retained",
+  "hash": "d1be7091399d",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-licenses.mjs; no life holds this license (only a US-born citizen starts with one, from a US state), and its notes, steps and renewal texts reach no screen since driving went in the scope reset of 2026-10-09.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .us-ca": {
+  "status": "Retained",
+  "hash": "20029f66731c",
+  "on": "2026-10-19",
+  "reason": "A US state's license by its own name (Class D (Operator) driver license) and its authority, the two fields a license's page shows for a US-born citizen; its notes, steps and renewal texts reach no screen since driving went.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .us-ct": {
+  "status": "Retained",
+  "hash": "4ea40016a1a2",
+  "on": "2026-10-19",
+  "reason": "A US state's license by its own name (Class D (Operator) driver license) and its authority, the two fields a license's page shows for a US-born citizen; its notes, steps and renewal texts reach no screen since driving went.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/licenses.ts#LICENSES .us-ny": {
+  "status": "Retained",
+  "hash": "e4d4f32682e3",
+  "on": "2026-10-19",
+  "reason": "A US state's license by its own name (Class D (Operator) driver license) and its authority, the two fields a license's page shows for a US-born citizen; its notes, steps and renewal texts reach no screen since driving went.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .AU": {
+  "status": "Retained",
+  "hash": "c233ce7f835d",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .BR": {
+  "status": "Retained",
+  "hash": "8a5ed9e3894e",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .CA": {
+  "status": "Retained",
+  "hash": "3e25cc958178",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .DE": {
+  "status": "Retained",
+  "hash": "16cbfaf8b134",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .ES": {
+  "status": "Retained",
+  "hash": "60f94605f2e7",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .FR": {
+  "status": "Retained",
+  "hash": "37e13692f28e",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .GB": {
+  "status": "Retained",
+  "hash": "d138344962ff",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .IE": {
+  "status": "Retained",
+  "hash": "71e6a5a109f1",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .IS": {
+  "status": "Retained",
+  "hash": "d7a42b83d25c",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .JP": {
+  "status": "Retained",
+  "hash": "aaf161a9223d",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .KR": {
+  "status": "Retained",
+  "hash": "9fd9bb04a198",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .LV": {
+  "status": "Retained",
+  "hash": "16ce5089b0d9",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .MX": {
+  "status": "Retained",
+  "hash": "0e42d446bbbe",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .NZ": {
+  "status": "Retained",
+  "hash": "8ceebda83a02",
+  "on": "2026-10-19",
+  "reason": "Generated by tools/build-passports.mjs from the passport research: of each office's entry a screen shows only its name (U.S. Passport Book, British Passport) and its issuer, as each office spells them, under Your Passport and in a refusal; its notes reach no screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passports.ts#PASSPORTS .US": {
+  "status": "Retained",
+  "hash": "516ed2563b4a",
+  "on": "2026-10-19",
+  "reason": "The US office's names and, for a citizen applying at home, its fee breakdown and its rule from abroad in Your Passport's fine print: DS-11's two payments and where a citizen abroad applies, as the State Department sets them out; generated, so changed only in the research.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/passportsabroad.ts#nzTerms": {
+  "status": "Retained",
+  "hash": "fdb8056d6967",
+  "on": "2026-10-19",
+  "reason": "New Zealand's online fee from overseas with and without GST, and the two assumptions the game makes (GST, the urgent fee), each said as an assumption with why, under Assumed in the game.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/passportsabroad.ts#PASSPORTS_ABROAD": {
+  "status": "Retained",
+  "hash": "b355ba637fe7",
+  "on": "2026-10-19",
+  "reason": "Each office's terms for a citizen applying from New Haven, in Your Passport's fine print: the fee abroad with its date, the time, what isn't offered from abroad, and where the game had to assume, said as the game's.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/safetynet.ts#CARE": {
+  "status": "Retained",
+  "hash": "5d8e1e8d06d3",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#CHARITY": {
+  "status": "Retained",
+  "hash": "efac3c21f6a0",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#CHRONIC": {
+  "status": "Retained",
+  "hash": "d084e1d3a10f",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#DENTAL_PLANS": {
+  "status": "Retained",
+  "hash": "96346facab4b",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#ENHANCED_CREDIT": {
+  "status": "Retained",
+  "hash": "7e90ace48079",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/safetynet.ts#PLANS": {
+  "status": "Retained",
+  "hash": "997e9dd7894a",
+  "on": "2026-10-19",
+  "reason": "Health plans' and dental plans' own names as their programs spell them, and research citations for the fine print's Source lines.",
+  "first": "Reviewed And Retained"
  },
  "src/engine/content/statetax.ts#FEDERAL_STATE_OFFSET": {
   "status": "Retained",
@@ -860,6 +1791,160 @@
   "evidence": "tests/editorial-papers.test.ts 'Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept' asserts each, as the fine print joins name and basis",
   "first": "Pending"
  },
+ "src/engine/content/workrules.ts#WORK_RULES": {
+  "status": "Retained",
+  "hash": "63deba223f3c",
+  "on": "2026-10-19",
+  "reason": "The form's own name, Form I-765, (c)(3)(B), the one string here a screen shows (the OPT panel's subtitle); the fee basis cites USCIS's G-1055 by its edition date and no screen reads it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#abroadQuote": {
+  "status": "Retained",
+  "hash": "887617bf3945",
+  "on": "2026-10-19",
+  "reason": "Each refusal for a payment abroad says the obstacle (no bank the game has, an unknown charge, too little held, too small to cover the margin) in one sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#abroadRefusal": {
+  "status": "Rewritten",
+  "hash": "f5783de35c9b",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-09-banking.test.ts and tests/home-account-setoff.test.ts assert There’s no known way to open anything new at … from America …",
+  "first": "Pending"
+ },
+ "src/engine/systems/abroad.ts#armHomeAccounts": {
+  "status": "Retained",
+  "hash": "18f1c5c319d2",
+  "on": "2026-10-19",
+  "reason": "A bank closing your account: who, why, the notice it gives, the day, and where the money goes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#arriveFromAbroad": {
+  "status": "Retained",
+  "hash": "dc3e1eb15050",
+  "on": "2026-10-19",
+  "reason": "What arrived and where, or why a payment came back and what it cost, in one notice each.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#atmAbroad": {
+  "status": "Retained",
+  "hash": "74c9ccad315f",
+  "on": "2026-10-19",
+  "reason": "Where the bank's own machines are, that its card works here only at another bank's machine, and what the game doesn't know.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#cardAbroadRefusal": {
+  "status": "Retained",
+  "hash": "66a3eb41df42",
+  "on": "2026-10-19",
+  "reason": "Says what the game doesn't know (the bank's charge for a purchase in dollars) and what follows from it: the card can't be your everyday card here.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#chargeAbroadFee": {
+  "status": "Retained",
+  "hash": "63e778379d32",
+  "on": "2026-10-19",
+  "reason": "The ledger memo and category for the fee a bank charges a customer abroad, naming what it's for.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#chargeWords": {
+  "status": "Retained",
+  "hash": "24e72264ae57",
+  "on": "2026-10-19",
+  "reason": "Fragments a bank-abroad sentence is built from (at least, at most, less on smaller sums), each reading whole inside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#closingBanks": {
+  "status": "Retained",
+  "hash": "bf3566f0f953",
+  "on": "2026-10-19",
+  "reason": "The two reasons a bank closes an account from abroad, said as the bank's own terms.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#foreignAccountsNotice": {
+  "status": "Retained",
+  "hash": "29373ab50404",
+  "on": "2026-10-19",
+  "reason": "The FBAR and Form 8938 notice: the highest balance, the thresholds, the dates and where each is filed, then what the game doesn't do for you.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#homeAccountLines": {
+  "status": "Retained",
+  "hash": "0e9a6c66e2e9",
+  "on": "2026-10-19",
+  "reason": "What a bank at home charges a customer abroad, when and from which account, its card's costs and its closing, each figure the bank's own.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#homeCloses": {
+  "status": "Retained",
+  "hash": "cb23e1fc7b31",
+  "on": "2026-10-19",
+  "reason": "Why an account didn't close (overdrawn by the amount) or that it did, and the money on its way, with the day it arrives.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#limitRefusal": {
+  "status": "Retained",
+  "hash": "4ec23611b266",
+  "on": "2026-10-19",
+  "reason": "The bank's daily and monthly limit for money going abroad, with how much has gone already.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/abroad.ts#quoteWords": {
+  "status": "Retained",
+  "hash": "a246bf55f625",
+  "on": "2026-10-19",
+  "reason": "A payment abroad quoted whole: what leaves, at what rate against the estimated exchange rate, what arrives, when, and the fees, with the estimate labelled.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/abroad.ts#sendAbroad": {
+  "status": "Retained",
+  "hash": "1be28df6553f",
+  "on": "2026-10-19",
+  "reason": "The ledger memos and the calendar's Money Arrives From Abroad for a payment on its way.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/assistance.ts#assistanceRefusal": {
+  "status": "Retained",
+  "hash": "77b6b2552811",
+  "on": "2026-10-19",
+  "reason": "Each refusal says why, and where the game narrows a real rule (SNAP for US citizens only) it says the game does so and why.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/assistance.ts#registerAssistance": {
+  "status": "Retained",
+  "hash": "f078dbcb4507",
+  "on": "2026-10-19",
+  "reason": "SNAP's time limit and closing notices say what happened, why (three months in three years without 80 hours, or the summer rule), and what reopens it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/assistance.ts#registerAssistance [escrow]": {
+  "status": "Retained",
+  "hash": "e136d8ae7040",
+  "on": "2026-10-19",
+  "reason": "EBT Card, SNAP: the account's name as the card itself is known, which the groceries are paid from first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/assistance.ts#schedule": {
+  "status": "Retained",
+  "hash": "3cd487e7f4ad",
+  "on": "2026-10-19",
+  "reason": "Assistance, The Month, the calendar's line for the month's payment, short on a crowded day.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/assistance.ts#snapStudentRefusal": {
+  "status": "Retained",
+  "hash": "0603849eaa6e",
+  "on": "2026-10-19",
+  "reason": "SNAP's student rule in one sentence with its regulation: in the summer, work-study or 20 hours of work a week.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/assistance.ts#snapYearOn": {
+  "status": "Retained",
+  "hash": "cfe7e4812bff",
+  "on": "2026-10-19",
+  "reason": "A date key the code builds for SNAP's fiscal years, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/systems/citizenship.ts#naturalizeRefusal": {
   "status": "Retained",
   "hash": "543738f58af9",
@@ -972,6 +2057,97 @@
   "reason": "Document names the code reads back (the F-1 match in report_lost, Driver License as the license fallback): they're keys as well as labels, and plain English.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/eiself.ts#eiRefusal": {
+  "status": "Retained",
+  "hash": "820690bb0a87",
+  "on": "2026-10-19",
+  "reason": "EI's refusals (living in Canada, a Canadian citizen, already registered) and its ledger lines, short and exact; a life in New Haven never reaches them.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/eiself.ts#eiWeek": {
+  "status": "Retained",
+  "hash": "4e96e8a24281",
+  "on": "2026-10-19",
+  "reason": "EI's refusals (living in Canada, a Canadian citizen, already registered) and its ledger lines, short and exact; a life in New Haven never reaches them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homebenefits.ts#CDMX_DESEMPLEO": {
+  "status": "Retained",
+  "hash": "9c3125ef32aa",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homebenefits.ts#claimAtHome": {
+  "status": "Retained",
+  "hash": "477d001ce8f0",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homebenefits.ts#desempleoRefusal": {
+  "status": "Retained",
+  "hash": "da8a11622513",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/homebenefits.ts#jobseekerRefusal": {
+  "status": "Retained",
+  "hash": "3d87b14bb051",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/homebenefits.ts#registerHomeBenefits": {
+  "status": "Retained",
+  "hash": "bda3d2e82154",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico City's benefits by their own names, their refusals in one sentence each, and their payment notices with the amount and the week or month.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homepensions.ts#bienestarRefusal": {
+  "status": "Retained",
+  "hash": "4c10d15b1efa",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/homepensions.ts#irishMeans": {
+  "status": "Retained",
+  "hash": "81428446f962",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homepensions.ts#irishPensionRefusal": {
+  "status": "Retained",
+  "hash": "c0679701b9ce",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/homepensions.ts#registerHomePensions": {
+  "status": "Retained",
+  "hash": "9ca5645cf72e",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homepensions.ts#registerHomePensions <pension.bienestar>": {
+  "status": "Retained",
+  "hash": "f8cd68af078b",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homepensions.ts#registerHomePensions <pension.ie_state>": {
+  "status": "Retained",
+  "hash": "6daaa499360e",
+  "on": "2026-10-19",
+  "reason": "Ireland's and Mexico's pensions by their own names, each refusal saying the age or record needed and what the record holds, and the payment notices.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/systems/identity.ts#idCardRefusal": {
   "status": "Rewritten",
   "hash": "6c510378e97c",
@@ -1034,6 +2210,27 @@
   "on": "2026-10-19",
   "reason": "The money refusal with nothing charged and the calendar's The License Comes, each the shortest true thing for its place.",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/imss.ts#imssRefusal": {
+  "status": "Retained",
+  "hash": "f6b9474160a9",
+  "on": "2026-10-19",
+  "reason": "The IMSS pension's refusals give the age, the year's weeks against your record and the other pension Mexico pays from 65.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/imss.ts#registerImss": {
+  "status": "Retained",
+  "hash": "3abd51a81bf9",
+  "on": "2026-10-19",
+  "reason": "The IMSS pension's refusals give the age, the year's weeks against your record and the other pension Mexico pays from 65.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/imss.ts#registerImss <pension.imss>": {
+  "status": "Retained",
+  "hash": "c922c52be7d7",
+  "on": "2026-10-19",
+  "reason": "The IMSS pension's refusals give the age, the year's weeks against your record and the other pension Mexico pays from 65.",
+  "first": "Reviewed And Retained"
  },
  "src/engine/systems/papervisits.ts#registerPaperVisits": {
   "status": "Rewritten",
@@ -1131,6 +2328,48 @@
   "hash": "b5d0d439c52e",
   "on": "2026-10-19",
   "reason": "Each says what settling asks in that country (five years, money earned in Britain in your field) or that you already are, with no invented route.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/socialsecurity.ts#registerSocialSecurity": {
+  "status": "Retained",
+  "hash": "505a1d852d57",
+  "on": "2026-10-19",
+  "reason": "Social Security's refusals give the ages (62, full at 67, more until 70) and the forty credits against yours, as the panel's Claimed note shows them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/socialsecurity.ts#registerSocialSecurity <pension.social_security>": {
+  "status": "Retained",
+  "hash": "1bc13bd76f79",
+  "on": "2026-10-19",
+  "reason": "Social Security's refusals give the ages (62, full at 67, more until 70) and the forty credits against yours, as the panel's Claimed note shows them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/socialsecurity.ts#socialSecurityRefusal": {
+  "status": "Retained",
+  "hash": "1a90f73e6b53",
+  "on": "2026-10-19",
+  "reason": "Social Security's refusals give the ages (62, full at 67, more until 70) and the forty credits against yours, as the panel's Claimed note shows them.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statepension.ts#registerStatePension": {
+  "status": "Retained",
+  "hash": "3671ecdd7b1e",
+  "on": "2026-10-19",
+  "reason": "The UK State Pension's refusals give your State Pension age and the ten qualifying years against your record, and its four-weekly payment notice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statepension.ts#registerStatePension <pension.state>": {
+  "status": "Retained",
+  "hash": "904cfb8df299",
+  "on": "2026-10-19",
+  "reason": "The UK State Pension's refusals give your State Pension age and the ten qualifying years against your record, and its four-weekly payment notice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statepension.ts#statePensionRefusal": {
+  "status": "Retained",
+  "hash": "7a46ba15e2b1",
+  "on": "2026-10-19",
+  "reason": "The UK State Pension's refusals give your State Pension age and the ten qualifying years against your record, and its four-weekly payment notice.",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/statetax.ts#agencyOf": {
@@ -1452,7 +2691,7 @@
   "status": "Retained",
   "hash": "a9adcae07ed0",
   "on": "2026-10-19",
-  "reason": "The first reminder says it's unpaid, that interest and the penalty keep adding up, and exactly where to pay or ask for a plan.",
+  "reason": "The first reminder says the balance is still unpaid, that the late-payment penalty and the IRS's charges keep adding up, and exactly where to pay or ask for a plan.",
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/taxreturn.ts#COLLECTION [CP503]": {
@@ -1637,6 +2876,90 @@
   "reason": "The calendar's and the history's short lines for a plan payment and an approval, each with its amount or date.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/unemployment.ts#basePeriodFor": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the base period's quarters are counted in, America/New_York, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/unemployment.ts#claimStateFor": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone name the claim's dates are written in, America/New_York, never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/unemployment.ts#close": {
+  "status": "Retained",
+  "hash": "f781978a98d6",
+  "on": "2026-10-19",
+  "reason": "Your Unemployment Claim Ended, the notice's title, which says what happened before its body says why.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/unemployment.ts#monetary": {
+  "status": "Retained",
+  "hash": "1b0e6672e630",
+  "on": "2026-10-19",
+  "reason": "Each state's monetary test said as its own rule, New York's and California's quarters, Connecticut's multiple, then the week's benefit and its weeks, after Filed now on the claim panel.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/unemployment.ts#registerUnemployment": {
+  "status": "Rewritten",
+  "hash": "084b61d31196",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g16-papers.test.ts asserts the claim ended at its benefit year (The benefit year ended a year after you filed.) and tests/evidence-g15-papers.test.ts at its most",
+  "first": "Pending"
+ },
+ "src/engine/systems/unemployment.ts#registerUnemployment <benefits.claim>": {
+  "status": "Retained",
+  "hash": "ba582570deb1",
+  "on": "2026-10-19",
+  "reason": "Each refusal says the obstacle (no state, a claim open, no permission to work, the base period short with what it paid), and the calendar's line for each Sunday.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/unemployment.ts#studentUnavailable": {
+  "status": "Retained",
+  "hash": "dc3d13998486",
+  "on": "2026-10-19",
+  "reason": "Connecticut's rule for a full-time student with its statute, and what it means for you: a claim pays only once you've left school.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/universalcredit.ts#close": {
+  "status": "Retained",
+  "hash": "40dabaf13784",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/universalcredit.ts#creditAward": {
+  "status": "Retained",
+  "hash": "e7489c1ddcf2",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/universalcredit.ts#creditRefusal": {
+  "status": "Retained",
+  "hash": "75529b01d102",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/universalcredit.ts#registerUniversalCredit": {
+  "status": "Retained",
+  "hash": "2f5f40783629",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/universalcredit.ts#schedule": {
+  "status": "Retained",
+  "hash": "44fea49f14af",
+  "on": "2026-10-19",
+  "reason": "Universal Credit by its own name and its award's lines (standard allowance, the 55% taper, savings), each refusal one sentence; a life in New Haven never reaches it.",
+  "first": "Reviewed And Retained"
+ },
  "src/ui/components/LienPanels.tsx#FederalLien": {
   "status": "Retained",
   "hash": "e3d2bcdf11cc",
@@ -1784,12 +3107,54 @@
   "reason": "The two openings of the OPT toast, Applied for OPT and Applied for OPT with premium processing, each naming exactly which application was made before its fee and decision date.",
   "first": "Rewritten And Verified"
  },
+ "src/ui/workspaces/PapersWorkspace.tsx#aidWord": {
+  "status": "Retained",
+  "hash": "b951d9fc1a33",
+  "on": "2026-10-19",
+  "reason": "The Assistance column's four words, Free Care, 67% Off, Over The Limit and Assistance Taken Off, each saying what the hospital did to the bill.",
+  "first": "Rewritten And Verified"
+ },
  "src/ui/workspaces/PapersWorkspace.tsx#amendWords": {
   "status": "Retained",
   "hash": "d219673787c9",
   "on": "2026-10-19",
   "reason": "An amendment's change said plainly as more tax, less tax, or no change in the total with each side that moved, read straight from the figures.",
   "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#AssistancePanel": {
+  "status": "Retained",
+  "hash": "b23c42387380",
+  "on": "2026-10-19",
+  "reason": "SNAP's panel: what's open, the most a month less 30% of net income, what's on the EBT card, and SNAP's income rules with their regulations in the fine print.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#BenefitsPane": {
+  "status": "Rewritten",
+  "hash": "778bce4d36ec",
+  "on": "2026-10-19",
+  "evidence": "the built app’s Unemployment tab, read in the text walk of the tax, health and withdraw saves at 1440 and 390 (after-1440, after-390: The game certifies each week for you on Sunday …)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#ConditionsPanel": {
+  "status": "Rewritten",
+  "hash": "86cc183c601e",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g04-life.test.ts presses Let It Go and Keep It Up and draws Health Cover (Depression: Left Untreated, the new toast)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#DentalPanel": {
+  "status": "Rewritten",
+  "hash": "1b1dfcc64e3c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g03-life.test.ts presses Buy Dental (You’re covered for the dentist from today.)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#EiPanel": {
+  "status": "Retained",
+  "hash": "6d3a7df26db6",
+  "on": "2026-10-19",
+  "reason": "EI's special benefits for the self-employed: when you registered, what premiums would cost, a sick week's benefit and its conditions; a life in New Haven never sees it.",
+  "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#filedWords": {
   "status": "Retained",
@@ -1798,11 +3163,32 @@
   "reason": "The File It toast in each of its variants says what filing did with the money: the refund's day, what the bank couldn't pay and where it now shows, or that nothing is owed either way.",
   "first": "Rewritten And Verified"
  },
+ "src/ui/workspaces/PapersWorkspace.tsx#HealthPane": {
+  "status": "Rewritten",
+  "hash": "0e748e24f87d",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-health-eligibility.test.ts (Apply For HUSKY D’s toast), tests/defects-g8-6.test.ts (assistance over the limit, nothing off the bill), tests/evidence-g05-life.test.ts and tests/evidence-g03-life.test.ts (Pay It Off)",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#HomeClaimsPanel": {
+  "status": "Retained",
+  "hash": "1e4f90666602",
+  "on": "2026-10-19",
+  "reason": "Universal Credit, Jobseeker's Allowance and the Seguro de Desempleo by their own names, each panel saying what's open, what's paid and why not; a life in New Haven never sees them.",
+  "first": "Rewritten And Verified"
+ },
  "src/ui/workspaces/PapersWorkspace.tsx#PapersWorkspace": {
   "status": "Retained",
   "hash": "3a1625091e6c",
   "on": "2026-10-19",
   "reason": "The screen's one-line subtitle names its five tabs' subjects in the tabs' order, so a player knows what Papers holds before choosing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#PensionsPanel": {
+  "status": "Retained",
+  "hash": "01cf72af5398",
+  "on": "2026-10-19",
+  "reason": "Each pension's credits or record, what it would pay and when, and Claim It's toast with the amount, its share of the full benefit where it's cut.",
   "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#PLAN_STATUS": {
@@ -1826,6 +3212,13 @@
   "evidence": "tests/editorial-papers.test.ts renders a UK tax year (January 31, 2028; a refund of …) and tests/defects-g8-8.test.ts the returns' fine print",
   "first": "Pending"
  },
+ "src/ui/workspaces/PapersWorkspace.tsx#STATE_NAMES": {
+  "status": "Retained",
+  "hash": "fa6cc8fb543e",
+  "on": "2026-10-19",
+  "reason": "The six states' names Papers writes beside their agencies, spelled as the states spell them.",
+  "first": "Reviewed And Retained"
+ },
  "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel": {
   "status": "Rewritten",
   "hash": "3810784a4ec7",
@@ -1835,10 +3228,17 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel": {
   "status": "Rewritten",
-  "hash": "e8c1ddee9080",
+  "hash": "cce56c686012",
   "on": "2026-10-19",
-  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders the panel before and after applying (the number's two ways, Not by direct debit)",
+  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders the panel before and after applying (the number's two ways, Not by direct debit), its rules now a second paragraph",
   "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#TherapyRow": {
+  "status": "Retained",
+  "hash": "41c458c77293",
+  "on": "2026-10-19",
+  "reason": "Therapy's progress, the therapist with each one's price or Free With Yale Health, and the button that names the course's length.",
+  "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#WhoIsOwed": {
   "status": "Rewritten",
@@ -1846,5 +3246,12 @@
   "on": "2026-10-19",
   "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders Owed To with an unresearched state’s two notes; tests/scope-taxpapers.test.ts renders Connecticut’s",
   "first": "Pending"
+ },
+ "src/ui/workspaces/PapersWorkspace.tsx#YourDoctor": {
+  "status": "Retained",
+  "hash": "a2f7221584b0",
+  "on": "2026-10-19",
+  "reason": "Where you're seen and what it would cost now, each practice and chain with its price and wait, and an appointment's line that says how to be seen where your cover pays.",
+  "first": "Rewritten And Verified"
  }
 }

@@ -399,7 +399,7 @@ describe('health.appeal_decided, on the marketplace a family’s savings reach (
     const text = papers(sim).text;
     expect(text).toContain('$45.00 Owed As Debt Denial Overturned');
     const bank = checking(sim).balance;
-    expect(press('health.pay_bill')).toEqual(['Paid off.']);
+    expect(press('health.pay_bill')).toEqual(['Your medical debt is paid off.']);
     expect(checking(sim).balance).toBe(bank - SHARE);
     expect(debtOf(sim)!.balance).toBe(0);
     expect(billOf(sim, billId)).toMatchObject({ paid: true });

@@ -332,7 +332,7 @@ describe('health.appeal_decided', () => {
       const row = billRow(sim, 'Visit', bill.at);
       fund(sim, 300_00); // TEST SETUP
       drawn(sim);
-      expect(press('health.pay_bill')).toEqual(['Paid off.']);
+      expect(press('health.pay_bill')).toEqual(['Your medical debt is paid off.']);
       const paid = memos(sim, 'Paid toward medical debt');
       expect(paid).toHaveLength(1);
       return { sim, bill, row, paid: into(paid[0]!, checking(sim)) };

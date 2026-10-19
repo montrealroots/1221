@@ -468,7 +468,7 @@ describe('health.dental', () => {
     const was = current(sim).balance;
     h.toasts = [];
     press(view, 'Buy Dental');
-    expect(h.toasts).toEqual(['Covered for the dentist from today.']);
+    expect(h.toasts).toEqual(['You’re covered for the dentist from today.']);
     expect(was - current(sim).balance).toBe(312_72);
     const paid = memos(sim, 'Yale Delta Dental Basic, the year');
     expect(paid).toHaveLength(1);
@@ -729,7 +729,7 @@ describe('health.pay_bill', () => {
         const was = current(sim).balance;
         h.toasts = [];
         press(owing, 'Pay It Off');
-        expect(h.toasts).toEqual(['Paid off.']);
+        expect(h.toasts).toEqual(['Your medical debt is paid off.']);
         expect(was - current(sim).balance).toBe(900_00);
         expect(medicalDebtOf(sim, sim.player)!.balance).toBe(0);
         sim = reload(sim);

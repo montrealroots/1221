@@ -244,7 +244,7 @@ export function registerUnemployment(sim: Simulation): void {
     const claim = person ? unemploymentOf(person).claim : undefined;
     if (!person || !claim) return;
     const cur = saveCurrency(s.universe);
-    if (s.now >= claim.endsAt) { close(s, person, 'A year from filing, the benefit year is over.'); return; }
+    if (s.now >= claim.endsAt) { close(s, person, 'The benefit year ended a year after you filed.'); return; }
     // Certified from anywhere in the country, as an interstate claim is, and
     // not from abroad, where they aren't available for work. Until 2026-09-27
     // it paid only in the claim's state, and a New York claimant who moved to

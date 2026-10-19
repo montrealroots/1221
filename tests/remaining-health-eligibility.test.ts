@@ -213,7 +213,7 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     expect(text).not.toMatch(NO_HOURS);
     // What Needs You read and cleared with Mark … Read, as the player does before she applies.
     sim.must({ kind: 'world.mark_read', payload: {} });
-    expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied. A notice will say what’s needed, and it’s decided February 8, 2027.']);
+    expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied. A notice will say what’s needed, and it’s decided on February 8, 2027.']);
     const told = home(sim);
     expect(told).toContain(`A Notice Of Noncompliance ${APPLIED_NOTICE}`);
     expect(told).not.toMatch(NO_HOURS);
@@ -253,7 +253,7 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     expect(healthOf(jump.player).program).toBeUndefined();
     // No restriction on applying again (42 CFR 435.558(e)): January is read now, and it's short too.
     papers(jump);
-    expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied. A notice will say what’s needed, and it’s decided March 16, 2027.']);
+    expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied. A notice will say what’s needed, and it’s decided on March 16, 2027.']);
     expect(healthOf(jump.player).pending).toMatchObject({ months: ['2027-01'], noticeAt: at(2027, 2, 9, 9) });
   }, 300_000);
 
@@ -357,7 +357,7 @@ describe('HUSKY D’s work rules: the exceptions SLATE reads, applied before a d
     expect(press('health.enroll')).toEqual(['Enrolled in the marketplace, from February 1, 2027.']);
     const text = papers(sim);
     expect(text).toContain(APPLY_LINE);
-    expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied. A notice will say what’s needed, and it’s decided February 8, 2027.']);
+    expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied. A notice will say what’s needed, and it’s decided on February 8, 2027.']);
     expect(papers(sim)).toContain('If you were in hospital in one of those months, you can ask for it to count.');
     expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['Hardship exception granted. The work rules count as met.']);
     expect(titled(sim, 'Public Cover Approved').map((n) => n.body)).toEqual(['HUSKY D covers you from December 1, 2026, with no premium. December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.']);

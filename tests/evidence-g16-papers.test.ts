@@ -980,7 +980,7 @@ describe('benefits.week', () => {
     later.advanceTo(Date.UTC(2030, 5, 10, 1));
     expect(unemploymentOf(later.player).claim).toBeUndefined();
     expect(unemploymentOf(later.player).past).toMatchObject([{ paid: 1_116_00, closedAt: Date.UTC(2030, 5, 10, 0) }]);
-    expect(titled(later, 'Your Unemployment Claim Ended').map((n) => n.body)).toEqual(['A year from filing, the benefit year is over.']);
+    expect(titled(later, 'Your Unemployment Claim Ended').map((n) => n.body)).toEqual(['The benefit year ended a year after you filed.']);
     expect(pendingOf(later, BENEFIT_WEEK_KIND)).toEqual([]);
     expect(memos(later, /^Unemployment insurance/)).toHaveLength(12);
   }, 60_000);

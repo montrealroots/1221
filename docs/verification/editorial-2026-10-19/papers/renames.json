@@ -1,5 +1,9 @@
 [
  { "old": "Your Social Security Card Came", "new": "Your Social Security Card Has Arrived", "where": "src/engine/systems/taxid.ts (a notice's title)" },
  { "old": "A Citizen", "new": "A Citizen Of <Country>", "where": "src/engine/systems/citizenship.ts (a notice's title, the country by name)" },
- { "old": "Not yet", "new": "None yet", "where": "src/ui/papers/Documents.tsx (Social Security Number's subtitle, a status, not a control)" }
+ { "old": "Not yet", "new": "None yet", "where": "src/ui/papers/Documents.tsx (Social Security Number's subtitle, a status, not a control)" },
+ { "old": "Next Payment (reading “Decided …” while a state's plan is being decided)", "new": "Answered By", "where": "src/ui/workspaces/PapersWorkspace.tsx (StatePlanPanel's third stat, as the IRS plan's already said)" },
+ { "old": "Paid by you", "new": "Not by direct debit", "where": "src/ui/workspaces/PapersWorkspace.tsx (TaxPlanPanel, the note beside Each Month)" },
+ { "old": "Your Conditions", "new": "Your Long-Term Conditions", "where": "src/ui/workspaces/PapersWorkspace.tsx (Health Cover's panel title); named by src/engine/content/guide/papers.ts (changed here) and src/engine/content/tutorial.ts line 384 (the tutorial area's)" },
+ { "old": "Left Alone", "new": "Left Untreated", "where": "src/ui/workspaces/PapersWorkspace.tsx (a long-term condition's row after Let It Go); its toast “Left alone.” is now “Care stopped. It’s left untreated from now on.”" }
 ]

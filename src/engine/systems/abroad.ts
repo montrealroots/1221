@@ -156,7 +156,7 @@ export function abroadRefusal(person: Person, bank: Bank | undefined): string | 
   const here = livesIn(person);
   const terms = bank ? homeTerms(bank.id) : undefined;
   if (!bank || !terms || here === undefined || bank.iso === here) return undefined;
-  return terms.abroad.opening ?? `No way to open anything new at ${bank.name} from America was found, so the game assumes there’s none.`;
+  return terms.abroad.opening ?? `There’s no known way to open anything new at ${bank.name} from America, so the game assumes there’s none.`;
 }
 
 /**
