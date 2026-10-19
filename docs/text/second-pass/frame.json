@@ -69,6 +69,13 @@
   "evidence": "tests/language-frame.test.ts, 'says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do', both variants word for word",
   "first": "Pending"
  },
+ "src/engine/content/climate.ts#CLIMATE_NAMES": {
+  "status": "Retained",
+  "hash": "eb7b9310fb17",
+  "on": "2026-10-19",
+  "reason": "The standard names of climate types, Oceanic, Continental, Subarctic, as atlases name them, shown beside the weather.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/content/ethnicity.ts#ETHNICITIES [american-indian]": {
   "status": "Retained",
   "hash": "8514eaaa4518",
@@ -132,6 +139,111 @@
   "reason": "Says the choice is free and many-valued, that nothing in the game uses or guesses it, and that leaving it blank is allowed: what a player wants to know before answering.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/content/guide/day.ts#DAY [day.advance]": {
+  "status": "Rewritten",
+  "hash": "d456cd7b6aab",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under Moving Time On",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.calendar]": {
+  "status": "Rewritten",
+  "hash": "5a41edebf96d",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Calendar",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.clock]": {
+  "status": "Rewritten",
+  "hash": "1db03f32ae6f",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Clock: Play And Pause",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.needs]": {
+  "status": "Rewritten",
+  "hash": "fdd3cdf8fcf5",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under What Needs You; its later lines held by tests/defects3-50-70.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.plans]": {
+  "status": "Rewritten",
+  "hash": "6351727d98c7",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under Your Own Plans",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.weather]": {
+  "status": "Rewritten",
+  "hash": "c828ef89d05c",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Weather",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [evaluation]": {
+  "status": "Rewritten",
+  "hash": "54e4c460fb7a",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Counts Toward",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [history]": {
+  "status": "Retained",
+  "hash": "0cd47ebc9dda",
+  "on": "2026-10-19",
+  "reason": "Lines under Kept In Your Record: a notice for a plan skipped or slept through, said where it appears.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#DAY [immediate]": {
+  "status": "Retained",
+  "hash": "bfb5624d3dc8",
+  "on": "2026-10-19",
+  "reason": "Lines under Changes Straight Away, each naming what the other feature does at once, in the screens’ own words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#DAY [optional]": {
+  "status": "Retained",
+  "hash": "70cc43c91d64",
+  "on": "2026-10-19",
+  "reason": "Lines under Worth Doing With It, each one plain sentence on why the two features go together.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#DAY [prerequisite]": {
+  "status": "Rewritten",
+  "hash": "ea803feaf6d7",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Comes First",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [scheduled]": {
+  "status": "Retained",
+  "hash": "0e5b5a43be30",
+  "on": "2026-10-19",
+  "reason": "Lines under Changes Later: midnight’s groceries, and a plan stopping the clock, each said as what happens when.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#HAVEN_THUNDER_FROM": {
+  "status": "Retained",
+  "hash": "736ae15f31a8",
+  "on": "2026-10-19",
+  "reason": "Says where New Haven’s thunder figure comes from, as published or estimated for its climate, inside a How This Works figure.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#RUN_COLD": {
+  "status": "Retained",
+  "hash": "9b086f13e429",
+  "on": "2026-10-19",
+  "reason": "A temperature in both scales, the run’s lowest, as the weather entry gives it beside the rule.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/day.ts#RUN_HOT": {
+  "status": "Retained",
+  "hash": "9b086f13e429",
+  "on": "2026-10-19",
+  "reason": "A temperature in both scales, the run’s highest feels-like, as the weather entry gives it beside the rule.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/content/guide/start.ts#START [immediate]": {
   "status": "Rewritten",
   "hash": "5fbbcf24cf9d",
@@ -173,6 +285,20 @@
   "on": "2026-10-19",
   "evidence": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs; its example's result held by tests/guide-examples-start-day-body.test.ts, 'start.home: New Haven opens under its line…'",
   "first": "Pending"
+ },
+ "src/engine/content/holiday-data.ts#HOLIDAY_FILES": {
+  "status": "Retained",
+  "hash": "47dd92c67d42",
+  "on": "2026-10-19",
+  "reason": "A table of each country’s holiday file size and count, read by the loader and never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/holidays.ts#loadCountryHolidays": {
+  "status": "Retained",
+  "hash": "161ffe931bab",
+  "on": "2026-10-19",
+  "reason": "The holiday file’s path and a developer’s error if it can’t be fetched, neither of them words a player reads.",
+  "first": "Reviewed And Retained"
  },
  "src/engine/content/identity.ts#ID_CARDS": {
   "status": "Retained",
@@ -1518,6 +1644,13 @@
   "reason": "Clear-headed twenty minutes after anything, and slow to notice when something is wrong with you: the trait and its blind spot.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/thunder.ts#THUNDER_DAYS": {
+  "status": "Retained",
+  "hash": "8ff70cfb06f1",
+  "on": "2026-10-19",
+  "reason": "Each city’s thunder-day source, as the weather service or the study names itself, shown after Source in the weather look.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/core/events.ts#EventBus": {
   "status": "Retained",
   "hash": "1297b86e52d0",
@@ -1552,6 +1685,41 @@
   "on": "2026-10-19",
   "reason": "Says the game can’t do that and changed nothing, for a press no screen should offer, without a command’s id.",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/core/sun.ts#formatDaylight": {
+  "status": "Retained",
+  "hash": "7ccd3730eb99",
+  "on": "2026-10-19",
+  "reason": "The short form of a day’s daylight, 10h 26m, in a stat beside Daylight, where the glossary keeps the short form.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/time.ts#formatDuration": {
+  "status": "Retained",
+  "hash": "2b7139cbeeda",
+  "on": "2026-10-19",
+  "reason": "Weekday and month names, the seasons’ names, and the short durations a chip or a stat shows, as the glossary keeps them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/time.ts#MONTH_NAMES": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "Weekday and month names, the seasons’ names, and the short durations a chip or a stat shows, as the glossary keeps them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/time.ts#seasonOf": {
+  "status": "Retained",
+  "hash": "c7f87f4dbe51",
+  "on": "2026-10-19",
+  "reason": "Weekday and month names, the seasons’ names, and the short durations a chip or a stat shows, as the glossary keeps them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/time.ts#WEEKDAY_NAMES": {
+  "status": "Retained",
+  "hash": "82bc8fd83504",
+  "on": "2026-10-19",
+  "reason": "Weekday and month names, the seasons’ names, and the short durations a chip or a stat shows, as the glossary keeps them.",
+  "first": "Reviewed And Retained"
  },
  "src/engine/decided.ts#skyFor": {
   "status": "Retained",
@@ -1889,6 +2057,20 @@
   "reason": "Names the cause, a compressed save this browser cannot open, and the one real way out, opening SLATE in an up-to-date browser.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/birthdays.ts#registerBirthdays": {
+  "status": "Retained",
+  "hash": "c10625f7529a",
+  "on": "2026-10-19",
+  "reason": "Your Birthday on the calendar, and Happy Birthday with your name and You’re 24 today: what a birthday says.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/birthdays.ts#schedule": {
+  "status": "Retained",
+  "hash": "2ebf63086756",
+  "on": "2026-10-19",
+  "reason": "Your Birthday on the calendar, and Happy Birthday with your name and You’re 24 today: what a birthday says.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/systems/life.ts#commitmentWithin": {
   "status": "Retained",
   "hash": "7048358356d0",
@@ -1980,6 +2162,41 @@
   "reason": "A key for counting the day’s workouts, stamina<workout, never shown; its words name the record, not a label.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/seasons.ts#FLU_TIMING": {
+  "status": "Retained",
+  "hash": "a452549f980a",
+  "on": "2026-10-19",
+  "reason": "The study the flu’s timing comes from, cited as its authors and journal give it, as a source line should.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/weather.ts#hourCondition": {
+  "status": "Retained",
+  "hash": "2781667bda6a",
+  "on": "2026-10-19",
+  "reason": "The weather’s conditions by the words forecasts use, Clear, Overcast, Drizzle, and the day’s line with its high and low.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/weather.ts#SHORT": {
+  "status": "Retained",
+  "hash": "2c85deb99518",
+  "on": "2026-10-19",
+  "reason": "The weather’s conditions by the words forecasts use, Clear, Overcast, Drizzle, and the day’s line with its high and low.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/weather.ts#weatherAt": {
+  "status": "Retained",
+  "hash": "7d7c1fd00b48",
+  "on": "2026-10-19",
+  "reason": "The weather’s conditions by the words forecasts use, Clear, Overcast, Drizzle, and the day’s line with its high and low.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/weather.ts#weatherOn": {
+  "status": "Retained",
+  "hash": "af3fbd3b9906",
+  "on": "2026-10-19",
+  "reason": "The weather’s conditions by the words forecasts use, Clear, Overcast, Drizzle, and the day’s line with its high and low.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/world/bootstrap.ts#createUniverse": {
   "status": "Retained",
   "hash": "4e72d5095744",
@@ -1999,6 +2216,20 @@
   "hash": "4631a6329f5d",
   "on": "2026-10-19",
   "reason": "One line of character for each family, said to the player in their own terms, before the figures that follow it in the same callout.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
+  "status": "Retained",
+  "hash": "cfc941a4f6e4",
+  "on": "2026-10-19",
+  "reason": "Each kind on the legend with what it holds on hover, the School row naming each term’s review, the glossary’s word.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/calendar.ts#skipTargets": {
+  "status": "Retained",
+  "hash": "8d9dc32d3d55",
+  "on": "2026-10-19",
+  "reason": "Says where you are and where the event is when they differ, the one fact Skip To Event needs to warn of.",
   "first": "Reviewed And Retained"
  },
  "src/engine/world/place.ts#placeKindLabel": {
@@ -2021,6 +2252,55 @@
   "on": "2026-10-19",
   "reason": "Each country’s own word for its regions’ capitals, State, Provincial, Prefectural, Cantonal, as a place’s look names them.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/world/plans.ts#ALREADY_OVER": {
+  "status": "Retained",
+  "hash": "3e4941e37232",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#checkPlan": {
+  "status": "Retained",
+  "hash": "5bc6ff20be10",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#NOT_ON_CALENDAR": {
+  "status": "Retained",
+  "hash": "fd4f5d276f59",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#PLAN_LENGTHS": {
+  "status": "Retained",
+  "hash": "d65ee042d074",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/plans.ts#registerPlans": {
+  "status": "Retained",
+  "hash": "8487281efae0",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#registerPlans <calendar.cancel>": {
+  "status": "Retained",
+  "hash": "2c6ed39b6cae",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#registerPlans <calendar.skip>": {
+  "status": "Retained",
+  "hash": "59a6d1e809c0",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
  },
  "src/engine/world/world.ts#NOT_THERE": {
   "status": "Retained",
@@ -2393,6 +2673,104 @@
   "reason": "Very high, high, ordinary or low: one plain word for an urgency out of 100, with the figure beside it.",
   "first": "Rewritten And Verified"
  },
+ "src/ui/looks/day.tsx#dayKindOf": {
+  "status": "Retained",
+  "hash": "3f3a47b725a9",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#daySentence": {
+  "status": "Retained",
+  "hash": "3d23a56af97c",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#entryDetail": {
+  "status": "Retained",
+  "hash": "4fadcb04d6a6",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#entrySentence": {
+  "status": "Retained",
+  "hash": "891603125786",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#lightDetail": {
+  "status": "Retained",
+  "hash": "549adceeed3c",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#lightSentence": {
+  "status": "Retained",
+  "hash": "0a3205f226cf",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#loadOf": {
+  "status": "Retained",
+  "hash": "f21876af1988",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#missCost": {
+  "status": "Retained",
+  "hash": "55b525d12256",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#quarterSentence": {
+  "status": "Retained",
+  "hash": "f3ba9c86a6d7",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#SEASONS": {
+  "status": "Retained",
+  "hash": "88c746e7b299",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#spokenWhen": {
+  "status": "Retained",
+  "hash": "4764b570b64a",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#STATUS_WORD": {
+  "status": "Retained",
+  "hash": "e51558ed4f3b",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#top": {
+  "status": "Retained",
+  "hash": "48b44a0462b2",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#top [observed]": {
+  "status": "Retained",
+  "hash": "837e43d3c920",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
  "src/ui/looks/Look.tsx#LookHeader": {
   "status": "Retained",
   "hash": "bbfa773e5a63",
@@ -2414,6 +2792,90 @@
   "reason": "Close on a look and its header, and where you are beside a place you stand in: plain words for the drill-down’s frame.",
   "first": "Reviewed And Retained"
  },
+ "src/ui/looks/place.tsx#clockAgainstHome": {
+  "status": "Retained",
+  "hash": "260a8f47bbb9",
+  "on": "2026-10-19",
+  "reason": "How far a place’s clock is from home’s in words, on the same clock or half an hour ahead, as a person says it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/place.tsx#latitudeLine": {
+  "status": "Retained",
+  "hash": "59cec42c98f5",
+  "on": "2026-10-19",
+  "reason": "Says what a latitude means for the light over the year in one plain clause for each band, from the polar circles to the equator.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#lightLine": {
+  "status": "Retained",
+  "hash": "4ddd98b9e081",
+  "on": "2026-10-19",
+  "reason": "The day’s light as one line beside Daylight: the sun never sets, never rises, or the hours from sunrise to sunset.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#rateLine": {
+  "status": "Retained",
+  "hash": "11f06f32227b",
+  "on": "2026-10-19",
+  "reason": "A currency’s rate said as about so much to the US dollar, estimated, as the glossary words an estimated exchange rate.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#REGION_WORD": {
+  "status": "Retained",
+  "hash": "abfdff8989b4",
+  "on": "2026-10-19",
+  "reason": "Each country’s own word for its regions, State, Province, Prefecture, Canton, as a place’s look names them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/place.tsx#regionWord": {
+  "status": "Retained",
+  "hash": "0f217179940c",
+  "on": "2026-10-19",
+  "reason": "Region, the plain fallback for a country whose word for its divisions the game doesn’t hold.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/place.tsx#spokenName": {
+  "status": "Retained",
+  "hash": "5a7bd4149d0d",
+  "on": "2026-10-19",
+  "reason": "Only the en-US locale tag for grouping digits in a place’s name, never words a player reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/place.tsx#summaryOfPlace": {
+  "status": "Retained",
+  "hash": "85975a0126a1",
+  "on": "2026-10-19",
+  "reason": "One sentence for where a place stands to you: where you live, or how far its clock is from home.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#swingLine": {
+  "status": "Retained",
+  "hash": "9a32555b5884",
+  "on": "2026-10-19",
+  "reason": "Says whether the days are getting longer or shorter, and by how many minutes a day, in a phrase a person would use.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#top": {
+  "status": "Rewritten",
+  "hash": "f25abf8aca47",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/looks-b4.txt, the looks rendered for six lives by render-looks.mjs, the Longyearbyen life's place with no tax table, and the state's source line",
+  "first": "Pending"
+ },
+ "src/ui/looks/place.tsx#yearLine": {
+  "status": "Retained",
+  "hash": "8e5ada2fef34",
+  "on": "2026-10-19",
+  "reason": "The longest and shortest days of the year in one sentence, with the midnight sun and the polar night said in words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/plans.tsx#top": {
+  "status": "Rewritten",
+  "hash": "288fff011c41",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/looks-b4.txt, the looks rendered for six lives by render-looks.mjs, under Your Own Plans and its hours",
+  "first": "Pending"
+ },
  "src/ui/looks/registry.ts#defineLook": {
   "status": "Retained",
   "hash": "78ef50f62edd",
@@ -2426,6 +2888,90 @@
   "hash": "f44a5d98177a",
   "on": "2026-10-19",
   "reason": "Developer errors for a look declared twice or parenting itself, thrown while the game is built, never shown to a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#againstNormal": {
+  "status": "Retained",
+  "hash": "bb519502cfc6",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#BAND": {
+  "status": "Retained",
+  "hash": "12c5d765a845",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#BRINGS": {
+  "status": "Retained",
+  "hash": "5ddbeec95022",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#clockWord": {
+  "status": "Retained",
+  "hash": "d4581152eee8",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#DOING": {
+  "status": "Retained",
+  "hash": "1663506e1152",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#spellSentence": {
+  "status": "Retained",
+  "hash": "b5bb974f2104",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#stretchOf": {
+  "status": "Retained",
+  "hash": "68866a1c342d",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#top": {
+  "status": "Retained",
+  "hash": "42e3b7a21a59",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#top [band]": {
+  "status": "Retained",
+  "hash": "8c4849b53707",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#weekdayAt": {
+  "status": "Retained",
+  "hash": "24345a14377f",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#WHEN_KIND": {
+  "status": "Retained",
+  "hash": "018ae60744f3",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#windOf": {
+  "status": "Retained",
+  "hash": "b3dc206d196d",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
   "first": "Reviewed And Retained"
  },
  "src/ui/saves/SaveSlots.tsx#BackupNote": {
@@ -2610,6 +3156,62 @@
   "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
   "first": "Reviewed And Retained"
  },
+ "src/ui/shell/TimeControls.tsx#AdvanceMenu": {
+  "status": "Retained",
+  "hash": "789810fc3e7d",
+  "on": "2026-10-19",
+  "reason": "Each line names where it lands, One Hour, Tonight, Tomorrow Morning, with the time beside it, and Next Event names the thing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/TimeControls.tsx#DIAL_LABEL": {
+  "status": "Retained",
+  "hash": "61e8509e7a0b",
+  "on": "2026-10-19",
+  "reason": "The eight wellbeing measures by the names How You Are gives them, so the menu’s figures match the panel’s.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/TimeControls.tsx#DueNow": {
+  "status": "Rewritten",
+  "hash": "8163eef59f71",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the stop says it needs you now, what going takes, and what a plan of your own and the world’s own each offer', both variants",
+  "first": "Pending"
+ },
+ "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
+  "status": "Retained",
+  "hash": "8ac8efdf6a2d",
+  "on": "2026-10-19",
+  "reason": "Each line gives its time, its cost and why it stands where it does, with Needed Now or Most Worth It on the first, and the toast says when it was done.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/TimeControls.tsx#MENU_FOOT": {
+  "status": "Retained",
+  "hash": "a08a4ddfa5d5",
+  "on": "2026-10-19",
+  "reason": "Layout values for the foot of a top-bar menu, padding and a border, which no player reads as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/TimeControls.tsx#SkipDialog": {
+  "status": "Retained",
+  "hash": "60a6ec4e51e0",
+  "on": "2026-10-19",
+  "reason": "Lists what the clock will stop at on the way and what else happens in order, and says why Skip is gray, with the event named on its button.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/TimeControls.tsx#SleepDialog": {
+  "status": "Retained",
+  "hash": "7dd33eebc608",
+  "on": "2026-10-19",
+  "reason": "Says when you would wake, what you would sleep through, and when a sleep stands for the night, with Sleep N Hours and Not Yet as the two buttons.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/TimeControls.tsx#TimeControls": {
+  "status": "Rewritten",
+  "hash": "f72913b743cb",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'On The Way says how many commitments the clock stops at and what each stop offers, for one and for two'",
+  "first": "Pending"
+ },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {
   "status": "Retained",
   "hash": "7725e05476ed",
@@ -2651,6 +3253,48 @@
   "on": "2026-10-19",
   "reason": "Short status words over the bar (Ready, Startup Stopped), Try Again under a failure and Before You Continue over warnings, each naming its moment; the version line is the slot card’s own.",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace": {
+  "status": "Rewritten",
+  "hash": "2557eef85ee3",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'says what the calendar holds, a clash in the next month, the legend’s kinds, and a day with nothing on it, still to come or gone'",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail": {
+  "status": "Rewritten",
+  "hash": "f39d6673b827",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g02-life.test.ts, 'PLAYER JOURNEY: a Call at 7:40 refuses a shower at 7:30 in its words; Call It Off on the Calendar takes it off the month, and the shower is taken'",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#MONTHS": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The months spelled out in full in the month picker, as the game writes every date.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#PlanForm": {
+  "status": "Rewritten",
+  "hash": "b79b5ac325d7",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g01-life.test.ts, 'PLAYER JOURNEY: the Calendar’s form puts Gym on the day where the player is; after a reload the clock stops at it and its handler keeps it'",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#statusWords": {
+  "status": "Retained",
+  "hash": "f840ac65b3e5",
+  "on": "2026-10-19",
+  "reason": "Canceled, the one status word the entry needs spelled for the screen, in American spelling.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#WEEKDAYS": {
+  "status": "Retained",
+  "hash": "acdfe17785fa",
+  "on": "2026-10-19",
+  "reason": "The three-letter weekday heads of the month grid, the short form every calendar uses.",
+  "first": "Reviewed And Retained"
  },
  "src/ui/workspaces/cell.ts#dayLabel": {
   "status": "Retained",

@@ -340,7 +340,7 @@ async function onTheWayCancelled(item) {
   const d = page.getByRole('dialog', { name: 'On The Way' }).first();
   must(await d.isVisible().catch(() => false), `no On The Way before ${item}: ${clean(await page.locator('[role=dialog]:visible').first().innerText().catch(() => 'no dialog'))}`);
   const words = clean(await d.innerText());
-  must(/passes \w+ commitments?, and the clock stops at each one\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
+  must(/passes \w+ commitments?\. The clock stops at (?:it|each one) so you can choose/.test(words), `On The Way says: ${words.slice(0, 240)}`);
   said(`On The Way: ${words.replace(/^On The Way /, '').slice(0, 400)}`);
   await press(d.getByRole('button', { name: /^Cancel$/ }).first(), 'Cancel'); await wait(600);
   must(!(await page.locator('[role=dialog]:visible').count()), 'a dialog still open after Cancel');
@@ -1190,7 +1190,7 @@ async function askedFirst(item) {
   }
   await language('On The Way');
   const words = clean(await d.innerText());
-  must(/passes \w+ commitments?, and the clock stops at each one\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
+  must(/passes \w+ commitments?\. The clock stops at (?:it|each one) so you can choose/.test(words), `On The Way says: ${words.slice(0, 240)}`);
   said(`On The Way: ${words.replace(/^On The Way /, '').slice(0, 400)}`);
   await press(d.getByRole('button', { name: /^Cancel$/ }).first(), 'Cancel'); await wait(600);
   must(!(await page.locator('[role=dialog]:visible').count()), 'a dialog still open after Cancel');

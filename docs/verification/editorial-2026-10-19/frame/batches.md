@@ -228,3 +228,69 @@ sentences), `evidence-g33-ui.test.ts` and `evidence-g32-ui.test.ts` (the tax lin
 **Checks:** tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos 0,
 text-inventory 0 once marked, doc-refs 0, deciders 0, guide-quotes 0. `npx vitest run` on the seven files that hold
 these words: 7 files, 172 tests, exit 0.
+
+## Batch 4: Moving The Clock, The Calendar, The Day's Looks, And How This Works For The Day
+
+**Sources (92, in 18 files):** `src/ui/shell/TimeControls.tsx` (8), `src/ui/workspaces/CalendarWorkspace.tsx` (6),
+`src/engine/world/plans.ts` (7), `src/ui/looks/plans.tsx` (1), `src/engine/world/calendar.ts` (2),
+`src/engine/core/time.ts` (4), `sun.ts` (1), `src/ui/looks/day.tsx` (14), `place.tsx` (11), `weather.tsx` (12),
+`src/engine/systems/weather.ts` (4), `seasons.ts` (1), `birthdays.ts` (2), `src/engine/content/holidays.ts` (1),
+`holiday-data.ts` (1), `thunder.ts` (1), `climate.ts` (1), and the six How This Works entries in
+`src/engine/content/guide/day.ts` (15).
+
+**Read whole:** moving the clock from the top bar: Advance and each line, On The Way with one commitment and two, the
+stop with Go, Stand Here and Skip It for a plan, the stop for a class or an appointment, the stop for a partner's
+rehearsal with Call It Off, Sleep with its suggestion and its warnings, Skip To Event with nothing, one and several on
+the way; the Calendar screen from the month to a day, Put Something On It and its refusals, an entry and Call It Off;
+the day, entry, place, region, country, currency, weather and plans looks for six lives (a New Haven student in the
+fall and in February, Longyearbyen at both solstices, Sydney and London); and each of the day's How This Works
+entries, through the Help dialog.
+
+**Rewritten (15):**
+- **The stop, for anything but a plan of your own:** the reference's own example, made true of every stop it shows
+  for. It shows for a class or a call, and also for an appointment or a paper visit, so it says "You can only skip a
+  plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. It happens the next time the
+  clock moves, and you’re there if you’re awake and in the right city."
+- **On The Way:** "passes one commitment. The clock stops at it so you can choose: press Go, or Stand Here to wait.
+  You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs
+  their trust."
+- **The Calendar screen:** "the public holidays where you are", "marked Clash" (the chip's own word), and "when it’s
+  time" for "when it comes round", in the plan form and an entry.
+- **How This Works for the day:** each entry's overview now leads with what the player does. The Clock starts "Press
+  Play at the top of the screen to start the clock". Moving Time On starts "Press Advance in the top bar". Your Own
+  Plans starts "To put a plan of your own on the calendar, press Open Calendar on Home". The engine's bookkeeping came
+  out where a player read it: "the world’s next look" became "within two days after that date", "the save forgets"
+  became "you can still open it", "A draw from your save’s own seed" became "A random draw, fixed for each town and day
+  in your save", and Work Out "reads" the weather became "checks". Semicolon chains became one fact to a sentence.
+- **The looks:** a place with no tax table names the figure, Tax On A Wage, not "the tile below"; a country's towns
+  "show up", not "are loaded"; Your Own Plans' source line says "marked".
+
+**Kept (77):** the plan form's refusals and notices (each names the obstacle and the next step, and three are quoted
+by the guide), the Sleep dialog, Skip To Event, the Advance and Look After Yourself menus, the calendar legend, the
+day, weather and most of the place looks (sentences true at the moment, with their figures labeled as estimated), the
+time and weather words, the source lines, and the day entries' connection lines that already read plainly.
+
+**Meaning-sensitive, and how each was checked:**
+- **"There’s no Skip It button here."** `DueNow` shows Skip It only where `item.kind === PLAN_KIND`, and Call It Off
+  only for `PARTNER_KIND`; this line shows for neither.
+- **"It happens the next time the clock moves."** Stand Here closes the dialog without running the item; the next
+  advance runs it with the player present if `present` finds them awake and in its city.
+- **"Within two days after that date".** `expireDecisions` at the two-day world tick.
+- **"A night is only slept for you on a move of more than an hour."** `MAX_STEP_MS` (30 minutes) for the live clock;
+  the coasting night is for a jump over an hour (`COASTING_*`, `systems/life.ts`).
+- **"Yale Health’s assessment is the only commitment you can be at from a hospital bed."** The entry's own header
+  records it, from `systems/leave.ts`.
+
+**Tests and tool matchers updated** (each as exact as before; no title changed): `tests/language-frame-ui.test.ts`
+(On The Way for one and two, the stop for a plan and for a visit, the Calendar's subtitle),
+`evidence-g01-life.test.ts` (the plan form), `evidence-g02-life.test.ts` (an entry), `defects3-50-70.test.ts` (What
+Needs You's later lines); `tools/playthroughs-ui.mjs`'s two On The Way checks, `/passes \w+ commitments?\. The clock
+stops at (?:it|each one) so you can choose/` for `/passes \w+ commitments?, and the clock stops at each one\./`.
+
+**Evidence:** `help-b4.txt` (the six day entries through the Help dialog, by `render-help.mjs`) and `looks-b4.txt` (the
+looks for six lives, by brief 14's `../../language-2026-10-17/frame/render-looks.mjs`).
+
+**Checks:** tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0 (after one fix: a
+sentence of the calendar entry opened on "Nothing"), spelling 0, typos 0, text-inventory 0 once marked, doc-refs 0,
+deciders 0, guide-quotes 0. `npx vitest run` on the 19 files that hold these words: 19 files, 260 tests, exit 0.
+

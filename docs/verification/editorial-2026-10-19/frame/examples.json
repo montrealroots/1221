@@ -376,5 +376,95 @@
   "why": "Two passives and a semicolon became one sentence that names the button.",
   "meaningSensitive": true,
   "verified": "help-b2.txt; tutorial.read refuses a chapter that isn't the next (world/tutorial.ts)"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#DueNow",
+  "kind": "dialog",
+  "before": "Only a plan of your own can be skipped. Go, or press Stand Here and the clock waits. Whatever moves the clock next runs this, with you there if you’re awake and in the right city.",
+  "after": "You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. It happens the next time the clock moves, and you’re there if you’re awake and in the right city.",
+  "why": "The reference's own row, adapted: this dialog shows for a class or a call and also for an appointment or a paper visit, so it says 'a plan of your own' rather than 'school events', and names the button that isn't there.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'the stop says it needs you now…', for a plan and for a passport office visit; DueNow shows Skip It only where item.kind is PLAN_KIND"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#TimeControls",
+  "kind": "confirmation",
+  "before": "Moving the clock to One Week (October 26, 2026 at 6:00 PM) passes one commitment, and the clock stops at each one. At each, you can go, or press Stand Here and the clock waits. A plan of your own can also be skipped, and a rehearsal with a partner called off, though at short notice that costs their trust.",
+  "after": "Moving the clock to One Week (October 26, 2026 at 6:00 PM) passes one commitment. The clock stops at it so you can choose: press Go, or Stand Here to wait. You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust. (Two: The clock stops at each one so you can choose…)",
+  "why": "'Stops at each one' after 'one commitment' read oddly; the buttons are named, and the passives became the player's choices.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'On The Way says how many commitments the clock stops at…', one and two; tools/playthroughs-ui.mjs's On The Way check moved with it"
+ },
+ {
+  "source": "src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace",
+  "kind": "heading",
+  "before": "Everything on your calendar, and the holidays kept where you are. When two things you need to be at overlap, they’re flagged here as a clash.",
+  "after": "Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.",
+  "why": "The chip's own word, Clash, and 'public holidays' for 'holidays kept'.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says what the calendar holds, a clash in the next month…'"
+ },
+ {
+  "source": "src/ui/workspaces/CalendarWorkspace.tsx#PlanForm",
+  "kind": "label",
+  "before": "You’ll need to be in New Haven for it, and the clock stops when it comes round. Two things at the same time are allowed, and the calendar flags the clash.",
+  "after": "You’ll need to be in New Haven for it, and the clock stops when it’s time. You can have two things at the same time, and the calendar marks the clash.",
+  "why": "'Comes round' is British; the second sentence becomes something the player can do.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g01-life.test.ts, the Gym journey"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.clock]",
+  "kind": "tutorial",
+  "before": "The clock at the top runs one to one with real time: a minute of yours is a minute of your character’s. Play starts it and Pause stops it. … It holds while the guide or this help is open.",
+  "after": "Press Play at the top of the screen to start the clock, and Pause to stop it. While it runs, a minute passes in the game for every real minute: you get tired and hungry, what’s on your calendar happens, and the clock pauses itself at each commitment. It waits while the guide or this help is open.",
+  "why": "The first action first, as the brief asks of every How This Works overview; 'the clock waits' is the glossary's word.",
+  "meaningSensitive": false,
+  "verified": "help-b4.txt, drawn through the Help dialog"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.needs]",
+  "kind": "tutorial",
+  "before": "Every question has a date, and closes on it, answered or not, at the world’s next look, which comes every 2 days. / The save forgets a closed question 180 days after it closed, and keeps your last 500 notices.",
+  "after": "Every question has a date. If you don’t answer it, it closes by itself within two days after that date. / You can still open a closed question for 180 days after it closes, and SLATE keeps your latest 500 notices.",
+  "why": "'The world's next look' and 'the save forgets' were the engine; the same facts, said as what the player sees, match the question look's words (batch 3).",
+  "meaningSensitive": true,
+  "verified": "help-b4.txt, drawn through the Help dialog; tests/defects3-50-70.test.ts holds both lines; expireDecisions at the two-day world tick, FORGOTTEN_AFTER_DAYS 180, NOTICES_KEPT 500"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.calendar]",
+  "kind": "tutorial",
+  "before": "To be counted there, you have to be awake, out of hospital and in the commitment’s town when it runs; only Yale Health’s assessment counts a hospital bed as there. … No move in the game takes you out of your town, and a plan names the town you made it in.",
+  "after": "To count as there, you need to be awake, out of hospital and in the commitment’s town when it runs. Yale Health’s assessment is the only commitment you can be at from a hospital bed. … The game never moves you to another town, and a plan is in the town where you made it.",
+  "why": "A semicolon chain became one fact to a sentence; the exception said as what it means for the player.",
+  "meaningSensitive": true,
+  "verified": "help-b4.txt, drawn through the Help dialog; present() in systems/school.ts and systems/health.ts, and the assessment's own check in systems/leave.ts, as the entry's header comment records"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.weather]",
+  "kind": "tutorial",
+  "before": "… It’s calculated from the town’s climate, its season and the day’s own luck, so it’s the same every time you look. One thing in the game reads it: whether a workout is a run. / Work Out reads the weather as its hour ends.",
+  "after": "… The weather changes one thing in the game: whether a workout is a run. It’s worked out from your town’s climate, the season and a little chance, so it’s the same every time you look. / Work Out checks the weather as its hour ends.",
+  "why": "What it changes leads; 'reads' was the engine's verb for a rule taking an input.",
+  "meaningSensitive": false,
+  "verified": "help-b4.txt, drawn through the Help dialog"
+ },
+ {
+  "source": "src/ui/looks/place.tsx#top",
+  "kind": "other",
+  "before": "The game has no income tax table for Svalbard and Jan Mayen, so the tile below says Not On File instead of showing a zero. / A country’s towns are loaded once your life has a place in it.",
+  "after": "The game has no income tax table for Svalbard and Jan Mayen, so Tax On A Wage says Not On File rather than zero. / A country’s towns show up once your life has a place in it.",
+  "why": "The figure named by its label, not 'the tile below'; 'loaded' was the browser's word.",
+  "meaningSensitive": false,
+  "verified": "looks-b4.txt, the Longyearbyen life and the state's source line"
+ },
+ {
+  "source": "src/ui/looks/plans.tsx#top",
+  "kind": "label",
+  "before": "Your plans are ordinary items on the calendar, so the clock stops at them and a clash is flagged.",
+  "after": "Your plans are ordinary calendar items: the clock stops at them, and a clash is marked.",
+  "why": "Marked, as the Calendar screen now says it.",
+  "meaningSensitive": false,
+  "verified": "looks-b4.txt, Your Own Plans"
  }
 ]

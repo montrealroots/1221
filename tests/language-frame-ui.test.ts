@@ -157,7 +157,7 @@ describe('the top bar’s dialogs', () => {
     press(button(/^One Week/));
     let said = dialog(drawn(sim, TimeControls).html, 'On The Way');
     const week = sim.now + 7 * MS_DAY;
-    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment, and the clock stops at each one. At each, you can go, or press Stand Here and the clock waits. A plan of your own can also be skipped, and a rehearsal with a partner called off, though at short notice that costs their trust.`);
+    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment. The clock stops at it so you can choose: press Go, or Stand Here to wait. You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust.`);
     expect(said).toMatch(/Dinner — /);
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: sim.now + 40 * MS_HOUR, durationMinutes: 60 } });
     h.given = new Map();
@@ -166,7 +166,7 @@ describe('the top bar’s dialogs', () => {
     drawn(sim, TimeControls);
     press(button(/^One Week/));
     said = dialog(drawn(sim, TimeControls).html, 'On The Way');
-    expect(said).toContain('passes two commitments, and the clock stops at each one.');
+    expect(said).toContain('passes two commitments. The clock stops at each one so you can choose: press Go, or Stand Here to wait.');
     expect(h.buttons.map((b) => b.text)).toEqual(expect.arrayContaining(['Cancel', 'Advance']));
   });
 
@@ -180,7 +180,7 @@ describe('the top bar’s dialogs', () => {
     let said = dialog(shown.html, 'Dinner');
     expect(said).toContain(`It’s ${formatTime(at, sim.zone)} on ${formatDate(at, sim.zone)}, and this needs you now. Going takes 1 hour, and the clock moves on to ${formatDateTime(at + 3 * MS_HOUR, sim.zone)}.`);
     expect(h.buttons.map((b) => b.text)).toEqual(expect.arrayContaining(['Stand Here', 'Skip It', 'Go']));
-    expect(said).not.toContain('Only a plan of your own can be skipped.');
+    expect(said).not.toContain('You can only skip a plan of your own');
 
     // An appointment's kind of stop, the world's own: nothing to skip. TEST SETUP: an item that wants the player, as a
     // paper visit or a doctor's appointment does.
@@ -197,7 +197,7 @@ describe('the top bar’s dialogs', () => {
     shown = drawn(other, TimeControls);
     said = dialog(shown.html, 'A Visit To The Passport Office');
     expect(said).toContain('Going takes 30 minutes');
-    expect(said).toContain('Only a plan of your own can be skipped. Go, or press Stand Here and the clock waits. Whatever moves the clock next runs this, with you there if you’re awake and in the right city.');
+    expect(said).toContain('You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. It happens the next time the clock moves, and you’re there if you’re awake and in the right city.');
     expect(h.buttons.map((b) => b.text)).not.toContain('Skip It');
     expect(said).not.toContain('The school’s');
   });
@@ -469,7 +469,7 @@ describe('the Calendar screen', () => {
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at, durationMinutes: 60 } });
 
     const first = drawn(sim, CalendarWorkspace);
-    expect(first.text).toContain('Calendar Your Plans And Commitments Everything on your calendar, and the holidays kept where you are. When two things you need to be at overlap, they’re flagged here as a clash.');
+    expect(first.text).toContain('Calendar Your Plans And Commitments Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.');
     expect(first.text).toContain('A clash in the next month.');
     // The legend's kinds, each with what it holds on hover; the World row, whose items are never drawn, isn't shown.
     expect(first.html).toContain('title="Your own plans, and your birthday, appointments and tax dates."');
