@@ -127,18 +127,36 @@ def ui_exit(name):
     return int(m.group(1)) if m else None
 # The brief's eight journeys (section 11), each with the runs on the tested commit that press it at both widths.
 JOURNEYS = [
-    ('New-player onboarding', ['ui-normal-1440', 'ui-normal-390', 'acceptance-1440', 'acceptance-390'], 'the normal playthrough from creation, and the acceptance run’s fifteen saves; the tutorial’s chapters followed on the build (tutorial/follow-1440, follow-390)'),
+    ('New-player onboarding', ['ui-normal-1440', 'ui-normal-390', 'acceptance-1440', 'acceptance-390'], 'the normal playthrough and the acceptance run, each from the empty slots through creation, the guide and the first days; the guide’s chapters followed on the build (final-follow/)'),
     ('School: preparation, a showing, feedback, improvement', ['ui-normal-1440', 'ui-normal-390'], 'the normal playthrough: a term’s coursework, its showings and the notes after'),
-    ('Attributes, genres, interpretation and advice', ['ui-specialist-1440', 'ui-specialist-390'], 'the specialist playthrough: practice, a brief taped, the Profile’s advice'),
-    ('A setback and recovery', ['ui-setback-1440', 'ui-setback-390'], 'the setback playthrough: an injury, time off, coming back'),
-    ('Banking with a restriction or a pending state', ['ui-banking-1440', 'ui-banking-390'], 'brief 14’s banking journey: round-ups short, a refusal, pending payments'),
-    ('Papers and a document on its way', ['ui-document-1440', 'ui-document-390'], 'brief 14’s document journey: a passport applied for and waited on'),
-    ('A health interruption', ['ui-health-1440', 'ui-health-390'], 'brief 14’s health journey: unwell on a class day, a doctor booked'),
-    ('Saving, exiting and continuing', ['acceptance-1440', 'acceptance-390'], 'the acceptance run opens each of fifteen saves from its slot and reads it; the review route’s last step asks the owner to do it by hand'),
+    ('Attributes, genres, interpretation and advice', ['ui-specialist-1440', 'ui-specialist-390'], 'the specialist playthrough: the Profile’s strengths, a Nordic Noir brief prepared, a reading chosen and taped, the advice followed, taped again'),
+    ('A setback and recovery', ['ui-setback-1440', 'ui-setback-390'], 'the setback playthrough: the term’s coursework warning, the scene it names short of its partner part, a reader, and the scene shown Working'),
+    ('Banking with a restriction or a pending state', ['ui-banking-1440', 'ui-banking-390'], 'brief 14’s banking journey: a transfer refused for more than the account holds, money moved, a card payment pending, the statement once it posts'),
+    ('Papers and a document on its way', ['ui-document-1440', 'ui-document-390'], 'brief 14’s document journey: a Connecticut ID card applied for, refused again while it’s on its way, then held'),
+    ('A health interruption', ['ui-health-1440', 'ui-health-390'], 'brief 14’s health journey: an injury, Work Out and a class’s step refused for it, its care and cost, the days it mends'),
+    ('Saving, exiting and continuing', ['ui-normal-1440', 'ui-normal-390', 'ui-specialist-1440', 'ui-specialist-390', 'acceptance-1440', 'acceptance-390'], 'every playthrough ends with Save & Exit and Continue, and checks the same moment came back (all but setback also ask Delete and keep the slot); the acceptance run continues twelve of the saves from their slot, and saves and continues with an ID card on its way; the review route asks the owner to do it by hand'),
 ]
 journeys = [(name, {s: ui_exit(s) for s in steps}, how) for name, steps, how in JOURNEYS]
+# A run that didn't exit 0: its failed steps from its trace, and the defect left that accounts for it, as brief 14's
+# receipt did. Banking's step 8 is brief 14's `journeys-3` (the engine's week planning, not its words), left there for
+# the owner and unchanged by brief 15. It's named here and checked against brief 14's index and the step's own words, so
+# a run failing for any other reason, or that defect fixed, fails it.
+FAILS_LEFT = {'ui-banking': ('journeys-3', 8, 'One Week wasn’t asked first')}
+d14 = {e['id']: e for e in (load(f'{B14}/defects.json', {}) or {}).get('entries', [])}
+accounted = {}
 for name, ex, _ in journeys:
-    if any(v != 0 for v in ex.values()): problems.append(f'the journey “{name}”: ' + ', '.join(f'{k} {"not run" if v is None else f"exit {v}"}' for k, v in ex.items() if v != 0))
+    for k, v in ex.items():
+        if v == 0 or v is None: continue
+        run = k.rsplit('-', 1)[0]
+        tr = load(f"{B}/{'interface-final' if run in ('ui-normal', 'ui-setback', 'ui-specialist') else 'journeys14-final'}/{k[3:]}/trace.json", {})
+        failed = [s for s in tr.get('steps', []) if not s.get('ok')]
+        left = FAILS_LEFT.get(run)
+        d = d14.get(left[0]) if left else None
+        if d and d.get('status') == 'left' and [s['n'] for s in failed] == [left[1]] and left[2] in (failed[0].get('why') or ''):
+            accounted[k] = (failed[0], d)
+for name, ex, _ in journeys:
+    bad = {k: v for k, v in ex.items() if v != 0 and k not in accounted}
+    if bad: problems.append(f'the journey “{name}”: ' + ', '.join(f'{k} {"not run" if v is None else f"exit {v}"}' for k, v in bad.items()))
 follow = {w: read(f'{B}/final-follow/follow-{w}.log') for w in ('1440', '390')}
 follow_exit = {w: exit_of(f'{B}/final-follow/follow-{w}-exit.txt') for w in ('1440', '390')}
 for w, e in follow_exit.items():
@@ -188,7 +206,7 @@ w(f"Written by `receipt.py` from the pass's records on `{receipt['commit']}`, no
   "crossed areas is `coordinator.md`; the reading of all ten areas together is `crossarea.md`.")
 w('')
 w('**What this is and isn’t.** Every number here is a count a tool made or a test checked. The journeys pressed the controls a player '
-  'presses at 1440 and 390 wide, and the walk read every screen on fifteen saves. A green check is no proof of good prose (section 10), '
+  'presses at 1440 and 390 wide, and the walk read Home, every destination the rail lists and every tab behind each, on fifteen saves. A green check is no proof of good prose (section 10), '
   'and nothing here is human usability approval: the review route, `PLAYTEST.md`, is for the owner’s ear, and only the owner can give it.')
 w('')
 w('## 1. The Second-Pass Inventory, Every Source Accounted For')
@@ -288,6 +306,15 @@ w('The brief’s eight journeys, each with the runs on the tested commit that pr
 w('')
 w(table(['Journey', 'Runs', 'How'], [[n, ', '.join(f'{k} {"not run" if v is None else v}' for k, v in e.items()), h] for n, e, h in journeys]))
 w('')
+for k, (st, d) in accounted.items():
+    w(f"- {k}, step {st['n']} failed: {cut(st.get('why') or st['name'], 300)} That is brief 14's `{d['id']}`, left for the owner: {cut(d.get('title', ''), 200)}")
+if accounted: w('')
+first = sorted(glob.glob(f'{B}/runs/first/exits-*.txt'))
+if first:
+    w('Every lane ran first on `c3478f9e`. The engine’s lanes all exited 0 there; lanes A and UI failed on matchers that looked for '
+      'words brief 15 changed, steps after them, and one wall of text, which the game now fixes (`uitools/README.md`). Those runs are '
+      'kept in `runs/first/`, and every lane ran again on the commit the table above names.')
+    w('')
 w('**Routes not exercised by a run.** Dialogs and states no save reaches are read in the code (the inventory) and by the areas’ renders, not '
   'on the build. No run plays a whole degree on the build: brief 13’s twenty-five journeys play it in the engine (`journeys-final/`). The '
   'built app is checked in Chromium alone. Whether the voice is natural is the owner’s to judge.')
