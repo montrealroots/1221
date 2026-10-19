@@ -1,0 +1,1318 @@
+[
+ {
+  "export": "FRAUD_LAW",
+  "key": "US",
+  "field": "debitWords",
+  "before": "Under the Electronic Fund Transfer Act's Regulation E, 12 CFR 1005.6(b), a consumer who reports a lost or stolen debit card within two business days of learning of it owes at most the lesser of $50 or the transfers made before notice; after two business days the cap rises to $500. Transfers shown on a periodic statement that aren't reported within 60 days of the statement being sent carry unlimited liability for transfers after that 60-day window. The 2- and 60-day clocks run from different starts: learning of the loss, and the statement's transmittal.",
+  "after": "If you report a lost or stolen debit card within two business days of finding out, you pay at most $50 of what was taken before you told the bank. After two business days, the most you pay rises to $500. And if a payment you didn’t make is on a statement and you don’t report it within 60 days of the statement being sent, you can be made to pay all of what’s taken after those 60 days. The two days start when you find out; the 60 days start when the statement is sent. This is Regulation E, 12 CFR 1005.6(b), under the Electronic Fund Transfer Act."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "US",
+  "field": "creditWords",
+  "before": "Truth in Lending Act, Regulation Z, 12 CFR 1026.12(b)(1)(ii): a cardholder's liability for unauthorized credit card use is capped at the lesser of $50 or the amount obtained before the card issuer is notified.",
+  "after": "If someone uses your credit card without your permission, you pay at most $50, or less if less was spent before you told the card’s issuer. This is the Truth in Lending Act’s Regulation Z, 12 CFR 1026.12(b)(1)(ii)."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "US",
+  "field": "refundWords",
+  "before": "Regulation E, 12 CFR 1005.11: the bank must decide within 10 business days (20 for a new account's first 30 days); if it takes longer it must provisionally credit the account within 10 business days and may take up to 45 days, or 90 days for point-of-sale debit card, out-of-state or new-account transfers. Results go to the consumer within 3 business days of finishing.",
+  "after": "The bank has 10 business days to decide, or 20 for a payment in a new account’s first 30 days. If it needs longer, it must put the money back in your account for now within those 10 business days, and it can then take up to 45 days, or 90 for a debit card purchase, a payment made from outside the US or one on a new account. It tells you the result within 3 business days of deciding. This is Regulation E, 12 CFR 1005.11."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "CA",
+  "field": "debitWords",
+  "before": "Debit cards fall under the voluntary Canadian Code of Practice for Consumer Debit Card Services (section 5): the cardholder isn't liable for losses from circumstances beyond their control, including being the victim of fraud, theft or coercion, technical failures, and use after the card is reported lost or stolen. A cardholder who contributed (for example by voluntarily sharing a PIN or not reporting in reasonable time) can be liable, but no more than the card's withdrawal limits, and more only where overdraft or a linked credit line is attached. There’s no statutory dollar cap for debit.",
+  "after": "You don’t pay for losses you couldn’t control: fraud, theft or being forced to use the card, a technical failure, or use after you reported the card lost or stolen. If you contributed to the loss, say by choosing to share your PIN or by not reporting it in reasonable time, you can be made to pay, but no more than the card’s withdrawal limits, unless an overdraft or a linked credit line is attached. No law sets a dollar limit for debit cards: this is the voluntary Canadian Code of Practice for Consumer Debit Card Services, section 5."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "CA",
+  "field": "creditWords",
+  "before": "Bank Act, S.C. 1991, c. 46, s. 627.33: a borrower's maximum liability for unauthorized use of a credit card issued in Canada is $50 unless they showed gross negligence (gross fault in Quebec), and nothing after they report the card lost, stolen or at risk. Use of the PIN alone doesn't prove gross negligence. For non-bank federally regulated issuers, FCAC says the cap is the lesser of $50 or the agreement's amount.",
+  "after": "If someone uses your credit card without your permission, you pay at most C$50, unless you were grossly negligent (gross fault, in Quebec), and nothing after you report the card lost, stolen or at risk. A payment made with your PIN doesn’t prove gross negligence on its own. For card issuers that aren’t banks but are federally regulated, the FCAC says the limit is C$50 or the amount in your agreement, whichever is less. This is the Bank Act, S.C. 1991, c. 46, s. 627.33."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "CA",
+  "field": "refundWords",
+  "before": "Debit Card Code of Practice: the issuer must respond to a report of an unauthorized transaction as soon as possible and in no more than 10 business days, a limit it can pause while waiting for a signed statement or affidavit. No statutory refund deadline is set for credit cards.",
+  "after": "Under the Debit Card Code of Practice, the bank must answer your report of a payment you didn’t make as soon as it can, within 10 business days, though it can stop that clock while it waits for a signed statement or affidavit from you. No law sets a deadline to refund a credit card payment."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "MX",
+  "field": "debitWords",
+  "before": "Banco de México's card rules, in force since 2019 as CONDUSEF describes them, require a bank told of unrecognized charges to credit the account by the second banking business day for transactions made in the 48 hours before the report. Older charges go through the general dispute (aclaración) process of Article 23 of the Ley para la Transparencia y Ordenamiento de los Servicios Financieros, which sets no peso cap on the customer's loss.",
+  "after": "Report charges you don’t recognize, and the bank must put back any made in the 48 hours before your report by the second banking business day. Older charges go through the general dispute process (aclaración) under Article 23 of the Ley para la Transparencia y Ordenamiento de los Servicios Financieros, which sets no limit in pesos on what you can lose. These are Banco de México’s card rules, in force since 2019, as CONDUSEF describes them."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "MX",
+  "field": "creditWords",
+  "before": "No statutory peso cap found. The same Banco de México rules (48-hour window, credit by the second business day) apply to credit cards, and under Article 23 of the Ley para la Transparencia y Ordenamiento de los Servicios Financieros a cardholder may withhold payment of a disputed charge, without interest or late fees and without being reported to a credit bureau, until the claim is resolved.",
+  "after": "No law was found that limits what you pay, in pesos. The same Banco de México rules apply to credit cards: charges from the 48 hours before your report are put back by the second business day. Under Article 23 of the Ley para la Transparencia y Ordenamiento de los Servicios Financieros, you can hold back payment of a disputed charge until your claim is settled, with no interest or late fee and without being reported to a credit bureau."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "MX",
+  "field": "refundWords",
+  "before": "Charges from the 48 hours before the report are credited by the second banking business day (Banco de México rules, per CONDUSEF). Under Article 23 LTOSF the institution must answer a dispute within 45 days, or 180 days for foreign transactions; CONDUSEF says an unanswered claim is treated as resolved in the customer's favor.",
+  "after": "Charges from the 48 hours before your report come back by the second banking business day (Banco de México’s rules, as CONDUSEF describes them). For other disputes, the bank must answer within 45 days, or 180 for a payment abroad, under Article 23 of the LTOSF. CONDUSEF says a claim left unanswered is settled in your favor."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "GB",
+  "field": "debitWords",
+  "before": "Payment Services Regulations 2017, reg. 77: the payer can be made to bear up to £35 of losses from a lost, stolen or misappropriated payment instrument, but nothing if the loss wasn't detectable before the payment, was caused by the provider's staff or agents, happened after notification, or strong customer authentication was required and not applied. A payer who acted fraudulently or failed their obligations with intent or gross negligence bears all the losses.",
+  "after": "You can be made to pay up to £35 of what’s lost on a lost, stolen or misused card, and nothing if you couldn’t have noticed the loss before the payment, if the bank’s staff or agents caused it, if it happened after you told the bank, or if the bank didn’t apply strong customer authentication (a second check, such as a code sent to your phone) where it was required. If you acted fraudulently, or broke your obligations on purpose or through gross negligence, you pay all of it. This is the Payment Services Regulations 2017, reg. 77."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "GB",
+  "field": "creditWords",
+  "before": "Consumer Credit Act 1974, s. 84(1): a debtor under a credit-token (credit card) agreement can be made liable for misuse only up to £35, or the credit limit if lower, and s. 84(3) ends even that once the issuer has been told the card is lost or stolen. The PSRs 2017 reg. 77 cap of £35 also applies to cards as payment instruments.",
+  "after": "If your credit card is misused, you can be made to pay at most £35, or your credit limit if that’s lower, and nothing once you’ve told the card’s issuer it’s lost or stolen (Consumer Credit Act 1974, s. 84(1) and (3)). The same £35 limit in the Payment Services Regulations 2017, reg. 77, covers cards too."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "GB",
+  "field": "refundWords",
+  "before": "PSRs 2017, reg. 76: the provider must refund as soon as practicable and no later than the end of the business day after it becomes aware of the unauthorized transaction, unless it has reasonable grounds to suspect the customer of fraud and notifies the authorities under the Proceeds of Crime Act 2002.",
+  "after": "Your bank must refund you as soon as it can, and by the end of the next business day after it learns of the payment, unless it has reasonable grounds to suspect you of fraud and reports it to the authorities under the Proceeds of Crime Act 2002. This is the Payment Services Regulations 2017, reg. 76."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "IE",
+  "field": "debitWords",
+  "before": "European Union (Payment Services) Regulations 2018 (S.I. No. 6 of 2018), reg. 98, transposing PSD2 Art. 74: the payer bears up to €50 of losses from a lost, stolen or misappropriated payment instrument, but nothing if the loss wasn't detectable before the payment, was caused by the provider's staff or agents, or strong customer authentication wasn't required. Fraud, or intentional or grossly negligent breach of the payer's obligations under reg. 93, removes the cap.",
+  "after": "You pay up to €50 of what’s lost on a lost, stolen or misused card, and nothing if you couldn’t have noticed the loss before the payment, if the bank’s staff or agents caused it, or if the bank didn’t ask for strong customer authentication (a second check, such as a code sent to your phone). If you acted fraudulently, or broke your obligations under reg. 93 on purpose or through gross negligence, there’s no limit. This is the European Union (Payment Services) Regulations 2018 (S.I. No. 6 of 2018), reg. 98, which brings in Article 74 of the EU’s PSD2."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "IE",
+  "field": "creditWords",
+  "before": "The same S.I. 6/2018 reg. 98 €50 cap covers credit cards, as they are payment instruments under PSD2.",
+  "after": "The same €50 limit covers credit cards, since they’re payment instruments under PSD2 (S.I. 6/2018, reg. 98)."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "IE",
+  "field": "refundWords",
+  "before": "S.I. 6/2018, reg. 97(1): refund immediately and no later than the end of the business day after the provider notes or is notified of the transaction, unless it has reasonable grounds to suspect fraud and communicates them to the Central Bank.",
+  "after": "Your bank must refund you at once, and by the end of the next business day after it notices the payment or is told of it, unless it has reasonable grounds to suspect fraud and gives them to the Central Bank (S.I. 6/2018, reg. 97(1))."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "IS",
+  "field": "debitWords",
+  "before": "Lög um greiðsluþjónustu nr. 114/2021 (Payment Services Act), art. 80, Iceland's PSD2 transposition: the payer bears losses up to the equivalent of €50 in krónur, at the official mid-rate, from a lost, stolen or misused payment instrument, but nothing if they couldn't have noticed the loss, the provider's staff caused it, it happened after notice, or strong customer authentication wasn't required. Fraud, or intentional or grossly negligent breach of the art. 75 duties, removes the cap.",
+  "after": "You pay up to the value of €50 in krónur, at the official mid-rate, of what’s lost on a lost, stolen or misused card, and nothing if you couldn’t have noticed the loss, the bank’s staff caused it, it happened after you told the bank, or the bank didn’t ask for strong customer authentication (a second check, such as a code sent to your phone). If you acted fraudulently, or broke your duties under art. 75 on purpose or through gross negligence, there’s no limit. This is Iceland’s Payment Services Act, Lög um greiðsluþjónustu nr. 114/2021, art. 80, which brings in PSD2."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "IS",
+  "field": "creditWords",
+  "before": "Art. 80 of Act 114/2021 applies to any payment instrument, credit cards included: up to the ISK equivalent of €50.",
+  "after": "The same limit, the value of €50 in krónur, covers credit cards too: art. 80 of Act 114/2021 applies to any payment instrument."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "IS",
+  "field": "refundWords",
+  "before": "Act 114/2021, art. 79: refund at once and no later than the end of the next business day after discovery or notice; a provider suspecting fraud may refuse and must report it to the Financial Supervisory Authority.",
+  "after": "Your bank must refund you at once, and by the end of the next business day after it finds out or is told. A bank that suspects fraud may refuse, and must report it to the Financial Supervisory Authority (Act 114/2021, art. 79)."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "FR",
+  "field": "debitWords",
+  "before": "Code monétaire et financier, art. L133-19: before notice, the payer bears losses from a lost or stolen instrument up to €50, but nothing if the transaction was made without the personalized security data, the loss wasn't detectable, the provider's staff caused it, the card was used remotely without the payer's knowledge, it was counterfeited while in their possession, or strong authentication wasn't required. Fraud, or intentional or grossly negligent breach of arts. L133-16 and L133-17, makes the payer bear all losses.",
+  "after": "Until you tell the bank, you pay up to €50 of what’s lost on a lost or stolen card, and nothing if the payment was made without your PIN or other security details, you couldn’t have noticed the loss, the bank’s staff caused it, the card was used remotely without your knowledge, it was copied while you still had it, or the bank didn’t ask for strong authentication. If you acted fraudulently, or broke your obligations under articles L133-16 and L133-17 on purpose or through gross negligence, you pay all of it. This is the Code monétaire et financier, art. L133-19."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "FR",
+  "field": "creditWords",
+  "before": "Art. L133-19 CMF covers every payment instrument, credit cards included: €50 cap on the same terms.",
+  "after": "The same €50 limit, on the same terms, covers credit cards: art. L133-19 of the Code monétaire et financier applies to every payment instrument."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "FR",
+  "field": "refundWords",
+  "before": "Code monétaire et financier, art. L133-18: refund at the latest by the end of the first business day after the provider learns of the unauthorized transaction.",
+  "after": "Your bank must refund you by the end of the first business day after it learns of the payment (Code monétaire et financier, art. L133-18)."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "DE",
+  "field": "debitWords",
+  "before": "Bürgerliches Gesetzbuch (BGB) §675v: the payment provider can claim up to €50 for losses from a lost, stolen or misused payment instrument, but nothing if the payer couldn't have noticed the loss, the provider's staff caused it, or the provider didn't require strong customer authentication. Fraudulent intent, or intentional or grossly negligent breach of §675l duties, makes the payer liable for the whole loss.",
+  "after": "Your bank can make you pay up to €50 of what’s lost on a lost, stolen or misused card, and nothing if you couldn’t have noticed the loss, the bank’s staff caused it, or the bank didn’t ask for strong customer authentication (a second check, such as a code sent to your phone). If you acted fraudulently, or broke your duties under §675l on purpose or through gross negligence, you pay all of it. This is the Bürgerliches Gesetzbuch (BGB), §675v."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "DE",
+  "field": "creditWords",
+  "before": "BGB §675v applies to every payment instrument (Zahlungsinstrument), credit cards included: €50 on the same terms.",
+  "after": "The same €50 limit, on the same terms, covers credit cards: BGB §675v applies to every payment instrument (Zahlungsinstrument)."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "DE",
+  "field": "refundWords",
+  "before": "BGB §675u: refund without delay, at the latest by the end of the business day after the day the provider was told of or learned about the unauthorized transaction.",
+  "after": "Your bank must refund you without delay, and by the end of the business day after it’s told of the payment or learns of it (BGB §675u)."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "ES",
+  "field": "debitWords",
+  "before": "Real Decreto-ley 19/2018, art. 46: the payer can be made to bear up to €50 of losses from a lost, stolen or misappropriated instrument, but nothing if the loss wasn't detectable or the provider's staff caused it, and nothing for card-not-present use of only the data printed on the card, for use after notice, or where strong customer authentication wasn't required. Fraud, or intentional or grossly negligent breach of art. 41 duties, removes the cap.",
+  "after": "You can be made to pay up to €50 of what’s lost on a lost, stolen or misused card, and nothing if you couldn’t have noticed the loss or the bank’s staff caused it. You also pay nothing for online or phone payments made with only the details printed on the card, for anything after you told the bank, or where the bank didn’t ask for strong customer authentication (a second check, such as a code sent to your phone). If you acted fraudulently, or broke your duties under art. 41 on purpose or through gross negligence, there’s no limit. This is Real Decreto-ley 19/2018, art. 46."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "ES",
+  "field": "creditWords",
+  "before": "RDL 19/2018 art. 46 covers every payment instrument, credit cards included: €50 on the same terms.",
+  "after": "The same €50 limit, on the same terms, covers credit cards: art. 46 of RDL 19/2018 applies to every payment instrument."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "ES",
+  "field": "refundWords",
+  "before": "RDL 19/2018, art. 45: refund immediately and at the latest by the end of the business day after the transaction is noticed or notified, unless the provider has reasonable grounds to suspect fraud and tells the Bank of Spain in writing.",
+  "after": "Your bank must refund you at once, and by the end of the business day after it notices the payment or is told of it, unless it has reasonable grounds to suspect fraud and tells the Bank of Spain in writing (RDL 19/2018, art. 45)."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "JP",
+  "field": "debitWords",
+  "before": "No law caps debit card purchase losses. The Depositor Protection Act (Act No. 94 of 2005) covers only ATM withdrawals with forged or stolen cash cards: forged-card withdrawals are void unless the depositor acted intentionally or with gross negligence (art. 4); for a stolen card the bank must repay withdrawals made from 30 days before the depositor's prompt notice (art. 5), in full, or three quarters if the bank proves ordinary negligence, and nothing for gross negligence or theft by a family member. Earlier withdrawals aren’t covered.",
+  "after": "No law limits what you lose on debit card purchases. The Depositor Protection Act (Act No. 94 of 2005) covers only cash machine withdrawals with a forged or stolen cash card. A withdrawal with a forged card is treated as never made, unless you acted on purpose or with gross negligence (art. 4). For a stolen card, the bank must repay withdrawals made from 30 days before you promptly reported it (art. 5): in full, or three quarters if the bank proves you were negligent, and nothing if you were grossly negligent or a family member took it. Withdrawals before those 30 days aren’t covered."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "JP",
+  "field": "creditWords",
+  "before": "No statutory cap on credit card liability was found for Japan; protection for unauthorized credit card use is set by each issuer's card member terms, not by law.",
+  "after": "No law was found that limits what you pay when your credit card is misused in Japan: each card issuer’s member terms set the protection, not the law."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "KR",
+  "field": "debitWords",
+  "before": "Electronic Financial Transactions Act art. 9: the bank must pay losses from forged or altered access media, errors in processing, and access media obtained by hacking into networks, unless the user acted intentionally or with gross negligence under a prior written agreement; art. 10 covers loss and theft of access media. The Specialized Credit Financial Business Act art. 16(1) makes the issuer liable for debit card use from the moment it’s told the card is lost or stolen. No statutory cap on a debit cardholder's loss before notice was found.",
+  "after": "Your bank must pay for losses from a forged or altered card or login, a processing error, or details stolen by hacking, unless you acted on purpose or with gross negligence under a written agreement made beforehand (Electronic Financial Transactions Act, art. 9; art. 10 covers a lost or stolen card or login). From the moment the card company is told your debit card is lost or stolen, it pays for any use (Specialized Credit Financial Business Act, art. 16(1)). No law was found that limits what you lose before you tell it."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "KR",
+  "field": "creditWords",
+  "before": "Specialized Credit Financial Business Act art. 16(2), with Enforcement Decree art. 6-9(1): the card company is liable for credit card use in the 60 days before it's told of loss or theft, and for everything after. Under art. 16(3) a written contract can shift part or all of that to a cardholder at fault. Under art. 16(5) the issuer bears forged cards, data stolen by hacking and cards issued in someone else's name, and under art. 16(10) it can't collect a disputed amount until it has investigated.",
+  "after": "The card company pays for use of your credit card in the 60 days before it’s told of the loss or theft, and for everything after (Specialized Credit Financial Business Act, art. 16(2), and its Enforcement Decree, art. 6-9(1)). A written contract can pass some or all of that to you if you were at fault (art. 16(3)). The card company also bears forged cards, details stolen by hacking and cards issued in someone else’s name (art. 16(5)), and it can’t collect an amount you dispute until it has investigated (art. 16(10))."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "KR",
+  "field": "refundWords",
+  "before": "No statutory refund deadline was found; art. 16(10) bars collecting a disputed credit card amount until the investigation ends.",
+  "after": "No law was found that sets a deadline for a refund. A card company can’t collect a credit card amount you dispute until it has finished investigating (art. 16(10))."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "AU",
+  "field": "debitWords",
+  "before": "ASIC's ePayments Code (June 2022), which covers ATM, EFTPOS, credit card, online and mobile payments: the holder isn't liable where it's clear they didn't contribute to the loss (cl. 10.3), or for fraud or negligence by bank staff, merchants or networks (cl. 10.1). Where a passcode was needed and fault can't be shown, liability is the least of $150, the balance available, or the loss before the report (cl. 11.7). If the bank proves the user contributed through fraud, a passcode breach or unreasonable delay, the holder bears actual losses before the report, within daily limits and the balance (cl. 11.2, 11.5).",
+  "after": "You don’t pay where it’s clear you didn’t contribute to the loss (cl. 10.3), or for fraud or negligence by bank staff, shops or networks (cl. 10.1). Where a passcode was needed and no one can show who was at fault, you pay the least of A$150, the balance available, or what was lost before you reported it (cl. 11.7). If the bank proves you contributed through fraud, by not keeping your passcode secure or by reporting the loss unreasonably late, you pay what was actually lost before your report, within the daily limits and the balance (cl. 11.2, 11.5). This is ASIC’s ePayments Code (June 2022), which covers ATM, EFTPOS, credit card, online and mobile payments."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "AU",
+  "field": "creditWords",
+  "before": "The ePayments Code covers credit card transactions, so the same rules apply: $0 if clearly not at fault, and a $150 limit where fault can't be shown (cl. 11.7). Clause 11.10 also requires the issuer to try card-scheme chargeback rights.",
+  "after": "The ePayments Code covers credit card payments too, so the same rules apply: nothing if you clearly weren’t at fault, and at most A$150 where no one can show who was (cl. 11.7). The card issuer also has to try to get the money back through the card scheme’s chargeback rules (cl. 11.10)."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "AU",
+  "field": "refundWords",
+  "before": "ePayments Code cl. 18: within 21 days of a report the bank must finish investigating or explain in writing that it needs more time, and it must finish within 45 days unless circumstances are exceptional. The code sets no separate refund deadline.",
+  "after": "Within 21 days of your report, the bank must finish investigating or tell you in writing that it needs more time, and it must finish within 45 days unless the circumstances are exceptional. The code sets no separate deadline for a refund (ePayments Code, cl. 18)."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "NZ",
+  "field": "debitWords",
+  "before": "New Zealand Banking Association Code of Banking Practice (current edition, with scam commitments from November 30, 2025): the bank compensates losses from an unauthorized payment, meaning someone used your card or electronic banking without authority, if you weren't dishonest or negligent, took reasonable steps to protect your banking, and co-operate quickly. It's an industry code; no statute sets a dollar cap.",
+  "after": "If someone uses your card or online banking without your permission, the bank pays you back, as long as you weren’t dishonest or negligent, took reasonable care to protect your banking, and cooperate with it quickly. This is the New Zealand Banking Association’s Code of Banking Practice (the current edition, with its scam commitments from November 30, 2025), an industry code: no law sets a dollar limit."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "NZ",
+  "field": "creditWords",
+  "before": "The Code of Banking Practice's unauthorized-payment promise covers cards generally, credit cards included: full compensation if you weren't dishonest or negligent. No statutory cap applies.",
+  "after": "The Code of Banking Practice’s promise covers credit cards too: you’re paid back in full if you weren’t dishonest or negligent. No law sets a limit."
+ },
+ {
+  "export": "FRAUD_LAW",
+  "key": "NZ",
+  "field": "refundWords",
+  "before": "Code of Banking Practice: once the bank has the information it needs, it pays any compensation within 30 business days.",
+  "after": "Once the bank has the information it needs, it pays you back within 30 business days (Code of Banking Practice)."
+ },
+ {
+  "export": "SECURITY",
+  "key": "us-chase",
+  "field": "lostCardWords",
+  "before": "Chase refuses to authorize any transaction once a card is reported lost or stolen, and sends a replacement card with a new number; for a credit card the account itself stays open and keeps its age for credit reporting.",
+  "after": "Once you report a card lost or stolen, Chase declines anything new on it and sends a replacement with a new number. For a credit card, the account itself stays open and keeps its age on your credit record."
+ },
+ {
+  "export": "SECURITY",
+  "key": "us-chase",
+  "field": "suspectWords",
+  "before": "Chase monitors cards around the clock and may contact the customer by text message, push notification, email or phone call to confirm whether unusual activity was authorized; fraud alerts are automatic and need no enrollment. Chase can refuse to authorize a transaction it reasonably believes may be fraudulent, but doesn’t say it holds a payment pending the customer's reply.",
+  "after": "Chase watches cards around the clock and may text, send an app notification, email or call to check that unusual activity was you. Fraud alerts are automatic: you don’t need to sign up. Chase can decline a payment it believes may be fraud, but it doesn’t say it holds a payment while it waits for your reply."
+ },
+ {
+  "export": "SECURITY",
+  "key": "us-bank-of-america",
+  "field": "lostCardWords",
+  "before": "For a lost or stolen credit card, the bank says it will cancel the card and send a replacement right away. A debit card can be locked in Online Banking or the app while you look for it, and replaced there or by phone.",
+  "after": "Bank of America says it cancels a lost or stolen credit card and sends a replacement right away. You can lock a debit card in Online Banking or the app while you look for it, and replace it there or by phone."
+ },
+ {
+  "export": "SECURITY",
+  "key": "us-wells-fargo",
+  "field": "rushUnpublished",
+  "before": "Wells Fargo’s rush is for credit cards: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet), and its Active Cash card agreement names a Rush Plastic Fee without an amount.",
+  "after": "Wells Fargo can rush a new credit card: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet). Its Active Cash card agreement names a Rush Plastic Fee but gives no amount."
+ },
+ {
+  "export": "SECURITY",
+  "key": "us-wells-fargo",
+  "field": "lostCardWords",
+  "before": "A lost or stolen debit or credit card is replaced with a new card number, expiration date and three-digit security code, arriving in about 5 to 7 calendar days. While you look for a misplaced card you can turn it off in the app or online, and recurring charges can still go through.",
+  "after": "Wells Fargo replaces a lost or stolen debit or credit card with a new number, expiration date and security code, and it arrives in about 5 to 7 calendar days. While you look for a misplaced card, you can turn it off in the app or online, and recurring charges still go through."
+ },
+ {
+  "export": "SECURITY",
+  "key": "us-wells-fargo",
+  "field": "suspectWords",
+  "before": "If it sees unusual card activity, the bank may contact you by phone, email or text asking you to verify the transactions, and it may refuse to authorize a transaction it suspects is fraudulent. Its texts come from short codes such as 93557.",
+  "after": "If Wells Fargo sees unusual card activity, it may call, email or text to ask whether the payments were you, and it may decline a payment it suspects is fraud. Its texts come from short codes such as 93557."
+ },
+ {
+  "export": "SECURITY",
+  "key": "us-citi",
+  "field": "lostCardWords",
+  "before": "A replaced credit card comes with a different number, security code and expiration date, usually within about 5 business days. Citi Quick Lock in the app or online blocks new charges on a misplaced card while letting recurring charges continue.",
+  "after": "A replacement credit card has a new number, security code and expiration date, and usually arrives within about 5 business days. Citi Quick Lock, in the app or online, blocks new charges on a misplaced card and lets recurring charges continue."
+ },
+ {
+  "export": "SECURITY",
+  "key": "us-capital-one",
+  "field": "lostCardWords",
+  "before": "When a credit card is reported lost or stolen, Capital One locks it and issues a replacement with a new card number, arriving in about 4 to 6 business days; a lost debit card is deactivated immediately. Eligible customers can use a virtual card in the app while they wait.",
+  "after": "When you report a credit card lost or stolen, Capital One locks it and sends a replacement with a new number in about 4 to 6 business days. A lost debit card is turned off at once. If you’re eligible, you can use a virtual card in the app while you wait."
+ },
+ {
+  "export": "SECURITY",
+  "key": "us-capital-one",
+  "field": "suspectWords",
+  "before": "If Capital One sees possibly suspicious activity it sends a text, always from the same number, and you can reply on the spot; answering no blocks the card. Alerts also come by email and in the app.",
+  "after": "If Capital One sees activity that might be fraud, it texts you, always from the same number, and you can reply on the spot. Answering no blocks the card. Alerts also come by email and in the app."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-rbc",
+  "field": "lostCardWords",
+  "before": "RBC cancels a lost or stolen debit card and issues a new one, and blocks a lost or stolen credit card from further use and issues a new card. The first debit card replacement in a calendar year is free and each further one costs $5.00, unless the replacement is due to fraud, a name change, or a card that arrived damaged.",
+  "after": "RBC cancels a lost or stolen debit card and sends a new one, and blocks a lost or stolen credit card and sends a new card. Your first replacement debit card in a calendar year is free, and each one after that costs C$5.00, unless it’s replaced because of fraud, a name change or a card that arrived damaged. The game charges nothing for any of them."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-rbc",
+  "field": "suspectWords",
+  "before": "RBC texts the credit cardholder from short code 722373 or 347722 asking them to reply Y to confirm a transaction or N if they don't recognize it, after which a fraud specialist contacts them. The card agreement says RBC can block the card without telling the customer when it suspects fraudulent use.",
+  "after": "On a credit card, RBC texts you from short code 722373 or 347722. Reply Y to confirm a payment, or N if you don’t recognize it, and a fraud specialist contacts you. The card agreement says RBC can block the card without telling you when it suspects fraud."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-td",
+  "field": "lostCardWords",
+  "before": "TD closes a lost, stolen or compromised Access Card permanently and issues a replacement that arrives by Canada Post in 5 to 7 business days, or can be picked up the same day at a branch. The customer can lock the card instantly in the TD app while looking for it.",
+  "after": "TD closes a lost, stolen or compromised Access Card for good and sends a replacement by Canada Post in 5 to 7 business days, or you can pick one up the same day at a branch. You can lock the card instantly in the TD app while you look for it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-td",
+  "field": "suspectWords",
+  "before": "TD texts the credit cardholder when it detects suspicious activity and blocks the card; replying Y unblocks it immediately, while replying N or not answering keeps it blocked until the customer calls, and TD phones if there’s no reply. TD's published fraud alerts cover credit cards; the page doesn’t mention debit cards.",
+  "after": "When TD sees suspicious activity on a credit card, it blocks the card and texts you. Reply Y and it’s unblocked at once. Reply N, or don’t answer, and it stays blocked until you call; TD phones you if you don’t reply. TD’s fraud alerts page covers credit cards and doesn’t mention debit cards."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-scotiabank",
+  "field": "lostCardWords",
+  "before": "A lost or stolen ScotiaCard debit card is reported and replaced in the Scotia app, with the new card arriving in 5 to 10 business days; a lost credit card is reported by phone and the replacement arrives in about 7 to 10 business days. A locked debit card still lets pre-authorized payments and bills set up on it go through.",
+  "after": "You report a lost or stolen ScotiaCard debit card in the Scotia app and order its replacement there, and the new card arrives in 5 to 10 business days. You report a lost credit card by phone, and its replacement arrives in about 7 to 10 business days. A locked debit card still lets pre-authorized payments and bills set up on it go through."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-scotiabank",
+  "field": "suspectWords",
+  "before": "Scotia Fraud Alerts block the card as soon as an unusual transaction is flagged and contact the customer by app push notification, text from 267373, email, or an automated call. The customer answers Yes or No, and after confirming must try the purchase again.",
+  "after": "Scotia Fraud Alerts block the card as soon as a payment looks unusual, then reach you by app notification, a text from 267373, email or an automated call. You answer Yes or No. After you confirm, you have to make the purchase again."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-bmo",
+  "field": "lostCardWords",
+  "before": "BMO lets the customer report a lost or stolen debit or credit card and request a new one online or in the app, and a replacement credit card comes by regular mail in six to eight business days. A misplaced card can be locked online to pause transactions and unlocked later.",
+  "after": "You can report a lost or stolen BMO debit or credit card and ask for a new one online or in the app. A replacement credit card comes by regular mail in six to eight business days. You can lock a misplaced card online to pause payments, and unlock it later."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-bmo",
+  "field": "suspectWords",
+  "before": "BMO's credit card agreement says it may block the card, or a type of transaction, without telling the customer when it suspects unauthorized or fraudulent use. BMO's Canadian pages didn’t describe how a suspected-fraud alert reaches the customer.",
+  "after": "BMO’s credit card agreement says it may block the card, or one kind of payment, without telling you when it suspects fraud. BMO’s Canadian pages don’t say how it tells you about a payment it suspects."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-cibc",
+  "field": "lostCardWords",
+  "before": "CIBC deactivates a lost or stolen credit card immediately and mails a new card with a new number, which can be added to a mobile wallet right away. A lost debit card is protected and replaced once reported at a branch or by phone, and either card can be temporarily locked in online or mobile banking.",
+  "after": "CIBC turns off a lost or stolen credit card at once and mails a new one with a new number, which you can add to a mobile wallet right away. Report a lost debit card at a branch or by phone, and CIBC protects and replaces it. You can lock either card for a while in online or mobile banking."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ca-cibc",
+  "field": "suspectWords",
+  "before": "CIBC asks the customer to confirm an unusual transaction by text from 242-225 or 242-234 (reply Y or N), by an automated call where they answer on the keypad, or by email. The fraud alerts page doesn’t say whether the card is held until the customer answers.",
+  "after": "CIBC asks you to confirm an unusual payment by text from 242-225 or 242-234 (reply Y or N), by an automated call you answer on the keypad, or by email. Its fraud alerts page doesn’t say whether the card is held until you answer."
+ },
+ {
+  "export": "SECURITY",
+  "key": "mx-bbva",
+  "field": "lostCardWords",
+  "before": "The card is blocked from the BBVA app (Emergencies, Theft and loss) or by calling Linea BBVA, and a replacement is requested in the app or at a branch; the new card arrives with a different number and must be activated, and an account holder can keep paying with the digital card meanwhile. Fees exclude 16% IVA: 169.50 pesos for a lost or stolen Libreton Basico debit card (free for damage or renewal) and 192 pesos for the Azul credit card.",
+  "after": "Block the card in the BBVA app (Emergencies, then Theft and loss) or by calling Línea BBVA, and ask for a replacement in the app or at a branch. The new card has a different number and has to be activated; meanwhile you can keep paying with the digital card. A new Libreton Basico debit card costs 169.50 pesos after loss or theft and nothing after damage or on renewal, and a new Azul credit card costs 192 pesos, both before 16% IVA."
+ },
+ {
+  "export": "SECURITY",
+  "key": "mx-bbva",
+  "field": "suspectWords",
+  "before": "When BBVA detects an unusual purchase it sends a push notification through the BBVA app and turns the card off as a precaution, so new purchases are declined; confirming the purchase in the app turns the card back on automatically, and rejecting it leaves the card off and starts a fraud report.",
+  "after": "When BBVA sees an unusual purchase, it sends a notification in the BBVA app and turns the card off as a precaution, so new purchases are declined. Confirm the purchase in the app and the card turns back on by itself. Reject it, and the card stays off and a fraud report starts."
+ },
+ {
+  "export": "SECURITY",
+  "key": "mx-santander",
+  "field": "lostCardWords",
+  "before": "The customer blocks the card in the Santander app (Block and replacement), picks a reason, and then orders a replacement for pickup at a branch: a personalized card is ready at the home branch in 3 to 5 business days, or an unpersonalized card is handed over immediately at any branch. There’s no charge if the card was swallowed by an ATM or the customer was a fraud victim; fees exclude 16% IVA.",
+  "after": "Block the card in the Santander app (Block and replacement), choose a reason, then order a replacement to collect at a branch. A card with your name on it is ready at your own branch in 3 to 5 business days, or any branch can hand you a card without your name at once. There’s no charge if a cash machine kept the card or you were a victim of fraud. Santander’s fees are before 16% IVA."
+ },
+ {
+  "export": "SECURITY",
+  "key": "mx-banamex",
+  "field": "lostCardWords",
+  "before": "The customer reports the card in the Banamex app (swipe the card, Report) or by phone; the card is canceled and a replacement is generated and sent to the registered address, or it can be collected at a branch by calling 55 1226 2639. Fees exclude IVA: 125 pesos for a MiCuenta or Perfiles debit card and 130 pesos for the Clasica credit card.",
+  "after": "Report the card in the Banamex app (swipe the card, then Report) or by phone. The card is canceled and a replacement is sent to the address Banamex has for you, or you can collect it at a branch by calling 55 1226 2639. A new MiCuenta or Perfiles debit card costs 125 pesos and a new Clasica credit card 130 pesos, both before IVA."
+ },
+ {
+  "export": "SECURITY",
+  "key": "mx-banamex",
+  "field": "suspectWords",
+  "before": "Banamex says it will contact the customer if it detects suspicious movement on cards or online banking, and warns it will never ask for a PIN, passwords or SMS codes; it doesn’t say on the pages read whether the purchase is held until confirmed.",
+  "after": "Banamex says it contacts you if it sees suspicious activity on your cards or in online banking, and that it will never ask for your PIN, passwords or text-message codes. It doesn’t say whether a purchase is held until you confirm it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "mx-banorte",
+  "field": "source",
+  "before": "Folleto Informativo Cuenta Enlace Personal (banorte.com, read via Wayback Machine snapshot of March 21, 2026); Folleto Informativo Tarjeta de Credito Clasica FI-Clasica.pdf (banorte.com, read via Wayback Machine snapshot of May 15, 2026). Live banorte.com timed out on every request., Clasica brochure valid January to June 2026; Enlace Personal brochure undated (its GAT figure is valid to October 2019, so the fee table may be old); read September 26, 2026",
+  "after": "Folleto Informativo Cuenta Enlace Personal (banorte.com, read via Wayback Machine snapshot of March 21, 2026); Folleto Informativo Tarjeta de Credito Clasica FI-Clasica.pdf (banorte.com, read via Wayback Machine snapshot of May 15, 2026), as the live banorte.com timed out on every request; Clasica brochure valid January to June 2026; Enlace Personal brochure undated (its GAT figure is valid to October 2019, so the fee table may be old); read September 26, 2026"
+ },
+ {
+  "export": "SECURITY",
+  "key": "mx-banorte",
+  "field": "lostCardWords",
+  "before": "The customer reports the lost or stolen card to Banorte; Blindaje Banorte covers fraudulent charges made up to 48 hours before the report on the Clasica credit card at no cost. Fees exclude IVA: 125 pesos to replace a Cuenta Enlace Personal debit card and 170 pesos for the Clasica credit card.",
+  "after": "Report a lost or stolen card to Banorte. On the Clasica credit card, Blindaje Banorte covers fraudulent charges made up to 48 hours before you report it, at no cost. A new Cuenta Enlace Personal debit card costs 125 pesos and a new Clasica credit card 170 pesos, both before IVA."
+ },
+ {
+  "export": "SECURITY",
+  "key": "mx-banorte",
+  "field": "suspectWords",
+  "before": "Banorte Avisa sends free SMS notifications meant to protect against unrecognized charges; the brochure doesn’t say whether a suspicious purchase is held until the customer confirms it.",
+  "after": "Banorte Avisa sends free text alerts to help you catch charges you don’t recognize. Its brochure doesn’t say whether a suspicious purchase is held until you confirm it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-barclays",
+  "field": "replaceWords",
+  "before": "The June 2025 tariff has no fee for a standard replacement debit card. Its only card-replacement charge is £12 for a temporary card collected from a branch. Lost, stolen and damaged are handled the same way, except that a damaged card keeps working for 28 days or until the new one is used.",
+  "after": "Barclays’ June 2025 tariff has no fee for a standard replacement debit card. Its only charge is £12 for a temporary card collected from a branch. Lost, stolen and damaged cards are handled the same way, except that a damaged card keeps working for 28 days or until you use the new one."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-barclays",
+  "field": "lostCardWords",
+  "before": "Barclays cancels the card and posts a replacement within seven working days by second-class Royal Mail (five if ordered through Online Banking). For an emergency, some branches issue a temporary debit card on the spot for £12, valid for 28 days and limited to two a year. The Barclaycard credit card is blocked permanently from the app and replaced within seven working days. Barclays says it tries to update the new card details with retailers that hold recurring payments on the old debit card (Visa informs most major retailers); others must be told by the customer.",
+  "after": "Barclays cancels the card and posts a replacement by second-class Royal Mail within seven working days, or five if you order it in Online Banking. In an emergency, some branches give you a temporary debit card on the spot for £12. It lasts 28 days, and you can have two a year. A Barclaycard credit card is blocked for good from the app and replaced within seven working days. Barclays says it tries to pass the new debit card’s details to shops that take regular payments from the old one (Visa tells most big retailers); you have to tell any others yourself."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-barclays",
+  "field": "suspectWords",
+  "before": "Barclays texts a fraud alert about a suspicious transaction and asks for a Y or N reply, or makes an automated call. It says it may delay or decline an unusual payment, or block the account, until it confirms the customer made it.",
+  "after": "Barclays texts you about a suspicious payment and asks you to reply Y or N, or calls you with an automated call. It says it may delay or decline an unusual payment, or block the account, until it’s sure you made it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-lloyds",
+  "field": "lostCardWords",
+  "before": "Lloyds cancels the card straight away, and the cancelation can't be reversed. A new card arrives in five working days. The new card's details show in the app the next day for a debit card, and within five days for a credit card, so they can be used online while the card is in the post.",
+  "after": "Lloyds cancels the card straight away, and you can’t undo it. A new card arrives in five working days. Its details show in the app the next day for a debit card, or within five days for a credit card, so you can use them online while the card is in the post."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-lloyds",
+  "field": "suspectWords",
+  "before": "When spending patterns suggest fraud, Lloyds usually has its automated telephone service call the customer to confirm the purchase, with operators available if it wasn't them. The pages don't say whether the payment is held until the customer confirms it.",
+  "after": "When your spending looks like fraud, Lloyds usually calls you with an automated service to check the purchase, and you can speak to someone if it wasn’t you. Lloyds doesn’t say whether the payment is held until you confirm it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-natwest",
+  "field": "replaceWords",
+  "before": "The current-account additional services charges list \"Replacing lost or damaged cards: No Charge\". The credit card fee page doesn't mention replacement.",
+  "after": "NatWest’s credit card fee page doesn’t mention replacing a card. Its list of extra charges on its accounts says “Replacing lost or damaged cards: No Charge”."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-natwest",
+  "field": "lostCardWords",
+  "before": "NatWest cancels the card, and issues a new PIN if the PIN may be compromised. The new card arrives within 10 working days, and its details can be used from the app's See details feature meanwhile. Emergency cash from a cash machine after reporting a card lost or stolen is free. Its current account terms say it may enroll a replacement card in the card scheme's automatic updater, although its help pages still tell customers to update subscriptions themselves.",
+  "after": "NatWest cancels the card, and sends a new PIN if someone may know the old one. The new card arrives within 10 working days; meanwhile you can use its details from See details in the app. Emergency cash from a cash machine after you report a card lost or stolen is free. NatWest’s account terms say it may sign a replacement card up to the card scheme’s automatic updater, which passes the new details to companies you pay, but its help pages still tell you to update your subscriptions yourself."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-natwest",
+  "field": "suspectWords",
+  "before": "When NatWest restricts a card over suspected fraud, its fraud team sends texts, automated calls and voicemails, then an email or letter. The block stays on the card until the customer contacts the fraud team.",
+  "after": "When NatWest blocks a card over suspected fraud, its fraud team texts you, calls with automated calls and leaves voicemails, then emails or writes to you. The block stays until you contact the fraud team."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-hsbc",
+  "field": "replaceWords",
+  "before": "Neither the HSBC current-account charges page, the credit card fees page nor the personal banking terms (effective July 6, 2026) lists a card replacement fee.",
+  "after": "HSBC lists no fee for a replacement card on its account charges page, its credit card fees page or its personal banking terms (effective July 6, 2026)."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-hsbc",
+  "field": "lostCardWords",
+  "before": "HSBC cancels the card straight away and posts a new one within 5-7 working days in the UK, or 12 working days abroad. The new card can be added to Apple Pay or Google Pay from the app before it arrives. A found card must not be used without contacting HSBC first.",
+  "after": "HSBC cancels the card straight away and posts a new one within 5 to 7 working days in the UK, or 12 working days abroad. You can add the new card to Apple Pay or Google Pay from the app before it arrives. If you find the old card, don’t use it without contacting HSBC first."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-hsbc",
+  "field": "suspectWords",
+  "before": "HSBC's terms say it contacts the customer the quickest secure way, which might be a text or a phone call, when there’s actual or suspected fraud. It may block the card while it suspects fraud, and unblocks it once the reason ends.",
+  "after": "HSBC’s terms say that when there’s fraud, or it suspects fraud, it contacts you the quickest secure way, which might be a text or a call. It may block the card while it suspects fraud, and unblocks it once the reason has gone."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-santander",
+  "field": "replaceWords",
+  "before": "The interest rates and fees document for current accounts (April 28, 2025) lists no card replacement fee. Lost, stolen and damaged cards are all reported the same way.",
+  "after": "Santander’s list of interest rates and fees for its checking accounts (April 28, 2025) has no fee for a replacement card. Lost, stolen and damaged cards are all reported the same way."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-santander",
+  "field": "lostCardWords",
+  "before": "Santander blocks the old card and sends a new one within 5-7 working days, keeping the same PIN unless a new one is requested. Digital wallets keep working meanwhile, and a branch can give access to cash with ID. The new card has a new number, which doesn't affect Direct Debits or standing orders.",
+  "after": "Santander blocks the old card and sends a new one within 5 to 7 working days, with the same PIN unless you ask for a new one. Digital wallets keep working meanwhile, and a branch can get you cash if you bring ID. The new card has a new number, which doesn’t affect Direct Debits or standing orders."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-santander",
+  "field": "suspectWords",
+  "before": "Santander sometimes declines a payment that doesn't look right. It then checks with the customer by an app push notification, a text to the registered mobile (a Y or N reply), or a phone call. Once the customer confirms, the payment can be made again.",
+  "after": "Santander sometimes declines a payment that doesn’t look right, then checks with you by an app notification, a text to your registered mobile (reply Y or N) or a call. Once you confirm, you can make the payment again."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-nationwide",
+  "field": "replaceWords",
+  "before": "Nationwide says it replaces broken or damaged cards free of charge. The Guide to your Current Account (January 2026) lists no replacement fee for lost or stolen cards either, but doesn’t say free. A damaged credit card needs a phone call.",
+  "after": "Nationwide says it replaces broken or damaged cards free. Its Guide to your Current Account (January 2026) lists no fee for replacing a lost or stolen card either, but doesn’t say it’s free. For a damaged credit card, you have to call."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-nationwide",
+  "field": "lostCardWords",
+  "before": "Nationwide cancels the card and issues a new one, and the new card can be used online as soon as it shows in the app. Nationwide says not to freeze a card that’s actually lost or stolen, only a misplaced one. A frozen card still lets recurring card payments, Direct Debits and wallet payments through.",
+  "after": "Nationwide cancels the card and sends a new one, which you can use online as soon as it shows in the app. Nationwide says to freeze a card only if it’s misplaced, not if it’s really lost or stolen. A frozen card still lets regular card payments, Direct Debits and wallet payments through."
+ },
+ {
+  "export": "SECURITY",
+  "key": "gb-nationwide",
+  "field": "suspectWords",
+  "before": "Nationwide blocks the card, then sends a fraud alert by app push notification, two texts, or an automated voice call. There are 2 hours to answer in the app before the alert moves to text. The card stays blocked until the customer replies, and it works again within minutes of confirming.",
+  "after": "Nationwide blocks the card, then sends a fraud alert by app notification, two texts or an automated call. You have 2 hours to answer in the app before the alert moves to text. The card stays blocked until you reply, and works again within minutes of you confirming."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ie-aib",
+  "field": "replaceWords",
+  "before": "The personal fee guide lists debit card issue and replacement under services with no charge. The credit card fee page lists no replacement fee at all, but it doesn't say one is free either.",
+  "after": "AIB’s credit card fee page lists no fee for a replacement card, but doesn’t say it’s free either. Its fee guide for personal accounts lists a debit card and its replacement among the services with no charge."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ie-aib",
+  "field": "lostCardWords",
+  "before": "You report the card lost or stolen in the app, online banking, a branch kiosk or by phone at any hour; the card is canceled and a new one is posted to your address. A card in Apple Pay or Google Pay updates to the new card on its own: a debit card by 5pm the next working day, a credit card at once.",
+  "after": "Report the card lost or stolen in the app, in online banking, at a branch kiosk or by phone at any hour. AIB cancels it and posts a new one to your address. A card in Apple Pay or Google Pay updates to the new card by itself: a debit card by 5 p.m. the next working day, a credit card at once."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ie-aib",
+  "field": "suspectWords",
+  "before": "AIB texts the transaction (amount, merchant, last four digits) and asks you to reply 1 if it's yours or 9 if not; replying 9 places a hold on the card and the cards team contacts you. If you don't reply within 8 hours, a hold is placed on the card and you must phone; the reply to a 1 says to check whether the payment went through, so the payment itself may have been declined.",
+  "after": "AIB texts you the payment’s amount, the shop and the card’s last four digits, and asks you to reply 1 if it’s yours or 9 if not. Reply 9, and AIB puts a hold on the card and its cards team contacts you. If you don’t reply within 8 hours, AIB puts a hold on the card and you have to phone. Its answer to a 1 tells you to check whether the payment went through, so the payment itself may have been declined."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ie-bank-of-ireland",
+  "field": "replaceWords",
+  "before": "The Personal Current Account section of the 2025 fee schedule lists no debit card replacement fee. The only replacement fee in it, EUR 8.00 for a lost, stolen or damaged card, is for the ATM card on a deposit account. The Classic Credit Card fee page lists no replacement fee. A damaged credit card is reissued with the same number, CVV and expiry date.",
+  "after": "The Personal Current Account section of Bank of Ireland’s 2025 fee schedule lists no fee for a replacement debit card. Its only replacement fee, €8.00 for a lost, stolen or damaged card, is for the ATM card on a deposit account. The Classic Credit Card fee page lists no replacement fee. A damaged credit card is reissued with the same number, security code and expiry date."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ie-bank-of-ireland",
+  "field": "lostCardWords",
+  "before": "You phone the 24/7 line; the bank cancels the card as soon as you report it and sends a new one to your address on file in 5 to 7 working days (standardDays is the upper bound). You can be liable for losses up to the moment you report it.",
+  "after": "Phone the 24-hour line. The bank cancels the card as soon as you report it and sends a new one to the address it has for you in 5 to 7 working days, and the game takes 7. You can be liable for losses up to the moment you report it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ie-ptsb",
+  "field": "replaceWords",
+  "before": "EUR 5.00 each to replace a lost or stolen debit card or credit card. The fee list charges only for lost or stolen cards; a damaged card is replaced through a separate process with no fee listed.",
+  "after": "€5.00 to replace a lost or stolen debit or credit card. The fee list charges only for a lost or stolen card; a damaged card is replaced another way, with no fee listed."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ie-ptsb",
+  "field": "lostCardWords",
+  "before": "You report it in the app, in Open24 online banking or by phone at any hour; the card is canceled and the new card and PIN arrive separately within 5 to 7 working days (standardDays is the upper bound). A debit card replaced as lost or stolen updates in your digital wallet automatically; one replaced as damaged or expired takes up to 2 business days.",
+  "after": "Report it in the app, in Open24 online banking or by phone at any hour. PTSB cancels the card, and the new card and PIN arrive separately within 5 to 7 working days; the game takes 7. A debit card replaced as lost or stolen updates in your digital wallet by itself; one replaced as damaged or expired takes up to 2 business days."
+ },
+ {
+  "export": "SECURITY",
+  "key": "ie-ptsb",
+  "field": "suspectWords",
+  "before": "PTSB's fraud monitoring may contact you by phone, text or letter to verify unusual activity; texts only ask for a Yes or No reply or a call to the fraud line, and a No blocks the card. The bank also says it may temporarily block specific card and ATM transactions it considers unusual until you call.",
+  "after": "PTSB may phone, text or write to you to check unusual activity. Its texts only ask you to reply Yes or No, or to call the fraud line, and a No blocks the card. PTSB also says it may block particular card and ATM payments it finds unusual until you call."
+ },
+ {
+  "export": "SECURITY",
+  "key": "is-landsbankinn",
+  "field": "replaceWords",
+  "before": "ISK 1,900 for a new payment card (debit or credit) to replace a lost or stolen one. No fee is listed for a damaged card.",
+  "after": "1,900 kr for a new debit or credit card to replace a lost or stolen one. No fee is listed for a damaged card."
+ },
+ {
+  "export": "SECURITY",
+  "key": "is-landsbankinn",
+  "field": "lostCardWords",
+  "before": "You freeze the card in the app straight away, or call 410 4000 (525 2000 outside hours); once reported, the card is closed temporarily or permanently. The new card has a new number but works online as soon as it's created, and the plastic follows in 5 to 10 working days, or 2 to 3 by express delivery (both day counts are the upper bound).",
+  "after": "Freeze the card in the app straight away, or call 410 4000 (525 2000 outside opening hours). Once you report it, the card is closed for a while or for good. The new card has a new number but works online as soon as it’s made, and the card itself follows in 5 to 10 working days, or 2 to 3 by express delivery; the game takes the longer of each."
+ },
+ {
+  "export": "SECURITY",
+  "key": "is-landsbankinn",
+  "field": "suspectWords",
+  "before": "The terms let the bank decline authorization and close a card on reasonable suspicion of fraud, and say the cardholder is notified of the closure, which is reversed if the suspicion proves unfounded. The bank's pages don't say whether it contacts you by text, app or phone.",
+  "after": "Landsbankinn’s terms let it decline a payment and close a card when it has reasonable grounds to suspect fraud. It tells you it has closed the card, and reopens it if the suspicion turns out to be wrong. It doesn’t say whether it contacts you by text, app or phone."
+ },
+ {
+  "export": "SECURITY",
+  "key": "is-arion",
+  "field": "replaceWords",
+  "before": "ISK 2,490 to reissue a lost card, for both debit and credit. The credit card terms say a defective card is replaced free.",
+  "after": "2,490 kr to reissue a lost debit or credit card. The credit card terms say a faulty card is replaced free."
+ },
+ {
+  "export": "SECURITY",
+  "key": "is-arion",
+  "field": "lostCardWords",
+  "before": "You freeze the card in the app and report it to customer service at 444 7000 (weekdays 9 to 4) or the emergency line at 525 2000; a frozen card can be unfrozen in the app if it turns up. While the card is frozen, subscriptions and phone or watch payments keep working.",
+  "after": "Freeze the card in the app and report it to customer service on 444 7000 (weekdays, 9 to 4) or the emergency line on 525 2000. If it turns up, you can unfreeze it in the app. While it’s frozen, subscriptions and phone or watch payments keep working."
+ },
+ {
+  "export": "SECURITY",
+  "key": "is-arion",
+  "field": "suspectWords",
+  "before": "The credit card terms say that on reasonable suspicion of fraud the bank may decline authorization and notify the cardholder without delay, and reopens authorization at once if the suspicion proves unfounded. The channel (text, app or phone) isn't stated.",
+  "after": "Arion’s credit card terms say that when it has reasonable grounds to suspect fraud, it may decline payments and must tell you without delay, and it lets payments through again at once if the suspicion turns out to be wrong. It doesn’t say whether it tells you by text, app or phone."
+ },
+ {
+  "export": "SECURITY",
+  "key": "is-islandsbanki",
+  "field": "replaceWords",
+  "before": "Debit cards cost ISK 1,100 for a new card or renewal, and credit cards ISK 2,200 to reissue. The credit terms charge the reissue fee when a card was lost and not when it was defective, and a defective card is replaced free.",
+  "after": "A new or renewed debit card costs 1,100 kr, and reissuing a credit card 2,200 kr. The credit card terms charge the fee when a card was lost, and replace a faulty card free."
+ },
+ {
+  "export": "SECURITY",
+  "key": "is-islandsbanki",
+  "field": "lostCardWords",
+  "before": "The terms require you to freeze the card in the bank's app at once and report it on 440-4000 (the emergency line is open 24 hours), and the card is then closed. To get a replacement you give a lost-card statement and apply for a new card; a credit card reported temporarily lost can be reopened if the request arrives by the next banking day.",
+  "after": "Íslandsbanki’s terms ask you to freeze the card in its app at once and report it on 440-4000 (the emergency line is open 24 hours), and the card is then closed. For a replacement, you make a lost-card statement and apply for a new card. A credit card reported as temporarily lost can be reopened if you ask by the next banking day."
+ },
+ {
+  "export": "SECURITY",
+  "key": "is-islandsbanki",
+  "field": "suspectWords",
+  "before": "The debit terms say that on reasonable suspicion of fraud the bank may refuse authorizations and close the card, notifying the cardholder without delay afterwards, and reopens it if the suspicion proves unfounded. The channel isn't stated.",
+  "after": "Íslandsbanki’s debit card terms say that when it has reasonable grounds to suspect fraud, it may decline payments and close the card, tells you without delay afterwards, and reopens it if the suspicion turns out to be wrong. It doesn’t say how it tells you."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-bnp-paribas",
+  "field": "replaceWords",
+  "before": "Tariff line is 'reissuing a card before expiry': 15 EUR, free for Visa Premier, Visa Infinite and virtual cards and for BNP Paribas Sécurité insurance holders. Stopping (blocking) the card is free. No separate standard credit card: the credit figure is the deferred-debit Visa Classic, which falls under the same line.",
+  "after": "BNP Paribas charges €15 to reissue a card before it expires, and nothing for Visa Premier, Visa Infinite and virtual cards, or if you have BNP Paribas Sécurité insurance. Blocking the card is free. It has no separate standard credit card, so the game prices its credit card as the deferred-debit Visa Classic, under the same line."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-bnp-paribas",
+  "field": "lostCardWords",
+  "before": "Reporting the card lost or stolen (by app, website, the 3477 line or a branch) takes effect immediately, is free and can't be undone; it has to be confirmed in writing. Unless told otherwise, BNP orders a new card automatically, with a new card number and a new PIN, which takes 5 business days, and a virtual card is available right away.",
+  "after": "Report the card lost or stolen in the app, on the website, on the 3477 line or at a branch. It takes effect at once, it’s free, and it can’t be undone; you then confirm it in writing. Unless you say otherwise, BNP Paribas orders a new card with a new number and PIN, which takes 5 business days, and a virtual card is ready right away."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-bnp-paribas",
+  "field": "suspectWords",
+  "before": "When BNP spots suspicious activity it sends a text asking you to call its 3477 line; it says its advisors will never phone you about fraud. It doesn’t say whether the payment is held until you confirm.",
+  "after": "When BNP Paribas spots suspicious activity, it texts you to call its 3477 line. It says its advisors will never phone you about fraud. It doesn’t say whether the payment is held until you confirm."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-societe-generale",
+  "field": "replaceWords",
+  "before": "20 EUR per card for damage or an early reissue, and 20 EUR after stopping a card for loss, theft or fraud; free on normal renewal or a malfunction, and included in the JAZZ and Sobrio bundles. SG does sell a separate revolving credit card (CB Visa Alterna); the credit figure applies the same card-replacement line to it.",
+  "after": "€20 a card for damage or an early reissue, and €20 after a card is stopped for loss, theft or fraud. It’s free on normal renewal or when a card stops working, and included in the JAZZ and Sobrio packages. Société Générale also sells a separate revolving credit card (CB Visa Alterna), and the game charges the same fee to replace it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-societe-generale",
+  "field": "lostCardWords",
+  "before": "You can stop the card 24/7 in the SG app or online. The block is immediate and permanent, and you're told by text, push or email. A new card is made automatically and sent to your home or branch, with the same PIN unless you ask for a new one. Home delivery is free, except that a card reissued with a new PIN can only be collected at a branch.",
+  "after": "You can stop the card at any hour in the SG app or online. The block is immediate and permanent, and you’re told by text, app notification or email. A new card is made automatically and sent to your home or your branch, with the same PIN unless you ask for a new one. Delivery to your home is free, but a card reissued with a new PIN can only be collected at a branch."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-societe-generale",
+  "field": "suspectWords",
+  "before": "SG says it will never call to ask you to cancel, block, validate or confirm a payment, or to read out a code or your card number. If in doubt, hang up and call 3933 yourself. The pages read don't say how SG itself flags a suspicious card payment. Card-detail updates to merchants are an opt-in service that only reaches participating online merchants.",
+  "after": "Société Générale says it will never call to ask you to cancel, block, approve or confirm a payment, or to read out a code or your card number. If in doubt, hang up and call 3933 yourself. It doesn’t say how it flags a suspicious card payment itself. Passing your new card’s details to shops is a service you opt into, and it reaches only the online shops that take part."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-lcl",
+  "field": "replaceWords",
+  "before": "13.30 EUR to replace a card at your request (damage, a new design or an early reissue). The tariff lists no replacement fee after loss or theft, and stopping the card is free. LCL does sell a revolving Visa Crédit Renouvelable card; the credit figure applies the same general line to it.",
+  "after": "€13.30 to replace a card at your request (damage, a new design or an early reissue). The tariff lists no fee for a replacement after loss or theft, and stopping the card is free. LCL also sells a revolving Visa Crédit Renouvelable card, and the game charges the same fee to replace it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-lcl",
+  "field": "lostCardWords",
+  "before": "You stop the card 24/7 from the LCL Mes Comptes app (the SOS Carte service) or by phone. A virtual card is available in the app right away, until the new physical card arrives. Sending the card by registered mail or Chronopost costs 10 EUR plus postage.",
+  "after": "Stop the card at any hour in the LCL Mes Comptes app (the SOS Carte service) or by phone. A virtual card is ready in the app right away, until the new card arrives. Sending the card by registered mail or Chronopost costs €10 plus postage."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-lcl",
+  "field": "suspectWords",
+  "before": "LCL sends fraud alerts by text or email and asks you to call its fraud line (+33 969 391 133). It doesn’t say whether the payment is held. Card-detail updates to merchants are an opt-in, free 'automatic card update' option for online merchants.",
+  "after": "LCL sends fraud alerts by text or email and asks you to call its fraud line (+33 969 391 133). It doesn’t say whether the payment is held. Passing your new card’s details to online shops is a free option you turn on, its automatic card update."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-credit-agricole",
+  "field": "replaceWords",
+  "before": "'Early reissue' is 10 EUR in the Île-de-France tariff: the scanned April 2026 grid's value column is misaligned, but the April 2025 grid clearly shows 10 EUR. Stopping a card for loss or theft is free. No standalone price for replacing a lost or stolen card is listed; it’s included in the account bundles. No separate standard credit card: the credit figure is the deferred-debit card under the same line.",
+  "after": "An early reissue costs €10 in the Île-de-France tariff. The figures in the scanned April 2026 table don’t line up with their rows, but the April 2025 table clearly shows €10. Stopping a card for loss or theft is free. There’s no separate price for replacing a lost or stolen card: it’s part of the account packages. Crédit Agricole has no separate standard credit card, so the game prices its credit card as the deferred-debit card, under the same line."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-credit-agricole",
+  "field": "lostCardWords",
+  "before": "You stop the card through your branch or the 24/7 line, 09 69 39 92 91, and have to confirm by registered letter to your branch. The advisor orders a new card, and Crédit Agricole's virtual card can be used until it arrives.",
+  "after": "Stop the card through your branch or the 24-hour line, 09 69 39 92 91, then confirm it by registered letter to your branch. Your advisor orders a new card, and you can use Crédit Agricole’s virtual card until it arrives."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-credit-agricole",
+  "field": "suspectWords",
+  "before": "Crédit Agricole says it will never ask you to validate or block payments remotely, or for codes received by text. If you suspect fraud, stop the card straight away. The pages read don't describe how the bank flags a suspicious payment. Card-detail updates to merchants are an opt-in setting in the Ma Banque app.",
+  "after": "Crédit Agricole says it will never ask you to approve or block payments remotely, or for codes it has texted you. If you suspect fraud, stop the card straight away. It doesn’t say how it flags a suspicious payment. Passing your new card’s details to shops is a setting you turn on in the Ma Banque app."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-la-banque-postale",
+  "field": "replaceWords",
+  "before": "Early reissue ('renouvellement anticipé') is 15 EUR, and 15 EUR for a withdrawal-only card. Stopping a card is free. The tariff has no separate line for replacement after loss or theft. No separate standard credit card: the credit figure is the deferred-debit Visa, under the same line.",
+  "after": "An early reissue (renouvellement anticipé) costs €15, and €15 for a cash-only card. Stopping a card is free. The tariff has no separate line for a replacement after loss or theft. La Banque Postale has no separate standard credit card, so the game prices its credit card as the deferred-debit Visa, under the same line."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-la-banque-postale",
+  "field": "lostCardWords",
+  "before": "You stop the card 24/7 in the app, online or on 3639. It’s blocked at once, you must confirm in writing, and the new card arrives 'within a few days'.",
+  "after": "Stop the card at any hour in the app, online or on 3639. It’s blocked at once, you confirm it in writing, and the new card arrives within a few days."
+ },
+ {
+  "export": "SECURITY",
+  "key": "fr-la-banque-postale",
+  "field": "suspectWords",
+  "before": "La Banque Postale says it watches transactions for suspicious ones and sends a text when a transaction is accepted or refused. If you didn't make the payment, you contact your advisor straight away. It will never ask for codes received by text.",
+  "after": "La Banque Postale says it watches for suspicious payments and texts you when one is accepted or refused. If you didn’t make the payment, contact your advisor straight away. It will never ask for codes it has texted you."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-deutsche-bank",
+  "field": "replaceWords",
+  "before": "PLV 'Bestellung einer Ersatzkarte' lists Deutsche Bank Card (girocard debit; Card Plus is a Debit Mastercard) and Mastercard/Visa credit cards (all versions) as free of charge, with no distinction by loss, theft, damage or fault.",
+  "after": "Deutsche Bank’s price list, under Bestellung einer Ersatzkarte (ordering a replacement card), lists the Deutsche Bank Card (a girocard debit card; the Card Plus is a Debit Mastercard) and every version of its Mastercard and Visa credit cards as free, whatever the reason."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-deutsche-bank",
+  "field": "lostCardWords",
+  "before": "The customer blocks the card in online banking or the app (Services > Card > block and/or replace) or by calling the 24/7 card line (069 910-10035); a replacement can be ordered in the same step. Only a block-and-replace flow is described; no self-service temporary freeze was found.",
+  "after": "Block the card in online banking or the app (Services, then Card, then block or replace it) or on the 24-hour card line, 069 910-10035, and order a replacement in the same step. Deutsche Bank describes only blocking and replacing a card, not freezing it yourself for a while."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-deutsche-bank",
+  "field": "suspectWords",
+  "before": "When a card transaction looks unusual, the bank immediately sends a text to the stored mobile number and the customer replies by text to say whether they made the payment. Whether the payment is held until confirmed isn’t stated.",
+  "after": "When a card payment looks unusual, Deutsche Bank texts your mobile at once, and you text back to say whether you made it. It doesn’t say whether the payment is held until you confirm."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-commerzbank",
+  "field": "replaceWords",
+  "before": "Girocard (with Visa debit function) replacement costs 15.00 EUR, charged when the customer asks for it because of a name change, a customer-initiated account switch, or a lost, stolen or misused card, unless the bank is responsible for the cause. The FAQ says a replacement for a defect is 15.00 EUR and loss/theft 'may' be free. The PLV lists no replacement fee for credit cards.",
+  "after": "Commerzbank’s price list has no fee for replacing a credit card. A replacement girocard (with a Visa debit function) costs €15.00 when you ask for one because of a name change, an account switch you started, or a lost, stolen or misused card, unless the bank caused the problem. Its FAQ says a replacement for a faulty girocard is €15.00, and that one after loss or theft may be free."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-commerzbank",
+  "field": "lostCardWords",
+  "before": "The customer blocks the card in the banking app or online banking ('Karte sperren') or by phone (24/7 card-block line +49 69 5050 2040 for credit cards); a lost or stolen credit card is automatically replaced with a new card and PIN by post, and the card number and PIN change (a defect replacement keeps both). A self-set temporary block on a credit card, and a girocard block, can be lifted again in the app or online banking.",
+  "after": "Block the card in the banking app or online banking (Karte sperren), or by phone; for credit cards, the card-block line, +49 69 5050 2040, is open at any hour. A lost or stolen credit card is replaced by post with a new card number and PIN; a replacement for a faulty card keeps both. You can lift a temporary block you set on a credit card, or a girocard block, in the app or online banking."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-postbank",
+  "field": "replaceWords",
+  "before": "The PLV (Stand July 1, 2026) has no replacement-card line at all; Postbank's 'Karten vermisst' page states blocking and the replacement card cost 0.00 EUR. The debit card terms allow a PLV fee for loss/theft/misuse replacements only if the bank isn’t responsible, but no such fee is listed. Debit card is the Postbank Card (girocard with Debit Mastercard function); credit card is the Postbank Mastercard (29 EUR/yr).",
+  "after": "Postbank’s price list (as of July 1, 2026) has no line for a replacement card, and its Karten vermisst page says blocking a card and the replacement cost €0.00. The debit card terms allow a price-list fee for a card replaced after loss, theft or misuse, where the bank isn’t responsible, but no such fee is listed. The debit card is the Postbank Card (a girocard with a Debit Mastercard function), and the credit card is the Postbank Mastercard (€29 a year)."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-postbank",
+  "field": "lostCardWords",
+  "before": "The debit card can be blocked by the customer in online banking or the app, or by phone (0228 5500 5500); a credit card is blocked by phone (0228 5500 5525, 24/7). A replacement card arrives automatically by post within a few days, with a new PIN mailed separately after loss or theft (a defect replacement keeps the old PIN). No self-service temporary freeze was found.",
+  "after": "Block a debit card in online banking or the app, or by phone on 0228 5500 5500. Block a credit card by phone, on 0228 5500 5525, at any hour. A replacement card comes by post within a few days, with a new PIN sent separately after loss or theft; a replacement for a faulty card keeps the old PIN. Postbank doesn’t describe a way to freeze a card yourself for a while."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-ing",
+  "field": "replaceWords",
+  "before": "PLV: replacement card 10 EUR (VISA Card debit and girocard), payable only if the customer is responsible for the cause (loss, theft, misuse, defect, name change). ING's help page table: theft/loss/misuse free, defect 10 EUR, expiry free, name change or new card on request 10 EUR. ING issues no standard credit card; its 'VISA Card' is a debit card.",
+  "after": "ING’s price list charges €10 for a replacement VISA Card (a debit card) or girocard, only if you caused the need for it (loss, theft, misuse, a fault or a name change). Its help page says something different: free after theft, loss or misuse, €10 for a fault, free on expiry, and €10 for a name change or a new card you ask for. ING has no standard credit card; its VISA Card is a debit card."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-ing",
+  "field": "lostCardWords",
+  "before": "The customer blocks the card in the ING app or online banking, or via 116 116 or 069 / 34 22 24; a permanent block can’t be undone and a new card with a new card number is sent automatically by post within a few days. A temporary block (VISA Card only) takes effect at once and the customer can lift it themselves.",
+  "after": "Block the card in the ING app or online banking, or on 116 116 or 069 / 34 22 24. A permanent block can’t be undone, and a new card with a new number comes by post within a few days. A temporary block, on the VISA Card only, takes effect at once and you can lift it yourself."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-berliner-sparkasse",
+  "field": "replaceWords",
+  "before": "Sparkassen-Card (girocard debit) and Mastercard/Visa credit card: replacement for a lost, stolen or misused card 0.00 EUR; for a name change 0.00 EUR; for a damaged card 15.00 EUR only where the customer is responsible for the damage.",
+  "after": "Replacing a Sparkassen-Card (a girocard debit card) or a Mastercard or Visa credit card costs €0.00 after loss, theft or misuse, €0.00 for a name change, and €15.00 for a damaged card, only where you caused the damage."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-berliner-sparkasse",
+  "field": "lostCardWords",
+  "before": "The customer calls 116 116 or the bank's 24/7 lines (Sparkassen-Card 030 869 869 05, credit card 030 245 524 00) or blocks online; blocking is free, and police should be told of a theft (the only way to stop direct-debit (ELV) use of the card). Whether a replacement is sent automatically wasn’t confirmed on a page read; the app's Card Control only switches card functions off temporarily and isn’t a full block.",
+  "after": "Call 116 116 or the bank’s 24-hour lines (030 869 869 05 for the Sparkassen-Card, 030 245 524 00 for a credit card), or block the card online. Blocking is free. Tell the police about a theft: it’s the only way to stop the card being used for direct debits (ELV). The bank’s pages don’t confirm that a replacement is sent automatically. Card Control in the app only switches card functions off for a while; it isn’t a full block."
+ },
+ {
+  "export": "SECURITY",
+  "key": "de-berliner-sparkasse",
+  "field": "suspectWords",
+  "before": "Card Control sends a real-time push or email alert when someone tries to use a card function the customer has switched off; no bank-initiated fraud call or text process was found.",
+  "after": "Card Control sends an app or email alert the moment someone tries to use a card function you’ve switched off. The bank doesn’t describe calling or texting you about suspected fraud."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-santander",
+  "field": "replaceWords",
+  "before": "Tariff item 10: €5.00 per duplicate card, charged only when the cause of the reissue is attributable to the customer (so no loss/theft/damage split is published). The same tariff also has a separate line for a duplicate physical card (its figure could not be matched to its row with confidence) and €3.00 for delivery to the home on request.",
+  "after": "€5.00 for each duplicate card, charged only when the reason for it is your doing; Santander publishes no separate fees for loss, theft or damage. The same tariff has another line for a duplicate physical card, whose figure couldn’t be matched to its row with confidence, and €3.00 for delivery to your home if you ask for it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-santander",
+  "field": "lostCardWords",
+  "before": "A card blocked permanently for loss or theft can’t be reactivated, and Santander automatically generates a replacement card. If the card may only be mislaid, the customer can switch it off temporarily in the app or online banking and switch it back on when it turns up, which avoids waiting for a new card.",
+  "after": "A card blocked for good after loss or theft can’t be turned back on, and Santander makes a replacement automatically. If the card may just be mislaid, you can switch it off in the app or online banking and back on when it turns up, without waiting for a new card."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-santander",
+  "field": "suspectWords",
+  "before": "Not found on Santander Spain's own pages. The tariff lists an optional paid SMS alert service that texts the customer about every card transaction so they can spot fraud and block the card themselves; no bank-initiated confirm-or-decline process is described.",
+  "after": "Santander Spain’s own pages don’t say how it flags a suspicious payment. Its tariff lists an optional paid text alert service that tells you about every card payment, so you can spot fraud and block the card yourself. It doesn’t describe asking you to confirm or decline a payment."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-bbva",
+  "field": "replaceWords",
+  "before": "€4.00 for a debit-card duplicate and €6.00 for a credit-card duplicate; under note 6, the fee is charged only when the cause of the reissue is attributable to the customer. No separate loss/theft/damage figures.",
+  "after": "€4.00 for a duplicate debit card and €6.00 for a duplicate credit card. Note 6 of the tariff says the fee is charged only when the reason for it is your doing. There are no separate fees for loss, theft or damage."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-bbva",
+  "field": "lostCardWords",
+  "before": "Blocking the card (in the app, on bbva.es or by phone) automatically sends a new card under the same contract that keeps the PIN but has a new card number, so the old card's transaction history doesn't carry over. If the customer only limits or switches the card off instead, they can switch the same card back on without needing a new one.",
+  "after": "Block the card in the app, on bbva.es or by phone, and BBVA sends a new card under the same contract. It keeps your PIN but has a new number, so the old card’s payment history doesn’t carry over. If you only limit the card or switch it off instead, you can switch the same card back on without a new one."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-bbva",
+  "field": "suspectWords",
+  "before": "No bank-initiated fraud call or text procedure found on BBVA Spain pages. If someone tries to use a switched-off card, the customer gets a notification that it must be switched back on. Customers can set up personal alerts in the app or on the web, and they report unrecognized transactions themselves by app, web, ATM or phone.",
+  "after": "BBVA Spain’s pages don’t describe calling or texting you about suspected fraud. If someone tries to use a card you’ve switched off, you get a notification that it has to be switched back on. You can set up your own alerts in the app or on the web, and you report a payment you don’t recognize yourself, by app, web, cash machine or phone."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-caixabank",
+  "field": "replaceWords",
+  "before": "The payment-services tariff lists 'Duplicado de tarjeta' at €5.00 per duplicate, with no split by card type or by loss, theft or damage. The English FAQ says the price of an urgent or international replacement is quoted when the card is requested, and in Spain a branch can hand over a replacement card on the spot.",
+  "after": "CaixaBank’s tariff for payment services lists Duplicado de tarjeta (a duplicate card) at €5.00, whatever the card and whether it was lost, stolen or damaged. Its English FAQ says an urgent or international replacement is priced when you ask for it, and in Spain a branch can hand you a replacement on the spot."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-caixabank",
+  "field": "lostCardWords",
+  "before": "The customer blocks the card in CaixaBankNow or CaixaBank Pay (temporarily or permanently) or by phone, and can order the duplicate in the same step. In Spain they can also go to a branch to get a card immediately or turn on mobile payments.",
+  "after": "Block the card, for a while or for good, in CaixaBankNow or CaixaBank Pay or by phone, and order the duplicate in the same step. In Spain you can also go to a branch to get a card at once, or turn on mobile payments."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-caixabank",
+  "field": "suspectWords",
+  "before": "CaixaBank says it sends fraud alerts and card-block notices by SMS and/or push notification through the CaixaBankNow app when the customer needs to know at once. A decline-until-confirmed process isn’t described.",
+  "after": "CaixaBank says it sends fraud alerts and card-block notices by text, or as a notification in the CaixaBankNow app, when you need to know at once. It doesn’t describe declining a payment until you confirm it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-sabadell",
+  "field": "replaceWords",
+  "before": "€3.01 per replacement card when the cause is attributable to the cardholder (section 3.7, applying to cardholders generally). There’s no loss/theft/damage split. Delivery to the home on request is an extra €3.01.",
+  "after": "€3.01 for each replacement card when the reason for it is your doing (section 3.7, for all cardholders). There are no separate fees for loss, theft or damage. Delivery to your home, if you ask for it, is another €3.01."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-sabadell",
+  "field": "lostCardWords",
+  "before": "In the app (My Card > Turn off, block or replace), the customer can switch a missing card off temporarily and back on, or block it permanently after loss or theft and ask for a replacement. Sabadell's free card-protection service refunds fraudulent transactions made in the 48 hours before the loss or theft was reported.",
+  "after": "In the app (My Card, then Turn off, block or replace), you can switch a missing card off and back on, or block it for good after loss or theft and ask for a replacement. Sabadell’s free card protection refunds fraudulent payments made in the 48 hours before you reported the loss or theft."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-sabadell",
+  "field": "suspectWords",
+  "before": "Sabadell's free card-protection service texts the customer about every credit or debit card transaction over €150, and the customer must phone the bank at once if they didn't make it. A decline-until-confirmed process wasn’t found on Sabadell's own pages.",
+  "after": "Sabadell’s free card protection texts you about every credit or debit card payment over €150, and you have to phone the bank at once if you didn’t make it. Sabadell’s pages don’t describe declining a payment until you confirm it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-bankinter",
+  "field": "replaceWords",
+  "before": "The pre-contract information for the Visa Clásica credit card charges €25 per duplicate or second card. An older 2012 card tariff (Epígrafe 9) listed €3.00 for a duplicate when the cause is attributable to the customer. No current debit-card duplicate fee was found.",
+  "after": "No current fee for a duplicate debit card was found in Bankinter’s terms. An older card tariff, from 2012, listed €3.00 for a duplicate when the reason was your doing. Its pre-contract information for the Visa Clásica credit card charges €25 for each duplicate or second card."
+ },
+ {
+  "export": "SECURITY",
+  "key": "es-bankinter",
+  "field": "lostCardWords",
+  "before": "Requesting a duplicate blocks the current card immediately, and a new card arrives inactive by ordinary mail at the home address within 5 days (5 business days for a new account's card; it can be collected at a branch to save time). For a card that may just be lost, the customer can switch it off temporarily in the app or on the web and switch it back on, or block it permanently.",
+  "after": "Asking for a duplicate blocks your card at once, and the new card comes by ordinary mail to your home within 5 days, not yet activated (5 business days for a new account’s card; you can collect it at a branch to save time). For a card that may just be lost, you can switch it off in the app or on the web and back on again, or block it for good."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-mufg",
+  "field": "replaceWords",
+  "before": "Cash card or MUFG Debit reissue after loss or theft costs 550 yen (tax included) through the app, 1,100 yen by phone or at a branch. MUFG Card (credit) reissue was set at 1,000 yen before consumption tax in a 2011 notice (no current tax-included figure found); Gold and Platinum reissue free. Cash card delivery is stated as about 1 week to 10 days, so standardDays = 8 business days.",
+  "after": "Reissuing a cash card or MUFG Debit card after loss or theft costs ¥550, tax included, in the app, or ¥1,100 by phone or at a branch. A 2011 notice set reissuing an MUFG Card (a credit card) at ¥1,000 before consumption tax, and no current figure with tax was found. Gold and Platinum cards are reissued free. MUFG says a cash card takes about a week to ten days to arrive, so the game uses 8 business days."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-mufg",
+  "field": "lostCardWords",
+  "before": "The customer reports the loss in the MUFG app (24/7 immediate suspension) or by phone to the loss center, and the card is stopped at once; reissue can be requested in the same step and the new card comes by registered mail that isn’t forwarded. A reissued debit card carries a new card number.",
+  "after": "Report the loss in the MUFG app, which stops the card at once at any hour, or by phone to the loss center. You can ask for a new card in the same step, and it comes by registered mail, which isn’t forwarded. A reissued debit card has a new number."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-mufg",
+  "field": "suspectWords",
+  "before": "For the MUFG Card, when a suspicious charge is detected the transaction is held and the cardholder is asked to confirm by email, SMS, an automated call or an operator call; if they deny it, the card is replaced with a new number. The debit card sends a usage notice email for each purchase.",
+  "after": "On the MUFG Card, a suspicious charge is held while MUFG asks you to confirm it by email, text, an automated call or a call from an operator. If you say it wasn’t you, the card is replaced with a new number. The debit card emails you about each purchase."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-smbc",
+  "field": "replaceWords",
+  "before": "Cash card reissue is 1,100 yen (tax included); Olive Flexible Pay is free except at the Olive Standard rank, which pays 1,100 yen on loss or theft. Sumitomo Mitsui Card (credit) reissue is free when done online and 1,100 yen by phone (Gold and above free). Bank cards arrive in 1-2 weeks, so standardDays = 10 business days; credit cards in about 1 week to 10 days.",
+  "after": "Reissuing a cash card costs ¥1,100, tax included. Olive Flexible Pay is reissued free, except at the Olive Standard rank, which pays ¥1,100 after loss or theft. A Sumitomo Mitsui Card (a credit card) is reissued free online and for ¥1,100 by phone; Gold and above are free. Bank cards arrive in 1 to 2 weeks, so the game uses 10 business days. Credit cards take about a week to ten days."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-smbc",
+  "field": "lostCardWords",
+  "before": "The cardholder reports online or by phone; the card company either stops the card permanently and reissues it with a new number, or places a temporary restriction that can be lifted if the card turns up. Reissued credit and debit cards always get a new card number.",
+  "after": "Report it online or by phone. The card company either stops the card for good and reissues it with a new number, or restricts it for a while, which can be lifted if the card turns up. A reissued credit or debit card always has a new number."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-smbc",
+  "field": "suspectWords",
+  "before": "A 24/7 fraud detection system restricts the card when a charge looks like fraud and contacts the cardholder by email, phone or SMS; answering through the link in the notice that the charge was theirs reopens the card.",
+  "after": "A fraud detection system, running at all hours, restricts the card when a charge looks like fraud, and contacts you by email, phone or text. Confirm through the link in the message that the charge was yours, and the card works again."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-mizuho",
+  "field": "replaceWords",
+  "before": "Cash card reissue is 1,100 yen (tax included) for loss or theft and free for a failed chip or stripe or wear damage; the page also lists 550 yen for a switch or reissue, apparently the online (Mizuho Direct) rate. Mileage Club credit card reissue is 1,100 yen depending on the reason. Cash card arrives about 10 days after a branch request, 1-2 weeks online, so standardDays = 10 business days; credit or debit-linked cards take 2-4 weeks.",
+  "after": "Reissuing a cash card costs ¥1,100, tax included, after loss or theft, and nothing for a failed chip or stripe or for wear. The page also lists ¥550 for a switch or reissue, which looks like the online (Mizuho Direct) price. Reissuing a Mileage Club credit card costs ¥1,100, depending on the reason. A cash card arrives about 10 days after you ask at a branch, or 1 to 2 weeks online, so the game uses 10 business days. Credit and debit-linked cards take 2 to 4 weeks."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-mizuho",
+  "field": "lostCardWords",
+  "before": "The customer calls the branch on weekdays or the 24-hour loss center, and the bank stops transactions immediately and explains how to reissue. A card found after being reported lost can’t be used again until the customer reopens it at a branch.",
+  "after": "Call your branch on a weekday, or the loss center at any hour, and Mizuho stops the card at once and explains how to get a new one. If you find a card you’ve reported lost, you can’t use it again until you reopen it at a branch."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-resona",
+  "field": "replaceWords",
+  "before": "Cash card and Resona Debit (Visa) reissue is 1,100 yen (tax included) per card for loss, theft or a forgotten PIN; free for a damaged card. Resona Card (credit) says only that a set reissue fee applies. Mailed cards arrive in 10-14 days, so standardDays = 10 business days; a branch can usually issue the card on the spot, with no separate charge listed beyond the reissue fee.",
+  "after": "Resona says only that the Resona Card (a credit card) has a set reissue fee, without saying how much. Reissuing a cash card or a Resona Debit (Visa) card costs ¥1,100 a card, tax included, after loss, theft or a forgotten PIN, and nothing for a damaged card. Cards by post arrive in 10 to 14 days, so the game uses 10 business days. A branch can usually give you the card on the spot, with no charge listed beyond the reissue fee."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-resona",
+  "field": "lostCardWords",
+  "before": "The customer phones the branch (weekdays) or the after-hours center to stop the card, and can also set the cash card or debit function to suspended and back in the Resona Group app, though a lost card must still be reported to the bank. The replacement is ordered online or at a branch, where it’s normally handed over the same day.",
+  "after": "Phone your branch on a weekday, or the after-hours center, to stop the card. You can also suspend the cash card or the debit function in the Resona Group app and turn it back on, but you still have to report a lost card to the bank. Order the replacement online or at a branch, where you normally get it the same day."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-resona",
+  "field": "suspectWords",
+  "before": "The bank runs 24/7 fraud monitoring on the debit card and asks customers to check their statements and call 0120-24-3989 about any withdrawal they don't recognize; no outbound contact method is described.",
+  "after": "Resona watches the debit card for fraud at all hours, and asks you to check your statements and call 0120-24-3989 about any withdrawal you don’t recognize. It doesn’t say how it would contact you."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-japan-post-bank",
+  "field": "replaceWords",
+  "before": "Reissuing a card or passbook after loss or theft costs 1,100 yen (tax included) each; Yucho Debit reissue may carry the same 1,100 yen fee. JP BANK Card (credit) reissue may carry a fee, amount not stated (Gold free). A cash card arrives about 2 weeks after the request, so standardDays = 10 business days; a JP BANK credit card takes about one month.",
+  "after": "Reissuing a JP BANK Card (a credit card) may cost a fee that isn’t stated; the Gold card is free. A JP BANK credit card takes about a month to arrive. Reissuing a cash card or a passbook after loss or theft costs ¥1,100 each, tax included, and Yucho Debit may cost the same. A cash card arrives about 2 weeks after you ask, so the game uses 10 business days."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-japan-post-bank",
+  "field": "lostCardWords",
+  "before": "The customer calls the 24-hour card loss center or uses a web form, and the bank stops transactions on the card; the replacement is applied for at a Japan Post Bank or post office counter with passbook, seal and ID and is sent by registered mail. A card found afterward stays stopped until the customer lifts the stop in person at a counter.",
+  "after": "Call the card loss center, open at all hours, or use the web form, and the bank stops the card. Apply for the replacement at a Japan Post Bank or post office counter with your passbook, seal and ID, and it comes by registered mail. If you find the card afterward, it stays stopped until you lift the stop in person at a counter."
+ },
+ {
+  "export": "SECURITY",
+  "key": "jp-japan-post-bank",
+  "field": "suspectWords",
+  "before": "Yucho Debit is monitored for fraud 24/7 and the bank sends a usage confirmation email to the registered address; customers can switch the debit card off and on themselves on the Yucho Debit member website (the passbook app can’t stop a cash card).",
+  "after": "Japan Post Bank watches Yucho Debit for fraud at all hours and emails you to confirm each use. You can switch the debit card off and on yourself on the Yucho Debit member website; the passbook app can’t stop a cash card."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-kb-kookmin",
+  "field": "replaceWords",
+  "before": "Check card: the first three reissues in a year are free; from the fourth reissue in a year, 2,000 won each. Same rule whatever the reason.",
+  "after": "No fee was found for a new KB Kookmin credit card. A check card’s first three reissues in a year are free; from the fourth, each costs ₩2,000, whatever the reason."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-kb-kookmin",
+  "field": "lostCardWords",
+  "before": "Once a loss is reported (phone 1588-1688, KB Pay app or a branch) the card can’t be used at all; the customer can later lift the report in KB Pay if the card turns up, as long as the replacement hasn’t gone into production. Charges others made in the 60 days around the report can be partly compensated.",
+  "after": "Once you report a loss (on 1588-1688, in the KB Pay app or at a branch), the card can’t be used at all. If it turns up, you can lift the report in KB Pay, as long as the replacement hasn’t gone into production. Charges someone else made in the 60 days before your report can be partly compensated."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-kb-kookmin",
+  "field": "suspectWords",
+  "before": "KB Kookmin Card runs a fraud detection system 24/7 that scores every transaction; a flagged one triggers a text message and a call from monitoring staff to confirm whether the customer made it.",
+  "after": "KB Kookmin Card’s fraud detection system scores every payment, at all hours. When one is flagged, you get a text and a call from its monitoring staff to check whether you made it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-shinhan",
+  "field": "replaceWords",
+  "before": "Check card design issuance fee (1,000 won on e.g. Pick E) is charged only at first issue, not when the same design is reissued, unless the card was closed first.",
+  "after": "No fee was found for a new Shinhan credit card. A check card’s design fee (₩1,000 on the Pick E, for example) is charged only when the card is first issued, not when the same design is reissued, unless the card was closed first."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-shinhan",
+  "field": "lostCardWords",
+  "before": "Reporting a loss blocks further use of the card at once. For a customer abroad, Shinhan will send an emergency replacement card (credit cards only, no ATM or online use) to where they are staying within 1 to 3 business days depending on the card network.",
+  "after": "Reporting a loss stops the card at once. If you’re abroad, Shinhan sends an emergency credit card to where you’re staying within 1 to 3 business days, depending on the card network. It can’t be used at a cash machine or online."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-hana",
+  "field": "lostCardWords",
+  "before": "Reporting a loss or theft (1800-1111, 24 hours) stops the card from being used so that nobody else can charge it, and a new card can then be reissued.",
+  "after": "Report a loss or theft on 1800-1111, at any hour, and the card is stopped so nobody else can use it. You can then have a new card issued."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-nh",
+  "field": "lostCardWords",
+  "before": "The customer reports the loss online, at an NH NongHyup Bank branch or on 1644-4000; once a replacement is registered the old card is void immediately and stays void even if found. A fraud claim of 500,000 won or more carries a 10,000 won per-card compensation processing fee.",
+  "after": "Report the loss online, at an NH NongHyup Bank branch or on 1644-4000. Once a replacement is registered, the old card stops working for good, even if you find it. A fraud claim of ₩500,000 or more costs ₩10,000 a card to process."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-kakaobank",
+  "field": "replaceWords",
+  "before": "2,000 won, charged only when the card is reissued because it was lost or damaged.",
+  "after": "KakaoBank charges ₩2,000 to reissue its check card, only when it was lost or damaged. No fee was found for a credit card."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-kakaobank",
+  "field": "lostCardWords",
+  "before": "The customer can first lock domestic and overseas payments in the app, then report the loss in the app, by phone (1599-8888) or through the chatbot and order a new card; the old card is closed automatically once the new one is used, and after a reissue the loss report can only be lifted through the customer center.",
+  "after": "You can first lock payments at home and abroad in the app, then report the loss in the app, by phone on 1599-8888 or through the chatbot, and order a new card. The old card closes by itself once you use the new one. After a reissue, only the customer center can lift the loss report."
+ },
+ {
+  "export": "SECURITY",
+  "key": "kr-kakaobank",
+  "field": "suspectWords",
+  "before": "When KakaoBank's fraud detection system flags a transaction, the customer is asked to verify it by video call.",
+  "after": "When KakaoBank’s fraud detection flags a payment, it asks you to confirm it on a video call."
+ },
+ {
+  "export": "SECURITY",
+  "key": "au-commbank",
+  "field": "replaceWords",
+  "before": "No fee for an ordinary replacement in Australia (none is listed in either fee schedule). A $20 emergency replacement card fee applies when an emergency card is delivered to you, typically overseas; the bank says it can send one anywhere in the world for $20.",
+  "after": "An ordinary replacement in Australia is free: neither fee schedule lists a fee. An emergency card delivered to you, usually overseas, costs A$20, and CommBank says it can send one anywhere in the world for that."
+ },
+ {
+  "export": "SECURITY",
+  "key": "au-commbank",
+  "field": "suspectWords",
+  "before": "An automated text arrives within seconds of possible fraud asking you to reply yes if it was you or no if it wasn't; a no brings a call from a fraud agent. App push alerts for suspicious transactions can also be turned on.",
+  "after": "Within seconds of possible fraud, an automated text asks you to reply yes if it was you or no if it wasn’t, and a no brings a call from a fraud agent. You can also turn on app alerts for suspicious payments."
+ },
+ {
+  "export": "SECURITY",
+  "key": "au-westpac",
+  "field": "replaceWords",
+  "before": "No replacement fee appears in the personal deposit account fee tables. If you are overseas you pay the courier cost; for a credit card couriered within Australia a $25 courier charge goes on the card, with more for same-day delivery.",
+  "after": "Westpac’s fee tables for personal accounts list no replacement fee. If you’re overseas, you pay the courier. A credit card sent by courier within Australia puts an A$25 courier charge on the card, and more for same-day delivery."
+ },
+ {
+  "export": "SECURITY",
+  "key": "au-westpac",
+  "field": "lostCardWords",
+  "before": "Reporting the card lost or stolen permanently cancels it (and any additional cardholder cards) and orders a replacement with a new card number. A digital card is available in the Westpac App right away, and a misplaced card can be locked for up to 15 days instead.",
+  "after": "Reporting the card lost or stolen cancels it for good, along with any extra cardholders’ cards, and orders a replacement with a new number. A digital card is ready in the Westpac App right away. If the card is just misplaced, you can lock it for up to 15 days instead."
+ },
+ {
+  "export": "SECURITY",
+  "key": "au-nab",
+  "field": "replaceWords",
+  "before": "No card replacement fee is listed in the personal banking fee guide (the only card fees are Platinum Visa Debit at $10 a month and $20 to change card color). If a card is lost overseas, Visa can issue a temporary emergency card, usually within 48 to 72 hours, that expires after two months.",
+  "after": "NAB’s personal banking fee guide lists no fee for a replacement card; its only card fees are A$10 a month for a Platinum Visa Debit and A$20 to change a card’s color. If you lose a card overseas, Visa can issue a temporary emergency card, usually within 48 to 72 hours, which expires after two months."
+ },
+ {
+  "export": "SECURITY",
+  "key": "au-nab",
+  "field": "suspectWords",
+  "before": "The app sends a push notification asking 'Yes, it's me' or 'No, not me', and the card may be blocked until you answer; otherwise an automated text asks you to reply 1 or 0, and a 0 brings a call from a fraud specialist. Since June 2026 customers can review flagged transactions and unblock the card in the app.",
+  "after": "The app sends a notification asking “Yes, it’s me” or “No, not me”, and the card may be blocked until you answer. Otherwise an automated text asks you to reply 1 or 0, and a 0 brings a call from a fraud specialist. Since June 2026 you can review flagged payments and unblock the card in the app."
+ },
+ {
+  "export": "SECURITY",
+  "key": "au-anz",
+  "field": "replaceWords",
+  "before": "No replacement fee in the account or credit card fee schedules. A $50 Priority Fee applies if you ask for a card or PIN to be issued and delivered as a priority, and courier delivery overseas costs $50.",
+  "after": "ANZ’s account and credit card fee schedules list no replacement fee. There’s an A$50 Priority Fee if you ask for a card or PIN to be issued and delivered as a priority, and courier delivery overseas costs A$50."
+ },
+ {
+  "export": "SECURITY",
+  "key": "au-anz",
+  "field": "lostCardWords",
+  "before": "The bank cancels the reported card and sends a replacement within 5 to 7 working days in Australia, with a new card number (a reissued card keeps its number only when it wasn't reported lost or stolen). For a credit card it may also open a new card account and move the balance across.",
+  "after": "ANZ cancels the card you report and sends a replacement with a new number within 5 to 7 working days in Australia; a reissued card keeps its number only if it wasn’t reported lost or stolen. For a credit card, ANZ may also open a new card account and move the balance across."
+ },
+ {
+  "export": "SECURITY",
+  "key": "au-anz",
+  "field": "suspectWords",
+  "before": "When its fraud system flags an unusual card transaction, ANZ may decline it or block the card and usually sends a two-way text in real time asking you to reply; once you confirm the transaction, the card should be unblocked within 15 minutes.",
+  "after": "When its fraud system flags an unusual card payment, ANZ may decline it or block the card, and usually texts you at once asking you to reply. Once you confirm the payment, the card should be unblocked within 15 minutes."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-anz",
+  "field": "replaceWords",
+  "before": "$5 per card for EFTPOS, Visa Debit and credit cards, lost and stolen included; urgent delivery is charged at the actual courier fee, in New Zealand or overseas. A lost card isn’t replaced while the customer is overseas; ANZ waits until they are back in New Zealand. No charge for the replacement wallet card in Apple Pay or Google Pay.",
+  "after": "NZ$5 a card for EFTPOS, Visa Debit and credit cards, lost and stolen included. Urgent delivery costs whatever the courier charges, in New Zealand or overseas. ANZ doesn’t replace a lost card while you’re overseas: it waits until you’re back in New Zealand. The replacement card in Apple Pay or Google Pay is free."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-anz",
+  "field": "lostCardWords",
+  "before": "The card is canceled in goMoney, Internet Banking or by phone and stops working for new transactions (ATM withdrawals can take up to 15 minutes to block), direct debits set up on the Visa Debit number stop, and the Apple Pay or Google Pay wallet card is canceled and re-created automatically for the replacement. The replacement is ordered at the customer's request and mailed out.",
+  "after": "Cancel the card in goMoney, Internet Banking or by phone, and it stops working for anything new (cash machine withdrawals can take up to 15 minutes to block). Direct debits set up on the Visa Debit number stop, and the card in Apple Pay or Google Pay is canceled and made again for the replacement. ANZ orders the replacement when you ask, and posts it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-anz",
+  "field": "suspectWords",
+  "before": "ANZ Fraud Check sends a text or email about the unusual transaction and the customer replies Yes or No; the card may be blocked until they reply, stays blocked if ANZ can't reach them, and a No reply cancels the card and a replacement may be ordered.",
+  "after": "ANZ Fraud Check texts or emails you about an unusual payment, and you reply Yes or No. The card may be blocked until you reply, and stays blocked if ANZ can’t reach you. A No cancels the card, and a replacement may be ordered."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-asb",
+  "field": "replaceWords",
+  "before": "No replacement card fee is listed for Visa Debit or credit cards; only overseas card delivery is charged ('applicable courier service fee'). Standard delivery is 5 to 7 business days in New Zealand; overseas delivery depends on local carriers.",
+  "after": "ASB lists no fee for replacing a Visa Debit or credit card. Only delivery overseas is charged, at the “applicable courier service fee”. Standard delivery takes 5 to 7 business days in New Zealand; overseas, it depends on local carriers."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-asb",
+  "field": "lostCardWords",
+  "before": "The customer cancels and replaces the card in the ASB app (Cards & devices), FastNet Classic, by phone or in a branch; the old card is canceled immediately and the new one is mailed within 5 to 7 business days. Apple Pay and Google Pay keep working and switch to the new card details around 5 a.m. the next day.",
+  "after": "Cancel and replace the card in the ASB app (Cards & devices), in FastNet Classic, by phone or at a branch. The old card is canceled at once and the new one is posted within 5 to 7 business days. Apple Pay and Google Pay keep working, and switch to the new card’s details around 5 a.m. the next day."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-asb",
+  "field": "suspectWords",
+  "before": "ASB's fraud monitoring may block a transaction, and ASB then contacts the customer to confirm whether they made it, by card security alert, phone call, email or text message.",
+  "after": "ASB’s fraud monitoring may block a payment, and ASB then asks you whether you made it, by a card security alert, a call, an email or a text."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-bnz",
+  "field": "replaceWords",
+  "before": "No fee when a card is replaced because it’s faulty, damaged, lost or stolen; if the customer chooses courier delivery, a courier charge may apply (amount not published).",
+  "after": "No fee when a card is replaced because it’s faulty, damaged, lost or stolen. If you choose courier delivery, there may be a courier charge, and BNZ doesn’t publish it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-bnz",
+  "field": "lostCardWords",
+  "before": "The customer calls BNZ or cancels the card in the app and orders a replacement, which arrives within 10 business days; the old card must be cut up if it turns up. The replacement arrives unblocked but has to be activated.",
+  "after": "Call BNZ, or cancel the card in the app and order a replacement, which arrives within 10 business days. If the old card turns up, cut it up. The replacement arrives unblocked, but you have to activate it."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-bnz",
+  "field": "suspectWords",
+  "before": "BNZ's transaction monitoring may decline suspicious transactions or block the card for security; the pages read don’t say whether BNZ texts or calls, and they tell the customer to call 0800 735 901 if they suspect fraud.",
+  "after": "BNZ’s monitoring may decline suspicious payments or block the card for security. BNZ doesn’t say whether it texts or calls you; it asks you to call 0800 735 901 if you suspect fraud."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-westpac",
+  "field": "replaceWords",
+  "before": "Debit Mastercard and EFTPOS replacements cost $10 plus courier costs where applicable; credit card replacements cost $0 plus courier costs where applicable. Standard delivery is 5 to 10 days. An expiring credit card is reissued free the month before expiry.",
+  "after": "Replacing a Debit Mastercard or EFTPOS card costs NZ$10, and a credit card NZ$0, plus courier costs where they apply. Standard delivery takes 5 to 10 days. A credit card about to expire is reissued free the month before."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-westpac",
+  "field": "lostCardWords",
+  "before": "The customer cancels the card in Westpac One or at a branch and Westpac permanently blocks the old card; the new card should arrive in 5 to 10 days, and Apple Pay or Google Pay keep working meanwhile. Mastercard's Automatic Billing Updater doesn’t apply to a card replaced because it was lost, stolen or used fraudulently, so the customer updates recurring payments themselves.",
+  "after": "Cancel the card in Westpac One or at a branch, and Westpac blocks the old card for good. The new card should arrive in 5 to 10 days, and Apple Pay or Google Pay keep working meanwhile. Mastercard’s Automatic Billing Updater doesn’t cover a card replaced because it was lost, stolen or used by someone else, so you update your regular payments yourself."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-westpac",
+  "field": "suspectWords",
+  "before": "When a transaction looks unusual, Westpac tries to reach the customer by phone (8 a.m. to 9:30 p.m. local time), email or text first; if it can't, it may put a temporary block on the card, lifted at once if the customer confirms the spending is genuine, and a confirmed fraud gets the card fully blocked and replaced.",
+  "after": "When a payment looks unusual, Westpac first tries to reach you by phone (8 a.m. to 9:30 p.m. local time), email or text. If it can’t, it may block the card for a while, and lifts the block at once if you confirm the spending was yours. If it’s fraud, the card is blocked for good and replaced."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-kiwibank",
+  "field": "replaceWords",
+  "before": "The current fees guide (effective May 14, 2026) lists no card replacement or card courier fee for Visa Debit, EFTPOS or credit cards. Lost, stolen or damaged Visa Debit and credit cards can be replaced; EFTPOS cards only if lost or stolen.",
+  "after": "Kiwibank’s fees guide (effective May 14, 2026) lists no fee to replace or courier a Visa Debit, EFTPOS or credit card. Lost, stolen or damaged Visa Debit and credit cards can be replaced; EFTPOS cards only if lost or stolen."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-kiwibank",
+  "field": "lostCardWords",
+  "before": "Ordering a replacement in the app cancels the old card at once and a new one is mailed, arriving within 10 business days; Apple Pay and Google Pay keep working. If the new card has a different number, the customer has to update their regular payments and saved card details themselves.",
+  "after": "Ordering a replacement in the app cancels the old card at once, and a new one comes by post within 10 business days. Apple Pay and Google Pay keep working. If the new card has a different number, you have to update your regular payments and saved card details yourself."
+ },
+ {
+  "export": "SECURITY",
+  "key": "nz-kiwibank",
+  "field": "suspectWords",
+  "before": "If Kiwibank notices unusual spending it may send a text or email asking whether the customer made the transaction; if it can't reach them and fraud looks likely, it may temporarily block the card until they speak.",
+  "after": "If Kiwibank notices unusual spending, it may text or email to ask whether you made the payment. If it can’t reach you and fraud looks likely, it may block the card until you speak to it."
+ }
+]

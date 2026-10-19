@@ -277,7 +277,7 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
     expect(words).toContain('Your Cards Lock a card, report it lost or stolen, or report a payment that wasn’t yours');
     expect(words).toContain('A new card is free. A rushed one costs $15.00 more. Cards last 4 years here. That’s estimated: the bank doesn’t say.');
     expect(words).toContain('The bank lists no fee for a new card, so the game charges nothing for one.');
-    expect(words).toContain('The law on the debit card: Under the Electronic Fund Transfer Act');
+    expect(words).toContain('The law on the debit card: If you report a lost or stolen debit card within two business days');
   });
 
   it('says how the day’s spending is paid and what savings covers, and what cash is in hand', () => {

@@ -1,0 +1,16 @@
+{
+ "src/engine/content/security.ts#FRAUD_LAW": {
+  "status": "Rewritten",
+  "hash": "217c92c7fdb4",
+  "on": "2026-10-19",
+  "evidence": "Your Cards drawn at a bank in each of the 13 countries by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/security.txt); tests/language-money.test.ts asserts the US debit card law's opening on Chase's screen",
+  "first": "Pending"
+ },
+ "src/engine/content/security.ts#SECURITY": {
+  "status": "Rewritten",
+  "hash": "6c309d6a58e7",
+  "on": "2026-10-19",
+  "evidence": "Your Cards drawn at each of the 60 banks by docs/verification/editorial-2026-10-19/money-data/render-panels.test.ts (rendered/security.txt); tests/evidence2-b04.test.ts asserts Wells Fargo's rush words on the screen",
+  "first": "Pending"
+ }
+}

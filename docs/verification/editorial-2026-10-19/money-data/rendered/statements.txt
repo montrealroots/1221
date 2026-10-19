@@ -1,0 +1,1799 @@
+=== us-chase (the life banks at us-chase)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Chase Total Checking ···3017, Chase Chase Savings ···4971, Chase Chase Freedom Unlimited ···9931, Chase 
+Period August 2026, So Far 
+Opening Balance $0.00 
+Money In $92,391.00 
+Money Out $0.00 
+Interest, After Tax $0.00 
+Fees $0.00 
+Available Now $92,391.00 
+Date What In / Out Balance 
+August 24, 2026 Opening balance: Chase Total Checking +$92,391.00 $92,391.00 
+Sources And Estimates
+A card payment: When Chase approves a debit card purchase it holds that much of your available balance, generally for three business days. The merchant can take several days longer to collect, so the purchase may post after the hold has already dropped off. Overnight: Each business night Chase first makes any adjustments from the day before and adds deposits. Then it takes out withdrawals, ATM and debit card transactions, checks, automatic payments, wires and real-time payments in the order of the date and time they were approved or showed as pending, with ties going largest to smallest. Items it has no time for post at the end of their day. Overdraft Protection transfers and similar items come next, largest to smallest, and fees come last. Source: Chase Deposit Account Agreement, effective June 14, 2026 (chase.com/content/dam/chase-ux/documents/personal/checking/deposit-account-agreement.pdf), Posting Order and Debit Card Authorizations and holds; Chase Cardmember Agreement COL00067 (chase.com/content/dam/chase-ux/feed/cmaonline/Chase/COL00067.pdf), Paying Us Back; chase.com/personal/credit-cards/education/basics/pending-transactions, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned $0.00 Before tax 
+Tax Taken Off It $0.00 
+Bank Fees $0.00 
+Card Fees $0.00 
+Card Interest Paid $0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (USD) 
+A Payment Over (USD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== us-bank-of-america (the life banks at us-bank-of-america)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Advantage Plus Banking ···2489, Bank of America Advantage Savings ···7164, Bank of America Bank of America Customized Cash Rewards credit card ···9931, Bank of America 
+Period August 2026, So Far 
+Opening Balance $0.00 
+Money In $92,391.00 
+Money Out $0.00 
+Interest, After Tax $0.00 
+Fees $0.00 
+Available Now $92,391.00 
+Date What In / Out Balance 
+August 24, 2026 Opening balance: Advantage Plus Banking +$92,391.00 $92,391.00 
+Sources And Estimates
+A card payment: When Bank of America approves a debit card purchase it may put a hold on that amount, and in most cases the hold ends three business days later or when the merchant collects, whichever comes first. Hotels and car rentals can be held longer, and if the merchant collects after the hold ends, the bank still pays it. Overnight: At the end of each business day Bank of America sorts items into groups and posts them group by group: backdated credits, then deposits and other credits, then backdated debits, then adjustments (each largest to smallest). Next come debits it has a date and time for, such as debit card purchases, ATM withdrawals, Zelle and wires, in date and time order with ties largest to smallest and undated ones last. Then checks in check-number order, then other electronic debits like ACH and bill payments largest to smallest, then fees, then Keep the Change transfers. Source: Bank of America Deposit Agreement and Disclosures, effective May 15, 2026 (bankofamerica.com/salesservices/deposits/resources/deposit-agreements/), processing and posting order and debit card authorization holds; Example BankAmericard Credit Card Agreement (bankofamerica.com/content/documents/creditcard/bankamericard_english.pdf); bankofamerica.com/credit-cards/credit-card-payments-statements-faq/, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned $0.00 Before tax 
+Tax Taken Off It $0.00 
+Bank Fees $0.00 
+Card Fees $0.00 
+Card Interest Paid $0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (USD) 
+A Payment Over (USD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== us-wells-fargo (the life banks at us-wells-fargo)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Everyday Checking ···5949, Wells Fargo Way2Save Savings ···2498, Wells Fargo Wells Fargo Active Cash Card ···9931, Wells Fargo 
+Period August 2026, So Far 
+Opening Balance $0.00 
+Money In $92,391.00 
+Money Out $0.00 
+Interest, After Tax $0.00 
+Fees $0.00 
+Available Now $92,391.00 
+Date What In / Out Balance 
+August 24, 2026 Opening balance: Everyday Checking +$92,391.00 $92,391.00 
+Sources And Estimates
+A card payment: If the merchant hasn't asked Wells Fargo for payment within three business days, the bank usually releases the hold on a debit card purchase, though the merchant can still collect later. Car rentals, hotels, cash disbursements and international purchases can be held for up to 30 business days. Overnight: Each business night Wells Fargo first adds deposits received before the cutoff. Then it takes out items it already approved and can't return, such as debit card purchases, ATM withdrawals, transfers, Bill Pay and cashed checks, sorted by the date and time they happened, with ties smallest to largest. Last come checks and preauthorized ACH payments, sorted by the date and time the bank received them, ties smallest to largest, with store-issued debit card ACH payments at the very end. Source: Wells Fargo Deposit Account Agreement, effective July 28, 2026 (wellsfargo.com/assets/pdf/small-business/agreement.pdf, covers consumer and business), How we process and post transactions; wellsfargo.com/help/online-banking/activity-faqs/; Wells Fargo Active Cash Credit Card Account Agreement, June 23, 2026 (wellsfargo.com/credit-cards/agreements/active-cash-agreement/), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned $0.00 Before tax 
+Tax Taken Off It $0.00 
+Bank Fees $0.00 
+Card Fees $0.00 
+Card Interest Paid $0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (USD) 
+A Payment Over (USD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== us-citi (the life banks at us-citi)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Citi Access Checking ···0083, Citi Citi Savings ···8476, Citi Citi Double Cash Card ···9931, Citi 
+Period August 2026, So Far 
+Opening Balance $0.00 
+Money In $92,391.00 
+Money Out $0.00 
+Interest, After Tax $0.00 
+Fees $0.00 
+Available Now $92,391.00 
+Date What In / Out Balance 
+August 24, 2026 Opening balance: Citi Access Checking +$92,391.00 $92,391.00 
+Sources And Estimates
+A card payment: Citi says a debit card hold is typically lifted within five to seven business days, once the money has gone to the merchant. Its account agreement only says the hold stays until the purchase settles or Citi decides it probably won't be processed. Overnight: Citi says it can post items in whatever order it chooses, but generally it first adds deposits made before the cutoff, then takes out its fees. Transactions that arrive in real time during the day, like ATM and teller withdrawals, debit card purchases, transfers, online bill payments and most ACH debits, come out as they happen if there's enough money. Checks and any ACH debits not already taken during the day come out last, smallest to largest. Source: Citibank Consumer Deposit Account Agreement, effective November 20, 2025 (citi.com/content/dam/cfs/mobile/assets/JRS/popups/ao/CDAA.pdf), 7.2.3 Posting Order and Authorizations; citi.com/banking/personal-banking-guide/basic-finance/how-to-remove-hold-on-bank-account-funds; Citi Card Agreement CMA_GenericADA-9 (citi.com/CRD/PDF/CMA/cardAgreement/CMA_GenericADA-9.pdf); citi.com/credit-cards/understanding-credit-cards/how-long-does-a-credit-card-payment-take-to-post, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned $0.00 Before tax 
+Tax Taken Off It $0.00 
+Bank Fees $0.00 
+Card Fees $0.00 
+Card Interest Paid $0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (USD) 
+A Payment Over (USD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== us-capital-one (the life banks at us-capital-one)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account 360 Checking ···4697, Capital One 360 Performance Savings ···8916, Capital One Platinum from Capital One ···9931, Capital One 
+Period August 2026, So Far 
+Opening Balance $0.00 
+Money In $92,391.00 
+Money Out $0.00 
+Interest, After Tax $0.00 
+Fees $0.00 
+Available Now $92,391.00 
+Date What In / Out Balance 
+August 24, 2026 Opening balance: 360 Checking +$92,391.00 $92,391.00 
+Sources And Estimates
+A card payment: Capital One says a pending debit card transaction lowers your available balance and can stay on the account for up to 5 days before it posts. Overnight: PIN debit purchases, ATM transactions, withdrawals, Zelle transfers into Capital One and fees post as they come in during the day. Everything else posts in batches through the day in this order: ACH credits, checks presented for payment, signature debit card transactions, then scheduled items like Zelle to other banks, ACH debits and Mail a Check. Within each batch credits go first, then debits. Signature debit card transactions post in date and time order, scheduled Zelle, Mail a Check and Bill Pay go largest to smallest, and everything else goes smallest to largest. Source: Capital One 360 Checking Key account terms, revised February 2024 (ecm.capitalone.com/WCM/bank/pdfs/360-checking-pew.pdf); capitalone.com/bank/disclosures/checking-accounts/online-checking-account/ (May 20, 2026); capitalone.com/help-center/checking-savings/pending-transactions/; capitalone.com/help-center/credit-cards/card-pending-transactions/; capitalone.com/help-center/credit-cards/understanding-payment-holds/, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned $0.00 Before tax 
+Tax Taken Off It $0.00 
+Bank Fees $0.00 
+Card Fees $0.00 
+Card Interest Paid $0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (USD) 
+A Payment Over (USD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== ca-rbc (the life banks at ca-rbc)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account RBC Signature No Limit Banking ···4253, RBC Royal Bank RBC High Interest eSavings ···1921, RBC Royal Bank RBC Cash Back Mastercard ···9931, RBC Royal Bank 
+Period January 2026, So Far 
+Opening Balance C$0.00 
+Money In C$26,804.00 
+Money Out C$0.00 
+Interest, After Tax C$0.00 
+Fees C$0.00 
+Available Now C$26,804.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: RBC Signature No Limit Banking +C$26,804.00 C$26,804.00 
+Sources And Estimates
+A card payment: RBC doesn't publish a hold length for debit card purchases. For its credit cards it says most transactions stay authorized for 3 to 5 days, then move to posted once the merchant finishes on its end. Source: rbcroyalbank.com/credit-cards/cardholders.html; rbcroyalbank.com/credit-cards/cardholders/credit-card-transaction-help.html; rbcroyalbank.com/credit-cards/cardholders/frequently-asked-questions/payments.html, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned C$0.00 Before tax 
+Tax Taken Off It C$0.00 
+Bank Fees C$0.00 
+Card Fees C$0.00 
+Card Interest Paid C$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (CAD) 
+A Payment Over (CAD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== ca-td (the life banks at ca-td)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account TD Unlimited Chequing ···1661, TD Canada Trust TD ePremium Savings ···1286, TD Canada Trust TD Cash Back Visa Card ···9931, TD Canada Trust 
+Period January 2026, So Far 
+Opening Balance C$0.00 
+Money In C$26,804.00 
+Money Out C$0.00 
+Interest, After Tax C$0.00 
+Fees C$0.00 
+Available Now C$26,804.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: TD Unlimited Chequing +C$26,804.00 C$26,804.00 
+Sources And Estimates
+A card payment: TD Canada Trust doesn't publish a hold length for Access Card (debit) purchases. On its credit cards it says a pending transaction usually takes 3 to 5 business days to post, and available credit drops by the amount right away. Source: TD help: How and when do Pending Transactions get posted to my TD Credit Card? (td.intelliresponse.com id 7622); TD help: Why does TD place a hold on some TD Credit Card payments? (id 7442), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned C$0.00 Before tax 
+Tax Taken Off It C$0.00 
+Bank Fees C$0.00 
+Card Fees C$0.00 
+Card Interest Paid C$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (CAD) 
+A Payment Over (CAD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== ca-scotiabank (the life banks at ca-scotiabank)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Preferred Package ···5211, Scotiabank MomentumPLUS Savings ···4233, Scotiabank Scotia Momentum No-Fee Visa Card ···9931, Scotiabank 
+Period January 2026, So Far 
+Opening Balance C$0.00 
+Money In C$26,804.00 
+Money Out C$0.00 
+Interest, After Tax C$0.00 
+Fees C$0.00 
+Available Now C$26,804.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Preferred Package +C$26,804.00 C$26,804.00 
+Sources And Estimates
+A card payment: Pending transactions, including pre-authorizations (holds), can stay on your account for up to 7 days. Scotiabank gives one figure for all accounts and says days, not business days. Source: help.scotiabank.com: How do pending transactions work?; help.scotiabank.com: When will the amount of my payments to my credit card or line of credit be available to use?, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned C$0.00 Before tax 
+Tax Taken Off It C$0.00 
+Bank Fees C$0.00 
+Card Fees C$0.00 
+Card Interest Paid C$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (CAD) 
+A Payment Over (CAD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== ca-bmo (the life banks at ca-bmo)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Performance Chequing Plan ···3922, BMO Savings Amplifier Account ···3191, BMO BMO CashBack Mastercard ···9931, BMO 
+Period January 2026, So Far 
+Opening Balance C$0.00 
+Money In C$26,804.00 
+Money Out C$0.00 
+Interest, After Tax C$0.00 
+Fees C$0.00 
+Available Now C$26,804.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Performance Chequing Plan +C$26,804.00 C$26,804.00 
+Sources And Estimates
+A card payment: Couldn't find a figure on BMO Canada's own pages; its Canadian help pages didn't load. The 3 and 5 business-day debit hold figures that turn up in searches come from BMO's U.S. site, so they aren't used here. Source: bmo.com/en-ca/main/personal/credit-cards/credit-card-faqs (did not load); bmo.com/en-us/main/personal/checking-accounts/debit-mastercard (U.S., excluded), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned C$0.00 Before tax 
+Tax Taken Off It C$0.00 
+Bank Fees C$0.00 
+Card Fees C$0.00 
+Card Interest Paid C$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (CAD) 
+A Payment Over (CAD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== ca-cibc (the life banks at ca-cibc)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account CIBC Smart Account ···9082, CIBC CIBC eAdvantage Savings ···1768, CIBC CIBC Dividend Visa Card ···9931, CIBC 
+Period January 2026, So Far 
+Opening Balance C$0.00 
+Money In C$26,804.00 
+Money Out C$0.00 
+Interest, After Tax C$0.00 
+Fees C$0.00 
+Available Now C$26,804.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: CIBC Smart Account +C$26,804.00 C$26,804.00 
+Sources And Estimates
+A card payment: CIBC doesn't publish a hold length for debit purchases in Canada. It says a merchant such as a gas station may put a pre-authorized hold that's bigger than the sale, and you're only charged the actual amount. Source: cibc.com/en/personal-banking/credit-cards/real-time-credit-card-transactions.html; cibc.com/en/personal-banking/smart-advice/manage-your-shopping.html, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned C$0.00 Before tax 
+Tax Taken Off It C$0.00 
+Bank Fees C$0.00 
+Card Fees C$0.00 
+Card Interest Paid C$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (CAD) 
+A Payment Over (CAD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== mx-bbva (the life banks at mx-bbva)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Libretón Básico Cuenta Digital ···6436, BBVA México Libretón ···8845, BBVA México Tarjeta Azul BBVA ···9931, BBVA México 
+Period January 2026, So Far 
+Opening Balance MX$0.00 
+Money In MX$352,174 
+Money Out MX$0.00 
+Interest, After Tax MX$0.00 
+Fees MX$0.00 
+Available Now MX$352,174 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Libretón Básico Cuenta Digital +MX$352,174 MX$352,174 
+Sources And Estimates
+A card payment: BBVA México says held money usually stays held for a few days until the merchant collects it, but in some cases approval can take up to a month. It gives no fixed number, and the app labels these charges "in transit." Source: bbva.mx/educacion-financiera/banca-digital/cuenta-digital-que-es-saldo-retenido.html, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned MX$0.00 Before tax 
+Tax Taken Off It MX$0.00 
+Bank Fees MX$0.00 
+Card Fees MX$0.00 
+Card Interest Paid MX$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (MXN) 
+A Payment Over (MXN) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== mx-banorte (the life banks at mx-banorte)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Cuenta Enlace Personal ···7163, Banorte Inversión Enlace ···3180, Banorte Banorte Credit Card ···9931, Banorte 
+Period January 2026, So Far 
+Opening Balance MX$0.00 
+Money In MX$352,174 
+Money Out MX$0.00 
+Interest, After Tax MX$0.00 
+Fees MX$0.00 
+Available Now MX$352,174 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Cuenta Enlace Personal +MX$352,174 MX$352,174 
+Sources And Estimates
+A card payment: Couldn't find a hold length for pending charges from Banorte itself. Its FAQ page didn't load. Source: banorte.com/Personal/Canales-Banorte/Horarios-y-tarifas.html; banorte.com Preguntas Frecuentes Tarjeta Universal (did not load), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned MX$0.00 Before tax 
+Tax Taken Off It MX$0.00 
+Bank Fees MX$0.00 
+Card Fees MX$0.00 
+Card Interest Paid MX$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (MXN) 
+A Payment Over (MXN) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== mx-santander (the life banks at mx-santander)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Débito LikeU ···8575, Santander México Débito LikeU ···2551, Santander México Tarjeta de Credito LikeU ···9931, Santander México 
+Period January 2026, So Far 
+Opening Balance MX$0.00 
+Money In MX$352,174 
+Money Out MX$0.00 
+Interest, After Tax MX$0.00 
+Fees MX$0.00 
+Available Now MX$352,174 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Débito LikeU +MX$352,174 MX$352,174 
+Sources And Estimates
+A card payment: Couldn't find a figure from Santander México itself. Its help pages returned errors, and the figures in searches came from third parties. Source: santander.com.mx help pages: Consulta de saldos y movimientos (HTTP 403), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned MX$0.00 Before tax 
+Tax Taken Off It MX$0.00 
+Bank Fees MX$0.00 
+Card Fees MX$0.00 
+Card Interest Paid MX$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (MXN) 
+A Payment Over (MXN) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== mx-banamex (the life banks at mx-banamex)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Cuenta de Nómina Banamex ···5374, Banamex Ahorro Fácil ···2509, Banamex Tarjeta de Credito Clasica Banamex ···9931, Banamex 
+Period January 2026, So Far 
+Opening Balance MX$0.00 
+Money In MX$352,174 
+Money Out MX$0.00 
+Interest, After Tax MX$0.00 
+Fees MX$0.00 
+Available Now MX$352,174 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Cuenta de Nómina Banamex +MX$352,174 MX$352,174 
+Sources And Estimates
+A card payment: Banamex says an authorization that's still pending or "in process" can stay that way from about 24 hours up to 9 business days on a debit card, and up to 15 business days on a credit card. Source: Banamex official X account replies (x.com/banamex/status/1957557467576988115; x.com/banamex/status/2016897524640973004); banamex.com/es/centro-de-ayuda/tarjetas/operaciones-con-tarjeta-de-credito.htm, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned MX$0.00 Before tax 
+Tax Taken Off It MX$0.00 
+Bank Fees MX$0.00 
+Card Fees MX$0.00 
+Card Interest Paid MX$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (MXN) 
+A Payment Over (MXN) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== gb-barclays (the life banks at gb-barclays)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Barclays Bank Account ···9945, Barclays Everyday Saver ···5164, Barclays Barclaycard Forward ···9931, Barclays 
+Period January 2026, So Far 
+Opening Balance £0.00 
+Money In £15,457.00 
+Money Out £0.00 
+Interest, After Tax £0.00 
+Fees £0.00 
+Available Now £15,457.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Barclays Bank Account +£15,457.00 £15,457.00 
+Sources And Estimates
+A card payment: A debit card purchase shows as pending and cuts your available balance, but it hasn't left the account yet. That usually happens within seven days, though it can occasionally take longer. Source: barclays.co.uk/help/payments/payment-information/not-debited; barclaycard.co.uk/personal/help/spending-transactions/pending-transactions; barclaycard.co.uk/personal/help/paying-bill/process-payment-online, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned £0.00 Before tax 
+Tax Taken Off It £0.00 
+Bank Fees £0.00 
+Card Fees £0.00 
+Card Interest Paid £0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (GBP) 
+A Payment Over (GBP) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== gb-lloyds (the life banks at gb-lloyds)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Classic Account ···3500, Lloyds Bank Easy Saver ···8745, Lloyds Bank Lloyds Bank 0% Purchase and Balance Transfer Credit Card ···9931, Lloyds Bank 
+Period January 2026, So Far 
+Opening Balance £0.00 
+Money In £15,457.00 
+Money Out £0.00 
+Interest, After Tax £0.00 
+Fees £0.00 
+Available Now £15,457.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Classic Account +£15,457.00 £15,457.00 
+Sources And Estimates
+A card payment: A pending transaction is money set aside for the retailer to collect. Merchants usually take it within a few days but it can take a few weeks, and if the retailer cancels or the payment fails it's removed automatically, which should happen within a week. Source: lloydsbank.com help-guidance/everyday-banking/statements/search-transactions and unrecognised-transactions (via search excerpts; pages returned errors when fetched); lloydsbank.com/credit-cards/ways-to-pay-your-credit-card.html, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned £0.00 Before tax 
+Tax Taken Off It £0.00 
+Bank Fees £0.00 
+Card Fees £0.00 
+Card Interest Paid £0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (GBP) 
+A Payment Over (GBP) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== gb-natwest (the life banks at gb-natwest)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Select Account ···2448, NatWest Flexible Saver ···7202, NatWest The NatWest Credit Card ···9931, NatWest 
+Period January 2026, So Far 
+Opening Balance £0.00 
+Money In £15,457.00 
+Money Out £0.00 
+Interest, After Tax £0.00 
+Fees £0.00 
+Available Now £15,457.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Select Account +£15,457.00 £15,457.00 
+Sources And Estimates
+A card payment: Retailers usually take a debit card payment within 4 working days for UK payments and up to 10 working days for international ones, and sometimes longer. A pending transaction can't be canceled. Source: natwest.com support pages/help-with-your-card/transactions/pending-transactions; natwest.com/current-accounts/bank-account-guides/pending-transactions.html; natwest.com support pages 'Are pending transactions included in the credit card balance', September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned £0.00 Before tax 
+Tax Taken Off It £0.00 
+Bank Fees £0.00 
+Card Fees £0.00 
+Card Interest Paid £0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (GBP) 
+A Payment Over (GBP) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== gb-hsbc (the life banks at gb-hsbc)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account HSBC Bank Account ···7395, HSBC UK Flexible Saver ···4290, HSBC UK HSBC Classic Credit Card ···9931, HSBC UK 
+Period January 2026, So Far 
+Opening Balance £0.00 
+Money In £15,457.00 
+Money Out £0.00 
+Interest, After Tax £0.00 
+Fees £0.00 
+Available Now £15,457.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: HSBC Bank Account +£15,457.00 £15,457.00 
+Sources And Estimates
+A card payment: Debit card transactions can take several days to go through and show as pending until then. You can't stop or cancel a pending transaction. Source: hsbc.co.uk/financial-fitness/everyday-budgeting/understanding-your-balance; hsbc.co.uk/help/card-support/credit-card-repayment-options, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned £0.00 Before tax 
+Tax Taken Off It £0.00 
+Bank Fees £0.00 
+Card Fees £0.00 
+Card Interest Paid £0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (GBP) 
+A Payment Over (GBP) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== gb-santander (the life banks at gb-santander)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Everyday Current Account ···9918, Santander UK Easy Access Saver ···5729, Santander UK Santander Everyday No Balance Transfer Fee Credit Card ···9931, Santander UK 
+Period January 2026, So Far 
+Opening Balance £0.00 
+Money In £15,457.00 
+Money Out £0.00 
+Interest, After Tax £0.00 
+Fees £0.00 
+Available Now £15,457.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Everyday Current Account +£15,457.00 £15,457.00 
+Sources And Estimates
+A card payment: Businesses often settle card payments at the end of the day or after a trading period, so a transaction might take a number of days to reach your statement. It shows as pending until it clears. Source: retail.santander.co.uk Santander Help 'View pending authorisations' (help00000109); santander.co.uk/personal/support/credit-cards/your-credit-card-repayments, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned £0.00 Before tax 
+Tax Taken Off It £0.00 
+Bank Fees £0.00 
+Card Fees £0.00 
+Card Interest Paid £0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (GBP) 
+A Payment Over (GBP) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== gb-nationwide (the life banks at gb-nationwide)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account FlexAccount ···9189, Nationwide Building Society Flex Instant Saver ···7518, Nationwide Building Society Nationwide Member Credit Card ···9931, Nationwide Building Society 
+Period January 2026, So Far 
+Opening Balance £0.00 
+Money In £15,457.00 
+Money Out £0.00 
+Interest, After Tax £0.00 
+Fees £0.00 
+Available Now £15,457.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: FlexAccount +£15,457.00 £15,457.00 
+Sources And Estimates
+A card payment: Pending transactions normally go into or out of the account within 7 days, and if the company hasn't taken the money after 7 days Nationwide stops reserving it. Some current account payments can still arrive up to 180 days later, so it's wise to keep the money there. Source: nationwide.co.uk/help/payments/pending-transactions; nationwide.co.uk/credit-cards/help/check-card-balance, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned £0.00 Before tax 
+Tax Taken Off It £0.00 
+Bank Fees £0.00 
+Card Fees £0.00 
+Card Interest Paid £0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (GBP) 
+A Payment Over (GBP) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== ie-aib (the life banks at ie-aib)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Personal Current Account ···2996, AIB Demand Deposit Account ···4429, AIB AIB Click Visa Card ···9931, AIB 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Personal Current Account +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Pending debit card transactions generally post within a number of days, depending on the merchant, and contactless payments normally appear on the account within 2 to 3 days. Some card transactions don't show as pending at all until the merchant tells AIB about them. Value dates: AIB's account terms give incoming electronic payments value, for interest purposes, on the business day it receives them (or the calendar day for transfers between AIB accounts and instant transfers), the same day the money becomes available. Outgoing instant transfers take value the calendar day they're sent, though AIB may use the next or previous business day on a non-business day and refers you to the statement for the exact date. The terms don't set a separate value date for card purchases, which are simply debited when they post. Source: aib.ie/help-and-guidance/aib-debit-card-faqs; aib.ie/help-and-guidance/about-my-balances; AIB Terms and Conditions for Current, Demand Deposit and Masterplan Accounts (Table 1, Table 3); AIB Personal Credit Card Terms and Conditions (conditions 8, 36-38), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== ie-bank-of-ireland (the life banks at ie-bank-of-ireland)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Personal Current Account ···2053, Bank of Ireland Demand Deposit Account ···4131, Bank of Ireland Bank of Ireland Classic Credit Card ···9931, Bank of Ireland 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Personal Current Account +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Card transactions under 'In progress' haven't been processed by the seller yet, and in most cases they complete and post to the account in a few days. On a credit card they still reduce your available credit meanwhile. Value dates: Yes. Bank of Ireland's terms promise a record of every transaction showing its debit or credit value date. An incoming payment received on a banking day before cut-off, with no currency conversion, is credited the same banking day, and SEPA instant transfers are credited on any calendar day. Card purchases reduce the balance immediately but only reach the statement once fully processed; a lodged check shows on the statement the day it's paid in even though it hasn't cleared. Source: bankofireland.com/help-centre/faq/do-i-owe-for-the-transactions-listed-in-in-progress-or-for-completed-transactions; Bank of Ireland Basic Bank Account Terms and Conditions 09.26 (clauses 14.5, 15.12, 15.14, 30.3); bankofireland.com/help-centre/faq/time-day-incoming-credits-come-current-account, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== ie-ptsb (the life banks at ie-ptsb)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Explore Account ···2962, PTSB Demand Deposit Account ···8609, PTSB PTSB ICE Visa Credit Card ···9931, PTSB 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Explore Account +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Pending transactions are items authorized but not yet debited, such as a debit card purchase or a withdrawal at a non-PTSB ATM. Contactless transactions show in pending straight away. Value dates: PTSB credits funds received before the cut-off on a business day to the account that day, and they start earning interest from the date received. Funds after cut-off count as the next business day. The cut-off is 6pm, with 5pm for checks and 4pm for international payments. PTSB's full terms PDF was blocked, so what the statement shows wasn't confirmed. Source: ptsb.ie/legal-information/our-policies-other-important-information/business-days-and-cut-off-time (search excerpt); ptsb.ie help-and-support/help-with-banking/transacting-on-your-account and contactless-visa-debit-card-faq (search excerpts; site returned 403 to direct fetches), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== is-landsbankinn (the life banks at is-landsbankinn)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Einkareikningur ···5940, Landsbankinn Vaxtareikningur ···2330, Landsbankinn Almennt kreditkort ···9931, Landsbankinn 
+Period January 2026, So Far 
+Opening Balance 0 kr 
+Money In 2,700,000 kr 
+Money Out 0 kr 
+Interest, After Tax 0 kr 
+Fees 0 kr 
+Available Now 2,700,000 kr 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Einkareikningur +2,700,000 kr 2,700,000 kr 
+Sources And Estimates
+A card payment: An authorization sets the amount aside for as long as the authorization response is valid, and merchants must send each card transaction for settlement without delay and never later than three days after it's made. The 3 is the bank's deadline for merchants in its acquiring terms (calendar days, not business days); it doesn't publish a cardholder-side figure. Value dates: Deposits earn interest from the day they're paid in until the day they're withdrawn, and the last interest day is the day before the withdrawal. So the value date is the booking day for money coming in, and the day before for money going out. Landsbankinn doesn't set a separate value date for card payments. Source: Skilmálar Landsbankans um færsluhirðingu (1546, from January 11, 2023), definition of authorization and the three-day submission clause; Almennir skilmálar um stofnun og notkun innlánsreikninga (1529, from November 13, 2017), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned 0 kr Before tax 
+Tax Taken Off It 0 kr 
+Bank Fees 0 kr 
+Card Fees 0 kr 
+Card Interest Paid 0 kr 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (ISK) 
+A Payment Over (ISK) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== is-arion (the life banks at is-arion)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Veltureikningur ···9770, Arion banki Vöxtur ···8610, Arion banki Almennt kort ···9931, Arion banki 
+Period January 2026, So Far 
+Opening Balance 0 kr 
+Money In 2,700,000 kr 
+Money Out 0 kr 
+Interest, After Tax 0 kr 
+Fees 0 kr 
+Available Now 2,700,000 kr 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Veltureikningur +2,700,000 kr 2,700,000 kr 
+Sources And Estimates
+A card payment: Arion's public pages and FAQs don't say how long a card purchase stays pending, and its current card terms PDFs weren't reachable (404). Value dates: Deposits generally earn interest from the moment the money is credited to the account, and the last interest day is the day before a withdrawal is debited. So incoming transfers are value-dated the day they arrive, and debits the day before they're booked. Taken from the March 2017 deposit terms, which have since been replaced; the current version wasn't reachable. Source: arionbanki.is debit card pages (EN/IS); Almennir skilmálar innlánsreikninga Arion banka, March 16, 2017 (superseded), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned 0 kr Before tax 
+Tax Taken Off It 0 kr 
+Bank Fees 0 kr 
+Card Fees 0 kr 
+Card Interest Paid 0 kr 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (ISK) 
+A Payment Over (ISK) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== is-islandsbanki (the life banks at is-islandsbanki)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Almennur reikningur ···8530, Íslandsbanki Vaxtaþrep ···4540, Íslandsbanki Almennt kort án fríðinda ···9931, Íslandsbanki 
+Period January 2026, So Far 
+Opening Balance 0 kr 
+Money In 2,700,000 kr 
+Money Out 0 kr 
+Interest, After Tax 0 kr 
+Fees 0 kr 
+Available Now 2,700,000 kr 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Almennur reikningur +2,700,000 kr 2,700,000 kr 
+Sources And Estimates
+A card payment: Since 2023 a debit card purchase isn't taken from the account straight away. It shows as a pending transaction that reduces the available balance, and the money only actually leaves the account once the merchant settles its card terminal. The bank gives no number of days. When a prepaid card is closed after recent foreign use, the bank may keep the balance for 30 days to cover transactions merchants haven't sent in yet. Value dates: A deposit to a payment account earns interest from the moment the money is credited to the account, and the day before a debit is the last interest day on the money that leaves. Different rules can apply to deposits and withdrawals made on weekends and public holidays. Interest uses 30 days a month and 360 days a year. Source: islandsbanki.is news 'Breytingar á debetkortagreiðslum' and 'Breytt sýn á debetkortafærslur' (2023); 'Kortaheimildir og páskar'; Skilmálar debetkorta EY-9092; Skilmálar kreditkorta EY-9096 (March 30, 2026) §8.4; Almennir skilmálar innlánsreikninga EY-9587 (April 22, 2024), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned 0 kr Before tax 
+Tax Taken Off It 0 kr 
+Bank Fees 0 kr 
+Card Fees 0 kr 
+Card Interest Paid 0 kr 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (ISK) 
+A Payment Over (ISK) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== fr-bnp-paribas (the life banks at fr-bnp-paribas)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Compte de dépôt ···2335, BNP Paribas Livret A ···6496, BNP Paribas Carte Visa Classic à débit différé ···9931, BNP Paribas 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Compte de dépôt +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Card payments are debited once BNP Paribas receives them from the merchant's bank through clearing, and BNP gives no number of days. On an immediate-debit card you need enough money in the account from the purchase until it's debited. On a deferred-debit card, payments up to the 28th (or the next business day) are debited together on the last business day of the month, and they show in the meantime under upcoming operations. The deferred-debit dates come from a search summary of BNP's page, which blocked a direct fetch. Value dates: The tariff brochure lists a value date for each kind of entry. Immediate-debit card payments are value-dated the day they're executed, and deferred-debit card payments on the deferred debit business day. Incoming SEPA transfers are value-dated the settlement date. The one entry that runs later than booking is a check deposit on a French bank, at booking day plus one business day. French law (Code monétaire et financier L133-14) says a credit can't be value-dated later than the business day the bank receives the funds, and a debit can't be value-dated earlier than the day it's debited. Source: BNP Paribas Convention de compte de dépôt, annexe contrat carte (April 2021) §6.4–6.5, §9; BNP Paribas Conditions et tarifs particuliers, 'Dates de valeur'; mabanque.bnpparibas 'Débit différé classic' (search summary; page returned 403); Légifrance CMF art. L133-14, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== fr-societe-generale (the life banks at fr-societe-generale)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Compte bancaire ···3287, SG Livret A ···1949, SG CB Visa à débit différé ···9931, SG 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Compte bancaire +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: The bank told MoneyVox that it books a card payment within 24 hours of receiving the clearing message, and shows it as 'being processed' in the meantime. Its card terms say a pre-authorized maximum amount (at a gas pump or hotel, say) counts against the card's spending limits but doesn't block the funds. Cards marked CRÉDIT are deferred-debit cards, debited once a month. Value dates: Société Générale says it doesn't apply value dates, except to check deposits: a euro check drawn on a French bank gets a value date one business day after collection, for interest purposes. French law (L133-14) also stops a credit from being value-dated later than the day the bank receives the funds. Source: SG Conditions Générales des cartes de débit (June 2026) e.3, g.4; SG Tarifs au 1er avril 2026 (sg-bt-2026.pdf) §3.4; MoneyVox 'Pourquoi un achat par carte bancaire met-il plusieurs jours…' (SG spokesperson); Légifrance CMF L133-14, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== fr-lcl (the life banks at fr-lcl)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Compte de dépôt ···5485, LCL Livret A ···4684, LCL Carte Visa Cléo ···9931, LCL 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Compte de dépôt +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Payments are debited from the account immediately unless a monthly deferred debit has been agreed. A hotel or car-rental booking can set an amount aside that counts against the monthly spending limit without being debited. Deferred-debit card payments are debited in one go on the last business day of the month; in 2026 statements close a day earlier, for example Jan 29 and Feb 26. LCL doesn't say how many days a purchase stays pending. Value dates: None of the LCL sources read give a value-date schedule; the 2026 tariff extract available was only four pages. French law (L133-14) says a credit can't be value-dated later than the business day the bank receives the funds, and a debit can't be value-dated earlier than the day it's debited. Source: lcl.fr FAQ 'SOS cartes'; LCL Carte Visa Cléo Dispositions Générales (December 7, 2023) §5.4; lcl.fr FAQ 'Gérer mes comptes'; Légifrance CMF L133-14, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== fr-credit-agricole (the life banks at fr-credit-agricole)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Compte de dépôt ···4129, Crédit Agricole Paris Île-de-France Livret A ···5787, Crédit Agricole Paris Île-de-France Mastercard à débit différé ···9931, Crédit Agricole Paris Île-de-France 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Compte de dépôt +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Crédit Agricole says some merchants, like restaurants, gas stations or merchants abroad, don't send card transactions right away, so they can appear several days later, and it suggests checking pending operations in online banking. It doesn't give a number of days. Each of the 39 regional banks, Île-de-France included, sets its own deferred-debit cut-off and debit dates. Value dates: The Île-de-France tariff brochure defines the value date as the date used to calculate overdraft interest. Cash deposits are value-dated the same day, and check deposits one business day after the transaction. It lists no separate value date for card payments or incoming transfers, which French law (L133-14) says can't be value-dated later than the day the bank receives the funds. Source: Crédit Agricole Île-de-France 'Principales conditions tarifaires' April 2026 (MoneyVox mirror of the bank's brochure); credit-agricole.fr magazine 'Carte à débit différé' (search summary); Légifrance CMF L133-14, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== fr-la-banque-postale (the life banks at fr-la-banque-postale)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account CCP ···5396, La Banque Postale Livret A ···2591, La Banque Postale Carte Visa Classic à débit différé ···9931, La Banque Postale 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: CCP +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: The bank told MoneyVox that an ordinary card payment in France, going through the standard clearing system, is cleared and received a day or two after the purchase (J+1 to J+2), and that entries post to the online statement each evening around 10:30 to 11 p.m. Its help center says upcoming operations are shown only as a guide and may not go through, or may post on a different date. Value dates: The 2026 tariff brochure only gives a value date for checks, which are credited the business day after the service center receives them (J+1). French law (L133-14) says card debits can't be value-dated earlier than the day they're debited, and incoming transfers no later than the day the funds arrive. Source: La Banque Postale FAQ 'Que comprend la liste des opérations à venir'; LBP Tarifs particuliers au 1er janvier 2026; MoneyVox 'Pourquoi un achat par carte bancaire met-il plusieurs jours…' (LBP statement); Légifrance CMF L133-14, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== de-deutsche-bank (the life banks at de-deutsche-bank)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account AktivKonto ···0846, Deutsche Bank Flexgeld ···8817, Deutsche Bank Deutsche Bank MasterCard Standard ···9931, Deutsche Bank 
+Period January To March 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: AktivKonto +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Deutsche Bank's debit card terms don't give a day count. They say the bank may block an amount only when the merchant starts the payment and you've agreed to the exact amount, and that it releases the blocked amount without delay once it's told the exact amount or receives the payment order. Value dates: Statements carry a value date (Wertstellung). The price list sets debits (Belastungen) at the day of the debit and outgoing transfers at the day the bank executes them, and incoming transfers at the day the money reaches the bank, credited at most one business day after it arrives (instant transfers at once). Card payments follow the debit rule, so the value date is the day the charge is booked, not the day of purchase. Anything falling on a non-business day is value-dated the next business day. The documents read don't cite section 675t BGB by name, but the rules match it. Source: Deutsche Bank, Bedingungen fuer Debitkarten (Stand January 2025), sec. 8 Sperrung eines verfuegbaren Geldbetrags; Preis- und Leistungsverzeichnis der Deutsche Bank AG (September 23, 2026), Wertstellungen and 2.3 Ueberweisungseingaenge, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== de-commerzbank (the life banks at de-commerzbank)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account GiroKonto ···5744, Commerzbank Tagesgeld ···4493, Commerzbank Commerzbank ClassicKreditkarte ···9931, Commerzbank 
+Period January To March 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: GiroKonto +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Commerzbank shows card payments and cash withdrawals in advance as "vorgemerkte Umsaetze" in online banking and the app, and lists booked, outstanding and reserved amounts separately, but its pages don't say how long a reservation lasts. Value dates: Commerzbank's own explainer says statements show both a booking date and a value date (Valuta), and the two needn't match. Its example: a transfer executed on Friday, booked on Monday, carries a Tuesday value date; payments after the cut-off are processed the next business day. The current price list defers value-dating rules to other documents and didn't state a card-specific rule, and PSD2 or section 675t BGB isn't cited on the pages read. Source: commerzbank.de/service/wie-sehe-ich-meinen-kontostand; commerzbank.de/privatkunden/wissen/ratgeber/grundwissen/banking/valuta-buchung-wertstellung; Commerzbank Preis- und Leistungsverzeichnis and Preisaushang (Stand September 15, 2026), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== de-postbank (the life banks at de-postbank)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Giro plus ···7401, Postbank Tagesgeld ···7438, Postbank Postbank Mastercard ···9931, Postbank 
+Period January To March 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Giro plus +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Postbank says a card payment stays among the reserved transactions (vorgemerkte Umsaetze) until it's posted to the checking account, and that it already counts against the balance. Its debit card terms say a blocked amount is released without delay once the exact amount is known or the payment order arrives. No day count could be confirmed on Postbank's own pages. Value dates: Statements carry a value date. Postbank's price list (sec. 10) value-dates incoming transfers on the day the money arrives, cash deposits on the deposit day, and outgoing transfers, direct debits and checks on the day the money leaves the account. The credit card is a charge card: each monthly statement falls due when it's issued and is debited in one sum from the linked checking account. PSD2 or section 675t BGB isn't cited. Source: Postbank Preis- und Leistungsverzeichnis 923 959 000 07.26, sec. 10 Wertstellung; Postbank Bedingungen Debitkarten 923 933 018 01.25, sec. 8; Postbank Kreditkarten Besondere Bedingungen 923 933 017; postbank.de Umsaetze filtern help page, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== de-ing (the life banks at de-ing)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Girokonto ···6943, ING Deutschland Extra-Konto ···7600, ING Deutschland ING Deutschland Credit Card ···9931, ING Deutschland 
+Period January To March 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Girokonto +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: ING says a VISA debit or girocard payment is reserved for the merchant when it's approved, can't be stopped or deleted, and already counts against the balance and the available limit. The reservation is removed when the final booking arrives or after 4 to 7 days. Value dates: Not stated on the ING pages read. ING says a deposit that's never collected, such as a hotel or rental-car hold, drops off the reserved list after a few days, and that foreign-currency and partly canceled payments can differ. Source: ing.de/wissen/vorgemerkte-umsaetze (Vorgemerkte Umsaetze beanstanden), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== de-berliner-sparkasse (the life banks at de-berliner-sparkasse)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Giro Digital ···2211, Berliner Sparkasse Tagesgeld ···5801, Berliner Sparkasse Berliner Sparkasse Visa Card ···9931, Berliner Sparkasse 
+Period January To March 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Giro Digital +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: The Sparkasse card terms don't give a day count. They let the bank block an amount only when the merchant starts the payment and you've agreed to the exact amount, and they require the release without delay once the exact amount is known or the payment order arrives. On the credit card, purchases not yet on a statement already reduce what's available. Value dates: The price list says an incoming transfer is made available without delay once it reaches the Sparkasse's account (an instant transfer within 10 seconds), and anything done on a Saturday, Sunday or holiday counts for value dating as done on the next business day. Internal transfers are processed around the clock but value-dated on the next business day. On the credit card, payments received are credited the same day as the charges, and the statement balance falls due at once and is debited from the linked checking account. Source: Berliner Sparkasse Preis- und Leistungsverzeichnis July 15, 2026; Berliner Sparkasse Kreditkartenbedingungen (Fassung Maerz 2026), nos. 4, 7, 9; berliner-sparkasse.de Buchungszeiten FAQ, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== es-santander (the life banks at es-santander)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Cuenta Santander ···0052, Banco Santander Cuenta Hucha ···5978, Banco Santander Tarjeta Crédito Santander ···9931, Banco Santander 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Cuenta Santander +€18,000.00 €18,000.00 
+Sources And Estimates
+Source: bancosantander.es card FAQs; wcm.bancosantander.es Documento de informacion precontractual Cuenta Santander (no hold or value-date terms for cards found), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== es-bbva (the life banks at es-bbva)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Cuenta Online Sin Comisiones ···7080, BBVA Cuenta Metas ···3986, BBVA Tarjeta de crédito Aqua Más ···9931, BBVA 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Cuenta Online Sin Comisiones +€18,000.00 €18,000.00 
+Sources And Estimates
+Source: bbva.es card documents refused automated access (HTTP 403); bbva.es help pages searched, with no hold duration found, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== es-caixabank (the life banks at es-caixabank)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Programa Día a Día ···6196, CaixaBank Cuenta Online sin Comisiones ···9972, CaixaBank MyCard ···9931, CaixaBank 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Programa Día a Día +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: CaixaBank's card terms don't give a hold period. They say debit-mode card payments are charged to the linked account immediately. Value dates: Debit-mode card payments are charged immediately to the linked account with a value date of the day of the purchase, so booking and value date match. Credit cards pay off either the day after the monthly statement period ends (the default) or, on the 2-day plan, each purchase 48 hours after it's made. Source: CaixaBank Condiciones generales de tarjetas (c15B.pdf); caixabank.es FAQ Avanzar pago tarjeta de credito; caixabank.es FAQ Saldo retenido en mi cuenta, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== es-sabadell (the life banks at es-sabadell)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Cuenta Online Sabadell ···1957, Banco Sabadell Cuenta Ahorro Sabadell ···2083, Banco Sabadell Tarjeta de crédito Visa Classic ···9931, Banco Sabadell 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Cuenta Online Sabadell +€18,000.00 €18,000.00 
+Sources And Estimates
+A card payment: Sabadell's card terms say pre-authorizations, such as a reservation before a service or delivery, can place a temporary block on the card's available credit or, for debit, on the account. They don't say how long the block lasts; its blog says it's released once the transaction is confirmed, usually within a few days. Value dates: For debit cards, the terms say the charge hits the account when the payment order is received, which counts from the moment the merchant asks the bank for authorization. BS Card Mastercard debit purchases, though, are charged after settlement with a value date three calendar days after each purchase. On the Visa Oro Especial, amounts are debited on the 25th (or the business day before) with that same value date; on company credit cards it's the 5th of the next month. Source: Banco Sabadell Condiciones generales del contrato de tarjeta modelo BS06/21CGT, secs. 3.1, 8, 9 and special conditions; bancsabadell.com blog Saldo retenido, September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== es-bankinter (the life banks at es-bankinter)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Cuenta Nómina ···3441, Bankinter Cuenta Nómina ···3661, Bankinter Tarjeta de crédito Bankinter ···9931, Bankinter 
+Period January 2026, So Far 
+Opening Balance €0.00 
+Money In €18,000.00 
+Money Out €0.00 
+Interest, After Tax €0.00 
+Fees €0.00 
+Available Now €18,000.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Cuenta Nómina +€18,000.00 €18,000.00 
+Sources And Estimates
+Source: Bankinter Informacion precontractual Tarjeta Combo; Bankinter INE Tarjeta Visa Clasica; bankinter.com card FAQs (HTTP 403). None states hold periods or value dates., September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned €0.00 Before tax 
+Tax Taken Off It €0.00 
+Bank Fees €0.00 
+Card Fees €0.00 
+Card Interest Paid €0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (EUR) 
+A Payment Over (EUR) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== jp-mufg (the life banks at jp-mufg)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account 普通預金 (Ordinary Deposit) ···0391, MUFG Bank 普通預金 (Ordinary Deposit) ···1061, MUFG Bank 三菱UFJカード ···9931, MUFG Bank 
+Period January 2026, So Far 
+Opening Balance ¥0 
+Money In ¥2,934,783 
+Money Out ¥0 
+Interest, After Tax ¥0 
+Fees ¥0 
+Available Now ¥2,934,783 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: 普通預金 (Ordinary Deposit) +¥2,934,783 ¥2,934,783 
+Sources And Estimates
+A card payment: MUFG Debit takes the money at once, and when a purchase is canceled the refund depends on how the merchant processes it: up to about a month and a half for Visa debit and about two months for JCB debit. Until the merchant's cancelation goes through, the amount can be taken twice, and the duplicate comes back within that same window. (31 is about 45 calendar days in business days.) Source: MUFG FAQ 615 (faq01.bk.mufg.jp/faq/show/615); Mitsubishi UFJ NICOS FAQ 'When does my available credit come back after the debit?' (faq.cr.mufg.jp/mufgcard/detail?id=47), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ¥0 Before tax 
+Tax Taken Off It ¥0 
+Bank Fees ¥0 
+Card Fees ¥0 
+Card Interest Paid ¥0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (JPY) 
+A Payment Over (JPY) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== jp-smbc (the life banks at jp-smbc)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account 普通預金 (Ordinary Deposit) ···0000, SMBC 普通預金 (Ordinary Deposit) ···3245, SMBC 三井住友カード（NL） ···9931, SMBC 
+Period January 2026, So Far 
+Opening Balance ¥0 
+Money In ¥2,934,783 
+Money Out ¥0 
+Interest, After Tax ¥0 
+Fees ¥0 
+Available Now ¥2,934,783 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: 普通預金 (Ordinary Deposit) +¥2,934,783 ¥2,934,783 
+Sources And Estimates
+A card payment: SMBC Debit refunds a return or cancelation to the account around the day after it receives the merchant's refund data. That data arrives in two to three days at the earliest and about two weeks at the latest. Source: SMBC Debit FAQ 'When does money come back after a return or cancellation?' (faq-debit.smbc-card.com); Sumitomo Mitsui Card 'Paying by transfer' (smbc-card.com/mem/oshiharai/rinji.jsp); Sumitomo Mitsui Card Hitotoki 'Statements and when they post' (smbc-card.com/mem/hitotoki/card_use/detailed_statement.jsp), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ¥0 Before tax 
+Tax Taken Off It ¥0 
+Bank Fees ¥0 
+Card Fees ¥0 
+Card Interest Paid ¥0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (JPY) 
+A Payment Over (JPY) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== jp-mizuho (the life banks at jp-mizuho)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account 普通預金 (Ordinary Deposit) ···3084, Mizuho Bank 普通預金 (Ordinary Deposit) ···2169, Mizuho Bank みずほマイレージクラブカードセゾン アメリカン・エキスプレス・カード・ベーシック ···9931, Mizuho Bank 
+Period January 2026, So Far 
+Opening Balance ¥0 
+Money In ¥2,934,783 
+Money Out ¥0 
+Interest, After Tax ¥0 
+Fees ¥0 
+Available Now ¥2,934,783 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: 普通預金 (Ordinary Deposit) +¥2,934,783 ¥2,934,783 
+Sources And Estimates
+A card payment: Once a cancelation or return is confirmed, JCB processes the refund for Mizuho JCB Debit, which can take about two weeks and sometimes longer. Source: Mizuho FAQ 7929 (faq.mizuhobank.co.jp/faq/show/7929); JCB FAQ 516 on credit after repayment (j-faq.jcb.co.jp/faq/show/516); JCB FAQ 293 on statement posting (j-faq.jcb.co.jp/faq/show/293), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ¥0 Before tax 
+Tax Taken Off It ¥0 
+Bank Fees ¥0 
+Card Fees ¥0 
+Card Interest Paid ¥0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (JPY) 
+A Payment Over (JPY) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== jp-resona (the life banks at jp-resona)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account 普通預金 (Ordinary Deposit) ···1972, Resona Bank 普通預金 (Ordinary Deposit) ···9020, Resona Bank りそなカード《セゾン》スタンダード ···9931, Resona Bank 
+Period January 2026, So Far 
+Opening Balance ¥0 
+Money In ¥2,934,783 
+Money Out ¥0 
+Interest, After Tax ¥0 
+Fees ¥0 
+Available Now ¥2,934,783 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: 普通預金 (Ordinary Deposit) +¥2,934,783 ¥2,934,783 
+Sources And Estimates
+A card payment: If a shop doesn't send cancelation data, Resona's Visa debit refunds the charge automatically about 45 days after the debit; the authorization lapses if no sales data arrives within 45 days. You can call to ask for an earlier refund, but it isn't guaranteed. (31 is about 45 calendar days in business days.) Source: Resona 'Visa debit cancellations and refunds' (resonabank.co.jp/kojin/visa_debit/modal/cancel.html, via search excerpt; page returned 403); Resona Visa debit 'How payment works' (resonabank.co.jp/kojin/visa_debit/support/, via search excerpt), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ¥0 Before tax 
+Tax Taken Off It ¥0 
+Bank Fees ¥0 
+Card Fees ¥0 
+Card Interest Paid ¥0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (JPY) 
+A Payment Over (JPY) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== jp-japan-post-bank (the life banks at jp-japan-post-bank)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account 通常貯金 (Ordinary Savings) ···6438, Japan Post Bank 通常貯金 (Ordinary Savings) ···4305, Japan Post Bank JP BANK カード 一般カード ···9931, Japan Post Bank 
+Period January 2026, So Far 
+Opening Balance ¥0 
+Money In ¥2,934,783 
+Money Out ¥0 
+Interest, After Tax ¥0 
+Fees ¥0 
+Available Now ¥2,934,783 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: 通常貯金 (Ordinary Savings) +¥2,934,783 ¥2,934,783 
+Sources And Estimates
+A card payment: Japan Post Bank refunds a Yucho Debit return once it receives the merchant's refund data, and when a return or cancelation leaves a double debit, the duplicate comes back later and can take up to about two months depending on the merchant. (42 is about two months in business days.) Source: Japan Post Bank FAQ 10989 on double debits (faq.jp-bank.japanpost.jp/faq_detail.html?id=10989); FAQ 10443 on refunds not received (faq_detail.html?id=10443), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ¥0 Before tax 
+Tax Taken Off It ¥0 
+Bank Fees ¥0 
+Card Fees ¥0 
+Card Interest Paid ¥0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (JPY) 
+A Payment Over (JPY) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== kr-kb-kookmin (the life banks at kr-kb-kookmin)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account KB국민ONE통장 (everyday account) ···2510, KB Kookmin Bank KB국민ONE통장 (everyday account) ···5611, KB Kookmin Bank KB국민 My WE:SH 카드 ···9931, KB Kookmin Bank 
+Period January 2026, So Far 
+Opening Balance ₩0 
+Money In ₩26,413,043 
+Money Out ₩0 
+Interest, After Tax ₩0 
+Fees ₩0 
+Available Now ₩26,413,043 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: KB국민ONE통장 (everyday account) +₩26,413,043 ₩26,413,043 
+Sources And Estimates
+A card payment: A KB check card takes the money from the account the moment it's approved, and KB says the sales slip is acquired two to three days after the card is used. Source: KB Kookmin Card 'Payment methods' guide (card.kbcard.com/SVC/DVIEW/HSGMCXCRSCSC0103); KB Kookmin Card corporate check card page (mbiz.kbcard.com/CXEHMPGCD0004.cms, via search excerpt), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ₩0 Before tax 
+Tax Taken Off It ₩0 
+Bank Fees ₩0 
+Card Fees ₩0 
+Card Interest Paid ₩0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (KRW) 
+A Payment Over (KRW) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== kr-shinhan (the life banks at kr-shinhan)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account 쏠편한 입출금통장 (everyday account) ···5588, Shinhan Bank 쏠편한 입출금통장 (everyday account) ···1165, Shinhan Bank 신한카드 처음 ···9931, Shinhan Bank 
+Period January 2026, So Far 
+Opening Balance ₩0 
+Money In ₩26,413,043 
+Money Out ₩0 
+Interest, After Tax ₩0 
+Fees ₩0 
+Available Now ₩26,413,043 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: 쏠편한 입출금통장 (everyday account) +₩26,413,043 ₩26,413,043 
+Sources And Estimates
+Source: Shinhan Card 'Card usage guide' (shinhancard.com/pconts/html/helpdesk/useGuide/credit/MOBFM12502R01.html, via search excerpt: a same-day cancellation restores the limit at once, a later one once the sales cancellation completes, one to three days after the cancellation; the page itself wouldn't render), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ₩0 Before tax 
+Tax Taken Off It ₩0 
+Bank Fees ₩0 
+Card Fees ₩0 
+Card Interest Paid ₩0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (KRW) 
+A Payment Over (KRW) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== kr-hana (the life banks at kr-hana)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account 달달 하나 통장 (everyday account) ···8161, Hana Bank 달달 하나 통장 (everyday account) ···2673, Hana Bank 하나카드 2.0 FREE ···9931, Hana Bank 
+Period January 2026, So Far 
+Opening Balance ₩0 
+Money In ₩26,413,043 
+Money Out ₩0 
+Interest, After Tax ₩0 
+Fees ₩0 
+Available Now ₩26,413,043 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: 달달 하나 통장 (everyday account) +₩26,413,043 ₩26,413,043 
+Sources And Estimates
+Source: Hana Card 'Payment guide' (hanacard.co.kr/OSA15000000N.web), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ₩0 Before tax 
+Tax Taken Off It ₩0 
+Bank Fees ₩0 
+Card Fees ₩0 
+Card Interest Paid ₩0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (KRW) 
+A Payment Over (KRW) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== kr-nh (the life banks at kr-nh)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account NH올원e통장 (everyday account) ···9385, NH NongHyup Bank NH올원e통장 (everyday account) ···1835, NH NongHyup Bank NH농협카드 ···9931, NH NongHyup Bank 
+Period January 2026, So Far 
+Opening Balance ₩0 
+Money In ₩26,413,043 
+Money Out ₩0 
+Interest, After Tax ₩0 
+Fees ₩0 
+Available Now ₩26,413,043 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: NH올원e통장 (everyday account) +₩26,413,043 ₩26,413,043 
+Sources And Estimates
+A card payment: NH NongHyup Card refunds an approval canceled before the slip is acquired right away, and a cancelation after acquisition on the business day after the cancelation slip is acquired. Source: NH NongHyup Card, NH Travlry check card product page (card.nonghyup.com/servlet/IpCc2021R.act?CD_WRS_SQNO=90010517), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ₩0 Before tax 
+Tax Taken Off It ₩0 
+Bank Fees ₩0 
+Card Fees ₩0 
+Card Interest Paid ₩0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (KRW) 
+A Payment Over (KRW) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== kr-kakaobank (the life banks at kr-kakaobank)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account 입출금통장 (everyday account) ···9595, KakaoBank 세이프박스 (savings box) ···5247, KakaoBank 카카오뱅크 줍줍 신한카드 ···9931, KakaoBank 
+Period January 2026, So Far 
+Opening Balance ₩0 
+Money In ₩26,413,043 
+Money Out ₩0 
+Interest, After Tax ₩0 
+Fees ₩0 
+Available Now ₩26,413,043 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: 입출금통장 (everyday account) +₩26,413,043 ₩26,413,043 
+Sources And Estimates
+A card payment: KakaoBank refunds a check card payment canceled on the day of use that same day. A partial cancelation, or one made after the day of use, takes three to five business days from the cancelation, depending on the bank. Source: KakaoBank FAQ (card section), blog.kakaobank.com/82 and m.kakaobank.com FAQ, via search excerpt; pages didn't render, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned ₩0 Before tax 
+Tax Taken Off It ₩0 
+Bank Fees ₩0 
+Card Fees ₩0 
+Card Interest Paid ₩0 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (KRW) 
+A Payment Over (KRW) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== au-commbank (the life banks at au-commbank)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Everyday Account Smart Access ···0263, Commonwealth Bank NetBank Saver ···8744, Commonwealth Bank CommBank Low Rate credit card ···9931, Commonwealth Bank 
+Period January 2026, So Far 
+Opening Balance A$0.00 
+Money In A$29,935.00 
+Money Out A$0.00 
+Interest, After Tax A$0.00 
+Fees A$0.00 
+Available Now A$29,935.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Everyday Account Smart Access +A$29,935.00 A$29,935.00 
+Sources And Estimates
+A card payment: A pending card transaction usually takes 3 to 5 business days to either go through or expire, but it can take up to 10 business days. If it expires, the money goes back into your available balance, though the business can still process it later and it'll reappear. Source: commbank.com.au/support/disputing-a-transaction/dispute-pending-transaction.html; commbank.com.au support: How do pending transactions affect my balance?, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned A$0.00 Before tax 
+Tax Taken Off It A$0.00 
+Bank Fees A$0.00 
+Card Fees A$0.00 
+Card Interest Paid A$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (AUD) 
+A Payment Over (AUD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== au-westpac (the life banks at au-westpac)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Westpac Choice ···4636, Westpac Westpac Life ···8641, Westpac Westpac Low Rate card ···9931, Westpac 
+Period January 2026, So Far 
+Opening Balance A$0.00 
+Money In A$29,935.00 
+Money Out A$0.00 
+Interest, After Tax A$0.00 
+Fees A$0.00 
+Available Now A$29,935.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Westpac Choice +A$29,935.00 A$29,935.00 
+Sources And Estimates
+A card payment: When you pay by card, the amount is held as pending while Westpac waits for the merchant to confirm the payment, which usually takes up to 5 business days but can take longer. Hotels, car rentals and cruises can stay pending for as long as 30 days. Source: westpac.com.au/faq/pt-what-is-pending-transaction/; westpac.com.au/faq/pending-transactions/, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned A$0.00 Before tax 
+Tax Taken Off It A$0.00 
+Bank Fees A$0.00 
+Card Fees A$0.00 
+Card Interest Paid A$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (AUD) 
+A Payment Over (AUD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== au-nab (the life banks at au-nab)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account NAB Classic Banking ···9169, NAB NAB Reward Saver ···3549, NAB NAB Low Rate Card ···9931, NAB 
+Period January 2026, So Far 
+Opening Balance A$0.00 
+Money In A$29,935.00 
+Money Out A$0.00 
+Interest, After Tax A$0.00 
+Fees A$0.00 
+Available Now A$29,935.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: NAB Classic Banking +A$29,935.00 A$29,935.00 
+Sources And Estimates
+A card payment: A pending transaction usually takes 3 to 5 business days to either go through or drop off your transaction history. In extreme cases it can take up to 10 business days. Source: nab.com.au/help-support/transaction-dispute, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned A$0.00 Before tax 
+Tax Taken Off It A$0.00 
+Bank Fees A$0.00 
+Card Fees A$0.00 
+Card Interest Paid A$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (AUD) 
+A Payment Over (AUD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== au-anz (the life banks at au-anz)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account ANZ Plus Everyday ···7301, ANZ ANZ Plus Growth Saver ···2852, ANZ ANZ Low Rate ···9931, ANZ 
+Period January 2026, So Far 
+Opening Balance A$0.00 
+Money In A$29,935.00 
+Money Out A$0.00 
+Interest, After Tax A$0.00 
+Fees A$0.00 
+Available Now A$29,935.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: ANZ Plus Everyday +A$29,935.00 A$29,935.00 
+Sources And Estimates
+A card payment: Pending card transactions usually take 5 to 7 business days to process, but ones tied to estimated or incremental authorizations, like hotel and car-rental holds, can take 16 days or longer. ANZ's glossary says a merchant's authorization stays on your account for up to six days. Source: anz.com.au/plus/support/money-transactions/transaction-disputes/pending-transactions/; anz.com.au/support/business/internet-banking/getting-started/glossary/; anz.com.au/personal/bank-accounts/manage-my-accounts/faqs/, September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned A$0.00 Before tax 
+Tax Taken Off It A$0.00 
+Bank Fees A$0.00 
+Card Fees A$0.00 
+Card Interest Paid A$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (AUD) 
+A Payment Over (AUD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== nz-anz (the life banks at nz-anz)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account ANZ Go ···6400, ANZ Serious Saver ···4630, ANZ ANZ Low Rate Visa ···9931, ANZ 
+Period January 2026, So Far 
+Opening Balance NZ$0.00 
+Money In NZ$32,478.00 
+Money Out NZ$0.00 
+Interest, After Tax NZ$0.00 
+Fees NZ$0.00 
+Available Now NZ$32,478.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: ANZ Go +NZ$32,478.00 NZ$32,478.00 
+Sources And Estimates
+A card payment: A hold that you don't end up spending won't be processed and drops off after a day or two. A card verification hold won't be processed either and disappears from your account in five days. Source: help.anz.co.nz a_id/310 Credit card transaction information (now redirects to anz.co.nz/banking-with-anz/ways-to-bank/guides/cards/; figures from search snippet), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned NZ$0.00 Before tax 
+Tax Taken Off It NZ$0.00 
+Bank Fees NZ$0.00 
+Card Fees NZ$0.00 
+Card Interest Paid NZ$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (NZD) 
+A Payment Over (NZD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== nz-asb (the life banks at nz-asb)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account ASB Streamline ···8100, ASB Savings Plus ···4430, ASB ASB Visa Light ···9931, ASB 
+Period January 2026, So Far 
+Opening Balance NZ$0.00 
+Money In NZ$32,478.00 
+Money Out NZ$0.00 
+Interest, After Tax NZ$0.00 
+Fees NZ$0.00 
+Available Now NZ$32,478.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: ASB Streamline +NZ$32,478.00 NZ$32,478.00 
+Sources And Estimates
+A card payment: Pending transactions are usually processed overnight, but some take 4 to 5 days. Accommodation, rental car and cruise transactions can be held for up to 30 days. Source: asb.co.nz/help/pending-transactions-on-my-credit-card.html; asb.co.nz/blog/2013/08/frequently-asked-questions-about-pending-transactions.html; asb.co.nz/help/when-are-credit-card-payments-processed.html (pages returned 403; read via search snippets), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned NZ$0.00 Before tax 
+Tax Taken Off It NZ$0.00 
+Bank Fees NZ$0.00 
+Card Fees NZ$0.00 
+Card Interest Paid NZ$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (NZD) 
+A Payment Over (NZD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== nz-bnz (the life banks at nz-bnz)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account YouMoney ···6300, BNZ Rapid Save ···2130, BNZ BNZ Lite Visa ···9931, BNZ 
+Period January 2026, So Far 
+Opening Balance NZ$0.00 
+Money In NZ$32,478.00 
+Money Out NZ$0.00 
+Interest, After Tax NZ$0.00 
+Fees NZ$0.00 
+Available Now NZ$32,478.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: YouMoney +NZ$32,478.00 NZ$32,478.00 
+Sources And Estimates
+A card payment: The final transaction usually goes through within 2 to 3 business days. A hold drops off once the final transaction is processed, or within 2 to 3 business days, and the same goes for a $1 card check. Source: bnz.co.nz/support/credit-cards/security/pending-transactions (covers credit cards and Flexi Debit Visa), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned NZ$0.00 Before tax 
+Tax Taken Off It NZ$0.00 
+Bank Fees NZ$0.00 
+Card Fees NZ$0.00 
+Card Interest Paid NZ$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (NZD) 
+A Payment Over (NZD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== nz-westpac (the life banks at nz-westpac)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Westpac Everyday ···9300, Westpac NZ Bonus Saver ···5430, Westpac NZ Westpac Fee Free Mastercard ···9931, Westpac NZ 
+Period January 2026, So Far 
+Opening Balance NZ$0.00 
+Money In NZ$32,478.00 
+Money Out NZ$0.00 
+Interest, After Tax NZ$0.00 
+Fees NZ$0.00 
+Available Now NZ$32,478.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Westpac Everyday +NZ$32,478.00 NZ$32,478.00 
+Sources And Estimates
+A card payment: Electronic transactions are usually processed within 3 to 10 days, and manual ones can take up to 30 days. Pre-authorization holds from hotels, gas stations and booking agents can take a few days to disappear. Source: westpac.co.nz/personal/life-money/managing-your-money/understanding-pending-transactions/; westpac.co.nz/help/why-hasnt-my-payment-appeared-on-my-credit-card-balance/ (403 and timeout; read via search snippets), September 26, 2026.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned NZ$0.00 Before tax 
+Tax Taken Off It NZ$0.00 
+Bank Fees NZ$0.00 
+Card Fees NZ$0.00 
+Card Interest Paid NZ$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (NZD) 
+A Payment Over (NZD) 
+Save Alerts Statement Ready: Off Short For A Payment: On
+
+=== nz-kiwibank (the life banks at nz-kiwibank)
+Statements
+Every payment in and out of each account, with the balance after it.
+Account Free Up ···3100, Kiwibank Online Call ···4930, Kiwibank Kiwibank Zero Visa ···9931, Kiwibank 
+Period January 2026, So Far 
+Opening Balance NZ$0.00 
+Money In NZ$32,478.00 
+Money Out NZ$0.00 
+Interest, After Tax NZ$0.00 
+Fees NZ$0.00 
+Available Now NZ$32,478.00 
+Date What In / Out Balance 
+January 5, 2026 Opening balance: Free Up +NZ$32,478.00 NZ$32,478.00 
+Sources And Estimates
+A card payment: Kiwibank says a pending transaction can't be disputed or reversed until it finishes processing, but it doesn't give a number of days. Source: kiwibank.co.nz/help/cards/dispute-a-transaction/; kiwibank.co.nz/documents/guide-view-accounts-balances/ (timeouts; read via search snippets), September 26, 2026. How long a card payment stays pending is estimated: the bank doesn’t say.
+The Year
+Interest, the tax taken off it, and every fee, as the bank reports them for the year.
+Year 2026, So Far 
+Interest Earned NZ$0.00 Before tax 
+Tax Taken Off It NZ$0.00 
+Bank Fees NZ$0.00 
+Card Fees NZ$0.00 
+Card Interest Paid NZ$0.00 
+Alerts
+What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.
+How This Works 
+Any Current Account Under (NZD) 
+A Payment Over (NZD) 
+Save Alerts Statement Ready: Off Short For A Payment: On

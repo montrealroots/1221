@@ -1,0 +1,110 @@
+[
+ {
+  "source": "src/engine/content/security.ts#FRAUD_LAW (US.debitWords)",
+  "kind": "official",
+  "before": "Under the Electronic Fund Transfer Act's Regulation E, 12 CFR 1005.6(b), a consumer who reports a lost or stolen debit card within two business days of learning of it owes at most the lesser of $50 or the transfers made before notice; after two business days the cap rises to $500. Transfers shown on a periodic statement that aren't reported within 60 days of the statement being sent carry unlimited liability for transfers after that 60-day window. The 2- and 60-day clocks run from different starts: learning of the loss, and the statement's transmittal.",
+  "after": "If you report a lost or stolen debit card within two business days of finding out, you pay at most $50 of what was taken before you told the bank. After two business days, the most you pay rises to $500. And if a payment you didn’t make is on a statement and you don’t report it within 60 days of the statement being sent, you can be made to pay all of what’s taken after those 60 days. The two days start when you find out; the 60 days start when the statement is sent. This is Regulation E, 12 CFR 1005.6(b), under the Electronic Fund Transfer Act.",
+  "why": "The law the most players read, said as what you pay and when, with the citation at the end. Every figure and both clocks kept: $50 within two business days of finding out, $500 after, and all of it after 60 days from the statement.",
+  "meaningSensitive": true,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), Chase; tests/language-money.test.ts asserts its opening; the tiers checked against FRAUD_LAW.US.debitTiers (2 business days, $50; 60 days from the statement, $500; then none)"
+ },
+ {
+  "source": "src/engine/content/security.ts#FRAUD_LAW (US.refundWords)",
+  "kind": "official",
+  "before": "Regulation E, 12 CFR 1005.11: the bank must decide within 10 business days (20 for a new account's first 30 days); if it takes longer it must provisionally credit the account within 10 business days and may take up to 45 days, or 90 days for point-of-sale debit card, out-of-state or new-account transfers. Results go to the consumer within 3 business days of finishing.",
+  "after": "The bank has 10 business days to decide, or 20 for a payment in a new account’s first 30 days. If it needs longer, it must put the money back in your account for now within those 10 business days, and it can then take up to 45 days, or 90 for a debit card purchase, a payment made from outside the US or one on a new account. It tells you the result within 3 business days of deciding. This is Regulation E, 12 CFR 1005.11.",
+  "why": "Plain words for \"provisionally credit\". \"Out-of-state\" misread Regulation E, whose 90 days are for a transfer not initiated within a state, that is, from outside the US: said so (defects.md, 1).",
+  "meaningSensitive": true,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), Chase; 12 CFR 1005.11(c)(3) read on consumerfinance.gov/rules-policy/regulations/1005/11/ on October 19, 2026: 20 business days for a transfer within 30 days of the first deposit; 90 days for one \"not initiated within a state\", from a point-of-sale debit card transaction, or within 30 days of the first deposit"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (ie-bank-of-ireland.lostCardWords)",
+  "kind": "official",
+  "before": "You phone the 24/7 line; the bank cancels the card as soon as you report it and sends a new one to your address on file in 5 to 7 working days (standardDays is the upper bound). You can be liable for losses up to the moment you report it.",
+  "after": "Phone the 24-hour line. The bank cancels the card as soon as you report it and sends a new one to the address it has for you in 5 to 7 working days, and the game takes 7. You can be liable for losses up to the moment you report it.",
+  "why": "A code name, \"(standardDays is the upper bound)\", reached the screen. It now says what the game does with the bank's range: it takes 7 working days.",
+  "meaningSensitive": true,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), Bank of Ireland; SECURITY['ie-bank-of-ireland'].standardDays is 7"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (jp-mufg.replaceWords)",
+  "kind": "official",
+  "before": "Cash card or MUFG Debit reissue after loss or theft costs 550 yen (tax included) through the app, 1,100 yen by phone or at a branch. MUFG Card (credit) reissue was set at 1,000 yen before consumption tax in a 2011 notice (no current tax-included figure found); Gold and Platinum reissue free. Cash card delivery is stated as about 1 week to 10 days, so standardDays = 8 business days.",
+  "after": "Reissuing a cash card or MUFG Debit card after loss or theft costs ¥550, tax included, in the app, or ¥1,100 by phone or at a branch. A 2011 notice set reissuing an MUFG Card (a credit card) at ¥1,000 before consumption tax, and no current figure with tax was found. Gold and Platinum cards are reissued free. MUFG says a cash card takes about a week to ten days to arrive, so the game uses 8 business days.",
+  "why": "\"standardDays = 8 business days\" was the research's note to itself. It becomes the game's assumption, labelled as the game's; yen written as the game writes them.",
+  "meaningSensitive": true,
+  "verified": "SECURITY['jp-mufg'].standardDays is 8; read in the file (both of MUFG's fees are listed, so the panel shows its own figures, not these words)"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (ca-td.suspectWords)",
+  "kind": "official",
+  "before": "TD texts the credit cardholder when it detects suspicious activity and blocks the card; replying Y unblocks it immediately, while replying N or not answering keeps it blocked until the customer calls, and TD phones if there’s no reply. TD's published fraud alerts cover credit cards; the page doesn’t mention debit cards.",
+  "after": "When TD sees suspicious activity on a credit card, it blocks the card and texts you. Reply Y and it’s unblocked at once. Reply N, or don’t answer, and it stays blocked until you call; TD phones you if you don’t reply. TD’s fraud alerts page covers credit cards and doesn’t mention debit cards.",
+  "why": "Spoken to the player, not about \"the credit cardholder\", and one long semicolon chain made three steps: what TD does, what each reply does, and what it doesn't cover.",
+  "meaningSensitive": false,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), TD"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (de-deutsche-bank.lostCardWords)",
+  "kind": "official",
+  "before": "The customer blocks the card in online banking or the app (Services > Card > block and/or replace) or by calling the 24/7 card line (069 910-10035); a replacement can be ordered in the same step. Only a block-and-replace flow is described; no self-service temporary freeze was found.",
+  "after": "Block the card in online banking or the app (Services, then Card, then block or replace it) or on the 24-hour card line, 069 910-10035, and order a replacement in the same step. Deutsche Bank describes only blocking and replacing a card, not freezing it yourself for a while.",
+  "why": "\"The customer blocks\" became an instruction to the player; an app path written with \">\" arrows became words, as the game names a place on screen; \"no self-service temporary freeze was found\" became what the bank does and doesn't describe.",
+  "meaningSensitive": false,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), Deutsche Bank"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (es-santander.suspectWords)",
+  "kind": "official",
+  "before": "Not found on Santander Spain's own pages. The tariff lists an optional paid SMS alert service that texts the customer about every card transaction so they can spot fraud and block the card themselves; no bank-initiated confirm-or-decline process is described.",
+  "after": "Santander Spain’s own pages don’t say how it flags a suspicious payment. Its tariff lists an optional paid text alert service that tells you about every card payment, so you can spot fraud and block the card yourself. It doesn’t describe asking you to confirm or decline a payment.",
+  "why": "It opened on a fragment, \"Not found on Santander Spain's own pages.\", that left the player guessing what wasn't found.",
+  "meaningSensitive": false,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), Santander (Spain)"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (kr-kb-kookmin.replaceWords)",
+  "kind": "official",
+  "before": "Check card: the first three reissues in a year are free; from the fourth reissue in a year, 2,000 won each. Same rule whatever the reason.",
+  "after": "No fee was found for a new KB Kookmin credit card. A check card’s first three reissues in a year are free; from the fourth, each costs ₩2,000, whatever the reason.",
+  "why": "Shown only under the credit card (the debit card's fee is listed), it spoke only of the check card, then \"The game charges nothing for it.\" It now starts with the card it sits under.",
+  "meaningSensitive": true,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), KB Kookmin, under the KB국민 credit card; SECURITY['kr-kb-kookmin'] lists replaceFeeDebit and no replaceFeeCredit"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (fr-bnp-paribas.replaceWords)",
+  "kind": "official",
+  "before": "Tariff line is 'reissuing a card before expiry': 15 EUR, free for Visa Premier, Visa Infinite and virtual cards and for BNP Paribas Sécurité insurance holders. Stopping (blocking) the card is free. No separate standard credit card: the credit figure is the deferred-debit Visa Classic, which falls under the same line.",
+  "after": "BNP Paribas charges €15 to reissue a card before it expires, and nothing for Visa Premier, Visa Infinite and virtual cards, or if you have BNP Paribas Sécurité insurance. Blocking the card is free. It has no separate standard credit card, so the game prices its credit card as the deferred-debit Visa Classic, under the same line.",
+  "why": "\"The credit figure is the deferred-debit Visa Classic, which falls under the same line\" was how the research took a figure. It now says what the game does: it prices the credit card as that card.",
+  "meaningSensitive": true,
+  "verified": "read in the file; both fees are listed (€15), so the panel shows the figure, and these words only where a fee is missing"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (gb-barclays.lostCardWords)",
+  "kind": "official",
+  "before": "Barclays cancels the card and posts a replacement within seven working days by second-class Royal Mail (five if ordered through Online Banking). For an emergency, some branches issue a temporary debit card on the spot for £12, valid for 28 days and limited to two a year. The Barclaycard credit card is blocked permanently from the app and replaced within seven working days. Barclays says it tries to update the new card details with retailers that hold recurring payments on the old debit card (Visa informs most major retailers); others must be told by the customer.",
+  "after": "Barclays cancels the card and posts a replacement by second-class Royal Mail within seven working days, or five if you order it in Online Banking. In an emergency, some branches give you a temporary debit card on the spot for £12. It lasts 28 days, and you can have two a year. A Barclaycard credit card is blocked for good from the app and replaced within seven working days. Barclays says it tries to pass the new debit card’s details to shops that take regular payments from the old one (Visa tells most big retailers); you have to tell any others yourself.",
+  "why": "Second person, the steps in the order the player meets them, and \"others must be told by the customer\" said as what the player has to do.",
+  "meaningSensitive": false,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), Barclays"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (us-wells-fargo.rushUnpublished)",
+  "kind": "official",
+  "before": "Wells Fargo’s rush is for credit cards: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet), and its Active Cash card agreement names a Rush Plastic Fee without an amount.",
+  "after": "Wells Fargo can rush a new credit card: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet). Its Active Cash card agreement names a Rush Plastic Fee but gives no amount.",
+  "why": "The bank's sentence stays a quotation, word for word, in its marks; the game's words around it are now a plain statement of what the bank offers and what it doesn't price.",
+  "meaningSensitive": false,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), Wells Fargo; tests/evidence2-b04.test.ts asserts the whole sentence, with the screen's \"With no fee published, the game doesn’t offer a rushed card.\" after it"
+ },
+ {
+  "source": "src/engine/content/security.ts#SECURITY (mx-banorte.source)",
+  "kind": "label",
+  "before": "Folleto Informativo Cuenta Enlace Personal (banorte.com, read via Wayback Machine snapshot of March 21, 2026); Folleto Informativo Tarjeta de Credito Clasica FI-Clasica.pdf (banorte.com, read via Wayback Machine snapshot of May 15, 2026). Live banorte.com timed out on every request., Clasica brochure valid January to June 2026; Enlace Personal brochure undated (its GAT figure is valid to October 2019, so the fee table may be old); read September 26, 2026",
+  "after": "Folleto Informativo Cuenta Enlace Personal (banorte.com, read via Wayback Machine snapshot of March 21, 2026); Folleto Informativo Tarjeta de Credito Clasica FI-Clasica.pdf (banorte.com, read via Wayback Machine snapshot of May 15, 2026), as the live banorte.com timed out on every request; Clasica brochure valid January to June 2026; Enlace Personal brochure undated (its GAT figure is valid to October 2019, so the fee table may be old); read September 26, 2026",
+  "why": "A source line printed \".,\" where a note on the live site met the next part. The note now joins the reading it explains.",
+  "meaningSensitive": false,
+  "verified": "read on Your Cards, rendered/security.txt (render-panels.test.ts), Banorte's Sources And Estimates"
+ }
+]
