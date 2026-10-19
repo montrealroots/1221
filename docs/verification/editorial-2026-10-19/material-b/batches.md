@@ -108,3 +108,52 @@ segment" and "the take’s sound").
 
 **Screens verified:** BriefPane for all 25 briefs of the file, rendered by `tests/material-words.test.ts` and kept as text
 in `rendered/second-a.txt`. The built app comes once the text is done (`batches.md`, The Area's End).
+
+## Batch 2: `second-b.ts`
+
+**Sources (78):** 25 briefs and 53 reading sources ([boy] holds two readings): [brief-coming_of_age-2] [free] [losing]
+[brief-concert_film-2] [pro] [song] [wings] [brief-conspiracy_thriller-3] [ledger] [nerve] [name] [brief-cosmic_horror-2]
+[record] [tomas] [peace] [brief-costume_drama-2] [robe] [caution] [brief-courtroom_drama-2] [right] [parents]
+[brief-creature_feature-2] [measure] [stubborn] [brief-crime-2] [boy] [game] [brief-cyberpunk-2] [buyback] [keeper]
+[brief-dance-2] [promise] [two] [brief-dark_fantasy-2] [mercy] [voices] [brief-detective-2] [minute] [heard] [guilt]
+[brief-disaster-2] [anchor] [listener] [brief-docudrama-2] [delegate] [door] [brief-docufiction-2] [rules] [offers]
+[brief-documentary-2] [film] [him] [brief-domestic_drama-2] [sewing] [son] [brief-drama-2] [own] [brief-dystopian-2]
+[spelling] [sent] [brief-eco_horror-2] [out] [pulled] [brief-epic-2] [soldier] [orchard] [brief-erotic_thriller-2] [vote]
+[want] [brief-espionage-2] [never] [trust] [brief-experimental-2] [list] [her] [brief-exploitation-2] [cool] [afraid].
+
+**Rewritten (20 sources, 42 strings):** 18 briefs (concert_film-2, conspiracy_thriller-3, cosmic_horror-2,
+costume_drama-2, creature_feature-2, dance-2, dark_fantasy-2, disaster-2, docudrama-2, docufiction-2, documentary-2,
+dystopian-2, eco_horror-2, epic-2, erotic_thriller-2, espionage-2, experimental-2, exploitation-2) and 2 readings
+([ledger]'s rests, a fragment after "It rests on:", and [nerve]). By kind: 10 staging notes made instructions (the
+syringe, the waltz, the spear drill, the two staged-intimacy notes, the dip that's never a fall); 5 voice briefs'
+`reader` fields; 8 passives about who calls, records or chooses (the reader calling cues, she placing each pause); 5
+reasons and 4 beats without a verb; 2 circumstances that closed on a recording fragment; one dangling participle
+(dark_fantasy-2's "Recorded alone …, it asks"); and eco_horror-2's arc, whose "her face shown to ask him out" read as a
+date.
+
+**Kept (58):** seven briefs whole (coming_of_age-2, courtroom_drama-2, crime-2, cyberpunk-2, detective-2,
+domestic_drama-2, drama-2) and 51 readings.
+
+**Meaning-sensitive, and how each was checked:**
+- The staging and safety notes (concert_film-2, creature_feature-2, dance-2, docudrama-2, epic-2, erotic_thriller-2,
+  exploitation-2): each instruction keeps every condition of the old note (the capped prop syringe and the sound cue;
+  nobody partners the waltz; the dip is "never a fall"; the replica spear aimed past the lens; the intimacy coordinator,
+  the solo embrace and "never touching the reader"), read against `briefs/types.ts`'s staging rule.
+- conspiracy_thriller-3's `reader`: the brief has no reader and she speaks into her phone for the reporter; the new
+  words say both, the reporter first, since the heading is You Speak To.
+- [ledger]'s rests now names the reporter's request ("names, dates and amounts, in order"), which the circumstances
+  state, and the first beat ("as plainly as the first line of a ledger").
+- eco_horror-2's arc: the last beat is "asks him to walk out with her", which the arc now says.
+- Only string values changed: `m15b/skeleton.py` (scratchpad) blanks every string and finds the file identical to HEAD;
+  the changed strings sit under `why`, `reader`, `circumstances`, `beats[].what`, `readings[].reading` and `rests`.
+
+**Interactions read whole:** each brief's pane top to bottom, as in batch 1; the allows notes and their misfit line for
+docufiction-2 (open) and experimental-2 (set). Rendered: `rendered/second-b.txt`.
+
+**Tests and tool matchers updated:** none held the old words.
+
+**Checks** (scratchpad `m15b/b2-checks/`): tsc 0, eslint (second-b.ts) 0, title-case 0, label-sweep 0, plural-check 0,
+voice-check 0, tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0; vitest `tests/material-words.test.ts
+tests/briefs-content.test.ts` 0 (454 tests). text-inventory 1 before the marks (the changed sources Pending) and 0 after.
+
+**Screens verified:** BriefPane for all 25 briefs of the file, rendered and kept in `rendered/second-b.txt`.
