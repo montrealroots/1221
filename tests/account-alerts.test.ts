@@ -48,7 +48,7 @@ describe('PLAYER JOURNEY: autopay from one bank, school money into the other', (
     sim.advanceTo(due.at - (LOOKAHEAD_DAYS - 1) * MS_DAY);
     const short = told(sim, /^Short For A Payment: 360 Checking$/);
     expect(short).toHaveLength(1);
-    expect(short[0]!.body).toMatch(/autopay, \$400\.00, comes from 360 Checking at Capital One on .* holds \$0\.00\. Move money into it/);
+    expect(short[0]!.body).toMatch(/autopay, \$400\.00, comes from 360 Checking at Capital One on .* has \$0\.00 available\. Move money into it/);
     expect(told(sim, /^Short For A Payment: Chase/)).toHaveLength(0);
     sim = reload(sim);
     sim.advanceTo(due.at - 60_000);
