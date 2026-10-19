@@ -1,0 +1,226 @@
+
+ RUN  v2.1.9 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/e15-money-data
+
+ ✓ tests/evidence-g12-money.test.ts (33 tests) 20010ms
+   ✓ card.report > stops a lost Chase debit card for no fee: the meal and each morning’s groceries go on the credit card, the machine refuses and the counter pays, and a new number comes on the seventh business day 708ms
+   ✓ card.report > rushes Chase’s for $15 out of checking in two business days, and refuses a Wells Fargo card’s rush, whose fee Wells Fargo doesn’t publish, where unrushed it takes five 584ms
+   ✓ card.report > is offered on Your Cards with Chase’s fee line, and Report It pressed stops the debit card and says when the new one comes 306ms
+   ✓ card.request_hardship > has autopay on the minimum ask the plan’s $100 at the due date rather than the card’s $48, on time, and the score moves by a month paid as agreed 2412ms
+   ✓ card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee 2223ms
+   ✓ card.request_hardship > names the plan’s $100 as what the statement asks and what the due date found short, where only the card’s $48 minimum was paid 1568ms
+   ✓ card.request_hardship > ends at the due date once the card is paid off before it: the suspension lifts and the card takes the day again 993ms
+   ✓ card.request_hardship > ends once the card is paid off before its statement too, with no due date to wait for, and the card isn’t left suspended owing nothing 1402ms
+   ✓ card.request_hardship > freezes a Capital One card’s 28.99% on a plan: no interest at the statement after a due date the plan’s payment met, where its twin off a plan is charged it nightly 2507ms
+   ✓ card.request_limit > is read by the record at the due date: the same $2,960 owed costs a $3,750 limit ten points of utilization and a raised $4,500 one seven 2113ms
+   ✓ card.set_everyday > meets somebody else’s use on the everyday card: the same day’s draw lands on Citi made everyday, and on Chase in the twin left so 533ms
+   ✓ card.set_everyday > refuses to make a card being closed the everyday card, as the screen never offers it 319ms
+   ✓ card.set_everyday > is offered on the card that isn’t everyday and not on one being closed, and Make It The Everyday Card pressed swaps the two panels’ words 315ms
+   ✓ card.set_over_limit > lets a meal go a tenth over a $500 limit once opted in, charges no fee for it at the statement, and opted out leaves the limit less what’s owed 1049ms
+   ✓ cash.deposit > takes nothing at a machine behind a locked, stopped or not-yet-arrived debit card, where the counter takes each, and the machine again once the card comes 546ms
+   ✓ cash.withdraw > takes a $300 cash advance on Chase’s card for its 5%, draws 28.49% from the first night with no grace, puts a $200 payment to the cash first, and charges the cash interest at the statement 703ms
+ ✓ tests/need-paths.test.ts (17 tests) 33267ms
+   ✓ the family a new life comes from (c-family, c-wealth) > Genres & Background offers the six families, Wealthy chosen as creation chose before; each, chosen on the select, is what Review says and what the save opens 1143ms
+   ✓ the family a new life comes from (c-family, c-wealth) > the Nothing family’s life begins with no card, and its Profile says Risk Tolerance set no autopay, where the Wealthy one’s card started on the whole statement 405ms
+   ✓ Yale’s living-expense scholarship, the term’s account (c-family) > PLAYER JOURNEY: a Scraping family’s student is paid $13,318.50 at the fall term’s start, the scholarship meeting the plan; the Wealthy one pays the $1,882 plan from the bank; each notice says which 8264ms
+   ✓ school.request_conversion, for a life the screen made with need > PLAYER JOURNEY: the Saturday called in sick, asked for on the drawn button, is paid at January’s processing, $138.00 into the bank, where the Wealthy family’s student is refused in the button’s words 3679ms
+   ✓ a leave taken with need: the aid returned, the balance, and paying it > PLAYER JOURNEY: a personal leave asked on the spring’s third day, begun on 21 January, returns half the spring’s scholarship, $7,600.25, to the Yale account; Pay From Your Bank, drawn and pressed, settles it from the bank to the cent 1060ms
+   ✓ a leave taken with need: the aid returned, the balance, and paying it > the Wealthy family’s student, on the same leave on the same day, has no aid to return and owes nothing 565ms
+   ✓ the marketplace, offered on income the clock paid (health.enroll, health.appeal_decided) > PLAYER JOURNEY: an Inherited family’s savings at Capital One earn $6,436.10 in September, over Connecticut’s line, and Enroll on Papers gives the marketplace; a Comfortable family’s student at the same bank, with $112.63, is given HUSKY D 873ms
+   ✓ the marketplace, offered on income the clock paid (health.enroll, health.appeal_decided) > PLAYER JOURNEY: that marketplace’s claim denied and appealed on Papers; paid when due, then overturned, gives back the $138.98 paid over the $45 share 1879ms
+   ✓ health.enroll: a program’s renewal, reached by the clock > PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the generic she filled uninsured, comes to its renewal on 1 October 2027: September’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload 3442ms
+   ✓ health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with $600 of October’s wages posted by hand she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over 9593ms
+   ✓ health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00, her September 2027 is $1,980.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 October 2027 with no gap, and no work is asked 1939ms
+ ✓ tests/evidence-g11-money.test.ts (21 tests) 23380ms
+   ✓ bank.repay_loan > pays a Citi loan off from the Personal Loan panel 20 days into a 30-day month: refused first where the account can’t cover it, then $3,000 and 20 days’ interest from Citi Access Checking, the next payment called off, and Citi lending again 2595ms
+   ✓ bank.repay_loan > charges 20 days’ interest 20 days into a loan taken on 24 August, a 31-day month 477ms
+   ✓ bank.set_alerts > leaves Regulation E’s $500 of a stranger’s $855.06 caught by A Payment Over, typed on the Alerts form, and reported four business days on, and $50 to a twin who learned of it from the statement 1515ms
+   ✓ bank.set_alerts > tells of a statement ready only while Statement Ready is pressed On on the Alerts form, and of a card’s statement with a payment due whatever it is 1449ms
+   ✓ bank.set_payments > takes a Citi loan’s monthly payment from Chase Savings when it falls due, with the link pressed On, and misses it onto the record with the link Off 1947ms
+   ✓ bank.take_term_interest > takes a Chase CD’s $174.52 from the panel 30 days before its end: refused with nothing earned, the penalty falling from $172.60 to nothing, and the renewal reinvesting only what the 30 days after earned 5383ms
+   ✓ bank.take_term_interest > takes AIB’s term interest less Ireland’s 33% DIRT: a quick-save life in Dublin, since a New Haven bank takes no tax off interest 577ms
+   ✓ card.close > leaves Citi’s $2,500 of $5,000 alone in what’s used once Chase’s card is closed from the panel, owing nothing: Citi’s due date moves the record a point down, where beside Chase’s it moves 1.5 up 3385ms
+   ✓ card.close > takes nothing new on a closing Chase card that owes $400: a second close refused, the night’s groceries kept off it, paid in full from the panel, and closed at its statement, across a reload 796ms
+   ✓ card.close > charges no yearly fee on a closing card: AIB’s €30 on December’s statement, the month it was opened, to the card left open and not to the one closing (a quick-save life in Dublin, since no New Haven card has a yearly fee) 4118ms
+   ✓ card.lock > refuses to lock a debit card reported lost, in its words, draws no lock for it, and locks the new one once it comes 321ms
+ ✓ tests/evidence-g05-life.test.ts (26 tests) 54865ms
+   ✓ health.appeal_decided > PLAYER JOURNEY: paid, then overturned, gives back the $138.98 paid over the $45 share to the payee account, once, across a reload 1849ms
+   ✓ health.appeal_decided > PLAYER JOURNEY: upheld, leaves the bill at $183.98 with nothing back, says Appeal Upheld, and Papers Denial Upheld 1442ms
+   ✓ health.appeal_decided > PLAYER JOURNEY: gone to debt, then overturned, takes the debt down to the $45 share and puts nothing in the bank 2429ms
+   ✓ health.appeal_decided > partly paid off as debt, then overturned, gives back what was paid over the share, and the bill is settled 1084ms
+   ✓ health.appeal_decided > the denial’s and the decision’s notices name the clinic as it’s written 1047ms
+   ✓ health.appointment > PLAYER JOURNEY: kept while a broken bone keeps them off work and out of class 532ms
+   ✓ health.appointment > PLAYER JOURNEY: booked again after Call It Off, missed in hospital, shown not yet seen, and kept when booked again, across a reload 1670ms
+   ✓ health.bill > PLAYER JOURNEY: a stay’s $200 falls due and is paid from the checking account, Settled on Papers, once across a reload 2132ms
+   ✓ health.bill > PLAYER JOURNEY: unpaid in a drained twin, is $200 of medical debt, a money trouble and Owed As Debt, until Pay It Off settles it, across a reload 2015ms
+   ✓ health.bill > A Medical Bill Went Unpaid names the hospital as it’s written 1022ms
+   ✓ health.month > PLAYER JOURNEY: diagnoses high blood pressure on the 1st, and the next week fills its medicine at Walmart’s $4, once across a reload 1051ms
+   ✓ health.month > PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses, and the next week’s toll reads it: 3 of morale 522ms
+   ✓ health.month > PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where $600 of wages in July (TEST SETUP) renews it six months 5937ms
+   ✓ health.month > PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported on the first month a year past due, once, across a reload 11001ms
+   ✓ health.therapy_session > PLAYER JOURNEY: a session the drained bank can’t pay is held, counted, and billed at $240 due in 30 days, then owed as debt 720ms
+   ✓ health.therapy_session > PLAYER JOURNEY: a course that lifts the depression ends its medicine and its toll, against a twin’s that doesn’t 3466ms
+   ✓ health.therapy_session > PLAYER JOURNEY: uninsured, a course that lifts the depression ends its month of care on the next 1st, against a twin’s that doesn’t 893ms
+   ✓ health.week > PLAYER JOURNEY: the flu, seen at urgent care, is five days, 25 of condition and 30 of energy, a sick day called in and the work shown ill 3936ms
+   ✓ health.week > PLAYER JOURNEY: a stay is three days in hospital, 40 of condition and of energy, $200, and the two days of classes it holds excused 828ms
+   ✓ health.week > the week’s flu draw is 4.5 times likelier at ten hours’ sleep debt and full stress (2.5 × 1.8), as the clock draws it 8898ms
+   ✓ injury.comp > PLAYER JOURNEY: a broken bone at an elective shift is paid a week at a time for all 42 days off, into the payee account, once across a reload 1073ms
+   ✓ injury.comp > the week’s rate is 75% of the $92 paid with nothing deducted from it, $69.00, not less a FICA that was never withheld 570ms
+ ✓ tests/evidence-g14-money.test.ts (18 tests) 19281ms
+   ✓ bank.open_current > refuses Chase for the $30 it charged off and three banks on its ChexSystems report, opening, applying for and sending nothing, and the panel says so with Apply shut 2856ms
+   ✓ bank.open_current > refuses a seventeen-year-old at the four banks that open from 18, in their words, and opens Citi on her eighteenth birthday 2034ms
+   ✓ bank.open_current > keeps an F-1 student’s branch hour off orientation’s registration, before it and during it, and opens Wells Fargo after it, the hour passing; a citizen opens online at once 332ms
+   ✓ bank.open_current > refuses an opening deposit from a card, from an account at the bank itself, of nothing or less, and of more than the account holds, each in its own words, nothing moved 1556ms
+   ✓ bank.set_primary > moves the night’s groceries, $40 from a machine and $100 paid to the Chase card by hand to Capital One once it’s primary, across a reload, and leaves Chase as it was 752ms
+   ✓ bank.set_primary > refuses one primary already, a savings account, a card, an account the bank closed and Citi while it closes, leaving the primary where it was 1760ms
+   ✓ bank.set_order_source > pays the $50 order from Capital One on the 28th once moved, into Chase savings in Capital One’s three business days, once a month across reloads; closing Capital One is refused for it until it moves back 1457ms
+   ✓ bank.set_order_source > refuses an order it doesn’t know, a savings account or a card to pay from, and Citi while it closes, leaving the order where it was 1014ms
+   ✓ bank.set_loan_repayment > draws the month’s $138.77 from Chase once the Citi loan is moved there, Citi untouched, once a month across reloads; Citi, refused for the loan before, then closes 2087ms
+   ✓ bank.set_loan_repayment > refuses a loan it doesn’t know, a savings account, Citi while it closes, and a loan paid off, leaving the repayment where it was 1912ms
+   ✓ bank.close_current > refuses Chase as her only current account, then as her primary, then overdrawn by $15.00 once its fee falls on it empty, until she pays it in 449ms
+   ✓ bank.close_current > names a payment set for a date and then the savings beside it; holding $2,300.00 and told nowhere, it asks where; named, the $2,300.00 arrives at Capital One whole in Chase’s three business days, once, across a reload 511ms
+   ✓ bank.close_current > keeps Citi open while its groceries are pending, refuses a second close, and on its date leaves it open with a Didn’t Close notice, its $5 fee having overdrawn the $2.00 in it; paid in, it closes 1433ms
+   ✓ bank.close_current > shows what keeps Chase open under it with Close It shut; once they’re moved, Close It, pressed, sends its $2,300.00 to Capital One, and the panel shows it on its way 606ms
+ ✓ tests/evidence3-lifepapers.test.ts (16 tests) 30373ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers, is charged $706 on 1 November and 1 December and $786 on 1 January 2027, each once across a reload; it’s refused again in its own words before and after it begins 2148ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: withdrawn after the fifteenth day, on 9 October, Yale Health covers thirty days more, to 8 November, and Enroll gives the marketplace from 1 December, the first of the month after Yale’s end, not 1 November; no premium is taken on 1 November 2616ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: a CD’s interest, $57,928.16 at its maturity on 24 March 2027, is income the year’s record and March’s income test read, so Enroll on 1 April gives the marketplace, not HUSKY D 5313ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: the same CD set to be paid out at its end is paid $57,928.16 of interest on 24 March 2027, and the year’s record and March’s income hold it once 5700ms
+   ✓ health.enroll, on income the clock paid (round three) > PLAYER JOURNEY: the same CD broken on 10 March 2027, 198 days’ interest less Chase’s 180 days’, keeps $4,918.42, and records it as the year’s interest and March’s income, once 5356ms
+   ✓ health.appeal_decided, on the marketplace a family’s savings reach (round three) > PLAYER JOURNEY: paid when due and upheld, the bill stays $183.98, nothing comes back, the notice says the plan kept its denial, and Papers says Denial Upheld 1080ms
+   ✓ health.appeal_decided, on the marketplace a family’s savings reach (round three) > PLAYER JOURNEY: savings unlinked and checking moved to savings before the bill falls due, it goes to debt, $183.98; overturned, the debt is the $45 share, and Pay It Off on Papers pays $45.00 and settles it 947ms
+   ✓ documents.us_status, a marketplace plan bought in the grace (round three) > PLAYER JOURNEY: the F-1 takes $10,110.10 of September’s interest, over Connecticut’s line, and is given the marketplace in her grace from 1 December; asked “Your US Status Is Ending” for 17 October, out of status that day, her plan ends on the 1 November look without a premium taken, where the citizen who did the same keeps hers and pays $706 on 1 December 3427ms
+   ✓ world.tick, with the undated rule gone (round three) > PLAYER JOURNEY: the F-1’s “Your US Status Is Ending”, dated 17 October, is closed by the first tick after it, leaves the open list, and is kept 180 days from closing, gone by the 183rd, across a reload 1173ms
+   ✓ world.tick, with the undated rule gone (round three) > a save an older build left with undated rows (TEST SETUP) loads with the open one dated ninety days from its raising, closed by the tick after that date, and the closed one let go 484ms
+   ✓ documents.apply_ssn, from a hospital bed the week drew (round three) > PLAYER JOURNEY: the F-1 admitted by her first health week (TEST SETUP: the draw forced to a stay) is refused “Not from a hospital bed.” where her twin, that evening, is sent to the office; discharged, she applies 371ms
+   ✓ health.choose_clinic, for a family-made life (round three) > PLAYER JOURNEY: the Scraping family’s student who picks Fair Haven on Your Doctor is booked 24 days on there and billed the uninsured’s $183.98; her twin who picks nothing is booked the next weekday at Yale Health, at $0 928ms
+   ✓ health.appointment, a visit called off on a family-made life (round three) > PLAYER JOURNEY: a visit called off is owed on Papers, and the next week the draw sends to the doctor books it; kept, it’s owed no more; a specialist it referred to, called off, is booked by the next such week as the specialist, 31 days on, not as the week’s own visit 583ms
+ ✓ tests/evidence2-b04.test.ts (8 tests) 5713ms
+   ✓ bank.break_term > closes a notice given in a save from before the close went on the clock, at its own day, once 593ms
+   ✓ bank.break_term > closes a NatWest term held beside a Barclays primary on 35 days’ notice by the clock, into the NatWest account kept beside it, the £10,000.00 whole after the £39.41 charge taken from what it earned, and Barclays sees none of it (a London life: no New Haven bank asks notice) 316ms
+   ✓ card.lock > steers somebody else’s use to the card left unlocked: the credit card locked from Your Cards, every night’s is the debit card’s; the debit card locked, every night’s is the credit card’s 554ms
+   ✓ card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record 2317ms
+   ✓ card.request_hardship > is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48 1489ms
+ ✓ tests/evidence-g13-money.test.ts (25 tests) 49371ms
+   ✓ finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30 2607ms
+   ✓ finance.pay_card > paid in full by hand, the statement keeps its grace period and the next charges no interest; with the minimum alone it carries, and the next charges the $62.47 that $2,000 built a day at a time at 18.46% 2956ms
+   ✓ finance.pay_card > paid by hand, a US card takes the minimum to the cheapest balance and the rest to the dearest: $540 clears a cash advance at 28.49%, and the next statement charges it no interest; the $40 minimum alone leaves it to draw 3646ms
+   ✓ finance.pay_card > paid from Capital One, made primary, the credit it frees is held for Chase’s 15 days, across a save and a load, and Left To Spend says so; then given back 615ms
+   ✓ bank.fraud_refund > due to a card closed since, goes once into the current account at its bank, across a save and a load, and the notice says where 564ms
+   ✓ bank.fraud_refund > due to a second bank’s current account closed since, goes into the primary account, and says so 831ms
+   ✓ bank.fraud_refund > due to the open card it was used on, goes onto the card, which then owes the $50 the law leaves, and its statement asks that 655ms
+   ✓ bank.scheduled_payment > from a current account Chase closed for sixty days overdrawn doesn’t go, and says so: nothing leaves it, nothing is in transit; the twin never overdrawn sends it 3339ms
+   ✓ card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it 9749ms
+   ✓ card.statement > charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements (Dublin, Bank of Ireland: no US card in SLATE has a yearly fee) 2766ms
+   ✓ credit score > asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and at day 125 the score has gained nothing on a twin’s who never moved it 9550ms
+   ✓ credit score > a mark seven years old leaves the record at the month’s end on the clock and gives 25 back, which an application then reads and the card’s screen reprices; one not yet seven years old waits for its own month’s end 1016ms
+   ✓ credit score > reads what’s used of the limit at the due date: 80% of it costs ten points of the month’s three, 20% costs none 2546ms
+   ✓ credit score > with no card open, the record ages back 2 a month on the 1st, to 680 and no further, and not at all with a payment late in the year 2546ms
+   ✓ credit score > prices a Citi loan by the record: 12.10% at 735, and 12.30% once a card application has taken its five points 1458ms
+   ✓ statements > shows a card’s kept cuts as its periods, a transition cycle’s charge under one statement, the minimum and the minimum-only warning, as the player has it 2219ms
+   ✓ statements > ends a closed card’s last period at its closing, as the row says a closed account’s does, not So Far 1393ms
+ ✓ tests/guide-examples-money.test.ts (16 tests) 51426ms
+   ✓ the money entries’ worked examples, played > bank.round-ups: Round-Ups 723ms
+   ✓ the money entries’ worked examples, played > money.affairs: Your Affairs And What You’re Worth 1592ms
+   ✓ the money entries’ worked examples, played > bank.transfer: Moving Money 414ms
+   ✓ the money entries’ worked examples, played > bank.term: Term Deposits 2184ms
+   ✓ the money entries’ worked examples, played > bank.upkeep: Keeping An Account 21772ms
+   ✓ the money entries’ worked examples, played > bank.card-offers: A Card’s Offers 2688ms
+   ✓ the money entries’ worked examples, played > leaves a live save byte for byte as it was, every example played beside it 20865ms
+ ✓ tests/language-money.test.ts (20 tests) 2889ms
+   ✓ PLAYER JOURNEY: a New York student closes Citi while its groceries are pending > refuses what a closing account can’t take, saying why, and says where what it held went when it closes 1248ms
+ ✓ tests/accountlife.test.ts (30 tests) 9691ms
+   ✓ a term deposit’s end > renews at Chase for the same term, with ten days to take it whole 2307ms
+   ✓ a term deposit’s end > breaks at MUFG at its early rate: the ordinary deposit’s in the first six months, and never under it after 506ms
+   ✓ a term deposit’s end > pays out instead when the holder says so, and moves into savings where that’s the bank’s way 2345ms
+   ✓ a term deposit’s end > keeps Deutsche Bank’s three months’ notice to change it, and writes in time for it 986ms
+   ✓ breaking a term deposit early > is refused once an Irish deposit has renewed: renewing doesn’t make it new again 1171ms
+   ✓ breaking a term deposit early > forfeits the interest so far where the bank words its penalty another way, SLATE’s estimate 342ms
+   ✓ breaking a term deposit early > lets Chase’s interest be taken during the term, where the bank allows it 477ms
+   ✓ savings > closes German savings past the allowance on three months’ notice, and into the current account then 480ms
+ ✓ tests/carried.test.ts (19 tests) 4932ms
+   ✓ catching the flu > is likelier short of sleep and under stress, by the tempered studies 1519ms
+   ✓ interest > reaches the return and the month’s income, as it was paid 413ms
+   ✓ the pharmacy, the dentist and the optician > bring the dentist to about three in five a year, and an eye exam only to those with lenses 644ms
+   ✓ conditions carried > are drawn once, at a young adult’s rates 1067ms
+   ✓ conditions carried > let asthma left alone double the emergencies 677ms
+ ✓ tests/cardlife.test.ts (20 tests) 11502ms
+   ✓ a record with no card open > ages back a little each month while nothing is in collections, stops at a thin file’s ceiling, and holds while anything is 842ms
+   ✓ going over the limit > is a US card’s choice, lets a tenth over for someone who opted in, and charges nothing for it at four statements over the limit 669ms
+   ✓ a late payment on the record > is reported by a US lender at thirty days past due, the next due date still short, and at once elsewhere 795ms
+   ✓ missed payments > suspend the card after two, lift it after one on time, and six charge it off to collections 1449ms
+   ✓ missed payments > end Barclaycard’s promotional rate at one missed minimum, as its terms say, and not Lloyds’ 375ms
+   ✓ persistent debt in Britain > writes at eighteen months of paying more in interest and fees than off the card, and at thirty-six sets a plan and stops it 5598ms
+ ✓ tests/language-data-dates.test.ts (12 tests) 1763ms
+   ✓ the guide, the tutorial and Papers say a day month first, as the game writes a date > every entry of the guide and every chapter of the tutorial, the papers guide’s built days among them 589ms
+ ✓ tests/cardoffers.test.ts (13 tests) 770ms
+   ✓ an introductory rate > ends on a US card for a payment sixty days late 351ms
+ ✓ tests/bank-moves.test.ts (11 tests) 3437ms
+   ✓ PLAYER JOURNEY: a second bank, opened and funded > opens Capital One at nothing, sends money from Chase in its days, and the card follows 660ms
+   ✓ PLAYER JOURNEY: moving the relationship, with school money arriving during it > moves the primary account, then wages, then orders, then closes Chase, with nothing lost 486ms
+   ✓ the exploits the old switch allowed > closes an unfunded Capital One account after its 60 days, the money it never held nowhere to lose 1082ms
+ ✓ tests/defects-r1-1.test.ts (11 tests) 18870ms
+   ✓ `spendRefusal`, against what `spend` does > says why exactly when `spend` can’t pay, and `spend` takes nothing then and owes nothing otherwise, for every way of paying, in New York and Paris 12225ms
+   ✓ `spendRefusal`, against what `spend` does > is what the menu says and what the command does, for a meal, for every way of paying, in New York and Paris 6495ms
+ ✓ tests/hardship-plan-minimum.test.ts (6 tests) 8481ms
+   ✓ a hardship plan’s statement > keeps the plan’s $101 as its least and says it’s the plan’s, where the statement cut before the plan keeps the card’s $48, across a reload 2646ms
+   ✓ a hardship plan’s statement > still asks the plan’s $101 on the Statements tab once the plan has ended: paid off on 25 October, the plan ends at the 10 November due date, and the October statement reads as it asked 1864ms
+   ✓ a hardship plan’s statement > says on the Statements tab what the plan’s payment takes to clear it, with no interest, not what paying the card’s minimum would at its rate 1133ms
+   ✓ a hardship plan’s statement > restates a statement already cut whose due date is still to come: the plan asked on 25 September puts its $100 in the place of the 20 September statement’s $48, as its due date judges it 891ms
+   ✓ paying the minimum by hand on a hardship plan > pays the plan’s $101, and with the bank emptied after it the due date counts it on time, where the card’s own minimum, under the plan’s, would have left it short and late 1275ms
+   ✓ the card’s panel on a hardship plan > gives the plan’s payment as what the statement asks and the late fee’s measure, and when the plan ends 671ms
+ ✓ tests/home-account-screens.test.ts (3 tests) 1972ms
+   ✓ an account kept at home, in its own money on every screen > shows HSBC UK’s accounts in pounds with the dollars beside, on the bank, Home, the looks and the statement, through a reload 1544ms
+ ✓ tests/finance-paths.test.ts (12 tests) 16686ms
+   ✓ a switch’s stages > is declined at the new bank’s first look when its opening rules no longer pass, and nothing moves 340ms
+   ✓ a switch’s stages > a partial switch takes its twenty working days, can’t be called off, and keeps the old account 328ms
+   ✓ an IRS payment plan > PLAYER JOURNEY: a monthly plan approved online, the penalty halved, collection stopped, payments taken, one missed and caught up 3252ms
+   ✓ an IRS payment plan > ends after CP523’s thirty days uncaught, and collection resumes 2922ms
+   ✓ an IRS payment plan > an amended return’s tax joins a plan where it adds two payments or less; past that, CP523 until it’s revised for its fee 2001ms
+   ✓ an IRS payment plan > a short-term plan has no fee and is paid in full by its 180 days 2903ms
+   ✓ an IRS payment plan > a refund goes to what’s owed on another year first 1612ms
+   ✓ the care log > keeps every event a cover change can reach and any whose bill is open, folds the rest into the year, and bills a change once 2967ms
+ ✓ tests/statements.test.ts (17 tests) 4819ms
+   ✓ an account’s entries > open at the balance before them, and each carries the balance after it, to the balance now 700ms
+   ✓ an account’s entries > close a past period where the next one opens 372ms
+   ✓ the periods > run by calendar month for an account, the current one so far, back to when it opened 561ms
+   ✓ the periods > run from the 20th to the 20th for the card, as its statements do 456ms
+   ✓ Germany’s quarterly closing > charges the quarter’s fees in one at the end of March, not month by month 390ms
+   ✓ Germany’s quarterly closing > pays the quarter’s interest at the closing, and none in the months before it 512ms
+   ✓ Germany’s quarterly closing > leaves everywhere else charging each month 318ms
+   ✓ an account’s statement > adds up what came in and went out, and counts interest after tax and the fees 470ms
+   ✓ the card’s statement > brings the balance forward, takes payments off, and asks the minimum with the warning 343ms
+   ✓ the year > counts a term deposit’s interest, not the deposit paid back beside it, and the tax taken 333ms
+ ✓ tests/cash.test.ts (10 tests) 720ms
+ ✓ tests/defects-g4-1.test.ts (9 tests) 401ms
+ ✓ tests/papers-complete.test.ts (9 tests) 4517ms
+   ✓ PLAYER JOURNEY: an international student’s banks and Social Security number > starts at a bank that opens for an F-1, is refused by Capital One, opens at Wells Fargo in a branch, and applies for the number once registered 1352ms
+   ✓ registration > unregistered, classes don’t count them and a shift can’t be worked; catching it up late counts them from then 318ms
+   ✓ where Yale’s payroll pays > moves to the new account after one weekly pay cycle, other payers after the fourteen days 456ms
+   ✓ bank history and cards > a closed account’s statements end at its closing; a second bank’s debit card can be locked 1975ms
+ ✓ tests/several-cards.test.ts (7 tests) 2556ms
+   ✓ applying for another card > is taken by another bank in the country while a card is held, and refused by the bank that issued one 325ms
+   ✓ each card > states on its own day, owes on its own statement, and is behind on its own 668ms
+   ✓ the record > reads what’s used of every card’s limit together 535ms
+   ✓ the record > counts a month paid as agreed once however many cards report it, and a late payment on any card as the whole mark 788ms
+ ✓ tests/defects-r3a-1.test.ts (7 tests) 399ms
+ ✓ tests/statements-hardship.test.ts (2 tests) 2804ms
+   ✓ the Statements tab on a hardship plan > asks the plan’s payment, which the due date judges, where its twin with no plan is asked the card’s minimum 1382ms
+   ✓ the Statements tab on a hardship plan > asks the card’s minimum on a statement due before the plan began, and the plan’s payment no higher than the statement 1421ms
+ ✓ tests/defects-g22-1.test.ts (6 tests) 140ms
+ ✓ tests/editorial-money-refusals.test.ts (4 tests) 416ms
+ ✓ tests/banking-complete.test.ts (3 tests) 1663ms
+   ✓ closing an account with card payments pending > is refused at Chase until they post, and Citi keeps it open, restricted, then closes it and remits past its own limit 1396ms
+ ✓ tests/account-alerts.test.ts (3 tests) 5651ms
+   ✓ PLAYER JOURNEY: autopay from one bank, school money into the other > warns once that Capital One is short for the card, names the account, the payment and the remedy, and not again 2145ms
+   ✓ PLAYER JOURNEY: autopay from one bank, school money into the other > says nothing when the account can cover it, and nothing when turned off 3219ms
+ ✓ tests/defects-g19-1.test.ts (3 tests) 3763ms
+   ✓ the card’s payment hold reads the account autopay paid from > holds nothing when autopay pays the Chase card from a Chase account, though the primary is at Capital One 2897ms
+   ✓ the card’s payment hold reads the account autopay paid from > holds the Chase days when autopay pays the Chase card from Capital One, though the primary is at Chase 834ms
+ ✓ tests/pending.test.ts (5 tests) 229ms
+
+ Test Files  33 passed (33)
+      Tests  422 passed (422)
+   Start at  04:55:30
+   Duration  201.20s (transform 16.85s, setup 4.38s, collect 141.05s, tests 396.75s, environment 19ms, prepare 12.75s)
+
+exit=0

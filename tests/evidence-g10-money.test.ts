@@ -298,7 +298,7 @@ describe('bank.break_term', () => {
     // Citi's CDs of a year or less: 90 days' simple interest on the principal, $1,000 × 4.25% × 90 ÷ 365 = $10.479.
     expect(screen.text).toContain('CD, $1,000.00 at 4.25%');
     expect(screen.text).toContain('Breaking it now costs $10.48.');
-    expect(screen.text).toContain('The bank’s terms: On the principal withdrawn: 90 days\' simple interest for CD terms of 1 year or less');
+    expect(screen.text).toContain('The bank’s terms: The penalty is simple interest on the amount you take out: 90 days’ for a CD of 1 year or less');
     const press = screen.button('Break It Early');
     expect(press.disabled).toBe(false);
     const c0 = citi.balance;
@@ -825,7 +825,7 @@ describe('bank.reactivate', () => {
     const screen = accountLife(sim, 'us-capital-one');
     expect(screen.text).toContain('360 Checking is dormant: the bank has blocked it until you reactivate it.');
     expect(screen.text).toContain('360 Performance Savings is dormant: the bank has blocked it until you reactivate it.');
-    expect(screen.text).toContain('The bank’s terms: Dormant after 24 months with no transactional activity.');
+    expect(screen.text).toContain('The bank’s terms: An account goes dormant after 24 months with no transactions.');
     const presses = screen.buttons.filter((b) => b.text === 'Reactivate');
     expect(presses).toHaveLength(2);
     for (const press of presses) press.onClick!();

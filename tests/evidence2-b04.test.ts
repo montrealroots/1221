@@ -392,7 +392,7 @@ describe('card.report', () => {
     const wfScreen = draw(wf, createElement(BankSecurity, { bankId: 'us-wells-fargo' }));
     expect(wfScreen.all('Report It And Rush The New One')).toHaveLength(0);
     expect(wfScreen.all('Report It').length).toBeGreaterThan(0);
-    expect(wfScreen.text).toContain('Wells Fargo’s rush is for credit cards: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet), and its Active Cash card agreement names a Rush Plastic Fee without an amount. With no fee published, the game doesn’t offer a rushed card.');
+    expect(wfScreen.text).toContain('Wells Fargo can rush a new credit card: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet). Its Active Cash card agreement names a Rush Plastic Fee but gives no amount. With no fee published, the game doesn’t offer a rushed card.');
     for (const which of ['debit', 'credit'] as const) {
       const refused = wf.execute({ kind: 'card.report', payload: { which, why: 'lost', rush: true } });
       expect(refused.error).toBe('Wells Fargo doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.');

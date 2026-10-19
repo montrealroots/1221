@@ -246,7 +246,7 @@ describe('PLAYER JOURNEY: a New York student at Chase reads each source line’s
     // Until 2026-10-17 these were "…/LGC61498.html ; minimum-payment formula …" and "…, 2026-09-26".
     expect(card.source).toContain('/LGC61498.html; minimum-payment formula from ');
     expect(screens.cash).toContain(`Source: ${CASH['us-chase']!.source}.`);
-    expect(CASH['us-chase']!.source).toMatch(/, September 26, 2026$/);
+    expect(CASH['us-chase']!.source).toMatch(/, read September 26, 2026$/);
     expect(screens.security).toContain('Deposit Account Agreement and fee schedule effective June 14, 2026;');
     expect(screens.lending).toContain('Source: Chase 7-month CD, via fortune.com, September 24, 2026.');
     expect(screens.statements).toContain('Chase Deposit Account Agreement, effective June 14, 2026 (chase.com/');

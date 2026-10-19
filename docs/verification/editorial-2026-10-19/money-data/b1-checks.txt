@@ -1,0 +1,28 @@
+node tools/title-case.mjs --check => exit=0
+node tools/label-sweep.mjs => exit=0
+node tools/plural-check.mjs => exit=0
+node tools/voice-check.mjs --check => exit=0
+node tools/tics.mjs --check => exit=0
+node tools/spelling.mjs => exit=0
+node tools/typos.mjs => exit=0
+node tools/text-inventory.mjs --check => exit=1
+controls          40 sources    172 strings     657 words     0 engine-speak; second pass: Rewritten 0 Retained 0 Pending 40 Blocked 0; first: RV 12 RR 28 P 0 B 0
+material         994 sources   9182 strings  153657 words   120 engine-speak; second pass: Rewritten 0 Retained 0 Pending 994 Blocked 0; first: RV 101 RR 893 P 0 B 0
+world             70 sources    183 strings   30379 words     1 engine-speak; second pass: Rewritten 0 Retained 0 Pending 70 Blocked 0; first: RV 1 RR 69 P 0 B 0
+area frame         489 sources   30874 words; Rewritten 1 Retained 1 Pending 487 Blocked 0
+area health        171 sources   38342 words; Rewritten 0 Retained 0 Pending 171 Blocked 0
+area material-a    508 sources   80076 words; Rewritten 0 Retained 0 Pending 508 Blocked 0
+area material-b    492 sources   74123 words; Rewritten 0 Retained 0 Pending 492 Blocked 0
+area money         255 sources   53353 words; Rewritten 0 Retained 0 Pending 255 Blocked 0
+area money-data    522 sources   97043 words; Rewritten 0 Retained 0 Pending 522 Blocked 0
+area papers        465 sources   55976 words; Rewritten 0 Retained 0 Pending 465 Blocked 0
+area profile       615 sources   53667 words; Rewritten 0 Retained 0 Pending 615 Blocked 0
+area school        589 sources   62549 words; Rewritten 0 Retained 0 Pending 589 Blocked 0
+area tutorial       47 sources   10929 words; Rewritten 0 Retained 0 Pending 47 Blocked 0
+all: 4153 sources, 35634 strings, 556932 words, 332 engine-speak hits; second pass: Rewritten 1, Retained 1, Pending 4151, Blocked 0; first pass: Rewritten And Verified 1283, Reviewed And Retained 2866, Pending 4, Blocked 0
+  2 sources Pending, their words changed since they were read (read each against docs/STYLE.md, then --mark2 it): src/engine/content/security.ts#SECURITY, src/engine/content/security.ts#FRAUD_LAW
+node tools/doc-refs.mjs --check => exit=0
+node tools/deciders.mjs --check => exit=0
+node tools/guide-quotes.mjs --check => exit=0
+node tools/research-dates.mjs => exit=0
+node tools/text-inventory.mjs --check (after --mark2) => exit=0

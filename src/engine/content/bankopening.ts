@@ -65,7 +65,7 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     sendDays: 2,
     minimumAge: 18,
     withoutSsn: 'branch',
-    source: 'Wells Fargo: online needs an SSN or ITIN, and in a branch a passport serves (though its FAQ also says a branch asks for one); "Be at least 18 years old"; Everyday Checking "$25 opening deposit"; a new card "within 5 to 7 calendar days"; "Initially the delivery speed is 2 business days for a transfer from your Wells Fargo account to your account at another financial institution". Its closing of a zero-balance account at a fee period\'s end, unless something posted in two months, isn\'t kept',
+    source: 'Wells Fargo: online needs an SSN or ITIN, and in a branch a passport serves (though its FAQ also says a branch asks for one); "Be at least 18 years old"; Everyday Checking "$25 opening deposit"; a new card "within 5 to 7 calendar days"; "Initially the delivery speed is 2 business days for a transfer from your Wells Fargo account to your account at another financial institution". The game leaves out its closing of a zero-balance account at a fee period\'s end unless something posted in two months',
   },
   'us-citi': {
     closesAtZeroAfterDays: 90,
@@ -74,7 +74,7 @@ export const OPENING: Readonly<Record<string, Opening>> = {
     minimumAge: 18,
     usPersonsOnly: true,
     closeWithPendingDays: 21,
-    source: 'Citi Consumer Deposit Account Agreement: "no minimum opening deposit"; "Accounts with zero balances are subject to closure after 90 days"; with items pending "the account may remain open for a period of up to 21 days"; a transfer to another bank the same day before 12:30 PM ET, the next after; $10,000 a day and $15,000 a month out for an account not yet "tenured" (when one becomes tenured isn\'t published, so the game keeps the lower limits throughout); its inbound limits are for money Citi pulls in, and in the game every transfer is sent by the bank it leaves, so they aren\'t kept. Online, a US citizen or resident alien, 18 or older. Its debit card\'s delivery isn\'t published',
+    source: 'Citi Consumer Deposit Account Agreement: "no minimum opening deposit"; "Accounts with zero balances are subject to closure after 90 days"; with items pending "the account may remain open for a period of up to 21 days"; a transfer to another bank the same day before 12:30 PM ET, the next after; $10,000 a day and $15,000 a month out for an account not yet "tenured" (when one becomes tenured isn\'t published, so the game keeps the lower limits throughout); its inbound limits are for money Citi pulls in, and in the game every transfer is sent by the bank it leaves, so the game leaves them out. Online, a US citizen or resident alien, 18 or older. Its debit card\'s delivery isn\'t published',
   },
   'us-capital-one': {
     openedWhenFunded: true,
@@ -96,7 +96,7 @@ export const ESTIMATE_CARD_DAYS = 7;
  * so many business days. A US bank's own figure (`OPENING`) comes first.
  */
 export const TRANSFERS: Readonly<Record<string, { instant?: boolean; days?: number; sameDayBefore?: number; scheme: string; source: string }>> = {
-  GB: { instant: true, scheme: 'Faster Payments', source: 'Pay.UK: in seconds; the Payment Services Regulations 2017, reg. 86, allow until the next business day. A fraud hold of up to four business days (2024) isn\'t kept' },
+  GB: { instant: true, scheme: 'Faster Payments', source: 'Pay.UK: in seconds; the Payment Services Regulations 2017, reg. 86, allow until the next business day. The game leaves out a fraud hold of up to four business days (2024)' },
   IE: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886: every euro bank sends instant transfers from October 9, 2025, within ten seconds' },
   DE: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },
   FR: { instant: true, scheme: 'SEPA Instant', source: 'Regulation (EU) 2024/886, as for Ireland' },

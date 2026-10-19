@@ -1,0 +1,51 @@
+[
+ {
+  "export": "PENDING",
+  "key": "fr-bnp-paribas",
+  "field": "source",
+  "before": "BNP Paribas Convention de compte de dépôt, annexe contrat carte (April 2021) §6.4–6.5, §9; BNP Paribas Conditions et tarifs particuliers, 'Dates de valeur'; mabanque.bnpparibas 'Débit différé classic' (search summary; page returned 403); Légifrance CMF art. L133-14, read September 26, 2026",
+  "after": "BNP Paribas Convention de compte de dépôt, annexe contrat carte (April 2021) §6.4–6.5, §9; BNP Paribas Conditions et tarifs particuliers, 'Dates de valeur'; mabanque.bnpparibas 'Débit différé classic' (a search summary; the page couldn’t be opened); Légifrance CMF art. L133-14, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "es-bbva",
+  "field": "source",
+  "before": "bbva.es card documents refused automated access (HTTP 403); bbva.es help pages searched, with no hold duration found, read September 26, 2026",
+  "after": "bbva.es card documents, which couldn’t be opened; bbva.es help pages searched, with no hold duration found, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "es-bankinter",
+  "field": "source",
+  "before": "Bankinter Informacion precontractual Tarjeta Combo; Bankinter INE Tarjeta Visa Clasica; bankinter.com card FAQs (HTTP 403). None states hold periods or value dates., read September 26, 2026",
+  "after": "Bankinter Informacion precontractual Tarjeta Combo; Bankinter INE Tarjeta Visa Clasica; bankinter.com card FAQs, which couldn’t be opened; none of them gives hold periods or value dates; read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "jp-resona",
+  "field": "source",
+  "before": "Resona 'Visa debit cancellations and refunds' (resonabank.co.jp/kojin/visa_debit/modal/cancel.html, via search excerpt; page returned 403); Resona Visa debit 'How payment works' (resonabank.co.jp/kojin/visa_debit/support/, via search excerpt), read September 26, 2026",
+  "after": "Resona 'Visa debit cancellations and refunds' (resonabank.co.jp/kojin/visa_debit/modal/cancel.html, via search excerpt; the page couldn’t be opened); Resona Visa debit 'How payment works' (resonabank.co.jp/kojin/visa_debit/support/, via search excerpt), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "mx-santander",
+  "field": "source",
+  "before": "santander.com.mx help pages: Consulta de saldos y movimientos (HTTP 403), read September 26, 2026",
+  "after": "santander.com.mx help pages: Consulta de saldos y movimientos, which couldn’t be opened, read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "ie-ptsb",
+  "field": "source",
+  "before": "ptsb.ie/legal-information/our-policies-other-important-information/business-days-and-cut-off-time (search excerpt); ptsb.ie help-and-support/help-with-banking/transacting-on-your-account and contactless-visa-debit-card-faq (search excerpts; site returned 403 to direct fetches), read September 26, 2026",
+  "after": "ptsb.ie/legal-information/our-policies-other-important-information/business-days-and-cut-off-time (search excerpt); ptsb.ie help-and-support/help-with-banking/transacting-on-your-account and contactless-visa-debit-card-faq (search excerpts; the site itself couldn’t be opened), read September 26, 2026"
+ },
+ {
+  "export": "PENDING",
+  "key": "nz-asb",
+  "field": "source",
+  "before": "asb.co.nz/help/pending-transactions-on-my-credit-card.html; asb.co.nz/blog/2013/08/frequently-asked-questions-about-pending-transactions.html; asb.co.nz/help/when-are-credit-card-payments-processed.html (pages returned 403; read via search snippets), read September 26, 2026",
+  "after": "asb.co.nz/help/pending-transactions-on-my-credit-card.html; asb.co.nz/blog/2013/08/frequently-asked-questions-about-pending-transactions.html; asb.co.nz/help/when-are-credit-card-payments-processed.html (read through search snippets, as the pages couldn’t be opened), read September 26, 2026"
+ }
+]
