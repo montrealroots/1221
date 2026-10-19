@@ -256,3 +256,48 @@ tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0; vitest (mat
 text-inventory 1 before the marks and 0 after.
 
 **Screens verified:** BriefPane for all 25 briefs of the file, rendered and kept in `rendered/second-d.txt`.
+
+## Batch 5: `second-e.ts`
+
+**Sources (78):** 25 briefs and 53 reading sources ([exact] and [pride] hold two readings each):
+[brief-psychological_thriller-3] [exact] [detail] [studying] [brief-queer_cinema-2] [title] [teammate] [brief-revenge-2]
+[stacked] [straight] [brief-road_movie-2] [pitch] [gift] [brief-rockumentary-2] [show] [song] [brief-romance-2] [nerve]
+[knew] [brief-romantic_comedy-2] [bet] [questions] [brief-romantic_drama-2] [listen] [plan] [brief-samurai-3] [pride]
+[hunger] [haggle] [brief-satire-2] [company] [sees] [brief-science_fantasy-2] [letter] [surety] [brief-science_fiction-2]
+[record] [sister] [afraid] [brief-screwball_comedy-2] [liar] [caught] [brief-sea_adventure-2] [command] [shipmate]
+[brief-silent_film-3] [calls] [own] [eyes] [brief-slapstick-2] [sport] [father] [brief-slasher-2] [medic] [terror]
+[brief-slice_of_life-2] [properly] [tour] [brief-social_realism-2] [braced] [angry] [brief-space_opera-2] [order]
+[goodnight] [enemy] [brief-spaghetti_western-2] [books] [dare] [brief-splatter-2] [farmer] [alone] [brief-sports-2]
+[honest] [brief-spy-2] [breath] [brief-steampunk-2] [hands] [forgive].
+
+**Rewritten (21 sources, 33 strings):** 21 briefs (psychological_thriller-3, revenge-2, road_movie-2, rockumentary-2,
+romance-2, romantic_drama-2, samurai-3, satire-2, science_fantasy-2, science_fiction-2, screwball_comedy-2,
+sea_adventure-2, silent_film-3, slapstick-2, slasher-2, slice_of_life-2, space_opera-2, spaghetti_western-2, splatter-2,
+spy-2, steampunk-2); no reading needed it. Sixteen of the 33 strings are the closing "For the tape …" sentence of a
+circumstances field, each now said to the actor; the rest are passives, fragments, one verbless beat (samurai-3's fight)
+and three techniques notes.
+
+**Kept (57):** four briefs whole (queer_cinema-2, romantic_comedy-2, social_realism-2, sports-2) and all 53 readings.
+
+**Meaning-sensitive, and how each was checked:**
+- slapstick-2's techniques are `{ clown: 2, combat: 2, comedy: 1 }` and the note named only comic timing; it now ties
+  clowning to the rope, the hat and the wand and stage combat to the stunt fall onto the hidden crash mat. The fall's
+  conditions (backward, onto the mat, rehearsed slowly first, repeatable) are kept.
+- screwball_comedy-2's techniques are `{ comedy: 2, clown: 1 }`; "physical comedy" is now "clowning: physical comedy …",
+  the glossary's word for Clown And Mask.
+- sea_adventure-2's "each has to be held exactly as long as it lasts" said nothing; the two waits (the laugh, the wind)
+  are now "he can’t hurry either one", which is what the beats ask (the laugh waited for, the wind that never comes).
+- splatter-2's staging keeps the stage blood optional ("or not at all"), the creature below the lens and the shovel out
+  of frame; slasher-2's keeps the replica cleaver and where it never points.
+- Only string values changed (`m15b/skeleton.py`).
+
+**Interactions read whole:** each pane top to bottom; the allows notes and misfit lines for science_fiction-2 (open) and
+spy-2 (set). Rendered: `rendered/second-e.txt`.
+
+**Tests and tool matchers updated:** none held the old words.
+
+**Checks** (scratchpad `m15b/b5-checks/`): tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0,
+tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0; vitest (material-words, briefs-content) 0, 454 tests.
+text-inventory 1 before the marks and 0 after.
+
+**Screens verified:** BriefPane for all 25 briefs of the file, rendered and kept in `rendered/second-e.txt`.
