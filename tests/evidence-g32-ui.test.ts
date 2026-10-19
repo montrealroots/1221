@@ -780,7 +780,7 @@ describe('h-needs: What Needs You on Home', () => {
     sim.must({ kind: 'world.mark_read', payload: {} });
     // 4.5% for filing late and 0.5% for paying late, the first month or part of one: 5% of what it owed, to the dollar.
     const late = `$${Math.round((r.figures.balance * 1.05) / 100)}`;
-    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting A tax return is past its due date and unfiled: ${late}, with its penalty so far.`;
+    const said = `What Needs You No questions are waiting on you. How This Works No Questions Waiting A tax return is past its due date and not filed yet. You owe ${late}, including the penalty so far.`;
     expect(needs(sim)).toBe(said);
     expect(needs(reload(sim))).toBe(said);
   });
@@ -956,7 +956,7 @@ describe('h-how: How You Are on Home', () => {
     expect(shown({ sleepDebt: 21 }).summary).toBe('Badly short on sleep. Everything is harder than it should be.');
     expect(shown({ stress: 79 }).summary).toBe('Stretched very thin. Something is going to give.');
     expect(shown({ nourishment: 24 }).summary).toBe('Hungry, and it’s starting to show.');
-    expect(shown({ energy: 70, morale: 29 }).summary).toBe('Flat. The work is fine, the feeling isn’t.');
+    expect(shown({ energy: 70, morale: 29 }).summary).toBe('Feeling low, though the day itself is going fine.');
     expect(shown({ energy: 70, stress: 40 }).summary).toBe('Holding up, with nothing out of the ordinary to worry about.');
     // Readiness has no line of its own: red under a quarter, amber under a half. Every dial at its worst is
     // 0.45 × 0.62 × 0.66 × 0.78 × 0.82 × 0.92 × 0.7 = 0.07585, over 1.35: 5.6, red; at 40 by hand, amber.

@@ -44,7 +44,7 @@ describe('a question in What Needs You, opened', () => {
     expect([seen.kind, seen.name, seen.summary]).toEqual(['Waiting On You', 'Your 2026 Tax Return', `Answer it by ${formatDate(due, sim.zone)}. That’s in 2 months.`]);
     const body = words(seen.body);
     expect(body).toContain('It came up just now, about your taxes. Its urgency is high, at 70/100. If it comes up again while it’s open, its urgency can only go up. It’s the only question waiting on you.');
-    expect(body).toContain(`It closes when you answer it on Home or deal with it on its own screen. Otherwise it closes by itself after ${formatDate(due, sim.zone)}: the game checks every two days, so that happens within two days of its date. The save keeps it for 180 days after it closes.`);
+    expect(body).toContain(`It closes when you answer it on Home or deal with it on its own screen. If you don’t, it closes by itself within two days after its date, ${formatDate(due, sim.zone)}. You can still open it here for 180 days after it closes.`);
     expect(body).toContain('On Home, its buttons are File It, Go There and Dismiss. Reading it here changes nothing.');
     expect(seen.provenance).toBe('Urgency is estimated, from 0 to 100.');
 
@@ -82,7 +82,7 @@ describe('a question in What Needs You, opened', () => {
     seen = look(sim, 'decision', late.id);
     expect([seen.kind, seen.summary]).toEqual(['No Longer Waiting', 'It closed after its date had passed, so it isn’t asking you for anything now.']);
     expect(words(seen.body)).toContain('It closed just now, and Home no longer lists it.');
-    expect(words(seen.body)).toContain(`The save keeps it until ${formatDate(sim.now + 180 * MS_DAY, sim.zone)}, 180 days after it closed.`);
+    expect(words(seen.body)).toContain(`You can still open it here until ${formatDate(sim.now + 180 * MS_DAY, sim.zone)}, 180 days after it closed.`);
     expect(words(seen.body)).toContain('It’s no longer on Home, so there’s nothing to press.');
     expect(words(seen.body)).toContain('Not listed Closed after its date');
 
@@ -102,8 +102,8 @@ describe('a question in What Needs You, opened', () => {
     expect(words(seen.body)).toContain('Not listed Dismissed');
 
     // Gone from the save, and a notice gone from the log.
-    expect(resolveLook(sim, at('decision', 'decision_none'))).toEqual({ gone: 'That question closed more than 180 days ago, so the save no longer keeps it.' });
-    expect(resolveLook(sim, at('notification', 'notice_none'))).toEqual({ gone: 'That notice is gone. The save keeps the latest 500, and this one was older.' });
+    expect(resolveLook(sim, at('decision', 'decision_none'))).toEqual({ gone: 'That question closed more than 180 days ago, so there’s nothing left to open.' });
+    expect(resolveLook(sim, at('notification', 'notice_none'))).toEqual({ gone: 'That notice is gone. SLATE keeps only your latest 500 notices, and this one was older.' });
   });
 });
 
@@ -133,7 +133,7 @@ describe('a notice, opened', () => {
     note = sim.universe.notifications.find((n) => n.id === note.id)!;
     seen = look(sim, 'notification', note.id);
     expect(seen.summary).toBe('You’ve read this notice. It came in 2 hours ago.');
-    expect(words(seen.body)).toContain('The save keeps it until there are more than 500 notices, when the oldest are dropped.');
+    expect(words(seen.body)).toContain('SLATE keeps your latest 500 notices, so this one stays until 500 newer ones have come in.');
     expect(words(seen.body)).toContain('Status Read No longer listed on Home');
   });
 });

@@ -176,3 +176,55 @@ doc-refs 0, deciders 0, guide-quotes 0. `npx vitest run` on the 23 files that ho
 exit 0, after the fixes above (the first run found 12 assertions holding the old words in strings split across lines).
 
 **Defects:** two, fixed with tests (`defects.md` 1 and 2).
+
+## Batch 3: Home, What Needs You, The Shell And Looking After Yourself
+
+**Sources (71, in 15 files):** `src/ui/screens/Home.tsx` (4), `src/ui/looks/attention.tsx` (10),
+`src/engine/world/world.ts` (5), `src/engine/core/events.ts` (1), `simulation.ts` (4), `src/engine/world/place.ts` (3),
+`src/ui/shell/GameShell.tsx` (2), `destinations.ts` (1), `sections.ts` (15), `src/ui/components/primitives.tsx` (5),
+`src/ui/workspaces/WorkspaceRouter.tsx` (2), `cell.ts` (1), `src/ui/looks/Look.tsx` (3), `registry.ts` (2),
+`src/engine/systems/life.ts` (13).
+
+**Read whole:** the first Home of a new life, every panel Locked and then each one open; a question answered,
+dismissed and opened on its own; a notice opened, Go There, and Mark N Read; No Questions Waiting with something still
+owed; a Locked screen reached from the rail; the Look After Yourself menu from its lines to the toast; How You Are's
+summary at each threshold.
+
+**Rewritten (6):**
+- **A question opened:** "the game checks every two days" and "the save keeps it" were the engine's bookkeeping. Now:
+  "If you don’t, it closes by itself within two days after its date, March 3, 2027. You can still open it here for 180
+  days after it closes." A closed one, "You can still open it here until …". One gone, "so there’s nothing left to
+  open".
+- **A notice opened:** "SLATE keeps your latest 500 notices, so this one stays until 500 newer ones have come in." and,
+  gone, "SLATE keeps only your latest 500 notices, and this one was older."
+- **No Questions Waiting:** "A tax return is past its due date and not filed yet. You owe $174, including the penalty so
+  far." for "… unfiled: $174, with its penalty so far."
+- **A Locked screen:** "Read “Your Bank” in the guide to open it.", the step first, as the guide's own locked sentences
+  put it.
+- **How You Are:** "Feeling low, though the day itself is going fine." for "Flat. The work is fine, the feeling isn’t."
+- **Look After Yourself:** "Indoors, since the weather’s no good for a run".
+
+**Kept (65):** the shell's labels, the rail and its lines, the tab names, the fault sentences (each already says what
+happened, what changed and the way on), What Needs You's refusals, the question look's state sentences, the place
+labels, the background items' labels, Home's money and papers lines, and Look After Yourself's refusals. Three of the
+kept lines are quoted elsewhere and read well enough to stay: "… starts at 9:00 AM: there isn’t the time before it."
+(quoted by two other areas' guide entries and eleven tests), "The payment didn’t go through." (a refusal nothing reaches
+now; the body guide quotes it), and "You dismissed that question, so it can’t be answered from What Needs You."
+
+**Meaning-sensitive, and how each was checked:**
+- **"Within two days after its date".** `expireDecisions` runs at the world tick, scheduled every two days
+  (`world.ts`), and closes a question past its date.
+- **"You can still open it here for 180 days".** The decision look resolves a closed question until
+  `FORGOTTEN_AFTER_DAYS` after it closed, and says "gone" after.
+- **"Stays until 500 newer ones have come in".** The save keeps the latest `NOTICES_KEPT` (500).
+- **The tax line's figure.** `troubles`' `return_late` amount is the balance with the penalty so far (the test's $174
+  is $165.60 and 5%).
+
+**Tests updated** (each as exact as before; no title changed): `tests/language-frame.test.ts` (the two looks, five
+sentences), `evidence-g33-ui.test.ts` and `evidence-g32-ui.test.ts` (the tax line, and How You Are),
+`evidence-g31-ui.test.ts` and `evidence-g29-ui.test.ts` (the Locked screens), `defects-g4-1.test.ts` and
+`evidence-g07-life.test.ts` (the indoor workout). No tool matcher held these words.
+
+**Checks:** tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0, tics 0, spelling 0, typos 0,
+text-inventory 0 once marked, doc-refs 0, deciders 0, guide-quotes 0. `npx vitest run` on the seven files that hold
+these words: 7 files, 172 tests, exit 0.

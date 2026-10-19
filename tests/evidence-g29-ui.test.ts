@@ -585,7 +585,7 @@ describe('c-tutorial', () => {
     // And Money opens as Locked, naming its chapter.
     const bank = screenAt(sim, '/workspace/bank');
     expect(bank).toContain('Money, Locked');
-    expect(bank).toContain('It opens once you read “Your Bank” in the guide.');
+    expect(bank).toContain('Read “Your Bank” in the guide to open it.');
     expect(bank).not.toContain('Your Bank Chase');
   });
 

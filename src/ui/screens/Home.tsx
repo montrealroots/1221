@@ -74,7 +74,7 @@ export function Home() {
         // no played life once a card paid off reset its count (defect 68 of that day’s third round; found by its final checks).
         said.push(`${which} is ${state?.suspended ? 'suspended' : 'a payment behind'}, owing ${m(t.amount)}.`);
       }
-      else if (t.kind === 'return_late') said.push(`A tax return is past its due date and unfiled: ${m(t.amount)}, with its penalty so far.`);
+      else if (t.kind === 'return_late') said.push(`A tax return is past its due date and not filed yet. You owe ${m(t.amount)}, including the penalty so far.`);
       else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
       else if (t.kind === 'collections') said.push(`${m(t.amount)} you owe is with a collection agency.`);
       else said.push(`You owe ${m(t.amount)} of income tax.`);

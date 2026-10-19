@@ -1518,6 +1518,41 @@
   "reason": "Clear-headed twenty minutes after anything, and slow to notice when something is wrong with you: the trait and its blind spot.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/core/events.ts#EventBus": {
+  "status": "Retained",
+  "hash": "1297b86e52d0",
+  "on": "2026-10-19",
+  "reason": "A developer’s diagnosis of a runaway event, which reaches the player only as the fault sentence the provider says instead.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/simulation.ts#FAULT_ROLLED_BACK": {
+  "status": "Retained",
+  "hash": "d1adf3b405bd",
+  "on": "2026-10-19",
+  "reason": "Says an error stopped it, that nothing changed and nothing was charged, and that the player can carry on: every part an error owes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/core/simulation.ts#FAULT_WHILE_TIME_PASSED": {
+  "status": "Retained",
+  "hash": "ed1749ee8919",
+  "on": "2026-10-19",
+  "reason": "Says an error stopped something as time passed, that what came before still stands, and that the clock went on: true of a move not rolled back.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/core/simulation.ts#Simulation": {
+  "status": "Retained",
+  "hash": "ef43d67b34da",
+  "on": "2026-10-19",
+  "reason": "The notice titled with the item that failed and saying it shows as missed, beside developer errors the player never sees.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/core/simulation.ts#UNKNOWN_COMMAND": {
+  "status": "Retained",
+  "hash": "5f89c1bfa3e0",
+  "on": "2026-10-19",
+  "reason": "Says the game can’t do that and changed nothing, for a press no screen should offer, without a command’s id.",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/decided.ts#skyFor": {
   "status": "Retained",
   "hash": "ad07cf6a779e",
@@ -1854,6 +1889,97 @@
   "reason": "Names the cause, a compressed save this browser cannot open, and the one real way out, opening SLATE in an up-to-date browser.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/life.ts#commitmentWithin": {
+  "status": "Retained",
+  "hash": "7048358356d0",
+  "on": "2026-10-19",
+  "reason": "Names the commitment and its time and says there isn’t the time before it; several guides quote it word for word.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#lookAfterRefusal": {
+  "status": "Retained",
+  "hash": "a329c223d1fa",
+  "on": "2026-10-19",
+  "reason": "Each says why the action is gray in a few words a person would say: not hungry, already clean, too tired, the flu, no time before a commitment.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#LOOKING_AFTER": {
+  "status": "Retained",
+  "hash": "4b9854d7af16",
+  "on": "2026-10-19",
+  "reason": "The Look After Yourself menu’s five actions, each a plain verb for what the hour is: Eat A Meal, Order In, Shower, Work Out, Unwind.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#registerLife [life.day_rollover]": {
+  "status": "Retained",
+  "hash": "f83957f209ca",
+  "on": "2026-10-19",
+  "reason": "The label of the midnight item in the system category, which no calendar screen draws; New Day says what it is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#registerLife <life.look_after>": {
+  "status": "Retained",
+  "hash": "0516016b1353",
+  "on": "2026-10-19",
+  "reason": "A refusal no menu can reach now, and the meal memos a statement lists; the guide’s body entry quotes the payment line as it stands.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#registerLife <life.sleep>": {
+  "status": "Retained",
+  "hash": "d3937a9ef2a9",
+  "on": "2026-10-19",
+  "reason": "Each refusal names the obstacle, a time in the past, more than a day ahead, or where you are until when, and the missed notice names what you slept through.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/life.ts#sleepReason": {
+  "status": "Retained",
+  "hash": "6104fe975954",
+  "on": "2026-10-19",
+  "reason": "Says why a night takes longer or can’t make up a day, from the one reason that applies: debt, stress, a late start, or a body that rests less.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/life.ts#startRefusal": {
+  "status": "Retained",
+  "hash": "684fd4e984b4",
+  "on": "2026-10-19",
+  "reason": "Short and in the player’s situation: not from a hospital bed, or where you are and until when.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#suggestedSleep": {
+  "status": "Retained",
+  "hash": "05516ff8b442",
+  "on": "2026-10-19",
+  "reason": "Says why the Sleep dialog suggests its hours: a clear calendar, a commitment you are standing at, or one too soon for a full night.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/life.ts#wellbeingSummary": {
+  "status": "Rewritten",
+  "hash": "aab6e9e8d18a",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g32-ui.test.ts, 'Energy is red under 15 and amber the fifteen above it; Stress red over 75 and amber the fifteen under; each summary said for the dial that’s out…'",
+  "first": "Pending"
+ },
+ "src/engine/systems/life.ts#WET": {
+  "status": "Retained",
+  "hash": "dbdd19bbdf67",
+  "on": "2026-10-19",
+  "reason": "The weather conditions that make a run a bad idea, named as the weather names them: Rain, Thunderstorm, Snow, Drizzle.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#whyNow": {
+  "status": "Rewritten",
+  "hash": "597fd87b1a62",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g4-1.test.ts, 'reads the weather as the hour ends, where the workout does, and says whether it’ll be a run', and tests/evidence-g07-life.test.ts, the dry hour under freezing journey",
+  "first": "Pending"
+ },
+ "src/engine/systems/life.ts#WORKOUTS_TODAY": {
+  "status": "Retained",
+  "hash": "3eaa433b25df",
+  "on": "2026-10-19",
+  "reason": "A key for counting the day’s workouts, stamina<workout, never shown; its words name the record, not a label.",
+  "first": "Reviewed And Retained"
+ },
  "src/engine/world/bootstrap.ts#createUniverse": {
   "status": "Retained",
   "hash": "4e72d5095744",
@@ -1875,11 +2001,102 @@
   "reason": "One line of character for each family, said to the player in their own terms, before the figures that follow it in the same callout.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/world/place.ts#placeKindLabel": {
+  "status": "Retained",
+  "hash": "5eeeb6cce064",
+  "on": "2026-10-19",
+  "reason": "Capital and Regional, the plain words a place’s look uses for a national or a regional capital.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/place.ts#placeProfile": {
+  "status": "Retained",
+  "hash": "596a52fa3c0f",
+  "on": "2026-10-19",
+  "reason": "Only the en-US locale tag for grouping a population’s digits, never words a player reads as such.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/place.ts#REGION_WORD": {
+  "status": "Retained",
+  "hash": "69f6cf57c617",
+  "on": "2026-10-19",
+  "reason": "Each country’s own word for its regions’ capitals, State, Provincial, Prefectural, Cantonal, as a place’s look names them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/world.ts#NOT_THERE": {
+  "status": "Retained",
+  "hash": "4b53f4110543",
+  "on": "2026-10-19",
+  "reason": "Says the question pressed is no longer in What Needs You, the panel the player pressed it on, in one sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/world.ts#registerWorld [world.tick]": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "The label of the background item that runs every two days, in the system category no calendar screen draws.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/world.ts#registerWorld <world.dismiss_decision>": {
+  "status": "Retained",
+  "hash": "89a754c85968",
+  "on": "2026-10-19",
+  "reason": "A refusal that says the question is already dismissed, which is the only reason Dismiss would be pressed twice.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/world.ts#registerWorld <world.set_preferences>": {
+  "status": "Retained",
+  "hash": "aadc742f4c59",
+  "on": "2026-10-19",
+  "reason": "Says the setting doesn’t exist, or that the clock has two settings, Play and Pause, the top bar’s own words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/world.ts#registerWorld <world.take_decision_action>": {
+  "status": "Retained",
+  "hash": "3ff2ecbd591b",
+  "on": "2026-10-19",
+  "reason": "Each refusal says why the answer did nothing: already settled and how, dismissed, not one of its answers, or nothing changed.",
+  "first": "Rewritten And Verified"
+ },
  "src/main.tsx#top": {
   "status": "Retained",
   "hash": "f86945acdc94",
   "on": "2026-10-19",
   "reason": "A developer’s error for a page with no element to mount on; a working page never shows it, and it names the missing mount point exactly.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#Empty": {
+  "status": "Retained",
+  "hash": "5a603280a77f",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#Fine": {
+  "status": "Retained",
+  "hash": "7c989d88af67",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#FOCUSABLE": {
+  "status": "Retained",
+  "hash": "2eca2fc5368c",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#Modal": {
+  "status": "Retained",
+  "hash": "e7ba1e2bd479",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#WhyNot": {
+  "status": "Retained",
+  "hash": "db15620b9e5e",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
   "first": "Reviewed And Retained"
  },
  "src/ui/creation/CharacterCreation.tsx#BankChoice": {
@@ -2106,6 +2323,111 @@
   "evidence": "tests/language-frame-ui.test.ts, 'the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do', drawn over the real world map file",
   "first": "Pending"
  },
+ "src/ui/looks/attention.tsx#ABOUT": {
+  "status": "Retained",
+  "hash": "245fd2b92d35",
+  "on": "2026-10-19",
+  "reason": "What a question or notice is about, by who raised it, in the player’s own terms: your bank, your school, your health.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#aboutOf": {
+  "status": "Retained",
+  "hash": "62563d42cfbc",
+  "on": "2026-10-19",
+  "reason": "The fallback when a category has no name of its own, something in your life, which still reads as a sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#ago": {
+  "status": "Retained",
+  "hash": "a7f8e7cc0d43",
+  "on": "2026-10-19",
+  "reason": "Says just now where the relative time is now, so a sentence reads It came in just now and not It came in now.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#categoryLabel": {
+  "status": "Retained",
+  "hash": "45c9e0013576",
+  "on": "2026-10-19",
+  "reason": "Not Recorded stands in the About figure only when a record has no category, and says exactly that.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#decisionSentence": {
+  "status": "Retained",
+  "hash": "c75e40b3605b",
+  "on": "2026-10-19",
+  "reason": "One sentence for each state of a question, true at the moment: answer it by a date, its date passed, dealt with, closed, or dismissed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#nameOf": {
+  "status": "Retained",
+  "hash": "5a7bd4149d0d",
+  "on": "2026-10-19",
+  "reason": "Only the en-US locale tag for grouping a long run of digits in a title, never words a player reads as such.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/attention.tsx#STAGE_WORD": {
+  "status": "Retained",
+  "hash": "29968628a2f7",
+  "on": "2026-10-19",
+  "reason": "Open, Dealt With, Closed After Its Date and Dismissed: one short phrase for each way a question ends, under Place On Home.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#stageOf": {
+  "status": "Retained",
+  "hash": "a2ca6c79eb38",
+  "on": "2026-10-19",
+  "reason": "The internal names of a question’s stages, let go and ran out, which the figure grid turns into STAGE_WORD’s words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/attention.tsx#top": {
+  "status": "Rewritten",
+  "hash": "ae3e4ec7e4c7",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says when to answer it, where it sits among the rest, its buttons on Home, and what closes it, for one and for several', 'says an overdue question comes first and closes itself within the world tick’s two days, and each way one closes', and 'says when it came, where it sits among the unread, what Mark Read does, and how long it’s kept, for one, for many and read'",
+  "first": "Pending"
+ },
+ "src/ui/looks/attention.tsx#weightOf": {
+  "status": "Retained",
+  "hash": "515f8bb758a3",
+  "on": "2026-10-19",
+  "reason": "Very high, high, ordinary or low: one plain word for an urgency out of 100, with the figure beside it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/Look.tsx#LookHeader": {
+  "status": "Retained",
+  "hash": "bbfa773e5a63",
+  "on": "2026-10-19",
+  "reason": "Close on a look and its header, and where you are beside a place you stand in: plain words for the drill-down’s frame.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/Look.tsx#LookPanel": {
+  "status": "Retained",
+  "hash": "bbfa773e5a63",
+  "on": "2026-10-19",
+  "reason": "Close on a look and its header, and where you are beside a place you stand in: plain words for the drill-down’s frame.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/Look.tsx#Ways": {
+  "status": "Retained",
+  "hash": "fda8460f766d",
+  "on": "2026-10-19",
+  "reason": "Close on a look and its header, and where you are beside a place you stand in: plain words for the drill-down’s frame.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/registry.ts#defineLook": {
+  "status": "Retained",
+  "hash": "78ef50f62edd",
+  "on": "2026-10-19",
+  "reason": "Developer errors for a look declared twice or parenting itself, thrown while the game is built, never shown to a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/registry.ts#trailTo": {
+  "status": "Retained",
+  "hash": "f44a5d98177a",
+  "on": "2026-10-19",
+  "reason": "Developer errors for a look declared twice or parenting itself, thrown while the game is built, never shown to a player.",
+  "first": "Reviewed And Retained"
+ },
  "src/ui/saves/SaveSlots.tsx#BackupNote": {
   "status": "Rewritten",
   "hash": "c4018aac5248",
@@ -2127,12 +2449,166 @@
   "evidence": "tests/language-frame-ui.test.ts: 'says what each slot holds: one empty, one a life saved by an older version, and the delete that keeps a backup or doesn’t', 'says a damaged save can’t be opened, its backup the way on, and what’s wrong behind a disclosure', and 'an empty slot with a backup says so, and a backup with no date says the date isn’t known'",
   "first": "Pending"
  },
+ "src/ui/screens/Home.tsx#Home": {
+  "status": "Rewritten",
+  "hash": "9b3f0f91a4c3",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g33-ui.test.ts, 'three days past its day unfiled…', and tests/evidence-g32-ui.test.ts, 'PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight…', Home's No Questions Waiting",
+  "first": "Pending"
+ },
+ "src/ui/screens/Home.tsx#PapersLine": {
+  "status": "Retained",
+  "hash": "a20cd8938d32",
+  "on": "2026-10-19",
+  "reason": "Says the one thing that matters on Papers in a line: no health cover, a return due with what it will cost, tax owed and growing, or unemployment paid.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/screens/Home.tsx#partOfDay": {
+  "status": "Retained",
+  "hash": "eede2a706b4a",
+  "on": "2026-10-19",
+  "reason": "The four words the greeting uses, Good Morning, Afternoon, Evening or Night, by the hour where you are.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/screens/Home.tsx#SchoolLine": {
+  "status": "Retained",
+  "hash": "d59e534f85bf",
+  "on": "2026-10-19",
+  "reason": "The year, the standing and the place in the class, then the next class with its date, and a pointer to the School screen when the standing needs explaining.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/destinations.ts#DESTINATIONS": {
+  "status": "Retained",
+  "hash": "69497279cf89",
+  "on": "2026-10-19",
+  "reason": "The rail’s names and one line under each listing what that screen holds, in the tabs’ own words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/GameShell.tsx#GameShell": {
+  "status": "Retained",
+  "hash": "f734191fe185",
+  "on": "2026-10-19",
+  "reason": "The top bar and rail’s labels, each the plain name of where it goes or what it does: Save & Exit, Menu, Skip To Content, All Read.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/GameShell.tsx#SaveIndicator": {
+  "status": "Retained",
+  "hash": "c6c1d2fe26e7",
+  "on": "2026-10-19",
+  "reason": "Four states of the save button, each a word or two: Saved, Saving…, Not Saved Yet, and Save Failed: Try Again, which says the way on.",
+  "first": "Rewritten And Verified"
+ },
  "src/ui/shell/LifeEnded.tsx#LifeEnded": {
   "status": "Rewritten",
   "hash": "8473b9e50431",
   "on": "2026-10-19",
   "evidence": "tests/evidence-g04-life.test.ts and tests/evidence2-b03.test.ts and tests/evidence-g08-life.test.ts render the ended life's screen and hold its new notes and closing line word for word",
   "first": "Pending"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [accounts]": {
+  "status": "Retained",
+  "hash": "36bae31694f8",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [benefits]": {
+  "status": "Retained",
+  "hash": "0ae981803c85",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [borrowing]": {
+  "status": "Retained",
+  "hash": "9f5c5c049105",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [cards]": {
+  "status": "Retained",
+  "hash": "0f830bc25e52",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [casting]": {
+  "status": "Retained",
+  "hash": "e0f540f92c72",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [classes]": {
+  "status": "Retained",
+  "hash": "ed1846afee3b",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [coursework]": {
+  "status": "Retained",
+  "hash": "a1da98d95263",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [health]": {
+  "status": "Retained",
+  "hash": "5fdbe30e8fb0",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [passport]": {
+  "status": "Retained",
+  "hash": "83e5e372ec2f",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [payments]": {
+  "status": "Retained",
+  "hash": "0be4502f405a",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [returns]": {
+  "status": "Retained",
+  "hash": "c294c31ec89f",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [standing]": {
+  "status": "Retained",
+  "hash": "f726693805de",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [statements]": {
+  "status": "Retained",
+  "hash": "5653cebc057d",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [terms]": {
+  "status": "Retained",
+  "hash": "7924ffbc22e7",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [work]": {
+  "status": "Retained",
+  "hash": "f29c41d765fd",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
  },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {
   "status": "Retained",
@@ -2175,5 +2651,26 @@
   "on": "2026-10-19",
   "reason": "Short status words over the bar (Ready, Startup Stopped), Try Again under a failure and Before You Continue over warnings, each naming its moment; the version line is the slot card’s own.",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/cell.ts#dayLabel": {
+  "status": "Retained",
+  "hash": "12f8fef58d25",
+  "on": "2026-10-19",
+  "reason": "A calendar day’s accessible name, the date then how many things are on it in words, which a screen reader reads aloud.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/WorkspaceRouter.tsx#LockedScreen": {
+  "status": "Rewritten",
+  "hash": "a13c17b6c227",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g31-ui.test.ts, 'PLAYER JOURNEY: in a guided life, Money and Papers pressed on the Profile open Locked screens…', and tests/evidence-g29-ui.test.ts, Your Bank locked",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/WorkspaceRouter.tsx#NoSuchScreen": {
+  "status": "Retained",
+  "hash": "3a463e4b5a94",
+  "on": "2026-10-19",
+  "reason": "Says the address isn’t a screen in this game and offers Go Home, the one way back, in two lines.",
+  "first": "Reviewed And Retained"
  }
 }

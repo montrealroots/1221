@@ -304,5 +304,77 @@
   "why": "A literary sentence about a basic control (the brief, section 3).",
   "meaningSensitive": false,
   "verified": "help-b2.txt"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "other",
+  "before": "It closes when you answer it on Home or deal with it on its own screen. Otherwise it closes by itself after March 3, 2027: the game checks every two days, so that happens within two days of its date. The save keeps it for 180 days after it closes.",
+  "after": "It closes when you answer it on Home or deal with it on its own screen. If you don’t, it closes by itself within two days after its date, March 3, 2027. You can still open it here for 180 days after it closes.",
+  "why": "'The game checks every two days' and 'the save keeps it' were the engine's bookkeeping; the player wants when it closes and how long they can open it.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts, 'says when to answer it, where it sits among the rest…'; expireDecisions runs at the world tick, every two days, and the look resolves until FORGOTTEN_AFTER_DAYS after closing"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "empty",
+  "before": "That question closed more than 180 days ago, so the save no longer keeps it. / That notice is gone. The save keeps the latest 500, and this one was older.",
+  "after": "That question closed more than 180 days ago, so there’s nothing left to open. / That notice is gone. SLATE keeps only your latest 500 notices, and this one was older.",
+  "why": "What the player meets when a link points at something gone: said from their side.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts, 'says an overdue question comes first…', the gone look of each"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "other",
+  "before": "The save keeps it until there are more than 500 notices, when the oldest are dropped.",
+  "after": "SLATE keeps your latest 500 notices, so this one stays until 500 newer ones have come in.",
+  "why": "The rule said as what happens to this notice.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts, 'says when it came, where it sits among the unread…'; NOTICES_KEPT keeps the latest 500, so a notice goes once 500 newer ones exist"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "notification",
+  "before": "A tax return is past its due date and unfiled: $174, with its penalty so far.",
+  "after": "A tax return is past its due date and not filed yet. You owe $174, including the penalty so far.",
+  "why": "A colon and an amount with no verb; the figure is what's owed, penalty included.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g33-ui.test.ts, 'three days past its day unfiled…': troubles' return_late amount is the balance with the penalty so far"
+ },
+ {
+  "source": "src/ui/workspaces/WorkspaceRouter.tsx#LockedScreen",
+  "kind": "empty",
+  "before": "It opens once you read “Your Bank” in the guide.",
+  "after": "Read “Your Bank” in the guide to open it.",
+  "why": "The step first, as the guide's own locked sentences put it (Read “…” in the guide first.).",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g31-ui.test.ts and tests/evidence-g29-ui.test.ts, Money and Papers locked"
+ },
+ {
+  "source": "src/engine/systems/life.ts#wellbeingSummary",
+  "kind": "feedback",
+  "before": "Flat. The work is fine, the feeling isn’t.",
+  "after": "Feeling low, though the day itself is going fine.",
+  "why": "'The work' is the engine's word; the line is how you are, said under How You Are when morale is under 30 and nothing worse is wrong.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts, 'Energy is red under 15 and amber the fifteen above it…', morale 29"
+ },
+ {
+  "source": "src/engine/systems/life.ts#whyNow",
+  "kind": "label",
+  "before": "Indoors, the weather being no good for a run: builds fitness, at 48 now, and eases stress; costs 12 energy.",
+  "after": "Indoors, since the weather’s no good for a run: builds fitness, at 48 now, and eases stress; costs 12 energy.",
+  "why": "An absolute construction that reads like a form; 'since' says the reason.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g4-1.test.ts, 'reads the weather as the hour ends…', and tests/evidence-g07-life.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.guide]",
+  "kind": "tutorial",
+  "before": "A chapter can only be marked read when it’s the next one; any chapter can be opened and read at any time.",
+  "after": "You can open and read any chapter at any time, but I’ve Read It only works on the next one.",
+  "why": "Two passives and a semicolon became one sentence that names the button.",
+  "meaningSensitive": true,
+  "verified": "help-b2.txt; tutorial.read refuses a chapter that isn't the next (world/tutorial.ts)"
  }
 ]

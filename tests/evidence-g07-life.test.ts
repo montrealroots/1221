@@ -404,7 +404,7 @@ describe('weather/trainingAt', () => {
     expect(cold.hour.condition).toBe('Partly Cloudy');
     expect(cold.hour.wetNow).toBe(false);
     expect(nwsHeatIndexC(cold.hour.temperatureC, cold.hour.humidity)).toBeLessThan(32);
-    expect(cold.line.says).toContain('Indoors, the weather being no good for a run');
+    expect(cold.line.says).toContain('Indoors, since the weather’s no good for a run');
     expect(cold.line.grayed).toBe(false);
     expect(cold.source).toBe('workout');
     expect(cold.built).toBeCloseTo(BUILT_AT_90, 9);
@@ -430,7 +430,7 @@ describe('weather/trainingAt', () => {
     expect(hot.hour.condition).toBe('Overcast');
     // The air at 30 °C is under the 32 °C line; as it feels, by the NWS's regression, 35.8 °C, over it.
     expect(nwsHeatIndexC(30, 73)).toBeCloseTo(35.78, 2);
-    expect(hot.line.says).toContain('Indoors, the weather being no good for a run');
+    expect(hot.line.says).toContain('Indoors, since the weather’s no good for a run');
     expect(hot.source).toBe('workout');
     expect(hot.built).toBeCloseTo(BUILT_AT_90, 9);
     expect(hot.kcal).toBeCloseTo(2.1 * hot.kg, 6);

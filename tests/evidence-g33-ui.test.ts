@@ -389,7 +389,7 @@ describe('h-papers', () => {
     const mark = h.buttons.filter((b) => /^Mark \d+ Read$/.test(b.text));
     expect(mark).toHaveLength(1);
     (mark[0]!.props.onClick as () => void)();
-    expect(drawn(sim).text).toContain('No Questions Waiting A tax return is past its due date and unfiled: $174, with its penalty so far.');
+    expect(drawn(sim).text).toContain('No Questions Waiting A tax return is past its due date and not filed yet. You owe $174, including the penalty so far.');
   });
 
   it('filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date, nothing accruing before it, and $169 sixty days past it, where the balance last stored reads $168; a reload says the same', () => {

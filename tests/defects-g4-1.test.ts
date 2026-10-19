@@ -167,7 +167,7 @@ describe('Work Out’s Fitness arrow', () => {
     expect(trainingAt(sim, sim.player).where).not.toBe(ends);
     const one = workout(sim);
     expect(Math.abs(one.shown - one.built)).toBeLessThan(0.03);
-    expect(one.why).toMatch(ends === 'run' ? /^A run in fine weather:/ : /^Indoors, the weather being no good for a run:/);
+    expect(one.why).toMatch(ends === 'run' ? /^A run in fine weather:/ : /^Indoors, since the weather’s no good for a run:/);
     const last = sim.player.development!.history.filter((h) => h.id === 'stamina').at(-1)!;
     expect(last.source).toBe(ends === 'run' ? 'workout:run' : 'workout');
   });
