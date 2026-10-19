@@ -451,3 +451,37 @@ text-inventory 0 after the marks, with `--todo2 material-a` at 0 Pending. vitest
 `tests/scenes.test.ts`, 2 files, 8 tests, exit 0.
 
 **Screens:** as batch 7.
+
+## Batch 9: The Conventions Shared With Material-B
+
+The coordinator sent material-b's conventions so the two lines of briefs read alike, and asked for this area's to
+match where they didn't. Already the same: staging notes as instructions to the actor with "your side of the frame"
+and the character still she or he; a voice brief's You Speak To line naming the person; "Recorded alone …" fragments
+made sentences; readings keeping their shapes and `why.beats` its one-line arc. Brought into line here (13 sources,
+13 strings, `scratchpad/ma/b9/edits.json`):
+- **High Wind's You Speak To** is the coordinator's wording: "Pell, the eight-year-old holding the string far below.
+  Her lines aren’t in the booth, so play to her as if she were." (batch 1 had said "She isn’t in the booth with you").
+  Last Launch From The Roof's already matched.
+- **The Last Pool's You Speak To** is just who: "The viewer at home, watching the sequence." Batch 4 had added "Speak
+  to them alone, as if no one else were listening."; The Two Of You already says the narrator speaks to one viewer.
+- **Every "On the tape …" sentence** is now an instruction too, which batches 3 to 6 had kept as set descriptions: The
+  Treehouse Treaty ("For the tape, play the treehouse as a cramped corner, and keep the ladder out of frame."), Night Two
+  At Juniper Creek, Sunday At The Laundromat, The Pump House, Table Nine, Mile Marker 212, The Late Number Nine, The
+  Interview In The Wet Office (whose "the water is imagined and played" is "imagine the water, and play it …") and
+  The Last Stop.
+- **Clowning, where the heading says Clown And Mask:** The Last Strip's "slapstick’s physical comedy" is "slapstick
+  clowning", and The Wardrobe In Suite Nine's pratfall is named "the clowning the scene asks for", where the note had
+  named only the comedy.
+
+Seven of these sources had been kept and are now Rewritten; six were rewritten already and were read and marked again.
+The area's second pass ends at **508 sources: 91 Rewritten, 417 Retained, 0 Pending, 0 Blocked**. Two retained samples
+went out of `retained.md` with them.
+
+**Checks (exits, `scratchpad/ma/b9/`):** `tsc -b --noEmit` 0; `eslint` on the five brief files 0; title-case 0;
+label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-refs 0; deciders 0; guide-quotes 0;
+text-inventory 0 after the marks. vitest: material-words and briefs-content, 2 files, 454 tests, exit 0 (the
+two-situations overlap test among them, since nine of the edits are in circumstances).
+
+**Screens:** a second build (`npm run build` exit 0, served on 4289, `cmp` exit 0, stopped by its process id), the 13
+briefs opened from the Player Profile at 1440 and 390 (`screens/briefs-walk-9-1440.json`, `-390.json`): all 13 new
+strings on their panes, nothing past the screen's edge at 390.

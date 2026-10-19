@@ -84,7 +84,7 @@ export const BRIEFS_E: readonly Brief[] = [
   {
     id: 'brief-road_movie', title: 'Mile Marker 212', kinds: ['road_movie'], medium: 'camera', size: 'medium',
     logline: 'On the second day of driving her grandfather to the town he left at seventeen, a young woman is asked to turn the car around.',
-    circumstances: 'The front seat of an old sedan on a two-lane highway, early morning, an hour past a gas station. She’s driving; he’s beside her with the map he insisted on. Ten minutes ago he said, out of nowhere, that he wanted to go home. For the tape she’s seated, the wheel mimed or a prop in her hands, her eyes on a fixed road line just off camera, with Walt’s voice coming from beside the lens.',
+    circumstances: 'The front seat of an old sedan on a two-lane highway, early morning, an hour past a gas station. She’s driving; he’s beside her with the map he insisted on. Ten minutes ago he said, out of nowhere, that he wanted to go home. For the tape, sit with the wheel mimed or a prop in your hands and your eyes on a fixed road line just off camera; Walt’s voice comes from beside the lens.',
     relationship: 'Grandfather and granddaughter, who have never spent this long alone together and have spent the trip finding out they like each other.',
     you: 'Dee, nineteen, who took a week off her first job to do this.',
     reader: 'Her grandfather, Walt, beside her in the passenger seat, looking out of his window.',
@@ -327,7 +327,7 @@ export const BRIEFS_E: readonly Brief[] = [
       timing: 'The talk is fast and overlapping, each line cut off by the next, and the fall and the bark land on cues.',
       physical: 'She guards the wardrobe with her body, and the fall onto the bed is the scene’s turn.',
       partner: 'The repartee lives on cutting in on the reader, which only works if she’s listening to every word.',
-      techniques: 'The fast, overlapping repartee is screwball comedy’s own, and it asks for comic timing. The catch of the heel is a pratfall: play it solo, with the reader off camera at the door, and work it out slowly first onto a bed or a soft mat, so it repeats safely on every take.',
+      techniques: 'The fast, overlapping repartee is screwball comedy’s own, and it asks for comic timing. The catch of the heel is a pratfall, the clowning the scene asks for: play it solo, with the reader off camera at the door, and work it out slowly first onto a bed or a soft mat, so it repeats safely on every take.',
       beats: 'Two comic beats that build to a fall, then a confession made funny by where she makes it.',
     },
     readings: [
@@ -406,7 +406,7 @@ export const BRIEFS_E: readonly Brief[] = [
       timing: 'Each gag lands on a cue: the wrap, the swat, the stagger, the reveal.',
       physical: 'The scene is a body fighting a strip of paper on a wobbling step, then a stagger, a fall and a recovery.',
       partner: 'The swat comes from the reader off frame, and his reaction has to meet her cue exactly.',
-      techniques: 'The fight with the paper and the fall are slapstick’s physical comedy. The swat is a staged blow that lands off frame: play it entirely as his reaction, with no contact. Work out the stagger off a low step onto the dust sheets solo, slowly at first, so it repeats on every take. The gags ask for comic timing.',
+      techniques: 'The fight with the paper and the fall are slapstick clowning. The swat is a staged blow that lands off frame: play it entirely as his reaction, with no contact. Work out the stagger off a low step onto the dust sheets solo, slowly at first, so it repeats on every take. The gags ask for comic timing.',
       beats: 'A comic struggle, a blow and a fall funny and painful at once, then the luck that saves him.',
     },
     readings: [
@@ -443,7 +443,7 @@ export const BRIEFS_E: readonly Brief[] = [
   {
     id: 'brief-slice_of_life', title: 'The Late Number Nine', kinds: ['slice_of_life'], medium: 'camera', size: 'short',
     logline: 'A student trying to finish an essay in a bus shelter is asked by an old man to write his granddaughter’s birthday card for him.',
-    circumstances: 'A bus shelter on a Sunday evening, rain on the roof, the number nine running twenty minutes late. The essay is due at midnight. The man on the other end of the bench takes this bus every Sunday, and today his hands are shaking too much to write. For the tape Kwame sits alone with the card and pen on his knee, and the old man’s voice comes from beside the lens.',
+    circumstances: 'A bus shelter on a Sunday evening, rain on the roof, the number nine running twenty minutes late. The essay is due at midnight. The man on the other end of the bench takes this bus every Sunday, and today his hands are shaking too much to write. For the tape, sit alone with the card and pen on your knee; the old man’s voice comes from beside the lens.',
     relationship: 'Regulars at the stop who have nodded at each other for a year and never spoken.',
     you: 'Kwame, twenty, a nursing student with a laptop on his knees.',
     reader: 'Mr. Sadowski, in his eighties, dictating from the other end of the bench.',

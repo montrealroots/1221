@@ -33,7 +33,7 @@ export const BRIEFS_C: readonly Brief[] = [
   {
     id: 'brief-family', title: 'The Treehouse Treaty', kinds: ['family'], medium: 'camera', size: 'short',
     logline: 'The night before the family moves across the country, a father climbs into his daughter’s treehouse to bring her down by bedtime.',
-    circumstances: 'A backyard at eight in the evening, the house behind it already packed into boxes. The truck comes at seven tomorrow. His nine-year-old has taken a flashlight, a sleeping bag and a written list of demands up the ladder, and she let him up only after he knocked the secret knock. On the tape the treehouse is a cramped corner, and the ladder is never seen.',
+    circumstances: 'A backyard at eight in the evening, the house behind it already packed into boxes. The truck comes at seven tomorrow. His nine-year-old has taken a flashlight, a sleeping bag and a written list of demands up the ladder, and she let him up only after he knocked the secret knock. For the tape, play the treehouse as a cramped corner, and keep the ladder out of frame.',
     relationship: 'Father and daughter, close; since her mother’s new job made the move, she has decided he’s the one to blame.',
     you: 'Marcus, in his late thirties, folded into a treehouse built for children.',
     reader: 'Junie, nine, his daughter, holding her list of demands.',
@@ -167,7 +167,7 @@ export const BRIEFS_C: readonly Brief[] = [
   {
     id: 'brief-found_footage', title: 'Night Two At Juniper Creek', kinds: ['found_footage'], medium: 'camera', size: 'short',
     logline: 'A woman filming a camping trip for her mother finds their late father’s fishing lure hanging from the tent zip, and keeps the camera running while she talks her brother into leaving.',
-    circumstances: 'A creekside campsite in a state forest at first light. She and her brother came to film their late father’s favorite fishing spot for their mother, who can’t travel. This morning his old red fishing lure was hanging from the outside of the tent zip, and she knows she left it in his tackle box at home. The camera is hers, held at arm’s length or turned on the campsite; her brother stays just out of frame. On the tape the campsite is whatever plain space is behind her, and her words supply the creek and the trees.',
+    circumstances: 'A creekside campsite in a state forest at first light. She and her brother came to film their late father’s favorite fishing spot for their mother, who can’t travel. This morning his old red fishing lure was hanging from the outside of the tent zip, and she knows she left it in his tackle box at home. The camera is hers, held at arm’s length or turned on the campsite; her brother stays just out of frame. For the tape, any plain space behind you will do for the campsite: her words supply the creek and the trees.',
     relationship: 'Brother and sister, two years apart, who still argue like teenagers.',
     you: 'Kayla Iverson, twenty-six, who promised her mother the whole trip on tape.',
     reader: 'Josh, her younger brother, who thinks it’s a prank and wants to stay.',
@@ -295,7 +295,7 @@ export const BRIEFS_C: readonly Brief[] = [
   {
     id: 'brief-hangout', title: 'Sunday At The Laundromat', kinds: ['hangout'], medium: 'camera', size: 'short',
     logline: 'Two old friends fold laundry on a slow Sunday, and one of them keeps not mentioning that she’s moving away.',
-    circumstances: 'A neighborhood laundromat on a Sunday afternoon, the dryers turning. They’ve met here every Sunday for six years, long after both of them could afford machines at home. On Friday she signed a lease in another state. On the tape she folds her own towels, and Bec’s sheet stays off frame.',
+    circumstances: 'A neighborhood laundromat on a Sunday afternoon, the dryers turning. They’ve met here every Sunday for six years, long after both of them could afford machines at home. On Friday she signed a lease in another state. For the tape, fold her towels yourself, and keep Bec’s sheet off frame.',
     relationship: 'Best friends since college, who don’t need to talk and talk anyway.',
     you: 'Yesenia Ibarra, thirty-one, folding towels with great precision.',
     reader: 'Bec, thirty-two, who has never folded a fitted sheet correctly and never will.',

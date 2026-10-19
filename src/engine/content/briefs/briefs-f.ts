@@ -91,7 +91,7 @@ export const BRIEFS_F: readonly Brief[] = [
   {
     id: 'brief-surrealist', title: 'The Interview In The Wet Office', kinds: ['surrealist'], medium: 'camera', size: 'short',
     logline: 'A woman sits a job interview in an office where the water is slowly rising past her ankles, and answers every strange question with complete sincerity.',
-    circumstances: 'A small office with a desk and two chairs, mid-morning. The floor is under an inch of water and rising; neither of them mentions it. On the tape the floor is dry: the water is imagined and played, in her feet and in how she sits. The questions on the interviewer’s sheet are about her shoes, her shoes’ childhood, and the drawer her mother kept her letters in.',
+    circumstances: 'A small office with a desk and two chairs, mid-morning. The floor is under an inch of water and rising; neither of them mentions it. On the tape the floor is dry: imagine the water, and play it in her feet and in how she sits. The questions on the interviewer’s sheet are about her shoes, her shoes’ childhood, and the drawer her mother kept her letters in.',
     relationship: 'Strangers across a desk: he holds the job, and she needs it.',
     you: 'Mireille, in her thirties, who has prepared answers for everything except these questions.',
     reader: 'The interviewer, polite and patient, reading from his sheet.',
@@ -612,7 +612,7 @@ export const BRIEFS_F: readonly Brief[] = [
   {
     id: 'brief-zombie', title: 'The Last Stop', kinds: ['zombie'], medium: 'camera', size: 'short',
     logline: 'A school bus driver evacuating a dozen children learns her co-driver was bitten, and he asks her to leave him at the next crossroads.',
-    circumstances: 'A school bus on a county road, an hour after the evacuation order. The children are asleep at the back. He has just shown her the bite under his sleeve, and the crossroads is two miles ahead. On the tape she’s seated, the wheel mimed, her eyes on a fixed road line off camera.',
+    circumstances: 'A school bus on a county road, an hour after the evacuation order. The children are asleep at the back. He has just shown her the bite under his sleeve, and the crossroads is two miles ahead. For the tape, sit with the wheel mimed and your eyes on a fixed road line off camera.',
     relationship: 'Two drivers who’ve shared the route for nine years and know each other’s coffee orders and children’s names.',
     you: 'Lorena Zavala, forty-four, driving, who can’t take her eyes off the road for long.',
     reader: 'Benny, her co-driver, sitting on the step by the door, getting colder.',

@@ -1,7 +1,8 @@
 # Material-A: A Sample Of What Was Kept
 
 Every kept source has its own reason in `docs/text/second-pass/material-a.json`. These are a sample, across the files,
-with the words kept and the reason, so the owner can judge the reasons as well as the rewrites.
+with the words kept and the reason, so the owner can judge the reasons as well as the rewrites. Two samples first kept here, The Treehouse Treaty's and
+The Pump House's tape staging, were taken out when batch 9 rewrote those sentences as instructions.
 
 ## Batch 1
 
@@ -39,19 +40,12 @@ with the words kept and the reason, so the owner can judge the reasons as well a
 - **`briefs-c.ts` [brief-giallo], The Dry Umbrella.** Circumstances: "One detail stays with her: the umbrella the figure
   carried was closed, and dry, in the rain. It rained again this morning, and the inspector’s coat is still wet."
   *Reason:* the scene turns on one clue an actor can see and hold, and ends with that umbrella in the room.
-- **`briefs-c.ts` [brief-family], The Treehouse Treaty.** "On the tape the treehouse is a cramped corner, and the
-  ladder is never seen." *Reason:* a set description a self-tape can do, kept as a description because it says what
-  the frame holds, not a safety instruction.
 - **`briefs-c.ts` [nobody], Nobody Waiting.** "The comedy is a woman holding off the fact that no one at home will
   miss her, and the third beat lets it in." *Reason:* it says exactly where the comedy and the grief meet, resting on
   the panel's "no record of a home".
 
 ## Batch 4
 
-- **`briefs-d.ts` [brief-monster_movie], The Pump House.** Circumstances: "On the tape she kneels alone on a bare floor,
-  with her brother off camera at her shoulder and the water only in her eyes." *Reason:* a monster scene built on one
-  rule (it hunts by sound) and a whisper, with a set description a tape can do; kept as a description because it says
-  what the frame holds.
 - **`briefs-d.ts` [brief-period_drama], The Gown For Tonight.** Obstacle: "A maid may not accuse a tradeswoman of
   error, may not mention her mistress’s debts, and may not go home without the gown." *Reason:* 1911's rules for a
   lady's maid set out plainly, so the contest inside good manners is playable.

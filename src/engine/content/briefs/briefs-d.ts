@@ -167,7 +167,7 @@ export const BRIEFS_D: readonly Brief[] = [
   {
     id: 'brief-monster_movie', title: 'The Pump House', kinds: ['monster_movie'], medium: 'camera', size: 'short',
     logline: 'A woman sheltering in a flooded pump house has to keep her brother still and quiet while the thing in the water passes beneath them.',
-    circumstances: 'A concrete pump house at the edge of a drained reservoir, the night after the floodgates failed. They’ve climbed onto the machinery platform; whatever came up with the water has already taken the dog, and it hunts by sound. On the tape she kneels alone on a bare floor, with her brother off camera at her shoulder and the water only in her eyes.',
+    circumstances: 'A concrete pump house at the edge of a drained reservoir, the night after the floodgates failed. They’ve climbed onto the machinery platform; whatever came up with the water has already taken the dog, and it hunts by sound. For the tape, kneel alone on a bare floor, with her brother off camera at your shoulder and the water only in your eyes.',
     relationship: 'Brother and sister who run the family’s fishing business and haven’t agreed on anything in years.',
     you: 'Lupe Navarro, the older sister, who saw it take the dog.',
     reader: 'Ben, her younger brother, who didn’t see it and wants to make a run for the truck.',
@@ -277,7 +277,7 @@ export const BRIEFS_D: readonly Brief[] = [
     circumstances: 'A recording booth. The sequence is already cut: dawn over a cracked riverbed, a heron working one shrinking pool, the fish crowding, and at the end the first drops of rain. The narration script is written to the picture, with each line timed to a shot.',
     relationship: 'The narrator speaks to a viewer watching at home, as a guide who has been there and wants them to see it.',
     you: 'The narrator, telling the story of the pool over the pictures.',
-    reader: 'The viewer at home, watching the sequence. Speak to them alone, as if no one else were listening.',
+    reader: 'The viewer at home, watching the sequence.',
     objective: 'Carry the viewer through the sequence so they feel the dry season end.',
     obstacle: 'The lines are fixed to the shots, and the story has to live inside the time each picture allows.',
     beats: [
@@ -604,7 +604,7 @@ export const BRIEFS_D: readonly Brief[] = [
   {
     id: 'brief-prison_film', title: 'Table Nine', kinds: ['prison_film'], medium: 'camera', size: 'short',
     logline: 'In a prison visiting room, a father sees his teenage daughter for the first time in a year, and she has come to ask him to sign a form.',
-    circumstances: 'The visiting room of a state prison, a Sunday afternoon, under a guard’s watch. She needs his signature to take her stepfather’s surname at school; visits are an hour, and touch is allowed only at the start and the end. On the tape the reader sits off camera across the table: play the hug to her eyeline, and never make it.',
+    circumstances: 'The visiting room of a state prison, a Sunday afternoon, under a guard’s watch. She needs his signature to take her stepfather’s surname at school; visits are an hour, and touch is allowed only at the start and the end. For the tape, the reader sits off camera across the table: play the hug to her eyeline, and never make it.',
     relationship: 'Father and daughter, close when she was small; he has three years left to serve.',
     you: 'Martin Pelletier, forty, who has written to her every week and had two replies.',
     reader: 'Josie, fifteen, with the form folded in her jacket pocket.',

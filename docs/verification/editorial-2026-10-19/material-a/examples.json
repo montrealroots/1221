@@ -1263,5 +1263,148 @@
   "why": "The note's variant of the reason, where the answer chosen isn't repeated: the old one had no subject.",
   "meaningSensitive": false,
   "verified": "tests/material-words.test.ts checks noteText(a, { kind: 'choice', question }) is exactly '<question>: <reason> You played <role> in <play>.' for every unsupported answer (passed, batch 8)."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-animated]",
+  "field": "reader (You Speak To)",
+  "kind": "label",
+  "before": "Pell, the eight-year-old holding the string far below. She isn’t in the booth with you, so play to her as if she were.",
+  "after": "Pell, the eight-year-old holding the string far below. Her lines aren’t in the booth, so play to her as if she were.",
+  "why": "Brought into line with material-b's voice briefs, as the coordinator asked: the original's own fact, her lines aren't in the booth, is the reason to play to her.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-family]",
+  "field": "circumstances, the tape's staging",
+  "kind": "other",
+  "before": "On the tape the treehouse is a cramped corner, and the ladder is never seen.",
+  "after": "For the tape, play the treehouse as a cramped corner, and keep the ladder out of frame.",
+  "why": "The tape's staging as an instruction to the actor, the convention both material areas share.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-found_footage]",
+  "field": "circumstances, the tape's staging",
+  "kind": "other",
+  "before": "On the tape the campsite is whatever plain space is behind her, and her words supply the creek and the trees.",
+  "after": "For the tape, any plain space behind you will do for the campsite: her words supply the creek and the trees.",
+  "why": "As above.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-hangout]",
+  "field": "circumstances, the tape's staging",
+  "kind": "other",
+  "before": "On the tape she folds her own towels, and Bec’s sheet stays off frame.",
+  "after": "For the tape, fold her towels yourself, and keep Bec’s sheet off frame.",
+  "why": "As above.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-monster_movie]",
+  "field": "circumstances, the tape's staging",
+  "kind": "other",
+  "before": "On the tape she kneels alone on a bare floor, with her brother off camera at her shoulder and the water only in her eyes.",
+  "after": "For the tape, kneel alone on a bare floor, with her brother off camera at your shoulder and the water only in your eyes.",
+  "why": "As above; the character is still she.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-prison_film]",
+  "field": "circumstances, the tape's staging",
+  "kind": "other",
+  "before": "On the tape the reader sits off camera across the table: play the hug to her eyeline, and never make it.",
+  "after": "For the tape, the reader sits off camera across the table: play the hug to her eyeline, and never make it.",
+  "why": "Every staging note now opens the same way.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-nature_documentary]",
+  "field": "reader (You Speak To)",
+  "kind": "label",
+  "before": "The viewer at home, watching the sequence. Speak to them alone, as if no one else were listening.",
+  "after": "The viewer at home, watching the sequence.",
+  "why": "Brought into line with material-b, as the coordinator asked: the heading says You Speak To, and The Two Of You already says the narrator speaks to one viewer at home.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json. Read on the built app too (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-road_movie]",
+  "field": "circumstances, the tape's staging",
+  "kind": "other",
+  "before": "For the tape she’s seated, the wheel mimed or a prop in her hands, her eyes on a fixed road line just off camera, with Walt’s voice coming from beside the lens.",
+  "after": "For the tape, sit with the wheel mimed or a prop in your hands and your eyes on a fixed road line just off camera; Walt’s voice comes from beside the lens.",
+  "why": "As The Treehouse Treaty's.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-slice_of_life]",
+  "field": "circumstances, the tape's staging",
+  "kind": "other",
+  "before": "For the tape Kwame sits alone with the card and pen on his knee, and the old man’s voice comes from beside the lens.",
+  "after": "For the tape, sit alone with the card and pen on your knee; the old man’s voice comes from beside the lens.",
+  "why": "As above.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-slapstick]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The fight with the paper and the fall are slapstick’s physical comedy.",
+  "after": "The fight with the paper and the fall are slapstick clowning.",
+  "why": "The label before it says Clown And Mask; the note names the same technique in the School's word for it.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-screwball_comedy]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The catch of the heel is a pratfall: play it solo,",
+  "after": "The catch of the heel is a pratfall, the clowning the scene asks for: play it solo,",
+  "why": "The label says Comedy, Clown And Mask, and the note named only the comedy; the pratfall is the clowning.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-surrealist]",
+  "field": "circumstances, the tape's staging",
+  "kind": "other",
+  "before": "On the tape the floor is dry: the water is imagined and played, in her feet and in how she sits.",
+  "after": "On the tape the floor is dry: imagine the water, and play it in her feet and in how she sits.",
+  "why": "Two passives ('is imagined and played') became the instruction they were.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
+ },
+ {
+  "batch": 9,
+  "source": "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-zombie]",
+  "field": "circumstances, the tape's staging",
+  "kind": "other",
+  "before": "On the tape she’s seated, the wheel mimed, her eyes on a fixed road line off camera.",
+  "after": "For the tape, sit with the wheel mimed and your eyes on a fixed road line off camera.",
+  "why": "As Mile Marker 212's.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > …', renders BriefPane and finds the after string whole (passed, batch 9); and read on a second build of the built app (port 4289, save brief.json, Player Profile, Open Its Brief) at 1440 and 390: screens/briefs-walk-9-1440.json and -390.json."
  }
 ]

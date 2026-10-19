@@ -145,7 +145,7 @@ export const BRIEFS_A: readonly Brief[] = [
     circumstances: 'A grassy hilltop in a gale, as the storm comes in off the sea. The kite has climbed higher than ever, the string is cutting the girl’s hands, and she won’t let go because he’s her only kite. You record it alone in a booth before any of it is drawn.',
     relationship: 'Best friends in the way a kite and its flyer are: she made him from a newspaper and a broken umbrella last spring.',
     you: 'Flap, the kite, small, boastful and much braver than he sounds.',
-    reader: 'Pell, the eight-year-old holding the string far below. She isn’t in the booth with you, so play to her as if she were.',
+    reader: 'Pell, the eight-year-old holding the string far below. Her lines aren’t in the booth, so play to her as if she were.',
     objective: 'Make her let go of the string.',
     obstacle: 'She loves him, she’s stubborn, and he can only reach her with his voice over the wind.',
     beats: [

@@ -78,9 +78,9 @@
  },
  "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-animated]": {
   "status": "Rewritten",
-  "hash": "ba220147ceb8",
+  "hash": "db2dec182558",
   "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders BriefPane for High Wind and finds the new You Speak To line, circumstances and voice-over note (passed, batch 1)",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for High Wind, its You Speak To line and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
   "first": "Pending"
  },
  "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-anime]": {
@@ -1071,11 +1071,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-family]": {
-  "status": "Retained",
-  "hash": "1e1c970ce2fc",
+  "status": "Rewritten",
+  "hash": "7a5aed1dcd52",
   "on": "2026-10-19",
-  "reason": "The Treehouse Treaty tells a moving-day scene through a child's written demands and a secret knock, with a staging line (the treehouse a cramped corner, the ladder never seen) a self-tape can do.",
-  "first": "Reviewed And Retained"
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Treehouse Treaty, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
  },
  "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-fantasy]": {
   "status": "Retained",
@@ -1107,9 +1107,9 @@
  },
  "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-found_footage]": {
   "status": "Rewritten",
-  "hash": "73510288b28e",
+  "hash": "fe0818c7e963",
   "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Night Two At Juniper Creek, its improvisation and techniques notes and finds the new words whole (passed, batch 3)",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Night Two At Juniper Creek, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
   "first": "Pending"
  },
  "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-gangster]": {
@@ -1141,11 +1141,11 @@
   "first": "Pending"
  },
  "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-hangout]": {
-  "status": "Retained",
-  "hash": "3486fff33223",
+  "status": "Rewritten",
+  "hash": "a5624cf85eee",
   "on": "2026-10-19",
-  "reason": "Sunday At The Laundromat lets a hangout scene be about not saying something, in plain facts (six years of Sundays, a lease signed Friday, a fitted sheet) and a staging line for the tape.",
-  "first": "Reviewed And Retained"
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Sunday At The Laundromat, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
  },
  "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-heist]": {
   "status": "Retained",
@@ -1638,11 +1638,11 @@
   "first": "Pending"
  },
  "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-monster_movie]": {
-  "status": "Retained",
-  "hash": "feaa4e70c6ca",
+  "status": "Rewritten",
+  "hash": "ed79c7659696",
   "on": "2026-10-19",
-  "reason": "The Pump House builds a monster scene from a rule (it hunts by sound) and a whisper, and says how a self-tape does it: kneeling on a bare floor, the water only in her eyes.",
-  "first": "Reviewed And Retained"
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Pump House, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
  },
  "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-mumblecore]": {
   "status": "Retained",
@@ -1667,9 +1667,9 @@
  },
  "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-nature_documentary]": {
   "status": "Rewritten",
-  "hash": "0419c03ac023",
+  "hash": "6e9a34a3a65b",
   "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Last Pool, its You Speak To line and finds the new words whole (passed, batch 4)",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Last Pool, its You Speak To line and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
   "first": "Pending"
  },
  "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-neo_noir]": {
@@ -1758,9 +1758,9 @@
  },
  "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-prison_film]": {
   "status": "Rewritten",
-  "hash": "105448dca967",
+  "hash": "15d93e27272d",
   "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Table Nine, its circumstances and finds the new words whole (passed, batch 4)",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Table Nine, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
   "first": "Pending"
  },
  "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-psychological_horror]": {
@@ -2128,11 +2128,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-road_movie]": {
-  "status": "Retained",
-  "hash": "38e1690963eb",
+  "status": "Rewritten",
+  "hash": "6e9a0bc7385b",
   "on": "2026-10-19",
-  "reason": "Mile Marker 212 says how a car scene is taped (seated, the wheel mimed, a fixed road line off camera) and keeps her eyes on the road as both the staging and the obstacle.",
-  "first": "Reviewed And Retained"
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Mile Marker 212, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
  },
  "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-rockumentary]": {
   "status": "Retained",
@@ -2192,9 +2192,9 @@
  },
  "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-screwball_comedy]": {
   "status": "Rewritten",
-  "hash": "a6e2a4835608",
+  "hash": "12a4de1dd2f1",
   "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Wardrobe In Suite Nine, its pratfall note and finds the new words whole (passed, batch 5)",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Wardrobe In Suite Nine, its techniques note and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
   "first": "Pending"
  },
  "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-sea_adventure]": {
@@ -2213,9 +2213,9 @@
  },
  "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-slapstick]": {
   "status": "Rewritten",
-  "hash": "de37e125ff65",
+  "hash": "3655629e1c71",
   "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Last Strip, its staged-blow and fall note and finds the new words whole (passed, batch 5)",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Last Strip, its techniques note and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
   "first": "Pending"
  },
  "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-slasher]": {
@@ -2226,11 +2226,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-slice_of_life]": {
-  "status": "Retained",
-  "hash": "81e9a3392e17",
+  "status": "Rewritten",
+  "hash": "f6bdd3d51f7e",
   "on": "2026-10-19",
-  "reason": "The Late Number Nine finds a scene in a favor at a bus shelter (a birthday card, a late wife's little bird) and says how a tape does it: the card on his knee, the voice beside the lens.",
-  "first": "Reviewed And Retained"
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Late Number Nine, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
  },
  "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-social_realism]": {
   "status": "Rewritten",
@@ -2653,11 +2653,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-surrealist]": {
-  "status": "Retained",
-  "hash": "5b47c660ab4c",
+  "status": "Rewritten",
+  "hash": "7fb16f546e1f",
   "on": "2026-10-19",
-  "reason": "The Interview In The Wet Office states its rules plainly (the water rises, neither mentions it, the floor is dry on the tape) and turns the absurd tender at one question.",
-  "first": "Reviewed And Retained"
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Interview In The Wet Office, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
  },
  "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-survival]": {
   "status": "Retained",
@@ -2793,11 +2793,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-zombie]": {
-  "status": "Retained",
-  "hash": "834d61ca972d",
+  "status": "Rewritten",
+  "hash": "0ef2516668e5",
   "on": "2026-10-19",
-  "reason": "The Last Stop keeps a zombie scene on a school bus with sleeping children, a bite under a sleeve and two miles to the crossroads, and says how the tape does the driving.",
-  "first": "Reviewed And Retained"
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Last Stop, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
  },
  "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brother]": {
   "status": "Retained",
