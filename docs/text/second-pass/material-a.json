@@ -3169,5 +3169,222 @@
   "on": "2026-10-19",
   "reason": "The thesis plays' real titles, authors and characters as their plays name them (Hedda Tesman, Judge Brack); a title is matched by exact text against the casting a save holds (school.ts, p.title === c.play), so it's a key too.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [asyoulike-3-2]": {
+  "status": "Rewritten",
+  "hash": "b5cbf7ca97f8",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for As You Like It 3.2, the wedding answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [caesar-2-1]": {
+  "status": "Rewritten",
+  "hash": "727ecf54b789",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Julius Caesar 2.1, the Capitol answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [caesar-4-3]": {
+  "status": "Retained",
+  "hash": "4ac4c8834d35",
+  "on": "2026-10-19",
+  "reason": "Julius Caesar 4.3: the quarrel in Brutus's tent, its reasons naming the bribes, the gold and Portia's death as the scene has them, with Shakespeare's lines kept exact.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [dream-3-2]": {
+  "status": "Rewritten",
+  "hash": "9766813e9371",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for A Midsummer Night’s Dream 3.2, the wedding-night answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [faustus-3]": {
+  "status": "Rewritten",
+  "hash": "d9366de2402f",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Doctor Faustus, the bond answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [hamlet-3-1]": {
+  "status": "Retained",
+  "hash": "dc36467f72ef",
+  "on": "2026-10-19",
+  "reason": "Hamlet 3.1: the nunnery scene with its watchers, each answer's reason resting on the text ('Are you honest?', the returned remembrances), the quotations kept as Shakespeare wrote them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [hamlet-3-4]": {
+  "status": "Rewritten",
+  "hash": "6f182dd63162",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Hamlet 3.4, the poisoned-cup answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [lear-4-7]": {
+  "status": "Rewritten",
+  "hash": "308ed0ea6082",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for King Lear 4.7, the blind answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [malfi-1]": {
+  "status": "Rewritten",
+  "hash": "ac446fcc718a",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for The Duchess of Malfi, the prison answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [measure-2-4]": {
+  "status": "Retained",
+  "hash": "bc783ff86a72",
+  "on": "2026-10-19",
+  "reason": "Measure for Measure 2.4: Angelo's bargain set out plainly, each reason resting on what the scene says or does ('Plainly conceive, I love you', the rubies of keen whips).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [othello-4-3]": {
+  "status": "Retained",
+  "hash": "fb360d2f3c34",
+  "on": "2026-10-19",
+  "reason": "Othello 4.3: the willow song scene, its reasons quoting the play exactly ('Wouldst thou do such a deed for all the world?') and saying plainly why the wrong answers don't fit.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [richard3-1-2]": {
+  "status": "Retained",
+  "hash": "009b557cb14d",
+  "on": "2026-10-19",
+  "reason": "Richard III 1.2: the wooing over Henry's coffin told plainly, and each reason rests on a line or act of the scene (the sword offered, the ring taken, his gloating alone after).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [scandal-2-1]": {
+  "status": "Rewritten",
+  "hash": "8e2b439b137c",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for The School for Scandal, the screen answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [shrew-2-1]": {
+  "status": "Retained",
+  "hash": "8cd74edc60ef",
+  "on": "2026-10-19",
+  "reason": "The Taming of the Shrew 2.1: the first meeting at Baptista's, each reason pointing to what the scene shows (the stool, the wasp, the strike, Sunday), with every quotation the play's own.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [stoops-2]": {
+  "status": "Rewritten",
+  "hash": "5f8eb7ce2717",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for She Stoops to Conquer, the alehouse and two barmaid answers' reasons and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [twelfth-1-5]": {
+  "status": "Retained",
+  "hash": "db5d041683ce",
+  "on": "2026-10-19",
+  "reason": "Twelfth Night 1.5: Olivia's house, the veil and the ring, set out as the play has them; each answer's reason names the line or the moment that settles it ('two lips, indifferent red').",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [twelfth-2-4]": {
+  "status": "Rewritten",
+  "hash": "a8b8d15a42a1",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Twelfth Night 2.4, the shore answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [wayoftheworld-4]": {
+  "status": "Rewritten",
+  "hash": "94e91fdf7f43",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for The Way of the World, the park and already-married answers' reasons and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [agamemnon-855]": {
+  "status": "Retained",
+  "hash": "1f5a97f68f8d",
+  "on": "2026-10-19",
+  "reason": "Murray's Agamemnon and the crimson tapestries: Clytemnestra's welcome and the quick exchange told as the play has them, each reason pointing to the moment that settles it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [antigone-441]": {
+  "status": "Retained",
+  "hash": "375b15365586",
+  "on": "2026-10-19",
+  "reason": "Jebb's Antigone before Creon: the unwritten laws and the tempered iron paraphrased plainly, each reason naming the exchange it rests on, with no wording put in Jebb's mouth.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [bacchae-451]": {
+  "status": "Retained",
+  "hash": "404610451cda",
+  "on": "2026-10-19",
+  "reason": "Murray's Bacchae, the Stranger brought in bound: Pentheus's jeers and the god's calm riddles as the translation has them, including Murray's stage direction, named as his.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [electra-328]": {
+  "status": "Retained",
+  "hash": "8aa059ee3f40",
+  "on": "2026-10-19",
+  "reason": "Jebb's Electra and Chrysothemis: the offerings, the dream and the locks of hair as the play has them, and each reason contrasts the wrong answer with what the sisters do.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [medea-446]": {
+  "status": "Retained",
+  "hash": "cee898ec232d",
+  "on": "2026-10-19",
+  "reason": "Murray's Medea and Jason: the debt she recites and his cool case paraphrased plainly, each reason resting on a named exchange of the scene.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [oedipus-300]": {
+  "status": "Retained",
+  "hash": "e09ebd038555",
+  "on": "2026-10-19",
+  "reason": "Jebb's Oedipus and Teiresias: the accusation and the riddle of his parents told as the scene has them, each reason saying what Teiresias or Oedipus actually says.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-house.ts#HOUSE_SCENES [caesar-3-2]": {
+  "status": "Retained",
+  "hash": "9510f929f7de",
+  "on": "2026-10-19",
+  "reason": "Julius Caesar's Forum: Brutus's prose and Antony's 'honourable men' quoted as the text has them, its British spellings kept, and each reason resting on the speech it names.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-house.ts#HOUSE_SCENES [dream-5-1]": {
+  "status": "Retained",
+  "hash": "7136a4f4ecca",
+  "on": "2026-10-19",
+  "reason": "Pyramus and Thisbe before the court: Bottom's 'Deceiving me is Thisbe's cue' and the deaths quoted as Shakespeare wrote them, and each reason says what the court or the players do.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-house.ts#HOUSE_SCENES [henry5-4-3]": {
+  "status": "Retained",
+  "hash": "b78f5a64609d",
+  "on": "2026-10-19",
+  "reason": "Henry V before Agincourt: the Crispin's day speech quoted exactly, the odds and the passport given as the scene states them, and each wrong answer answered from the text.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-house.ts#HOUSE_SCENES [oedipus-1]": {
+  "status": "Retained",
+  "hash": "cc9020dbdf44",
+  "on": "2026-10-19",
+  "reason": "Murray's Oedipus with the suppliants: the plague, the Sphinx and Creon's coming as the translation tells them, its verse quoted exactly and its spellings kept.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-meeting.ts#MEETING_SCENES [enemy-4]": {
+  "status": "Retained",
+  "hash": "a49fca1ed910",
+  "on": "2026-10-19",
+  "reason": "An Enemy of the People's public meeting, Sharp's translation quoted exactly ('the compact majority'), and every reason says what in the meeting settles the answer.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-meeting.ts#MEETING_SCENES [strife-2-2]": {
+  "status": "Retained",
+  "hash": "d6032cec689e",
+  "on": "2026-10-19",
+  "reason": "Strife's meeting outside the works: Harness and Roberts each quoted as Galsworthy wrote them, and each reason names the stage direction or line that settles it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-scored.ts#SCORED_SCENES [scapin-3-2]": {
+  "status": "Retained",
+  "hash": "55591a47c0e6",
+  "on": "2026-10-19",
+  "reason": "The Impostures of Scapin's sack scene, with each voice Scapin puts on quoted from Wall's translation as written and the footnote about the inverted commas given as the translation's own.",
+  "first": "Rewritten And Verified"
  }
 }

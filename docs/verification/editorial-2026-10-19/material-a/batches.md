@@ -358,3 +358,54 @@ text-inventory 0 after the marks. vitest: material-words and briefs-content, 2 f
 
 **Screens:** BriefPane for each brief, rendered by the material-words test; on the built app, the briefs walk at the
 end of the area (below).
+
+## Batch 7: The Older Plays' Scenes (Classical, Greek, House, Meeting, Scored)
+
+**Sources (31):** `scenes-classical.ts` 18 ([twelfth-1-5], [shrew-2-1], [scandal-2-1], [richard3-1-2], [hamlet-3-1],
+[othello-4-3], [measure-2-4], [hamlet-3-4], [caesar-4-3], [caesar-2-1], [lear-4-7], [asyoulike-3-2], [dream-3-2],
+[twelfth-2-4], [faustus-3], [malfi-1], [wayoftheworld-4], [stoops-2]); `scenes-greek.ts` 6 ([antigone-441],
+[oedipus-300], [electra-328], [medea-446], [bacchae-451], [agamemnon-855]); `scenes-house.ts` 4 ([caesar-3-2],
+[henry5-4-3], [oedipus-1], [dream-5-1]); `scenes-meeting.ts` 2 ([enemy-4], [strife-2-2]); `scenes-scored.ts` 1
+([scapin-3-2]). About 15,300 words: every summary, `where`, role name, answer and reason, read against the play the
+scene's comment names.
+
+**What a scene's words are for.** The card shows the play, the author, the year, the `where` and the summary; the Table
+Work shows each answer in a select and, once the piece is shown, its reason ("Why the text supports it: …" or "Why the
+text doesn’t support it: …"). A reason the text doesn't support is also the teacher's note, word for word:
+"<question>: <reason> You played <role> in <play>." (`noteText`, `systems/coursework.ts`). That note doesn't repeat
+the answer, so a reason that only points back at it ("That’s the fourth act.") reads as a sentence with no subject.
+
+**Rewritten (11 sources, 14 strings):** scandal-2-1, hamlet-3-4, caesar-2-1, asyoulike-3-2, dream-3-2, twelfth-2-4,
+malfi-1, wayoftheworld-4 (two), stoops-2 (three), lear-4-7, faustus-3: each an unsupported answer's reason that pointed
+back at the answer and said nothing else ("That’s the fourth act.", "That comes in the next act.", "This is the bargain
+they strike before it."). Each now names what it means and, where the old one didn't, says what's true here: "The
+screen scene is the fourth act; this one is at home with Sir Peter.", "She plays the barmaid only in the next act.",
+"They aren’t married yet: this is the bargain they strike before the wedding."
+
+**Kept (20 sources):** the rest, each with a reason naming the scene and what its words do. Every quotation from a
+play stays as its edition has it (Shakespeare's, Jebb's, Murray's, Sharp's, Galsworthy's, Wall's), British spellings
+included ("honourable"), and every reason is the game's paraphrase around it. Reasons of the form "That’s the third
+act; here she’s alone with Angelo." are kept: their second clause says what's true here. The rest of the fix is the
+note's template, school's, in `defects.md` (3) and the report.
+
+**Meaning-sensitive (14), and how each was checked:** every new reason was read against the play: the screen scene
+is IV.3 of The School for Scandal, at Joseph Surface's, and II.1 is at Sir Peter Teazle's; Gertrude drinks in V.2;
+Caesar goes to the Capitol later on the Ides (II.2 to III.1); As You Like It's weddings are V.4, when Rosalind
+unmasks; the Dream's wedding night is Act Five; Viola comes ashore in I.2; the Duchess is imprisoned in Act Four;
+Mirabell and Millamant's first scene together is in St James's Park, Act Two, and the proviso scene is at Lady
+Wishfort's; Tony Lumpkin sends Marlow and Hastings astray at the Three Pigeons in I.2, and Kate plays the barmaid from
+Act Three; Gloucester is the one blinded in Lear; Faustus signs the bond in his blood in scene five.
+
+**Interactions read whole:** a scene from set to note: the set notice ("<play>, <where>. You play <role> …"), the card,
+the Table Work before and after showing, and the teacher's note for an unsupported answer.
+
+**Tests and tool matchers updated:** none; no test or tool held the old words.
+
+**Checks (exits, `scratchpad/ma/b7/`):** `tsc -b --noEmit` 0; `eslint` on the five scene files 0; title-case 0;
+label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-refs 0; deciders 0; guide-quotes 0;
+text-inventory 0 after the marks. vitest: `tests/material-words.test.ts` and `tests/scenes.test.ts`, 2 files, 8 tests,
+exit 0.
+
+**Screens:** CourseworkPane's Table Work and the note for every scene, both roles and every answer, rendered by the
+material-words test; the walk of the built app at the end of the area shows the card for the scenes its saves have set
+(Arms and the Man, Othello, King Lear).

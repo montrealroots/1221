@@ -72,3 +72,15 @@ with the words kept and the reason, so the owner can judge the reasons as well a
 - **`briefs-f.ts` [scale], Something Enormous.** "The scene is the size of what she sees. She plays to the eyeline of a
   performer in a creature suit on a miniature set, the way the genre’s actors do, and the wonder carries the argument."
   *Reason:* it says how the genre's actors actually work, as a playable note.
+
+## Batch 7
+
+- **`scenes-house.ts` [henry5-4-3], Henry V before Agincourt.** Westmorland's tactic, its reason: "He wishes for the
+  men “That do no work today.”" *Reason:* the quotation is the play's, exact, and the game's sentence around it says
+  plainly what he does with it.
+- **`scenes-greek.ts` [bacchae-451], The Bacchae.** Dionysus's tactic, its reason: "Murray’s stage direction has him
+  gentle and unafraid, and each answer turns the question back." *Reason:* a translator's stage direction is named as
+  his, not passed off as the game's or the play's.
+- **`scenes-classical.ts` [measure-2-4], Measure for Measure.** A reason for an answer the text doesn't support: "She
+  would wear the marks of keen whips as rubies first." *Reason:* it answers "Bargain for better terms" with the play's
+  own image, said plainly, and reads whole as the teacher's note.

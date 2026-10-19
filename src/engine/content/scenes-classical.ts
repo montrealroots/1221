@@ -127,7 +127,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     circumstances: [
       yes('london', 'Their house in London, a few months married; she’s on her way out to Lady Sneerwell’s'),
       no('country', 'Her father’s house in the country, during the courtship', 'He brings that life up to her; they’re in London now.'),
-      no('screen', 'Joseph Surface’s library, behind the screen', 'That’s the fourth act.'),
+      no('screen', 'Joseph Surface’s library, behind the screen', 'The screen scene is the fourth act; this one is at home with Sir Peter.'),
     ],
     relationship: [
       yes('married', 'Newly married: an old bachelor and the young country wife he chose'),
@@ -416,7 +416,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
         obstacle: [
           yes('cannot-see', 'She can’t see the Ghost, and takes him for mad'),
           yes('spots', 'What he makes her see in herself: black and grained spots in her soul'),
-          no('poison', 'She has drunk the poisoned cup', 'That’s the last scene.'),
+          no('poison', 'She has drunk the poisoned cup', 'She drinks the poisoned cup only in the last scene.'),
         ],
         tactic: [
           yes('command', 'Command him, as his mother and his queen', '“Come, come, you answer with an idle tongue.”'),
@@ -482,7 +482,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     summary: 'Before dawn on the Ides of March, the conspirators just gone, Portia finds Brutus sleepless in his orchard and asks what troubles him. She kneels, reminds him she’s Cato’s daughter, and shows the wound she gave herself in the thigh to prove her constancy; he promises to tell her all, and a knock calls him away.',
     circumstances: [
       yes('orchard', 'Brutus’s orchard before dawn on the Ides, the conspirators just gone into the night', 'She says he stole from their bed and walked about, musing and sighing.'),
-      no('capitol', 'The Capitol, Caesar on his way', 'That’s later that morning.'),
+      no('capitol', 'The Capitol, Caesar on his way', 'Caesar goes to the Capitol later that morning.'),
       no('tent', 'His tent at Sardis', 'That’s the war after; Portia is dead by then.'),
     ],
     relationship: [
@@ -569,7 +569,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
         obstacle: [
           yes('mind', 'His doubt of his own mind', '“I fear I am not in my perfect mind.”'),
           yes('shame', 'His shame for what he did to her'),
-          no('blind', 'He is blind', 'That’s Gloucester; Lear sees her.'),
+          no('blind', 'He is blind', 'It’s Gloucester who is blinded; Lear sees her.'),
         ],
         tactic: [
           yes('kneel', 'Kneel to her'),
@@ -585,7 +585,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     circumstances: [
       yes('forest', 'The Forest of Arden, his verses hung on the trees; she in a youth’s clothes, Celia with her as Aliena', 'She has just read his verses, and Celia has told her who wrote them.'),
       no('wrestling', 'The court, at the wrestling', 'That’s where they met, in the first act; both have fled to the forest since.'),
-      no('wedding', 'The wedding at the end', 'That’s the last scene, when she unmasks.'),
+      no('wedding', 'The wedding at the end', 'The weddings come in the last scene, when she unmasks.'),
     ],
     relationship: [
       yes('disguised', 'In love since the wrestling; he doesn’t know the youth is her', 'He tells the youth that he’s the man so love-shaked.'),
@@ -636,7 +636,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     circumstances: [
       yes('wood', 'The wood near Athens at night, the young men enchanted by a spell neither woman knows of', 'Lysander and Demetrius both swear love to Helena, who loved Demetrius in vain.'),
       no('court', 'Theseus’s court in Athens', 'That’s the first act; the four have fled to the wood since.'),
-      no('wedding', 'The wedding night at the end', 'That’s the fifth act, with the spells undone.'),
+      no('wedding', 'The wedding night at the end', 'The wedding night is the fifth act, with the spells undone.'),
     ],
     relationship: [
       yes('friends', 'Friends since childhood, like a double cherry, now each sure the other has betrayed her', 'Helena reminds her of their schooldays and the sampler they worked on one cushion.'),
@@ -688,7 +688,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     circumstances: [
       yes('palace', 'Orsino’s palace, the old song just sung, the others sent away', 'Orsino sends them off and keeps Cesario by him.'),
       no('olivia', 'Olivia’s house', 'Viola is sent there at the end of the scene.'),
-      no('shore', 'The shore after the wreck', 'That’s the first act, before she disguised herself.'),
+      no('shore', 'The shore after the wreck', 'The shore is the first act, before she disguised herself.'),
     ],
     relationship: [
       yes('master-page', 'Master and page: she loves him, and he doesn’t know she’s a woman', 'She asks what if a lady loved him as he loves Olivia.'),
@@ -739,7 +739,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     circumstances: [
       yes('conjured', 'Night in a grove outside Wittenberg, the circle drawn, the devil come at his spells', 'Faustus has just spoken the conjuration in Latin.'),
       no('study', 'His study, the morning he first turns to magic', 'That’s the first scene; by now he has conjured.'),
-      no('bond', 'The night the bond is signed in his blood', 'That comes later; here he only sends the offer.'),
+      no('bond', 'The night the bond is signed in his blood', 'He signs the bond in his blood later; here he only sends the offer.'),
     ],
     relationship: [
       yes('summoner', 'A scholar and the spirit he thinks he has commanded', 'Faustus believes his spells have power; Mephistopheles corrects him.'),
@@ -791,7 +791,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     circumstances: [
       yes('chamber', 'The Duchess’s chamber at Amalfi, her brothers just gone, Cariola hidden behind the arras as a witness', 'She tells Cariola to hide; Cariola comes out at the end.'),
       no('court', 'Before the whole court', 'She sends everyone away; the marriage is secret.'),
-      no('prison', 'Her prison, near her death', 'That’s the fourth act, years later.'),
+      no('prison', 'Her prison, near her death', 'Her imprisonment comes in the fourth act, years later.'),
     ],
     relationship: [
       yes('mistress-steward', 'A widowed duchess and her steward, far below her, who loves her and hasn’t said so', 'He says that ambition, madam, is a great man’s madness.'),
@@ -842,13 +842,13 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     summary: 'At Lady Wishfort’s house Mirabell finds Millamant at her poetry, and the two set the terms of their marriage: she will keep her liberty, lie in bed of a morning, be called no names of fondness, and come to be a wife only by degrees; he that she keep no confidante, wear no masks and no tight stays.',
     circumstances: [
       yes('house', 'Lady Wishfort’s house, Millamant just rid of a clumsy suitor, Mirabell come in on her lines of verse', 'She is repeating Suckling when he enters and caps the line.'),
-      no('park', 'St James’s Park', 'That’s the second act.'),
+      no('park', 'St James’s Park', 'The park scene is the second act; this one is at Lady Wishfort’s house.'),
       no('wedding', 'Their wedding', 'They set its terms here; it comes after the last act.'),
     ],
     relationship: [
       yes('lovers', 'Lovers on the point of marriage, each guarding a freedom', 'She says she won’t be called names of fondness after she is married.'),
       no('strangers', 'Strangers meeting', 'He has loved her through the play.'),
-      no('married', 'Already married', 'This is the bargain they strike before it.'),
+      no('married', 'Already married', 'They aren’t married yet: this is the bargain they strike before the wedding.'),
     ],
     roles: [
       {
@@ -892,8 +892,8 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
     summary: 'Young Marlow, easy with barmaids and helpless with ladies of his own class, meets Kate Hardcastle, the woman his father means him to marry, in a house he takes for an inn. He can’t look at her or finish a sentence; she finishes them for him, and he bows himself out as soon as he can.',
     circumstances: [
       yes('house', 'Mr. Hardcastle’s house, which Marlow takes for an inn; Kate in her finery', 'Tony Lumpkin has told the travelers it’s an inn.'),
-      no('alehouse', 'The Three Pigeons alehouse', 'That’s where the young men were sent astray, before.'),
-      no('barmaid', 'Kate dressed as the barmaid', 'That’s her stoop, in the next act.'),
+      no('alehouse', 'The Three Pigeons alehouse', 'The young men were sent astray at the alehouse, before they reached the house.'),
+      no('barmaid', 'Kate dressed as the barmaid', 'She dresses as the barmaid only in the next act: that’s her stoop.'),
     ],
     relationship: [
       yes('suitor', 'The suitor her father chose, meeting her for the first time', 'Sir Charles Marlow has sent his son to court her.'),
@@ -915,7 +915,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
         tactic: [
           yes('lead', 'Lead the talk, and finish his sentences for him'),
           yes('agree', 'Agree with everything he half says'),
-          no('barmaid', 'Play the barmaid', 'That comes in the next act.'),
+          no('barmaid', 'Play the barmaid', 'She plays the barmaid only in the next act.'),
         ],
       },
       {
