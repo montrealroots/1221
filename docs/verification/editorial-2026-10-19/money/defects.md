@@ -12,3 +12,15 @@ figure: with €1,999.50 left the refusal said €2,000, and with C$98.50 of roo
 would let out. Found reading the refusals' figures while rewriting them. Now the figure is written to the cent, as the
 house writes a refusal's figure. `tests/editorial-money.test.ts`, "m1", fails without the fix (it reads "€2,000" and
 "C$99").
+
+## m2. A charge-off is said to stay on the record "until it’s paid" (the panel: batch 3; the glossary: the coordinator)
+
+`src/ui/bank/BankLending.tsx`, the In Collections panel: "It’s on your record until it’s paid." And `docs/GLOSSARY.md`,
+Money, **charged off**, **collections**: "on your record until paid". The record keeps a charge-off's mark for its
+country's years (`MARK_YEARS`, seven in the US; Mexico's by the debt's size), and `marksFallOff` alone removes it;
+`bank.pay_collections` pays the debt down and doesn't touch the marks. What an unpaid collections debt does is block a
+card application at any bank (`card.apply`) and an account at the bank owed (`openRefusal`). Found reading the
+charge-off notice's "It’s on your record." against `markRecord`. The notice now says "for seven years, paid or not, and
+no bank approves a card while the debt is unpaid" (`tests/editorial-money.test.ts`). The panel is fixed in batch 3. The
+glossary row is for the coordinator: "on your record for its country's years, paid or not; while unpaid, no bank
+approves a card".

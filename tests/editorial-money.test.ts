@@ -7,6 +7,9 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
+import { MS_DAY } from '@/engine/core/time';
+import { CARDS, type CardProduct } from '@/engine/content/cards';
+import { cardsOf, stateOf, STATEMENT_KIND } from '@/engine/systems/credit';
 
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown>) => sim.execute({ kind, payload });
 const own = (sim: Simulation, kind: 'checking' | 'savings', bankId: string): Account =>
@@ -99,4 +102,64 @@ describe('refusals no other test reads, in their new words', () => {
     expect(run(sim, 'bank.schedule_payment', { fromId: termId, toId: checking.id, amount: 10_00, at: sim.now + 86_400_000 }).error)
       .toBe(`${name} is a term deposit, locked until its end. A payment set for a date goes between your checking and easy-access savings accounts.`);
   });
+});
+
+describe('the card’s notices and refusals, in their new words', () => {
+  const ny = (seed: string) => quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, seed);
+  const cardOf = (sim: Simulation) => cardsOf(sim, sim.player)[0]!;
+  const bodies = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title).map((n) => n.body);
+
+  it('a balance moved onto a new card names both cards, the fee, the rate and when it ends', () => {
+    const sim = ny('ed15-moved');
+    const old = cardOf(sim);
+    setTo(sim, old, -800_00);
+    sim.must({ kind: 'bank.set_primary', payload: { accountId: sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } }).accountId } });
+    sim.advanceBy(10 * MS_DAY);
+    expect(run(sim, 'card.apply', { transfer: true }).ok).toBe(true);
+    sim.advanceBy(8 * MS_DAY);
+    // The old card's balance when the new one arrives: the $800.00 and the groceries on it since.
+    expect(bodies(sim, 'Your Balance Moved')).toEqual([expect.stringMatching(/^\$[\d,]+\.\d\d moved from the Chase Freedom Unlimited onto your Citi Double Cash Card, for a \$\d+\.\d\d fee\. It’s charged 0% until \w+ \d+, \d{4}, then \d+(\.\d+)?%\. The old card is closed\.$/)]);
+  });
+
+  it('a card paid off while suspended says it works again, by name', () => {
+    const sim = ny('ed15-works');
+    const card = cardOf(sim);
+    Object.assign(stateOf(sim.player, card), { suspended: 'late', missed: 2 });
+    setTo(sim, card, 0);
+    sim.advanceTo(sim.timeline.pending().find((i) => i.kind === STATEMENT_KIND && i.payload.personId === sim.player.id)!.at + 60_000);
+    expect(bodies(sim, 'Your Card Works Again')).toEqual(['The Chase Freedom Unlimited is paid off, and Chase has lifted the suspension.']);
+  });
+
+  it('a card application turned down for an empty bank, and under 21, says why and what applying cost', () => {
+    const sim = ny('ed15-declined');
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings')) setTo(sim, a, 0);
+    const applied = run(sim, 'card.apply', { bankId: 'us-citi' });
+    expect(applied.value).toMatchObject({ approved: false });
+    expect(bodies(sim, 'Card Application Declined').at(-1)).toMatch(/^Citi turned down your application because (applicants under 21 need income or money of their own, and you have none in the bank|you have no money in the bank to repay it from)\. Applying still took a few points off your credit score\.$/);
+  });
+
+  it('a money transfer with no checking account to take it is refused, and nothing moves', () => {
+    const sim = ny('ed15-money-transfer');
+    const card = cardOf(sim);
+    const kept = (CARDS as Record<string, CardProduct>)[card.bankId!]!;
+    // TEST SETUP: Chase's card offering a money transfer for 3%, as three cards in the research do, and no primary account.
+    (CARDS as Record<string, CardProduct>)[card.bankId!] = { ...kept, moneyTransferFee: 0.03 };
+    try {
+      delete sim.player.primaryAccountId;
+      const before = card.balance;
+      expect(run(sim, 'card.money_transfer', { amount: 100_00, accountId: card.id }).error).toBe('You need a checking account for the money to go into.');
+      expect(card.balance).toBe(before);
+    } finally { (CARDS as Record<string, CardProduct>)[card.bankId!] = kept; }
+  });
+
+  it('a card charged off says how long it stays on the record, paid or not, and where to pay the debt', () => {
+    const sim = quickSave({ homeRegionId: 'us-ct-newhaven', startLocationId: 'us-ct-newhaven', wealth: 'comfortable', bankId: 'us-chase' }, 'ed15-chargeoff');
+    const { accountId } = sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } });
+    const card = cardOf(sim);
+    sim.must({ kind: 'card.set_autopay_from', payload: { cardId: card.id, accountId } });
+    sim.must({ kind: 'bank.set_payments', payload: { everyday: 'credit' } });
+    sim.advanceTo(sim.now + 220 * MS_DAY);
+    expect(card.closedAt).toBeDefined();
+    expect(bodies(sim, 'Your Card Was Charged Off')).toEqual([expect.stringMatching(/^The \$[\d,]+\.\d\d you owed on the Chase Freedom Unlimited went to collections, and the card is closed\. The charge-off stays on your credit record for seven years, paid or not, and no bank approves a card while the debt is unpaid\. You can pay it on Money, under Borrowing\.$/)]);
+  }, 120_000);
 });

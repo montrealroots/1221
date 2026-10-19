@@ -451,7 +451,7 @@ describe('card.request_hardship', () => {
 
   it('is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee', () => {
     const { sim, card } = shortOfThePlan('g12-plan-short');
-    expect(notes(sim, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $52.00, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(notes(sim, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['The Chase Freedom Unlimited’s autopay of $52.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     // A US card's first late fee, the $30 safe harbor, under the $100 due; no returned payment's fee beside it.
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
     expect(moved(sim, card, 'Returned payment fee')).toEqual([]);

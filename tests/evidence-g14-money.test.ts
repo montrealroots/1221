@@ -709,7 +709,7 @@ describe('bank.close_current', () => {
     // Its history kept, its statements ending at its closing.
     expect(postingsTo(sim, chase).length).toBeGreaterThan(3);
     const last = periodsOf(sim, acct(sim, chase))[0]!; // newest first
-    expect([last.to, last.label]).toEqual([closedAt, 'September 2026, To Its Closing']);
+    expect([last.to, last.label]).toEqual([closedAt, 'September 2026, Until It Closed']);
     expect(checkingsOf(sim, sim.player).map((a) => a.id)).toEqual([cap]);
   });
 

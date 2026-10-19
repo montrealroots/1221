@@ -490,7 +490,7 @@ describe('bank.close_current', () => {
     expect(postingsTo(sim, cap, at(2026, 9, 11, 8, 1)).filter((p) => p.memo === 'From Chase Total Checking').map((p) => [p.at, p.amount])).toEqual([[at(2026, 9, 16, 8, 1), holding]]);
     // Two months on: no October or November for it, only September to its closing and August, as August was.
     const periods = periodsOf(sim, acct(sim, chase));
-    expect(periods.map((p) => [p.label, p.to])).toEqual([['September 2026, To Its Closing', closed.closedAt], ['August 2026', at(2026, 9, 1, 0)]]);
+    expect(periods.map((p) => [p.label, p.to])).toEqual([['September 2026, Until It Closed', closed.closedAt], ['August 2026', at(2026, 9, 1, 0)]]);
     expect(accountStatement(sim, acct(sim, chase), periods[1]!)).toEqual(augustBefore);
     expect(checkingsOf(sim, sim.player).map((a) => a.id)).toEqual([cap]);
   });
@@ -503,7 +503,7 @@ describe('bank.close_current', () => {
     const closed = run<{ closedAt: number }>(sim, 'bank.close_current', { accountId: chase, remainderTo: cap });
     sim.advanceTo(at(2026, 10, 2));
     const last = accountStatement(sim, acct(sim, chase), periodsOf(sim, acct(sim, chase))[0]!);
-    expect(last.period.label).toBe('September 2026, To Its Closing');
+    expect(last.period.label).toBe('September 2026, Until It Closed');
     // What the account held went out at its closing, and its last statement says so: it closes at nothing.
     expect(last.lines.at(-1)).toMatchObject({ at: closed.closedAt, memo: 'To Capital One: 360 Checking', amount: -holding, balance: 0 });
     expect(last.closing).toBe(0);

@@ -103,3 +103,90 @@ the "Nothing" sentences were folded), spelling 0, typos 0, doc-refs 0, deciders 
 
 **Screens:** the Accounts and Payments And Cash tabs and the bank's look, rendered in the tests above; the built app is
 read at the end of the area.
+
+## Batch 2: Cards, Their Notices, And Statements
+
+**Sources (49):** `src/engine/systems/credit.ts` (13), `src/engine/systems/cardlife.ts` (9),
+`src/engine/systems/cardoffers.ts` (6), `src/engine/systems/statements.ts` (6), `src/ui/bank/BankCard.tsx` (5),
+`src/ui/bank/BankCardOffers.tsx` (1), `src/ui/bank/BankStatements.tsx` (8), `src/ui/bank/feeWords.ts` (1). Rewritten 18,
+Retained 31.
+
+**Interactions read whole, in order:**
+- *A card payment pending, then posted, and its statement:* the card's panel (Owed, Left To Spend, the rate, the
+  interest and minimum lines), a purchase pending on Statements ("· Pending, posts …", Balance Now with "… of it
+  pending"), its posting, the statement notice, the Statements tab's minimum line and the minimum-only warning.
+- *A card's autopay short, the late fee and the notice:* the statement notice, the due date, the bounce notice, the
+  late notice, the suspension two misses on, the default notice, the charge-off, the In Collections panel; and the
+  way back (Your Card Works Again, The Penalty Rate Is Off).
+- *A limit raised:* Ask For This Limit, the decline notice with the bank's three conditions, the automatic raise and its
+  notice (Your Card Limit Went Up).
+- *Applying for a card:* Another Card's lines, Apply For This Card, Card Approved or Card Application Declined, the
+  arrival, and a balance moved from another bank's card.
+
+**What changed.**
+- *The statement notice* said what was owed and "At least $40.00 has to be paid by then." It now says the minimum
+  payment, the glossary's term, and what autopay will do that day, which is what tells a player whether they have to
+  act: "The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from
+  Chase Total Checking that day, if there’s enough in it." Autopay always pays something (the minimum, the whole
+  statement or a plan's payment), so every variant has the sentence; "the whole $270.00" where autopay pays the lot,
+  "The whole … is due" where the minimum is the whole statement (a charge card).
+- *The bounce notice* named no card or account ("Autopay asked for $52.00, and the current account couldn’t cover
+  it."). It now names both and gives the step: "The Chase Freedom Unlimited’s autopay of $52.00 didn’t go through,
+  because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re
+  charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards."
+- *The late notice:* "and only $0.00 was paid" became "and nothing was paid by the due date" at zero; the card is named;
+  the record's two cases are two sentences; it ends with where to pay.
+- *The card application:* declined for "your credit record isn’t strong enough" now gives the figure the game approves
+  from, "your credit score is below 620, the lowest it approves", and every decline adds that applying still took a few
+  points off the score; a debt in collections says where to pay it.
+- *The charge-off:* see the defect below; the notice now says how long the mark stays, paid or not, that no card is
+  approved while the debt is unpaid, and where to pay it.
+- *Smaller:* the suspension notice says "two payments" and how it lifts, as the card's panel does; "Your Card Works
+  Again" names the card; a balance transfer's notice names both cards and gives the rate as a rate with its end
+  date ("It’s charged 0% until July 22, 2027, then 21.15%."), where it said "at 0.00%"; "The least you can pay is …"
+  is "The minimum payment is …, due …"; a closed account's last period is "…, Until It Closed" for "…, To Its Closing";
+  the low balance alert's field is **Any Checking Account Under**.
+- *Provenance:* a card's rewards and plans were shown as "In the bank’s words:" and "The bank’s plans, in its words:".
+  They're the research's summaries of the bank's terms, some with the researcher's notes ("percentage not readable on
+  citi.com"), not the bank's words. They're now "Its published rewards:" and "The bank’s published plans:", and the
+  notes are cleaned in batch 8 (the card data).
+- *A capped rate* had the whole citation as its sentence's subject ("Criminal Code s. 347 (criminal rate: over 35% APR,
+  since January 1, 2025); Quebec Consumer Protection Act … caps the rate at 35%"). It now says "The law here caps the
+  rate at 35%, and the card is held to that.", and the citation goes in the Source line.
+
+**Meaning-sensitive changes, and how each was checked.**
+- *Autopay in the statement notice:* `autopayAsk` gives what autopay will ask (`asked`) and what the due date judges
+  (`due`); the account is read as `autopaySource` reads it but without pinning it (`sourceOf`), because pinning at the
+  statement would stop autopay following a primary account changed before the due date. "if there’s enough in it" is
+  the bounce condition (`autopayReach`).
+- *The bounce:* every card has a returned payment fee, its bank's or the estimate (`cardTerms`, `RETURNED_PAYMENT_USD`),
+  so "The payment is late now" is reached only where a US card is short (`lateToo`). A third branch written first for
+  a payment that wasn't late was unreachable and came out.
+- *620:* `APPROVE_FROM` in `cardlife.ts`, the one figure the game approves from at every bank.
+- *"applying still took a few points":* `credit.score -= INQUIRY` runs before the decision, approved or not.
+- *The charge-off's years:* the mark just made, `markYears` of it (seven in the US). Paying a collections debt doesn't
+  touch the record; only `marksFallOff` does, by years. An unpaid collections debt blocks a card application at any
+  bank (`card.apply`'s `collections` check).
+- *"Until It Closed":* the period ends at `account.closedAt`, in the past.
+
+**Defects:** m2 (`defects.md`): the In Collections panel and the glossary say a charge-off is on the record "until
+it’s paid"; the record keeps it for the country's years whether it's paid or not. The notice is right now; the panel is
+batch 3's (it's `BankLending.tsx`), and the glossary row is the coordinator's.
+
+**Tests and tool matchers updated:** evidence-g10-money, evidence-g11-money (one regex), evidence-g12-money,
+evidence-g13-money, evidence-g14-money, evidence-g28-ui, evidence-g34-ui, evidence2-b04, evidence2-b05, evidence2-b11,
+home-account-screens, hardship-plan-minimum, language-dynamic (one regex; the suspension loop now pairs each count with
+its word), language-money, papers-complete, cross-journeys, statements (a filter that found due statements by their old
+words now finds them by "The statement comes to"), statements-hardship. In evidence-g28-ui and evidence-g34-ui one
+assertion held the same statement notice for two lives with different autopay settings; the notice now says what each
+autopay pays, so each life has its own exact assertion: two exact assertions where there was one. New:
+`tests/editorial-money-screens.test.ts` (the published plans, a charge card's line and a capped rate, the alert's
+label) and six cases in `tests/editorial-money.test.ts` (the balance moved, the card working again, the declines, the
+money transfer refusal, the charge-off). No UI tool matcher held these words.
+
+**Checks:** tsc 0; eslint 0; the 21 test files (347 tests, then the 9 with matchers to move: 173, then 15) 0; the two new
+files 0 (14 tests); title-case, label-sweep, plural-check, voice-check, tics, spelling, typos, doc-refs, deciders 0;
+guide-quotes 0 (581 of 581, after two quotes in the guide moved with their refusals). `text-inventory --check` 1 on my
+own guide entries and `cancelRefusal` only, as after batch 1.
+
+**Screens:** the Cards and Statements tabs rendered in the tests above; the built app at the end.

@@ -456,7 +456,7 @@ describe('bank.set_alerts', () => {
     // The card's statement on 20 September: owing nothing, told only where it's asked; owing, told anyway.
     for (const sim of [asked, quiet]) sim.advanceTo(at(2026, 9, 20, 9, 1));
     expect(told(asked, 'Statement Ready: Chase Freedom Unlimited').map((n) => n.body)).toEqual(['The card owes nothing this month.']);
-    expect(told(quiet, 'Statement Ready: Chase Freedom Unlimited').map((n) => n.body)).toEqual([expect.stringMatching(/^The statement comes to \$400\.00, due October 11, 2026\. At least \$\d+\.\d\d has to be paid by then\.$/)]);
+    expect(told(quiet, 'Statement Ready: Chase Freedom Unlimited').map((n) => n.body)).toEqual([expect.stringMatching(/^The statement comes to \$400\.00, due October 11, 2026\. The minimum payment is \$\d+\.\d\d\. Autopay pays the whole \$400\.00 from Chase Total Checking that day, if there’s enough in it\.$/)]);
     expect(told(quiet, 'Statement Ready: Chase Total Checking')).toEqual([]);
 
     // TEST SETUP: the notices read, as the player reads them. Then Statement Ready pressed Off, and October's end and

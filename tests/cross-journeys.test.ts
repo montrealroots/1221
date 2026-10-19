@@ -60,7 +60,7 @@ describe('PLAYER JOURNEY: a student changes banks while the School pays and a ca
     expect(checkingsOf(sim, sim.player).map((a) => a.bankId)).toEqual(['us-capital-one']);
     // History kept: Chase's postings, its statements to its closing, and the card's autopay from Capital One.
     expect(sim.universe.transactions.filter((t) => t.postings.some((p) => p.accountId === chase)).length).toBeGreaterThan(5);
-    expect(periodsOf(sim, sim.universe.accounts[chase]!)[0]!.label).toMatch(/To Its Closing/);
+    expect(periodsOf(sim, sim.universe.accounts[chase]!)[0]!.label).toMatch(/Until It Closed/);
     for (const card of cardsOf(sim, sim.player)) expect(stateOf(sim.player, card).autopayFrom).toBe(cap.accountId);
   });
 });

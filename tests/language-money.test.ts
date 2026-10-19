@@ -263,12 +263,12 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
     expect(words).toContain('If a payment is sixty days late, the rate goes up to 29.99% after 45 days’ notice. No yearly fee. Statements come on the 20th, and payment is due 21 days after each one.');
     expect(words).toContain('The minimum payment is 1% of the statement plus the month’s interest, or $40 if that’s more. Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself.');
     expect(words).toContain('Owed $0 Left To Spend');
-    expect(words).toContain('You can apply to any bank here, not only yours. It looks at your credit record and whether you have income or money to repay from, and if it says yes, the card arrives a week later. Applying takes a few points off your credit record, whether or not you’re approved.');
+    expect(words).toContain('You can apply to any bank here, not only yours. The bank checks your credit record and whether you have income or money to repay from. If it approves you, the card arrives a week later. Applying takes a few points off your credit score, whether or not you’re approved.');
   });
 
   it('says the card’s offers, and that there’s nothing to put in a plan when there isn’t', () => {
     const words = drawn(nyStudent('lang14-offers'), BankCardOffers as FunctionComponent<{ bankId: string }>);
-    expect(words).toMatch(/Rewards: 1\.5% back on every purchase, added up at each statement\. You have \$0 to redeem\. In the bank’s words: .*?\. Those categories are things a card doesn’t buy in the game, so you earn the base rate\./);
+    expect(words).toMatch(/Rewards: 1\.5% back on every purchase, added up at each statement\. You have \$0 to redeem\. Its published rewards: .*?\. Those categories are things a card doesn’t buy in the game, so you earn the base rate\./);
     expect(words).toMatch(/A plan made while the introductory rate lasts, until [A-Z][a-z]+ \d{1,2}, \d{4}, is free for its whole life\. One made after that costs 1\.72% of the plan a month, the most the bank says it charges\. There’s nothing on the card to put into one right now\./);
   });
 

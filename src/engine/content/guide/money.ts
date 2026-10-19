@@ -518,7 +518,7 @@ export const MONEY: readonly GuideEntry[] = [
       'On Accounts, find Your Accounts Over Time. It only shows when it has something to show: a term deposit, round-ups your bank offers, an unused account, something new enough to cancel, money to claim back, or savings withdrawal fees.',
       'A dormant account shows Reactivate, something new enough to cancel shows Cancel It, and money handed to the state shows Claim It Back.',
       'When the bank writes that it’s about to hand an account to the state, What Needs You offers Keep The Account.',
-      'On Statements, under Alerts, type amounts in Any Current Account Under and A Payment Over (leave one blank to turn it off) and press Save Alerts. Press Statement Ready or Short For A Payment to turn it On or Off.',
+      'On Statements, under Alerts, type amounts in Any Checking Account Under and A Payment Over (leave one blank to turn it off) and press Save Alerts. Press Statement Ready or Short For A Payment to turn it On or Off.',
     ],
     needs: [
       // Until 2026-10-15 this named Korea among the fourteen days for every account. Korea's rule (청약철회) gives none for a
@@ -953,7 +953,7 @@ export const MONEY: readonly GuideEntry[] = [
       '“You have no credit record to apply with.”, “A card is already on its way.” or “You need a bank to apply to.”',
       '“You can only apply for a card in the country you bank in, and … is elsewhere.”, “… doesn’t issue a credit card.” or “You already have …’s card.”',
       `Declined, in What Needs You: a credit score under ${APPROVE_FROM}, a debt in collections, no money in your accounts to repay it from, or in the US under 21 without money of your own.`,
-      '“You don’t have a card.”, “You don’t owe anything on it.” or “There’s nothing in the bank to pay it with.”',
+      '“You don’t have a card.”, “You don’t owe anything on it.” or “Your bank accounts have nothing available to pay it with, so nothing was paid.”',
       '“… takes the whole statement from your account each month. The … can’t carry a balance.” for a charge card’s autopay.',
       '“Pick a day from the 1st to the 28th.”, “Enter the limit you want.” or “Only a US card lets you opt in to going over the limit.”',
       '“You’re already on a payment plan.”, “You don’t owe anything on the card.” or “You could pay it off today. A hardship plan is for when you can’t.”',
@@ -1041,7 +1041,7 @@ export const MONEY: readonly GuideEntry[] = [
       '“You have … to redeem” is the rewards waiting. Redeem Onto The Card is grayed out while there are none.',
     ],
     unavailable: [
-      '“The … doesn’t offer money transfers.”, “You need a current account for the money.” or “Enter an amount.”',
+      '“The … doesn’t offer money transfers.”, “You need a checking account for the money to go into.” or “Enter an amount.”',
       '“The card has … of its limit left, and this needs … with its fee.”',
       '“No payment plan terms were found for the ….”, “A plan runs for … months.”, “Only … of purchases can go into a plan.” or “A plan needs at least ….”',
       '“The card has no rewards to redeem.”',

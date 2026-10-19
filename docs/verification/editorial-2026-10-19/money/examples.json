@@ -158,5 +158,135 @@
   "why": "The glossary's words for pending money: already taken off the available balance.",
   "meaningSensitive": false,
   "verified": "Read in the code; pending.ts holds a payment against the available balance."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "notification",
+  "before": "Statement Ready: Chase Freedom Unlimited — The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.",
+  "after": "Statement Ready: Chase Freedom Unlimited — The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.",
+  "why": "The glossary's 'minimum payment', and what autopay will do, which tells the player whether to act. Variants: 'the whole $270.00' with autopay in full; 'The plan’s payment is $101.00.' on a hardship plan; 'The whole … is due.' on a charge card.",
+  "meaningSensitive": true,
+  "verified": "autopayAsk's asked and due; the account read without pinning it. tests/evidence-g28-ui.test.ts and tests/evidence-g34-ui.test.ts read both autopay settings."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "notification",
+  "before": "A Card Payment Bounced — Autopay asked for $52.00, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.",
+  "after": "A Card Payment Bounced — The Chase Freedom Unlimited’s autopay of $52.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.",
+  "why": "The STYLE's own example of this notice: which card, which account, what it means, what to do.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g12-money.test.ts; the late branch runs only for a short US payment (lateToo)."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "notification",
+  "before": "A Late Card Payment — The minimum payment was $48.00, and only $0.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.",
+  "after": "A Late Card Payment — The minimum payment on the Chase Freedom Unlimited was $48.00, and nothing was paid by the due date. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record. Pay the card on Money, under Cards.",
+  "why": "'only $0.00' at zero; the card named; the record's condition as its own sentence; the next step. Variant: 'and it’s on your credit record now' once reported.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b04.test.ts, tests/language-dynamic.test.ts (both paid variants)."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/cardlife.ts#registerCardLife <card.apply>",
+  "kind": "notification",
+  "before": "Citi turned down your application: your credit record isn’t strong enough.",
+  "after": "Citi turned down your application because your credit score is below 620, the lowest it approves. Applying still took a few points off your credit score.",
+  "why": "The figure the decision turned on, and what the application cost. Variants: a debt in collections (with where to pay it), no money in the bank, under 21 in the US.",
+  "meaningSensitive": true,
+  "verified": "APPROVE_FROM = 620; the inquiry is taken before the decision. tests/evidence-g13-money.test.ts, tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#chargeOff",
+  "kind": "notification",
+  "before": "Your Card Was Charged Off — $1,234.00 on the Chase Freedom Unlimited is with collections now, and the card is closed. It’s on your record.",
+  "after": "Your Card Was Charged Off — The $1,234.00 you owed on the Chase Freedom Unlimited went to collections, and the card is closed. The charge-off stays on your credit record for seven years, paid or not, and no bank approves a card while the debt is unpaid. You can pay it on Money, under Borrowing.",
+  "why": "How long, what it blocks, where to pay; the panel beside it said 'until it’s paid', which the record doesn't do (defect m2).",
+  "meaningSensitive": true,
+  "verified": "markYears of the new mark; pay_collections leaves the marks alone; card.apply refuses with any collections debt. tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/cardoffers.ts#transferOnArrival",
+  "kind": "notification",
+  "before": "Your Balance Moved — $930.00 moved from the Chase Freedom Unlimited, for a $46.50 fee, at 0.00%. The old card is closed.",
+  "after": "Your Balance Moved — $930.00 moved from the Chase Freedom Unlimited onto your Citi Double Cash Card, for a $46.50 fee. It’s charged 0% until July 22, 2027, then 21.15%. The old card is closed.",
+  "why": "'at 0.00%' wasn't said to be a rate or to end; both cards named.",
+  "meaningSensitive": true,
+  "verified": "The transfer's introApr and introUntil and the transfer apr after it. tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#afterMissed",
+  "kind": "notification",
+  "before": "Your Card Is Suspended — You’ve missed 2 payments in a row, so Chase has suspended the Chase Freedom Unlimited until you catch up.",
+  "after": "Your Card Is Suspended — You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you make a payment on time.",
+  "why": "A number under ten in words; 'catch up' said how it lifts, as the card's panel says it.",
+  "meaningSensitive": true,
+  "verified": "A due date met clears suspended 'late'. tests/evidence2-b11.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/bank/BankStatements.tsx#CardStatementView",
+  "kind": "label",
+  "before": "The least you can pay is $100.00, the plan’s payment, by October 11, 2026. Pay the whole $1,200.00 and none of it is charged interest.",
+  "after": "The plan’s payment is $100.00, due October 11, 2026. Pay the whole $1,200.00, and none of it is charged interest.",
+  "why": "The glossary's minimum payment, or the plan's payment, said as what it is.",
+  "meaningSensitive": false,
+  "verified": "tests/statements-hardship.test.ts, tests/hardship-plan-minimum.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/bank/BankCardOffers.tsx#CardOffers",
+  "kind": "official",
+  "before": "The bank’s plans, in its words: Chase Pay Over Time (formerly My Chase Plan): a fixed monthly fee instead of interest; 0% during the 15-month intro period, then up to 1.72% of the plan amount per month",
+  "after": "The bank’s published plans: Chase Pay Over Time (formerly My Chase Plan): a fixed monthly fee instead of interest; 0% during the 15-month intro period, then up to 1.72% of the plan amount per month.",
+  "why": "The text is the research's summary of the bank's terms, not a quotation, and the label no longer claims it is.",
+  "meaningSensitive": true,
+  "verified": "Read across all 36 plan and 41 rewards texts in content/cards.ts. tests/editorial-money-screens.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "Criminal Code s. 347 (criminal rate: over 35% APR, since January 1, 2025); Quebec Consumer Protection Act (minimum payment); … caps the rate at 35%, and the card is held to that. Source: https://laws-lois.justice.gc.ca/….",
+  "after": "The law here caps the rate at 35%, and the card is held to that. Source: Criminal Code s. 347 (criminal rate: over 35% APR, since January 1, 2025); …; https://laws-lois.justice.gc.ca/….",
+  "why": "A three-statute citation as a sentence's subject; the citation now sits in the Source line at the foot.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts (a capped case, TEST SETUP law)."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/bank/BankStatements.tsx#AlertsView",
+  "kind": "label",
+  "before": "Any Current Account Under (USD)",
+  "after": "Any Checking Account Under (USD)",
+  "why": "The glossary's word, on the field label; renames.json.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/statements.ts#periodsOf",
+  "kind": "label",
+  "before": "September 2026, To Its Closing",
+  "after": "September 2026, Until It Closed",
+  "why": "A plain past tense for a period that ended when the account closed; renames.json.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b05.test.ts, tests/evidence-g14-money.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#registerCredit <finance.pay_card>",
+  "kind": "error",
+  "before": "There’s nothing in the bank to pay it with.",
+  "after": "Your bank accounts have nothing available to pay it with, so nothing was paid.",
+  "why": "The refusal shape for money that isn't there: what can't pay, and what didn't happen.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g13-money.test.ts."
  }
 ]

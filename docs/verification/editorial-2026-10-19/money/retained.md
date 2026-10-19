@@ -27,3 +27,18 @@ files, each with its words and its reason, so the reasons can be judged as well 
   Chase Total Checking and put $500.00 into Chase Savings, on …").
 - **`src/engine/systems/banking.ts#payInterest`:** "Interest", "Tax On Interest". Kept: ledger account names the lending
   code reads back by name and The Year shows as row labels; they're keys as much as labels (`common.md`, known keys).
+
+## Batch 2
+
+- **`src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>`:** "The bank kept your limit at $5,000. It
+  raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to
+  repay it." Kept: it says what happened and the bank's three conditions, each something the player can check.
+- **`src/engine/systems/cardoffers.ts#transferRefusal`:** "It would come with a $2,500 limit, and moving $3,000 needs
+  $3,150 with its fee. Pay the old card down first." Kept: the figures that refuse it, and the one step that would
+  change the answer.
+- **`src/engine/systems/credit.ts#persistentDebt`:** "Over eighteen months, more of what you paid the Barclaycard went to
+  interest and fees than to the balance. Paying more than the minimum would clear it sooner. If you can’t, press Ask For
+  Help With Payments on the card." Kept: Britain's rule in plain words, what would help, and the button by its label.
+- **`src/ui/bank/feeWords.ts#waiverWords`:** "waived in any month you have $500 of electronic deposits (wages, benefits
+  or a tax refund) paid in, or keep $1,500 in it all month". Kept: each condition as something the player does in a
+  month, the way a bank lists them.

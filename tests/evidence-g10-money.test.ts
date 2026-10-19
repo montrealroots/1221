@@ -671,7 +671,7 @@ describe('bank.pay_collections', () => {
     // Owed and unpaid: nothing to pay it with yet, every reader holds it.
     expect(refused(sim, 'bank.pay_collections', { amount: 100_00 })).toBe('There’s nothing in the account to pay it with.');
     expect(troubles(sim, sim.player).filter((t) => t.kind === 'collections')).toEqual([{ kind: 'collections', amount: owed }]);
-    expect(applied(sim)).toMatchObject({ approved: false, said: expect.stringMatching(/ turned down your application: you have a debt in collections\.$/) });
+    expect(applied(sim)).toMatchObject({ approved: false, said: expect.stringMatching(/ turned down your application because you have a debt in collections\. You can pay it on Money, under Borrowing\. Applying still took a few points off your credit score\.$/) });
     expect(refused(sim, 'bank.open_current', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
     expect(refused(sim, 'bank.switch', { bankId: 'us-chase' })).toBe('Chase won’t open an account for you while you owe it a debt it has charged off.');
 

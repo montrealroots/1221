@@ -139,7 +139,7 @@ describe('bank history and cards', () => {
     tended(sim, sim.now + 70 * MS_DAY);
     const periods = periodsOf(sim, sim.universe.accounts[cap]!);
     expect(periods[0]!.to).toBe(closedAt);
-    expect(periods[0]!.label).toMatch(/To Its Closing/);
+    expect(periods[0]!.label).toMatch(/Until It Closed/);
   });
 });
 
