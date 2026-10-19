@@ -216,7 +216,7 @@ describe('refusals, in words', () => {
   it('says what the bank or the research leaves out', async () => {
     const barclays = await make(london('gb-barclays'));
     expect(refused(barclays, 'bank.transfer', { fromId: at(barclays, 'gb-barclays', 'checking').id, toId: at(barclays, 'us-chase', 'checking').id, amount: 100_000, in: 'GBP' }))
-      .toBe('Barclays Bank Account has nothing in it, so nothing was moved.');
+      .toBe('Barclays Bank Account has nothing available, so nothing was moved.');
     const mizuho = await make(life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-mizuho' }));
     expect(refused(mizuho, 'bank.transfer', { fromId: at(mizuho, 'jp-mizuho', 'savings').id, toId: at(mizuho, 'us-chase', 'checking').id, amount: 100_000, in: 'JPY' }))
       .toBe('Mizuho’s app and Direct banking aren’t open to a non-resident, and its counters are in Japan.');
@@ -251,7 +251,7 @@ describe('the Move Money panel', () => {
     expect(words).toContain('Barclays sends £1,000.00 for no fee. At its rate, 2.75% under the estimated exchange rate, Chase receives $1,216.01 after its $15.00 fee for a payment from abroad, on Wednesday, September 2, 2026.');
     const press = h.elements.find((e) => e.text === 'Move It')!;
     (press.props.onClick as () => void)();
-    expect(h.toasts.at(-1)).toBe('Sent £1,000.00. It arrives September 2, 2026.');
+    expect(h.toasts.at(-1)).toBe(`Sent £1,000.00 to ${chase.name}. It arrives September 2, 2026.`);
     expect(current.held).toBe(10_000);
   });
 });

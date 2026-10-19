@@ -58,7 +58,7 @@ export function BankStatements() {
             </select>
           </div>
         </div>
-        {period.rebuilt && <p className="xs dim" style={{ margin: 0 }}>Rebuilt: this statement comes from before the card’s statements were kept, so its dates are set from the statement day of the earliest one kept. If the statement day was moved before then, they may be a few days off.</p>}
+        {period.rebuilt && <p className="xs dim" style={{ margin: 0 }}>Rebuilt: this statement is from before the game kept card statements, so its dates are estimated from the earliest one kept. If you moved the statement day before then, they may be a few days off.</p>}
         {account.kind === 'credit_card' ? <CardStatementView account={account} period={period} /> : <AccountStatementView account={account} period={period} />}
       </Panel>
       <YearView />
@@ -80,7 +80,7 @@ function AccountStatementView({ account, period }: { account: Account; period: R
   const own = (native: number, dollars: number) => (h && account.currency ? { value: formatMoney(native, account.currency), note: `${money(dollars)} in dollars` } : { value: money(dollars) });
   return (
     <LookRegion className="col gap-3">
-      {h && account.currency && <p className="xs dim" style={{ margin: 0 }}>In {account.currency}, as {account.institution ?? 'the bank'} keeps it, with its value in dollars, at an estimated exchange rate, under each figure.</p>}
+      {h && account.currency && <p className="xs dim" style={{ margin: 0 }}>Figures are in {account.currency}, as {account.institution ?? 'the bank'} keeps them, with each one’s value in dollars under it, at an estimated exchange rate.</p>}
       <div className="grid grid-3">
         <Figure look={look} label={owed ? 'Owed At The Start' : 'Opening Balance'} {...own(h?.opening ?? 0, st.opening)} />
         <Figure look={look} label={owed ? 'Paid Off' : 'Money In'} {...own(h?.moneyIn ?? 0, owed ? st.moneyOut : st.moneyIn)} />
@@ -144,8 +144,8 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
       {closed && st.newBalance > 0 && st.minimum !== undefined && (
         <p className="small" style={{ margin: 0 }}>
           {st.terms.kind === 'charge'
-            ? `${st.terms.issuer ?? 'The bank'} takes the whole ${money(st.newBalance)} from your current account${due ? ` on ${formatDate(due, sim.zone)}` : ''}.`
-            : `The least you can pay is ${money(least!)}${onPlan ? ', the plan’s payment' : ''}${due ? `, by ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)} and ${carried ? 'nothing new is charged interest, though the interest built up since this statement comes on the next one' : 'none of it is charged interest'}.`}
+            ? `${st.terms.issuer ?? 'The bank'} takes the whole ${money(st.newBalance)} from your checking account${due ? ` on ${formatDate(due, sim.zone)}` : ''}.`
+            : `${onPlan ? 'The plan’s payment' : 'The minimum payment'} is ${money(least!)}${due ? `, due ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)}, and ${carried ? 'new spending isn’t charged interest, though the interest that built up since this statement still comes on the next one' : 'none of it is charged interest'}.`}
         </p>
       )}
       {/* On a plan nothing draws interest and nothing new goes on the card, so paying the plan’s payment clears it in so many
@@ -222,7 +222,7 @@ function AlertsView() {
     <Panel title="Alerts" subtitle={`What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next ${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][LOOKAHEAD_DAYS] ?? LOOKAHEAD_DAYS} days. That alert is the game’s own, not a feature of a real bank.`} help="bank.set_alerts">
       <div className="field-row">
         <div className="field">
-          <label htmlFor="alert-low">Any Current Account Under ({cur})</label>
+          <label htmlFor="alert-low">Any Checking Account Under ({cur})</label>
           <input id="alert-low" type="text" inputMode="decimal" placeholder="Off" value={low} onChange={(e) => setLow(e.target.value)} />
         </div>
         <div className="field">

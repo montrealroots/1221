@@ -94,8 +94,8 @@ export function transfersOf(sim: Simulation, person: Person): { fromId: string; 
  */
 export function openRefusal(sim: Simulation, person: Person, bankId: string, at: Instant = sim.now): string | undefined {
   const bank = banksFor(homeOf(person)).find((b) => b.id === bankId);
-  if (!bank) return 'You can only open an account at a bank where you live.';
-  if (checkingAt(sim, person, bank.id)) return `You already have a current account at ${bank.name}.`;
+  if (!bank) return 'You can only open an account at a bank in the country you live in.';
+  if (checkingAt(sim, person, bank.id)) return `You already have a checking account at ${bank.name}.`;
   if (applicationsOf(sim, person).some((a) => a.bankId === bank.id)) return `${bank.name} is still reviewing your application.`;
   if (collectionsOf(sim, person, bank.name)) return `${bank.name} won’t open an account for you while you owe it a debt it has charged off.`;
   if (declines(sim, person, bank)) return `${bank.name} won’t open an account for you because of the ChexSystems report ${person.chex!.bank} filed, which stays on your record until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
@@ -270,22 +270,22 @@ export function pinInstructions(sim: Simulation, person: Person): void {
   if (person.credit) for (const card of cardsOf(sim, person)) autopaySource(sim, person, card);
 }
 
-/** What the primary account is for, said where it's chosen. */
+/** What the primary account is for, said where it's chosen: what money comes from it for, as a sentence lists them. */
 export const PRIMARY_DOES = [
-  'Your debit card’s everyday purchases come from it',
-  'Cash from a machine comes out of it',
-  'Bills you pay by hand come from it',
-  'A new standing order or autopay starts from it',
+  'your debit card’s everyday purchases',
+  'cash from a machine',
+  'bills you pay by hand',
+  'any new standing order or autopay',
 ] as const;
 
 /** Why a current account can't close now, or nothing. */
 export function closeRefusal(sim: Simulation, person: Person, account: Account): string | undefined {
-  if (account.ownerId !== person.id || account.closedAt || account.kind !== 'checking') return 'Only a current account of yours can be closed here.';
-  if (checkingsOf(sim, person).length < 2) return 'It’s your only current account. Open another one first: you always need a current account to be paid into.';
+  if (account.ownerId !== person.id || account.closedAt || account.kind !== 'checking') return 'Only one of your own checking accounts can be closed here.';
+  if (checkingsOf(sim, person).length < 2) return 'It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.';
   if (account.id === person.primaryAccountId) return 'It’s your primary account. Make another account primary first.';
-  if (account.balance < 0) return `It’s overdrawn by ${formatMoney(-account.balance, saveCurrency(sim.universe))}. The bank only closes it once that’s paid off.`;
+  if (account.balance < 0) return `It’s overdrawn by ${formatMoney(-account.balance, saveCurrency(sim.universe))}, and the bank only closes it once that’s paid off. Move money into it first.`;
   // A fee for a customer abroad owed where the account can't go below zero is the same debt (from 2026-10-16).
-  if (account.feeOwedHeld) return `You owe its fee for customers abroad, ${formatMoney(account.feeOwedHeld, bankById(account.bankId!)!.currency)}. The bank only closes it once that’s paid.`;
+  if (account.feeOwedHeld) return `You owe its ${formatMoney(account.feeOwedHeld, bankById(account.bankId!)!.currency)} fee for customers living abroad, and the bank only closes it once that’s paid. Move money into it: once it holds enough, the bank takes the fee that night.`;
   if (transfersOf(sim, person).some((t) => t.fromId === account.id || t.toId === account.id)) return 'Money is on its way into or out of it. Wait until it arrives.';
   const held = closeHold(sim, person, account.id);
   if (held) return held;
@@ -306,7 +306,7 @@ export function closeRefusal(sim: Simulation, person: Person, account: Account):
   const earned = Math.floor(account.accrued ?? 0);
   const short = fees + od - account.balance - (earned > 0 ? earned - interestTaxFor(sim, account, earned) : 0);
   const m = (n: Money) => formatMoney(n, saveCurrency(sim.universe));
-  if (fees + od > 0 && short > 0) return `${owingWords([...(od > 0 ? [['its overdraft interest', m(od)] as const] : []), ...(fees > 0 ? [['its fees', m(fees)] as const] : [])])} more than it holds. Pay in ${m(short)} first.`;
+  if (fees + od > 0 && short > 0) return `${owingWords([...(od > 0 ? [['its overdraft interest', m(od)] as const] : []), ...(fees > 0 ? [['its fees', m(fees)] as const] : [])])} more than it holds. Move ${m(short)} into it first.`;
   return undefined;
 }
 
@@ -377,11 +377,11 @@ export function registerBankMoves(sim: Simulation): void {
     const min = openingDeposit(s, bank);
     const amount = Math.round(Number(p.amount ?? 0));
     const from = p.fundFrom ? bankAccountsOf(s, person).find((a) => a.id === p.fundFrom) : undefined;
-    if (p.fundFrom && !from) throw new CommandError('Pay the opening deposit from one of your own current or savings accounts.');
+    if (p.fundFrom && !from) throw new CommandError('Pay the opening deposit from one of your own checking or savings accounts.');
     if (from && from.bankId === bank.id) throw new CommandError(`That account is already at ${bank.name}. Pay the deposit from an account at another bank.`);
     if (min > 0 && (!from || amount < min)) throw new CommandError(`${bank.name} asks for an opening deposit of ${formatMoney(min, saveCurrency(s.universe), { cents: false })}, sent from another of your accounts.`);
-    if (amount < 0 || (from && !(amount > 0))) throw new CommandError('Enter how much to pay in.');
-    if (from && amount > from.balance) throw new CommandError(`${from.name} ${from.balance > 0 ? `has only ${formatMoney(from.balance, saveCurrency(s.universe))}` : 'has nothing in it'}, so the account wasn’t opened.`);
+    if (amount < 0 || (from && !(amount > 0))) throw new CommandError('Enter the amount of the opening deposit.');
+    if (from && amount > from.balance) throw new CommandError(`${from.name} has ${from.balance > 0 ? `only ${formatMoney(from.balance, saveCurrency(s.universe))}` : 'nothing'} available, so the account wasn’t opened.`);
     // Under review, the deposit goes now and waits for the decision; decided at once, the account opens now.
     if (rules?.reviewDays) {
       const kept = daysOfAccount({ bankId: bank.id }, person);
@@ -466,7 +466,7 @@ export function registerBankMoves(sim: Simulation): void {
   sim.onCommand<{ accountId: string }, { affects: readonly string[]; unchanged: string[] }>('bank.set_primary', (p, { sim: s }) => {
     const person = s.player;
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
-    if (!account) throw new CommandError('Only an open current account of yours can be primary.');
+    if (!account) throw new CommandError('Only one of your open checking accounts can be your primary account.');
     if (account.id === person.primaryAccountId) throw new CommandError(`${account.name} is already your primary account.`);
     if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing, so it can’t be your primary account.`);
     // A home account's card pays here only where its bank says it works abroad and the research has its fee (from
@@ -485,7 +485,7 @@ export function registerBankMoves(sim: Simulation): void {
   sim.onCommand<{ accountId: string }, { at: Instant }>('bank.redirect_deposits', (p, { sim: s }) => {
     const person = s.player;
     const account = bankAccountsOf(s, person).find((a) => a.id === p.accountId);
-    if (!account) throw new CommandError('Wages are paid into an open current or savings account of yours.');
+    if (!account) throw new CommandError('Choose one of your open checking or savings accounts for your wages.');
     if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing, so wages can’t be paid into it.`);
     // From 2026-10-16: an account kept at home, at a bank in another country, takes no wages from here.
     if (heldFromAbroad(s, account)) throw new CommandError('Yale only pays wages into an account in America.');
@@ -497,7 +497,7 @@ export function registerBankMoves(sim: Simulation): void {
     const order = paymentsOf(person).standingOrders.find((o) => o.id === p.orderId);
     if (!order) throw new CommandError('That standing order no longer exists.');
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
-    if (!account) throw new CommandError('A standing order pays from an open current account of yours.');
+    if (!account) throw new CommandError('A standing order has to pay from one of your open checking accounts.');
     if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing, so a standing order can’t pay from it.`);
     // Until 2026-10-13 a current account the order paid into was refused here. A standing order goes only into savings
     // (`bank.add_standing_order`), and only a current account pays one, so nothing reached it, and it went.
@@ -510,7 +510,7 @@ export function registerBankMoves(sim: Simulation): void {
     const card = person.credit ? cardsOf(s, person).find((c) => c.id === p.cardId) : undefined;
     if (!card) throw new CommandError('That isn’t one of your cards.');
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
-    if (!account) throw new CommandError('Autopay pays from an open current account of yours.');
+    if (!account) throw new CommandError('Autopay has to pay from one of your open checking accounts.');
     if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing, so autopay can’t pay from it.`);
     autopaySource(s, person, card);
     const credit = person.credit!;
@@ -523,7 +523,7 @@ export function registerBankMoves(sim: Simulation): void {
   sim.onCommand<{ accountId: string; remainderTo?: string }, { closedAt: Instant; arrivesAt?: Instant }>('bank.close_current', (p, { sim: s }) => {
     const person = s.player;
     const account = s.universe.accounts[String(p.accountId)];
-    if (!account) throw new CommandError('Only a current account of yours can be closed here.');
+    if (!account) throw new CommandError('Only one of your own checking accounts can be closed here.');
     if (account.closingAt !== undefined) throw new CommandError(`${account.name} is already closing on ${formatDate(account.closingAt, s.zone)}.`);
     const no = closeRefusal(s, person, account);
     if (no) throw new CommandError(no);
@@ -551,7 +551,7 @@ export function registerBankMoves(sim: Simulation): void {
     const into = to && !to.closedAt ? to : depositAccount(s, person) ?? checkingsOf(s, person).find((a) => a.id !== account.id);
     // Overdrawn by what posted since, it stays open until that's paid, as the bank says it does.
     if (account.balance < 0) {
-      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Didn’t Close`, body: 'Payments that posted in the meantime left it overdrawn, so it’s still open. Pay in what’s owed, then close it again.', importance: 60, route: '/workspace/bank' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Didn’t Close`, body: 'Payments that posted while it was closing left it overdrawn, so it’s still open. Move money into it to clear the overdraft, then press Close It again.', importance: 60, route: '/workspace/bank' });
       return;
     }
     // What it held, said as it went (from 2026-10-17): into the next account at once at its own bank, or on its way to

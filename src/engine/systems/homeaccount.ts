@@ -48,7 +48,7 @@ function countryWord(iso: string | undefined): string {
 }
 
 const keyOf = (y: number, m: number, d: number) => `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-const before = (config: NewSaveConfig) => (config.school ? 'Yale' : 'this life');
+const before = (config: NewSaveConfig) => (config.school ? 'Yale' : 'you came here');
 
 /** The day an account at the bank was opened, YYYY-MM-DD: the later of moving there and reaching its opening age. */
 export function openingDayOf(config: NewSaveConfig, terms: HomeTerms): string {
@@ -77,14 +77,14 @@ export function homeAccountRefusal(config: NewSaveConfig, bankId: string | undef
   if (!bank) return 'Choose the bank you kept the account at.';
   if (bank.iso !== there) return `${bank.name} isn’t a bank in ${countryWord(there)}.`;
   const terms = homeTerms(bank.id);
-  if (!terms) return `There’s no research on what ${bank.name} does when a customer moves to America, so the game can’t offer it.`;
+  if (!terms) return `The game doesn’t know what ${bank.name} does when a customer moves to America, so it can’t offer this account.`;
   if (terms.unusable) return terms.unusable;
-  // 4. Open before Yale began.
+  // 4. Open before Yale began. Said of the move, not of “this life” (from brief 15, 2026-10-19).
   const start = keyOf(config.startYear, config.startMonth, config.startDay);
   if (openingDayOf(config, terms) >= start) {
     const age = ageOnDate({ year: config.birthYear, month: config.birthMonth, day: config.birthDay }, { year: config.startYear, month: config.startMonth, day: config.startDay });
     return keyOf(prior.fromYear, prior.fromMonth, 1) >= start
-      ? `You began living there after ${before(config)} began.`
+      ? (config.school ? 'You moved there after Yale began.' : 'You moved there after you came here.')
       : `${bank.name} opens an account from age ${terms.openFromAge}, and you left at ${age}.`;
   }
   // 5. The birthplace, read only as the citizenship it gives.
@@ -145,8 +145,8 @@ export function whatFollows(config: NewSaveConfig, bankId: string): string[] {
   }
   // From 2026-10-16: until then the current account opened at nothing, and the bank's own fees overdrew it.
   const float = feesToGraduation(config, bank);
-  if (float > 0) out.push(`Its ${bank.current.name} opens with what its fees come to until you graduate in May ${config.startYear + GRADUATES.years}, ${formatMoney(float, bank.currency)}, ${config.savingsAtHome === false ? 'from your money here' : 'from your savings'}, as far as that goes: move more in before it runs low.`);
-  if (terms.ageAssumed) out.push(`The research found no opening age for ${bank.name}, so the game assumes ${terms.openFromAge}.`);
+  if (float > 0) out.push(`Its ${bank.current.name} opens with ${formatMoney(float, bank.currency)} ${config.savingsAtHome === false ? 'from your money here' : 'from your savings'}, what its fees come to until you graduate in May ${config.startYear + GRADUATES.years}, or as much of that as there is. Move more in before it runs low.`);
+  if (terms.ageAssumed) out.push(`No opening age was found for ${bank.name}, so the game assumes ${terms.openFromAge}.`);
   return out;
 }
 

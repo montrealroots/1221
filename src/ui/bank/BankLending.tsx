@@ -29,7 +29,9 @@ import { SWITCHING } from '@/engine/content/banks-lending';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { CASH } from '@/engine/content/cash';
 import { END_WORDS } from '@/engine/systems/accountlife';
-import { CHARGE_OFF_DAYS } from '@/engine/systems/credit';
+import { CHARGE_OFF_DAYS, MARK_YEARS } from '@/engine/systems/credit';
+import { CITIES } from '@/engine/content/geography';
+import { said } from '@/ui/looks/words';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import { abroadRefusal } from '@/engine/systems/abroad';
 import type { Account } from '@/engine/core/ledger';
@@ -79,6 +81,13 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
   // described as an account overdrawn, and the French notice was read from the bank on screen, not the bank owed).
   const source = useWorld((s) => (debt ? collectionsSource(s, debt) : undefined));
   const owedBank = debt ? banksIn(bank.iso).find((b) => b.name === debt.institution) : undefined;
+  // What the charge-off does to the record, and what the unpaid debt blocks (from brief 15, 2026-10-19). Until then this
+  // said “It’s on your record until it’s paid.”: the record keeps the mark its country's years, paid or not
+  // (`markRecord`, `marksFallOff`), a bank abroad marks it not at all (`closeForOverdraft`), and paying the debt touches
+  // neither. Mexico's years go by the debt's size, so they aren't named.
+  const country = CITIES.get(sim.player.currentLocationId)?.countryId;
+  const recordYears = country && country !== 'mx' ? MARK_YEARS[country] : undefined;
+  const onRecord = source?.card === true || (owedBank !== undefined && owedBank.iso === isoOf(homeOf(sim.player)));
   // Nor one that turns a ChexSystems report away: until 2026-09-27 the list offered them, and the switch was refused.
   const chex = sim.player.chex && sim.now - sim.player.chex.at < CHEX.years * 365 * 86_400_000 ? sim.player.chex : undefined;
   const others = banksFor(homeOf(sim.player)).filter((b) => b.id !== bank.id && !owes(b.name) && !declines(sim, sim.player, b));
@@ -248,7 +257,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
             <div className="field-act">
               <div className="field"><label htmlFor={`term-amount${account ? `-${bank.id}` : ''}`}>{`Term Deposit Amount (${cur})`}</label><input id={`term-amount${account ? `-${bank.id}` : ''}`} type="text" inputMode="decimal" value={deposit} onChange={(e) => setDeposit(e.target.value)} /></div>
               <Gated feature="bank.open_term" className="btn btn-sm" disabled={!deposit}
-                onClick={() => { if (run('bank.open_term', { amount: cents(deposit), bankId: bank.id }).ok) { toast('Put away.', 'positive'); setDeposit(''); } }}>
+                onClick={() => { const a = run<{ maturesAt: number }>('bank.open_term', { amount: cents(deposit), bankId: bank.id }); if (a.ok && a.value) { toast(`Your ${lending.term!.called} is open, locked until ${formatDate(a.value.maturesAt, sim.zone)}.`, 'positive'); setDeposit(''); } }}>
                 Put It Away
               </Gated>
             </div>
@@ -264,7 +273,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
             <p className="small" style={{ margin: 0 }}>
               {source?.overdraft !== false ? <>{debt.institution} closed your account after it was overdrawn {owedBank?.id.startsWith('fr-') ? `past its limit, on the ${FRANCE.closingNoticeDays} days’ notice French law requires` : `for ${ESTIMATE.closeAfterDays} days`}, and charged off what it couldn’t recover. {owedBank?.id.startsWith('fr-') ? '' : 'How long a bank lets an overdraft run is estimated. '}</> : null}
               {source?.card ? <>{debt.institution} closed your card after its payments were {CHARGE_OFF_DAYS} days behind, and charged off what was owed on it. </> : null}
-              It’s on your record until it’s paid.
+              {onRecord ? `The charge-off stays on your credit record${recordYears !== undefined ? ` for ${said(recordYears, 'year')}` : ''}, paid or not. ` : ''}While the debt is unpaid, no bank approves a card, and {debt.institution} won’t open an account for you.
             </p>
             <div className="field-act">
               <div className="field"><label htmlFor="collections-pay">{`Pay Toward It (${cur})`}</label><input id="collections-pay" type="text" inputMode="decimal" value={toCollections} onChange={(e) => setToCollections(e.target.value)} /></div>
@@ -300,7 +309,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
                 </select>
               </div>
               <Gated feature="bank.set_loan_repayment" className="btn btn-sm btn-ghost" disabled={!repay || repay === repayFrom?.id} onClick={() => { if (run('bank.set_loan_repayment', { loanId: loan.id, accountId: repay }).ok) toast('From the next payment, it’s repaid from that account.', 'positive'); }}>Repay From This Account</Gated>
-              <Gated feature="bank.repay_loan" className="btn btn-sm" onClick={() => { if (run('bank.repay_loan', { loanId: loan.id }).ok) toast('Paid off.', 'positive'); }}>
+              <Gated feature="bank.repay_loan" className="btn btn-sm" onClick={() => { if (run('bank.repay_loan', { loanId: loan.id }).ok) toast('Your loan is paid off.', 'positive'); }}>
                 Pay It Off
               </Gated>
             </div>
@@ -349,7 +358,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
             </div>
             <div>
               <Gated feature="bank.borrow" className="btn btn-sm" disabled={!quote || 'refused' in quote}
-                onClick={() => { if (run('bank.borrow', { amount: asked, months: Number(months), bankId: bank.id, purpose, intoId: into || current?.id, repayFromId: repay || current?.id }).ok) { toast('Borrowed.', 'positive'); setBorrow(''); setInto(''); setRepay(''); } }}>
+                onClick={() => { const paidInto = sim.universe.accounts[into || current?.id || '']; if (run('bank.borrow', { amount: asked, months: Number(months), bankId: bank.id, purpose, intoId: into || current?.id, repayFromId: repay || current?.id }).ok) { toast(`Your ${money(asked)} loan is in ${paidInto?.name ?? 'your account'}.`, 'positive'); setBorrow(''); setInto(''); setRepay(''); } }}>
                 Borrow It
               </Gated>
             </div>

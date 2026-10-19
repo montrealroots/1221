@@ -78,9 +78,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [bank]": {
   "status": "Rewritten",
-  "hash": "9704157d759e",
+  "hash": "5f41f6d6255a",
   "on": "2026-10-19",
-  "evidence": "tests/help-mechanics.test.ts, 'PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything' renders every paragraph and name; read word for word and followed on the built app at 1440 and 390, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt and follow-390/log.txt, chapter bank (the five tabs, Move Money's Move It at the same bank, Cards, How You Pay, Statements, The Year and Alerts); tests/defects-g22-1.test.ts holds its Statements, Move Money and help with payments sentences",
+  "evidence": "the money area's rename carried in at its merge: Savings Covers The Checking Account, the label BankPayments.tsx now shows; tests/help-mechanics.test.ts renders every paragraph and passes on the merge, and tests/guide-chapter-facts.test.ts holds the chapter's names",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [body]": {

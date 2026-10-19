@@ -144,7 +144,7 @@ describe('a hardship plan’s statement', () => {
     expect(stateOf(sim.player, card).hardship).toBeUndefined();
     const october = draw(sim, createElement(BankStatements), [card.id, 1]);
     expect(october).toContain('New Balance $4,830.00');
-    expect(october).toContain('The least you can pay is $101.00, the plan’s payment, by November 10, 2026.');
+    expect(october).toContain('The plan’s payment is $101.00, due November 10, 2026.');
   });
 
   it('says on the Statements tab what the plan’s payment takes to clear it, with no interest, not what paying the card’s minimum would at its rate', () => {
@@ -173,7 +173,7 @@ describe('a hardship plan’s statement', () => {
     // $4,800 over forty-eight months: $100 exactly.
     expect(must(sim, 'card.request_hardship', {})).toEqual({ payment: 100_00 });
     expect(stateOf(sim.player, card).issued!.at(-1)).toMatchObject({ at: edt(9, 20, 9), minimum: 100_00, plan: true });
-    expect(draw(sim, createElement(BankStatements), [card.id, 1])).toContain('The least you can pay is $100.00, the plan’s payment, by October 11, 2026.');
+    expect(draw(sim, createElement(BankStatements), [card.id, 1])).toContain('The plan’s payment is $100.00, due October 11, 2026.');
     // Its due date: autopay asks the $100, not the whole statement it’s set to, and it’s on time.
     sim.advanceTo(edt(10, 11, 12, 5));
     expect(moved(sim, card, 'Paid Chase Freedom Unlimited')).toEqual([100_00]);

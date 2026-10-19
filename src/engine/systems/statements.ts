@@ -157,7 +157,7 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
     // drawn (from 2026-10-13, when the closing’s own postings joined the last period: the two would both have shown them).
     const closing = account.closedAt !== undefined && to >= account.closedAt;
     // A card's past statement drawn here has no cut kept (a save from before 2026-10-10): rebuilt, and said so.
-    if (!closing || from < account.closedAt!) out.push({ from, to: closing ? account.closedAt! : to, label: closing ? `${label}, To Its Closing` : to > sim.now ? `${label}, So Far` : card ? `${label} (Rebuilt)` : label, ...(card && to <= sim.now ? { rebuilt: true } : {}) });
+    if (!closing || from < account.closedAt!) out.push({ from, to: closing ? account.closedAt! : to, label: closing ? `${label}, Until It Closed` : to > sim.now ? `${label}, So Far` : card ? `${label} (Rebuilt)` : label, ...(card && to <= sim.now ? { rebuilt: true } : {}) });
     if (from <= since || (fromParts.year < start.year - 1)) break;
     m -= step;
     while (m < 1) { m += 12; y -= 1; }
@@ -200,7 +200,7 @@ function cardPeriods(sim: Simulation, account: Account, kept: readonly Instant[]
     // A card closed since its last cut ends there, as a closed account's last period does (from 2026-10-13: until then it
     // ran on past the closing, read "So Far"; found by the review of that day).
     const to = account.closedAt ?? next ?? last + 31 * MS_DAY;
-    out.push({ from: last, to, label: `${labelOf(to)}, ${account.closedAt ? 'To Its Closing' : 'So Far'}` });
+    out.push({ from: last, to, label: `${labelOf(to)}, ${account.closedAt ? 'Until It Closed' : 'So Far'}` });
   }
   for (let i = cuts.length - 1; i >= 1; i -= 1) out.push({ from: cuts[i - 1]!, to: cuts[i]!, label: labelOf(cuts[i]!) });
   // Before the first kept cut: a month back at a time, on its day. A card opened in the life (at or after its holder’s

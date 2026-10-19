@@ -245,7 +245,10 @@ export const expenseFor = (category: string) => EXPENSE_LINE[category] ?? 'Other
 
 
 const CANT_AFFORD = 'You can’t afford it.';
-const CASH_UNSPENT = 'The bank and the card can’t pay it. Cash in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card.';
+// What would spend the cash, and where (from brief 15, 2026-10-19): until then “The bank and the card can’t pay it. Cash
+// in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card.” A locked or stopped debit card
+// spends it too, but never reaches these words (`spendRefusal`).
+const CASH_UNSPENT = 'Your bank and card can’t cover it. Your cash in hand would, but it isn’t spent while The Day’s Spending is on a card. Set it to In Cash, Then The Debit Card, under How You Pay.';
 
 /**
  * Why `spend` would refuse an amount now, with nothing owed allowed, in the world's words, or nothing if it would go
@@ -414,7 +417,9 @@ export function buyTheDaysFood(sim: Simulation, person: Person): boolean {
     sim.notify({
       category: 'money',
       title: 'No Money For Food Today',
-      body: `${why && why !== CANT_AFFORD ? `A day’s groceries cost ${price}. ${why}` : `A day’s groceries cost ${price}, and there’s nothing left to pay with.`} It’s what’s in the cupboard today, and not enough of it.`,
+      // What the hunger is, plainly (from brief 15, 2026-10-19): until then “It’s what’s in the cupboard today, and not
+      // enough of it.”
+      body: `${why && why !== CANT_AFFORD ? `A day’s groceries cost ${price}. ${why}` : `A day’s groceries cost ${price}, and there’s nothing left to pay with.`} You’re eating what’s left in the cupboard today, and it isn’t enough.`,
       importance: 70,
     });
   }

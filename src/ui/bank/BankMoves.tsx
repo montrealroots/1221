@@ -23,6 +23,7 @@ import { SECURITY } from '@/engine/content/security';
 import { bankAccountsOf, banksFor, closingFeesWords, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import { checkingsOf } from '@/engine/systems/lending';
 import { waiverWords, nth } from '@/ui/bank/feeWords';
+import { spokenList } from '@/engine/core/text';
 import { balanceText } from '@/engine/systems/abroad';
 import { homeOf } from '@/engine/systems/earnings';
 import { paymentsOf } from '@/engine/systems/payments';
@@ -81,7 +82,7 @@ export function BankMoves() {
       parts.push(`Without a Social Security number, you apply in person at a branch, with your passport and I-20. It takes ${BRANCH_MINUTES === 60 ? 'an hour' : `${BRANCH_MINUTES} minutes`}.`);
       estimated.push('The time at the branch is estimated.');
     }
-    parts.push(rules?.reviewDays ? `It decides an application in ${rules.reviewDays} business days, the top of the range it gives.` : 'It opens the account as soon as you apply.');
+    parts.push(rules?.reviewDays ? `It decides an application within ${rules.reviewDays} business days, the longest it says it takes.` : 'It opens the account as soon as you apply.');
     parts.push(minimum > 0 ? `It asks for an opening deposit of ${money(minimum)}, sent from another of your accounts.` : rules ? 'It doesn’t ask for an opening deposit.' : 'No opening deposit was found for it, so none is asked for.');
     if (rules?.openedWhenFunded) parts.push('The account only counts as open once money is paid in.');
     if (rules?.fundWithinDays) parts.push(`If nothing is paid in within ${rules.fundWithinDays} days of opening, the bank closes it.`);
@@ -126,7 +127,7 @@ export function BankMoves() {
 
   return (
     <div className="col gap-4" style={{ marginBottom: 'var(--s5)' }}>
-      <Panel title="Your Banks" subtitle={currents.length > 1 ? `${currents.length} current accounts` : 'One current account'} help="bank.other-banks">
+      <Panel title="Your Banks" subtitle={currents.length > 1 ? `${currents.length} checking accounts` : 'One checking account'} help="bank.other-banks">
         <div className="col gap-3">
           {currents.map((a) => {
             const links = linkedTo(sim, person, a.id);
@@ -143,7 +144,7 @@ export function BankMoves() {
                   {a.id === person.primaryAccountId ? '. This is your primary account.' : '.'}
                   {a.awaitingFunds !== undefined ? ` It’s waiting for ${a.awaitingFunds > 1 ? `its opening deposit of ${money(a.awaitingFunds)}` : 'its first deposit'}${a.fundBy ? `, due by ${formatDate(a.fundBy, sim.zone)}` : ''}.` : ''}
                   {a.plastic?.stopped === 'new' && a.plastic.replacementAt ? ` Its debit card arrives ${formatDate(a.plastic.replacementAt, sim.zone)}.` : ''}
-                  {a.closingAt !== undefined ? ` It closes ${formatDate(a.closingAt, sim.zone)}, after its pending payments post.` : ''}
+                  {a.closingAt !== undefined ? ` It closes ${formatDate(a.closingAt, sim.zone)}, after its pending card payments post.` : ''}
                 </p>
                 {links.length > 0 && <p className="xs dim" style={{ margin: 0 }}>{links.join('. ')}.</p>}
                 <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'end' }}>
@@ -180,13 +181,13 @@ export function BankMoves() {
           })}
           <div className="row-between gap-2" style={{ alignItems: 'start' }}>
             <p className="xs dim" style={{ margin: 0 }}>
-              Your primary account is the one money comes from unless you say otherwise: {PRIMARY_DOES.map((w) => w.charAt(0).toLowerCase() + w.slice(1)).join('; ')}. Making another account primary doesn’t move anything already set up.
+              Your primary account is the one money comes from unless you choose otherwise: {spokenList(PRIMARY_DOES)}. Making another account primary doesn’t move anything already set up.
             </p>
             <HowItWorks help="bank.set_primary" />
           </div>
           <div className="row-between gap-2" style={{ alignItems: 'start' }}>
             <p className="xs dim" style={{ margin: 0 }}>
-              Your wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}. A change reaches Yale’s payroll in {PAYER_LEAD['yale-payroll']} days, about one of its weekly pay cycles, as Yale says. Other payers take {DEPOSIT_LEAD.days} days, which is estimated: employers say one to two pay cycles.
+              Your wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}. If you move them, Yale’s payroll starts paying the new account after {PAYER_LEAD['yale-payroll']} days, about one of its weekly pay cycles, as Yale says. Other payers take {DEPOSIT_LEAD.days} days, which is estimated: employers say one to two pay cycles.
             </p>
             <HowItWorks help="bank.redirect_deposits" />
           </div>

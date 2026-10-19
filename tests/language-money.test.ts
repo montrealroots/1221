@@ -162,7 +162,7 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Accounts', () => {
     const accounts = Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && !a.nominal && !a.closedAt && a.bankId === 'us-chase');
     expect(bank.kind).toBe('Your Everyday Bank');
     expect(bank.summary).toMatch(new RegExp(`^You have \\$[\\d,.]+ here, across ${accounts.length} accounts\\.$`));
-    expect(text(bank.body)).toContain('Your primary account is here, so your everyday spending and your pay go through it.');
+    expect(text(bank.body)).toContain('Your primary account is here, so your debit card’s everyday purchases come from it.');
     expect(bank.provenance).toBe('Each balance is the total of every payment in and out of the account, added up again each time you look.');
     const checking = checkingOf(sim);
     const line = [...sim.universe.transactions].reverse().find((t) => t.postings.some((p) => p.accountId === checking.id) && (t.postsAt === undefined || t.postsAt <= sim.now))!;
@@ -180,7 +180,7 @@ describe('PLAYER JOURNEY: a New York student at Chase opens an account at anothe
     expect(words).toContain('Chase Total Checking at Chase,');
     expect(words).toContain('. This is your primary account.');
     expect(words).toContain(`Other payers take ${DEPOSIT_LEAD.days} days, which is estimated: employers say one to two pay cycles.`);
-    expect(words).toContain('Your primary account is the one money comes from unless you say otherwise: your debit card’s everyday purchases come from it;');
+    expect(words).toContain('Your primary account is the one money comes from unless you choose otherwise: your debit card’s everyday purchases,');
     expect(words).not.toMatch(/SLATE’s estimate/);
     const sent = press('bank.open_current', 'Apply');
     expect(sent).toHaveLength(1);
@@ -191,8 +191,8 @@ describe('PLAYER JOURNEY: a New York student at Chase opens an account at anothe
     const sim = nyStudent('lang14-refuse');
     const checking = checkingOf(sim);
     expect(sim.execute({ kind: 'bank.set_primary', payload: { accountId: checking.id } }).error).toBe(`${checking.name} is already your primary account.`);
-    expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checking.id } }).error).toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
-    expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-chase' } }).error).toBe('You already have a current account at Chase.');
+    expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checking.id } }).error).toBe('It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.');
+    expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-chase' } }).error).toBe('You already have a checking account at Chase.');
   });
 });
 
@@ -233,7 +233,7 @@ describe('PLAYER JOURNEY: Other Charges and the sources line, at banks around th
   it('says the debit card’s yearly fee and age, its timing, and its estimate after the source', () => {
     const words = drawn(lifeAt('is-39-mosfellsbr', 'is-arion', 'lang14-arion'), BankWorkspace);
     expect(words).toContain('The debit card costs 950 kr a year and 19 kr a purchase, or nothing at 23 and under. It’s paid for the year ahead, and what’s left of the year is refunded if the account closes. Source: Arion’s price list');
-    expect(words).toMatch(/ or nothing at 23 and under\. It’s (paid for the year ahead, and what’s left of the year is refunded|charged at the end of each card year, and the days used so far are charged) if the account closes\. Source: Arion’s price list[^.]*\. Estimated: Arion’s price list and terms don’t say when in the year it’s charged\./);
+    expect(words).toMatch(/ or nothing at 23 and under\. It’s (paid for the year ahead, and what’s left of the year is refunded|charged at the end of each card year, and the days used so far are charged) if the account closes\. Source: Arion’s price list[^.]*\. The timing is estimated: Arion’s price list and terms don’t say when in the year it’s charged\./);
     expect(words).toMatch(/ It’s paid here on [A-Z][a-z]+ \d{1,2}\. The day is estimated\./);
   });
 
@@ -263,12 +263,12 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
     expect(words).toContain('If a payment is sixty days late, the rate goes up to 29.99% after 45 days’ notice. No yearly fee. Statements come on the 20th, and payment is due 21 days after each one.');
     expect(words).toContain('The minimum payment is 1% of the statement plus the month’s interest, or $40 if that’s more. Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself.');
     expect(words).toContain('Owed $0 Left To Spend');
-    expect(words).toContain('You can apply to any bank here, not only yours. It looks at your credit record and whether you have income or money to repay from, and if it says yes, the card arrives a week later. Applying takes a few points off your credit record, whether or not you’re approved.');
+    expect(words).toContain('You can apply to any bank here, not only yours. The bank checks your credit record and whether you have income or money to repay from. If it approves you, the card arrives a week later. Applying takes a few points off your credit score, whether or not you’re approved.');
   });
 
   it('says the card’s offers, and that there’s nothing to put in a plan when there isn’t', () => {
     const words = drawn(nyStudent('lang14-offers'), BankCardOffers as FunctionComponent<{ bankId: string }>);
-    expect(words).toMatch(/Rewards: 1\.5% back on every purchase, added up at each statement\. You have \$0 to redeem\. In the bank’s words: .*?\. Those categories are things a card doesn’t buy in the game, so you earn the base rate\./);
+    expect(words).toMatch(/Rewards: 1\.5% back on every purchase, added up at each statement\. You have \$0 to redeem\. Its published rewards: .*?\. Those categories are things a card doesn’t buy in the game, so you earn the base rate\./);
     expect(words).toMatch(/A plan made while the introductory rate lasts, until [A-Z][a-z]+ \d{1,2}, \d{4}, is free for its whole life\. One made after that costs 1\.72% of the plan a month, the most the bank says it charges\. There’s nothing on the card to put into one right now\./);
   });
 
@@ -282,7 +282,7 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
 
   it('says how the day’s spending is paid and what savings covers, and what cash is in hand', () => {
     const sim = nyStudent('lang14-pay');
-    expect(drawn(sim, BankPayments as FunctionComponent<{ bankId: string }>)).toContain('How the day’s spending is paid, and which account each payment comes from. How This Works The Day’s Spending In Cash, Then The Debit Card On The Credit Card On The Debit Card When this is on, a payment a current account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows. Chase Savings covers Chase Total Checking, which pays the day’s spending and the Chase Freedom Unlimited’s autopay.');
+    expect(drawn(sim, BankPayments as FunctionComponent<{ bankId: string }>)).toContain('How the day’s spending is paid, and which account each payment comes from. How This Works The Day’s Spending In Cash, Then The Debit Card On The Credit Card On The Debit Card When this is on, a payment your checking account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows. Chase Savings covers Chase Total Checking, which pays the day’s spending and the Chase Freedom Unlimited’s autopay.');
     expect(drawn(sim, BankCash as FunctionComponent<{ bankId: string }>)).toContain('Cash You have $0.00 in cash. How This Works Amount To Take Out (USD)');
   });
 });
@@ -311,9 +311,9 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Borrowing, Statement
     const account = () => resolveLook(sim, lookAt('account', savings.id)) as Looked;
     setBalance(sim, savings, 250_00);
     expect(account().kind).toBe('Savings Account');
-    expect(account().summary).toBe('You have $250.00 in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.');
+    expect(account().summary).toBe('You have $250.00 in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the checking account can’t, and it pays off anything left unpaid.');
     setBalance(sim, savings, 0);
-    expect(account().summary).toBe('There’s nothing in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.');
+    expect(account().summary).toBe('There’s nothing in it at Chase. It’s money set aside. Where you’ve linked it, it pays what the checking account can’t, and it pays off anything left unpaid.');
     setBalance(sim, savings, -3_30);
     expect(account().summary).toBe('It’s $3.30 overdrawn at Chase, and every day it stays overdrawn can cost you.');
     expect((resolveLook(sim, lookAt('account', checking.id)) as Looked).summary).toMatch(/^You have \$[\d,.]+ in it at Chase\. It’s your primary account, so the day’s spending comes out of it\.$/);
@@ -326,7 +326,7 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Borrowing, Statement
       expect(owed && 'gone' in owed ? owed.gone : '').toBe('You don’t owe anyone anything, so there’s nothing to show here.');
     }
     const worth = resolveLook(sim, lookAt('networth', sim.player.id)) as Looked;
-    expect(worth.provenance).toBe('Added up from your accounts each time you look, and stored nowhere. Every payment behind it has a matching entry on the other side, and the books balance to the cent.');
+    expect(worth.provenance).toBe('It’s added up from all your accounts each time you look, so it’s right to the cent.');
     expect(text(worth.body)).toContain('is your primary account, where the day’s spending comes from.');
   });
 });
@@ -352,9 +352,9 @@ describe('PLAYER JOURNEY: a refused banking action says why and what to do', () 
     const [held, kept] = [checking.balance, savings.balance];
     expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: checking.id, amount: 1_00 })).toBe('From and To are the same account. Choose another account to move it to.');
     expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: 0 })).toBe('Enter how much to move.');
-    expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: held + 1_00 })).toBe(`${checking.name} has only ${formatMoney(held, 'USD')}, so nothing was moved.`);
+    expect(refused(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: held + 1_00 })).toBe(`${checking.name} has only ${formatMoney(held, 'USD')} available, so nothing was moved.`);
     expect(refused(sim, 'bank.open_savings', { bankId: 'us-chase' })).toBe('You already have a savings account at Chase.');
-    expect(refused(sim, 'bank.open_savings', { bankId: 'us-citi' })).toBe('You can only open savings at a bank where you have a current account.');
+    expect(refused(sim, 'bank.open_savings', { bankId: 'us-citi' })).toBe('You can only open savings at a bank where you have a checking account.');
     expect(refused(sim, 'bank.add_standing_order', { amount: 0, day: 1, toId: savings.id })).toBe('Enter how much to pay each month.');
     expect(refused(sim, 'bank.add_standing_order', { amount: 50_00, day: 40, toId: savings.id })).toBe('Pick a day of the month, 1 to 31.');
     expect(refused(sim, 'bank.cancel_standing_order', { id: 'none' })).toBe('That standing order no longer exists.');

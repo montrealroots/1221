@@ -87,11 +87,12 @@ const fullDay = (key: string): string => `${MONTHS[Number(key.slice(5, 7)) - 1]}
 /** An hour on the clock, 17 as 5:00 PM (from 2026-10-12: until then the appointment's and the session's read 10:00 and 17:00). */
 const clock = (hour: number): string => `${hour % 12 === 0 ? 12 : hour % 12}:00 ${hour < 12 ? 'AM' : 'PM'}`;
 /**
- * Where a bill or a premium paid from the current account comes from (`payFromCurrent`): the primary account, then the
- * easy-access savings at its bank where Savings Covers The Current Account is On, then its overdraft. Until 2026-10-12
- * this said "its overdraft or linked savings", which named neither the bank nor the order.
+ * Where a bill or a premium paid from the checking account comes from (`payFromCurrent`): the primary account, then the
+ * easy-access savings at its bank where Savings Covers The Checking Account is On, then its overdraft. Until 2026-10-12
+ * this said "its overdraft or linked savings", which named neither the bank nor the order. The control was Savings
+ * Covers The Current Account until brief 15's money area renamed it, and this moved with it at the merge.
  */
-const FROM_CURRENT = 'your checking account, then the easy-access savings at its bank where Savings Covers The Current Account is On, then its overdraft';
+const FROM_CURRENT = 'your checking account, then the easy-access savings at its bank where Savings Covers The Checking Account is On, then its overdraft';
 
 // ---------------------------------------------------------------------------
 // Where, and the chapter that opens it

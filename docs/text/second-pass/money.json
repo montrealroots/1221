@@ -1,0 +1,1801 @@
+{
+ "src/engine/content/cards.ts#CARD_LAW": {
+  "status": "Retained",
+  "hash": "d8d4e0b5c648",
+  "on": "2026-10-19",
+  "reason": "Each country's card law as it names itself, the act and article, with its source; a citation the cap line quotes",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/cards.ts#CARDS": {
+  "status": "Rewritten",
+  "hash": "2497849ab2bb",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts renders MUFG's published plans and rewards in English; tests/cards.test.ts and tests/cardoffers.test.ts read every card's terms, unchanged",
+  "first": "Pending"
+ },
+ "src/engine/content/currency.ts#RATES_NOTE": {
+  "status": "Retained",
+  "hash": "434b8cbc68d0",
+  "on": "2026-10-19",
+  "reason": "One sentence saying the exchange rates are estimated, not live market rates, shown where money converts",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/currency.ts#SYMBOLS": {
+  "status": "Retained",
+  "hash": "773a7a5062cc",
+  "on": "2026-10-19",
+  "reason": "Currency symbols as each country writes them, Ft, Rp, Rs, Kz and the rest, before a figure",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#businessDays": {
+  "status": "Retained",
+  "hash": "9ad26337dc53",
+  "on": "2026-10-19",
+  "reason": "A count of business days, one or several, written with the right plural for each figure",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#card": {
+  "status": "Retained",
+  "hash": "6e2e8bfc3ebf",
+  "on": "2026-10-19",
+  "reason": "A stand-in card name, Its Card, used only where the research holds no card for a bank",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#chapter": {
+  "status": "Retained",
+  "hash": "7c457d6af80e",
+  "on": "2026-10-19",
+  "reason": "The guide chapter's own title that opens a feature, or its chapter where none is found",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#CHASE_BANDS": {
+  "status": "Retained",
+  "hash": "2bef7ba11b25",
+  "on": "2026-10-19",
+  "reason": "Chase's early withdrawal penalty bands, days of interest by the length of the term, as its terms list them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#clockOf": {
+  "status": "Retained",
+  "hash": "535f5efe9016",
+  "on": "2026-10-19",
+  "reason": "When the US law's clock on a debit card report starts, from learning of it or from the statement",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#Fee": {
+  "status": "Retained",
+  "hash": "75f527181b57",
+  "on": "2026-10-19",
+  "reason": "The word Free at the head of a cost figure, where a bank charges nothing for something",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.accounts]": {
+  "status": "Rewritten",
+  "hash": "39070d251512",
+  "on": "2026-10-19",
+  "evidence": "Checking account throughout, Savings Covers The Checking Account named as the button reads; tests/guide-examples-money.test.ts plays the example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.borrowing]": {
+  "status": "Rewritten",
+  "hash": "2e15ccb6ab53",
+  "on": "2026-10-19",
+  "evidence": "The charge-off's years on the record, paid or not, and what paying it changes (m2); tests/guide-examples-money.test.ts plays the overdraft example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.card-offers]": {
+  "status": "Rewritten",
+  "hash": "8c8eab555e7b",
+  "on": "2026-10-19",
+  "evidence": "Checking account for the money transfer and its refusal; tests/defects-g21-1.test.ts and the example's play read the entry",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.card-security]": {
+  "status": "Rewritten",
+  "hash": "aa842cba2344",
+  "on": "2026-10-19",
+  "evidence": "Checking account in the new number line and the refusal; tests/guide-examples-money.test.ts plays the stranger's charge example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.card]": {
+  "status": "Rewritten",
+  "hash": "929667babb77",
+  "on": "2026-10-19",
+  "evidence": "The short says pay the whole statement every month; the statement's minimum payment named; tests/language-crossarea-raise.test.ts reads the limit lines",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
+  "status": "Rewritten",
+  "hash": "f7ce8a70f12b",
+  "on": "2026-10-19",
+  "evidence": "The cash refusals quoted as the game says them now, has only … available; tests/guide-examples-money.test.ts plays the ATM example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.home-account]": {
+  "status": "Rewritten",
+  "hash": "fca9c1512cc3",
+  "on": "2026-10-19",
+  "evidence": "Checking account and the German fees in the glossary's words; tests/decisions-arion.test.ts reads Arion's line, the example is played",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.other-banks]": {
+  "status": "Rewritten",
+  "hash": "d4d4a104c57c",
+  "on": "2026-10-19",
+  "evidence": "Checking account throughout and the fees held over for the quarter's closing; tests/guide-examples-money.test.ts plays the Bank of America example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.payments]": {
+  "status": "Rewritten",
+  "hash": "a207de90f7b9",
+  "on": "2026-10-19",
+  "evidence": "Checking account and the button Savings Covers The Checking Account; tests/guide-examples-money.test.ts plays the standing order example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.round-ups]": {
+  "status": "Rewritten",
+  "hash": "39ddc56d59eb",
+  "on": "2026-10-19",
+  "evidence": "The short says where to turn them on, ING's floor written as €20; tests/guide-examples-money.test.ts plays NatWest's example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.term]": {
+  "status": "Rewritten",
+  "hash": "043c046258b0",
+  "on": "2026-10-19",
+  "evidence": "The short gives the first action, Put It Away, and checking account throughout; tests/guide-examples-money.test.ts plays the CD broken early",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.transfer]": {
+  "status": "Rewritten",
+  "hash": "703f5a0126e4",
+  "on": "2026-10-19",
+  "evidence": "The short leads with the action, the Moved message names the account; tests/guide-examples-money.test.ts reads the quote and plays it",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [bank.upkeep]": {
+  "status": "Rewritten",
+  "hash": "6474e637b8da",
+  "on": "2026-10-19",
+  "evidence": "tests/guide-examples-money.test.ts plays the dormant savings example; tools/guide-quotes.mjs --check reads every quoted refusal, 582 of 582",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [evaluation]": {
+  "status": "Retained",
+  "hash": "c49bcc3400f6",
+  "on": "2026-10-19",
+  "reason": "What a card's record decides, a loan or an overdraft and its rate, each said once in a sentence",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/money.ts#MONEY [history]": {
+  "status": "Retained",
+  "hash": "b8666b410d42",
+  "on": "2026-10-19",
+  "reason": "The one history connection: a debt sent to collections stays in Owed until it's paid",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/money.ts#MONEY [immediate]": {
+  "status": "Rewritten",
+  "hash": "50fe7f01ba93",
+  "on": "2026-10-19",
+  "evidence": "Checking account in the money transfer and payments connections; tests/guide.test.ts reads every connection's target",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [money.affairs]": {
+  "status": "Rewritten",
+  "hash": "f3b05c9f3545",
+  "on": "2026-10-19",
+  "evidence": "Checking account in what In The Bank counts; tests/guide-examples-money.test.ts plays the example and reads Credit Used's points",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [optional]": {
+  "status": "Retained",
+  "hash": "d9404acc24c2",
+  "on": "2026-10-19",
+  "reason": "Why an optional entry is worth reading with this one, a sentence each, naming the control and the tab",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/money.ts#MONEY [prerequisite]": {
+  "status": "Rewritten",
+  "hash": "e5263e0a501f",
+  "on": "2026-10-19",
+  "evidence": "Checking account, and the button Savings Covers The Checking Account as the screen names it; tests/guide.test.ts reads each target",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/money.ts#MONEY [scheduled]": {
+  "status": "Rewritten",
+  "hash": "16bf4b736f6d",
+  "on": "2026-10-19",
+  "evidence": "Checking account in the round-ups and accounts connections; tests/guide.test.ts reads every connection's target",
+  "first": "Pending"
+ },
+ "src/engine/core/ledger.ts#Ledger": {
+  "status": "Retained",
+  "hash": "343a76f5b8cf",
+  "on": "2026-10-19",
+  "reason": "Integrity errors the ledger throws only on a bug in the game, never on anything a player does",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/money.ts#formatMoney": {
+  "status": "Retained",
+  "hash": "5a7bd4149d0d",
+  "on": "2026-10-19",
+  "reason": "The locale tag en-US that formats figures, a code the player never reads as words",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#breakQuote": {
+  "status": "Retained",
+  "hash": "9d61b70130ef",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for a bank that won't break a term deposit before its end, the bank named as the one whose rule it is",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#breakTerm": {
+  "status": "Retained",
+  "hash": "28eea0865af5",
+  "on": "2026-10-19",
+  "reason": "Statement lines for a term deposit broken early, its interest, the tax on it and the Early Withdrawal Penalty, as a bank statement names them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#cancelRefusal": {
+  "status": "Rewritten",
+  "hash": "607cccfd6069",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-money.test.ts and tests/remaining-banking.test.ts read each refusal of Cancel It, the fees and the interest going back, ending in Move … into it first",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#cancelWords": {
+  "status": "Retained",
+  "hash": "d4cf0e0af276",
+  "on": "2026-10-19",
+  "reason": "What canceling in the cooling-off period gives back, the money with or without its interest and the fees refunded or owed, for the panel's sentence",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#creditInterest": {
+  "status": "Retained",
+  "hash": "376e315a4b81",
+  "on": "2026-10-19",
+  "reason": "Interest and Tax On Interest are ledger account names the code reads back by name, posted as a term deposit pays interest during its term",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#END_WORDS": {
+  "status": "Rewritten",
+  "hash": "f8a900e1204c",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts, it('a TD term deposit, paid out at its end, says it goes into the checking account') renders the term deposit panel",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#endTerm": {
+  "status": "Retained",
+  "hash": "6c4deb0aa890",
+  "on": "2026-10-19",
+  "reason": "Statement lines for a term deposit's end, ended into the account it went to, and its interest reinvested on a renewal, as a bank names them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#idleAccounts": {
+  "status": "Rewritten",
+  "hash": "d900fc7c6be7",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('savings left unused nearly three years …') and tests/evidence-g10-money.test.ts Unclaimed Money read the years in words",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife": {
+  "status": "Rewritten",
+  "hash": "8a1079f4a42c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b04.test.ts and tests/evidence-g10-money.test.ts read Your Fixed-Term Savings Closed going to your checking account",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.break_term>": {
+  "status": "Retained",
+  "hash": "0c41c5990e26",
+  "on": "2026-10-19",
+  "reason": "Says a term deposit already closes on a date, on the notice you gave, so there is nothing more to break",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.cancel_new>": {
+  "status": "Rewritten",
+  "hash": "8a0d592792f1",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a new account that is the primary one can’t be canceled, and says to make another primary')",
+  "first": "Pending"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.claim_unclaimed>": {
+  "status": "Retained",
+  "hash": "3c864607e767",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal with nothing held as unclaimed, and the statement line for money returned from the state's office",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.reactivate>": {
+  "status": "Retained",
+  "hash": "d23ace4b54db",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for Reactivate on an account that isn't dormant, saying exactly why nothing changed",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.set_term_end>": {
+  "status": "Retained",
+  "hash": "0cef3fb9c2d1",
+  "on": "2026-10-19",
+  "reason": "Says why a term deposit's end can't be changed: not yours, a way the bank doesn't allow, or too near the end for its days of notice",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <bank.take_term_interest>": {
+  "status": "Retained",
+  "hash": "45361e5db4cd",
+  "on": "2026-10-19",
+  "reason": "Says a bank pays a term deposit's interest only at its end, or that nothing is earned yet, the two reasons Take The Interest does nothing",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#registerAccountLife <world.day_rollover>": {
+  "status": "Retained",
+  "hash": "101aab3fb130",
+  "on": "2026-10-19",
+  "reason": "The ends-soon notice says the date, what will happen to the money, until when it can be changed, and the penalty-free days after a renewal",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/accountlife.ts#unclaimedLaw": {
+  "status": "Retained",
+  "hash": "140ed7ad34f0",
+  "on": "2026-10-19",
+  "reason": "Names where unclaimed money goes and how to claim it back, the state's unclaimed-property office, with Connecticut's statute cited for the three years in the fine print",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/accountlife.ts#yearsWord": {
+  "status": "Rewritten",
+  "hash": "fbe0b376cab4",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('savings left unused nearly three years …') reads the years in words in the bank's letter",
+  "first": "Pending"
+ },
+ "src/engine/systems/banking.ts#cardYearWords": {
+  "status": "Rewritten",
+  "hash": "0c6e1d23be94",
+  "on": "2026-10-19",
+  "evidence": "tests/decisions-arion.test.ts, it('PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly at midnight …') renders the Accounts panel's whole card-year paragraph in the new words",
+  "first": "Pending"
+ },
+ "src/engine/systems/banking.ts#closeSavings": {
+  "status": "Retained",
+  "hash": "364b3dc46c3a",
+  "on": "2026-10-19",
+  "reason": "The statement line for interest paid as a savings account closes, named with the account, as a bank's own entry reads; saves keep the memo as written",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/banking.ts#closingFeesWords": {
+  "status": "Rewritten",
+  "hash": "db7cfbfb1d0f",
+  "on": "2026-10-19",
+  "evidence": "tests/decisions-arion.test.ts, it('PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr …') and the paid-behind FIXTURE render both card-year shares under Close It",
+  "first": "Pending"
+ },
+ "src/engine/systems/banking.ts#endedWords": {
+  "status": "Rewritten",
+  "hash": "3c51be0fa387",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-banking.test.ts, it('FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld …') and it('PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither …') assert the closing notice’s new sentence",
+  "first": "Pending"
+ },
+ "src/engine/systems/banking.ts#feesWords": {
+  "status": "Rewritten",
+  "hash": "a794a0236b4e",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-09-banking.test.ts, it('PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student …'), the month's-edges and ING journeys, and tests/scope-money.test.ts render every variant on Your Banks",
+  "first": "Pending"
+ },
+ "src/engine/systems/banking.ts#payInterest": {
+  "status": "Retained",
+  "hash": "376e315a4b81",
+  "on": "2026-10-19",
+  "reason": "Interest and Tax On Interest are ledger account names the lending code reads back and The Year shows as row labels, so they are keys as well as labels",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/banking.ts#rebank": {
+  "status": "Retained",
+  "hash": "036a27e74459",
+  "on": "2026-10-19",
+  "reason": "Names a card moved from a save made before the real banks as its bank's credit card, Chase Credit Card, a plain product name a statement shows",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/banking.ts#registerBanking": {
+  "status": "Rewritten",
+  "hash": "d47789847c99",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a Chase Total Checking left overdrawn at the month’s end …') and the quarterly AktivKonto case, with tests/home-account-screens.test.ts and tests/evidence-g11-money.test.ts, read the statement notice",
+  "first": "Pending"
+ },
+ "src/engine/systems/banking.ts#registerBanking <bank.close_savings>": {
+  "status": "Rewritten",
+  "hash": "8644bcd74450",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('closing savings with no checking account to take the money says so') asserts the new refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/banking.ts#registerBanking <bank.open_savings>": {
+  "status": "Rewritten",
+  "hash": "b9c6b70de640",
+  "on": "2026-10-19",
+  "evidence": "tests/language-money.test.ts, it('refuses a move, savings and a standing order in words that name the obstacle, and moves nothing') asserts the checking-account refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/banking.ts#registerBanking <bank.transfer>": {
+  "status": "Rewritten",
+  "hash": "472effb1e435",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts (m1, both cases), tests/language-money.test.ts it('refuses a move, savings and a standing order in words that name the obstacle, and moves nothing'), tests/evidence-g12-money.test.ts dormant case, tests/remaining-banking.test.ts nothing available",
+  "first": "Pending"
+ },
+ "src/engine/systems/banking.ts#registerBanking <world.day_rollover>": {
+  "status": "Retained",
+  "hash": "56ef4cab4752",
+  "on": "2026-10-19",
+  "reason": "The statement line for a monthly fee taken on the 1st, Monthly fee and the account's name, against Bank Fees, as a bank statement names the charge",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/banking.ts#scheduleMonthEnd": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "The label of the month's-end item on the clock's own schedule, category system, which the calendar filters out, so no player reads it as an event",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/banking.ts#settleFees": {
+  "status": "Retained",
+  "hash": "a407a62abe58",
+  "on": "2026-10-19",
+  "reason": "Statement lines for a closing's fees and a debit card year refunded or charged to the closing day, each naming the account, as a bank statement lists them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/bankmoves.ts#closedByBank": {
+  "status": "Retained",
+  "hash": "01673e889f10",
+  "on": "2026-10-19",
+  "reason": "The bank's closing notice names the bank and the account, gives the bank's own reason, then where its leftover interest went and the day it lands",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/bankmoves.ts#closeNow": {
+  "status": "Retained",
+  "hash": "364b3dc46c3a",
+  "on": "2026-10-19",
+  "reason": "The statement line for interest paid as a checking account closes, the account named, as the bank's own entry for it reads; saves keep the memo",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/bankmoves.ts#closeRefusal": {
+  "status": "Rewritten",
+  "hash": "33ea0e51a621",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts it('refuses Chase as her only current account …'), tests/home-account-abroad.test.ts SMBC fee case, tests/scope-money.test.ts and tests/remaining-09-banking.test.ts assert each refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#inTransitOf [escrow]": {
+  "status": "Retained",
+  "hash": "a433c996d27f",
+  "on": "2026-10-19",
+  "reason": "Money In Transit is the plain name of the holding account money sits in between two of your banks, shown as an account name on statements",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/bankmoves.ts#limitRefusal": {
+  "status": "Retained",
+  "hash": "6c55a3f1bc17",
+  "on": "2026-10-19",
+  "reason": "Names Citi's own published limit for sending to other banks, a day's or a month's, and what you've already sent against it, so the player sees exactly why it stopped",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/bankmoves.ts#openApproved": {
+  "status": "Retained",
+  "hash": "1935c6fb64f2",
+  "on": "2026-10-19",
+  "reason": "Your New Card Arrives is the calendar entry for the day a new account's debit card comes, a Title Case event name that says what happens that day",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/bankmoves.ts#openRefusal": {
+  "status": "Rewritten",
+  "hash": "1f7744fa8260",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b05.test.ts, it('refuses a bank in London as no bank where she lives …') and tests/language-money.test.ts, it('refuses in words that say why and what to do next') assert the new refusals",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#PRIMARY_DOES": {
+  "status": "Rewritten",
+  "hash": "319ed32f2983",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts, it('shows Chase as Primary and Make Primary on Capital One …') renders Your Banks with the list joined into one sentence, and tests/bank-moves.test.ts compares the command's answer",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves": {
+  "status": "Rewritten",
+  "hash": "ba7ecafc0df6",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts, it('keeps Citi open while its groceries are pending, refuses a second close, and on its date leaves it open with a Didn’t Close notice …') reads the new notice body",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.close_current>": {
+  "status": "Rewritten",
+  "hash": "7dfe1fbb05b8",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-09-banking.test.ts and tests/decisions-arion.test.ts assert Only one of your own checking accounts can be closed here on the command",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.open_current>": {
+  "status": "Rewritten",
+  "hash": "7af6cd43a26a",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts, it('refuses an opening deposit from a card, from an account at the bank itself, of nothing or less, and of more than the account holds …') asserts each",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.redirect_deposits>": {
+  "status": "Rewritten",
+  "hash": "ded11a322c90",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('wages sent to a card, autopay from savings and a dated payment from a term deposit are each refused in plain words')",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.set_order_source>": {
+  "status": "Rewritten",
+  "hash": "d51e5405af2f",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts, it('refuses an order it doesn’t know, a savings account or a card to pay from, and Citi while it closes …') asserts the new refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <bank.set_primary>": {
+  "status": "Rewritten",
+  "hash": "f201f111e5dd",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts, it('refuses one primary already, a savings account, a card, an account the bank closed and Citi while it closes …') asserts the new refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <card.set_autopay_from>": {
+  "status": "Rewritten",
+  "hash": "fcb6a11b70e3",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('wages sent to a card, autopay from savings and a dated payment from a term deposit are each refused in plain words')",
+  "first": "Pending"
+ },
+ "src/engine/systems/bankmoves.ts#registerBankMoves <world.day_rollover>": {
+  "status": "Retained",
+  "hash": "25dc204a9d14",
+  "on": "2026-10-19",
+  "reason": "Each opens the closing notice with the bank's own condition and its days, no money paid in within 60 days or 90 days at zero, plainly as the cause",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/bankmoves.ts#sendBetweenBanks": {
+  "status": "Retained",
+  "hash": "60779f1e51bd",
+  "on": "2026-10-19",
+  "reason": "Statement lines for money sent to another bank, To and the account at the bank, and the calendar entry Money Arrives From Your Other Bank for the day it lands",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/banknumber.ts#accountNumber": {
+  "status": "Retained",
+  "hash": "f6f1e4f9c5fe",
+  "on": "2026-10-19",
+  "reason": "Account numbers in each country's own format, routing, transit, sort code or BSB, as a bank prints them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/cardlife.ts#armCardLife": {
+  "status": "Retained",
+  "hash": "1935c6fb64f2",
+  "on": "2026-10-19",
+  "reason": "Your New Card Arrives is the calendar entry for an approved card's day, a Title Case event name saying what happens that day",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/cardlife.ts#registerCardLife": {
+  "status": "Retained",
+  "hash": "12a579df75db",
+  "on": "2026-10-19",
+  "reason": "The arrival notice names the card and its limit in one sentence, and Bank Credit Card names a card whose product the research doesn't have",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/cardlife.ts#registerCardLife <card.apply>": {
+  "status": "Rewritten",
+  "hash": "14db170ae0e6",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g13-money.test.ts score case, tests/evidence-g10-money.test.ts collections case and tests/editorial-money.test.ts empty-bank case read the declined notice",
+  "first": "Pending"
+ },
+ "src/engine/systems/cardlife.ts#registerCardLife <card.close>": {
+  "status": "Retained",
+  "hash": "83ff38c63952",
+  "on": "2026-10-19",
+  "reason": "Two one-line refusals for Close The Card, no card held or already closing, each the plain reason nothing happened",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/cardlife.ts#registerCardLife <card.request_hardship>": {
+  "status": "Retained",
+  "hash": "a3e8a8370edd",
+  "on": "2026-10-19",
+  "reason": "Each says why help with payments is refused: already on a plan, nothing owed, or able to pay it off today, which is what a hardship plan isn't for",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>": {
+  "status": "Retained",
+  "hash": "b8bf2a9e626d",
+  "on": "2026-10-19",
+  "reason": "A declined limit says the limit stays where it was and the bank's three conditions for raising one, the score, no late payment in a year, money to repay",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/cardlife.ts#registerCardLife <card.set_auto_raise>": {
+  "status": "Retained",
+  "hash": "641e19ef8b53",
+  "on": "2026-10-19",
+  "reason": "The single refusal for the automatic raise with no card held, You don't have a card, the plain and only reason",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/cardlife.ts#registerCardLife <card.set_over_limit>": {
+  "status": "Retained",
+  "hash": "3afecb1fc4cf",
+  "on": "2026-10-19",
+  "reason": "Says over-limit opt-in exists only on a US card, the rule behind the button that only a US card shows",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/cardlife.ts#registerCardLife <card.set_statement_day>": {
+  "status": "Retained",
+  "hash": "c3e903f9f8cc",
+  "on": "2026-10-19",
+  "reason": "Pick a day from the 1st to the 28th names the only days a statement can fall on, written as the Statement Day list writes them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/cardoffers.ts#registerCardOffers <card.money_transfer>": {
+  "status": "Rewritten",
+  "hash": "21458b7f203b",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a money transfer with no checking account to take it is refused, and nothing moves')",
+  "first": "Pending"
+ },
+ "src/engine/systems/cardoffers.ts#registerCardOffers <card.plan>": {
+  "status": "Retained",
+  "hash": "356c6fdb1e55",
+  "on": "2026-10-19",
+  "reason": "Each refusal names the plan's own limit: no terms found for the card, the lengths a plan runs for, how much of purchases can go in, its smallest amount",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/cardoffers.ts#registerCardOffers <card.redeem_rewards>": {
+  "status": "Retained",
+  "hash": "d900d62a7784",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal with no rewards to redeem, and the statement line Rewards redeemed under Card Rewards, as a card statement names it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/cardoffers.ts#statementOffers": {
+  "status": "Retained",
+  "hash": "eaaeacd55517",
+  "on": "2026-10-19",
+  "reason": "Statement lines for a transfer's and a plan's interest and a plan's fee, under Card Interest and Card Fees, as a card statement names its charges",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/cardoffers.ts#transferOnArrival": {
+  "status": "Rewritten",
+  "hash": "69cdca1a9018",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a balance moved onto a new card names both cards, the fee, the rate and when it ends')",
+  "first": "Pending"
+ },
+ "src/engine/systems/cardoffers.ts#transferRefusal": {
+  "status": "Retained",
+  "hash": "dfb3753c8488",
+  "on": "2026-10-19",
+  "reason": "Says exactly why a balance can't move: no card to move from, same bank, no terms found, nothing owed, or the new limit too small with the fee, and to pay the old card down",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/cash.ts#registerCash <cash.deposit>": {
+  "status": "Rewritten",
+  "hash": "6a205ee6cd39",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g12-money.test.ts reads the checking-or-savings refusal and the dormant refusal of Pay It In",
+  "first": "Pending"
+ },
+ "src/engine/systems/cash.ts#registerCash <cash.withdraw>": {
+  "status": "Retained",
+  "hash": "c2ff671acd5e",
+  "on": "2026-10-19",
+  "reason": "Two refusals naming what the form needs, an amount and where to take it from, with the places listed, and the statement lines for cash and its fees",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/cash.ts#shortWords": {
+  "status": "Rewritten",
+  "hash": "6b21336a45d3",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-refusals.test.ts and tests/evidence-g12-money.test.ts read has only … available and has nothing available",
+  "first": "Pending"
+ },
+ "src/engine/systems/cash.ts#walletOf [cash]": {
+  "status": "Retained",
+  "hash": "7c86c81e9979",
+  "on": "2026-10-19",
+  "reason": "Cash In Hand names the money you carry as an account, as the Cash panel, statements and Home show it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/cash.ts#withdrawalQuote": {
+  "status": "Rewritten",
+  "hash": "764ca8537274",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g12-money.test.ts cash.withdraw dormant case and tests/editorial-money.test.ts no-checking case read the new refusals",
+  "first": "Pending"
+ },
+ "src/engine/systems/credit.ts#afterMissed": {
+  "status": "Rewritten",
+  "hash": "315b294867b7",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b11.test.ts, it('PLAYER JOURNEY: her everyday spending put on the card … the autopay bounces …') reads the suspension notice in What Needs You",
+  "first": "Pending"
+ },
+ "src/engine/systems/credit.ts#chargeOff": {
+  "status": "Rewritten",
+  "hash": "095741b7a618",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a card charged off says how long it stays on the record, paid or not, and where to pay the debt')",
+  "first": "Pending"
+ },
+ "src/engine/systems/credit.ts#persistentDebt": {
+  "status": "Retained",
+  "hash": "6e47e1c10e3d",
+  "on": "2026-10-19",
+  "reason": "Britain's persistent-debt notices: the eighteen-month warning with what paying more would do and the button to press, then the plan with its monthly payment",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/credit.ts#refundCredit": {
+  "status": "Retained",
+  "hash": "f2b303b78317",
+  "on": "2026-10-19",
+  "reason": "The statement line for a card's credit balance sent back to your account, named with the card, as a bank's own entry reads",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/credit.ts#registerCredit": {
+  "status": "Rewritten",
+  "hash": "04ceda6b82bd",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g28-ui.test.ts it('PLAYER JOURNEY: the same groceries on the card each midnight …'), tests/evidence-g12-money.test.ts bounce case, tests/evidence2-b04.test.ts late case, tests/editorial-money.test.ts works-again case",
+  "first": "Pending"
+ },
+ "src/engine/systems/credit.ts#registerCredit <card.refund_credit>": {
+  "status": "Retained",
+  "hash": "1522cda99262",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for a card with no credit balance, The card holds no credit to send back, which is exactly why Send The Credit does nothing",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/credit.ts#registerCredit <card.set_everyday>": {
+  "status": "Retained",
+  "hash": "03533ca54b50",
+  "on": "2026-10-19",
+  "reason": "Two short refusals for making a card the everyday one: it isn't yours, or it's closing so nothing new can go on it, each the exact obstacle",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/credit.ts#registerCredit <finance.pay_card>": {
+  "status": "Rewritten",
+  "hash": "0885829c9740",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g13-money.test.ts, it('is refused in its own words: nothing owed, nothing to pay, nothing in the bank, no card; and a refusal moves nothing')",
+  "first": "Pending"
+ },
+ "src/engine/systems/credit.ts#registerCredit <finance.set_autopay>": {
+  "status": "Retained",
+  "hash": "99ecfbf5c1d2",
+  "on": "2026-10-19",
+  "reason": "Says why a charge card's autopay can't be set to the minimum: its bank takes the whole statement each month and the card can't carry a balance",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/credit.ts#scheduleDue": {
+  "status": "Retained",
+  "hash": "2414aa1ad2bb",
+  "on": "2026-10-19",
+  "reason": "Card Payment Due is the calendar entry for a card's due date, the glossary's due date as a plain Title Case event name",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/credit.ts#scheduleStatement": {
+  "status": "Retained",
+  "hash": "1a95e2ac3d22",
+  "on": "2026-10-19",
+  "reason": "Card Statement is the calendar entry for the day a card's statement is cut, a Title Case event name that says what happens that day",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/credit.ts#scoreWord": {
+  "status": "Retained",
+  "hash": "9a57db6328d7",
+  "on": "2026-10-19",
+  "reason": "The five bands a credit score falls in, Exceptional to Poor, the names the US scoring model gives them, shown beside the score as a plain grade",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/credit.ts#statementDayRefusal": {
+  "status": "Retained",
+  "hash": "c5ba0e095895",
+  "on": "2026-10-19",
+  "reason": "Says why the statement day can't move again yet, since it moved once this cycle, and exactly when it can: once the next statement comes",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/credit.ts#statementWords": {
+  "status": "Rewritten",
+  "hash": "4f8831bf0f77",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g28-ui.test.ts it('PLAYER JOURNEY: the same groceries on the card each midnight …') and tests/evidence-g34-ui.test.ts read the statement notice for both autopay settings, exact",
+  "first": "Pending"
+ },
+ "src/engine/systems/earnings.ts#ukTaxYear": {
+  "status": "Retained",
+  "hash": "3619d14fbb18",
+  "on": "2026-10-19",
+  "reason": "The time zone Europe/London that the UK tax year is counted in, never shown to the player",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/earnings.ts#workedBetween": {
+  "status": "Retained",
+  "hash": "163e86a66a08",
+  "on": "2026-10-19",
+  "reason": "The statement memo for Yale's summer cabaret stipend, as the payroll line names the payment",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homeaccount.ts#before": {
+  "status": "Rewritten",
+  "hash": "b2911d709f08",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a life outside Yale is asked where it lived before it came here, not before “this life”')",
+  "first": "Pending"
+ },
+ "src/engine/systems/homeaccount.ts#closesOn": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "America/New_York is a time zone id for the closing date's arithmetic, read by the clock and never shown to a player",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homeaccount.ts#countryWord": {
+  "status": "Retained",
+  "hash": "506678eabb74",
+  "on": "2026-10-19",
+  "reason": "America for the United States, as the home account's rule says it, and that country where the atlas has no name",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homeaccount.ts#homeAccountRefusal": {
+  "status": "Rewritten",
+  "hash": "a095a1d86c0c",
+  "on": "2026-10-19",
+  "evidence": "tests/home-account-creation.test.ts reads the moved-there and the game-doesn't-know refusals on Starting Point's Before Yale",
+  "first": "Pending"
+ },
+ "src/engine/systems/homeaccount.ts#openHomeAccount": {
+  "status": "Retained",
+  "hash": "437c836e40bb",
+  "on": "2026-10-19",
+  "reason": "Statement lines for a home account's opening balance, against Opening Balances, as a bank's first statement line names it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homeaccount.ts#startOf": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "America/New_York is a time zone id, the default where a start town has none, read by the clock and never shown to a player",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/homeaccount.ts#whatFollows": {
+  "status": "Rewritten",
+  "hash": "6e443a49dfcc",
+  "on": "2026-10-19",
+  "evidence": "tests/home-account-creation.test.ts reads the opening float sentence and the assumed opening age on Starting Point",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#cardYearNight": {
+  "status": "Retained",
+  "hash": "5a8a82de57d3",
+  "on": "2026-10-19",
+  "reason": "The statement line for a debit card's yearly fee, against Bank Fees, as a bank statement names the charge",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#chargeForItem": {
+  "status": "Retained",
+  "hash": "69fd1f5b6862",
+  "on": "2026-10-19",
+  "reason": "The statement line for an overdraft fee on an item, Overdraft fee against Bank Fees, the bank's own name for the charge",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#chargeForPurchase": {
+  "status": "Retained",
+  "hash": "c81eddddc4b0",
+  "on": "2026-10-19",
+  "reason": "The statement lines for a foreign transaction fee and a debit card purchase fee, against Bank Fees, as a statement names them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#chargeReturned": {
+  "status": "Retained",
+  "hash": "fb3ac8383b08",
+  "on": "2026-10-19",
+  "reason": "The statement line for a payment returned unpaid, Returned payment fee against Bank Fees, the bank's own name for it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#closeForOverdraft": {
+  "status": "Rewritten",
+  "hash": "4f0e8ba3f9c3",
+  "on": "2026-10-19",
+  "evidence": "tests/home-account-setoff.test.ts reads Chase Took What It Was Owed opening on the account's name, and the Closed An Account variant",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#closeForOverdraft [loan]": {
+  "status": "Retained",
+  "hash": "6b79fdbc1194",
+  "on": "2026-10-19",
+  "reason": "Owed To Chase, In Collections names the charged-off debt as an account, the bank's name first, as Borrowing shows it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#collectionsOf": {
+  "status": "Retained",
+  "hash": "52e05f867cfc",
+  "on": "2026-10-19",
+  "reason": "The debt's account name ends In Collections, after the bank's name, as Owed To Chase, In Collections reads on Borrowing and statements",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#collectionsSource": {
+  "status": "Retained",
+  "hash": "103e883cd204",
+  "on": "2026-10-19",
+  "reason": "Charged off by and Charged off: are statement memos the In Collections panel reads back to tell an account's charge-off from a card's, so they are keys",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#completeSwitch": {
+  "status": "Retained",
+  "hash": "bff4fd7939ec",
+  "on": "2026-10-19",
+  "reason": "Each switch outcome says what opened, where wages, standing orders and autopay went, what stays in the old account and the one step to clear it; decision 4's words",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#frenchOverrun": {
+  "status": "Rewritten",
+  "hash": "e9d3eb501eff",
+  "on": "2026-10-19",
+  "evidence": "tests/home-account-setoff.test.ts reads BNP Paribas Wrote About Your Overrun with the rate said as what it's charged on",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#loanOffer": {
+  "status": "Rewritten",
+  "hash": "1834a97bd984",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g10-money.test.ts bank.borrow cases read the score floor and both payment-share refusals with their figures",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#monthlyCharges": {
+  "status": "Retained",
+  "hash": "e23a610db95e",
+  "on": "2026-10-19",
+  "reason": "The statement lines for a dormant account's fee, a second-chance account's and a quiet month's, against Bank Fees, as a statement names each charge",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#overdraftOffer": {
+  "status": "Rewritten",
+  "hash": "43e1937d2dac",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('an overdraft asked for under the score floor says the score the game arranges one from')",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#refundInterestTax": {
+  "status": "Retained",
+  "hash": "74955f46f5d7",
+  "on": "2026-10-19",
+  "reason": "Says the tax assessment gave back part of the tax taken on last year's interest, with the figure, and the statement line for it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#registerLending": {
+  "status": "Rewritten",
+  "hash": "199b1fbd61c7",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g11-money.test.ts, the Citi loan case, reads A Missed Loan Payment naming the loan and the empty account",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending [loan]": {
+  "status": "Retained",
+  "hash": "36c89f16cb06",
+  "on": "2026-10-19",
+  "reason": "The loan's account name, the bank's name and Personal Loan, as Borrowing and statements show it, plain and Title Case",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.arrange_overdraft>": {
+  "status": "Rewritten",
+  "hash": "b90d80fc56eb",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('an overdraft or a loan on an account that isn’t one of your checking accounts is refused in plain words')",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.borrow>": {
+  "status": "Rewritten",
+  "hash": "24689b641ff8",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('an overdraft or a loan on an account that isn’t one of your checking accounts is refused in plain words')",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.cancel_switch>": {
+  "status": "Retained",
+  "hash": "1e9af9aedd27",
+  "on": "2026-10-19",
+  "reason": "Decision 4's refusals for calling off a switch: none under way, a service that doesn't allow it, the last day it could, and the confirmation of what stays",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.debit_overdraft>": {
+  "status": "Retained",
+  "hash": "65afa5a86822",
+  "on": "2026-10-19",
+  "reason": "Says the opt-in isn't offered at this bank, or that the bank never pays a debit card purchase into an overdraft, the bank's own rule",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.open_term>": {
+  "status": "Rewritten",
+  "hash": "678042f1058e",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g10-money.test.ts asserts the checking-account refusal and the has-only-available refusal of Put It Away",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.pay_collections>": {
+  "status": "Rewritten",
+  "hash": "4c052a19d323",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g10-money.test.ts, it('closes an account overdrawn for sixty days by the clock into a debt Chase’s own …') asserts the new refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.repay_loan>": {
+  "status": "Retained",
+  "hash": "c747b8c408e4",
+  "on": "2026-10-19",
+  "reason": "Says the repayment account can't cover the payoff, with the figure, and that nothing was paid, the refusal shape for money that isn't there",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.set_loan_repayment>": {
+  "status": "Rewritten",
+  "hash": "e4caab3e429a",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts asserts both refusals of Repay From This Account, a savings account and Citi while it closes",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.stop_balance_transfer>": {
+  "status": "Retained",
+  "hash": "5e126cfe3945",
+  "on": "2026-10-19",
+  "reason": "Decision 4's refusals for stopping a balance transfer: none under way, no such step, already stopped, too late, and the confirmation saying what stays where",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.switch>": {
+  "status": "Rewritten",
+  "hash": "65a30427117d",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-09-banking.test.ts asserts You can only switch to a bank in the country you live in",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <bank.take_overrun_loan>": {
+  "status": "Rewritten",
+  "hash": "d54becb326ee",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g18-1.test.ts asserts That isn’t one of your open checking accounts on the command",
+  "first": "Pending"
+ },
+ "src/engine/systems/lending.ts#registerLending <world.day_rollover>": {
+  "status": "Retained",
+  "hash": "5a3733e59d20",
+  "on": "2026-10-19",
+  "reason": "A term deposit's three endings each say where the money is now: renewed at its rate with its penalty-free window, moved into savings, or paid out after tax",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#scheduleLoan": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "The label of a loan's due item on the clock's own schedule, category system, which the calendar filters out, so no player reads it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#settleOverdraftInterest": {
+  "status": "Retained",
+  "hash": "ff547c6525e1",
+  "on": "2026-10-19",
+  "reason": "The statement line for overdraft interest charged as an account closes, against Overdraft Interest, a ledger name the code reads by name",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#settlePendingItems": {
+  "status": "Retained",
+  "hash": "69fd1f5b6862",
+  "on": "2026-10-19",
+  "reason": "The statement line for an overdraft fee charged once its next-day window passes, Overdraft fee against Bank Fees",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/lending.ts#switchApplicationRefusal": {
+  "status": "Retained",
+  "hash": "192aa298f704",
+  "on": "2026-10-19",
+  "reason": "Each says why the new bank won't take a switch: a debt it charged off, a ChexSystems report and until when, no photo ID and where to get one, age, US persons only",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/obligations.ts#accountAlerts": {
+  "status": "Rewritten",
+  "hash": "0218116077fc",
+  "on": "2026-10-19",
+  "evidence": "tests/language-dynamic.test.ts reads Short For A Payment saying what the account has available, as the payment takes it",
+  "first": "Pending"
+ },
+ "src/engine/systems/obligations.ts#obligationsAhead": {
+  "status": "Retained",
+  "hash": "6da2a249684d",
+  "on": "2026-10-19",
+  "reason": "The payment named in Short For A Payment, a standing order, autopay or loan, with what to do about it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/payments.ts#armPayments": {
+  "status": "Retained",
+  "hash": "fa7b6a2fad5b",
+  "on": "2026-10-19",
+  "reason": "Standing Order is the calendar entry for each month's payment into savings, the glossary's term as a Title Case event name",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/payments.ts#blockedBy": {
+  "status": "Rewritten",
+  "hash": "8b7143d80988",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g16-1.test.ts, it('makes no payment set for a date out of an account a switch left in debt, or into one closing') reads the notice built from it",
+  "first": "Pending"
+ },
+ "src/engine/systems/payments.ts#coveredBanks": {
+  "status": "Retained",
+  "hash": "32292255465d",
+  "on": "2026-10-19",
+  "reason": "Joins the banks of the paying accounts as a sentence names them, Citi or Chase, falling back to your bank where an account has no institution",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/payments.ts#registerPayments": {
+  "status": "Rewritten",
+  "hash": "05090255e845",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-banking.test.ts standing order journey, tests/evidence-g13-money.test.ts scheduled payment cases and tests/evidence2-b05.test.ts read the notices",
+  "first": "Pending"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.add_standing_order>": {
+  "status": "Retained",
+  "hash": "e6f342e7c90c",
+  "on": "2026-10-19",
+  "reason": "Each refusal names what the standing order form needs: one of your savings accounts, easy-access not a term deposit, a monthly amount, a day from 1 to 31",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.cancel_scheduled>": {
+  "status": "Retained",
+  "hash": "2dc9db315fbb",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for a dated payment that already went or was canceled, That payment is no longer scheduled, which leaves nothing to undo",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.cancel_standing_order>": {
+  "status": "Retained",
+  "hash": "676bea19f007",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for a standing order already gone, That standing order no longer exists, plain and final, with nothing left to do",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.schedule_payment>": {
+  "status": "Rewritten",
+  "hash": "7e8f618b0dd7",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('wages sent to a card, autopay from savings and a dated payment from a term deposit are each refused in plain words')",
+  "first": "Pending"
+ },
+ "src/engine/systems/payments.ts#registerPayments <bank.set_payments>": {
+  "status": "Rewritten",
+  "hash": "99d2ac36ee37",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-r3b-1.test.ts, it('is refused naming both banks once the Chase savings is closed') and tests/evidence-g11-money.test.ts assert both forms",
+  "first": "Pending"
+ },
+ "src/engine/systems/roundups.ts#EVERY_WORDS": {
+  "status": "Retained",
+  "hash": "54ffc1b13ccb",
+  "on": "2026-10-19",
+  "reason": "every two weeks, how often a round-up moves where the bank moves it fortnightly, said as a schedule in plain words",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/roundups.ts#move": {
+  "status": "Retained",
+  "hash": "12201c6d98dc",
+  "on": "2026-10-19",
+  "reason": "Round-ups is the statement line for a round-up moved into savings, the bank's own name for the feature",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/roundups.ts#moveRoundUps": {
+  "status": "Retained",
+  "hash": "5f91c16423bf",
+  "on": "2026-10-19",
+  "reason": "Each reason a round-up didn't move, said after because, and Citi's Spend & Save notice saying what it turned off, why, and how to turn it on again",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/roundups.ts#roundUpChoiceRefusal": {
+  "status": "Retained",
+  "hash": "88047dc84e7a",
+  "on": "2026-10-19",
+  "reason": "Each refusal names the one choice the round-up form still needs, how it counts, what to round to, the multiplier, the amount or the minimum balance",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/roundups.ts#roundUpRefusal": {
+  "status": "Retained",
+  "hash": "d9c62bdbc66a",
+  "on": "2026-10-19",
+  "reason": "Says the bank doesn't round purchases up, or that round-ups need easy-access savings there and to open some first",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/routing.ts#closeHold": {
+  "status": "Rewritten",
+  "hash": "370ed7b0ffb7",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts, it('shows Chase as Primary and Make Primary on Capital One …') and tests/scope-money.test.ts RBC Cancel It case read the new last sentence",
+  "first": "Pending"
+ },
+ "src/engine/systems/routing.ts#linkedTo": {
+  "status": "Retained",
+  "hash": "2f22aac94356",
+  "on": "2026-10-19",
+  "reason": "Each line names one instruction that still uses the account, a standing order and its day, a card's autopay, a loan's payments, so Close It lists exactly what to move",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/routing.ts#movingDays": {
+  "status": "Retained",
+  "hash": "154df9963f15",
+  "on": "2026-10-19",
+  "reason": "Splits a change of where wages go by payer, Yale's payroll from one date and the rest from another, each with its own date as formatDate writes it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/routing.ts#paidInto": {
+  "status": "Retained",
+  "hash": "4acf3e20ce61",
+  "on": "2026-10-19",
+  "reason": "Says the wages are paid into this account, and where a change is under way, until they move to the other account on its date",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/routing.ts#PAYER_NAMES": {
+  "status": "Retained",
+  "hash": "64663dc47680",
+  "on": "2026-10-19",
+  "reason": "Yale's payroll is the one payer the wages line names apart, as Yale names its own payroll office, possessive and plain",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/security.ts#attemptOnNumber": {
+  "status": "Retained",
+  "hash": "9444b5d1807b",
+  "on": "2026-10-19",
+  "reason": "Says a debit was tried on the old number and declined, or taken with the number, where to report it, and that the account can move to a new number",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/security.ts#disputeRefusal": {
+  "status": "Retained",
+  "hash": "6050c87b7f3a",
+  "on": "2026-10-19",
+  "reason": "Says why a payment can't be reported: it isn't on your accounts, it's reported already, or the law's days from the statement have passed",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/security.ts#registerSecurity": {
+  "status": "Retained",
+  "hash": "f3cacee114e9",
+  "on": "2026-10-19",
+  "reason": "The new card's arrival with the account and its last four, and the refund for a payment you didn't make with what the law leaves you to pay",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/security.ts#registerSecurity <bank.new_number>": {
+  "status": "Rewritten",
+  "hash": "37c8d6082acd",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a card locked, or cash taken out, with no checking account says so') asserts the new-number refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/security.ts#registerSecurity <card.dispute>": {
+  "status": "Retained",
+  "hash": "4799626c1f2c",
+  "on": "2026-10-19",
+  "reason": "A Refund From The Bank is the title of the notice that a reported payment has been refunded, plain and in Title Case",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/security.ts#registerSecurity <card.lock>": {
+  "status": "Rewritten",
+  "hash": "2b297edb20ec",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a card locked, or cash taken out, with no checking account says so')",
+  "first": "Pending"
+ },
+ "src/engine/systems/security.ts#registerSecurity <card.report>": {
+  "status": "Rewritten",
+  "hash": "c2ad6b04cb98",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money.test.ts, it('a card locked, or cash taken out, with no checking account says so') asserts Report It's refusal too",
+  "first": "Pending"
+ },
+ "src/engine/systems/security.ts#registerSecurity <world.day_rollover>": {
+  "status": "Retained",
+  "hash": "528730a19135",
+  "on": "2026-10-19",
+  "reason": "Says a card expires soon and the new one keeps the number and when it expires, the facts a renewal letter gives",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/security.ts#replace": {
+  "status": "Retained",
+  "hash": "1935c6fb64f2",
+  "on": "2026-10-19",
+  "reason": "Your New Card Arrives is the calendar entry for a replacement card's day, a Title Case event name saying what happens that day",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/security.ts#somebodyElse": {
+  "status": "Retained",
+  "hash": "5c6fe3a21457",
+  "on": "2026-10-19",
+  "reason": "The fraud notices say what was tried, on which card, what the bank did, and where to report a large payment that wasn't you",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/spending.ts#arrearsAccount [loan]": {
+  "status": "Retained",
+  "hash": "185bc034120b",
+  "on": "2026-10-19",
+  "reason": "The names of the account holding unpaid bills, Bills Owed, and its category Unpaid, as Money lists them",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/spending.ts#buyTheDaysFood": {
+  "status": "Rewritten",
+  "hash": "5d766ab4b9a9",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-r1-1.test.ts and tests/evidence-g10-money.test.ts read No Money For Food Today ending You're eating what's left in the cupboard",
+  "first": "Pending"
+ },
+ "src/engine/systems/spending.ts#CANT_AFFORD": {
+  "status": "Retained",
+  "hash": "ea27a50063b3",
+  "on": "2026-10-19",
+  "reason": "The shortest refusal of a purchase, You can't afford it, used where nothing else would pay",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/spending.ts#CASH_UNSPENT": {
+  "status": "Rewritten",
+  "hash": "4670c7f1a8b9",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-r1-1.test.ts and tests/evidence-g12-money.test.ts read the meal and groceries refusal naming the How You Pay setting",
+  "first": "Pending"
+ },
+ "src/engine/systems/spending.ts#drawFromBank": {
+  "status": "Retained",
+  "hash": "940b9e90bf59",
+  "on": "2026-10-19",
+  "reason": "The category name Bank Fees, on a statement line for a fee the bank charged",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/spending.ts#EXPENSE_LINE": {
+  "status": "Retained",
+  "hash": "de1d64bdf4d4",
+  "on": "2026-10-19",
+  "reason": "Spending categories as statements and the spending list name them: Food, Union Dues, Medical Care and the rest",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/spending.ts#expenseFor": {
+  "status": "Retained",
+  "hash": "6e6a6f2086bb",
+  "on": "2026-10-19",
+  "reason": "The category Other, for spending no named category covers, on statements and the list",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/spending.ts#settleArrears": {
+  "status": "Retained",
+  "hash": "1da8e65c37a5",
+  "on": "2026-10-19",
+  "reason": "The statement line Paid back what was owed, when savings or wages clear Bills Owed overnight",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/spending.ts#spend": {
+  "status": "Retained",
+  "hash": "fbfb8fd2b6b3",
+  "on": "2026-10-19",
+  "reason": "The category name Food, on a meal's statement line, as the spending list groups it",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/spending.ts#spendRefusal": {
+  "status": "Retained",
+  "hash": "ee0de475d6c4",
+  "on": "2026-10-19",
+  "reason": "Why a debit card purchase failed, the card locked, stopped or over its ceiling, and nothing else enough",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statements.ts#cardPeriods": {
+  "status": "Rewritten",
+  "hash": "9bcdb314156e",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g13-money.test.ts, it('ends a closed card’s last period at its closing, as the row says a closed account’s does, not So Far')",
+  "first": "Pending"
+ },
+ "src/engine/systems/statements.ts#MONTHS": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The months' names, as formatDate writes them, for the statement periods' labels; plain English month names",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statements.ts#periodsOf": {
+  "status": "Rewritten",
+  "hash": "3a8f251b8189",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence2-b05.test.ts, it('PLAYER JOURNEY: refuses Chase for the groceries pending on it …') reads September 2026, Until It Closed",
+  "first": "Pending"
+ },
+ "src/engine/systems/statements.ts#registerStatements <bank.set_alerts>": {
+  "status": "Retained",
+  "hash": "ed28314c357d",
+  "on": "2026-10-19",
+  "reason": "Names which alert the typed figure is for, low balance or large payment, and the two ways to fill it: an amount, or blank to turn it off",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/statements.ts#registerStatements <world.day_rollover>": {
+  "status": "Retained",
+  "hash": "1dd4498f196f",
+  "on": "2026-10-19",
+  "reason": "A Large Payment says the amount, what it was for and the account it left, the three facts the alert is for",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/statements.ts#statementReady": {
+  "status": "Retained",
+  "hash": "ca23b81bb0af",
+  "on": "2026-10-19",
+  "reason": "Statement Ready and the account's name is the notice title the Alerts form's Statement Ready button turns on, the same words on both",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankAccountLife.tsx#BankAccountLife": {
+  "status": "Retained",
+  "hash": "8bbd06c1995c",
+  "on": "2026-10-19",
+  "reason": "Each line says one account's state and what to do: a term's end and until when it can change, a savings fee, inactive or dormant and Reactivate, Cancel It until its date",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/bank/BankAccountLife.tsx#END_BUTTON": {
+  "status": "Retained",
+  "hash": "2eb4ee10a9c3",
+  "on": "2026-10-19",
+  "reason": "The buttons for a term deposit's end, Renew It At The End, Move It To Savings At The End, Pay It Out At The End, each the action and when it happens",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankCard.tsx#CardApplication": {
+  "status": "Rewritten",
+  "hash": "b832ca3a2540",
+  "on": "2026-10-19",
+  "evidence": "tests/language-money.test.ts, it('says the card’s rate as set when it opened, its fees and its minimum, in the introductory months') renders Another Card's new lines",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankCard.tsx#CardPanel": {
+  "status": "Rewritten",
+  "hash": "37db8bd5f7cb",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts charge card and capped-rate case, and tests/language-dynamic.test.ts it('payments missed in a row and a payment plan’s months …') render the panel",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankCard.tsx#MONTH_NAMES": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The months' names for the yearly fee's statement month, as formatDate writes them, plain English month names",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankCard.tsx#sourceAndDay": {
+  "status": "Retained",
+  "hash": "d1c4cc48d5ca",
+  "on": "2026-10-19",
+  "reason": "Puts the day a card's terms are from after its source, as Terms as of and the date, only where the source names another day",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/bank/BankCard.tsx#TERM_WORDS": {
+  "status": "Retained",
+  "hash": "1cf9b88acca6",
+  "on": "2026-10-19",
+  "reason": "The card's terms as a sentence names them, the rate, the minimum payment, the late fee, for the line saying which ones are estimated",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankCardOffers.tsx#CardOffers": {
+  "status": "Rewritten",
+  "hash": "2343b89b58d4",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts, it('names Chase’s plans as published …') and tests/language-money.test.ts, it('says the card’s offers …') render the panel",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankCash.tsx#BankCash": {
+  "status": "Retained",
+  "hash": "97f3b193f597",
+  "on": "2026-10-19",
+  "reason": "The Cash panel's lines say what's in hand, what a withdrawal costs and from where, a machine owner's fee, a cash advance's rate, and the source at the foot",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/bank/BankLending.tsx#BankLending": {
+  "status": "Rewritten",
+  "hash": "698ac2b8dc97",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g10-money.test.ts renders In Collections for an account and a card charge-off, and presses Borrow It and Put It Away for their toasts",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankLending.tsx#SWITCH_OUTCOME": {
+  "status": "Retained",
+  "hash": "fbf242f1a86e",
+  "on": "2026-10-19",
+  "reason": "How each past switch ended, in a few words for the Past Switches list: declined by the new bank, called off, complete with the old account left in debt",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankMoves.tsx#BankMoves": {
+  "status": "Rewritten",
+  "hash": "4c859ced7994",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g14-money.test.ts, it('shows Bank of America first with its $100 and two business days …') and tests/remaining-09-banking.test.ts render the Your Banks and Open An Account panels",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankPayments.tsx#BankPayments": {
+  "status": "Rewritten",
+  "hash": "38633e24e6ee",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g11-money.test.ts and tests/defects-r6-1.test.ts render How You Pay and press Savings Covers The Checking Account by its name",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankPayments.tsx#coverText": {
+  "status": "Rewritten",
+  "hash": "032e54cfb234",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-r6-1.test.ts, it('stays offered so it can be turned Off, says it covers nothing, and goes once it’s Off') and tests/defects-r3b-1.test.ts render the new lines",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankSecurity.tsx#BankSecurity": {
+  "status": "Rewritten",
+  "hash": "b1e38524cf02",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts, it('a French debit card’s spending limit is labelled an estimate in a sentence, not a fragment') renders Your Cards",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankSecurity.tsx#WHY_WORDS": {
+  "status": "Retained",
+  "hash": "8ff82f7353ca",
+  "on": "2026-10-19",
+  "reason": "Why a card was stopped, Lost, Stolen, Damaged, Used by somebody else, Not arrived yet, the reasons a bank's form gives",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankStatements.tsx#AccountStatementView": {
+  "status": "Rewritten",
+  "hash": "bef34e04a4ee",
+  "on": "2026-10-19",
+  "evidence": "tests/home-account-screens.test.ts, it('shows HSBC UK’s accounts in pounds with the dollars beside …') reads the statement's new currency line",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankStatements.tsx#AlertsView": {
+  "status": "Rewritten",
+  "hash": "eade7c575a2b",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts, it('labels the low balance alert in a checking account’s words') renders the Alerts panel",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankStatements.tsx#BankStatements": {
+  "status": "Rewritten",
+  "hash": "8829349fdcc8",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g13-money.test.ts, it('shows a card’s kept cuts as its periods …') reads the Rebuilt line on the Statements tab",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankStatements.tsx#CardStatementView": {
+  "status": "Rewritten",
+  "hash": "974ec452b0e1",
+  "on": "2026-10-19",
+  "evidence": "tests/statements-hardship.test.ts, it('asks the plan’s payment, which the due date judges …') and tests/hardship-plan-minimum.test.ts render the minimum line",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankStatements.tsx#Lines": {
+  "status": "Retained",
+  "hash": "539711eda9c3",
+  "on": "2026-10-19",
+  "reason": "The statement table's column heads, Date, What, In / Out, Balance, and the pending line's posting day, as a bank statement lays them out",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankStatements.tsx#PendingTerms": {
+  "status": "Retained",
+  "hash": "f8f3c9142fd6",
+  "on": "2026-10-19",
+  "reason": "Gives the bank's own pending, overnight and value-date terms under their names, its source, and says the pending days are estimated where it gives none",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/bank/BankStatements.tsx#yearsAndMonths": {
+  "status": "Retained",
+  "hash": "11162576bc93",
+  "on": "2026-10-19",
+  "reason": "A span in years and months as a sentence says it, a year and 3 months, or under a month, for the minimum-only warning",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankStatements.tsx#YearView": {
+  "status": "Retained",
+  "hash": "3ac0ed902fcb",
+  "on": "2026-10-19",
+  "reason": "The Year's headings and figures, Interest Earned before tax, Tax Taken Off It, Bank Fees, Card Fees, Card Interest Paid, each a plain label for its total",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/bank/feeWords.ts#waiverWords": {
+  "status": "Retained",
+  "hash": "0f1f60a74bd7",
+  "on": "2026-10-19",
+  "reason": "Each waiver condition as something done in a month, have $500 of electronic deposits paid in, keep $1,500 in it all month, joined with or as a bank lists them",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/bank/RoundUps.tsx#RoundUps": {
+  "status": "Rewritten",
+  "hash": "b7e7ac29d6f9",
+  "on": "2026-10-19",
+  "evidence": "tests/roundups.test.ts reads Round-ups at Lloyds Bank only work when a Lloyds Bank checking account is your primary account",
+  "first": "Pending"
+ },
+ "src/ui/looks/bank.tsx#movedWords": {
+  "status": "Retained",
+  "hash": "a9135a3f14e8",
+  "on": "2026-10-19",
+  "reason": "What a statement line did to each account in a few words, put into, took out of, added to what you owe, the account named, joined into the line's summary",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/bank.tsx#standing": {
+  "status": "Retained",
+  "hash": "784c4d1e24e1",
+  "on": "2026-10-19",
+  "reason": "The short detail beside each account in the bank's look, the money owed on it or the money in it, read straight from its balance",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/bank.tsx#top": {
+  "status": "Rewritten",
+  "hash": "0c611fbfa715",
+  "on": "2026-10-19",
+  "evidence": "tests/language-money.test.ts, it('opens on the bank and on a statement line in words a player reads') renders the bank's look body with the new primary-account line",
+  "first": "Pending"
+ },
+ "src/ui/looks/money.tsx#ACCOUNT_KIND": {
+  "status": "Rewritten",
+  "hash": "a0eaa6f24675",
+  "on": "2026-10-19",
+  "evidence": "The checking account's kind reads Checking Account, as the frame area's account name does; tests/editorial-money-screens.test.ts reads the Statements tab without Current Account",
+  "first": "Pending"
+ },
+ "src/ui/looks/money.tsx#accountBody": {
+  "status": "Retained",
+  "hash": "6cea616fd726",
+  "on": "2026-10-19",
+  "reason": "The look's stat labels and the rate sentence, overdraft interest taken on the 1st, already plain and specific",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/money.tsx#accountSentence": {
+  "status": "Retained",
+  "hash": "0d451e1c51e6",
+  "on": "2026-10-19",
+  "reason": "What the account is doing in one sentence, owed, overdrawn, empty or holding, each variant read in tests/language-dynamic.test.ts",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/money.tsx#CATEGORY_WORDS": {
+  "status": "Retained",
+  "hash": "5f3bdad5ae05",
+  "on": "2026-10-19",
+  "reason": "Two category names a spending list shows, Carried From Before and Food, already in the player's words",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/money.tsx#debtBody": {
+  "status": "Rewritten",
+  "hash": "503c8b6803ca",
+  "on": "2026-10-19",
+  "evidence": "The credit used sentence now says points come off your credit score, the more used the more taken, as credit.ts scores utilization above 30%",
+  "first": "Pending"
+ },
+ "src/ui/looks/money.tsx#HELD_AS": {
+  "status": "Retained",
+  "hash": "34e6c4ec54b5",
+  "on": "2026-10-19",
+  "reason": "What money held apart is, on its way between your banks or SNAP on an EBT card, inside the worth sentence",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/money.tsx#heldFor": {
+  "status": "Retained",
+  "hash": "e9b6ed9efdb0",
+  "on": "2026-10-19",
+  "reason": "How long ago an account was opened, this month, last month, or months and years ago, after the bank's name",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/money.tsx#movementSentence": {
+  "status": "Retained",
+  "hash": "59c1e836adda",
+  "on": "2026-10-19",
+  "reason": "What came in and went out over thirty days, each of the four cases written without saying nothing twice",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/money.tsx#RECENT_WORDS": {
+  "status": "Retained",
+  "hash": "2621e83aee36",
+  "on": "2026-10-19",
+  "reason": "The span the account's movement sentences read over, thirty days, written as words inside them",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/money.tsx#spendBody": {
+  "status": "Retained",
+  "hash": "481c0b86004c",
+  "on": "2026-10-19",
+  "reason": "What went out in thirty days and the categories most of it went to, a list with each figure",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/money.tsx#tailFor": {
+  "status": "Rewritten",
+  "hash": "b333575893f2",
+  "on": "2026-10-19",
+  "evidence": "tests/language-money.test.ts reads the savings account's look, saying it pays what the checking account can't",
+  "first": "Pending"
+ },
+ "src/ui/looks/money.tsx#top": {
+  "status": "Rewritten",
+  "hash": "0446c13f4816",
+  "on": "2026-10-19",
+  "evidence": "tests/language-money.test.ts reads the net worth look's provenance in the new words; the account look's no longer quotes the ledger's own rule",
+  "first": "Pending"
+ },
+ "src/ui/looks/money.tsx#top [went]": {
+  "status": "Retained",
+  "hash": "db1cca7b2b3e",
+  "on": "2026-10-19",
+  "reason": "The facet label Where It Went, over the last thirty days of spending by category",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/money.tsx#worthBody": {
+  "status": "Retained",
+  "hash": "6865d22ec6e4",
+  "on": "2026-10-19",
+  "reason": "The accounts open in your name, the primary one named, and three stat labels with their notes",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/money.tsx#worthSentence": {
+  "status": "Retained",
+  "hash": "575f9fa37347",
+  "on": "2026-10-19",
+  "reason": "What you're worth and its parts, the bank, cash, held money, a pension and what's owed, in one spoken list",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#BankTabs": {
+  "status": "Retained",
+  "hash": "3f6b6f5b8bbe",
+  "on": "2026-10-19",
+  "reason": "The tab list's accessible name, Your Bank, and an element id the player never reads",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace": {
+  "status": "Rewritten",
+  "hash": "28ba00670939",
+  "on": "2026-10-19",
+  "evidence": "tests/editorial-money-screens.test.ts reads Move Money's allowance hint to the cent (m1), tests/remaining-banking.test.ts and tests/home-account-transfers.test.ts read the Moved and Sent messages naming the account",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#BorrowingAt": {
+  "status": "Retained",
+  "hash": "7c5d75ffbe07",
+  "on": "2026-10-19",
+  "reason": "The one label over the choice of lender, Borrow At, shown only when two banks hold checking accounts",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#closingWords": {
+  "status": "Retained",
+  "hash": "f2e4d82cec99",
+  "on": "2026-10-19",
+  "reason": "What closing savings moves and where, or the notice Germany's limit asks for, each figure to the cent and the account named",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#CONFIDENCE": {
+  "status": "Retained",
+  "hash": "b2f6de275831",
+  "on": "2026-10-19",
+  "reason": "A plain sentence at the foot of the sources line saying the research couldn't confirm some or all of a bank's figures",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#interestWords": {
+  "status": "Retained",
+  "hash": "ec6b5087b591",
+  "on": "2026-10-19",
+  "reason": "What an account pays, said the way a bank's terms say it: the rate and APY, steps, tiers, bonus, when it's paid and the tax kept back",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#MONTH_NAMES": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The twelve month names, used to say when interest is paid and when a tax refund comes",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#OtherCharges": {
+  "status": "Rewritten",
+  "hash": "e325d06b1a8f",
+  "on": "2026-10-19",
+  "evidence": "tests/language-money.test.ts reads Arion's debit card line ending in The timing is estimated, after its source",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/BankWorkspace.tsx#othersText": {
+  "status": "Retained",
+  "hash": "fb0c9695d079",
+  "on": "2026-10-19",
+  "reason": "What the other banks hold, in the head line, with each bank abroad's sum in its own money, already plain",
+  "first": "Reviewed And Retained"
+ }
+}

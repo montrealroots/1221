@@ -331,10 +331,10 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const state = stateOf(sim.player, card);
     const cardText = () => drawn(sim, (() => createElement(BankCard, { bankId: card.bankId! })) as FunctionComponent);
     // TEST SETUP: the card's record as missed due dates leave it (`SUSPEND_AFTER`, two in a row, suspends it).
-    for (const missed of [2, 5]) {
+    for (const [missed, words] of [[2, 'two'], [5, 'five']] as const) {
       Object.assign(state, { suspended: 'late', missed });
       const line = cardText().split('\n').find((l) => l.startsWith('Suspended:'))!;
-      expect(line).toBe(`Suspended: you’ve missed ${missed} payments in a row. It works again once you make a payment on time. Miss six in a row, and what’s owed is charged off to collections.`);
+      expect(line).toBe(`Suspended: you’ve missed ${words} payments in a row. It works again once you make a payment on time. Miss six in a row, and what’s owed is charged off to collections.`);
       sound(line);
     }
     delete state.suspended; state.missed = 0;
@@ -871,12 +871,12 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     spendAll(sim);
     tended(sim, on(2026, 10, 10, 12));
     const short = sim.universe.notifications.find((n) => n.title === 'Short For A Payment: Chase Total Checking')!;
-    expect(short.body).toMatch(/^The Chase Freedom Unlimited’s autopay, \$\d+\.\d{2}, comes from Chase Total Checking at Chase on October 11, 2026, and it holds \$\d+\.\d{2}\. Move money into it, pay the card by hand, or have autopay pay from another account\.$/);
+    expect(short.body).toMatch(/^The Chase Freedom Unlimited’s autopay, \$\d+\.\d{2}, comes from Chase Total Checking at Chase on October 11, 2026, and it has \$\d+\.\d{2} available\. Move money into it, pay the card by hand, or have autopay pay from another account\.$/);
     expect(drawn(sim, Home)).toContain('Card Payment Due in ');
     spendAll(sim);
     tended(sim, on(2026, 10, 12, 12));
     const late = titled(sim, 'A Late Card Payment')[0]!;
-    expect(late.body).toMatch(/^The minimum payment was \$\d+\.\d{2}, and only \$\d+\.\d{2} was paid\. That costs a \$\d+\.\d{2} late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late\.$/);
+    expect(late.body).toMatch(/^The minimum payment on the Chase Freedom Unlimited was \$\d+\.\d{2}, and (only \$\d+\.\d{2} was paid|nothing was paid) by the due date\. That costs a \$\d+\.\d{2} late fee\. If the payment is still short at the next due date, thirty days late, it goes on your credit record\. Pay the card on Money, under Cards\.$/);
     for (const s of [short.body, late.body]) { sound(s); whole(s); dated(s); }
   });
 });

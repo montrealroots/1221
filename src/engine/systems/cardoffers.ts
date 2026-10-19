@@ -45,7 +45,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { addMonths, zonedParts } from '../core/time';
+import { addMonths, formatDate, zonedParts } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
@@ -233,7 +233,11 @@ export function transferOnArrival(sim: Simulation, person: Person, card: Account
   credit.transfers = [{ kind: 'balance', owed: owed + fee, accrued: 0, apr: terms.transfer.apr, ...intro }];
   if (person.id === sim.universe.playerId) {
     const cur = saveCurrency(sim.universe);
-    sim.notify({ category: 'bank', title: 'Your Balance Moved', body: `${formatMoney(owed, cur)} moved from the ${old.name}, for a ${formatMoney(fee, cur)} fee, at ${((intro.introApr ?? terms.transfer.apr) * 100).toFixed(2)}%. The old card is closed.`, importance: 50, route: '/workspace/bank' });
+    // The rate said as the card's panel says one, and how long it lasts (from brief 15, 2026-10-19): until then “at 0.00%”,
+    // with nothing to say it was a rate or that it ends.
+    const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
+    const rate = intro.introUntil !== undefined ? `It’s charged ${pct(intro.introApr ?? 0)} until ${formatDate(intro.introUntil, sim.zone)}, then ${pct(terms.transfer.apr)}` : `It’s charged ${pct(terms.transfer.apr)}`;
+    sim.notify({ category: 'bank', title: 'Your Balance Moved', body: `${formatMoney(owed, cur)} moved from the ${old.name} onto your ${card.name}, for a ${formatMoney(fee, cur)} fee. ${rate}. The old card is closed.`, importance: 50, route: '/workspace/bank' });
   }
 }
 
@@ -246,7 +250,7 @@ export function registerCardOffers(sim: Simulation): void {
     const terms = cardTerms(s, card, person.credit.score);
     if (!terms.moneyTransferFee) throw new CommandError(`The ${card.name} doesn’t offer money transfers.`);
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    if (!current || current.closedAt) throw new CommandError('You need a current account for the money.');
+    if (!current || current.closedAt) throw new CommandError('You need a checking account for the money to go into.');
     const amount = Math.round(Number(p.amount));
     if (!(amount > 0)) throw new CommandError('Enter an amount.');
     const fee = Math.round(amount * terms.moneyTransferFee);

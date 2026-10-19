@@ -1,0 +1,822 @@
+[
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Barclays Bank Account has been blocked since the switch, except for paying off what it owes.",
+  "after": "Barclays Bank Account is blocked, so nothing was moved. It was overdrawn when you switched banks, and it stays blocked until the overdraft is paid off. Move money into it to clear what it owes, and it closes once it’s repaid.",
+  "why": "The reference's example 4: what happened, why, and the way out. Its 'Nothing was moved.' became a clause, since a sentence opening on Nothing is over the tics budget.",
+  "meaningSensitive": true,
+  "verified": "lending.ts sets switchDebt only when the old account was overdrawn on the switch day, and closes it once its balance is back to zero; moving money in is allowed. Decision 4's bank.switch: words only."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "Chase Total Checking has only $40.50, so nothing was moved.",
+  "after": "Chase Total Checking has only $40.50 available, so nothing was moved.",
+  "why": "The figure is the available balance, pending card payments already off it, and the word says so (the reference's banking restriction).",
+  "meaningSensitive": true,
+  "verified": "bank.transfer compares with from.balance; systems/pending.ts: postedBalance = balance − pendingOn. tests/language-money.test.ts."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+  "kind": "error",
+  "before": "You can take €2,000 more out of Flexgeld this month without notice. More than that takes three months’ notice.",
+  "after": "You can take only €1,999.50 more out of Flexgeld this month without notice, so nothing was moved. To take out more, you’d have to close the account, which takes three months’ notice.",
+  "why": "The figure was rounded up past the limit (defect m1), the refusal didn't say nothing moved, and notice can only be given by closing the account.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-money.test.ts m1, failing without the fix; bank.close_savings is the only command that schedules SAVINGS_NOTICE_KIND."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/bankmoves.ts#closeRefusal",
+  "kind": "error",
+  "before": "It’s your only current account. Open another one first: you always need a current account to be paid into.",
+  "after": "It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.",
+  "why": "Checking account, the glossary's word; the reason first, then the step.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts and four other tests assert it on bank.close_current."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/bankmoves.ts#closeRefusal",
+  "kind": "error",
+  "before": "Its fees, €0.16, are more than it holds. Pay in €0.06 first.",
+  "after": "Its fees, €0.16, are more than it holds. Move €0.06 into it first.",
+  "why": "'Pay in' is a British banking verb; Move Money is the control that does it.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-money.test.ts and tests/remaining-09-banking.test.ts."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#registerBanking",
+  "kind": "notification",
+  "before": "Statement Ready: Chase Total Checking — $3,025.00 at the close.",
+  "after": "Statement Ready: Chase Total Checking — It ended the month with $3,025.00 in it. The statement is on Money, under Statements.",
+  "why": "A fragment became a sentence that says what the figure is and where the statement is. Variants: 'the quarter' for a German account; 'It ended the month overdrawn by $3.30.' below zero.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-money.test.ts reads the overdrawn and quarterly variants; tests/home-account-screens.test.ts the pounds-and-dollars one."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/payments.ts#registerPayments",
+  "kind": "notification",
+  "before": "Your €2,500.00 payment to AktivKonto didn’t go. There wasn’t enough in Flexgeld on the day.",
+  "after": "Your €2,500.00 payment to AktivKonto didn’t go through: there wasn’t enough available in Flexgeld that day. You can set it up again under How You Pay.",
+  "why": "What happened, why, and the next step: a payment set for a date is gone once it fails.",
+  "meaningSensitive": true,
+  "verified": "The scheduled item runs once and isn't rescheduled; tests/evidence-g13-money.test.ts."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#feesWords",
+  "kind": "official",
+  "before": "Closing it now charges its fees to the day, €3.12 ($3.39): October’s €6.90 for the 14 days of its 31 it’s been open, €3.12. German law charges a month’s fee only to the day an account closes.",
+  "after": "Closing it now charges €3.12 ($3.39) in fees: €3.12 of October’s €6.90 fee, for the 14 days of its 31 the account has been open. Under German law, a month’s fee is charged only up to the day an account closes.",
+  "why": "The total first, then what makes it up, the share before the fee it's a share of; the law said as the bank's rule.",
+  "meaningSensitive": true,
+  "verified": "closingFeesDue's figures unchanged; tests/remaining-09-banking.test.ts renders every variant."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#feesWords",
+  "kind": "official",
+  "before": "Closing it now charges €4.90 ($5.33), the €4.90 for last month, due on the 1st: October’s was counted at the month’s end.",
+  "after": "Closing it now charges €4.90 ($5.33): the €4.90 for October, which would come off on the 1st. October’s fee was already counted at the month’s end.",
+  "why": "At 11:30 PM on October 31 the fee due on the 1st is October's, not last month's.",
+  "meaningSensitive": true,
+  "verified": "ING's feesDue holds a fee only between the month's end at 11 PM and the 1st's rollover; tests/remaining-09-banking.test.ts, the ING journey."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/banking.ts#cardYearWords",
+  "kind": "official",
+  "before": "This card year began August 25, 2026, paid in advance with 950 kr, and runs to August 24, 2027. The next year is charged August 25, 2027. … Its days are counted by Reykjavík’s calendar. If the account can’t cover the year’s fee, it’s charged anyway, and the account goes below zero by the difference. Estimated: Arion’s price list and terms don’t say when in the year it’s charged.",
+  "after": "The current card year runs from August 25, 2026 to August 24, 2027, and you paid 950 kr for it in advance. The next year’s fee is charged on August 25, 2027. … The bank counts the card year’s days by the date in Reykjavík. If the account can’t cover the fee, the bank charges it anyway and the account goes overdrawn by the difference. The timing is estimated: Arion’s price list and terms don’t say when in the year it’s charged.",
+  "why": "The year as a span, the glossary's 'overdrawn', and the estimate label says what's estimated. Variant: 'and nothing was charged for it' under the age the bank spares.",
+  "meaningSensitive": true,
+  "verified": "tests/decisions-arion.test.ts renders both variants."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/bank/BankPayments.tsx#BankPayments",
+  "kind": "button",
+  "before": "Savings Covers The Current Account: On",
+  "after": "Savings Covers The Checking Account: On",
+  "why": "The glossary's word for the account, on the button too.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g11-money.test.ts presses it by name; renames.json."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "heading",
+  "before": "Your Banks — One current account",
+  "after": "Your Banks — One checking account",
+  "why": "The panel's subtitle in the glossary's word; '2 checking accounts' with more.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-09-banking.test.ts renders 'Your Banks 2 checking accounts'."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/bank/BankMoves.tsx#BankMoves",
+  "kind": "label",
+  "before": "Your primary account is the one money comes from unless you say otherwise: your debit card’s everyday purchases come from it; cash from a machine comes out of it; bills you pay by hand come from it; a new standing order or autopay starts from it.",
+  "after": "Your primary account is the one money comes from unless you choose otherwise: your debit card’s everyday purchases, cash from a machine, bills you pay by hand and any new standing order or autopay.",
+  "why": "Four semicolon clauses repeating 'comes from it' became one list.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts renders Your Banks."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/routing.ts#closeHold",
+  "kind": "error",
+  "before": "Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Move them first.",
+  "after": "Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Move those to another account first.",
+  "why": "'Move it first' after 'wages … are paid into it' pointed at a plural with 'it'; the step now names where.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g14-money.test.ts."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/bank.tsx#top",
+  "kind": "other",
+  "before": "Chase is a United States bank and keeps its accounts in USD. … Your primary account is here, so your everyday spending and your pay go through it.",
+  "after": "Chase is a bank in the United States, and keeps its accounts in USD. … Your primary account is here, so your debit card’s everyday purchases come from it.",
+  "why": "'a Germany bank' was possible; and pay goes to the account wages are paid into, which can be another bank's.",
+  "meaningSensitive": true,
+  "verified": "depositAccount is separate from primaryAccountId (routing.ts); tests/language-money.test.ts renders the look."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/bank.tsx#top",
+  "kind": "other",
+  "before": "It’s pending. It already counts in your available balance, and it posts on October 21, 2026.",
+  "after": "It’s pending: it’s already taken off your available balance, and it posts on October 21, 2026.",
+  "why": "The glossary's words for pending money: already taken off the available balance.",
+  "meaningSensitive": false,
+  "verified": "Read in the code; pending.ts holds a payment against the available balance."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "notification",
+  "before": "Statement Ready: Chase Freedom Unlimited — The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.",
+  "after": "Statement Ready: Chase Freedom Unlimited — The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.",
+  "why": "The glossary's 'minimum payment', and what autopay will do, which tells the player whether to act. Variants: 'the whole $270.00' with autopay in full; 'The plan’s payment is $101.00.' on a hardship plan; 'The whole … is due.' on a charge card.",
+  "meaningSensitive": true,
+  "verified": "autopayAsk's asked and due; the account read without pinning it. tests/evidence-g28-ui.test.ts and tests/evidence-g34-ui.test.ts read both autopay settings."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "notification",
+  "before": "A Card Payment Bounced — Autopay asked for $52.00, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.",
+  "after": "A Card Payment Bounced — The Chase Freedom Unlimited’s autopay of $52.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.",
+  "why": "The STYLE's own example of this notice: which card, which account, what it means, what to do.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g12-money.test.ts; the late branch runs only for a short US payment (lateToo)."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#registerCredit",
+  "kind": "notification",
+  "before": "A Late Card Payment — The minimum payment was $48.00, and only $0.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.",
+  "after": "A Late Card Payment — The minimum payment on the Chase Freedom Unlimited was $48.00, and nothing was paid by the due date. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record. Pay the card on Money, under Cards.",
+  "why": "'only $0.00' at zero; the card named; the record's condition as its own sentence; the next step. Variant: 'and it’s on your credit record now' once reported.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b04.test.ts, tests/language-dynamic.test.ts (both paid variants)."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/cardlife.ts#registerCardLife <card.apply>",
+  "kind": "notification",
+  "before": "Citi turned down your application: your credit record isn’t strong enough.",
+  "after": "Citi turned down your application because your credit score is below 620, the lowest it approves. Applying still took a few points off your credit score.",
+  "why": "The figure the decision turned on, and what the application cost. Variants: a debt in collections (with where to pay it), no money in the bank, under 21 in the US.",
+  "meaningSensitive": true,
+  "verified": "APPROVE_FROM = 620; the inquiry is taken before the decision. tests/evidence-g13-money.test.ts, tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#chargeOff",
+  "kind": "notification",
+  "before": "Your Card Was Charged Off — $1,234.00 on the Chase Freedom Unlimited is with collections now, and the card is closed. It’s on your record.",
+  "after": "Your Card Was Charged Off — The $1,234.00 you owed on the Chase Freedom Unlimited went to collections, and the card is closed. The charge-off stays on your credit record for seven years, paid or not, and no bank approves a card while the debt is unpaid. You can pay it on Money, under Borrowing.",
+  "why": "How long, what it blocks, where to pay; the panel beside it said 'until it’s paid', which the record doesn't do (defect m2).",
+  "meaningSensitive": true,
+  "verified": "markYears of the new mark; pay_collections leaves the marks alone; card.apply refuses with any collections debt. tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/cardoffers.ts#transferOnArrival",
+  "kind": "notification",
+  "before": "Your Balance Moved — $930.00 moved from the Chase Freedom Unlimited, for a $46.50 fee, at 0.00%. The old card is closed.",
+  "after": "Your Balance Moved — $930.00 moved from the Chase Freedom Unlimited onto your Citi Double Cash Card, for a $46.50 fee. It’s charged 0% until July 22, 2027, then 21.15%. The old card is closed.",
+  "why": "'at 0.00%' wasn't said to be a rate or to end; both cards named.",
+  "meaningSensitive": true,
+  "verified": "The transfer's introApr and introUntil and the transfer apr after it. tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#afterMissed",
+  "kind": "notification",
+  "before": "Your Card Is Suspended — You’ve missed 2 payments in a row, so Chase has suspended the Chase Freedom Unlimited until you catch up.",
+  "after": "Your Card Is Suspended — You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you make a payment on time.",
+  "why": "A number under ten in words; 'catch up' said how it lifts, as the card's panel says it.",
+  "meaningSensitive": true,
+  "verified": "A due date met clears suspended 'late'. tests/evidence2-b11.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/bank/BankStatements.tsx#CardStatementView",
+  "kind": "label",
+  "before": "The least you can pay is $100.00, the plan’s payment, by October 11, 2026. Pay the whole $1,200.00 and none of it is charged interest.",
+  "after": "The plan’s payment is $100.00, due October 11, 2026. Pay the whole $1,200.00, and none of it is charged interest.",
+  "why": "The glossary's minimum payment, or the plan's payment, said as what it is.",
+  "meaningSensitive": false,
+  "verified": "tests/statements-hardship.test.ts, tests/hardship-plan-minimum.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/bank/BankCardOffers.tsx#CardOffers",
+  "kind": "official",
+  "before": "The bank’s plans, in its words: Chase Pay Over Time (formerly My Chase Plan): a fixed monthly fee instead of interest; 0% during the 15-month intro period, then up to 1.72% of the plan amount per month",
+  "after": "The bank’s published plans: Chase Pay Over Time (formerly My Chase Plan): a fixed monthly fee instead of interest; 0% during the 15-month intro period, then up to 1.72% of the plan amount per month.",
+  "why": "The text is the research's summary of the bank's terms, not a quotation, and the label no longer claims it is.",
+  "meaningSensitive": true,
+  "verified": "Read across all 36 plan and 41 rewards texts in content/cards.ts. tests/editorial-money-screens.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/bank/BankCard.tsx#CardPanel",
+  "kind": "official",
+  "before": "Criminal Code s. 347 (criminal rate: over 35% APR, since January 1, 2025); Quebec Consumer Protection Act (minimum payment); … caps the rate at 35%, and the card is held to that. Source: https://laws-lois.justice.gc.ca/….",
+  "after": "The law here caps the rate at 35%, and the card is held to that. Source: Criminal Code s. 347 (criminal rate: over 35% APR, since January 1, 2025); …; https://laws-lois.justice.gc.ca/….",
+  "why": "A three-statute citation as a sentence's subject; the citation now sits in the Source line at the foot.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts (a capped case, TEST SETUP law)."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/bank/BankStatements.tsx#AlertsView",
+  "kind": "label",
+  "before": "Any Current Account Under (USD)",
+  "after": "Any Checking Account Under (USD)",
+  "why": "The glossary's word, on the field label; renames.json.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/statements.ts#periodsOf",
+  "kind": "label",
+  "before": "September 2026, To Its Closing",
+  "after": "September 2026, Until It Closed",
+  "why": "A plain past tense for a period that ended when the account closed; renames.json.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b05.test.ts, tests/evidence-g14-money.test.ts."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/credit.ts#registerCredit <finance.pay_card>",
+  "kind": "error",
+  "before": "There’s nothing in the bank to pay it with.",
+  "after": "Your bank accounts have nothing available to pay it with, so nothing was paid.",
+  "why": "The refusal shape for money that isn't there: what can't pay, and what didn't happen.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g13-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#loanOffer",
+  "kind": "error",
+  "before": "Your credit record isn’t strong enough for the bank.",
+  "after": "Your credit score is below 580, and in the game a bank doesn’t lend below that.",
+  "why": "The figure the refusal turns on, labelled as the game's rule since no bank publishes it.",
+  "meaningSensitive": true,
+  "verified": "score < ESTIMATE.scoreFloor (580). tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#loanOffer",
+  "kind": "error",
+  "before": "A payment of $176 a month is more than the bank lets a loan take of $138 of wages.",
+  "after": "A payment of $176 a month is more than the 35% of your wages a loan can take: $48 of the $138 paid in over the last 30 days.",
+  "why": "The share and its figure, so the player can compare; variant with the loans already paid named.",
+  "meaningSensitive": true,
+  "verified": "ESTIMATE.loanShareOfPay; the comparison unchanged. tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#registerLending",
+  "kind": "notification",
+  "before": "A Missed Loan Payment — $264.09 was due, and there was only $0.00 to pay it with. It’s on your credit record, and what’s left is still owed.",
+  "after": "A Missed Loan Payment — Your Citi Personal Loan payment of $264.09 was due, and Chase Total Checking had nothing available to pay it. It’s on your credit record, and what’s left is still owed.",
+  "why": "Which loan, which account, and nothing said as nothing; variant 'only $X of it could be paid'.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g11-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "official",
+  "before": "Chase closed your card after its payments were 180 days behind, and charged off what was owed on it. It’s on your record until it’s paid.",
+  "after": "Chase closed your card after its payments were 180 days behind, and charged off what was owed on it. The charge-off stays on your credit record for seven years, paid or not. While the debt is unpaid, no bank approves a card, and Chase won’t open an account for you.",
+  "why": "The old sentence promised what paying doesn't do (defect m2); the new one says what the record and the unpaid debt each do.",
+  "meaningSensitive": true,
+  "verified": "markRecord, marksFallOff, bank.pay_collections, card.apply. tests/evidence-g10-money.test.ts, failing with the old sentence."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "confirmation",
+  "before": "Put away.",
+  "after": "Your CD is open, locked until August 24, 2027.",
+  "why": "A fragment became what happened and until when.",
+  "meaningSensitive": false,
+  "verified": "bank.open_term's maturesAt. tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/bank/BankLending.tsx#BankLending",
+  "kind": "confirmation",
+  "before": "Borrowed.",
+  "after": "Your $2,000 loan is in Citi Access Checking.",
+  "why": "Where the money went.",
+  "meaningSensitive": false,
+  "verified": "bank.borrow pays into the Paid Into account. tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#frenchOverrun",
+  "kind": "official",
+  "before": "Your account has been past its overdraft limit for a month, by €30.24 ($32.86) at 18.40% a year, with the charges each month brings. French law has the bank tell you after a month.",
+  "after": "Your account has been past its overdraft limit for a month, by €30.24 ($32.86). The bank charges 18.40% a year on what’s overdrawn, as well as its monthly charges. French law has the bank tell you after a month.",
+  "why": "The rate is the overdraft's, not the overrun's; two sentences for two facts.",
+  "meaningSensitive": true,
+  "verified": "terms.rate is the overdraft terms' rate. tests/home-account-setoff.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#closeForOverdraft",
+  "kind": "notification",
+  "before": "Chase Took What It Was Owed — It had been below zero for 60 days, so the bank took what it was owed from your other money there. Chase Total Checking and Chase Savings stay open.",
+  "after": "Chase Took What It Was Owed — Chase Total Checking had been below zero for 60 days, so the bank took what it was owed from your other money there. Chase Total Checking and Chase Savings stay open.",
+  "why": "'It' had nothing to point at.",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-setoff.test.ts."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/lending.ts#registerLending <bank.open_term>",
+  "kind": "error",
+  "before": "A term deposit at Wells Fargo is paid for from your current account there. Open a current account at Wells Fargo first.",
+  "after": "A term deposit at Wells Fargo is paid for from your checking account there. Open a checking account at Wells Fargo first.",
+  "why": "The glossary's word.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/accountlife.ts#registerAccountLife <bank.cancel_new>",
+  "kind": "error",
+  "before": "Your primary current account can’t be canceled. Make another account primary first.",
+  "after": "You can’t cancel your primary account. Make another account primary first.",
+  "why": "The player as the subject, and no 'current account'.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/accountlife.ts#idleAccounts",
+  "kind": "official",
+  "before": "$500.00 in Chase Savings hasn’t been used for nearly 3 years. Unless you tell the bank to keep the account by …, it goes to the state’s unclaimed-property office as unclaimed money.",
+  "after": "$500.00 in Chase Savings hasn’t been used for nearly three years. Unless you tell the bank to keep the account by …, it goes to the state’s unclaimed-property office as unclaimed money.",
+  "why": "A number under ten in prose, in words.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/cash.ts#registerCash <cash.deposit>",
+  "kind": "error",
+  "before": "Chase Savings is dormant. Reactivate it first, under Your Accounts Over Time.",
+  "after": "Chase Savings is dormant, so nothing was paid in. Reactivate it under Your Accounts Over Time, then try again.",
+  "why": "The refusal shape: what stopped it, what didn't happen, the way out.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g12-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/cash.ts#withdrawalQuote",
+  "kind": "error",
+  "before": "Chase Total Checking is dormant. Reactivate it first, under Your Accounts Over Time.",
+  "after": "Chase Total Checking is dormant. Reactivate it under Your Accounts Over Time to take cash out of it.",
+  "why": "Shown before Take It Out is pressed as well as after, so it gives the step and claims nothing about a press.",
+  "meaningSensitive": false,
+  "verified": "BankCash reads withdrawalQuote for its line under the amount; tests/evidence-g12-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/cash.ts#shortWords",
+  "kind": "error",
+  "before": "Chase Total Checking has only $20.01, and $20.00 in cash with its fees comes to $25.22.",
+  "after": "Chase Total Checking has only $20.01 available, and $20.00 in cash with its fees comes to $25.22.",
+  "why": "Available, as every money refusal says it now.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-refusals.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/homeaccount.ts#whatFollows",
+  "kind": "official",
+  "before": "Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥10,200, from your savings, as far as that goes: move more in before it runs low.",
+  "after": "Its 普通預金 (Ordinary Deposit) opens with ¥10,200 from your savings, what its fees come to until you graduate in May 2029, or as much of that as there is. Move more in before it runs low.",
+  "why": "The figure first; the condition said plainly.",
+  "meaningSensitive": true,
+  "verified": "feesToGraduation is the full total, moved from savings as far as they go. tests/home-account-creation.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/homeaccount.ts#homeAccountRefusal",
+  "kind": "error",
+  "before": "There’s no research on what Banca Intesa does when a customer moves to America, so the game can’t offer it.",
+  "after": "The game doesn’t know what Banca Intesa does when a customer moves to America, so it can’t offer this account.",
+  "why": "'research' is the project's word, not the player's.",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-creation.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/homeaccount.ts#before",
+  "kind": "error",
+  "before": "You haven’t said where you lived before this life.",
+  "after": "You haven’t said where you lived before you came here.",
+  "why": "'this life' is one of the brief's named phrases.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/ui/bank/BankSecurity.tsx#BankSecurity",
+  "kind": "label",
+  "before": "Source: …. Estimated: the lowest limit the bank sets.",
+  "after": "Source: …. The limit shown is the lowest the bank sets, which is estimated.",
+  "why": "A fragment became a sentence that says what's estimated.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts."
+ },
+ {
+  "batch": 4,
+  "source": "src/engine/systems/accountlife.ts#END_WORDS",
+  "kind": "official",
+  "before": "At its end it is paid, with its interest, into your current account, unless you choose another way the bank allows.",
+  "after": "At its end it is paid, with its interest, into your checking account, unless you choose another way the bank allows.",
+  "why": "The glossary's word.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts (TD)."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "confirmation",
+  "before": "Moved $25.",
+  "after": "Moved $25 to Chase Savings.",
+  "why": "The confirmation names where the money went, so a player with three accounts doesn't have to look.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-banking.test.ts (Move Money pressed once) reads the toast."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "confirmation",
+  "before": "Sent £1,000.00. It arrives September 2, 2026.",
+  "after": "Sent £1,000.00 to Chase Total Checking. It arrives September 2, 2026.",
+  "why": "As Moved: the account named, the arrival day kept.",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-transfers.test.ts reads the toast."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "label",
+  "before": "You can take out €2,000 more this month without notice.",
+  "after": "You can take out €1,999.50 more this month without notice.",
+  "why": "Defect m1's third instance: the hint rounded the allowance left to whole euros, more than Move It would then let out.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-money-screens.test.ts (m1, on the Accounts tab), mutation-checked."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+  "kind": "label",
+  "before": "…, and what it holds moves to your current account then.",
+  "after": "…, and what it holds moves to your checking account then.",
+  "why": "The glossary's word, where no account is named.",
+  "meaningSensitive": false,
+  "verified": "Read in the code; the named account is the usual case."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/workspaces/BankWorkspace.tsx#OtherCharges",
+  "kind": "official",
+  "before": "… Source: Arion’s price list …. Estimated: Arion’s price list and terms don’t say when in the year it’s charged.",
+  "after": "… Source: Arion’s price list …. The timing is estimated: Arion’s price list and terms don’t say when in the year it’s charged.",
+  "why": "Says what's estimated, as the debit card's year line on the account panel does (batch 1).",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (Arion)."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#ACCOUNT_KIND",
+  "kind": "label",
+  "before": "Current Account",
+  "after": "Checking Account",
+  "why": "The glossary's word; the frame area's report named this label, and its own account name is Checking Account.",
+  "meaningSensitive": false,
+  "verified": "tsc; the look's kind line is read in the built app's walk."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#top",
+  "kind": "other",
+  "before": "Added up from your accounts each time you look, and stored nowhere. Every payment behind it has a matching entry on the other side, and the books balance to the cent.",
+  "after": "It’s added up from all your accounts each time you look, so it’s right to the cent.",
+  "why": "The old provenance showed the player the bookkeeping (where it's stored, double entry); what matters is that it's current and exact.",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts reads the net worth look's provenance."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#top",
+  "kind": "other",
+  "before": "The balance is added up from every payment in and out of the account, not a figure anybody typed in.",
+  "after": "The balance is the sum of every payment into and out of the account.",
+  "why": "\"Not a figure anybody typed in\" is the house's ledger rule, not something a player needs told.",
+  "meaningSensitive": false,
+  "verified": "Read; `Ledger` keeps each balance as the sum of its postings."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#tailFor",
+  "kind": "label",
+  "before": "It’s money set aside. Where you’ve linked it, it pays what the current account can’t, and it pays off anything left unpaid.",
+  "after": "It’s money set aside. Where you’ve linked it, it pays what the checking account can’t, and it pays off anything left unpaid.",
+  "why": "The glossary's word.",
+  "meaningSensitive": false,
+  "verified": "tests/language-money.test.ts (the savings look, above and at zero)."
+ },
+ {
+  "batch": 5,
+  "source": "src/ui/looks/money.tsx#debtBody",
+  "kind": "label",
+  "before": "Above 30%, each month’s credit report takes points off your record, and more the more you use.",
+  "after": "Above 30%, each month’s credit report takes points off your credit score, and the more you use, the more it takes.",
+  "why": "\"Credit score\" is the glossary's word for the number that falls; \"more the more\" read as a stumble.",
+  "meaningSensitive": true,
+  "verified": "`systems/credit.ts` scores utilization above 30% by tenths; the sentence doesn't name a figure."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/systems/spending.ts#CASH_UNSPENT",
+  "kind": "error",
+  "before": "The bank and the card can’t pay it. Cash in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card.",
+  "after": "Your bank and card can’t cover it. Your cash in hand would, but it isn’t spent while The Day’s Spending is on a card. Set it to In Cash, Then The Debit Card, under How You Pay.",
+  "why": "What failed, why the cash didn’t help, and the setting that would spend it, with where it is. Not “only spent when”: a locked or stopped debit card spends it too, though that case has its own words.",
+  "meaningSensitive": true,
+  "verified": "tests/defects-r1-1.test.ts (the meal and groceries with cash unspent) and tests/evidence-g12-money.test.ts."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/systems/spending.ts#buyTheDaysFood",
+  "kind": "notification",
+  "before": "A day’s groceries cost $10.00, and there’s nothing left to pay with. It’s what’s in the cupboard today, and not enough of it.",
+  "after": "A day’s groceries cost $10.00, and there’s nothing left to pay with. You’re eating what’s left in the cupboard today, and it isn’t enough.",
+  "why": "Says what it means for the player plainly: they eat, but not enough.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-r1-1.test.ts and tests/evidence-g10-money.test.ts."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/systems/obligations.ts#accountAlerts",
+  "kind": "notification",
+  "before": "The Chase Freedom Unlimited’s autopay, $41.10, comes from Chase Total Checking at Chase on October 11, 2026, and it holds $12.00. …",
+  "after": "The Chase Freedom Unlimited’s autopay, $41.10, comes from Chase Total Checking at Chase on October 11, 2026, and it has $12.00 available. …",
+  "why": "The figure is what's available, pending card payments off it, which is what the payment can take (`inReach`).",
+  "meaningSensitive": true,
+  "verified": "tests/language-dynamic.test.ts reads Short For A Payment."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.transfer]",
+  "kind": "tutorial",
+  "before": "Move Money moves money between your own current and savings accounts. Within one bank it arrives at once. …",
+  "after": "Move Money, on the Accounts tab, moves money between your own checking and savings accounts: choose From and To, type the amount and press Move It. Within one bank it arrives at once. …",
+  "why": "An entry starts with a plain overview and the first action (common.md); the glossary's word.",
+  "meaningSensitive": false,
+  "verified": "tests/guide.test.ts; the steps name the same controls."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.transfer]",
+  "kind": "tutorial",
+  "before": "Type the Amount in whole money, not cents (250 at a US bank is $250), and press Move It.",
+  "after": "Type the Amount as you’d write it, not in cents (250 at a US bank is $250, and 12.50 is $12.50), and press Move It.",
+  "why": "The field takes decimals (`centsFromTyped`), so \"whole money\" told the player something untrue.",
+  "meaningSensitive": true,
+  "verified": "`centsFromTyped` (core/money.ts) reads a decimal mark with one or two digits after it."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.upkeep]",
+  "kind": "tutorial",
+  "before": "An account you don’t use becomes inactive, then dormant and blocked, …",
+  "after": "Two panels look after your accounts between payments: Your Accounts Over Time, on Accounts, and Alerts, on Statements. An account you don’t use becomes inactive, then dormant and blocked, …",
+  "why": "Leads with where the entry's controls are, before the rules.",
+  "meaningSensitive": false,
+  "verified": "The where label names the same two panels; tests/guide.test.ts."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.upkeep]",
+  "kind": "tutorial",
+  "before": "Short For A Payment names the account, the payment, its date and what the account holds, and what to do about it.",
+  "after": "Short For A Payment names the payment, its amount, the account and its date, what the account has available, and what to do about it.",
+  "why": "In the alert's own order, and with batch 5's figure: what's available.",
+  "meaningSensitive": false,
+  "verified": "Read against `accountAlerts` (systems/obligations.ts); tests/language-dynamic.test.ts reads the alert."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.round-ups]",
+  "kind": "tutorial",
+  "before": "… ING counts nothing while the account holds under 20 €",
+  "after": "… ING counts nothing while the account holds under €20",
+  "why": "Euros as the game writes them everywhere else.",
+  "meaningSensitive": false,
+  "verified": "`formatMoney(ING_FLOOR * 100, 'EUR', { cents: false })`; ING's rule is 20 (content/roundups.ts)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.cash]",
+  "kind": "tutorial",
+  "before": "“… has only ….”, or, where the fees push it over, “… has only …, and … in cash with its fees comes to ….”",
+  "after": "“… has only … available.” or “… has nothing available.”, or, where the fees push it over, “… has only … available, and … in cash with its fees comes to ….”",
+  "why": "The refusals as the game says them since batch 4.",
+  "meaningSensitive": false,
+  "verified": "Read against `shortWords` (systems/cash.ts)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.card]",
+  "kind": "tutorial",
+  "before": "Each month a statement comes, and you pay at least the minimum by the due date; pay the whole statement and you’re charged no interest.",
+  "after": "Each month a statement comes, and you pay at least the minimum payment by the due date. Pay the whole statement every month and you’re never charged interest.",
+  "why": "Paying one statement in full after carrying a balance still brings the interest built since it (the statement panel says so), so \"every month\" is what makes it true.",
+  "meaningSensitive": true,
+  "verified": "The Statements tab's line: \"new spending isn’t charged interest, though the interest that built up since this statement still comes on the next one\"."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.card]",
+  "kind": "tutorial",
+  "before": "A statement on the Statements tab gives the least you can pay and, …. On a hardship plan the least is the plan’s payment, …",
+  "after": "A statement on the Statements tab gives the minimum payment and its due date and, …. On a hardship plan it gives the plan’s payment instead, …",
+  "why": "The statement's own words since batch 2, and the glossary's term.",
+  "meaningSensitive": false,
+  "verified": "Read against `BankStatements.tsx`: \"The minimum payment is …, due …\" and \"The plan’s payment is …\"."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.borrowing]",
+  "kind": "tutorial",
+  "before": "Pay a debt in collections under In Collections, to stop it weighing on you and to improve your chances at the next bank.",
+  "after": "Pay a debt in collections under In Collections. Once it’s paid, a bank can approve you for a card again, it stops worrying you, and the next US bank is less likely to turn you away.",
+  "why": "Says what paying changes, and not that it clears the record (m2).",
+  "meaningSensitive": true,
+  "verified": "`card.apply` declines on any collections debt; the day's worry counts one; ChexSystems' declines fall from the unpaid to the paid rate (`CHEX.declines`)."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.borrowing]",
+  "kind": "tutorial",
+  "before": "… and 100 points come off your score. A standing order …",
+  "after": "… and 100 points come off your score. The charge-off stays on your credit record for 7 years in the US, paid or not, and while the debt is unpaid no bank approves a card and the bank owed won’t open an account for you. A standing order …",
+  "why": "m2: what the record keeps and what an unpaid debt blocks, which the entry didn't say.",
+  "meaningSensitive": true,
+  "verified": "`closedByBank` calls `markRecord` for a bank in the country the person lives in; `MARK_YEARS.us` is 7; `openRefusal` refuses while the bank's debt is unpaid."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.accounts]",
+  "kind": "tutorial",
+  "before": "The Accounts tab shows each of your current and savings accounts: …, and choose which current account is your primary account.",
+  "after": "The Accounts tab shows each of your checking and savings accounts: …, and choose which checking account is your primary account.",
+  "why": "The glossary's word, in every field of the guide's money entries (154 words).",
+  "meaningSensitive": false,
+  "verified": "tests/guide-examples-money.test.ts plays each example; two of its anchors moved with the words."
+ },
+ {
+  "batch": 6,
+  "source": "src/engine/content/guide/money.ts#MONEY [bank.other-banks]",
+  "kind": "tutorial",
+  "before": "In Germany the fees are those kept for the quarter’s close plus this month’s fee only for the days it’s been open, …",
+  "after": "In Germany the fees are those held over for the quarter’s closing plus this month’s fee only for the days it’s been open, …",
+  "why": "The words the Close It line uses since batch 1.",
+  "meaningSensitive": false,
+  "verified": "Read against `closingFeesWords` (systems/banking.ts)."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "BMO PaySmart installment plans: a monthly fee of up to 2% of the principal, disclosed at setup",
+  "after": "BMO PaySmart installment plans: a monthly fee of up to 2% of the amount, told to you when you set one up",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (ca-bmo, planWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "分割払い 3-24回 at 14.75-18.00%/yr (3回 ¥2.46, 12回 ¥9.84 per ¥100); 2回 free; リボ 18.00%/yr",
+  "after": "installments (分割払い) over 3 to 24 payments at 14.75% to 18.00% a year (¥2.46 per ¥100 over 3 payments, ¥9.84 over 12), and 2 payments free; revolving payments (リボ) at 18.00% a year",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept and the bank’s own term beside its English (jp-mufg, planWords).",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts (MUFG)"
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "分割払い 3-24回 at 14.70-17.88%/yr (3回 ¥2.46, 12回 ¥9.84 per ¥100); 2回 free; リボ 18.0%/yr for cards/リボ frames set from 2026-03-31 (15.0% before)",
+  "after": "installments (分割払い) over 3 to 24 payments at 14.70% to 17.88% a year (¥2.46 per ¥100 over 3 payments, ¥9.84 over 12), and 2 payments free; revolving payments (リボ) at 18.0% a year on cards and revolving limits set from March 31, 2026 (15.0% before)",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept and the bank’s own term beside its English (jp-smbc, planWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "Shopping リボ 18.00%/yr (standard course); 分割 12回 17.7%/yr, ¥9.9 per ¥100; 2回 free",
+  "after": "revolving payments for shopping (リボ) at 18.00% a year on the standard course; installments (分割) over 12 payments at 17.7% a year, ¥9.9 per ¥100; 2 payments free",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept and the bank’s own term beside its English (jp-mizuho, planWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "1% in Cash Back Dollars on grocery, gas and EV charging, public transit, recurring bills and streaming/gaming/media (first $5,000 a year in each), 0.5% on everything else",
+  "after": "1% in Cash Back Dollars on grocery, gas and EV charging, public transit, recurring bills and streaming, gaming and media (the first $5,000 a year in each), 0.5% on everything else",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (ca-td, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "Puntos BBVA worth 9% of each single-payment purchase in points (not on meses sin intereses); a point is worth about 7 to 10 centavos depending on where it is redeemed, so roughly 0.6%-0.9% back",
+  "after": "Puntos BBVA worth 9% of each purchase paid in one go, in points (not on meses sin intereses); a point is worth about 7 to 10 centavos depending on where it’s redeemed, so roughly 0.6% to 0.9% back",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (mx-bbva, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "Promotional 1% back on purchases for the first year (max 10 EUR net a month) when taken out in the app or web by 31/01/2027; ongoing refunds and discounts through Santander Premia (needs Cuenta Santander/Colectivos/Mundo) and the paid Plan Santander Iberia Club (5 EUR/month)",
+  "after": "1% back on purchases for the first year as a promotion (at most €10 a month, net) on a card taken out in the app or online by January 31, 2027; after that, refunds and discounts through Santander Premia (which needs a Cuenta Santander, Colectivos or Mundo account) and the paid Plan Santander Iberia Club (€5 a month)",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (es-santander, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "Global Point: 1 point per ¥1,000 of monthly spend, worth up to ¥5; up to 20% back at enrolled partner stores (conditions incl. MUFG Bank payment account)",
+  "after": "Global Point: 1 point for each ¥1,000 spent in a month, worth up to ¥5; up to 20% back at participating partner stores, with conditions, among them paying from an MUFG Bank account",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (jp-mufg, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-money-screens.test.ts (MUFG)"
+ },
+ {
+  "batch": 7,
+  "source": "src/engine/content/cards.ts#CARDS",
+  "kind": "official",
+  "before": "V Point: 1 point per ¥200 spent; 7% at named convenience stores/restaurants by smartphone touch payment, up to 20% with stacked programs",
+  "after": "V Point: 1 point for each ¥200 spent; 7% at named convenience stores and restaurants when you pay by touching your smartphone, up to 20% with other programs added",
+  "why": "A research summary the Cards tab shows, in sentences a player reads, every figure kept (jp-smbc, rewardsWords).",
+  "meaningSensitive": false,
+  "verified": "Compared field by field against the old words; tests/cards.test.ts and tests/cardoffers.test.ts."
+ }
+]

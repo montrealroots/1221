@@ -111,7 +111,7 @@ export function BankWorkspace() {
     if (answer.ok && answer.value) {
       const later = answer.value.arrivesAt !== undefined && answer.value.arrivesAt > sim.now;
       const what = answer.value.sentIn ? formatMoney(answer.value.sent!, answer.value.sentIn) : money(answer.value.moved);
-      toast(later ? `Sent ${what}. It arrives ${formatDate(answer.value.arrivesAt!, sim.zone)}.` : `Moved ${what}.`, 'positive');
+      toast(later ? `Sent ${what} to ${target?.name ?? 'your other account'}. It arrives ${formatDate(answer.value.arrivesAt!, sim.zone)}.` : `Moved ${what} to ${target?.name ?? 'your other account'}.`, 'positive');
       setAmount('');
     }
   };
@@ -173,12 +173,12 @@ export function BankWorkspace() {
                   return (
                   <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                     {savingsNotice(sim, account)
-                      ? <span className="xs dim">You’ve given notice. It closes <Open subject={at('day', dateKey(savingsNotice(sim, account)!.at, sim.homeZone))}>{formatDate(savingsNotice(sim, account)!.at, sim.zone)}</Open>, and what it holds moves to {into ? <Open subject={at('account', into.id)}>{into.name}</Open> : 'your current account'} then.</span>
+                      ? <span className="xs dim">You’ve given notice. It closes <Open subject={at('day', dateKey(savingsNotice(sim, account)!.at, sim.homeZone))}>{formatDate(savingsNotice(sim, account)!.at, sim.zone)}</Open>, and what it holds moves to {into ? <Open subject={at('account', into.id)}>{into.name}</Open> : 'your checking account'} then.</span>
                       : <>
                         <Gated feature="bank.close_savings" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ on?: number }>('bank.close_savings', { accountId: account.id }); if (a.ok && a.value?.on) toast(`Notice given. It closes ${formatDate(a.value.on, sim.zone)}.`, 'positive'); }}>
                           Close It
                         </Gated>
-                        <span className="xs dim">{closingWords(sim, account, into?.name ?? 'your current account')}</span>
+                        <span className="xs dim">{closingWords(sim, account, into?.name ?? 'your checking account')}</span>
                       </>}
                   </div>
                   );
@@ -224,7 +224,7 @@ export function BankWorkspace() {
             <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>
               {freeLeft === true ? 'This withdrawal is free. Once the month’s free ones are used, each costs the bank’s fee. ' : ''}
               {freeLeft === false ? `You’ve used this month’s free withdrawals, so this one costs ${formatMoney(savingsTerms.fee, cur)}, taken from the savings on top of the amount. ` : ''}
-              {allowanceLeft !== undefined ? `You can take out ${money(allowanceLeft)} more this month without notice.` : ''}
+              {allowanceLeft !== undefined ? `You can take out ${formatMoney(allowanceLeft, cur)} more this month without notice.` : ''}
             </p>
           )}
           {abroad && <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>{'refused' in abroad ? abroad.refused : quoteWords(sim, abroad)}</p>}
@@ -457,7 +457,7 @@ function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank })
     // unverified (`Bank.card.year`, from brief 10).
     const year = bank.card.yearly !== undefined ? bank.card.year : undefined;
     const timing = year ? (year.paid === 'ahead' ? '. It’s paid for the year ahead, and what’s left of the year is refunded if the account closes' : '. It’s charged at the end of each card year, and the days used so far are charged if the account closes') : '';
-    const simulated = year?.simulated ? ` Estimated: ${year.simulated}.` : '';
+    const simulated = year?.simulated ? ` The timing is estimated: ${year.simulated}.` : '';
     lines.push(`The debit card costs ${bank.card.yearly !== undefined ? `${money(bank.card.yearly)} a year` : 'nothing a year'}${bank.card.perPurchase !== undefined ? ` and ${money(bank.card.perPurchase)} a purchase` : ''}${bank.card.freeUnder !== undefined ? `, or nothing at ${bank.card.freeUnder - 1} and under` : ''}${timing}. Source: ${bank.card.source}.${simulated}`);
   }
   if (bank.returned) lines.push(`A payment the bank returns unpaid costs ${money(bank.returned.fee)}${bank.returned.ifShortAtLeast !== undefined ? `, or nothing when the account is less than ${money(bank.returned.ifShortAtLeast)} short` : ''}${bank.returned.gapDays > 1 ? `, at most once every ${bank.returned.gapDays} business days` : ''}. Source: ${bank.returned.source}.`);

@@ -95,7 +95,7 @@ export function accountAlerts(sim: Simulation, person: Person): void {
     owing.set(o.accountId, total);
     if (!account || account.closedAt || inReach(account) >= total || said.has(o.key)) continue;
     said.add(o.key);
-    sim.notify({ category: 'bank', title: `Short For A Payment: ${account.name}`, body: `${o.what}, ${formatMoney(o.amount, cur)}, comes from ${account.name} at ${account.institution ?? 'your bank'} on ${formatDate(o.at, sim.zone)}, and it holds ${balanceText(sim, account)}. ${o.remedy}`, importance: 65, route: '/workspace/bank' });
+    sim.notify({ category: 'bank', title: `Short For A Payment: ${account.name}`, body: `${o.what}, ${formatMoney(o.amount, cur)}, comes from ${account.name} at ${account.institution ?? 'your bank'} on ${formatDate(o.at, sim.zone)}, and it has ${balanceText(sim, account)} available. ${o.remedy}`, importance: 65, route: '/workspace/bank' });
   }
   // Kept only for payments still ahead, so the list doesn't grow with the years.
   const live = new Set(ahead.map((o) => o.key));

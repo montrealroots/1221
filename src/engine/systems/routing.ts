@@ -165,7 +165,7 @@ export function closeHold(sim: Simulation, person: Person, accountId: string): s
   if (links.length === 0) return undefined;
   const leaves = depositsLeave(sim, person, accountId);
   if (leaves !== undefined) return `${links.join('. ')}. ${links.length === 1 ? 'You can close it' : 'Move the others first, and then you can close it'} from ${formatDate(leaves, sim.zone)}.`;
-  return `${links.join('. ')}. Move ${links.length === 1 ? 'it' : 'them'} first.`;
+  return `${links.join('. ')}. Move ${links.length === 1 ? 'that' : 'those'} to another account first.`;
 }
 
 /**

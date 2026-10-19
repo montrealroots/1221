@@ -517,19 +517,19 @@ describe('bank.cancel_new', () => {
     expect(text).toContain('its money back with its interest, and its fees refunded.');
     expect(buttonAfter(rbc.name, 'Cancel It').disabled).toBe(false);
     const set = ok<{ id: string }>(sim, 'bank.schedule_payment', { fromId: rbc.id, toId: td.id, amount: 10_00, at: sim.now + 5 * MS_DAY });
-    expect(refusal(sim, 'bank.cancel_new', { accountId: rbc.id })).toBe('A payment set for a date uses it. Move it first.');
+    expect(refusal(sim, 'bank.cancel_new', { accountId: rbc.id })).toBe('A payment set for a date uses it. Move that to another account first.');
     // The panel while it's refused: the reason said under it, and Cancel It grayed with the same words.
     const held = drawn(sim, createElement(BankAccountLife, { bankId: 'ca-td' }));
     expect(held).toContain(`${rbc.name} is new enough to cancel, until`);
-    expect(held).toContain('its money back with its interest, and its fees refunded. A payment set for a date uses it. Move it first.');
-    expect([buttonAfter(rbc.name, 'Cancel It').disabled, buttonAfter(rbc.name, 'Cancel It').title]).toEqual([true, 'A payment set for a date uses it. Move it first.']);
+    expect(held).toContain('its money back with its interest, and its fees refunded. A payment set for a date uses it. Move that to another account first.');
+    expect([buttonAfter(rbc.name, 'Cancel It').disabled, buttonAfter(rbc.name, 'Cancel It').title]).toEqual([true, 'A payment set for a date uses it. Move that to another account first.']);
     ok(sim, 'bank.cancel_scheduled', { id: set.id });
     // TEST SETUP: RBC's account C$20 under. Until 2026-10-15 it was canceled so, and closed with its C$20 owed.
     setTo(sim, rbc, -20_00);
-    expect(refusal(sim, 'bank.cancel_new', { accountId: rbc.id })).toBe('It’s overdrawn by C$20.00. The bank only closes it once that’s paid off.');
+    expect(refusal(sim, 'bank.cancel_new', { accountId: rbc.id })).toBe('It’s overdrawn by C$20.00, and the bank only closes it once that’s paid off. Move money into it first.');
     expect(rbc.closedAt).toBeUndefined();
-    expect(drawn(sim, createElement(BankAccountLife, { bankId: 'ca-td' }))).toContain('its fees refunded. It’s overdrawn by C$20.00. The bank only closes it once that’s paid off.');
-    expect([buttonAfter(rbc.name, 'Cancel It').disabled, buttonAfter(rbc.name, 'Cancel It').title]).toEqual([true, 'It’s overdrawn by C$20.00. The bank only closes it once that’s paid off.']);
+    expect(drawn(sim, createElement(BankAccountLife, { bankId: 'ca-td' }))).toContain('its fees refunded. It’s overdrawn by C$20.00, and the bank only closes it once that’s paid off. Move money into it first.');
+    expect([buttonAfter(rbc.name, 'Cancel It').disabled, buttonAfter(rbc.name, 'Cancel It').title]).toEqual([true, 'It’s overdrawn by C$20.00, and the bank only closes it once that’s paid off. Move money into it first.']);
     setTo(sim, rbc, 50_00); // TEST SETUP
     const tdBefore = td.balance;
     drawn(sim, createElement(BankAccountLife, { bankId: 'ca-td' }));
@@ -582,8 +582,8 @@ describe('bank.cancel_new', () => {
     setTo(sim, giro, 10); // TEST SETUP
     // Commerzbank's GiroKonto: €4.90 a month, free only at €50,000; Germany's fees are settled at closing (`settleFees`),
     // this month's to the day: opened and canceled on Monday 5 January, one day of 31, 490 / 31 = 15.8, 16 cents.
-    const words = 'Its fees, €0.16, are more than it holds. Pay in €0.06 first.';
-    const said = 'Canceling it now charges its fees to the day, €0.16: January’s €4.90 for the one day of its 31 it’s been open, €0.16. German law charges a month’s fee only to the day an account closes.';
+    const words = 'Its fees, €0.16, are more than it holds. Move €0.06 into it first.';
+    const said = 'Canceling it now charges €0.16 in fees: €0.16 of January’s €4.90 fee, for the one day of its 31 the account has been open. Under German law, a month’s fee is charged only up to the day an account closes.';
     const text = drawn(sim, createElement(BankAccountLife, { bankId: 'de-deutsche-bank' }));
     expect(text).toContain(`${giro.name} is new enough to cancel, until`);
     // Until 2026-10-15's later pass this said “with its interest”: Germany's rule returns it (`KEEPS_INTEREST`).
@@ -702,7 +702,7 @@ describe('bank.cancel_new', () => {
     expect(ok<{ paid: number }>(sim, 'bank.take_term_interest', { accountId: term.id })).toEqual({ paid: 6_30 });
     expect(giro.balance - before).toBe(6_30);
     setTo(sim, giro, 0); // TEST SETUP: the primary spent to nothing.
-    const words = `The interest it paid into ${giro.name}, €6.30, goes back out of it, and is more than it holds. Pay in €6.30 first.`;
+    const words = `Canceling takes back the €6.30 of interest it paid into ${giro.name}, which holds less than that. Move €6.30 into ${giro.name} first.`;
     expect(drawn(sim, createElement(BankAccountLife, { bankId: 'de-commerzbank' }))).toContain(`${term.name} is new enough to cancel, until`);
     // Its row in the cancel list: the last button naming it, the term's own row (Take Interest, Break It Early) above.
     const cancelOf = () => h.buttons.slice(h.buttons.map((b) => b.text).lastIndexOf(term.name) + 1).find((b) => b.text === 'Cancel It')!;
@@ -712,7 +712,7 @@ describe('bank.cancel_new', () => {
     // A cent short is still refused (from 2026-10-15's second recheck: until then only 0 and €6.30 were tried, and the
     // refusal's threshold was untested).
     setTo(sim, giro, 6_29); // TEST SETUP
-    expect(refusal(sim, 'bank.cancel_new', { accountId: term.id })).toBe(`The interest it paid into ${giro.name}, €6.30, goes back out of it, and is more than it holds. Pay in €0.01 first.`);
+    expect(refusal(sim, 'bank.cancel_new', { accountId: term.id })).toBe(`Canceling takes back the €6.30 of interest it paid into ${giro.name}, which holds less than that. Move €0.01 into ${giro.name} first.`);
     expect(term.closedAt).toBeUndefined();
     setTo(sim, giro, 6_30); // TEST SETUP
     drawn(sim, createElement(BankAccountLife, { bankId: 'de-commerzbank' }));
@@ -934,10 +934,10 @@ describe('bank.close_current', () => {
     // Commerzbank's GiroKonto: €4.90 a month, charged at closing (`settleFees`) to the day: one day of January's 31,
     // 490 / 31 = 15.8, 16 cents; 16 − 10 = 6 cents short. Until 2026-10-15 Close It closed such an account overdrawn, its
     // debt closed with it.
-    const words = 'Its fees, €0.16, are more than it holds. Pay in €0.06 first.';
+    const words = 'Its fees, €0.16, are more than it holds. Move €0.06 into it first.';
     const text = drawn(sim, createElement(BankMoves));
     expect(buttons('Close It').map((b) => [b.disabled, b.title])).toEqual([[true, words]]);
-    expect(text).toContain(`You can’t close it yet. ${words} Closing it now charges its fees to the day, €0.16: January’s €4.90 for the one day of its 31 it’s been open, €0.16.`);
+    expect(text).toContain(`You can’t close it yet. ${words} Closing it now charges €0.16 in fees: €0.16 of January’s €4.90 fee, for the one day of its 31 the account has been open.`);
     expect(refusal(sim, 'bank.close_current', { accountId: giro.id, remainderTo: db.id })).toBe(words);
     expect([giro.closedAt, giro.balance]).toEqual([undefined, 10]);
     setTo(sim, giro, 100_00); // TEST SETUP

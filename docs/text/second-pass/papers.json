@@ -106,9 +106,9 @@
  },
  "src/engine/content/guide/papers.ts#FROM_CURRENT": {
   "status": "Rewritten",
-  "hash": "a3dadd549527",
+  "hash": "ad1dd4f34d82",
   "on": "2026-10-19",
-  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID): where a bill or a premium is taken from, the checking account first, as the glossary now names it",
+  "evidence": "the money area's rename carried in at its merge: Savings Covers The Checking Account, the label BankPayments.tsx now shows; tests/guide-examples-papers.test.ts and tools/guide-quotes.mjs pass on the merge",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#MONTHS": {

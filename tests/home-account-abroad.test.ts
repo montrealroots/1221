@@ -162,7 +162,7 @@ describe('the bank’s fee for a customer abroad, on its schedule, in its own mo
     expect(little).toBeLessThan(44_000);
     expect(smbc.feeOwedHeld).toBe(44_000);
     // Nor is it closed with the fee owed, as an overdrawn account isn't.
-    expect(refused(sim, 'bank.close_current', { accountId: smbc.id })).toBe('You owe its fee for customers abroad, ¥440. The bank only closes it once that’s paid.');
+    expect(refused(sim, 'bank.close_current', { accountId: smbc.id })).toBe('You owe its ¥440 fee for customers living abroad, and the bank only closes it once that’s paid. Move money into it: once it holds enough, the bank takes the fee that night.');
     expect(refused(sim, 'bank.transfer', { fromId: smbc.id, toId: chase.id, amount: 100, in: 'JPY' }))
       .toBe('SMBC stops its payments abroad while the Global Service fee can’t be taken. ¥440 of it is owed, taken the first night an account there holds it.');
     // $100 more: the night it lands both months are taken together, and payments abroad go again.
@@ -305,8 +305,9 @@ describe('a card from home, as the everyday card here', () => {
     expect(atm).toMatchObject({ ownerCharge: 322 });
     expect(postingsOn(sim, current, 'Cash withdrawal fee').at(-1)!.native).toBe(-392);
     expect(refused(sim, 'cash.withdraw', { amount: 10_000, from: 'atm' })).toBe('HSBC UK’s own machines and counters are in its country. Here, its card works only at another bank’s machine.');
-    // More than it holds, said in pounds, the dollars beside (until 2026-10-16 in dollars alone).
-    expect(refused(sim, 'cash.withdraw', { amount: 500_000, from: 'other_atm' })).toMatch(/^HSBC Bank Account has only £[\d,]+\.\d\d \(\$[\d,]+\.\d\d\), and \$[\d,]+\.\d\d in cash with its fees comes to \$[\d,]+\.\d\d\.$/);
+    // More than it holds, said in pounds, the dollars beside (until 2026-10-16 in dollars alone), and from brief 15 "available",
+    // as the money guide quotes it.
+    expect(refused(sim, 'cash.withdraw', { amount: 500_000, from: 'other_atm' })).toMatch(/^HSBC Bank Account has only £[\d,]+\.\d\d \(\$[\d,]+\.\d\d\) available, and \$[\d,]+\.\d\d in cash with its fees comes to \$[\d,]+\.\d\d\.$/);
     expect(refused(sim, 'card.apply', {})).toBe('HSBC UK opens its accounts for people living in the UK; for a customer abroad it has HSBC Expat, from £75,000.');
     expect(sim.ledger.audit()).toEqual([]);
   });
