@@ -204,3 +204,55 @@ tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0; vitest (mat
 text-inventory 1 before the marks and 0 after.
 
 **Screens verified:** BriefPane for all 25 briefs of the file, rendered and kept in `rendered/second-c.txt`.
+
+## Batch 4: `second-d.ts`
+
+**Sources (81):** 25 briefs and 56 reading sources ([cool] holds two readings): [brief-magical_realism-2] [routine]
+[messenger] [brief-martial_arts-2] [restraint] [brother] [endure] [brief-medical_drama-2] [steady] [witness]
+[brief-melodrama-2] [storm] [child] [pride] [brief-military-2] [light] [reach] [brief-mockumentary-2] [sell] [invent]
+[dream] [brief-monster_movie-2] [leader] [terror] [brief-mumblecore-2] [cool] [hoping] [brief-musical-2] [number] [love]
+[brief-mystery-2] [reasoner] [student] [cornered] [brief-nature_documentary-2] [storyteller] [clock] [brief-neo_noir-2]
+[confession] [brief-neorealism-2] [plain] [house] [brief-new_wave-3] [narration] [waiting] [brief-nordic_noir-2] [method]
+[town] [brief-occult-2] [business] [pulled] [brief-parody-2] [straight] [epic] [brief-period_drama-2] [ledger] [widow]
+[brief-picaresque-2] [raconteur] [tired] [breath] [brief-police_procedural-2] [procedure] [strain]
+[brief-political_drama-2] [orator] [conscience] [walt] [brief-political_thriller-2] [neutral] [defiance]
+[brief-post_apocalyptic-2] [teacher] [future] [brief-prison_film-2] [rules] [kid] [brief-psychological_horror-2]
+[together] [loop] [awake].
+
+**Rewritten (16 sources, 39 strings):** 16 briefs (martial_arts-2, medical_drama-2, military-2, mockumentary-2,
+monster_movie-2, mumblecore-2, nature_documentary-2, neo_noir-2, neorealism-2, new_wave-3, parody-2, picaresque-2,
+police_procedural-2, political_thriller-2, prison_film-2, psychological_horror-2); no reading needed it. By kind: 10
+circumstances (staging made instructions, martial_arts-2's "On the tape" brought to the "For the tape," every other
+brief now opens with, and two improvised-talk passives given their subject); 11 verbless beats (the
+nature documentary's shots, the noir narrator's first two beats, four of the picaresque's six voice notes, the new wave's
+talk and closing narration); 4 voice briefs' `reader` fields ("the voice speaks to them alone, at the microphone");
+political_thriller-2's and psychological_horror-2's `relationship`, which used the same stock phrase under The Two Of
+You; and 12 reasons (staging, a passive or a fragment).
+
+**Kept (65):** nine briefs whole (magical_realism-2, melodrama-2, musical-2, mystery-2, nordic_noir-2, occult-2,
+period_drama-2, political_drama-2, post_apocalyptic-2) and all 56 readings. Kept as written: parody-2's beats, named as a
+trailer's sections ("The opening: a building, a season, and a schedule that changed everything."), since a trailer is
+those sections, and its `relationship`, where "The voice" is the character (You Play: The trailer voice).
+
+**Meaning-sensitive, and how each was checked:**
+- mockumentary-2's circumstances said "Her tour and her answers are improvised around fixed points: the tour, …", which
+  made the tour both improvised and fixed; its improvisation note says "The tour is written, but the answers are hers".
+  The circumstances now agree: "You improvise her answers around three fixed points: the written tour, the stuck lock,
+  and the question about who built it." The brief's `improvisation: 2` and the readings are untouched.
+- prison_film-2's "the lights-out is played, not made, and the frame stays lit" is now "Act the lights going out without
+  dimming them: the frame stays lit": the same staging, said as what to do.
+- neorealism-2's "the labor has to read as real" is "has to look real": reads was the judge's verb, and the sentence is
+  about what the camera sees.
+- The fight and contact notes (martial_arts-2, monster_movie-2): no contact, reduced speed, the open-handed stop and the
+  reader's called attacks are kept.
+- Only string values changed (`m15b/skeleton.py`).
+
+**Interactions read whole:** each pane top to bottom; no brief in the file has `allows`. Rendered: `rendered/second-d.txt`.
+
+**Tests and tool matchers updated:** none held the old words.
+
+**Checks** (scratchpad `m15b/b4-checks/`): tsc 0, eslint 0, title-case 0, label-sweep 0, plural-check 0, voice-check 0,
+tics 0, spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0; vitest (material-words, briefs-content) 0, 454 tests.
+text-inventory 1 before the marks and 0 after.
+
+**Screens verified:** BriefPane for all 25 briefs of the file, rendered and kept in `rendered/second-d.txt`.
