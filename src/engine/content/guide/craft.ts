@@ -307,7 +307,7 @@ export const CRAFT: readonly GuideEntry[] = [
     questions: ['Where are my abilities?', 'How good am I?', 'What does Classes Reach mean?', 'What should I work on next?', 'Where is the work I’ve done?'],
     where: { route: PROFILE, label: 'Player Profile' },
     available: `${OPENED}: Player Profile on the menu, and your name at its foot.`,
-    short: `The Player Profile is you as an actor. From the top: Identity And Background, as you made your character; Attributes And Craft, your ${ABILITY_DEFS.length} abilities from 0 to 100, with what to work on next; Techniques, ${TECHNIQUES.length} learned skills, each mastered at ${MASTERED}; Genres, each with its practice brief; Current Condition, your readiness for work today; School Journey, every piece of work judged; Your Work So Far; and Development History, each change and what made it. Looking at it changes nothing and moves no clock.`,
+    short: `The Player Profile is you as an actor. From the top: Identity And Background, as you made your character; Attributes And Craft, your ${ABILITY_DEFS.length} abilities from 0 to 100, with what to work on next; Techniques, ${TECHNIQUES.length} learned skills, each mastered at ${MASTERED}; Genres, each with its practice brief; Readiness Today, your readiness for work today; School Journey, every piece of work judged; Your Work So Far; and Development History, each change and what made it. Looking at it changes nothing and moves no clock.`,
     steps: [
       'Press P, or Player Profile on the menu, or your name at the foot of the menu.',
       'In Attributes And Craft, each ability shows Now, Full, Classes Reach, Today (what holds it back today), It Shapes (what your teacher looks for that it affects), Last Change and Practice. What To Work On Next sits above the table.',
@@ -353,7 +353,7 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     unavailable: [
       `${LOCKED} Until then the screen opens as Locked, with the chapter that opens it.`,
-      '“This life began outside drama school, so there are no acting abilities or techniques to show.”',
+      '“You didn’t start at drama school, so there are no acting abilities or techniques to show.”',
     ],
     mistakes: [
       'Reading Classes Reach as a cap: it’s where classes level off, and an hour of practice goes past it to full.',
@@ -370,7 +370,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { to: 'craft.practice', kind: 'optional', why: 'Each ability and technique has its exercise in the Practice column beside it.' },
       { to: 'craft.work', kind: 'optional', why: 'A piece of work in School Journey opens into how it was judged.' },
       { to: 'craft.identity', kind: 'optional', why: 'Your Work So Far, near the profile’s foot, reads the actor your work shows.' },
-      { to: 'body.how', kind: 'optional', why: 'Current Condition shows the readiness today’s work meets, from how you are.' },
+      { to: 'body.how', kind: 'optional', why: 'Readiness Today shows how ready you are for today’s work, from how you are.' },
       { to: 'start.find', kind: 'optional', why: 'P opens the profile from anywhere but a text box.' },
     ],
     example: {

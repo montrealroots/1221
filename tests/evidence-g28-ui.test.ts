@@ -663,7 +663,7 @@ describe('c-genres', () => {
     expect(sim.player.genres).toEqual(['drama']);
     const shown = profile(sim);
     expect(shown).toContain('1 loved;');
-    expect(shown).toContain('You love: Drama. Drama is the one you love and know least, and no part asks for a kind yet.');
+    expect(shown).toContain('You love: Drama. Drama is worth studying next: of the genres you love, it’s the one you know least.');
     expect(look(sim, 'person', sim.player.id).body).toContain('The films you love. Drama.');
   });
 

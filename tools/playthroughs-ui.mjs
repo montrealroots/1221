@@ -887,9 +887,9 @@ async function specialist() {
     const first = clean(await work.locator('p').first().innerText());
     const assumes = clean(await work.locator('[data-assumes]').innerText().catch(() => ''));
     const attention = clean(await work.locator('[data-attention]').innerText().catch(() => ''));
-    must(/\d+ hours of its exercise(?:, a session a day,)? would take it from \d+ to about \d+\. On your recent work, replayed with you as you are now, that’s forecast to be worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
+    must(/\d+ hours of its exercise(?:, an hour a day,)? would take it from \d+ to about \d+\. On your recent work, judged again as you are now, that’s forecast to be worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
     must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes: ${assumes || 'nothing'}`);
-    must(/deserves? attention|^Neither preparation nor training/.test(attention), `what deserves attention: ${attention || 'nothing'}`);
+    must(/(is|are) worth your time now|^Neither preparation nor training/.test(attention), `what deserves attention: ${attention || 'nothing'}`);
     const ex = work.locator('button', { hasText: /…$/ }).first();
     trains = (await ex.count()) ? clean(await ex.innerText()).replace(/…$/, '') : '';
     said(`${first} / ${assumes} / ${attention} / its exercise: ${trains || 'none offered here'}`);

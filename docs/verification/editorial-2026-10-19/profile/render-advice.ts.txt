@@ -1,0 +1,44 @@
+/**
+ * Prints the advice the Player Profile shows (`adviceFor`) on brief 12's tuning cases, as built and after twenty sessions
+ * of what each names first, for brief 15's profile area. Kept as .txt so the lint and the typecheck leave it be: copy it
+ * out as a .ts, then from the clone run npx vite-node <that file> -- <out.txt>
+ */
+import { writeFileSync } from 'node:fs';
+import { buildCase, caseOf, live, rest, clone, go } from '<the clone>/tools/advice-harness';
+import { adviceFor, heldVersusNext, noteAdvice } from '@/engine/systems/next-steps';
+import type { Simulation } from '@/engine/core/simulation';
+import { BRIEFS } from '@/engine/content/briefs';
+
+const out: string[] = [];
+const show = (sim: Simulation, title: string) => {
+  const recs = adviceFor(sim, sim.player);
+  out.push(`## ${title}`);
+  for (const r of recs) {
+    out.push(`- ${r.label}${r.exercise ? ` (${r.exercise}, tier ${r.tier})` : ''}. ${r.why}`);
+    for (const k of ['standing', 'next', 'assumes', 'attention'] as const) if (r[k]) out.push(`    ${k}: ${r[k]}`);
+  }
+  const hv = heldVersusNext(sim.player, recs);
+  if (hv) out.push(`    beside a brief: ${hv}`);
+};
+for (const seed of ['adv-t-0', 'adv-t-5', 'adv-t-10', 'adv-t-13']) {
+  const c = caseOf(seed)!;
+  const { sim } = buildCase(seed, c.band!, c.stage!);
+  noteAdvice(sim, sim.player, 'work');
+  show(sim, `${seed} as built`);
+  const first = adviceFor(sim, sim.player).find((r) => r.forecast);
+  if (!first) continue;
+  const copy = clone(sim);
+  live(copy, first.target);
+  noteAdvice(copy, copy.player, 'practice');
+  show(copy, `${seed} after twenty sessions of ${first.label}`);
+  // A new take after it, and the advice noted before it, so "since" the latest work reads.
+  const b = BRIEFS.find((x) => x.medium === 'camera' && !copy.player.briefs?.[x.id]);
+  if (b) {
+    go(copy, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
+    for (const step of ['read', 'lines', 'rehearse']) go(copy, 'brief.prepare', { brief: b.id, step });
+    const t = go(copy, 'practice.self_tape', { genre: b.kinds[0], brief: b.id });
+    if (t.ok) { live(copy, first.target, 5); noteAdvice(copy, copy.player, 'practice'); rest(copy); show(copy, `${seed}, a new take, then five more sessions`); }
+  }
+}
+writeFileSync(process.argv[2] ?? 'advice.txt', `${out.join('\n')}\n`);
+console.log(`${out.length} lines written`);

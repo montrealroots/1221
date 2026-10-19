@@ -226,7 +226,7 @@ const rowOf = (html: string, name: string): string[] => {
 };
 const abilities = (html: string) => panel(html, 'Attributes And Craft', 'Techniques');
 const techniques = (html: string) => panel(html, 'Techniques', 'Genres');
-const genres = (html: string) => panel(html, 'Genres', 'Current Condition');
+const genres = (html: string) => panel(html, 'Genres', 'Readiness Today');
 const identity = (html: string) => onScreen(panel(html, 'Identity And Background', 'Attributes And Craft'));
 
 // ---------------------------------------------------------------------------
@@ -339,7 +339,7 @@ describe('p-identity', () => {
     // The class entering in 2026 graduates in 2029, after three years; nothing judged yet, in good standing.
     expect(shown).toContain('School Year 1 Class of 2029, good standing');
     expect(shown).toContain('Living In New Haven');
-    expect(shown).toContain('In their own words. Grew up backstage.');
+    expect(shown).toContain('In your own words. Grew up backstage.');
     expect(shown).toContain('Race and ethnicity, as given. Black Or African, Hispanic Or Latino, Dominican.');
   });
 
@@ -357,7 +357,7 @@ describe('p-identity', () => {
     expect(shown).toContain('Age 23 Born August 30, 2002');
     expect(html).toContain(`<img src="${portrait}" alt="Ada Cole’s portrait"`);
     expect(shown).not.toContain('No portrait chosen');
-    expect(shown).not.toContain('In their own words.');
+    expect(shown).not.toContain('In your own words.');
     expect(shown).not.toContain('Race and ethnicity, as given.');
     sim.advanceTo(at(2026, 8, 31, 8));
     expect(identity(profile(sim))).toContain('Age 24 Born August 30, 2002');
@@ -802,9 +802,9 @@ describe('p-genres', () => {
     const sim = life('g31-part', { genres: ['drama', 'comedy'] });
     sim.advanceTo(at(2026, 8, 24, 8));
     const sentence = (html: string) => inline(/You love: ([\s\S]*?)<\/p>/.exec(html)?.[1] ?? '');
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Drama is the one you love and know least, and no part asks for a kind yet.');
+    expect(sentence(profile(sim))).toBe('Drama, Comedy. Drama is worth studying next: of the genres you love, it’s the one you know least.');
     sim.must({ kind: 'genre.study', payload: { genre: 'drama' } });
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Comedy is the one you love and know least, and no part asks for a kind yet.');
+    expect(sentence(profile(sim))).toBe('Drama, Comedy. Comedy is worth studying next: of the genres you love, it’s the one you know least.');
     // After orientation's first session, an hour and a half free again.
     sim.advanceTo(at(2026, 8, 24, 12, 30));
     sim.must({ kind: 'genre.study', payload: { genre: 'comedy' } });
@@ -814,10 +814,10 @@ describe('p-genres', () => {
     // the play demands (`BASE_INPUTS`), and Barbara again from later that day, when a stage's house came to weigh the
     // voice and the body (`STAGE_LEAN`). The play, and so the kinds below, are the same.
     expect(sim.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Barbara Undershaft' });
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Satire is the kind of play your next part is in, and the one of its kinds you know least.');
+    expect(sentence(profile(sim))).toBe('Drama, Comedy. Satire is worth studying next: your next part is in a play of that kind, and it’s the one of the play’s kinds you know least.');
     expect(studyRefusal(sim, sim.player, 'satire')).toBeUndefined();
     sim.must({ kind: 'genre.study', payload: { genre: 'satire' } });
-    expect(sentence(profile(sim))).toBe('Drama, Comedy. Political Drama is the kind of play your next part is in, and the one of its kinds you know least.');
+    expect(sentence(profile(sim))).toBe('Drama, Comedy. Political Drama is worth studying next: your next part is in a play of that kind, and it’s the one of the play’s kinds you know least.');
   });
 
   it('PLAYER JOURNEY: Open Its Brief pressed, Tape It refused before a reading, Read It This Way and Tape It pressed: the take kept once and practice 1.5 in Drama’s row, a cold take’s share, across a reload; refused by the clock before orientation', () => {

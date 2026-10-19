@@ -1316,7 +1316,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     for (const r of prep) {
       expect(r.focus).toBe('preparation');
       expect(r.exercise).toBeUndefined();
-      expect(r.why).toMatch(/^Coming to your work short on .+ cost about (?:1 point|(?!1 )[\d.]+ points) off the whole a piece\. That’s preparation, not training\.$/);
+      expect(r.why).toMatch(/^Coming to your work short on .+ cost about (?:1 point|(?!1 )[\d.]+ points) off the whole a piece\. That’s preparation, not training: prepare that part further before you show or tape the next piece\.$/);
       expect(cold.next).toContain(`${r.label}. ${r.why}`);
     }
     const ready = taped('p2b-f3-cold', LONG, preparedFully);

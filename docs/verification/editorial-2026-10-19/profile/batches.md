@@ -86,3 +86,97 @@ ability looks after it, a gone work and a gone genre, a life that never trained,
 **Left for the built app:** `AttributesPanel` is drawn by `tests/evidence-g08-life.test.ts` and `-g29-ui`, which read
 its figure and not its paragraph, so it's marked once the School screen is read on the built app at the end of the
 area.
+
+## Batch 2: The Player Profile And The Advice
+
+**Sources read (31):** `ui/workspaces/ProfileWorkspace.tsx` (17), `systems/next-steps.ts` (10), `systems/experience.ts`
+(4). About 2,300 words, and the advice's every variant as rendered.
+
+**The interaction read whole:** a new life's Profile (nothing judged yet), then the advice as it grows: the first
+training line, its standing once it has led a while, the line when another takes over, what moved its forecast, the
+next hour, what the forecast assumes, the verdict on preparation and training, the line beside a brief, and the all-full
+line; then the Practice control the advice sends the player to, in both tables; the Genres table's suggestion and its
+two buttons; Readiness Today against How You Are's Condition.
+
+**Rewritten:**
+- **The advice's standing** (`standingOf`), the working reference's example 7, in both shapes. The lead now "has led the
+  advice on what to train since …"; when another has taken over, the sentence says what led, until when you last saw
+  it, what it has done since it took the lead, and why it moved on ("Emotional depth’s forecast is now the higher, at
+  0.84, so it leads now"). Section 8 asks a repeated message to say what the player did, what changed and why it still
+  holds or moved on: the hours practiced, the pieces done since and the parts that moved the forecast were already
+  there, and now read in that order.
+- **Variants that read badly:** an unmoved forecast ("gone from 0.8339 to 0.8339"), one piece counted as "1", a note
+  the same day ("since …, today"), "Of the 1 piece". Each has its own shape now (`defects.md`, D2).
+- **The training line** (`recommendations`): "judged again as you are now" for "replayed with you as you are now";
+  "an hour a day"; "your last 6 pieces all call on it" for "6 of your last 6"; the discipline's share "comes from" it;
+  the Focus setting named as the control names it ("Set Focus to Steady to start").
+- **The next hour** (`nextOf`) names the Focus setting, the Practice column and the panel, and for a technique the
+  Techniques panel (`defects.md`, D1).
+- **The verdict** (`attentionSaid`): "worth your time" for "deserve attention", and "would add" for "would bring" and
+  "would have brought it".
+- **What the forecast assumes** (`assumesOf`): one piece as "it", one genre as "its genre", a comma before the last of
+  several.
+- **The line beside a brief** (`heldVersusNext`): the two forecasts at two places, so they don't print as a tie the
+  sentence then breaks, and its last clause a sentence of its own.
+- **The all-full line** (`allFull`): "so more practice wouldn’t improve that work", "stamina isn’t full".
+- **The Profile:** the empty state for a life without the school ("This life began outside drama school" was the game
+  describing its own state); In your own words; the advice's empty state, leading with when it starts; Risk Tolerance
+  with no card ("but you don’t have a card"); the suggested genre ("is worth studying next: …"); the stamina paragraph,
+  whose "After that" followed the wrong sentence; Open Its Brief named in the Genres fine print; and **Current Condition
+  renamed Readiness Today** (`renames.json`), since Condition is one of the eight wellbeing measures and this panel
+  doesn't show it.
+
+**Kept, and why (reasons in `docs/text/second-pass/profile.json`):** the material labels (`FEATURE_LABEL`), the five
+parts a change of forecast is said in (`PART_SAID`), the dispositions (creation's own words, the frame area's), sleep
+owed, Today's causes, stamina's practice cell, the Practice control's labels, Your Work So Far, Techniques, the filter
+box, School Journey and Development History.
+
+**Meaning-sensitive, and how each was held:**
+- **Every figure in the advice** is the engine's, in the same place. `tools/advice.ts` was run over the 30 tuning cases
+  (`advice/tuning.json`, `advice/tuning.log`): F1 to F6 30 of 30, H1 to H6 30 of 30, 485 reads and 0 stale, 806 changes
+  and 0 unexplained, check (g) 136 of 136. Its whole summary is identical to brief 14's run
+  (`docs/verification/language-2026-10-17/advice/tuning-final.json`), so no ranking, figure or note moved.
+- **"Judged again as you are now"** is `trainingForecast`: the recent pieces judged again at today's levels, with and
+  without the trained gain.
+- **"Since it took the lead"** is `was.since`, the day the input became first (`noteAdvice`); "when you last saw it" is
+  `was.day`, the last day the advice was noted, which happens only where the advice is shown beside what it's for.
+- **The working reference's example 7** said "so training it is now worth less". The forecast can fall because the
+  work it's forecast on changed as well as the level, and the parts sentence after it says which, so the standing says
+  what moved, and doesn't say why in one word.
+- **"Worth your time"** keeps the verdict's floor: each side at a tenth of a point a piece or more (`ADVICE_FLOOR`).
+- **The panel in the next hour** is what the exercise trains (`isAbility(targetId(e.trains))`), the same test the two
+  tables are built on.
+
+**Tests and tool matchers updated (words only, every assertion as exact as before; three added):**
+- `tests/decisions-advice.test.ts` (the standing's two shapes, the pieces' count in its three shapes, the discipline's
+  share, the verdict's four starts, the preparation and training words, what the forecast assumes, the all-full line,
+  the parts sentence), `tests/defects-r8-1.test.ts`, `tests/evidence-g23-school.test.ts` (the training line's regex),
+  `tests/language-dynamic.test.ts`, `tests/attributes-phase-2b.test.ts` (the preparation line's regex),
+  `tests/evidence-g28-ui.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence-g32-ui.test.ts`,
+  `tests/need-paths.test.ts`.
+- **Added:** `tests/advice.test.ts`, the next hour's panel for an ability and a technique (D1, mutation-tested);
+  `tests/evidence-g32-ui.test.ts`, the Profile's empty state for a life with no craft.
+- **Tools:** `tools/advice-harness.ts` (S3's branch by " when you last saw it, on ", the forecast now by "is now the
+  higher, at", the level by "It’s still at", an unmoved forecast by "its forecast is still", the parts sentence by
+  "since it took the lead:"); `tools/advice.ts` (F2's genre words in both shapes, F5's verdict starts, (g)'s count with
+  "all"); `tools/acceptance-ui.mjs` (the training line's regex, the verdict's "worth your time", the Readiness Today
+  heading by role and name); `tools/playthroughs-ui.mjs` (the training line's regex and the verdict).
+- `src/engine/content/attributes-matrix.ts` names the Profile's sections, so Readiness Today, and
+  `docs/ATTRIBUTES-MATRIX.md` was written again by `tools/attributes-matrix.ts` (one line moved).
+- `src/engine/content/guide/craft.ts`: the Profile entry's quote of the empty state and its panel names. Marked in
+  batch 5.
+
+**Checks:** `npx tsc -b --noEmit` exit 0. `npx eslint` on the 17 changed `.ts` and `.tsx` files, exit 0. `npx vitest
+run` on the 38 files that read the Profile, the advice, the looks or the guide: 609 of 612 at first, the three failures
+each an assertion still on the old words (the preparation line twice, the "neither" verdict once), then those three
+files 98 of 98, exit 0; `tests/advice.test.ts` 6 of 6 with the new test, which fails with the panel forced back
+(mutation, exit 1); `tests/evidence-g32-ui.test.ts`'s p-condition 7 of 7. title-case 0, label-sweep 0, plural-check 0,
+voice-check 0, tics 0 (no count moved), spelling 0, typos 0, doc-refs 0, deciders 0, guide-quotes 0 (580 of 580).
+text-inventory 1 before marking, on the sources changed.
+
+**Screens verified:** `b2-advice.txt` (from `render-advice.ts.txt`): the advice on four tuning cases (adv-t-0, -5,
+-10, -13) as built, after twenty sessions of what each named first, and after a new take and five more sessions: every
+shape of the standing (the same lead, another taking over, one led before), an unmoved forecast, one piece and several,
+the next hour, what it assumes with one genre and several, the verdict, the line beside a brief. The Profile's stamina
+paragraph and Genres fine print, and Readiness Today, are read on the built app at the end of the area, where
+`AbilitiesPanel` and `GenresPanel` are marked.
