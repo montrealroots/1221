@@ -1,0 +1,14 @@
+# The whole suite, once, at the area's end (npx vitest run, two forks; the machine shared by ten areas)
+ Test Files  2 failed | 389 passed (391)
+      Tests  2 failed | 4713 passed (4715)
+   Duration  4976.32s (transform 61.14s, setup 27.60s, collect 1135.03s, tests 8246.39s, environment 108ms, prepare 121.06s)
+exit=1
+   × condition > Readiness at 100 says a measure short of its best is short of it, not pulling readiness down; under 100 it is 150ms
+   × Readiness on your own page > names what reads it now, and not the career that went 50ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+     → expected 'How ready you are today, from all of …' to match /judged work/
+
+# The two failed files, and the files that hold the looks' words, run again after the fixes below
+ Test Files  7 passed (7)
+      Tests  159 passed (159)
+exit=0

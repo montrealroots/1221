@@ -1,0 +1,407 @@
+[
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "8. You’re running low, and it pulls readiness down. Under 15, stress starts to climb.",
+  "after": "8. You’re running on empty, so stress is climbing and readiness is down. Only sleep brings energy back.",
+  "why": "At 8 the rule it quoted had already happened: stress climbs below 15. Under 15 the look now says what is happening and the one thing that fixes it. From 15 to 40 the old sentence stays.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the worn-out band; tests/evidence-g06-life.test.ts energy journey asserts the new words at 7"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "25 hours owed. Everything is harder than it should be until it’s paid back.",
+  "after": "25 hours owed. Until it’s paid back, your energy runs down faster and a night gives back less.",
+  "why": "“Everything is harder” was vague. Now it names the two things a large debt does: energy drains faster (applyElapsedWellbeing) and a night gives back less (DEBT_HOLDS in applySleep).",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the worn-out band; checked against applyElapsedWellbeing's drain and applySleep's owing factor"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "62. Steady, and each night brings it back toward 80. Down like this, a night clears less of the day’s stress than usual.",
+  "after": "62. Steady. Each night moves it toward 80. Under 63, a night clears less of the day’s stress than usual.",
+  "why": "It said “Steady” and then “Down like this” about the same mood. It now gives the actual line, 62.5, where a night's stress clearing breaks even (applySleep, settled = 1). “Brings it back toward 80” didn't fit a mood still rising toward 80.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the first morning; tests/evidence-g06-life.test.ts morale asserts the 20 and 90 variants"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "50. At your fitness, rest can mend it to 88. For now, a night gives back 91% of the energy it would at 88, and each midnight brings it a little closer. Under 55, a sick day from classes is excused. The lower it is, the likelier a year is to be your last.",
+  "after": "50. Rest can mend it to 88 at your fitness, and each midnight brings it a little closer. Until then, a night gives back only 91% of the energy it normally would. Under 55, a sick day from classes is excused. The lower it is, the likelier a year is to be your last.",
+  "why": "“The energy it would at 88” left the reader to work out the comparison. The midnight pull now comes right after the mark it pulls toward, and the cost is said in plain words. The sentence is left out when the share rounds to 100%.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the low band; tests/evidence-g06-life.test.ts asserts the 47 variant"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "100. As sound as rest can make you at your fitness. Above 100, it settles back toward 100 each midnight. The lower it is, the likelier a year is to be your last.",
+  "after": "100. As sound as rest can make you at your fitness. The lower it is, the likelier a year is to be your last.",
+  "why": "A body exactly at the mark was told what happens above it, which here was impossible. The midnight pull back is said only above the mark (defects.md, 1).",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the peak band; tests/evidence-g06-life.test.ts ‘the Condition look says the midnight pulls it back only …’ fails without the fix"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "50. At this fitness, rest can mend your condition to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is near its best, and age takes very little from it.",
+  "after": "50. At this fitness, rest can mend your condition to 100, and a workout costs 10 energy. At 24, training can take it to 99 at most. The body is near its best, and age takes very little from it.",
+  "why": "“The most a body can be trained to is” was passive and roundabout. The new clause is short and says the same thing (ceilingAt(age).fitness).",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), first morning; tests/evidence-g06-life.test.ts fitness"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "14. Hungry, and it’s costing condition and morale every hour. Each morning the day’s groceries bring it up to at least 76, or to 40 on a day the food can’t be paid for.",
+  "after": "14. Hungry, and it’s costing condition and morale every hour. Each morning the day’s groceries bring it up to at least 76, or only to 40 on a day there’s no money for food.",
+  "why": "The passive “can’t be paid for” is now a plain circumstance. It names nobody, so it works for anybody's look.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g06-life.test.ts nourishment journey, both cards locked"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#DIALS [condition]",
+  "kind": "other",
+  "before": "88/100. How sound your body is. It sets how much a night gives back, your morale, sick days, and how likely each year is to be your last.",
+  "after": "88/100. How sound your body is. It sets how much energy a night gives back, where your morale settles, when a sick day is excused, and how likely a year is to be your last.",
+  "why": "The list mixed kinds of thing (“your morale, sick days”). Each item now says what condition decides: the night's energy, where morale settles (moraleSettlesAt), the excused sick day (under 55), and mortality.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts); tests/evidence-g33-ui.test.ts l-person and tests/scope-people.test.ts (she/her)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#DIALS [fitness]",
+  "kind": "other",
+  "before": "50/100. How trained his body is. It sets how far rest can mend him and what a workout costs.",
+  "after": "50/100. How trained his body is. It sets how far rest can mend his condition and how much energy a workout costs.",
+  "why": "“Mend him” was vague. Rest mends condition, and a workout costs energy, so the line now says both.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), another person he/him; tests/scope-people.test.ts"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "Kept up, at what his plan doesn’t cover.",
+  "after": "Kept up, and he pays what his plan doesn’t cover.",
+  "why": "“At what his plan doesn’t cover” left the payer out. The line now has a subject and a verb, and the glossary's phrase.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts (he/him); tests/evidence-g33-ui.test.ts (you)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "He’s keeping it up. Its care is paid each month, at what his plan doesn’t cover.",
+  "after": "He’s keeping it up, and each month he pays the part of its care his plan doesn’t cover.",
+  "why": "The passive and the dangling “at what” are gone. Who pays, how often and how much are now in one sentence.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts, his asthma kept up"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "Mending. A Pulled Muscle, until September 25, 2026, on workers’ compensation.",
+  "after": "Mending. A pulled muscle, until September 25, 2026, on workers’ compensation.",
+  "why": "Inside a sentence the injury is a noun, not a label, so it's in sentence case. The look's title keeps the Title Case label.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g07-life.test.ts work-study journey; looks-before.txt and looks-after-1.txt (render-looks.ts)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "empty",
+  "before": "They aren’t part of this story any more.",
+  "after": "This person isn’t in your life any more.",
+  "why": "“This story” was a literary turn for a look whose person is gone. The new sentence says it plainly.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b12.test.ts ‘only the player is a Person …’ asserts the gone look"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "How ready the measures it moves leave you today.",
+  "after": "How ready you are today. The measures this trait moves are part of it.",
+  "why": "The old line was hard to parse. It's now two short sentences: what Readiness is, then how the trait comes into it.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), trait spender"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "It can start with a life, at a young adult’s rates, or begin later, likelier in a heavier body. Source: …",
+  "after": "It can be there from the start, at young adults’ rate, or begin later, more often in a heavier body. Source: …",
+  "why": "“Start with a life” sounded like the engine. The line now says the condition can be there from the start, at the rate young adults have it, or begin later. It keeps to the one-line limit tests/looks.test.ts holds a provenance to.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), condition arthritis; tests/looks.test.ts provenance length"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#leftAlone",
+  "kind": "other",
+  "before": "Left untreated, it has no effect in the game beyond going without its care, which then costs nothing.",
+  "after": "Left untreated, it has no effect in the game, and its care costs nothing.",
+  "why": "The old clause chain said “it does nothing” in a roundabout way. Now it's two plain facts.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), hypertension left untreated"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.how]",
+  "kind": "tutorial",
+  "before": "Energy turns red under 15 and amber within 15 above it. Stress turns red over 75 and amber within 15 below it. Those are the points where your body starts to pay.",
+  "after": "Energy turns amber under 30 and red under 15. Stress turns amber over 60 and red over 75. Red is where your body starts to pay for it.",
+  "why": "“Within 15 above it” made the reader do the sum. The figures are now worked out from EMPTY and OVERWROUGHT, in the order the bar changes color (Meter's line, primitives.tsx).",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section; checked against Meter in src/ui/components/primitives.tsx"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.how]",
+  "kind": "tutorial",
+  "before": "Readiness, opened, names up to three measures that each cost you more than a twentieth of it, worst first.",
+  "after": "Open Readiness to see up to three measures holding it back, worst first. It names only those that cost you more than a twentieth of it.",
+  "why": "It now starts with the action, and the threshold comes second (dragsOn).",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.how]",
+  "kind": "tutorial",
+  "before": "Your own page opens with “A Whole Life”, the guide’s last chapter. Until then, Readiness names the measures holding you back and opens them, a trait opens only on the Player Profile, from “You As An Actor”, and a long-term condition can’t be opened.",
+  "after": "Your own page opens with “A Whole Life”, the guide’s last chapter. Until then, Readiness names the measures holding you back, and you can open those. A trait opens only on the Player Profile, from “You As An Actor”, and a long-term condition doesn’t open at all.",
+  "why": "One sentence with three clauses and a passive is now two sentences, each about one thing.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.look-after]",
+  "kind": "tutorial",
+  "before": "You can’t afford it when your current account and any savings linked to it, …",
+  "after": "You can’t afford it when your checking account and any savings linked to it, …",
+  "why": "From this brief the glossary's word is checking account.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.look-after]",
+  "kind": "tutorial",
+  "before": "… the next day starts on what the meal left, with no 76 under it.",
+  "after": "… the next day starts on what the meal left, without the groceries’ 76 to fall back on.",
+  "why": "“With no 76 under it” was cryptic. Now it names the floor the morning loses.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.look-after]",
+  "kind": "tutorial",
+  "before": "Each line waits for you to press it, and the clock then moves through the time it takes.",
+  "after": "A line waits until you press it. Then the clock moves on by the time it takes.",
+  "why": "Shorter, with a clear subject, and none of the tics.mjs openings.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [immediate]",
+  "kind": "tutorial",
+  "before": "Anything that needs you during the night happens without you and is missed.",
+  "after": "A commitment during the night goes ahead without you, and it counts as missed.",
+  "why": "It now uses the glossary's word, commitment, for “anything that needs you”, and an active verb.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide's connections"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [scheduled]",
+  "kind": "tutorial",
+  "before": "An injury from a run or a workout brings a doctor’s care, and a bill for it.",
+  "after": "An injury from a run or a workout needs care, and you may owe a share of its cost.",
+  "why": "Not every injury brings a bill: a covered one “costs you nothing” (mayHurt). Care can also be urgent care or the emergency room, not only a doctor.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide's connections; checked against mayHurt in systems/injury.ts"
+ },
+ {
+  "source": "src/engine/content/body.ts#TRAINING_CLASS_NAMES",
+  "kind": "label",
+  "before": "Acting Intimacy And Combat For The Stage in its spring",
+  "after": "Acting Intimacy And Combat For The Stage in the spring term",
+  "why": "“In its spring” read like a season of the course's own. It's the spring term.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the Looking After Yourself entry's Straight Away"
+ },
+ {
+  "source": "src/engine/systems/health.ts#dueWords",
+  "kind": "official",
+  "before": "A doctor’s visit, Fair Haven Community Health Care. Your share is $183.98, due on October 24, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.",
+  "after": "A doctor’s visit, Fair Haven Community Health Care. You owe $183.98. It’s taken from your checking account on October 24, 2026, and if there isn’t enough then, it becomes medical debt.",
+  "why": "The working reference's own example. It says the amount first, then the date it's taken, from the glossary's checking account, then what follows if it can't be paid, with no passive “can’t be paid”.",
+  "meaningSensitive": true,
+  "verified": "tests/scope-health.test.ts asserts the notice whole. Checked against BILL_KIND (payFromCurrent on dueAt, else medical debt)"
+ },
+ {
+  "source": "src/engine/systems/injury.ts#mayHurt",
+  "kind": "notification",
+  "before": "It takes 10 days to mend, and you can’t work out until then. Your share of its care is $699.13, due on February 5, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.",
+  "after": "It takes 10 days to mend, and you can’t work out until then. You owe $699.13 for its care. It’s taken from your checking account on February 5, 2026, and if there isn’t enough then, it becomes medical debt.",
+  "why": "The same bill sentence as a doctor's visit, in the same words, for an injury's care.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g07-life.test.ts, an everyday sprain played uninsured in New Haven"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth",
+  "kind": "notification",
+  "before": "$699.13 for a sprained ankle: its care couldn’t be paid from your current account on its due date, so it’s medical debt now. Pay It Off, on Papers under Health Cover, clears it.",
+  "after": "Your bank couldn’t cover a $699.13 medical bill when it came due, so it’s now medical debt. The bill was for a sprained ankle’s care. To clear it, press Pay It Off on Papers, under Health Cover.",
+  "why": "What happened comes first, then what the bill was for (in a sentence of its own, so a bill's name with commas can't run into the verb), then the action with its button. The injury's bill is now “a sprained ankle’s care”.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence2-b02.test.ts, the drained twin's sprain; tests/evidence-g05-life.test.ts, a stay in hospital"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth",
+  "kind": "notification",
+  "before": "title “Appeal Upheld”, body “The plan kept its denial for a checkup, Fair Haven Community Health Care, so the full bill stands.”",
+  "after": "title “Appeal Lost”, body unchanged",
+  "why": "An appeal “upheld” means one that succeeded. This notice is for the one that failed, and Papers calls the outcome Denial Upheld. “Appeal Lost” is the plain opposite of the notice “Appeal Won” (renames.json).",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g02-life.test.ts and tests/evidence3-lifepapers.test.ts, an appeal played to its upheld outcome"
+ },
+ {
+  "source": "src/engine/systems/health.ts#careFor",
+  "kind": "notification",
+  "before": "Your plan denied the claim for a doctor’s visit, One Medical, Flatiron, so the bill is $183.98 unless an appeal overturns it. You can appeal within 180 days with Appeal It, on Papers, under Health Cover.",
+  "after": "Your plan denied the claim for a doctor’s visit, One Medical, Flatiron, so you owe the full $183.98 unless an appeal overturns it. To appeal, press Appeal It on Papers, under Health Cover, within 180 days.",
+  "why": "It says what the denial means for the player (you owe the full amount), and the next step leads with the action and the button.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g05-life.test.ts asserts the notice whole"
+ },
+ {
+  "source": "src/engine/systems/health.ts#repriceCare",
+  "kind": "notification",
+  "before": "Yale Health Affiliate cover, back to the day student cover ended: care you had from January 20, 2027 is billed again as that cover pays, $336.96 less, taken off what was open or owed, with the rest back in your bank.",
+  "after": "Yale Health Affiliate cover, back to the day student cover ended: the care you’ve had since January 20, 2027 has been priced again. You owe $336.96 less. It comes off anything still unpaid or owed as debt, and the rest goes back to your bank.",
+  "why": "“Billed again as that cover pays” was hard to parse. Now the repricing, the change in what you owe, and where the credit goes are three plain sentences. The order the code applies a credit (open bill, then debt, then refund) is kept.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-health-billing.test.ts, Affiliate cover bought back to the day student cover ended"
+ },
+ {
+  "source": "src/engine/systems/health.ts#registerHealth",
+  "kind": "official",
+  "before": "December 2026 didn’t show $580.00 of income, time at the School or an exception, and none was shown by February 7, 2027, so your application for HUSKY D is denied. …",
+  "after": "HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in December 2026, and nothing was shown by February 7, 2027, so your application is denied. …",
+  "why": "A month that “didn’t show” anything was the engine talking. The decision now uses the same words as the notice of noncompliance it answers (“HUSKY D couldn’t find …”), with “still” for the repeat (the brief, section 8).",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-health-eligibility.test.ts, an application left unanswered to its decision"
+ },
+ {
+  "source": "src/engine/systems/health.ts#noticeOfNoncompliance",
+  "kind": "official",
+  "before": "Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover.",
+  "after": "You don’t need to send anything about your pay, income, time at the School, age or SNAP: those come from the records. A stay in hospital in those months also counts if you ask for it: press Request A Hardship Exception on Papers, under Health Cover.",
+  "why": "A notice asks for an answer, and the old passive left the player wondering what to send. Now it says nothing is needed for those, and the one thing they can ask for.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-09-hardship.test.ts and tests/need-paths.test.ts assert the notice whole. The decision re-reads the months from the records (WORK_DECIDED_KIND)"
+ },
+ {
+  "source": "src/engine/systems/health.ts#applyRenewal",
+  "kind": "official",
+  "before": "HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules because people your age are exempt.",
+  "after": "HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and you met its work rules in June 2027, because people your age are exempt.",
+  "why": "The person meets the rules, not the month. The month becomes when.",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), the under-19 and SNAP renewals; tests/defects-g8-4.test.ts the income variant"
+ },
+ {
+  "source": "src/engine/systems/health.ts#grantPending",
+  "kind": "official",
+  "before": "HUSKY D covers you from December 1, 2026, with no premium. December 2026 met its work rules through a stay in hospital you asked to count. Your marketplace plan ends as it begins.",
+  "after": "HUSKY D covers you from December 1, 2026, with no premium. You met its work rules in December 2026, through a stay in hospital you asked to count. Your marketplace plan ends when HUSKY D begins.",
+  "why": "“Ends as it begins” had no clear subject for “it”. The marketplace plan ends where HUSKY D starts (45 CFR 155.430(d)(2)(v), m.until set to HUSKY D's from).",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-health-eligibility.test.ts, a hardship granted on an application with a marketplace plan held"
+ },
+ {
+  "source": "src/engine/systems/health.ts#renewProgram",
+  "kind": "official",
+  "before": "From October 1, 2026, HUSKY D is only for US citizens and people who’ve held a green card for five years, and renewal checks that, so HUSKY D ends on September 30, 2027.",
+  "after": "From October 1, 2026, HUSKY D is only for US citizens and people who’ve held a green card for five years, and at your renewal you’re neither, so HUSKY D ends on September 30, 2027.",
+  "why": "“And renewal checks that, so …” left out the finding. It now says what the renewal found about you.",
+  "meaningSensitive": false,
+  "verified": "tests/defects4.test.ts, an F-1 member's renewal after 1 October 2026"
+ },
+ {
+  "source": "src/engine/systems/health.ts#healthMonth",
+  "kind": "notification",
+  "before": "Covered Connecticut is only for people with no other qualifying cover, and Yale Health’s student cover covers you again.",
+  "after": "You have Yale Health’s student cover again, and Covered Connecticut is only for people with no other qualifying cover.",
+  "why": "What happened comes first, then the rule it trips, without “cover covers”.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-cover.test.ts, a student back from leave with Covered Connecticut"
+ },
+ {
+  "source": "src/engine/systems/health.ts#applyRefusal",
+  "kind": "error",
+  "before": "Your application waits on its notice: answer it by February 7, 2027.",
+  "after": "You’ve already applied. Answer its notice of noncompliance by February 7, 2027.",
+  "why": "It now says why the button is refused (you've applied), names the notice, and gives the real next step with its date.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-health-eligibility.test.ts, Apply For HUSKY D pressed twice"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#registerAppointments",
+  "kind": "notification",
+  "before": "A doctor’s visit: Yale Health sees Yale students it covers, and it doesn’t cover you now. You weren’t seen at Yale Health Center, Student Health. If you book again, with Book An Appointment on Papers under Health Cover, it’s at Fair Haven Community Health Care.",
+  "after": "A doctor’s visit: you weren’t seen at Yale Health Center, Student Health. Yale Health sees Yale students it covers, and it doesn’t cover you now. To book again at Fair Haven Community Health Care, press Book An Appointment on Papers, under Health Cover.",
+  "why": "The notice now goes in order: what happened, why, what to do. The conditional with its parenthetical became one instruction with the button.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-health.test.ts, a member uncovered on a personal leave"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#registerAppointments",
+  "kind": "notification",
+  "before": "A doctor’s visit: you weren’t there, so you weren’t seen. Book again with Book An Appointment, on Papers under Health Cover.",
+  "after": "A doctor’s visit: you weren’t there, so you weren’t seen. To book again, press Book An Appointment on Papers, under Health Cover.",
+  "why": "The instruction now leads with what it's for and names the button as one, as the other health notices do.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g05-life.test.ts, a visit slept through"
+ },
+ {
+  "source": "src/engine/systems/appointments.ts#registerAppointments <health.cancel_appointment>",
+  "kind": "error",
+  "before": "No such appointment.",
+  "after": "That appointment isn’t booked any more.",
+  "why": "Call It Off is pressed on an appointment the player can see, so “no such” read as an error in the game. The real case is a stale panel, so it says the appointment is gone.",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), Call It Off on an appointment that isn't booked"
+ },
+ {
+  "source": "src/engine/content/geography.ts#loadCountryCities",
+  "kind": "error",
+  "before": "This country’s full list of towns couldn’t be loaded, so for now only the towns already listed can be picked. Check your connection, then choose another country and come back to this one.",
+  "after": "This country’s full list of towns couldn’t be loaded, so for now you can only pick from the towns already listed. Check your connection, then choose another country and come back to this one.",
+  "why": "The passive “can be picked” is now active, with the player as subject. The failure and the way out stay as they were.",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), the town list with a failing fetch"
+ },
+ {
+  "source": "src/engine/content/geography.ts#city",
+  "kind": "other",
+  "before": "Location, time zone and administrative parentage are public reference data. Cost figures are SLATE calibrations.",
+  "after": "Its location, time zone, region and country are public reference data. Its costs are estimated.",
+  "why": "“Administrative parentage” was jargon, and “SLATE calibrations” is what the glossary's “estimated” replaces. No screen shows a city's note today, but it's the city's own record of where its figures come from.",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), Los Angeles's note"
+ },
+ {
+  "source": "src/engine/content/geography.ts#deriveCity",
+  "kind": "other",
+  "before": "Location, time zone and administrative parentage are public reference data. The cost figures are derived from the country and the population, not looked up.",
+  "after": "Its location, time zone, region and country are public reference data. Its costs are estimated from its country and its population, not looked up.",
+  "why": "The same two fixes, and “derived” said as estimated, the glossary's word. The basis, country and population, is kept (deriveCity reads both).",
+  "meaningSensitive": false,
+  "verified": "care-after-2.txt (render-care.ts), the first derived city's note"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "100. As good as a day gets, even with nourishment short of your best. / Nourishment: At 63, and pulling readiness down.",
+  "after": "100. As good as a day gets, even with nourishment short of your best. / Nourishment: At 63, short of its best.",
+  "why": "At the ceiling, readiness clamps at 100, so the way contradicted the summary above it. Found on the built app's looks walk (dir1). Under 100 the way still says it's pulling readiness down.",
+  "meaningSensitive": true,
+  "verified": "looks-walk/dir1.json on the built app before the fix. tests/evidence-g06-life.test.ts ‘Readiness at 100 …’ fails without the fix"
+ }
+]

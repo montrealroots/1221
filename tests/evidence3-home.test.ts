@@ -307,7 +307,7 @@ describe('h-needs', () => {
       const bills = healthOf(sim.player).bills;
       // A broken bone's care is the emergency room and six sessions of physical therapy (content/injury.ts); Yale Health
       // leaves $50 for the emergency room and nothing for a visit (content/safetynet.ts): $50, due thirty days on.
-      expect(bills.map((b) => [b.what, b.amount, (b.dueAt - b.at) / MS_DAY])).toEqual([['A broken bone: its care', 50_00, 30]]);
+      expect(bills.map((b) => [b.what, b.amount, (b.dueAt - b.at) / MS_DAY])).toEqual([['A broken bone’s care', 50_00, 30]]);
       sim.advanceTo(bills[0]!.dueAt - MS_HOUR);
       if (move) emptyChecking(sim);
       // Before midnight, so the day's groceries don't come into it.

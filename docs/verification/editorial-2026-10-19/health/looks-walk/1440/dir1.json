@@ -1,0 +1,42 @@
+[
+ {
+  "look": "person",
+  "text": "YOURSELF\nAda Cole\nClose\n\nRested, steady and ready for a real day.\n\nYour body. 6 ft 0 in and 154 lb, with a body mass index of 20.8, in the healthy weight range. In feet, inches and pounds, the units of the United States, where you live.\n\nOn your papers. Pronouns they/them. A citizen of the United States.\n\nEnergy\n100/100. What’s left in you for today. Sleep brings it back.\nStress\n0/100. How wound up you are. High stress spoils your sleep.\nSleep Debt\n0 hours. Sleep you owe, which a night pays back.\nMorale\n89/100. Your mood. When it’s up, a night clears more of the day’s stress.\nCondition\n97/100. How sound your body is. It sets how much energy a night gives back, where your morale settles, when a sick day is excused, and how likely a year is to be your last.\nFitness\n40/100. How trained your body is: the Stamina on your Player Profile. It sets how far rest can mend your condition and how much energy a workout costs.\nNourishment\n63/100. How well fed you are. A meal puts it back.\nHygiene\n82/100. How clean you are. When it’s low, it drags on your morale, and on readiness a little.\nReadiness\nHow ready you are today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how well your work goes when it’s judged.\nYour Own Plans\nEverything you’ve put on the calendar yourself.\n\nYour wellbeing: eight measures that move with the hours you keep, the work you do, what you can afford and the kind of person you are. Home shows Energy and Stress, and all eight are here."
+ },
+ {
+  "look": "Energy",
+  "text": "Ada Cole\nYOUR WELLBEING\nEnergy\nClose\n\n100. Plenty for a full day.\n\nEnergy is what you have left for today. It runs down every hour you’re awake, faster when you owe sleep. Only sleep brings it back: a meal doesn’t. Your stamina is something else: how long you can keep going in a long scene or a night on stage. So is your condition: how sound your body is.\n\nFrom 0 to 100. It changes with every hour the clock runs."
+ },
+ {
+  "look": "Stress",
+  "text": "Ada Cole\nYOUR WELLBEING\nStress\nClose\n\n0. Not much is adding to it. Running out of energy would, and so would money trouble or bad nights.\n\nStress is how wound up you are. It eases while you have energy left and climbs once you run out, and money you owe adds to it every day. Over 75, it wears your condition down every hour.\n\nFrom 0 to 100. It changes with every hour the clock runs."
+ },
+ {
+  "look": "Sleep Debt",
+  "text": "Ada Cole\nYOUR WELLBEING\nSleep Debt\nClose\n\nNone to speak of. You’re caught up on sleep.\n\nSleep debt is the sleep you owe. Every waking hour adds a little, and a night’s sleep pays it back. The more you owe, the faster your energy runs down and the less a night gives back.\n\nCounted in hours. Each waking hour adds about a third of an hour, and a night pays it back, a long night faster. A night under six hours adds some too, and the shortest add more than they pay back."
+ },
+ {
+  "look": "Morale",
+  "text": "Ada Cole\nYOUR WELLBEING\nMorale\nClose\n\n89. In good spirits. Each night moves it toward 84. Above 62, a night clears more of the day’s stress than usual.\n\nMorale is your mood. Meals, workouts, unwinding and good nights lift it. Hunger, grime, money trouble and an injury pull it down.\n\nFrom 0 to 100. It changes with every hour the clock runs."
+ },
+ {
+  "look": "Condition",
+  "text": "Ada Cole\nYOUR WELLBEING\nCondition\nClose\n\n97. As sound as rest can make you at your fitness. Above 94, it settles back toward 94 each midnight. The lower it is, the likelier a year is to be your last.\n\nCondition is how sound your body is. Illness, hunger, stress and short nights wear it down, and a good night’s rest mends it, as far as your fitness allows. Energy is about today, and condition changes more slowly. Your health is something else again: a long-term condition such as asthma, your health cover and your medical care are on Papers, under Health Cover.\n\nFrom 0 to 100. It changes with every hour the clock runs."
+ },
+ {
+  "look": "Fitness",
+  "text": "Ada Cole\nYOUR WELLBEING\nFitness\nClose\n\n40. At this fitness, rest can mend your condition to 94, and a workout costs 11 energy. At 24, training can take it to 99 at most. The body is near its best, and age takes very little from it.\n\nFitness is how trained your body is, and it’s the same figure as Stamina on your Player Profile: how long you can keep going in a long scene or a night on stage before you tire. Working out builds it. It holds for 3 days after a workout, then slowly falls. Rest doesn’t build it: rest brings back energy and condition.\n\nFrom 0 to 100. It changes with every hour the clock runs."
+ },
+ {
+  "look": "Nourishment",
+  "text": "Ada Cole\nYOUR WELLBEING\nNourishment\nClose\n\n63. Getting hungry. Under 20, hunger costs condition and morale every hour. Each morning the day’s groceries bring it up to at least 76, or only to 40 on a day there’s no money for food.\n\nNourishment is how well fed you are. It falls every hour you’re awake, and a meal puts it back.\n\nFrom 0 to 100. It changes with every hour the clock runs."
+ },
+ {
+  "look": "Hygiene",
+  "text": "Ada Cole\nYOUR WELLBEING\nHygiene\nClose\n\n82. Clean enough not to bother you. The morning shower brings it up to at least 82.\n\nHygiene is how clean you are. It falls through the day, and a shower puts it back.\n\nFrom 0 to 100. It changes with every hour the clock runs."
+ },
+ {
+  "look": "Readiness",
+  "text": "Ada Cole\nHOW READY YOU ARE TODAY\nReadiness\nClose\n\n100. As good as a day gets, even with nourishment short of your best.\n\nNourishment\nAt 63, short of its best.\n\nSeven of the eight measures, all but fitness, from 5 to 100. It sets how much a class, a lab, a rehearsal, an hour of practice or a workout builds, and under 60 it costs you in judged work."
+ }
+]

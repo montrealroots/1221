@@ -133,9 +133,9 @@ function press(feature: string, label?: string): string[] {
 // The notice of 1 October 2027, worked from the rules above: April to September read, answered by 4 November, decided on
 // 5 November, ended with November where unanswered (each a month earlier from 2026-10-16, brief 09's journeys). Until
 // 2026-10-17 it began “80 hours’ work” and said “school at least half-time” (brief 12).
-const NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027. You stay covered while you answer, until November 4, 2027. Your pay, income, time at the School, age and SNAP are checked from the records. A stay in hospital in those months counts too if you ask: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on November 30, 2027, and you’ll be told on November 5, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.';
+const NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027. You stay covered while you answer, until November 4, 2027. You don’t need to send anything about your pay, income, time at the School, age or SNAP: those come from the records. A stay in hospital in those months also counts if you ask for it: press Request A Hardship Exception on Papers, under Health Cover. If you don’t answer, HUSKY D ends on November 30, 2027, and you’ll be told on November 5, 2027. After that, you won’t get the premium tax credit while HUSKY D would take you if not for its work rules. You can apply again in any month after one that meets them.';
 const PENDING_LINE = 'A notice of noncompliance dated October 1, 2027: HUSKY D couldn’t find that you met the work rules in April to September 2027. Answer by November 4, 2027. You’re covered until it’s decided on November 5, 2027.';
-const RENEWED = 'HUSKY D is renewed. Its next renewal is on April 1, 2028. Last month’s income is within its limit, and September 2027 met its work rules through a stay in hospital you asked to count.';
+const RENEWED = 'HUSKY D is renewed. Its next renewal is on April 1, 2028. Last month’s income is within its limit, and you met its work rules in September 2027, through a stay in hospital you asked to count.';
 const NO_STAY = 'None of the months it checked, April to September 2027, had a stay in hospital, the one hardship the game counts.';
 
 /**
@@ -250,7 +250,7 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
     unasked.advanceTo(at(2027, 12, 2, 9));
     expect(titled(unasked, 'Your Public Cover Is Renewed')).toEqual([]);
     expect(titled(unasked, 'Your Public Cover Ends').map((n) => n.at)).toEqual([at(2027, 11, 5, 0)]);
-    expect(home(unasked)).toContain('Your Public Cover Ends No month from April to September 2027 showed $580.00 of income, time at the School or an exception, and none was shown by November 4, 2027, so HUSKY D ends on November 30, 2027.');
+    expect(home(unasked)).toContain('Your Public Cover Ends HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in any month from April to September 2027, and nothing was shown by November 4, 2027, so HUSKY D ends on November 30, 2027.');
     expect(healthOf(unasked.player).program!.until).toBe(at(2027, 12, 1, 0));
     expect(coverOn(unasked.player, at(2027, 12, 1, 9))).toBeUndefined();
   }, 900_000);

@@ -1,0 +1,4 @@
+[
+ { "old": "Appeal Upheld", "new": "Appeal Lost", "where": "src/engine/systems/health.ts, the notice title when a plan keeps its denial (registerHealth, APPEAL_KIND); Papers' Denial Upheld status is unchanged" },
+ { "old": "A Sprained Ankle: Its Care (and each injury's “…: its care”)", "new": "A Sprained Ankle’s Care (and each injury's “…’s care”)", "where": "src/engine/systems/injury.ts, an injury's bill name, shown on Papers' Care And Its Bills, in A Medical Bill Went Unpaid and in Money's memo “Medical bill: …”" }
+]

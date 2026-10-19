@@ -213,7 +213,7 @@ export function registerAppointments(sim: Simulation): void {
     if (!presentForCare(person, item.at)) {
       item.status = 'missed';
       healthOf(person).owedVisit = a.what;
-      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Missed The Doctor', body: `${a.what}: you weren’t there, so you weren’t seen. Book again with Book An Appointment, on Papers under Health Cover.`, importance: 60, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Missed The Doctor', body: `${a.what}: you weren’t there, so you weren’t seen. To book again, press Book An Appointment on Papers, under Health Cover.`, importance: 60, route: '/workspace/papers' });
       return;
     }
     // A practice for its members that doesn't see them now (from 2026-10-15): not seen, and owed, as a visit missed is.
@@ -221,7 +221,7 @@ export function registerAppointments(sim: Simulation): void {
     if (at && at.members !== null && !seesThem(person, at, item.at)) {
       item.status = 'missed';
       healthOf(person).owedVisit = a.what;
-      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Not Seen At Your Practice', body: `${a.what}: ${MEMBERS_ONLY[at.members]} You weren’t seen at ${at.name}. If you book again, with Book An Appointment on Papers under Health Cover, it’s at ${clinicFor(person, 'visit', item.at)?.name ?? 'the town’s first practice'}.`, importance: 60, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Not Seen At Your Practice', body: `${a.what}: you weren’t seen at ${at.name}. ${MEMBERS_ONLY[at.members]} To book again at ${clinicFor(person, 'visit', item.at)?.name ?? 'the town’s first practice'}, press Book An Appointment on Papers, under Health Cover.`, importance: 60, route: '/workspace/papers' });
       return;
     }
     careFor(s, person, { care: 'visit', what: a.what, ...(a.clinicId ? { clinicId: a.clinicId } : {}) }, item.at);
@@ -246,7 +246,7 @@ export function registerAppointments(sim: Simulation): void {
   sim.onCommand<{ appointmentId: string }, { canceled: true }>('health.cancel_appointment', (p, { sim: s }) => {
     const person = s.player;
     const a = appointmentsOf(person).find((x) => x.id === p?.appointmentId);
-    if (!a) throw new CommandError('No such appointment.');
+    if (!a) throw new CommandError('That appointment isn’t booked any more.');
     healthOf(person).appointments = appointmentsOf(person).filter((x) => x.id !== a.id);
     for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === APPOINTMENT_KIND && one.payload.appointmentId === a.id) s.timeline.cancel(one.id, s.now);
     healthOf(person).owedVisit = a.what;

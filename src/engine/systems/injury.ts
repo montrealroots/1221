@@ -106,10 +106,11 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
   const cur = saveCurrency(sim.universe);
   // The care: the visit it needs and its sessions of physical therapy, at what the plan leaves; at work, the employer's cover pays it.
   const care = shareOf(person, spec.care, at, cur) + spec.therapy * shareOf(person, 'visit', at, cur);
-  // The bill named in sentence case, as every other bill is (“A doctor’s visit”), so a sentence that names it reads “a
-  // sprained ankle: its care”. Until 2026-10-13 it took the notice’s title as it was, and “A Medical Bill Went Unpaid”
-  // read “for a Sprained Ankle: its care”; found by the second round of that day’s evidence.
-  const bill = !work && care > 0 ? billCare(sim, person, `${spec.label.charAt(0)}${spec.label.slice(1).toLowerCase()}: its care`, care, at) : undefined;
+  // The bill named in sentence case, as every other bill is (“A doctor’s visit”), so a sentence that names it reads
+  // “a sprained ankle’s care”. Until 2026-10-13 it took the notice’s title as it was, and “A Medical Bill Went Unpaid”
+  // read “for a Sprained Ankle: its care”; found by the second round of that day’s evidence. Until 2026-10-19 (brief 15)
+  // it was “A sprained ankle: its care”, which a sentence couldn’t carry: “the bill for a sprained ankle: its care”.
+  const bill = !work && care > 0 ? billCare(sim, person, `${spec.label.charAt(0)}${spec.label.slice(1).toLowerCase()}’s care`, care, at) : undefined;
   const w = person.wellbeing;
   w.stress = clamp(w.stress + 6 * personalityOf(person, 'stressGain'), 0, 100);
   w.morale = clamp(w.morale - 4 * personalityOf(person, 'moraleSwing'), 0, 100);
@@ -128,7 +129,7 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
       // whether care was had or what it cost, where the flu's notice says there's nothing to pay; and an injury that
       // limits the work didn't say Call In Sick excuses a day of classes for it (`sickRefusal`'s doctor's note), where
       // the flu's does. An injury that lays them up already says it keeps them from classes.
-      body: [`It takes ${plural(days, 'day')} to mend${spec.offWork ? ', and you’re laid up until then, kept from classes, work and training' : spec.limits !== 'none' ? ', and you can’t work out until then' : ''}.`, work ? 'It happened at work, so workers’ compensation pays for the care' + (spec.offWork && rules ? `, and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : bill ? `Your share of its care is ${formatMoney(care, cur)}, ${dueWords(sim, bill.dueAt)}` : `Its care, ${CARE_WORDS[spec.care]}${spec.therapy ? ` and ${plural(spec.therapy, 'session')} of physical therapy` : ''}, costs you nothing.`, !spec.offWork && spec.limits !== 'none' && person.school && !schoolEnded(person.school.standing) ? 'Call In Sick, on School, excuses a day of classes while it mends.' : ''].filter(Boolean).join(' '),
+      body: [`It takes ${plural(days, 'day')} to mend${spec.offWork ? ', and you’re laid up until then, kept from classes, work and training' : spec.limits !== 'none' ? ', and you can’t work out until then' : ''}.`, work ? 'It happened at work, so workers’ compensation pays for the care' + (spec.offWork && rules ? `, and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : bill ? `You owe ${formatMoney(care, cur)} for its care. ${dueWords(sim, bill.dueAt)}` : `Its care, ${CARE_WORDS[spec.care]}${spec.therapy ? ` and ${plural(spec.therapy, 'session')} of physical therapy` : ''}, costs you nothing.`, !spec.offWork && spec.limits !== 'none' && person.school && !schoolEnded(person.school.standing) ? 'Call In Sick, on School, excuses a day of classes while it mends.' : ''].filter(Boolean).join(' '),
       importance: 80, route: '/workspace/papers',
     });
   }

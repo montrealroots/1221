@@ -123,7 +123,7 @@ describe('HUSKY D held from before 1 October 2026', () => {
     // Said at the renewal, and ended at the month's end at least ten days on, 30 September (42 CFR 431.211; from
     // 2026-10-16: until then it ended at the renewal's own hour, “Your Public Cover Ended At Renewal”).
     expect(notices(sim, 'Your Public Cover Ends').map((n) => n.body)).toEqual([
-      'From October 1, 2026, HUSKY D is only for US citizens and people who’ve held a green card for five years, and renewal checks that, so HUSKY D ends on September 30, 2027. You’re out of status, so the marketplace can’t take you.',
+      'From October 1, 2026, HUSKY D is only for US citizens and people who’ve held a green card for five years, and at your renewal you’re neither, so HUSKY D ends on September 30, 2027. You’re out of status, so the marketplace can’t take you.',
     ]);
     expect(healthOf(sim.player).program!.until).toBe(edt(2027, 10, 1, 0));
   }, 300_000);

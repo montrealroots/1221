@@ -605,7 +605,7 @@ describe('l-person', () => {
     expect(INJURY_KIND.fracture.days).toEqual([42, 84]);
     // Monday 24 August and 43 days: 7 to the end of August, 30 in September, 6 in October.
     expect((at(2026, 10, 6, 8, 30) - at(2026, 8, 24, 8, 30)) / MS_DAY).toBe(43);
-    const line: [string, string] = ['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.'];
+    const line: [string, string] = ['Mending. ', 'A broken bone, until October 6, 2026, and laid up until then.'];
     expect(openedFromHome(sim).lines).toContainEqual(line);
     sim.advanceTo(at(2026, 10, 6, 8));
     expect(openedFromHome(sim).lines).toContainEqual(line);
@@ -620,7 +620,7 @@ describe('l-person', () => {
     expect(Object.keys(sim.universe.people)).toEqual([sim.player.id]);
     // Her classmates are records on the School, with a look of their own kind.
     expect(sim.player.school!.classmates).toHaveLength(15);
-    expect(resolveLook(sim, subject('person', 'someone-else'))).toEqual({ gone: 'They aren’t part of this story any more.' });
+    expect(resolveLook(sim, subject('person', 'someone-else'))).toEqual({ gone: 'This person isn’t in your life any more.' });
     type Seen = { name: string; kind: string; ways?: { label: string }[]; body?: unknown };
     const mine = resolveLook(sim, subject('person', sim.player.id)) as Seen;
     expect(mine.ways!.map((w) => w.label)).toContain('Your Own Plans');

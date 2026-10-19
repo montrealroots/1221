@@ -366,7 +366,7 @@ describe('health.appeal_decided, on the marketplace a family’s savings reach (
     expect(bill.denied!.outcome).toBe('upheld');
     expect(bill.amount).toBe(UNINSURED);
     expect(memos(sim, /^Appeal won: /)).toHaveLength(0);
-    expect(titled(sim, 'Appeal Upheld').map((n) => n.body)).toEqual([`The plan kept its denial for ${bill.what.charAt(0).toLowerCase()}${bill.what.slice(1)}, so the full bill stands.`]);
+    expect(titled(sim, 'Appeal Lost').map((n) => n.body)).toEqual([`The plan kept its denial for ${bill.what.charAt(0).toLowerCase()}${bill.what.slice(1)}, so the full bill stands.`]);
     expect(titled(sim, 'Appeal Won')).toHaveLength(0);
     expect(papers(sim).text).toContain('$183.98 Settled Denial Upheld');
     // Nothing about the bill moved money at the decision: no posting at its hour names it.

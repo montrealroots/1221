@@ -114,7 +114,7 @@ describe('cover and care', () => {
     poor.advanceBy(2 * MS_DAY);
     const debt = medicalDebtOf(poor, poor.player)!;
     expect(debt.balance).toBe(-30_000_00);
-    expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 0 } }).error).toBe('Say how much.');
+    expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 0 } }).error).toBe('Enter an amount to pay.');
     // What the account holds and what to do, from 2026-10-16; until then “… can’t cover it.”
     expect(poor.execute({ kind: 'health.pay_bill', payload: { amount: 29_000_00 } }).error).toMatch(/ has only \$[\d,]+\.\d\d of the \$29,000\.00, so nothing was paid\. Move money into it first, on your bank’s Move Money\.$/);
     const current = poor.universe.accounts[poor.player.primaryAccountId!]!;
