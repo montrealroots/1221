@@ -268,3 +268,47 @@ label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-r
 text-inventory 0 after the marks. vitest: material-words and briefs-content, 2 files, 454 tests, exit 0.
 
 **Screens:** BriefPane for each brief, rendered by the material-words test.
+
+## Batch 5: Briefs, Psychological Thriller To Steampunk
+
+**Sources (75):** `briefs/briefs-e.ts`, 25 briefs (brief-psychological_thriller, brief-queer_cinema, brief-revenge,
+brief-road_movie, brief-rockumentary, brief-romance, brief-romantic_comedy, brief-romantic_drama, brief-samurai,
+brief-satire, brief-science_fantasy, brief-science_fiction, brief-screwball_comedy, brief-sea_adventure,
+brief-silent_film, brief-slapstick, brief-slasher, brief-slice_of_life, brief-social_realism, brief-space_opera,
+brief-spaghetti_western, brief-splatter, brief-sports, brief-spy, brief-steampunk) and 50 reading ids (right,
+slipping, comedy, decision, plan, chance, driver, friends, pro, relief, hoping, surprised, sparring, flustered,
+sacrifice, listening, duty, debt, believer, trapped, con, wonder, catchup, loss, speed, pair, craft, fear, clown,
+heart, dignity, panic, clear, dread, drawn, glad, tired, organizer, grand, sisters, stone, trade, politeness, shock,
+coach, goodbye, tradecraft, marriage, bluff, pride). About 8,200 words.
+
+**Rewritten (12 sources, 12 strings):** chance, driver, brief-romantic_comedy, sparring, brief-romantic_drama,
+brief-samurai, catchup, brief-screwball_comedy, brief-slapstick, drawn, brief-social_realism, brief-spy. By kind:
+- **Staging as instructions (3):** The Crossing At Dawn's sword form ("For the tape, mark the three exchanges alone …":
+  it had said Gonroku marks them, and the character doesn't tape anything), The Wardrobe In Suite Nine's pratfall
+  ("play it solo, … and work it out slowly first onto a bed or a soft mat, so it repeats safely on every take") and
+  The Last Strip's blow and fall ("play it entirely as his reaction, with no contact").
+- **Readings resting on the paperwork (3):** "her objective is", "his objective is", "the brief is built on" now say
+  what the character wants or what the scene is.
+- **Passives where a person does it (4):** Eyes On The Road, Drawn In, The Parrot Knows' timing ("has to be waited
+  for"), Between Clients' improvisation note.
+- **Notes that said "has to be placed" and nothing more (2):** The House Sale's and Two Coffees' timing notes now say
+  what placing the moment means ("each one has to come on exactly the right line", "so that beat has to land
+  exactly").
+
+**Kept (63 sources):** the rest. Mile Marker 212's and The Late Number Nine's "For the tape …" set descriptions are kept
+as descriptions.
+
+**Meaning-sensitive (3):** the three staging notes; each keeps every condition it had (reduced speed, the replica, the
+called cues, the off-camera eyeline and never the lens or the reader; solo, the reader off camera at the door, the slow
+first run onto something soft; a blow landing off frame with no contact).
+
+**Interactions read whole:** each brief's pane, as before.
+
+**Tests and tool matchers updated:** none. The Crossing At Dawn's old phrasing is close to material-b's `second-e.ts`
+line 259, listed in the report.
+
+**Checks (exits, `scratchpad/ma/b5/`):** `tsc -b --noEmit` 0; `eslint briefs-e.ts --max-warnings=0` 0; title-case 0;
+label-sweep 0; plural-check 0; voice-check 0; tics 0; spelling 0; typos 0; doc-refs 0; deciders 0; guide-quotes 0;
+text-inventory 0 after the marks. vitest: material-words and briefs-content, 2 files, 454 tests, exit 0.
+
+**Screens:** BriefPane for each brief, rendered by the material-words test.

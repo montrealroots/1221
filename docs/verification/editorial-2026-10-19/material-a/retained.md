@@ -55,3 +55,11 @@ with the words kept and the reason, so the owner can judge the reasons as well a
 - **`briefs-d.ts` [brief-period_drama], The Gown For Tonight.** Obstacle: "A maid may not accuse a tradeswoman of
   error, may not mention her mistress’s debts, and may not go home without the gown." *Reason:* 1911's rules for a
   lady's maid set out plainly, so the contest inside good manners is playable.
+
+## Batch 5
+
+- **`briefs-e.ts` [brief-silent_film], The Telegram For Miss Avery.** Physical: "The scene has no spoken lines: every
+  thought is mime and gesture, played to the lens through the face and hands." *Reason:* it says plainly how a silent
+  scene works and gives each beat one clear piece of business (the face that falls so far it's funny, the hatband).
+- **`briefs-e.ts` [right], She’s Right.** It rests on: "The brief never says who sent the message, only that it came
+  from her number." *Reason:* here "the brief never says" is the point, the one open fact the reading stands on.

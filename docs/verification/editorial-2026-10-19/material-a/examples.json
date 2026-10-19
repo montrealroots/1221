@@ -713,5 +713,137 @@
   "why": "The contact's staging as an instruction, as the fights' and the embraces' now are.",
   "meaningSensitive": true,
   "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 4)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [chance]",
+  "field": "rests",
+  "kind": "narration",
+  "before": "Her objective is to make him remember first, and she decides about the folder after.",
+  "after": "She wants him to remember first, and she decides about the folder only after.",
+  "why": "'Her objective is' named the brief's field instead of saying what she wants.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [driver]",
+  "field": "rests",
+  "kind": "narration",
+  "before": "She has to keep her eyes on the road, and the last beat is played with the signal and the exit.",
+  "after": "She has to keep her eyes on the road, and she plays the last beat with the signal and the exit.",
+  "why": "A passive where she does it.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-romantic_comedy]",
+  "field": "why.timing",
+  "kind": "other",
+  "before": "The sparring is quick and each comeback has to land on the line before it, and the parrot’s interruption has to be waited for.",
+  "after": "The sparring is quick, each comeback landing on the line before it, and she has to wait for the parrot’s interruption.",
+  "why": "'Has to be waited for' is a passive no one says; she waits for it.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [sparring]",
+  "field": "rests",
+  "kind": "narration",
+  "before": "The brief is built on sparring, and she gives up the truth only to get the key.",
+  "after": "Every exchange is sparring, and she gives up the truth only to get the key.",
+  "why": "'The brief is built on' rested the reading on the paperwork, not the scene.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-romantic_drama]",
+  "field": "why.timing",
+  "kind": "other",
+  "before": "The scene turns on when she almost speaks and doesn’t, and those moments have to be placed.",
+  "after": "The scene turns on the moments she almost speaks and doesn’t, and each one has to come on exactly the right line.",
+  "why": "'Have to be placed' left the player asking where; the note now says what placing them means.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-samurai]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "For the tape, Gonroku marks the three exchanges alone at reduced speed with a replica blade, cutting to the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.",
+  "after": "For the tape, mark the three exchanges alone at reduced speed with a replica blade, cutting to the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.",
+  "why": "The staging is the actor's, not the character's: Gonroku doesn't tape anything.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [catchup]",
+  "field": "rests",
+  "kind": "narration",
+  "before": "His objective is to be her father again in this conversation, and he gives the gift anyway.",
+  "after": "He wants to be her father again in this one conversation, and he gives the gift anyway.",
+  "why": "As The Retirement Folder's: what he wants, not the field's name.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-screwball_comedy]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The catch of the heel is a pratfall, played solo with the reader off camera at the door, worked out slowly first onto a bed or a soft mat, and repeatable on every take.",
+  "after": "The catch of the heel is a pratfall: play it solo, with the reader off camera at the door, and work it out slowly first onto a bed or a soft mat, so it repeats safely on every take.",
+  "why": "The fall's staging as an instruction; the soft landing and the slow first run are kept.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-slapstick]",
+  "field": "why.techniques",
+  "kind": "other",
+  "before": "The swat is a staged blow that lands off frame and is played entirely as his reaction, with no contact. The stagger off a low step onto the dust sheets is worked out solo, slowly at first, and repeats on every take.",
+  "after": "The swat is a staged blow that lands off frame: play it entirely as his reaction, with no contact. Work out the stagger off a low step onto the dust sheets solo, slowly at first, so it repeats on every take.",
+  "why": "The blow and the fall staged as instructions, with no contact and the slow first run kept.",
+  "meaningSensitive": true,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [drawn]",
+  "field": "rests",
+  "kind": "narration",
+  "before": "The essay is due at midnight, and the laptop is closed only in the last beat.",
+  "after": "The essay is due at midnight, and he closes the laptop only in the last beat.",
+  "why": "A passive where he does it.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-social_realism]",
+  "field": "why.improvisation",
+  "kind": "other",
+  "before": "Only the sum and her demand are fixed: how she gets Bev to sign is found against whatever Bev says, as a real office conversation goes.",
+  "after": "Only the sum and her demand are fixed. You find how she gets Bev to sign from whatever Bev says, the way a real office conversation goes.",
+  "why": "A passive clause as the subject of a passive verb ('how she gets … is found') became the actor finding it.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
+ },
+ {
+  "batch": 5,
+  "source": "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-spy]",
+  "field": "why.timing",
+  "kind": "other",
+  "before": "The scene turns on a name given a beat too fast, and that beat has to be placed.",
+  "after": "The scene turns on a name given a beat too fast, so that beat has to land exactly.",
+  "why": "'Has to be placed' said nothing to do; the beat has to land exactly.",
+  "meaningSensitive": false,
+  "verified": "tests/material-words.test.ts, 'a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound', renders BriefPane for the brief and finds the after string whole (passed, batch 5)."
  }
 ]
