@@ -1,0 +1,191 @@
+{
+ "src/engine/content/body.ts#BODY": {
+  "status": "Retained",
+  "hash": "4fa84758134d",
+  "on": "2026-10-19",
+  "reason": "A citation line of the published studies behind body weight and energy, kept as the sources cite themselves so a reader can look them up.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/body.ts#ONSET": {
+  "status": "Retained",
+  "hash": "646ba301b8f9",
+  "on": "2026-10-19",
+  "reason": "The citations behind when a long-term condition begins, kept exactly as the CDC report and the papers name themselves, with their links.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/body.ts#TRAINING_CLASS_NAMES": {
+  "status": "Rewritten",
+  "hash": "9ee20c985826",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition: the Looking After Yourself entry lists Acting Intimacy And Combat For The Stage in the spring term",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/body.ts#BODY [body.how]": {
+  "status": "Rewritten",
+  "hash": "2af175939757",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section; tests/guide-examples-start-day-body.test.ts plays the example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/body.ts#BODY [body.look-after]": {
+  "status": "Rewritten",
+  "hash": "17ed32d7b44b",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section; tests/guide-examples-start-day-body.test.ts plays the example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/body.ts#BODY [body.sleep]": {
+  "status": "Rewritten",
+  "hash": "86bff835ed93",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section; tests/guide-examples-start-day-body.test.ts plays the example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/body.ts#BODY [evaluation]": {
+  "status": "Retained",
+  "hash": "7f8c0b8d7e7a",
+  "on": "2026-10-19",
+  "reason": "Each How It Connects line names one link in plain words with its figure: readiness sets what a class builds, under 60 a tired night on stage costs you, missed classes are absences, the weather decides a run.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/body.ts#BODY [history]": {
+  "status": "Retained",
+  "hash": "4279bbc057a7",
+  "on": "2026-10-19",
+  "reason": "Three short lines that say where each thing is kept: long-term conditions on Papers, slept-through commitments in the next morning's notice, and fitness as the Profile's Stamina.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/body.ts#BODY [immediate]": {
+  "status": "Rewritten",
+  "hash": "57f188c89b2c",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section's connections",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/body.ts#BODY [optional]": {
+  "status": "Retained",
+  "hash": "b5fea7cd0d80",
+  "on": "2026-10-19",
+  "reason": "Two concrete options with their catch stated: under 55 condition a sick day is excused, and skipping through the night sleeps for you but stops at 74 energy.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/body.ts#BODY [scheduled]": {
+  "status": "Rewritten",
+  "hash": "4664cde3eba9",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section's connections",
+  "first": "Pending"
+ },
+ "src/engine/content/lifespan.ts#AGING": {
+  "status": "Retained",
+  "hash": "47000170ec9c",
+  "on": "2026-10-19",
+  "reason": "Each age band's line follows the fitness figure and says, in plain everyday words, what age does to training and to a night's rest at that age, true to the band's own rates.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/body.ts#bmiWord": {
+  "status": "Retained",
+  "hash": "7be5b52fb98c",
+  "on": "2026-10-19",
+  "reason": "The WHO's four body mass index ranges by their published names, in Title Case where they stand as labels and lowered where a sentence uses them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/body.ts#bodyUnits": {
+  "status": "Retained",
+  "hash": "1ce77dbe703a",
+  "on": "2026-10-19",
+  "reason": "Says which units a body is shown in and why, in one plain sentence: in feet, inches and pounds, the units of the United States, where you live.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/wellbeing.tsx#bodyWords": {
+  "status": "Retained",
+  "hash": "0519bb0c8399",
+  "on": "2026-10-19",
+  "reason": "Says a body in the units where the person lives, with its WHO range in words: 5 ft 7 in and 143 lb, with a body mass index of 22.5, in the healthy weight range.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [condition]": {
+  "status": "Rewritten",
+  "hash": "01a5aef002d8",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition; tests/evidence-g33-ui.test.ts l-person and tests/scope-people.test.ts assert the words",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [energy]": {
+  "status": "Retained",
+  "hash": "a8da6e49648b",
+  "on": "2026-10-19",
+  "reason": "A one-line way into Energy beside its figure: what is left in you for today, and that sleep is what brings it back, said in the pronouns of whoever it belongs to.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [fitness]": {
+  "status": "Rewritten",
+  "hash": "61cd4292d73b",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition; tests/evidence-g33-ui.test.ts l-person and tests/scope-people.test.ts assert the words",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [hygiene]": {
+  "status": "Retained",
+  "hash": "ccf95150b28c",
+  "on": "2026-10-19",
+  "reason": "Says how clean you are and what low hygiene costs, your morale and a little readiness, the two things the figure actually moves.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [morale]": {
+  "status": "Retained",
+  "hash": "71fcc7ee22d7",
+  "on": "2026-10-19",
+  "reason": "Calls morale your mood, as the glossary does, and gives its one effect a player can use: when it is up, a night clears more of the day's stress.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [nourishment]": {
+  "status": "Retained",
+  "hash": "3626e27282a9",
+  "on": "2026-10-19",
+  "reason": "Two short sentences beside the figure, how well fed you are and that a meal puts it back, which is all the line needs before it opens.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [sleepDebt]": {
+  "status": "Retained",
+  "hash": "e8e11c40af67",
+  "on": "2026-10-19",
+  "reason": "Beside a figure in hours, it says sleep debt is sleep you owe and that a night pays it back, the one fact the player needs to act on it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [stress]": {
+  "status": "Retained",
+  "hash": "548e2f936d1b",
+  "on": "2026-10-19",
+  "reason": "Names stress in the everyday phrase, how wound up you are, and gives the consequence a player feels next, that high stress spoils the night's sleep.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#leftAlone": {
+  "status": "Rewritten",
+  "hash": "1ab9ad17a7c4",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition (conditions and a broken bone, type 2 diabetes left untreated)",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#sentenceFor": {
+  "status": "Rewritten",
+  "hash": "0e22190ab72c",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition; tests/evidence-g06-life.test.ts asserts each dial sentence played (energy, condition, fitness, nourishment, morale)",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#top": {
+  "status": "Rewritten",
+  "hash": "743bbefca43b",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition; tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts, tests/scope-people.test.ts and tests/evidence-g07-life.test.ts assert the person, injury and condition words",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#WHAT": {
+  "status": "Rewritten",
+  "hash": "12e25c03ccfe",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition (each measure's body)",
+  "first": "Pending"
+ }
+}

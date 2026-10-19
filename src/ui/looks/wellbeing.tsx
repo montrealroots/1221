@@ -77,6 +77,8 @@ function spokenOf(person: Person, isYou: boolean): Spoken {
   return { they: 'they', them: 'them', their: 'their', are: 'are', s: (v) => v };
 }
 const upper = (w: string) => w.charAt(0).toUpperCase() + w.slice(1);
+/** A label said in a sentence: "A Broken Bone" as "A broken bone". */
+const sentenceCase = (label: string) => label.charAt(0) + label.slice(1).toLowerCase();
 
 /**
  * The eight, in the order a person would notice them.
@@ -103,8 +105,8 @@ const DIALS = [
   { key: 'stress', name: 'Stress', unit: 'level', behind: (p: Spoken) => `How wound up ${p.they} ${p.are}. High stress spoils ${p.their} sleep` },
   { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: (p: Spoken) => `Sleep ${p.they} ${p.s('owe')}, which a night pays back` },
   { key: 'morale', name: 'Morale', unit: 'level', behind: (p: Spoken) => `${upper(p.their)} mood. When it’s up, a night clears more of the day’s stress` },
-  { key: 'condition', name: 'Condition', unit: 'level', behind: (p: Spoken) => `How sound ${p.their} body is. It sets how much a night gives back, ${p.their} morale, sick days, and how likely each year is to be ${p.their} last` },
-  { key: 'fitness', name: 'Fitness', unit: 'level', behind: (p: Spoken) => `How trained ${p.their} body is${p.they === 'you' ? ', the Stamina on your Player Profile' : ''}. It sets how far rest can mend ${p.them} and what a workout costs` },
+  { key: 'condition', name: 'Condition', unit: 'level', behind: (p: Spoken) => `How sound ${p.their} body is. It sets how much energy a night gives back, where ${p.their} morale settles, when a sick day is excused, and how likely a year is to be ${p.their} last` },
+  { key: 'fitness', name: 'Fitness', unit: 'level', behind: (p: Spoken) => `How trained ${p.their} body is${p.they === 'you' ? ': the Stamina on your Player Profile' : ''}. It sets how far rest can mend ${p.their} condition and how much energy a workout costs` },
   { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: (p: Spoken) => `How well fed ${p.they} ${p.are}. A meal puts it back` },
   { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: (p: Spoken) => `How clean ${p.they} ${p.are}. When it’s low, it drags on ${p.their} morale, and on readiness a little` },
 ] as const;
@@ -115,7 +117,7 @@ const WHAT: Record<DialKey, string> = {
   stress: `Stress is how wound up you are. It eases while you have energy left and climbs once you run out, and money you owe adds to it every day. Over ${OVERWROUGHT}, it wears your condition down every hour.`,
   sleepDebt: 'Sleep debt is the sleep you owe. Every waking hour adds a little, and a night’s sleep pays it back. The more you owe, the faster your energy runs down and the less a night gives back.',
   morale: 'Morale is your mood. Meals, workouts, unwinding and good nights lift it. Hunger, grime, money trouble and an injury pull it down.',
-  condition: 'Condition is how sound your body is, after illness, hunger, stress and short nights. A good night’s rest mends it, as far as your fitness allows. Energy is about today, and condition changes more slowly. Your health is a separate thing again: a long-term condition such as asthma, your health cover and your medical care are on Papers, under Health Cover.',
+  condition: 'Condition is how sound your body is. Illness, hunger, stress and short nights wear it down, and a good night’s rest mends it, as far as your fitness allows. Energy is about today, and condition changes more slowly. Your health is something else again: a long-term condition such as asthma, your health cover and your medical care are on Papers, under Health Cover.',
   fitness: `Fitness is how trained your body is, and it’s the same figure as Stamina on your Player Profile: how long you can keep going in a long scene or a night on stage before you tire. Working out builds it. It holds for ${plural(FITNESS.heldDays, 'day')} after a workout, then slowly falls. Rest doesn’t build it: rest brings back energy and condition.`,
   nourishment: 'Nourishment is how well fed you are. It falls every hour you’re awake, and a meal puts it back.',
   hygiene: 'Hygiene is how clean you are. It falls through the day, and a shower puts it back.',
@@ -141,7 +143,7 @@ const personIn = (sim: Simulation, id: string): Person | undefined =>
 // ---------------------------------------------------------------------------
 
 defineLook<Person>('person', {
-  gone: 'They aren’t part of this story any more.',
+  gone: 'This person isn’t in your life any more.',
   resolve: (sim, id) => personIn(sim, id || sim.universe.playerId),
   seeds: (sim) => [sim.universe.playerId],
   look: (person, { sim }) => {
@@ -163,7 +165,7 @@ defineLook<Person>('person', {
       label: 'Readiness',
       // What reads it now (from 2026-10-12): until then this named an audition and a day’s work, which went with the
       // career on 2026-10-09.
-      detail: `How ready ${p.they} ${p.are} today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how judged work goes.`,
+      detail: `How ready ${p.they} ${p.are} today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how well ${p.their} work goes when it’s judged.`,
     });
     // The traits held and the conditions carried, each opening into what it does (from 2026-10-09: until then the
     // traits were a sentence here and the conditions a row on Papers, and neither said what it moved).
@@ -174,7 +176,7 @@ defineLook<Person>('person', {
     }
     // A condition another person carries names them in its id, as their trait does (from 2026-10-14).
     for (const c of Object.keys(person.health?.chronic ?? {}) as Condition[]) {
-      ways.push({ to: at('condition', isYou ? c : `${person.id}/${c}`), label: CONDITION_LABEL[c], detail: person.health!.chronic![c]!.treated ? `Kept up, at what ${p.their} plan doesn’t cover.` : 'Left untreated, and what that does.' });
+      ways.push({ to: at('condition', isYou ? c : `${person.id}/${c}`), label: CONDITION_LABEL[c], detail: person.health!.chronic![c]!.treated ? `Kept up, and ${p.they} ${p.s('pay')} what ${p.their} plan doesn’t cover.` : 'Left untreated, and what that does.' });
     }
     if (injuryOf(person, sim.now)) ways.push({ to: at('condition', isYou ? 'injury' : `${person.id}/injury`), label: 'An Injury', detail: `What it is, when it mends, and what it keeps ${p.them} from.` });
     if (isYou) {
@@ -226,7 +228,7 @@ defineLook<Person>('person', {
         return hurt ? (
           <p key="hurt" className="small">
             <span className="dim">Mending. </span>
-            {INJURY_KIND[hurt.kind].label}, until {formatDate(hurt.until, sim.zone)}{hurt.offWorkUntil ? ', and laid up until then' : ''}{hurt.atWork ? ', on workers’ compensation' : ''}.
+            {sentenceCase(INJURY_KIND[hurt.kind].label)}, until {formatDate(hurt.until, sim.zone)}{hurt.offWorkUntil ? ', and laid up until then' : ''}{hurt.atWork ? ', on workers’ compensation' : ''}.
           </p>
         ) : null;
       })(),
@@ -326,7 +328,8 @@ function sentenceFor(dial: Dial, now: number, p: Spoken): string {
     case 'energy':
       return n > 75 ? `${n}. Plenty for a full day.`
         : n > 40 ? `${n}. Enough for today, but not much more.`
-          : `${n}. ${upper(theyAre)} running low, and it pulls readiness down. Under ${EMPTY}, stress starts to climb.`;
+          : dial.value >= EMPTY ? `${n}. ${upper(theyAre)} running low, and it pulls readiness down. Under ${EMPTY}, stress starts to climb.`
+            : `${n}. ${upper(theyAre)} running on empty, so stress is climbing and readiness is down. Only sleep brings energy back.`;
     case 'stress':
       return n < 25 ? `${n}. Not much is adding to it. Running out of energy would, and so would money trouble or bad nights.`
         : n < 60 ? `${n}. Noticeable, but manageable. The higher it is, the longer it takes to clear.`
@@ -342,14 +345,14 @@ function sentenceFor(dial: Dial, now: number, p: Spoken): string {
         : (dial.person.wokeWithDebt ?? dial.value) < 2 && dial.value < A_NORMAL_DAYS_DEBT + 2
           ? `${plural(n, 'hour')}, about what a normal day awake adds. A night’s sleep pays it back.`
           : n < 12 ? `${plural(n, 'hour')} owed. One long night would clear it.`
-            : `${plural(n, 'hour')} owed. Everything is harder than it should be until it’s paid back.`;
+            : `${plural(n, 'hour')} owed. Until it’s paid back, ${p.their} energy runs down faster and a night gives back less.`;
     case 'morale': {
       // Even at 62.5, where a night clears its usual share of stress.
       const settles = Math.round(moraleSettlesAt(dial.person, w.condition, now));
       const mood = n > 70 ? 'In good spirits' : n > 40 ? 'Steady' : 'Low';
-      return `${n}. ${mood}, and each night brings it back toward ${settles}. `
-        + (n >= 63 ? 'Up like this, a night clears more of the day’s stress than usual.'
-          : 'Down like this, a night clears less of the day’s stress than usual.');
+      return `${n}. ${mood}. Each night moves it toward ${settles}. `
+        + (n >= 63 ? 'Above 62, a night clears more of the day’s stress than usual.'
+          : 'Under 63, a night clears less of the day’s stress than usual.');
     }
     case 'condition': {
       const mends = Math.round(mendsTo(dial.person, now));
@@ -358,8 +361,8 @@ function sentenceFor(dial: Dial, now: number, p: Spoken): string {
       // On the figure the school reads, not the one shown rounded (from 2026-10-13: until then 54.8, shown as 55, left the
       // line out where the school would excuse the day; found by the review of that day).
       const also = `${dial.person.school && dial.value < SCHOOL_ESTIMATE.sickBelow ? ` Under ${SCHOOL_ESTIMATE.sickBelow}, a sick day from classes is excused.` : ''} The lower it is, the likelier a year is to be ${p.their} last.`;
-      return n >= mends ? `${n}. As sound as rest can make ${p.them} at ${p.their} fitness. Above ${mends}, it settles back toward ${mends} each midnight.${also}`
-        : `${n}. At ${p.their} fitness, rest can mend it to ${mends}. For now, a night gives back ${share}% of the energy it would at ${mends}, and each midnight brings it a little closer.${also}`;
+      return n >= mends ? `${n}. As sound as rest can make ${p.them} at ${p.their} fitness.${n > mends ? ` Above ${mends}, it settles back toward ${mends} each midnight.` : ''}${also}`
+        : `${n}. Rest can mend it to ${mends} at ${p.their} fitness, and each midnight brings it a little closer.${share < 100 ? ` Until then, a night gives back only ${share}% of the energy it normally would.` : ''}${also}`;
     }
     case 'fitness': {
       const mends = Math.round(mendsTo(dial.person, now));
@@ -368,14 +371,14 @@ function sentenceFor(dial: Dial, now: number, p: Spoken): string {
       const age = (now - dial.person.birthInstant) / (365.2425 * 86_400_000);
       return `${n}. At this fitness, rest can mend ${p.their} condition to ${mends}, and a workout costs ${costs} energy.`
         + (dial.value <= EVERYDAY_FITNESS ? ' This is where everyday life keeps it without training.' : '')
-        + ` At ${Math.floor(age)}, the most a body can be trained to is ${Math.round(ceilingAt(age).fitness)}. ${ageWords(age)}`;
+        + ` At ${Math.floor(age)}, training can take it to ${Math.round(ceilingAt(age).fitness)} at most. ${ageWords(age)}`;
     }
     case 'nourishment':
       // With the day’s meals: at least 76 each morning when the food is paid for, 40 when it can’t be.
       return (n > 70 ? `${n}. Well fed.`
         : n >= 20 ? `${n}. Getting hungry. Under 20, hunger costs condition and morale every hour.`
           : `${n}. Hungry, and it’s costing condition and morale every hour.`)
-        + ' Each morning the day’s groceries bring it up to at least 76, or to 40 on a day the food can’t be paid for.';
+        + ' Each morning the day’s groceries bring it up to at least 76, or only to 40 on a day there’s no money for food.';
     case 'hygiene':
       return (n >= 50 ? `${n}. Clean enough not to bother ${p.them}.`
         : `${n}. Under 50, it wears on ${p.their} morale every hour. A shower puts it back.`)
@@ -487,7 +490,7 @@ defineLook<HeldTrait>('trait', {
           <p className="small"><span className="dim">Its cost. </span>{t.cost}</p>
         </div>
       ),
-      ways: [{ to: at('readiness', person.id), label: 'Readiness', detail: `How ready the measures it moves leave ${p.them} today.` }],
+      ways: [{ to: at('readiness', person.id), label: 'Readiness', detail: `How ready ${p.they} ${p.are} today. The measures this trait moves are part of it.` }],
       provenance: `Each figure is the trait’s own. “All told” is ${p.their} traits and dispositions taken together, within set limits.`,
     };
   },
@@ -513,7 +516,7 @@ function leftAlone(c: Condition, typeOne?: boolean): { untreated: string; keptUp
     };
   }
   if (c === 'arthritis') return { untreated: `Left untreated, it takes ${u.arthritisEnergyAWeek} from energy every week.`, keptUp: true };
-  return { untreated: 'Left untreated, it has no effect in the game beyond going without its care, which then costs nothing.', keptUp: false };
+  return { untreated: 'Left untreated, it has no effect in the game, and its care costs nothing.', keptUp: false };
 }
 
 defineLook<Carried>('condition', {
@@ -549,7 +552,7 @@ defineLook<Carried>('condition', {
           : INJURY_KIND[hurt.kind].limits !== 'none' ? ` Until then ${p.they} can’t work out, and it holds back the physical side of ${p.their} work.${isYou && person.school && !schoolEnded(person.school.standing) ? ' Call In Sick, on School, excuses a day of classes while it mends.' : ''}` : ''}`,
         parent: at('person', person.id),
         ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: `How sound ${p.their} body is. An injury doesn’t lower it, but it adds to ${p.their} stress and lowers ${p.their} morale each day.` }],
-        provenance: 'How long it takes depends on the injury, and it’s longer for somebody illness hits harder.',
+        provenance: 'How long it takes depends on the injury and on how resilient the body is.',
       };
     }
     const state = person.health!.chronic![key]!;
@@ -562,16 +565,16 @@ defineLook<Carried>('condition', {
       summary: state.treated
         ? (state.lapsed
           ? `${upper(theyAre)} keeping it up, but this month’s care went unpaid, so it goes untreated until next month.`
-          : `${upper(theyAre)} keeping it up. Its care is paid each month, at what ${p.their} plan doesn’t cover.`)
+          : `${upper(theyAre)} keeping it up, and each month ${p.they} ${p.s('pay')} the part of its care ${p.their} plan doesn’t cover.`)
         : `${upper(theyAre)} leaving it untreated. That costs nothing, but it has the effects below.`,
       parent: at('person', person.id),
       body: (() => {
         const left = leftAlone(key, state.typeOne);
         return <p className="small">{left.untreated}{left.keptUp ? ' Kept up, it does none of that.' : ''}{isYou ? ' To change it, go to Papers, then Health Cover, and press Keep It Up or Let It Go beside it.' : ''}</p>;
       })(),
-      ways: dial ? [{ to: at('dial', `${person.id}/${dial}`), label: dial[0]!.toUpperCase() + dial.slice(1), detail: 'What it takes from when it’s left untreated.' }] : [],
+      ways: dial ? [{ to: at('dial', `${person.id}/${dial}`), label: dial[0]!.toUpperCase() + dial.slice(1), detail: 'The measure it lowers when it’s left untreated.' }] : [],
       // Some begin later in a life too (`onsetMonth`, from 2026-09-28): until 2026-10-17 this said every one was drawn once.
-      provenance: `${key in ONSET.yearly ? 'It can start with a life, at a young adult’s rates, or begin later, likelier in a heavier body.' : 'It starts with a life, at a young adult’s rates.'} Source: ${CHRONIC.source}.`,
+      provenance: `${key in ONSET.yearly ? 'It can be there from the start, at young adults’ rate, or begin later, more often in a heavier body.' : 'It can only be there from the start, at young adults’ rate.'} Source: ${CHRONIC.source}.`,
     };
   },
 });

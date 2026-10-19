@@ -486,13 +486,13 @@ describe('l-person', () => {
       ['Stress', `${Math.round(w.stress)}/100. How wound up you are. High stress spoils your sleep.`],
       ['Sleep Debt', `${plural(Math.round(w.sleepDebt), 'hour')}. Sleep you owe, which a night pays back.`],
       ['Morale', `${Math.round(w.morale)}/100. Your mood. When it’s up, a night clears more of the day’s stress.`],
-      ['Condition', `${Math.round(w.condition)}/100. How sound your body is. It sets how much a night gives back, your morale, sick days, and how likely each year is to be your last.`],
-      ['Fitness', `${Math.round(w.fitness)}/100. How trained your body is, the Stamina on your Player Profile. It sets how far rest can mend you and what a workout costs.`],
+      ['Condition', `${Math.round(w.condition)}/100. How sound your body is. It sets how much energy a night gives back, where your morale settles, when a sick day is excused, and how likely a year is to be your last.`],
+      ['Fitness', `${Math.round(w.fitness)}/100. How trained your body is: the Stamina on your Player Profile. It sets how far rest can mend your condition and how much energy a workout costs.`],
       ['Nourishment', `${Math.round(w.nourishment)}/100. How well fed you are. A meal puts it back.`],
       ['Hygiene', `${Math.round(w.hygiene!)}/100. How clean you are. When it’s low, it drags on your morale, and on readiness a little.`],
-      ['Readiness', 'How ready you are today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how judged work goes.'],
+      ['Readiness', 'How ready you are today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how well your work goes when it’s judged.'],
       ['Curious', 'The thing nobody asked you to read gets read: your reading of a scene goes deeper.'],
-      ['Depression', 'Kept up, at what your plan doesn’t cover.'],
+      ['Depression', 'Kept up, and you pay what your plan doesn’t cover.'],
       ['Your Own Plans', 'Everything you’ve put on the calendar yourself.'],
     ]);
     // Each way opens what it names.
@@ -509,7 +509,7 @@ describe('l-person', () => {
     const kept = reload(sim);
     expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Left untreated, and what that does.']);
     kept.must({ kind: 'health.treat', payload: { condition: 'depression', on: true } });
-    expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Kept up, at what your plan doesn’t cover.']);
+    expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Kept up, and you pay what your plan doesn’t cover.']);
   });
 
   it('the units are where she lives: the same 170 cm and 65 kg read “170 cm and 65.0 kg” for a life in London', () => {
@@ -525,10 +525,10 @@ describe('l-person', () => {
     sim.must({ kind: 'life.look_after', payload: { action: 'exercise' } });
     // The draw's 43 days from 8:30 AM on Monday 24 August.
     const hurt = openedFromHome(sim);
-    expect(hurt.lines).toContainEqual(['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.']);
+    expect(hurt.lines).toContainEqual(['Mending. ', 'A broken bone, until October 6, 2026, and laid up until then.']);
     expect(hurt.ways).toContainEqual(['An Injury', 'What it is, when it mends, and what it keeps you from.']);
     const kept = reload(sim);
-    expect(openedFromHome(kept).lines).toContainEqual(['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.']);
+    expect(openedFromHome(kept).lines).toContainEqual(['Mending. ', 'A broken bone, until October 6, 2026, and laid up until then.']);
     kept.advanceTo(at(2026, 10, 6, 12));
     const mended = openedFromHome(kept);
     expect(mended.lines.map(([label]) => label)).not.toContain('Mending. ');

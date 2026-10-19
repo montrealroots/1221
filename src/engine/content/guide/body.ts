@@ -89,7 +89,7 @@ export const BODY: readonly GuideEntry[] = [
     questions: ['What is readiness?', 'Why is my energy so low?', 'What’s the difference between energy, condition and stamina?', 'What do the colors on the bars mean?', 'What does stress do?', 'Where are the rest of my measures?', 'What does a trait change?'],
     where: { route: '/home', label: 'Home, The How You Are Panel' },
     available: `It opens with ${chapter('body')}. Your traits also open on the Player Profile, from ${chapter('profile')}. Your own page, with all eight measures, opens from your name once you’ve read ${chapter('life')}.`,
-    short: 'How You Are, on Home, shows how you’re doing today: a line that sums it up, then Energy, Stress and Readiness. Readiness is how sharp you’ll be at today’s work. Behind them are eight measures of your wellbeing, and four things are easy to mix up. Energy is what you have left for today, and only sleep brings it back. Condition is how sound your body is after illness, hunger, stress and short nights. Fitness is how trained your body is, and it’s the Stamina on your Player Profile. Your health, meaning illness, injury, long-term conditions, your care and your health cover, is on Papers, under Health Cover.',
+    short: 'How You Are, on Home, shows how you’re doing today: a line that sums it up, then Energy, Stress and Readiness. Readiness is how sharp you’ll be at today’s work. Behind them are eight measures of your wellbeing, and four things are easy to mix up. Energy is what you have left for today, and only sleep brings it back. Condition is how sound your body is: illness, hunger, stress and short nights wear it down. Fitness is how trained your body is, and it’s the Stamina on your Player Profile. Your health is on Papers, under Health Cover: illness, injury, long-term conditions, your care and your health cover.',
     steps: [
       'On Home, read How You Are: the line at the top, then Energy, Stress and Readiness, each out of 100.',
       'Press Energy, Stress or Readiness to open it under the panel. It says where it stands and what that means, and Readiness names what’s holding you back most.',
@@ -98,7 +98,7 @@ export const BODY: readonly GuideEntry[] = [
     ],
     needs: [
       `The panel and its three bars open with ${chapter('body')}.`,
-      `Your own page opens with ${chapter('life')}, the guide’s last chapter. Until then, Readiness names the measures holding you back and opens them, a trait opens only on the Player Profile, from ${chapter('profile')}, and a long-term condition can’t be opened.`,
+      `Your own page opens with ${chapter('life')}, the guide’s last chapter. Until then, Readiness names the measures holding you back, and you can open those. A trait opens only on the Player Profile, from ${chapter('profile')}, and a long-term condition doesn’t open at all.`,
       'A long-term condition opens only while you have it, and an injury only while it mends.',
     ],
     costs: [
@@ -112,21 +112,21 @@ export const BODY: readonly GuideEntry[] = [
       { label: 'What Readiness Sets', value: `How much a class, a lab, a rehearsal, an hour of practice or a workout builds, along with how the hour suits an early riser or a night owl. Under ${EVALUATION.sufficientReadiness}, it also costs you in work that’s judged.` },
       { label: 'Condition', value: `How sound your body is. It sets how much energy a night puts back and how likely a year is to be your last. Under ${ESTIMATE.sickBelow}, staying home sick from classes is excused.` },
       { label: 'Fitness', value: `How trained your body is: the same figure as Stamina on the Player Profile. It sets how far rest can mend your condition and what a workout costs. Untrained, it falls toward ${EVERYDAY_FITNESS}, what everyday life keeps.` },
-      { label: 'Health', value: 'Illness, injury, long-term conditions, your care and your health cover, all on Papers, under Health Cover. Illness and an emergency take from your condition and energy, and an injury adds to your stress and lowers your mood each day.' },
+      { label: 'Health', value: 'Illness, injury, long-term conditions, your care and your health cover, all on Papers, under Health Cover. Illness and an emergency take from your condition and energy, and an injury adds to your stress and lowers your morale each day.' },
       { label: 'Traits', value: 'Each changes what it names: how good a night is, how fast stress clears, how far your morale moves, what food costs' },
     ],
     now: ['Opening a bar, a measure, a trait or a condition changes nothing. It shows the figure as it stands.'],
     later: [
-      'The measures move every second the clock runs, by what a waking hour costs. A night, a meal, a shower, a workout and an hour unwinding move them back.',
+      'While you’re awake, the measures move every second the clock runs. A night, a meal, a shower, a workout and an hour unwinding move them back.',
       `Each midnight your body settles. Fitness falls ${FITNESS.perDay} if you haven’t trained in ${plural(FITNESS.heldDays, 'day')}, and condition drifts a little toward what your fitness lets rest mend it to.`,
       `A long-term condition left untreated takes from one measure each week: depression ${CHRONIC.untreated.moraleAWeek} from morale, arthritis ${CHRONIC.untreated.arthritisEnergyAWeek} from energy, diabetes ${CHRONIC.untreated.diabetesConditionAWeek} from condition. Kept up on Papers, it takes nothing.`,
       `An injury takes ${INJURY.weighs.morale} from morale and adds ${INJURY.weighs.stress} to stress each day until it mends.`,
     ],
     interpret: [
-      `Energy turns red under ${EMPTY} and amber within 15 above it. Stress turns red over ${OVERWROUGHT} and amber within 15 below it. Those are the points where your body starts to pay.`,
+      `Energy turns amber under ${EMPTY + 15} and red under ${EMPTY}. Stress turns amber over ${OVERWROUGHT - 15} and red over ${OVERWROUGHT}. Red is where your body starts to pay for it.`,
       'Readiness turns red under 25 and amber under 50.',
       'The line at the top names the worst problem first: no energy left, then a lot of sleep owed, then very high stress, then hunger. With none of those, energy over 75 and stress under 30, it says you’re rested and ready.',
-      'Readiness, opened, names up to three measures that each cost you more than a twentieth of it, worst first.',
+      'Open Readiness to see up to three measures holding it back, worst first. It names only those that cost you more than a twentieth of it.',
       'A trait’s table shows each thing it changes as a percentage. “All told” is all your traits and dispositions taken together.',
     ],
     unavailable: [
@@ -169,7 +169,7 @@ export const BODY: readonly GuideEntry[] = [
     questions: ['How long should I sleep?', 'What happens if I sleep through a class?', 'Why is the Sleep button gray?', 'Does a short night hurt?', 'What does sleep debt do?'],
     where: { route: '/home', label: 'The Top Bar’s Sleep Button' },
     available: `It opens with ${chapter('sleep')}.`,
-    short: `Sleep asks how many hours, from ${SHORTEST_SLEEP} to ${LONGEST_NIGHT}. It suggests a number from when you’re next needed and how much sleep you owe, and says when you’d wake. Then the clock runs through the night at once. A night brings back energy, less the more sleep you owe. It clears stress and sleep debt, and it mends condition only with more than about five hours of real rest. Anything on the calendar in those hours happens without you.`,
+    short: `Sleep asks how many hours, from ${SHORTEST_SLEEP} to ${LONGEST_NIGHT}. It suggests a number from when you’re next needed and how much sleep you owe, and says when you’d wake. Then the clock runs through the night at once. A night brings back energy, though less when you owe sleep. It clears stress and sleep debt, and it mends condition only with more than about five hours of real rest. Anything on the calendar in those hours happens without you.`,
     steps: [
       'Press Sleep in the top bar.',
       'Read the suggestion at the top: how many hours it suggests, and why.',
@@ -229,7 +229,7 @@ export const BODY: readonly GuideEntry[] = [
     related: ['body.how', 'day.advance', 'day.calendar', 'day.clock'],
     connections: [
       { to: 'body.how', kind: 'immediate', why: 'A night moves energy, stress, sleep debt, condition and morale by the time you wake.' },
-      { to: 'day.calendar', kind: 'immediate', why: 'Anything that needs you during the night happens without you and is missed.' },
+      { to: 'day.calendar', kind: 'immediate', why: 'A commitment during the night goes ahead without you, and it counts as missed.' },
       { to: 'day.needs', kind: 'history', why: 'Commitments you slept through are named in a notice the next morning.' },
       { to: 'school.standing', kind: 'evaluation', why: 'Classes and calls you sleep through are absences the faculty weigh at the end of the term.' },
       { to: 'day.advance', kind: 'optional', why: `Skipping ahead through the night sleeps for you, but it’s a poorer night that stops at ${COASTING_ENERGY_CEILING} energy.` },
@@ -249,7 +249,7 @@ export const BODY: readonly GuideEntry[] = [
     questions: ['How do I eat?', 'Why is Work Out gray?', 'What does a shower do?', 'Does working out make me fitter?', 'Why did my weight go up?', 'What does Needed Now mean?'],
     where: { route: '/home', label: 'The Top Bar’s Look After Yourself Menu' },
     available: `It opens with ${chapter('looking-after')}.`,
-    short: `Look After Yourself holds what a day needs besides sleep: ${listed(LABELS)}. Each line says how long it takes, what it costs, why it’s where it is in the list and what it would do to your wellbeing. Whatever is costing you every hour comes first, marked Needed Now. Then come the rest, by how much readiness each gives back, and last what you can’t do right now. Each line waits for you to press it, and the clock then moves through the time it takes.`,
+    short: `Look After Yourself holds what a day needs besides sleep: ${listed(LABELS)}. Each line says how long it takes, what it costs, why it’s where it is in the list and what it would do to your wellbeing. Whatever is costing you every hour comes first, marked Needed Now. Then come the rest, by how much readiness each gives back, and last what you can’t do right now. A line waits until you press it. Then the clock moves on by the time it takes.`,
     steps: [
       'Press Look After Yourself in the top bar.',
       'Read each line: how long it takes, its price if it has one, and why it’s there. Under that are the measures it would change and the readiness it gives back.',
@@ -310,7 +310,7 @@ export const BODY: readonly GuideEntry[] = [
       'In the middle of a commitment, everything but Eat A Meal waits, Order In too, and the line says where you are and until when.',
       'Eat A Meal and Order In wait until you’re hungry: nourishment under 90.',
       'With your debit card locked, or stopped while a replacement or a new account’s first card is on its way, a meal can only go on the credit card or cash in hand. If those are short, the line says so, even when the bank could have paid the rest. With the bank short as well, it says you can’t afford it.',
-      'You can’t afford it when your current account and any savings linked to it, any overdraft your bank lets a debit card use (at a US bank that asks, once you’ve opted in), your credit card and your cash in hand come to less than the meal.',
+      'You can’t afford it when your checking account and any savings linked to it, any overdraft your bank lets a debit card use (at a US bank that asks, once you’ve opted in), your credit card and your cash in hand come to less than the meal.',
       'If the day is paid by card, the bank and the card are short, and your cash would make up the difference, the line tells you to set The Day’s Spending to In Cash, Then The Debit Card.',
       'A French debit card’s payment ceiling, for the month or the last 30 days, can leave too little for its part of the meal. If the credit card can’t take all of it, the line says so.',
       'Shower waits until hygiene is under 95.',
@@ -320,7 +320,7 @@ export const BODY: readonly GuideEntry[] = [
       'Anything waits if something you’re expected at starts during the time it takes, and the line names it.',
     ],
     mistakes: [
-      'Eating late in the evening, close to midnight. The day’s groceries lift nourishment to at least 76 at midnight anyway, so a late meal only adds what it puts above that. With money for one but not both, the meal is paid first and the groceries go unbought, with a notice that there’s no money for food: the next day starts on what the meal left, with no 76 under it.',
+      'Eating late in the evening, close to midnight. The day’s groceries lift nourishment to at least 76 at midnight anyway, so a late meal only adds what it puts above that. With money for one but not both, the meal is paid first and the groceries go unbought, with a notice that there’s no money for food: the next day starts on what the meal left, without the groceries’ 76 to fall back on.',
       'Working out just before a class or a performance. It costs energy, and readiness counts your energy now.',
       `Ordering in every meal. It costs about ${DELIVERY.times.toFixed(1)} times as much as eating at home, and adds a restaurant’s calories each time.`,
     ],
@@ -335,7 +335,7 @@ export const BODY: readonly GuideEntry[] = [
       { to: 'day.weather', kind: 'evaluation', why: 'Work Out checks the weather as its hour ends to decide whether it was a run.' },
       { to: 'bank.payments', kind: 'immediate', why: 'A meal is paid the way How You Pay pays the day’s spending: the debit card, the credit card or cash.' },
       { to: 'craft.profile', kind: 'history', why: 'The fitness a workout builds is your Stamina on the Player Profile.' },
-      { to: 'papers.doctor', kind: 'scheduled', why: 'An injury from a run or a workout brings a doctor’s care, and a bill for it.' },
+      { to: 'papers.doctor', kind: 'scheduled', why: 'An injury from a run or a workout needs care, and you may owe a share of its cost.' },
     ],
     example: {
       setup: `A new life’s first morning in New Haven: energy ${FIRST.energy}, stress ${FIRST.stress}, nourishment ${FIRST.nourishment}, hygiene ${FIRST.hygiene}.`,

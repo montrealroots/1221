@@ -119,7 +119,7 @@ export const TRAINING_CLASSES: Readonly<Record<string, 'fall' | 'spring' | 'both
 };
 
 /** Those classes by name, in the catalog's order, as the guide and the tutorial say them. */
-export const TRAINING_CLASS_NAMES: readonly string[] = COURSES.filter((c) => TRAINING_CLASSES[c.code]).map((c) => (TRAINING_CLASSES[c.code] === 'both' ? c.name : `${c.name} in its ${TRAINING_CLASSES[c.code]}`));
+export const TRAINING_CLASS_NAMES: readonly string[] = COURSES.filter((c) => TRAINING_CLASSES[c.code]).map((c) => (TRAINING_CLASSES[c.code] === 'both' ? c.name : `${c.name} in the ${TRAINING_CLASSES[c.code]} term`));
 
 // ---------------------------------------------------------------------------
 // What the weight raises

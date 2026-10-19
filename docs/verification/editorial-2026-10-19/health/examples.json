@@ -1,0 +1,227 @@
+[
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "8. You’re running low, and it pulls readiness down. Under 15, stress starts to climb.",
+  "after": "8. You’re running on empty, so stress is climbing and readiness is down. Only sleep brings energy back.",
+  "why": "At 8 the rule it quoted had already happened: stress climbs below 15. Under 15 the look now says what is happening and the one thing that fixes it. From 15 to 40 the old sentence stays.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the worn-out band; tests/evidence-g06-life.test.ts energy journey asserts the new words at 7"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "25 hours owed. Everything is harder than it should be until it’s paid back.",
+  "after": "25 hours owed. Until it’s paid back, your energy runs down faster and a night gives back less.",
+  "why": "“Everything is harder” was vague. Now it names the two things a large debt does: energy drains faster (applyElapsedWellbeing) and a night gives back less (DEBT_HOLDS in applySleep).",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the worn-out band; checked against applyElapsedWellbeing's drain and applySleep's owing factor"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "62. Steady, and each night brings it back toward 80. Down like this, a night clears less of the day’s stress than usual.",
+  "after": "62. Steady. Each night moves it toward 80. Under 63, a night clears less of the day’s stress than usual.",
+  "why": "It said “Steady” and then “Down like this” about the same mood. It now gives the actual line, 62.5, where a night's stress clearing breaks even (applySleep, settled = 1). “Brings it back toward 80” didn't fit a mood still rising toward 80.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the first morning; tests/evidence-g06-life.test.ts morale asserts the 20 and 90 variants"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "50. At your fitness, rest can mend it to 88. For now, a night gives back 91% of the energy it would at 88, and each midnight brings it a little closer. Under 55, a sick day from classes is excused. The lower it is, the likelier a year is to be your last.",
+  "after": "50. Rest can mend it to 88 at your fitness, and each midnight brings it a little closer. Until then, a night gives back only 91% of the energy it normally would. Under 55, a sick day from classes is excused. The lower it is, the likelier a year is to be your last.",
+  "why": "“The energy it would at 88” left the reader to work out the comparison. The midnight pull now comes right after the mark it pulls toward, and the cost is said in plain words. The sentence is left out when the share rounds to 100%.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the low band; tests/evidence-g06-life.test.ts asserts the 47 variant"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "100. As sound as rest can make you at your fitness. Above 100, it settles back toward 100 each midnight. The lower it is, the likelier a year is to be your last.",
+  "after": "100. As sound as rest can make you at your fitness. The lower it is, the likelier a year is to be your last.",
+  "why": "A body exactly at the mark was told what happens above it, which here was impossible. The midnight pull back is said only above the mark (defects.md, 1).",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the peak band; tests/evidence-g06-life.test.ts ‘the Condition look says the midnight pulls it back only …’ fails without the fix"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "50. At this fitness, rest can mend your condition to 100, and a workout costs 10 energy. At 24, the most a body can be trained to is 99. The body is near its best, and age takes very little from it.",
+  "after": "50. At this fitness, rest can mend your condition to 100, and a workout costs 10 energy. At 24, training can take it to 99 at most. The body is near its best, and age takes very little from it.",
+  "why": "“The most a body can be trained to is” was passive and roundabout. The new clause is short and says the same thing (ceilingAt(age).fitness).",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), first morning; tests/evidence-g06-life.test.ts fitness"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#sentenceFor",
+  "kind": "feedback",
+  "before": "14. Hungry, and it’s costing condition and morale every hour. Each morning the day’s groceries bring it up to at least 76, or to 40 on a day the food can’t be paid for.",
+  "after": "14. Hungry, and it’s costing condition and morale every hour. Each morning the day’s groceries bring it up to at least 76, or only to 40 on a day there’s no money for food.",
+  "why": "The passive “can’t be paid for” is now a plain circumstance. It names nobody, so it works for anybody's look.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g06-life.test.ts nourishment journey, both cards locked"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#DIALS [condition]",
+  "kind": "other",
+  "before": "88/100. How sound your body is. It sets how much a night gives back, your morale, sick days, and how likely each year is to be your last.",
+  "after": "88/100. How sound your body is. It sets how much energy a night gives back, where your morale settles, when a sick day is excused, and how likely a year is to be your last.",
+  "why": "The list mixed kinds of thing (“your morale, sick days”). Each item now says what condition decides: the night's energy, where morale settles (moraleSettlesAt), the excused sick day (under 55), and mortality.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts); tests/evidence-g33-ui.test.ts l-person and tests/scope-people.test.ts (she/her)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#DIALS [fitness]",
+  "kind": "other",
+  "before": "50/100. How trained his body is. It sets how far rest can mend him and what a workout costs.",
+  "after": "50/100. How trained his body is. It sets how far rest can mend his condition and how much energy a workout costs.",
+  "why": "“Mend him” was vague. Rest mends condition, and a workout costs energy, so the line now says both.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), another person he/him; tests/scope-people.test.ts"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "Kept up, at what his plan doesn’t cover.",
+  "after": "Kept up, and he pays what his plan doesn’t cover.",
+  "why": "“At what his plan doesn’t cover” left the payer out. The line now has a subject and a verb, and the glossary's phrase.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts (he/him); tests/evidence-g33-ui.test.ts (you)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "He’s keeping it up. Its care is paid each month, at what his plan doesn’t cover.",
+  "after": "He’s keeping it up, and each month he pays the part of its care his plan doesn’t cover.",
+  "why": "The passive and the dangling “at what” are gone. Who pays, how often and how much are now in one sentence.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-people.test.ts, his asthma kept up"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "Mending. A Pulled Muscle, until September 25, 2026, on workers’ compensation.",
+  "after": "Mending. A pulled muscle, until September 25, 2026, on workers’ compensation.",
+  "why": "Inside a sentence the injury is a noun, not a label, so it's in sentence case. The look's title keeps the Title Case label.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g07-life.test.ts work-study journey; looks-before.txt and looks-after-1.txt (render-looks.ts)"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "empty",
+  "before": "They aren’t part of this story any more.",
+  "after": "This person isn’t in your life any more.",
+  "why": "“This story” was a literary turn for a look whose person is gone. The new sentence says it plainly.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b12.test.ts ‘only the player is a Person …’ asserts the gone look"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "How ready the measures it moves leave you today.",
+  "after": "How ready you are today. The measures this trait moves are part of it.",
+  "why": "The old line was hard to parse. It's now two short sentences: what Readiness is, then how the trait comes into it.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), trait spender"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#top",
+  "kind": "other",
+  "before": "It can start with a life, at a young adult’s rates, or begin later, likelier in a heavier body. Source: …",
+  "after": "It can be there from the start, at young adults’ rate, or begin later, more often in a heavier body. Source: …",
+  "why": "“Start with a life” sounded like the engine. The line now says the condition can be there from the start, at the rate young adults have it, or begin later. It keeps to the one-line limit tests/looks.test.ts holds a provenance to.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), condition arthritis; tests/looks.test.ts provenance length"
+ },
+ {
+  "source": "src/ui/looks/wellbeing.tsx#leftAlone",
+  "kind": "other",
+  "before": "Left untreated, it has no effect in the game beyond going without its care, which then costs nothing.",
+  "after": "Left untreated, it has no effect in the game, and its care costs nothing.",
+  "why": "The old clause chain said “it does nothing” in a roundabout way. Now it's two plain facts.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), hypertension left untreated"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.how]",
+  "kind": "tutorial",
+  "before": "Energy turns red under 15 and amber within 15 above it. Stress turns red over 75 and amber within 15 below it. Those are the points where your body starts to pay.",
+  "after": "Energy turns amber under 30 and red under 15. Stress turns amber over 60 and red over 75. Red is where your body starts to pay for it.",
+  "why": "“Within 15 above it” made the reader do the sum. The figures are now worked out from EMPTY and OVERWROUGHT, in the order the bar changes color (Meter's line, primitives.tsx).",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section; checked against Meter in src/ui/components/primitives.tsx"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.how]",
+  "kind": "tutorial",
+  "before": "Readiness, opened, names up to three measures that each cost you more than a twentieth of it, worst first.",
+  "after": "Open Readiness to see up to three measures holding it back, worst first. It names only those that cost you more than a twentieth of it.",
+  "why": "It now starts with the action, and the threshold comes second (dragsOn).",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.how]",
+  "kind": "tutorial",
+  "before": "Your own page opens with “A Whole Life”, the guide’s last chapter. Until then, Readiness names the measures holding you back and opens them, a trait opens only on the Player Profile, from “You As An Actor”, and a long-term condition can’t be opened.",
+  "after": "Your own page opens with “A Whole Life”, the guide’s last chapter. Until then, Readiness names the measures holding you back, and you can open those. A trait opens only on the Player Profile, from “You As An Actor”, and a long-term condition doesn’t open at all.",
+  "why": "One sentence with three clauses and a passive is now two sentences, each about one thing.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.look-after]",
+  "kind": "tutorial",
+  "before": "You can’t afford it when your current account and any savings linked to it, …",
+  "after": "You can’t afford it when your checking account and any savings linked to it, …",
+  "why": "From this brief the glossary's word is checking account.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.look-after]",
+  "kind": "tutorial",
+  "before": "… the next day starts on what the meal left, with no 76 under it.",
+  "after": "… the next day starts on what the meal left, without the groceries’ 76 to fall back on.",
+  "why": "“With no 76 under it” was cryptic. Now it names the floor the morning loses.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [body.look-after]",
+  "kind": "tutorial",
+  "before": "Each line waits for you to press it, and the clock then moves through the time it takes.",
+  "after": "A line waits until you press it. Then the clock moves on by the time it takes.",
+  "why": "Shorter, with a clear subject, and none of the tics.mjs openings.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide section"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [immediate]",
+  "kind": "tutorial",
+  "before": "Anything that needs you during the night happens without you and is missed.",
+  "after": "A commitment during the night goes ahead without you, and it counts as missed.",
+  "why": "It now uses the glossary's word, commitment, for “anything that needs you”, and an active verb.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide's connections"
+ },
+ {
+  "source": "src/engine/content/guide/body.ts#BODY [scheduled]",
+  "kind": "tutorial",
+  "before": "An injury from a run or a workout brings a doctor’s care, and a bill for it.",
+  "after": "An injury from a run or a workout needs care, and you may owe a share of its cost.",
+  "why": "Not every injury brings a bill: a covered one “costs you nothing” (mayHurt). Care can also be urgent care or the emergency room, not only a doctor.",
+  "meaningSensitive": true,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the guide's connections; checked against mayHurt in systems/injury.ts"
+ },
+ {
+  "source": "src/engine/content/body.ts#TRAINING_CLASS_NAMES",
+  "kind": "label",
+  "before": "Acting Intimacy And Combat For The Stage in its spring",
+  "after": "Acting Intimacy And Combat For The Stage in the spring term",
+  "why": "“In its spring” read like a season of the course's own. It's the spring term.",
+  "meaningSensitive": false,
+  "verified": "looks-before.txt and looks-after-1.txt (render-looks.ts), the Looking After Yourself entry's Straight Away"
+ }
+]
