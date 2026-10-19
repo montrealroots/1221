@@ -662,7 +662,7 @@ describe('mortality', () => {
       expect(text).toContain('Ada Cole');
       expect(text).toContain('August 25, 1940 – September 13, 2026 · Aged 86 · Actress · New Haven');
       expect(text).toContain(`Earned ${dollars(6 * 23_00)} Wages, before tax Left Behind`);
-      expect(text).toContain(`Left Behind ${dollars(left)} What they were worth`);
+      expect(text).toContain(`Left Behind ${dollars(left)} Their net worth at the end`);
       expect(buttons.map((b) => b.text)).toEqual(['Back To The Slots']);
       buttons[0]!.onClick!();
       expect(h.exits).toBe(1);
@@ -673,7 +673,7 @@ describe('mortality', () => {
     const { sim } = ended();
     // From 7:30 AM on 24 August to 13 September: 19.9 days, 0.65 of a month, which the screen rounds to one.
     expect(Math.round(((sim.universe.meta.endedAt! - sim.universe.meta.createdAt) / MS_YEAR) * 12)).toBe(1);
-    expect(drawn2(sim).text).toContain('Years In The World 1 Month From the first morning to the last');
+    expect(drawn2(sim).text).toContain('Years In The World 1 Month From the first day to the last');
   });
 });
 

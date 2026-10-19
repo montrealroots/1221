@@ -155,7 +155,7 @@ export function LocationPicker({
           <p className="hint">
             {known > 0
               ? `${known.toLocaleString('en-US')} town${known === 1 ? '' : 's'} and cit${known === 1 ? 'y' : 'ies'} on record.`
-              : 'No settlements on record for this country.'}
+              : 'No towns or cities on record for this country.'}
           </p>
         </div>
 
@@ -168,7 +168,7 @@ export function LocationPicker({
             disabled={regions.length === 0}
           >
             <option value="">
-              {regions.length === 0 ? 'No subdivisions' : `Anywhere in ${COUNTRIES.get(countryId)?.name ?? 'the country'}`}
+              {regions.length === 0 ? 'None' : `Anywhere in ${COUNTRIES.get(countryId)?.name ?? 'the country'}`}
             </option>
             {regions.map((r) => (
               <option key={r.id} value={r.id}>{r.name}</option>
@@ -177,7 +177,7 @@ export function LocationPicker({
           <p className="hint">
             {regions.length > 0
               ? `${regions.length} to choose from.`
-              : 'This country isn’t subdivided.'}
+              : 'There are no states or regions to choose from in this country.'}
           </p>
         </div>
       </div>
@@ -188,7 +188,7 @@ export function LocationPicker({
           id={`${prefix}-search`}
           type="search"
           value={query}
-          placeholder={loading ? 'Loading the country…' : 'Start typing a town name'}
+          placeholder={loading ? 'Loading its towns…' : 'Start typing a town name'}
           onChange={(e) => setQuery(e.target.value)}
           autoComplete="off"
         />
@@ -198,7 +198,11 @@ export function LocationPicker({
       <div className="picker-results" role="listbox" aria-label="Matching Places">
         {matches.length === 0 && !loading && (
           <p className="hint" style={{ padding: 'var(--s3)' }}>
-            No town or city matches “{query}” there. Try a different spelling, or widen the region.
+            {/* Each variant says what's true of it (from 2026-10-19, brief 15): until then an empty search in a country
+                with no towns read “No town or city matches “” there.”, and “widen the region” named no control. */}
+            {query.trim() === ''
+              ? 'There’s no town or city on record there.'
+              : `No town or city matches “${query.trim()}” there. Try a different spelling${regionId ? `, or choose Anywhere in ${COUNTRIES.get(countryId)?.name ?? 'the country'}` : ''}.`}
           </p>
         )}
         {matches.slice(0, VISIBLE_MATCHES).map((c) => (

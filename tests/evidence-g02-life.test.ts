@@ -269,7 +269,7 @@ describe('calendar.cancel', () => {
 
     const screen = opened(sim, id);
     expect(screen.text).toContain(NEXT_30);
-    expect(screen.text).toContain('You need to be there. The clock stops when it comes round, so you can go. You put it there, so you can take it off again.');
+    expect(screen.text).toContain('You need to be there. The clock stops when it’s time, so you can go. You put it there, so you can take it off again.');
     expect(screen.has('Leave It')).toBe(true);
     screen.press('Call It Off');
 

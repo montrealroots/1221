@@ -44,7 +44,8 @@ interface StartupContext {
   warnings: string[];
 }
 
-const STAGES: Stage[] = [
+/** Each stage of the opening, in order; exported so a test can run the stages that read the slots. */
+export const STAGES: Stage[] = [
   {
     id: 'storage', label: 'Connecting To Storage', weight: 30,
     run: async (context) => {
@@ -63,7 +64,7 @@ const STAGES: Stage[] = [
     run: async (context) => {
       for (const slot of context.slots ?? []) {
         if (slot.error) {
-          context.warnings.push(`Slot ${slot.slot}: ${slot.error}${slot.hasBackup ? ' Its backup can be restored from the save slots.' : ''}`);
+          context.warnings.push(`Slot ${slot.slot}: ${slot.error}${slot.hasBackup ? ' You can restore its backup from the save slots.' : ''}`);
         }
       }
     },
@@ -76,12 +77,12 @@ const STAGES: Stage[] = [
         if (version === undefined) continue;
         if (version > SAVE_SCHEMA_VERSION) {
           context.warnings.push(
-            `Slot ${slot.slot} was saved by a newer version of SLATE. This version won’t open it, so it can’t be damaged.`,
+            `Slot ${slot.slot} was saved by a newer version of SLATE, so this version won’t open it. That keeps the save safe.`,
           );
         } else if (version < SAVE_SCHEMA_VERSION) {
           context.warnings.push(
             // `openSlot` keeps a backup of the slot before it writes the save brought forward.
-            `Slot ${slot.slot} was saved by an older version of SLATE. It’s updated when you open it, and a backup of it is kept first.`,
+            `Slot ${slot.slot} was saved by an older version of SLATE. When you open it, SLATE keeps a backup and then updates it.`,
           );
         }
       }

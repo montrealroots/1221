@@ -641,7 +641,7 @@ describe('the trait knobs, nine of the row’s ten live (round three)', () => {
     const keeps = look(sim, 'trait', 'keeps_accounts');
     expect(keeps).toContain('How hard a slight from a classmate cuts +10%');
     const chaotic = look(sim, 'trait', 'chaotic');
-    expect(chaotic).toContain('How fast you stop being clean +30%');
+    expect(chaotic).toContain('How soon you need a shower +30%');
     expect(chaotic).toContain('How much stress a hard hour, a performance’s nerves or an injury adds −8%');
     for (const words of [keeps, chaotic]) expect(words).not.toMatch(/receipt/i);
     expect(Object.keys(KNOB_LIMITS).sort()).toEqual(Object.keys(KNOB_READS).sort());

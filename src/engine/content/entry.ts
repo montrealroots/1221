@@ -80,7 +80,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Canadian citizens are visa-exempt and don’t use ESTA; admitted by CBP, usually for up to 6 months (CBP discretion, no fixed window).",
+        "note": "Canadian citizens need no visa and don’t use ESTA. US Customs and Border Protection usually admits them for up to 6 months, at the officer’s discretion.",
         "source": "https://www.cbp.gov/travel/international-visitors/visa-waiver-program"
       },
       "MX": {
@@ -88,7 +88,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "B-1/B-2 visa or Border Crossing Card",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Mexico isn’t in the Visa Waiver Program. B-1/B-2 admission period set by CBP at entry, commonly up to 6 months.",
+        "note": "Mexico isn’t in the Visa Waiver Program. US Customs and Border Protection sets how long a B-1/B-2 visitor may stay at entry, commonly up to 6 months.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "BR": {
@@ -96,7 +96,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "B-1/B-2 visa",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Brazil isn’t in the Visa Waiver Program. Admission period set by CBP at entry, commonly up to 6 months.",
+        "note": "Brazil isn’t in the Visa Waiver Program. US Customs and Border Protection sets how long a visitor may stay at entry, commonly up to 6 months.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "GB": {
@@ -104,7 +104,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "IE": {
@@ -112,7 +112,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "IS": {
@@ -120,7 +120,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "DE": {
@@ -128,7 +128,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "FR": {
@@ -136,7 +136,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "ES": {
@@ -144,7 +144,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "JP": {
@@ -152,7 +152,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "KR": {
@@ -160,7 +160,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "AU": {
@@ -168,7 +168,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "NZ": {
@@ -176,7 +176,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       },
       "LV": {
@@ -184,7 +184,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ESTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+        "note": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
         "source": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html"
       }
     }
@@ -220,7 +220,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "Common Travel Area: Irish citizens need no ETA or visa and may live and work in the UK.",
+        "note": "Under the Common Travel Area, Irish citizens need no ETA or visa, and may live and work in the UK.",
         "source": "https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta"
       },
       "US": {
@@ -228,7 +228,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+        "note": "A visitor may stay up to 6 months each visit. An ETA has been required for travel since January 8, 2025 (Appendix ETA National List, section (c)), and airlines and other carriers have checked for one since February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "CA": {
@@ -236,7 +236,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+        "note": "A visitor may stay up to 6 months each visit. An ETA has been required for travel since January 8, 2025 (Appendix ETA National List, section (c)), and airlines and other carriers have checked for one since February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "JP": {
@@ -244,7 +244,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+        "note": "A visitor may stay up to 6 months each visit. An ETA has been required for travel since January 8, 2025 (Appendix ETA National List, section (c)), and airlines and other carriers have checked for one since February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "KR": {
@@ -252,7 +252,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+        "note": "A visitor may stay up to 6 months each visit. An ETA has been required for travel since January 8, 2025 (Appendix ETA National List, section (c)), and airlines and other carriers have checked for one since February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "MX": {
@@ -260,7 +260,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+        "note": "A visitor may stay up to 6 months each visit. An ETA has been required for travel since January 8, 2025 (Appendix ETA National List, section (c)), and airlines and other carriers have checked for one since February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "AU": {
@@ -268,7 +268,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+        "note": "A visitor may stay up to 6 months each visit. An ETA has been required for travel since January 8, 2025 (Appendix ETA National List, section (c)), and airlines and other carriers have checked for one since February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "BR": {
@@ -276,7 +276,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+        "note": "A visitor may stay up to 6 months each visit. An ETA has been required for travel since January 8, 2025 (Appendix ETA National List, section (c)), and airlines and other carriers have checked for one since February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "NZ": {
@@ -284,7 +284,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); ETA required for travel on or after January 8, 2025 (Appendix ETA National List section (c)); enforced with carrier checks from February 25, 2026.",
+        "note": "A visitor may stay up to 6 months each visit. An ETA has been required for travel since January 8, 2025 (Appendix ETA National List, section (c)), and airlines and other carriers have checked for one since February 25, 2026.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "IS": {
@@ -292,7 +292,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
+        "note": "A visitor may stay up to 6 months each visit. European nationals have needed an ETA for travel since April 2, 2025 (Appendix ETA National List, section (d)). Applications opened on March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "DE": {
@@ -300,7 +300,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
+        "note": "A visitor may stay up to 6 months each visit. European nationals have needed an ETA for travel since April 2, 2025 (Appendix ETA National List, section (d)). Applications opened on March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "FR": {
@@ -308,7 +308,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
+        "note": "A visitor may stay up to 6 months each visit. European nationals have needed an ETA for travel since April 2, 2025 (Appendix ETA National List, section (d)). Applications opened on March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "ES": {
@@ -316,7 +316,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
+        "note": "A visitor may stay up to 6 months each visit. European nationals have needed an ETA for travel since April 2, 2025 (Appendix ETA National List, section (d)). Applications opened on March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       },
       "LV": {
@@ -324,7 +324,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visitor (up to 6 months per visit); European nationals have needed an ETA for travel on or after April 2, 2025 (Appendix ETA National List section (d)); applications opened March 5, 2025.",
+        "note": "A visitor may stay up to 6 months each visit. European nationals have needed an ETA for travel since April 2, 2025 (Appendix ETA National List, section (d)). Applications opened on March 5, 2025.",
         "source": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-national-list"
       }
     }
@@ -360,7 +360,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "US citizens need neither visa nor eTA; carry a valid US passport. Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "US citizens need neither a visa nor an eTA, only a valid US passport. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "MX": {
@@ -368,7 +368,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "Visitor visa (TRV), or eTA if eligible",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Since February 29, 2024 Mexican citizens need a visitor visa, unless flying on a Mexican passport and holding a valid US nonimmigrant visa or having held a Canadian visa in the past 10 years, in which case an eTA suffices (air only; land and sea arrivals always need a visa).",
+        "note": "Since February 29, 2024, Mexican citizens need a visitor visa. An eTA is enough instead for someone flying in on a Mexican passport who holds a valid US nonimmigrant visa, or has held a Canadian visa in the past 10 years. Arriving by land or sea always needs a visa.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/campaigns/eta-work-visa-mexico.html"
       },
       "BR": {
@@ -376,7 +376,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "Visitor visa (TRV), or eTA if eligible",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Brazil is visa-required, but Brazilians flying in who hold a valid US nonimmigrant visa or held a Canadian visa in the past 10 years may use an eTA instead (air only).",
+        "note": "Brazilians need a visa, but those flying in who hold a valid US nonimmigrant visa, or have held a Canadian visa in the past 10 years, can use an eTA instead. That’s by air only.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility/eta-x.html"
       },
       "GB": {
@@ -384,7 +384,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "IE": {
@@ -392,7 +392,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "IS": {
@@ -400,7 +400,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "DE": {
@@ -408,7 +408,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "FR": {
@@ -416,7 +416,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "ES": {
@@ -424,7 +424,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "JP": {
@@ -432,7 +432,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "KR": {
@@ -440,7 +440,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "AU": {
@@ -448,7 +448,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "NZ": {
@@ -456,7 +456,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       },
       "LV": {
@@ -464,7 +464,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "ETA required when flying to or transiting a Canadian airport (not needed by land or sea). Visitors normally admitted for up to 6 months (officer discretion).",
+        "note": "An eTA is required to fly to or through a Canadian airport, but not to arrive by land or sea. Visitors are normally admitted for up to 6 months, at the officer’s discretion.",
         "source": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html"
       }
     }
@@ -489,98 +489,98 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "Common Travel Area: British citizens need no visa or permission and may live and work in Ireland.",
+        "note": "Under the Common Travel Area, British citizens need no visa or permission, and may live and work in Ireland.",
         "source": "https://www.irishimmigration.ie/coming-to-visit-ireland/"
       },
       "IS": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is outside Schengen, so passport or ID checks still apply at the border).",
+        "note": "Free movement within the EU and EEA. Ireland is outside the Schengen area, so there are still passport or ID checks at the border.",
         "source": "https://www.irishimmigration.ie/coming-to-visit-ireland/"
       },
       "DE": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is outside Schengen, so passport or ID checks still apply at the border).",
+        "note": "Free movement within the EU and EEA. Ireland is outside the Schengen area, so there are still passport or ID checks at the border.",
         "source": "https://www.irishimmigration.ie/coming-to-visit-ireland/"
       },
       "FR": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is outside Schengen, so passport or ID checks still apply at the border).",
+        "note": "Free movement within the EU and EEA. Ireland is outside the Schengen area, so there are still passport or ID checks at the border.",
         "source": "https://www.irishimmigration.ie/coming-to-visit-ireland/"
       },
       "ES": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is outside Schengen, so passport or ID checks still apply at the border).",
+        "note": "Free movement within the EU and EEA. Ireland is outside the Schengen area, so there are still passport or ID checks at the border.",
         "source": "https://www.irishimmigration.ie/coming-to-visit-ireland/"
       },
       "LV": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is outside Schengen, so passport or ID checks still apply at the border).",
+        "note": "Free movement within the EU and EEA. Ireland is outside the Schengen area, so there are still passport or ID checks at the border.",
         "source": "https://www.irishimmigration.ie/coming-to-visit-ireland/"
       },
       "US": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Permission to land for up to 90 days granted by an immigration officer at the border. Ireland isn’t in Schengen, so this is separate from the Schengen 90/180 count. No electronic travel authorisation scheme is in force.",
+        "note": "An immigration officer at the border grants permission to land for up to 90 days. Ireland isn’t in the Schengen area, so this doesn’t count toward Schengen’s 90 days in 180. There’s no electronic travel authorization scheme in force.",
         "source": "https://www.ireland.ie/en/dfa/visas-for-ireland/"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Permission to land for up to 90 days granted by an immigration officer at the border. Ireland isn’t in Schengen, so this is separate from the Schengen 90/180 count. No electronic travel authorisation scheme is in force.",
+        "note": "An immigration officer at the border grants permission to land for up to 90 days. Ireland isn’t in the Schengen area, so this doesn’t count toward Schengen’s 90 days in 180. There’s no electronic travel authorization scheme in force.",
         "source": "https://www.ireland.ie/en/dfa/visas-for-ireland/"
       },
       "JP": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Permission to land for up to 90 days granted by an immigration officer at the border. Ireland isn’t in Schengen, so this is separate from the Schengen 90/180 count. No electronic travel authorisation scheme is in force.",
+        "note": "An immigration officer at the border grants permission to land for up to 90 days. Ireland isn’t in the Schengen area, so this doesn’t count toward Schengen’s 90 days in 180. There’s no electronic travel authorization scheme in force.",
         "source": "https://www.ireland.ie/en/dfa/visas-for-ireland/"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Permission to land for up to 90 days granted by an immigration officer at the border. Ireland isn’t in Schengen, so this is separate from the Schengen 90/180 count. No electronic travel authorisation scheme is in force.",
+        "note": "An immigration officer at the border grants permission to land for up to 90 days. Ireland isn’t in the Schengen area, so this doesn’t count toward Schengen’s 90 days in 180. There’s no electronic travel authorization scheme in force.",
         "source": "https://www.ireland.ie/en/dfa/visas-for-ireland/"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Permission to land for up to 90 days granted by an immigration officer at the border. Ireland isn’t in Schengen, so this is separate from the Schengen 90/180 count. No electronic travel authorisation scheme is in force.",
+        "note": "An immigration officer at the border grants permission to land for up to 90 days. Ireland isn’t in the Schengen area, so this doesn’t count toward Schengen’s 90 days in 180. There’s no electronic travel authorization scheme in force.",
         "source": "https://www.ireland.ie/en/dfa/visas-for-ireland/"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Permission to land for up to 90 days granted by an immigration officer at the border. Ireland isn’t in Schengen, so this is separate from the Schengen 90/180 count. No electronic travel authorisation scheme is in force.",
+        "note": "An immigration officer at the border grants permission to land for up to 90 days. Ireland isn’t in the Schengen area, so this doesn’t count toward Schengen’s 90 days in 180. There’s no electronic travel authorization scheme in force.",
         "source": "https://www.ireland.ie/en/dfa/visas-for-ireland/"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Permission to land for up to 90 days granted by an immigration officer at the border. Ireland isn’t in Schengen, so this is separate from the Schengen 90/180 count. No electronic travel authorisation scheme is in force.",
+        "note": "An immigration officer at the border grants permission to land for up to 90 days. Ireland isn’t in the Schengen area, so this doesn’t count toward Schengen’s 90 days in 180. There’s no electronic travel authorization scheme in force.",
         "source": "https://www.ireland.ie/en/dfa/visas-for-ireland/"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Permission to land for up to 90 days granted by an immigration officer at the border. Ireland isn’t in Schengen, so this is separate from the Schengen 90/180 count. No electronic travel authorisation scheme is in force.",
+        "note": "An immigration officer at the border grants permission to land for up to 90 days. Ireland isn’t in the Schengen area, so this doesn’t count toward Schengen’s 90 days in 180. There’s no electronic travel authorization scheme in force.",
         "source": "https://www.ireland.ie/en/dfa/visas-for-ireland/"
       }
     }
@@ -610,28 +610,28 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026. UK nationals have been treated as non-EU nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is in the EU but outside Schengen; ID or passport checks at the Schengen external border).",
+        "note": "Free movement within the EU and EEA. Ireland is in the EU but outside the Schengen area, so there are ID or passport checks at the Schengen border.",
         "source": "https://travel-europe.europa.eu/"
       },
       "IS": {
@@ -645,70 +645,70 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "FR": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "ES": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "JP": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       }
     }
@@ -738,35 +738,35 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026. UK nationals have been treated as non-EU nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is in the EU but outside Schengen; ID or passport checks at the Schengen external border).",
+        "note": "Free movement within the EU and EEA. Ireland is in the EU but outside the Schengen area, so there are ID or passport checks at the Schengen border.",
         "source": "https://travel-europe.europa.eu/"
       },
       "IS": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "DE": {
@@ -780,63 +780,63 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "ES": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "JP": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       }
     }
@@ -866,42 +866,42 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026. UK nationals have been treated as non-EU nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is in the EU but outside Schengen; ID or passport checks at the Schengen external border).",
+        "note": "Free movement within the EU and EEA. Ireland is in the EU but outside the Schengen area, so there are ID or passport checks at the Schengen border.",
         "source": "https://travel-europe.europa.eu/"
       },
       "IS": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "DE": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "FR": {
@@ -915,56 +915,56 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "JP": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       }
     }
@@ -994,49 +994,49 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026. UK nationals have been treated as non-EU nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is in the EU but outside Schengen; ID or passport checks at the Schengen external border).",
+        "note": "Free movement within the EU and EEA. Ireland is in the EU but outside the Schengen area, so there are ID or passport checks at the Schengen border.",
         "source": "https://travel-europe.europa.eu/"
       },
       "IS": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "DE": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "FR": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "ES": {
@@ -1050,49 +1050,49 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       }
     }
@@ -1122,98 +1122,98 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026). UK nationals have been third-country nationals since January 1, 2021.",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026. UK nationals have been treated as non-EU nationals since January 1, 2021.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "IE": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement (Ireland is in the EU but outside Schengen; ID or passport checks at the Schengen external border).",
+        "note": "Free movement within the EU and EEA. Ireland is in the EU but outside the Schengen area, so there are ID or passport checks at the Schengen border.",
         "source": "https://travel-europe.europa.eu/"
       },
       "IS": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "DE": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "FR": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "ES": {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "EU/EEA free movement.",
+        "note": "Free movement within the EU and EEA.",
         "source": "https://travel-europe.europa.eu/"
       },
       "JP": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": 180,
-        "note": "Under Regulation (EU) 2018/1806 Annex II: 90 days in any 180-day period across the whole Schengen area. Biometric EES registration at the external border since October 12, 2025 (fully operational April 10, 2026). ETIAS will be required once it launches (not live on September 29, 2026).",
+        "note": "Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026.",
         "source": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
       },
       "LV": {
@@ -1245,98 +1245,98 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "CA": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "IS": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "FR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "ES": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "LV": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+        "note": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "No visa is needed for up to 90 days. A footnote from Japan’s foreign ministry says citizens of this country can apply at a regional immigration office to extend the stay to 6 months in all, though this wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "IE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "No visa is needed for up to 90 days. A footnote from Japan’s foreign ministry says citizens of this country can apply at a regional immigration office to extend the stay to 6 months in all, though this wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "DE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "No visa is needed for up to 90 days. A footnote from Japan’s foreign ministry says citizens of this country can apply at a regional immigration office to extend the stay to 6 months in all, though this wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa exemption up to 90 days; per MOFA's footnote, nationals of this country may apply at a regional immigration office to extend to up to 6 months in total (see uncertain).",
+        "note": "No visa is needed for up to 90 days. A footnote from Japan’s foreign ministry says citizens of this country can apply at a regional immigration office to extend the stay to 6 months in all, though this wasn’t confirmed.",
         "source": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
       },
       "BR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver for Brazilian holders of ICAO-compliant e-passports since September 30, 2023, originally for 3 years (to September 29, 2026); extended by an exchange of notes in July 2026 to September 29, 2029. Holders of non-chip passports need a visa.",
+        "note": "Since September 30, 2023, Brazilians with an e-passport to the international (ICAO) standard need no visa. The waiver first ran for 3 years, to September 29, 2026, and an exchange of notes in July 2026 extended it to September 29, 2029. A passport without a chip still needs a visa.",
         "source": "https://www.gov.br/mre/en/contact-us/press-area/press-releases/reciprocal-visa-exemption-between-brazil-and-japan"
       }
     }
@@ -1372,63 +1372,63 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "Up to 90 days. This country is one of 22 countries and regions that don’t need a K-ETA until December 31, 2026, and a K-ETA is required again from January 1, 2027, unless that’s extended. You can still apply for one, for a fee.",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "GB": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "Up to 90 days. This country is one of 22 countries and regions that don’t need a K-ETA until December 31, 2026, and a K-ETA is required again from January 1, 2027, unless that’s extended. You can still apply for one, for a fee.",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "DE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "Up to 90 days. This country is one of 22 countries and regions that don’t need a K-ETA until December 31, 2026, and a K-ETA is required again from January 1, 2027, unless that’s extended. You can still apply for one, for a fee.",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "FR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "Up to 90 days. This country is one of 22 countries and regions that don’t need a K-ETA until December 31, 2026, and a K-ETA is required again from January 1, 2027, unless that’s extended. You can still apply for one, for a fee.",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "ES": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "Up to 90 days. This country is one of 22 countries and regions that don’t need a K-ETA until December 31, 2026, and a K-ETA is required again from January 1, 2027, unless that’s extended. You can still apply for one, for a fee.",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "JP": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "Up to 90 days. This country is one of 22 countries and regions that don’t need a K-ETA until December 31, 2026, and a K-ETA is required again from January 1, 2027, unless that’s extended. You can still apply for one, for a fee.",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "AU": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "Up to 90 days. This country is one of 22 countries and regions that don’t need a K-ETA until December 31, 2026, and a K-ETA is required again from January 1, 2027, unless that’s extended. You can still apply for one, for a fee.",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days. Temporarily exempt from K-ETA until December 31, 2026 (one of 22 countries and regions in the exemption); K-ETA is required again from January 1, 2027 unless extended. Voluntary K-ETA application still possible (fee charged).",
+        "note": "Up to 90 days. This country is one of 22 countries and regions that don’t need a K-ETA until December 31, 2026, and a K-ETA is required again from January 1, 2027, unless that’s extended. You can still apply for one, for a fee.",
         "source": "https://www.mofa.go.kr/ca-en/brd/m_5231/view.do?seq=761797"
       },
       "CA": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Up to 6 months under the Korea-Canada arrangement. Temporarily exempt from K-ETA until December 31, 2026.",
+        "note": "Up to 6 months, under an arrangement between Korea and Canada. A K-ETA isn’t needed until December 31, 2026.",
         "source": "https://www.mofa.go.kr/ca-en/wpge/m_5236/contents.do"
       },
       "IE": {
@@ -1436,7 +1436,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "K-ETA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days but not among the 22 temporarily exempt countries, so K-ETA is required before boarding.",
+        "note": "Up to 90 days. This country isn’t among the 22 exempt for now, so a K-ETA is required before boarding.",
         "source": "https://www.k-eta.go.kr/"
       },
       "IS": {
@@ -1444,7 +1444,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "K-ETA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days but not among the 22 temporarily exempt countries, so K-ETA is required before boarding.",
+        "note": "Up to 90 days. This country isn’t among the 22 exempt for now, so a K-ETA is required before boarding.",
         "source": "https://www.k-eta.go.kr/"
       },
       "MX": {
@@ -1452,7 +1452,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "K-ETA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days but not among the 22 temporarily exempt countries, so K-ETA is required before boarding.",
+        "note": "Up to 90 days. This country isn’t among the 22 exempt for now, so a K-ETA is required before boarding.",
         "source": "https://www.k-eta.go.kr/"
       },
       "BR": {
@@ -1460,7 +1460,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "K-ETA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days but not among the 22 temporarily exempt countries, so K-ETA is required before boarding.",
+        "note": "Up to 90 days. This country isn’t among the 22 exempt for now, so a K-ETA is required before boarding.",
         "source": "https://www.k-eta.go.kr/"
       },
       "LV": {
@@ -1468,7 +1468,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "K-ETA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "90 days but not among the 22 temporarily exempt countries, so K-ETA is required before boarding.",
+        "note": "Up to 90 days. This country isn’t among the 22 exempt for now, so a K-ETA is required before boarding.",
         "source": "https://www.k-eta.go.kr/"
       }
     }
@@ -1493,91 +1493,91 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "GB": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "CA": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "IE": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "IS": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "DE": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "FR": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "ES": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "JP": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "KR": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "AU": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "NZ": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "LV": {
         "status": "free",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Enters as a visitor without permission to work, up to 180 days maximum. The INM officer sets the actual number of days at entry (recorded on the FMM or digital FMM). No pre-travel authorisation.",
+        "note": "A visitor, without permission to work, for up to 180 days. The immigration officer (INM) sets the actual number of days at entry and records it on the visitor’s form, the FMM, on paper or digital. There’s no travel authorization to apply for in advance.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-no-requieren-visa-para-mexico/"
       },
       "BR": {
@@ -1585,7 +1585,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "Mexican visitor visa",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Mexico reinstated the visa requirement for Brazilians on August 18, 2022. Exempt if holding a valid US, Canada, UK, Japan or Schengen visa, or permanent residence in those countries or the Pacific Alliance (then entry as a visa-exempt visitor).",
+        "note": "Mexico has required Brazilians to have a visa again since August 18, 2022. A Brazilian with a valid US, Canadian, UK, Japanese or Schengen visa, or permanent residence in one of those or a Pacific Alliance country, enters without one as a visitor.",
         "source": "https://www.inm.gob.mx/gobmx/word/index.php/paises-requieren-visa-para-mexico/"
       }
     }
@@ -1631,7 +1631,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "Trans-Tasman arrangement: NZ citizens get a Special Category Visa (subclass 444) on arrival and may live and work indefinitely.",
+        "note": "Under the Trans-Tasman arrangement, New Zealand citizens get a Special Category Visa (subclass 444) on arrival, and may live and work in Australia indefinitely.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/special-category-444"
       },
       "US": {
@@ -1639,7 +1639,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Every non-citizen needs a visa; the ETA is an electronically linked visa. Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Everyone who isn’t a citizen needs a visa, and the ETA is a visa linked electronically to the passport. It allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601"
       },
       "CA": {
@@ -1647,7 +1647,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Every non-citizen needs a visa; the ETA is an electronically linked visa. Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Everyone who isn’t a citizen needs a visa, and the ETA is a visa linked electronically to the passport. It allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601"
       },
       "JP": {
@@ -1655,7 +1655,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Every non-citizen needs a visa; the ETA is an electronically linked visa. Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Everyone who isn’t a citizen needs a visa, and the ETA is a visa linked electronically to the passport. It allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601"
       },
       "KR": {
@@ -1663,7 +1663,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "ETA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Every non-citizen needs a visa; the ETA is an electronically linked visa. Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Everyone who isn’t a citizen needs a visa, and the ETA is a visa linked electronically to the passport. It allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/electronic-travel-authority-601"
       },
       "GB": {
@@ -1671,7 +1671,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eVisitor",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Eligible for both: eVisitor (free, via ImmiAccount) or ETA (AUD 20 via the app). Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Citizens can use either an eVisitor (free, through ImmiAccount) or an ETA (AUD 20, through the app). Either allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651"
       },
       "IE": {
@@ -1679,7 +1679,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eVisitor",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Eligible for both: eVisitor (free, via ImmiAccount) or ETA (AUD 20 via the app). Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Citizens can use either an eVisitor (free, through ImmiAccount) or an ETA (AUD 20, through the app). Either allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651"
       },
       "IS": {
@@ -1687,7 +1687,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eVisitor",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Eligible for both: eVisitor (free, via ImmiAccount) or ETA (AUD 20 via the app). Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Citizens can use either an eVisitor (free, through ImmiAccount) or an ETA (AUD 20, through the app). Either allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651"
       },
       "DE": {
@@ -1695,7 +1695,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eVisitor",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Eligible for both: eVisitor (free, via ImmiAccount) or ETA (AUD 20 via the app). Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Citizens can use either an eVisitor (free, through ImmiAccount) or an ETA (AUD 20, through the app). Either allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651"
       },
       "FR": {
@@ -1703,7 +1703,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eVisitor",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Eligible for both: eVisitor (free, via ImmiAccount) or ETA (AUD 20 via the app). Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Citizens can use either an eVisitor (free, through ImmiAccount) or an ETA (AUD 20, through the app). Either allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651"
       },
       "ES": {
@@ -1711,7 +1711,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eVisitor",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Eligible for both: eVisitor (free, via ImmiAccount) or ETA (AUD 20 via the app). Multiple entries over 12 months, up to 3 months each visit.",
+        "note": "Citizens can use either an eVisitor (free, through ImmiAccount) or an ETA (AUD 20, through the app). Either allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651"
       },
       "LV": {
@@ -1719,7 +1719,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "eVisitor",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Latvia is eVisitor-eligible (free) but not ETA-eligible. Multiple entries over 12 months, up to 3 months each.",
+        "note": "Latvian citizens can use an eVisitor (free), but not an ETA. It allows entries over 12 months, up to 3 months each visit.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/evisitor-651"
       },
       "MX": {
@@ -1727,7 +1727,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "Visitor visa (subclass 600)",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Not ETA or eVisitor eligible; must apply for a Visitor visa (subclass 600, Tourist stream), fee charged. Stay period is set in the grant (commonly up to 3, 6 or 12 months).",
+        "note": "Citizens can’t use an ETA or an eVisitor, so they apply for a Visitor visa (subclass 600, Tourist stream), for a fee. The visa sets how long they can stay, commonly up to 3, 6 or 12 months.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600"
       },
       "BR": {
@@ -1735,7 +1735,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "Visitor visa (subclass 600)",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Not ETA or eVisitor eligible; must apply for a Visitor visa (subclass 600, Tourist stream), fee charged. Stay period is set in the grant (commonly up to 3, 6 or 12 months).",
+        "note": "Citizens can’t use an ETA or an eVisitor, so they apply for a Visitor visa (subclass 600, Tourist stream), for a fee. The visa sets how long they can stay, commonly up to 3, 6 or 12 months.",
         "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600"
       }
     }
@@ -1771,77 +1771,77 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "IE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "IS": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "DE": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "FR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "ES": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "KR": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "MX": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "NZ": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "LV": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visitor: up to 90 days, extendable by the Federal Police up to 180 days per 12-month period. For EU Schengen members the Brazil-EU short-stay agreement is 90 days in any 180-day period.",
+        "note": "A visitor can stay up to 90 days, and the Federal Police can extend that to 180 days in any 12 months. For citizens of Schengen countries in the EU, the Brazil-EU short-stay agreement allows 90 days in any 180.",
         "source": "https://www.gov.br/mre/pt-br/assuntos/portal-consular/vistos/quadro-geral-de-regime-de-vistos-para-a-entrada-de-estrangeiros-no-brasil"
       },
       "JP": {
         "status": "free",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Reciprocal visa waiver since September 30, 2023 for holders of ICAO e-passports; extended in July 2026 to September 29, 2029.",
+        "note": "Since September 30, 2023, Brazil and Japan have each waived visas for the other’s citizens with an e-passport to the international (ICAO) standard. In July 2026 the waiver was extended to September 29, 2029.",
         "source": "https://www.gov.br/mre/en/contact-us/press-area/press-releases/reciprocal-visa-exemption-between-brazil-and-japan"
       },
       "US": {
@@ -1849,7 +1849,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "e-Visa (electronic visitor visa)",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa requirement reinstated on reciprocity grounds from April 10, 2025; apply online for an e-Visa (USD 80.90). Up to 90 days per entry, extendable to 180 per 12 months. Validity: 10 years for US citizens, 5 years for Canadian and Australian citizens (see uncertain).",
+        "note": "Brazil has required a visa again since April 10, 2025, in return for these countries requiring one of Brazilians. Apply online for an e-Visa (USD 80.90). It allows up to 90 days each entry, which can be extended to 180 in any 12 months. It’s valid for 10 years for US citizens and 5 years for Canadian and Australian citizens, though the validity wasn’t confirmed.",
         "source": "https://www.gov.br/mre/pt-br/consulado-miami/information-about-visas-in-english/electronic-visitor-visa-e-visa"
       },
       "CA": {
@@ -1857,7 +1857,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "e-Visa (electronic visitor visa)",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa requirement reinstated on reciprocity grounds from April 10, 2025; apply online for an e-Visa (USD 80.90). Up to 90 days per entry, extendable to 180 per 12 months. Validity: 10 years for US citizens, 5 years for Canadian and Australian citizens (see uncertain).",
+        "note": "Brazil has required a visa again since April 10, 2025, in return for these countries requiring one of Brazilians. Apply online for an e-Visa (USD 80.90). It allows up to 90 days each entry, which can be extended to 180 in any 12 months. It’s valid for 10 years for US citizens and 5 years for Canadian and Australian citizens, though the validity wasn’t confirmed.",
         "source": "https://www.gov.br/mre/pt-br/consulado-miami/information-about-visas-in-english/electronic-visitor-visa-e-visa"
       },
       "AU": {
@@ -1865,7 +1865,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "visa": "e-Visa (electronic visitor visa)",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa requirement reinstated on reciprocity grounds from April 10, 2025; apply online for an e-Visa (USD 80.90). Up to 90 days per entry, extendable to 180 per 12 months. Validity: 10 years for US citizens, 5 years for Canadian and Australian citizens (see uncertain).",
+        "note": "Brazil has required a visa again since April 10, 2025, in return for these countries requiring one of Brazilians. Apply online for an e-Visa (USD 80.90). It allows up to 90 days each entry, which can be extended to 180 in any 12 months. It’s valid for 10 years for US citizens and 5 years for Canadian and Australian citizens, though the validity wasn’t confirmed.",
         "source": "https://www.gov.br/mre/pt-br/consulado-miami/information-about-visas-in-english/electronic-visitor-visa-e-visa"
       }
     }
@@ -1901,7 +1901,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "status": "free-movement",
         "maxDays": null,
         "windowDays": null,
-        "note": "Trans-Tasman Travel Arrangement: Australian citizens get a resident visa on arrival; no NZeTA or IVL needed.",
+        "note": "Under the Trans-Tasman Travel Arrangement, Australian citizens get a resident visa on arrival, and need no NZeTA or visitor levy (IVL).",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "GB": {
@@ -1909,7 +1909,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 180,
         "windowDays": null,
-        "note": "Visa waiver: UK citizens may stay up to 6 months; NZeTA plus IVL required before travel.",
+        "note": "UK citizens need no visa and may stay up to 6 months, but need an NZeTA and must pay the visitor levy (IVL) before they travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "US": {
@@ -1917,7 +1917,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "CA": {
@@ -1925,7 +1925,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "IE": {
@@ -1933,7 +1933,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "IS": {
@@ -1941,7 +1941,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "DE": {
@@ -1949,7 +1949,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "FR": {
@@ -1957,7 +1957,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "ES": {
@@ -1965,7 +1965,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "JP": {
@@ -1973,7 +1973,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "KR": {
@@ -1981,7 +1981,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "MX": {
@@ -1989,7 +1989,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "BR": {
@@ -1997,7 +1997,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       },
       "LV": {
@@ -2005,7 +2005,7 @@ export const ENTRY: Readonly<Record<string, Destination>> = {
         "authorization": "NZeTA",
         "maxDays": 90,
         "windowDays": null,
-        "note": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+        "note": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
         "source": "https://www.immigration.govt.nz/visas/new-zealand-electronic-travel-authority-nzeta/"
       }
     }

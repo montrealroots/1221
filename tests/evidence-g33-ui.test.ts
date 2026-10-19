@@ -389,7 +389,7 @@ describe('h-papers', () => {
     const mark = h.buttons.filter((b) => /^Mark \d+ Read$/.test(b.text));
     expect(mark).toHaveLength(1);
     (mark[0]!.props.onClick as () => void)();
-    expect(drawn(sim).text).toContain('No Questions Waiting A tax return is past its due date and unfiled: $174, with its penalty so far.');
+    expect(drawn(sim).text).toContain('No Questions Waiting A tax return is past its due date and not filed yet. You owe $174, including the penalty so far.');
   });
 
   it('filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date, nothing accruing before it, and $169 sixty days past it, where the balance last stored reads $168; a reload says the same', () => {
@@ -491,7 +491,7 @@ describe('l-person', () => {
       ['Nourishment', `${Math.round(w.nourishment)}/100. How well fed you are. A meal puts it back.`],
       ['Hygiene', `${Math.round(w.hygiene!)}/100. How clean you are. When it’s low, it drags on your morale, and on readiness a little.`],
       ['Readiness', 'How ready you are today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how judged work goes.'],
-      ['Curious', 'The thing nobody asked you to read gets read: your reading of a scene goes deeper.'],
+      ['Curious', 'The thing nobody asked you to read gets read, and you go deeper into how to play a part.'],
       ['Depression', 'Kept up, at what your plan doesn’t cover.'],
       ['Your Own Plans', 'Everything you’ve put on the calendar yourself.'],
     ]);

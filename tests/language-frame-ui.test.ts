@@ -157,7 +157,7 @@ describe('the top bar’s dialogs', () => {
     press(button(/^One Week/));
     let said = dialog(drawn(sim, TimeControls).html, 'On The Way');
     const week = sim.now + 7 * MS_DAY;
-    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment, and the clock stops at each one. At each, you can go, or press Stand Here and the clock waits. A plan of your own can also be skipped, and a rehearsal with a partner called off, though at short notice that costs their trust.`);
+    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment. The clock stops at it so you can choose: press Go, or Stand Here to wait. You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust.`);
     expect(said).toMatch(/Dinner — /);
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: sim.now + 40 * MS_HOUR, durationMinutes: 60 } });
     h.given = new Map();
@@ -166,7 +166,7 @@ describe('the top bar’s dialogs', () => {
     drawn(sim, TimeControls);
     press(button(/^One Week/));
     said = dialog(drawn(sim, TimeControls).html, 'On The Way');
-    expect(said).toContain('passes two commitments, and the clock stops at each one.');
+    expect(said).toContain('passes two commitments. The clock stops at each one so you can choose: press Go, or Stand Here to wait.');
     expect(h.buttons.map((b) => b.text)).toEqual(expect.arrayContaining(['Cancel', 'Advance']));
   });
 
@@ -180,7 +180,7 @@ describe('the top bar’s dialogs', () => {
     let said = dialog(shown.html, 'Dinner');
     expect(said).toContain(`It’s ${formatTime(at, sim.zone)} on ${formatDate(at, sim.zone)}, and this needs you now. Going takes 1 hour, and the clock moves on to ${formatDateTime(at + 3 * MS_HOUR, sim.zone)}.`);
     expect(h.buttons.map((b) => b.text)).toEqual(expect.arrayContaining(['Stand Here', 'Skip It', 'Go']));
-    expect(said).not.toContain('Only a plan of your own can be skipped.');
+    expect(said).not.toContain('You can only skip a plan of your own');
 
     // An appointment's kind of stop, the world's own: nothing to skip. TEST SETUP: an item that wants the player, as a
     // paper visit or a doctor's appointment does.
@@ -197,7 +197,7 @@ describe('the top bar’s dialogs', () => {
     shown = drawn(other, TimeControls);
     said = dialog(shown.html, 'A Visit To The Passport Office');
     expect(said).toContain('Going takes 30 minutes');
-    expect(said).toContain('Only a plan of your own can be skipped. Go, or press Stand Here and the clock waits. Whatever moves the clock next runs this, with you there if you’re awake and in the right city.');
+    expect(said).toContain('You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. It happens the next time the clock moves, and you’re there if you’re awake and in the right city.');
     expect(h.buttons.map((b) => b.text)).not.toContain('Skip It');
     expect(said).not.toContain('The school’s');
   });
@@ -317,12 +317,12 @@ describe('the save slots', () => {
     // Delete pressed on slot 1: a readable save becomes its own backup on the way out.
     press(button('Delete'));
     ({ text } = shown(adapter, slots));
-    expect(text).toContain('Delete Slot 1? This ends that universe. The character, everywhere they’ve been and everything that happened to them is gone from the slot. A backup is kept, so if you change your mind you can bring it back here with Restore Backup. Keep It Delete Slot 1');
+    expect(text).toContain(`Delete Slot 1? This deletes ${sim.player.displayName}’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1`);
     // An unreadable save with no backup can't be brought back.
     const broken = { slot: 1 as const, occupied: true, hasBackup: false, error: 'That save file is damaged and can’t be read.' };
     ({ text } = shown(adapter, [broken, ...slots.slice(1)]));
     expect(text).toContain('Slot 1 Unreadable Save That save file is damaged and can’t be read. Delete');
-    expect(text).toContain('This slot has no backup, so it can’t be brought back afterwards.');
+    expect(text).toContain('This slot has no backup, so you can’t bring it back afterwards.');
   });
 
   it('says a damaged save can’t be opened, its backup the way on, and what’s wrong behind a disclosure', async () => {
@@ -344,7 +344,7 @@ describe('the save slots', () => {
     for (let i = 0; i < 200 && !h.sets.some((one) => one.value === null && h.sets.indexOf(one) > 2); i++) await new Promise((r) => setTimeout(r, 10));
     for (const one of h.sets) h.given.set(one.at, one.value);
     const { text } = shown(adapter, slots);
-    expect(text).toContain('The save in Slot 1 is damaged, so it can’t be opened. Its backup can be restored instead: press Restore Backup. What’s Wrong With It Player is in an unknown location \'xx-nowhere\'.');
+    expect(text).toContain('The save in Slot 1 is damaged, so it can’t be opened. Press Restore Backup to open its backup instead. What’s Wrong With It Player is in an unknown location \'xx-nowhere\'.');
     expect(text).not.toContain('didn’t pass validation');
   });
 
@@ -393,17 +393,17 @@ describe('the save slots', () => {
       const { kept, adapter } = device(fail);
       for (const [k, v] of ok.kept) kept.set(k, v);
       await expect(adapter.save(sim.universe)).rejects.toThrow(fail === 'full'
-        ? 'There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.'
-        : 'The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.');
+        ? 'There isn’t enough storage space on this device to save, so nothing in the slot changed. Free some space, or delete a save you no longer want, then try again.'
+        : 'SLATE couldn’t save to this device, so nothing in the slot changed. Try again in a moment.');
       expect(kept.get([...kept.keys()].find((k) => k.includes('save'))!)).toBe(before);
     }
     // The provider says it in the toast, and the top bar's save button says it failed.
-    const failing = { save: async () => { throw new PersistenceError('The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.', true); } };
+    const failing = { save: async () => { throw new PersistenceError('SLATE couldn’t save to this device, so nothing in the slot changed. Try again in a moment.', true); } };
     h.given = new Map();
     const { game } = drawn(sim, () => null, failing);
     h.sets = [];
     await game.saveNow();
-    expect(toasted().map((t) => t.message)).toEqual(['The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.']);
+    expect(toasted().map((t) => t.message)).toEqual(['SLATE couldn’t save to this device, so nothing in the slot changed. Try again in a moment.']);
     for (const one of h.sets) h.given.set(one.at, one.value);
     drawn(sim, GameShell, failing);
     expect(h.buttons.map((b) => b.text)).toContain('Save Failed: Try Again');
@@ -427,33 +427,33 @@ describe('creation, step by step', () => {
   it('says each step’s guidance in the player’s words, with what each choice does, and why Continue waits', () => {
     let text = step(0, ada());
     expect(text).toContain('Your legal name is the one on your documents. What people call you can be different.');
-    expect(text).toContain('It’s what you say when someone asks, and it decides the citizenship you were born to.');
-    expect(text).toMatch(/You’ll be \d+ when this life begins\./);
-    expect(text).toContain('Any size or shape works. It’s cropped to a headshot and made small enough to keep in the save. It’s only shown: the game never looks at what’s in it.');
+    expect(text).toContain('Where you’re from, which isn’t always where you live now. It’s what you tell people when they ask, and it decides your citizenship.');
+    expect(text).toMatch(/You’ll be \d+ when you start\./);
+    expect(text).toContain('Any size or shape works. SLATE crops it to a headshot and keeps a small copy in the save. It’s only for show: the game never looks at what’s in it.');
     expect(text).toContain('Choose as many as are true. It’s part of who your character is and nothing more: it changes no ability, nothing in the game uses it, and the game never guesses it from a name or a country.');
     text = step(0, ada({ pronouns: 'they/them', performerTitle: undefined }));
-    expect(text).toContain('With They/Them, the choice is yours. Actor and Actress are two words for the same craft, and the game treats them as equals. Pick the one you want to be called: the game calls you by it, and at school you’re cast in parts written for it, or written for anyone.');
+    expect(text).toContain('With They/Them, you choose. Actor and Actress are two words for the same craft, and neither counts for more. The game calls you by the one you pick, and at school you’re cast in parts written for it, or for anyone.');
     expect(text).toContain('Choose whether you’re billed as an actor or an actress.');
     text = step(0, ada({ firstName: '', lastName: ' ' }));
     expect(text).toContain('Enter a first name. Enter a last name.');
 
     text = step(1, ada());
-    expect(text).toContain('How you lean, not what you can do. Each one shapes a part of your life:');
-    expect(text).toContain(`Risk Tolerance: over ${CARRIES_A_BALANCE}, your card’s autopay starts on the minimum payment, so you carry a balance.`);
-    expect(text).toContain('Extraversion: how being watched as you perform, by an audience or a class, affects your stress.');
-    expect(text).toContain('Composure is an ability your work is judged on. Apart from where Composure and Discipline start, none of these makes you better or worse at anything.');
-    expect(text).toContain('Pick up to four. Traits come in opposing pairs, and you can’t hold both sides of a pair.');
+    expect(text).toContain('Your temperament, not your talent. Each one changes a part of your life:');
+    expect(text).toContain(`Risk Tolerance: above ${CARRIES_A_BALANCE}, your card’s autopay starts out paying only the minimum, so you carry a balance.`);
+    expect(text).toContain('Extraversion: whether performing in front of people, an audience or your class, raises your stress or eases it.');
+    expect(text).toContain('Apart from your starting Composure and Discipline, none of these makes you a better or worse actor. Composure is one of the abilities your performances are judged on.');
+    expect(text).toContain('Pick up to four. Traits come in opposing pairs, and you can’t have both of a pair. Between them, they change: how fast stress builds and clears; how well you sleep, and how much a night restores;');
 
     text = step(3, ada());
     expect(text).toContain('You’re a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, one of 16 actors admitted this year: among the strongest of them, but not ahead of everyone.');
     expect(text).toContain('Your money is kept in the dollar (USD), the currency where you start, and stays in it wherever you go.');
-    expect(text).toContain('Leave them blank and your body is drawn from the averages where you were born.');
+    expect(text).toContain('Leave them blank and SLATE picks them at random, around the averages where you were born.');
 
     text = step(4, ada());
     expect(text).toContain('Ready To Begin');
     expect(text).toMatch(/Food Each Month \$[\d,]+/);
-    expect(text).toContain('You haven’t picked any traits. That’s fine: only the dispositions above will shape your sleep, your temper and your card.');
-    expect(text).toContain('This life begins with the clock paused. Once you press Play, time passes a minute for every minute, and the calendar fills whether you’re watching or not.');
+    expect(text).toContain('You haven’t picked any traits. That’s fine: the dispositions above still shape your stress, your sleep, your morale and your card.');
+    expect(text).toContain('Your life starts with the clock paused. Once you press Play, a minute passes in the game for every real minute, and what’s on your calendar happens whether you’re watching or not.');
   });
 });
 
@@ -469,7 +469,7 @@ describe('the Calendar screen', () => {
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at, durationMinutes: 60 } });
 
     const first = drawn(sim, CalendarWorkspace);
-    expect(first.text).toContain('Calendar Your Plans And Commitments Everything on your calendar, and the holidays kept where you are. When two things you need to be at overlap, they’re flagged here as a clash.');
+    expect(first.text).toContain('Calendar Your Plans And Commitments Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.');
     expect(first.text).toContain('A clash in the next month.');
     // The legend's kinds, each with what it holds on hover; the World row, whose items are never drawn, isn't shown.
     expect(first.html).toContain('title="Your own plans, and your birthday, appointments and tax dates."');
@@ -493,5 +493,222 @@ describe('the Calendar screen', () => {
       h.given = new Map<number, unknown>([[view, h.inits[view]], [view + 1, gone.key]]);
       expect(drawn(sim, CalendarWorkspace).text).toContain('No Plans You had nothing on that day.');
     }
+  });
+});
+
+/**
+ * From 2026-10-19 (the owner's brief 15, "Complete Natural-Language Editorial Pass, Including All Retained Text"): the
+ * words the startup sequence and opening a slot say, each held word for word in each variant, where until then only a
+ * pattern held them, or nothing did.
+ */
+describe('opening and starting, said in words', () => {
+  it('the startup sequence says what it found in each slot: damaged, with a backup or without, newer and older', async () => {
+    const { STAGES } = await import('@/ui/startup/StartupSequence');
+    const slots = [
+      { slot: 1 as const, occupied: true, hasBackup: true, error: 'That save file is damaged and can’t be read.' },
+      { slot: 2 as const, occupied: true, hasBackup: false, meta: { schemaVersion: SAVE_SCHEMA_VERSION + 1 } },
+      { slot: 3 as const, occupied: true, hasBackup: false, meta: { schemaVersion: SAVE_SCHEMA_VERSION - 1 } },
+    ];
+    const context = { warnings: [] as string[], slots: slots as never };
+    for (const stage of STAGES.filter((s) => s.id === 'validate' || s.id === 'migrations')) await stage.run(context);
+    expect(context.warnings).toEqual([
+      'Slot 1: That save file is damaged and can’t be read. You can restore its backup from the save slots.',
+      'Slot 2 was saved by a newer version of SLATE, so this version won’t open it. That keeps the save safe.',
+      'Slot 3 was saved by an older version of SLATE. When you open it, SLATE keeps a backup and then updates it.',
+    ]);
+    const without = { warnings: [] as string[], slots: [{ ...slots[0]!, hasBackup: false }] as never };
+    await STAGES.find((s) => s.id === 'validate')!.run(without);
+    expect(without.warnings).toEqual(['Slot 1: That save file is damaged and can’t be read.']);
+  });
+
+  it('opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither', async () => {
+    const { openSlot, migrate } = await import('@/engine');
+    const kept = new Map<string, string>();
+    const adapter = new LocalSaveAdapter({ getItem: async (k) => kept.get(k) ?? null, setItem: async (k, v) => { kept.set(k, v); }, removeItem: async (k) => { kept.delete(k); } });
+    const newer = quickSave({}, 'frame-open-newer');
+    newer.universe.meta.schemaVersion = SAVE_SCHEMA_VERSION + 1;
+    await adapter.save(newer.universe);
+    const before = [...kept.entries()];
+    const opened = await openSlot(adapter, newer.universe.meta.slot);
+    expect('error' in opened && opened.error).toBe(`Slot ${newer.universe.meta.slot} was saved by a newer version of SLATE, so this version won’t open it. SLATE hasn’t changed anything in it.`);
+    expect([...kept.entries()]).toEqual(before);
+    expect(migrate(JSON.parse(serialise(newer.universe))).problems).toEqual(['This save was made by a newer version of SLATE, so this version won’t open it. SLATE hasn’t changed anything in it.']);
+    // A balance that isn't the sum of its postings. TEST SETUP: one account's cached balance moved by a cent.
+    const logged = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const off = quickSave({}, 'frame-open-unbalanced');
+    const account = Object.values(off.universe.accounts).find((a) => a.ownerId === off.universe.playerId)!;
+    account.balance += 1;
+    expect(migrate(JSON.parse(serialise(off.universe))).problems).toEqual(['This save’s accounts don’t add up, so SLATE can’t update it safely and hasn’t changed anything in it. If the slot has a backup, you can restore that instead.']);
+    logged.mockRestore();
+  });
+
+  it('a life where the game has no bank keeps a checking account by that name, and a home’s money given back says what it was', async () => {
+    const { CITIES } = await import('@/engine/content/geography');
+    const { banksFor } = await import('@/engine/systems/banking');
+    const { migrate, loadSave } = await import('@/engine');
+    // A town whose country no bank table covers. TEST SETUP: the first the gazetteer lists.
+    const town = CITIES.all().find((c) => banksFor(c.id).length === 0)!;
+    expect(town).toBeDefined();
+    const far = quickSave({ startLocationId: town.id, homeRegionId: town.id }, 'frame-no-bank');
+    const own = Object.values(far.universe.accounts).filter((a) => a.ownerId === far.universe.playerId && a.kind !== 'credit_card' && !a.nominal);
+    expect(own.map((a) => a.name)).toContain('Checking Account');
+
+    // A save at 90 with a home's deposit held and rent paid ahead. TEST SETUP, as the 91 migration test sets one up.
+    const sim = quickSave({}, 'frame-home-money');
+    const deposit = sim.openAccount({ id: sim.nextId('account'), kind: 'escrow', category: 'deposit', name: 'Rent Deposit', ownerId: sim.player.id, openedAt: sim.now });
+    sim.post({ memo: 'Deposit held', category: 'rent', postings: [{ accountId: sim.player.primaryAccountId!, amount: -900_00 }, { accountId: deposit.id, amount: 900_00 }] });
+    const universe = JSON.parse(serialise(sim.universe)) as typeof sim.universe;
+    universe.meta.schemaVersion = 90;
+    Object.assign(universe.people[universe.playerId]!.payments as object, { rentCredit: 500_00 });
+    migrate(universe);
+    const opened = loadSave(universe);
+    const memos = opened.universe.transactions.map((t) => t.memo);
+    expect(memos).toContain('Home deposit returned');
+    expect(memos).toContain('Rent paid ahead, returned');
+  });
+
+  it('an empty slot with a backup says so, and a backup with no date says the date isn’t known', () => {
+    const adapter = new LocalSaveAdapter({ getItem: async () => null, setItem: async () => undefined, removeItem: async () => undefined });
+    h.calls = 0; h.inits = []; h.sets = []; h.buttons = [];
+    const html = renderToStaticMarkup(createElement(SaveSlots, {
+      adapter,
+      initialSlots: [{ slot: 1, occupied: false, hasBackup: true }, { slot: 2, occupied: false, hasBackup: true, backupDateLabel: 'March 3, 2027' }, { slot: 3, occupied: false, hasBackup: false }],
+      onNew: () => undefined, onContinue: () => undefined,
+    })).replace(/<!-- -->/g, '');
+    const text = words(html);
+    // The button, then the note under it, in that order.
+    expect(text).toMatch(/Slot 1 Empty, but there’s a backup of the save that was here\. New Save Restore Backup (B)ackup from an unknown date/);
+    expect(text).toMatch(/Slot 2 Empty, but there’s a backup of the save that was here\. New Save Restore Backup (B)ackup from March 3, 2027/);
+  });
+});
+
+/**
+ * From 2026-10-19 (brief 15): creation's pickers and Before Yale, word for word in each variant. Before Yale's savings
+ * line said "Your savings stay where you saved them" with Moved To chosen too, and "opens with nothing in it" beside a
+ * current account the split had given its fees (frame `defects.md`, brief 15, 1).
+ */
+describe('creation’s pickers and Before Yale, said in words', () => {
+  /** A component drawn with some of its state given, by the order its useState is called in. TEST SETUP. */
+  const drawnWith = (el: ReturnType<typeof createElement>, given: [number, unknown][] = []) => {
+    h.given = new Map(given);
+    h.calls = 0; h.inits = []; h.sets = []; h.buttons = [];
+    const html = renderToStaticMarkup(el).replace(/<!-- -->/g, '');
+    return { html, text: words(html) };
+  };
+
+  it('the place picker says what a country has, and a search that finds nothing what to try', async () => {
+    const { LocationPicker } = await import('@/ui/creation/LocationPicker');
+    const { REGIONS } = await import('@/engine/content/geography');
+    const picker = (given: [number, unknown][]) => drawnWith(createElement(LocationPicker, { cityId: '', map: false, onPick: () => undefined }), given).text;
+    // Antarctica: no towns on record, and no states or regions. TEST SETUP: the country given as the picker's first state.
+    let text = picker([[0, 'aq']]);
+    expect(text).toContain('No towns or cities on record for this country.');
+    expect(text).toContain('None');
+    expect(text).toContain('There are no states or regions to choose from in this country.');
+    expect(text).toContain('There’s no town or city on record there.');
+    // A search in a state that finds nothing names the select's own way wider.
+    const state = REGIONS.all().find((r) => r.parentId === 'us')!;
+    text = picker([[0, 'us'], [1, state.id], [2, 'Zzyzxq']]);
+    expect(text).toContain('No town or city matches “Zzyzxq” there. Try a different spelling, or choose Anywhere in United States.');
+    text = picker([[0, 'us'], [2, 'Zzyzxq']]);
+    expect(text).toContain('No town or city matches “Zzyzxq” there. Try a different spelling.');
+  });
+
+  it('the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { WorldMap } = await import('@/ui/creation/WorldMap');
+    const map = JSON.parse(readFileSync('public/geo/world-map.json', 'utf8')) as unknown;
+    const { html } = drawnWith(createElement(WorldMap, { countryId: 'us', onPick: () => undefined }), [[0, map]]);
+    expect(html).toContain('<title>Antarctica: no towns or cities on record</title>');
+    const { describeRejection, CANNOT_DECODE } = await import('@/ui/creation/portrait');
+    expect(describeRejection({ type: 'application/pdf', size: 100, name: 'resume.pdf' })).toBe('resume.pdf isn’t an image. Choose a JPEG, PNG or WebP photo.');
+    expect(describeRejection({ type: 'image/jpeg', size: 30 * 1024 * 1024, name: 'huge.jpg' })).toBe('That photo is 30.0MB, over the 24MB limit. Try a smaller one.');
+    expect(describeRejection({ type: 'image/png', size: 0, name: 'empty.png' })).toBe('That file is empty. Choose a different photo.');
+    expect(CANNOT_DECODE).toBe('That photo couldn’t be opened. It may be damaged, so try a different one.');
+    // A photo being framed: what to do with it. TEST SETUP: an image given as the picker's first state.
+    const { PortraitPicker } = await import('@/ui/creation/PortraitPicker');
+    const framing = drawnWith(createElement(PortraitPicker, { portrait: undefined, name: 'Ada Cole', onChange: () => undefined }), [[0, { width: 800, height: 600 }]]).text;
+    expect(framing).toContain('Drag the photo to move it in the frame, and use Zoom to size it.');
+  });
+
+  it('creation says what it’s for, a draft put back, each disposition and trait’s reach, the family’s card, and the guide’s choice', async () => {
+    const { CharacterCreation: Creation, validate, StartingPointStep } = await import('@/ui/creation/CharacterCreation');
+    const { withFamily } = await import('@/engine/world/bootstrap');
+    const ada = (extra: Partial<NewSaveConfig> = {}): NewSaveConfig => ({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
+    const at = (step: number, config: NewSaveConfig, restored = false) => drawnWith(createElement(Creation, { slot: 1 as never, onCancel: () => undefined, onStart: () => undefined }), [[0, step], [1, config], [2, restored]]).text;
+    let text = at(0, ada(), true);
+    expect(text).toContain('Who Are You Going To Be? SLATE is a life simulator. Here you create the actress you’ll play.');
+    expect(text).toContain('You’d started filling this in before, so it’s back the way you left it. Start Over');
+    text = at(1, ada());
+    expect(text).toContain('Emotional Stability: how fast stress builds and clears, and how much Composure you start with.');
+    expect(text).toContain('Conscientiousness: how well you sleep, and how much Discipline you start with.');
+    expect(text).toContain('Ambition: how fast stress builds, from work and from money alike.');
+    expect(text).toContain('Openness: whether rehearsing new work, a festival’s new play or a Cabaret piece, lifts your morale or lowers it.');
+    expect(text).toContain('Agreeableness: whether a day of rehearsal lifts your morale or lowers it.');
+    expect(text).toContain('how hard an illness hits; how sharp you are in the morning or the evening; which part of preparing a scene goes furthest; how you warm to classmates, and how much a slight from one hurts; and, for Frugal, Spender and Generous, what your food costs and how much a meal lifts you.');
+    expect(text).toContain('A trait’s description and cost describe the whole person, but the game uses only the effects above. Once you’re playing, open a trait on your Player Profile to see exactly what it changes.');
+    text = at(2, withFamily(ada(), 'scraping'));
+    expect(text).toContain('Background Who you were before you arrived.');
+    expect(text).toMatch(/in checking and \$[\d,]+ in savings, and a card with a \$[\d,]+ limit and \$[\d,]+ owed on it\./);
+    text = at(2, withFamily(ada(), 'wealthy'));
+    expect(text).toMatch(/, and a card with a \$[\d,]+ limit and nothing owed on it\./);
+    text = at(4, ada());
+    expect(text).toContain('Guide Me Through It. The game opens a part at a time, each with a short chapter of the guide that explains it. Recommended if you’re new.');
+    expect(text).toContain('I Know SLATE. Everything is open from the start, and the clock starts paused. The guide’s chapters and How This Works are there whenever you want them.');
+    // Before Yale's three refusals of a time, as validate words them.
+    const STARTING_POINT = 3;
+    const before = (fromYear: number, fromMonth: number) => validate(ada({ priorResidence: { cityId: 'uk-eng-london', fromYear, fromMonth } }), STARTING_POINT);
+    expect(before(2010, 13)).toContain('Choose the month and year you moved there.');
+    expect(before(1990, 1)).toContain('You can’t have moved there before you were born.');
+    expect(before(2027, 1)).toContain('That’s after you arrive at Yale. Choose an earlier month.');
+    // Where the game has no bank, the money is in a plain checking account.
+    const { CITIES } = await import('@/engine/content/geography');
+    const { banksFor } = await import('@/engine/systems/banking');
+    const town = CITIES.all().find((c) => banksFor(c.id).length === 0)!;
+    text = drawnWith(createElement(StartingPointStep, { config: ada({ startLocationId: town.id, school: undefined }), set: (() => undefined) as never, setConfig: (() => undefined) as never })).text;
+    expect(text).toContain('SLATE has no bank on record where you live, so your money is in a plain checking account.');
+  });
+
+  it('a trait’s look names what a session of preparation gets done, and how soon you need a shower, for each trait that moves one', async () => {
+    const { resolveLook } = await import('@/ui/looks/registry');
+    const { at: lookAt } = await import('@/ui/looks/subject');
+    await import('@/ui/looks/all');
+    const said = (trait: string) => {
+      const sim = createSave(1, `frame-trait-${trait}`, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', personalityTraits: [trait] });
+      const found = resolveLook(sim, lookAt('trait', trait)) as { body?: unknown };
+      return drawn(sim, () => found.body as never).text;
+    };
+    expect(said('curious')).toMatch(/How much a session on how to play a part gets done \+15%/);
+    expect(said('single_minded')).toContain('How much a session learning the lines gets done');
+    expect(said('scattered')).toContain('How much a session getting to know the play gets done');
+    expect(said('scattered')).toContain('Most of them, anyway: something is always the one you dropped.');
+    expect(said('self_critical')).toContain('How much a session revising after a note gets done');
+    // A trait's description is on creation's Traits, where it's chosen.
+    const { CharacterCreation: Creation } = await import('@/ui/creation/CharacterCreation');
+    const traits = drawnWith(createElement(Creation, { slot: 1 as never, onCancel: () => undefined, onStart: () => undefined }), [[0, 1], [1, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' }]]).text;
+    expect(traits).toContain('Self Critical You’re the harshest critic you’ll ever have, and a revision is better for it.');
+    expect(traits).toContain('Curious The thing nobody asked you to read gets read, and you go deeper into how to play a part.');
+    expect(said('chaotic')).toContain('How soon you need a shower');
+    expect(said('unshakeable')).toContain('How fast stress clears while you’re awake, and with a workout or an hour unwinding');
+  });
+
+  it('Before Yale says where the savings go and what the account kept there opens with, for each choice', async () => {
+    const { StartingPointStep } = await import('@/ui/creation/CharacterCreation');
+    const { withFamily } = await import('@/engine/world/bootstrap');
+    const life = (extra: Partial<NewSaveConfig>): NewSaveConfig => ({ ...withFamily(newLifeConfig(), 'modest'), homeRegionId: 'uk-eng-london', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId: 'us-chase', ...extra });
+    const step = (config: NewSaveConfig) => drawnWith(createElement(StartingPointStep, { config, set: (() => undefined) as never, setConfig: (() => undefined) as never })).text;
+    // Barclays, savings kept: its current account opens at nothing (tests/home-account-creation.test.ts).
+    let text = step(life({ priorResidence: { cityId: 'uk-eng-london', fromYear: 2008, fromMonth: 9 }, homeBankId: 'gb-barclays' }));
+    expect(text).toContain('Your savings stay at Barclays. Your everyday money is in your account here, and your card stays with Chase. Your Barclays Bank Account opens with nothing in it.');
+    // HSBC UK, savings moved: still nothing in the current account kept there.
+    text = step(life({ priorResidence: { cityId: 'uk-eng-london', fromYear: 2008, fromMonth: 9 }, homeBankId: 'gb-hsbc', savingsAtHome: false }));
+    expect(text).toContain('Your savings move to Chase. Your everyday money is in your account here, and your card stays with Chase.');
+    expect(text).toMatch(/and your card stays with Chase\. Your [^.]+ opens with nothing in it\./);
+    // MUFG, whose current account opens with its fees to graduation: the line doesn't say it opens with nothing.
+    text = step(life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-mufg' }));
+    expect(text).toContain('Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥10,200, from your savings');
+    expect(text).toContain('Your savings stay at MUFG Bank. Your everyday money is in your account here, and your card stays with Chase.');
+    expect(text).not.toContain('opens with nothing in it');
+    expect(text).toContain('If you lived outside America just before Yale, say where, and whether you kept a bank account there.');
   });
 });

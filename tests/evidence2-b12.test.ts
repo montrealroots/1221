@@ -566,7 +566,7 @@ describe('l-person', () => {
     play.type('height-ft', '5');
     play.type('height-in', '7');
     // 67 inches at 2.54 cm, 170.18, kept to a tenth; 143 lb at 0.45359237 kg, 64.86, 64.9; 64.9 / 1.702², 22.40.
-    expect(play.type('weight-lb', '143')).toContain('A body mass index of 22.4.');
+    expect(play.type('weight-lb', '143')).toContain('That’s a body mass index of 22.4.');
     play.next('Continue');
     play.next('Begin');
     const config = play.started()!;
@@ -590,7 +590,7 @@ describe('l-person', () => {
     play.type('height-ft', '5');
     play.type('height-in', '7');
     // 67 inches at 2.54 cm, 170.18, kept to a tenth; 143 lb at 0.45359237 kg, 64.86, 64.9; 64.9 / 1.702², 22.40.
-    expect(play.type('weight-lb', '143')).toContain('A body mass index of 22.4.');
+    expect(play.type('weight-lb', '143')).toContain('That’s a body mass index of 22.4.');
     play.next('Continue');
     play.next('Begin');
     const config = play.started()!;

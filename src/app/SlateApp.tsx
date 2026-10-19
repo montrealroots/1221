@@ -23,8 +23,8 @@ import type { SaveUniverse } from '@/engine/domain/model';
  */
 export function startFailure(e: unknown): string {
   return e instanceof PersistenceError
-    ? `That life couldn’t be saved, so it wasn’t started. ${e.message}`
-    : 'That life couldn’t be started because of an error in the game, so nothing was saved to the slot.';
+    ? `Your new life couldn’t be saved, so it hasn’t started. ${e.message}`
+    : 'Your new life couldn’t start because of an error in the game, and nothing was saved to the slot.';
 }
 
 /** Why a save didn't open, past the slots' own checks: a fault, its message in the console. */

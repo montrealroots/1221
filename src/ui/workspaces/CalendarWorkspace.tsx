@@ -63,8 +63,8 @@ export function CalendarWorkspace() {
         <div className="eyebrow">Calendar</div>
         <h1>Your Plans And Commitments</h1>
         <p className="muted">
-          Everything on your calendar, and the holidays kept where you are. When two things you need to be at
-          overlap, they’re flagged here as a clash.
+          Everything on your calendar, and the public holidays where you are. When two things you need to be at
+          overlap, they’re marked Clash.
         </p>
       </div>
 
@@ -321,7 +321,7 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
       </div>
       <p className="xs dim" style={{ margin: 0 }}>
         You’ll need to be in {CITIES.get(sim.player.currentLocationId)?.name ?? 'the place you are now'} for it, and the clock
-        stops when it comes round. Two things at the same time are allowed, and the calendar flags the clash.
+        stops when it’s time. You can have two things at the same time, and the calendar marks the clash.
       </p>
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Modal>
@@ -382,7 +382,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         {entry.status === 'observance'
           ? 'An observance. It’s on the calendar so you know, and there’s nothing for you to do about it.'
           : entry.requiresPlayer
-            ? 'You need to be there. The clock stops when it comes round, so you can go.'
+            ? 'You need to be there. The clock stops when it’s time, so you can go.'
             : 'It happens on its own when the clock reaches it.'}
         {mine && ' You put it there, so you can take it off again.'}
       </p>

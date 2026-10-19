@@ -710,7 +710,7 @@ describe('c-traits', () => {
     const page = creation(STEP.dispositions, ada()).text;
     // The page names no deduction, and says the slight among what the traits change.
     expect(page).not.toMatch(/Keeps Accounts how much|deduct/);
-    expect(page).toContain('how you warm to classmates and how much a slight from one hurts');
+    expect(page).toContain('how you warm to classmates, and how much a slight from one hurts');
   });
 });
 

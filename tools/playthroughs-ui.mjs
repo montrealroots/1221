@@ -340,7 +340,7 @@ async function onTheWayCancelled(item) {
   const d = page.getByRole('dialog', { name: 'On The Way' }).first();
   must(await d.isVisible().catch(() => false), `no On The Way before ${item}: ${clean(await page.locator('[role=dialog]:visible').first().innerText().catch(() => 'no dialog'))}`);
   const words = clean(await d.innerText());
-  must(/passes \w+ commitments?, and the clock stops at each one\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
+  must(/passes \w+ commitments?\. The clock stops at (?:it|each one) so you can choose/.test(words), `On The Way says: ${words.slice(0, 240)}`);
   said(`On The Way: ${words.replace(/^On The Way /, '').slice(0, 400)}`);
   await press(d.getByRole('button', { name: /^Cancel$/ }).first(), 'Cancel'); await wait(600);
   must(!(await page.locator('[role=dialog]:visible').count()), 'a dialog still open after Cancel');
@@ -368,7 +368,7 @@ async function deleteKeptThenContinue() {
   const d = page.getByRole('dialog', { name: 'Confirm Deletion' });
   must(await d.isVisible().catch(() => false), 'no Confirm Deletion');
   const words = clean(await d.innerText());
-  must(/^Delete Slot 1\?/.test(words) && /This ends that universe\./.test(words) && /(A backup is kept|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
+  must(/^Delete Slot 1\?/.test(words) && /This deletes (?:.+’s life from the slot|the save in this slot)\./.test(words) && /(SLATE keeps a backup|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
   said(`Confirm Deletion: ${words}`);
   await shot('confirm-deletion');
   await press(d.getByRole('button', { name: /^Keep It$/ }), 'Keep It'); await wait(600);
@@ -1190,7 +1190,7 @@ async function askedFirst(item) {
   }
   await language('On The Way');
   const words = clean(await d.innerText());
-  must(/passes \w+ commitments?, and the clock stops at each one\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
+  must(/passes \w+ commitments?\. The clock stops at (?:it|each one) so you can choose/.test(words), `On The Way says: ${words.slice(0, 240)}`);
   said(`On The Way: ${words.replace(/^On The Way /, '').slice(0, 400)}`);
   await press(d.getByRole('button', { name: /^Cancel$/ }).first(), 'Cancel'); await wait(600);
   must(!(await page.locator('[role=dialog]:visible').count()), 'a dialog still open after Cancel');

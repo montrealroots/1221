@@ -689,7 +689,7 @@ describe('life.end', () => {
     expect(sim.universe.scheduled.filter((i) => i.kind === END_KIND && i.status === 'done').map((i) => i.payload.cause)).toEqual(['starved']);
     const shell = drawn(sim, GameShell);
     expect(shell.text).toContain('A Life, Ended Ada Cole June 14, 2002 – August 25, 2026 · Aged 24 · Actress');
-    expect(shell.text).toContain('The clock has stopped for this life.');
+    expect(shell.text).toContain('The clock won’t run in this save again.');
     // No clock, no rail, no Home: one way on.
     expect(shell.buttons.map((b) => b.text)).toEqual(['Back To The Slots']);
     // The slot, as the app writes it (`refreshMeta` before every save) and the real adapter lists it.

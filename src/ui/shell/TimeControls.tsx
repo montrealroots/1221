@@ -157,9 +157,9 @@ export function TimeControls() {
               rehearsal with a partner, which at short notice costs their trust (`school.cancel_rehearsal`). */}
           <p className="small muted">
             Moving the clock to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) passes{' '}
-            {said(confirm.missed.length, 'commitment')}, and the clock stops at each one. At each, you can go, or press
-            Stand Here and the clock waits. A plan of your own can also be skipped, and a rehearsal with a partner called
-            off, though at short notice that costs their trust.
+            {said(confirm.missed.length, 'commitment')}. The clock stops at {confirm.missed.length === 1 ? 'it' : 'each one'} so
+            you can choose: press Go, or Stand Here to wait. You can also skip a plan of your own, or call off a rehearsal
+            with a partner, though at short notice that costs their trust.
           </p>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {confirm.missed.slice(0, 8).map((entry) => (
@@ -316,8 +316,8 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
       </p>
       {!mine && !partner && (
         <p className="small muted">
-          Only a plan of your own can be skipped. Go, or press Stand Here and the clock waits. Whatever moves the clock next
-          runs this, with you there if you’re awake and in the right city.
+          You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. It
+          happens the next time the clock moves, and you’re there if you’re awake and in the right city.
         </p>
       )}
       {partner && (

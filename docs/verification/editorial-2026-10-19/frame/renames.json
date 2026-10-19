@@ -1,0 +1,32 @@
+[
+ {
+  "old": "What Is Yours",
+  "new": "Your Money",
+  "where": "src/ui/creation/CharacterCreation.tsx (Starting Point's card heading)"
+ },
+ {
+  "old": "Nothing",
+  "new": "Next To Nothing",
+  "where": "src/ui/creation/CharacterCreation.tsx (The Family You Come From, and Review's Family line)"
+ },
+ {
+  "old": "Scraping",
+  "new": "Scraping By",
+  "where": "src/ui/creation/CharacterCreation.tsx (The Family You Come From, and Review's Family line)"
+ },
+ {
+  "old": "Inherited",
+  "new": "Inherited Wealth",
+  "where": "src/ui/creation/CharacterCreation.tsx (The Family You Come From, and Review's Family line)"
+ },
+ {
+  "old": "No subdivisions",
+  "new": "None",
+  "where": "src/ui/creation/LocationPicker.tsx (State Or Region, a country with none)"
+ },
+ {
+  "old": "Current Account",
+  "new": "Checking Account",
+  "where": "src/engine/index.ts (the account a life opens where the game has no bank)"
+ }
+]

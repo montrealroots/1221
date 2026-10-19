@@ -363,7 +363,7 @@ describe('c-wealth', () => {
   it('shows Starting Point’s tiles as the accounts Begin opens, with no picker, and Money shows the same balances', async () => {
     const config = ada();
     const point = creation(STARTING_POINT, config);
-    expect(point.text).toContain('What Is Yours');
+    expect(point.text).toContain('Your Money');
     expect(point.text).toContain('Checking $92,391');
     expect(point.text).toContain('Savings $413,043');
     expect(point.text).toContain('Credit Record 795');
@@ -585,7 +585,7 @@ describe('c-tutorial', () => {
     // And Money opens as Locked, naming its chapter.
     const bank = screenAt(sim, '/workspace/bank');
     expect(bank).toContain('Money, Locked');
-    expect(bank).toContain('It opens once you read “Your Bank” in the guide.');
+    expect(bank).toContain('Read “Your Bank” in the guide to open it.');
     expect(bank).not.toContain('Your Bank Chase');
   });
 

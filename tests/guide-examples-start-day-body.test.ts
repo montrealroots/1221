@@ -456,7 +456,7 @@ describe('getting started', () => {
     expect(p.country.name).toBe(p.countryName);
     // Each with more to press.
     for (const opened of [p.place, p.region, p.country]) expect(opened.ways!.length, opened.name).toBeGreaterThan(0);
-    expect(result).toMatch(/nothing in the save has changed/);
+    expect(result).toMatch(/Your save is just as it was\./);
     expect(p.after).toBe(p.before);
   });
 

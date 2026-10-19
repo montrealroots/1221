@@ -48,6 +48,7 @@ import { YALE_DRAMA } from '@/engine/content/school';
 import { termAccount } from '@/engine/systems/school';
 import { bodyUnits } from '@/engine/systems/body';
 import { outOf, said } from '@/ui/looks/words';
+import { spokenList } from '@/engine/core/text';
 
 /**
  * How far back the last year a character can be born in sits from the year
@@ -87,8 +88,14 @@ type StepIndex = number;
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
 const WEALTH: StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
-/** A wealth level, or the family that has it, as a select and Review name it. */
-const wealthLabel = (w: StartingWealth): string => w.charAt(0).toUpperCase() + w.slice(1);
+/**
+ * A wealth level, or the family that has it, as a select and Review name it, in the words of its note (`WEALTH_PROFILE`).
+ * Until 2026-10-19 (brief 15) the label was the id capitalized, so Review said "Family Nothing, Need Found".
+ */
+const WEALTH_LABEL: Record<StartingWealth, string> = {
+  nothing: 'Next To Nothing', scraping: 'Scraping By', modest: 'Modest', comfortable: 'Comfortable', wealthy: 'Wealthy', inherited: 'Inherited Wealth',
+};
+const wealthLabel = (w: StartingWealth): string => WEALTH_LABEL[w];
 
 /** The seven sliders, each with the word for either end. */
 const PERSONALITY_AXES: { key: keyof Personality; label: string; low: string; high: string }[] = [
@@ -164,7 +171,7 @@ export function CharacterCreation({
               <div className="eyebrow">Slot {slot}</div>
               <h1 style={{ fontSize: 'var(--size-lg)' }}>Who Are You Going To Be?</h1>
               <p className="muted small" style={{ marginTop: 2 }}>
-                SLATE is a life simulator. This is the {billedAs(config).toLowerCase()} you play.
+                SLATE is a life simulator. Here you create the {billedAs(config).toLowerCase()} you’ll play.
               </p>
             </div>
           </div>
@@ -173,7 +180,7 @@ export function CharacterCreation({
 
         {restored && step === 0 && (
           <div className="callout callout-info" style={{ marginBottom: 'var(--s5)' }}>
-            You’d started filling in this form, so it’s been put back the way you left it.
+            You’d started filling this in before, so it’s back the way you left it.
             <button className="btn btn-ghost btn-sm" style={{ marginLeft: 'var(--s2)' }} onClick={() => setConfig(newLifeConfig())}>
               Start Over
             </button>
@@ -309,13 +316,13 @@ function BodyFields({ config, setConfig }: { config: NewSaveConfig; setConfig: (
       {(cm !== undefined || kg !== undefined) && !bodyGiven(config) && (
         <p className="xs" role="status" style={{ marginTop: 'var(--s2)', color: 'var(--warning)' }}>
           {cm === undefined || kg === undefined
-            ? 'Give both, or neither. With only one, your body is drawn from the averages where you were born.'
+            ? 'Enter both, or neither. With only one, SLATE picks your height and weight at random, around the averages where you were born.'
             : imperial
-              ? `That’s out of range, so your body will be drawn instead. Use a height from ${feetAndInches(Math.ceil(BODY_GIVEN.heightCm[0] / 2.54))} to ${feetAndInches(Math.floor(BODY_GIVEN.heightCm[1] / 2.54))} and a weight from ${Math.ceil(BODY_GIVEN.weightKg[0] / 0.45359237)} to ${Math.floor(BODY_GIVEN.weightKg[1] / 0.45359237)} pounds.`
-              : `That’s out of range, so your body will be drawn instead. Use a height from ${BODY_GIVEN.heightCm[0]} to ${BODY_GIVEN.heightCm[1]} centimeters and a weight from ${BODY_GIVEN.weightKg[0]} to ${BODY_GIVEN.weightKg[1]} kilograms.`}
+              ? `That’s out of range, so SLATE will pick your height and weight instead. Use a height from ${feetAndInches(Math.ceil(BODY_GIVEN.heightCm[0] / 2.54))} to ${feetAndInches(Math.floor(BODY_GIVEN.heightCm[1] / 2.54))} and a weight from ${Math.ceil(BODY_GIVEN.weightKg[0] / 0.45359237)} to ${Math.floor(BODY_GIVEN.weightKg[1] / 0.45359237)} pounds.`
+              : `That’s out of range, so SLATE will pick your height and weight instead. Use a height from ${BODY_GIVEN.heightCm[0]} to ${BODY_GIVEN.heightCm[1]} centimeters and a weight from ${BODY_GIVEN.weightKg[0]} to ${BODY_GIVEN.weightKg[1]} kilograms.`}
         </p>
       )}
-      <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>Leave them blank and your body is drawn from the averages where you were born.{imperial && cm && kg ? ` A body mass index of ${(kg / (cm / 100) ** 2).toFixed(1)}.` : ''} Once you’re playing, your weight follows what you eat against how active you are. A heavier body is more likely to develop diabetes, high blood pressure and arthritis as the years go by, at published rates, and a weight far from the middle in either direction makes a long life less likely.</p>
+      <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>Leave them blank and SLATE picks them at random, around the averages where you were born.{imperial && cm && kg ? ` That’s a body mass index of ${(kg / (cm / 100) ** 2).toFixed(1)}.` : ''} Once you’re playing, your weight changes with what you eat and how active you are. A heavier body is more likely to develop diabetes, high blood pressure and arthritis over the years, at published rates, and a weight far from the middle either way makes a long life less likely.</p>
     </>
   );
 }
@@ -424,8 +431,8 @@ function IdentityStep({ config, set, setConfig }: {
                 <>
                   <output className="settled-title" htmlFor="pronouns" aria-labelledby="billed-as">{PERFORMER_NOUN[settled]}</output>
                   <p className="xs dim" style={{ marginTop: 4 }}>
-                    Your pronouns say which of the two words is yours, so there’s nothing to pick.
-                    Change them and this changes with them.
+                    Your pronouns decide this, so there’s nothing to pick. Change your pronouns and it
+                    changes too.
                   </p>
                 </>
               ) : (
@@ -444,9 +451,9 @@ function IdentityStep({ config, set, setConfig }: {
                     ))}
                   </div>
                   <p className="xs dim" style={{ marginTop: 4 }}>
-                    With They/Them, the choice is yours. Actor and Actress are two words for the same craft,
-                    and the game treats them as equals. Pick the one you want to be called: the game calls you
-                    by it, and at school you’re cast in parts written for it, or written for anyone.
+                    With They/Them, you choose. Actor and Actress are two words for the same craft, and neither
+                    counts for more. The game calls you by the one you pick, and at school you’re cast in parts
+                    written for it, or for anyone.
                   </p>
                 </>
               )}
@@ -529,8 +536,8 @@ function IdentityStep({ config, set, setConfig }: {
         <div>
           <h3>Place Of Birth</h3>
           <p className="muted small">
-            Where you’re from, which isn’t always where you ended up. It’s what you say when someone
-            asks, and it decides the citizenship you were born to.
+            Where you’re from, which isn’t always where you live now. It’s what you tell people when they
+            ask, and it decides your citizenship.
           </p>
         </div>
       </div>
@@ -559,7 +566,7 @@ function IdentityStep({ config, set, setConfig }: {
       </div>
 
       <div className="callout">
-        You’ll be <strong>{ageAtStart(config)}</strong> when this life begins.
+        You’ll be <strong>{ageAtStart(config)}</strong> when you start.
       </div>
     </div>
   );
@@ -592,9 +599,9 @@ export function blockedTraitReason(held: readonly string[], id: string): string 
   if (held.includes(id)) return undefined;
   const conflicts = conflictingPersonalityTraits(held, id);
   if (conflicts.length > 0) {
-    return `Can’t be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name ?? c).join(' or ')}.`;
+    return `It clashes with ${spokenList(conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name ?? c))}, which you’ve picked.`;
   }
-  if (held.length >= MAX_PERSONALITY_TRAITS) return `You already hold ${said(MAX_PERSONALITY_TRAITS, 'trait')}.`;
+  if (held.length >= MAX_PERSONALITY_TRAITS) return `You already have ${said(MAX_PERSONALITY_TRAITS, 'trait')}, the most you can pick.`;
   return undefined;
 }
 
@@ -632,20 +639,20 @@ function PersonalityStep({ config, setConfig }: {
                 stress's gain and recovery (`personality.ts`), the night (`life.ts`), the card's autopay over 65
                 (`credit.ts`), and how a day is taken (`enjoyment.ts`: a house watching, new work, a rehearsal, either way by the lean). */}
             <p className="muted small">
-              How you lean, not what you can do. Each one shapes a part of your life:
+              Your temperament, not your talent. Each one changes a part of your life:
             </p>
             <ul className="muted small" style={{ margin: 'var(--s1) 0 0', paddingLeft: 'var(--s4)' }}>
-              <li>Emotional Stability: how quickly stress builds and how quickly it clears, and where your Composure starts.</li>
-              <li>Conscientiousness: how well you sleep, and where your Discipline starts.</li>
-              <li>Ambition: how quickly stress builds, from work and from money alike.</li>
-              <li>Risk Tolerance: over {CARRIES_A_BALANCE}, your card’s autopay starts on the minimum payment, so you carry a balance.</li>
-              <li>Extraversion: how being watched as you perform, by an audience or a class, affects your stress.</li>
-              <li>Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale.</li>
-              <li>Agreeableness: how a day of rehearsal affects your morale.</li>
+              <li>Emotional Stability: how fast stress builds and clears, and how much Composure you start with.</li>
+              <li>Conscientiousness: how well you sleep, and how much Discipline you start with.</li>
+              <li>Ambition: how fast stress builds, from work and from money alike.</li>
+              <li>Risk Tolerance: above {CARRIES_A_BALANCE}, your card’s autopay starts out paying only the minimum, so you carry a balance.</li>
+              <li>Extraversion: whether performing in front of people, an audience or your class, raises your stress or eases it.</li>
+              <li>Openness: whether rehearsing new work, a festival’s new play or a Cabaret piece, lifts your morale or lowers it.</li>
+              <li>Agreeableness: whether a day of rehearsal lifts your morale or lowers it.</li>
             </ul>
             <p className="muted small" style={{ marginTop: 'var(--s2)' }}>
-              Composure is an ability your work is judged on. Apart from where Composure and Discipline start, none of
-              these makes you better or worse at anything.
+              Apart from your starting Composure and Discipline, none of these makes you a better or worse actor.
+              Composure is one of the abilities your performances are judged on.
             </p>
           </div>
         </div>
@@ -680,16 +687,23 @@ function PersonalityStep({ config, setConfig }: {
                 2026-10-14 it said that deduction decided nothing for a student; the owner had the
                 knob (`receipts`) go that day, and Keeps Accounts moves how a slight cuts alone. */}
             <p className="muted small">
-              Pick up to four. Traits come in opposing pairs, and you can’t hold both sides of a pair. For now
-              they change how stress builds and clears, how well you sleep and how much a night restores, how
-              quickly you need a shower, how far your morale swings, how hard an illness hits, how sharp you are
-              in the morning or the evening, which part of preparing a scene goes furthest, and how you warm to
-              classmates and how much a slight from one hurts. Frugal, Spender and Generous also change what
-              your food costs and how much a meal lifts you.
+              Pick up to four. Traits come in opposing pairs, and you can’t have both of a pair. Between them,
+              they change:
             </p>
-            <p className="muted small">
-              Each description and cost is written for a whole life, and the game applies only the parts that
-              reach those. Once you’re playing, each trait opens from your own page to show what it changes.
+            <ul className="muted small" style={{ margin: 'var(--s1) 0 0', paddingLeft: 'var(--s4)' }}>
+              <li>how fast stress builds and clears;</li>
+              <li>how well you sleep, and how much a night restores;</li>
+              <li>how soon you need a shower;</li>
+              <li>how far your morale swings;</li>
+              <li>how hard an illness hits;</li>
+              <li>how sharp you are in the morning or the evening;</li>
+              <li>which part of preparing a scene goes furthest;</li>
+              <li>how you warm to classmates, and how much a slight from one hurts;</li>
+              <li>and, for Frugal, Spender and Generous, what your food costs and how much a meal lifts you.</li>
+            </ul>
+            <p className="muted small" style={{ marginTop: 'var(--s2)' }}>
+              A trait’s description and cost describe the whole person, but the game uses only the effects above.
+              Once you’re playing, open a trait on your Player Profile to see exactly what it changes.
             </p>
           </div>
           <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -776,10 +790,10 @@ function PersonalStep({
               ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' }
               : undefined}
             aria-pressed={on}
-            title={moves.has(option.id) ? undefined : 'Shown on your page, but nothing in a student’s life uses it'}
+            title={moves.has(option.id) ? undefined : 'Shown on your Player Profile, but nothing in a student’s life uses it'}
             onClick={() => onToggle(option.id)}
           >
-            {option.label}{moves.has(option.id) ? '' : <span className="dim" aria-label=", shown on your page only"> ·</span>}
+            {option.label}{moves.has(option.id) ? '' : <span className="dim" aria-label=", shown on your Player Profile only"> ·</span>}
           </button>
         );
       })}
@@ -810,9 +824,9 @@ function PersonalStep({
             <h2>Genres</h2>
             <p className="muted small">
               The films you love. Pick as many as are true: there’s no limit. Rehearsing or performing a
-              play of a genre you love, a comedy or a tragedy, lifts your morale and eases your stress. It
-              doesn’t make you any better at it. A genre marked · has no plays of its kind here, so it’s
-              only shown on your page.
+              play in a genre you love, a comedy or a tragedy, lifts your morale and eases your stress, though
+              it doesn’t make you any better at it. A genre marked · has no plays here, so it’s only shown on
+              your Player Profile.
             </p>
           </div>
           <div className="row gap-2" style={{ alignItems: 'center' }}>
@@ -833,7 +847,7 @@ function PersonalStep({
         <div className="panel-head">
           <div>
             <h2>Background</h2>
-            <p className="muted small">The life before this one.</p>
+            <p className="muted small">Who you were before you arrived.</p>
           </div>
         </div>
         <div className="field">
@@ -841,7 +855,7 @@ function PersonalStep({
           <textarea
             id="background" value={config.background}
             onChange={(e) => set('background', e.target.value)}
-            placeholder="A sentence about the life before this one. It’s shown on your page from the first morning, and changes nothing in the game."
+            placeholder="A sentence about your life before now. It’s shown on your Player Profile from the first morning, and changes nothing in the game."
           />
         </div>
       </div>
@@ -863,7 +877,7 @@ function FamilyChoice({ config, setConfig }: { config: NewSaveConfig; setConfig:
   const whole = (cents: number) => formatMoney(cents, cur, { cents: false });
   const aided = termAccount(cur);
   const card = wealth.cardLimit > 0
-    ? `, and a card with a ${whole(wealth.cardLimit)} limit${wealth.cardBalance < 0 ? `, ${whole(-wealth.cardBalance)} owed on it` : ' owing nothing'}`
+    ? `, and a card with a ${whole(wealth.cardLimit)} limit and ${wealth.cardBalance < 0 ? `${whole(-wealth.cardBalance)} owed on it` : 'nothing owed on it'}`
     : ', and no card';
   return (
     <div className="card">
@@ -882,8 +896,8 @@ function FamilyChoice({ config, setConfig }: { config: NewSaveConfig; setConfig:
       <div className="callout">
         {wealthNote(config.wealth)} {`${whole(wealth.checking)} in checking and ${whole(wealth.savings)} in savings${card}.`}{' '}
         {findsNeed(config)
-          ? `Yale finds that you need aid. Its living-expense scholarship, ${formatMoney(aided.livingScholarship, cur)} a term, pays the term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, and the rest, ${formatMoney(aided.refund, cur)}, goes into your bank each fall and spring. Work-study hours you miss while ill can be converted to grant aid, and a leave that begins mid-term means giving back part of the scholarship.`
-          : `Yale finds that you don’t need aid, because of your family’s means. There’s no aid for living costs, and the term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, comes out of your bank each fall and spring.`}
+          ? `Yale finds that you need aid. Its living-expense scholarship of ${formatMoney(aided.livingScholarship, cur)} a term pays for that term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, and puts the rest, ${formatMoney(aided.refund, cur)}, into your bank each fall and spring. If you miss work-study hours while you’re ill, you can convert them to grant aid. If you take a leave in the middle of a term, you give back part of the scholarship.`
+          : `Yale finds that you don’t need aid, given your family’s means, so there’s no aid for living costs. The term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, comes out of your bank each fall and spring.`}
       </div>
     </div>
   );
@@ -992,7 +1006,7 @@ export function StartingPointStep({ config, set, setConfig }: {
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>What Is Yours</h2>
+            <h2>Your Money</h2>
             <p className="muted small">The money in your own name on the first morning.</p>
             <p className="muted small">
               {cur === currencyOfCountry
@@ -1089,7 +1103,7 @@ export function BeforeYale({ config, setConfig, split }: { config: NewSaveConfig
         <div>
           <h2>Before Yale</h2>
           <p className="muted small">
-            Where you lived just before Yale, if it was outside America, and an account you kept there. A bank keeps an account open for a customer who lived and banked in its country; being born there doesn’t count.
+            If you lived outside America just before Yale, say where, and whether you kept a bank account there. A bank keeps an account open only for a customer who lived and banked in its country. Being born there doesn’t count.
           </p>
         </div>
       </div>
@@ -1169,7 +1183,10 @@ export function BeforeYale({ config, setConfig, split }: { config: NewSaveConfig
                     <span>Moved To {usBank.name}</span>
                   </label>
                   <p className="small muted" style={{ margin: 'var(--s2) 0 0' }}>
-                    Your savings stay where you saved them. Your everyday money is in your account here, and the card stays with {usBank.name}. Your {home.current.name} opens with nothing in it.
+                    {/* Said of the choice made, and of what the account opens with (from 2026-10-19, brief 15: until
+                        then “Your savings stay where you saved them” beside Moved To too, and “opens with nothing in
+                        it” above the stat and the sentence that gave it its fees; `splitOf` sets both). */}
+                    {config.savingsAtHome !== false ? `Your savings stay at ${home.name}.` : `Your savings move to ${usBank.name}.`} Your everyday money is in your account here, and your card stays with {usBank.name}.{split.homeCurrent > 0 ? '' : ` Your ${home.current.name} opens with nothing in it.`}
                   </p>
                 </fieldset>
               )}
@@ -1193,7 +1210,7 @@ function BankChoice({ config, set }: { config: NewSaveConfig; set: <K extends ke
   const banks = banksFor(config.startLocationId).filter((b) => usPerson || !OPENING[b.id]?.usPersonsOnly);
   const bank = startingBank(config.startLocationId, config.bankId, usPerson);
   if (!bank) {
-    return <p className="small muted" style={{ marginTop: 'var(--s3)' }}>SLATE has no bank on record where you live, so your money is kept in a plain current account.</p>;
+    return <p className="small muted" style={{ marginTop: 'var(--s3)' }}>SLATE has no bank on record where you live, so your money is in a plain checking account.</p>;
   }
   const fee = bank.current.monthlyFee;
   const bankMoney = (cents: number) => formatMoney(cents, bank.currency, { cents: false });
@@ -1314,8 +1331,8 @@ export function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setCo
         <div style={{ marginTop: 'var(--s3)' }}>
           {config.personalityTraits.length === 0 ? (
             <p className="muted small">
-              You haven’t picked any traits. That’s fine: only the dispositions above will shape your sleep,
-              your temper and your card.
+              You haven’t picked any traits. That’s fine: the dispositions above still shape your stress, your
+              sleep, your morale and your card.
             </p>
           ) : (
             <div className="col gap-3">
@@ -1359,19 +1376,19 @@ export function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setCo
         <legend className="eyebrow">The Guide</legend>
         <label className="row gap-2 small" style={{ alignItems: 'flex-start', padding: 'var(--s1) 0' }}>
           <input type="radio" name="guide" checked={config.tutorial !== false} onChange={() => setConfig((c) => ({ ...c, tutorial: true }))} />
-          <span><strong>Guide Me Through It.</strong> The game opens a part at a time, each with a short chapter saying what it does. Recommended for a first life.</span>
+          <span><strong>Guide Me Through It.</strong> The game opens a part at a time, each with a short chapter of the guide that explains it. Recommended if you’re new.</span>
         </label>
         <label className="row gap-2 small" style={{ alignItems: 'flex-start', padding: 'var(--s1) 0' }}>
           <input type="radio" name="guide" checked={config.tutorial === false} onChange={() => setConfig((c) => ({ ...c, tutorial: false }))} />
-          <span><strong>I Know SLATE.</strong> Everything is open from the start, and the clock starts paused. The chapters and How This Works are there whenever you want them.</span>
+          <span><strong>I Know SLATE.</strong> Everything is open from the start, and the clock starts paused. The guide’s chapters and How This Works are there whenever you want them.</span>
         </label>
       </fieldset>
 
       {/* The life opens with the clock paused, guided or not (`SlateApp`'s createSave, `paused: true`): until 2026-10-17
           this said the world starts running once it begins. */}
       <div className="callout callout-accent">
-        This life begins with the clock paused. Once you press Play, time passes a minute for every minute, and the
-        calendar fills whether you’re watching or not.
+        Your life starts with the clock paused. Once you press Play, a minute passes in the game for every real
+        minute, and what’s on your calendar happens whether you’re watching or not.
       </div>
     </div>
   );
@@ -1428,7 +1445,7 @@ export function validate(config: NewSaveConfig, step: StepIndex): string[] {
       issues.push(`Your character can’t be born after ${latestBirthYear(config)}.`);
     }
 
-    if (age > 95) issues.push('Your character would be over 95 when this life begins. Choose a later year of birth.');
+    if (age > 95) issues.push('Your character would be over 95 at the start. Choose a later year of birth.');
     // A day the month has (from 2026-10-13: until then any day to 31 passed, and 31 February became 3 March).
     if (!Number.isInteger(config.birthDay) || config.birthDay < 1 || config.birthDay > daysInMonth(config.birthYear, config.birthMonth)) issues.push(`${MONTHS[config.birthMonth - 1]} ${config.birthYear} has no day ${config.birthDay}.`);
     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
@@ -1441,9 +1458,9 @@ export function validate(config: NewSaveConfig, step: StepIndex): string[] {
     const prior = config.priorResidence;
     if (prior) {
       const since = prior.fromYear * 12 + prior.fromMonth;
-      if (!Number.isInteger(prior.fromYear) || prior.fromMonth < 1 || prior.fromMonth > 12) issues.push('Choose the month and year you began living where you lived before.');
-      else if (since < config.birthYear * 12 + config.birthMonth) issues.push('You can’t have lived there from before you were born.');
-      else if (since > config.startYear * 12 + config.startMonth) issues.push('You began living there after you arrive here. Choose a month before.');
+      if (!Number.isInteger(prior.fromYear) || prior.fromMonth < 1 || prior.fromMonth > 12) issues.push('Choose the month and year you moved there.');
+      else if (since < config.birthYear * 12 + config.birthMonth) issues.push('You can’t have moved there before you were born.');
+      else if (since > config.startYear * 12 + config.startMonth) issues.push('That’s after you arrive at Yale. Choose an earlier month.');
     }
     if (config.homeBankId !== undefined) {
       const refused = homeAccountRefusal(config, config.homeBankId);
