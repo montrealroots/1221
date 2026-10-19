@@ -429,7 +429,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     // What Papers prices it at there, before the cover changes and after: the bill it brings, kept.
     ok(sim, 'school.buy_affiliate', { confirm: true });
     expect(coverOn(sim.player, appointment!.at)).toBe('yale');
-    const outside = 'You booked a doctor’s visit on March 4, 2027 at Fair Haven Community Health Care while Yale Health didn’t cover you, so it stays where you booked it. Yale Health pays only for a visit at its own Health Center. To be covered, call it off under Your Doctor on Papers, then press Book An Appointment to be seen there.';
+    const outside = 'You booked a doctor’s visit on March 4, 2027 at Fair Haven Community Health Care while Yale Health didn’t cover you, so it stays where you booked it. Yale Health pays only for a visit at its own Health Center. To be covered, press Call It Off on Papers, under Health Cover, then Book An Appointment to be seen there.';
     expect(titled(sim, 'Your Appointment Is Outside Yale Health').map((n) => n.body)).toEqual([outside]);
     const papers = drawn(sim, PapersWorkspace, 'health');
     expect(papers).toContain('A doctor’s visit: an appointment March 4, 2027, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center: call this off, then Book An Appointment, to be seen there');

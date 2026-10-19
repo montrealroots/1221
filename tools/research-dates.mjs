@@ -110,6 +110,16 @@ export function gameAccess(text) {
   return outsideKept(text, (t) => ACCESS.reduce((s, [re, to]) => s.replace(re, to), t));
 }
 
+/**
+ * The house's apostrophe (’) inside a word, quotation or not, as `tools/build-attribute-content.mjs` writes the genre
+ * research's: "the bank’s", "l’usure". A web address is kept as it is. From 2026-10-19 (brief 15's coordinator): until
+ * then the bank files' shown fields kept the research's straight marks, 112 of them, beside the game's own.
+ */
+export function houseApostrophe(text) {
+  if (typeof text !== 'string') return text;
+  return text.replace(/\S+/g, (w) => (/^(?:https?:|www\.)|\/\S/.test(w) ? w : w.replace(/(\p{L})'(\p{L})/gu, '$1’$2')));
+}
+
 /** A sentence with its dates written the game's way, everything else as it was. */
 export function gameDates(text) {
   return outsideKept(text, prose);
@@ -197,7 +207,7 @@ function main() {
       if (!paths) continue;
       // The generator's form: the data stringified, inside JSON.parse. A file not in that form isn't rewritten.
       if (JSON.stringify(JSON.stringify(one.data)) !== one.literal) { console.error(`${file} ${one.name}: not in the generator's form, left as it is`); process.exitCode = 2; continue; }
-      const changes = editFields(one.data, paths, (t) => noSpaceBefore(gameAccess(gameDates(t))));
+      const changes = editFields(one.data, paths, (t) => noSpaceBefore(gameAccess(gameDates(houseApostrophe(t)))));
       for (const [f, name, key, field, was, now] of BY_HAND) {
         if (f !== file || name !== one.name) continue;
         const text = one.data[key]?.[field];

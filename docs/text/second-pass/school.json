@@ -3046,9 +3046,9 @@
  },
  "src/engine/systems/leave.ts#tellOutsideTheCover": {
   "status": "Rewritten",
-  "hash": "915beec23e9a",
+  "hash": "852524f69f91",
   "on": "2026-10-19",
-  "evidence": "tests/remaining-09-journeys.test.ts (Your Appointment Is Outside Yale Health: You booked a doctor’s visit … while Yale Health didn’t cover you)",
+  "evidence": "the coordinator's cross-area review: the notice names its control as the booking notice does, Call It Off on Papers, under Health Cover, where it named the panel; tests/remaining-09-journeys.test.ts holds the sentence whole, and fails with the old words (mutation, exit 1)",
   "first": "Pending"
  },
  "src/engine/systems/leave.ts#welfareTrigger": {

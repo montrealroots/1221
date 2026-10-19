@@ -227,8 +227,8 @@ defineLook<PlaceProfile>('place', {
               : label
                 ? `It’s the ${label.toLowerCase()} of ${spokenName(region?.name ?? place.countryName)}, ${people} people live here, and the climate is ${climate}.`
                 : `${people} people live here, in ${spokenName(region?.name ?? place.countryName)}, and the climate is ${climate}.`}
-            {/* Its tags in short, as Home's place line has them (from 2026-10-19, brief 15's coordinator, at the health and frame
-                areas' report): "What it’s known for:" read an adjective as a thing ("… desert and affordable."). */}
+            {/* Its tags in short, as Home’s place line has them (from 2026-10-19, brief 15’s coordinator, at the health and frame
+                areas’ report): "What it’s known for:" read an adjective as a thing ("… desert and affordable."). */}
             {place.tags.length > 0 && ` In short: ${spokenList(place.tags).toLowerCase()}.`}
           </p>
           <p className="small muted">

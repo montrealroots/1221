@@ -1,16 +1,16 @@
 {
  "src/engine/content/cards.ts#CARD_LAW": {
-  "status": "Retained",
-  "hash": "d8d4e0b5c648",
+  "status": "Rewritten",
+  "hash": "657636eaf373",
   "on": "2026-10-19",
-  "reason": "Each country's card law as it names itself, the act and article, with its source; a citation the cap line quotes",
-  "first": "Rewritten And Verified"
+  "evidence": "Each country's card law as it names itself, the act and article, with its source; a citation the cap line quotes. Then brief 15's coordinator's houseApostrophe step (tools/research-dates.mjs --write): the house's apostrophe inside a word, as the genre research already had it, where the research's straight marks stood beside the game's own; listed by the tool, and tests/language-money.test.ts and the card, statement and bank tests pass on it",
+  "first": "Pending"
  },
  "src/engine/content/cards.ts#CARDS": {
   "status": "Rewritten",
-  "hash": "2497849ab2bb",
+  "hash": "f34613c42c89",
   "on": "2026-10-19",
-  "evidence": "tests/editorial-money-screens.test.ts renders MUFG's published plans and rewards in English; tests/cards.test.ts and tests/cardoffers.test.ts read every card's terms, unchanged",
+  "evidence": "tests/editorial-money-screens.test.ts renders MUFG's published plans and rewards in English; tests/cards.test.ts and tests/cardoffers.test.ts read every card's terms, unchanged. Then brief 15's coordinator's houseApostrophe step (tools/research-dates.mjs --write): the house's apostrophe inside a word, as the genre research already had it, where the research's straight marks stood beside the game's own; listed by the tool, and tests/language-money.test.ts and the card, statement and bank tests pass on it",
   "first": "Pending"
  },
  "src/engine/content/currency.ts#RATES_NOTE": {

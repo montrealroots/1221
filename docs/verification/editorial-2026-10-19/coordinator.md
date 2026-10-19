@@ -102,6 +102,23 @@ The areas' defects files hold what each left to the coordinator. Each item is se
 - **Left Alone** was already Left Untreated (the papers area). **Current account in a term deposit's end** was already
   checking account (the money area).
 
+### Read Across The Areas, On The Integrated Code
+
+Searches of every source at once, for what separate batches say two ways:
+- **Where to press.** "On Papers, under Health Cover" is the game's usual way to send a player somewhere: 48 sentences
+  give the screen, then the tab or the panel. Six give it the other way round, "under Genres on your Player Profile",
+  and those stay: both orders are plain English, and the nearer name comes first where it's the one to look for. One
+  notice named the same control differently from another. The leave's "Your Appointment Is Outside Yale Health" said
+  "call it off under Your Doctor on Papers", a panel's name, where the booking notice says "press Call It Off on
+  Papers, under Health Cover". It now says the latter. The journey test that holds it fails with the old words.
+- **The research's straight apostrophes.** 112 sat in the bank files' shown fields ("the central bank's", "l'usure"),
+  beside the game's own. The genre research already had the house's. `houseApostrophe` in `tools/research-dates.mjs`
+  does what the attribute builder does, and `--write` rewrote 79 fields. Everything else with straight apostrophes is
+  either unshown research (the home accounts' notes, the dead licenses, the passports' notes) or a name as it's
+  published (holidays, places).
+- **"Your Profile"** in five sentences and **"your Player Profile"** in fifteen: the short form is the menu's word, used
+  where the sentence has just said School, and stays.
+
 ### The Renames, Carried Into The Guide And Tests
 
 No player string in the guide or the tutorial holds an old label (the cross-area review's search). The tests that held

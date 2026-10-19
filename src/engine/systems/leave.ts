@@ -185,7 +185,9 @@ function tellOutsideTheCover(sim: Simulation, person: Person): void {
   // Said with the player as the subject (from 2026-10-19, brief 15): until then “…: booked while Yale Health didn’t cover
   // you, it stays where it was booked”.
   const one = outside.length === 1;
-  notify(sim, person, 'Your Appointment Is Outside Yale Health', `You booked ${list} while Yale Health didn’t cover you, so ${one ? 'it stays' : 'they stay'} where you booked ${one ? 'it' : 'them'}. Yale Health pays only for a visit at its own Health Center. To be covered, call ${one ? 'it' : 'them'} off under Your Doctor on Papers, then press Book An Appointment to be seen there.`, 75);
+  // Its control named as the booking notice names it (from 2026-10-19, brief 15's coordinator): the button, the screen
+  // and its tab. Until then "call it off under Your Doctor on Papers", the panel's name and not the button's.
+  notify(sim, person, 'Your Appointment Is Outside Yale Health', `You booked ${list} while Yale Health didn’t cover you, so ${one ? 'it stays' : 'they stay'} where you booked ${one ? 'it' : 'them'}. Yale Health pays only for a visit at its own Health Center. To be covered, press Call It Off${one ? '' : ' beside each'} on Papers, under Health Cover, then Book An Appointment to be seen there.`, 75);
 }
 const usd = (sim: Simulation, cents: Money) => inSaveMoney(sim, cents, 'USD');
 
