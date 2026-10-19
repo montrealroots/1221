@@ -23,7 +23,7 @@ written by a vite-node script over `GUIDE_BY_ID` that prints the parts in the or
 (13), `identity.ts` (9), `residence.ts` (6), `permission.ts` (6), `citizenship.ts` (3), `taxid.ts` (3),
 `papervisits.ts` (2), `src/engine/content/visas.ts` (5), `src/engine/content/guide/documents.ts` (11). About 7,900 words.
 
-**Rewritten (35):**
+**Rewritten (32):**
 - *Passport And ID tab:* the empty table ("You don't hold any."); the run-out license row ("You can't renew a driving
   license in the game. Use a passport or ID card in force as your photo ID …"); a new passport cancels the old one
   "when it arrives"; Going Abroad names the country it answers for; the ID card's Get toast in its three variants
@@ -42,7 +42,7 @@ written by a vite-node script over `GUIDE_BY_ID` that prints the parts in the or
   upkeep removed from two Costs; Status's six values; Permission To Work's overview, Time, Registration and next step;
   two connections ("Your status ends on a set day.", the registration prerequisite).
 
-**Kept (40):** the status and kind words, the toasts' openings, the residence routes and refusals, the OPT and status
+**Kept (43):** the status and kind words, the toasts' openings, the residence routes and refusals, the OPT and status
 notices, the replacement refusals, the starting documents' names (keys the code reads), Residence Abroad's entry, and
 the guide connections that already say who checks what. Each status gives its reason; a sample is in `retained.md`.
 
@@ -89,14 +89,14 @@ are read in the area's final walk (below).
 
 ## Batch 2: The Tax Returns Tab, The Tax Engine And The Tax Guide
 
-**Sources (199):** the Tax Returns parts of `src/ui/workspaces/PapersWorkspace.tsx` (9: `WhoIsOwed`, `filedWords`,
+**Sources (189):** the Tax Returns parts of `src/ui/workspaces/PapersWorkspace.tsx` (9: `WhoIsOwed`, `filedWords`,
 `amendWords`, `StatePlanPanel`, `ReturnLife`, `PLAN_STATUS`, `TaxPlanPanel`, `PapersWorkspace`, `ReturnsPane`),
 `src/ui/components/LienPanels.tsx` (4), `src/engine/systems/taxreturn.ts` (32), `src/engine/systems/statetax.ts` (37),
 `src/engine/content/statetax.ts` (86), `src/engine/content/tax.ts` (10), `src/engine/content/guide/taxes.ts` (11), and
 one connection of `guide/documents.ts` that took its weeks in words. About 14,000 words. The tax guide was planned as
 its own batch; it went with the engine whose words it quotes, inside the size the prompt sets.
 
-**Rewritten (34):**
+**Rewritten (26, and the documents guide's connection):**
 - *The screen:* an unresearched state's notes ("None added: the game doesn't have this state's rules"); the state
   plan "covers" up to its limit, and a plan being decided gives its day under Answered By; the IRS plan says how it's
   decided with a Social Security number and without (defects.md, 8) and "Not by direct debit" (defects.md, 9); a UK
@@ -109,7 +109,7 @@ its own batch; it went with the engine whose words it quotes, inside the size th
 - *The guide:* the checking account throughout (the glossary's word from brief 15: 16 places); "send it with File
   It"; "If you don't pay"; weeks and payments under ten in words; a date's comma; Answered By said.
 
-**Kept (165):** every other notice, refusal, label and line, with a reason each. Most of the tax engine's words were
+**Kept (163):** every other notice, refusal, label and line, with a reason each. Most of the tax engine's words were
 rewritten in brief 14 to say the amount, the year, who acts, when and where to pay, and they still do. The 21 states
 other than Connecticut are reachable by no life in New Haven (every life files in Connecticut), and their names,
 notice titles and statutes are the agencies' own; their reasons say so. `content/tax.ts`'s labels are tax names the
@@ -143,3 +143,122 @@ label-sweep, plural-check, voice-check, tics, spelling, typos, doc-refs, decider
 
 **Screens:** the guide entries rendered in `guide-taxes.txt`; the Tax Returns tab drawn on a played 2027 return in the
 new test; the built app's Tax Returns on the tax, lien, missed-plan and nonfiler saves in the area's final walk.
+
+## Batch 3: Health Cover, Unemployment, Benefits, Pensions, Banking Abroad And The Papers Guide
+
+**Sources (96):** the rest of `src/ui/workspaces/PapersWorkspace.tsx` (12: `HealthPane`, `aidWord`, `TherapyRow`,
+`ConditionsPanel`, `DentalPanel`, `STATE_NAMES`, `HomeClaimsPanel`, `AssistancePanel`, `EiPanel`, `BenefitsPane`,
+`YourDoctor`, `PensionsPanel`); `src/engine/systems/unemployment.ts` (7), `assistance.ts` (6), `homebenefits.ts` (5),
+`universalcredit.ts` (5), `eiself.ts` (2), `homepensions.ts` (6), `socialsecurity.ts` (3), `statepension.ts` (3),
+`imss.ts` (3), `abroad.ts` (15); `src/engine/content/safetynet.ts` (6), `workrules.ts` (1); and
+`src/engine/content/guide/papers.ts` (22). About 14,800 words. Health Cover's systems are the health area's; its panels'
+words on Papers, and the papers guide's entries about them, are this area's.
+
+**Rewritten (14):**
+- *Health Cover:* Your Conditions became **Your Long-Term Conditions** and Left Alone **Left Untreated**, with Let It
+  Go's toast "Care stopped. It's left untreated from now on." (the glossary's long-term condition and left untreated,
+  `renames.json`); the fine print "at what your plan doesn't cover"; Apply For HUSKY D's toast ("decided on …"); "Your
+  medical debt is paid off."; financial assistance over the limit says nothing came off the bill; the dental toasts.
+- *Unemployment:* "The game certifies each week for you on Sunday …"; "count toward the claim's base period"; the
+  benefit year's end ("The benefit year ended a year after you filed.").
+- *Banking abroad:* "There's no known way to open anything new at … from America …", the refusal decision 4's
+  `bank.take_overrun_loan` returns, its behavior unchanged.
+- *The guide:* Health Cover's and the doctor's overviews (the first action first, your share, financial assistance);
+  Conditions And Therapy's overview (the rates moved to What Decides It, How Often A Life Begins With One); the
+  benefits overview without the formula; the checking account (FROM_CURRENT and the rest, 9 places); three connections.
+
+**Kept (82):** the benefits, pensions and assistance refusals and notices (each says its rule's figure against your
+record), Your Doctor and its fine print, the pensions panels, the research and plan names in `safetynet.ts` and
+`workrules.ts`, the banking-abroad sentences built from each bank's own terms, and the guide's overview, pensions and
+most connections. Universal Credit, Jobseeker's Allowance, EI, the Seguro de Desempleo, the UK's, Ireland's and
+Mexico's pensions and Ontario's and BC's assistance are reached by no life in New Haven; their reasons say so.
+
+**Meaning-sensitive, and how each was checked:**
+- *"Care stopped. It's left untreated from now on.":* `health.treat` with `on: false` stops the care and the refills
+  at once (the guide's Now line, unchanged); `tests/evidence-g04-life.test.ts` presses it.
+- *"so nothing came off this bill":* the over-the-limit branch sets `aid: 'refused'` and leaves the amount;
+  `tests/defects-g8-6.test.ts`.
+- *"The game certifies each week for you":* `BENEFIT_WEEK_KIND` certifies on Sunday with no player action.
+- *The doctor's overview:* every figure and condition kept (the wait, the hour, the uninsured price at Fair Haven),
+  only the order and the sentences changed; the doctor's example still plays (`tests/guide-examples-papers.test.ts`).
+
+**Interactions read whole:**
+- *Unemployment claimed:* No Claim Open (what filing now would pay, or why not) → File A Claim → "Claim filed: $… a
+  week." → A Connecticut Claim → Sunday's certification → "Your Unemployment Claim Ended" → Past Claims → the guide's
+  Unemployment And Assistance.
+- *A long-term condition:* the row → Let It Go → the toast → Left Untreated → the Monday toll → Keep It Up → the
+  guide's Conditions And Therapy. The panel, the row, the toast and the guide now use the same words.
+- *A medical bill:* Care And Its Bills → Appeal It / Apply For Assistance → the toasts → Pay It Off → the guide.
+
+**Tests updated:** `tests/evidence-g04-life.test.ts`, `tests/evidence-g03-life.test.ts`, `tests/evidence-g05-life.test.ts`,
+`tests/evidence3-lifepapers.test.ts`, `tests/evidence2-b02.test.ts`, `tests/defects-g8-6.test.ts`,
+`tests/remaining-health-eligibility.test.ts`, `tests/evidence-g16-papers.test.ts`, `tests/remaining-09-banking.test.ts`,
+`tests/home-account-setoff.test.ts`. No tool matcher read these words.
+
+**Checks:** `npx tsc -b --noEmit` 0; `npx eslint` on the changed files 0; `npx vitest run` on the 30 health, benefits,
+pensions, banking-abroad and guide files 0 (374 tests); the guide's three test files 0 (40); title-case, label-sweep,
+plural-check, voice-check, tics, spelling, typos, doc-refs, deciders and guide-quotes (581 quotes, 0 stale) 0.
+
+**Screens:** `guide-papers.txt`; the built app's Health Cover and Unemployment tabs in the walk below.
+
+## Batch 4: The Generated Research: Passports, Licenses And License Paths
+
+**Sources (105):** `src/engine/content/passports.ts` (15), `passportsabroad.ts` (2), `licenses.ts` (19),
+`licensepaths.ts` (69). About 18,900 words, most of them research notes no screen shows.
+
+**Read, and how it was decided what reaches a player:** every reader of each export was followed (`grep` over `src/`).
+- `passports.ts` is generated by `tools/build-passports.mjs` from `docs/research/world/research-passports.json` and says
+  not to edit it by hand. A screen shows each office's `name` and `issuer` (Your Passport's subtitle, a refusal, the
+  arrival notice) and, for a US citizen applying at home only, the US entry's `feeBasis` and `abroad` in the fine print
+  (`passportOffice`). Every life lives in New Haven, so another office's `feeBasis`, `abroad` and `lost` never show.
+- `passportsabroad.ts`'s terms are what a citizen of anywhere else reads under Your Passport, with the game's
+  assumptions under "Assumed in the game:". They were rewritten in brief 14 as sentences that say what's assumed and
+  why, and still do.
+- `licenses.ts` is generated by `tools/build-licenses.mjs`. Only a US-born citizen starts with a license, from a US state
+  (`startingDocuments`), so only the New York, Connecticut and California entries' `name` and `authority` reach a
+  screen, on the license's page. Since driving went (2026-10-09) the notes, steps, renewal and visitor texts reach none.
+- `licensepaths.ts` has no reader: only its `LicenseStage` type is imported (`systems/documents.ts`).
+
+**Rewritten:** none. **Kept (105):** each with the reason above specific to its kind. The one blemish a player can
+meet, the US fee basis's closing fragment "Two separate payments.", is the research's own sentence; changing it means a
+curated basis in the build tool and a rebuild, which this pass didn't do (the coordinator's, in the report).
+
+**Checks:** nothing changed in these files, so no test or check moved; `node tools/text-inventory.mjs --check` holds
+their statuses.
+
+## The Built App, At The End
+
+- **Build:** `npm run build` 0, served on port 4287 with `vite preview --strictPort`; `curl … | cmp - dist/index.html`
+  matched before anything was read. Built and walked twice: once when the text was done, and again on the final code
+  after the IRS plan's paragraph was split (below); `after-1440/` and `after-390/` are the second walk. The server was
+  stopped by its process id each time.
+- **The walk:** `tools/text-walk.mjs` on the tax, health, lien, missed-plan, nonfiler and withdraw saves
+  (`b15-saves/`), at 1440 (`after-1440/`) and 390 (`after-390/`), 25 screens each, exit 0 both.
+  `tools/text-render-check.mjs after-1440 after-390`: 54,826 strings, 0 faults, exit 0.
+- **Before and after:** `walk-compare-1440.txt` sets each Papers tab's changed lines beside the walk on `main` at
+  `bdb23949` (`b15-before/walk-1440/`): 28 of the six saves' Papers screens changed, 8,952 words before and 9,042 after.
+  Notices in the saves keep the words of the day they were written, so the notices' new words are read in the tests.
+- **How This Works on the built app:** `help-1440.json` holds the 11 entries of this area that a Papers panel opens,
+  each opened by its How This Works button on the tax save, Show Everything pressed, read whole (the overview entry,
+  Papers, opens from the guide's contents, not a panel).
+- **At 390:** screenshots of each Papers tab and of the changed panels (`shots-390/`). Nothing of this area's text runs past
+  the edge; the tab strip and the bills table scroll, as they did before. The IRS plan's paragraph, about 120 words
+  once it said how a plan is decided without a Social Security number, was a wall at 390 and became two: what the plan
+  is, then, dimmer, how it's decided and what it changes (`TaxPlanPanel`, its status marked again on the same test).
+
+## Checks, At The End
+
+Run from the clone on the final code (`6f0391a7` and these records), each exit read from a file in the scratchpad's
+`papers15/`.
+
+| Check | Exit |
+|---|---|
+| `npx tsc -b --noEmit` | 0 |
+| `npx eslint` on every file this area changed, `--max-warnings=0` | 0 |
+| `node tools/title-case.mjs --check`, `label-sweep`, `plural-check`, `voice-check --check`, `tics --check`, `spelling`, `typos` | 0 each |
+| `node tools/text-inventory.mjs --check` | 0: papers 465 sources, Rewritten 73, Retained 392, Pending 0, Blocked 0; engine-speak 3, unchanged (`licensepaths.ts`, which nothing reads) |
+| `node tools/doc-refs.mjs --check`, `deciders --check`, `guide-quotes --check` | 0 each; 581 quotes, 0 stale |
+| `npx vitest run`, the whole suite once (`vt-full.txt`) | 1: 4,724 of 4,726 tests in 390 of 392 files. The two failures were `tests/evidence2-b13.test.ts` and `tests/evidence3-person.test.ts` (the removed interests' stale-claims check, which reads `docs/`): one of this area's reasons in `papers.json` said "that interest", which the check reads as one of the removed interests. The reason was reworded and the source marked again; both files then 0 (26 of 26). Started before the IRS plan's paragraph was split in two; `tests/editorial-papers.test.ts` and `tests/scope-taxpapers.test.ts`, which draw that panel, 0 after it (30 of 30). |
+| `npm run build` | 0 |
+| `node tools/text-walk.mjs`, six saves, at 1440 and 390, on the final build | 0 and 0: 25 screens each on every save |
+| `node tools/text-render-check.mjs after-1440 after-390` | 0: 54,826 strings, 0 faults |

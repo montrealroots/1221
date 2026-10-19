@@ -1,0 +1,140 @@
+Papers screens on six saves at 1440, the final build against main at bdb23949 (b15-before/walk-1440): 8952 words before, 9042 after; 28 of the 30 Papers screens changed.
+
+## tax / Tax Returns
+- before: This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It takes up to $50,000.00, paid over 2 to 12 months. There’s no fee. While the plan is in force, collection stops, but interest keeps adding up. What happens after a missed payment isn’t published. In the game, the plan ends.
++ after: This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It covers up to $50,000.00, paid over 2 to 12 months. There’s no fee. While the plan is in force, collection stops, but interest keeps adding up. What happens after a missed payment isn’t published. In the game, the plan ends.
+
+## tax / Health Cover
+- before: Your Conditions
++ after: Your Long-Term Conditions
+
+## tax / Unemployment
+- before: Each Sunday the week is certified for you, from anywhere in the country, as an interstate claim is. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count in the claim’s base period. What’s paid is taxable income on your return.
++ after: The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count toward the claim’s base period. What’s paid is taxable income on your return.
+
+## tax / Passport And ID
+- before: A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one ends with it.
+- before: None held.
++ after: When a new passport arrives, it cancels the one before it, and any travel authorization issued on the old one ends with it.
++ after: You don’t hold any.
+
+## tax / Permission To Work
+- before: None held.
+- before: OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after its 90 days without work, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing adds $1,780.00 and gets a decision within 30 business days.
++ after: You don’t hold any.
++ after: OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after those 90 days, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.
+
+## health / Health Cover
+- before: Your Conditions
++ after: Your Long-Term Conditions
+
+## health / Unemployment
+- before: Each Sunday the week is certified for you, from anywhere in the country, as an interstate claim is. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count in the claim’s base period. What’s paid is taxable income on your return.
++ after: The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count toward the claim’s base period. What’s paid is taxable income on your return.
+
+## health / Passport And ID
+- before: A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one ends with it.
+- before: None held.
++ after: When a new passport arrives, it cancels the one before it, and any travel authorization issued on the old one ends with it.
++ after: You don’t hold any.
+
+## health / Permission To Work
+- before: None held.
+- before: OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after its 90 days without work, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing adds $1,780.00 and gets a decision within 30 business days.
++ after: You don’t hold any.
++ after: OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after those 90 days, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.
+
+## lien / Tax Returns
+- before: One IRS plan covers what you owe the IRS for every year. It’s for federal tax only: a state has its own plan for what you owe it. A short-term plan gives you 180 days to pay, with no fee. A monthly plan for up to $50,000.00 is approved online and has a setup fee. While a plan is in force, collection stops. If you filed the return on time, each month of late-payment penalty that begins under the plan is 0.25% instead of 0.5%. If you miss a payment, the IRS sends Notice CP523 and gives you 30 days to catch up before the plan ends. The lowest monthly payment shown, what you owe spread over 72 months, is estimated.
+- before: This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It takes up to $50,000.00, paid over 2 to 12 months. There’s no fee. While the plan is in force, collection stops, but interest keeps adding up. What happens after a missed payment isn’t published. In the game, the plan ends.
++ after: One IRS plan covers what you owe the IRS for every year. It’s for federal tax only: a state has its own plan for what you owe it. A short-term plan gives you 180 days to pay, with no fee. A monthly plan for up to $50,000.00 has a setup fee.
++ after: With a Social Security number you apply online, and the IRS answers within a minute. Without one, your application goes by mail and the answer takes 30 days. While a plan is in force, collection stops. If you filed the return on time, each month of late-payment penalty that begins under the plan is 0.25% instead of 0.5%. If you miss a payment, the IRS sends Notice CP523 and gives you 30 days to catch up before the plan ends. The lowest monthly payment shown, what you owe spread over 72 months, is estimated.
++ after: This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It covers up to $50,000.00, paid over 2 to 12 months. There’s no fee. While the plan is in force, collection stops, but interest keeps adding up. What happens after a missed payment isn’t published. In the game, the plan ends.
+
+## lien / Health Cover
+- before: Your Conditions
++ after: Your Long-Term Conditions
+
+## lien / Unemployment
+- before: Each Sunday the week is certified for you, from anywhere in the country, as an interstate claim is. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count in the claim’s base period. What’s paid is taxable income on your return.
++ after: The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count toward the claim’s base period. What’s paid is taxable income on your return.
+
+## lien / Passport And ID
+- before: A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one ends with it.
+- before: None held.
++ after: When a new passport arrives, it cancels the one before it, and any travel authorization issued on the old one ends with it.
++ after: You don’t hold any.
+
+## lien / Permission To Work
+- before: None held.
+- before: OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after its 90 days without work, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing adds $1,780.00 and gets a decision within 30 business days.
++ after: You don’t hold any.
++ after: OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after those 90 days, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.
+
+## missed-plan / Tax Returns
+- before: This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It takes up to $50,000.00, paid over 2 to 12 months. There’s no fee. While the plan is in force, collection stops, but interest keeps adding up. What happens after a missed payment isn’t published. In the game, the plan ends.
++ after: This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It covers up to $50,000.00, paid over 2 to 12 months. There’s no fee. While the plan is in force, collection stops, but interest keeps adding up. What happens after a missed payment isn’t published. In the game, the plan ends.
+
+## missed-plan / Health Cover
+- before: Your Conditions
++ after: Your Long-Term Conditions
+
+## missed-plan / Unemployment
+- before: Each Sunday the week is certified for you, from anywhere in the country, as an interstate claim is. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count in the claim’s base period. What’s paid is taxable income on your return.
++ after: The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count toward the claim’s base period. What’s paid is taxable income on your return.
+
+## missed-plan / Passport And ID
+- before: A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one ends with it.
+- before: None held.
++ after: When a new passport arrives, it cancels the one before it, and any travel authorization issued on the old one ends with it.
++ after: You don’t hold any.
+
+## missed-plan / Permission To Work
+- before: None held.
+- before: OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after its 90 days without work, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing adds $1,780.00 and gets a decision within 30 business days.
++ after: You don’t hold any.
++ after: OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after those 90 days, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.
+
+## nonfiler / Tax Returns
+- before: This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It takes up to $50,000.00, paid over 2 to 12 months. There’s no fee. While the plan is in force, collection stops, but interest keeps adding up. What happens after a missed payment isn’t published. In the game, the plan ends.
++ after: This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It covers up to $50,000.00, paid over 2 to 12 months. There’s no fee. While the plan is in force, collection stops, but interest keeps adding up. What happens after a missed payment isn’t published. In the game, the plan ends.
+
+## nonfiler / Health Cover
+- before: Your Conditions
++ after: Your Long-Term Conditions
+
+## nonfiler / Unemployment
+- before: Each Sunday the week is certified for you, from anywhere in the country, as an interstate claim is. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count in the claim’s base period. What’s paid is taxable income on your return.
++ after: The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count toward the claim’s base period. What’s paid is taxable income on your return.
+
+## nonfiler / Passport And ID
+- before: A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one ends with it.
+- before: None held.
++ after: When a new passport arrives, it cancels the one before it, and any travel authorization issued on the old one ends with it.
++ after: You don’t hold any.
+
+## nonfiler / Permission To Work
+- before: None held.
+- before: OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after its 90 days without work, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing adds $1,780.00 and gets a decision within 30 business days.
++ after: You don’t hold any.
++ after: OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after those 90 days, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.
+
+## withdraw / Health Cover
+- before: Your Conditions
++ after: Your Long-Term Conditions
+
+## withdraw / Unemployment
+- before: Each Sunday the week is certified for you, from anywhere in the country, as an interstate claim is. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count in the claim’s base period. What’s paid is taxable income on your return.
++ after: The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count toward the claim’s base period. What’s paid is taxable income on your return.
+
+## withdraw / Passport And ID
+- before: A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one ends with it.
+- before: None held.
++ after: When a new passport arrives, it cancels the one before it, and any travel authorization issued on the old one ends with it.
++ after: You don’t hold any.
+
+## withdraw / Permission To Work
+- before: None held.
+- before: OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after its 90 days without work, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing adds $1,780.00 and gets a decision within 30 business days.
++ after: You don’t hold any.
++ after: OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after those 90 days, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.
