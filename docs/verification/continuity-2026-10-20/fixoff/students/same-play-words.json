@@ -1,0 +1,631 @@
+{
+ "runs": 24,
+ "identical": 24,
+ "unexplained": 0,
+ "renamed": [
+  {
+   "to": "Still There: Rehearsal",
+   "why": "the ledger’s rehearsal note named Rehearsal in every course (coordinator, DIM_SUBJECT)"
+  },
+  {
+   "to": "You’re On At Yale Rep",
+   "why": "an understudy in the company named by the Rep, and a matinee “today” (school editor)"
+  },
+  {
+   "to": "You Went On At Yale Rep",
+   "why": "the same (school editor)"
+  },
+  {
+   "to": "You’re On As ",
+   "why": "a matinee “today”, an evening “tonight” (school editor)"
+  },
+  {
+   "to": "Incomplete",
+   "why": "several Incompletes from one review told in one notice (school editor)"
+  }
+ ],
+ "byRun": {
+  "approaches-v16-0": {
+   "events": [
+    238,
+    238
+   ],
+   "same": true,
+   "notices": {
+    "before": 335,
+    "after": 335,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "approaches-v17-1": {
+   "events": [
+    245,
+    245
+   ],
+   "same": true,
+   "notices": {
+    "before": 359,
+    "after": 359,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "attentive-long-v17-2": {
+   "events": [
+    437,
+    437
+   ],
+   "same": true,
+   "notices": {
+    "before": 682,
+    "after": 682,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     26,
+     26
+    ],
+    "endedOn": [
+     "October 22, 2028",
+     "October 22, 2028"
+    ]
+   }
+  },
+  "attentive-v16-0": {
+   "events": [
+    244,
+    244
+   ],
+   "same": true,
+   "notices": {
+    "before": 402,
+    "after": 402,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "attentive-v17-1": {
+   "events": [
+    250,
+    250
+   ],
+   "same": true,
+   "notices": {
+    "before": 415,
+    "after": 415,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "distant-long-v17-2": {
+   "events": [
+    441,
+    441
+   ],
+   "same": true,
+   "notices": {
+    "before": 686,
+    "after": 686,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     26,
+     26
+    ],
+    "endedOn": [
+     "October 22, 2028",
+     "October 22, 2028"
+    ]
+   }
+  },
+  "distant-v16-0": {
+   "events": [
+    244,
+    244
+   ],
+   "same": true,
+   "notices": {
+    "before": 397,
+    "after": 397,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "distant-v17-1": {
+   "events": [
+    247,
+    247
+   ],
+   "same": true,
+   "notices": {
+    "before": 412,
+    "after": 412,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "improving-v16-0": {
+   "events": [
+    244,
+    244
+   ],
+   "same": true,
+   "notices": {
+    "before": 387,
+    "after": 387,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "improving-v17-1": {
+   "events": [
+    244,
+    244
+   ],
+   "same": true,
+   "notices": {
+    "before": 387,
+    "after": 387,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "newplayer-v17-3": {
+   "events": [
+    77,
+    77
+   ],
+   "same": true,
+   "notices": {
+    "before": 166,
+    "after": 166,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     4,
+     4
+    ],
+    "endedOn": [
+     "December 23, 2026",
+     "December 23, 2026"
+    ]
+   }
+  },
+  "practicing-v16-0": {
+   "events": [
+    243,
+    243
+   ],
+   "same": true,
+   "notices": {
+    "before": 399,
+    "after": 399,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "practicing-v17-1": {
+   "events": [
+    248,
+    248
+   ],
+   "same": true,
+   "notices": {
+    "before": 418,
+    "after": 418,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "pressure-v16-0": {
+   "events": [
+    238,
+    238
+   ],
+   "same": true,
+   "notices": {
+    "before": 410,
+    "after": 410,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "pressure-v17-1": {
+   "events": [
+    218,
+    218
+   ],
+   "same": true,
+   "notices": {
+    "before": 379,
+    "after": 371,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [
+     "Incomplete"
+    ],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     13,
+     13
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "regressing-v16-0": {
+   "events": [
+    243,
+    243
+   ],
+   "same": true,
+   "notices": {
+    "before": 365,
+    "after": 365,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "regressing-v17-1": {
+   "events": [
+    248,
+    248
+   ],
+   "same": true,
+   "notices": {
+    "before": 387,
+    "after": 387,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "skilled-v16-0": {
+   "events": [
+    241,
+    241
+   ],
+   "same": true,
+   "notices": {
+    "before": 399,
+    "after": 399,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     13,
+     13
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "skilled-v17-1": {
+   "events": [
+    246,
+    246
+   ],
+   "same": true,
+   "notices": {
+    "before": 416,
+    "after": 416,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "tired-v16-0": {
+   "events": [
+    241,
+    241
+   ],
+   "same": true,
+   "notices": {
+    "before": 396,
+    "after": 396,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "tired-v17-1": {
+   "events": [
+    247,
+    247
+   ],
+   "same": true,
+   "notices": {
+    "before": 415,
+    "after": 415,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     13,
+     13
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "underprepared-long-v17-2": {
+   "events": [
+    332,
+    332
+   ],
+   "same": true,
+   "notices": {
+    "before": 392,
+    "after": 392,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     26,
+     26
+    ],
+    "endedOn": [
+     "October 22, 2028",
+     "October 22, 2028"
+    ]
+   }
+  },
+  "underprepared-v16-0": {
+   "events": [
+    238,
+    238
+   ],
+   "same": true,
+   "notices": {
+    "before": 336,
+    "after": 336,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "underprepared-v17-1": {
+   "events": [
+    245,
+    245
+   ],
+   "same": true,
+   "notices": {
+    "before": 358,
+    "after": 358,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": [],
+    "onlyBefore": [],
+    "onlyAfter": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  }
+ }
+}

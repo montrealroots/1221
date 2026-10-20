@@ -39,9 +39,11 @@ def stream(run):
 # changed. Read on both sides, so a notice is compared by what it is. Anything else that differs fails the comparison.
 RENAMED = [
     (re.compile(r'^Still There: Time On Its Feet$'), 'Still There: Rehearsal', 'the ledger’s rehearsal note named Rehearsal in every course (coordinator, DIM_SUBJECT)'),
-    (re.compile(r'^You’re On Tonight As An Understudy In The Company$'), 'You’re On Today At Yale Rep', 'an understudy in the company named by the Rep, and a matinee “today” (school editor)'),
+    # A matinee is "today" and an evening "tonight" (from brief 17), where brief 16 said "tonight" of both: the day word is
+    # left out on both sides, so a notice is the same notice whichever it says.
+    (re.compile(r'^You’re On (?:Tonight|Today) (?:As An Understudy In The Company|At Yale Rep)$'), 'You’re On At Yale Rep', 'an understudy in the company named by the Rep, and a matinee “today” (school editor)'),
     (re.compile(r'^You Went On As An Understudy In The Company$'), 'You Went On At Yale Rep', 'the same (school editor)'),
-    (re.compile(r'^You’re On (?:Tonight|Today) As '), 'You’re On Today As ', 'a matinee “today”, not “tonight” (school editor)'),
+    (re.compile(r'^You’re On (?:Tonight|Today) As '), 'You’re On As ', 'a matinee “today”, an evening “tonight” (school editor)'),
     (re.compile(r'^Incompletes?(?: In |: ).*'), 'Incomplete', 'several Incompletes from one review told in one notice (school editor)'),
 ]
 def norm(t):

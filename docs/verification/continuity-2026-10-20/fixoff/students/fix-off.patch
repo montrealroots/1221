@@ -1,0 +1,13 @@
+diff --git a/src/engine/systems/classmates.ts b/src/engine/systems/classmates.ts
+index 70ef1a88..eee79c7b 100644
+--- a/src/engine/systems/classmates.ts
++++ b/src/engine/systems/classmates.ts
+@@ -399,7 +399,7 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
+     } });
+     // An apology for the rehearsals they've missed since their last (`missesOwed`), all of them at once.
+     const owed = missesOwed(cw, mate, i);
+-    if (owed.length && !recent(mate, 'apology')) cands.push({ kind: 'apology', mate: i, build: () => ({ text: apologyWords(mate, pr, owed, now), covers: owed.map(({ r }) => r.id) }) });
++    if ((mateRecord(mate).stoodUp ?? 0) > (personOf(mate).moments ?? []).filter((m) => m.kind === 'apology').length && !recent(mate, 'apology')) cands.push({ kind: 'apology', mate: i, build: () => ({ text: apologyWords(mate, pr, owed, now), covers: owed.map(({ r }) => r.id) }) });
+     // A boundary, after you've let them down twice and not made it right.
+     if (!personOf(mate).boundary && unrepaired(mate).length >= CLASS.boundary.after && !recent(mate, 'boundary')) cands.push({ kind: 'boundary', mate: i, build: () => ({ text: boundaryWords(mate, pr) }) });
+   });

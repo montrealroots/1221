@@ -1,40 +1,42 @@
 """
-Whether brief 17's runs are brief 16's game (brief 17, section 10: "Gameplay must remain unchanged except for the
-authorized incident-continuity fix"): every number, boolean, key, list length and id-like string in each run's outputs
-against brief 16's final runs, with only the words a player reads allowed to differ. Never typed: each folder's files
-are compared with the same file of brief 16's. Brief 16's script (itself brief 15's), on brief 17's folders.
+Whether brief 17's runs are brief 16's game but for the authorized fix (brief 17, section 10: "Gameplay must remain
+unchanged except for the authorized incident-continuity fix... For the explicitly authorized incident-continuity fix,
+explain and test the intended behavioral difference separately"). Two comparisons, never typed, each file with the same
+file of the other side:
 
-    python3 docs/verification/continuity-2026-10-20/numbers-same.py
+1. **The words** (`words`): brief 16's final runs against brief 17's runs with the fix taken out (`fixoff/`, made by
+   `runs/fixoff-lanes17.sh` on the tested commit with `fixoff/students/fix-off.patch`, its one line). Every number,
+   boolean, key, list length and id-like string must be the same, the words a player reads aside, and what's explained
+   below counted apart. The judge's outputs (`final/`, the tested commit's) are held here too: the judge reads no
+   classmate. A difference not explained fails it (exit 1).
+2. **The fix** (`fix`): the runs with the fix taken out against the tested commit's. Everything that differs here is
+   the fix's, and is counted, file by file. For each journey, the first day its notices differ must be a classmate's
+   (a moment, a rehearsal they ask for, miss or aren't answered about), with everything before it the same; a journey
+   whose first difference is anything else fails it.
 
 A string is words when it holds a space or a capital letter; otherwise it's an id, a kind, a date or a key, and it's
-compared. What differs and is explained below is counted apart, with its reason; anything else fails it (exit 1). The
-explanations are brief 14's kinds of field, read from where the tools write them, never one difference waved through by
-its value:
+compared. What's explained, read from where the tools write it, never one difference waved through by its value:
 - **the run's own record:** the commit a run was made on, the files it read, the seconds it took;
-- **figures.json:** written after the runs, from them, and compared by the criteria with brief 14's figures row by row;
+- **figures.json:** written after the runs, from them, and compared by criteria.py figure by figure;
 - **a count of notices:** a notice merges into an unread one with the same title and body (`Simulation.notify`), so a
-  rewrite that makes two bodies differ, or alike, changes how many merge. The events they tell of are counted apart and
-  must be the same;
+  rewrite that makes two bodies differ, or alike, changes how many merge. The events they tell of are compared apart;
 - **a measure of words:** what the journeys' continuity reads (all counts of text) and freshness's suggestions found by
   their phrases.
+
+    python3 docs/verification/continuity-2026-10-20/numbers-same.py
 """
 import json, os, re, sys
 
-B13 = 'docs/verification/voices-2026-10-20'   # before: brief 16's final runs
-B14 = 'docs/verification/continuity-2026-10-20'   # after: brief 17's
-FOLDERS = ['final', 'runs', 'advice', 'journeys-final']
+B16 = 'docs/verification/voices-2026-10-20'      # brief 16's final runs
+B17 = 'docs/verification/continuity-2026-10-20'  # brief 17's, on the tested commit
+OFF = f'{B17}/fixoff'                             # brief 17's with the fix taken out
 EXPLAINED = [
     (r'^\.commits?(\[\d+\])?$|^\.files\[\d+\]$|^(\[\d+\])?\.secs$|^\.parts\[\d+\]\.secs$', 'the run’s own record: its commit, the files it read, its seconds'),
-    (r'^\.notices$|^\.notices\[\d+\]|^\.shownNotices$', 'a count of notices: fewer merge, since a repeated one says what changed (section 8); the events are compared apart'),
+    (r'^\.notices$|^\.notices\[\d+\]|^\.shownNotices$', 'a count of notices: a rewrite changes which merge; the events are compared apart'),
     (r'^\.continuity\.(saidAgain|sameWordsTwice|advice\.wordsOnlyChanges|advice\.longRuns\[\d+\]\.stripped)', 'a measure of words: the journeys’ continuity counts text'),
     (r'^\.results\[\d+\]\.suggestionsFromRecord$', 'a measure of words: freshness finds a suggestion by its phrases'),
 ]
 SKIP = {'figures.json': 'written after the runs and compared by criteria.py, figure by figure'}
-# Brief 15's script let J16 parts 2 and 3 differ in one verdict, written before a tool's fix in brief 14. Brief 15's and
-# brief 16's are both written by the fixed tool, so nothing is let differ by its file.
-BY_FILE = set()
-BY_FILE_WHY = ''
-
 ID = re.compile(r'^[a-z0-9_.:/#@+\-]*$')
 def is_words(s): return not ID.match(s) and not re.match(r'^\d{4}-\d{2}-\d{2}(T[\d:.]+Z?)?$', s)
 
@@ -55,58 +57,94 @@ def diff(a, b, path, out):
 def load(p):
     if p.endswith('.jsonl'): return [json.loads(l) for l in open(p, encoding='utf-8') if l.strip().startswith('{')]
     return json.load(open(p, encoding='utf-8'))
+def why(path): return next((reason for pat, reason in EXPLAINED if re.search(pat, path)), None)
+def files(d): return sorted(f for f in os.listdir(d) if f.endswith(('.json', '.jsonl')) and f not in SKIP) if os.path.isdir(d) else []
 
-def why(path):
-    return next((reason for pat, reason in EXPLAINED if re.search(pat, path)), None)
+# Titles an editor renamed, read on both sides as the notice they are (`same-play.py`'s RENAMED, the same table).
+RENAMED = [
+    (re.compile(r'^Still There: Time On Its Feet$'), 'Still There: Rehearsal'),
+    (re.compile(r'^You’re On (?:Tonight|Today) (?:As An Understudy In The Company|At Yale Rep)$'), 'You’re On At Yale Rep'),
+    (re.compile(r'^You Went On (?:As An Understudy In The Company|At Yale Rep)$'), 'You Went On At Yale Rep'),
+    (re.compile(r'^You’re On (?:Tonight|Today) As '), 'You’re On As '),
+    (re.compile(r'^Incompletes?(?: In |: ).*'), 'Incomplete'),
+]
+def norm(t):
+    for pat, to in RENAMED:
+        if pat.search(t or ''): return pat.sub(to, t) if to.endswith(' ') else to
+    return t
+CLASS = re.compile(r'^\w+(?:: (?:A Different Reading|Run Lines Together\?|A Request For Help|A Word After Class|An Apology|A Boundary)| Didn’t Come| Asks To Rehearse| Didn’t Hear Back)$')
 
-result, failed = {}, False
-for d in FOLDERS:
-    a_dir, b_dir = f'{B13}/{d}', f'{B14}/{d}'
-    same, explained, unexplained, missing, skipped = 0, {}, {}, [], []
-    for f in sorted(os.listdir(a_dir)):
-        if not f.endswith(('.json', '.jsonl')): continue
-        if f in SKIP: skipped.append(f); continue
-        if not os.path.exists(f'{b_dir}/{f}'): missing.append(f); continue
+result, failed = {'words': {}, 'fix': {}}, False
+# 1. The words: brief 16's runs against the fix taken out, and the judge's outputs against the tested commit's.
+for d, before, after in (('final', f'{B16}/final', f'{B17}/final'), ('runs', f'{B16}/runs', f'{OFF}/runs'),
+                         ('advice', f'{B16}/advice', f'{OFF}/advice'), ('journeys-final', f'{B16}/journeys-final', f'{OFF}/journeys-final')):
+    same, explained, unexplained, missing = 0, {}, {}, []
+    for f in files(before):
+        if not os.path.exists(f'{after}/{f}'): missing.append(f); continue
         out = []
-        try: diff(load(f'{a_dir}/{f}'), load(f'{b_dir}/{f}'), '', out)
+        try: diff(load(f'{before}/{f}'), load(f'{after}/{f}'), '', out)
         except Exception as e: out = [('', f'unreadable: {e}')]
-        reason = lambda p: BY_FILE_WHY if any(f == bf and p.startswith(bp) for bf, bp in BY_FILE) else why(p)
-        un = [(p, x) for p, x in out if not reason(p)]
+        un = [(p, x) for p, x in out if not why(p)]
         for p, x in out:
-            r = reason(p)
-            if r: explained[r] = explained.get(r, 0) + 1
+            if why(p): explained[why(p)] = explained.get(why(p), 0) + 1
         if un: unexplained[f] = [f'{p}: {x}' for p, x in un[:8]]
         elif not out: same += 1
-    if unexplained or missing: failed = True
-    files = len([f for f in os.listdir(a_dir) if f.endswith(('.json', '.jsonl')) and f not in SKIP])
-    result[d] = {'files': files, 'same': same, 'explained': explained, 'unexplained': unexplained, 'missing': missing, 'skipped': skipped}
-    print(f"{d}: {result[d]['files']} files; {same} identical in every number; differences explained: {explained or 'none'}; unexplained: {len(unexplained)} files; missing after: {len(missing)}")
+    if unexplained or missing or not files(before): failed = True
+    result['words'][d] = {'before': before, 'after': after, 'files': len(files(before)), 'same': same, 'explained': explained, 'unexplained': unexplained, 'missing': missing}
+    print(f"words, {d}: {len(files(before))} files; {same} identical in every number; explained: {explained or 'none'}; unexplained: {len(unexplained)} files; missing: {len(missing)}")
     for f, v in unexplained.items():
         print(f'  {f}:'); [print(f'    {x}') for x in v]
-# The events the notices tell of (the docstring's "counted apart"), from each journey's whole list of (day, title): every
-# notice brief 15's run had on a day is in brief 16's on that day, no title is had fewer times, and what's had more is
-# only a classmate's notice whose body brief 16 made say its history (a help asked for again, a partner who didn't come
-# again, an apology, lines run again), so it no longer merges into the one before (`Simulation.notify`).
-REPEATS = re.compile(r'(: A Request For Help|: An Apology| Didn’t Come|^Ran Lines With )')
-events = {'journeys': 0, 'every day and title kept': 0, 'none fewer': 0, 'more only of a classmate’s repeat': 0, 'more': {}}
-for f in sorted(os.listdir(f'{B13}/journeys-final')):
-    if not f.endswith('-p4.json'): continue
-    a, b = load(f'{B13}/journeys-final/{f}'), load(f'{B14}/journeys-final/{f}')
+# The events the notices tell of: every (day, title) brief 16's journey had is in the fix-off journey's on that day,
+# titles renamed read as one; and what's had more or fewer, by title.
+ev = {'journeys': 0, 'every day and title kept': 0, 'more': {}, 'fewer': {}}
+for f in files(f'{B16}/journeys-final'):
+    if not f.endswith('-p4.json') or not os.path.exists(f'{OFF}/journeys-final/{f}'): continue
+    a, b = load(f'{B16}/journeys-final/{f}'), load(f'{OFF}/journeys-final/{f}')
     if not isinstance(a.get('notices'), list): continue
-    ta, tb = {}, {}
-    for n in a['notices']: ta[n[1]] = ta.get(n[1], 0) + 1
-    for n in b['notices']: tb[n[1]] = tb.get(n[1], 0) + 1
-    more = {t: tb[t] - ta.get(t, 0) for t in tb if tb[t] > ta.get(t, 0)}
-    events['journeys'] += 1
-    events['every day and title kept'] += {(n[0], n[1]) for n in a['notices']} <= {(n[0], n[1]) for n in b['notices']}
-    events['none fewer'] += all(tb.get(t, 0) >= c for t, c in ta.items())
-    events['more only of a classmate’s repeat'] += all(REPEATS.search(t) for t in more)
-    for t, c in more.items():
-        k = REPEATS.search(t).group(1).strip(': ') if REPEATS.search(t) else t
-        events['more'][k] = events['more'].get(k, 0) + c
-n = events['journeys']
-if not n or any(events[k] != n for k in ('every day and title kept', 'none fewer', 'more only of a classmate’s repeat')): failed = True
-result['notice events'] = events
-print(f"notice events: {n} journeys; every day and title kept in {events['every day and title kept']}; none fewer in {events['none fewer']}; more only of a classmate’s repeat in {events['more only of a classmate’s repeat']}; more: {events['more']}")
-json.dump(result, open(f'{B14}/numbers-same.json', 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
+    ev['journeys'] += 1
+    da, db = {(n[0], norm(n[1])) for n in a['notices']}, {(n[0], norm(n[1])) for n in b['notices']}
+    ev['every day and title kept'] += da == db
+    ca, cb = {}, {}
+    for n in a['notices']: ca[norm(n[1])] = ca.get(norm(n[1]), 0) + 1
+    for n in b['notices']: cb[norm(n[1])] = cb.get(norm(n[1]), 0) + 1
+    for t in set(ca) | set(cb):
+        k = re.sub(r'^\w+(?=(?:: | Didn’t))', 'A classmate', t)
+        if cb.get(t, 0) > ca.get(t, 0): ev['more'][k] = ev['more'].get(k, 0) + cb[t] - ca.get(t, 0)
+        if cb.get(t, 0) < ca.get(t, 0): ev['fewer'][k] = ev['fewer'].get(k, 0) + ca[t] - cb.get(t, 0)
+if not ev['journeys'] or ev['every day and title kept'] != ev['journeys']: failed = True
+result['words']['notice events'] = ev
+print(f"words, notice events: {ev['journeys']} journeys; the same days and titles in {ev['every day and title kept']}; more: {ev['more']}; fewer: {ev['fewer']}")
+
+# 2. The fix: the fix taken out against the tested commit's.
+for d in ('runs', 'advice', 'journeys-final'):
+    before, after = f'{OFF}/{d}', f'{B17}/{d}'
+    same, differ = 0, {}
+    for f in files(before):
+        if not os.path.exists(f'{after}/{f}'): differ[f] = ['missing after']; continue
+        out = []
+        diff(load(f'{before}/{f}'), load(f'{after}/{f}'), '', out)
+        un = [(p, x) for p, x in out if not why(p)]
+        if un: differ[f] = len(un)
+        else: same += 1
+    result['fix'][d] = {'files': len(files(before)), 'same': same, 'differ': differ}
+    print(f"fix, {d}: {len(files(before))} files; {same} the same in every number; {len(differ)} differ: {', '.join(f'{f} ({n})' for f, n in list(differ.items())[:12])}")
+# Each journey's first difference, by its notices.
+jr = {}
+for f in files(f'{OFF}/journeys-final'):
+    if not f.endswith('-p4.json') or not os.path.exists(f'{B17}/journeys-final/{f}'): continue
+    a, b = load(f'{OFF}/journeys-final/{f}'), load(f'{B17}/journeys-final/{f}')
+    sa, sb = sorted({(n[0], n[1]) for n in a.get('notices', [])}), sorted({(n[0], n[1]) for n in b.get('notices', [])})
+    i = next((k for k in range(min(len(sa), len(sb))) if sa[k] != sb[k]), None)
+    if i is None and len(sa) == len(sb): jr[f[:-8]] = {'same': True}; continue
+    day = min(sa[i][0] if i is not None and i < len(sa) else '9999', sb[i][0] if i is not None and i < len(sb) else '9999')
+    xa, xb = {t for d_, t in sa if d_ == day}, {t for d_, t in sb if d_ == day}
+    first = sorted((xa - xb) | (xb - xa))
+    ok = bool(first) and all(CLASS.match(t) for t in first)
+    jr[f[:-8]] = {'same': False, 'from': day, 'first': first[:4], 'aClassmates': ok}
+    if not ok: failed = True
+result['fix']['journeys'] = jr
+print(f"fix, journeys: {len(jr)}; the same in {sum(1 for v in jr.values() if v['same'])}; first differing on a classmate's day in {sum(1 for v in jr.values() if not v['same'] and v['aClassmates'])}; otherwise {sum(1 for v in jr.values() if not v['same'] and not v['aClassmates'])}")
+for k, v in jr.items():
+    if not v['same']: print(f"  {k}: from {v['from']}, {', '.join(v['first'])}")
+json.dump(result, open(f'{B17}/numbers-same.json', 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 sys.exit(1 if failed else 0)

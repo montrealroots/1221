@@ -8,7 +8,7 @@
    "why": "the ledger’s rehearsal note named Rehearsal in every course (coordinator, DIM_SUBJECT)"
   },
   {
-   "to": "You’re On Today At Yale Rep",
+   "to": "You’re On At Yale Rep",
    "why": "an understudy in the company named by the Rep, and a matinee “today” (school editor)"
   },
   {
@@ -16,8 +16,8 @@
    "why": "the same (school editor)"
   },
   {
-   "to": "You’re On Today As ",
-   "why": "a matinee “today”, not “tonight” (school editor)"
+   "to": "You’re On As ",
+   "why": "a matinee “today”, an evening “tonight” (school editor)"
   },
   {
    "to": "Incomplete",

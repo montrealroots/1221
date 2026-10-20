@@ -306,6 +306,17 @@ speaker; the advice by day and what it recommends; every notice by day and title
 - **Unexplained:** 0. Renamed notice titles are read as the notices they are (`RENAMED` in the script, each with its
   editor). Incompletes from one review are one notice now, which changes how many notices a day holds in one run.
 
+**The fix taken out, to show it's the only change to play** (`runs/fixoff17.sh`, `fixoff/students/`). The tested commit
+was run again with one line put back as brief 16 had it (`fix-off.patch`): an apology is a candidate again while a
+classmate's misses outnumber the apologies among their last 20 moments. Nothing else changed, and the words stayed brief
+17's.
+- **Against brief 16** (`same-play-words.json`): all 24 runs are the same event for event, with the same notices on the
+  same days and the same reloads and last days. Every word brief 17 changed changed no play.
+- **Against the tested commit** (`same-play-fix.json`): the same four runs differ, from the same four days. The fix is
+  the whole of the difference.
+- **The other lanes:** the same was done for the lanes whose games have a class in them (`runs/fixoff-lanes17.sh`): the
+  journeys, the lives, the workloads and plans, and the advice (The Final Runs, below).
+
 ## Before And After, From Play
 
 `examples.md` (written by `examples.py` from `before/` and `after/`, never typed) sets 47 events side by side, each one

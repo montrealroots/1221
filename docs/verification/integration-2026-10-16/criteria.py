@@ -530,7 +530,8 @@ SAME17 = False
 if os.path.exists(f'{B17F}/figures.json') and os.path.exists(f'{B16F}/figures.json'):
     FIG17 = json.load(open(f'{B17F}/figures.json', encoding='utf-8'))
     B17AT = re.search(r'^at (\w+)', open(f'{B17F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
-    NS17 = json.load(open('docs/verification/continuity-2026-10-20/numbers-same.json', encoding='utf-8')).get('final', {}) if os.path.exists('docs/verification/continuity-2026-10-20/numbers-same.json') else {}
+    # Brief 17's numbers-same.json holds two comparisons (the words, and the fix); the judge's outputs are the words'.
+    NS17 = json.load(open('docs/verification/continuity-2026-10-20/numbers-same.json', encoding='utf-8')).get('words', {}).get('final', {}) if os.path.exists('docs/verification/continuity-2026-10-20/numbers-same.json') else {}
     SAME17 = bool(NS17) and NS17.get('same') == NS17.get('files') and not NS17.get('unexplained') and not NS17.get('missing') and not NS17.get('explained')
     for r in rows:
         if r.get('measured') == {'commit': B16AT, 'watch': 'judge'}:
