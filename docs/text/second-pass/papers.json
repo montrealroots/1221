@@ -2478,11 +2478,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/statetax.ts#missStatePlan": {
-  "status": "Retained",
-  "hash": "feab43fa2e9b",
-  "on": "2026-10-19",
-  "reason": "A missed state payment: the amount, then the state's rule or, where unpublished, the game's, said as the game's, and what follows.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "0aaa9a8bfcca",
+  "on": "2026-10-20",
+  "evidence": "tests/scope-taxpapers.test.ts plays Connecticut's plan to its missed payment with its rule unpublished and, as TEST SETUP, published",
+  "first": "Pending"
  },
  "src/engine/systems/statetax.ts#nextJanuary": {
   "status": "Retained",

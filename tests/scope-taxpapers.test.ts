@@ -457,6 +457,20 @@ describe('tax.apply_state_plan and tax.catch_up_state_plan', () => {
     expect(titled(sim, 'Connecticut DRS Intends To Levy').map((n) => n.at)).toEqual([due + 30 * MS_DAY]);
   });
 
+  it('where a state publishes that a missed payment ends its plan, the plan’s end says so, not that the rule isn’t published (TEST SETUP: Connecticut’s rule marked published, as Arizona’s, Louisiana’s, New Mexico’s and the District’s are)', () => {
+    // From 2026-10-20 (brief 16's papers editor): until then every state with no cure was said not to publish its rule.
+    const plan = STATE_TAX['us-ct'].plan as { cureAssumed: boolean };
+    plan.cureAssumed = false;
+    try {
+      const sim = thaw(unpaid());
+      sim.must({ kind: 'tax.apply_state_plan', payload: { state: 'us-ct', months: 12 } });
+      sim.advanceTo(at(2028, 3, 2, 14));
+      const p = sim.player.statePlans!['us-ct']!;
+      expect([p.status, p.why]).toEqual(['ended', 'Ended: a payment missed (Connecticut DRS ends a plan when a payment is missed)']);
+      expect(titled(sim, 'Connecticut DRS Ended Your Plan').map((n) => n.body)).toEqual(['Your bank couldn’t pay the plan’s $48.78. Connecticut DRS ends a plan when a payment is missed. Collection resumes on what you owe it.']);
+    } finally { plan.cureAssumed = true; }
+  });
+
   it('refuses months outside 2 to 12 and a second plan, in Connecticut’s words, charging nothing', () => {
     const sim = thaw(unpaid());
     expect(refusal(sim, 'tax.apply_state_plan', { state: 'us-ct', months: 13 })).toBe('Connecticut DRS sets up a plan over 2 to 12 months.');
