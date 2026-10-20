@@ -479,7 +479,8 @@ describe('standing/term evaluation', () => {
     const [review] = plain.player.school!.history;
     expect(review).toMatchObject({ term: 0, standing: 'concern', attendance: 1, coursework: { shown: n, unready: n, strong: 0 } });
     expect(review!.reason).toContain('You came to 100% of the classes, calls and shifts asked of you');
-    expect(review!.reason).toContain(` ${n} of the ${n} pieces due in class were Unready or not shown. That’s short of what the program asks.`);
+    // A sentence of its own, first where it's what fell short (from 2026-10-20, brief 17: until then after the attendance and growth).
+    expect(review!.reason).toMatch(new RegExp(`(^| )${n} of the ${n} pieces due in class were Unready or not shown\\. That’s short of what the program asks\\.`));
     expect(plain.player.school!.standing).toBe('concern');
     // The twin: under half unready, half or more strong, and the faculty say so.
     const m = pieces(done).length;
@@ -559,7 +560,8 @@ describe('standing/term evaluation', () => {
     expect(review.work).toBeCloseTo(mean, 12);
     // At or under -0.5 a term's work on stage falls short.
     expect(mean).toBeLessThanOrEqual(-0.5);
-    expect(review.reason).toContain(` Your work in ${CARLOTTA} and Major Barbara fell short of what the program asks.`);
+    // A sentence of its own, first where it's what fell short (from 2026-10-20, brief 17: until then after the attendance and growth).
+    expect(review.reason).toMatch(new RegExp(`(^| )Your work in ${CARLOTTA} and Major Barbara fell short of what the program asks\\.`));
     expect(review.standing).toBe('concern');
     expect(K.player.school!.unreviewed).toBeUndefined();
     // Once: the spring's evaluation doesn't read it again.

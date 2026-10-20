@@ -111,7 +111,7 @@ import { INJURY, INJURY_KIND } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
-import { courseworkOf, lapseTerm, meetingWeight, mateRecord, shortCause, partnerAsks, reliabilityOf, reliabilityFor, scheduleOrientation, setWork, termTally, type Assignment } from './coursework';
+import { courseworkOf, lapseTerm, meetingWeight, mateRecord, shortCause, partnerAsks, reliabilityOf, reliabilityFor, scheduleOrientation, setWork, termTally, ORIENTATION_KIND, type Assignment } from './coursework';
 import { f1Of, scheduleUsStatus } from './permission';
 import { connecticutTax, nonresidentFor } from './taxreturn';
 import { MOMENT_KIND, momentInClass } from './classmates';
@@ -1158,10 +1158,51 @@ export const CABARET_RUN = { rehearsals: YALE_CABARET.rehearsalEvenings, perform
  * A part as a sentence names it (from 2026-10-17, brief 14's editorial review): a named role as it is, a part the School
  * casts by size (“A Leading Part In A New Play”, “An Understudy In The Company”) in lower case, the Cabaret keeping its
  * capital. Until then a sentence read “Chloe Tanaka as A Leading Part In A New Play”. The labels themselves stay as they
- * are: `redateCredits` finds a credit's part in its casting notice word for word, and `!part.startsWith('A ')` tells a
- * size from a role.
+ * are: `redateCredits` finds a credit's part in its casting notice, as the label or, from 2026-10-20 (brief 17, when the
+ * notice began to say it so), as this says it; and `!part.startsWith('A ')` tells a size from a role.
  */
 export const partWords = (part: string): string => (/^(A|An) /.test(part) ? part.toLowerCase().replace(/\bcabaret\b/g, 'Cabaret') : part);
+
+/** Whether a part is one the School casts by its size (“A Leading Part In A New Play”), not a role with a name. */
+export const bySize = (part: string): boolean => /^(A|An) /.test(part);
+
+/**
+ * A Yale Rep production as a sentence names it (from 2026-10-20, brief 17): “Yale Rep’s” and its play where the season
+ * names one, or its slot, whose name already says it's the Rep's. Until then the notices put “Yale Rep’s” before the
+ * slot's name too, and an understudy sent on read “you go on in Yale Rep’s Yale Rep’s October Production”.
+ */
+export const repNamed = (c: { production: string; play?: string }): string => (c.play ? `Yale Rep’s ${c.play}` : c.production.startsWith('Yale Rep') ? c.production : `Yale Rep’s ${c.production}`);
+
+/**
+ * A term's classes and its review, as the notice that it began says them (from 2026-10-20, brief 17): “Classes run from
+ * January 11 to April 23, 2027, when the faculty review the term.” The review is at five on the last class day
+ * (`EVALUATION_KIND`).
+ */
+export function classesWords(term: number): string {
+  const { from, to } = classPeriod(term);
+  const last = formatDate(at(to, 12), zone());
+  const firstDay = formatDate(at(from, 12), zone());
+  const first = from.year === to.year ? firstDay.replace(/, \d{4}$/, '') : firstDay;
+  return `Classes run from ${first} to ${last}, when the faculty review the term.`;
+}
+
+/** A curtain as a notice says it: a matinee is today, an evening tonight (from 2026-10-20: until then a Sunday's at two was “tonight at 2:00 PM”). */
+export const tonight = (curtain: Instant): 'today' | 'tonight' => (zonedParts(curtain, zone()).hour < 17 ? 'today' : 'tonight');
+
+/** Going on, as an understudy's notices say it: as the role they cover, or at the Rep for a company's understudy, who covers no named part. */
+const goOnAs = (c: { role: string }): string => (bySize(c.role) ? 'at Yale Rep' : `as ${c.role}`);
+
+/**
+ * An understudy's night on, told (from 2026-10-20, brief 17): until then “The role’s actor was out, and you played An
+ * Understudy In The Company in Yale Rep’s Yale Rep’s October Production tonight.”, of a matinee too.
+ */
+const wentOn = (c: { role: string; production: string; play?: string }, curtain: Instant) => ({
+  category: 'school' as const,
+  title: bySize(c.role) ? 'You Went On At Yale Rep' : `You Went On As ${c.role}`,
+  body: bySize(c.role) ? `An actor you cover was out, and you went on in ${repNamed(c)} ${tonight(curtain)}.` : `${c.role}’s actor was out, and you played the part in ${repNamed(c)} ${tonight(curtain)}.`,
+  importance: 90,
+  route: '/workspace/school',
+});
 
 /**
  * A first class's classmate through a run (from 2026-10-11, out of `formerProductions`, for the Rep's company and the
@@ -1735,10 +1776,14 @@ export function enroll(sim: Simulation, person: Person): void {
   scheduleOrientation(sim, person);
   if (person.id !== sim.universe.playerId) return;
   const day = (d: SchoolDate) => formatDate(at(d, 12), zone());
+  // The first week's sessions, where they're still to come, and what to do about one missed (from 2026-10-20, brief 17,
+  // section 9): until then the first notice a new life read said orientation ran and not that it was on the calendar.
+  const sessions = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === ORIENTATION_KIND && i.payload.personId === person.id).sort((a, b) => a.at - b.at);
+  const first = sessions.length ? ` Orientation’s ${sessions.length === 1 ? 'session' : `${countWords(sessions.length)} sessions`}, from ${formatDate(sessions[0]!.at, zone())}, ${sessions.length === 1 ? 'is' : 'are'} on your calendar. If you miss one, press Catch Up beside it under Orientation, on the School’s Coursework tab.` : '';
   sim.notify({
     category: 'school',
     title: 'Welcome To The Class Of ' + school.classOf,
-    body: `You’re one of ${YALE_DRAMA.classSize} actors starting the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}, chosen at this year’s auditions. You’ll be cast beside and against the other ${YALE_DRAMA.classSize - 1}. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until ${day(ORIENTATION_2026.ends)}, and classes start on ${day(ORIENTATION_2026.classesBegin)}, at 9 a.m.`,
+    body: `You’re one of ${YALE_DRAMA.classSize} actors starting the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}, chosen at this year’s auditions. You’ll be cast beside and against the other ${YALE_DRAMA.classSize - 1}. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until ${day(ORIENTATION_2026.ends)}, and classes start on ${day(ORIENTATION_2026.classesBegin)}, at 9 a.m.${first}`,
     importance: 80, route: '/workspace/school',
   });
 }
@@ -2127,7 +2172,11 @@ export function redateCredits(school: SchoolRecord, notices: readonly { at: Inst
   for (const c of school.credits ?? []) {
     if (c.kind === 'cabaret' || c.kind === 'summer') continue;
     // Its production named, and its part where the notice names it (a company part in the Rep it doesn't).
-    const k = casts.findIndex((x, i) => i >= from && !used.has(`${i}|${c.production}`) && x.text.includes(c.production) && (c.kind === 'role' || x.text.includes(c.role)));
+    // A part cast by size found as the label, as notices before 2026-10-20 wrote it, or as `partWords` says it, as the
+    // notice has since (brief 17): only a save from before 2026-10-11 is dated, and its notices have the label, but a
+    // save brought forward in a test with today's notices reads the same.
+    const said = (x: { text: string }) => x.text.includes(c.role) || (bySize(c.role) && x.text.includes(partWords(c.role.replace(/ In The Festival$/, ''))));
+    const k = casts.findIndex((x, i) => i >= from && !used.has(`${i}|${c.production}`) && x.text.includes(c.production) && (c.kind === 'role' || said(x)));
     const year = k < 0 ? undefined : casts[k]!.year;
     if (year === undefined || year > c.year || c.year - year > 2) { c.yearAsKept = true; kept += 1; continue; }
     used.add(`${k}|${c.production}`);
@@ -2899,19 +2948,34 @@ function cast(sim: Simulation, person: Person, term: number): void {
     if (mates.length) schedule(sim, person, at(parseKey(rep.run.to), 23), { kind: COMPANY_KIND, label: `${rep.name}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates: mates.map(({ i }) => i), rehearsals: Math.round(days * 5 / 7), performances: Math.round((Date.parse(rep.run.to) - Date.parse(rep.run.from)) / MS_DAY * 6 / 7) + 1, production: rep.name, opened: rep.run.from } });
   }
   if (person.id === sim.universe.playerId) {
-    // The casting is SLATE's simulation of the chair's (from 2026-10-16 the notice names nobody as having made it: until then
-    // it named the chair of Acting, as `setStanding`'s notices did).
-    const parts: string[] = [];
+    // The casting is SLATE's simulation of the chair's, and the notice says it's the chair's, as `setStanding`'s notices
+    // name the chair. Until 2026-10-20 this comment said that from 2026-10-16 it named nobody, which the notice never did.
+    // Each casting its own sentence from 2026-10-20 (brief 17): until then one sentence joined them, so a part the School
+    // casts by size read as a role ("cast you as A Leading Part In A New Play"), a lead given to a classmate came after a
+    // semicolon the Rep's understudy then hung from ("; Nadia Brooks plays Masha, and to understudy in …"), and an
+    // understudy of a play the Rep's season names was never told whom they cover. A part cast by size is said as
+    // `partWords` says it; the credits are dated by the labels in notices from before 2026-10-11 (`redateCredits`), and a
+    // save begun since is dated from the start (`creditsDated`), so no notice of these words is read for it.
+    const said: string[] = [];
     const c = school.casting;
+    const r = school.rep;
     if (c) {
       // Who the lead went to, where it wasn't them.
       const lead = c.size !== 'lead' ? c.cast?.find((x) => !x.part.startsWith('A ') && playOf(sim, person, { kind: c.kind, n: production!.n, runs: production!.runs }).parts.find((p) => p.name === x.part)?.size === 'lead') : undefined;
       const rival = lead && bondWord(school.classmates.find((m) => m.name === lead.name)?.bond) === 'Rival';
-      parts.push(`as ${c.role} in ${c.play ? `${c.play} (${c.production})` : `${c.kind === 'thesis' ? '' : 'the '}${c.production}`}, from its first rehearsal call${lead ? `; ${lead.name}${rival ? ', your rival,' : ''} plays ${lead.part}` : ''}`);
+      const where = c.play ? `${c.play} (${c.production})` : `${c.kind === 'thesis' ? '' : 'the '}${c.production}`;
+      said.push(`The chair of Acting has cast you ${bySize(c.role) ? `in ${partWords(c.role.replace(/ In The Festival$/, ''))} at ${where}` : `as ${c.role} in ${where}`}, from its first rehearsal call.${lead ? ` The lead, ${lead.part}, went to ${lead.name}${rival ? ', your rival' : ''}.` : ''}`);
     }
-    const r = school.rep;
-    if (r) parts.push(r.kind === 'role' ? `and, at the director’s invitation with the dean’s approval, in the company of ${r.production}` : `and to understudy ${term === 1 ? `${r.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : `in ${r.production}`}, in New Haven and reachable at every performance`);
-    if (parts.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair of Acting has cast you ${parts.join(', ')}. You play the part through the run, and its calls are on your calendar. A missed call counts against you: ${countWords(ESTIMATE.missedCallsOut)} in a term take you out of the casting pool.`, importance: 75, route: '/workspace/school' });
+    if (r) {
+      // Whom they cover: the Rep's 2027 Seagull's part, a part of the play the season names, or the company.
+      const covers = term === 1 ? `${r.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : r.play && !bySize(r.role) ? `${r.role} in ${repNamed(r)}` : `in ${repNamed(r)}`;
+      const company = repNamed(r);
+      said.push(r.kind === 'role'
+        ? `${c ? 'You’re also in' : 'The chair of Acting has cast you in'} the company of ${company}, at the director’s invitation with the dean’s approval.`
+        : `${c ? 'You’ll also understudy' : 'The chair of Acting has cast you to understudy'} ${covers}: be in New Haven and reachable at every performance.`);
+    }
+    const plays = Boolean(c) || r?.kind === 'role';
+    if (said.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `${said.join(' ')} ${plays ? `You play ${c && r?.kind === 'role' ? 'both parts through their runs' : 'the part through the run'}. ` : ''}${c && r ? 'Both productions’ calls are' : 'Its calls are'} on your calendar. A missed call counts against you: ${countWords(ESTIMATE.missedCallsOut)} in a term take you out of the casting pool.`, importance: 75, route: '/workspace/school' });
   }
 }
 
@@ -3010,12 +3074,29 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   // What held the unready ones back, and what answers it (from 2026-10-16): until then the notice gave the count alone.
   // From 2026-10-17 (`shortCause`): every part of each short, or no part short on more than one, said as that, and not a
   // part named by its tie.
+  // The part named is the one most often unfinished among the pieces shown Unready, said as that, with its count of them
+  // (from 2026-10-20, brief 17): until then "What held most of them back was “Daily Practice”, unfinished on 6 of them"
+  // was said of 39 pieces shown Unready (brief 16's underprepared student, December 11, 2026), so "most" was false; and
+  // "them" read as every piece due Unready or not shown, where the part is counted over those shown alone.
   const most = shortCause(person, tally.unreadyShown);
-  const why = most?.kind === 'part' ? ` What held most of them back was “${most.label}”, unfinished on ${most.n} of them. To work on it: ${most.remedy}.` : most?.kind === 'every' ? ' None of them had a single part finished.' : most?.kind === 'scattered' ? ' Each fell short on a different part.' : '';
+  const ofShown = tally.unreadyShown.length === 1 ? 'the one you showed Unready' : `${most?.kind === 'part' ? most.n : 0} of the ${tally.unreadyShown.length} you showed Unready`;
+  const why = most?.kind === 'part' ? ` The part most often left unfinished was “${most.label}”, on ${ofShown}. To work on it: ${most.remedy}.` : most?.kind === 'every' ? ' None of them had a single part finished.' : most?.kind === 'scattered' ? ' Each fell short on a different part.' : '';
   const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were Unready or not shown. That’s short of what the program asks.${why}` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.` : '';
   const notPassed = failedNow.length ? ` You didn’t pass ${failedNow.length === 1 ? failedNow[0]!.name : `${failedNow.slice(0, -1).map((r) => r.name).join(', ')} and ${failedNow.at(-1)!.name}`}.` : '';
   const breached = t.breaches > 0 ? ' A grave breach of professionalism this term keeps you from good standing.' : '';
-  const reason = `You came to ${pct(attendance)} of the classes, calls and shifts asked of you. Your craft grew ${growth.toFixed(1)} points this term, and the middle student in your class grew ${classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ${pace} the class.${onStage}${inClass}${notPassed}${breached}`;
+  // What fell short first, each with the minimum it fell under, then what met it (from 2026-10-20, brief 17, section 8):
+  // until then the review always opened on attendance and growth, so a notice of concern for the coursework said two
+  // sentences of what was fine before why, and a term short on attendance or growth didn't say what the minimum was.
+  const attendanceShort = attendance < ESTIMATE.attendanceFloor;
+  const said = [
+    { short: attendanceShort, text: `You came to ${pct(attendance)} of the classes, calls and shifts asked of you.${attendanceShort ? ` That’s under the ${pct(ESTIMATE.attendanceFloor)} the program asks.` : ''}` },
+    { short: grewTooLittle, text: `Your craft grew ${growth.toFixed(1)} points this term, and the middle student in your class grew ${classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ${pace} the class.${grewTooLittle ? ` That’s under ${ESTIMATE.growthFloor === 0.5 ? 'half' : pct(ESTIMATE.growthFloor)} its pace, short of what the program asks.` : ''}` },
+    { short: workedPoorly, text: onStage },
+    { short: unreadyWork, text: inClass },
+    { short: failedNow.length > 0, text: notPassed },
+    { short: t.breaches > 0, text: breached },
+  ];
+  const reason = [...said.filter((x) => x.short), ...said.filter((x) => !x.short)].map((x) => x.text.trim()).filter(Boolean).join(' ');
   const extraTerm = school.extra?.term === term;
   const last = academicTerm(school, term) === YALE_DRAMA.terms - 1 || extraTerm;
   // A faculty review this term that kept them on warning (`facultyReview`) has judged these Fails: the evaluation doesn't
@@ -3200,11 +3281,13 @@ export function registerSchool(sim: Simulation): void {
     if (person.id === s.universe.playerId && !unsupported) {
       s.notify({
         category: 'school', title: `${termLabel(term)} Begins`,
-        body: need
+        // The term's classes and its review first, then what it billed and paid (from 2026-10-20, brief 17, section 8): until
+        // then the notice that a term began said only the money.
+        body: `${classesWords(term)} ${need
           // What reached the account, less what was withheld for the IRS and what the Yale account took (from 2026-10-16:
           // until then the whole refund, so an F-1 student was told $13,318.50 was in her account where $11,356.54 was).
           ? `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Your living-expense scholarship of ${formatMoney(account.livingScholarship, cur)} paid this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${!applied ? `and ${formatMoney(account.refund - withheld, cur)} is` : account.refund - withheld - applied > 0 ? `and the ${formatMoney(applied, cur)} your Yale account owed; ${formatMoney(account.refund - withheld - applied, cur)} is` : `and ${formatMoney(applied, cur)} of what your Yale account owed${accountOwed(s, person) > 0 ? `, which still owes ${formatMoney(accountOwed(s, person), cur)}` : ''}; none of it is`} in your ${current?.name ?? 'account'}${withheld ? `, after ${formatMoney(withheld, cur)} withheld for the IRS` : ''}.`
-          : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${planPaid ? 'was paid from your bank, and living costs are yours.' : 'and living costs are yours. Your bank couldn’t cover the plan, so it’s owed: it comes out of your bank the first day there’s money for it.'}`,
+          : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${planPaid ? 'was paid from your bank, and living costs are yours.' : 'and living costs are yours. Your bank couldn’t cover the plan, so it’s owed: it comes out of your bank the first day there’s money for it.'}`}`,
         importance: 55, route: '/workspace/school',
       });
     }
@@ -3300,7 +3383,9 @@ export function registerSchool(sim: Simulation): void {
     // A day in hospital is excused, as a sick day called in is.
     meet(false, offSick(person, item.at));
     if (offSick(person, item.at)) { school.tally.excused += 1; considerWelfare(s, person); return; }
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `You missed ${spokenList(courses.map((one) => one.name))} today, unexcused. The faculty count it at the term review. If you’re unwell, call in sick before classes start.`, importance: 65, route: '/workspace/school' });
+    // The control named as the Classes tab names it, and the hour it has to be pressed by (from 2026-10-20, brief 17): the
+    // day is counted at nine, when this runs, and until then the notice said only “call in sick before classes start”.
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `You missed ${spokenList(courses.map((one) => one.name))} today, unexcused. The faculty count it at the term review. If you’re unwell, press Call In Sick on the School’s Classes tab before classes start at nine.`, importance: 65, route: '/workspace/school' });
   });
 
   sim.onCommand<Record<string, never>, { cost: Money }>('school.buy_ppe', (_p, { sim: s }) => {
@@ -3550,14 +3635,14 @@ export function registerSchool(sim: Simulation): void {
       if (!goesOn(s, person, curtain)) { item.status = 'cancelled'; if (last) closeRun(s, person, casting, curtain); return; }
       if (person.currentLocationId !== YALE_DRAMA.cityId) {
         school.tally.calls += 1;
-        breach(s, person, `weren’t in New Haven when called to go on as ${casting.role}`);
+        breach(s, person, `weren’t in New Haven when called to go on ${goOnAs(casting)}`);
         if (last) closeRun(s, person, casting, curtain);
         return;
       }
       // Sent on: the night’s performance is theirs, on the calendar from now, with three hours’ notice, and on the last
       // night it closes the run when played or missed.
-      schedule(s, person, curtain, { kind: CALL_KIND, label: `${casting.production}: You’re On As ${casting.role}`, minutes: holdOf(casting), payload: { call: 'performance', which: 'rep', wentOn: true, ...(last ? { last: true } : {}) } });
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You’re On Tonight As ${casting.role}`, body: `The role’s actor is out: you go on in Yale Rep’s ${casting.production} tonight at ${formatTime(curtain, zone())}.`, importance: 95, route: '/workspace/school' });
+      schedule(s, person, curtain, { kind: CALL_KIND, label: bySize(casting.role) ? `${casting.production}: You’re On` : `${casting.production}: You’re On As ${casting.role}`, minutes: holdOf(casting), payload: { call: 'performance', which: 'rep', wentOn: true, ...(last ? { last: true } : {}) } });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You’re On ${tonight(curtain) === 'tonight' ? 'Tonight' : 'Today'} ${bySize(casting.role) ? 'At Yale Rep' : `As ${casting.role}`}`, body: `${bySize(casting.role) ? 'An actor you cover is' : `${casting.role}’s actor is`} out, so you go on in ${repNamed(casting)} ${tonight(curtain)} at ${formatTime(curtain, zone())}.`, importance: 95, route: '/workspace/school' });
       return;
     }
     if (call === 'runthrough') {
@@ -3581,7 +3666,9 @@ export function registerSchool(sim: Simulation): void {
       // Rep night, its run-through and a night on call read no genre, while the creation screen and the guide said a
       // night of a play of its kind was a better day; found by the review of that day).
       enjoyWork(person, { genres: genresOfPlay(casting.play) });
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Your Understudy Run-Through', body: `You played ${casting.role} through for the director today: ${night === 'off' ? 'an off' : `a ${night}`} night.`, importance: 60, route: '/workspace/school' });
+      // Said of the run-through, not a night (from 2026-10-20, brief 17): until then “today: a solid night” of an afternoon,
+      // and an understudy of the company “played An Understudy In The Company through”.
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Your Understudy Run-Through', body: `${bySize(casting.role) ? 'You played the understudies’ run-through' : `You played ${casting.role} through`} for the director today, and ${night === 'off' ? 'it was an off day' : `it was ${night}`}.`, importance: 60, route: '/workspace/school' });
       return;
     }
     if (call === 'oncall') {
@@ -3597,10 +3684,10 @@ export function registerSchool(sim: Simulation): void {
         // Not judged, as it never was: its energy is the lead's evening it covers (from 2026-10-16, brief 10).
         tire(person, energyOfNight(nightEvaluation(s, person, `oncall-${item.at}`, casting, item.at, 'lead', 'rep', true)));
         enjoyWork(person, { genres: genresOfPlay(casting.play) });
-        if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
+        if (person.id === s.universe.playerId) s.notify(wentOn(casting, item.at));
         return;
       }
-      breach(s, person, `weren’t there when called to go on as ${casting.role}`);
+      breach(s, person, `weren’t there when called to go on ${goOnAs(casting)}`);
       return;
     }
     school.tally.calls += 1;
@@ -3625,7 +3712,7 @@ export function registerSchool(sim: Simulation): void {
         grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting)));
         tire(person, energy);
         enjoyWork(person, { genres: genresOfPlay(casting.play) });
-        if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
+        if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify(wentOn(casting, item.at));
       } else {
         const stage = (item.payload.stage as Stage | undefined) ?? 'work';
         const weight = callAnswered(s, person, casting, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(casting), item.payload.which === 'rep' ? 'rep' : 'school');
@@ -3954,7 +4041,11 @@ export function registerSchool(sim: Simulation): void {
   sim.onSchedule(RECESS_KIND, (item, s) => {
     const person = personOf(item);
     if (!person || !summerOf(person, item.at)) return;
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'The Summer Is Yours', body: 'Classes are done until the fall term, and nothing at the School calls on you until then.', importance: 60, route: '/workspace/school' });
+    // In the Summer Cabaret's company, its calls are on the calendar from the day it was joined (`school.summer_cabaret`),
+    // and the notice says so (from 2026-10-20, brief 17): until then it told a member of the company that nothing at the
+    // School called on them all summer.
+    const company = person.school?.summer && !person.school.summer.out && person.school.summer.until > item.at;
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'The Summer Is Yours', body: company ? 'Classes are done until the fall term. The Summer Cabaret’s rehearsals and shows are on your calendar, and nothing else at the School calls on you until then.' : 'Classes are done until the fall term, and nothing at the School calls on you until then.', importance: 60, route: '/workspace/school' });
   });
 
   sim.onSchedule(STIPEND_KIND, (item, s) => {

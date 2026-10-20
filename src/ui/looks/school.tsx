@@ -175,7 +175,9 @@ defineLook<TheSchool>('school', {
       body: (
         <>
           <p className="small">
-            The {YALE_DRAMA.degree} in {YALE_DRAMA.program}{school ? `, class of ${school.classOf},` : ''} in {city?.name ?? 'New Haven'}, over {YALE_DRAMA.terms} terms. {YALE_DRAMA.dean.name} is the dean, and {YALE_DRAMA.actingChair.name}, the chair of acting, casts every student.
+            {/* The chair named as every notice names them, the chair of Acting, and the terms in words (from 2026-10-20, brief 17):
+                until then “the chair of acting” and “over 6 terms”. */}
+            The {YALE_DRAMA.degree} in {YALE_DRAMA.program}{school ? `, class of ${school.classOf},` : ''} in {city?.name ?? 'New Haven'}, over {['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][YALE_DRAMA.terms] ?? YALE_DRAMA.terms} terms. {YALE_DRAMA.dean.name} is the dean, and {YALE_DRAMA.actingChair.name}, the chair of Acting, casts every student.
             {school && !done ? ` This is ${termLabel(term)}, ${thisTerm}` : ''}
             {!school ? ` It teaches ${courses.length} courses in the first year, each training part of an actor’s craft.` : ''}
           </p>

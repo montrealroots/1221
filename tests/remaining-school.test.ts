@@ -975,8 +975,9 @@ describe('school.unreached-refusals: each refusal no test reached, reached', () 
     expect(drew('school.return_notice')).toEqual([]);
     const back = thaw(a.marks['term 3 begins']!);
     flu(back);
-    expect(refusedLeaving(back, 'school.request_leave', { kind: 'medical', reason: 'illness', terms: 2 })).toBe('You’ve had two terms of leave, and the Bulletin allows three in all.');
-    expect(drawn(back, LeavePanel).text).toContain('Two terms: You’ve had two terms of leave, and the Bulletin allows three in all.');
+    expect(refusedLeaving(back, 'school.request_leave', { kind: 'medical', reason: 'illness', terms: 2 })).toBe('You’ve had two terms of leave, and the Bulletin allows three in all. One more term is the most you can take.');
+    // Said once for the two lengths it refuses (from 2026-10-20, brief 17: until then once for each, and again for Ask For A Leave…).
+    expect(drawn(back, LeavePanel).text).toContain('Two or three terms: You’ve had two terms of leave, and the Bulletin allows three in all. One more term is the most you can take.');
   }, 900_000);
 
   it('GUARD: a notice of return after its deadline, which no save reaches (the deadline’s own item dismisses at its hour; TEST SETUP: that item called off by hand), is refused “Its deadline has passed.”', () => {

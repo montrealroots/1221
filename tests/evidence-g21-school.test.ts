@@ -764,7 +764,8 @@ describe('school.evaluation', () => {
     for (const s of [missed, played]) tended(s, at(2027, 12, 10, 17, 1));
     const review = (s: Simulation) => s.player.school!.history.find((r) => r.term === 2)!;
     expect(review(missed).standing).toBe('warning');
-    expect(review(missed).reason).toMatch(/ A grave breach of professionalism this term keeps you from good standing\.$/);
+    // A sentence of its own, first as what fell short (from 2026-10-20, brief 17: until then last, after what met its minimum).
+    expect(` ${review(missed).reason}`).toMatch(/ A grave breach of professionalism this term keeps you from good standing\.( |$)/);
     expect(missed.player.school!.standing).toBe('warning');
     expect(review(played).standing).toBe('good');
     expect(review(played).reason).not.toContain('grave breach');

@@ -36,6 +36,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatDate, formatTime, MS_DAY, type Instant } from '../core/time';
+import { spokenList } from '../core/text';
 import { startRefusal } from './life';
 import type { SchoolRecord } from './school';
 
@@ -118,8 +119,17 @@ export function settleCourses(sim: Simulation, person: Person, term: number, sho
     } else r.result = 'pass';
     settled.push(r);
   }
-  if (person.id === sim.universe.playerId) {
-    for (const r of settled.filter((x) => x.result === 'incomplete')) sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill for ${r.excused} of its ${r.meetings} classes, so it’s an Incomplete for now. To complete it, make up ${sessionsWords(r.owed ?? 0)} with its teachers by ${formatDate(r.dueBy!, sim.zone)}, each covering a week of the course: press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
+  // The term's Incompletes told in one notice where there are several (from 2026-10-20, brief 17): they share a deadline,
+  // and until then each was told in its own notice with the same seventy words of instruction, nine of them at once for
+  // brief 17's student under pressure (seed v17-1, April 23, 2027). One course is told as it was, but "ill or hurt": an
+  // excused meeting is a sick day, a stay in hospital or a lay-up (`offSick`), and until then it said "ill" of an injury.
+  const incompletes = settled.filter((x) => x.result === 'incomplete');
+  if (person.id === sim.universe.playerId && incompletes.length === 1) {
+    const r = incompletes[0]!;
+    sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill or hurt for ${r.excused} of its ${r.meetings} classes, so it’s an Incomplete for now. To complete it, make up ${sessionsWords(r.owed ?? 0)} with its teachers by ${formatDate(r.dueBy!, sim.zone)}, each covering a week of the course: press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
+  } else if (person.id === sim.universe.playerId && incompletes.length > 1) {
+    const owed = incompletes.reduce((n, r) => n + (r.owed ?? 0), 0);
+    sim.notify({ category: 'school', title: `Incompletes In ${countTitle(incompletes.length)} Courses`, body: `You were ill or hurt for too many of their classes to pass ${countWord(incompletes.length)} courses yet, so each is an Incomplete for now. To complete them, make up ${sessionsWords(owed)} with their teachers by ${formatDate(incompletes[0]!.dueBy!, sim.zone)}, each covering a week of its course: ${spokenList(incompletes.map((r) => `${r.name} (${countWord(r.owed ?? 0)})`))}. Press Make Up A Session beside each on the Standing And Craft tab. If you need longer for one, press Ask For A Month More beside it, once. A course not made up in time becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
   }
   return settled;
 }
@@ -174,8 +184,13 @@ function repeatOpen(r: CourseRecord, room: (academic: number) => boolean): boole
   return room(academic % 2 === 0 ? academic + 1 : academic);
 }
 
+/** A count as prose says it, and as a title does: one, two, 12; One, Two, 12. */
+const COUNT_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const countWord = (n: number): string => COUNT_WORDS[n] ?? String(n);
+const countTitle = (n: number): string => countWord(n).replace(/^\w/, (c) => c.toUpperCase());
+
 /** Sessions, counted as prose says them: one session, two sessions, 12 sessions. */
-const sessionsWords = (n: number, noun = 'session'): string => `${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? n} ${n === 1 ? noun : `${noun}s`}`;
+const sessionsWords = (n: number, noun = 'session'): string => `${countWord(n)} ${n === 1 ? noun : `${noun}s`}`;
 
 /** An Incomplete's reminder a week before its deadline, and the deadline. */
 function scheduleDue(sim: Simulation, person: Person, r: CourseRecord): void {
@@ -277,7 +292,19 @@ export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation
     const r = person?.school ? coursesOf(person.school)[String(item.payload.key)] : undefined;
     if (!person || !r || r.result !== 'incomplete') return;
     if (item.payload.remind === true) {
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `A Week Left: ${r.name}`, body: `You still have ${sessionsWords((r.owed ?? 0) - (r.madeUp ?? 0), 'make-up session')} to do, by ${formatDate(r.dueBy!, s.zone)}. Press Make Up A Session on the Standing And Craft tab.${extendRefusal(s, person, String(item.payload.key)) ? '' : ' If you need longer, press Ask For A Month More.'}`, importance: 75, route: '/workspace/school' });
+      if (person.id !== s.universe.playerId) return;
+      // The Incompletes still open on the same deadline are reminded together, by the first of them (from 2026-10-20,
+      // brief 17): each reminder fires at the same hour, and until then each said its own notice. One extended has a
+      // deadline of its own, and is reminded on its own.
+      const left = (x: CourseRecord) => (x.owed ?? 0) - (x.madeUp ?? 0);
+      const together = Object.entries(coursesOf(person.school!)).filter(([, x]) => x.result === 'incomplete' && x.dueBy === r.dueBy).sort(([a], [b]) => a.localeCompare(b));
+      if (together.length > 1) {
+        if (together[0]![0] !== String(item.payload.key)) return;
+        const longer = together.some(([k]) => !extendRefusal(s, person, k));
+        s.notify({ category: 'school', title: `A Week Left: ${countTitle(together.length)} Incompletes`, body: `You still have ${sessionsWords(together.reduce((n, [, x]) => n + left(x), 0), 'make-up session')} to do, by ${formatDate(r.dueBy!, s.zone)}: ${spokenList(together.map(([, x]) => `${x.name} (${countWord(left(x))})`))}. Press Make Up A Session beside each on the Standing And Craft tab.${longer ? ' If you need longer for one, press Ask For A Month More beside it.' : ''}`, importance: 75, route: '/workspace/school' });
+        return;
+      }
+      s.notify({ category: 'school', title: `A Week Left: ${r.name}`, body: `You still have ${sessionsWords(left(r), 'make-up session')} to do, by ${formatDate(r.dueBy!, s.zone)}. Press Make Up A Session on the Standing And Craft tab.${extendRefusal(s, person, String(item.payload.key)) ? '' : ' If you need longer, press Ask For A Month More.'}`, importance: 75, route: '/workspace/school' });
       return;
     }
     r.result = 'permanent';

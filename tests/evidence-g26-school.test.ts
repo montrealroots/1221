@@ -363,7 +363,10 @@ describe('school.extend_incomplete', () => {
     // Played: 39 meetings, 11 excused, 28 attended. Three quarters is 29.25, so 30 meetings pass it: two short, and a
     // session makes up a week's three, so one session, due thirty days from the evaluation at five on 11 December.
     expect(acting()).toMatchObject({ result: 'incomplete', meetings: 39, excused: 11, attended: 28, owed: 1, madeUp: 0, dueBy: at(2027, 1, 10, 17) });
-    expect(titled(sim, 'Incomplete: Acting I')).toHaveLength(1);
+    // The fall's four Incompletes told in one notice, Acting I's one session among them (from 2026-10-20, brief 17: until
+    // then a notice each, Incomplete: Acting I its own).
+    expect(titled(sim, 'Incomplete: Acting I')).toHaveLength(0);
+    expect(titled(sim, 'Incompletes In Four Courses').map((n) => n.body.includes('Acting I (one)'))).toEqual([true]);
     expect(dueItems(sim, ACTING_I)).toEqual([[at(2027, 1, 3, 17), true], [at(2027, 1, 10, 17), false]]);
 
     const before = drawn(sim, SchoolWorkspace);
@@ -394,7 +397,12 @@ describe('school.extend_incomplete', () => {
     // The old reminder's day: Acting I's isn't said; its three fellows', not extended, are.
     tend(sim, at(2027, 1, 3, 18));
     expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(0);
-    for (const name of others) expect(titled(sim, `A Week Left: ${name}`)).toHaveLength(1);
+    // Reminded together, the three on the old date, and Acting I not among them (from 2026-10-20, brief 17: until then a
+    // reminder each).
+    const week = titled(sim, 'A Week Left: Three Incompletes');
+    expect(week).toHaveLength(1);
+    for (const name of others) expect(week[0]!.body).toContain(`${name} (`);
+    expect(week[0]!.body).not.toContain('Acting I (');
     // The old deadline: Acting I still Incomplete; its fellows Permanent.
     tend(sim, at(2027, 1, 10, 18));
     expect(acting().result).toBe('incomplete');
@@ -430,9 +438,15 @@ describe('school.extend_incomplete', () => {
     const sim = thaw(incomplete());
     const acting = () => sim.player.school!.courses![ACTING_I]!;
     tend(sim, at(2027, 1, 3, 16));
-    expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(0);
+    expect(titled(sim, 'A Week Left: Four Incompletes')).toHaveLength(0);
     tend(sim, at(2027, 1, 3, 18));
-    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['You still have one make-up session to do, by January 10, 2027. Press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More.']);
+    // The four reminded together, each with what's left of it (from 2026-10-20, brief 17: until then a reminder each).
+    const open = Object.entries(sim.player.school!.courses!).filter(([, r]) => r.result === 'incomplete').sort(([a], [b]) => a.localeCompare(b)).map(([, r]) => r);
+    const word = (n: number) => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
+    const left = open.reduce((n, r) => n + r.owed! - r.madeUp!, 0);
+    expect(open.map((r) => r.name)).toContain('Acting I');
+    expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(0);
+    expect(titled(sim, 'A Week Left: Four Incompletes').map((n) => n.body)).toEqual([`You still have ${word(left)} make-up sessions to do, by January 10, 2027: ${open.slice(0, -1).map((r) => `${r.name} (${word(r.owed! - r.madeUp!)})`).join(', ')} and ${open.at(-1)!.name} (${word(open.at(-1)!.owed! - open.at(-1)!.madeUp!)}). Press Make Up A Session beside each on the Standing And Craft tab. If you need longer for one, press Ask For A Month More beside it.`]);
     tend(sim, at(2027, 1, 10, 16));
     expect(acting().result).toBe('incomplete');
     tend(sim, at(2027, 1, 10, 18));

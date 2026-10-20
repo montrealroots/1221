@@ -923,7 +923,9 @@ describe('school.cabaret', () => {
     // Over −0.5 and under 1 the reason is silent on it; at or under −0.5 it falls short, at 1 or over it's noted.
     const said = work <= -0.5 ? ` Your work in ${SEASON} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${SEASON}.` : '';
     expect(said).not.toBe('');
-    expect(review.reason).toContain(said);
+    // Read with a space before it, so a sentence the review now puts first where it fell short (from 2026-10-20, brief 17) is
+    // held at its boundary as it was.
+    expect(` ${review.reason}`).toContain(said);
     expect(drawn(sim, 'standing').shown).toContain(said.trim());
     expect(never.player.school!.history[0]!.work).toBeUndefined();
     expect(never.player.school!.history[0]!.reason).not.toContain('Yale Cabaret');

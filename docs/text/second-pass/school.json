@@ -2381,9 +2381,9 @@
  },
  "src/engine/systems/courserecord.ts#registerCourseRecord": {
   "status": "Rewritten",
-  "hash": "9aed8abebb19",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g26-school.test.ts and tests/evidence2-b09.test.ts (A Week Left, on the Standing And Craft tab)",
+  "hash": "3c97bcfe8341",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “Incompletes from one review” (A Week Left: Two Incompletes) and tests/evidence-g26-school.test.ts (A Week Left: Three Incompletes, Four Incompletes)",
   "first": "Pending"
  },
  "src/engine/systems/courserecord.ts#registerCourseRecord <school.make_up>": {
@@ -2409,9 +2409,9 @@
  },
  "src/engine/systems/courserecord.ts#settleCourses": {
   "status": "Rewritten",
-  "hash": "cab8e2fd1ae9",
-  "on": "2026-10-19",
-  "evidence": "tests/language-dynamic.test.ts \"a warning repeated ... an Incomplete\" (Make Up A Session on the Standing And Craft tab)",
+  "hash": "75f210c7c2b9",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “Incompletes from one review” (Incompletes In Two Courses; one alone, ill or hurt) and tools/voices.ts pressure v17-1 played on the tree (Incompletes In Nine Courses, April 23, 2027)",
   "first": "Pending"
  },
  "src/engine/systems/courserecord.ts#tellFails": {
@@ -3004,9 +3004,9 @@
  },
  "src/engine/systems/leave.ts#leaveLengths": {
   "status": "Rewritten",
-  "hash": "da5aa0f71c67",
-  "on": "2026-10-19",
-  "evidence": "tests/remaining-school.test.ts (the third term refused: You’ve had two terms of leave, and the Bulletin allows three in all; and the Leave panel's Length list)",
+  "hash": "0f7cfe766a22",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “a leave’s lengths” and tests/remaining-school.test.ts; the built app walked on the leave save at 1440 and 390 (Two or three terms: …)",
   "first": "Pending"
  },
  "src/engine/systems/leave.ts#leaveRefusal": {
@@ -3361,9 +3361,9 @@
  },
  "src/engine/systems/school.ts#cast": {
   "status": "Rewritten",
-  "hash": "eb91ef800fc4",
-  "on": "2026-10-19",
-  "evidence": "tests/defects-g8-12.test.ts (the Cast notice); rendered.txt (render.mts)",
+  "hash": "0d309a2998c2",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “a part cast by size is said in lower case”, and tools/voices.ts attentive v16-0 and pressure v17-1 played on the tree (both terms’ Cast: notices)",
   "first": "Pending"
  },
  "src/engine/systems/school.ts#CEILING": {
@@ -3379,6 +3379,13 @@
   "on": "2026-10-19",
   "reason": "The calendar entry when a Cabaret show closes, titled with the show's name and what happens, as the calendar titles other runs ending.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#classesWords": {
+  "status": "Rewritten",
+  "hash": "4db794ebb03e",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “a term’s notice says its classes and its review before the money”, and tools/voices.ts pressure v17-1 played on the tree (each term’s … Begins)",
+  "first": "Pending"
  },
  "src/engine/systems/school.ts#companyPart": {
   "status": "Retained",
@@ -3431,16 +3438,16 @@
  },
  "src/engine/systems/school.ts#enroll": {
   "status": "Rewritten",
-  "hash": "a454988eed6d",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/rendered.txt (render.mts) NOTICE and MONTH Welcome To The Class Of 2029",
+  "hash": "352229275a0f",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “the welcome says orientation’s sessions are on the calendar”, and tools/voices.ts runs on the tree (Welcome To The Class Of 2029)",
   "first": "Pending"
  },
  "src/engine/systems/school.ts#evaluate": {
   "status": "Rewritten",
-  "hash": "dc40fad5784c",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence2-b08.test.ts and tests/evidence3-school.test.ts (the review's reason); tests/scope-school.test.ts The Degree Isn’t Recommended",
+  "hash": "98f36436e04e",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “the term review’s words” (both), tests/evidence3-school.test.ts and tests/scope-school.test.ts; tools/voices.ts underprepared v16-0 played on the tree (A Notice Of Academic Concern, Academic Warning)",
   "first": "Pending"
  },
  "src/engine/systems/school.ts#FAMILY": {
@@ -3477,6 +3484,13 @@
   "on": "2026-10-19",
   "reason": "Classmates' given names, common American names chosen so no real student is named; a name is the player's way of telling classmates apart.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/school.ts#goOnAs": {
+  "status": "Rewritten",
+  "hash": "fdc318fede68",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “an understudy of the company goes on “at Yale Rep””, read with the breach it names in the source",
+  "first": "Pending"
  },
  "src/engine/systems/school.ts#leaveCabaret": {
   "status": "Rewritten",
@@ -3543,9 +3557,9 @@
  },
  "src/engine/systems/school.ts#registerSchool": {
   "status": "Rewritten",
-  "hash": "bd6fa11bd0a7",
-  "on": "2026-10-19",
-  "evidence": "tests/remaining-school.test.ts and tests/evidence-g26-school.test.ts (Not Registered, with and without a hold); tests/evidence-g21-school.test.ts (A Shift You Couldn’t Work); tests/remaining-09-journeys.test.ts and tests/need-paths.test.ts (a term begins); tests/evidence-g26-school.test.ts (December conferral)",
+  "hash": "3d2f02e96c0e",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts (the term’s first notices, the Rep understudy, the summer’s notice), tests/need-paths.test.ts and tests/remaining-09-journeys.test.ts (each … Begins); tools/voices.ts attentive v16-0 on the tree (You’re On Today At Yale Rep)",
   "first": "Pending"
  },
  "src/engine/systems/school.ts#registerSchool [summer]": {
@@ -3609,6 +3623,13 @@
   "hash": "74942e8060f3",
   "on": "2026-10-19",
   "evidence": "tests/evidence-g26-school.test.ts (Not Registered after a hold: Press Register on the Standing And Craft tab) and tests/evidence-g21-school.test.ts (A Shift You Couldn’t Work: Catch up on Registration And Your Account)",
+  "first": "Pending"
+ },
+ "src/engine/systems/school.ts#repNamed": {
+  "status": "Rewritten",
+  "hash": "be1b893d636f",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “an understudy of the company goes on “at Yale Rep””, and tools/voices.ts attentive v16-0 played on the tree",
   "first": "Pending"
  },
  "src/engine/systems/school.ts#repProduction": {
@@ -3716,6 +3737,13 @@
   "reason": "A term as a sentence names it, the fall term of 2026, used inside ledger lines and notices where a heading's form would read stiffly.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/school.ts#wentOn": {
+  "status": "Rewritten",
+  "hash": "933f0920257e",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “an understudy of the company goes on “at Yale Rep””, and tools/voices.ts attentive v16-0 played on the tree (You Went On At Yale Rep)",
+  "first": "Pending"
+ },
  "src/engine/systems/workbook.ts#discoveriesOf": {
   "status": "Retained",
   "hash": "7badb3917ccf",
@@ -3760,9 +3788,9 @@
  },
  "src/engine/systems/workbook.ts#problemsOf [prep]": {
   "status": "Rewritten",
-  "hash": "8255a8a0feb0",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/b5.txt (rendered by b5.mts, played through commands on practice briefs): Knowing The Genre: Not There Yet: It costs your interpretation 9.5 points, and the whole piece 0.8",
+  "hash": "bd0853ba53ac",
+  "on": "2026-10-20",
+  "evidence": "the built app walked at 1440 on the rehearsal and decision saves (Work It Through: “Its own preparation step, above, works on it.”)",
   "first": "Pending"
  },
  "src/engine/systems/workbook.ts#problemsOf [segment]": {
@@ -3823,9 +3851,9 @@
  },
  "src/engine/systems/workload.ts#workloadWords": {
   "status": "Rewritten",
-  "hash": "1e994874d536",
-  "on": "2026-10-19",
-  "evidence": "tests/decisions-stamina.test.ts \"says the workload before the curtain under A Night Now and in the night’s record after it\"",
+  "hash": "a1890c7e39c8",
+  "on": "2026-10-20",
+  "evidence": "tests/decisions-stamina.test.ts “says the workload before the curtain under A Night Now”, and the built app walked on the direction save at 1440 and 390 (The Evening’s Workload, How It’s Worked Out)",
   "first": "Pending"
  },
  "src/engine/systems/workpieces.ts#away": {
@@ -3858,9 +3886,9 @@
  },
  "src/ui/components/BriefPane.tsx#BriefPane": {
   "status": "Rewritten",
-  "hash": "b3fd2417939e",
+  "hash": "3bc7b4d2e4e6",
   "on": "2026-10-20",
-  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "evidence": "tests/editorial17-school.test.ts “a practice brief” renders the pane after a take (beat by beat below; points off connection)",
   "first": "Pending"
  },
  "src/ui/components/BriefPane.tsx#BriefPane step()": {
@@ -4054,9 +4082,9 @@
  },
  "src/ui/components/RehearsalProcess.tsx#RehearsalProcess": {
   "status": "Rewritten",
-  "hash": "05013e5be8d9",
-  "on": "2026-10-19",
-  "evidence": "tests/decisions-stamina.test.ts and tests/rehearsal-notes-history.test.ts (the panel rendered); tests/looks.test.ts (a figure of 100 written as one: The Nights Together averaged N of 100, as docs/GLOSSARY.md writes trust)",
+  "hash": "03ac9173d197",
+  "on": "2026-10-20",
+  "evidence": "tests/decisions-stamina.test.ts renders it, and the built app walked on the direction save at 1440 and 390 (How It’s Worked Out under The Evening’s Workload)",
   "first": "Pending"
  },
  "src/ui/components/StudyPlanPanels.tsx#at9": {
@@ -4082,9 +4110,9 @@
  },
  "src/ui/components/StudyPlanPanels.tsx#LeavePanel": {
   "status": "Rewritten",
-  "hash": "4c9e91420a0c",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g25-school.test.ts and tests/evidence-g26-school.test.ts (Register for Spring Term 2028: until you do, you’re counted absent from classes and can’t work shifts)",
+  "hash": "edb18594a030",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “a leave’s lengths” renders the panel, and the built app walked on the leave save at 1440 and 390",
   "first": "Pending"
  },
  "src/ui/components/StudyPlanPanels.tsx#RepeatPanel": {
@@ -4158,11 +4186,11 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/looks/school.tsx#top": {
-  "status": "Retained",
-  "hash": "6aac5a8eb6f8",
-  "on": "2026-10-19",
-  "reason": "The school's, a course's, a skill's and a piece's own pages, each saying where you stand in it in a sentence and what it trains, with the source of each fact.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "29feaaad37c7",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “the school’s look” renders it (the chair of Acting, over six terms)",
+  "first": "Pending"
  },
  "src/ui/looks/school.tsx#YEAR_WORD": {
   "status": "Retained",
@@ -4194,9 +4222,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#ClassesPane": {
   "status": "Rewritten",
-  "hash": "a6d2493a6249",
+  "hash": "70ccb1d6a714",
   "on": "2026-10-20",
-  "evidence": "Brief 16 sec. 7: five sentences now 2 and 3 (tools/screen-text.mjs on the built app); the injury that limits the work added, as sickRefusal in systems/school.ts reads it; tests/defects-g8-3 and whynot-school pass",
+  "evidence": "tests/editorial17-school.test.ts “withdrawn in the first fall” renders the tab, and the built app walked on the withdraw save at 1440 and 390 (No Classes Now)",
   "first": "Pending"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#CoursesPanel": {
@@ -4285,9 +4313,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#TermsPane": {
   "status": "Rewritten",
-  "hash": "017aff0f318c",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): Tuition is covered in full for every student’s six terms, by the David Geffen gift; the past-six sentence in billUnsupportedTerm's words (pays its health fee and what the account owes), as tests/remaining-banking.test.ts holds them",
+  "hash": "037634138035",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-school.test.ts “withdrawn in the first fall” renders the tab, and the built app walked on the withdraw save at 1440 and 390 (the terms begun only)",
   "first": "Pending"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#WEEKDAYS": {
@@ -4305,10 +4333,10 @@
   "first": "Pending"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#WorkPane": {
-  "status": "Retained",
-  "hash": "03de30482ff3",
-  "on": "2026-10-19",
-  "reason": "The work-study hours, Friday's pay with its rate, the protective equipment and how a missed shift counts, each with the school's own figure.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "b18d7ed3cb81",
+  "on": "2026-10-20",
+  "evidence": "the built app walked at 1440 on the workload and decision saves (Shifts And Pay: what every student works first, the cap and the conversion last)",
+  "first": "Pending"
  }
 }

@@ -649,7 +649,9 @@ describe('standing/term evaluation', () => {
     expect(a!.reason).toBe(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${a!.growth.toFixed(1)} points this term, and the middle student in your class grew ${a!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ahead of the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.`);
     // Behind the class, and nothing else short: a concern for the pace alone.
     expect(b!.standing).toBe('concern');
-    expect(b!.reason).toBe(`You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${b!.growth.toFixed(1)} points this term, and the middle student in your class grew ${b!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.`);
+    // The pace first, as what fell short, with its minimum (from 2026-10-20, brief 17: until then after the attendance, the
+    // minimum unsaid).
+    expect(b!.reason).toBe(`Your craft grew ${b!.growth.toFixed(1)} points this term, and the middle student in your class grew ${b!.classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class. That’s under half its pace, short of what the program asks. You came to 100% of the classes, calls and shifts asked of you. The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.`);
     expect(driven.player.school!.standing).toBe('concern');
     // The Standing tab, as the player has it.
     const { text } = drawn(driven, SchoolWorkspace, 'standing');
