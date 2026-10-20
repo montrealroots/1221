@@ -4,8 +4,9 @@
 "Complete Natural-Language Editorial Pass, Including All Retained Text"
 (`docs/verification/briefs-2026-10-16/15-complete-natural-language-editorial-pass.txt`, kept verbatim). The work was done
 on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `bdb23949` (#43's merge, the handoff after #42's). Brief
-14's section below was the status until brief 15 began. It is pushed, and its pull request follows the gate. It isn't
-merged: merging is the owner's. **Nothing is deployed.**
+14's section below was the status until brief 15 began. It is pushed and in pull request #44
+(https://github.com/yvcbcjhsy7-prog/1221/pull/44), opened after the gate. It isn't merged: merging is the owner's.
+**Nothing is deployed.**
 
 ## 1. The Repository
 
