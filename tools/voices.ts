@@ -389,7 +389,7 @@ export function brief17(runs: { scenario: string; seed: string; said: Said[]; le
     }
   }
   // Contradictions: a showing's claims against the course's own record, read in order.
-  const claims = { moveClaims: 0, moveWrong: 0, bestClaims: 0, bestWrong: 0, runClaims: 0, runWrong: 0, countClaims: 0, countWrong: 0, examples: [] as string[] };
+  const claims = { moveClaims: 0, moveWrong: 0, bestClaims: 0, bestWrong: 0, firstClaims: 0, firstWrong: 0, runClaims: 0, runWrong: 0, countClaims: 0, countWrong: 0, examples: [] as string[] };
   for (const r of runs) {
     const byCourse = new Map<string, Said[]>();
     const sorted = r.said.filter((y) => y.kind === 'showing').sort((a, b) => (a.t ?? 0) - (b.t ?? 0));
@@ -411,11 +411,19 @@ export function brief17(runs: { scenario: string; seed: string; said: Said[]; le
         claims.bestClaims += 1;
         if (!(prev.length && prev.every((y) => BAND_WORD[y.band!]! < BAND_WORD[x.band!]!))) { claims.bestWrong += 1; if (claims.examples.length < 12) claims.examples.push(`${r.scenario} ${x.at} ${x.course}: a best after ${prev.map((y) => y.band).join(',')}`); }
       }
-      const runM = /\b(two|three|four|five|six|seven|eight|nine|ten|\d+) times running|\b(second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|\d+(?:st|nd|rd|th)) time in a row|twice running|two in a row/i.exec(t);
+      // A run at Strong or better, in brief 16's words and brief 17's ("four times in a row", "four in a row at Strong or
+      // better", "four straight at", "the run … is four long"); a limit's run of pieces ("the fourth piece running") isn't one.
+      // A first Strong (brief 17's own situation): nothing the course showed before was Strong or better.
+      if (/\b(?:first (?:Strong|Exceptional)|a first for)\b/i.test(t)) {
+        claims.firstClaims += 1;
+        if (!(BAND_WORD[x.band!]! >= 2 && prev.length && prev.every((y) => BAND_WORD[y.band!]! < 2))) { claims.firstWrong += 1; if (claims.examples.length < 12) claims.examples.push(`${r.scenario} ${x.at} ${x.course}: a first after ${prev.map((y) => y.band).join(',')}`); }
+      }
+      const runM = /\b(two|three|four|five|six|seven|eight|nine|ten|\d+) (?:times (?:running|in a row)|in a row at Strong|straight at Strong)|\brun at Strong or better is (two|three|four|five|six|seven|eight|nine|ten|\d+) long|\b(second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|\d+(?:st|nd|rd|th)) time in a row|twice running|two in a row/i.exec(t);
       if (runM) {
         const words = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
         const ords = ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'];
-        const said = runM[1] ? (words.indexOf(runM[1].toLowerCase()) > 0 ? words.indexOf(runM[1].toLowerCase()) : parseInt(runM[1], 10)) : runM[2] ? (ords.indexOf(runM[2].toLowerCase()) > 0 ? ords.indexOf(runM[2].toLowerCase()) : parseInt(runM[2], 10)) : 2;
+        const n1 = runM[1] ?? runM[2];
+        const said = n1 ? (words.indexOf(n1.toLowerCase()) > 0 ? words.indexOf(n1.toLowerCase()) : parseInt(n1, 10)) : runM[3] ? (ords.indexOf(runM[3].toLowerCase()) > 0 ? ords.indexOf(runM[3].toLowerCase()) : parseInt(runM[3], 10)) : 2;
         let run = BAND_WORD[x.band!]! >= 2 ? 1 : 0;
         for (const y of [...prev].reverse()) { if (!run || BAND_WORD[y.band!]! < 2) break; run += 1; }
         claims.runClaims += 1;
