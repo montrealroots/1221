@@ -104,6 +104,30 @@ describe('a classmate’s apology, kept on the misses it’s for', () => {
   }, 120_000);
 });
 
+describe('an apology long after the miss', () => {
+  it('says how long it’s been, where the miss was weeks or months ago, and nothing of it where it was days', () => {
+    const sim = life('continuity-late');
+    const a = toPartneredWork(sim);
+    const mate = alone(sim, a.partner!, 'people');
+    // TEST SETUP: one rehearsal they didn't come to, five months ago, after you'd met.
+    mateRecord(mate).met = sim.now - 200 * MS_DAY;
+    a.rehearsals.push({ id: 'old-miss', at: sim.now - 150 * MS_DAY, status: 'missedByThem' });
+    mateRecord(mate).stoodUp = 1;
+    const late = moments(sim, 40).filter((m) => m.kind === 'apology');
+    expect(late).toHaveLength(1);
+    expect(late[0]!.text).toMatch(/ It’s (?:five|six) months since, and they still wanted to say it\.$/);
+    // The same a few days after: no word of time.
+    const sim2 = life('continuity-late');
+    const a2 = toPartneredWork(sim2);
+    const mate2 = alone(sim2, a2.partner!, 'people');
+    a2.rehearsals.push({ id: 'new-miss', at: sim2.now - 2 * MS_DAY, status: 'missedByThem' });
+    mateRecord(mate2).stoodUp = 1;
+    const soon = moments(sim2, 40).filter((m) => m.kind === 'apology');
+    expect(soon).toHaveLength(1);
+    expect(soon[0]!.text).not.toMatch(/since, and they still wanted to say it/);
+  }, 120_000);
+});
+
 describe('what a classmate has asked, counted on them', () => {
   it('counts past the last 20, says how the newest request was answered, and says “before” where a save’s count is a floor', () => {
     const sim = life('continuity-asked');

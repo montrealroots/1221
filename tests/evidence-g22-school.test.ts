@@ -873,7 +873,7 @@ describe('school.partner_rehearsal', () => {
     play(sim, r2.at + 60_000);
     expect(r2.status).toBe('missedByThem');
     expect(titled(sim, `${first} Didn’t Come`)).toHaveLength(2);
-    expect(titled(sim, `${first} Didn’t Come`).sort((x, y) => x.at - y.at)[1]!.body).toContain(`, and they didn’t come, the second time they haven’t come. It isn’t held against you`);
+    expect(titled(sim, `${first} Didn’t Come`).sort((x, y) => x.at - y.at)[1]!.body).toContain(`, and they didn’t come. It’s the second time they haven’t come. It isn’t held against you`);
     const second = () => momentsOf(courseworkOf(sim, sim.player)!).find((x) => x.kind === 'apology' && x.mate === i && x.id !== m.id);
     while (!second() && sim.now < r2.at + 21 * MS_DAY) play(sim, sim.now + 6 * MS_HOUR);
     // The second apology is for the second miss alone, the first already apologized for, and counts both (from

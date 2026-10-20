@@ -76,6 +76,23 @@ describe('every situation, in every course’s voice', () => {
     }
   });
 
+  it('says a day once: a move from the piece shown the day a slipped note was put right says the day in one place', () => {
+    for (const v of VOICES) {
+      const f = SITUATIONS(v).slipped!;
+      const c = showingCandidates({ ...f, band: 'unready', bandLabel: 'Unready', prev: { band: 'working', label: 'Working', on: 'September 15, 2026' } });
+      expect(c.length, v).toBeGreaterThan(0);
+      for (const x of c) expect((x.match(/September 15, 2026/g) ?? []).length, `${v}: ${x}`).toBeLessThanOrEqual(1);
+      // A note given again, and a limit again, the last time the course's last piece: the day said once.
+      const moved = { band: 'unready' as const, bandLabel: 'Unready', prev: { band: 'working' as const, label: 'Working', on: 'September 8, 2026' } };
+      const s = SITUATIONS(v);
+      for (const g of [{ ...s.recurring!, ...moved }, { ...s.heldAgain!, ...moved, held: { ...s.heldAgain!.held!, again: 'September 8, 2026' } }]) {
+        const all = showingCandidates(g);
+        expect(all.length, v).toBeGreaterThan(0);
+        for (const x of all) expect((x.match(/September 8, 2026/g) ?? []).length, `${v}: ${x}`).toBe(1);
+      }
+    }
+  });
+
   it('stops at a first Strong, a best and a strong piece despite the day, holds back the step where what held a piece has a remedy, and gives it at a plateau', () => {
     for (const v of VOICES) {
       const s = SITUATIONS(v);

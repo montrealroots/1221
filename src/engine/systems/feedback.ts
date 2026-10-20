@@ -397,7 +397,7 @@ function movedLeads(v: Voice, f: ShowingFacts): string[] {
   switch (v) {
     case 'direct': return up ? [`${b} this time, up from ${p.label}.`, `Up from ${p.label} on ${p.on}, to ${b}.`] : [`${b} this time, down from ${p.label}.`, `Down from ${p.label} on ${p.on}, to ${b}.`];
     case 'warm': return up ? [`A step up to ${b}, from ${p.label} last time.`, `${b}, better than the ${p.label} piece on ${p.on}.`] : [`${b}, not as strong as the ${p.label} piece on ${p.on}.`, `A step down to ${b}, from ${p.label} last time.`];
-    case 'exacting': return [`${up ? 'Up' : 'Down'} ${bands(by)} to ${b}, from ${p.label} on ${p.on}.`, `${b}, ${up ? 'up' : 'down'} from ${p.label} on ${p.on}.`];
+    case 'exacting': return [`${up ? 'Up' : 'Down'} ${bands(by)} to ${b}, from ${p.label} on ${p.on}.`, `${b}, ${up ? 'up' : 'down'} ${bands(by)} from ${p.label}.`];
     case 'patient': return up ? [`It came out ${b}, up from ${p.label} on ${p.on}.`, `${b}, up from ${p.label} last time.`] : [`It came out ${b}, down from ${p.label} on ${p.on}.`, `${b}, down from ${p.label} last time.`];
     case 'brisk': return up ? [`Up from ${p.label} to ${b}.`, `${b}, up from ${p.label}.`] : [`Down from ${p.label} to ${b}.`, `${b}, down from ${p.label}.`];
   }
@@ -471,23 +471,24 @@ function partialLeads(v: Voice, f: ShowingFacts, dated = false): string[] {
   const { t, has } = topicOf(f);
   const fig = then && now;
   switch (v) {
-    case 'direct': return fig ? [`Better since ${since}: ${t} went from ${then} to ${now}. Not there yet.`, `${cap(t)} ${has} moved since ${since}, ${then} to ${now}. Still short.`] : [`Better than ${sinceOn}, but not there yet.`];
+    case 'direct': return fig ? [`Better since ${since}: ${t} went from ${then} to ${now}. Not there yet.`, `${cap(t)} ${has} moved since ${since}, from ${then} to ${now}. Still short.`] : [`Better than ${sinceOn}, but not there yet.`];
     case 'warm': return fig ? [`Progress on ${t}: ${then} ${sinceOn}, ${now} now. It isn’t there yet.`, `${cap(t)} ${has} come on since ${since}, from ${then} to ${now}, though it isn’t all the way yet.`] : [`Progress since ${since}, though it isn’t all the way yet.`];
     case 'exacting': return fig ? [`${cap(t)}: ${then} ${sinceOn}, ${now} now. Short of the mark.`, `Up from ${then} to ${now} on ${t} since ${since}, and still short.`] : [`Better than ${sinceOn}, and still short.`];
-    case 'patient': return fig ? [`${cap(t)} ${has} moved since ${since}, from ${then} to ${now}. It’s building, and it isn’t there yet.`, `Since ${since}, ${t} ${has} gone from ${then} to ${now}. Not all the way yet.`] : [`It’s been building since ${since}, and it isn’t there yet.`];
+    case 'patient': return fig ? [`It’s building: since ${since}, ${t} ${has} gone from ${then} to ${now}. It isn’t there yet.`, `Since ${since}, ${t} ${has} gone from ${then} to ${now}. Not all the way yet.`] : [`It’s been building since ${since}, and it isn’t there yet.`];
     case 'brisk': return fig ? [`${cap(t)}: up from ${then} to ${now} since ${since}. Keep at it.`, `From ${then} to ${now} on ${t} since ${since}. Not there yet.`] : [`Better than ${sinceOn}. Not there yet.`];
   }
 }
 
-function slippedLeads(v: Voice, f: ShowingFacts): string[] {
-  const at = f.before!.taken!;
+function slippedLeads(v: Voice, f: ShowingFacts, dated = false): string[] {
+  // `dated`: the move just before named the day it was put right, the course's last piece, so it's "then".
+  const at = dated ? 'then' : `on ${f.before!.taken!}`;
   const { t, has, was, it } = topicOf(f);
   switch (v) {
-    case 'direct': return [`You fixed ${t} on ${at}, and ${it} ${has} slipped since.`, `${cap(t)} again: ${it} ${was} right on ${at}.`];
-    case 'warm': return [`You’d got ${t} right on ${at}, and ${it} ${has} slipped since.`, `${cap(t)} came right on ${at}, and ${it} ${has} slipped back since.`];
-    case 'exacting': return [`${cap(t)} ${was} put right on ${at}, and ${has} dropped back since.`];
-    case 'patient': return [`${cap(t)} came right on ${at}, and ${it} ${has} slipped since. It’s worth going back to.`];
-    case 'brisk': return [`${cap(t)} slipped. ${cap(it)} ${was} right on ${at}.`];
+    case 'direct': return [`You fixed ${t} ${at}, and ${it} ${has} slipped since.`, `${cap(t)} again: ${it} ${was} right ${at}.`];
+    case 'warm': return [`You’d got ${t} right ${at}, and ${it} ${has} slipped since.`, `${cap(t)} came right ${at}, and ${it} ${has} slipped back since.`];
+    case 'exacting': return [`${cap(t)} ${was} put right ${at}, and ${has} dropped back since.`];
+    case 'patient': return [`${cap(t)} came right ${at}, and ${it} ${has} slipped since. It’s worth going back to.`];
+    case 'brisk': return [`${cap(t)} slipped. ${cap(it)} ${was} right ${at}.`];
   }
 }
 
@@ -735,7 +736,11 @@ export function showingCandidates(f: ShowingFacts): string[] {
   // short."). Where every way would, they're kept.
   const all = composed(f);
   const twice = (x: string) => (x.match(new RegExp(`\\b${f.bandLabel}\\b`, 'g')) ?? []).length > 1 && !/\b(?:again|running|in a row|twice)\b/.test(x);
-  const once = all.filter((x) => !twice(x));
+  // Nor a day said twice: a move from the piece shown the day a note was put right, and the note slipped since (brief 17's
+  // first after-runs: "Down from Working on October 19, 2026. Your choices again: they were right on October 19, 2026.").
+  const days = (x: string) => x.match(new RegExp(`\\b${MONTH} \\d{1,2}, \\d{4}`, 'g')) ?? [];
+  const dayTwice = (x: string) => new Set(days(x)).size < days(x).length;
+  const once = all.filter((x) => !twice(x) && !dayTwice(x));
   return once.length ? once : all;
 }
 
@@ -778,7 +783,7 @@ function composed(f: ShowingFacts): string[] {
   }
   // A new note on a part, its lead run into its words; the rest, the lead and then the words.
   if (s === 'new' && f.about === 'part') return front.flatMap((m) => newPartLeads(v, f).map((lead) => joined(m, lead, fix)));
-  const leads = (m: string) => (s === 'partial' ? partialLeads(v, f, Boolean(m) && m.includes(f.before!.on)) : s === 'slipped' ? slippedLeads(v, f) : s === 'recurring' ? againLeads(v, f) : newLeads(v, d, f));
+  const leads = (m: string) => (s === 'partial' ? partialLeads(v, f, Boolean(m) && m.includes(f.before!.on)) : s === 'slipped' ? slippedLeads(v, f, Boolean(m) && m.includes(f.before!.taken!)) : s === 'recurring' ? againLeads(v, f) : newLeads(v, d, f));
   const open = again ? standing(v, f, s === 'partial') : [''];
   return front.flatMap((m) => leads(m).flatMap((lead) => open.map((o) => joined(m, lead, body, o, fix))));
 }

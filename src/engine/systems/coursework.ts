@@ -1748,8 +1748,10 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
     remember(sim, mate, `They didn’t come to rehearse ${what}`);
     // From the second, how many (from 2026-10-20, brief 16, `stoodUp`): until then each read as the first, nine times in a
     // year from one classmate in brief 16's baseline.
-    const times = m.stoodUp >= 2 ? `, the ${ordinal(m.stoodUp)} time they haven’t come` : '';
-    if (mine) sim.notify({ category: 'school', title: `${first} Didn’t Come`, body: `You waited for ${first} to rehearse ${what}, and they didn’t come${times}. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With ${first}, or use ${READER.label} to work on your side of it.`, importance: 50, route: '/workspace/school' });
+    // Said as a sentence of its own (from 2026-10-20, brief 17): until then "…and they didn’t come, the second time they
+    // haven’t come."
+    const times = m.stoodUp >= 2 ? ` It’s the ${ordinal(m.stoodUp)} time they haven’t come.` : '';
+    if (mine) sim.notify({ category: 'school', title: `${first} Didn’t Come`, body: `You waited for ${first} to rehearse ${what}, and they didn’t come.${times} It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With ${first}, or use ${READER.label} to work on your side of it.`, importance: 50, route: '/workspace/school' });
     return;
   }
   r.status = 'kept';

@@ -71,7 +71,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { YALE_DRAMA, type SchoolDate } from '../content/school';
 import { questionWords, sceneById, templateById } from '../content/coursework';
@@ -249,11 +249,15 @@ function apologyWords(mate: Classmate, pr: Priority, owed: ReturnType<typeof mis
   const all = mateRecord(mate).stoodUp ?? owed.length;
   const more = all > owed.length ? ` That’s ${countWords(all)} rehearsals they’ve missed with you.` : '';
   const rehearsals = owed.length > 1 ? 'the rehearsals' : 'your rehearsal';
+  // An apology weeks or months after the last miss says so (from 2026-10-20, brief 17): until then brief 17's first
+  // after-runs had Owen sorry, a year on, about a rehearsal "on September 17, 2026", as though it were last week.
+  const gap = (now - Math.max(...owed.map(({ r }) => r.at))) / MS_DAY;
+  const late = gap < 28 ? '' : ` It’s ${gap < 63 ? `${countWords(Math.floor(gap / 7))} weeks` : gap < 330 ? `${countWords(Math.round(gap / 30.4))} months` : gap < 395 ? 'a year' : 'more than a year'} since, and they still wanted to say it.`;
   switch (pr) {
-    case 'craft': return `${f} finds you before class, sorry about ${rehearsals} of ${what}: they lost track of the day, and they know the scene lost the evening.${more}`;
-    case 'people': return `${f} apologizes for not coming to rehearse ${what}. They lost track of the day, and they’re sorry to have left you waiting.${more}`;
-    case 'career': return `${f} says sorry, briefly, for missing ${rehearsals} of ${what}: they lost track of the day.${more}`;
-    case 'home': return `${f} apologizes for not coming to rehearse ${what}: something at home took the evening.${more}`;
+    case 'craft': return `${f} finds you before class, sorry about ${rehearsals} of ${what}: they lost track of the day, and they know the scene lost the evening.${late}${more}`;
+    case 'people': return `${f} apologizes for not coming to rehearse ${what}. They lost track of the day, and they’re sorry to have left you waiting.${late}${more}`;
+    case 'career': return `${f} says sorry, briefly, for missing ${rehearsals} of ${what}: they lost track of the day.${late}${more}`;
+    case 'home': return `${f} apologizes for not coming to rehearse ${what}: something at home took the evening.${late}${more}`;
   }
 }
 
@@ -433,7 +437,7 @@ function disagreement(a: Assignment, mate: Classmate, draw: number, pr: Priority
   // In their voice (from 2026-10-20, brief 17): their reading and yours are the same facts either way.
   const text = pr === 'craft' ? `${f} reads ${q2} in ${where} another way: “${theirs.text}”, where you have “${mine.text}”. They’d like to try theirs.`
     : pr === 'people' ? `${f} asks, gently, whether ${q2} in ${where} could be “${theirs.text}”. You have “${mine.text}”.`
-      : pr === 'career' ? `${f} wants to settle ${q2} in ${where} before your next rehearsal: they read it as “${theirs.text}”, where you have “${mine.text}”.`
+      : pr === 'career' ? `${f} wants to settle ${q2} in ${where} before your next rehearsal: they see it as “${theirs.text}”, where you have “${mine.text}”.`
         : `${f} reads ${q2} in ${where} as “${theirs.text}”, where you have “${mine.text}”, and asks what you think.`;
   return { assignmentId: a.id, question: q.id, theirs: theirs.id, text };
 }
