@@ -240,7 +240,7 @@ describe('health.choose_clinic, New Haven’s two practices', () => {
     expect(at(2026, 9, 1) - at(2026, 8, 31)).toBe(YALE_WAIT * MS_DAY);
     expect(at(2026, 9, 24) - at(2026, 8, 31)).toBe(TOWN_WAIT * MS_DAY);
     expect(pendingOf(chooser, APPOINTMENT_KIND).map((i) => i.label)).toEqual([`The Doctor, ${YALE_NAME}`]);
-    expect(titled(chooser, 'A Doctor’s Appointment').map((n) => n.body)).toEqual([`A doctor’s visit: booked at ${YALE_NAME} for September 1, 2026, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.`]);
+    expect(titled(chooser, 'A Doctor’s Appointment').map((n) => n.body)).toEqual([`A doctor’s visit: booked at ${YALE_NAME} for September 1, 2026, the next day it’s open. Be there then, or press Call It Off on Papers, under Health Cover.`]);
 
     // Reloaded, the clock runs to each visit, and each is kept where it was booked.
     const kept = [chooser, plain].map((sim, i) => {

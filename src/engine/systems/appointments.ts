@@ -176,7 +176,7 @@ export function book(sim: Simulation, person: Person, what: string): Appointment
   const own = clinicFor(person, 'visit', sim.now)?.waitDays ?? undefined;
   const days = what === SPECIALIST ? referralDays(person) : own ?? waitDays(sim, person, `${what}-${sim.now}`);
   if (days === undefined) return undefined;
-  return bookIn(sim, person, what, days);
+  return bookIn(sim, person, what, days, undefined, what !== SPECIALIST && own !== undefined);
 }
 
 /**
@@ -185,7 +185,7 @@ export function book(sim: Simulation, person: Person, what: string): Appointment
  * the referral's clause added to it). The practice is looked up for the person as they are: until 2026-10-12 it was
  * for a copy of them put in their own town, which was the town they were in.
  */
-function bookIn(sim: Simulation, person: Person, what: string, days: number, why?: string): Appointment {
+function bookIn(sim: Simulation, person: Person, what: string, days: number, why?: string, ownWait = false): Appointment {
   const clinic = clinicFor(person, 'visit', sim.now);
   const h = healthOf(person);
   h.seq = (h.seq ?? 0) + 1;
@@ -195,8 +195,11 @@ function bookIn(sim: Simulation, person: Person, what: string, days: number, why
   // Its words are the papers guide's quote (`guide/papers.ts`, papers.doctor's example, which tests/guide-examples-papers
   // holds equal), so brief 14's health area left them for that guide's area; the editorial review changed both together,
   // “the wait where you live” becoming “the usual wait where you live”. Brief 15's coordinator added the next step to both
-  // at the health area's merge, where the health area had left the notice Blocked for that reason.
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.`, importance: 50, route: '/workspace/papers' });
+  // at the health area's merge, where the health area had left the notice Blocked for that reason. A practice's own
+  // published wait is said as that (from 2026-10-20, brief 17, the health editor's find): until then Yale Health's next
+  // day read "the usual wait where you live", the town's wait, which it isn't.
+  const wait = !ownWait ? 'the usual wait where you live' : days === 1 ? 'the next day it’s open' : `its own wait of ${days} days`;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, ${wait}. Be there then, or press Call It Off on Papers, under Health Cover.`, importance: 50, route: '/workspace/papers' });
   return a;
 }
 
