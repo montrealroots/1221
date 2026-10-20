@@ -1,9 +1,9 @@
 {
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.passport-id]": {
   "status": "Rewritten",
-  "hash": "e00d409d99a5",
-  "on": "2026-10-19",
-  "evidence": "rendered with every figure by tools in my folder (guide-documents.txt, vite-node over GUIDE_BY_ID); its quotes held by tools/guide-quotes.mjs --check",
+  "hash": "61e5d093d75e",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check",
   "first": "Pending"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]": {
@@ -15,9 +15,9 @@
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
   "status": "Rewritten",
-  "hash": "8e7b201617a7",
-  "on": "2026-10-19",
-  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-documents.txt (vite-node over GUIDE_BY_ID); quotes held by tools/guide-quotes.mjs --check",
+  "hash": "bde4d5c6fe44",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check",
   "first": "Pending"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [evaluation]": {
@@ -155,23 +155,23 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.conditions]": {
   "status": "Rewritten",
-  "hash": "5e731c1be28a",
-  "on": "2026-10-19",
-  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-papers.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "hash": "ac88d35b0345",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
   "status": "Rewritten",
-  "hash": "5b3cabe37d2f",
-  "on": "2026-10-19",
-  "evidence": "tests/guide-examples-papers.test.ts plays the example and holds its quoted notice equal to the game's, with the next step the health area added",
+  "hash": "84639425243c",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check; the short's practice and wait still parsed by tests/guide-examples-papers.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
   "status": "Rewritten",
-  "hash": "4aa3cd1645d8",
-  "on": "2026-10-19",
-  "evidence": "tools/guide-quotes.mjs --check finds the quoted refusal in systems/health.ts as the health area rewrote it, exit 0",
+  "hash": "db6c7035ca1d",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check; its notice quote checked against healthMonth in systems/health.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.overview]": {
@@ -281,9 +281,9 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]": {
   "status": "Rewritten",
-  "hash": "1b616e4f1522",
-  "on": "2026-10-19",
-  "evidence": "rendered in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "hash": "d63d1b30fe56",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check",
   "first": "Pending"
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.pay]": {
@@ -295,16 +295,16 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.plan]": {
   "status": "Rewritten",
-  "hash": "2d6ff1848140",
-  "on": "2026-10-19",
-  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "hash": "7816f1e22655",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check",
   "first": "Pending"
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.return]": {
   "status": "Rewritten",
-  "hash": "c11f09053621",
-  "on": "2026-10-19",
-  "evidence": "rendered with every figure in docs/verification/editorial-2026-10-19/papers/guide-taxes.txt (vite-node over GUIDE_BY_ID); tests/guide-examples-papers.test.ts plays its example",
+  "hash": "78df8467a08c",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check",
   "first": "Pending"
  },
  "src/engine/content/licensepaths.ts#LICENSE_EXCHANGES": {
@@ -3123,9 +3123,9 @@
  },
  "src/ui/papers/Documents.tsx#WorkPane": {
   "status": "Rewritten",
-  "hash": "c293a9c40e61",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g15-papers.test.ts 'documents.apply_opt > on Permission To Work, the OPT panel says its fees …' and tests/evidence-g16-papers.test.ts (the out-of-status note) render the pane",
+  "hash": "b1e12d259936",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read on the built app by tools/screen-text.mjs (Papers, Permission To Work, a year in) and rendered for an F-1 graduate in tests/evidence-g15-papers.test.ts, which holds the window, the fee and the degree warning",
   "first": "Pending"
  },
  "src/ui/papers/Documents.tsx#WorkPane <documents.apply_opt>": {
@@ -3158,9 +3158,9 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#BenefitsPane": {
   "status": "Rewritten",
-  "hash": "778bce4d36ec",
-  "on": "2026-10-19",
-  "evidence": "the built app’s Unemployment tab, read in the text walk of the tax, health and withdraw saves at 1440 and 390 (after-1440, after-390: The game certifies each week for you on Sunday …)",
+  "hash": "c017ab416d0c",
+  "on": "2026-10-20",
+  "evidence": "brief 16: read on the built app by tools/screen-text.mjs (Papers, Unemployment, a year in) and rendered for an open Connecticut claim in tests/evidence-g15-papers.test.ts",
   "first": "Pending"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#ConditionsPanel": {
@@ -3249,16 +3249,16 @@
  },
  "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel": {
   "status": "Rewritten",
-  "hash": "3810784a4ec7",
-  "on": "2026-10-19",
-  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders Connecticut DRS Installment Agreement (It covers up to $50,000.00 …)",
+  "hash": "b8256e30aa5e",
+  "on": "2026-10-20",
+  "evidence": "brief 16: rendered for Connecticut and California in tests/editorial-papers.test.ts, which holds each paragraph, the fine print and the estimate against the plan's own monthly payment",
   "first": "Pending"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel": {
   "status": "Rewritten",
-  "hash": "cce56c686012",
-  "on": "2026-10-19",
-  "evidence": "tests/editorial-papers.test.ts 'a 2027 return left owing …' renders the panel before and after applying (the number's two ways, Not by direct debit), its rules now a second paragraph",
+  "hash": "c4b413a5ebb4",
+  "on": "2026-10-20",
+  "evidence": "brief 16: rendered for a 2027 return left owing in tests/editorial-papers.test.ts, which holds how a plan is decided, its fees and the setup fee line",
   "first": "Pending"
  },
  "src/ui/workspaces/PapersWorkspace.tsx#TherapyRow": {

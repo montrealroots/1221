@@ -181,7 +181,10 @@ function StatePlanPanel({ state }: { state: string }) {
   const longest = long && lp ? lp.maxMonths : rules.plan.maxMonths;
   const no = statePlanRefusal(sim, person, state, Number(months), { long, down: downCents });
   const statement = long && lp?.statement ? financialStatement(sim, person) : undefined;
-  const monthly = Math.ceil(Math.max(0, owed - downCents) / Math.max(1, Number(months)));
+  // With the fee where the state adds it to what you owe, as the plan's own monthly payment has it (`tax.apply_state_plan`).
+  // Until 2026-10-20 (brief 16) the estimate left the fee out, and said less than the plan then took.
+  const feeAdded = rules.plan.feeAdded ? statePlanFee(person, rules, cur) : 0;
+  const monthly = Math.ceil(Math.max(0, owed - downCents + feeAdded) / Math.max(1, Number(months)));
   const lien = rules.lien && ((long && lp?.lien) || (rules.lien.plan && ((rules.lien.plan.monthsOver !== undefined && Number(months) > rules.lien.plan.monthsOver) || (rules.lien.plan.over !== undefined && owed > rules.lien.plan.over))));
   const STATUS: Record<string, string> = { pending: 'Being decided', active: 'In force', missed: 'A payment missed', ended: 'Ended', paid: 'Paid in full', declined: 'Declined' };
   return (
@@ -201,10 +204,21 @@ function StatePlanPanel({ state }: { state: string }) {
         {plan?.status === 'missed' && <div><Gated feature="tax.catch_up_state_plan" className="btn btn-sm" onClick={() => { const a = run<{ paid: number }>('tax.catch_up_state_plan', { state }); if (a.ok) toast(`Caught up: ${money(a.value!.paid)} paid. The plan is back in force.`, 'positive'); }}>Catch Up</Gated></div>}
         {(!live || (lp?.alreadyOnPlan && plan?.status === 'active' && !plan.long)) && owed > 0 && (
           <div className="col gap-2">
+            {/* What the plan does for you, what it costs and what a missed payment does, each its own paragraph before Apply
+                For The Plan, and what isn't published under Sources And Estimates below (from 2026-10-20, brief 16,
+                section 7). Until then one paragraph, six sentences for Connecticut and twelve for Louisiana, which also
+                said a missed payment's rule wasn't published for every state whose plan ends at once, where Arizona's,
+                Louisiana's, New Mexico's and the District's publish it (`cureAssumed`). */}
             <p className="small" style={{ margin: 0 }}>
-              This is {rules.short}’s own payment plan, separate from any plan with the IRS. It covers {rules.plan.max !== undefined ? `up to ${money(rules.plan.max)}` : 'any amount (no limit is published)'}{rules.plan.min !== undefined ? `, for a balance over ${money(rules.plan.min)}` : ''}, paid over {rules.plan.minMonths} to {rules.plan.maxMonths} months{rules.plan.tiers ? ` (${rules.plan.tiers.map((t) => `up to ${t.maxMonths} months for ${t.upTo !== undefined ? `${money(t.upTo)} or less` : 'any amount'}`).join(', ')})` : ''}{rules.plan.minMonthly !== undefined ? `, at least ${money(rules.plan.minMonthly)} a month` : ''}.{rules.plan.monthsAssumed ? ' The longest term isn’t published, so it’s estimated.' : ''}{rules.plan.fee ? (statePlanFee(person, rules, cur) ? ` A ${money(statePlanFee(person, rules, cur))} fee is added to what you owe.` : ' Its fee is waived at your income.') : ' There’s no fee.'}{rules.plan.beyond ? ` ${rules.plan.beyond}` : ''} While the plan is in force, collection stops, but interest {rules.payLate.monthly ? 'and the late-payment penalty keep' : 'keeps'} adding up.{rules.plan.cure.kind === 'next-due' ? ' If you miss a payment, you can make it up by the next due date.' : rules.plan.cure.kind === 'notice' ? ` If you miss a payment, ${rules.short} sends an Intent to Terminate and gives you ${rules.plan.cure.days} days.` : ' What happens after a missed payment isn’t published. In the game, the plan ends.'}{rules.plan.newBalance === 'default' ? ' A new balance owed while the plan is in force puts it in default.' : ''}
-              {dp ? ` ${dp.why}` : ''}{lp ? ` For longer, there’s its ${lp.name.toLowerCase()}, up to ${lp.maxMonths} months${lp.maxAssumed ? ' (the longest term is estimated)' : ''}. ${lp.how}` : ''}
+              {rules.short}’s own payment plan spreads what you owe it over {rules.plan.minMonths} to {rules.plan.maxMonths} months{rules.plan.tiers ? ` (${rules.plan.tiers.map((t) => `up to ${t.maxMonths} months for ${t.upTo !== undefined ? `${money(t.upTo)} or less` : 'any amount'}`).join(', ')})` : ''}{rules.plan.minMonthly !== undefined ? `, at least ${money(rules.plan.minMonthly)} a month` : ''}, and collection stops while it’s in force. It covers {rules.plan.max !== undefined ? `up to ${money(rules.plan.max)}` : 'any amount (no limit is published)'}{rules.plan.min !== undefined ? `, for a balance over ${money(rules.plan.min)}` : ''}, and it’s separate from any plan with the IRS.{rules.plan.beyond ? ` ${rules.plan.beyond}` : ''}
             </p>
+            <p className="small" style={{ margin: 0 }}>
+              {rules.plan.fee ? (statePlanFee(person, rules, cur) ? `A ${money(statePlanFee(person, rules, cur))} fee is added to what you owe.` : 'Its fee is waived at your income.') : 'There’s no fee.'} Interest {rules.payLate.monthly ? 'and the late-payment penalty keep' : 'keeps'} adding up while the plan runs.{dp ? ` ${dp.why}` : ''}
+            </p>
+            <p className="small" style={{ margin: 0 }}>
+              {rules.plan.cure.kind === 'next-due' ? 'If you miss a payment, press Catch Up by the next due date, or the plan ends and collection starts again.' : rules.plan.cure.kind === 'notice' ? `If you miss a payment, ${rules.short} sends an Intent to Terminate, and you have ${rules.plan.cure.days} days to press Catch Up before the plan ends and collection starts again.` : 'If you miss a payment, the plan ends and collection starts again.'}{rules.plan.newBalance === 'default' ? ' A new balance owed while the plan is in force counts as a missed payment.' : ''}
+            </p>
+            {lp && <p className="small" style={{ margin: 0 }}>For longer, there’s its {lp.name.toLowerCase()}, up to {lp.maxMonths} months{lp.maxAssumed ? ' (the longest term is estimated)' : ''}. {lp.how}</p>}
             <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
               {lp && <label className="check" htmlFor={`state-plan-long-${state}`}><input id={`state-plan-long-${state}`} type="checkbox" checked={long} onChange={(e) => setLong(e.target.checked)} /><span>{`Ask For Its ${lp.name}`}</span></label>}
               <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor={`state-plan-${state}`}>Pay Over</label><select id={`state-plan-${state}`} style={{ width: 'auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>
@@ -223,7 +237,7 @@ function StatePlanPanel({ state }: { state: string }) {
             <ul style={{ margin: 0 }}>{plan.history.map((h, i) => <li key={i}>{formatDate(h.at, sim.zone)}: {h.what}{h.amount !== undefined ? `, ${money(h.amount)}` : ''}.</li>)}</ul>
           </details>
         )}
-        <Fine>Source: {rules.source}.</Fine>
+        <Fine>{rules.plan.monthsAssumed ? 'The plan’s longest term isn’t published, so it’s estimated. ' : ''}{rules.plan.cure.kind === 'none' && rules.plan.cureAssumed ? `${rules.short} doesn’t publish what happens after a missed payment, so in the game the plan ends. ` : ''}Source: {rules.source}.</Fine>
       </div>
     </Panel>
   );
@@ -340,13 +354,19 @@ function TaxPlanPanel() {
         )}
         {!live && owed > 0 && (
           <div className="col gap-2">
+            {/* What the plan does for you and how it's decided, what it costs, then what a missed payment does, and the
+                lowest payment's estimate under Sources And Estimates (from 2026-10-20, brief 16, section 7). Brief 15 made
+                one paragraph of about 120 words two, and the second still held six rules; it said a monthly plan had a
+                setup fee where a low income's by direct debit is $0 (`PLAN.fee`), and nothing of the interest a plan
+                leaves running. */}
             <p className="small" style={{ margin: 0 }}>
-              One IRS plan covers what you owe the IRS for every year. It’s for federal tax only: a state has its own plan for what you owe it. A short-term plan gives you {PLAN.shortDays} days to pay, with no fee. A monthly plan for up to {money(PLAN.longMax)} has a setup fee.
+              One IRS plan covers what you owe the IRS for every year, and collection stops while it’s in force. It’s for federal tax only: a state has its own plan for what you owe it. With a Social Security number you apply online and the IRS answers within a minute; without one, your application goes by mail and the answer takes {PLAN.mailDays} days.
             </p>
-            {/* What it is, then how it's decided and what it changes, as two paragraphs (from 2026-10-19, brief 15: one of
-                about 120 words was a wall at 390 wide). */}
-            <p className="xs dim" style={{ margin: 0 }}>
-              With a Social Security number you apply online, and the IRS answers within a minute. Without one, your application goes by mail and the answer takes {PLAN.mailDays} days. While a plan is in force, collection stops. If you filed the return on time, each month of late-payment penalty that begins under the plan is {PLAN.reducedRate * 100}% instead of {RETURN.payLateMonthly * 100}%. If you miss a payment, the IRS sends Notice CP523 and gives you {PLAN.defaultDays} days to catch up before the plan ends. The lowest monthly payment shown, what you owe spread over {PLAN.leastMonths} months, is estimated.
+            <p className="small" style={{ margin: 0 }}>
+              A short-term plan gives you {PLAN.shortDays} days to pay, with no fee. A monthly plan for up to {money(PLAN.longMax)} has a setup fee that depends on your income and on paying by direct debit. Interest keeps adding up under either. If you filed the return on time, each month of late-payment penalty that begins under a plan is {PLAN.reducedRate * 100}% instead of {RETURN.payLateMonthly * 100}%.
+            </p>
+            <p className="small" style={{ margin: 0 }}>
+              If you miss a payment, the IRS sends Notice CP523, and you have {PLAN.defaultDays} days to press Catch Up before the plan ends and collection starts again.
             </p>
             <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
               <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor="plan-kind">Plan Type</label><select id="plan-kind" style={{ width: 'auto' }} value={kind} onChange={(e) => setKind(e.target.value as 'long' | 'short')}>
@@ -365,7 +385,7 @@ function TaxPlanPanel() {
             <ul style={{ margin: 0 }}>{plan.history.map((h, i) => <li key={i}>{formatDate(h.at, sim.zone)}: {h.what}{h.amount !== undefined ? `, ${money(h.amount)}` : ''}.</li>)}</ul>
           </details>
         )}
-        <Fine>Source: {PLAN.source}.</Fine>
+        <Fine>The lowest monthly payment shown, what you owe spread over {PLAN.leastMonths} months, is estimated. Source: {PLAN.source}.</Fine>
       </div>
     </Panel>
   );
@@ -867,7 +887,10 @@ function BenefitsPane() {
   // A full-time student in Connecticut isn't available for work (from 2026-10-10, `studentUnavailable`).
   // A student in Connecticut, or a noncitizen without permission to work (`usWorkAuthorized`, from 2026-10-10): the reason said, no button.
   const studying = state ? studentUnavailable(person, state) ?? (usWorkAuthorized(person, sim.now) ? undefined : 'Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3304(a)(14)).') : undefined;
-  const partial = state === 'ca' ? `the benefit less your earnings above ${formatMoney(inSaveMoney(sim, CALIFORNIA_UI.disregard, 'USD'), cur)} or a quarter of them, whichever is greater` : state === 'ct' ? 'the benefit less two-thirds of the pay' : 'a share of the benefit by the hours worked, and nothing once the pay reaches the maximum';
+  // A week is certified by the open claim's state's rules (`weekBenefit`, `ableOnMost`); until 2026-10-20 (brief 16) these
+  // words read the state a claim filed now would go to, the same for every New Haven life, but not for a claim elsewhere.
+  const weekState = claim?.state ?? state;
+  const partial = weekState === 'ca' ? `the benefit less your earnings above ${formatMoney(inSaveMoney(sim, CALIFORNIA_UI.disregard, 'USD'), cur)} or a quarter of them, whichever is greater` : weekState === 'ct' ? 'the benefit less two-thirds of the pay' : 'a share of the benefit by the hours worked, and nothing once the pay reaches the maximum';
   return (
     <div className="col gap-5">
       <HomeClaimsPanel />
@@ -892,8 +915,15 @@ function BenefitsPane() {
               {!state ? 'Unemployment is paid in the game only in New York, California and Connecticut, and you’d have to live in one of them.' : studying ? studying : preview!.result.ok ? `Filed now, your base period, ${preview!.quarters.join(', ')}, pays ${preview!.result.why}` : `Filed now, it wouldn’t pay: ${preview!.result.why}`}
             </p>
           )}
+          {/* What happens once a claim is open, then what a week pays (from 2026-10-20, brief 16, section 7: until then one
+              paragraph of five sentences). Until then too it said a week counted "the wages paid that week", where from
+              2026-10-13 it's the work done in it, paid then or later (`workDoneIn`), and it left out the weeks in hospital,
+              laid up or without permission to work, which pay nothing (`ableOnMost`, `usWorkAuthorized`). */}
           <p className="small" style={{ margin: 0 }}>
-            The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays {partial}, counting the wages paid that week. Work-study wages come from your school and don’t count toward the claim’s base period. What’s paid is taxable income on your return{state === 'ca' ? ' federally, though California doesn’t tax it' : ''}.
+            Once a claim is open, the game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. What it pays is taxable income on your return{weekState === 'ca' ? ' federally, though California doesn’t tax it' : ''}.
+          </p>
+          <p className="small" style={{ margin: 0 }}>
+            A week with work pays {partial}, counting the work you did that week, even if it’s paid later. A week pays nothing if you’re abroad, a full-time student in Connecticut or without permission to work in the US, or in hospital or laid up by an injury {weekState === 'ct' ? 'for most of the week' : 'when it’s certified'}. Work-study wages come from your school and don’t count toward a claim’s base period.
           </p>
           <Fine>Source: {source}.</Fine>
         </div>
