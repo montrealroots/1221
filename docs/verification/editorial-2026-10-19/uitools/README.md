@@ -94,7 +94,7 @@ done and Shown Today 52 → 52".
 
 ## The Trials And The Final Runs
 
-The trials were run on copies of the working tree, not as records (the scratchpad's `try15.sh` and `try15b.sh`).
+The trials ran on copies of the working tree, as checks before the final runs, not as their record. Their scripts and the normal run at 390 from each are kept in `trial/`.
 
 **The first trial, `e5fdacb7`'s tree:**
 - acceptance: 77 of 77 at each width;
@@ -102,4 +102,9 @@ The trials were run on copies of the working tree, not as records (the scratchpa
 - setback 9 of 9, specialist 11 of 11, document 8 of 8 and health 10 of 10, at each width;
 - banking 9 of 10 at each width: step 8 is brief 14's `journeys-3`, which brief 15 didn't change.
 
-The second trial, on `d6f6527a`'s tree, and the final runs are in `../runs/README.md`.
+**The second trial, `d6f6527a`'s tree,** ran what reads the forecast:
+- acceptance: 77 of 77 at 390;
+- normal: 14 of 14 at each width;
+- setback: 9 of 9 at each width.
+
+Then every lane ran again on `d6f6527a`. `../runs/README.md` has those runs.
