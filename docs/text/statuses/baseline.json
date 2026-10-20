@@ -4429,11 +4429,6 @@
   "hash": "469f22f9bb99",
   "on": "2026-10-17"
  },
- "src/engine/content/briefs/index.ts#RETIRED_BRIEFS": {
-  "status": "Pending",
-  "hash": "d9c6498d91ab",
-  "on": "2026-10-17"
- },
  "src/engine/content/briefs/second-a.ts#SECOND_A [bait]": {
   "status": "Pending",
   "hash": "2836db7a908b",

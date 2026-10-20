@@ -3121,13 +3121,6 @@
   "reason": "Someone Wants Her says she half believes her grandmother is still keeping house, resting on the bread cut the way her grandmother cut it.",
   "first": "Reviewed And Retained"
  },
- "src/engine/content/briefs/index.ts#RETIRED_BRIEFS": {
-  "status": "Retained",
-  "hash": "d9c6498d91ab",
-  "on": "2026-10-19",
-  "reason": "The fourteen retired scenes' own invented titles, in Title Case; only their genres are read (briefKinds), so a save's old takes keep their genre, and no screen offers these scenes again.",
-  "first": "Reviewed And Retained"
- },
  "src/engine/content/plays.ts#PLAY_ALIASES": {
   "status": "Retained",
   "hash": "1f1a07b56446",

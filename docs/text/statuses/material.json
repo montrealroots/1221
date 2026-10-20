@@ -2675,12 +2675,6 @@
   "on": "2026-10-17",
   "reason": "Someone Wants Her, a reading of The Kettle At Six: says in a sentence what the scene is, played this way, and what in the brief supports it (The bread at her old place is cut the way her grandmother made it for her as a girl), plainly. Read whole on 2026-10-17; no engine terms."
  },
- "src/engine/content/briefs/index.ts#RETIRED_BRIEFS": {
-  "status": "Reviewed And Retained",
-  "hash": "d9c6498d91ab",
-  "on": "2026-10-17",
-  "reason": "The fourteen briefs retired on 2026-10-16, their titles in Title Case, kept so a save's record still names its genre; no screen shows these titles: only .kinds is read, by briefKinds (grep of src for RETIRED_BRIEFS finds no other read)"
- },
  "src/engine/content/briefs/second-a.ts#SECOND_A [bait]": {
   "status": "Reviewed And Retained",
   "hash": "2836db7a908b",

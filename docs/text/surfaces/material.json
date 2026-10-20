@@ -1128,29 +1128,6 @@
   ]
  },
  {
-  "surface": "The Retired Briefs’ Titles",
-  "where": "No screen: kept with their genres for an old take on the work record (the actor look files it by genre through briefKinds)",
-  "sources": [
-   "src/engine/content/briefs/index.ts#RETIRED_BRIEFS"
-  ],
-  "states": [
-   "history"
-  ],
-  "outcome": "Kept",
-  "why": "The fourteen second situations retired on 2026-10-16 keep their real titles beside their genres so a save that taped one still knows which genre and which scene it was. Only kinds is read (briefKinds, from the actor look); nothing in the game reads title or replacedBy, so no player meets these words, and the unread fields are reported for the owner rather than deleted in a writing pass.",
-  "changes": "",
-  "evidence": [
-   {
-    "kind": "source",
-    "ref": "src/engine/content/briefs/index.ts"
-   },
-   {
-    "kind": "source",
-    "ref": "src/ui/looks/actor.tsx"
-   }
-  ]
- },
- {
   "surface": "A Class Scene From A Play, On Its Coursework Card And At The Table Work",
   "where": "School, Coursework, a piece set from a scene: the card’s opening sentence (play, author or translator, year, place, the parts), the summary, and the Table Work’s questions with each answer, and once the piece is shown, Why the text supports it or doesn’t under each; and the notice when the piece is set (“Your scene is from …”)",
   "sources": [
