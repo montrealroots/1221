@@ -26,6 +26,7 @@ dates the work 2026-10-16, as the work plan does, so the commits' dates and the 
 | `14-complete-player-facing-language-and-tutorial-overhaul.txt`: "Complete Player-Facing Language And Tutorial Overhaul" | 2026-10-17 15:44, the same session, on the branch restarted from `main` at `0368d46b` | `../language-2026-10-17/`; its receipt `RECEIPT.md` | #42 (`99f3c756`), at the owner's word; the handoff fixed after it in #43 (`bdb23949`) | merged, not deployed; until 2026-10-20 this row said in progress |
 | `15-complete-natural-language-editorial-pass.txt`: "Complete Natural-Language Editorial Pass, Including All Retained Text" | 2026-10-19 03:34, the same session, on the branch restarted from `main` at `bdb23949` | `../editorial-2026-10-19/`; its receipt `RECEIPT.md` | #44 (`74259312`), at the owner's word; the handoff fixed after it on the branch, which went into #45 with brief 16 | merged, not deployed |
 | `16-contextual-writing-distinct-voices-and-clear-information.txt`: "Contextual Writing, Distinct Voices, And Clear Information" | 2026-10-20 04:24, the same session, on the branch at `d1ae7a79` (`main` at `74259312` with the handoff's account of #44's merge) | `../voices-2026-10-20/`; its account `README.md` | #45 (`bbb82253`), at the owner's word | merged, not deployed |
+| `17-final-comprehensive-writing-and-continuity-pass.txt`: "Final Comprehensive Writing And Continuity Pass" | 2026-10-20 10:05, the same session, on the branch at `dffc6ea0` (`main` at `bbb82253` with the handoff's account of #45's merge, not yet in `main`) | `../continuity-2026-10-20/` | — | in progress |
 | `08-next-integration-and-acceptance-pass.md`: the scope the owner recorded for it before it was given | — | — | — | superseded by the brief's text |
 
 `short-directives.txt` keeps the owner's short instructions between the briefs, verbatim: the session's first message
@@ -42,7 +43,8 @@ session. Brief 15's work was taken up again after the container stopped it ("Res
 "Proceed exactly with what I been wanting you to do."; the last was taken in the middle of a turn, so the transcript
 holds it as a queued message). Its "Yes." answered whether to watch #44, and the eighth "Merge it." merged it. The
 request for page captures after it was answered with images sent in the session. Brief 16's "Both." answered whether to
-merge #45 or watch it: #45 was watched and merged.
+merge #45 or watch it: #45 was watched and merged. "Is it merged now?" was answered from Git: #45 was, and the
+handoff's account of it on the branch (`dffc6ea0`) wasn't.
 
 What isn't here: the session's own summaries of itself, written when its context ran out, are the model's words, not
 the owner's, and the briefs of the sessions before this one are in `../prompts-2026-10-16/` where they were kept.

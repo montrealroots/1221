@@ -1,0 +1,313 @@
+SLATE — Final Comprehensive Writing And Continuity Pass
+
+Implement this work fully. My quality target is 10/10: natural, clear, engaging language that stays relevant and fresh throughout extended play.
+
+Review everything completed so far, preserve what works, and finish the remaining weaknesses. Do not respond with only a plan, a new framework, a checklist, or a self-awarded score.
+
+1. ESTABLISH THE CURRENT TRUTH
+
+Read the repository instructions, current main, recent merged changes, handoff, style guide, glossary, previous editorial inventories, and Brief 16’s implementation and verification records.
+
+Confirm merge status against Git rather than trusting stale handoff prose. Update outdated status documentation accurately.
+
+Inspect the actual feedback system, advice card, tutorial, contextual help, school reports, director notes, classmate responses, banking, papers, wellbeing, creation suite, and every other currently reachable player-facing area.
+
+Preserve existing work and save compatibility. Keep deferred decision #4 deferred. Do not restore removed systems or begin career development during this task.
+
+2. REVIEW THE WHOLE PLAYER EXPERIENCE
+
+Build a coverage matrix of reachable text-producing surfaces, including:
+
+- First-use instructions and tutorials.
+
+- Ordinary actions and repeated actions.
+
+- Success, partial success, setbacks, and failure.
+
+- Empty, unavailable, locked, overdue, and error states.
+
+- Confirmations and consequential warnings.
+
+- Notifications and their expanded details.
+
+- Recommendations, forecasts, and explanations.
+
+- Teacher, director, and classmate feedback.
+
+- Historical records and returning-player messages.
+
+- Dynamically assembled sentences.
+
+For each surface, record its source, relevant states, review outcome, changes needed, and verification evidence.
+
+Previously reviewed or retained text is not exempt. However, do not rewrite good text merely to increase the change count.
+
+Read rendered sequences, not just isolated strings.
+
+3. FINISH THE NATURAL-LANGUAGE EDIT
+
+Remove awkward constructions, vague references, mechanical phrasing, unnecessary repetition, and sentences that require rereading.
+
+Examples to investigate include:
+
+- “The note is taken at 75%.”
+
+- “At Unready, this is the part that fell shortest.”
+
+- “A fourth time for the note on With Your Partner.”
+
+- Repeated combinations such as “Meanwhile, try this” followed by the same advice.
+
+Translate these into ordinary language that accurately communicates the rule. For example, if the mechanic actually resolves a note when preparation reaches a threshold, say that clearly instead of saying the note is “taken.”
+
+Do not introduce a new factual interpretation merely to improve the sentence.
+
+Preserve necessary acting vocabulary, explaining unfamiliar terms when first introduced. Preserve vivid original scenes where their language serves the drama.
+
+Use established Title Case for headings and controls, normal sentence case for prose, and exact control names in instructions.
+
+4. MAKE EACH SPEAKER RECOGNIZABLE
+
+Build upon the existing discipline-specific feedback.
+
+Give recurring teachers, directors, and classmates consistent fictionalized communication styles appropriate to their roles and established characterization.
+
+Useful differences include:
+
+- Direct versus encouraging delivery.
+
+- Concise versus reflective phrasing.
+
+- How they acknowledge improvement.
+
+- How they address repeated problems.
+
+- How they frame a next step.
+
+Do not give everyone a catchphrase. Avoid caricatures, invented accents, and claims to imitate real people’s actual speech.
+
+The same speaker should remain recognizable across different circumstances without repeating identical sentences.
+
+Keep the existing distinction between SLATE’s simulated feedback and genuine quotations.
+
+5. VARY THE SUBSTANCE, NOT JUST THE OPENING
+
+The previous pass greatly reduced exact duplicates. Now address repeated advice bodies and sentence structures.
+
+Ground messages in the recorded assignment, role, preparation, chosen approach, evaluation, partner contribution, relevant condition, and history.
+
+Select only the facts that matter.
+
+When supported, distinguish:
+
+- A first breakthrough.
+
+- Progress that is continuing.
+
+- A strength maintained.
+
+- Partial improvement.
+
+- A repeated unresolved problem.
+
+- A problem resolved and later recurring.
+
+- A strong result despite a recorded difficulty.
+
+- Preparation completed but skill still limiting the result.
+
+Give a relevant available action when useful.
+
+Do not manufacture a new criticism after every success. Sometimes acknowledge the achievement and stop.
+
+If the same advice remains correct, acknowledge its continuity. Explain what has changed or what still needs work. Do not pretend an old finding is new.
+
+Never invent observed acting behavior that the engine did not record.
+
+6. STRENGTHEN CONTINUITY
+
+Inspect how events and messages identify what they refer to.
+
+Fix the reported issue where a classmate can apologize again for the same missed rehearsals after older moments fall out of the recent-history window.
+
+Use stable incident identity and resolution state where appropriate. A bounded presentation history must not erase whether an actual incident was resolved.
+
+Allow a new apology for a genuinely new incident. Do not suppress legitimate events merely to reduce repetition.
+
+Verify related responses, promises, completed actions, and resolved notices do not incorrectly reappear as new.
+
+Do not suppress repeated fees, deadlines, warnings, or unresolved obligations that the player still needs to see.
+
+If persistence changes are necessary, implement and test migration for existing saves.
+
+7. KEEP PRESENTATION MEMORY SEPARATE FROM GAMEPLAY
+
+Preserve deterministic message selection and delivered feedback across save/reload.
+
+Text variation must not:
+
+- Consume gameplay randomness.
+
+- Change scores, relationships, balances, or event timing.
+
+- Reroll already delivered feedback.
+
+- Cause unbounded save growth.
+
+Use recent wording and semantic history to avoid repetitive sequences. Different dates or numbers do not automatically make the same sentence feel new.
+
+When accurate alternatives run out, prefer truthful repetition to fabricated variety.
+
+8. COMPLETE THE INFORMATION HIERARCHY
+
+Keep the new concise advice card and improve any remaining dense surfaces.
+
+The first view should answer:
+
+- What happened or matters now?
+
+- What can I do?
+
+- What will that action change?
+
+- Is there a meaningful cost, deadline, or restriction?
+
+Keep detailed calculations, assumptions, and sources accessible underneath.
+
+Never hide essential fees, consequences, eligibility conditions, or irreversible outcomes until after confirmation.
+
+Apply the same approach consistently to school, money, papers, wellbeing, and creation.
+
+Keep interface labels stable. Variation belongs primarily in narrative and feedback, not in randomly changing the names of controls.
+
+9. CHECK TUTORIALS AS A NEW PLAYER
+
+Follow each tutorial from its actual entry point.
+
+Confirm:
+
+- Every referenced control exists under the stated name.
+
+- The player can reach it at that point.
+
+- Automatic behavior is explained.
+
+- The next step is clear.
+
+- Blocked actions explain both the reason and the available remedy.
+
+- Links and back navigation work.
+
+- Reading help does not unexpectedly advance time.
+
+- Optional detail remains accessible.
+
+Pay particular attention to time advancement, attendance, preparation, feedback resolution, practice, bank payments, and documents.
+
+Do not treat shorter paragraphs alone as proof of clarity.
+
+10. TEST AGAINST THE PREVIOUS PASS
+
+Use equivalent starting states and seeds to compare the previous version with this implementation.
+
+Run meaningful sequences covering:
+
+- A new player.
+
+- A consistently prepared student.
+
+- An underprepared student.
+
+- Improvement after feedback.
+
+- Resolution followed by regression.
+
+- Sustained excellent work.
+
+- Fatigue or injury.
+
+- Repeated partner interactions.
+
+- Different genres and performance approaches.
+
+- Banking and papers deadlines.
+
+- Save/reload and existing-save migration where applicable.
+
+Include longer school sequences that reveal repeated advice and returning incidents.
+
+Measure:
+
+- Exact duplicate messages.
+
+- Repeated openings.
+
+- Repeated advice bodies.
+
+- Repeated sentence structures after normalizing dates, names, and numbers.
+
+- Whether repeated advice remains contextually justified.
+
+- Contradictions between messages and actual state.
+
+Report the denominator, history window, and exclusions for each metric. Do not improve the numbers by hiding messages or changing the measurement definition without disclosure.
+
+Compare gameplay outcomes to ensure presentation-only changes preserve them. For the explicitly authorized incident-continuity fix, explain and test the intended behavioral difference separately.
+
+11. PERFORM AN EDITORIAL REVIEW AFTER TESTING
+
+Read consecutive final transcripts and inspect representative desktop and mobile screens.
+
+Evaluate:
+
+- Immediate comprehension.
+
+- Naturalness.
+
+- Relevance.
+
+- Concision.
+
+- Speaker consistency.
+
+- Variety over time.
+
+- Factual grounding.
+
+- Useful next steps.
+
+Identify examples that still fall short, revise them, and rerun affected checks.
+
+Verify expandable details, keyboard navigation, accessibility labels, overflow, and mobile readability.
+
+Run the required full regression gate after fixes stabilize. Do not inflate testing with repeated identical runs that answer no remaining question.
+
+12. DELIVER PROOF AND AN ACCURATE HANDOFF
+
+Provide:
+
+- The exact tested commit and actual merge/deployment status.
+
+- The completed text coverage matrix.
+
+- Before/after examples from actual gameplay.
+
+- Consecutive transcripts demonstrating distinct speakers and continuity.
+
+- Repetition measurements compared with Brief 16.
+
+- Evidence that resolved incidents do not return incorrectly.
+
+- Desktop and mobile examples of summaries and expanded details.
+
+- Tests run, results, defects fixed, and remaining issues.
+
+- A short playable route for the owner to judge the final writing.
+
+Separate automated evidence from editorial judgment. Never claim tests prove “perfect writing,” “zero bugs everywhere,” or “never repetitive.”
+
+Completion means the agreed changes are implemented, reviewed in context, and verified—not merely documented.
+
+Continue through implementation and verification without stopping at an intermediate milestone. If a genuine blocker prevents completion, state precisely what remains and preserve a usable handoff. Do not weaken criteria or mark unresolved items complete to manufacture a 100% result.
+
+The outcome I want is a coherent game that speaks clearly, remembers my journey, gives people recognizable voices, and keeps its feedback meaningful as I continue playing.
