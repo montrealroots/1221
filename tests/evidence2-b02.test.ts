@@ -508,7 +508,7 @@ function sprainBilled(): Simulation {
     const bill = healthOf(sim.player).bills.find((b) => b.at === ends)!;
     expect(bill.what).toMatch(SPRAIN_BILL);
     expect(bill.dueAt).toBe(ends + 30 * MS_DAY);
-    expect(titled(sim, 'A Sprained Ankle').map((n) => n.body)).toEqual(['It takes 5 days to mend, and you can’t work out until then. You owe $699.13 for its care. It’s taken from your checking account on October 2, 2026, and if there isn’t enough then, it becomes medical debt.']);
+    expect(titled(sim, 'A Sprained Ankle').map((n) => n.body)).toEqual(['It takes 5 days to mend, until September 7, 2026. Until then you can’t work out, and it holds back the physical side of your work. You owe $699.13 for its care, a visit to urgent care and two sessions of physical therapy. It’s taken from your checking account on October 2, 2026, and if there isn’t enough then, it becomes medical debt.']);
     sim.advanceTo(bill.dueAt - 2 * MS_HOUR);
     expect(bill.paid).toBeFalsy();
     sprainSave = serialise(sim.universe);
@@ -629,7 +629,7 @@ describe('injury.comp', () => {
     expect(seven.injury.offWorkUntil).toBe(seven.shift.at + 7 * MS_DAY);
     // A week of $92 is paid 75% of the whole, Connecticut’s least for it. Until 2026-10-13 the notice said “75% of your
     // week’s wage after tax”, which it wasn’t, and this test held that.
-    expect(titled(six.sim, 'A Concussion').map((n) => n.body)).toEqual(['It takes 6 days to mend, and you’re laid up until then, kept from classes, work and training. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.']);
+    expect(titled(six.sim, 'A Concussion').map((n) => n.body)).toEqual(['It takes 6 days to mend, until September 7, 2026. You’re laid up until then, kept from classes, work and training. What you miss at school is excused. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.']);
     // CGS 31-295(a): more than three days but less than seven, paid from the fourth; seven, from the first. A week’s rate
     // is 75% of the $92, with no tax or FICA deducted from it; a day’s a seventh of that.
     expect(comp(six.sim).map((t) => [t.at, into(t, checking(six.sim))])).toEqual([[six.shift.at + 7 * MS_DAY, Math.round((0.75 * 92_00 * 3) / 7)]]);
@@ -644,7 +644,7 @@ describe('injury.comp', () => {
     const { sim, injury } = concussedOnStage('us-ny-newyork');
     // The $375 week is paid 75% of the whole, Connecticut’s least for it, $281.25. Until 2026-10-13 the notice said “75%
     // of your week’s wage after tax”, which it wasn’t, and this test held that.
-    expect(titled(sim, 'A Concussion').map((n) => n.body)).toEqual(['It takes 10 days to mend, and you’re laid up until then, kept from classes, work and training. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.']);
+    expect(titled(sim, 'A Concussion').map((n) => n.body)).toEqual(['It takes 10 days to mend, until June 14, 2027. You’re laid up until then, kept from classes, work and training. What you miss at school is excused. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.']);
     // Paid at a week, and at the tenth day for the three after it: three sevenths of the week’s.
     const paid = comp(sim);
     expect(paid.map((t) => t.at)).toEqual([injury.at + 7 * MS_DAY, injury.at + 10 * MS_DAY]);

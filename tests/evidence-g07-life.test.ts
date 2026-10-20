@@ -642,8 +642,10 @@ describe('injuries', () => {
     const told = notices(hurt, 'A Pulled Muscle');
     expect(told).toHaveLength(1);
     // Yale Health pays a student's care in full: no bill. Until 2026-10-17 the notice named no cost; it now says the care
-    // cost nothing, and that Call In Sick excuses a day of classes while it mends (brief 14's health journey).
-    expect(told[0]!.body.trim()).toBe('It takes 21 days to mend, and you can’t work out until then. Its care, a visit to urgent care and 2 sessions of physical therapy, costs you nothing. Call In Sick, on School, excuses a day of classes while it mends.');
+    // cost nothing, and that Call In Sick excuses a day of classes while it mends (brief 14's health journey). From
+    // 2026-10-20 (brief 17) it gives the day it mends and what it holds back, and says Call In Sick can excuse each day's
+    // classes, before what the care cost.
+    expect(told[0]!.body.trim()).toBe('It takes 21 days to mend, until September 14, 2026. Until then you can’t work out, and it holds back the physical side of your work. Each day until then, Call In Sick, on School’s Classes tab, can excuse that day at school. Its care, a visit to urgent care and two sessions of physical therapy, costs you nothing.');
     expect(healthOf(hurt.player).bills).toHaveLength(0);
     const gap = () => ({ stress: hurt.player.wellbeing.stress - well.player.wellbeing.stress, morale: hurt.player.wellbeing.morale - well.player.wellbeing.morale });
     expect(gap().stress).toBeCloseTo(6, 9);
@@ -698,7 +700,7 @@ describe('injuries', () => {
     // $180 and $100, × 1.75 uninsured, grown to 2026).
     // Named in sentence case, as every other bill is, from 2026-10-13: until then “A Sprained Ankle: its care”.
     expect(bills[0]).toMatchObject({ what: 'A sprained ankle’s care', at: midnight, amount: 699_13, dueAt: Date.UTC(2026, 1, 5, 5) });
-    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('It takes 10 days to mend, and you can’t work out until then. You owe $699.13 for its care. It’s taken from your checking account on February 5, 2026, and if there isn’t enough then, it becomes medical debt.');
+    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('It takes 10 days to mend, until January 16, 2026. Until then you can’t work out, and it holds back the physical side of your work. You owe $699.13 for its care, a visit to urgent care and two sessions of physical therapy. It’s taken from your checking account on February 5, 2026, and if there isn’t enough then, it becomes medical debt.');
     sim.advanceTo(Date.UTC(2026, 0, 6, 15)); // 10:00 AM
     clearCalendar(sim); // TEST SETUP
     sim.player.wellbeing.energy = 90; // TEST SETUP
@@ -727,7 +729,7 @@ describe('injuries', () => {
     expect(sim.player.school!.tally.worked).toBe(1);
     // Six hours at the Bulletin's $23.00 an hour is the week's wage the compensation would read.
     expect(healthOf(sim.player).injury).toEqual({ kind: 'strain', at: shift, until: shift + 20 * MS_DAY, atWork: { stateId: 'us-ct', weeklyWage: 138_00, paidDays: 0, noFica: true } });
-    expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('It takes 20 days to mend, and you can’t work out until then. It happened at work, so workers’ compensation pays for the care. Call In Sick, on School, excuses a day of classes while it mends.');
+    expect(notices(sim, 'A Pulled Muscle')[0]!.body).toBe('It takes 20 days to mend, until September 25, 2026. Until then you can’t work out, and it holds back the physical side of your work. Each day until then, Call In Sick, on School’s Classes tab, can excuse that day at school. It happened at work, so workers’ compensation pays for the care.');
     expect(personLook(sim)).toContain('Mending. A pulled muscle, until September 25, 2026, on workers’ compensation.');
     expect(healthOf(sim.player).bills).toHaveLength(0);
     // Not off work, so no week of compensation is scheduled.
@@ -755,7 +757,7 @@ describe('chronic', () => {
     expect(healthOf(heavy.player).chronic!.diabetes).toMatchObject({ treated: true, since: month });
     const told = notices(heavy, 'Diagnosed: Diabetes');
     expect(told).toHaveLength(1);
-    expect(told[0]!.body).toBe('A doctor found it this month. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.');
+    expect(told[0]!.body).toBe('A doctor found this month that you have diabetes. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.');
     expect(healthOf(lean.player).chronic?.diabetes).toBeUndefined();
     expect(notices(lean, 'Diagnosed: Diabetes')).toHaveLength(0);
     // The next health week fills its medicine, America's 30-day fill (CMS), kept across a reload.
@@ -809,7 +811,7 @@ describe('chronic', () => {
     expect(kept.player.wellbeing.condition).toBeCloseTo(before[0]!.condition, 6);
     const er = notices(letGo, 'The Emergency Room');
     expect(er).toHaveLength(1);
-    expect(er[0]!.body).toBe('The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department. Classes you miss while you’re there are excused. You owe $50.00. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt.');
+    expect(er[0]!.body).toBe('You went to the emergency room at Yale New Haven Hospital, York Street Campus Emergency Department. Classes you miss while you’re there are excused. You owe $50.00. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt.');
     // Connecticut's median 189 minutes in the department (CMS), and the emergency's toll of 20 on condition and energy.
     expect(healthOf(letGo.player).inHospitalUntil).toBe(week + 189 * 60_000);
     expect(letGo.player.wellbeing.condition).toBeCloseTo(before[1]!.condition - 20, 6);

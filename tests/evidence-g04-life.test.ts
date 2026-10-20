@@ -283,7 +283,7 @@ describe('health.therapy', () => {
     // By the fifteenth day of classes: the cover ends that day.
     expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
     sim.advanceTo(r.first + 7 * MS_DAY + 60_000);
-    expect(titled(sim, 'Your Counseling At Yale Ended').map((n) => n.body)).toEqual(['Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, so your course there stopped after 1 of 8 sessions. A therapist outside Yale can start a new course with you: choose one on Papers, under Health Cover.']);
+    expect(titled(sim, 'Your Counseling At Yale Ended').map((n) => n.body)).toEqual(['Your course at Yale Mental Health & Counseling stopped after 1 of 8 sessions, because it sees only students Yale Health covers and your cover has ended. A therapist outside Yale can start a new course with you: choose one on Papers, under Health Cover.']);
     expect(sim.player.therapy).toBeUndefined();
     expect(sessions(sim).filter((i) => i.status === 'pending')).toHaveLength(0);
     sim.advanceTo(r.first + 14 * MS_DAY + 60_000);
@@ -595,7 +595,8 @@ describe('life.day_rollover', () => {
     // Yale Health leaves nothing to pay for it, so the notice names no bill. Until 2026-10-16 this read '5 days to mend. ',
     // the space the empty second sentence left behind it, which the notice had (brief 09's journeys, injury.ts). Until
     // 2026-10-17 it said nothing of the care; it now says what it was and that it cost nothing (brief 14's health journey).
-    expect(titled(sim, 'A Bad Knock').map((n) => [n.at, n.body])).toEqual([[midnight, 'It takes 5 days to mend. Its care, a doctor’s visit, costs you nothing.']]);
+    // Until 2026-10-20 (brief 17) it gave no day it mends and didn't say a knock keeps you from nothing.
+    expect(titled(sim, 'A Bad Knock').map((n) => [n.at, n.body])).toEqual([[midnight, 'It takes 5 days to mend, until November 24, 2026. It won’t stop you working out or going to class. Its care, a doctor’s visit, costs you nothing.']]);
     sim.advanceTo(EST(2026, 11, 25, 12));
     expect(titled(sim, 'A Bad Knock')).toHaveLength(1);
   });

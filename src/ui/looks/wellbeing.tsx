@@ -40,7 +40,7 @@ import { ageWords, ceilingAt } from '@/engine/content/lifespan';
 import { describeEthnicity } from '@/engine/content/ethnicity';
 import { COUNTRIES } from '@/engine/content/geography';
 import { bmiOf, bmiWord, bodyUnits, type Body } from '@/engine/systems/body';
-import { injuryOf } from '@/engine/systems/injury';
+import { injuryKeeps, injuryOf } from '@/engine/systems/injury';
 import { formatDate } from '@/engine/core/time';
 import { INJURY_KIND } from '@/engine/content/injury';
 import { ONSET } from '@/engine/content/body';
@@ -232,6 +232,14 @@ defineLook<Person>('person', {
           </p>
         ) : null;
       })(),
+      // Down with the flu, and until when (from 2026-10-20, brief 17): until then an injury had its line here and the
+      // flu, which refuses a workout and holds back the work as long as it lasts (`fluUntil`), was on no look at all.
+      (person.health?.fluUntil ?? 0) > sim.now && (
+        <p key="ill" className="small">
+          <span className="dim">Ill. </span>
+          The flu, until {formatDate(person.health!.fluUntil!, sim.zone)}.
+        </p>
+      ),
       <p key="papers" className="small">
         {/* Pronouns named as pronouns, and the country with its article (from 2026-10-17: until then "she/her, a citizen of
             United States."). */}
@@ -300,9 +308,10 @@ defineLook<Dial>('dial', {
       parent: at('person', dial.person.id),
       summary: sentenceFor(dial, sim.now, p),
       body: isYou ? <p className="small">{WHAT[dial.key]}</p> : undefined,
+      // A sentence, where it was the fragment "From 0 to 100." (until 2026-10-20, brief 17).
       provenance: dial.unit === 'hours'
         ? 'Counted in hours. Each waking hour adds about a third of an hour, and a night pays it back, a long night faster. A night under six hours adds some too, and the shortest add more than they pay back.'
-        : 'From 0 to 100. It changes with every hour the clock runs.',
+        : 'It runs from 0 to 100, and it changes with every hour the clock runs.',
     };
   },
 });
@@ -436,7 +445,9 @@ defineLook<Ready>('readiness', {
         // way that said “At 63, and pulling readiness down.”).
         detail: `${d.key === 'sleepDebt' ? `${plural(Math.round(d.value), 'hour')} owed` : `At ${Math.round(d.value)}`}${ready.value >= 99.5 ? ', short of its best.' : ', and pulling readiness down.'}`,
       })),
-      provenance: `Seven of the eight measures, all but fitness, from 5 to 100. It sets how much a class, a lab, a rehearsal, an hour of practice or a workout builds, and under ${EVALUATION.sufficientReadiness} it costs ${p.them} in judged work.`,
+      // A sentence with a subject from 2026-10-20 (brief 17): until then "Seven of the eight measures, all but fitness, from
+      // 5 to 100.", a fragment.
+      provenance: `It comes from seven of the eight measures, all but fitness, and runs from 5 to 100. It sets how much a class, a lab, a rehearsal, an hour of practice or a workout builds, and under ${EVALUATION.sufficientReadiness} it costs ${p.them} in judged work.`,
     };
   },
 });
@@ -550,9 +561,10 @@ defineLook<Carried>('condition', {
         // What it keeps them from, by what it limits (from 2026-10-17, brief 14): until then only an injury that lays them
         // up said so, and a sprained ankle, which keeps them from training too (`trainingRefusal`), said nothing. The same
         // day, the health journey found it didn’t say Call In Sick excuses a day of classes for it, as the flu’s notice does.
-        summary: `It mends by ${formatDate(hurt.until, sim.zone)}.${hurt.offWorkUntil
-          ? ` Until then ${theyAre} laid up, kept from classes, work and training.`
-          : INJURY_KIND[hurt.kind].limits !== 'none' ? ` Until then ${p.they} can’t work out, and it holds back the physical side of ${p.their} work.${isYou && person.school && !schoolEnded(person.school.standing) ? ' Call In Sick, on School, excuses a day of classes while it mends.' : ''}` : ''}`,
+        // From 2026-10-20 (brief 17) in the notice's words (`injuryKeeps`): until then a laid-up injury didn't say the
+        // classes it keeps them from are excused, a cut or a knock said nothing of what it keeps them from, though the
+        // way in promised it, and Call In Sick "excuses a day of classes" read as one day in all.
+        summary: `It mends by ${formatDate(hurt.until, sim.zone)}. ${injuryKeeps(hurt.kind, isYou && Boolean(person.school && !schoolEnded(person.school.standing)), { they: p.they, them: p.them, their: p.their, theyAre })}`,
         parent: at('person', person.id),
         ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: `How sound ${p.their} body is. An injury doesn’t lower it, but it adds to ${p.their} stress and lowers ${p.their} morale each day.` }],
         provenance: 'How long it takes depends on the injury and on how resilient the body is.',

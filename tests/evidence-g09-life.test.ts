@@ -253,8 +253,8 @@ describe('knob:illnessToll', () => {
     // Kept off work as long: a broken bone is time off (`INJURY_KIND`).
     expect(injury(plain).offWorkUntil).toBe(injury(plain).until);
     expect(injury(resilient).offWorkUntil).toBe(injury(resilient).until);
-    expect(notices(plain, 'A Broken Bone').map((n) => n.body)[0]).toContain('It takes 43 days to mend, and you’re laid up until then, kept from classes, work and training.');
-    expect(notices(resilient, 'A Broken Bone').map((n) => n.body)[0]).toContain('It takes 28 days to mend, and you’re laid up until then, kept from classes, work and training.');
+    expect(notices(plain, 'A Broken Bone').map((n) => n.body)[0]).toContain('It takes 43 days to mend, until October 6, 2026. You’re laid up until then, kept from classes, work and training.');
+    expect(notices(resilient, 'A Broken Bone').map((n) => n.body)[0]).toContain('It takes 28 days to mend, until September 21, 2026. You’re laid up until then, kept from classes, work and training.');
     expect(lookAfter(plain, 'exercise').error).toBe('Not with a broken bone; it has 43 days yet to mend.');
     expect(lookAfter(resilient, 'exercise').error).toBe('Not with a broken bone; it has 28 days yet to mend.');
 

@@ -444,7 +444,7 @@ describe('health.appointment', () => {
     expect(visitsLogged(sim).map((c) => [c.at, c.share])).toEqual([[visit.at, 0]]);
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
     // Until 2026-10-15 the notice named Fair Haven, where she was booked; from that day, Yale Health's practice, at $0.
-    expect(titled(sim, 'A Doctor’s Visit', visit.at).map((n) => n.body)).toEqual([`${VISIT}, ${YALE_CLINIC}. There’s nothing to pay.`]);
+    expect(titled(sim, 'A Doctor’s Visit', visit.at).map((n) => n.body)).toEqual([`You saw a doctor at ${YALE_CLINIC}. There’s nothing to pay.`]);
     expect(titled(sim, 'Missed The Doctor')).toEqual([]);
   });
 
@@ -481,7 +481,7 @@ describe('health.appointment', () => {
     const second = sim.universe.scheduled.find((i) => i.kind === APPOINTMENT_KIND && i.at === again.at)!;
     expect(second.status).toBe('missed');
     expect(healthOf(sim.player).owedVisit).toBe(VISIT);
-    expect(titled(sim, 'Missed The Doctor').map((n) => n.body)).toEqual([`${VISIT}: you weren’t there, so you weren’t seen. To book again, press Book An Appointment on Papers, under Health Cover.`]);
+    expect(titled(sim, 'Missed The Doctor').map((n) => n.body)).toEqual(['You weren’t there for your doctor’s appointment, so you weren’t seen. To book again, press Book An Appointment on Papers, under Health Cover.']);
     expect(visitsLogged(sim)).toEqual([]);
 
     // Reloaded, and out of hospital on Thursday 17 September: Papers says it's owed, and Book An Appointment books it at
@@ -519,7 +519,7 @@ function stayBilled() {
   const bill = healthOf(sim.player).bills.find((b) => b.at === week.at)!;
   expect(bill).toMatchObject({ amount: STAY_COPAY, dueAt: at(2026, 10, 7, 9), hospital: true });
   expect(bill.what).toMatch(/^A stay in hospital, Yale New Haven Hospital/);
-  expect(titled(sim, 'In Hospital')[0]!.body).toBe(`${bill.what}, for 3 days. Classes you miss while you’re there are excused. You owe $200.00. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt.`);
+  expect(titled(sim, 'In Hospital')[0]!.body).toBe(`You’re in hospital for 3 days at ${bill.what.replace(/^A stay in hospital, /, '')}. Classes you miss while you’re there are excused. You owe $200.00. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt.`);
   return { sim, bill };
 }
 const billMemo = (what: string) => `Medical bill: ${what}`;
@@ -615,7 +615,7 @@ describe('health.month', () => {
     force('health.onset', [sim.player.id, String(month.at)], [0.999, 0]); // TEST SETUP
     sim.advanceTo(month.at + MS_HOUR);
     expect(healthOf(sim.player).chronic!.hypertension).toEqual({ treated: true, since: month.at, lapsed: false });
-    expect(titled(sim, 'Diagnosed: High Blood Pressure').map((n) => n.body)).toEqual(['A doctor found it this month. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.']);
+    expect(titled(sim, 'Diagnosed: High Blood Pressure').map((n) => n.body)).toEqual(['A doctor found this month that you have high blood pressure. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.']);
     // The next Monday fills a month of it, 30 days (CMS's retail fill), at Walmart's own $4 generic: `PHARMACY.plans`
     // carries no copay for Yale Health, so a student pays the counter's cash price.
     const week = nextPending(sim, HEALTH_WEEK_KIND);
@@ -802,7 +802,7 @@ describe('health.therapy_session', () => {
     expect(coverOn(sim.player, sim.now)).toBeUndefined();
     sim.advanceTo(at(2026, 9, 15, 18));
     expect(sim.player.therapy).toBeUndefined();
-    expect(titled(sim, 'Your Counseling At Yale Ended').map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 15, 17), `${YALE} sees students Yale Health covers, and your cover has ended, so your course there stopped after 2 of 8 sessions. A therapist outside Yale can start a new course with you: choose one on Papers, under Health Cover.`]]);
+    expect(titled(sim, 'Your Counseling At Yale Ended').map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 15, 17), `Your course at ${YALE} stopped after 2 of 8 sessions, because it sees only students Yale Health covers and your cover has ended. A therapist outside Yale can start a new course with you: choose one on Papers, under Health Cover.`]]);
     expect(sessions(sim).filter((i) => i.status === 'pending')).toEqual([]);
     expect(memos(sim, /, a session$/)).toEqual([]);
     const again = reload(sim);
@@ -924,7 +924,7 @@ describe('health.week', () => {
     // CARE.toll.flu, at an illness toll of 1.
     expect(well.sim.player.wellbeing.condition - ill.sim.player.wellbeing.condition).toBeCloseTo(25, 9);
     expect(well.sim.player.wellbeing.energy - ill.sim.player.wellbeing.energy).toBeCloseTo(30, 9);
-    expect(titled(ill.sim, 'You Have The Flu').map((n) => n.body)).toEqual([expect.stringMatching(/^The flu, at urgent care, .+\. It lasts until December 5, 2026, and it has cost you some condition and energy\. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes\. There’s nothing to pay\.$/)]);
+    expect(titled(ill.sim, 'You Have The Flu').map((n) => n.body)).toEqual([expect.stringMatching(/^You saw a doctor for it at .+\. It lasts until December 5, 2026, and it has cost you some condition and energy\. Until it passes you can’t work out, and it holds back your voice and body work\. Each day until then, Call In Sick, on School’s Classes tab, can excuse that day at school\. There’s nothing to pay\.$/)]);
     expect(titled(well.sim, 'You Have The Flu')).toEqual([]);
     // Tuesday before classes: called in sick and excused, where the twin is refused and goes.
     for (const { sim } of [ill, well]) sim.advanceTo(at(2026, 12, 1, 7));
@@ -951,7 +951,7 @@ describe('health.week', () => {
     expect(healthOf(ill.sim.player).inHospitalUntil).toBe(at(2026, 9, 10, 9));
     expect(well.sim.player.wellbeing.condition - ill.sim.player.wellbeing.condition).toBeCloseTo(40, 9);
     expect(well.sim.player.wellbeing.energy - ill.sim.player.wellbeing.energy).toBeCloseTo(40, 9);
-    expect(titled(ill.sim, 'In Hospital')[0]!.body).toMatch(/^A stay in hospital, .+, for 3 days\. Classes you miss while you’re there are excused\. You owe \$200\.00\. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt\.$/);
+    expect(titled(ill.sim, 'In Hospital')[0]!.body).toMatch(/^You’re in hospital for 3 days at .+\. Classes you miss while you’re there are excused\. You owe \$200\.00\. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt\.$/);
     expect(healthOf(ill.sim.player).bills.filter((b) => b.at === ill.week).map((b) => b.amount)).toEqual([200_00]);
     const tally = (sim: Simulation) => ({ ...sim.player.school!.tally });
     const [ti, tw] = [tally(ill.sim), tally(well.sim)];
@@ -972,7 +972,7 @@ describe('health.week', () => {
     expect(healthOf(ill.sim.player).inHospitalUntil).toBe(ill.week + 189 * 60_000);
     expect(well.sim.player.wellbeing.condition - ill.sim.player.wellbeing.condition).toBeCloseTo(20, 9);
     expect(well.sim.player.wellbeing.energy - ill.sim.player.wellbeing.energy).toBeCloseTo(20, 9);
-    expect(titled(ill.sim, 'The Emergency Room')[0]!.body).toMatch(/^The emergency room, .+\. Classes you miss while you’re there are excused\. You owe \$50\.00\. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt\.$/);
+    expect(titled(ill.sim, 'The Emergency Room')[0]!.body).toMatch(/^You went to the emergency room at .+\. Classes you miss while you’re there are excused\. You owe \$50\.00\. It’s taken from your checking account on October 7, 2026, and if there isn’t enough then, it becomes medical debt\.$/);
     expect(healthOf(ill.sim.player).bills.filter((b) => b.at === ill.week).map((b) => b.amount)).toEqual([50_00]);
   });
 
@@ -1028,7 +1028,7 @@ describe('injury.comp', () => {
     const { sim, shift } = hurtAtAnElectiveShift();
     // Paid 75% of the whole week’s $92, Connecticut’s least for a week that small. Until 2026-10-13 the notice said “75% of
     // your week’s wage after tax”, which it wasn’t, and this test held that.
-    expect(titled(sim, 'A Broken Bone')[0]!.body).toBe('It takes 42 days to mend, and you’re laid up until then, kept from classes, work and training. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.');
+    expect(titled(sim, 'A Broken Bone')[0]!.body).toBe('It takes 42 days to mend, until October 13, 2026. You’re laid up until then, kept from classes, work and training. What you miss at school is excused. It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.');
     // Its care is the employer’s: no bill.
     expect(healthOf(sim.player).bills.filter((b) => b.what.startsWith('A Broken Bone'))).toEqual([]);
     // Off more than Connecticut's six days, no waiting days: every one of the 42, a full week's rate each week.

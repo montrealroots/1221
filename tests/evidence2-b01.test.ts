@@ -261,7 +261,7 @@ describe('life.look_after:order', () => {
     for (const sim of [ordered, ate]) sim.advanceTo(EDT(2026, 9, 1, 1));
     expect(ordered.player.body!.weightKg).toBeGreaterThanOrEqual(25 * 2.007 ** 2);
     expect(ate.player.body!.weightKg).toBeLessThan(25 * 2.007 ** 2);
-    expect(titled(ordered, 'Diagnosed: High Blood Pressure').map((n) => [n.at, n.body])).toEqual([[month, 'A doctor found it this month. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.']]);
+    expect(titled(ordered, 'Diagnosed: High Blood Pressure').map((n) => [n.at, n.body])).toEqual([[month, 'A doctor found this month that you have high blood pressure. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.']]);
     expect(healthOf(ordered.player).chronic).toEqual({ hypertension: { treated: true, lapsed: false, since: month } });
     expect(titled(ate, 'Diagnosed: High Blood Pressure')).toEqual([]);
     expect(healthOf(ate.player).chronic ?? {}).toEqual({});
@@ -598,10 +598,10 @@ describe('health.choose_clinic', () => {
       };
     };
     const nhs = play(false);
-    expect(nhs).toEqual({ kept: ['A doctor’s visit, Soho Square General Practice. There’s nothing to pay.'], bills: [] });
+    expect(nhs).toEqual({ kept: ['You saw a doctor at Soho Square General Practice. There’s nothing to pay.'], bills: [] });
     const bupa = play(true);
     expect(bupa.kept).toHaveLength(1);
-    expect(bupa.kept[0]).toMatch(/^A doctor’s visit, Bupa Private GP \(pay-as-you-go\)\./);
+    expect(bupa.kept[0]).toMatch(/^You saw a doctor at Bupa Private GP \(pay-as-you-go\)\./);
     expect(bupa.kept[0]).not.toContain('There’s nothing to pay.');
     expect(bupa.bills).toHaveLength(1);
     expect(bupa.bills[0]![1]).toBeGreaterThan(0);
