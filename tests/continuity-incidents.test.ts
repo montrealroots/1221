@@ -16,7 +16,7 @@ import { createSave, migrate } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY } from '@/engine/core/time';
-import { missesOwed, momentsOf, personOf, type Moment, type MomentKind } from '@/engine/systems/classmates';
+import { missesOwed, momentsOf, personOf, wayOf, type Moment, type MomentKind } from '@/engine/systems/classmates';
 import { courseworkOf, mateRecord, type Assignment } from '@/engine/systems/coursework';
 import type { Classmate } from '@/engine/systems/school';
 
@@ -37,7 +37,7 @@ function toPartneredWork(sim: Simulation): Assignment {
  * no bond to encourage you), and nothing to dispute (the pieces' answers cleared); the one under test met a month ago,
  * with the priority given. So a moment the class days bring is theirs, and of the kind under test.
  */
-function alone(sim: Simulation, i: number, priority: 'craft' | 'career'): Classmate {
+function alone(sim: Simulation, i: number, priority: 'craft' | 'career' | 'people' | 'home'): Classmate {
   sim.player.school!.classmates.forEach((m, j) => {
     mateRecord(m).trust = 0;
     m.bond = 0;
@@ -153,6 +153,23 @@ describe('what a classmate has asked, counted on them', () => {
     expect(floor.length).toBeGreaterThan(0);
     expect(floor[0]!.text).toMatch(/ They’ve asked before, and you helped them last time\.$/);
   }, 120_000);
+});
+
+describe('a classmate’s way of asking', () => {
+  it('is their own, the same each time they ask, and the class doesn’t share one', () => {
+    const sim = life('continuity-ways');
+    const a = toPartneredWork(sim);
+    const mate = alone(sim, a.partner!, 'career');
+    const asks = moments(sim, 120).filter((m) => m.kind === 'help');
+    expect(asks.length).toBeGreaterThanOrEqual(2);
+    // The same sentence, but for the count of times asked that follows it.
+    const opening = (t: string) => t.split(/(?<=\.) (?=It’s the|They’ve asked)/)[0];
+    expect(new Set(asks.map((m) => opening(m.text))).size, asks.map((m) => m.text).join(' | ')).toBe(1);
+    expect(asks[0]!.text.startsWith(mate.name.split(' ')[0]!) || asks[0]!.text.includes(` ${mate.name.split(' ')[0]!} `)).toBe(true);
+    // Across the class, each kind said more than one way.
+    const ways = sim.player.school!.classmates.map((m) => wayOf(m, 'help', 3));
+    expect(new Set(ways).size).toBeGreaterThan(1);
+  }, 180_000);
 });
 
 describe('a save from before brief 17, opened', () => {

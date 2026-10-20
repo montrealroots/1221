@@ -484,11 +484,11 @@ function slippedLeads(v: Voice, f: ShowingFacts, dated = false): string[] {
   const at = dated ? 'then' : `on ${f.before!.taken!}`;
   const { t, has, was, it } = topicOf(f);
   switch (v) {
-    case 'direct': return [`You fixed ${t} ${at}, and ${it} ${has} slipped since.`, `${cap(t)} again: ${it} ${was} right ${at}.`];
-    case 'warm': return [`You’d got ${t} right ${at}, and ${it} ${has} slipped since.`, `${cap(t)} came right ${at}, and ${it} ${has} slipped back since.`];
-    case 'exacting': return [`${cap(t)} ${was} put right ${at}, and ${has} dropped back since.`];
-    case 'patient': return [`${cap(t)} came right ${at}, and ${it} ${has} slipped since. It’s worth going back to.`];
-    case 'brisk': return [`${cap(t)} slipped. ${cap(it)} ${was} right ${at}.`];
+    case 'direct': return [`You fixed ${t} ${at}, and ${it} ${has} slipped since.`, `${cap(t)} again: ${it} ${was} right ${at}.`, `${cap(t)} ${has} slipped since you fixed ${it} ${at}.`];
+    case 'warm': return [`You’d got ${t} right ${at}, and ${it} ${has} slipped since.`, `${cap(t)} came right ${at}, and ${it} ${has} slipped back since.`, `${cap(t)} ${has} slipped back since you got ${it} right ${at}.`];
+    case 'exacting': return [`${cap(t)} ${was} put right ${at}, and ${has} dropped back since.`, `Put right ${at}, ${t} ${has} dropped back.`];
+    case 'patient': return [`${cap(t)} came right ${at}, and ${it} ${has} slipped since. It’s worth going back to.`, `${cap(t)} ${was} there ${at}, and ${has} slipped since. It can come back.`];
+    case 'brisk': return [`${cap(t)} slipped. ${cap(it)} ${was} right ${at}.`, `Slipped since ${at === 'then' ? 'then' : at.slice(3)}: ${t}.`];
   }
 }
 
@@ -626,11 +626,11 @@ function maintainedLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
   const same = prev?.band === f.band;
   // Times, not pieces: a piece shown in rounds is one piece shown several times (`roundsShown`).
   if (run >= 3) switch (v) {
-    case 'direct': return [`${b}${same ? ' again' : ''}: ${count(run)} times running at Strong or better.`, `That’s ${count(run)} times in a row at Strong or better.`];
-    case 'warm': return [`Another ${b}. That’s ${count(run)} times running at Strong or better.`, `${b}${same ? ' again' : ''}, ${count(run)} times in a row at Strong or better now.`];
-    case 'exacting': return [`${b}: ${count(run)} times running at Strong or better.`, `The ${ordinal(run)} time in a row at Strong or better.`];
-    case 'patient': return [`${b}${same ? ' again' : ''}. ${cap(count(run))} times in a row now at Strong or better.`, `${cap(WORK[d])} is holding: ${count(run)} times running at Strong or better.`];
-    case 'brisk': return [`${b}${same ? ' again' : ''}, ${count(run)} straight at Strong or better.`];
+    case 'direct': return [`${b}${same ? ' again' : ''}: ${count(run)} times running at Strong or better.`, `That’s ${count(run)} times in a row at Strong or better.`, `Still Strong or better, ${count(run)} times in a row now, ${b} this time.`];
+    case 'warm': return [`Another ${b}. That’s ${count(run)} times running at Strong or better.`, `${b}${same ? ' again' : ''}, ${count(run)} times in a row at Strong or better now.`, `You’ve kept it up: ${count(run)} times running at Strong or better, ${b} this time.`];
+    case 'exacting': return [`${b}: ${count(run)} times running at Strong or better.`, `The ${ordinal(run)} time in a row at Strong or better.`, `${b}. The run at Strong or better is ${count(run)} long now.`];
+    case 'patient': return [`${b}${same ? ' again' : ''}. ${cap(count(run))} times in a row now at Strong or better.`, `${cap(WORK[d])} is holding: ${count(run)} times running at Strong or better.`, `It’s settling in: ${b}, and ${count(run)} times running at Strong or better.`];
+    case 'brisk': return [`${b}${same ? ' again' : ''}, ${count(run)} straight at Strong or better.`, `${cap(count(run))} in a row at Strong or better. Keep going.`];
   }
   if (same) switch (v) {
     case 'direct': return [`${b} again, as on ${prev!.on}.`];
@@ -667,11 +667,11 @@ function heldLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
   const b = f.bandLabel;
   const prep = h.kind === 'preparation';
   if (h.again) switch (v) {
-    case 'direct': return [`${h.words} again, as on ${h.again}.`, `Same as on ${h.again}: ${low(h.words)}.`];
-    case 'warm': return [`As on ${h.again}, ${low(h.words)}.`, `${h.words}, as it did on ${h.again}.`];
-    case 'exacting': return [`The same limit as on ${h.again}: ${low(h.words)}.`];
-    case 'patient': return [`It was the same on ${h.again}: ${low(h.words)}.${h.kind === 'ability' || h.kind === 'technique' ? ' That builds slowly.' : ''}`];
-    case 'brisk': return [`${h.words}. Same as last time, on ${h.again}.`];
+    case 'direct': return [`${h.words} again, as on ${h.again}.`, `Same as on ${h.again}: ${low(h.words)}.`, `It’s what held the last piece back, on ${h.again}: ${low(h.words)}.`];
+    case 'warm': return [`As on ${h.again}, ${low(h.words)}.`, `${h.words}, as it did on ${h.again}.`, `The same thing held it back as on ${h.again}: ${low(h.words)}.`];
+    case 'exacting': return [`The same limit as on ${h.again}: ${low(h.words)}.`, `Unchanged since ${h.again}: ${low(h.words)}.`];
+    case 'patient': return [`It was the same on ${h.again}: ${low(h.words)}.${h.kind === 'ability' || h.kind === 'technique' ? ' That builds slowly.' : ''}`, `Again, as it was on ${h.again}, ${low(h.words)}.`];
+    case 'brisk': return [`${h.words}. Same as last time, on ${h.again}.`, `Still the same as on ${h.again}: ${low(h.words)}.`];
   }
   if (prep) return [`It stayed at ${b}: ${low(h.words)}.`, `${h.words}. That’s what held it back most.`];
   switch (v) {

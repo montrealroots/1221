@@ -80,6 +80,7 @@ import {
   WORK, courseworkOf, mateBusy, mateRecord, questionsFor, trustOf, type Assignment, type Coursework, type MateRecord,
 } from './coursework';
 import { startRefusal } from './life';
+import { hash } from './feedback';
 import { inHospital } from './health';
 import { laidUp } from './injury';
 import { exerts } from './body';
@@ -362,9 +363,17 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
       const { n, known } = askedBefore(mate, 'help');
       const how = last?.choice === 'help' ? ', and you helped them last time' : last?.choice === 'no' ? ', and last time you said you couldn’t' : '';
       const again = n ? (known ? ` It’s the ${nth(n + 1)} time they’ve asked${how}.` : ` They’ve asked before${how}.`) : '';
-      return { text: pr === 'home'
-        ? `${first(mate)} is behind on their lines after a hard week away from school, and asks if you’d run them for three quarters of an hour, now.${again}`
-        : `${first(mate)} is behind on their lines, with an audition outside school, and asks if you’d run them for three quarters of an hour, now.${again}` };
+      // Each classmate in a way of their own, the same each time they ask (`wayOf`, brief 17): until then every classmate
+      // with a life outside school asked in one sentence, and every one with an audition in another.
+      const f = first(mate);
+      const ways = pr === 'home'
+        ? [`${f} is behind on their lines after a hard week away from school, and asks if you’d run them for three quarters of an hour, now.`,
+          `${f} has had a hard week away from school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now.`,
+          `A hard week away from school has left ${f} behind on their lines. They ask for three quarters of an hour of your time, now, to run them.`]
+        : [`${f} is behind on their lines, with an audition outside school, and asks if you’d run them for three quarters of an hour, now.`,
+          `${f} has an audition outside school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now.`,
+          `With an audition outside school coming up, ${f} is behind on their lines and asks for three quarters of an hour of your time, now, to run them.`];
+      return { text: `${ways[wayOf(mate, 'help', ways.length)]}${again}` };
     } });
     // Encouragement, from a classmate at a bond of `CLASS.encourage.bondFrom` or more, after work of yours that went
     // badly in the last days. Until 2026-10-12 this said from a friend only, a bond the gate doesn't ask (`BONDS.friend`).
@@ -442,6 +451,9 @@ function disagreement(a: Assignment, mate: Classmate, draw: number, pr: Priority
   return { assignmentId: a.id, question: q.id, theirs: theirs.id, text };
 }
 
+/** A classmate's own way of putting a kind of moment, of `n`: by their name, so the same each time (brief 17, section 4). */
+export const wayOf = (mate: Classmate, kind: string, n: number): number => hash(`${mate.name}:${kind}`) % n;
+
 /** An evening in the next three a classmate is free to run lines, at seven. */
 function studyEvening(person: Person, i: number, day: SchoolDate, returning = false, before: readonly { choice?: string }[] = [], pr: Priority = 'craft'): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
   for (let n = 1; n <= 3; n += 1) {
@@ -459,7 +471,9 @@ function studyEvening(person: Person, i: number, day: SchoolDate, returning = fa
     // and one returning a favour says so.
     const text = returning
       ? (pr === 'career' ? `${f} has an hour free on ${on} and offers it to run lines together: you ran theirs when they were behind.` : pr === 'home' ? `${f} asks if you’d run lines together for an hour on ${on}. They haven’t forgotten you ran theirs when they were behind.` : `${f} asks if you’d run lines together for an hour on ${on}. You ran theirs when they were behind.`)
-      : pr === 'people' ? `${f} asks if you’d like to run lines together for an hour on ${on}.${again}` : `${f} asks if you’d run lines together for an hour on ${on}, to keep the work moving.${again}`;
+      : `${(pr === 'people'
+        ? [`${f} asks if you’d like to run lines together for an hour on ${on}.`, `${f} wonders if you’d like to run lines together for an hour on ${on}.`, `${f} would be glad of an hour running lines with you on ${on}.`]
+        : [`${f} asks if you’d run lines together for an hour on ${on}, to keep the work moving.`, `${f} suggests an hour running lines together on ${on}, so the work keeps moving.`])[wayOf(mate, 'study', pr === 'people' ? 3 : 2)]}${again}`;
     return { when, text };
   }
   return undefined;

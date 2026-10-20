@@ -1,0 +1,143 @@
+[
+ {
+  "surface": "A piece’s feedback: what the course says after a showing",
+  "where": "School, Coursework, each piece’s card under Feedback, and the Feedback notice after class",
+  "sources": [
+   "src/engine/systems/feedback.ts#*",
+   "src/engine/systems/coursework.ts#noteText",
+   "src/engine/systems/coursework.ts#show",
+   "src/engine/systems/coursework.ts#remedyWords",
+   "src/engine/systems/coursework.ts#reshownWords",
+   "src/engine/systems/coursework.ts#meetingWeight",
+   "src/engine/systems/evaluation.ts#chiefLimit",
+   "src/engine/systems/evaluation.ts#conditionWords",
+   "src/engine/systems/evaluation.ts#pointsWords"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "repeated",
+   "success",
+   "partial",
+   "setback",
+   "failure",
+   "teacher",
+   "recommendation",
+   "history",
+   "returning",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read in order in the baseline’s 24 runs, five courses spoke one frame: “It’s at 50% now, and the note is taken at 75%” 451 times from 21 courses; a new note named its part twice (“Your lines held it back most. The lines weren’t secure…”); card labels stood as prose subjects (“the note on Built On”); a single point of tiredness made a Strong piece “strong despite the day”; and a part left unfinished was answered with a step beyond it.",
+  "changes": "Composed by situation in five course voices (direct, warm, exacting, patient, brisk; `VOICE_OF`), two first-year courses of one discipline never sharing one. A new note runs into its own words; a note given before says where its part stands and the rule that puts it right (“It’s at 50%. A piece shown with it at 75% or more puts the note right.”), never “taken”; a first Strong, a best and a piece strong despite a day that cost two points or more stop at the acknowledgment; a part left unfinished is answered by the steps that finish it; every move names the new band; a day and the band are said once; the words are chosen by the shapes and frames the course said lately, with no draw from the game’s randomness.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/feedback-voices.test.ts: 'is said whole and true: no card label as a subject, no \"taken\", no two colons in a sentence, the date and figures it has, and a step only where the situation gives one'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/feedback-voices.test.ts: 'says the same facts in words no other voice uses: no whole message, and no first sentence, shared'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/feedback-voices.test.ts: 'stops at a first Strong, a best and a strong piece despite the day, holds back the step where what held a piece has a remedy, and gives it at a plateau'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/feedback-voices.test.ts: 'says a day once: a move from the piece shown the day a slipped note was put right says the day in one place'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-dynamic.test.ts: 'a teacher’s note on an unchanged weakness says it was said before, how often, and when; never as a new discovery'"
+   }
+  ]
+ },
+ {
+  "surface": "The feedback card’s label and the note’s heading",
+  "where": "School, Coursework, Feedback on each piece: the label beside it (A New Note, Still There, What Held It Back)",
+  "sources": [
+   "src/ui/components/CourseworkPane.tsx#FeedbackBlock",
+   "src/ui/components/CourseworkPane.tsx#KIND_LABEL",
+   "src/ui/components/CourseworkPane.tsx#kindLabel"
+  ],
+  "states": [
+   "first use",
+   "repeated",
+   "partial",
+   "success",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "A piece held back by something other than its notes, or by nothing, carried the label of a note (“A New Note”) though no note was given, so the label and the words beneath it disagreed.",
+  "changes": "`kindLabel`: “What Held It Back” where a limit held a prepared piece, “Nothing Held It Back” where nothing did; a note keeps its kind’s label. Labels stay the same words every time they apply.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/ui/components/CourseworkPane.tsx"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g24-school.test.ts: 'draws the note on the Coursework tab: the skill note new, then taken, shown again and marked taken in the ledger; and the objective a note put first, with why'"
+   }
+  ]
+ },
+ {
+  "surface": "Your Notes: every note given, and where each stands",
+  "where": "School, Coursework, Your Notes",
+  "sources": [
+   "src/ui/components/CourseworkPane.tsx#NotesLedger",
+   "src/ui/components/CourseworkPane.tsx#objectiveWhy",
+   "src/ui/components/CourseworkPane.tsx#timesWords",
+   "src/engine/systems/learning.ts#DIM_SUBJECT",
+   "src/engine/systems/learning.ts#noteSubject"
+  ],
+  "states": [
+   "history",
+   "repeated",
+   "success",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "Read on the workload save at 1440, each note is a line a player can scan: its subject, how often, first and last given, and Open or Taken with the day. The ledger’s rehearsal note was named “Time On Its Feet”, a scene’s word, though it counts Voice I’s daily practice, Speech’s drills and the movement score’s rehearsal too.",
+  "changes": "The rehearsal note is “Rehearsal” (`DIM_SUBJECT`), and the feedback names it in prose by what it is in every course (`DIM_WORDS`), with the piece’s own name for it after (“Here that’s the daily practice, at 23%.”).",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/coordinator/walk-before-workload-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence2-b11.test.ts: 'PLAYER JOURNEY: Your Work So Far at the end of a played school, dismissed by 20 December 2027: every section as the records it reads give it, worked out here, and a reload the same'"
+   }
+  ]
+ },
+ {
+  "surface": "A Note That Keeps Coming Back and Another Way At It",
+  "where": "School, Coursework, a piece’s card, where a note has come back three times or more",
+  "sources": [
+   "src/ui/components/CourseworkPane.tsx#AnotherWay",
+   "src/engine/systems/learning.ts#APPROACHES",
+   "src/engine/systems/learning.ts#ADVANCED"
+  ],
+  "states": [
+   "repeated",
+   "recommendation",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Each way is named as its control is and says what it costs in time and what it works on (“a half-hour drill of it, once a day”); the feedback points to it by the card’s own heading, so the player can find the control from the words.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/direction.test.ts: 'names what the part’s forecast shows, where, with several ways at it; worked, it keeps its way and its evidence'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/learning.ts"
+   }
+  ]
+ }
+]
