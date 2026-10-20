@@ -1,0 +1,110 @@
+[
+ {
+  "want": "Comedy|Out The Door By Seven",
+  "id": "brief-comedy-2",
+  "chars": 7500,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Creature Feature|The Dispensary Door",
+  "id": "brief-creature_feature-2",
+  "chars": 7010,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Eco-Horror|The Warm Walls",
+  "id": "brief-eco_horror-2",
+  "chars": 6604,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Found Footage|The Tape For Later",
+  "id": "brief-found_footage-2",
+  "chars": 7037,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Hangout|No Meteors Tonight",
+  "id": "brief-hangout-2",
+  "chars": 6827,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Kitchen Sink Drama|One More Friday",
+  "id": "brief-kitchen_sink-2",
+  "chars": 6886,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Picaresque|Notes From The Overnight Bus",
+  "id": "brief-picaresque-2",
+  "chars": 7027,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Crime|Tuesday Night, All Night",
+  "id": "brief-crime-2",
+  "chars": 6201,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Detective|Seven Minutes Fast",
+  "id": "brief-detective-2",
+  "chars": 6980,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Domestic Drama|The Boxes In The Hall",
+  "id": "brief-domestic_drama-2",
+  "chars": 6603,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Dystopian|The Approved Lesson",
+  "id": "brief-dystopian-2",
+  "chars": 6840,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Costume Drama|The Second Fitting",
+  "id": "brief-costume_drama-2",
+  "chars": 6957,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Action|The Loading Bay",
+  "id": "brief-action",
+  "chars": 6509,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Anime|Last Launch From The Roof",
+  "id": "brief-anime",
+  "chars": 5865,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Erotic Thriller|The Second Key",
+  "id": "brief-erotic_thriller",
+  "chars": 6764,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Swashbuckler|The Steward Of The Cellar",
+  "id": "brief-swashbuckler-2",
+  "chars": 7680,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Kitchen Sink Drama|Not Going Back",
+  "id": "brief-kitchen_sink",
+  "chars": 6313,
+  "pageOverflowsSideways": false
+ },
+ {
+  "want": "Found Footage|Night Two At Juniper Creek",
+  "id": "brief-found_footage",
+  "chars": 7001,
+  "pageOverflowsSideways": false
+ }
+]

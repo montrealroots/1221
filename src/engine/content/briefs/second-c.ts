@@ -217,7 +217,7 @@ export const SECOND_C: readonly Brief[] = [
     allows: { structure: ['open'] },
     why: {
       partner: 'Dana steers every turn from behind the lens, and Rosa plays two eyelines: the lens for the future, and just beside it for her friend.',
-      improvisation: 'The brief gives the beats and the objective and leaves every word to the take, the way the form is made.',
+      improvisation: 'The brief gives the beats and the objective and leaves every word to you as you tape, the way found footage is made.',
       techniques: 'The tape is improvised: you find every line live inside the beats, in answer to what Dana asks. Talking to the lens is the on-camera work every self-tape asks for.',
       allows: 'With no written lines, the words come fresh from what the reader asks in each take, so it can only be played open, never set and repeated.',
       beats: 'A home video, a question dodged, and the truth told to a listener who doesn’t exist yet.',
@@ -365,9 +365,9 @@ export const SECOND_C: readonly Brief[] = [
     allows: { structure: ['open'] },
     why: {
       partner: 'The pleasure of the scene is in how she listens to him, and he never takes the same tangent twice.',
-      improvisation: 'The brief gives the beats and leaves the talk to the take, so you find each argument and tangent live with the reader.',
+      improvisation: 'The brief gives the beats and leaves the talk to you, so you find each argument and tangent live with the reader.',
       techniques: 'The talk is improvised, unhurried and found in the moment, built on whatever the reader offers.',
-      allows: 'With the talk left to the take, each night on the roof goes differently, so it can only be played open, never set and repeated.',
+      allows: 'With the talk left to you, each night on the roof goes differently, so it can only be played open, never set and repeated.',
       beats: 'An argument about clouds, a tangent worth following, a quiet admission, and a streak that keeps him up there.',
     },
     readings: [
@@ -710,7 +710,7 @@ export const SECOND_C: readonly Brief[] = [
     why: {
       partner: 'Everything turns on the rent man: what he has heard, what he believes, and what he decides to do with his own money.',
       vocal: 'She speaks at two volumes: the bright voice for the wall and the woman behind it, and the low one for the truth, with the town’s speech in both.',
-      techniques: 'The lines are written in the working-class speech of a Lancashire mill town, its rhythms and its “love” and “ta” among them, and the accent is played as the way Jean talks, with the dignity it’s owed, never as color or a joke.',
+      techniques: 'The lines are written in the working-class speech of a Lancashire mill town, its rhythms and its “love” and “ta” among them. Play the accent as the way Jean talks, with the dignity it’s owed, never as color or a joke.',
       beats: 'A show for the neighbors, a story he has heard, the truth told low, and a kindness she didn’t ask for.',
     },
     readings: [
