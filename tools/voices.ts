@@ -81,7 +81,7 @@ const courseOf = (code: string) => COURSES.find((c) => c.code === code);
 const argv = process.argv.slice(2).filter((a) => a !== '--');
 const arg = (n: string, d: string) => { const i = argv.indexOf(`--${n}`); return i >= 0 ? argv[i + 1]! : d; };
 
-interface Said { at: string; kind: 'notice' | 'showing' | 'director' | 'moment' | 'advice'; speaker: string; title?: string; text: string; band?: string; note?: string; course?: string; piece?: string; details?: string; focus?: string }
+interface Said { at: string; kind: 'notice' | 'showing' | 'director' | 'moment' | 'advice'; speaker: string; title?: string; text: string; band?: string; note?: string; course?: string; piece?: string; details?: string; focus?: string; t?: number; mate?: number; choice?: string }
 
 const SCENARIOS: Record<string, { config: Record<string, unknown>; setup?: (sim: Simulation) => void; underprepared?: (day: string) => boolean; extra?: boolean; adverse?: boolean; shortSleep?: number; contrary?: boolean; approaches?: boolean }> = {
   attentive: { config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her' } },
@@ -123,7 +123,7 @@ function play(name: string, seed: string, months: number): { said: Said[]; reloa
     sim.notify = ((spec: { category: string; title: string; body: string }) => { said.push({ at: dayOf(sim.now), kind: 'notice', speaker: spec.category, title: spec.title, text: spec.body, focus: `notice:${structureOf(spec.title)}` }); return notify(spec as never); }) as typeof sim.notify;
   };
   watch();
-  const seenShowing = new Set<string>(); const seenNote = new Set<string>(); const seenMoment = new Set<string>();
+  const seenShowing = new Set<string>(); const seenNote = new Set<string>(); const seenMoment = new Map<string, Said>();
   const read = () => {
     const cw = courseworkOf(sim, sim.player);
     for (const a of cw?.assignments ?? []) {
@@ -131,12 +131,16 @@ function play(name: string, seed: string, months: number): { said: Said[]; reloa
       const key = `${a.id}:${a.shown.at}`;
       if (seenShowing.has(key)) continue;
       seenShowing.add(key);
-      said.push({ at: dayOf(a.shown.at), kind: 'showing', speaker: a.feedback.course, course: courseOf(a.course)?.name ?? a.course, piece: templateById(a.template)?.title, band: a.shown.band, note: `${a.feedback.kind}:${a.feedback.focus.kind}`, focus: noteKey(a.feedback.focus as never), text: a.feedback.text });
+      said.push({ at: dayOf(a.shown.at), kind: 'showing', speaker: a.feedback.course, course: courseOf(a.course)?.name ?? a.course, piece: templateById(a.template)?.title, band: a.shown.band, note: `${a.feedback.kind}:${a.feedback.focus.kind}`, focus: noteKey(a.feedback.focus as never), t: a.shown.at, text: a.feedback.text });
     }
     for (const m of cw ? momentsOf(cw) : []) {
-      if (seenMoment.has(m.id)) continue;
-      seenMoment.add(m.id);
-      said.push({ at: dayOf(m.at), kind: 'moment', speaker: `mate:${m.mate}`, note: m.kind, text: m.text });
+      // The answer, once given, kept with the moment it answers (brief 17: what a later moment says of the last answer
+      // is checked against it).
+      const had = seenMoment.get(m.id);
+      if (had) { if (m.choice && !had.choice) had.choice = m.choice; continue; }
+      const x: Said = { at: dayOf(m.at), kind: 'moment', speaker: `mate:${m.mate}`, note: m.kind, mate: m.mate, t: m.at, text: m.text, ...(m.choice ? { choice: m.choice } : {}) };
+      seenMoment.set(m.id, x);
+      said.push(x);
     }
     for (const which of WHICH) {
       const h = holderFor(sim, sim.player, which);
@@ -205,8 +209,10 @@ function play(name: string, seed: string, months: number): { said: Said[]; reloa
         const awake = (sim.player.awakeSince ?? 0) <= sim.now;
         if (!((p.hour >= 23 || p.hour < 5) && awake && sim.execute({ kind: 'life.sleep', payload: { hours: suggestedSleep(sim).hours } }).ok)) sim.advanceTo(sim.now + 3_600_000);
       } else attentiveHour(sim, s.extra ? () => practiceHour(sim) : undefined);
+      // Every hour (from 2026-10-20, brief 17): a piece shown in rounds can show two in a day, and the first round's words
+      // are replaced by the second's on the piece; read at noon alone, the first was lost to the transcript.
+      read();
       if (p.hour === 12) {
-        read();
         if (new Date(sim.now).getUTCDay() === 0) {
           const recs = adviceFor(sim, sim.player);
           // As the card draws it (from 2026-10-20, brief 16's `adviceSummary`): what's shown, and what's behind Why This
@@ -376,8 +382,8 @@ export function brief17(runs: { scenario: string; seed: string; said: Said[]; re
   const claims = { moveClaims: 0, moveWrong: 0, bestClaims: 0, bestWrong: 0, runClaims: 0, runWrong: 0, countClaims: 0, countWrong: 0, examples: [] as string[] };
   for (const r of runs) {
     const byCourse = new Map<string, Said[]>();
-    const byFocus = new Map<string, number>();
-    for (const x of r.said.filter((y) => y.kind === 'showing')) {
+    const sorted = r.said.filter((y) => y.kind === 'showing').sort((a, b) => (a.t ?? 0) - (b.t ?? 0));
+    for (const x of sorted) {
       const prev = byCourse.get(x.course ?? '') ?? [];
       const p = prev.at(-1);
       const t = x.text;
@@ -403,16 +409,19 @@ export function brief17(runs: { scenario: string; seed: string; said: Said[]; re
         claims.runClaims += 1;
         if (said !== run) { claims.runWrong += 1; if (claims.examples.length < 12) claims.examples.push(`${r.scenario} ${x.at} ${x.course}: "${runM[0]}", the run ${run}`); }
       }
-      const n = x.focus ? (byFocus.get(x.focus) ?? 0) + 1 : 0;
+      // The showings before on the same note: those of earlier days, and of the same day, whose order a run's record doesn't
+      // keep (a showing's time is its day's), so a count is right if some order of the day's makes it so.
+      const earlier = x.focus ? sorted.filter((y) => y.focus === x.focus && y.at < x.at).length : 0;
+      const sameDay = x.focus ? sorted.filter((y) => y !== x && y.focus === x.focus && y.at === x.at).length : 0;
+      const n = earlier + 1;
       const cm = /\b(?:the|a|an) (second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|\d+(?:st|nd|rd|th)) time (?:you’ve had|for the note)|after (one|two|three|four|five|six|seven|eight|nine|ten|\d+) notes/i.exec(t);
       if (cm && x.focus && !x.focus.startsWith('advanced')) {
         const ords = ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'];
         const words = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
         const said = cm[1] ? (ords.indexOf(cm[1].toLowerCase()) > 0 ? ords.indexOf(cm[1].toLowerCase()) : parseInt(cm[1], 10)) : (words.indexOf(cm[2]!.toLowerCase()) >= 0 ? words.indexOf(cm[2]!.toLowerCase()) : parseInt(cm[2]!, 10)) + 1;
         claims.countClaims += 1;
-        if (said !== n) { claims.countWrong += 1; if (claims.examples.length < 12) claims.examples.push(`${r.scenario} ${x.at} ${x.course}: said ${said}, the transcript's ${n} (${x.focus})`); }
+        if (said < n || said > n + sameDay) { claims.countWrong += 1; if (claims.examples.length < 12) claims.examples.push(`${r.scenario} ${x.at} ${x.course}: said ${said}, the transcript's ${n}${sameDay ? ` to ${n + sameDay}` : ''} (${x.focus})`); }
       }
-      if (x.focus) byFocus.set(x.focus, n || (byFocus.get(x.focus) ?? 0) + 1);
       byCourse.set(x.course ?? '', [...prev, x]);
     }
   }
@@ -442,6 +451,23 @@ export function brief17(runs: { scenario: string; seed: string; said: Said[]; re
       }
     }
   }
+  // A moment's claim about the last time (brief 17): a request for help or an invitation to run lines that says how the
+  // last one of its kind from the same classmate was answered, against that answer.
+  const last = { claims: 0, wrong: 0, examples: [] as string[] };
+  const CLAIM: [RegExp, string][] = [[/you helped them last time/, 'help'], [/last time you said you couldn’t/, 'no'], [/You ran lines together the last time they asked/, 'yes'], [/Last time, you couldn’t/, 'no']];
+  for (const r of runs) {
+    const byMateKind = new Map<string, Said[]>();
+    for (const x of r.said.filter((y) => y.kind === 'moment').sort((a, b) => (a.t ?? 0) - (b.t ?? 0))) {
+      const k = `${x.mate}:${x.note}`;
+      const before = byMateKind.get(k) ?? [];
+      for (const [re, answer] of CLAIM) if (re.test(x.text)) {
+        last.claims += 1;
+        const prior = before.at(-1)?.choice;
+        if (prior !== answer) { last.wrong += 1; if (last.examples.length < 10) last.examples.push(`${r.scenario} ${x.at}: "${re.source}", the last answer ${prior ?? 'none recorded'}`); }
+      }
+      byMateKind.set(k, [...before, x]);
+    }
+  }
   // Speakers: of two courses of one discipline, the share of their sentence structures in common (Jaccard), the
   // discipline's own steps and the template notes included, since a voice is all a course says.
   const discOf = (name?: string) => { const c = COURSES.find((x) => x.name === name); return c ? disciplineOf(c.skills) : undefined; };
@@ -465,14 +491,16 @@ export function brief17(runs: { scenario: string; seed: string; said: Said[]; re
       bodies: 'everything after the first sentence (the part played aside), as structures, said in the window; denominator: messages of more than one sentence',
       sameFinding: 'a repeated body whose message is on the same thing as the one it repeats (the note\'s key, or the director\'s note and its problem); said continuing: its first sentence says so (again, still, same, as on, last time, before, back, since, keeps, another, running, in a row)',
       structures: 'a sentence whose structure (dates, figures, quotes, ordinals, counts and runs of capitalised words past the first taken out) was said in the window; allStale: a message every one of whose sentences was',
-      contradictions: 'a showing\'s claims read from its words against the course\'s showings before it in the run: a band\'s move named against the last piece, a best against every piece before, a run against the Strong-or-better run, a note\'s count against the earlier showings on the same note (any course); the claims a phrasing the parser doesn\'t know makes aren\'t counted, so each count of claims is its denominator',
+      contradictions: 'a showing\'s claims read from its words against the course\'s showings before it in the run: a band\'s move named against the last piece, a best against every piece before, a run against the Strong-or-better run, a note\'s count against the earlier showings on the same note (any course), either order of a day\'s two on it allowed, since a showing\'s recorded time is its day\'s; the claims a phrasing the parser doesn\'t know makes aren\'t counted, so each count of claims is its denominator',
       events: 'from notices alone: each classmate\'s apologies against their Didn\'t Come notices before them; a miss\'s and a request\'s stated count against the notices before',
+      lastAnswer: 'a classmate\'s moment that says how the last of its kind was answered, against the answer the run recorded for the one before it from the same classmate',
       excluded: 'nothing is left out of a denominator but the sentence naming the part played, which every scene\'s feedback ends on',
     },
     perKind: per,
     commonestRepeatedBodies: [...bodyTop.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([body, n]) => ({ body, n })),
     contradictions: claims,
     events,
+    lastAnswer: last,
     speakers: { pairs: pairs.length, meanShared: mean(pairs.map((p) => p.shared)), mostShared: [...pairs].sort((a, b) => b.shared - a.shared).slice(0, 8) },
     rerolled: { checked: runs.reduce((a, r) => a + (r.checkedAtReload ?? 0), 0), differed: runs.reduce((a, r) => a + (r.rerolled ?? 0), 0) },
   };

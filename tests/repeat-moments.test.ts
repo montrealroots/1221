@@ -44,7 +44,8 @@ describe('a classmate who asks again', () => {
         } else {
           if (!i) { expect(m.text).not.toMatch(/Last time, you couldn’t\.|They’ve asked before\./); return; }
           // A classmate you ran lines for asks in return, and that's said in its place.
-          expect(m.text.endsWith(' Last time, you couldn’t.') || m.text.endsWith(' You ran theirs when they were behind.'), m.text).toBe(true);
+          // In their voice from 2026-10-20 (brief 17): each way a classmate returning the favour says it.
+          expect(m.text.endsWith(' Last time, you couldn’t.') || / (?:You ran theirs|They haven’t forgotten you ran theirs)|: you ran theirs/.test(m.text) && m.text.endsWith(' when they were behind.'), m.text).toBe(true);
         }
         checked[kind] += 1;
       });

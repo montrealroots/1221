@@ -548,10 +548,12 @@ describe('Feedback And Your Notes, played', () => {
     // Shown with the parts it was given at.
     expect(pct(r.shown.interpretation!)).toBe(figure(example('coursework.feedback').setup, /Table Work at (\d+)%/));
     expect(r.feedback.focus).toEqual({ kind: 'dim', dim: 'memorization' });
-    // The note the guide quotes, said after one sentence on what it was (from 2026-10-20, brief 16's `showingWords`) and
-    // before the steps that work on it; until then the note was the whole of the feedback.
+    // The note the guide quotes, run into what held the piece back most (from 2026-10-20, brief 17, in Acting I's voice:
+    // brief 16 said one sentence on what it was before it) and before the steps that work on it; until brief 16 the note
+    // was the whole of the feedback.
     const quoted = said(result, /the note is on it: “(.+?)” Two of/)[0]!;
-    expect(r.feedback.text).toMatch(new RegExp(`^[^.]+\\. ${quoted.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} To work on it: Learn Lines\\.$`));
+    const run = `${quoted.charAt(0).toLowerCase()}${quoted.slice(1)}`;
+    expect(r.feedback.text).toMatch(new RegExp(`^What held it back most: ${run.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} .*Work on it: Learn Lines\\.$`));
     expect(r.status).toBe('revising');
     expect(r.a.revision!.dueOn).toBe(r.meetings[1]);
     // Marked read, the note worked twice.

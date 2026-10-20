@@ -450,9 +450,9 @@ describe('p-journey-history', () => {
     const weak = Object.entries(j.limits ?? {}).filter(([, t]) => t.n >= 3).sort((a, b) => b[1].whole - a[1].whole).slice(0, 3)
       .map(([k, t]) => ({ line: `${t.label} has held back ${t.n} pieces, about ${r1(t.whole / t.n)} points off the whole each.`, evidence: [`${KIND[k.split(':')[0]!] ?? 'The choice'}, ${r1(t.whole)} points in all`] }));
     const notes = ((p.school as { coursework?: { notes?: { key: string; status: string; given: number }[] } }).coursework?.notes ?? []).filter((n) => n.status === 'open' && n.given >= 3).sort((a, b) => b.given - a.given);
-    // The class's name for a note on rehearsal: Time On Its Feet.
+    // The class's name for a note on rehearsal: Rehearsal (from 2026-10-20, brief 17; until then Time On Its Feet).
     expect(notes[0]!.key).toBe('dim:rehearsal');
-    weak.push({ line: `The same note has been given ${notes[0]!.given} times and is still open: Time On Its Feet.`, evidence: ['The class’s notes: Time On Its Feet'] });
+    weak.push({ line: `The same note has been given ${notes[0]!.given} times and is still open: Rehearsal.`, evidence: ['The class’s notes: Rehearsal'] });
     section('What Keeps Holding It Back', weak);
     // Material met.
     const features = p.experience?.features ?? {};

@@ -1126,6 +1126,50 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     if (dropped > 0) steps.push(`Let go of ${plural(dropped, 'person’s interests', 'people’s interests')}: the game no longer keeps them.`);
   }
 
+  // The classmates' apologies, kept on the misses they're for (2026-10-20, the owner's brief 17, `missesOwed` in
+  // `systems/classmates.ts`), once a save. Until then an apology was due while a classmate's misses outnumbered the
+  // apologies among their last 20 moments, so each miss's apology is read back from what the save holds:
+  // - **an apology kept** (on the classmate, or in the coursework's last 60 moments) covers every miss before it;
+  // - **where a classmate's 20 moments are full,** what came before the oldest of them isn't known, and every miss before
+  //   it is taken as apologized for then: an apology owed for a miss older than everything the save remembers of the
+  //   classmate would come a year late, which is the defect itself;
+  // - **a miss after the last apology** stays owed, as it is.
+  // Each classmate's counts of what they've brought (`asked`) start from their moments; full, the counts are a floor,
+  // and the words say "again" for them rather than a number (`countedSince`). Nothing else changes: their trust, their
+  // bond and the moments are as they were.
+  {
+    let marked = 0; let assumed = 0; let counted = 0;
+    type Kept = { at: number; kind: string; choice?: string };
+    type Mate = { met?: number; moments?: Kept[]; asked?: Record<string, number>; countedSince?: number };
+    type Rehearsal = { id: string; at: number; status: string; apologized?: number };
+    type Work = { partner?: number; rehearsals?: Rehearsal[] };
+    for (const person of Object.values(universe.people ?? {})) {
+      const school = person.school as (NonNullable<typeof person.school> & { coursework?: { assignments?: Work[]; moments?: { mate: number; kind: string; at: number }[] } }) | undefined;
+      if (!school || school.missesMarked) continue;
+      const cw = school.coursework;
+      for (const [i, raw] of (school.classmates ?? []).entries()) {
+        const mate = raw as unknown as Mate;
+        const kept = mate.moments ?? [];
+        const full = kept.length >= 20;
+        const from = kept.length ? Math.min(...kept.map((m) => m.at)) : undefined;
+        const misses = (cw?.assignments ?? []).flatMap((a) => (a.partner === i ? (a.rehearsals ?? []).filter((r) => r.status === 'missedByThem' && r.apologized === undefined && r.at >= (mate.met ?? 0)) : [])).sort((x, y) => x.at - y.at);
+        if (full && from !== undefined) for (const r of misses) if (r.at < from) { r.apologized = from; assumed += 1; }
+        const apologies = [...new Set([...kept.filter((m) => m.kind === 'apology').map((m) => m.at), ...(cw?.moments ?? []).filter((m) => m.mate === i && m.kind === 'apology').map((m) => m.at)])].sort((x, y) => x - y);
+        for (const at of apologies) for (const r of misses) if (r.apologized === undefined && r.at < at) { r.apologized = at; marked += 1; }
+        if (!mate.asked && kept.length) {
+          mate.asked = {};
+          for (const m of kept) mate.asked[m.kind] = (mate.asked[m.kind] ?? 0) + 1;
+          if (full && from !== undefined) mate.countedSince = from;
+          counted += 1;
+        }
+      }
+      school.missesMarked = true;
+    }
+    if (marked > 0) steps.push(`Marked ${plural(marked, 'missed rehearsal')} as apologized for, from the apologies the save keeps.`);
+    if (assumed > 0) steps.push(`Took ${plural(assumed, 'missed rehearsal')} from before what the save remembers of a classmate as apologized for.`);
+    if (counted > 0) steps.push(`Counted what ${plural(counted, 'classmate has', 'classmates have')} asked of you from the moments the save keeps.`);
+  }
+
   // The credits' years, from the acceptance pass of 2026-10-11 on: an older save's dated by their terms' casting notices,
   // once (`redateCredits`). Until then a credit kept the year it was written down, often the year after its run.
   {

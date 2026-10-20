@@ -859,7 +859,9 @@ describe('school.partner_rehearsal', () => {
     while (!apology() && sim.now < at(2026, 9, 12)) play(sim, sim.now + 6 * MS_HOUR);
     const m = apology()!;
     expect(m).toBeDefined();
-    expect(m.text).toMatch(new RegExp(`^${first} apologizes for not coming to rehearse: (something at home took the evening|they lost track of the day)\\.$`));
+    // In their voice, for the rehearsal they missed, by its play and day (from 2026-10-20, brief 17: until then neither).
+    expect(m.text).toBe(`${first} finds you before class, sorry about your rehearsal of Trifles on August 29: they lost track of the day, and they know the scene lost the evening.`);
+    expect(m.covers).toHaveLength(1);
     expect(titled(sim, `${first}: An Apology`)).toHaveLength(1);
     expect(sim.must<{ done: string }>({ kind: 'school.respond', payload: { momentId: m.id, choice: 'accept' } }).done).toBe(`You told ${first} it’s fine.`);
     expect(mate.bond).toBe(2);
@@ -874,7 +876,10 @@ describe('school.partner_rehearsal', () => {
     expect(titled(sim, `${first} Didn’t Come`).sort((x, y) => x.at - y.at)[1]!.body).toContain(`, and they didn’t come, the second time they haven’t come. It isn’t held against you`);
     const second = () => momentsOf(courseworkOf(sim, sim.player)!).find((x) => x.kind === 'apology' && x.mate === i && x.id !== m.id);
     while (!second() && sim.now < r2.at + 21 * MS_DAY) play(sim, sim.now + 6 * MS_HOUR);
-    expect(second()?.text).toMatch(new RegExp(`^${first} apologizes for not coming to rehearse: (something at home took the evening|they lost track of the day)\\. It’s the second rehearsal they’ve missed with you\\.$`));
+    // The second apology is for the second miss alone, the first already apologized for, and counts both (from
+    // 2026-10-20, brief 17, `missesOwed`).
+    expect(second()?.text).toMatch(new RegExp(`^${first} finds you before class, sorry about your rehearsal of Trifles on \\w+ \\d{1,2}: they lost track of the day, and they know the scene lost the evening\\. That’s two rehearsals they’ve missed with you\\.$`));
+    expect(second()?.covers).toEqual([r2.id]);
   }, 60_000);
 
   it('PLAYER JOURNEY: missed by you, away in New York: trust 50 to 38, bond 0 to −5, an incident kept, their notice and the screen saying so', () => {

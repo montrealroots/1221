@@ -388,7 +388,8 @@ describe('school.learn_part', () => {
     // And the notes read the lines: past two-fifths of the calls a twin short of off book is told to get there; the
     // learner, off book, isn't.
     expect(proc(twin).notes[0]!.focus).toEqual({ kind: 'lines' });
-    expect(proc(twin).notes[0]!.text).toMatch(/^Be off book/);
+    // In the production director's voice (from 2026-10-20, brief 17, `directorVoiceOf`): the same note, said one of three ways.
+    expect(proc(twin).notes[0]!.text).toMatch(/^(?:Be off book|The lines aren’t there yet\. I need you off book|Get off book)/);
     expect(proc(sim).notes.some((n) => n.focus.kind === 'lines')).toBe(false);
 
     // The second fall's casting: the chair reads each one's own run of four nights, delivered as its nights were
@@ -507,7 +508,7 @@ describe('school.review_blocking', () => {
     expect(proc(sim).lines).toBeCloseTo(1 - 0.88 ** 5, 12);
     expect(proc(sim).notes[0]!.focus).toEqual({ kind: 'lines' });
     expect(proc(leftOpen).notes[0]!.focus).toEqual({ kind: 'blocking' });
-    expect(proc(leftOpen).notes[0]!.text).toBe('The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.');
+    expect(['The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.', 'The blocking isn’t set yet. Go back through the book until every stage picture lands where it’s meant to.', 'Go back through the blocking in the book, so the stage pictures settle where they’re meant to.']).toContain(proc(leftOpen).notes[0]!.text);
 
     // The first night: the fifth call and the technical set a quarter more each, on what the book left, or on the gap.
     const first = (s: Simulation) => callsOf(s).nights[0]!.at;
@@ -621,7 +622,8 @@ describe('school.work_note', () => {
     for (const { n, prior } of again) {
       // What was tried, its figure then and at the next call, and, where it moved nothing, that it didn't.
       expect(n.text).toContain(`You tried ${prior.answer!.label!}: ${prior.answer!.before} then, ${prior.answer!.now ?? prior.answer!.after} now`);
-      expect(n.text).toMatch(prior.taken ? /^(?:Better since the last note|That’s moved since the last note|The last note took)\. You tried / : /^(?:Still: |Same note as at the last call\. |Not there yet\. )/);
+      // In the production director's voice (from 2026-10-20, brief 17): each of the three voices' ways.
+      expect(n.text).toMatch(prior.taken ? /^(?:Better since the last note|That’s moved since the last note|The last note took|That’s fixed|That last note landed|Good: that’s moved since the last call)\. You tried / : /^(?:Still: |Same note as at the last call\. |Not there yet\. |The same note as last time: |We’re still on the last note\. |Keep at the last note: )/);
       // Worse by the evidence at the call, it says it made it worse; otherwise that it didn't move it.
       const worse = Math.min(prior.answer!.after, prior.answer!.now ?? prior.answer!.after) - prior.answer!.before <= -WORKBOOK.evidence;
       if (prior.outcome === 'learned') expect(n.text).toContain(`which ${worse ? 'made it worse' : 'didn’t move it'}: worth knowing, and not the answer.`);

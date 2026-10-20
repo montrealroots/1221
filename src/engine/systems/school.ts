@@ -418,6 +418,11 @@ export interface SchoolRecord {
   credits?: { production: string; role: string; kind: Casting['kind'] | 'cabaret' | 'summer'; year: number; wentOn: number; size?: PartSize; yearAsKept?: true }[];
   /** The credits' years checked against the casting notices, once (`redateCredits`, from 2026-10-11). */
   creditsDated?: true;
+  /**
+   * The classmates' misses marked with the apologies that covered them (from 2026-10-20, brief 17, `missesOwed`): set as a
+   * class is admitted, and once by `migrate` for a save from before, which marks them from what it still holds.
+   */
+  missesMarked?: true;
   /** A Cabaret show this term: which term, its production week's Thursday, the shows played, and the part and its nights (`Run`). */
   /** `withdrawn`: taken out of the show by an academic warning that came during it (from 2026-10-10, `leaveCabaret`). */
   cabaret?: { term: number; week: string; performed: number; withdrawn?: { at: Instant; why: string } } & Partial<Run>;
@@ -1712,7 +1717,7 @@ export function enroll(sim: Simulation, person: Person): void {
   bindCeiling(person.craft, person.craftCeiling);
   for (const mate of admitted.classmates) { mate.ceiling = ceilingFrom(mate.craft); bindCeiling(mate.craft, mate.ceiling); }
   const school: SchoolRecord = {
-    classOf: TERM_STARTS_2026_27.fall.year + 3, termsBegun: 0, standing: 'good', castable: true, creditsDated: true,
+    classOf: TERM_STARTS_2026_27.fall.year + 3, termsBegun: 0, standing: 'good', castable: true, creditsDated: true, missesMarked: true,
     classmates: admitted.classmates, tally: undefined as unknown as TermTally, history: [],
     workStudy: { electiveHours: 0, owedHours: 0 },
   };

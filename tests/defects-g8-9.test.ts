@@ -63,7 +63,8 @@ describe('Table Work’s Write It Up', () => {
   it('opens once the questions are answered with readings the text supports, and not before', () => {
     const sim = life('g89-table');
     const a = work(sim, 'table-work', 'DRAM 163b', 'cherry-orchard-4', { familiarity: 0.9 }, false);
-    const why = 'Answer the questions first: there’s nothing to write up yet.';
+    // Two sentences from 2026-10-20 (brief 17): after the step's name and its colon, one more colon read as a list.
+    const why = 'Answer the questions first. There’s nothing to write up yet.';
     expect(go(sim, 'school.prepare', { assignmentId: a.id, activity: 'write' }).error).toBe(why);
     // Answered against the text, the analysis the showing reads is still short: still refused.
     answer(sim, a, false);

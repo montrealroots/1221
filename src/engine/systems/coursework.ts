@@ -81,7 +81,7 @@ import { academicTerm, cabaretEvenings, CABARET_RUN, coursesFor, ESTIMATE, short
 import { choose, materialContext, materialOf, rehearseChoice, sidesOf, type Playing } from './material';
 import { PLAYING } from '../content/approaches';
 import { featureSpeed, noteMaterial } from './experience';
-import { STEP, disciplineOf, showingWords } from './feedback';
+import { DIM_WORDS, STEP, disciplineOf, partWords, saysStep, showingWords, situationOf, type ShowingFacts, type Situation } from './feedback';
 import { exerciseFor } from '../content/practice';
 
 /** What SLATE estimates for the coursework, named where it's read. */
@@ -181,11 +181,18 @@ export interface Showing {
  * notes before it on the same thing (`kind`; `before` is the last time it was
  * given). From 2026-10-08.
  */
-export interface Feedback { course: string; teachers: string; text: string; focus: Focus; seen?: boolean; kind?: NoteKind; before?: { on: string; course: string } }
+/**
+ * A showing's feedback as delivered: its words, kept, so a reload never chooses them again. From 2026-10-20 (brief 17)
+ * it also keeps which situation the words said (`situationOf`) and whether they carried a step beyond (`saysStep`), so
+ * the card's label says what the words do; a save from before has neither, and its card reads as it did.
+ */
+export interface Feedback { course: string; teachers: string; text: string; focus: Focus; seen?: boolean; kind?: NoteKind; before?: { on: string; course: string }; situation?: Situation; step?: boolean }
 
 export interface PartnerRehearsal {
   /** `excused`: missed in hospital or laid up, which isn't standing them up (from 2026-10-10). */
   id: string; at: Instant; status: 'booked' | 'kept' | 'missedByYou' | 'missedByThem' | 'cancelled' | 'excused';
+  /** A rehearsal they didn't come to: when their apology covered it (from 2026-10-20, brief 17, `missesOwed`). */
+  apologized?: Instant;
   /** What the partner said after it, kept (`peerNote`): the game's words, marked simulated. */
   said?: string;
 }
@@ -1173,21 +1180,31 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const day = judged.limits.find((l) => l.kind === 'condition');
   const share = showing.together && a.partner !== undefined ? showing.together : undefined;
   const mate = share ? (/^(?:a|an|the) (.+)$/i.exec(share.partner)?.[1] ? `The ${(/^(?:a|an|the) (.+)$/i.exec(share.partner)![1]!).toLowerCase()}` : share.partner.split(' ')[0]!) : undefined;
-  const text = showingWords({
+  // The way at a note that keeps coming back this piece was worked with, where it's the note given (brief 17).
+  const tried = a.approach && focus.kind !== 'advanced' && a.approach.key === noteKey(focus) ? APPROACHES[a.approach.kind].label : undefined;
+  const facts: ShowingFacts = {
     key: `${a.id}:${onDay}:${a.round ?? 0}`, discipline, course: c.name, piece: t.title, band, bandLabel: BAND_LABEL[band],
     ...(prev ? { prev: { band: prev.band, label: BAND_LABEL[prev.band], on: formatDate(prev.at, zone()) } } : {}),
     run, best: earlier.length > 0 && earlier.every((e) => BAND_RANK[e.band] < BAND_RANK[band]),
+    // A first breakthrough (brief 17): Strong or better, where nothing the course showed before was.
+    firstStrong: strongBand(band) && earlier.length > 0 && earlier.every((e) => !strongBand(e.band)),
     kind, note: body, ...(focus.kind !== 'advanced' ? { about: focus.kind === 'dim' ? 'part' as const : focus.kind } : {}),
-    ...(focus.kind === 'dim' && focus.dim !== 'partner' ? { remedy: remedyWords(a, focus.dim) } : {}),
+    // The partner part's remedy is said with a note given before, whose own words (which name the reader) aren't said again.
+    ...(focus.kind === 'dim' && (focus.dim !== 'partner' || kind !== 'new') ? { remedy: remedyWords(a, focus.dim) } : {}),
+    ...(tried ? { tried } : {}),
     ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}), ...(heldAgain ? { again: heldAgain } : {}) } } : {}),
     ...(day ? { condition: { what: day.what, whole: day.whole ?? 0, words: day.label } } : {}),
     ...(share && mate ? { partner: { first: mate, lifted: share.overall - judged.overall >= 1, behind: (together?.parts.prep ?? 1) < 0.6, ...(share.slip ? { slip: { at: share.slip.at, covered: share.slip.covered >= 0.5 } } : {}) } } : {}),
     ...(prior ? { before: { on: dayWords(prior.on), course: prior.course, given: prior.given, ...(prior.taken ? { taken: dayWords(prior.taken) } : {}) } } : {}),
     ...(focus.kind === 'dim' ? { part: { label: t.dims[focus.dim]?.label ?? focus.dim, ...(prior?.level !== undefined ? { then: prior.level } : {}), ...(pick?.level !== undefined ? { now: pick.level } : {}) } } : {}),
-    subject: focus.kind === 'dim' ? (t.dims[focus.dim]?.label ?? noteSubject(noteKey(focus))) : focus.kind === 'choice' ? `your answer to “${questionsFor(a).find(({ q }) => q.id === focus.question)?.q.label ?? noteSubject(noteKey(focus))}”` : focus.kind === 'skill' ? (SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()) : undefined,
+    // A part as prose names it, never by its card's label (brief 17: "the note on Built On"): what it is in every course,
+    // since the ledger counts it across them (`DIM_WORDS`), and what this piece calls it (`here`).
+    ...(focus.kind === 'dim' ? { here: partWords(t.dims[focus.dim]?.label ?? noteSubject(noteKey(focus))).words } : {}),
+    subject: focus.kind === 'dim' ? (DIM_WORDS[focus.dim]?.[0] ?? partWords(t.dims[focus.dim]?.label ?? noteSubject(noteKey(focus))).words) : focus.kind === 'choice' ? `your answer to “${questionsFor(a).find(({ q }) => q.id === focus.question)?.q.label ?? noteSubject(noteKey(focus))}”` : focus.kind === 'skill' ? (SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()) : undefined,
     persistent: kind === 'recurring' && (prior?.given ?? 0) >= LEARNING.persistent, enough: LEARNING.enough, recent,
-  });
-  a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
+  };
+  const text = showingWords(facts);
+  a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}), situation: situationOf(facts), step: saysStep(facts) };
   a.shown = showing;
   return showing;
 }

@@ -288,7 +288,8 @@ describe('classmate trust/bonds', () => {
     // The first class, Monday 31 August: Hannah brings the boundary; answered that evening, accepted.
     sim.advanceTo(at(2026, 8, 31, 19));
     const m = momentsOf(cwOf(sim)).find((x) => x.kind === 'boundary')!;
-    expect(m).toMatchObject({ mate: a.partner, status: 'open', text: 'Hannah says that after the last few times, they’ll only rehearse with you if you ask a day ahead.' });
+    // In her voice and with what happened, counted (from 2026-10-20, brief 17: until then "after the last few times").
+    expect(m).toMatchObject({ mate: a.partner, status: 'open', text: 'Hannah says their time is tight. After you didn’t come once and called off late once, they’ll rehearse with you only if you ask a day ahead.' });
     go(sim, 'school.respond', { momentId: m.id, choice: 'respect' });
     expect(personOf(mateOf(sim, work(sim, a.id))).boundary).toBeDefined();
     const now = sim.now;
@@ -617,7 +618,8 @@ describe('notes and feedback', () => {
     const shown = work(sim, a.id);
     // Said against the course's last piece and with what held it most, before the note (from 2026-10-20, brief 16's
     // `showingWords`); until then the note alone.
-    expect(shown.feedback).toMatchObject({ focus: { kind: 'skill', skill: 'character' }, kind: 'new', text: 'Better than the Unready piece on October 5, 2026. At Working, the craft is what held it back most. This piece asked for more character work than you have yet. Keep building it in class over the next few weeks.' });
+    // In Acting I's voice from 2026-10-20 (brief 17, direct).
+    expect(shown.feedback).toMatchObject({ focus: { kind: 'skill', skill: 'character' }, kind: 'new', text: 'Up from Unready on October 5, 2026. Your craft held it back most. This piece asked for more character work than you have yet. Keep building it in class over the next few weeks.' });
     expect(shown.status).toBe('revising');
     expect(shown.revision!.dueOn).toBe('2026-10-26');
     const given = notesOf(cwOf(sim)).find((x) => x.key === 'skill:character')!;
@@ -746,7 +748,8 @@ describe('notes and feedback', () => {
     const first = cwOf(sim).assignments.find((a) => a.course === ACTING_I)!;
     const body = 'The lines weren’t secure, so the attention went to remembering, not to the other person.';
     // That it held the piece back most, the note, and what to do about it (from 2026-10-20, brief 16); until then the note alone.
-    expect(first.feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'new', text: `This is what held it back most. ${body} (Lines: 0% prepared.) You played Varya in The Cherry Orchard. To work on it: Learn Lines.` });
+    // Run into the note's own words, which name the part, in Acting I's voice (from 2026-10-20, brief 17).
+    expect(first.feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'new', text: `What held it back most: ${body.charAt(0).toLowerCase()}${body.slice(1)} (Lines: 0% prepared.) You played Varya in The Cherry Orchard. Work on it: Learn Lines.` });
     expect(notesOf(cwOf(sim)).find((x) => x.key === 'dim:memorization')).toMatchObject({ status: 'open', given: 1, level: 0 });
     // The second, set the next day: everything but the lines prepared (TEST SETUP, the table answered through the
     // command), and Learn Lines once, after the partner's ask is answered no.
@@ -765,7 +768,10 @@ describe('notes and feedback', () => {
     toMeeting(sim, second.dueOn);
     const pct = Math.round(lines * 100);
     // The figures said once, in the lead (from 2026-10-20, brief 16): until then the note said them again after itself.
-    expect(work(sim, second.id).feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'partial', text: `Better than on September 8, 2026 (0% then, ${pct}% now), though not all the way. ${body} You played The Sergeant in The Rising of the Moon. To work on it: Learn Lines.` });
+    // And the note's own words, given before, not again: what moved, the rule that puts it right, what answers it (from
+    // 2026-10-20, brief 17, in Acting I's voice).
+    expect(work(sim, second.id).feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'partial', text: `Your lines have moved since September 8, 2026, 0% to ${pct}%. Still short. A piece shown with it at 75% or more puts the note right. Work on it: Learn Lines.` });
+    expect(work(sim, second.id).feedback!.text).not.toContain(body);
     expect(notesOf(cwOf(sim)).find((x) => x.key === 'dim:memorization')).toMatchObject({ status: 'open', given: 2, level: lines });
   });
 
@@ -953,7 +959,8 @@ describe('showing/night bands', () => {
     const first = mate.name.split(' ')[0];
     const encouraged = (s: Simulation) => momentsOf(cwOf(s)).filter((m) => m.kind === 'encouragement');
     expect(encouraged(ten)).toHaveLength(1);
-    expect(encouraged(ten)[0]).toMatchObject({ mate: 0, status: 'said', assignmentId: cwOf(ten).assignments.find((a) => a.course === ACTING_I)!.id, text: `${first} caught you after class to say everyone has a showing like that, and not to take it to heart.` });
+    // In their voice, naming the piece (from 2026-10-20, brief 17: until then the same sentence from every classmate).
+    expect(encouraged(ten)[0]).toMatchObject({ mate: 0, status: 'said', assignmentId: cwOf(ten).assignments.find((a) => a.course === ACTING_I)!.id, text: `${first} stopped you after class to say they’ve had showings go the way your Scene Study did.` });
     expect(mateRecord(mate).log![0]!.what).toBe('Encouraged you after a hard showing');
     expect(encouraged(nine)).toEqual([]);
     expect(encouraged(working1)).toEqual([]);

@@ -229,7 +229,8 @@ describe('school.study_session', () => {
     away(again.when!);
     expect(personOf(mateOf()).incidents!.map((x) => x.kind)).toEqual(['missed', 'missed']);
     const b = untilOpen(sim, (x) => x.kind === 'boundary' && x.mate === i, at(2026, 12, 20));
-    expect(b.text).toBe(`${first} says that after the last few times, they’ll only rehearse with you if you ask a day ahead.`);
+    // In their voice and with what happened, counted (from 2026-10-20, brief 17: until then "after the last few times").
+    expect(b.text).toBe(`${first} says the scene can’t keep losing evenings. After you didn’t come twice, they’ll rehearse with you only if you ask a day ahead.`);
     const before = trustOf(mateOf());
     sim.must({ kind: 'school.respond', payload: { momentId: b.id, choice: 'respect' } });
     expect(personOf(mateOf()).boundary).toMatchObject({ keptSince: 0, accepted: true });
