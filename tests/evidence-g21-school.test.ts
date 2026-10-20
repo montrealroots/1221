@@ -66,7 +66,9 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import {
   CALL_KIND, COMMENCEMENT_KIND, EVALUATION_KIND, PAYDAY_KIND, SHIFT_KIND, WEEK_KIND, classmatePerformer, coursesOn, mateAbilities, type Casting,
+  directorsNote,
 } from '@/engine/systems/school';
+import { directorVoiceFor, type DirectorVoice } from '@/engine/systems/production';
 import { coverOn, healthOf } from '@/engine/systems/health';
 import { journeyOf } from '@/engine/systems/evaluation';
 import { courseworkOf } from '@/engine/systems/coursework';
@@ -151,11 +153,11 @@ const meanOf = (...runs: Partial<Record<string, number>>[]) => {
   for (const r of runs) for (const [b, c] of Object.entries(r)) { n += c!; sum += WORTH[b]! * c!; }
   return n ? sum / n : 0;
 };
-/** The director's note's opening, by the run's mean: 1.25 and up, 0.5, −0.25, and under. */
-const opening = (mean: number) => mean >= 1.25 ? 'Remarkable work, night after night.'
-  : mean >= 0.5 ? 'Strong, reliable work across the run.'
-    : mean >= -0.25 ? 'Solid, sound nights. The next step is to take more risks in them.'
-      : 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.';
+/**
+ * The director's note's opening, by the run's mean: 1.25 and up, 0.5, −0.25, and under; in the production's director's
+ * voice (from 2026-10-20, brief 17), its words held in `tests/feedback-voices.test.ts`.
+ */
+const opening = (mean: number, voice: DirectorVoice) => directorsNote(mean >= 1.25 ? 2 : mean >= 0.5 ? 1 : mean >= -0.25 ? 0 : -1, voice);
 /** What a run's work is weighted by at the next casting: its nights to eight, a School or Rep run whole, a Cabaret or Summer play half. */
 const RUN_WEIGHT: Record<string, number> = { school: 1, rep: 1, cabaret: 0.5, summer: 0.5 };
 /** A run as closeRun leaves it: the moment it closed, and the process looked back on. */
@@ -497,7 +499,7 @@ function noteFrom(sim: Simulation, lastAt: number): { note: string; overall: num
   for (const r of records) for (const l of r.limits) if (l.kind === 'ability' || l.kind === 'technique') { const e = held.get(l.what) ?? { label: l.label, whole: 0 }; e.whole += l.whole ?? l.by / 4; held.set(l.what, e); }
   const top = [...held.values()].sort((a, b) => b.whole - a.whole)[0];
   const workOn = top && top.whole / records.length >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held your nights back most.` : '';
-  return { note: `${opening(meanOf(bands))}${workOn}`, overall: Math.round(records.reduce((a, r) => a + r.overall, 0) / records.length * 10) / 10, nights: records.length };
+  return { note: `${opening(meanOf(bands), directorVoiceFor('school', sim.player.school!.casting!))}${workOn}`, overall: Math.round(records.reduce((a, r) => a + r.overall, 0) / records.length * 10) / 10, nights: records.length };
 }
 
 describe('school.call', () => {
@@ -516,8 +518,9 @@ describe('school.call', () => {
     const want = noteFrom(sim, last.at);
     expect(want.nights).toBe(3);
     expect(c.note).toBe(want.note);
-    // On this seed, three solid nights held back most by the emotional depth the part asked.
-    expect(c.note).toBe('Solid, sound nights. The next step is to take more risks in them. Work on your emotional depth: it held your nights back most.');
+    // On this seed, three solid nights held back most by the emotional depth the part asked; the Carlotta's director
+    // encouraging (from 2026-10-20, brief 17: until then every director "Solid, sound nights. The next step is…").
+    expect(c.note).toBe('Good, solid nights. Next, let yourself take more risks in them. Work on your emotional depth: it held your nights back most.');
     const runs = journeyOf(sim.player).milestones.filter((m) => m.kind === 'run');
     // A supporting part from 2026-10-16, a leading one until then: the spring casting reads each night's abilities as the
     // play demands since that day (`BASE_INPUTS`).

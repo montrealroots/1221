@@ -7,7 +7,8 @@
  */
 import { describe, expect, it } from 'vitest';
 import { STEP, VOICE_OF, pick, saysStep, shapeOf, showingCandidates, situationOf, voiceOf, type ShowingFacts, type Voice } from '@/engine/systems/feedback';
-import { directorVoiceOf, noteText } from '@/engine/systems/production';
+import { directorVoiceFor, directorVoiceOf, noteText } from '@/engine/systems/production';
+import { directorsNote } from '@/engine/systems/school';
 
 /** One course of each voice, and its discipline. */
 const COURSE: Record<Voice, { course: string; discipline: ShowingFacts['discipline'] }> = {
@@ -163,5 +164,23 @@ describe('a production’s director', () => {
       const again = noteText({ kind: 'lines' }, { at: 0, text: '', focus: { kind: 'lines' }, taken }, undefined, { key: `k-${voice}-${taken}`, recent: [], voice });
       expect(again.split(/(?<=[.!?]\)?)\s+/).every((x) => (x.match(/:/g) ?? []).length <= 1), again).toBe(true);
     }
+  });
+
+  it('closes the run in the voice of its calls, its four bands said three ways and the plain way as before', () => {
+    // The same director at the calls and at the close: one key, the run's and the production's.
+    expect(directorVoiceFor('school', { production: 'Carlotta Festival Of New Plays' })).toBe(directorVoiceOf('school:Carlotta Festival Of New Plays'));
+    expect(directorVoiceFor('summer', { title: 'Summer Show' })).toBe(directorVoiceOf('summer:Summer Show'));
+    // Each band at its edge: 1.25, 0.5 and -0.25, and under.
+    const at = [1.25, 0.5, -0.25, -0.26];
+    expect(at.map((m) => directorsNote(m))).toEqual([
+      'Remarkable work, night after night.', 'Strong, reliable work across the run.', 'Solid, sound nights. The next step is to take more risks in them.', 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.',
+    ]);
+    expect(at.map((m) => directorsNote(m, 'exacting'))).toEqual([
+      'Remarkable, every night. That’s the standard to keep.', 'Strong across the run, and I could count on you every night.', 'Solid, but safe. Next time, take more risks in the nights.', 'Too uneven: on some nights the part got away from you. Come in rested, and have it in your body before the house does.',
+    ]);
+    expect(at.map((m) => directorsNote(m, 'encouraging'))).toEqual([
+      'Remarkable work, every night of it. Thank you.', 'You were strong and reliable all through the run. Well done.', 'Good, solid nights. Next, let yourself take more risks in them.', 'Some nights got away from you, and that happens. Come in rested, and have the part in your body before the house does.',
+    ]);
+    expect(directorsNote(1.24)).toBe(directorsNote(0.5));
   });
 });

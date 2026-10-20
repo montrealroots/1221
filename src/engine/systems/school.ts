@@ -118,7 +118,8 @@ import { MOMENT_KIND, momentInClass } from './classmates';
 import { endCoursework } from './coursework';
 import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, tellFails, type CourseRecord } from './courserecord';
 import { withRepeat, considerWelfare, facultyReview, followFormerClasses, FORMER_KIND, joinCohort, leaveClassBehind, insuranceStart, accountOwed, aidOnAccount, billUnsupportedTerm, closeLeave, liftHold, yaleAccount, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
-import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
+import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, directorVoiceFor, nightFactor, prepOf, processOf, reflect, stagesOf, type DirectorVoice, type Stage } from './production';
+import { voiceOf, type Voice } from './feedback';
 
 export type Craft = Record<Skill, number>;
 /**
@@ -2481,13 +2482,49 @@ export function nightOf(sim: Simulation, person: Person, key: string, holder: Ni
   return nightBand(nightEvaluation(sim, person, key, holder, at, size, where).overall);
 }
 
-/** The director's note on a run, by how its nights went on average. */
-export function directorsNote(mean: number): string {
-  if (mean >= 1.25) return 'Remarkable work, night after night.';
-  if (mean >= 0.5) return 'Strong, reliable work across the run.';
-  if (mean >= -0.25) return 'Solid, sound nights. The next step is to take more risks in them.';
-  return 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.';
+/**
+ * The director's note on a run, by how its nights went on average, in the voice the director gave its notes at the calls
+ * (`directorVoiceFor`, from 2026-10-20, brief 17): until then every director closed every run in the same words, so two
+ * productions with nights alike opened their notes alike ("Solid, sound nights…"), whoever directed them.
+ */
+const DIRECTORS_NOTE: Record<DirectorVoice, readonly [string, string, string, string]> = {
+  plain: ['Remarkable work, night after night.', 'Strong, reliable work across the run.', 'Solid, sound nights. The next step is to take more risks in them.', 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.'],
+  exacting: ['Remarkable, every night. That’s the standard to keep.', 'Strong across the run, and I could count on you every night.', 'Solid, but safe. Next time, take more risks in the nights.', 'Too uneven: on some nights the part got away from you. Come in rested, and have it in your body before the house does.'],
+  encouraging: ['Remarkable work, every night of it. Thank you.', 'You were strong and reliable all through the run. Well done.', 'Good, solid nights. Next, let yourself take more risks in them.', 'Some nights got away from you, and that happens. Come in rested, and have the part in your body before the house does.'],
+};
+export function directorsNote(mean: number, voice: DirectorVoice = 'plain'): string {
+  const [remarkable, strong, solid, uneven] = DIRECTORS_NOTE[voice];
+  return mean >= 1.25 ? remarkable : mean >= 0.5 ? strong : mean >= -0.25 ? solid : uneven;
 }
+
+/** A teacher's note on the term, by how the student grew against the class, in the course's voice: `inIt` is "in voice and speech", `yours` "your voice and speech". */
+const TEACHERS_NOTE: Record<Voice, Record<'ahead' | 'even' | 'behind', (inIt: string, yours: string) => string>> = {
+  direct: {
+    ahead: (i) => `Real progress this term: you’re pulling ahead of the class ${i}.`,
+    even: (_, y) => `Steady work, in step with the class. Keep at ${y}.`,
+    behind: (i) => `You’ve grown less than the class ${i} this term. Come to class rested, and do the work between classes.`,
+  },
+  warm: {
+    ahead: (i) => `A really good term ${i}: you’ve pulled ahead of the class. Well done.`,
+    even: (i) => `A good, steady term ${i}, growing with the class. Keep it going.`,
+    behind: (i) => `This term was harder ${i}, and you grew less than the class. Come to class rested, and keep up the work between classes.`,
+  },
+  exacting: {
+    ahead: (i) => `You grew more than the class ${i} this term, by a clear margin.`,
+    even: (i) => `In step with the class ${i}, no further. There’s room to pull ahead.`,
+    behind: (i) => `Behind the class ${i} this term. Arrive rested, and put in the work between classes.`,
+  },
+  patient: {
+    ahead: (i) => `This term you pulled ahead of the class ${i}. The work is adding up.`,
+    even: (i) => `You’ve kept pace with the class ${i}. Keep going as you are.`,
+    behind: (i) => `You grew less than the class ${i} this term. That can turn: come to class rested, and keep up the work between classes.`,
+  },
+  brisk: {
+    ahead: (i) => `Ahead of the class ${i} this term. Good.`,
+    even: (i) => `In step with the class ${i}. Keep at it.`,
+    behind: (i) => `Behind the class ${i}. Rest up before class, and work between them.`,
+  },
+};
 
 /**
  * The teachers' notes on a term: for each course the term ran, its first
@@ -2511,11 +2548,10 @@ export function teachersNotes(person: Person, term: number): { course: string; t
     // Two skills where one has an “and” of its own each keep their preposition or “your” (from 2026-10-19, brief 15:
     // until then “in speech, and accents and dialects”).
     const joined = (lead: string) => (names.length < 2 ? `${lead}${names[0]!}` : names.length === 2 && names.some((n) => n.includes(' and ')) ? `${lead}${names[0]} and ${lead}${names[1]}` : `${lead}${names.slice(0, -1).join(', ')}${names.some((n) => n.includes(' and ')) ? ', and' : ' and'} ${names.at(-1)}`);
-    const note = mine >= 1.25 * middle
-      ? `Real progress this term: you’re pulling ahead of the class ${joined('in ')}.`
-      : mine >= 0.75 * middle
-      ? `Steady work, in step with the class. Keep at ${joined('your ')}.`
-      : `You’ve grown less than the class ${joined('in ')} this term. Come to class rested, and do the work between classes.`;
+    // In the course's own voice (`voiceOf`, from 2026-10-20, brief 17): until then one sentence a band for every teacher,
+    // so five of a first fall's eight notes read "Steady work, in step with the class. Keep at …" in one panel.
+    const band = mine >= 1.25 * middle ? 'ahead' : mine >= 0.75 * middle ? 'even' : 'behind';
+    const note = TEACHERS_NOTE[voiceOf(c.name)][band](joined('in '), joined('your '));
     return { course: c.name, teacher: c.teachers.split(', ')[0]!, note };
   });
 }
@@ -3079,8 +3115,9 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   // was said of 39 pieces shown Unready (brief 16's underprepared student, December 11, 2026), so "most" was false; and
   // "them" read as every piece due Unready or not shown, where the part is counted over those shown alone.
   const most = shortCause(person, tally.unreadyShown);
-  const ofShown = tally.unreadyShown.length === 1 ? 'the one you showed Unready' : `${most?.kind === 'part' ? most.n : 0} of the ${tally.unreadyShown.length} you showed Unready`;
-  const why = most?.kind === 'part' ? ` The part most often left unfinished was “${most.label}”, on ${ofShown}. To work on it: ${most.remedy}.` : most?.kind === 'every' ? ' None of them had a single part finished.' : most?.kind === 'scattered' ? ' Each fell short on a different part.' : '';
+  // One piece shown Unready names its part plainly, not as "most often" of one.
+  const named = most?.kind !== 'part' ? '' : tally.unreadyShown.length === 1 ? ` “${most.label}” was left unfinished on the one you showed Unready.` : ` The part most often left unfinished was “${most.label}”, on ${most.n} of the ${tally.unreadyShown.length} you showed Unready.`;
+  const why = most?.kind === 'part' ? `${named} To work on it: ${most.remedy}.` : most?.kind === 'every' ? ' None of them had a single part finished.' : most?.kind === 'scattered' ? ' Each fell short on a different part.' : '';
   const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were Unready or not shown. That’s short of what the program asks.${why}` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.` : '';
   const notPassed = failedNow.length ? ` You didn’t pass ${failedNow.length === 1 ? failedNow[0]!.name : `${failedNow.slice(0, -1).map((r) => r.name).join(', ')} and ${failedNow.at(-1)!.name}`}.` : '';
   const breached = t.breaches > 0 ? ' A grave breach of professionalism this term keeps you from good standing.' : '';
@@ -3582,7 +3619,10 @@ export function registerSchool(sim: Simulation): void {
     const top = [...held.values()].sort((a, b) => b.whole - a.whole)[0];
     const workOn = top && top.whole / Math.max(1, runNights.length) >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held your nights back most.` : '';
     // An understudy who never went on missed no night, and the note says so.
-    casting.note = runNights.length ? `${directorsNote(nightsMean(casting.nights ?? {}))}${workOn}`
+    // The run's director, as at its calls: the Rep's, the School's, the Cabaret's or the summer's, by the production.
+    const sch = person.school as SchoolRecord | undefined;
+    const which = casting === sch?.rep ? 'rep' : casting === sch?.casting ? 'school' : casting === sch?.cabaret ? 'cabaret' : 'summer';
+    casting.note = runNights.length ? `${directorsNote(nightsMean(casting.nights ?? {}), directorVoiceFor(which, casting))}${workOn}`
       : !wentOn ? `${/^(A|An) /.test(casting.role) ? 'You were on call to cover the company through the run, and didn’t go on.' : `You covered ${casting.role} on call through the run and didn’t go on.`} The work you did in the room isn’t lost.`
         : `The run went on without you: the nights you missed are in the record, and the work you did in the room isn’t lost.`;
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });

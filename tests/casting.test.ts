@@ -10,7 +10,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
-import { COURSES } from '@/engine/content/school';
+import { COURSES, SKILLS } from '@/engine/content/school';
 import { TOGETHER_BOND, courseworkOf } from '@/engine/systems/coursework';
 import { EVALUATION } from '@/engine/content/tasks';
 
@@ -320,7 +320,10 @@ describe('the teachers’ notes', () => {
     const tally = sim.player.school!.tally;
     tally.craftAtStart = { ...sim.player.craft! };
     const still = teachersNotes(sim.player, 0);
-    expect(still.every((n) => /You’ve grown less than the class in /.test(n.note))).toBe(true);
+    // Each in its course's voice (from 2026-10-20, brief 17): until then the same sentence from every teacher.
+    expect(still.every((n) => /\b(?:grown less than the class|grew less than the class|Behind the class)\b/.test(n.note)), still.map((n) => n.note).join(' | ')).toBe(true);
+    expect(still.every((n) => n.note.includes(SKILLS.find((k) => k.id === COURSES.find((c) => c.name === n.course)!.skills[0])!.label.toLowerCase())), 'each names its course’s skills').toBe(true);
+    expect(new Set(still.map((n) => n.note.split(' ').slice(0, 3).join(' '))).size).toBeGreaterThan(2);
   }, 120_000);
 });
 

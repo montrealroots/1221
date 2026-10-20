@@ -80,6 +80,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import {
   CABARET_KIND, COMPANY_KIND, LAB_KIND, STIPEND_KIND, SUMMER_KIND, castFit, classmatePerformer, evenCraft, mateAbilities, rankIn,
+  directorsNote,
 } from '@/engine/systems/school';
 import { NEW_PLAYS_READ } from '@/engine/content/plays';
 import { ORIENTATION_KIND, askRefusal, courseworkOf, mateRecord, notesOf, preparedParts, trustOf, type Assignment } from '@/engine/systems/coursework';
@@ -87,7 +88,7 @@ import { momentsOf, personOf } from '@/engine/systems/classmates';
 import { attributesOf, developmentOf } from '@/engine/systems/attributes';
 import { DEVELOPMENT } from '@/engine/content/abilities';
 import { journeyOf } from '@/engine/systems/evaluation';
-import { hasProcess } from '@/engine/systems/production';
+import { directorVoiceFor, hasProcess } from '@/engine/systems/production';
 import { healthOf } from '@/engine/systems/health';
 import { recordWages, yearOf } from '@/engine/systems/earnings';
 import { returnsOf } from '@/engine/systems/taxreturn';
@@ -146,18 +147,17 @@ const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 /** A night's band from its whole, at the evaluation's lines: 50, 65 and 80 (`EVALUATION.bands`, LAMDA's Pass, Merit, Distinction). */
 const bandOf = (overall: number) => (overall >= 80 ? 'remarkable' : overall >= 65 ? 'strong' : overall >= 50 ? 'solid' : 'off');
 /** The director's note's sentence for a run's nights: each worth off −1, solid 0, strong 1, remarkable 2, cut at 1.25, 0.5, −0.25. */
-const noteSentence = (nights: Partial<Record<'off' | 'solid' | 'strong' | 'remarkable', number>>) => {
+const noteSentence = (nights: Partial<Record<'off' | 'solid' | 'strong' | 'remarkable', number>>, which: string, holder: object) => {
   const value = { off: -1, solid: 0, strong: 1, remarkable: 2 } as const;
   const all = Object.entries(nights) as [keyof typeof value, number][];
   const n = all.reduce((s, [, c]) => s + c, 0);
   const mean = all.reduce((s, [b, c]) => s + value[b] * c, 0) / n;
-  return mean >= 1.25 ? 'Remarkable work, night after night.'
-    : mean >= 0.5 ? 'Strong, reliable work across the run.'
-      : mean >= -0.25 ? 'Solid, sound nights. The next step is to take more risks in them.'
-        : 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.';
+  // In the production's director's voice (from 2026-10-20, brief 17), its words held in `tests/feedback-voices.test.ts`.
+  const voice = directorVoiceFor(which, holder);
+  return directorsNote(mean >= 1.25 ? 2 : mean >= 0.5 ? 1 : mean >= -0.25 ? 0 : -1, voice);
 };
 /** The note in full: the sentence, and what held the nights back most where something did. */
-const noteFor = (nights: Parameters<typeof noteSentence>[0]) => new RegExp(`^${escape(noteSentence(nights))}( Work on your [a-z -]+: it held your nights back most\\.)?$`);
+const noteFor = (nights: Parameters<typeof noteSentence>[0], which: string, holder: object) => new RegExp(`^${escape(noteSentence(nights, which, holder))}( Work on your [a-z -]+: it held your nights back most\\.)?$`);
 /** The nights as the Casting tab lists them, strongest first. */
 const nightsWords = (nights: Partial<Record<'off' | 'solid' | 'strong' | 'remarkable', number>>) =>
   (['remarkable', 'strong', 'solid', 'off'] as const).filter((b) => nights[b]).map((b) => `${{ remarkable: 'Remarkable', strong: 'Strong', solid: 'Solid', off: 'Off' }[b]} ${nights[b]}`).join(', ');
@@ -404,7 +404,7 @@ describe('school.cabaret (kind)', () => {
     // Closed at the closing, with its note, its notice and its look back.
     const run = cab as typeof cab & { closed?: number; note?: string };
     expect(run.closed).toBe(shows[4]!.at);
-    expect(run.note).toMatch(noteFor(nights));
+    expect(run.note).toMatch(noteFor(nights, 'cabaret', run));
     expect(titled(sim, 'The Director’s Note: Yale Cabaret, Season 59').map((n) => n.body)).toEqual([run.note]);
     expect(hasProcess(cab)).toBe(true);
     const proc = hasProcess(cab) ? cab.process : undefined;
@@ -460,7 +460,7 @@ describe('school.summer', () => {
     expect(Object.values(show.nights!).reduce((a, b) => a + b, 0)).toBe(4);
     expect(sim.player.school!.runs!.find((r) => r.source === 'summer')).toMatchObject({ play: show.play, nights: 4, missed: 0 });
     expect(show.closed).toBe(closing.at);
-    expect(show.note).toMatch(noteFor(show.nights!));
+    expect(show.note).toMatch(noteFor(show.nights!, 'summer', show));
     // Grown by its rehearsals and nights past a twin who never joined, in the scene, the feeling and the lines.
     play(never, closing.at + 60_000);
     for (const skill of ['scene', 'emotion', 'memorization'] as const) expect(sim.player.craft![skill], skill).toBeGreaterThan(never.player.craft![skill]);
@@ -476,7 +476,7 @@ describe('school.summer', () => {
     expect(s.summer!.played[0]).toBe(3);
     expect(s.credits).toEqual([{ production: `${wshow.play}, Yale Summer Cabaret 2027`, role: wshow.role, kind: 'summer', year: 2027, wentOn: 3 }]);
     expect(wshow.closed).toBe(closing.at);
-    expect(wshow.note).toMatch(noteFor(wshow.nights!));
+    expect(wshow.note).toMatch(noteFor(wshow.nights!, 'summer', wshow));
     expect(titled(ward, `The Director’s Note: ${wshow.play}`).map((n) => n.body)).toEqual([wshow.note]);
     expect(hasProcess(wshow) ? wshow.process.reflection?.text : undefined).toMatch(new RegExp(`^${escape(wshow.play!)}: `));
     // Excused: kept in the company, the next show's calls still ahead, and the night not noted as missed.
@@ -524,7 +524,7 @@ describe('school.summer', () => {
     // its look back: the review's todo, closeRun's own "played or not", the Cabaret's missed closing and keepCredit's.
     expect(school.credits).toEqual([{ production: `${show.play}, Yale Summer Cabaret 2027`, role: show.role, kind: 'summer', year: 2027, wentOn: 3 }]);
     expect(show.closed).toBe(closing.at);
-    expect(show.note).toMatch(noteFor(show.nights!));
+    expect(show.note).toMatch(noteFor(show.nights!, 'summer', show));
     expect(hasProcess(show) ? show.process.reflection?.text : undefined).toMatch(new RegExp(`^${escape(show.play!)}: `));
   }, 60_000);
 

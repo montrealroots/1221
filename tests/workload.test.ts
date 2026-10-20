@@ -47,7 +47,8 @@ describe('school workload, said before it’s held against you', () => {
     // 2026-10-17, `shortCause`; until then "Most often short on them: …, on 1 of the 6 shown", brief 13's journey J15).
     const said = /^So far this term, (\d+) of the (\d+) pieces you’ve shown were Unready\. This is a warning\. The term review is on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the review would [^.]+\. None of them had a single part finished, so it’s the preparation as a whole, not one part\. Work through each piece’s steps before it’s due\./.exec(ws[0]!.body)!;
     expect(said).not.toBeNull();
-    expect(ws[0]!.body).not.toContain('What held most of them back');
+    // No one part named (from 2026-10-20, brief 17, the part named as the one most often left unfinished).
+    expect(ws[0]!.body).not.toContain('left unfinished');
     expect(shown.filter((a) => a.shown!.band === 'unready').every((a) => shortParts(sim.player, a).length === Object.keys(templateById(a.template)!.dims).filter((d) => d in weightsOf(a)).length)).toBe(true);
     expect(Number(said[1])).toBeGreaterThanOrEqual((ESTIMATE.coursework.unready - TERM_CHECK.margin) * Number(said[2]));
     expect(ws[0]!.body).toContain(`The term review is on ${formatDate(instantFromZoned({ ...classPeriod(term).to, hour: 17 }, NY), NY)}`);
@@ -224,7 +225,7 @@ describe('school workload, found by the sweep (2026-10-16)', () => {
     expect(warnings(sim)).toHaveLength(1);
     expect(warnings(sim)[0]!.body).toContain(`So far this term, ${need} of the ${termTally(cw.assignments, term).shown} pieces you’ve shown were Unready. This is a warning. The term review is on `);
     expect(warnings(sim)[0]!.body).toContain(' Each fell short on a different part, so there’s no one thing to fix. Each piece’s feedback says what held it back.');
-    expect(warnings(sim)[0]!.body).not.toContain('What held most of them back');
+    expect(warnings(sim)[0]!.body).not.toContain('left unfinished');
   }, 180_000);
 
   it('PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)', () => {

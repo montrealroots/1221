@@ -49,14 +49,14 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { STUDY_KIND, momentsOf, personOf, sharedWork, type Moment } from '@/engine/systems/classmates';
 import { courseworkOf, trustOf, type Assignment } from '@/engine/systems/coursework';
 import { SCENES, sceneById } from '@/engine/content/coursework';
-import { CABARET_KIND, CALL_KIND, CLASSES_KIND, COMPANY_KIND, EVALUATION_KIND, LAB_KIND, castingReads, classmatesIn, coursesFor, evenCraft, mateAbilities } from '@/engine/systems/school';
+import { CABARET_KIND, CALL_KIND, CLASSES_KIND, COMPANY_KIND, EVALUATION_KIND, LAB_KIND, castingReads, classmatesIn, coursesFor, directorsNote, evenCraft, mateAbilities } from '@/engine/systems/school';
 import { developmentOf, levelOf } from '@/engine/systems/attributes';
 import { EXERCISES } from '@/engine/content/practice';
 import { journeyOf, replay, type WorkRecord } from '@/engine/systems/evaluation';
 import { DIMENSION_LABEL, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { ABILITY_DEFS, ABILITY_KIN, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS, genresOfPlay } from '@/engine/content/plays';
-import { processOf } from '@/engine/systems/production';
+import { directorVoiceFor, processOf, type DirectorVoice } from '@/engine/systems/production';
 import { BRIEFS, BRIEF_BY_ID } from '@/engine/content/briefs';
 import { tapeReadsOf } from '@/engine/systems/briefs';
 import { DEMAND_TECHNIQUE, genreTags } from '@/engine/content/demands';
@@ -512,7 +512,8 @@ const CABARET_SHOW = 'Yale Cabaret, Season 59';
 /** A night's band as a number, for a run's mean (`NIGHT_VALUE`: off -1, solid 0, strong 1, remarkable 2). */
 const NIGHT = { off: -1, solid: 0, strong: 1, remarkable: 2 } as const;
 /** The director's note's first sentence for a run's mean, by its edges: 1.25, 0.5 and -0.25. */
-const noteFor = (mean: number) => (mean >= 1.25 ? 'Remarkable work, night after night.' : mean >= 0.5 ? 'Strong, reliable work across the run.' : mean >= -0.25 ? 'Solid, sound nights. The next step is to take more risks in them.' : 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.');
+// In the production's director's voice (from 2026-10-20, brief 17), its words held in `tests/feedback-voices.test.ts`.
+const noteFor = (mean: number, voice: DirectorVoice) => directorsNote(mean >= 1.25 ? 2 : mean >= 0.5 ? 1 : mean >= -0.25 ? 0 : -1, voice);
 
 describe('work records + journey', () => {
   it('PLAYER JOURNEY: a Cabaret run played through keeps its nights, and at the last a run milestone averaged from them and a note naming what cost them most, once through a reload, on the Profile', () => {
@@ -533,7 +534,7 @@ describe('work records + journey', () => {
     const top = [...held.values()].sort((a, b) => b.whole - a.whole)[0];
     const workOn = top && top.whole / nights.length >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held your nights back most.` : '';
     const nightsMean = nights.reduce((s, w) => s + NIGHT[w.band as keyof typeof NIGHT], 0) / nights.length;
-    expect(cab.note).toBe(`${noteFor(nightsMean)}${workOn}`);
+    expect(cab.note).toBe(`${noteFor(nightsMean, directorVoiceFor('cabaret', cab))}${workOn}`);
     expect(workOn, 'something held this run back').not.toBe('');
     expect(notices(sim, `The Director’s Note: ${CABARET_SHOW}`).map((n) => n.body)).toEqual([cab.note]);
     // On the Profile's School Journey.

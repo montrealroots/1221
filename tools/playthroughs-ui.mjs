@@ -640,7 +640,7 @@ async function setback() {
     trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json';
     const { body } = await readNotice(/^A Word On Your Coursework$/);
     must(/So far this term, \d+ of the \d+ pieces (you’ve shown|due) were Unready/.test(body), `no count: ${body.slice(0, 200)}`);
-    must(/What held most of them back was [^,]+, unfinished on [^.]+\. To work on it: .*Run It With A Reader.*\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
+    must(/(?:The part most often left unfinished was [^,]+, on [^.]+|“[^”]+” was left unfinished on the one you showed Unready)\. To work on it: .*Run It With A Reader.*\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
     must(/(One piece is|(?:Two|Three|Four|Five|Six|Seven|Eight|Nine|\d+) pieces are) set and still to be shown/.test(body), `no pieces still to be shown: ${body.slice(0, 300)}`);
     must(/This is a warning\. The term review is on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the review would (give you a notice of academic concern|put you on academic warning|keep you on academic warning|dismiss you from the School|not recommend your degree)\./.test(body), `no review day: ${body.slice(0, 400)}`);
     await shot('warning-on-home');

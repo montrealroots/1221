@@ -227,7 +227,8 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const one = warned('dyn-warn-one', 1, 2, 1, true);
     expect(one.body).toMatch(/^So far this term, 3 of the 6 pieces due were Unready or not shown\./);
     // The one Unready piece shown, short on one part: that part, on the one you showed, and the steps that answer it.
-    expect(one.body).toMatch(/ What held most of them back was “[^”]+”, unfinished on the one you showed\. To work on it: [^.]+\./);
+    expect(one.body).toMatch(/ “[^”]+” was left unfinished on the one you showed Unready\. To work on it: [^.]+\./);
+    expect(one.body).not.toContain('most of them');
     expect(one.body).toContain('One piece is set and still to be shown.');
     const many = warned('dyn-warn-many', 3, 0, 2);
     expect(many.body).toContain('Two pieces are set and still to be shown.');
@@ -265,7 +266,7 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     termWarning(sim, sim.player, scene);
     const body = titled(sim, 'A Word On Your Coursework')[0]!.body;
     expect(body).toMatch(/^So far this term, 3 of the 6 pieces due were Unready or not shown\./);
-    const label = body.match(/What held most of them back was “([^”]+)”, unfinished on the one you showed\. To work on it: ask your partner for an evening under Rehearsing With, at least/)?.[1];
+    const label = body.match(/“([^”]+)” was left unfinished on the one you showed Unready\. To work on it: ask your partner for an evening under Rehearsing With, at least/)?.[1];
     expect(label).toBe('With Your Partner');
     expect(body).toContain('Two pieces are set and still to be shown.');
     expect(body).toContain('the review would give you a notice of academic concern.');
@@ -1130,7 +1131,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
       // sentence each, the same in every course: "You had this note in … too, and it’s still there."
       const DAY = '(\\w+ \\d{1,2}, \\d{4})';
       const SAID = [
-        `\\b(?:[Ss]ame note as|[Tt]he same note as|again|came up)\\b[^.]*?\\bon ${DAY}`,
+        `\\b(?:[Ss]ame note as|[Tt]he same note as|again|came up|Back to)\\b[^.]*?\\bon ${DAY}`,
         `\\b(?:[Tt]hird note|[Nn]ote \\d+|notes now|for the \\w+ time|times now|note on .+?)\\b[^.]*?(?:\\. The last (?:note )?was[^.]*?)?\\bon ${DAY}`,
         `\\b(?:still on|still the thing)\\b[^.]*?\\bon ${DAY}`,
         `\\b(?:fixed|got|came right|put right|was right|were right)\\b[^.]*?\\bon ${DAY}`,

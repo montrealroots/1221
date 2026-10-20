@@ -360,6 +360,8 @@ export function noteFor(person: Person, p: Process, reads: Partial<Craft>, n: nu
 export type DirectorVoice = 'plain' | 'exacting' | 'encouraging';
 const DIRECTOR_VOICES: readonly DirectorVoice[] = ['plain', 'exacting', 'encouraging'];
 export const directorVoiceOf = (key: string): DirectorVoice => DIRECTOR_VOICES[hash(`director:${key}`) % DIRECTOR_VOICES.length]!;
+/** A production's director, by the run and the production's name: the same voice at every call and at the run's close. */
+export const directorVoiceFor = (which: string, holder: object): DirectorVoice => directorVoiceOf(`${which}:${(holder as { production?: string; title?: string }).production ?? (holder as { title?: string }).title ?? ''}`);
 
 export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { target: string; label: string; pieces: number }, memory?: { key: string; recent: readonly string[]; voice?: DirectorVoice }): string {
   const voice = memory?.voice ?? 'plain';
@@ -511,9 +513,8 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
     const before = [...p.notes].reverse().find((x) => same(x.focus));
     // A limit on the weakness the actor's work keeps coming back to is said as one (from 2026-10-12, `noteText`).
     const recurring = focus.kind === 'craft' && focus.problem.startsWith('limit:') ? identityOf(person).recurring : undefined;
-    // The production's director, by its name (brief 17): the same voice at every call of the run.
-    const production = (holder as { production?: string; title?: string }).production ?? (holder as { title?: string }).title ?? '';
-    p.notes.push({ at: sim.now, text: noteText(focus, before, recurring, { key: `${which ?? stage}:${p.calls}:${p.notes.length}`, recent: p.notes.slice(-6).map((x) => x.text), voice: directorVoiceOf(`${which ?? stage}:${production}`) }), focus });
+    // The production's director, by its name (brief 17): the same voice at every call of the run, and at its close.
+    p.notes.push({ at: sim.now, text: noteText(focus, before, recurring, { key: `${which ?? stage}:${p.calls}:${p.notes.length}`, recent: p.notes.slice(-6).map((x) => x.text), voice: directorVoiceFor(which ?? stage, holder) }), focus });
     if (focus.kind === 'craft' || focus.kind === 'direction') countDirection(person, { given: true });
     if (p.notes.length > 30) p.notes.splice(0, p.notes.length - 30);
   }

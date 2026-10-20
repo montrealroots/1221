@@ -1392,8 +1392,11 @@ export function termWarning(sim: Simulation, person: Person, a: Assignment): voi
   const which = prior.length ? `This is your ${ordinal(prior.length + 1)} coursework warning${prior.includes(a.term - 1) ? ', after one last term' : ''}.` : 'This is a warning.';
   (cw.warned ??= []).push(a.term);
   const top = shortCause(person, tally.unreadyShown);
-  const of = tally.unreadyShown.length === 1 ? 'the one you showed' : `${top?.kind === 'part' ? top.n : 0} of the ${tally.unreadyShown.length} you showed`;
-  const cause = top?.kind === 'part' ? ` What held most of them back was “${top.label}”, unfinished on ${of}. To work on it: ${top.remedy}.`
+  // The part most often unfinished among the pieces shown Unready, with its count of them, as the term review says it
+  // (from 2026-10-20, brief 17): until then "What held most of them back was “…”, unfinished on 2 of the 5 you showed",
+  // which said "most" wherever the count was under half, and "most of them" of a single piece.
+  const named = top?.kind !== 'part' ? '' : tally.unreadyShown.length === 1 ? ` “${top.label}” was left unfinished on the one you showed Unready.` : ` The part most often left unfinished was “${top.label}”, on ${top.n} of the ${tally.unreadyShown.length} you showed Unready.`;
+  const cause = top?.kind === 'part' ? `${named} To work on it: ${top.remedy}.`
     : top?.kind === 'every' ? ' None of them had a single part finished, so it’s the preparation as a whole, not one part. Work through each piece’s steps before it’s due.'
       : top?.kind === 'scattered' ? ' Each fell short on a different part, so there’s no one thing to fix. Each piece’s feedback says what held it back.' : ' Each piece’s feedback says what held it back.';
   const set = tally.work.filter((x) => !x.shown && (x.status === 'open' || x.status === 'revising')).length;
