@@ -624,7 +624,9 @@ step.bank = async () => {
   check('a card can be locked and reported', await button('Lock It').count() > 0 && await button('Report It').count() > 0);
   await tab('Payments And Cash');
   const pay = await money();
-  check('How You Pay is on Payments And Cash, with Savings Covers The Current Account', /How You Pay/.test(pay) && /Savings Covers The Current Account/.test(pay));
+  // The money area renamed the control to Checking (coordinator.md, From The Frame Area), merged after this was written;
+  // brief 15's final follow on d6f6527a failed this on the old name, the button and the guide both saying Checking.
+  check('How You Pay is on Payments And Cash, with Savings Covers The Checking Account', /How You Pay/.test(pay) && /Savings Covers The Checking Account/.test(pay));
   await tab('Statements');
   const st = await money();
   check('Statements, its own tab, has The Year and Alerts, with Statement Ready and Short For A Payment', /The Year/.test(st) && /Alerts/.test(st) && /Statement Ready/.test(st) && /Short For A Payment/.test(st));
