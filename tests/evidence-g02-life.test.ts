@@ -64,7 +64,7 @@ import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_MINUTE, instantFromZoned } from '@/engine/core/time';
-import { titleCaseLabel } from '@/engine/core/text';
+import { readsAsProse, titleCaseLabel } from '@/engine/core/text';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { careFor, coverOn, healthOf, medicalDebtOf, type MedicalBill } from '@/engine/systems/health';
 import { earningsOf } from '@/engine/systems/earnings';
@@ -793,7 +793,13 @@ function deniedClaim(seed: string): { sim: Simulation; bill: MedicalBill } {
 }
 const billOf = (sim: Simulation, id: string) => healthOf(sim.player).bills.find((b) => b.id === id)!;
 /** The Papers bills table's row for a bill. */
-const paperRow = (sim: Simulation, bill: MedicalBill) => rowOf(drawn(sim, PapersWorkspace, [], HEALTH).html, titleCaseLabel(bill.what));
+/**
+ * A bill's care as Care And Its Bills labels it: Title Case, and where the whole reads as prose, the care alone, the
+ * place's name as it's spelled (from 2026-10-20, brief 17: until then the whole was left as written, and an emergency's
+ * read "The emergency room, Yale New Haven Hospital, …").
+ */
+const careLabel = (what: string): string => { if (!readsAsProse(what)) return titleCaseLabel(what); const [care, ...where] = what.split(', '); return [titleCaseLabel(care!), ...where].join(', '); };
+const paperRow = (sim: Simulation, bill: MedicalBill) => rowOf(drawn(sim, PapersWorkspace, [], HEALTH).html, careLabel(bill.what));
 /** What paying the bill took from the player's own accounts, read off its 'Medical bill' posting. */
 function paidFor(sim: Simulation, bill: MedicalBill): { accountId: string; amount: number } {
   const t = memos(sim, `Medical bill: ${bill.what}`);
@@ -810,7 +816,7 @@ describe('health.appeal', () => {
     const share = bill.denied!.share;
     expect(full).toBeGreaterThan(share);
     const papers = drawn(sim, PapersWorkspace, [], HEALTH);
-    expect(rowOf(papers.html, titleCaseLabel(bill.what))).toContain('Appeal It');
+    expect(rowOf(papers.html, careLabel(bill.what))).toContain('Appeal It');
     expect(papers.press('Appeal It')).toEqual(['Appealed: decided in 60 days.']);
     expect(bill.denied!.appealedAt).toBe(on(2026, 11, 2));
     expect(paperRow(sim, bill)).toContain('Appealed');
@@ -942,7 +948,7 @@ describe('health.apply_aid', () => {
   it('PLAYER JOURNEY: Apply For Assistance on Papers with no income makes it Free Care, settled; nothing is paid when it falls due, across a reload', () => {
     const { sim, bill } = fallen('g02-aid-free');
     const papers = drawn(sim, PapersWorkspace, [], HEALTH);
-    expect(rowOf(papers.html, titleCaseLabel(bill.what))).toContain('Apply For Assistance');
+    expect(rowOf(papers.html, careLabel(bill.what))).toContain('Apply For Assistance');
     expect(papers.press('Apply For Assistance')).toEqual(['The hospital applied its financial assistance to this bill.']);
     expect(bill).toMatchObject({ aid: 'free', amount: 0, paid: true });
     const row = paperRow(sim, bill);

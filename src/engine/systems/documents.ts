@@ -212,7 +212,9 @@ export function mayEnter(person: Person, destination: string, at: Instant, stayD
     // O-1 or OPT as the visa its holder travels on, and doesn't model the consulate's stamp ($205, DS-160).
     const visaHeld = documentsOf(person).some((d) => (d.kind === 'visa' || (d.kind === 'permit' && d.bookingId === undefined)) && d.destination === destination && inForce(d, at) && (d.expiresAt ?? Infinity) >= leaving);
     if (auth.live && !visaHeld && !authorizationFor(person, destination, at, leaving)) {
-      missing.push(`${theCountry(country).replace(/^./, (c) => c.toUpperCase())} asks citizens of ${theirs} for ${auth.name}: ${auth.fee > 0 ? formatFee(auth.fee, auth.currency) : 'no fee'}, applied for online, and good for ${auth.validityYears} ${auth.validityYears === 1 ? 'year' : 'years'} or until the passport runs out.`);
+      // Its years in words under ten, as prose writes a number (from 2026-10-20, brief 17: until then "good for 1 year").
+      const years = auth.validityYears < 10 ? `${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][auth.validityYears]} ${auth.validityYears === 1 ? 'year' : 'years'}` : `${auth.validityYears} years`;
+      missing.push(`${theCountry(country).replace(/^./, (c) => c.toUpperCase())} asks citizens of ${theirs} for ${auth.name}: ${auth.fee > 0 ? formatFee(auth.fee, auth.currency) : 'no fee'}, applied for online, and good for ${years} or until the passport runs out.`);
     }
   }
   if (rule.status === 'visa') {

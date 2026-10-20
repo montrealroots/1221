@@ -639,7 +639,7 @@ describe('n-decision-tax', () => {
     expect(returnDecision(sim)).toHaveLength(1);
     expect(d).toMatchObject({
       title: 'Your 2026 Tax Return', createdAt: at(2027, 2, 1, 9), dueAt: DUE,
-      detail: 'Form 1040-NR, with Form 8843. You owe $165.60, on $1,656.00 of income. File it by April 15, 2027.',
+      detail: 'Form 1040-NR, with Form 8843. You owe $165.60, on $1,656.00 of income. File It pays it from your bank at once, and if your bank can’t cover it, you’re sent a bill instead. File it by April 15, 2027.',
       actions: [{ label: 'File It', commandKind: 'tax.file', payload: { year: 2026 } }],
     });
     expect(d!.resolvedAt).toBeUndefined();

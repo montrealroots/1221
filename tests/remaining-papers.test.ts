@@ -339,7 +339,7 @@ describe('tax.s8.passport', () => {
     expect(drew('documents.apply_passport').map((c) => c.label)).toEqual(['Renew It', 'Renew It Faster']);
     const applied = sim.now;
     expect(press('documents.apply_passport', 'Renew It Faster')).toEqual([expect.stringMatching(/^Applied and paid \$[\d,]+\.\d\d\. It should arrive by /)]);
-    expect(taken(sim, 'New Zealand passport, expedited')).toEqual([faster]);
+    expect(taken(sim, 'New Zealand Passport, expedited')).toEqual([faster]);
     expect(refusal(sim, 'documents.apply_passport')).toBe('You’ve already applied, and it’s being decided.');
     const again = reload(sim);
     again.advanceTo(applied + 5 * MS_DAY - MS_HOUR);
@@ -348,8 +348,8 @@ describe('tax.s8.passport', () => {
     const renewed = passportOf(again.player, again.now)!;
     expect(renewed.id).not.toBe(old.id);
     expect(documentsOf(again.player).find((d) => d.id === old.id)!.status).toBe('cancelled');
-    expect(titled(again, 'New Zealand passport Issued')).toHaveLength(1);
-    expect(taken(again, 'New Zealand passport, expedited')).toEqual([faster]);
+    expect(titled(again, 'New Zealand Passport Issued')).toHaveLength(1);
+    expect(taken(again, 'New Zealand Passport, expedited')).toEqual([faster]);
   });
 
   it('PLAYER JOURNEY: New Zealand’s GST turned off after she has applied (TEST SETUP: `NZ_FROM_ABROAD.gstCharged`, as a correction would change it): her application, charged NZ$247 with GST, is issued on its day across a save and a load with nothing charged or refunded and its transaction as it was; reported lost, the next is NZ$214.78, faster NZ$429.56, the screen saying no GST is charged, and the faster one is charged that', () => {
@@ -359,8 +359,8 @@ describe('tax.s8.passport', () => {
     drawn(sim, PassportPane);
     const applied = sim.now;
     press('documents.apply_passport', 'Renew It');
-    expect(taken(sim, 'New Zealand passport')).toEqual([withGst]);
-    const charged = JSON.stringify(sim.universe.transactions.filter((t) => t.memo === 'New Zealand passport'));
+    expect(taken(sim, 'New Zealand Passport')).toEqual([withGst]);
+    const charged = JSON.stringify(sim.universe.transactions.filter((t) => t.memo === 'New Zealand Passport'));
     const posted = JSON.stringify(sim.universe.transactions);
     try {
       NZ_FROM_ABROAD.gstCharged = false;
@@ -370,8 +370,8 @@ describe('tax.s8.passport', () => {
       again.advanceTo(applied + 28 * MS_DAY + MS_HOUR);
       const renewed = passportOf(again.player, again.now)!;
       expect(renewed.id).not.toBe(old.id);
-      expect(JSON.stringify(again.universe.transactions.filter((t) => t.memo === 'New Zealand passport'))).toBe(charged);
-      expect(taken(again, 'New Zealand passport')).toEqual([withGst]);
+      expect(JSON.stringify(again.universe.transactions.filter((t) => t.memo === 'New Zealand Passport'))).toBe(charged);
+      expect(taken(again, 'New Zealand Passport')).toEqual([withGst]);
       // What's applied for after takes the value as it now stands.
       again.must({ kind: 'documents.report_lost', payload: { documentId: renewed.id } });
       const without = usdOf(214_78, 'NZD');
@@ -383,8 +383,8 @@ describe('tax.s8.passport', () => {
       expect(screen).toContain('Assumed in the game: No GST is charged, as you’re taken to be a non-resident for New Zealand tax.');
       expect(screen).not.toContain('GST is charged.');
       press('documents.apply_passport', 'Apply Faster');
-      expect(taken(again, 'New Zealand passport, expedited')).toEqual([faster]);
-      expect(taken(again, 'New Zealand passport')).toEqual([withGst]);
+      expect(taken(again, 'New Zealand Passport, expedited')).toEqual([faster]);
+      expect(taken(again, 'New Zealand Passport')).toEqual([withGst]);
     } finally {
       NZ_FROM_ABROAD.gstCharged = true;
     }

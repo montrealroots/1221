@@ -9,6 +9,11 @@
  * the application. Canada's eTA for a Mexican or Brazilian holding a US visa,
  * the US's $250 Visa Integrity Fee (enacted, its collection at these posts
  * unconfirmed) and a refusal at interview aren't kept.
+ *
+ * Nothing has taken an application since the scope reset of 2026-10-09: `days` is read by nothing, and `years` and
+ * `validDays` only by a visa a save from before then still had pending. Until 2026-10-20 (brief 17) the bases Going
+ * Abroad shows said how long the game took to decide one, "In the game it takes 30 days to decide", and that the game
+ * used Mexico's waits for Brazil's; they say the published figures, and what wasn't found, alone.
  */
 
 export interface VisaRule {
@@ -29,7 +34,7 @@ const US_B1B2 = (who: string): VisaRule => ({
   fee: 185, currency: 'USD',
   days: 150 + 7,
   years: 10,
-  basis: `The application fee is $185. The interview is about five months away at the Mexico City consulate (as of September 29, 2026, from a secondary source)${who === 'BR' ? ', and the game uses the same wait for Brazil’s posts, whose waits weren’t found' : ''}, and issuing it takes a week (estimated). It’s good for ten years, for multiple entries, by reciprocity.`,
+  basis: `The application fee is $185. The interview is about five months away at the Mexico City consulate (as of September 29, 2026, from a secondary source)${who === 'BR' ? '. The waits at Brazil’s posts weren’t found' : ''}. It’s good for ten years, for multiple entries, by reciprocity.`,
   source: 'https://travel.state.gov (fees); waitvisa.com (the wait, citing the State Department)',
 });
 const CA_TRV = (who: string): VisaRule => ({
@@ -37,7 +42,7 @@ const CA_TRV = (who: string): VisaRule => ({
   fee: 100 + 85, currency: 'CAD',
   days: 18,
   years: 10,
-  basis: `CAD 100, and CAD 85 for biometrics. A decision takes about 18 days after biometrics for a Mexican applicant (from a secondary source)${who === 'BR' ? ', and the game uses the same for a Brazilian' : ''}. It’s good for up to ten years, or until the passport runs out.`,
+  basis: `CAD 100, and CAD 85 for biometrics. A decision takes about 18 days after biometrics for a Mexican applicant (from a secondary source)${who === 'BR' ? '. The time for a Brazilian applicant wasn’t found' : ''}. It’s good for up to ten years, or until the passport runs out.`,
   source: 'IRCC fee schedule; immigration.ca',
 });
 const AU_600: VisaRule = {
@@ -45,7 +50,7 @@ const AU_600: VisaRule = {
   fee: 250, currency: 'AUD',
   days: 30,
   years: 1,
-  basis: 'AUD 250 from July 1, 2026 (from a secondary source, since Home Affairs’ own pages couldn’t be read). In the game it takes 30 days to decide and is granted for a year, the longest of the three, six and twelve months it gives (both estimated).',
+  basis: 'AUD 250 from July 1, 2026 (from a secondary source, since Home Affairs’ own pages couldn’t be read). It’s granted for three, six or twelve months.',
   source: 'austmss.com.au, July 2026',
 };
 const BR_EVISA: VisaRule = {
@@ -69,7 +74,7 @@ export const VISAS: Readonly<Record<string, VisaRule>> = {
     fee: 10, currency: 'USD',
     days: 3,
     validDays: 180,
-    basis: 'US$10 from February 5, 2026, for a stay under 180 days, flying in (from Deloitte and the press, secondary sources). In the game it takes three days to decide (estimated).',
+    basis: 'US$10 from February 5, 2026, for a stay under 180 days, flying in (from Deloitte and the press, secondary sources).',
     source: 'https://www.deloitte.com/latam/es/services/legal/perspectives/restablecimiento-de-la-visa-electronica-de-visitante-de-visa-para-nacionales-de-brasil.html',
   },
   'BR<US': BR_EVISA,

@@ -185,7 +185,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
   },
   "IE": {
     "issuer": "Department of Foreign Affairs – Passport Service (An Roinn Gnóthaí Eachtracha)",
-    "name": "Irish passport (standard 10-year passport book)",
+    "name": "Irish Passport (Standard 10-Year Passport Book)",
     "fee": 75,
     "currency": "EUR",
     "feeBasis": "Standard adult 10-year passport via Passport Online; the same €75 applies to a first-time adult application and to a renewal. Post Passport (paper) channel: €80 plus a postal service fee of €9.50 per single application (€16 for up to four sent together). Public-counter renewal in Dublin/Cork: €95 passport fee plus an appointment fee. Passport Card €35; book plus card bundle €100. Applicants living outside Ireland pay an extra €15 postal fee when applying online. Expedite: Adult renewals only, never first-time applications, by booked appointment at the public offices. Same-day turnaround (Dublin): €95 passport fee plus €150 appointment fee, €245 in total. Four-day turnaround (Cork and Dublin): €95 plus €75, €170 in total. London offers a five-day turnaround at €170. The page doesn’t say whether 'four-day' means working or calendar days. A same-day emergency service for bereavement or medical emergency charges only the passport fee.",
@@ -610,7 +610,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
   },
   "AU": {
     "issuer": "Australian Passport Office, Department of Foreign Affairs and Trade",
-    "name": "Australian passport",
+    "name": "Australian Passport",
     "fee": 422,
     "currency": "AUD",
     "feeBasis": "Standard adult passport (aged 16 and over, 10-year validity); the same fee applies to a first passport and to a renewal. Figure from the fee table headed 'as of 1 January 2026' - no July 1, 2026 indexation is published; the current schedule is dated January 1, 2026.",
@@ -709,7 +709,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
   },
   "NZ": {
     "issuer": "Te Tari Taiwhenua Department of Internal Affairs (New Zealand Passports)",
-    "name": "New Zealand passport",
+    "name": "New Zealand Passport",
     "fee": 247,
     "currency": "NZD",
     "feeBasis": "Standard adult passport (GST inclusive), fee in force from May 2, 2025; the same fee applies to first passports and renewals. Courier delivery is charged on top (NZD 7 to 78 for online applications, by destination).",

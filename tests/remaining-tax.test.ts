@@ -48,7 +48,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
-import { MS_DAY, MS_HOUR, MS_MINUTE, instantFromZoned, type Instant } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, MS_MINUTE, formatDate, instantFromZoned, type Instant } from '@/engine/core/time';
 import { newLifeConfig, withFamily } from '@/engine/world/bootstrap';
 import { formatMoney } from '@/engine/core/money';
 import { recordWages, yearOf } from '@/engine/systems/earnings';
@@ -471,8 +471,11 @@ describe('tax.catch_up_state_plan (FIXTURE: a New York quick-save)', () => {
 
   it('FIXTURE: its payment missed, Catch Up drawn on Papers and pressed: the plan in force past the day it would have ended, its next payment taken, across a reload; its twin left behind ends that day', () => {
     const { sim, endsBy, monthly } = behind('rt-ny-catch');
-    papers(sim);
+    const shown = papers(sim);
     expect(drew('tax.catch_up_state_plan')).toHaveLength(1);
+    // What was missed, what Catch Up does and by when, in sight beside it, from the plan's record (brief 17, 2026-10-20:
+    // until then only Catch Up By's date and the button).
+    expect(shown).toContain(`Your bank couldn’t pay the plan’s ${usd(monthly)} on ${formatDate(endsBy - 30 * MS_DAY, sim.zone)}. Press Catch Up to pay it from your bank by ${formatDate(endsBy, sim.zone)}, or the plan ends and collection starts again.`);
     // TEST SETUP: the payment's money back in the bank, and a month's living besides.
     fund(sim, 3_000_00 + monthly);
     const caughtAt = sim.now;

@@ -385,7 +385,7 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const papers = () => drawn(sim, PassportPane);
     const held = () => documentsOf(sim.player).filter((d) => ['passport', 'visa', 'authorization'].includes(d.kind));
     expect(held()).toHaveLength(0);
-    expect(papers()).toContain('You don’t hold any.');
+    expect(papers()).toContain('You don’t hold a passport, a visa or a travel authorization.');
     const applied = sim.must<{ readyAt: number; fee: number }>({ kind: 'documents.apply_passport', payload: {} });
     expect(held()).toHaveLength(1);
     const row = papers().split('\n');

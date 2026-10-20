@@ -400,6 +400,24 @@ export function stateNextNotice(sim: Simulation, person: Person, r: TaxReturn, s
   sim.schedule({ at: from + days * MS_DAY, kind: STATE_NOTICE_KIND, label: rules.short, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state } });
 }
 
+/**
+ * What a state's collection does next on a year it's owed, and when, as its schedule has it (from 2026-10-20, brief 17,
+ * section 8: until then Papers gave the latest notice and nothing of what came next or by when): its next notice, or a
+ * levy on the bank accounts once the notices are spent. Nothing while a payment plan of its own holds collection, as
+ * `STATE_NOTICE_KIND`'s handler holds it, or with nothing on the schedule.
+ */
+export function nextStateStep(sim: Simulation, person: Person, r: TaxReturn, state: string): { at: Instant; notice?: { code: string; title: string } } | undefined {
+  const rules = rulesOf(state);
+  const sd = r.stateDue?.[state];
+  if (!rules || !sd?.owed) return undefined;
+  const plan = person.statePlans?.[state];
+  if (plan && ['pending', 'active', 'missed'].includes(plan.status)) return undefined;
+  const item = sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === STATE_NOTICE_KIND && i.payload.personId === person.id && i.payload.year === r.year && i.payload.state === state);
+  if (!item) return undefined;
+  const n = rules.notices[sd.collection ?? 0];
+  return { at: item.at, ...(n ? { notice: { code: n.code, title: n.title } } : {}) };
+}
+
 /** Everything owed to a state, every year, now. */
 export function owedToState(person: Person, state: string, at: Instant): Money {
   return Object.values(person.returns ?? {}).reduce((s, r) => { const sd = r.stateDue?.[state]; return s + (sd ? stateOwedOn(sd, stateDueOf(r), at) : 0); }, 0);
@@ -668,7 +686,9 @@ export function fileStateLien(sim: Simulation, person: Person, r: TaxReturn, sta
   Object.assign(l, { status: 'filed', trigger, amount: sd.owed ?? 0, recordedAt: lr.recordedAt, filedAt: sim.now, fee });
   sd.lien = l;
   lienNote(l, sim.now, `Filed with ${lr.recordedAt}${trigger === 'plan' ? ', as the plan requires' : ''}${fee ? `, its ${formatMoney(fee, cur)} recording fee added to what you owe` : ''}`, l.amount);
-  notifyPlayer(sim, person, `A ${lr.name} Is Filed`, `${rules.short} filed a ${lr.name} for ${formatMoney(l.amount, cur)} on your ${r.year} ${stateName(state)} return with ${lr.recordedAt}${trigger === 'plan' ? ', as its payment plan requires' : ''}.${fee ? ` Its ${formatMoney(fee, cur)} recording fee was added to what you owe.` : ''} It’s a public record. ${lr.effect} It’s released ${lienReleaseWords(lr)}.`);
+  // Filed by collection, it ends on where to pay, as the state's other notices do (from 2026-10-20, brief 17: until then it
+  // ended on how it's released, with no next step); filed for a plan, the plan pays it.
+  notifyPlayer(sim, person, `A ${lr.name} Is Filed`, `${rules.short} filed a ${lr.name} for ${formatMoney(l.amount, cur)} on your ${r.year} ${stateName(state)} return with ${lr.recordedAt}${trigger === 'plan' ? ', as its payment plan requires' : ''}.${fee ? ` Its ${formatMoney(fee, cur)} recording fee was added to what you owe.` : ''} It’s a public record. ${lr.effect} It’s released ${lienReleaseWords(lr)}.${trigger === 'plan' ? '' : ' You can pay it on Papers, under Tax Returns.'}`);
 }
 
 /** Paid in full: its lien released after the state's days, or held for the request the state asks; one not yet filed, dropped. */
@@ -818,7 +838,9 @@ export function stateNonFilerStep(sim: Simulation, person: Person, r: TaxReturn,
   if (step < letters.length) {
     const l = letters[step]!;
     (r.lettersSent ??= {})[state] = step + 1;
-    notifyPlayer(sim, person, l.title, `${l.code}: your ${r.year} ${stateName(state)} return. ${l.words.charAt(0).toUpperCase()}${l.words.slice(1)}`);
+    // The letter's code, the return it's about, then what it says, one sentence (from 2026-10-20, brief 17: until then
+    // "Failure To File Notice: your 2026 Connecticut return. You didn’t file, …", the first a fragment).
+    notifyPlayer(sim, person, l.title, `${l.code}, on your ${r.year} ${stateName(state)} return: ${l.words}`);
     sim.schedule({ at: sim.now + l.days * MS_DAY, kind: STATE_NONFILER_KIND, label: `${rules.short} On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state, step: step + 1 } });
     return;
   }
@@ -853,8 +875,11 @@ export function assessStateNonFiler(sim: Simulation, person: Person, r: TaxRetur
   sd.collection = 0;
   stateNextNotice(sim, person, r, state);
   statePlanNewBalance(sim, person, state, sd.owed ?? 0);
-  const named = (rules.nonFiler.adds ?? []).map((a) => a.label);
-  notifyPlayer(sim, person, `${rules.short} Assessed Your ${r.year} Return`, `You didn’t file, so ${rules.short} assessed ${formatMoney(sd.owed ?? 0, cur)}: the tax from what was reported, plus its late penalties and interest from the due date${named.length ? `, and ${named.join(' and ')}` : ''}. File your own return on Papers to replace it.`);
+  // What the assessment adds, said in the sentence's own case, and where to file in its place (from 2026-10-20, brief 17:
+  // until then "…, and The Penalty For A Return DRS Made, 10% Or $50, The Greater. File your own return on Papers to
+  // replace it.").
+  const named = (rules.nonFiler.adds ?? []).map((a) => a.words);
+  notifyPlayer(sim, person, `${rules.short} Assessed Your ${r.year} Return`, `You didn’t file, so ${rules.short} assessed ${formatMoney(sd.owed ?? 0, cur)}: the tax from what was reported, plus its late penalties and interest from the due date${named.length ? `, and ${named.join(' and ')}` : ''}. File your own return on Papers, under Tax Returns, to replace it.`);
 }
 
 /**
@@ -921,7 +946,7 @@ export function registerStateTax(sim: Simulation): void {
     // What collection adds at this step: Colorado's 15%, Georgia's 20% with the execution, Illinois's fee (from 2026-10-11).
     const charged = (rules.charges ?? []).filter((c) => c.step === step).map((c) => ({ c, amount: chargeOf(c, sd, cur) })).filter((x) => x.amount > 0);
     for (const { amount } of charged) setStateOwed(sd, { ...sd.parts!, penalty: sd.parts!.penalty + amount }, s.now);
-    const added = charged.map(({ c, amount }) => ` ${c.label}, ${formatMoney(amount, cur)}, is added.`).join('');
+    const added = charged.map(({ c, amount }) => ` ${c.words.charAt(0).toUpperCase()}${c.words.slice(1)}, ${formatMoney(amount, cur)}, is added.`).join('');
     // The step its lien is filed at, or its notice of intent sent (from 2026-10-11).
     if (rules.lien?.atStep === step && !sd.lien) stateLienStep(s, person, r, state);
     if (step < rules.notices.length) {
