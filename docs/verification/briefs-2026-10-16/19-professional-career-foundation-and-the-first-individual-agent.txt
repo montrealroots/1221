@@ -1,0 +1,451 @@
+SLATE — Professional Career Foundation And The First Individual Agent
+
+Build the next chapter of SLATE on the current game: the transition from drama student to professional actor.
+
+Start with ONE fully developed individual talent agent and a complete playable career loop. Depth, continuity, and meaningful consequences come before adding more agents or companies.
+
+This is an implementation request. Research, build, test, debug, and provide evidence.
+
+1. START FROM THE CURRENT REPOSITORY
+
+Read the repository instructions, latest main, handoff, paused Brief 18, and existing school, attributes, genres, evaluation, banking, papers, calendar, relationships, and writing systems.
+
+Confirm the actual current state before editing.
+
+Keep Brief 18 paused except for specific dependencies required to make this career phase function correctly. Identify any such fixes and why they are necessary.
+
+Preserve existing saves and work. Do not restore the deleted industry engine wholesale or bring back unrelated personal-life systems.
+
+2. RESEARCH THE CAREER TRANSITION
+
+Research current authoritative information about:
+
+- Yale’s acting program, degree requirements, graduation timing, showcase, and professional-work restrictions.
+
+- Whether early graduation, accelerated completion, or another officially permitted route exists.
+
+- Representation submissions, referrals, meetings, agreements, and the chosen agent’s professional role.
+
+- Relevant work authorization, representation requirements, and payment rules for the location and work being simulated.
+
+Use official school publications, agency pages, applicable government sources, and relevant professional organizations.
+
+Record sources, dates, and uncertainties. Verify facts rather than copying assumptions from previous prompts.
+
+Separate:
+
+- Verified real-world information.
+
+- Explicit gameplay assumptions.
+
+- Fictional conversations and simulated decisions.
+
+Never invent an unpublished policy and present it as a real school’s or agent’s rule.
+
+3. SUPPORT DISTINCT SCHOOL-TO-CAREER PATHWAYS
+
+Build a transition that recognizes:
+
+A. Completing the degree normally.
+
+B. Seeking representation while still enrolled, where permitted.
+
+C. Pursuing professional work while enrolled, subject to applicable school rules, scheduling, and work authorization.
+
+D. Leaving school before graduating.
+
+E. Graduating early, ONLY if the school’s verified rules permit it.
+
+Early graduation must not be awarded simply because attributes are high. Check coursework, required terms, attendance, standing, and all applicable requirements.
+
+If Yale does not permit early graduation, clearly explain that in the game. Do not manufacture an accelerated Yale degree. Keep legitimate career alternatives available without mislabeling them as graduation.
+
+If the published rules do not settle the question, record the uncertainty and leave that route unavailable pending verification while completing the other routes.
+
+Seeking representation must not automatically withdraw the player from school. Signing with an agent must not automatically count as employment or permission to work.
+
+4. PRESERVE THE PLAYER’S EXISTING LIFE
+
+Carry forward:
+
+- Identity and background.
+
+- Acting attributes and techniques.
+
+- Genre familiarity and experience.
+
+- School standing and completed coursework.
+
+- Production history and actual roles performed.
+
+- Relationships and relevant feedback.
+
+- Money, accounts, obligations, and documents.
+
+- Health, readiness, calendar, and existing commitments.
+
+Do not reset progression when the career begins.
+
+Differentiate school credits, practice exercises, self-tapes, professional credits, and unreleased work. A practice brief must not become a professional screen credit.
+
+5. BUILD A DURABLE PROFESSIONAL PROFILE
+
+Create an actor profile and portfolio that can support submissions and representation.
+
+Include, where applicable:
+
+- Professional name and relevant contact information within the simulation.
+
+- Training and truthful education status.
+
+- School and professional credits, clearly distinguished.
+
+- Relevant skills.
+
+- Headshots.
+
+- Résumé.
+
+- Reel or selected performance material.
+
+- Availability and location.
+
+- Work eligibility.
+
+Every component must have a purpose and an effect.
+
+Materials must have provenance: where they came from, when they were created, what they contain, and whether the player can actually use them. Do not create footage automatically from a performance that was never recorded.
+
+Make creating or updating necessary materials playable, with clearly stated time and costs where modeled.
+
+Keep permanent credits and important portfolio assets separate from the rolling detailed evaluation history. They must survive long careers and save/reload without making saves grow uncontrollably.
+
+Give the player practical feedback about missing or unsuitable materials.
+
+6. CONNECT THE SCHOOL SHOWCASE
+
+Research and implement the appropriate school showcase or professional introduction process.
+
+Connect it to:
+
+- Eligibility and timing.
+
+- Material selection.
+
+- Preparation.
+
+- Scheduling.
+
+- Performance.
+
+- Recorded feedback.
+
+- Follow-up opportunities.
+
+Use existing attributes, genre knowledge, preparation, and condition systems to evaluate the work.
+
+Do not guarantee that the chosen agent attends or offers representation. If attendance cannot be verified for a real person, treat their participation as a clearly fictional event in the simulation.
+
+A strong showcase can improve opportunity without guaranteeing a contract.
+
+7. IMPLEMENT ONE INDIVIDUAL AGENT IN DEPTH
+
+Do not populate a large agency directory or introduce several shallow agents.
+
+Use an individual agent already selected by the owner if one exists. Otherwise, research and select one real, currently active agent appropriate to this starting career path, explaining the choice.
+
+Verify their current:
+
+- Name.
+
+- Agency affiliation.
+
+- Office or market.
+
+- Department and professional focus.
+
+- Public submission or contact policies, where available.
+
+Represent the agency only as deeply as needed to support this individual’s actual function.
+
+If suitable information is unavailable, choose another appropriate agent or document a clearly fictional simulation assumption. Do not invent a real person’s client list, private policies, personality, or contract terms.
+
+All outreach happens inside the game. Do not contact real agents, submit real materials, or send real messages.
+
+8. BUILD THE COMPLETE RELATIONSHIP
+
+Implement the relevant stages:
+
+Discovery → eligibility and materials check → submission or introduction → waiting and follow-up → response → meeting → decision → agreement → active representation.
+
+Allow meaningful outcomes:
+
+- No response.
+
+- A request for more material.
+
+- A rejection with only as much explanation as the simulation supports.
+
+- A meeting.
+
+- An offer.
+
+- The player declining an offer.
+
+- Representation ending.
+
+Do not turn persistence into an exploit where repeated submissions guarantee acceptance.
+
+Track genuine relationship history:
+
+- Prior contact.
+
+- What was requested.
+
+- What the player supplied.
+
+- Meetings kept or missed.
+
+- Promises.
+
+- Offers and decisions.
+
+- Opportunities handled.
+
+- Relevant successes and problems.
+
+Stable event identities must prevent resolved incidents and completed requests from reappearing as new.
+
+9. MAKE REPRESENTATION DECISIONS EXPLAINABLE
+
+An agent’s interest should consider supported factors such as:
+
+- Quality and relevance of submitted work.
+
+- Training and experience.
+
+- Fit with the agent’s professional focus.
+
+- Availability.
+
+- Existing roster needs, explicitly modeled as simulation data.
+
+- Reliability demonstrated through actual events.
+
+Avoid a single universal “agent likes you” score deciding everything.
+
+High attributes should produce high-quality work under the existing mastery rules when preparation and conditions are appropriate. They must not guarantee representation or booking.
+
+Distinguish:
+
+- Performance quality.
+
+- Suitability for a particular role.
+
+- Representation fit.
+
+- Availability and eligibility.
+
+- The final competitive decision.
+
+10. IMPLEMENT REVIEWABLE AGREEMENTS
+
+Before acceptance, clearly present the agreement’s:
+
+- Representation scope and territory.
+
+- Covered work.
+
+- Exclusivity, where applicable.
+
+- Commission and what earnings it applies to.
+
+- Duration.
+
+- Responsibilities.
+
+- Termination provisions.
+
+- Any relevant continuing commission obligations.
+
+Use verified requirements and explicitly identified simulation terms. Do not claim to reproduce the real agent’s private agreement.
+
+The player must be able to inspect, accept, or decline.
+
+Accepting must change actual representation state and affect later opportunities and payments. A contract must not be decorative text.
+
+11. COMPLETE ONE PROFESSIONAL WORK LOOP
+
+Build enough supporting industry structure for this sequence to work:
+
+Opportunity → submission → audition or self-tape → optional callback → offer → contract decision → preparation → scheduled work → performance evaluation → payment → commission where owed → lasting career record.
+
+Do not require every opportunity to use every stage.
+
+Each opportunity needs:
+
+- A clearly identified project and role.
+
+- Requirements.
+
+- Relevant genre and performance demands.
+
+- Dates and location.
+
+- Submission or audition deadline.
+
+- Compensation terms.
+
+- Eligibility restrictions.
+
+- A meaningful outcome.
+
+Use clearly fictional projects for initial playable opportunities unless a real project’s details are verified and its fictional casting scenario is clearly identified.
+
+Do not imply that a real production is actually hiring or that a real person made an offer.
+
+The first agent must actively participate in this loop: finding or receiving suitable opportunities, submitting the player where appropriate, communicating outcomes, and handling offers within their role.
+
+12. KEEP AN UNSIGNED PATH AVAILABLE
+
+The player must be able to pursue appropriate opportunities without representation where the opportunity permits it.
+
+Representation should change access, support, and obligations—not unlock every possible acting action.
+
+Do not make an agent responsible for every career task. Distinguish the agent’s role from casting, production, school, and the player.
+
+13. CONNECT EXISTING ENGINES
+
+Use the existing systems rather than building disconnected duplicates.
+
+- Calendar: deadlines, meetings, auditions, rehearsals, and work.
+
+- School: permission, attendance, leave, withdrawal, and graduation.
+
+- Attributes and genres: preparation and work quality.
+
+- Health and readiness: relevant performance and scheduling consequences.
+
+- Banking: receivables, actual payments, commissions, and balances.
+
+- Papers: work eligibility and supported tax treatment.
+
+- Relationships: professional history and reliability.
+
+- Journey/profile: credits, milestones, and development.
+
+Every interactive field and action must affect something identifiable, provide necessary information, or navigate to a functioning feature. Explain connections through useful drill-down views.
+
+14. FIX REQUIRED DEPENDENCIES
+
+Before career appointments rely on the clock, resolve relevant time-jump and dialog problems from Brief 18.
+
+Before career earnings are paid, verify that payment and commission accounting:
+
+- Uses the correct accounts and currency.
+
+- Distinguishes promised money from received money.
+
+- Applies deductions only when due.
+
+- Prevents duplicate payments through reloads and time jumps.
+
+- Handles delayed or insufficient payments where included.
+
+- Connects to applicable reporting without treating all income identically.
+
+Before affected characters accept work, connect actual work eligibility to the new employment record. Remove any obsolete assumption that no professional work exists after school.
+
+Fix only dependencies required for this phase; keep unrelated backlog items clearly tracked.
+
+15. USE THE NEW WRITING STANDARD
+
+Preserve natural language, concise summaries, optional detail, and established Title Case rules.
+
+Give the agent a consistent fictionalized game voice without claiming to imitate the real person.
+
+Messages must reflect actual events, requests, decisions, and history.
+
+Avoid repeated congratulations, generic rejection loops, invented performance observations, and fake novelty. Keep control names stable.
+
+Provide contextual tutorials for each new feature, explaining what to do, why it matters, and what it affects.
+
+16. BUILD AN EXTENSIBLE FOUNDATION
+
+Use reusable structures for agents, agreements, opportunities, auditions, engagements, payments, and credits.
+
+Fully populate and verify ONE agent first.
+
+Future agents should be addable with distinct data and supported behavior, without copying the whole engine. Do not populate empty profiles or advertise unavailable relationships as playable.
+
+17. VERIFY THROUGH COMPLETE PLAYTHROUGHS
+
+Write acceptance criteria before implementation, then verify:
+
+- A graduating student carrying their history into the career.
+
+- An enrolled student pursuing a permitted opportunity.
+
+- A player leaving without a degree.
+
+- Early graduation correctly allowed, refused, or unavailable according to verified policy.
+
+- An incomplete submission and its remedy.
+
+- Rejection and a valid later attempt.
+
+- A meeting missed or rescheduled.
+
+- An offer accepted and declined.
+
+- Representation ending according to its terms.
+
+- An unsigned opportunity.
+
+- An audition, callback where applicable, booking, completed work, and payment.
+
+- Scheduling conflicts.
+
+- Relevant work-authorization restrictions.
+
+- Commission accounting.
+
+- Save/reload at critical transitions.
+
+- Migration of an existing graduate’s save.
+
+Ensure high skill improves performance without guaranteeing casting, and that suitable opportunities remain possible for developing actors.
+
+Check desktop, mobile, keyboard navigation, accessible labels, and tutorial accuracy.
+
+Reuse existing regression tests. Add meaningful tests for new mechanics and defects. Run the repository’s required full verification gate after the changes stabilize.
+
+18. DELIVER EVIDENCE
+
+Provide:
+
+- The selected agent and why they fit.
+
+- Research sources, dates, and explicit simulation assumptions.
+
+- The school-policy findings, including early graduation.
+
+- A coverage matrix linking actions to state changes and downstream effects.
+
+- The exact tested commit.
+
+- Actual player-facing examples.
+
+- Complete playthrough results.
+
+- Tests run, failures found, and fixes made.
+
+- Any remaining limitations.
+
+- Accurate merge and deployment status.
+
+Continue through implementation, debugging, and verification. Do not stop after adding an agent card, writing a plan, or producing sample dialogue.
+
+The milestone is one complete, coherent professional beginning: my existing student becomes an emerging actor, develops a real in-game relationship with one individual agent, pursues work, experiences consequences, and carries every meaningful outcome forward.
+
+Do not claim perfection from test counts. Finish the defined scope and show that it works.
