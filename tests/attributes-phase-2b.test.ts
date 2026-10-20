@@ -1311,6 +1311,8 @@ const nextWork = (sim: Simulation): string => { const page = profile(sim).text.r
  * label and the whole of `why`. Until then each was drawn `${label}. ${why}`.
  */
 const drawnAs = (next: string, r: Recommendation): boolean => next.includes(`${r.label}: ${r.why}`)
+  // Among the others, why now, with what to do said once where two share it (from 2026-10-20, later that day).
+  || (r.now !== undefined && next.includes(`${r.label}: ${r.now}`) && (!r.more || next.includes(r.more)))
   || (next.includes(`${r.label}. ${[r.now, r.act].filter(Boolean).join(' ')}`) && (!r.more || next.includes(r.more)));
 /** TEST SETUP: a brief's parts complete and its genre known, as a player who prepared it leaves them. */
 const preparedFully = (sim: Simulation, b: Brief) => { Object.assign(recordOf(sim.player, b.id).prep, { interpretation: 1, memorization: 1, rehearsal: 1 }); for (const g of b.kinds) Object.assign(genreState(sim.player, g), { familiarity: 100, practice: 100 }); };

@@ -2670,7 +2670,7 @@
   "status": "Rewritten",
   "hash": "4ddb8ddc6e83",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial2 and the practicing rounds check) and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/coursework.ts#tableWorkRefusal": {
@@ -2794,9 +2794,9 @@
  },
  "src/engine/systems/feedback.ts#maintainedLeads": {
   "status": "Rewritten",
-  "hash": "4c9c405b3197",
+  "hash": "0134b36a4da9",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial2 and the practicing rounds check) and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#movedLeads": {

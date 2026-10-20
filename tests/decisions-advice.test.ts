@@ -539,8 +539,10 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(prep).toBeGreaterThan(0.05);
     for (const f of trainingForecast(sim, sim.player).values()) { expect(Math.abs(f.preparation! - prep)).toBeLessThan(1e-9); expect(Math.abs(exact(f) - (f.own! + f.days!))).toBeLessThan(1e-12); }
     expect(first.why).toContain(`would bring it about ${Math.round(prep * 100) / 100} points a piece as you are now. That’s preparation, not training`);
-    expect(profileText(sim)).toContain(first.assumes!);
-    expect(paneText(sim, 'brief-drama')).toContain(first.assumes!);
+    // Under Why This Recommendation, a sentence a line (from 2026-10-20, brief 16's `adviceSummary`): until then one paragraph.
+    const lines = first.assumes!.split(/(?<=\.)\s+(?=[A-Z])/);
+    expect(lines.length).toBeGreaterThan(2);
+    for (const line of lines) { expect(profileText(sim)).toContain(`>${line}</p>`); expect(paneText(sim, 'brief-drama')).toContain(`>${line}</p>`); }
     const again = clone(sim);
     expect(adviceFor(again, again.player)).toEqual(adviceFor(sim, sim.player));
     // The falsifiability test: a beginner's cold take, held back most by an ability, is read as taped, counted short and

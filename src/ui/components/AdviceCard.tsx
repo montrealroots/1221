@@ -26,9 +26,10 @@ export function AdviceCard({ advice, heading }: { advice: AdviceSummary; heading
           {advice.details.map((d) => (
             <div key={d.heading} className="col gap-1" style={{ marginTop: 'var(--s2)' }}>
               <div className="eyebrow" role="heading" aria-level={4}>{d.heading}</div>
-              {d.lines.length === 1 || d.heading !== 'Other Things Worth Your Time'
+              {d.lines.length === 1 || !d.list
                 ? d.lines.map((l, i) => <p key={i} className="xs" style={P} {...(d.mark && i === 0 ? { [`data-${d.mark}`]: '' } : {})}>{l}</p>)
                 : <ul className="xs" style={P}>{d.lines.map((l, i) => <li key={i}>{l}</li>)}</ul>}
+              {d.after?.map((l, i) => <p key={`after-${i}`} className="xs" style={P}>{l}</p>)}
             </div>
           ))}
         </details>

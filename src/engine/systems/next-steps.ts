@@ -222,7 +222,12 @@ function assumesOf(sim: Simulation, person: Person, first: Recommendation): stri
   const out = [`What the forecast assumes of your last ${a.pieces === 1 ? 'piece' : `${a.pieces} pieces`}: ${a.pieces === 1 ? own[0]!.replace(/^1 /, 'it ') : listed(own)}.`];
   if (a.prepared.length) {
     const label = (task: string, part: string) => (TASK_PROFILES[task]?.prepLabel?.[part] ?? (part === 'approach' ? 'Rehearsing how you play it' : part)).toLowerCase();
-    for (const p of a.prepared) out.push(`In ${p.what}, ${list(p.parts.map((x, i) => `${label(p.task, x.part)} ${p.parts.length > 1 && i > 0 ? '' : 'stood '}at ${Math.round(x.share * 100)}%`))} of the way to complete.`);
+    // Two pieces of one name prepared alike are said once, with how many (from 2026-10-20, brief 16: on the workload save
+    // "In Heightened Text Scene, work with your partner stood at 0% …" came twice, and its revision twice more).
+    const said = new Map<string, number>();
+    for (const p of a.prepared) { const k = `${p.what}\u0000${list(p.parts.map((x, i) => `${label(p.task, x.part)} ${p.parts.length > 1 && i > 0 ? '' : 'stood '}at ${Math.round(x.share * 100)}%`))}`; said.set(k, (said.get(k) ?? 0) + 1); }
+    const PIECES = ['', '', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+    for (const [k, n] of said) { const [what, parts] = k.split('\u0000'); out.push(`In ${what}${n > 1 ? ` (${PIECES[n] ?? n} pieces)` : ''}, ${parts} of the way to complete.`); }
     const taped = exactOf(trainingForecast(sim, person, person.work ?? [], [first.target], true).get(first.target));
     out.push(`The forecast counts ${a.prepared.length === 1 ? 'that piece' : 'those pieces'} as fully prepared, since ${a.prepared.length === 1 ? 'its' : 'their'} own preparation held ${a.prepared.length === 1 ? 'it' : 'each'} back most.${taped !== undefined ? ` Counted as ${a.prepared.length === 1 ? 'it was' : 'they were'}, ${first.forecast!.hours} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exactOf(first.forecast)!.toFixed(2)}.` : ''}`);
   }
@@ -345,6 +350,9 @@ export interface AdviceSection {
   lines: string[];
   /** What the section's first line is, where a reader of the screen looks for it (`data-standing`, `data-assumes`, `data-attention`). */
   mark?: 'standing' | 'assumes' | 'attention';
+  /** Drawn as a list, a line an item: the alternatives; `after`, what's said once of several of them, below it. */
+  list?: boolean;
+  after?: string[];
 }
 export interface AdviceSummary {
   target: string;
@@ -401,9 +409,10 @@ export function adviceSummary(sim: Simulation, person: Person, recs: readonly Re
     if (ff.prepared && !lead?.assumes) lines.push(`It counts ${ff.prepared === 1 ? 'the piece' : `the ${ff.prepared} pieces`} held back most by ${ff.prepared === 1 ? 'its' : 'their'} own preparation as if fully prepared.`);
     lines.push(first.focus === 'spaced' ? SPACED_NOW : STEADY_FIRST);
     lines.push('It’s an estimate: it reads only the work on your record, and the work you do next may call on different things.');
-    details.push({ heading: 'How The Estimate Is Worked Out', lines });
+    details.push({ heading: primary === first ? 'How The Estimate Is Worked Out' : 'How The Training Estimates Are Worked Out', lines });
   }
-  if (lead?.assumes) details.push({ heading: 'What It Assumes Of Your Work', lines: [lead.assumes], mark: 'assumes' });
+  // Its sentences apart, each piece on its own line, not one paragraph.
+  if (lead?.assumes) details.push({ heading: 'What It Assumes Of Your Work', lines: lead.assumes.split(/(?<=\.)\s+(?=[A-Z])/), mark: 'assumes' });
   const attention = recs.find((r) => r.attention)?.attention;
   const prepApart = first?.forecast && first.forecast.preparation !== undefined && (first.forecast.prepared ?? 0) > 0
     ? `Apart from training, fully preparing ${first.forecast.prepared === 1 ? 'the piece' : `the ${first.forecast.prepared} pieces`} held back most by ${first.forecast.prepared === 1 ? 'its' : 'their'} own preparation would bring ${first.forecast.prepared === 1 ? 'it' : 'them'} about ${Math.round(first.forecast.preparation * 100) / 100} ${Math.round(first.forecast.preparation * 100) === 100 ? 'point' : 'points'} a piece as you are now. That’s preparation, not training, and it isn’t part of ${first.label.toLowerCase()}’s estimate.`
@@ -420,14 +429,26 @@ export function adviceSummary(sim: Simulation, person: Person, recs: readonly Re
   const versus = heldVersusNext(person, recs);
   if (versus) record.push(versus);
   if (record.length) details.push({ heading: 'From Your Record', lines: record });
-  // The others, a line each: what, the exercise, and its estimate or its cost. Shared reasoning isn't said again.
-  const others = recs.filter((r) => r !== primary).map((r) => {
+  // The others, a line each: what, the exercise, and its estimate or its cost. What to do is said once where two or more
+  // share it, and not at all where the first said it (from 2026-10-20, later that day: on the workload save two
+  // preparations each said "That’s preparation, not training: …" again, after the first had).
+  const rest = recs.filter((r) => r !== primary);
+  const acts = rest.map((r) => r.act).filter((x): x is string => !!x);
+  const shared = (act: string) => act === primary.act || acts.filter((x) => x === act).length > 1;
+  const others = rest.map((r) => {
     const ex = r.exercise ? EXERCISE_BY_ID[r.exercise] : undefined;
     const doing = ex ? `, ${ex.label} at the ${TIER.label[r.tier ?? 0]} tier` : '';
     if (r.forecast) return `${r.label}${doing}: an estimated ${pointsOf(r.points)} a piece for ${r.forecast.hours} hours, from ${Math.round(r.forecast.from)} to about ${Math.round(r.forecast.to)}.${primary.tiedWith?.includes(r.label) ? ' About as useful as the first.' : ''}`;
-    return `${r.label}${doing}: ${r.why}`;
+    if (!r.now) return `${r.label}${doing}: ${r.why}`;
+    return `${r.label}${doing}: ${[r.now, r.act && !shared(r.act) ? r.act : undefined, r.more].filter(Boolean).join(' ')}`;
   });
-  if (others.length) details.push({ heading: 'Other Things Worth Your Time', lines: others });
+  // A step two of them share, said once after the list, naming whose it is.
+  const once = [...new Set(acts)].filter((act) => act !== primary.act && acts.filter((x) => x === act).length > 1).map((act) => {
+    const whose = rest.filter((r) => r.act === act);
+    const names = listOf(whose.map((r) => r.label.toLowerCase()));
+    return whose.every((r) => r.focus === 'preparation') ? `${capFirst(names)} are preparation, not training: prepare each part further before you show or tape the next piece.` : `${capFirst(names)}: ${act}`;
+  });
+  if (others.length) details.push({ heading: 'Other Things Worth Your Time', lines: others, list: true, ...(once.length ? { after: once } : {}) });
   if (primary.more) details.push({ heading: `More On ${primary.label}`, lines: [primary.more] });
   return { target: primary.target, what: primary.label, why, ...(action ? { action } : {}), ...(estimate ? { estimate } : {}), ...(unavailable ? { unavailable } : {}), details };
 }

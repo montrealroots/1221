@@ -261,9 +261,10 @@ function maintainedLeads(d: Discipline, f: ShowingFacts): string[] {
   const { bandLabel: b, run, course, prev } = f;
   const same = prev?.band === f.band;
   if (run >= 3) return [
-    `${b}${same ? ' again' : ''}: ${count(run)} pieces running in ${course} at Strong or better.`,
-    `That’s the ${ordinal(run)} piece in a row at Strong or better in ${course}.`,
-    `${cap(WORK[d])} is holding: ${count(run)} pieces running at Strong or better.`,
+    // Times, not pieces: a piece shown in rounds is one piece shown several times (`roundsShown`).
+    `${b}${same ? ' again' : ''}: ${count(run)} times running in ${course} at Strong or better.`,
+    `That’s the ${ordinal(run)} time in a row at Strong or better in ${course}.`,
+    `${cap(WORK[d])} is holding: ${count(run)} times running at Strong or better.`,
   ];
   return same
     ? [`${b} again, as on ${prev!.on}.`, `${b} for the second time running.`, `${cap(WORK[d])} is holding: ${b} again.`]

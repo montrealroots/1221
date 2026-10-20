@@ -1151,26 +1151,30 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   // "It didn’t come together today. … When it does come together, here’s what to try next.", "You had this note … and
   // it’s still there.", the same in every course.
   const dayWords = (key: string) => formatDate(at(parse(key), 12), zone());
-  // The piece's own earlier round counts as the course's last piece (found reading brief 16's first transcripts: a second
-  // round was compared with the piece before the first).
-  const earlier = cw.assignments.filter((x) => x.course === a.course && x.shown && x.shown.at < when).sort((x, y) => x.shown!.at - y.shown!.at);
+  // The course's showings before this one, every round of a piece in rounds counted (`roundsShown`, its band and day),
+  // since a piece keeps only its latest round as `shown` (found reading brief 16's first transcripts: a second round was
+  // compared with the piece before the first, and a run of three Strong rounds was called the second).
+  const earlier = cw.assignments.filter((x) => x.course === a.course).flatMap((x) => (x.roundsShown?.length
+    ? x.roundsShown.filter((r) => r.on < onDay).map((r) => ({ band: r.band, at: at(parse(r.on), 12), x }))
+    : x.shown && x.shown.at < when ? [{ band: x.shown.band, at: x.shown.at, x }] : [])).sort((p, q) => p.at - q.at);
   const prev = earlier.at(-1);
   let run = strongBand(band) ? 1 : 0;
-  for (const x of [...earlier].reverse()) { if (!run || !strongBand(x.shown!.band)) break; run += 1; }
+  for (const e of [...earlier].reverse()) { if (!run || !strongBand(e.band)) break; run += 1; }
   const discipline = disciplineOf(c.skills);
   const recent = cw.assignments.filter((x) => x.shown && x.shown.at < when && x.feedback && disciplineOf(courseOf(x.course)?.skills ?? []) === discipline).sort((x, y) => x.shown!.at - y.shown!.at).slice(-8).map((x) => x.feedback!.text);
   const heldLimit = held ? limits.limits[0] : undefined;
   const heldExercise = heldLimit && (heldLimit.kind === 'ability' || heldLimit.kind === 'technique') ? exerciseFor(heldLimit.what as never)?.label : undefined;
   // The same limit held the course's last piece back, and was said then: said as continuity, with when.
-  const prevChief = prev && prev.feedback?.kind === 'advanced' && !strongBand(prev.shown!.band) ? (person.work ?? []).find((w) => w.at === prev.shown!.at)?.limits[0] : undefined;
-  const heldAgain = heldLimit && prevChief && prevChief.kind === heldLimit.kind && prevChief.what === heldLimit.what ? formatDate(prev!.shown!.at, zone()) : undefined;
+  // (A round's own record isn't kept apart from its piece's, so a round before is never said as the same limit.)
+  const prevChief = prev && !prev.x.roundsShown?.length && prev.x.feedback?.kind === 'advanced' && !strongBand(prev.band) ? (person.work ?? []).find((w) => w.at === prev.at)?.limits[0] : undefined;
+  const heldAgain = heldLimit && prevChief && prevChief.kind === heldLimit.kind && prevChief.what === heldLimit.what ? formatDate(prev!.at, zone()) : undefined;
   const day = judged.limits.find((l) => l.kind === 'condition');
   const share = showing.together && a.partner !== undefined ? showing.together : undefined;
   const mate = share ? (/^(?:a|an|the) (.+)$/i.exec(share.partner)?.[1] ? `The ${(/^(?:a|an|the) (.+)$/i.exec(share.partner)![1]!).toLowerCase()}` : share.partner.split(' ')[0]!) : undefined;
   const text = showingWords({
     key: `${a.id}:${onDay}:${a.round ?? 0}`, discipline, course: c.name, piece: t.title, band, bandLabel: BAND_LABEL[band],
-    ...(prev ? { prev: { band: prev.shown!.band, label: BAND_LABEL[prev.shown!.band], on: formatDate(prev.shown!.at, zone()) } } : {}),
-    run, best: earlier.length > 0 && earlier.every((x) => BAND_RANK[x.shown!.band] < BAND_RANK[band]),
+    ...(prev ? { prev: { band: prev.band, label: BAND_LABEL[prev.band], on: formatDate(prev.at, zone()) } } : {}),
+    run, best: earlier.length > 0 && earlier.every((e) => BAND_RANK[e.band] < BAND_RANK[band]),
     kind, note: body, ...(focus.kind !== 'advanced' ? { about: focus.kind === 'dim' ? 'part' as const : focus.kind } : {}),
     ...(focus.kind === 'dim' && focus.dim !== 'partner' ? { remedy: remedyWords(a, focus.dim) } : {}),
     ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}), ...(heldAgain ? { again: heldAgain } : {}) } } : {}),

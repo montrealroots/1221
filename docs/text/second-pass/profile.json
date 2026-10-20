@@ -4026,9 +4026,9 @@
  },
  "src/engine/systems/next-steps.ts#adviceSummary": {
   "status": "Rewritten",
-  "hash": "fc95e28cdcaa",
+  "hash": "647245181187",
   "on": "2026-10-20",
-  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "evidence": "Read on the built app's Player Profile at 1440 and 390 (workload save, the card shut and open) and held by tests/advice-card.test.ts and tests/decisions-advice.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#agoOf": {
@@ -4047,9 +4047,9 @@
  },
  "src/engine/systems/next-steps.ts#assumesOf": {
   "status": "Rewritten",
-  "hash": "cb4bc052d0f0",
-  "on": "2026-10-19",
-  "evidence": "the area's walk fix: the forecast's assumptions say prepared or underprepared, not taped, of a showing and a night as well as a tape; tests/decisions-advice.test.ts asserts the words and fails when they're mutated back (b8-assume-mut, exit 1), and passes restored; tests/advice.test.ts passes",
+  "hash": "0fcf42149649",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app's Player Profile at 1440 and 390 (workload save, the card shut and open) and held by tests/advice-card.test.ts and tests/decisions-advice.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#attentionSaid": {

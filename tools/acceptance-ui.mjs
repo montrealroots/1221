@@ -1422,11 +1422,17 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
   });
   // The advice's two lines brief 12 added (F2-A10 (f) as the owner resolved it), read where the walkthrough sends a player.
   await step('[save: brief scenario] advice: What To Work On says what its forecast assumes of the work and whether preparation, training or both deserve attention', async () => {
-    // Behind Why This Recommendation from brief 16 (2026-10-20), opened as a player opens it.
+    // Behind Why This Recommendation from brief 16 (2026-10-20), opened from the keyboard: the control takes focus, Enter
+    // opens it, and a screen reader is told it's expanded (the playthroughs open it with the mouse).
     const why = briefPane().locator('details[data-why]').first();
     must(await why.count(), 'no Why This Recommendation');
-    await why.locator('summary').click(); await wait(300);
-    must((await why.getAttribute('open')) !== null, 'Why This Recommendation didn’t open');
+    const summary = why.locator('summary');
+    must(/^Why This Recommendation$/.test((await summary.innerText()).trim()), `its control reads: ${await summary.innerText()}`);
+    await summary.focus();
+    must(await summary.evaluate((el) => el === document.activeElement), 'Why This Recommendation doesn’t take focus');
+    await page.keyboard.press('Enter'); await wait(300);
+    must((await why.getAttribute('open')) !== null, 'Enter didn’t open Why This Recommendation');
+    must((await summary.evaluate((el) => el.closest('details').open)) === true, 'not open to the accessibility tree');
     const assumes = (await briefPane().locator('[data-assumes]').first().innerText().catch(() => '')).trim();
     const attention = (await briefPane().locator('[data-attention]').first().innerText().catch(() => '')).trim();
     must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
