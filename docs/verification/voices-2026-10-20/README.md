@@ -117,7 +117,8 @@ The long runs (below) compare everything else.
 - **Classmates** say what they've done before, from their own record: a request for help asked again (how many, and how
   the last was answered), an invitation to run lines (how the last went), a partner who doesn't come again and their
   apology (how many).
-- **A term's coursework warning** after one the term before says it's the second.
+- **A term's coursework warning** after an earlier one says which it is, and that the last came the term before when it
+  did: "This is your second coursework warning, after one last term."
 
 **The Profile** (`adviceSummary` in `next-steps.ts`, `AdviceCard.tsx`): What To Work On Next and a brief's What To Work
 On draw one card:
@@ -127,7 +128,7 @@ On draw one card:
   what it assumes of your work a sentence a line, preparation or training, how long it's been first, from your record,
   and the other things worth your time a line each, a step two share said once.
 
-**Help, the tutorial and the screens**, by five editors in clones, each merged with its own commit:
+**Help, the tutorial and the screens**, by five editors in clones, each area brought in as its own commit:
 - **Life and craft** (`65d54282`); the **tutorial** (`cb9b323d`); the **school** (`77380be9`); **money** (`f9403bb2`);
   **papers** (`28f30fde`).
 - **The order:** each long explanation now says what it means for you and what to do first, then what it costs, then
@@ -182,6 +183,28 @@ changes separately identified rather than silently changing mechanics").
    for either kind). IRC 6651(h) arguably covers installment agreements only (the papers editor).
 4. **The missed state-plan notice's figures** and `optRefusal`'s "90 days" and "60 days" are copied into prose rather
    than read from the rule (the papers editor).
+
+## The Runs On The Tested Commit
+
+Brief 15's final runs, every one again on `4ef5e961` (`runs/README.md`, `final/README.md`), 201 steps in clones, each
+exit 0 but banking's step 8:
+- **The built app:** the acceptance walk, 77 passed, 0 failed, 0 skipped, 0 errors, 0 overflows, at 1440 and at 390.
+- **Brief 13's playthroughs:** normal 14 of 14, setback 9 of 9, specialist 11 of 11, at each width
+  (`interface-final/summary.json`).
+- **Brief 14's journeys:** document 8 of 8 and health 10 of 10 at each width. Banking is 9 of 10 at each width: step 8,
+  the engine's week planning (brief 14's `journeys-3`, left for the owner), failed by brief 15's runs in the same words.
+- **The school journeys:** brief 13's 25, played to the end, all ten checks passed on each, each ending as brief 15's
+  ended.
+- **The long runs:** 24 lives, the workloads, the mastery plans, variety and freshness.
+- **The advice:** the fresh set and the held-out set again, 40 of 40 F2-A cases.
+- **The judge and acting measurements:** all 36 figures brief 15's, every output byte for byte.
+
+**The same numbers** (`numbers-same.py`, `numbers-same.json`): every number, id, key and list length in brief 16's runs
+is brief 15's, but the words and three counted kinds of thing, each checked:
+- a coursework warning's words in two workloads;
+- how many classmate notices stay apart, since one that comes again now says so (880 more kept apart in the 25
+  journeys; every notice brief 15's had on a day is there on that day, none fewer);
+- the run's own record.
 
 ## Examples, Read In Order
 

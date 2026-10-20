@@ -84,5 +84,30 @@ for d in FOLDERS:
     print(f"{d}: {result[d]['files']} files; {same} identical in every number; differences explained: {explained or 'none'}; unexplained: {len(unexplained)} files; missing after: {len(missing)}")
     for f, v in unexplained.items():
         print(f'  {f}:'); [print(f'    {x}') for x in v]
+# The events the notices tell of (the docstring's "counted apart"), from each journey's whole list of (day, title): every
+# notice brief 15's run had on a day is in brief 16's on that day, no title is had fewer times, and what's had more is
+# only a classmate's notice whose body brief 16 made say its history (a help asked for again, a partner who didn't come
+# again, an apology, lines run again), so it no longer merges into the one before (`Simulation.notify`).
+REPEATS = re.compile(r'(: A Request For Help|: An Apology| Didn’t Come|^Ran Lines With )')
+events = {'journeys': 0, 'every day and title kept': 0, 'none fewer': 0, 'more only of a classmate’s repeat': 0, 'more': {}}
+for f in sorted(os.listdir(f'{B13}/journeys-final')):
+    if not f.endswith('-p4.json'): continue
+    a, b = load(f'{B13}/journeys-final/{f}'), load(f'{B14}/journeys-final/{f}')
+    if not isinstance(a.get('notices'), list): continue
+    ta, tb = {}, {}
+    for n in a['notices']: ta[n[1]] = ta.get(n[1], 0) + 1
+    for n in b['notices']: tb[n[1]] = tb.get(n[1], 0) + 1
+    more = {t: tb[t] - ta.get(t, 0) for t in tb if tb[t] > ta.get(t, 0)}
+    events['journeys'] += 1
+    events['every day and title kept'] += {(n[0], n[1]) for n in a['notices']} <= {(n[0], n[1]) for n in b['notices']}
+    events['none fewer'] += all(tb.get(t, 0) >= c for t, c in ta.items())
+    events['more only of a classmate’s repeat'] += all(REPEATS.search(t) for t in more)
+    for t, c in more.items():
+        k = REPEATS.search(t).group(1).strip(': ') if REPEATS.search(t) else t
+        events['more'][k] = events['more'].get(k, 0) + c
+n = events['journeys']
+if not n or any(events[k] != n for k in ('every day and title kept', 'none fewer', 'more only of a classmate’s repeat')): failed = True
+result['notice events'] = events
+print(f"notice events: {n} journeys; every day and title kept in {events['every day and title kept']}; none fewer in {events['none fewer']}; more only of a classmate’s repeat in {events['more only of a classmate’s repeat']}; more: {events['more']}")
 json.dump(result, open(f'{B14}/numbers-same.json', 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 sys.exit(1 if failed else 0)
