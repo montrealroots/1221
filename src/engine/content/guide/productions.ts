@@ -62,7 +62,7 @@ import type { AxisValue } from '../material';
 import {
   BONDS, CAST_LIST, ESTIMATE, NIGHT_DIFFICULTY, NIGHT_LEAST, NIGHT_VALUE, castScore, evenCraft, rehearsalDays, schoolProduction, summerRuns,
 } from '../../systems/school';
-import { DIRECTION, PROCESS, completeFor, stagesOf, type Process } from '../../systems/production';
+import { DIRECTION, PROCESS, completeFor, directorVoiceFor, noteText, stagesOf, type Process } from '../../systems/production';
 import { ENSEMBLE } from '../../systems/ensemble';
 import { WORK } from '../../systems/coursework';
 import { PLAYREADING } from '../../systems/playreading';
@@ -124,6 +124,14 @@ const fresh = (of: number, format?: Process['format']): { process: Process } => 
 // --- the first spring's Carlotta Festival, the first production a class is cast in --------------------------------------
 
 const CARLOTTA = schoolProduction(1, 1, 1)!;
+/**
+ * A note in the words of the Carlotta's director, whose voice is the production's for its whole run (from 2026-10-20,
+ * brief 17, `directorVoiceFor`): until then the guide quoted the one voice every director had, and the Carlotta's
+ * director, encouraging, says it otherwise.
+ */
+const carlottaSays = (f: Parameters<typeof noteText>[0]) => noteText(f, undefined, undefined, { key: 'guide', recent: [], voice: directorVoiceFor('school', { production: CARLOTTA.name }) });
+/** The note on tiring in the second half of a new play, as the Carlotta's director gives it. */
+const CARLOTTA_TIRING = carlottaSays({ kind: 'craft', note: 'pacing', problem: 'stamina', where: 'The Second Half', segment: 1, measure: 0 });
 const CARLOTTA_DAYS = rehearsalDays(1, CARLOTTA.runs[0]!, CARLOTTA.weeks);
 const CARLOTTA_CALLS = CARLOTTA_DAYS.length;
 const CARLOTTA_STAGES = stagesOf(CARLOTTA_CALLS);
@@ -376,7 +384,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       `A School or Rep call you miss counts against the term’s attendance, and ${word(ESTIMATE.missedCallsOut)} in a term take you out of the casting pool.`,
     ],
     interpret: [
-      `Lines under ${pct(PROCESS.offBook)} after the off-book call bring the note “Be off book: the lines aren’t there yet, and the scene can’t start until they are.”`,
+      `Lines under ${pct(PROCESS.offBook)} after the off-book call bring a note to get off book, each director in their own words: in the ${CARLOTTA.name}, “${carlottaSays({ kind: 'lines' })}”`,
       'Growth From A Night is how much a night grows your craft, 100% for keeping every call and no more. It doesn’t change the night’s result.',
       'A Night Now is a forecast of what a night would come to if it opened now, with no luck either way. The Part Now, Movement By Movement shows each movement’s own blocking against what it needs.',
       'Blocking set at a call you were excused from is still a gap, and Missed To Catch Up counts it.',
@@ -504,7 +512,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       { to: 'productions.playing', kind: 'optional', why: 'A choice against the director’s request comes back as a note until the choice changes.' },
     ],
     example: {
-      setup: `In the ${CARLOTTA.name}, as a lead, off book and with the blocking set, at stamina half of full and rested, at readiness 100. A new play is judged in its two halves, and at a work-through the director says “You’re spent by the second half: find where the play lets you breathe.”`,
+      setup: `In the ${CARLOTTA.name}, as a lead, off book and with the blocking set, at stamina half of full and rested, at readiness 100. A new play is judged in its two halves, and at a work-through the director says “${CARLOTTA_TIRING}”`,
       steps: [
         `From the ways to work on the note, choose ${ADJUSTMENTS.breathe.label}.`,
         `Press Work On The Note: ${ADJUSTMENTS.breathe.label}. It takes ${ADJUSTMENTS.breathe.minutes} minutes, and a message gives the second half’s figure before and after.`,

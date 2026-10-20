@@ -347,7 +347,7 @@ describe('tax.pay_state and tax.lien_release', () => {
     // it act on; tests/remaining-tax.test.ts).
     expect(drew('tax.lien_release').map((c) => [c.disabled, c.title])).toEqual([[true, 'You can ask for its release once what it was filed for is paid in full.']]);
     expect(drew('tax.lien_dispute')).toEqual([]);
-    expect(screen).toContain('It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.');
+    expect(screen).toContain('It was filed for tax you owed, so it wasn’t filed in error, and it can’t be withdrawn.');
     expect(sim.must({ kind: 'tax.pay_state', payload: { state: 'us-ct', year: 2027, amount: 100_00 } })).toEqual({ paid: 100_00, owed: 561_41, tax: 23_92, penalty: 58_53, interest: 17_55 });
     expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 561_42 })).toBe('You owe Connecticut DRS $561.41. Pay that amount or less.');
     expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 0 })).toBe('Enter an amount above zero.');
@@ -365,7 +365,7 @@ describe('tax.pay_state and tax.lien_release', () => {
     expect(press('tax.lien_release')).toEqual(['Asked. It’s to be released by July 25, 2028.']);
     expect(lien.releaseDue).toBe(at(2028, 7, 25, 12));
     expect(refusal(sim, 'tax.lien_release', { state: 'us-ct', year: 2027 })).toBe('You’ve already asked. It’s to be released by July 25, 2028.');
-    expect(refusal(sim, 'tax.lien_dispute', { state: 'us-ct', year: 2027 })).toBe('It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.');
+    expect(refusal(sim, 'tax.lien_dispute', { state: 'us-ct', year: 2027 })).toBe('It was filed for tax you owed, so it wasn’t filed in error, and it can’t be withdrawn.');
     const again = reload(sim);
     again.advanceTo(at(2028, 7, 25, 11));
     expect(ct(again).lien!.status).toBe('paid');
@@ -496,7 +496,7 @@ describe('tax.apply_state_plan and tax.catch_up_state_plan', () => {
     const sim = thaw(levied());
     expect(sim.must<{ monthly: number }>({ kind: 'tax.apply_state_plan', payload: { state: 'us-ct', months: 12 } }).monthly).toBe(48_78);
     // That year's lien, filed on DRS's assessment and replaced by her own return, secured tax she owed: no error.
-    expect(refusal(sim, 'tax.lien_dispute', { state: 'us-ct', year: 2026 })).toBe('It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.');
+    expect(refusal(sim, 'tax.lien_dispute', { state: 'us-ct', year: 2026 })).toBe('It was filed for tax you owed, so it wasn’t filed in error, and it can’t be withdrawn.');
   });
 
   it('PLAYER JOURNEY: a year levied and still owed does refuse it: her 2027 balance’s levy on 17 July finds nothing to take', () => {

@@ -491,7 +491,7 @@ export const TAXES: readonly GuideEntry[] = [
       '“when collection reached that stage” or “because the payment plan requires one” says why it went on record.',
       `The line about its effect is in the authority’s own words. Connecticut’s says “${CT_LIEN.effect}” The IRS’s says it may limit your ability to get credit.`,
       'In the game, no credit record or bank reads a lien, so its status is all that changes.',
-      'On a lien filed for tax you owed, the panel says so instead of offering Ask For Its Withdrawal As Filed In Error: “It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.” Connecticut’s always does, because it takes a payment to its penalty and interest before its tax and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',
+      'On a lien filed for tax you owed, the panel says so instead of offering Ask For Its Withdrawal As Filed In Error: “It was filed for tax you owed, so it wasn’t filed in error, and it can’t be withdrawn.” Connecticut’s always does, because it takes a payment to its penalty and interest before its tax and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',
       `A student’s year never owes the IRS ${usd(FEDERAL_LIEN.threshold)}: a year of a living-cost scholarship and work-study owes it less than two thousand dollars. The IRS’s lien and its Form 12277 are for much bigger balances.`,
     ],
     next: [

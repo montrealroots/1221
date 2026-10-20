@@ -300,7 +300,7 @@ describe('tax.early_filing_notices: a plan refused, and a save from before', () 
 // ---------------------------------------------------------------------------
 
 describe('tax.ct_filed_in_error', () => {
-  const SECURED = 'It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.';
+  const SECURED = 'It was filed for tax you owed, so it wasn’t filed in error, and it can’t be withdrawn.';
 
   it('PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date: Papers draws no Ask For Its Withdrawal As Filed In Error and says why in the engine’s words, Ask For Its Release beside it; the command sent anyway is refused and moves nothing', () => {
     const sim = thaw(unpaid());

@@ -162,9 +162,9 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
   "status": "Rewritten",
-  "hash": "d226c4b02d1d",
+  "hash": "00412522b8b5",
   "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
+  "evidence": "tests/guide-examples-papers.test.ts ('papers.doctor…'): the booking notice quoted as the game now says it for Yale Health",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
@@ -281,9 +281,9 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.lien]": {
   "status": "Rewritten",
-  "hash": "d63d1b30fe56",
+  "hash": "e0c562619f51",
   "on": "2026-10-20",
-  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check",
+  "evidence": "tests/scope-taxpapers.test.ts and tests/remaining-tax.test.ts: the lien refusal quoted as the game says it; tools/guide-quotes.mjs --check 578 of 578",
   "first": "Pending"
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.pay]": {
@@ -2457,11 +2457,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/statetax.ts#lienDisputeRefusal": {
-  "status": "Retained",
-  "hash": "23dbf87ffddd",
-  "on": "2026-10-19",
-  "reason": "The dispute's refusals, including the one the panel shows instead of the button: filed for tax you owed, so released once paid, not withdrawn.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "251bfe61512f",
+  "on": "2026-10-20",
+  "evidence": "tests/scope-taxpapers.test.ts and tests/remaining-tax.test.ts hold the refusal exactly; the lien panel says how it's released once",
+  "first": "Pending"
  },
  "src/engine/systems/statetax.ts#lienReleaseRefusal": {
   "status": "Retained",

@@ -232,7 +232,9 @@ const PLAY: Record<string, () => void> = {
     // The lines short of off book at that call, past the call they're asked from: the note is theirs.
     expect(given).toBeGreaterThanOrEqual(offBook);
     expect(proc().notes[0]!.focus.kind).toBe('lines');
-    expect(proc().notes[0]!.text).toMatch(/^Be off book/);
+    // The guide's quote, in the Carlotta's director's own voice (from 2026-10-20, brief 17: until then every director's words were the same).
+    expect(proc().notes[0]!.text).toMatch(/^(?:Be off book|The lines aren’t there yet|Get off book)/);
+    expect(GUIDE_BY_ID['productions.part']!.interpret.join(' ')).toContain(`“${proc().notes[0]!.text}”`);
   },
 
   'productions.notes': () => {

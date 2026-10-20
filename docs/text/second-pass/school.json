@@ -643,6 +643,13 @@
   "reason": "What each way of playing favors and uses, and why a part's table leaves stamina out, said once for the guide's playing entry.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/content/guide/productions.ts#CARLOTTA_TIRING [craft]": {
+  "status": "Retained",
+  "hash": "38de7a76662f",
+  "on": "2026-10-20",
+  "reason": "The segment's own name, The Second Half, as a new play is judged in its two halves (unitSegments); the note says it in lower case inside the director's sentence, which noteText writes.",
+  "first": "Pending"
+ },
  "src/engine/content/guide/productions.ts#clock": {
   "status": "Retained",
   "hash": "a9977ef67589",
@@ -743,16 +750,16 @@
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]": {
   "status": "Rewritten",
-  "hash": "920e6c538e7d",
+  "hash": "87974a3f37cb",
   "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
+  "evidence": "tests/guide-examples-productions.test.ts: the off-book note and the notes example quoted in the Carlotta's director's own voice, computed by noteText, and played",
   "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.part]": {
   "status": "Rewritten",
-  "hash": "2748ce540c74",
+  "hash": "a6d591bcffb8",
   "on": "2026-10-20",
-  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-productions.test.ts",
+  "evidence": "tests/guide-examples-productions.test.ts: the off-book note and the notes example quoted in the Carlotta's director's own voice, computed by noteText, and played",
   "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.playing]": {

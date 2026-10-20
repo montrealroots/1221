@@ -755,7 +755,9 @@ export function lienInError(r: TaxReturn, state: string): boolean {
 export function lienDisputeRefusal(r: TaxReturn | undefined, state: string): string | undefined {
   const l = r?.stateDue?.[state]?.lien;
   if (!l || !['filed', 'paid', 'released'].includes(l.status)) return l?.status === 'disputed' ? `You’ve already asked. A decision is due by ${formatDate(l.decideAt!, HOME)}.` : l?.status === 'withdrawn' ? 'The lien has already been withdrawn.' : 'There’s no lien on that year to dispute.';
-  if (!lienInError(r!, state)) return 'It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.';
+  // Release said once (from 2026-10-20, brief 17): until then this ended "It’s released once that’s paid, not withdrawn.",
+  // right after the panel's own line on how it's released. Only a state's lien reaches here, which nothing withdraws.
+  if (!lienInError(r!, state)) return 'It was filed for tax you owed, so it wasn’t filed in error, and it can’t be withdrawn.';
   return undefined;
 }
 

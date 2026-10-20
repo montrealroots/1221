@@ -108,7 +108,7 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-twenty checks: title-case, label-sweep, plural-check, voice-check, tics,
+twenty-one checks: title-case, label-sweep, plural-check, voice-check, tics,
 doc-refs, wired, deciders, spelling, typos, geo-check, inventory, devmap,
 traceability, capabilities (added 2026-10-08), coverage (added 2026-10-13,
 which fails an audit row whose cited test or line doesn't hold, and
@@ -126,8 +126,13 @@ counts, which may fall and may not rise; `docs/STYLE.md` and `docs/GLOSSARY.md`
 are the standard it serves; from the end of brief 14 it also fails a source
 that's Pending, its words changed since they were read) and guide-quotes (added
 2026-10-17 at the end of brief 14, after text-inventory: it fails a sentence the
-guide quotes that the game no longer says). This said nineteen until the end of
-brief 14 on 2026-10-17, eighteen until 2026-10-17, seventeen until 2026-10-16, sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
+guide quotes that the game no longer says) and surfaces (added 2026-10-20 at the
+owner's brief 17, after guide-quotes: it fails a source of player text that no row
+of the text coverage matrix in `docs/text/surfaces/` claims, a row whose source is
+gone, whose state isn't one the brief lists or whose outcome isn't Revised or Kept,
+a Kept row with no reason, evidence that isn't there, and a `docs/text/SURFACES.md`
+that isn't the matrix as it stands). This said twenty until brief 17 on
+2026-10-20, nineteen until the end of brief 14 on 2026-10-17, eighteen until 2026-10-17, seventeen until 2026-10-16, sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
 2026-10-08, leaving out traceability, which the gate already ran, and sixteen
 until 2026-10-09, when catalog-coverage (added 2026-10-03) left the gate with
 the catalogs it counted in the owner's scope reset. Read its exit

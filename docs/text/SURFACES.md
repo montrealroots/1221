@@ -2,7 +2,7 @@
 
 Every surface a player can reach that shows text, written by `tools/surfaces.mjs` from `surfaces/*.json` (from 2026-10-20, the owner's brief 17, section 2). Each row says where the player meets it, the sources it draws on, the states it's met in, what reading it in context found, what changed, and the evidence. `--check` fails a source no row claims.
 
-**265 surfaces; 4229 of 4229 sources claimed; 127 revised, 138 kept.**
+**265 surfaces; 4230 of 4230 sources claimed; 127 revised, 138 kept.**
 
 | Area | Sources | Claimed |
 |---|---|---|
@@ -12,7 +12,7 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | material-b | 492 | 492 |
 | money | 264 | 264 |
 | money-data | 522 | 522 |
-| new | 1 | 1 |
+| new | 2 | 2 |
 | papers | 473 | 473 |
 | profile | 621 | 621 |
 | school | 634 | 634 |

@@ -1019,7 +1019,8 @@
   "surface": "How This Works: The Director’s Notes",
   "where": "School, Casting, The Rehearsal Process",
   "sources": [
-   "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]"
+   "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]",
+   "src/engine/content/guide/productions.ts#CARLOTTA_TIRING [craft]"
   ],
   "states": [
    "director",
