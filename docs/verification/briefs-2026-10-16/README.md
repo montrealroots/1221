@@ -27,7 +27,7 @@ dates the work 2026-10-16, as the work plan does, so the commits' dates and the 
 | `15-complete-natural-language-editorial-pass.txt`: "Complete Natural-Language Editorial Pass, Including All Retained Text" | 2026-10-19 03:34, the same session, on the branch restarted from `main` at `bdb23949` | `../editorial-2026-10-19/`; its receipt `RECEIPT.md` | #44 (`74259312`), at the owner's word; the handoff fixed after it on the branch, which went into #45 with brief 16 | merged, not deployed |
 | `16-contextual-writing-distinct-voices-and-clear-information.txt`: "Contextual Writing, Distinct Voices, And Clear Information" | 2026-10-20 04:24, the same session, on the branch at `d1ae7a79` (`main` at `74259312` with the handoff's account of #44's merge) | `../voices-2026-10-20/`; its account `README.md` | #45 (`bbb82253`), at the owner's word | merged, not deployed |
 | `17-final-comprehensive-writing-and-continuity-pass.txt`: "Final Comprehensive Writing And Continuity Pass" | 2026-10-20 10:05, the same session, on the branch at `dffc6ea0` (`main` at `bbb82253` with the handoff's account of #45's merge, not yet in `main`) | `../continuity-2026-10-20/`; its account `README.md` | #46 (`f615caea`), at the owner's word | merged, not deployed |
-| `18-close-the-remaining-writing-and-gameplay-gaps.txt`: "Close The Remaining Writing And Gameplay Gaps" | 2026-10-20 22:15, the same session, on the branch fast-forwarded to `main` at `469f8448` (#47) | `../gaps-2026-10-20/`; its criteria `criteria.md`, written before any fix | — | in progress |
+| `18-close-the-remaining-writing-and-gameplay-gaps.txt`: "Close The Remaining Writing And Gameplay Gaps" | 2026-10-20 22:15, the same session, on the branch fast-forwarded to `main` at `469f8448` (#47) | `../gaps-2026-10-20/`; its criteria `criteria.md`, written before any fix, and its plan, `plan/` | — | paused at the owner's word before any fix |
 | `08-next-integration-and-acceptance-pass.md`: the scope the owner recorded for it before it was given | — | — | — | superseded by the brief's text |
 
 `short-directives.txt` keeps the owner's short instructions between the briefs, verbatim: the session's first message
@@ -48,7 +48,7 @@ merge #45 or watch it: #45 was watched and merged. "Is it merged now?" was answe
 handoff's account of it on the branch (`dffc6ea0`) wasn't. Brief 17's "Yes. And the merge it." answered whether to open
 a pull request after its gate: #46 was opened and merged. "Now." asked for the handoff's account of that merge in
 `main` too, and #47 took it there. The request for page captures after it was answered with images sent in the session, from a build of
-`469f8448`.
+`469f8448`. Brief 18 was paused at "Actually save and put a pause on all of this.", after its criteria and before any fix.
 
 What isn't here: the session's own summaries of itself, written when its context ran out, are the model's words, not
 the owner's, and the briefs of the sessions before this one are in `../prompts-2026-10-16/` where they were kept.

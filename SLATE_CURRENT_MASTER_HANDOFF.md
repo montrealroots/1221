@@ -1,6 +1,31 @@
-# Read First: Brief 17, The Final Comprehensive Writing And Continuity Pass, 2026-10-20
+# Read First: Brief 18, Close The Remaining Writing And Gameplay Gaps, Paused, 2026-10-20
 
-**This section is the current status, and where a new session starts.** It was written at the end of the owner's
+**This section is the current status, and where a new session starts.** The owner gave brief 18
+(`docs/verification/briefs-2026-10-16/18-close-the-remaining-writing-and-gameplay-gaps.txt`, kept verbatim) and paused
+it before any fix: "Actually save and put a pause on all of this. I want to move on to something else." (2026-10-20,
+22:28 UTC). Nothing in the game changed. The rest of the state is brief 17's, in its section below.
+
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+- **The repository:** `main` is at `469f8448` (#47). The working branch, `claude/peaceful-hamilton-59zdbb`, was
+  fast-forwarded to it and carries brief 18's records on top: the brief, its criteria and its plan. None of them changes
+  the game, and none is in `main`. Nothing is deployed. There is no stash, one worktree, and no other branch in progress.
+- **What's done:** `docs/verification/gaps-2026-10-20/criteria.md` turns the brief into 31 items, each with what closes
+  it, every one Open: the feedback's thin voices (W1 to W3), the Profile (P1 to P4), the acting terms and place names (T1
+  to T3), time and sleep with banking's step 8 (S1 to S5), health (H1 to H3), banking (B1 to B9), the papers (X1 to X5)
+  and the understudy's part (U1). The deferred scope stays deferred, each with whose word it was.
+- **What was started and stopped:** nine area workers, each in a clone of `32962d82`, were stopped while still reading;
+  none had changed anything, so nothing of theirs needed keeping. `docs/verification/gaps-2026-10-20/plan/` keeps their
+  instructions, the areas and what each owns, and the final-run scripts drafted from brief 17's.
+- **To take it up again:** read the criteria and `plan/README.md`, start each area from the current `main`, and run
+  the final lanes on the integrated commit. Brief 17's final runs are the baseline, since `main` plays brief 17's tested
+  game.
+
+# Earlier: Brief 17, The Final Comprehensive Writing And Continuity Pass, 2026-10-20
+
+**This section was the current status until brief 18** (**Superseded 2026-10-20:** the current status is the first
+section above, brief 18's, which is paused; the completion line is unchanged and stated there too). It was written at
+the end of the owner's
 "Final Comprehensive Writing And Continuity Pass"
 (`docs/verification/briefs-2026-10-16/17-final-comprehensive-writing-and-continuity-pass.txt`, kept verbatim).
 - **Where the work was done:** `claude/peaceful-hamilton-59zdbb`, from `dffc6ea0`, which is `main` at `bbb82253`
