@@ -2059,9 +2059,9 @@
  },
  "src/engine/index.ts#migrate": {
   "status": "Rewritten",
-  "hash": "f6c3f3583c2f",
+  "hash": "f8545e1fd645",
   "on": "2026-10-20",
-  "evidence": "tests/language-frame-ui.test.ts, 'opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither', holds the refusal naming Restore Backup word for word",
+  "evidence": "tests/continuity-incidents.test.ts ('marks each miss an apology it keeps covered…'): the steps a save from before brief 17 is told on opening",
   "first": "Pending"
  },
  "src/engine/index.ts#openSlot": {

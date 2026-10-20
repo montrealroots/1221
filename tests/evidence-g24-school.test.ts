@@ -621,7 +621,7 @@ describe('notes and feedback', () => {
     // Said against the course's last piece and with what held it most, before the note (from 2026-10-20, brief 16's
     // `showingWords`); until then the note alone.
     // In Acting I's voice from 2026-10-20 (brief 17, direct).
-    expect(shown.feedback).toMatchObject({ focus: { kind: 'skill', skill: 'character' }, kind: 'new', text: 'Up from Unready on October 5, 2026. Your craft held it back most. This piece asked for more character work than you have yet. Keep building it in class over the next few weeks.' });
+    expect(shown.feedback).toMatchObject({ focus: { kind: 'skill', skill: 'character' }, kind: 'new', text: 'Up from Unready on October 5, 2026, to Working. Your craft held it back most. This piece asked for more character work than you have yet. Keep building it in class over the next few weeks.' });
     expect(shown.status).toBe('revising');
     expect(shown.revision!.dueOn).toBe('2026-10-26');
     const given = notesOf(cwOf(sim)).find((x) => x.key === 'skill:character')!;
@@ -772,7 +772,7 @@ describe('notes and feedback', () => {
     // The figures said once, in the lead (from 2026-10-20, brief 16): until then the note said them again after itself.
     // And the note's own words, given before, not again: what moved, the rule that puts it right, what answers it (from
     // 2026-10-20, brief 17, in Acting I's voice).
-    expect(work(sim, second.id).feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'partial', text: `Your lines have moved since September 8, 2026, 0% to ${pct}%. Still short. A piece shown with it at 75% or more puts the note right. Work on it: Learn Lines.` });
+    expect(work(sim, second.id).feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'partial', text: `Your lines have moved since September 8, 2026, from 0% to ${pct}%. Still short. A piece shown with it at 75% or more puts the note right. Work on it: Learn Lines.` });
     expect(work(sim, second.id).feedback!.text).not.toContain(body);
     expect(notesOf(cwOf(sim)).find((x) => x.key === 'dim:memorization')).toMatchObject({ status: 'open', given: 2, level: lines });
   });

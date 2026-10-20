@@ -14,11 +14,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/coursework.ts#learn": {
-  "status": "Retained",
-  "hash": "252f4fcec465",
-  "on": "2026-10-19",
-  "reason": "Learn Lines, with its refusal saying the scene comes first because you learn lines from a scene you know.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "fb9afef82e9a",
+  "on": "2026-10-20",
+  "evidence": "tests/evidence-g18-school.test.ts and tests/defects-g8-9.test.ts hold each refusal as two sentences",
+  "first": "Pending"
  },
  "src/engine/content/coursework.ts#QUESTIONS [circumstances]": {
   "status": "Retained",
@@ -182,11 +182,11 @@
   "first": "Pending"
  },
  "src/engine/content/coursework.ts#TEMPLATES [build]": {
-  "status": "Retained",
-  "hash": "de8af62e00de",
-  "on": "2026-10-19",
-  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "421d0798420d",
+  "on": "2026-10-20",
+  "evidence": "tests/evidence-g18-school.test.ts and tests/defects-g8-9.test.ts hold each refusal as two sentences",
+  "first": "Pending"
  },
  "src/engine/content/coursework.ts#TEMPLATES [classical-scene]": {
   "status": "Retained",
@@ -231,11 +231,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/coursework.ts#TEMPLATES [fight-sequence]": {
-  "status": "Retained",
-  "hash": "8ebf0f197c00",
-  "on": "2026-10-19",
-  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "4ef9b78ca4e0",
+  "on": "2026-10-20",
+  "evidence": "tests/evidence-g18-school.test.ts and tests/defects-g8-9.test.ts hold each refusal as two sentences",
+  "first": "Pending"
  },
  "src/engine/content/coursework.ts#TEMPLATES [find-turn]": {
   "status": "Retained",
@@ -252,11 +252,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/coursework.ts#TEMPLATES [intimacy-practice]": {
-  "status": "Retained",
-  "hash": "fc1ad95e6b29",
-  "on": "2026-10-19",
-  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "2ceaaee289e8",
+  "on": "2026-10-20",
+  "evidence": "tests/evidence-g18-school.test.ts and tests/defects-g8-9.test.ts hold each refusal as two sentences",
+  "first": "Pending"
  },
  "src/engine/content/coursework.ts#TEMPLATES [learn-fight]": {
   "status": "Retained",
@@ -315,11 +315,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/coursework.ts#TEMPLATES [prepare-talk]": {
-  "status": "Retained",
-  "hash": "26c4b41a835a",
-  "on": "2026-10-19",
-  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "20448c567019",
+  "on": "2026-10-20",
+  "evidence": "tests/evidence-g18-school.test.ts and tests/defects-g8-9.test.ts hold each refusal as two sentences",
+  "first": "Pending"
  },
  "src/engine/content/coursework.ts#TEMPLATES [protocol]": {
   "status": "Retained",
@@ -343,11 +343,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/coursework.ts#TEMPLATES [record]": {
-  "status": "Retained",
-  "hash": "37182507f5cd",
-  "on": "2026-10-19",
-  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "4ecc0f70aa3d",
+  "on": "2026-10-20",
+  "evidence": "tests/evidence-g18-school.test.ts and tests/defects-g8-9.test.ts hold each refusal as two sentences",
+  "first": "Pending"
  },
  "src/engine/content/coursework.ts#TEMPLATES [rehearse-score]": {
   "status": "Retained",
@@ -385,11 +385,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/coursework.ts#TEMPLATES [score]": {
-  "status": "Retained",
-  "hash": "daa4c2c33b70",
-  "on": "2026-10-19",
-  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "6aa985b0b701",
+  "on": "2026-10-20",
+  "evidence": "tests/evidence-g18-school.test.ts and tests/defects-g8-9.test.ts hold each refusal as two sentences",
+  "first": "Pending"
  },
  "src/engine/content/coursework.ts#TEMPLATES [self-tape]": {
   "status": "Retained",
@@ -469,11 +469,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/coursework.ts#TEMPLATES [write]": {
-  "status": "Retained",
-  "hash": "4291e30ae52d",
-  "on": "2026-10-19",
-  "reason": "Each course's piece names its parts and steps as its teacher would, each step's refusal says which step comes first, and each note says in the teacher's voice what fell short.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "b950a8e5a6e3",
+  "on": "2026-10-20",
+  "evidence": "tests/evidence-g18-school.test.ts and tests/defects-g8-9.test.ts hold each refusal as two sentences",
+  "first": "Pending"
  },
  "src/engine/content/coursework.ts#withPartner": {
   "status": "Retained",
@@ -2183,12 +2183,26 @@
   "reason": "Two short refusals for Make Amends: there's no such classmate, or there's nothing between you to put right, each true and enough at that moment.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/classmates.ts#apologyWords": {
+  "status": "Rewritten",
+  "hash": "30799c7204ac",
+  "on": "2026-10-20",
+  "evidence": "tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments",
+  "first": "Pending"
+ },
  "src/engine/systems/classmates.ts#boundaryRefusal": {
   "status": "Retained",
   "hash": "6a65e290a2ff",
   "on": "2026-10-19",
   "reason": "A classmate's own condition after being let down, with the fix in the same breath: ask for an evening at least a day ahead.",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/classmates.ts#boundaryWords": {
+  "status": "Rewritten",
+  "hash": "3d3c547a978e",
+  "on": "2026-10-20",
+  "evidence": "tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments",
+  "first": "Pending"
  },
  "src/engine/systems/classmates.ts#CHOICES [accept]": {
   "status": "Retained",
@@ -2269,24 +2283,24 @@
  },
  "src/engine/systems/classmates.ts#classMoment [encouragement]": {
   "status": "Rewritten",
-  "hash": "3c6ed2d71e8a",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g24-school.test.ts (a word after class, said once after an Unready showing)",
+  "hash": "4f28722424f1",
+  "on": "2026-10-20",
+  "evidence": "tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments",
   "first": "Pending"
  },
  "src/engine/systems/classmates.ts#classMoment [help]": {
   "status": "Rewritten",
-  "hash": "e2f536cfac53",
+  "hash": "9c687cddd598",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "evidence": "tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments",
   "first": "Pending"
  },
  "src/engine/systems/classmates.ts#disagreement": {
-  "status": "Retained",
-  "hash": "be749f7fb33f",
-  "on": "2026-10-19",
-  "reason": "A classmate's other reading set beside yours, both quoted from the Table Work answers, so Keep Your Reading and Try Theirs are a real choice between two named answers.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "fb96b8429130",
+  "on": "2026-10-20",
+  "evidence": "tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments",
+  "first": "Pending"
  },
  "src/engine/systems/classmates.ts#lapse": {
   "status": "Retained",
@@ -2339,9 +2353,16 @@
  },
  "src/engine/systems/classmates.ts#studyEvening": {
   "status": "Rewritten",
-  "hash": "4e3251423cdf",
+  "hash": "25df4a8aa942",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments",
+  "first": "Pending"
+ },
+ "src/engine/systems/classmates.ts#templateTitle": {
+  "status": "Rewritten",
+  "hash": "34f10d89085b",
+  "on": "2026-10-20",
+  "evidence": "tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments",
   "first": "Pending"
  },
  "src/engine/systems/courserecord.ts#extendRefusal": {
@@ -2619,9 +2640,9 @@
  },
  "src/engine/systems/coursework.ts#rehearsalOutcome": {
   "status": "Rewritten",
-  "hash": "c389a1290c3a",
+  "hash": "8ae5acbf9aaa",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "evidence": "tests/evidence-g22-school.test.ts (Didn't Come's count) and tests/language-dynamic.test.ts (the coursework warning); read in the after-runs' notices",
   "first": "Pending"
  },
  "src/engine/systems/coursework.ts#remedyWords": {
@@ -2668,9 +2689,9 @@
  },
  "src/engine/systems/coursework.ts#termWarning": {
   "status": "Rewritten",
-  "hash": "c7c6a5f78b12",
+  "hash": "e8484c65cd38",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "tests/evidence-g22-school.test.ts (Didn't Come's count) and tests/language-dynamic.test.ts (the coursework warning); read in the after-runs' notices",
   "first": "Pending"
  },
  "src/engine/systems/ensemble.ts#sharedOf": {
@@ -2736,11 +2757,32 @@
   "evidence": "rendered.txt limit lines: \"12 points out of 100\", \"1 point out of 100\", \"less than a point\"; tests/editorial-school-words.test.ts and tests/evaluation.test.ts",
   "first": "Pending"
  },
+ "src/engine/systems/feedback.ts#againLeads": {
+  "status": "Rewritten",
+  "hash": "b615000eb22c",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#bands": {
+  "status": "Rewritten",
+  "hash": "a7b7755d8033",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
  "src/engine/systems/feedback.ts#bestLeads": {
   "status": "Rewritten",
-  "hash": "49ba148051c0",
+  "hash": "8f93403468fe",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#composed": {
+  "status": "Rewritten",
+  "hash": "7befe2270ab6",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#CONDITION": {
@@ -2750,53 +2792,109 @@
   "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
+ "src/engine/systems/feedback.ts#CRAFT": {
+  "status": "Rewritten",
+  "hash": "a42d5fb0e95a",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
  "src/engine/systems/feedback.ts#despiteLeads": {
   "status": "Rewritten",
-  "hash": "34c037bd1ac0",
+  "hash": "73884e77d9ab",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#DIM_WORDS": {
+  "status": "Rewritten",
+  "hash": "3da5d4bf828f",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#firstLeads": {
+  "status": "Rewritten",
+  "hash": "0f209f5b00de",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#heldAction": {
   "status": "Rewritten",
-  "hash": "85cf078249a3",
+  "hash": "9705c55ae844",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#heldLeads": {
   "status": "Rewritten",
-  "hash": "8ea36817e853",
+  "hash": "464b18dfac3e",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#maintainedLeads": {
   "status": "Rewritten",
-  "hash": "0134b36a4da9",
+  "hash": "eab0ee005c12",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#MONTH": {
+  "status": "Retained",
+  "hash": "335d22f91501",
+  "on": "2026-10-20",
+  "reason": "The month names the memory reads a date by (shapeOf), as a pattern; never shown to a player.",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#movedLeads": {
   "status": "Rewritten",
-  "hash": "118614225fbc",
+  "hash": "2d17e062c429",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#newLeads": {
   "status": "Rewritten",
-  "hash": "66bbc96316ac",
+  "hash": "cd651fc599a1",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#newPartLeads": {
+  "status": "Rewritten",
+  "hash": "9feb8cc4a165",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#oftenLeads": {
+  "status": "Rewritten",
+  "hash": "e394a4fc6848",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#otherWays": {
+  "status": "Rewritten",
+  "hash": "1842906d98d0",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#PART_WORDS": {
+  "status": "Rewritten",
+  "hash": "927db962a0ab",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#partialLeads": {
   "status": "Rewritten",
-  "hash": "420cd37e8ff5",
+  "hash": "0acea75c617c",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#partnerSentence": {
@@ -2806,18 +2904,32 @@
   "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
+ "src/engine/systems/feedback.ts#REMEDY": {
+  "status": "Rewritten",
+  "hash": "3251b67615df",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
  "src/engine/systems/feedback.ts#slippedLeads": {
   "status": "Rewritten",
-  "hash": "f1509edd2778",
+  "hash": "ce45e1e017ec",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#standing": {
+  "status": "Rewritten",
+  "hash": "62dcf79c7a74",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#steadyLeads": {
   "status": "Rewritten",
-  "hash": "903cb802ef5e",
+  "hash": "b1718b4e6674",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#STEP": {
@@ -2829,9 +2941,16 @@
  },
  "src/engine/systems/feedback.ts#STEP_INTROS": {
   "status": "Rewritten",
-  "hash": "890f5dcc7101",
+  "hash": "c842c5ed72c5",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#topicOf": {
+  "status": "Rewritten",
+  "hash": "09ac8c5429eb",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#WORK": {
@@ -3221,17 +3340,17 @@
  },
  "src/engine/systems/production.ts#noteText": {
   "status": "Rewritten",
-  "hash": "24d53ba444c0",
+  "hash": "8328d7dad3cb",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "tests/feedback-voices.test.ts ('keeps one voice for the run…') and tests/variety.test.ts; read in the after-runs' director's notes",
   "first": "Pending"
  },
  "src/engine/systems/production.ts#noteWords": {
-  "status": "Retained",
-  "hash": "039e306ae365",
-  "on": "2026-10-19",
-  "reason": "The director's notes in the director's own voice, specific to the part of the play and with what to do: be off book, find what turns it, decide who they are to you.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "861aa1c52b31",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts ('keeps one voice for the run…') and tests/variety.test.ts; read in the after-runs' director's notes",
+  "first": "Pending"
  },
  "src/engine/systems/production.ts#ownWorkRefusal": {
   "status": "Retained",
@@ -3380,6 +3499,13 @@
   "evidence": "Newly read by the inventory from brief 15's coordinator on: the registrar's degree conferral page and Yale's 2026 to 2027 academic calendar. It ended with the research's file name, research-yale-leave-2.json, now gone, and the year's span takes the house's dash; read in node tools/text-inventory.mjs after the change; tests/work-limits.test.ts passes on it",
   "first": "Pending"
  },
+ "src/engine/systems/school.ts#DIRECTORS_NOTE": {
+  "status": "Rewritten",
+  "hash": "e57cd751a739",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts ('closes the run in the voice of its calls…'), tests/casting.test.ts (the teachers' notes) and tests/editorial17-school.test.ts (the review's part named)",
+  "first": "Pending"
+ },
  "src/engine/systems/school.ts#drawCohort": {
   "status": "Retained",
   "hash": "f041ef618571",
@@ -3396,9 +3522,9 @@
  },
  "src/engine/systems/school.ts#evaluate": {
   "status": "Rewritten",
-  "hash": "98f36436e04e",
+  "hash": "a5b137aa6002",
   "on": "2026-10-20",
-  "evidence": "tests/editorial17-school.test.ts “the term review’s words” (both), tests/evidence3-school.test.ts and tests/scope-school.test.ts; tools/voices.ts underprepared v16-0 played on the tree (A Notice Of Academic Concern, Academic Warning)",
+  "evidence": "tests/feedback-voices.test.ts ('closes the run in the voice of its calls…'), tests/casting.test.ts (the teachers' notes) and tests/editorial17-school.test.ts (the review's part named)",
   "first": "Pending"
  },
  "src/engine/systems/school.ts#FAMILY": {
@@ -3653,6 +3779,13 @@
   "reason": "Refusals for the Summer Cabaret, each naming the rule that stops it: good standing, not on leave, a year still to go, already in it, or the company already formed.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/school.ts#TEACHERS_NOTE": {
+  "status": "Rewritten",
+  "hash": "84df9cd3cb7c",
+  "on": "2026-10-20",
+  "evidence": "tests/feedback-voices.test.ts ('closes the run in the voice of its calls…'), tests/casting.test.ts (the teachers' notes) and tests/editorial17-school.test.ts (the review's part named)",
+  "first": "Pending"
+ },
  "src/engine/systems/school.ts#termBegins": {
   "status": "Retained",
   "hash": "f523a6344867",
@@ -3886,9 +4019,9 @@
  },
  "src/ui/components/CourseworkPane.tsx#AssignmentCard": {
   "status": "Rewritten",
-  "hash": "87280d12f65c",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/screens.txt (screens.mts, the Coursework tab rendered for a played life): Shown Today lines, Put First and the card's header",
+  "hash": "7d72bfcd9e03",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-coordinator.test.ts (the first week's place), tests/evidence-g18-school.test.ts (No Rehearsals Yet), tests/evidence-g24-school.test.ts (the card's label); the Coursework tab walked at 1440",
   "first": "Pending"
  },
  "src/ui/components/CourseworkPane.tsx#CourseworkPane": {
@@ -3919,6 +4052,13 @@
   "reason": "Five short labels for where a note stands, each matching the words the note itself opens with: a new note, still there, better, taken, the next step.",
   "first": "Rewritten And Verified"
  },
+ "src/ui/components/CourseworkPane.tsx#kindLabel": {
+  "status": "Rewritten",
+  "hash": "0ebcf119672f",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-coordinator.test.ts (the first week's place), tests/evidence-g18-school.test.ts (No Rehearsals Yet), tests/evidence-g24-school.test.ts (the card's label); the Coursework tab walked at 1440",
+  "first": "Pending"
+ },
  "src/ui/components/CourseworkPane.tsx#NotesLedger": {
   "status": "Rewritten",
   "hash": "de8b9a73e4ec",
@@ -3934,11 +4074,11 @@
   "first": "Pending"
  },
  "src/ui/components/CourseworkPane.tsx#Partners": {
-  "status": "Retained",
-  "hash": "367a68c3af13",
-  "on": "2026-10-19",
-  "reason": "Each partner's line gives trust, rehearsals kept and what they care about, and a let-down not yet made right is said plainly beside Make Amends.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "df82d580e7e1",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-coordinator.test.ts (the first week's place), tests/evidence-g18-school.test.ts (No Rehearsals Yet), tests/evidence-g24-school.test.ts (the card's label); the Coursework tab walked at 1440",
+  "first": "Pending"
  },
  "src/ui/components/CourseworkPane.tsx#Rehearsals": {
   "status": "Rewritten",

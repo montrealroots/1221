@@ -4011,11 +4011,11 @@
   "first": "Pending"
  },
  "src/engine/systems/learning.ts#DIM_SUBJECT": {
-  "status": "Retained",
-  "hash": "932ecffdae6d",
-  "on": "2026-10-19",
-  "reason": "The note subjects as the coursework card names its parts, Knowing The Material, Lines, The Choices, Time On Its Feet, Work With Your Partner, Working A Note",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "f9c758778a7e",
+  "on": "2026-10-20",
+  "evidence": "tests/evidence2-b11.test.ts (the rehearsal note named Rehearsal on Your Work So Far) and the Your Notes panel walked at 1440",
+  "first": "Pending"
  },
  "src/engine/systems/learning.ts#noteSubject": {
   "status": "Retained",

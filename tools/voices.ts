@@ -407,7 +407,7 @@ export function brief17(runs: { scenario: string; seed: string; said: Said[]; le
         const ok = m[1]!.toLowerCase() === p.band && (up ? BAND_WORD[x.band!]! > BAND_WORD[p.band!]! : BAND_WORD[x.band!]! < BAND_WORD[p.band!]!);
         if (!ok) { claims.moveWrong += 1; if (claims.examples.length < 12) claims.examples.push(`${r.scenario} ${x.at} ${x.course}: "${m[0]}" after ${p.band}`); }
       }
-      if (/\b(?:best|strongest)\b[^.]*\b(?:so far|yet|has been)\b/i.test(t)) {
+      if (/\b(?:best|strongest|highest)\b[^.]*\b(?:so far|yet|has been|you’ve shown)\b/i.test(t)) {
         claims.bestClaims += 1;
         if (!(prev.length && prev.every((y) => BAND_WORD[y.band!]! < BAND_WORD[x.band!]!))) { claims.bestWrong += 1; if (claims.examples.length < 12) claims.examples.push(`${r.scenario} ${x.at} ${x.course}: a best after ${prev.map((y) => y.band).join(',')}`); }
       }
