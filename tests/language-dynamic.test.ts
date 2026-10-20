@@ -370,7 +370,7 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     for (const [missed, words] of [[2, 'two'], [5, 'five']] as const) {
       Object.assign(state, { suspended: 'late', missed });
       const line = cardText().split('\n').find((l) => l.startsWith('Suspended:'))!;
-      expect(line).toBe(`Suspended: you’ve missed ${words} payments in a row. It works again once you make a payment on time. Miss six in a row, and what’s owed is charged off to collections.`);
+      expect(line).toBe(`Suspended: you’ve missed ${words} payments in a row. It works again once you pay at least the minimum by a due date, or pay the card off. Miss six in a row, and what’s owed is charged off to collections.`);
       sound(line);
     }
     delete state.suspended; state.missed = 0;
@@ -905,8 +905,10 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     const state = stateOf(sim.player, card);
     expect(state.statementBalance).toBeGreaterThan(0);
     const cardText = () => drawn(sim, (() => createElement(BankCard, { bankId: card.bankId! })) as FunctionComponent);
-    expect(cardText()).toContain('Statements come on the 20th, and payment is due 21 days after each one. The next payment is due October 11, 2026.');
-    expect(cardText()).toMatch(/On this statement it’s \$\d+\./);
+    // The next payment first, with this statement’s minimum, and the cycle under The Card’s Terms (from 2026-10-20, brief
+    // 17): until then the due date closed the cycle’s line, and the minimum’s rule ended “On this statement it’s $40.”
+    expect(cardText()).toContain('Statements come on the 20th, and payment is due 21 days after each one.');
+    expect(cardText()).toMatch(/The next payment is due October 11, 2026\. The statement is \$[\d,]+, and the minimum payment is \$\d+\./);
     // TEST SETUP: the money spent before the autopay day; the warning comes the day before.
     spendAll(sim);
     tended(sim, on(2026, 10, 10, 12));
@@ -916,7 +918,8 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     spendAll(sim);
     tended(sim, on(2026, 10, 12, 12));
     const late = titled(sim, 'A Late Card Payment')[0]!;
-    expect(late.body).toMatch(/^The minimum payment on the Chase Freedom Unlimited was \$\d+\.\d{2}, and (only \$\d+\.\d{2} was paid|nothing was paid) by the due date\. That costs a \$\d+\.\d{2} late fee\. If the payment is still short at the next due date, thirty days late, it goes on your credit record\. Pay the card on Money, under Cards\.$/);
+    // Its due date named, and the suspension the next miss brings, from 2026-10-20 (brief 17).
+    expect(late.body).toMatch(/^The minimum payment on the Chase Freedom Unlimited, \$\d+\.\d{2}, was due October 11, 2026, and (only \$\d+\.\d{2} was paid|nothing was paid)\. That costs a \$\d+\.\d{2} late fee\. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card\. Pay the card on Money, under Cards\.$/);
     for (const s of [short.body, late.body]) { sound(s); whole(s); dated(s); }
   });
 });

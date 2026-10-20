@@ -64,10 +64,17 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
                 {(life?.endChoices?.length ?? 0) > 1 && notice > 0 && term.maturesAt ? (tooNear ? ` It’s too near its end to change: the bank needs ${notice} days’ notice.` : ` You can change that until ${formatDate(term.maturesAt - notice * DAY, sim.zone)}.`) : ''}
               </p>
               {life?.maturityWords && <p className="xs dim" style={{ margin: '0 0 4px' }}>The bank’s terms at the end: {life.maturityWords}</p>}
-              <Fine>
-                {term.breakAt !== undefined ? `It closes on ${formatDate(term.breakAt, sim.zone)}, on the notice you gave. ` : ''}{quote.refused ?? (quote.penalty > 0 ? `Breaking it now costs ${money(quote.penalty)}${quote.estimate ? ', the interest earned so far' : ''}.` : 'Breaking it now costs nothing.')}{!quote.refused && quote.penalty > 0 && quote.estimate ? ' The penalty is estimated as the interest so far, because the bank words its penalty another way.' : ''}
-                {quote.words ? ` The bank’s terms: ${quote.words}` : ''}
-              </Fine>
+              {/* What breaking it costs, beside the button that breaks it (from 2026-10-20, brief 17, section 8): until then
+                  it was folded under Sources And Estimates, and Break It Early breaks it at once. */}
+              <p className="small" style={{ margin: '0 0 4px' }} data-break-cost="">
+                {term.breakAt !== undefined ? `It closes on ${formatDate(term.breakAt, sim.zone)}, on the notice you gave. ` : ''}{quote.refused ?? (quote.penalty > 0 ? `Breaking it now costs ${money(quote.penalty)}${quote.estimate ? ', the interest earned so far' : ''}.` : 'Breaking it now costs nothing.')}
+              </p>
+              {((!quote.refused && quote.penalty > 0 && quote.estimate) || quote.words) && (
+                <Fine>
+                  {!quote.refused && quote.penalty > 0 && quote.estimate ? 'The penalty is estimated as the interest so far, because the bank words its penalty another way.' : ''}
+                  {quote.words ? `${!quote.refused && quote.penalty > 0 && quote.estimate ? ' ' : ''}The bank’s terms: ${quote.words}` : ''}
+                </Fine>
+              )}
               <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
                 {!tooNear && (life?.endChoices ?? []).filter((end) => end !== termEndOf(term)).map((end) => (
                   <Gated key={end} feature="bank.set_term_end" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_term_end', { accountId: term.id, atEnd: end })}>

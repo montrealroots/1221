@@ -203,7 +203,7 @@ describe('finance.pay_card', () => {
     expect(notes(unpaid, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['The Chase Freedom Unlimited’s autopay of $40.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.']);
     expect(txns(unpaid, 'Late fee').map((t) => on(t, card(unpaid)))).toEqual([-30_00]);
     expect(txns(unpaid, 'Returned payment fee')).toEqual([]);
-    expect(notes(unpaid, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment on the Chase Freedom Unlimited was $40.00, and nothing was paid by the due date. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record. Pay the card on Money, under Cards.']);
+    expect(notes(unpaid, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.']);
     expect(stateOf(unpaid.player, card(unpaid)).missed).toBe(1);
     expect(unpaid.player.credit!.score).toBe(795);
   });

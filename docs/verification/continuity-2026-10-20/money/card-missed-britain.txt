@@ -1,0 +1,32 @@
+# A Barclaycard's missed due dates in London, every bank and money notice in the order made, on b17-money's words (brief 17, 2026-10-20). Made by npx vite-node /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-work/seq2.ts gb: a quick-save life born and living in London at Barclays, seed b17-gb, the day's spending on the card and every account set to nothing each day (TEST SETUP), nothing marked read.
+card Barclaycard Forward
+January 20, 2026 [bank 50] Statement Ready: Barclaycard Forward
+    The statement comes to £150.00, due February 15, 2026. The minimum payment is £5.00. Autopay pays the whole £150.00 from Barclays Bank Account that day, if there’s enough in it.
+February 13, 2026 [bank 65] Short For A Payment: Barclays Bank Account
+    The Barclaycard Forward’s autopay, £150.00, comes from Barclays Bank Account at Barclays on February 15, 2026, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.
+February 15, 2026 [bank 75] A Card Payment Bounced
+    The Barclaycard Forward’s autopay of £150.00 didn’t go through, because Barclays Bank Account couldn’t cover it. The card charged a £32.00 returned payment fee for it. Move money into Barclays Bank Account, then pay the card on Money, under Cards.
+February 15, 2026 [bank 80] A Late Card Payment
+    The minimum payment on the Barclaycard Forward, £5.00, was due February 15, 2026, and nothing was paid. That costs a £12.00 late fee, and it’s on your credit record now. If the next payment is short too, Barclays suspends the card. Pay the card on Money, under Cards.
+February 20, 2026 [bank 50] Statement Ready: Barclaycard Forward
+    The statement comes to £514.33, due March 15, 2026. The minimum payment is £25.76. Autopay pays the whole £514.33 from Barclays Bank Account that day, if there’s enough in it. The last payment was missed. If this one is short too, Barclays suspends the card, and it goes on your credit record again.
+March 13, 2026 [bank 65] Short For A Payment: Barclays Bank Account
+    The Barclaycard Forward’s autopay, £514.33, comes from Barclays Bank Account at Barclays on March 15, 2026, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.
+March 15, 2026 [bank 75] A Card Payment Bounced
+    The Barclaycard Forward’s autopay of £514.33 didn’t go through, because Barclays Bank Account couldn’t cover it. The card charged a £32.00 returned payment fee for it. Move money into Barclays Bank Account, then pay the card on Money, under Cards.
+March 15, 2026 [bank 80] A Late Card Payment
+    The minimum payment on the Barclaycard Forward, £25.76, was due March 15, 2026, and nothing was paid. That costs a £12.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.
+March 15, 2026 [bank 85] Your Card Is Suspended
+    You’ve missed two payments in a row, so Barclays has suspended the Barclaycard Forward. It works again once you pay at least the minimum by a due date, or pay the card off.
+March 16, 2026 [money 70] No Money For Food Today
+    A day’s groceries cost £10.00, and there’s nothing left to pay with. You’re eating what’s left in the cupboard today, and it isn’t enough.
+March 20, 2026 [bank 50] Statement Ready: Barclaycard Forward
+    The statement comes to £805.43, due April 15, 2026. The minimum payment is £41.26. Autopay pays the whole £805.43 from Barclays Bank Account that day, if there’s enough in it. The card works again if at least £41.26 is paid by then.
+April 13, 2026 [bank 65] Short For A Payment: Barclays Bank Account
+    The Barclaycard Forward’s autopay, £805.43, comes from Barclays Bank Account at Barclays on April 15, 2026, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.
+April 15, 2026 [bank 75] A Card Payment Bounced
+    The Barclaycard Forward’s autopay of £805.43 didn’t go through, because Barclays Bank Account couldn’t cover it. The card charged a £32.00 returned payment fee for it. Move money into Barclays Bank Account, then pay the card on Money, under Cards.
+April 15, 2026 [bank 80] A Late Card Payment
+    The minimum payment on the Barclaycard Forward, £41.26, was due April 15, 2026, and nothing was paid. That costs a £12.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.
+April 20, 2026 [bank 50] Statement Ready: Barclaycard Forward
+    The statement comes to £872.83, due May 15, 2026. The minimum payment is £49.58. Autopay pays the whole £872.83 from Barclays Bank Account that day, if there’s enough in it. The card works again if at least £49.58 is paid by then.

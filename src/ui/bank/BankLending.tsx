@@ -28,8 +28,8 @@ import { countryOfIso } from '@/engine/content/bankdays';
 import { SWITCHING } from '@/engine/content/banks-lending';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { CASH } from '@/engine/content/cash';
-import { END_WORDS } from '@/engine/systems/accountlife';
-import { CHARGE_OFF_DAYS, MARK_YEARS } from '@/engine/systems/credit';
+import { BREAK_NOTICE, breakRuleWords, END_WORDS } from '@/engine/systems/accountlife';
+import { CHARGE_OFF_AFTER, MARK_YEARS } from '@/engine/systems/credit';
 import { CITIES } from '@/engine/content/geography';
 import { said } from '@/ui/looks/words';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
@@ -37,7 +37,7 @@ import { abroadRefusal } from '@/engine/systems/abroad';
 import type { Account } from '@/engine/core/ledger';
 import {
   CASS, ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, checkingsOf, collectionsOf, collectionsSource, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, repaymentAccount, termsOf,
-  FRANCE, CHEX, declines, nextBusinessDay,
+  FRANCE, CHEX, declines, nextBusinessDay, overdrawnDeadline,
 } from '@/engine/systems/lending';
 
 /** A date key in words, as the calendar has it: no zone round trip. */
@@ -122,16 +122,26 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
         )}
         {!current?.secondChance && <>
         {!od && <p className="small">No overdraft terms were found for {bank.name}, so the account never goes below zero here. A payment it can’t cover comes from savings if you’ve linked them. Otherwise the day’s shopping goes on the card, and any other payment comes back unpaid, with its fee.</p>}
+        {/* What it charges, when it charges nothing, and the next business day's wait, a sentence each (from 2026-10-20,
+            brief 17, section 3): until then one sentence of up to eight clauses, “…, unless the account is back by the end
+            of the next business day, and nothing while it’s overdrawn by $50 or less, and none on an item of $5.00 or
+            less.” “Back” is back within the grace, as `settlePendingItems` lets a held fee go, and the fees-on-hold line
+            below says it so. */}
         {od?.kind === 'per_item' && (
           <p className="small">
-            {bank.name} pays what the account can’t without an arrangement, and charges {formatMoney(inSaveMoney(sim, od.fee, bank.currency), cur)}
+            {bank.name} pays what the account can’t cover without an arrangement, and charges {formatMoney(inSaveMoney(sim, od.fee, bank.currency), cur)}
             {od.atMidnight ? ' for an account still overdrawn at midnight' : ' for each item that overdraws it'}
             {od.maxPerDay !== undefined && !od.atMidnight ? `, at most ${od.maxPerDay} a day` : ''}
             {od.maxPerMonth !== undefined ? `, at most ${od.maxPerMonth} a month` : ''}
-            {od.nextDay ? ', unless the account is back by the end of the next business day' : ''}
-            {od.graceUpTo !== undefined ? `, and nothing while it’s overdrawn by ${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur, { cents: false })} or less` : ''}
-            {od.smallItemsFree !== undefined ? `, and none on an item of ${formatMoney(inSaveMoney(sim, od.smallItemsFree, bank.currency), cur)} or less` : ''}
             {od.rate !== undefined ? `, with ${pct(od.rate)} a year on what’s overdrawn` : ''}.
+            {(() => {
+              const none = [
+                od.smallItemsFree !== undefined ? `on an item of ${formatMoney(inSaveMoney(sim, od.smallItemsFree, bank.currency), cur)} or less` : '',
+                od.graceUpTo !== undefined ? `while the account is overdrawn by ${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur, { cents: false })} or less` : '',
+              ].filter(Boolean);
+              const back = od.graceUpTo !== undefined ? `−${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur)}` : 'zero';
+              return `${none.length ? ` There’s no fee ${none.join(', or ')}.` : ''}${od.nextDay ? ` A fee waits until the end of the next business day, and if the account is back to ${back} or better by then, there’s none.` : ''}`;
+            })()}
             {od.ties ? ` Payments at the same moment post ${od.ties === 'high' ? 'largest' : 'smallest'} first.` : ''}
             {' '}It covers up to about {money(room)}.
           </p>
@@ -217,6 +227,14 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
             )}
           </div>
         )}
+        {/* The day the bank acts on an account left overdrawn (`leftOverdrawn`, `closeForOverdraft`), said while there's
+            time to act (from 2026-10-20, brief 17, section 8): until then nothing on Money said it before the notice that it
+            had closed the account and sent the debt to collections. */}
+        {current?.negativeSince !== undefined && (
+          <p className="small" data-overdrawn-until="">
+            If {current.name} is still {(current.overdraftLimit ?? 0) > 0 ? 'past its overdraft limit' : 'overdrawn'} at the end of {formatDate(overdrawnDeadline(bank, current)! - 1, sim.zone)}, {bank.name} takes what it’s owed from your other money there. If that isn’t enough, it closes the account, and the rest goes to collections{bank.iso === isoOf(homeOf(sim.player)) ? ' and onto your credit record' : ''}.
+          </p>
+        )}
         {(current?.pendingItems?.length ?? 0) > 0 && od?.kind === 'per_item' && (
           <p className="small">
             {current!.pendingItems!.reduce((n, one) => n + one.count, 0)} overdraft {current!.pendingItems!.reduce((n, one) => n + one.count, 0) === 1 ? 'fee is' : 'fees are'} on hold, {formatMoney(inSaveMoney(sim, od.fee * current!.pendingItems!.reduce((n, one) => n + one.count, 0), bank.currency), cur)}. {current!.pendingItems!.reduce((n, one) => n + one.count, 0) === 1 ? 'It’s' : 'Each is'} charged after the end of {dayWords(nextBusinessDay(current!.pendingItems![0]!.day, countryOfIso(bank.iso)))}, unless the account is back to {od.graceUpTo !== undefined ? `−${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur)}` : 'zero'} or better by then.
@@ -241,7 +259,9 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
         {lending.term && (
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
-              Locked for {lending.term.months} months at a fixed {pct(lending.term.rate)}. At its end it {END_WORDS[ACCOUNT_LIFE[bank.id]?.atEnd ?? 'paid_out']}, unless you choose another way the bank allows. Breaking one early, where the bank lets you, is under Your Accounts Over Time.
+              {/* What breaking it costs, by the bank's rule, before Put It Away (`breakRuleWords`, from 2026-10-20, brief 17):
+                  until then “Breaking one early, where the bank lets you, is under Your Accounts Over Time.” */}
+              Locked for {lending.term.months} months at a fixed {pct(lending.term.rate)}. At its end it {END_WORDS[ACCOUNT_LIFE[bank.id]?.atEnd ?? 'paid_out']}, unless you choose another way the bank allows. {breakRuleWords(bank.id, lending.term.months)}{ACCOUNT_LIFE[bank.id]?.early === false ? '' : ` Once it’s open, ${BREAK_NOTICE[bank.id] ? `Give ${BREAK_NOTICE[bank.id]} Days’ Notice` : 'Break It Early'} is under Your Accounts Over Time.`}
               {lending.term.minAmount !== undefined ? ` It takes ${formatMoney(inSaveMoney(sim, lending.term.minAmount, bank.currency), cur, { cents: false })} or more.` : ''}
               {lending.term.market ? ' The rate is the market’s average: the bank publishes none of its own.' : ''}
             </p>
@@ -272,7 +292,9 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
               {source?.overdraft !== false ? <>{debt.institution} closed your account after it was overdrawn {owedBank?.id.startsWith('fr-') ? `past its limit, on the ${FRANCE.closingNoticeDays} days’ notice French law requires` : `for ${ESTIMATE.closeAfterDays} days`}, and charged off what it couldn’t recover. {owedBank?.id.startsWith('fr-') ? '' : 'How long a bank lets an overdraft run is estimated. '}</> : null}
-              {source?.card ? <>{debt.institution} closed your card after its payments were {CHARGE_OFF_DAYS} days behind, and charged off what was owed on it. </> : null}
+              {/* The payments missed, as the card's notices count them (from 2026-10-20, brief 17): until then “after its
+                  payments were 180 days behind”, at the sixth missed due date, 150 days after the first. */}
+              {source?.card ? <>{debt.institution} closed your card after {said(CHARGE_OFF_AFTER, 'payment')} in a row were missed, and charged off what was owed on it. </> : null}
               {onRecord ? `The charge-off stays on your credit record${recordYears !== undefined ? ` for ${said(recordYears, 'year')}` : ''}, paid or not. ` : ''}While the debt is unpaid, no bank approves a card, and {debt.institution} won’t open an account for you.
             </p>
             <div className="field-act">

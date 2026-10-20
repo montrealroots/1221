@@ -22,7 +22,7 @@ import { orderSource } from './routing';
 import { autopayAsk, autopaySource, cardsOf, DUE_KIND } from './credit';
 import { checkingsOf, LOAN_DUE_KIND, repaymentAccount } from './lending';
 import { alertsOf } from './statements';
-import { balanceText } from './abroad';
+import { balanceText, heldOf } from './abroad';
 
 export const LOOKAHEAD_DAYS = 3;
 
@@ -65,6 +65,13 @@ export function obligationsAhead(sim: Simulation, person: Person, until: Instant
   return out.sort((a, b) => a.at - b.at);
 }
 
+/**
+ * How far below zero an account is, as the month's statement notice says it (from 2026-10-20, brief 17): until then both
+ * alerts printed the balance as it stood, so an overdrawn account “has -$12.00 available”, with a hyphen for its sign, and
+ * an empty one “has $0.00 available”, where the glossary says “has nothing available”.
+ */
+const overdrawnBy = (sim: Simulation, account: Account): string => balanceText(sim, account, -account.balance, account.currency ? -heldOf(account) : undefined);
+
 /** What an account has in reach on the day for a payment: its balance, never below nothing. */
 const inReach = (account: Account | undefined): Money => Math.max(0, account?.balance ?? 0);
 
@@ -78,7 +85,7 @@ export function accountAlerts(sim: Simulation, person: Person): void {
     for (const account of checkingsOf(sim, person)) {
       if (account.balance < settings.lowBalance && !sent.has(account.id)) {
         sent.add(account.id);
-        sim.notify({ category: 'bank', title: `Low Balance: ${account.name}`, body: `${account.name} at ${account.institution ?? 'your bank'} is down to ${balanceText(sim, account)}, under the ${formatMoney(settings.lowBalance, cur)} you set.`, importance: 55, route: '/workspace/bank' });
+        sim.notify({ category: 'bank', title: `Low Balance: ${account.name}`, body: `${account.name} at ${account.institution ?? 'your bank'} is ${account.balance < 0 ? `overdrawn by ${overdrawnBy(sim, account)}` : `down to ${balanceText(sim, account)}`}, under the ${formatMoney(settings.lowBalance, cur)} you set.`, importance: 55, route: '/workspace/bank' });
       } else if (account.balance >= settings.lowBalance) sent.delete(account.id);
     }
     alerts.lowSentFor = [...sent].filter((id) => checkingsOf(sim, person).some((a) => a.id === id));
@@ -95,7 +102,7 @@ export function accountAlerts(sim: Simulation, person: Person): void {
     owing.set(o.accountId, total);
     if (!account || account.closedAt || inReach(account) >= total || said.has(o.key)) continue;
     said.add(o.key);
-    sim.notify({ category: 'bank', title: `Short For A Payment: ${account.name}`, body: `${o.what}, ${formatMoney(o.amount, cur)}, comes from ${account.name} at ${account.institution ?? 'your bank'} on ${formatDate(o.at, sim.zone)}, and it has ${balanceText(sim, account)} available. ${o.remedy}`, importance: 65, route: '/workspace/bank' });
+    sim.notify({ category: 'bank', title: `Short For A Payment: ${account.name}`, body: `${o.what}, ${formatMoney(o.amount, cur)}, comes from ${account.name} at ${account.institution ?? 'your bank'} on ${formatDate(o.at, sim.zone)}, and ${account.balance > 0 ? `it has ${balanceText(sim, account)} available` : account.balance < 0 ? `it’s overdrawn by ${overdrawnBy(sim, account)}` : 'it has nothing available'}. ${o.remedy}`, importance: 65, route: '/workspace/bank' });
   }
   // Kept only for payments still ahead, so the list doesn't grow with the years.
   const live = new Set(ahead.map((o) => o.key));

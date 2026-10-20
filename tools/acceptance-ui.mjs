@@ -1145,7 +1145,7 @@ if (DIR) {
     must(/Round-Ups, Spend & Save\./.test(words) && /at most \$15 a transfer/.test(words), `not Citi’s words: ${words.slice(0, 200)}`);
     must(await often().count() && await minimum().count(), 'no How Often or Minimum Balance');
     must(await toggle().isDisabled(), 'Round-Ups: Off offered before the choices are made');
-    must(/Turn On: Choose how often it moves: daily, weekly\./.test(words) || /Not now: Choose how often it moves: daily, weekly\./.test(words), `no reason said: ${words.slice(0, 400)}`);
+    must(/Turn On: Choose how often it moves: daily or weekly\./.test(words) || /Not now: Choose how often it moves: daily or weekly\./.test(words), `no reason said: ${words.slice(0, 400)}`);
     await often().selectOption({ label: 'Weekly' }); await wait(200);
     must(await toggle().isDisabled(), 'turned on with no minimum balance');
     await minimum().fill('49'); await wait(200);

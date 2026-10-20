@@ -535,7 +535,7 @@ describe('bank.set_payments', () => {
     expect(posted(unlinked.sim, 'Payment: Citi Personal Loan')).toEqual([]);
     expect(account(unlinked.sim, unlinked.loanId).balance).toBe(-(3_000_00 + 25_60));
     expect(lates(unlinked)).toBe(lateOff + 1);
-    expect(told(unlinked.sim, 'A Missed Loan Payment').map((n) => n.body)).toEqual(['Your Citi Personal Loan payment of $264.09 was due, and Chase Total Checking had nothing available to pay it. It’s on your credit record, and what’s left is still owed.']);
+    expect(told(unlinked.sim, 'A Missed Loan Payment').map((n) => n.body)).toEqual(['Your Citi Personal Loan payment of $264.09 was due September 24, 2026, and Chase Total Checking had nothing available to pay it. It’s on your credit record, and what’s left is still owed.']);
     expect(posted(unlinked.sim, 'Returned payment fee')).toEqual([]);
   });
 
@@ -819,7 +819,11 @@ describe('card.close', () => {
     expect(account(sim, card).closedAt).toBe(statement);
     expect(told(sim, 'Card Closed').map((n) => n.body)).toEqual(['The Chase Freedom Unlimited is paid off and closed.']);
     expect(cardsOf(sim, sim.player)).toEqual([]);
-    expect(panel()).not.toContain('Chase Freedom Unlimited');
+    // The closed card's own panel is gone. From 2026-10-20 (brief 17) Credit Card names the card it would apply for before
+    // Apply For This Card, Chase's among them, so its name alone no longer says the panel went; its controls do.
+    const after = panel();
+    for (const control of ['Pay Card In Full', 'Pay What You Can', 'Close The Card', 'Autopay:']) expect(after).not.toContain(control);
+    expect(after).toContain('Chase Freedom Unlimited: Chase sets its rate between 18.24% and 27.74%');
   });
 
   it('charges no yearly fee on a closing card: AIB’s €30 on December’s statement, the month it was opened, to the card left open and not to the one closing (a quick-save life in Dublin, since no New Haven card has a yearly fee)', () => {

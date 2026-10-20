@@ -1,0 +1,26 @@
+# A Chase checking account left overdrawn, every bank and money notice in the order made, with the balance every ten days, on b17-money's words (brief 17, 2026-10-20). Made by npx vite-node /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-work/seq2.ts overdraft: a quick-save life in New York at Chase, seed b17-od, Low Balance set at $100, debit card overdrafts opted in, savings emptied and checking set to $20 (TEST SETUP), then any money paid in taken back out each day.
+-- January 5, 2026: checking at $20.00, savings emptied, debit overdrafts on
+January 6, 2026 [bank 55] Low Balance: Chase Total Checking
+    Chase Total Checking at Chase is down to $7.00, under the $100.00 you set.
+   January 6, 2026: Chase Total Checking 7
+   January 16, 2026: Chase Total Checking -383.58, negative since January 7, 2026
+   January 26, 2026: Chase Total Checking -652.58, negative since January 7, 2026
+   February 5, 2026: Chase Total Checking -667.58, negative since January 7, 2026
+   February 15, 2026: Chase Total Checking -667.58, negative since January 7, 2026
+February 20, 2026 [bank 50] Statement Ready: Chase Freedom Unlimited
+    The statement comes to $390.00, due March 13, 2026. The minimum payment is $40.00. Autopay pays the whole $390.00 from Chase Total Checking that day, if there’s enough in it.
+   February 25, 2026: Chase Total Checking -667.58, negative since January 7, 2026
+   March 7, 2026: Chase Total Checking -682.58, negative since January 7, 2026
+March 8, 2026 [bank 90] Chase Closed Your Account
+    It was overdrawn for 60 days. $692.58 it couldn’t recover went to collections and onto your credit record. You can pay it on Money, under Borrowing. Your money is at Bank of America now, in a second-chance account: every other bank here turned you away on the ChexSystems report.
+March 9, 2026 [bank 55] Low Balance: Advantage Plus Banking
+    Advantage Plus Banking at Bank of America is down to $0.00, under the $100.00 you set.
+March 11, 2026 [bank 65] Short For A Payment: Advantage Plus Banking
+    The Chase Freedom Unlimited’s autopay, $390.00, comes from Advantage Plus Banking at Bank of America on March 13, 2026, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.
+March 13, 2026 [bank 75] A Card Payment Bounced
+    The Chase Freedom Unlimited’s autopay of $390.00 didn’t go through, because Advantage Plus Banking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Advantage Plus Banking, then pay the card on Money, under Cards.
+March 13, 2026 [bank 80] A Late Card Payment
+    The minimum payment on the Chase Freedom Unlimited, $40.00, was due March 13, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.
+   March 17, 2026: Chase Total Checking 0 CLOSED
+March 20, 2026 [bank 50] Statement Ready: Chase Freedom Unlimited
+    The statement comes to $790.94, due April 10, 2026. The minimum payment is $40.00. Autopay pays the whole $790.94 from Advantage Plus Banking that day, if there’s enough in it. The last payment was missed. If this one is short too, Chase suspends the card, and it goes on your credit record.
