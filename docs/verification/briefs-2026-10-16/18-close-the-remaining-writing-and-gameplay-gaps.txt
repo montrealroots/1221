@@ -1,0 +1,259 @@
+SLATE — Close The Remaining Writing And Gameplay Gaps
+
+Implement the remaining fixes identified after Brief 17. Work from current main, preserve the improvements already merged, and finish with evidence from the actual game.
+
+This is a focused completion pass—not another complete rewrite or audit-only task.
+
+1. VERIFY THE STARTING POINT
+
+Read the repository instructions, current handoff, Brief 17’s final report, coverage matrix, and known-issues lists.
+
+Confirm the latest main and any existing work before editing. Preserve changes already in progress.
+
+Turn the remaining issues below into explicit acceptance criteria. Track each as fixed and verified, genuinely blocked, or explicitly deferred. Do not mark an issue complete merely because it has been documented.
+
+Keep decision #4 and previously deferred scope deferred. Do not restore removed systems or begin professional career development.
+
+2. FINISH THE REMAINING WRITING FIXES
+
+Fix the repetitive patient-voice and exacting-voice patterns identified in Brief 17.
+
+Improve the complete message, not just its opening:
+
+- Preserve the speaker’s established voice.
+
+- Use the relevant assignment, preparation, result, and history.
+
+- Acknowledge when the same limitation still applies.
+
+- Avoid repeating a full explanation when a short reminder is sufficient.
+
+- Offer a different next action only when it is genuinely relevant and supported.
+
+Do not insert meaningless variants to improve repetition statistics. Dates, names, and numbers changing do not make a message substantively different.
+
+Review the cases where repeated openings increased from 229 to 253. Separate justified recurring information from avoidable repetitive phrasing. Fix the avoidable cases and show the resulting sequences.
+
+Preserve factual accuracy, stable control labels, deterministic presentation, and delivered feedback across reloads.
+
+3. FIX THE PROFILE’S REMAINING CLARITY ISSUES
+
+Replace the seven-clause Dispositions paragraph with readable, accessible rows or short sections.
+
+For each disposition, show:
+
+- Its name and current value.
+
+- A concise explanation of its actual effects.
+
+- Optional detail where needed.
+
+Make it comfortable to read on mobile without losing information.
+
+Also investigate and fix the reported issues:
+
+- The fatigue label being derived from only one piece.
+
+- Milestone details exposing internal band keys.
+
+- “Fine” always having “Sources And Estimates” as its summary.
+
+Use the correct underlying state and human-readable labels. Do not conceal a calculation problem with vague text.
+
+4. FINISH TERMINOLOGY AND HELP
+
+Add clear, contextual explanations for blocking, understudy, and off book, plus any other necessary acting terms found during this focused review.
+
+Keep explanations short and link to fuller help where useful.
+
+Correct missing diacritics and inaccurate place/currency display names using verified names, while preserving stable internal identifiers and save compatibility.
+
+Ensure affected tutorials quote the final controls and behavior accurately.
+
+5. FIX TIME AND SLEEP BEHAVIOR
+
+Investigate the reported differences between Skip It and Call It Off during a time jump.
+
+Define consistent behavior appropriate to each action:
+
+- Skipping an occurrence and cancelling a plan may differ.
+
+- Those differences must be intentional, explained, and tested.
+
+- Neither action may unexpectedly advance time, skip another commitment, or leave the jump in an inconsistent state.
+
+Fix Tomorrow Morning so it targets the next occurrence of the displayed morning time. At 2 AM, it should not silently skip the coming morning. Show the destination date and time before confirmation.
+
+Replace the unconditional eight-hour sleep suggestion with a sensible recommendation based on the existing sleep model, current condition, time, and upcoming commitments. Keep the player able to choose a duration.
+
+Pause simulation time while the Sleep dialog is open. Cancelling or confirming must restore or advance time consistently with the game’s established dialog behavior.
+
+Update all related tutorials, warnings, and tests.
+
+6. FIX HEALTH FEEDBACK AND STATE MISMATCHES
+
+Make flu effects shown on the Profile agree with the effects actually applied by the engine.
+
+Add a clear, once-per-recovery notification when:
+
+- An injury has healed.
+
+- The flu has passed.
+
+Remove only the restrictions belonging to the resolved condition. Do not imply full recovery if another condition still limits the player.
+
+Fix the fitness explanation below 35 so its wording and actual behavior agree.
+
+Verify these changes through illness/injury onset, treatment, recovery, overlapping conditions, time advancement, and save/reload.
+
+7. FIX THE REMAINING BANKING ISSUES
+
+Investigate the known missed-payment timing, first-year card fee, and overdrawn-account warning issues.
+
+Research current authoritative bank terms and regulatory sources relevant to the affected jurisdiction and product. Record sources and dates. Distinguish verified real rules from explicit simulation assumptions.
+
+Then:
+
+- Correct missed-payment, penalty-rate, notice, and charge-off timing where the implementation is wrong.
+
+- Apply the first-year annual fee according to the actual product terms, including genuine introductory waivers.
+
+- Prevent duplicate charges through reloads or large time jumps.
+
+- Give an actionable warning before an overdrawn account closes, stating the deadline and what the player can do.
+
+- Keep balances, statements, fees, credit consequences, notifications, and tutorials consistent.
+
+Investigate and resolve the existing banking journey that remains 9/10. Determine whether the problem is game behavior or a faulty test expectation. Fix the responsible side without weakening the intended check.
+
+Also examine the unresolved banking items carried forward from earlier passes, including card-liability discrepancies, replacement fees, term-deposit penalties, notice rules, and incorrectly available claim actions.
+
+List each concrete inherited issue and resolve those within the retained banking scope. Do not assume that a newer writing pass fixed an older mechanic.
+
+8. FIX THE REMAINING PAPERS ISSUES
+
+Investigate and resolve the reported:
+
+- Catch Up action offered when new tax debt requires a payment-plan revision.
+
+- California treating a new balance as a missed payment and blaming the bank.
+
+- 1040-NR interest presentation.
+
+- Short-term tax-plan penalty treatment.
+
+- State-plan figures and refusal periods hard-coded into prose.
+
+Research authoritative sources before changing legal or tax behavior. Do not assume every interest item on a nonresident return is incorrect; determine the applicable treatment.
+
+Generate amounts, dates, and periods from the same rules used by the simulation.
+
+Keep eligibility, available actions, notices, payments, balances, and tutorials consistent.
+
+If a fact cannot be verified, identify the precise uncertainty and use an explicitly documented simulation assumption where appropriate. Do not present a guess as law.
+
+9. FIX THE UNDERSTUDY CONTINUITY GAP
+
+When an understudy goes on, identify the actual part they are covering.
+
+Connect that part to:
+
+- The casting record.
+
+- The call and calendar entry.
+
+- Relevant preparation.
+
+- The performance evaluation.
+
+- The resulting history and feedback.
+
+Do not invent a named role solely in the notification while the engine continues evaluating an unspecified company part.
+
+Preserve the existing school scope.
+
+10. PRESERVE WHAT ALREADY WORKS
+
+Keep:
+
+- The five course voices and three director voices.
+
+- The incident-based apology fix.
+
+- Concise advice with expandable reasoning.
+
+- Existing attribute and genre balance unless a listed defect directly requires a change.
+
+- Save compatibility.
+
+- The established Title Case rules.
+
+- Accessible desktop and mobile navigation.
+
+Text selection must not consume gameplay randomness.
+
+For authorized gameplay fixes, document the intended downstream differences. Do not demand identical outcomes where corrected behavior should change them.
+
+11. VERIFY THE FIXES THROUGH PLAY
+
+Capture the current baseline, then test the corrected build using suitable existing scenarios and targeted additions.
+
+Cover:
+
+- Recurring feedback, improvement, regression, and sustained strong work.
+
+- Mobile Profile readability and keyboard access.
+
+- Time jumps crossing midnight and multiple commitments.
+
+- Sleep confirmation, cancellation, and interrupted sleep.
+
+- Recovery from illness and injury, including overlapping conditions.
+
+- Bank fees, missed payments, notices, account closure, and applicable liability cases.
+
+- Tax-plan changes and affected return scenarios.
+
+- An understudy preparing for and performing a named part.
+
+- Existing-save migration and repeated save/reload.
+
+Test boundary dates, insufficient funds, repeated clicks, and large time advances where relevant.
+
+Read the final player-facing sequences. Confirm that every message matches what the game actually did.
+
+Add meaningful regression tests for the defects. Do not merely change expected text until tests pass.
+
+Rerun affected checks after fixes, then run the repository’s complete required verification gate on the final candidate. Resolve any failures introduced by this work.
+
+12. PROVIDE THE FINAL RECEIPT
+
+Deliver:
+
+- The exact tested commit.
+
+- Each issue, its cause, its fix, and its verification evidence.
+
+- Before/after rendered examples.
+
+- Consecutive feedback samples demonstrating the remaining repetition fixes.
+
+- Test commands and actual results.
+
+- Research sources for changed banking and tax rules.
+
+- Intended downstream changes.
+
+- Accurate merge and deployment status.
+
+- A short owner playtest route.
+
+- Any unresolved items, clearly named with their reasons.
+
+Do not claim that automated tests prove perfect writing or that no undiscovered bugs exist.
+
+Do not leave an identified in-scope fix unfinished solely because it requires another affected test run. Complete the implementation and verification before reporting the pass as finished.
+
+If a genuine external blocker remains, explain exactly what it prevents and complete the independent work around it.
+
+My target is a polished, coherent experience: clear language, meaningful variation, reliable continuity, correct visible consequences, and no mismatch between what the game tells me and what its engines actually do.
