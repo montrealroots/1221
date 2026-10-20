@@ -23,7 +23,8 @@ dates the work 2026-10-16, as the work plan does, so the commits' dates and the 
 | `11-finish-the-current-build-against-a-fixed-checklist.txt`: "Finish The Current Build Against A Fixed Checklist" | 2026-10-16, the same session, on the branch restarted from `main` at `0e7ff7c2` | `../completion-2026-10-16/`; its receipt `RECEIPT.md` | #38 (`9302b29c`), at the owner's word | merged, not deployed; ST6-R, F2-A10 (f) and (h) and health.enroll with the owner |
 | `12-resolve-the-remaining-decisions-and-complete-the-authorized-build.txt`: "Resolve The Remaining Decisions And Complete The Authorized Build" | 2026-10-17, the same session, on the branch restarted from `main` at `9302b29c` | `../resolution-2026-10-17/`; its receipt `RECEIPT.md` | #39 (`102ba8f2`), at the owner's word | merged, not deployed; ST6-R2.c and ST6-R2.e with the owner |
 | `13-resolve-the-final-acting-clauses-and-validate-through-multiple-playthroughs.txt`: "Resolve The Final Acting Clauses And Validate Through Multiple Playthroughs" | 2026-10-17, the same session, on the branch restarted from `main` at `102ba8f2` | `../playthroughs-2026-10-17/`; its receipt `RECEIPT.md` | #40 (`280c9f88`), at the owner's word; the handoff fixed after it in #41 (`0368d46b`) | merged, not deployed; ST6-R2.e with the owner |
-| `14-complete-player-facing-language-and-tutorial-overhaul.txt`: "Complete Player-Facing Language And Tutorial Overhaul" | 2026-10-17 15:44, the same session, on the branch restarted from `main` at `0368d46b` | `../language-2026-10-17/` | — | in progress |
+| `14-complete-player-facing-language-and-tutorial-overhaul.txt`: "Complete Player-Facing Language And Tutorial Overhaul" | 2026-10-17 15:44, the same session, on the branch restarted from `main` at `0368d46b` | `../language-2026-10-17/`; its receipt `RECEIPT.md` | #42 (`99f3c756`), at the owner's word; the handoff fixed after it in #43 (`bdb23949`) | merged, not deployed; until 2026-10-20 this row said in progress |
+| `15-complete-natural-language-editorial-pass.txt`: "Complete Natural-Language Editorial Pass, Including All Retained Text" | 2026-10-19 03:34, the same session, on the branch restarted from `main` at `bdb23949` | `../editorial-2026-10-19/`; its receipt `RECEIPT.md` | #44 (`74259312`), at the owner's word | merged, not deployed |
 | `08-next-integration-and-acceptance-pass.md`: the scope the owner recorded for it before it was given | — | — | — | superseded by the brief's text |
 
 `short-directives.txt` keeps the owner's short instructions between the briefs, verbatim: the session's first message
@@ -35,6 +36,10 @@ stopped at 14:58 the day before: brief 13's coordinator added the rest from the 
 "Merge it.", which merged #40 (brief 13's), came with no question of watching before it, and the handoff was fixed after
 it on a fresh branch, as the owner asked. The fifth merged #41, that fix. Brief 14's "Yes." answered whether to watch
 #42, and the sixth "Merge it." merged it; the handoff was fixed after it on a fresh branch, as it was after #40.
+The seventh merged #43, that fix, and the request for page captures after it was answered with images sent in the
+session. Brief 15's work was taken up again after the container stopped it ("Resume.", "Why did things stop?" and
+"Proceed exactly with what I been wanting you to do."; the last was taken in the middle of a turn, so the transcript
+holds it as a queued message). Its "Yes." answered whether to watch #44, and the eighth "Merge it." merged it.
 
 What isn't here: the session's own summaries of itself, written when its context ran out, are the model's words, not
 the owner's, and the briefs of the sessions before this one are in `../prompts-2026-10-16/` where they were kept.

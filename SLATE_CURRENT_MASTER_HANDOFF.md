@@ -5,12 +5,14 @@
 (`docs/verification/briefs-2026-10-16/15-complete-natural-language-editorial-pass.txt`, kept verbatim). The work was done
 on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `bdb23949` (#43's merge, the handoff after #42's). Brief
 14's section below was the status until brief 15 began. It is pushed and in pull request #44
-(https://github.com/yvcbcjhsy7-prog/1221/pull/44), opened after the gate. It isn't merged: merging is the owner's.
-**Nothing is deployed.**
+(https://github.com/yvcbcjhsy7-prog/1221/pull/44), opened after the gate and merged to `main` with a merge commit at
+the owner's word ("Merge it.", 2026-10-20, `74259312`); until then this said it wasn't merged. **Merged isn't deployed:
+nothing is.**
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `bdb23949`, #43's merge.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `74259312`, #44's merge;
+  until then this said `bdb23949`, #43's.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 15's commits on `bdb23949`
   (`git log --oneline bdb23949..origin/claude/peaceful-hamilton-59zdbb`). It was pushed and never force-pushed. The ten
   areas were each merged in from their clones with merge commits (`git log --merges bdb23949..HEAD`).
@@ -107,8 +109,9 @@ section 12's receipt, written by `receipt.py`. `crossarea.md` is the reading of 
   - Decision 4's rows are unchanged.
 - **What only a person can judge:** whether the voice is natural. `PLAYTEST.md` is the route, about twenty-five
   minutes. `playtest-check.py` finds each phrase it quotes on the built app or in the code.
-- **Merging and deploying are the owner's.** Base44 deployment waits for the owner and the gate (rule 14). Read section
-  10 further down first.
+- **Deploying is the owner's.** The pull request was merged at the owner's "Merge it." (`74259312`); until then this
+  said merging was the owner's too. Base44 deployment waits for the owner and the gate (rule 14). Read section 10
+  further down first.
 
 ## 5. The Rules, The Schema And The Model
 
