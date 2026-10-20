@@ -623,7 +623,7 @@ describe('school.work_note', () => {
       // What was tried, its figure then and at the next call, and, where it moved nothing, that it didn't.
       expect(n.text).toContain(`You tried ${prior.answer!.label!}: ${prior.answer!.before} then, ${prior.answer!.now ?? prior.answer!.after} now`);
       // In the production director's voice (from 2026-10-20, brief 17): each of the three voices' ways.
-      expect(n.text).toMatch(prior.taken ? /^(?:Better since the last note|That’s moved since the last note|The last note took|That’s fixed|That last note landed|Good: that’s moved since the last call)\. You tried / : /^(?:Still: |Same note as at the last call\. |Not there yet\. |The same note as last time: |We’re still on the last note\. |Keep at the last note: )/);
+      expect(n.text).toMatch(prior.taken ? /^(?:Better since the last note|That’s moved since the last note|The last note took|That’s fixed|That last note landed|Good: that’s moved since the last call)\. You tried / : /^(?:Still: |Same note as at the last call\. |Not there yet\. |The same note as last time: |We’re still on the last note\. |Keep at the last note: |The last note still stands\. |Again, the same note\. |Let’s stay with the last note\. )/);
       // Worse by the evidence at the call, it says it made it worse; otherwise that it didn't move it.
       const worse = Math.min(prior.answer!.after, prior.answer!.now ?? prior.answer!.after) - prior.answer!.before <= -WORKBOOK.evidence;
       if (prior.outcome === 'learned') expect(n.text).toContain(`which ${worse ? 'made it worse' : 'didn’t move it'}: worth knowing, and not the answer.`);

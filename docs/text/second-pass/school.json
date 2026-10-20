@@ -3354,9 +3354,9 @@
  },
  "src/engine/systems/production.ts#noteText": {
   "status": "Rewritten",
-  "hash": "8328d7dad3cb",
+  "hash": "5c2c4052ef88",
   "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts ('keeps one voice for the run…') and tests/variety.test.ts; read in the after-runs' director's notes",
+  "evidence": "tests/feedback-voices.test.ts ('keeps one voice for the run…, never two colons in a sentence'), tests/direction.test.ts, tests/journey-school-production.test.ts, tests/evidence-g19-school.test.ts; read in the after-runs' director's notes",
   "first": "Pending"
  },
  "src/engine/systems/production.ts#noteWords": {

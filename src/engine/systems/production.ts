@@ -380,14 +380,16 @@ export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { targ
   // brief 16's baseline. Without them, the first way, as before.
   // In the director's voice (brief 17): what came of the last note, then this one.
   const TAKEN: Record<DirectorVoice, string[]> = {
-    plain: [`Better since the last note.${tried} ${words}${history}`, `That’s moved since the last note.${tried} Now: ${continued(words)}${history}`],
-    exacting: [`The last note took.${tried} Next: ${continued(words)}${history}`, `That’s fixed.${tried} Now: ${continued(words)}${history}`, `The last note took.${tried} ${words}${history}`],
-    encouraging: [`That last note landed.${tried} Next: ${continued(words)}${history}`, `Good: that’s moved since the last call.${tried} ${words}${history}`],
+    plain: [`Better since the last note.${tried} ${words}${history}`, `That’s moved since the last note.${tried} Now: ${continued(words)}${history}`, `That’s moved since the last note.${tried} ${words}${history}`],
+    exacting: [`The last note took.${tried} Next: ${continued(words)}${history}`, `That’s fixed.${tried} Now: ${continued(words)}${history}`, `The last note took.${tried} ${words}${history}`, `That’s fixed.${tried} ${words}${history}`],
+    encouraging: [`That last note landed.${tried} Next: ${continued(words)}${history}`, `Good: that’s moved since the last call.${tried} ${words}${history}`, `That last note landed.${tried} ${words}${history}`],
   };
+  // Each voice has two ways or more whose words can follow a note's own colon (brief 17's after-runs: once the colon rule
+  // took the others, plain's "Same note as at the last call." and "Better since the last note." came 24 times each).
   const STILL: Record<DirectorVoice, string[]> = {
-    plain: [`Still: ${continued(words)}${tried}${history}`, `Same note as at the last call. ${words}${tried}${history}`],
-    exacting: [`Not there yet. ${words}${tried}${history}`, `The same note as last time: ${continued(words)}${tried}${history}`],
-    encouraging: [`We’re still on the last note. ${words}${tried}${history}`, `Keep at the last note: ${continued(words)}${tried}${history}`],
+    plain: [`Still: ${continued(words)}${tried}${history}`, `Same note as at the last call. ${words}${tried}${history}`, `The last note still stands. ${words}${tried}${history}`],
+    exacting: [`Not there yet. ${words}${tried}${history}`, `The same note as last time: ${continued(words)}${tried}${history}`, `Again, the same note. ${words}${tried}${history}`],
+    encouraging: [`We’re still on the last note. ${words}${tried}${history}`, `Keep at the last note: ${continued(words)}${tried}${history}`, `Let’s stay with the last note. ${words}${tried}${history}`],
   };
   // Never two colons in a sentence (brief 17's first after-run: "Keep at the last note: get off book: once the lines are
   // in you…"): a way that would put a colon before words that have one gives way to one that doesn't, where there is one.
