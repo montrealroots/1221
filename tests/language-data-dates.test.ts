@@ -204,7 +204,7 @@ describe('the guide, the tutorial and Papers say a day month first, as the game 
     expect(said('papers.doctor')).toContain('its pharmacy statutes, read on October 15, 2026');
     expect(said('papers.pensions')).toContain('68 for anyone born after April 5, 1978');
     expect(said('papers.health-cover')).toContain('Yale Delta Dental Basic runs to its September 30 whatever happens to Yale Health');
-    expect(strings(CHAPTERS.find((c) => c.id === 'papers')).join(' ')).toContain('A UK tax year’s is settled on its own, by the next January 31.');
+    expect(strings(CHAPTERS.find((c) => c.id === 'papers')).join(' ')).toContain('UK tax is settled separately for each UK tax year, by the next January 31.');
   });
 
   it('PLAYER JOURNEY: a student reads Health Cover’s dental plan and, with a UK pension claimed, the State Pension’s fine print', () => {
@@ -246,7 +246,7 @@ describe('PLAYER JOURNEY: a New York student at Chase reads each source line’s
     // Until 2026-10-17 these were "…/LGC61498.html ; minimum-payment formula …" and "…, 2026-09-26".
     expect(card.source).toContain('/LGC61498.html; minimum-payment formula from ');
     expect(screens.cash).toContain(`Source: ${CASH['us-chase']!.source}.`);
-    expect(CASH['us-chase']!.source).toMatch(/, September 26, 2026$/);
+    expect(CASH['us-chase']!.source).toMatch(/, read September 26, 2026$/);
     expect(screens.security).toContain('Deposit Account Agreement and fee schedule effective June 14, 2026;');
     expect(screens.lending).toContain('Source: Chase 7-month CD, via fortune.com, September 24, 2026.');
     expect(screens.statements).toContain('Chase Deposit Account Agreement, effective June 14, 2026 (chase.com/');

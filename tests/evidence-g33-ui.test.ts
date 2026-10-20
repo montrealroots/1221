@@ -280,7 +280,7 @@ describe('h-money', () => {
   it('“No account” can’t be reached: the bank refuses to close a life’s only current account, in its words, and the line still names it', () => {
     const sim = life('g33-money-close');
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: primary(sim).id } }).error)
-      .toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
+      .toBe('It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.');
     expect(drawn(sim).affairs).toContain('Money Chase Total Checking: $92,391.00.');
   });
 });
@@ -354,7 +354,7 @@ describe('h-school', () => {
     const sim = life('g33-school-guided', { tutorial: true });
     readTo(sim, 'weather');
     const before = drawn(sim).affairs;
-    expect(before).toContain('School Locked This opens when you read “Drama School” in the guide: where your life as an actor begins. Read About It');
+    expect(before).toContain('School Locked This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale. Read About It');
     expect(before).not.toContain('Arriving');
     readTo(sim, 'school');
     expect(drawn(sim).affairs).toContain(`School Arriving, good standing, ${ordinal(rankOf(sim))} of 16 in the class. Next: Registration And Your Account`);
@@ -389,7 +389,7 @@ describe('h-papers', () => {
     const mark = h.buttons.filter((b) => /^Mark \d+ Read$/.test(b.text));
     expect(mark).toHaveLength(1);
     (mark[0]!.props.onClick as () => void)();
-    expect(drawn(sim).text).toContain('No Questions Waiting A tax return is past its due date and unfiled: $174, with its penalty so far.');
+    expect(drawn(sim).text).toContain('No Questions Waiting A tax return is past its due date and not filed yet. You owe $174, including the penalty so far.');
   });
 
   it('filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date, nothing accruing before it, and $169 sixty days past it, where the balance last stored reads $168; a reload says the same', () => {
@@ -486,13 +486,13 @@ describe('l-person', () => {
       ['Stress', `${Math.round(w.stress)}/100. How wound up you are. High stress spoils your sleep.`],
       ['Sleep Debt', `${plural(Math.round(w.sleepDebt), 'hour')}. Sleep you owe, which a night pays back.`],
       ['Morale', `${Math.round(w.morale)}/100. Your mood. When it’s up, a night clears more of the day’s stress.`],
-      ['Condition', `${Math.round(w.condition)}/100. How sound your body is. It sets how much a night gives back, your morale, sick days, and how likely each year is to be your last.`],
-      ['Fitness', `${Math.round(w.fitness)}/100. How trained your body is, the Stamina on your Player Profile. It sets how far rest can mend you and what a workout costs.`],
+      ['Condition', `${Math.round(w.condition)}/100. How sound your body is. It sets how much energy a night gives back, where your morale settles, when a sick day is excused, and how likely a year is to be your last.`],
+      ['Fitness', `${Math.round(w.fitness)}/100. How trained your body is: the Stamina on your Player Profile. It sets how far rest can mend your condition and how much energy a workout costs.`],
       ['Nourishment', `${Math.round(w.nourishment)}/100. How well fed you are. A meal puts it back.`],
       ['Hygiene', `${Math.round(w.hygiene!)}/100. How clean you are. When it’s low, it drags on your morale, and on readiness a little.`],
-      ['Readiness', 'How ready you are today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how judged work goes.'],
-      ['Curious', 'The thing nobody asked you to read gets read: your reading of a scene goes deeper.'],
-      ['Depression', 'Kept up, at what your plan doesn’t cover.'],
+      ['Readiness', 'How ready you are today, from all of these but fitness. It sets what a class, a lab, a rehearsal, an hour of practice or a workout builds, and how well your work goes when it’s judged.'],
+      ['Curious', 'The thing nobody asked you to read gets read, and you go deeper into how to play a part.'],
+      ['Depression', 'Kept up, and you pay what your plan doesn’t cover.'],
       ['Your Own Plans', 'Everything you’ve put on the calendar yourself.'],
     ]);
     // Each way opens what it names.
@@ -509,7 +509,7 @@ describe('l-person', () => {
     const kept = reload(sim);
     expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Left untreated, and what that does.']);
     kept.must({ kind: 'health.treat', payload: { condition: 'depression', on: true } });
-    expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Kept up, at what your plan doesn’t cover.']);
+    expect(openedFromHome(kept).ways.find(([label]) => label === 'Depression')).toEqual(['Depression', 'Kept up, and you pay what your plan doesn’t cover.']);
   });
 
   it('the units are where she lives: the same 170 cm and 65 kg read “170 cm and 65.0 kg” for a life in London', () => {
@@ -525,10 +525,10 @@ describe('l-person', () => {
     sim.must({ kind: 'life.look_after', payload: { action: 'exercise' } });
     // The draw's 43 days from 8:30 AM on Monday 24 August.
     const hurt = openedFromHome(sim);
-    expect(hurt.lines).toContainEqual(['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.']);
+    expect(hurt.lines).toContainEqual(['Mending. ', 'A broken bone, until October 6, 2026, and laid up until then.']);
     expect(hurt.ways).toContainEqual(['An Injury', 'What it is, when it mends, and what it keeps you from.']);
     const kept = reload(sim);
-    expect(openedFromHome(kept).lines).toContainEqual(['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.']);
+    expect(openedFromHome(kept).lines).toContainEqual(['Mending. ', 'A broken bone, until October 6, 2026, and laid up until then.']);
     kept.advanceTo(at(2026, 10, 6, 12));
     const mended = openedFromHome(kept);
     expect(mended.lines.map(([label]) => label)).not.toContain('Mending. ');
@@ -823,7 +823,7 @@ describe('n-decision-us-status', () => {
     const sim = londoner('g33-probe-withdraw');
     sim.advanceTo(at(2026, 9, 1, 12));
     sim.must({ kind: 'school.withdraw', payload: { confirm: true } });
-    expect(titled(sim, 'You Withdrew From The School')[0]!.body).toContain('As an F-1 student you have fifteen days’ grace, and OPT isn’t open to you.');
+    expect(titled(sim, 'You Withdrew From The School')[0]!.body).toContain('As an F-1 student, you have a fifteen-day grace period, and OPT isn’t open to you.');
     sim.advanceTo(at(2026, 9, 17, 12));
     expect(sim.player.usOutOfStatus).toBe(at(2026, 9, 16, 12));
     expect(titled(sim, 'Out Of Status')).toHaveLength(1);

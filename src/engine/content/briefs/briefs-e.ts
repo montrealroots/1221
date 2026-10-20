@@ -78,13 +78,13 @@ export const BRIEFS_E: readonly Brief[] = [
     },
     readings: [
       { id: 'plan', label: 'The Plan', reading: 'She came to destroy him, and his not remembering only makes it easier.', rests: 'She planned the dinner to the minute, and the folder was always going on the table.', lean: { consistency: 1.2, execution: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'execution', ability: 'discipline', weight: 0.4 }] },
-      { id: 'chance', label: 'His Last Chance', reading: 'She hoped he’d remember and be sorry, and the folder goes across only when he laughs.', rests: 'Her objective is to make him remember first, and she decides about the folder after.', lean: { believability: 1.2, responsiveness: 1.15 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'responsiveness', ability: 'listening', weight: 0.5 }] },
+      { id: 'chance', label: 'His Last Chance', reading: 'She hoped he’d remember and be sorry, and the folder goes across only when he laughs.', rests: 'She wants him to remember first, and she decides about the folder only after.', lean: { believability: 1.2, responsiveness: 1.15 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'responsiveness', ability: 'listening', weight: 0.5 }] },
     ],
   },
   {
     id: 'brief-road_movie', title: 'Mile Marker 212', kinds: ['road_movie'], medium: 'camera', size: 'medium',
     logline: 'On the second day of driving her grandfather to the town he left at seventeen, a young woman is asked to turn the car around.',
-    circumstances: 'The front seat of an old sedan on a two-lane highway, early morning, an hour past a gas station. She’s driving; he’s beside her with the map he insisted on. Ten minutes ago he said, out of nowhere, that he wanted to go home. For the tape she’s seated, the wheel mimed or a prop in her hands, her eyes on a fixed road line just off camera, with Walt’s voice coming from beside the lens.',
+    circumstances: 'The front seat of an old sedan on a two-lane highway, early morning, an hour past a gas station. She’s driving; he’s beside her with the map he insisted on. Ten minutes ago he said, out of nowhere, that he wanted to go home. For the tape, sit with the wheel mimed or a prop in your hands and your eyes on a fixed road line just off camera; Walt’s voice comes from beside the lens.',
     relationship: 'Grandfather and granddaughter, who have never spent this long alone together and have spent the trip finding out they like each other.',
     you: 'Dee, nineteen, who took a week off her first job to do this.',
     reader: 'Her grandfather, Walt, beside her in the passenger seat, looking out of his window.',
@@ -101,7 +101,7 @@ export const BRIEFS_E: readonly Brief[] = [
       beats: 'Road-trip sparring, a confession heard with her eyes on the road, then a choice made by turning the wheel.',
     },
     readings: [
-      { id: 'driver', label: 'Eyes On The Road', reading: 'The road is her shelter: she can hear anything as long as she’s driving, and the wheel does her feeling for her.', rests: 'She has to keep her eyes on the road, and the last beat is played with the signal and the exit.', lean: { believability: 1.15, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'consistency', ability: 'focus', weight: 0.5 }] },
+      { id: 'driver', label: 'Eyes On The Road', reading: 'The road is her shelter: she can hear anything as long as she’s driving, and the wheel does her feeling for her.', rests: 'She has to keep her eyes on the road, and she plays the last beat with the signal and the exit.', lean: { believability: 1.15, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'consistency', ability: 'focus', weight: 0.5 }] },
       { id: 'friends', label: 'Two Days In', reading: 'They’ve become friends on the road, and she keeps him going the way a friend would, with a joke.', rests: 'They’ve spent the trip finding out they like each other, and she ends asking him to read her the next town.', lean: { connection: 1.25, responsiveness: 1.1 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
     ],
   },
@@ -170,13 +170,13 @@ export const BRIEFS_E: readonly Brief[] = [
     language: 'everyday', timing: 3, physical: 1, partner: 3, vocal: 1, improvisation: 0,
     techniques: { comedy: 2 },
     why: {
-      timing: 'The sparring is quick and each comeback has to land on the line before it, and the parrot’s interruption has to be waited for.',
+      timing: 'The sparring is quick, each comeback landing on the line before it, and she has to wait for the parrot’s interruption.',
       partner: 'Every line is an answer to his, and the sparring only works if she takes what he gives.',
       techniques: 'The scene is built as verbal sparring, a romantic comedy’s own resource, and asks comic timing of every exchange.',
       beats: 'Two comic beats that escalate, then a joke she can only make by telling the truth.',
     },
     readings: [
-      { id: 'sparring', label: 'Winning The Round', reading: 'She plays to win every exchange, and losing the last one on purpose is the turn.', rests: 'The brief is built on sparring, and she gives up the truth only to get the key.', lean: { execution: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'execution', ability: 'focus', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
+      { id: 'sparring', label: 'Winning The Round', reading: 'She plays to win every exchange, and losing the last one on purpose is the turn.', rests: 'Every exchange is sparring, and she gives up the truth only to get the key.', lean: { execution: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'execution', ability: 'focus', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
       { id: 'flustered', label: 'Already Lost', reading: 'She’s liked him since the date, and the comedy is a woman failing to hide it.', rests: 'She left before dessert, and the parrot repeats what she really said about him.', lean: { believability: 1.15, connection: 1.15 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'connection', ability: 'listening', weight: 0.5 }] },
     ],
   },
@@ -196,7 +196,7 @@ export const BRIEFS_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 0, partner: 3, vocal: 0, improvisation: 0,
     why: {
-      timing: 'The scene turns on when she almost speaks and doesn’t, and those moments have to be placed.',
+      timing: 'The scene turns on the moments she almost speaks and doesn’t, and each one has to come on exactly the right line.',
       partner: 'She reads in everything he says whether there’s room for what she came to say, and there isn’t.',
       beats: 'Care, a memory that brings the past into the room, then a sale that holds the loss and the love together.',
     },
@@ -226,7 +226,7 @@ export const BRIEFS_E: readonly Brief[] = [
       physical: 'The posture, the bow, the draw and the three exchanges are a samurai’s body held to its forms throughout.',
       timing: 'The draw, the exchanges and the stopped blade are placed by the forms, and the silences around them are held exactly.',
       partner: 'Each exchange answers the reader’s called cue, and the decision in the last beat comes from what Sakon has said.',
-      techniques: 'The swordplay is staged in fixed forms of film sword-fighting, with a straight back, planted heels and the etiquette of drawing and sheathing. For the tape, Gonroku marks the three exchanges alone at reduced speed with a replica blade, cutting to the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.',
+      techniques: 'The swordplay is staged in fixed forms of film sword-fighting, with a straight back, planted heels and the etiquette of drawing and sheathing. For the tape, mark the three exchanges alone at reduced speed with a replica blade, cutting to the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.',
       beats: 'A formal duty, a fight played to its forms, then a choice made with the back turned that holds the grief in it.',
     },
     readings: [
@@ -303,7 +303,7 @@ export const BRIEFS_E: readonly Brief[] = [
       beats: 'A mistake that’s funny and painful at once, the gift that makes the gap plain, then the thing she kept.',
     },
     readings: [
-      { id: 'catchup', label: 'Catching Up', reading: 'He refuses to grieve the eight years and throws himself at learning who she is.', rests: 'His objective is to be her father again in this conversation, and he gives the gift anyway.', lean: { responsiveness: 1.2, connection: 1.1 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.6 }, { dim: 'connection', ability: 'listening', weight: 0.4 }] },
+      { id: 'catchup', label: 'Catching Up', reading: 'He refuses to grieve the eight years and throws himself at learning who she is.', rests: 'He wants to be her father again in this one conversation, and he gives the gift anyway.', lean: { responsiveness: 1.2, connection: 1.1 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.6 }, { dim: 'connection', ability: 'listening', weight: 0.4 }] },
       { id: 'loss', label: 'What It Cost', reading: 'He sees, from the first line, what the voyage took, and the scene is him bearing it in front of her.', rests: 'Eight months passed for him and eight years for her, and the gift was bought for a nine-year-old.', lean: { believability: 1.25, consistency: 1.05 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.7 }, { dim: 'consistency', ability: 'composure', weight: 0.3 }] },
     ],
   },
@@ -327,7 +327,7 @@ export const BRIEFS_E: readonly Brief[] = [
       timing: 'The talk is fast and overlapping, each line cut off by the next, and the fall and the bark land on cues.',
       physical: 'She guards the wardrobe with her body, and the fall onto the bed is the scene’s turn.',
       partner: 'The repartee lives on cutting in on the reader, which only works if she’s listening to every word.',
-      techniques: 'The fast, overlapping repartee is screwball comedy’s own, and it asks for comic timing. The catch of the heel is a pratfall, played solo with the reader off camera at the door, worked out slowly first onto a bed or a soft mat, and repeatable on every take.',
+      techniques: 'The fast, overlapping repartee is screwball comedy’s own, and it asks for comic timing. The catch of the heel is a pratfall, the clowning the scene asks for: play it solo, with the reader off camera at the door, and work it out slowly first onto a bed or a soft mat, so it repeats safely on every take.',
       beats: 'Two comic beats that build to a fall, then a confession made funny by where she makes it.',
     },
     readings: [
@@ -406,7 +406,7 @@ export const BRIEFS_E: readonly Brief[] = [
       timing: 'Each gag lands on a cue: the wrap, the swat, the stagger, the reveal.',
       physical: 'The scene is a body fighting a strip of paper on a wobbling step, then a stagger, a fall and a recovery.',
       partner: 'The swat comes from the reader off frame, and his reaction has to meet her cue exactly.',
-      techniques: 'The fight with the paper and the fall are slapstick’s physical comedy. The swat is a staged blow that lands off frame and is played entirely as his reaction, with no contact. The stagger off a low step onto the dust sheets is worked out solo, slowly at first, and repeats on every take. The gags ask for comic timing.',
+      techniques: 'The fight with the paper and the fall are slapstick clowning. The swat is a staged blow that lands off frame: play it entirely as his reaction, with no contact. Work out the stagger off a low step onto the dust sheets solo, slowly at first, so it repeats on every take. The gags ask for comic timing.',
       beats: 'A comic struggle, a blow and a fall funny and painful at once, then the luck that saves him.',
     },
     readings: [
@@ -443,7 +443,7 @@ export const BRIEFS_E: readonly Brief[] = [
   {
     id: 'brief-slice_of_life', title: 'The Late Number Nine', kinds: ['slice_of_life'], medium: 'camera', size: 'short',
     logline: 'A student trying to finish an essay in a bus shelter is asked by an old man to write his granddaughter’s birthday card for him.',
-    circumstances: 'A bus shelter on a Sunday evening, rain on the roof, the number nine running twenty minutes late. The essay is due at midnight. The man on the other end of the bench takes this bus every Sunday, and today his hands are shaking too much to write. For the tape Kwame sits alone with the card and pen on his knee, and the old man’s voice comes from beside the lens.',
+    circumstances: 'A bus shelter on a Sunday evening, rain on the roof, the number nine running twenty minutes late. The essay is due at midnight. The man on the other end of the bench takes this bus every Sunday, and today his hands are shaking too much to write. For the tape, sit alone with the card and pen on your knee; the old man’s voice comes from beside the lens.',
     relationship: 'Regulars at the stop who have nodded at each other for a year and never spoken.',
     you: 'Kwame, twenty, a nursing student with a laptop on his knees.',
     reader: 'Mr. Sadowski, in his eighties, dictating from the other end of the bench.',
@@ -460,7 +460,7 @@ export const BRIEFS_E: readonly Brief[] = [
       beats: 'A favor done half-heartedly, a correction that’s funny and tender, then the laptop closed.',
     },
     readings: [
-      { id: 'drawn', label: 'Drawn In', reading: 'He resents the interruption at first and comes round slowly, with nothing marking the moment it happens.', rests: 'The essay is due at midnight, and the laptop is closed only in the last beat.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'consistency', ability: 'focus', weight: 0.5 }] },
+      { id: 'drawn', label: 'Drawn In', reading: 'He resents the interruption at first and comes round slowly, with nothing marking the moment it happens.', rests: 'The essay is due at midnight, and he closes the laptop only in the last beat.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'consistency', ability: 'focus', weight: 0.5 }] },
       { id: 'glad', label: 'Glad Of It', reading: 'He’s been hoping for a reason to talk to the old man for a year, and the card is the excuse.', rests: 'They’ve nodded at each other at this stop every Sunday for a year.', lean: { connection: 1.25, responsiveness: 1.05 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.3 }] },
     ],
   },
@@ -480,7 +480,7 @@ export const BRIEFS_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 0, partner: 3, vocal: 0, improvisation: 2,
     why: {
-      improvisation: 'Only the sum and her demand are fixed: how she gets Bev to sign is found against whatever Bev says, as a real office conversation goes.',
+      improvisation: 'Only the sum and her demand are fixed. You find how she gets Bev to sign from whatever Bev says, the way a real office conversation goes.',
       partner: 'Bev is on her side and still in the way, and Lucía has to work out how to use that.',
       beats: 'A plain case, a gift so small it’s absurd, then a demand made with patience.',
     },
@@ -604,7 +604,7 @@ export const BRIEFS_E: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 0, partner: 3, vocal: 0, improvisation: 0,
     why: {
-      timing: 'The scene turns on a name given a beat too fast, and that beat has to be placed.',
+      timing: 'The scene turns on a name given a beat too fast, so that beat has to land exactly.',
       partner: 'Every answer depends on how curious he is, and she reads it from his tone.',
       beats: 'A light deflection, a slip, then the cost of his trust, felt and kept to herself.',
     },

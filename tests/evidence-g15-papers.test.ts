@@ -312,7 +312,7 @@ describe('documents.apply_idcard', () => {
     expect(sim.execute(APPLY_ID).error).toBe('On an F-1, the DMV asks for your I-20 and proof that you’re enrolled, and you’re not at school.');
     tended(sim, at(2026, 9, 25));
     expect(sim.player.usOutOfStatus).toBe(at(2026, 9, 8) + 15 * MS_DAY);
-    expect(sim.execute(APPLY_ID).error).toBe('The DMV checks lawful presence through SAVE, and you stayed past the end of your status.');
+    expect(sim.execute(APPLY_ID).error).toBe('The DMV checks lawful presence through SAVE, and you’re out of status, so it won’t issue you a card.');
     expect(held(sim, 'idcard')).toEqual([]);
   });
 
@@ -388,7 +388,7 @@ describe('documents.apply_idcard', () => {
     const get = button(first, 'Get Non-Driver Identification Card');
     expect(get).toMatchObject({ feature: 'documents.apply_idcard', disabled: false });
     const before = checking(sim).balance;
-    expect(press(get)).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes September 22, 2026. It’s good until June 14, 2034.']);
+    expect(press(get)).toEqual(['You applied for the Non-Driver Identification Card and paid $28.00. The card comes September 22, 2026, and it’s good until June 14, 2034.']);
     expect(before - checking(sim).balance).toBe(28_00);
     const after = papers(sim, 'passport');
     expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'One is already on its way.' });
@@ -538,12 +538,12 @@ describe('documents.apply_opt', () => {
     const first = papers(sim, 'work');
     expect(first.text).toContain('Your Program Ends July 15, 2026');
     expect(first.text).toContain('Your US Status Ends September 13, 2026 Including the grace period after your permission ends');
-    expect(first.text).toContain('OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval');
-    expect(first.text).toContain('$470.00. Premium processing adds $1,780.00 and gets a decision within 30 business days.');
+    expect(first.text).toContain('OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval');
+    expect(first.text).toContain('$470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.');
     expect(button(first, 'Apply With Premium Processing')).toMatchObject({ feature: 'documents.apply_opt', disabled: false });
     expect(press(button(first, 'Apply For OPT'))).toEqual(['Applied for OPT and paid $470.00. It’s decided by November 22, 2026.']);
     const after = papers(sim, 'work');
-    expect(after.text).toContain('Your US Status Held While you study, or while an application is decided');
+    expect(after.text).toContain('Your US Status Held While you study, or while an application is being decided');
     expect(after.text).toContain('Employment Authorization, OPT');
     expect(after.text).toContain('Ready November 22, 2026 Being Decided');
     for (const words of ['Apply For OPT', 'Apply With Premium Processing']) expect(button(after, words)).toMatchObject({ disabled: true, title: 'You’ve already applied for OPT.' });
@@ -751,7 +751,7 @@ describe('documents.report_lost', () => {
   it('refuses a British student’s F-1 in its words, which holds; her passport reported lost leaves the F-1 in force', () => {
     const sim = life('g15-lost-f1', 'uk-eng-london');
     const f1 = held(sim, 'visa')[0]!;
-    expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: f1.id } }).error).toBe('A status can’t be reported lost: it stays in force whatever happens to the paper.');
+    expect(sim.execute({ kind: 'documents.report_lost', payload: { documentId: f1.id } }).error).toBe('You can’t report a status lost. It stays in force whatever happens to the paper.');
     expect(f1.status).toBe('valid');
     sim.must({ kind: 'documents.report_lost', payload: { documentId: held(sim, 'passport')[0]!.id } });
     expect(f1.status).toBe('valid');

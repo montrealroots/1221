@@ -273,7 +273,7 @@ describe('h-money', () => {
     expect(sim.must({ kind: 'bank.close_savings', payload: { accountId: savings.id } })).toEqual({ closed: savings.id });
     expect(sim.must({ kind: 'card.close', payload: { accountId: own(sim, 'credit_card').id } })).toEqual({ closing: true });
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checking.id } }).error)
-      .toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
+      .toBe('It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.');
     expect(sim.ledger.accountsOf(sim.player.id).map((a) => a.name)).toEqual(['Chase Total Checking']);
     // $92,391.00 and the savings' $413,043.00 (the profile's 380,000 € at 0.92, to the dollar) in one account, written to the
     // dollar from $100,000.
@@ -566,7 +566,7 @@ describe('l-person', () => {
     play.type('height-ft', '5');
     play.type('height-in', '7');
     // 67 inches at 2.54 cm, 170.18, kept to a tenth; 143 lb at 0.45359237 kg, 64.86, 64.9; 64.9 / 1.702², 22.40.
-    expect(play.type('weight-lb', '143')).toContain('A body mass index of 22.4.');
+    expect(play.type('weight-lb', '143')).toContain('That’s a body mass index of 22.4.');
     play.next('Continue');
     play.next('Begin');
     const config = play.started()!;
@@ -590,7 +590,7 @@ describe('l-person', () => {
     play.type('height-ft', '5');
     play.type('height-in', '7');
     // 67 inches at 2.54 cm, 170.18, kept to a tenth; 143 lb at 0.45359237 kg, 64.86, 64.9; 64.9 / 1.702², 22.40.
-    expect(play.type('weight-lb', '143')).toContain('A body mass index of 22.4.');
+    expect(play.type('weight-lb', '143')).toContain('That’s a body mass index of 22.4.');
     play.next('Continue');
     play.next('Begin');
     const config = play.started()!;
@@ -605,7 +605,7 @@ describe('l-person', () => {
     expect(INJURY_KIND.fracture.days).toEqual([42, 84]);
     // Monday 24 August and 43 days: 7 to the end of August, 30 in September, 6 in October.
     expect((at(2026, 10, 6, 8, 30) - at(2026, 8, 24, 8, 30)) / MS_DAY).toBe(43);
-    const line: [string, string] = ['Mending. ', 'A Broken Bone, until October 6, 2026, and laid up until then.'];
+    const line: [string, string] = ['Mending. ', 'A broken bone, until October 6, 2026, and laid up until then.'];
     expect(openedFromHome(sim).lines).toContainEqual(line);
     sim.advanceTo(at(2026, 10, 6, 8));
     expect(openedFromHome(sim).lines).toContainEqual(line);
@@ -620,7 +620,7 @@ describe('l-person', () => {
     expect(Object.keys(sim.universe.people)).toEqual([sim.player.id]);
     // Her classmates are records on the School, with a look of their own kind.
     expect(sim.player.school!.classmates).toHaveLength(15);
-    expect(resolveLook(sim, subject('person', 'someone-else'))).toEqual({ gone: 'They aren’t part of this story any more.' });
+    expect(resolveLook(sim, subject('person', 'someone-else'))).toEqual({ gone: 'This person isn’t in your life any more.' });
     type Seen = { name: string; kind: string; ways?: { label: string }[]; body?: unknown };
     const mine = resolveLook(sim, subject('person', sim.player.id)) as Seen;
     expect(mine.ways!.map((w) => w.label)).toContain('Your Own Plans');

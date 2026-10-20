@@ -215,7 +215,7 @@ describe('documents.replace_license', () => {
     expect(replaced(twin).map((t) => t.memo)).toEqual(['Class D (Operator) driver license, replaced']);
     twin.advanceTo(on(2026, 9, 27));
     expect(documentsOf(twin.player).filter((d) => d.kind === 'license' && d.status === 'valid').map((d) => d.expiresAt)).toEqual([on(2026, 10, 1, 3)]);
-    expect(titled(twin, 'Class D (Operator) driver license Arrived').map((n) => n.body)).toEqual(['It’s in your hands and in force from today.']);
+    expect(titled(twin, 'Class D (Operator) driver license Arrived').map((n) => n.body)).toEqual(['It’s arrived, and you can use it from today.']);
 
     // On 30 September, 21 days would bring it on 21 October, three weeks past its date.
     sim.advanceTo(on(2026, 9, 30));
@@ -282,8 +282,8 @@ describe('What Needs You', () => {
     expect(needs.later.some((line) => /no date/.test(line))).toBe(false);
     // It said “A question with a date closes on its date” until 2026-10-14, when every question came to have one, and the
     // save’s keeping a closed question to its date went from the line after.
-    expect(needs.later).toContain('Every question has a date, and closes on it, answered or not, at the world’s next look, which comes every 2 days.');
-    expect(needs.later).toContain('The save forgets a closed question 180 days after it closed, and keeps your last 500 notices.');
+    expect(needs.later).toContain('Every question has a date. If you don’t answer it, it closes by itself within two days after that date.');
+    expect(needs.later).toContain('You can still open a closed question for 180 days after it closes, and SLATE keeps your latest 500 notices.');
   }, 60_000);
 
   it('the Papers entry gives Home’s tax owed as growing only once its return’s due date has passed, as the alert says it (`growing`, ui/screens/Home.tsx)', () => {

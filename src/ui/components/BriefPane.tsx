@@ -171,7 +171,10 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
         <ol className="small" style={{ margin: 0 }}>
           {b.beats.map((beat, i) => <li key={i}>{beat.what} <span className="xs dim">({beat.tones.map((t) => TONE[t]).join(' and ')}{beat.tones.length > 1 ? ', held at once' : ''})</span></li>)}
         </ol>
-        <p className="xs dim" style={{ margin: 0 }}>{turns.transitions} change{turns.transitions === 1 ? '' : 's'} of tone between beats and {turns.blends} beat{turns.blends === 1 ? '' : 's'} held two ways. Rehearsal is complete at {pct(req.rehearsal!)} in a beat, up to {pct(PIECE.brief.perTurn)} more in a beat a change leads into, and {pct(PIECE.brief.perBlend)} more in one held two ways. {b.why.beats}</p>
+        {/* The beats' arc (`why.beats`) is said once, after the Tone line of What It Asks below, where `briefMaterial` gives
+            it as the turns' reason (from 2026-10-19, brief 15, at material-b's suggestion): until then this line said it
+            too, and the pane read it twice. */}
+        <p className="xs dim" style={{ margin: 0 }}>{turns.transitions} change{turns.transitions === 1 ? '' : 's'} of tone between beats and {turns.blends} beat{turns.blends === 1 ? '' : 's'} held two ways. Rehearsal is complete at {pct(req.rehearsal!)} in a beat, up to {pct(PIECE.brief.perTurn)} more in a beat a change leads into, and {pct(PIECE.brief.perBlend)} more in one held two ways.</p>
       </div>
 
       <MaterialDemands material={material} />

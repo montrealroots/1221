@@ -176,7 +176,7 @@ describe('a mandatory medical leave', () => {
     considerWelfare(sim, sim.player);
     const w = sim.player.school!.welfare!;
     expect(w.trigger).toMatch(/2 stays in hospital/);
-    expect(titled(sim, 'Yale Health Asks To See You')[0]!.body).toMatch(/not of any diagnosis/);
+    expect(titled(sim, 'Yale Health Asks To See You')[0]!.body).toMatch(/not at any diagnosis/);
     sim = reload(sim);
     sim.advanceTo(w.assessAt + MS_HOUR);
     expect(titled(sim, 'Yale Health Recommends A Medical Leave')).toHaveLength(1);

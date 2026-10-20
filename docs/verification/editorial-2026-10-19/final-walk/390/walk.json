@@ -1,0 +1,81 @@
+{
+ "base": "http://localhost:4241",
+ "width": 390,
+ "visited": [
+  {
+   "save": "brief.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "decision.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "dir1.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "dir2.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "direction.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "health.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "leave.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "lien.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "missed-plan.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "nonfiler.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "rehearsal.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "roundups.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "tax.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "withdraw.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "workload.json",
+   "screens": 25,
+   "failed": []
+  }
+ ]
+}

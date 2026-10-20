@@ -191,7 +191,7 @@ describe('school.orientation', () => {
     expect(cw(sim).orientation.done[task as 'tour']).toBe(sim.now);
     return r.told;
   };
-  const LIBRARY = 'You don’t know where the library is yet. The building tour in Orientation shows you.';
+  const LIBRARY = 'You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.';
 
   it('PLAYER JOURNEY: the week missed in New York, caught up in New Haven: each session takes its own minutes and opens what it arranges, once, across a reload', () => {
     const sim = student('g19-orientation');
@@ -216,7 +216,8 @@ describe('school.orientation', () => {
     expect(firstYearFall).toHaveLength(8);
     const open = cw(sim).assignments.filter((a) => a.status === 'open');
     expect(open.map((a) => a.course).sort()).toEqual(firstYearFall);
-    expect(told).toContain(`${open.length} courses gave you their first piece now`);
+    expect(open).toHaveLength(8);
+    expect(told).toContain('Eight courses gave you their first piece now');
     tended(there, on(2026, 8, 29, 9));
     const shape = (s: Simulation) => cw(s).assignments.map((a) => [a.course, a.template, a.dueOn, a.sceneId ?? '']).sort();
     expect(shape(sim)).toEqual(shape(there));
@@ -240,13 +241,13 @@ describe('school.orientation', () => {
     const talk = open.find((a) => a.template === 'context-presentation')!;
     const studioStep = { kind: 'school.prepare', payload: { assignmentId: score.id, activity: 'devise' } };
     const libraryStep = { kind: 'school.prepare', payload: { assignmentId: talk.id, activity: 'research' } };
-    expect(sim.execute(studioStep).error).toBe('You don’t know where the studios are yet. The building tour in Orientation shows you.');
-    expect(sim.execute(libraryStep).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
+    expect(sim.execute(studioStep).error).toBe('You don’t know where the studios are yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
+    expect(sim.execute(libraryStep).error).toBe('You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
     caughtUp(sim, 'tour', 120);
     const devised = sim.execute<{ moved: number }>(studioStep);
     expect(devised.ok, devised.error).toBe(true);
     expect(devised.value!.moved).toBeGreaterThan(0);
-    expect(sim.execute(libraryStep).error).not.toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
+    expect(sim.execute(libraryStep).error).not.toBe('You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
     const read = sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } });
     expect(read.ok, read.error).toBe(true);
 
@@ -625,7 +626,7 @@ describe('school.work_note', () => {
       if (prior.outcome === 'learned') expect(n.text).toContain(`which ${worse ? 'made it worse' : 'didn’t move it'}: worth knowing, and not the answer.`);
     }
 
-    // The closing: the calls as the calendar has them, the notes as they were given, taken and answered in the work.
+    // The closing: the calls as the calendar has them, the notes as they were given and taken (with those answered in the work, until 2026-10-19).
     tended(sim, callsOf(sim).nights.at(-1)!.at + 4 * MS_HOUR);
     const { calls } = callsOf(sim);
     const given = notes.filter((n) => n.taken !== undefined);
@@ -633,10 +634,10 @@ describe('school.work_note', () => {
     expect(untaken.some((n) => n.focus.kind === 'craft')).toBe(true);
     const looking = titled(sim, `Looking Back: ${TITLE}`);
     expect(looking).toHaveLength(1);
-    const answered = notes.filter((n) => n.focus.kind === 'craft' && n.taken).length;
     const learned = notes.filter((n) => n.outcome === 'learned').length;
+    const W = ['none', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
     const [done, took, dress] = [calls.filter((c) => c.status === 'done').length, given.filter((n) => n.taken).length, proc(sim).dress];
-    expect(looking[0]!.body).toContain(`${TITLE}: ${done === calls.length ? `you answered all ${calls.length} calls` : `you answered ${done || 'none'} of your ${calls.length} calls`}. The director gave you ${given.length} notes. You took ${took || 'none'}${took && answered ? `, ${answered === took ? 'all' : answered} of them answered in the work` : ''}${learned ? `, and worked on ${learned} that didn’t move` : ''}. The dress rehearsal was ${dress === 'off' ? 'an off night' : dress}.`);
+    expect(looking[0]!.body).toContain(`${TITLE}: ${done === calls.length ? `you answered all ${calls.length} calls` : `you answered ${done || 'none'} of your ${calls.length} calls`}. The director gave you ${W[given.length] ?? given.length} notes, and you took ${took === given.length ? 'all of them' : W[took] ?? took}${learned ? `. You worked on ${W[learned] ?? learned} more, but ${learned === 1 ? 'it didn’t' : 'they didn’t'} move` : ''}. The dress rehearsal was ${dress === 'off' ? 'an off night' : dress}.`);
     expect(looking[0]!.body).toContain('What’s still open goes with you into class.');
     // Each craft note not taken, in the class's ledger as the part of a scene's preparation that answers it.
     const ledger = notesOf(courseworkOf(sim, sim.player)!);
@@ -937,7 +938,7 @@ describe('school.cabaret', () => {
     expect(you.from).toContainEqual({ what: SEASON, source: 'cabaret', nights: 5, delivery, weight });
     // A fifth of the fit by the delivery, as the chair reads it.
     expect(Math.abs(you.score - (you.fit * (0.8 + 0.2 * delivery) + you.balance))).toBeLessThanOrEqual(0.15);
-    expect(drawn(sim, 'casting').shown).toContain(`${SEASON}, the Yale Cabaret, 5 nights (${Math.round(delivery * 100)}%, counted ×2.5)`);
+    expect(drawn(sim, 'casting').shown).toContain(`${SEASON}, the Yale Cabaret, 5 nights (${Math.round(delivery * 100)}%, counted as 2.5 nights)`);
     // Never joined: nothing to read, everything delivered.
     expect(never.player.school!.lastWork?.from ?? []).toEqual([]);
     expect(never.player.school!.castRead!.rows.find((r) => r.you)!.delivery).toBe(1);

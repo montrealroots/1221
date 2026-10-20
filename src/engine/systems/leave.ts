@@ -41,7 +41,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { formatDate, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { COURSES, EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, YALE_DRAMA } from '../content/school';
 import {
-  CLASSES_KIND, COMPANY_KIND, ESTIMATE, callOff, bindCeiling, ceilingBefore, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, keyOf, drawCohort, formerProductions, keepCredit, schoolProduction, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
+  CLASSES_KIND, COMPANY_KIND, ESTIMATE, callOff, countWords, bindCeiling, ceilingBefore, EVALUATION_KIND, PAYDAY_KIND, conferIfReady, advanceMates, keyOf, drawCohort, formerProductions, keepCredit, schoolProduction, TERM_KIND, academicTerm, at, classPeriod, hasNeed, isClassDay, leaveCabaret, planWeek, schedule,
   schoolEnded, setStanding, termAccount, termBegins, termLabel, termStart, yearOfTerm, zone, type SchoolRecord,
 } from './school';
 import { degreeShortfall, failsOf, INCOMPLETE_DUE_KIND } from './courserecord';
@@ -56,6 +56,10 @@ import { drawFromBank, expenseFor } from './spending';
 import { payeeAccount } from './cash';
 import { outsideTheCover } from './appointments';
 import { clinicById } from './clinics';
+import { spokenList } from '../core/text';
+
+/** A term's place past six, as prose says it: seventh, eighth, ninth. */
+const ORDINAL: Readonly<Record<number, string>> = { 7: 'seventh', 8: 'eighth', 9: 'ninth' };
 
 export type LeaveKind = 'personal' | 'medical';
 export type LeaveReason = 'illness' | 'injury' | 'mental-health' | 'family' | 'financial' | 'personal' | 'professional';
@@ -177,8 +181,13 @@ const money = (sim: Simulation, cents: Money) => formatMoney(cents, saveCurrency
 function tellOutsideTheCover(sim: Simulation, person: Person): void {
   const outside = outsideTheCover(person);
   if (!outside.length) return;
-  const list = outside.map((a) => `${a.what} on ${formatDate(a.at, zone())} at ${clinicById(a.clinicId!)?.name ?? 'another practice'}`).join('; ');
-  notify(sim, person, 'Your Appointment Is Outside Yale Health', `${list}: booked while Yale Health didn’t cover you, it stays where it was booked, and Yale Health pays for a visit only at its own Health Center. Call it off under Your Doctor on Papers, then Book An Appointment, and you’re seen there.`, 75);
+  const list = spokenList(outside.map((a) => `${a.what.replace(/^A /, 'a ')} on ${formatDate(a.at, zone())} at ${clinicById(a.clinicId!)?.name ?? 'another practice'}`));
+  // Said with the player as the subject (from 2026-10-19, brief 15): until then “…: booked while Yale Health didn’t cover
+  // you, it stays where it was booked”.
+  const one = outside.length === 1;
+  // Its control named as the booking notice names it (from 2026-10-19, brief 15's coordinator): the button, the screen
+  // and its tab. Until then "call it off under Your Doctor on Papers", the panel's name and not the button's.
+  notify(sim, person, 'Your Appointment Is Outside Yale Health', `You booked ${list} while Yale Health didn’t cover you, so ${one ? 'it stays' : 'they stay'} where you booked ${one ? 'it' : 'them'}. Yale Health pays only for a visit at its own Health Center. To be covered, press Call It Off${one ? '' : ' beside each'} on Papers, under Health Cover, then Book An Appointment to be seen there.`, 75);
 }
 const usd = (sim: Simulation, cents: Money) => inSaveMoney(sim, cents, 'USD');
 
@@ -219,7 +228,7 @@ export function leaveLengths(sim: Simulation, school: SchoolRecord, kind: LeaveK
   const used = leaveTermsUsed(school);
   const yearLong = COURSES.filter((c) => c.year === yearOfTerm(Math.min(YALE_DRAMA.terms - 1, resume)) && c.terms.length > 1).map((c) => c.code);
   return [1, 2, 3].map((n) => {
-    if (used + n > LEAVE_RULES.maxTerms) return { terms: n, why: `You’ve had ${used} term${used === 1 ? '' : 's'} of leave; the Bulletin allows ${LEAVE_RULES.maxTerms} in all.` };
+    if (used + n > LEAVE_RULES.maxTerms) return { terms: n, why: `You’ve had ${countWords(used)} term${used === 1 ? '' : 's'} of leave, and the Bulletin allows ${countWords(LEAVE_RULES.maxTerms)} in all.` };
     const back = termStart(start.term + n).fall;
     if (back !== termStart(start.term).fall && yearLong.length) return { terms: n, why: `You’d come back in the ${back ? 'fall' : 'spring'} to the second halves of year-long courses (${yearLong.slice(0, 2).join(', ')} and others) whose first halves you haven’t taken.` };
     return { terms: n };
@@ -421,11 +430,13 @@ export function startLeave(sim: Simulation, person: Person, begun = true): void 
   sim.schedule({ at: Math.max(back, sim.now + 120_000), kind: TERM_KIND, label: termBegins(l.returnTerm), category: 'school', priority: 30, payload: { personId: person.id, term: l.returnTerm } });
   notify(sim, person, 'Your Leave Has Begun', [
     `You’re on a ${l.kind} leave until ${termLabel(l.returnTerm)}, ${formatDate(back, zone())}${termStart(l.returnTerm).estimate ? ' (an estimated date)' : ''}.`,
-    left.length ? `${left.join(', ')} ${left.length === 1 ? 'is' : 'are'} left unfinished, to be taken again when you’re back.` : '',
+    // The courses after the count, in a list with its “and” (from 2026-10-19, brief 15): until then the list, joined by
+    // commas alone, came first, “Acting I, …, Drama 50: The Theatrical Event are left unfinished”.
+    left.length ? (left.length === 1 ? `${left[0]} is left unfinished, to take again when you’re back.` : `You leave ${countWords(left.length)} courses unfinished, to take again when you’re back: ${spokenList(left)}.`) : '',
     l.aidReturned ? `${money(sim, l.aidReturned)} of the term’s scholarship has to be returned on the rebate schedule. It’s on your Yale account, due by ${formatDate(sim.now + EXTENDED_STUDY.dueDays * MS_DAY, zone())}.` : '',
     l.kind === 'medical' ? 'Yale Health keeps covering you as Affiliate cover, which the School pays for.' : `Yale Health’s student cover ${l.retro ? 'is canceled back to the insurance term’s start, and its fee refunded' : l.coverEnds! > sim.now ? `ends on ${formatDate(l.coverEnds!, zone())}` : 'ended today'}. Affiliate cover, ${money(sim, usd(sim, LEAVE_RULES.affiliatePerTerm))} a term, can be bought until ${formatDate(l.affiliateBy!, zone())}.`,
     l.f1Extended ? 'Your I-20 is extended a year, as an authorized reduced course load.' : '',
-    `Give notice of your return by ${formatDate(l.noticeBy, zone())}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}, on the Standing tab. Without it, the leave ends in dismissal.`,
+    `Give notice of your return by ${formatDate(l.noticeBy, zone())}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}: press Give Notice Of Return on the Standing And Craft tab. Without it, the leave ends in dismissal.`,
   ].filter(Boolean).join(' '), 85);
 }
 
@@ -440,7 +451,7 @@ export function returnFromLeave(sim: Simulation, person: Person): void {
   delete school.leave;
   school.mustRegister = true;
   planWeek(sim, person, sim.now);
-  notify(sim, person, 'Back From Your Leave', `Welcome back for ${termLabel(l.returnTerm)}. Register on the Standing tab before classes: until you do, classes don’t count your attendance. You’re in year ${yearOfTerm(academicTerm(school, l.returnTerm))} again, with the courses you left, in the class of ${school.classOf}.`, 85);
+  notify(sim, person, 'Back From Your Leave', `Welcome back for ${termLabel(l.returnTerm)}. Press Register on the Standing And Craft tab before classes: until you do, you’re counted absent from them. You’re in year ${yearOfTerm(academicTerm(school, l.returnTerm))} again, with the courses you left, in the class of ${school.classOf}.`, 85);
   tellOutsideTheCover(sim, person);
 }
 
@@ -566,7 +577,7 @@ export function joinCohort(sim: Simulation, person: Person, term: number): void 
   school.classmates = next;
   delete school.around;
   delete school.castRead;
-  notify(sim, person, `The Class Of ${school.classOf}`, `You go on with the class of ${school.classOf}, ${next.length} actors in their ${academic % 2 === 0 ? 'first' : 'second'} term of year ${yearOfTerm(academic)}, as you are. Your first class, the class of ${school.classOf - 1}, is a year ahead now; they’re on the Standing tab, and what you shared with them stays yours.`, 75);
+  notify(sim, person, `The Class Of ${school.classOf}`, `You go on with the class of ${school.classOf}, ${next.length} actors in their ${academic % 2 === 0 ? 'first' : 'second'} term of year ${yearOfTerm(academic)}, as you are. Your first class, the class of ${school.classOf - 1}, is a year ahead now. They’re listed on the Standing And Craft tab, and what you shared with them stays yours.`, 75);
 }
 
 // ---------------------------------------------------------------------------
@@ -593,7 +604,7 @@ export function facultyReview(sim: Simulation, person: Person, term: number): { 
   const outcome = already || before || !room ? 'dismissed' : 'warning';
   const why = outcome === 'dismissed'
     ? `${out} The faculty reviewed it and disqualified you: ${already ? 'you were already on academic warning' : before ? 'they had reviewed a disqualification before' : 'there’s no room left to repeat the year within nine semesters'}.`
-    : `${out} The faculty reviewed it and kept you, on academic warning: the year is to be repeated, which you ask for at its end.`;
+    : `${out} The faculty reviewed it and kept you on academic warning, to repeat the year: ask to repeat it at the year’s end, on the Standing And Craft tab.`;
   (school.reviews ??= []).push({ at: sim.now, term, outcome, why });
   if (outcome === 'warning') { school.standing = 'warning'; notify(sim, person, 'A Faculty Review: On Warning', why, 90); }
   return { outcome, why };
@@ -657,7 +668,7 @@ export function considerWelfare(sim: Simulation, person: Person): void {
   const assessAt = businessDaysOn(sim.now, MANDATORY_LEAVE.assessWorkingDays, 'yale');
   school.welfare = { at: sim.now, trigger, assessAt, status: 'scheduled' };
   sim.schedule({ at: assessAt, kind: WELFARE_KIND, label: 'Yale Health: An Assessment', category: 'school', priority: 34, requiresPlayer: true, durationMinutes: MANDATORY_LEAVE.assessMinutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id } });
-  notify(sim, person, 'Yale Health Asks To See You', `With ${trigger}, Yale Health has asked to assess whether you can go on with your studies for now, on ${formatDate(assessAt, zone())}. It’s an individual assessment of how you’re managing and what the School can adjust for you, not of any diagnosis; it can end with nothing changed, with modifications, or with a recommendation of a medical leave that the dean decides. You can ask for a medical leave yourself first. Not coming to the assessment is itself a ground the Bulletin names for a leave.`, 90);
+  notify(sim, person, 'Yale Health Asks To See You', `After ${trigger}, Yale Health has asked to see you on ${formatDate(assessAt, zone())}, to assess whether you can go on with your studies for now. It looks at how you’re managing and what the School can adjust for you, not at any diagnosis. It can end with nothing changed, with modifications, or with a recommendation of a medical leave, which the dean decides. You can ask for a medical leave yourself first. If you don’t come, the Bulletin counts that as a ground for a leave in itself.`, 90);
 }
 
 /** What an assessment finds now: fit; back within two weeks, so the modifications are enough; or not, so a leave. */
@@ -734,11 +745,11 @@ export function billUnsupportedTerm(sim: Simulation, person: Person, term: numbe
   const billed = !livingPaid
     ? `${money(sim, a.tuition)} tuition and ${money(sim, a.healthPlan)} for Yale Health are on your Yale account, due by ${due}. ${unpaid}`
     : applied <= 0
-      ? `${money(sim, a.tuition)} tuition is on your Yale account, due by ${due}; the term’s living scholarship meets its ${money(sim, a.healthPlan)} Yale Health fee. ${unpaid}`
+      ? `${money(sim, a.tuition)} tuition is on your Yale account, due by ${due}; the term’s living scholarship pays its ${money(sim, a.healthPlan)} Yale Health fee. ${unpaid}`
       : left > 0
-        ? `${money(sim, a.tuition)} tuition is on your Yale account; the term’s living scholarship meets its ${money(sim, a.healthPlan)} Yale Health fee and pays ${money(sim, applied)} of what the account owes before any reaches your bank, so ${money(sim, left)} is due by ${due}. ${unpaid}`
-        : `${money(sim, a.tuition)} tuition is on your Yale account; the term’s living scholarship meets its ${money(sim, a.healthPlan)} Yale Health fee and pays the ${money(sim, applied)} the account owes before any reaches your bank, so none of it is due.`;
-  notify(sim, person, 'A Term Without Tuition Support', `The tuition scholarship supports six terms, and this is your ${enrolledTerms(school).length}th: ${billed}`, 85);
+        ? `${money(sim, a.tuition)} tuition is on your Yale account; the term’s living scholarship pays its ${money(sim, a.healthPlan)} Yale Health fee and ${money(sim, applied)} of what the account owes before any reaches your bank, so ${money(sim, left)} is due by ${due}. ${unpaid}`
+        : `${money(sim, a.tuition)} tuition is on your Yale account; the term’s living scholarship pays its ${money(sim, a.healthPlan)} Yale Health fee and the ${money(sim, applied)} the account owes before any reaches your bank, so none of it is due.`;
+  notify(sim, person, 'A Term Without Tuition Support', `The tuition scholarship supports six terms, and this is your ${ORDINAL[enrolledTerms(school).length] ?? `${enrolledTerms(school).length}th`}: ${billed}`, 85);
 }
 
 // ---------------------------------------------------------------------------
@@ -850,8 +861,9 @@ function bankShortWords(sim: Simulation, person: Person, amount: Money, inFull: 
   const short = fromBankToYale(sim, person, amount).short;
   if (short <= 0) return undefined;
   const can = amount - short;
-  if (can <= 0) return 'Your current account and the savings beside it can’t cover any of it. Move money into your current account first.';
-  return `Your current account and the savings beside it can cover only ${money(sim, can)} of it now. ${inFull ? 'It’s paid in full, so move money into your current account first.' : 'Pay that or less, or move money into your current account first.'}`;
+  // The everyday account is a checking account from 2026-10-19 (brief 15, docs/GLOSSARY.md), a current account until then.
+  if (can <= 0) return 'Your checking account and your savings can’t cover any of it, so nothing was paid. Move money into your checking account first.';
+  return `Your checking account and your savings can cover only ${money(sim, can)} of it now, so nothing was paid. ${inFull ? 'It’s paid in full, so move money into your checking account first.' : 'Pay that or less, or move money into your checking account first.'}`;
 }
 
 /** Why a payment on the Yale account can't be made, or nothing. */
@@ -971,9 +983,9 @@ export function repeatRefusal(sim: Simulation, person: Person): string | undefin
  */
 export function cancelRepeatWarning(sim: Simulation, school: SchoolRecord): string {
   // Past the thirty days, it withholds the degree at once (`school.cancel_repeat`, from 2026-10-13).
-  if (school.repeatBy !== undefined && sim.now >= school.repeatBy) return `Calling it off withholds the degree now: its thirty days ended on ${formatDate(school.repeatBy, sim.zone)}.`;
+  if (school.repeatBy !== undefined && sim.now >= school.repeatBy) return `If you call it off, the faculty won’t recommend the degree: its thirty days ended on ${formatDate(school.repeatBy, sim.zone)}.`;
   return school.repeatBy !== undefined
-    ? `Calling it off leaves the degree withheld if you don’t ask again by ${formatDate(school.repeatBy, sim.zone)}.`
+    ? `If you call it off and don’t ask again by ${formatDate(school.repeatBy, sim.zone)}, the faculty won’t recommend the degree.`
     : 'Calling it off carries you on to the next year with the course not passed, and the degree can’t be completed without it.';
 }
 
@@ -1021,7 +1033,7 @@ export function offerRepeat(sim: Simulation, person: Person): boolean {
   if (!repeat && extra.why) { delete school.repeatBy; return false; }
   sim.schedule({ at: school.repeatBy, kind: REPEAT_DUE_KIND, label: 'Finishing The Degree: Last Day To Ask', category: 'school', priority: 33, payload: { personId: person.id } });
   const unpassed = degreeShortfall(school).failed.map((r) => r.name);
-  notify(sim, person, 'Your Degree Isn’t Complete', `${unpassed.join(', ')} ${unpassed.length === 1 ? 'isn’t' : 'aren’t'} passed, and the degree needs every course. By ${formatDate(school.repeatBy, zone())} you can ask ${[repeat ? 'to repeat the year' : '', !extra.why ? `for an additional term, ${termLabel(extra.term!)}, to retake ${extra.courses!.length === 1 ? 'it' : 'them'}` : ''].filter(Boolean).join(' or ')}, on the Standing tab. A term past the sixth has no tuition support unless the aid office grants it. If you don’t ask, the degree is withheld.`, 90);
+  notify(sim, person, 'Your Degree Isn’t Complete', `You haven’t passed ${spokenList(unpassed)}, and the degree needs every course. By ${formatDate(school.repeatBy, zone())}, you can ask on the Standing And Craft tab ${[repeat ? 'to repeat the year' : '', !extra.why ? `for an additional term, ${termLabel(extra.term!)}, to retake ${extra.courses!.length === 1 ? 'it' : 'them'}` : ''].filter(Boolean).join(' or ')}. A term past the sixth has no tuition support unless the aid office grants it. If you don’t ask, the faculty won’t recommend the degree.`, 90);
   return true;
 }
 
@@ -1101,7 +1113,7 @@ export function registerLeave(sim: Simulation): void {
     if (terms === undefined) return;
     school.leave = { id: `leave-${(school.leaves?.length ?? 0) + 1}`, kind: 'medical', reason: 'illness', requestedAt: s.now, status: 'granted', firstTerm: evaluated(school, t) ? t + 1 : t, returnTerm: (evaluated(school, t) ? t + 1 : t) + terms, terms, decideAt: s.now, decidedAt: s.now, mandatory: { assessedAt: w.at, why: w.why ?? '', appealBy: s.now + MANDATORY_LEAVE.appealDays * MS_DAY } };
     if (!evaluated(school, t)) startLeave(s, person);
-    notify(s, person, 'A Medical Leave, By The Dean’s Decision', `The dean has placed you on a medical leave on Yale Health’s recommendation: ${w.why} You can appeal in writing to the dean until ${formatDate(school.leave?.mandatory?.appealBy ?? s.now, zone())}; the leave stands while the appeal is heard.`, 95);
+    notify(s, person, 'A Medical Leave, By The Dean’s Decision', `The dean has placed you on a medical leave on Yale Health’s recommendation: ${w.why} To appeal, press Appeal To The Dean on the Standing And Craft tab by ${formatDate(school.leave?.mandatory?.appealBy ?? s.now, zone())}. The leave stands while the appeal is heard.`, 95);
   });
 
   sim.onCommand<{ statement?: string }, { decideAt: Instant }>('school.appeal_leave', (_p, { sim: s }) => {
@@ -1171,7 +1183,7 @@ export function registerLeave(sim: Simulation): void {
     for (const i of s.universe.scheduled) if (i.status === 'pending' && i.payload.personId === person.id && (i.kind === REPEAT_DUE_KIND || i.kind === 'school.commencement')) s.timeline.cancel(i.id, s.now);
     s.schedule({ at: Math.max(at(termStart(r.term).date, 9), s.now + 60_000), kind: TERM_KIND, label: termBegins(r.term), category: 'school', priority: 30, payload: { personId: person.id, term: r.term } });
     extendF1(s, person);
-    notify(s, person, 'An Additional Term Granted', `The chair and the dean granted it: in ${termLabel(r.term)} you retake ${r.courses.map((c) => c.name).join(', ')}, and only those, with the class then in that year. ${termStart(r.term).fall ? 'Passed, the degree is conferred at Yale’s December conferral.' : 'Passed, the degree comes at Commencement in May.'} A term past six has no tuition support unless the aid office grants an exception: ask for its review. The Bulletin sets no rule for this; the decision is the game’s.`, 85);
+    notify(s, person, 'An Additional Term Granted', `The chair and the dean granted it: in ${termLabel(r.term)} you retake ${r.courses.map((c) => c.name).join(', ')}, and only those, with the class then in that year. ${termStart(r.term).fall ? 'Passed, the degree is conferred at Yale’s December conferral.' : 'Passed, the degree comes at Commencement in May.'} A term past six has no tuition support unless the aid office grants an exception: press Ask For An Aid Review on the Terms And Award tab. The Bulletin sets no rule for this; the decision is the game’s.`, 85);
   });
 
   sim.onCommand<Record<string, never>, { decideAt: Instant }>('school.request_aid_review', (_p, { sim: s }) => {
@@ -1243,7 +1255,7 @@ export function registerLeave(sim: Simulation): void {
     const school = person?.school;
     const l = school?.leave;
     if (!person || !school || !l || l.status !== 'on' || l.noticeAt !== undefined) return;
-    if (item.payload.remind === true) { notify(s, person, 'Two Weeks To Give Notice', `Tell the registrar you’re coming back by ${formatDate(l.noticeBy!, zone())}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}, on the Standing tab.`, 80); return; }
+    if (item.payload.remind === true) { notify(s, person, 'Two Weeks To Give Notice', `Give notice of your return by ${formatDate(l.noticeBy!, zone())}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}: press Give Notice Of Return on the Standing And Craft tab. Without it, the leave ends in dismissal.`, 80); return; }
     l.why = 'no notice of return given';
     setStanding(s, person, 'dismissed', `You didn’t give notice of your return by ${formatDate(l.noticeBy!, zone())}, and a student who doesn’t return from an approved leave, with no extension, is dismissed (Bulletin p.158).`);
   });
@@ -1348,7 +1360,7 @@ export function registerLeave(sim: Simulation): void {
     }
     // The terms past six by the count the decision read, the program’s terms still to come among them (`withRepeat`).
     const past = would - EXTENDED_STUDY.supportedTerms;
-    notify(s, person, 'You’ll Repeat The Year', `The chair and the dean granted it: from ${termLabel(t + 1)} you take year ${r.year}’s courses again, and what you did the first time stays on your record. ${past > 0 ? `The tuition scholarship supports six terms, and with the year again the degree takes ${would}: ${past === 1 ? 'one term' : `${past} terms`} will be billed to your Yale account. ` : ''}${f1Of(person) ? 'Your I-20 is extended a year. ' : ''}The Bulletin sets no rule for repeating a course; the decision is the game’s.`, 85);
+    notify(s, person, 'You’ll Repeat The Year', `The chair and the dean granted it: from ${termLabel(t + 1)} you take year ${r.year}’s courses again, and what you did the first time stays on your record. ${past > 0 ? `The tuition scholarship supports six terms, and with the year again the degree takes ${countWords(would)} terms: ${past === 1 ? 'one' : countWords(past)} will be billed to your Yale account. ` : ''}${f1Of(person) ? 'Your I-20 is extended a year. ' : ''}The Bulletin sets no rule for repeating a course; the decision is the game’s.`, 85);
   });
 
   sim.onSchedule(REPEAT_DUE_KIND, (item, s) => {

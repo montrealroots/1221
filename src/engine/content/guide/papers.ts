@@ -87,11 +87,12 @@ const fullDay = (key: string): string => `${MONTHS[Number(key.slice(5, 7)) - 1]}
 /** An hour on the clock, 17 as 5:00 PM (from 2026-10-12: until then the appointment's and the session's read 10:00 and 17:00). */
 const clock = (hour: number): string => `${hour % 12 === 0 ? 12 : hour % 12}:00 ${hour < 12 ? 'AM' : 'PM'}`;
 /**
- * Where a bill or a premium paid from the current account comes from (`payFromCurrent`): the primary account, then the
- * easy-access savings at its bank where Savings Covers The Current Account is On, then its overdraft. Until 2026-10-12
- * this said "its overdraft or linked savings", which named neither the bank nor the order.
+ * Where a bill or a premium paid from the checking account comes from (`payFromCurrent`): the primary account, then the
+ * easy-access savings at its bank where Savings Covers The Checking Account is On, then its overdraft. Until 2026-10-12
+ * this said "its overdraft or linked savings", which named neither the bank nor the order. The control was Savings
+ * Covers The Current Account until brief 15's money area renamed it, and this moved with it at the merge.
  */
-const FROM_CURRENT = 'your current account, then the easy-access savings at its bank where Savings Covers The Current Account is On, then its overdraft';
+const FROM_CURRENT = 'your checking account, then the easy-access savings at its bank where Savings Covers The Checking Account is On, then its overdraft';
 
 // ---------------------------------------------------------------------------
 // Where, and the chapter that opens it
@@ -236,7 +237,7 @@ export const PAPERS: readonly GuideEntry[] = [
     questions: ['What covers me after Yale?', 'How do I get HUSKY D?', 'When can I enroll in the marketplace?', 'Why was my claim denied?', 'What happens if I don’t pay a medical bill?', 'Can a hospital bill be reduced?', 'Do I need a dental plan?'],
     where: { route: ROUTE, tab: HEALTH, label: 'Papers, Health Cover: Your Cover, The Marketplace, A Dental Plan, Care And Its Bills' },
     available: `From the guide’s chapter “${CHAPTER}”. Enroll shows when you may enroll. While Yale Health covers you, that’s only in its last ${SPECIAL} days, once its end is set.`,
-    short: `Health cover pays for your care. Yale Health covers you while you’re at the School, and the School bills it each term. From ${SPECIAL} days before it ends, Enroll on The Marketplace takes you into HUSKY D or Covered Connecticut, with no premium, whenever last month’s income is low enough. Otherwise it buys Access Health CT’s silver plan, in open enrollment, in those ${SPECIAL} days, or within ${SPECIAL} days of losing cover. Each piece of care brings a bill for what your plan leaves you to pay, due in ${MEDICAL_DEBT.dueDays} days. Care And Its Bills is where you appeal a denied claim, ask a Connecticut hospital for its charity care and pay off anything that went to medical debt.`,
+    short: `Health cover pays for your care. Yale Health covers you while you’re at the School, and the School bills it each term. When it’s about to end, from ${SPECIAL} days before, press Enroll on The Marketplace. If last month’s income is low enough, that takes you into HUSKY D or Covered Connecticut, with no premium. Otherwise it buys Access Health CT’s silver plan, which you can do in open enrollment, in those ${SPECIAL} days, or within ${SPECIAL} days of losing cover. Each piece of care brings a bill for your share, due in ${MEDICAL_DEBT.dueDays} days. Under Care And Its Bills you can appeal a denied claim, ask a Connecticut hospital for financial assistance, and pay off anything that went to medical debt.`,
     steps: [
       'Open Papers, then Health Cover. Your Cover says what covers you This Month.',
       'Read the line under The Marketplace: it says whether you may enroll now, and why. When Enroll shows beside the title, press it. The toast names what you’re enrolled in and the day it starts.',
@@ -291,7 +292,7 @@ export const PAPERS: readonly GuideEntry[] = [
       'Request A Hardship Exception: decided at once. A renewal is renewed, with “Your Public Cover Is Renewed” or, moving from Covered Connecticut, “Your Public Cover Changed At Renewal”; an application is approved, “Public Cover Approved”, from the first of the month you applied in, or of an earlier month with care in it as Enroll reaches back, and a marketplace plan bought meanwhile ends as it begins.',
       `Appeal It: the bill reads Appealed, and its answer comes ${DENIALS.decideDays} days on.`,
       `Apply For Assistance: decided at once. Free Care clears the bill, ${pct(CT_CHARITY.discount)} Off cuts it, and Over The Limit leaves it as it was. The toast for a bill helped says “The hospital applied its financial assistance to this bill.”`,
-      'Pay It Off: the whole debt is paid from your current account, and every bill that went to it reads Settled.',
+      'Pay It Off: the whole debt is paid from your checking account, and every bill that went to it reads Settled.',
       'Buy Dental: Yale’s year is paid at once, and the dentist is covered from today.',
     ],
     later: [
@@ -342,26 +343,26 @@ export const PAPERS: readonly GuideEntry[] = [
       // Until 2026-10-16 the sentence said “of earnings” and nothing of an exception, and it was the end of it: Apply For
       // HUSKY D takes the application on its notice since. Until 2026-10-17 it began “80 hours’ work” (brief 12).
       `HUSKY D, its work rules not shown: “From January 1, 2027, … asks for … in the month before you apply, and last month had none of them.”, naming HUSKY D and what it asks: ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of income, time at the School or an exception. The line goes on to say whether the marketplace is open to you, and Enroll shows only where it is, and buys its plan; Apply For HUSKY D, beside it, takes the application on a notice.`,
-      '“Your application waits on its notice: answer it by …”: one application at a time. “Last month meets its work rules, so press Enroll instead.”: Apply For HUSKY D is for a month that doesn’t.',
+      '“You’ve already applied. Answer its notice of noncompliance by …”: one application at a time. “Last month meets its work rules, so press Enroll instead.”: Apply For HUSKY D is for a month that doesn’t.',
       '“There’s no notice of noncompliance waiting for an answer.”, “The … days to answer ended on ….” or “None of the months it checked, …, had a stay in hospital, the one hardship the game counts.”: Request A Hardship Exception doesn’t show, and the notice’s line says which.',
       '“You have no plan of your own to drop.”, or, dropped already, “It’s already dropped, and it ends on ….”',
       '“…, so there’s no renewal left to answer.”, saying the program has ended or the day it ends: a renewal’s notice whose program has ended some other way, and Request A Hardship Exception doesn’t show.',
       `“That claim wasn’t denied.”, “It’s been appealed.” or “An appeal has to be filed within ${DENIALS.appealDays} days of the denial, and that time has passed.”: Appeal It doesn’t show.`,
       '“Only a Connecticut hospital’s bill can be put in for its financial assistance.”, “It’s already settled or past its due date.”, “The hospital’s financial assistance has already come off it.” or “It’s already been put in for the hospital’s financial assistance.”, for a bill applied for or screened over the limit at billing: Apply For Assistance doesn’t show.',
       // Until 2026-10-16 the last was “… can’t cover it.”, which said nothing of what to do.
-      '“You owe nothing for care.”, or, when your current account holds less than the debt, “… has only … of the …, so nothing was paid. Move money into it first, on your bank’s Move Money.” (“… has nothing to pay it with, so nothing was paid.” where it holds nothing).',
+      '“You owe nothing for care.”, or, when your checking account holds less than the debt, “… has only … of the …, so nothing was paid. Move money into it first, on your bank’s Move Money.” (“… has nothing to pay it with, so nothing was paid.” where it holds nothing).',
       'A Dental Plan shows only while Yale Health covers you or a Yale plan you bought runs: once Yale Health ends, New Haven sells none. Pressed, Buy Dental says “Your bank can’t cover … for the year, so nothing was charged.” when the bank can’t pay the year.',
       `Prepay Three Months and Prepay A Year are England’s, for its ${gbp(NHS.prescription)} prescription charge: “The prepayment certificate is only for England’s prescription charge.” A life in New Haven never sees them.`,
     ],
     next: [
       'Before Yale Health ends, enroll ahead so your new cover starts the day after it, with no gap.',
-      'Keep enough in your current account on the first of each month for a marketplace premium.',
+      'Keep enough in your checking account on the first of each month for a marketplace premium.',
       'If a claim is denied or a hospital bill comes, use Appeal It or Apply For Assistance before its due date.',
     ],
     mistakes: [
       `Waiting for Yale’s cover to end before enrolling: after the degree Yale Health runs to July 31, and Enroll shows from ${ENROLL_OPENS_ON}. Enrolled by July 31, cover begins August 1 with no gap; enrolled on August 1 or later, a plan begins the first of the next month, and August goes uncovered, where HUSKY D, if last month’s income and its work rules take you, begins on August 1 all the same.`,
-      `Letting the current account run dry before the first: the premium isn’t taken, the plan ends, and a plan left unpaid opens no special enrollment. Unless a month’s income qualifies you for HUSKY D or Covered Connecticut, you wait for open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}.`,
-      'Leaving a bill to its due date with too little in the bank: it goes to medical debt. Pay It Off takes the whole debt from your current account at once, so wait until it holds all of it.',
+      `Letting the checking account run dry before the first: the premium isn’t taken, the plan ends, and a plan left unpaid opens no special enrollment. Unless a month’s income qualifies you for HUSKY D or Covered Connecticut, you wait for open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}.`,
+      'Leaving a bill to its due date with too little in the bank: it goes to medical debt. Pay It Off takes the whole debt from your checking account at once, so wait until it holds all of it.',
       `Missing a denial: “A Claim Denied” comes as a notice, and an appeal is filed within ${DENIALS.appealDays} days of the care.`,
       `Dropping cover to save the premium: care uninsured is billed at ${MARKUP} times the commercial price, less a Connecticut hospital’s financial assistance for an emergency or a stay, and a marketplace plan dropped can’t be bought again until open enrollment.`,
       'Buying Yale’s dental plan late in its year: bought from October to July, it runs only to the next September 30, so bought in June or July the full year’s premium buys a summer. Bought in August or September, it runs from that day to September 30 a year on.',
@@ -370,7 +371,7 @@ export const PAPERS: readonly GuideEntry[] = [
     connections: [
       { to: 'school.leave', kind: 'prerequisite', why: `Yale Health covers you while you’re at the School; the degree, a withdrawal, a dismissal or a personal leave without Affiliate cover ends it. A withdrawal by the fifteenth day of a term’s classes, or such a leave, ends the cover then or back to its insurance term’s start, and Enroll waits for the first of the next month, unless it’s open enrollment or last month’s income qualifies you for HUSKY D or Covered Connecticut. Otherwise Enroll shows from ${SPECIAL} days before the cover’s end: at once after a dismissal or any other withdrawal.` },
       { to: 'school.money', kind: 'history', why: 'The Yale Health plan is billed each term with the School’s charges: the living-expense scholarship meets it where need is found, and your bank pays it where none is.' },
-      { to: 'papers.doctor', kind: 'evaluation', why: 'Your cover is read each time care is had: a visit, urgent care, an emergency or a stay is billed at what it leaves you.' },
+      { to: 'papers.doctor', kind: 'evaluation', why: 'Your cover decides your share each time you have care: a visit, urgent care, an emergency or a stay.' },
       { to: 'papers.conditions', kind: 'evaluation', why: 'A condition’s month of care and each fill of its medicine are priced at your plan’s copays.' },
       { to: 'taxes.return', kind: 'history', why: 'Each marketplace premium paid is kept for the year’s premium tax credit, which the return works out.' },
       { to: 'money.affairs', kind: 'scheduled', why: `A bill unpaid at its due date goes to Owed For Medical Care, a debt your net worth counts; at ${usd(MEDICAL_DEBT.reportAt)} or more, ${MEDICAL_DEBT.reportAfterDays} days on, it marks your credit record.` },
@@ -397,7 +398,7 @@ export const PAPERS: readonly GuideEntry[] = [
     questions: ['How do I see a doctor?', 'How long is the wait for a doctor?', 'Why did I miss my appointment?', 'How do I book again after missing the doctor?', 'Which pharmacy is cheapest?', 'What does a referral do?'],
     where: { route: ROUTE, tab: HEALTH, label: 'Papers, Health Cover, Your Doctor' },
     available: `From the guide’s chapter “${CHAPTER}”. Your Pharmacy is America’s; Fill A Longer Supply shows while you keep a condition up.`,
-    short: `A doctor’s visit comes up when a week brings one, about ${CARE.perYear.visit} a year, and the game books it for you at your doctor’s practice, after its wait: in New Haven, while Yale Health covers you, ${YALE_SOON} at ${YALE_PRACTICE} for $0, unless you pick ${PRACTICE}, ${WAIT} days on at the uninsured price; once it doesn’t, ${WAIT} days on at ${PRACTICE}; at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday there. Keep it and you’re seen and billed at what your plan leaves you to pay. Miss it and you aren’t seen, and Book An Appointment books it again. Your Pharmacy sets the cash price a generic is filled at, Walmart’s ${usd(Math.round((WALMART?.generic ?? 0) * 100))} against the ${usd(PHARMACY.price.generic)} median of ${MEDICAL_CPI.base.rx[0]}, grown since, and your plan’s copay is never more than that price.`,
+    short: `About ${CARE.perYear.visit === 2 ? 'twice' : `${CARE.perYear.visit} times`} a year a week brings a doctor’s visit, and the game books it for you at your doctor’s practice, at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday. In New Haven, while Yale Health covers you, that’s ${YALE_PRACTICE}, ${YALE_SOON}, for $0, unless you pick ${PRACTICE}, ${WAIT} days on at the uninsured price. Once Yale Health no longer covers you, it’s ${PRACTICE}, ${WAIT} days on. Keep the appointment and you’re seen and billed your share. Miss it and you aren’t seen: press Book An Appointment to book it again. Your Pharmacy sets the cash price a generic is filled at, from Walmart’s ${usd(Math.round((WALMART?.generic ?? 0) * 100))} against the ${usd(PHARMACY.price.generic)} median of ${MEDICAL_CPI.base.rx[0]}, grown since, and your plan’s copay is never more than that price.`,
     steps: [
       'Open Papers, Health Cover. Your Doctor names where a doctor’s visit, urgent care and an emergency are had where you live, and what each would cost you now.',
       // Your Doctor's box shows only where the town keeps two practices or more (from 2026-10-13: until then New Haven's
@@ -408,7 +409,7 @@ export const PAPERS: readonly GuideEntry[] = [
       'The Your Pharmacy box, in America, picks the chain whose cash price fills a generic.',
       'A booked appointment shows below with its date. When the clock reaches it, it stops and asks; be awake and out of hospital at the hour.',
       'Call It Off cancels an appointment. The visit stays owed, and Book An Appointment books it again.',
-      `Fill A Longer Supply, ${LONGEST} Days, under Your Conditions, fills the medicine of every condition you keep up for that long at once, paid ahead. Where the bank can’t cover every condition’s fill, none is filled.`,
+      `Fill A Longer Supply, ${LONGEST} Days, under Your Long-Term Conditions, fills the medicine of every condition you keep up for that long at once, paid ahead. Where the bank can’t cover every condition’s fill, none is filled.`,
     ],
     needs: [
       `Your Doctor: a practice in the town you live in that would see you, two or more of them. In New Haven the game has ${PRACTICES.join(' and ')}; ${YALE_PRACTICE} sees only Yale students Yale Health covers: while you’re at the School, thirty days after a withdrawal past the fifteenth day of classes, not after one by it, and to July 31 after the degree.`,
@@ -436,7 +437,7 @@ export const PAPERS: readonly GuideEntry[] = [
       `Fill A Longer Supply pays at once from ${FROM_CURRENT}, moves each Medicine until date on by the days filled, and the toast says “${LONGEST} days of medicine filled.” Where the bank can’t cover every condition’s fill, it’s refused whole, “Your bank can’t cover … for every condition’s fill, so nothing was filled or charged.”, and nothing is filled or paid.`,
     ],
     later: [
-      `At the hour, kept: “A Doctor’s Visit” comes as a notice, and what your cover leaves you is billed, due in ${MEDICAL_DEBT.dueDays} days, under the practice it was booked at; on Yale Health at ${YALE_PRACTICE}, HUSKY D or Covered Connecticut that’s $0, and no bill is made. On Yale Health at ${PRACTICE} it’s ${usd(UNINSURED_VISIT)} in 2026, and the notice says Yale Health pays for a visit at its own Health Center. On Access Health CT’s silver plan it’s the ${usd(SILVER.visit)} copay, with no deductible, and Care And Its Bills gives what the plan paid of the visit’s price under Plan Paid. Your prescriptions are renewed, a review visit marks its condition reviewed, and the visit may end in a referral, booked for the specialist’s wait.`,
+      `At the hour, kept: “A Doctor’s Visit” comes as a notice, and your share is billed, due in ${MEDICAL_DEBT.dueDays} days, under the practice it was booked at; on Yale Health at ${YALE_PRACTICE}, HUSKY D or Covered Connecticut that’s $0, and no bill is made. On Yale Health at ${PRACTICE} it’s ${usd(UNINSURED_VISIT)} in 2026, and the notice says Yale Health pays for a visit at its own Health Center. On Access Health CT’s silver plan it’s the ${usd(SILVER.visit)} copay, with no deductible, and Care And Its Bills gives what the plan paid of the visit’s price under Plan Paid. Your prescriptions are renewed, a review visit marks its condition reviewed, and the visit may end in a referral, booked for the specialist’s wait.`,
       `At the hour, booked at ${YALE_PRACTICE} after Yale Health’s cover has ended: “Not Seen At Your Practice” comes as a notice, the visit goes unbilled and stays owed, and Book An Appointment books it at ${PRACTICE}, for its wait.`,
       'At the hour, missed: “Missed The Doctor” comes as a notice, the visit goes unbilled, and it stays owed until you book, or until a Monday brings another visit, which books the one owed.',
       // From 2026-10-16 (brief 09's journeys): until then only the visit's bill said so.
@@ -481,7 +482,7 @@ export const PAPERS: readonly GuideEntry[] = [
     related: ['papers.health-cover', 'papers.conditions', 'day.calendar', 'day.needs'],
     connections: [
       { to: 'day.calendar', kind: 'scheduled', why: `A booked appointment is a commitment on the calendar, ${CONSULT_MINUTES} minutes at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday, and the clock stops at it.` },
-      { to: 'papers.health-cover', kind: 'immediate', why: `A visit kept is billed at once at what your cover leaves you, and its bill joins Care And Its Bills, due in ${MEDICAL_DEBT.dueDays} days.` },
+      { to: 'papers.health-cover', kind: 'immediate', why: `A visit you keep is billed at once for your share, and its bill joins Care And Its Bills, due in ${MEDICAL_DEBT.dueDays} days.` },
       { to: 'papers.conditions', kind: 'evaluation', why: 'Your Pharmacy’s cash price is read for every generic fill of a condition’s medicine.' },
       { to: 'day.needs', kind: 'scheduled', why: 'Booking sends “A Doctor’s Appointment” to What Needs You, a missed one “Missed The Doctor”, and a referral “A Referral”.' },
     ],
@@ -490,7 +491,7 @@ export const PAPERS: readonly GuideEntry[] = [
       steps: [
         // From 2026-10-15: until then the visit was booked at Fair Haven, 24 days on, a student on Yale Health being given
         // the town's first practice with nothing picked.
-        `A notice: “A doctor’s visit: booked at ${YALE_PRACTICE} for …, the usual wait where you live.”, ${YALE_SOON}.`,
+        `A notice: “A doctor’s visit: booked at ${YALE_PRACTICE} for …, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.”, ${YALE_SOON}.`,
         `On the day you sleep past ${clock(CONSULT_HOUR)}, and “Missed The Doctor” follows.`,
         'Open Papers, Health Cover, and press Book An Appointment beside “A doctor’s visit: not yet seen”.',
       ],
@@ -504,17 +505,17 @@ export const PAPERS: readonly GuideEntry[] = [
     covers: ['health.treat', 'health.therapy'],
     synonyms: ['depression', 'asthma', 'high blood pressure', 'diabetes', 'arthritis', 'chronic condition', 'insulin', 'keep it up', 'let it go', 'therapy', 'cbt', 'counseling', 'therapist'],
     questions: ['What does Let It Go do?', 'How do I treat depression?', 'What happens if I stop my medicine?', 'How much does my condition cost a month?', 'Can therapy lift depression for good?'],
-    where: { route: ROUTE, tab: HEALTH, label: 'Papers, Health Cover, Your Conditions' },
-    available: `From the guide’s chapter “${CHAPTER}”. Your Conditions shows when you carry a condition or wear lenses, and Therapist when you carry depression.`,
-    short: `A condition is a long-term illness you carry, and this is where you keep it treated or not. A life may begin with one, at the rates for adults 18 to 34: depression ${pct(CHRONIC.share.depression)}, asthma ${pct(CHRONIC.share.asthma)}, high blood pressure ${pct(CHRONIC.share.hypertension)}, diabetes ${pct(CHRONIC.share.diabetes)} and arthritis ${pct(CHRONIC.share.arthritis)}; diabetes, high blood pressure and arthritis can also begin later, likelier in a heavier body. Kept up, each costs its month of care and its medicine at what your plan leaves you to pay. Let It Go stops both, and from then the condition takes its toll each week. A course of ${THERAPY.sessions} therapy sessions can lift depression for good.`,
+    where: { route: ROUTE, tab: HEALTH, label: 'Papers, Health Cover, Your Long-Term Conditions' },
+    available: `From the guide’s chapter “${CHAPTER}”. Your Long-Term Conditions shows when you have a long-term condition or wear lenses, and Therapist when you have depression.`,
+    short: `A long-term condition is an illness that stays with you: depression, asthma, high blood pressure, diabetes or arthritis. Your Long-Term Conditions, on Health Cover, is where you keep each one up or let it go. Kept up, each costs its month of care and its medicine, at what your plan doesn’t cover. Let It Go stops both, and from then the condition, left untreated, takes its toll each week. With depression, a course of ${THERAPY.sessions === 8 ? 'eight' : THERAPY.sessions} therapy sessions can lift it for good.`,
     steps: [
-      'Open Papers, Health Cover, Your Conditions. Each row reads Kept Up, Left Alone, Out Of Medicine, or Kept Up, But This Month’s Care Went Unpaid, with the date your medicine lasts to.',
+      'Open Papers, Health Cover, Your Long-Term Conditions. Each row reads Kept Up, Left Untreated, Out Of Medicine, or Kept Up, But This Month’s Care Went Unpaid, with the date your medicine lasts to.',
       'Let It Go stops a condition’s care and its medicine. Keep It Up starts them again.',
       `With depression, pick a Therapist where you live and press Begin A Course Of ${THERAPY.sessions} Sessions. In New Haven that’s ${YALE_COUNSELING.name}, Free With Yale Health, or ${PRIVATE_THERAPIST.name}, ${PRIVATE_SESSION} A Session.`,
       `While the course runs, the panel reads “Therapy with …: 2 of ${THERAPY.sessions} sessions”, naming ${YALE_COUNSELING.name}, and so on. Each session is a commitment the clock stops at.`,
     ],
     needs: [
-      'A condition you carry: drawn once when a life begins; one that begins later comes with a “Diagnosed” notice and is kept up from the start.',
+      'A long-term condition: drawn once when a life begins; one that begins later comes with a “Diagnosed” notice and is kept up from the start.',
       `Begin A Course Of ${THERAPY.sessions} Sessions: depression, no course running, a therapist in the town you’re in, and for ${YALE_COUNSELING.name}, Yale Health covering you.`,
     ],
     costs: [
@@ -527,44 +528,45 @@ export const PAPERS: readonly GuideEntry[] = [
       { label: 'Time', value: `Each session on the calendar at ${clock(SESSION_HOUR)} on a weekday`, estimate: true },
     ],
     reads: [
+      { label: 'How Often A Life Begins With One', value: `At the rates for adults 18 to 34: depression ${pct(CHRONIC.share.depression)}, asthma ${pct(CHRONIC.share.asthma)}, high blood pressure ${pct(CHRONIC.share.hypertension)}, diabetes ${pct(CHRONIC.share.diabetes)} and arthritis ${pct(CHRONIC.share.arthritis)}. Diabetes, high blood pressure and arthritis can also begin later, likelier in a heavier body` },
       { label: 'Kept Up', value: 'Treated, with this month’s care paid and the medicine not run out: all three at once' },
-      { label: 'Left Alone, Each Week', value: `Depression takes ${LEFT.moraleAWeek} morale, diabetes ${LEFT.diabetesConditionAWeek} condition, arthritis ${LEFT.arthritisEnergyAWeek} energy; asthma makes an emergency ${LEFT.asthmaEmergencies} times as likely, and type 1 diabetes ${LEFT.diabetesEmergencies} times; high blood pressure does nothing a year shows`, estimate: true },
+      { label: 'Left Untreated, Each Week', value: `Depression takes ${LEFT.moraleAWeek} morale, diabetes ${LEFT.diabetesConditionAWeek} condition, arthritis ${LEFT.arthritisEnergyAWeek} energy; asthma makes an emergency ${LEFT.asthmaEmergencies} times as likely, and type 1 diabetes ${LEFT.diabetesEmergencies} times; high blood pressure does nothing a year shows`, estimate: true },
       { label: 'A Course’s Chance', value: `${pct(THERAPY.recovery.private)} for a private course or Yale’s, ${pct(THERAPY.recovery.nhs)} for NHS Talking Therapies`, estimate: true },
       { label: 'Reviews', value: `A doctor’s visit booked for a condition kept up: high blood pressure and asthma every ${REVIEW_MONTHS.hypertension} months, diabetes every ${REVIEW_MONTHS.diabetes}` },
     ],
     now: [
       `Keep It Up: this month’s care is paid at once from ${FROM_CURRENT}. If it can’t be, the row says the care went unpaid. The toast says “Kept up from this month.”`,
-      'Let It Go: care and refills stop at once, and the toast says “Left alone.”',
+      'Let It Go: care and refills stop at once, and the toast says “Care stopped. It’s left untreated from now on.”',
       `Begin A Course Of ${THERAPY.sessions} Sessions: the first session is set a week later, at ${clock(SESSION_HOUR)} on a weekday, and the toast gives its date. While it runs, depression’s monthly therapy charge stops; each session is paid as it’s held.`,
     ],
     later: [
-      'On the first of each month, each kept-up condition’s care is paid. If the bank can’t cover it, the condition goes without and counts as left alone until the next month.',
-      `Each Monday, medicine with ${FILL.refillDays} days or fewer left is refilled for ${FILL.us} days, and a condition left alone or out of medicine takes its toll.`,
+      'On the first of each month, each kept-up condition’s care is paid. If the bank can’t cover it, the condition goes without and counts as left untreated until the next month.',
+      `Each Monday, medicine with ${FILL.refillDays} days or fewer left is refilled for ${FILL.us} days, and a condition left untreated or out of medicine takes its toll.`,
       'Each session at its hour: awake and out of hospital, it’s held, and paid or billed; asleep or in hospital, it moves to the next week. After the last, the depression lifts at the course’s rate or stays, and another course can be had.',
       `${YALE_COUNSELING.name} sees students Yale Health covers: if that cover ends mid-course, the course ends with it, and the sessions had stay had. ${PRIVATE_THERAPIST.name} can then begin a new course of ${THERAPY.sessions}, at its fee.`,
     ],
     interpret: [
       '“The Depression Has Lifted” takes it off your record: no more care, medicine or weekly loss of morale. “The Course Is Done” means it stayed.',
-      'Out Of Medicine means the supply ran out: the condition counts as left alone until Monday’s fill.',
+      'Out Of Medicine means the supply ran out: the condition counts as left untreated until Monday’s fill.',
       'Care and medicine for a condition are paid straight from your bank, so they show on your statements, not as rows in Care And Its Bills.',
     ],
     unavailable: [
-      '“You don’t have that.”: a condition you don’t carry.',
+      '“You don’t have that.”: a condition you don’t have.',
       '“Choose a therapist where you live.”, “A course of therapy here is for depression.” or “You’re in a course already.”',
       `“${YALE_COUNSELING.name} sees students Yale Health covers.” After Yale Health, ${PRIVATE_THERAPIST.name} takes a course in New Haven, at ${PRIVATE_SESSION} a session.`,
     ],
     next: [
-      'Keep enough in your current account on the first of each month for each condition’s care.',
+      'Keep enough in your checking account on the first of each month for each condition’s care.',
       'With depression, begin a course of therapy early in your time at the School, while Yale Health covers it.',
     ],
     mistakes: [
-      `Letting a condition go to save money: the weekly toll keeps coming, and type 1 diabetes left alone makes the emergency room ${LEFT.diabetesEmergencies} times as likely, each visit billed.`,
+      `Letting a condition go to save money: the weekly toll keeps coming, and type 1 diabetes left untreated makes the emergency room ${LEFT.diabetesEmergencies} times as likely, each visit billed.`,
       'Missing sessions: each one missed asleep or in hospital moves the course a week.',
       `Starting late in your last year: if Yale Health ends before the last session, the course at Yale ends there, and finishing means a new course of ${THERAPY.sessions} at ${PRIVATE_THERAPIST.name}, at ${PRIVATE_SESSION} a session. Begin early.`,
     ],
     related: ['papers.health-cover', 'papers.doctor', 'body.how', 'day.calendar'],
     connections: [
-      { to: 'body.how', kind: 'scheduled', why: 'Each Monday a condition left alone takes its toll: depression lowers morale, diabetes condition, arthritis energy.' },
+      { to: 'body.how', kind: 'scheduled', why: 'Each Monday a long-term condition left untreated takes its toll: depression lowers morale, diabetes your condition, arthritis your energy.' },
       { to: 'day.calendar', kind: 'scheduled', why: `Begin A Course Of ${THERAPY.sessions} Sessions puts a session on the calendar each week, a commitment the clock stops at.` },
       { to: 'papers.doctor', kind: 'scheduled', why: 'A condition kept up books its review as a doctor’s appointment when it falls due.' },
       { to: 'bank.accounts', kind: 'immediate', why: `Keep It Up pays the month’s care at once from ${FROM_CURRENT}; later months and each fill are paid the same way.` },
@@ -576,7 +578,7 @@ export const PAPERS: readonly GuideEntry[] = [
         `Choose ${YALE_COUNSELING.name}, Free With Yale Health, and press Begin A Course Of ${THERAPY.sessions} Sessions.`,
         `Be awake and out of hospital at ${clock(SESSION_HOUR)} on each session’s day.`,
       ],
-      result: `Each session costs $0. After the last, ${pct(THERAPY.recovery.private)} of the time a notice says “The Depression Has Lifted”, and depression is gone from Your Conditions; otherwise “The Course Is Done”, and another course can begin.`,
+      result: `Each session costs $0. After the last, ${pct(THERAPY.recovery.private)} of the time a notice says “The Depression Has Lifted”, and depression is gone from Your Long-Term Conditions; otherwise “The Course Is Done”, and another course can begin.`,
     },
   },
   {
@@ -588,7 +590,7 @@ export const PAPERS: readonly GuideEntry[] = [
     questions: ['Can I claim unemployment as a student?', 'How much unemployment would I get?', 'When is unemployment paid?', 'How do I get SNAP?', 'Why was my SNAP case closed?'],
     where: { route: ROUTE, tab: BENEFITS, label: 'Papers, Unemployment: SNAP And Your Claim' },
     available: `From the guide’s chapter “${CHAPTER}”.`,
-    short: `Unemployment insurance pays you each week when you’re out of work, and SNAP helps pay for food. File A Claim opens a claim with Connecticut, where a New Haven life’s wages are earned. A week’s benefit is your two highest quarters’ average over 26, from ${CT_FLOOR_SHORT} to ${usd(CONNECTICUT_UI.maximum)}, for up to ${CONNECTICUT_UI.weeks} weeks, with no waiting week. Connecticut doesn’t pay a full-time student, so a claim waits until you’ve left school. Apply, on the SNAP panel, puts up to ${usd(SNAP_FULL)} a month of food assistance on an EBT card, and each day’s groceries are paid from it first.`,
+    short: `Unemployment insurance pays you each week when you’re out of work, and SNAP helps pay for food. On the Unemployment tab, File A Claim opens a claim with Connecticut, where you earn your wages: from ${CT_FLOOR_SHORT} to ${usd(CONNECTICUT_UI.maximum)} a week, by what you earned, for up to ${CONNECTICUT_UI.weeks} weeks, with no waiting week. Connecticut doesn’t pay a full-time student, so a claim waits until you’ve left school. Apply, on the SNAP panel, puts up to ${usd(SNAP_FULL)} a month of food assistance on an EBT card, and each day’s groceries are paid from it first.`,
     steps: [
       'Open Papers, then Unemployment.',
       'The claim panel, No Claim Open, says what filing now would pay, or why it wouldn’t. File A Claim shows beside its title only when a claim would pay.',

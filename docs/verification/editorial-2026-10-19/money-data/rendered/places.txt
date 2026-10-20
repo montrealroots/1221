@@ -1,0 +1,59 @@
+=== is-39-reykjavik
+Rent on a one-bedroom runs about 250K kr a month, and the cost of living sits at 184, where a hundred is the United States’ price level. The rent is published: HMS’s mean market rent for a two-room flat, the third quarter of 2025, for an area HMS doesn’t name; source: https://hms.is/skyrslur/manadarskyrsla-oktober-2025. Income tax comes in one layer here: Icelandic Income Tax.
+
+=== is-39-mosfellsbr
+Rent on a one-bedroom runs about 205K kr a month, and the cost of living sits at 166, where a hundred is the United States’ price level. The rent is published: HMS’s market rent for the capital region, 3,739 kr a square meter, for 55 square meters, September to October 2025; source: https://hms.is/gogn-og-maelabord/maelabordleiguskra/leiguverdsja. Income tax comes in one layer here: Icelandic Income Tax.
+
+=== us-ny-newyork
+Rent on a one-bedroom runs about $2.7K a month, and the cost of living sits at 168, where a hundred is the United States’ price level. The rent is published: HUD’s Fair Market Rent, the 40th percentile rent, utilities included, fiscal year 2026; the room’s rent is SpareRoom’s, for the second quarter of 2026; source: https://www.huduser.gov/portal/datasets/fmr/fmr2026/FY26_FMRs.xlsx. Income tax comes in three layers here: United States Federal Income Tax, New York State Income Tax and New York City Resident Income Tax.
+
+=== us-ct-newhaven
+Rent on a one-bedroom runs about $1.6K a month, and the cost of living sits at 127, where a hundred is the United States’ price level. The rent is published: HUD’s Fair Market Rent for the New Haven–Meriden area, the 40th percentile rent, utilities included, fiscal year 2026; source: https://www.huduser.gov/portal/datasets/fmr/fmr2026/FY26_FMRs.xlsx. Income tax comes in one layer here: United States Federal Income Tax.
+
+=== us-ca-losangeles
+Rent on a one-bedroom runs about $2.1K a month, and the cost of living sits at 152, where a hundred is the United States’ price level. The rent is published: HUD’s Fair Market Rent, the 40th percentile rent, utilities included, fiscal year 2026; the room’s rent is SpareRoom’s, for the fourth quarter of 2025; source: https://www.huduser.gov/portal/datasets/fmr/fmr2026/FY26_FMRs.xlsx. Income tax comes in two layers here: United States Federal Income Tax and California Income Tax.
+
+=== uk-eng-london
+Rent on a one-bedroom runs about £1.8K a month, and the cost of living sits at 158, where a hundred is the United States’ price level. The rent is published: the ONS’s mean rent across private tenancies, August 2026; the room’s rent is SpareRoom’s, for the first quarter of 2026; source: https://www.ons.gov.uk/economy/inflationandpriceindices/bulletins/priceindexofprivaterentsukmonthlypricestatistics. Income tax comes in one layer here: United Kingdom Income Tax.
+
+=== ca-on-toronto
+Rent on a one-bedroom runs about C$2.1K a month, and the cost of living sits at 128, where a hundred is the United States’ price level. The rent is published: Statistics Canada’s mean asking rent for a one-bedroom, the second quarter of 2026; source: https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=4610009201. Income tax comes in two layers here: Canada Federal Income Tax and Ontario Income Tax.
+
+=== ca-bc-vancouver
+Rent on a one-bedroom runs about C$2.3K a month, and the cost of living sits at 137, where a hundred is the United States’ price level. The rent is published: Statistics Canada’s mean asking rent for a one-bedroom, the second quarter of 2026; source: https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=4610009201. Income tax comes in two layers here: Canada Federal Income Tax and British Columbia Income Tax.
+
+=== ca-qc-montreal
+Rent on a one-bedroom runs about C$1.5K a month, and the cost of living sits at 105, where a hundred is the United States’ price level. The rent is published: Statistics Canada’s mean asking rent for a one-bedroom, the second quarter of 2026; source: https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=4610009201. Income tax comes in two layers here: Canada Federal Income Tax and Quebec Income Tax.
+
+=== au-nsw-sydney
+Rent on a one-bedroom runs about A$3.0K a month, and the cost of living sits at 141, where a hundred is the United States’ price level. The rent is published: the NSW median rent on new bonds for a one-bedroom unit, A$700 a week, April to June 2026; source: https://dcj.nsw.gov.au/about-us/families-and-communities-statistics/housing-rent-and-sales/rent-and-sales-report.html. Income tax comes in one layer here: Australia Income Tax.
+
+=== au-vic-melbourne
+Rent on a one-bedroom runs about A$2.2K a month, and the cost of living sits at 128, where a hundred is the United States’ price level. The rent is published: Victoria’s median rent on new lettings for a one-bedroom flat, A$500 a week, the September quarter of 2025; the room’s rent is from a summary of listings, April 2026; source: https://www.dffh.vic.gov.au/tables-rental-report-september-quarter-2025-excel. Income tax comes in one layer here: Australia Income Tax.
+
+=== nz-akl-auckland
+Rent on a one-bedroom runs about NZ$2.0K a month, and the cost of living sits at 122, where a hundred is the United States’ price level. The rent is published: a summary of Tenancy Services’ bond data for central Auckland, NZ$463 a week, March 2026; source: https://www.tenancy.govt.nz/about-tenancy-services/data-and-statistics/rental-bond-data/. Income tax comes in one layer here: New Zealand Income Tax.
+
+=== de-be-berlin
+Rent on a one-bedroom runs about €940 a month, and the cost of living sits at 112, where a hundred is the United States’ price level. The rent is published: the IBB’s median asking rent including heating (warm), for about 50 square meters, 2025; the room’s rent is the Moses Mendelssohn Institut’s, September 2026; source: https://www.ibb.de/de/ueber-uns/publikationen/wohnungsmarktbericht/2025.html. Income tax comes in one layer here: Germany Income Tax.
+
+=== fr-idf-paris
+Rent on a one-bedroom runs about €1.2K a month, and the cost of living sits at 142, where a hundred is the United States’ price level. The rent is published: OLAP’s mean rent for recent movers into a two-room flat, without charges, January 2025; source: https://www.observatoire-des-loyers.fr/. Income tax comes in one layer here: France Income Tax.
+
+=== es-md-madrid
+Rent on a one-bedroom runs about €1.2K a month, and the cost of living sits at 102, where a hundred is the United States’ price level. The rent is published: idealista’s asking rent, €23.30 a square meter for 50 square meters, August 2026; the room’s rent is from idealista and OCU; source: https://www.idealista.com/sala-de-prensa/informes-precio-vivienda/alquiler/madrid-comunidad/madrid-provincia/madrid/. Income tax comes in one layer here: Spain Income Tax.
+
+=== it-laz-rome
+Rent on a one-bedroom runs about €675 a month, and the cost of living sits at 104, where a hundred is the United States’ price level. The rent is published: the Agenzia Entrate’s registered new contracts, €13.50 a square meter for 50 square meters, likely below listing prices, 2025; source: https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi/pubblicazioni/rapporti-immobiliari-residenziali. Income tax comes in one layer here: Italy Income Tax.
+
+=== ie-lei-dublin
+Rent on a one-bedroom runs about €1.9K a month, and the cost of living sits at 132, where a hundred is the United States’ price level. The rent is published: the RTB’s standardized average for a one-bedroom on new tenancies, the fourth quarter of 2025; the room’s rent is Daft.ie’s, for the first quarter of 2026; source: https://www.rtb.ie/. Income tax comes in one layer here: Ireland Income Tax.
+
+=== jp-13-tokyo
+Rent on a one-bedroom runs about ¥171K a month, and the cost of living sits at 126, where a hundred is the United States’ price level. The rent is published: At Home’s average asking rent for 30 to 50 square meters in the 23 wards, October 2025; source: https://www.athome.co.jp/corporate/news/data/market/2026/. Income tax comes in one layer here: Japan Income Tax.
+
+=== kr-11-seoul
+Rent on a one-bedroom runs about ₩830K a month, and the cost of living sits at 118, where a hundred is the United States’ price level. The rent is published: the monthly rent (wolse) on small units, taken at a ₩10 million deposit, the first quarter of 2026; source: https://www.seoul.co.kr/news/economy/estate/2026/03/09/20260309029001. Income tax comes in one layer here: South Korea Income Tax.
+
+=== mx-cmx-mexicocity
+Rent on a one-bedroom runs about MX$16K a month, and the cost of living sits at 68, where a hundred is the United States’ price level. The rent is published: Inmuebles24’s asking rent, 334 pesos a square meter, for 45 to 50 square meters, April 2026; source: https://www.inmuebles24.com/blog/. Income tax comes in one layer here: Mexico Income Tax (ISR).

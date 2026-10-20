@@ -1,0 +1,21 @@
+{
+ "base": "http://localhost:4281",
+ "width": 390,
+ "visited": [
+  {
+   "save": "decision.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "missed-plan.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "rehearsal.json",
+   "screens": 25,
+   "failed": []
+  }
+ ]
+}

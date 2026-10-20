@@ -1,0 +1,22 @@
+[
+ {
+  "old": "Savings Covers The Current Account",
+  "new": "Savings Covers The Checking Account",
+  "where": "src/ui/bank/BankPayments.tsx"
+ },
+ {
+  "old": "Any Current Account Under",
+  "new": "Any Checking Account Under",
+  "where": "src/ui/bank/BankStatements.tsx (the Alerts form's low balance field)"
+ },
+ {
+  "old": "…, To Its Closing",
+  "new": "…, Until It Closed",
+  "where": "src/engine/systems/statements.ts (a closed account's last statement period, in the Period list)"
+ },
+ {
+  "old": "Current Account",
+  "new": "Checking Account",
+  "where": "src/ui/looks/money.tsx (the kind under a checking account's name in its look, from the frame area's report)"
+ }
+]

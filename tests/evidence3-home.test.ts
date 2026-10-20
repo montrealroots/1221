@@ -307,7 +307,7 @@ describe('h-needs', () => {
       const bills = healthOf(sim.player).bills;
       // A broken bone's care is the emergency room and six sessions of physical therapy (content/injury.ts); Yale Health
       // leaves $50 for the emergency room and nothing for a visit (content/safetynet.ts): $50, due thirty days on.
-      expect(bills.map((b) => [b.what, b.amount, (b.dueAt - b.at) / MS_DAY])).toEqual([['A broken bone: its care', 50_00, 30]]);
+      expect(bills.map((b) => [b.what, b.amount, (b.dueAt - b.at) / MS_DAY])).toEqual([['A broken bone’s care', 50_00, 30]]);
       sim.advanceTo(bills[0]!.dueAt - MS_HOUR);
       if (move) emptyChecking(sim);
       // Before midnight, so the day's groceries don't come into it.
@@ -336,7 +336,7 @@ describe('h-money', () => {
     // 40 € at 0.92 to the dollar, $43, and no savings or card (tests/need-paths.test.ts).
     expect(sim.ledger.accountsOf(sim.player.id).map((a) => [a.name, a.balance])).toEqual([['Chase Total Checking', 43_00]]);
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checkingOf(sim).id } }).error)
-      .toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
+      .toBe('It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.');
     expect(between(drawn(sim, Home).text, 'Your Affairs', 'School')).toMatch(/Money Chase Total Checking: \$43\.00\. Worth \$43\. Chase How This Works/);
   });
 });

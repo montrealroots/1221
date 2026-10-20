@@ -103,11 +103,11 @@ describe('l-person: another person’s look reads their traits, their condition 
     expect(labels).toEqual(['Energy', 'Stress', 'Sleep Debt', 'Morale', 'Condition', 'Fitness', 'Nourishment', 'Hygiene', 'Readiness', 'Curious', 'Frugal']);
     expect(her.ways!.find((w) => w.label === 'Energy')!.detail).toMatch(/^\d+\/100\. What’s left in her for today\. Sleep brings it back\.$/);
     expect(her.ways!.find((w) => w.label === 'Stress')!.detail).toMatch(/\. How wound up she is\. High stress spoils her sleep\.$/);
-    expect(her.ways!.find((w) => w.label === 'Condition')!.detail).toMatch(/\. How sound her body is\. It sets how much a night gives back, her morale, sick days, and how likely each year is to be her last\.$/);
-    expect(her.ways!.find((w) => w.label === 'Fitness')!.detail).toMatch(/\. How trained her body is\. It sets how far rest can mend her and what a workout costs\.$/);
+    expect(her.ways!.find((w) => w.label === 'Condition')!.detail).toMatch(/\. How sound her body is\. It sets how much energy a night gives back, where her morale settles, when a sick day is excused, and how likely a year is to be her last\.$/);
+    expect(her.ways!.find((w) => w.label === 'Fitness')!.detail).toMatch(/\. How trained her body is\. It sets how far rest can mend her condition and how much energy a workout costs\.$/);
     expect(her.ways!.find((w) => w.label === 'Nourishment')!.detail).toMatch(/\. How well fed she is\. A meal puts it back\.$/);
     expect(her.ways!.find((w) => w.label === 'Hygiene')!.detail).toMatch(/\. How clean she is\. When it’s low, it drags on her morale, and on readiness a little\.$/);
-    expect(her.ways!.find((w) => w.label === 'Readiness')!.detail).toMatch(/^How ready she is today, from all of these but fitness\. .* and how judged work goes\.$/);
+    expect(her.ways!.find((w) => w.label === 'Readiness')!.detail).toMatch(/^How ready she is today, from all of these but fitness\. .* and how well her work goes when it’s judged\.$/);
     expect(her.ways!.find((w) => w.label === 'Curious')!.to).toEqual(at('trait', `${cleo.id}/curious`));
     expect(her.ways!.find((w) => w.label === 'Energy')!.to).toEqual(at('dial', `${cleo.id}/energy`));
     expect(yous(her)).toEqual([]);
@@ -137,7 +137,7 @@ describe('l-person: another person’s look reads their traits, their condition 
     expect(he.words).toContain('On his papers. Pronouns he/him. A citizen of the United Kingdom.');
     expect(he.words).toContain('Where he comes from. Grew up over a shop in Hackney.');
     expect(he.words).toContain('The films he loves. Comedy and Horror.');
-    expect(he.ways!.find((w) => w.label === 'Fitness')!.detail).toMatch(/how far rest can mend him and /);
+    expect(he.ways!.find((w) => w.label === 'Fitness')!.detail).toMatch(/how far rest can mend his condition and /);
     expect(they.words).toContain('Who they are. Curious and Frugal.');
     expect(they.words).toContain('Their body. 160 cm and 55.0 kg, with a body mass index of 21.5, in the healthy weight range. In centimeters and kilograms, the units of the United Kingdom, where they live.');
     expect(they.words).toContain('The films they love. Comedy and Horror.');
@@ -178,18 +178,18 @@ describe('l-person: another person’s look reads their traits, their condition 
     const devs = look(sim, 'person', dev.id);
     expect(devs.ways!.filter((w) => (w.to as { kind: string }).kind === 'condition').map((w) => [w.label, w.detail])).toEqual([
       ['Depression', 'Left untreated, and what that does.'],
-      ['Asthma', 'Kept up, at what his plan doesn’t cover.'],
+      ['Asthma', 'Kept up, and he pays what his plan doesn’t cover.'],
     ]);
     const depression = look(sim, 'condition', `${dev.id}/depression`);
     expect([depression.name, depression.kind, depression.summary]).toEqual(['Depression', 'A Long-Term Condition', 'He’s leaving it untreated. That costs nothing, but it has the effects below.']);
     expect(depression.parent).toEqual(at('person', dev.id));
     expect(depression.ways!.map((w) => w.to)).toEqual([at('dial', `${dev.id}/morale`)]);
     const asthma = look(sim, 'condition', `${dev.id}/asthma`);
-    expect([asthma.kind, asthma.summary]).toEqual(['A Long-Term Condition', 'He’s keeping it up. Its care is paid each month, at what his plan doesn’t cover.']);
+    expect([asthma.kind, asthma.summary]).toEqual(['A Long-Term Condition', 'He’s keeping it up, and each month he pays the part of its care his plan doesn’t cover.']);
     expect(asthma.words).not.toContain('Keep It Up or Let It Go');
 
     const hers = look(sim, 'person', cleo.id);
-    expect(hers.words).toContain('Mending. A Broken Bone, until September 5, 2026, and laid up until then.');
+    expect(hers.words).toContain('Mending. A broken bone, until September 5, 2026, and laid up until then.');
     expect(hers.ways!.find((w) => w.label === 'An Injury')!.detail).toBe('What it is, when it mends, and what it keeps her from.');
     const injury = look(sim, 'condition', `${cleo.id}/injury`);
     expect([injury.name, injury.kind, injury.summary]).toEqual(['A Broken Bone', 'An Injury', 'It mends by September 5, 2026. Until then she’s laid up, kept from classes, work and training.']);
@@ -228,7 +228,7 @@ describe('l-person: another person’s look reads their traits, their condition 
     expect(hers('energy')).toBe('90. Plenty for a full day.');
     expect(hers('sleepDebt')).toBe('None to speak of. She’s caught up on sleep.');
     expect(hers('hygiene')).toBe('44. Under 50, it wears on her morale every hour. A shower puts it back. The morning shower brings it up to at least 82.');
-    expect(hers('condition')).toMatch(/^\d+\. (?:As sound as rest can make her at her fitness\.|At her fitness, rest can mend it to \d+\.).* The lower it is, the likelier a year is to be her last\.$/);
+    expect(hers('condition')).toMatch(/^\d+\. (?:As sound as rest can make her at her fitness\.|Rest can mend it to \d+ at her fitness,).* The lower it is, the likelier a year is to be her last\.$/);
     expect(hers('fitness')).toMatch(/^\d+\. At this fitness, rest can mend her condition to \d+, and a workout costs \d+ energy\./);
     expect(dialOf(dev, 'energy').summary).toBe('90. Plenty for a full day.');
     expect(dialOf(dev, 'sleepDebt').summary).toBe('None to speak of. He’s caught up on sleep.');

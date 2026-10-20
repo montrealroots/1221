@@ -279,8 +279,8 @@ export function worldBanking(currencyOf: (iso: string) => string): CountryBankin
         code: '',
         ibanCountry: row.ibanCountry,
         ibanLength: row.ibanLength,
-        current: { name: row.checking ? 'Checking Account' : 'Current Account', source: `no product sheet on record; the bank from ${row.source}`, asOf: '2026-09-25' },
-        savings: { name: 'Savings Account', source: `no product sheet on record; the bank from ${row.source}`, asOf: '2026-09-25' },
+        current: { name: row.checking ? 'Checking Account' : 'Current Account', source: `no fees or rates were researched for this bank, so the game charges none and pays none; the bank was found at ${row.source}`, asOf: '2026-09-25' },
+        savings: { name: 'Savings Account', source: `no fees or rates were researched for this bank, so the game charges none and pays none; the bank was found at ${row.source}`, asOf: '2026-09-25' },
         confidence: row.confidence,
       })),
     };

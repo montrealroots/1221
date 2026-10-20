@@ -159,7 +159,7 @@ export function practicePreview(sim: Simulation, person: Person, e: Exercise, ti
   const moved = carried.filter((c) => c.gain > 0);
   const words = gain <= 0
     ? `${label} is full: an hour adds nothing to it.`
-    : `About +${gain.toFixed(2)} to ${label.toLowerCase()} (now ${before.toFixed(1)})${moved.length ? `, and ${moved.map((c) => `+${c.gain.toFixed(2)} to ${labelOf(c.target).toLowerCase()}`).join(' and ')}` : ''}${discipline > 0 ? `, and +${discipline.toFixed(2)} to discipline for a day of practice kept` : ''}.${why.length ? ` It’s more or less than an ordinary hour because ${why.join('; ')}.` : ''} The higher it is, the less an hour adds.${pastMastery(id, before)}`;
+    : `About +${gain.toFixed(2)} to ${label.toLowerCase()} (now ${before.toFixed(1)})${moved.length ? `, and ${moved.map((c) => `+${c.gain.toFixed(2)} to ${labelOf(c.target).toLowerCase()}`).join(' and ')}` : ''}${discipline > 0 ? `, and +${discipline.toFixed(2)} to discipline for a day of practice kept` : ''}.${why.length ? ` Compared with an ordinary hour: ${why.join('; ')}.` : ''} The higher your level, the less an hour adds.${pastMastery(id, before)}`;
   return { gain, target: id, level: before, carried, discipline, terms, words };
 }
 
@@ -234,7 +234,7 @@ export function practiceFeedback(e: Exercise, level: number, tier: 0 | 1 | 2, f:
   else if (f === 'variation' || f === 'live') out.push('What it carries over to is full already.');
   const feats = design?.practises.map((x) => FEATURE_LABEL[x]?.toLowerCase()).filter(Boolean) ?? [];
   if (feats.length) out.push(`It also counts as experience of ${feats.join(' and ')}, so material that asks for it prepares faster.`);
-  if (level >= 100) out.push(`${FOCUS[f].label} or not, it’s full. What’s left is new material.`);
+  if (level >= 100) out.push('It’s at its full, whatever the focus. What’s left is new material.');
   // Past mastery, said (from 2026-10-16): until then an hour on a technique at 95 said what it rose by and not that no
   // work reads it past `MASTERED`.
   else if (hour) out.push(pastMastery(targetId(e.trains), hour.level).trim());

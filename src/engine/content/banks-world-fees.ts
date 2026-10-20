@@ -46,7 +46,7 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
   },
   'BF|Coris Bank International': {
     monthlyFee: 1_500_00,
-    source: 'XOF 500 for state employees; work in the game isn’t for the state, so the full fee',
+    source: 'XOF 500 for state employees; work in the game isn’t for the state, so the game charges the full fee',
   },
   'KY|Butterfield': {
     monthlyFee: 8_00, reduced: { to: 2_00, averageAtLeast: 5_000_00 },
@@ -58,23 +58,23 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
   },
   'GU|Bank of Guam': {
     deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1, ageAtLeast: 55 },
-    source: 'waived with e-Statements and an electronic deposit in the month, or at 55 and over; the game’s accounts are online, so e-Statements are taken as chosen',
+    source: 'waived with e-Statements and an electronic deposit in the month, or at 55 and over; the game’s accounts are online, so the game takes e-Statements as chosen',
   },
   'MH|Bank of Guam': {
     deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
-    source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',
+    source: 'waived with e-Statements and an electronic deposit in the month; the game takes e-Statements as chosen',
   },
   'FM|Bank of Guam': {
     deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
-    source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',
+    source: 'waived with e-Statements and an electronic deposit in the month; the game takes e-Statements as chosen',
   },
   'MP|Bank of Guam': {
     deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
-    source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',
+    source: 'waived with e-Statements and an electronic deposit in the month; the game takes e-Statements as chosen',
   },
   'PW|Bank of Guam': {
     deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
-    source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',
+    source: 'waived with e-Statements and an electronic deposit in the month; the game takes e-Statements as chosen',
   },
   'HU|OTP Bank': {
     deposits: 'electronic', monthlyFee: 1_082_00, waiver: { depositsAtLeast: 214_662_00 },

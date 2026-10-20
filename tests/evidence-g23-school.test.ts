@@ -180,7 +180,7 @@ describe('school.study_session', () => {
     expect(trustOf(mateOf())).toBe(trust + 2);
     expect(mateOf().bond).toBe(bond + 2);
     expect(personOf(mateOf()).log![0]!.what).toBe('Ran lines with you');
-    expect(notices(sim, `Ran Lines With ${first}`).map((n) => n.body)).toEqual([`${play}: your lines went from ${Math.round(lines * 100)}% to ${Math.round(after * 100)}%.`]);
+    expect(notices(sim, `Ran Lines With ${first}`).map((n) => n.body)).toEqual([`Your lines for ${play} went from ${Math.round(lines * 100)}% to ${Math.round(after * 100)}%.`]);
     // Once: a reload and a night on, nothing is run again.
     sim = reload(sim);
     tended(sim, sim.now + 12 * MS_HOUR);
@@ -229,7 +229,7 @@ describe('school.study_session', () => {
     away(again.when!);
     expect(personOf(mateOf()).incidents!.map((x) => x.kind)).toEqual(['missed', 'missed']);
     const b = untilOpen(sim, (x) => x.kind === 'boundary' && x.mate === i, at(2026, 12, 20));
-    expect(b.text).toBe(`${first} says that after the last times, they’ll only rehearse with you if you ask a day ahead.`);
+    expect(b.text).toBe(`${first} says that after the last few times, they’ll only rehearse with you if you ask a day ahead.`);
     const before = trustOf(mateOf());
     sim.must({ kind: 'school.respond', payload: { momentId: b.id, choice: 'respect' } });
     expect(personOf(mateOf()).boundary).toMatchObject({ keptSince: 0, accepted: true });
@@ -596,7 +596,7 @@ describe('work records + journey', () => {
     const exercise = EXERCISES.find((e) => e.trains === what)!;
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const each = r1(top.points);
-    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise(?:, a session a day,)? would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}\\. On your recent work, replayed with you as you are now, that’s forecast to be worth about ${esc(String(each))} points? a piece`));
+    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise(?:, an hour a day,)? would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}\\. On your recent work, judged again as you are now, that’s forecast to be worth about ${esc(String(each))} points? a piece`));
   });
 
   it('PLAYER JOURNEY: Taking Direction reads, for life, the notes on the craft a run gave and those the work answered', () => {
@@ -624,7 +624,7 @@ describe('work records + journey', () => {
     const answered = onCraft.filter((n) => n.taken === true).length;
     expect(onCraft.length).toBeGreaterThanOrEqual(3);
     expect(journeyOf(sim.player).direction).toMatchObject({ given: onCraft.length, answered });
-    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered}`);
+    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered || 'none'}`);
   });
 
   it('names a strength at 4 over the mean and not at 3.9', () => {

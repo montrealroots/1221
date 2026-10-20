@@ -650,8 +650,8 @@ describe('health.enroll: the work rules in the guide and the tutorial, as the pl
     const i = CHAPTERS.findIndex((c) => c.id === 'papers');
     const chapter = drawn(sim, createElement(GuideProvider, null, null), [CHAPTERS[i]!.id]);
     expect(chapter.text).toContain(`Chapter ${i + 1} Of ${CHAPTERS.length} ${CHAPTERS[i]!.title}`);
-    expect(chapter.text).toContain('From 2027 Medicaid asks for a month spent partly at the School, or one with $580 of income (pay, interest or a benefit counts), unless you’re 65 or over, on SNAP under its work rules or, if you ask, in hospital that month');
-    expect(chapter.text).toContain('If you fit neither, or its work rules aren’t met, it ends at a month’s end');
+    expect(chapter.text).toContain('From 2027 Medicaid asks for a month spent partly at the School, or a month with $580 of income (pay, interest or a benefit counts), unless you’re 65 or over, on SNAP under its work rules or, if you ask, in hospital that month');
+    expect(chapter.text).toContain('If you fit neither, or don’t meet its work rules, it ends at the end of a month');
     expect(chapter.text).not.toMatch(/hours’ work|hours of work|half-time/);
   }, 60_000);
 });

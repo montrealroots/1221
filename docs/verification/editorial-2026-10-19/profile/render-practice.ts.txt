@@ -1,0 +1,62 @@
+/**
+ * Prints what practice says, drawn as the game draws it, for brief 15's profile area: the Focus control's lines, the
+ * preview before an hour at each tier and focus and tired, hours pressed through the command, the four-hour refusal,
+ * what the hour found in each variant, a technique past mastery and one at full; the ways at a note that keeps coming
+ * back and the teacher's next steps; and Your Work So Far on a played case. Kept as .txt so the lint and the typecheck
+ * leave it be: copy it out as a .ts, then from the clone run npx vite-node <that file> -- <out.txt>
+ */
+import { writeFileSync } from 'node:fs';
+import { createSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import type { Simulation } from '@/engine/core/simulation';
+import { EXERCISE_BY_ID, EXERCISE_DESIGN, FOCUS, TIER, type PracticeFocus } from '@/engine/content/practice';
+import { practicePreview, practiceFeedback, practiceRefusal } from '@/engine/systems/practice';
+import { APPROACHES, ADVANCED } from '@/engine/systems/learning';
+import { identityOf } from '@/engine/systems/artistry';
+import { occupiedAt } from '@/engine/systems/life';
+import { buildCase, caseOf } from '<CLONE>/tools/advice-harness';
+
+const out: string[] = [];
+function freeAndRested(sim: Simulation): void {
+  for (let busy = occupiedAt(sim, sim.now); busy; busy = occupiedAt(sim, sim.now)) sim.advanceTo(busy.at + busy.durationMinutes! * 60_000);
+  for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.requiresPlayer && !item.payload.kept) sim.timeline.cancel(item.id, sim.now);
+  const w = sim.player.wellbeing; w.energy = 100; w.stress = 0; w.morale = 80; w.nourishment = 90; w.hygiene = 100; w.sleepDebt = 0;
+  sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
+}
+const sim = createSave(1, 'p15-practice', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+freeAndRested(sim);
+out.push('## The Focus control, each choice with the line under it');
+for (const f of Object.keys(FOCUS) as PracticeFocus[]) out.push(`  ${FOCUS[f].label}: ${FOCUS[f].words}`);
+const e = EXERCISE_BY_ID.concentration!;
+out.push(`## The preview before an hour (${e.label}: ${EXERCISE_DESIGN[e.id]!.challenge})`);
+for (const [tier, focus] of [[1, 'steady'], [2, 'steady'], [0, 'spaced'], [1, 'precision'], [1, 'variation']] as const) out.push(`  ${TIER.label[tier]}, ${FOCUS[focus].label}: ${practicePreview(sim, sim.player, e, tier, focus).words}`);
+sim.player.wellbeing.energy = 30; sim.player.wellbeing.sleepDebt = 6;
+out.push(`  Tired, ${TIER.label[1]}, Steady: ${practicePreview(sim, sim.player, e, 1, 'steady').words}`);
+freeAndRested(sim);
+for (let h = 1; h <= 5; h += 1) {
+  freeAndRested(sim);
+  const r = sim.execute<{ feedback: string }>({ kind: 'practice.exercise', payload: { exercise: e.id, tier: 1, focus: 'steady' } });
+  out.push(r.ok ? `  hour ${h} pressed: ${r.value!.feedback}` : `  hour ${h} refused: ${r.error}`);
+  if (h === 2) out.push(`  after two hours: ${practicePreview(sim, sim.player, e, 1, 'steady').words}`);
+}
+out.push(`  practiceRefusal now: ${practiceRefusal(sim, sim.player, e)}`);
+out.push('## What the hour found, by its variants (practiceFeedback)');
+const c = EXERCISE_BY_ID['comic-timing']!;
+const hour = { gained: 0.31, level: 55.4, full: 100, sessions: 7, streak: 7, gains: [0.5, 0.48, 0.46, 0.3, 0.29, 0.28, 0.27], priorTier: 0, repeats: 1, dayFocus: 0.6 };
+for (const [f, gap] of [['steady', 1], ['precision', 2], ['spaced', 3], ['spaced', undefined], ['spaced', 0], ['spaced', 12], ['variation', 1], ['live', 1]] as const) out.push(`  ${f}, gap ${gap}: ${practiceFeedback(c, 55.4, 1, f, f === 'precision' ? 0.9 : 0.6, gap, f === 'variation' ? [{ target: 'listening', gained: 0.08 }] : [], hour)}`);
+out.push(`  a tier below: ${practiceFeedback(c, 80, 0, 'steady', 1, 1, [], { ...hour, level: 80.2, repeats: 0, dayFocus: 1, streak: 1 })}`);
+out.push(`  a tier above: ${practiceFeedback(c, 30, 2, 'steady', 1, 1, [], { ...hour, level: 30.2, repeats: 0, dayFocus: 1, streak: 1 })}`);
+out.push(`  a technique past mastery: ${practiceFeedback(c, 94, 2, 'steady', 1, 1, [], { ...hour, level: 94.1, repeats: 0, dayFocus: 1, streak: 1 })}`);
+out.push(`  at full: ${practiceFeedback(c, 100, 2, 'steady', 1, 1, [], { ...hour, level: 100, repeats: 0, dayFocus: 1, streak: 1 })}`);
+out.push('## The ways at a note that keeps coming back');
+for (const [k, a] of Object.entries(APPROACHES)) out.push(`  ${k}: Another Way At It: ${a.label}. For lines: ${a.words}. It won’t take the note on its own.`);
+out.push('## The teacher’s next steps beyond the work');
+for (const [k, a] of Object.entries(ADVANCED)) out.push(`  ${k}: It held together. Here’s a next step to try. ${a}`);
+const spec = caseOf('adv-t-10')!;
+const { sim: played } = buildCase('adv-t-10', spec.band!, spec.stage!);
+const id = identityOf(played.player);
+out.push(`## Your Work So Far on adv-t-10 (${id.pieces} pieces)`);
+for (const [title, xs] of [['What Your Work Shows Most', id.strengths], ['What Keeps Holding It Back', id.weaknesses], ['Material You Know', id.familiar], ['How You Tend To Play It', id.habits], ['Range', [id.versatility]], ['Taking Direction', id.direction ? [id.direction] : []], ['Reliability', id.reliability ? [id.reliability] : []], ['Playing With Others', id.collaboration ? [id.collaboration] : []]] as const) for (const x of xs) out.push(`  ${title}: ${x.line} From: ${x.evidence.join('; ')}.`);
+out.push(`  Not met yet: ${id.unfamiliar.join(', ')}.`);
+writeFileSync(process.argv[2] ?? 'practice.txt', `${out.join('\n')}\n`);
+console.log(`${out.length} lines written`);

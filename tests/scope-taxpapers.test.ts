@@ -289,10 +289,12 @@ describe('tax.catch_up_plan and tax.revise_plan', () => {
     sim.advanceTo(end + MS_HOUR);
     expect([p.status, p.why]).toEqual(['ended', 'Ended: not caught up after CP523']);
     expect(titled(sim, 'Your IRS Payment Plan Has Ended')).toHaveLength(1);
+    // Its words (brief 15, 2026-10-19): what you didn't do, then what follows.
+    expect(titled(sim, 'Your IRS Payment Plan Has Ended').map((n) => n.body)).toEqual(['You didn’t make up the missed payment within its thirty days. Collection resumes on what you owe, and the final notice before a levy comes next.']);
     papers(sim);
     expect([drew('tax.catch_up_plan'), drew('tax.revise_plan')]).toEqual([[], []]);
     expect(refusal(sim, 'tax.catch_up_plan')).toBe('Your plan isn’t behind, so there’s nothing to catch up.');
-    expect(refusal(sim, 'tax.revise_plan')).toBe('Only a monthly plan that’s in force can be revised.');
+    expect(refusal(sim, 'tax.revise_plan')).toBe('You can revise only a monthly plan that’s in force.');
     // Collection back at the LT11, five weeks after the 18 April due date, since the plan ended before it: one letter,
     // though the save was opened while the plan was behind. Until 2026-10-15 opening it put a second on the calendar
     // beside it (`armCollection`); until 2026-10-16 the five weeks ran from the plan's end, 6 May (`nextNotice`).
@@ -520,7 +522,7 @@ describe('what her life never reaches', () => {
     sim.advanceTo(at(2028, 9, 5, 12));
     expect(titled(sim, 'Final Notice Of Intent To Levy')).toEqual([]);
     sim.advanceTo(at(2028, 9, 6, 12));
-    expect(titled(sim, 'Final Notice Of Intent To Levy').map((n) => [n.at, n.body])).toEqual([[ret(sim).due + 140 * MS_DAY, 'Notice LT11: you owe $1,789.55 on your 2027 return. In 30 days the IRS takes what you owe from your bank accounts. Paying it, or a payment plan, stops the levy.']]);
+    expect(titled(sim, 'Final Notice Of Intent To Levy').map((n) => [n.at, n.body])).toEqual([[ret(sim).due + 140 * MS_DAY, 'Notice LT11: you owe $1,789.55 on your 2027 return. In 30 days the IRS takes what you owe from your bank accounts. Paying it, or setting up a payment plan, stops the levy: both are on Papers, under Tax Returns.']]);
     expect(ret(sim).lien).toBeUndefined();
     expect(refusal(sim, 'tax.federal_lien_withdraw', { year: 2027 })).toBe('There’s no federal tax lien on that year.');
     papers(sim);

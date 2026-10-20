@@ -834,7 +834,7 @@ export function registerCredit(sim: Simulation): void {
       credit.missed = 0;
       if (credit.suspended === 'late') {
         delete credit.suspended;
-        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your Card Works Again', body: `It’s paid off, and ${terms.issuer ?? 'the bank'} has lifted the suspension.`, importance: 50 });
+        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your Card Works Again', body: `The ${card.name} is paid off, and ${terms.issuer ?? 'the bank'} has lifted the suspension.`, importance: 50 });
       }
       if (credit.hardship && card.balance >= 0) { delete credit.hardship; if (credit.suspended === 'hardship' || credit.suspended === 'persistent') delete credit.suspended; }
     }
@@ -849,7 +849,7 @@ export function registerCredit(sim: Simulation): void {
       // At least what the due date will judge: on a hardship plan its payment, not the card's minimum (from 2026-10-13).
       // With its due date (from 2026-10-17, brief 14's editorial review): until then “$270.00 to pay, at least $40.00.”, and
       // by when only on the card's panel.
-      ? `The statement comes to ${formatMoney(credit.statementBalance, saveCurrency(s.universe))}, due ${formatDate(dueAt(zoneOf(s, person), item.at, terms.graceDays), zoneOf(s, person))}. At least ${formatMoney(autopayAsk(s, person, card).due, saveCurrency(s.universe))} has to be paid by then.`
+      ? statementWords(s, person, card, item.at, terms.graceDays)
       : 'The card owes nothing this month.', credit.statementBalance > 0);
     scheduleStatement(s, person, item.at, card);
   });
@@ -882,7 +882,15 @@ export function registerCredit(sim: Simulation): void {
         const lateToo = bankById(card.bankId ?? '')?.iso === 'US' && paidNow() < due;
         const returned = lateToo ? 0 : terms.returnedPaymentFee;
         if (returned > 0) s.post({ memo: 'Returned payment fee', category: 'fees', postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: returned }, { accountId: card.id, amount: -returned }] });
-        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Card Payment Bounced', body: `Autopay asked for ${formatMoney(asked, currency)}, and the current account couldn’t cover it. ${returned > 0 ? `The card charged ${formatMoney(returned, currency)} for that.` : 'The payment is late now, and the late fee is the only fee charged for it.'}`, importance: 75 });
+        // The card and the account it asked, and the next step where the payment is short (from brief 15, 2026-10-19:
+        // until then "the current account"). No returned payment fee means a US card's late fee stands in for it
+        // (`lateToo`): every card has one, its bank's or the estimate.
+        if (person.id === s.universe.playerId) {
+          const from = sourceOf(s, person, card);
+          const short = paidNow() < due;
+          const after = returned > 0 ? `The card charged a ${formatMoney(returned, currency)} returned payment fee for it.` : 'The payment is late now, and its late fee is the only fee you’re charged for it.';
+          s.notify({ category: 'bank', title: 'A Card Payment Bounced', body: `The ${card.name}’s autopay of ${formatMoney(asked, currency)} didn’t go through, because ${from?.name ?? 'your checking account'} couldn’t cover it. ${after}${short ? ` Move money into ${from?.name ?? 'your checking account'}, then pay the card on Money, under Cards.` : ''}`, importance: 75 });
+        }
       }
     }
     const paid = paidNow();
@@ -933,7 +941,7 @@ export function registerCredit(sim: Simulation): void {
       s.notify({
         category: 'bank',
         title: 'A Late Card Payment',
-        body: `${credit.hardship ? 'The plan’s payment' : 'The minimum payment'} was ${formatMoney(due, currency)}, and only ${formatMoney(paid, currency)} was paid. That costs a ${formatMoney(fee, currency)} late fee, and ${reported ? 'it’s on your credit record' : 'it goes on your credit record if it’s still short at the next due date, thirty days late'}.`,
+        body: `${credit.hardship ? 'The plan’s payment' : 'The minimum payment'} on the ${card.name} was ${formatMoney(due, currency)}, and ${paid > 0 ? `only ${formatMoney(paid, currency)} was paid` : 'nothing was paid'} by the due date. That costs a ${formatMoney(fee, currency)} late fee${reported ? ', and it’s on your credit record now' : '. If the payment is still short at the next due date, thirty days late, it goes on your credit record'}. Pay the card on Money, under Cards.`,
         importance: 80,
       });
       if (credit.penalty) credit.penalty.onTime = 0;
@@ -967,7 +975,7 @@ export function registerCredit(sim: Simulation): void {
       }
       if (credit.suspended === 'late') {
         delete credit.suspended;
-        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your Card Works Again', body: `Payments are back on time, and ${terms.issuer ?? 'the bank'} has lifted the suspension.`, importance: 50 });
+        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your Card Works Again', body: `Your payments on the ${card.name} are back on time, and ${terms.issuer ?? 'the bank'} has lifted the suspension.`, importance: 50 });
       }
       if (credit.hardship && card.balance >= 0) {
         delete credit.hardship;
@@ -1038,7 +1046,7 @@ export function registerCredit(sim: Simulation): void {
         : Math.round(Number(p.amount));
     if (!(want > 0)) throw new CommandError('Enter an amount to pay.');
     const paid = payCard(s, person, want, true, card);
-    if (paid === 0) throw new CommandError('There’s nothing in the bank to pay it with.');
+    if (paid === 0) throw new CommandError('Your bank accounts have nothing available to pay it with, so nothing was paid.');
     return { paid };
   });
 
@@ -1112,6 +1120,35 @@ export function autopaySource(sim: Simulation, person: Person, card: Account): A
 }
 
 /**
+ * The account a card's autopay pays from, read without pinning it there (`autopaySource` pins an unpinned autopay to the
+ * primary account, which a notice mustn't do: autopay follows the primary until something pins it).
+ */
+function sourceOf(sim: Simulation, person: Person, card: Account): Account | undefined {
+  const id = stateOf(person, card).autopayFrom ?? person.primaryAccountId;
+  return id ? sim.universe.accounts[id] : undefined;
+}
+
+/** A count under ten in words, as prose writes it, and a figure from ten. */
+const countWord = (n: number): string => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
+
+/**
+ * The statement notice when something is owed (from brief 15, 2026-10-19): the statement, its due date, the least it asks
+ * and what autopay will take, from which account, that day. Until then "At least … has to be paid by then.", and nothing
+ * of autopay, which always pays something (the minimum or the whole statement) where the account can cover it.
+ */
+function statementWords(sim: Simulation, person: Person, card: Account, statementAt: Instant, graceDays: number | undefined): string {
+  const cur = saveCurrency(sim.universe);
+  const zone = zoneOf(sim, person);
+  const credit = stateOf(person, card);
+  const owed = credit.statementBalance;
+  const { asked, due } = autopayAsk(sim, person, card);
+  const from = sourceOf(sim, person, card);
+  const least = due >= owed ? `The whole ${formatMoney(owed, cur)} is due` : `${credit.hardship ? 'The plan’s payment' : 'The minimum payment'} is ${formatMoney(due, cur)}`;
+  const autopay = asked > 0 && from && !from.closedAt ? ` Autopay pays ${asked >= owed && asked > due ? `the whole ${formatMoney(owed, cur)}` : formatMoney(asked, cur)} from ${from.name} that day, if there’s enough in it.` : '';
+  return `The statement comes to ${formatMoney(owed, cur)}, due ${formatDate(dueAt(zone, statementAt, graceDays), zone)}. ${least}.${autopay}`;
+}
+
+/**
  * What a card's autopay will ask its account for on the due date, and the minimum due: a charge card's minimum is the
  * whole statement, and a hardship plan's payment stands in for both (from 2026-10-10 a function of its own, which the
  * account alerts read ahead of the day, `systems/statements.ts`).
@@ -1164,7 +1201,7 @@ function afterMissed(sim: Simulation, person: Person, card: Account, credit: Car
   const missed = credit.missed ?? 0;
   if (missed >= SUSPEND_AFTER && !credit.suspended) {
     credit.suspended = 'late';
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Card Is Suspended', body: `You’ve missed ${missed} payments in a row, so ${bank?.name ?? 'the bank'} has suspended the ${card.name} until you catch up.`, importance: 85 });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Card Is Suspended', body: `You’ve missed ${countWord(missed)} payments in a row, so ${bank?.name ?? 'the bank'} has suspended the ${card.name}. It works again once you make a payment on time.`, importance: 85 });
   }
   if (missed === CHARGE_OFF_AFTER - 1 && person.id === sim.universe.playerId) {
     sim.notify({ category: 'bank', title: 'A Default Notice', body: `The ${card.name} is ${missed * 30} days behind. Pay at least ${formatMoney(minimumDue(sim, Math.max(0, -card.balance), cardTerms(sim, card, person.credit!.score), credit.statementInterest ?? 0, credit.statementPlanDue ?? 0), currency)} before the next due date, or the whole balance falls due and goes to collections.`, importance: 95 });
@@ -1190,7 +1227,12 @@ function chargeOff(sim: Simulation, person: Person, card: Account, credit: CardS
   delete credit.hardship;
   credit.missed = 0;
   ensurePrimary(sim, person);
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Card Was Charged Off', body: `${formatMoney(owed, saveCurrency(sim.universe))} on the ${card.name} is with collections now, and the card is closed. It’s on your record.`, importance: 95 });
+  // How long the mark stays, paid or not, and what the unpaid debt blocks (from brief 15, 2026-10-19): until then “It’s on
+  // your record.”, which the In Collections panel said lasted until the debt was paid, though nothing paying it touches
+  // the record (`markRecord`, `marksFallOff`).
+  const mark = person.credit?.marks?.at(-1);
+  const years = mark ? markYears(mark) : undefined;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Card Was Charged Off', body: `The ${formatMoney(owed, saveCurrency(sim.universe))} you owed on the ${card.name} went to collections, and the card is closed. The charge-off stays on your credit record${years !== undefined ? ` for ${countWord(years)} ${years === 1 ? 'year' : 'years'}` : ''}, paid or not, and no bank approves a card while the debt is unpaid. You can pay it on Money, under Borrowing.`, importance: 95 });
 }
 
 /** What a charge-off costs the record: SLATE's estimate, heavier than an eviction's sixty. */

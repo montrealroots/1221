@@ -116,7 +116,11 @@ export class Base44SaveAdapter implements SaveAdapter {
    */
   private async call(name: string, payload: Record<string, unknown>, what: string): Promise<FunctionReply> {
     const fn = this.fn;
-    if (!fn) throw new PersistenceError(`${what} isn’t possible here, because this version of SLATE has no server to save to.`, true);
+    // `what` is what SLATE was doing, said in the middle of a sentence ("while saving"), and at its start where it's the
+    // subject (from 2026-10-19, brief 15: until then "Loading that save couldn’t reach the server", the act as the one
+    // reaching).
+    const What = what.replace(/^./, (c) => c.toUpperCase());
+    if (!fn) throw new PersistenceError(`${What} isn’t possible here, because this version of SLATE has no server to save to.`, true);
 
     let reply: FunctionReply | undefined;
     try {
@@ -128,17 +132,17 @@ export class Base44SaveAdapter implements SaveAdapter {
         throw new PersistenceError(body.error, isRetryable(body.status ?? thrown.response?.status));
       }
       console.error(error);
-      throw new PersistenceError(`${what} couldn’t reach the server. Check your connection, then try again.`, true);
+      throw new PersistenceError(`SLATE couldn’t reach the server while ${what}. Check your connection, then try again.`, true);
     }
 
-    if (!reply) throw new PersistenceError(`${what} got no answer from the server. Try again in a moment.`, true);
-    if (!reply.ok) throw new PersistenceError(reply.error ?? `${what} didn’t go through: the server turned it down without saying why. Try again in a moment.`, isRetryable(reply.status));
+    if (!reply) throw new PersistenceError(`SLATE got no answer from the server while ${what}. Try again in a moment.`, true);
+    if (!reply.ok) throw new PersistenceError(reply.error ?? `${What} didn’t go through: the server turned it down without saying why. Try again in a moment.`, isRetryable(reply.status));
     return reply;
   }
 
   async listSlots(): Promise<SaveSlotInfo[]> {
     if (this.fn) {
-      const reply = await this.call('loadUniverse', {}, 'Reading your saves');
+      const reply = await this.call('loadUniverse', {}, 'reading your saves');
       return ([1, 2, 3] as Slot[]).map((slot) => {
         const row = reply.slots?.find((s) => s.slot === slot);
         if (!row?.occupied) {
@@ -204,7 +208,7 @@ export class Base44SaveAdapter implements SaveAdapter {
 
   async load(slot: Slot): Promise<SaveUniverse | null> {
     if (this.fn) {
-      const reply = await this.call('loadUniverse', { slot }, 'Loading that save');
+      const reply = await this.call('loadUniverse', { slot }, 'opening that save');
       return reply.payload ? deserialise(reply.payload) : null;
     }
 
@@ -231,7 +235,7 @@ export class Base44SaveAdapter implements SaveAdapter {
           // after a migration was taken for a retry of the last write and
           // dropped, so the server kept the old save.
           idempotencyKey: `${universe.meta.id}:${universe.now}:${Math.round(universe.meta.playtimeSeconds)}:${universe.meta.schemaVersion}`,
-        }, 'Saving');
+        }, 'saving');
         await this.fallback.save(universe).catch(() => undefined);
         return;
       } catch (error) {
@@ -281,7 +285,7 @@ export class Base44SaveAdapter implements SaveAdapter {
 
   async remove(slot: Slot): Promise<void> {
     if (this.fn) {
-      await this.call('clearSlot', { slot }, 'Clearing that slot');
+      await this.call('clearSlot', { slot }, 'deleting that slot');
       await this.fallback.remove(slot).catch(() => undefined);
       return;
     }
@@ -321,7 +325,7 @@ export class Base44SaveAdapter implements SaveAdapter {
     // The server swaps its own backup and save (from 2026-10-05). Until then this re-sent the backup as an ordinary
     // write, which the server replayed or refused for its older clock, so a restore never took on Base44.
     if (this.fn) {
-      await this.call('saveUniverse', { slot, restore: true }, 'Restoring');
+      await this.call('saveUniverse', { slot, restore: true }, 'restoring the backup');
       await this.fallback.save(universe).catch(() => undefined);
       return universe;
     }

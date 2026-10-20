@@ -201,10 +201,12 @@ export function energyOfNight(e: Parameters<typeof nightOfRecord>[0]): number {
   return r ? eveningCost(r.night, r.stamina, r.readiness).energy : 0;
 }
 
+/** A duration in a sentence, as the glossary says one (from 2026-10-19, brief 15: until then “2 h 30”): 2 hours and 30 minutes. */
 const minutesWords = (m: number): string => {
   const h = Math.floor(m / 60);
   const r = Math.round(m - h * 60);
-  return h ? `${h} h${r ? ` ${String(r).padStart(2, '0')}` : ''}` : `${r} minutes`;
+  const hours = `${h} ${h === 1 ? 'hour' : 'hours'}`;
+  return h ? `${hours}${r ? ` and ${r} minutes` : ''}` : `${r} minutes`;
 };
 const SIZE_WORDS: Record<Participation, string> = { lead: 'a lead', supporting: 'a supporting part', featured: 'a featured part', solo: 'a solo piece' };
 const WORDS = ['no', 'one', 'two', 'three'];
@@ -222,5 +224,7 @@ export function workloadWords(e: Parameters<typeof nightOfRecord>[0]): string | 
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const breaks = n.breaks.length ? `with ${WORDS[n.breaks.length] ?? n.breaks.length} ${n.breaks.length === 1 ? 'break' : 'breaks'} of ${n.breaks.map((b) => `${b} minutes`).join(' and ')}` : 'straight through';
   const estimate = n.basis === 'estimate' ? ' (estimated)' : '';
-  return `The evening runs ${minutesWords(n.running)} ${breaks}${estimate}. As ${SIZE_WORDS[n.size]}, you’re on stage for about ${pct(n.share)} of its ${minutesWords(n.playing)} of playing. Its physical demand is ${n.physical} of 3 and its vocal demand ${n.vocal} of 3, an intensity of ${n.intensity.toFixed(2)}, so its workload is ${n.workload.toFixed(2)} of a possible ${WORKLOAD.cap}. By the final curtain, tiring takes ${pct(cost.drainEnd)} off the parts of your performance it affects, with your stamina as it is and readiness at ${Math.round(readiness)}. The evening costs ${Math.round(cost.energy)} energy.`;
+  // What it does first, then how it's worked out (from 2026-10-19, brief 15): the intensity, an intermediate figure, is
+  // left to the workload it makes.
+  return `With your stamina as it is and readiness at ${Math.round(readiness)}, tiring takes ${pct(cost.drainEnd)} off the parts of your performance it affects by the final curtain, and the evening costs ${Math.round(cost.energy)} energy. The evening runs ${minutesWords(n.running)}, ${breaks}${estimate}. As ${SIZE_WORDS[n.size]}, you’re on stage for about ${pct(n.share)} of its ${minutesWords(n.playing)} of playing. Its physical demand is ${n.physical} of 3 and its vocal demand ${n.vocal} of 3, so its workload is ${n.workload.toFixed(1)} of a possible ${WORKLOAD.cap}.`;
 }

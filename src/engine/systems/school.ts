@@ -77,6 +77,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { formatDate, formatTime, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
+import { spokenList } from '../core/text';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import {
@@ -125,6 +126,16 @@ export type Craft = Record<Skill, number>;
  * (Bulletin p.151), didn't (from 2026-10-10: until then Commencement was booked for any standing short of dismissal).
  */
 export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated' | 'withheld' | 'withdrawn';
+
+/** A count under ten in words, as prose says it: two, six, 12 (the leave's notices and the Standing And Craft tab's say theirs with it). */
+export const countWords = (n: number): string => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
+
+/**
+ * How to register, as a notice says it (from 2026-10-19, brief 15: until then “Register on the School screen”, which has
+ * no Register control of its own): back from a leave or a hold, the Register button on Standing And Craft
+ * (`school.reregister`); otherwise Orientation's registration session, caught up on the Coursework tab.
+ */
+const registerWay = (school: SchoolRecord): string => (school.mustRegister ? 'Press Register on the Standing And Craft tab.' : 'Catch up on Registration And Your Account under Orientation, on the Coursework tab.');
 
 /**
  * Whether they're registered for the program (from 2026-10-10). The Bulletin has every student register before the fall
@@ -514,7 +525,7 @@ export const CONFERRAL_KIND = 'school.conferral';
  * School's 2026–27 calendar gives 22 December 2026). SLATE confers a degree finished in an additional fall term on 22
  * December; later years' dates are SLATE's estimate by the same day. A diploma off-cycle is mailed six weeks after.
  */
-export const DEGREE_DATES = { december: [12, 22] as const, mailedWeeks: 6, source: 'https://registrar.yale.edu (degree conferral); Yale Graduate School 2026-2027 academic calendar; research-yale-leave-2.json' } as const;
+export const DEGREE_DATES = { december: [12, 22] as const, mailedWeeks: 6, source: 'https://registrar.yale.edu (degree conferral); Yale Graduate School 2026–2027 academic calendar' } as const;
 export const CABARET_KIND = 'school.cabaret';
 export const SUMMER_KIND = 'school.summer';
 export const STIPEND_KIND = 'school.stipend';
@@ -1722,7 +1733,7 @@ export function enroll(sim: Simulation, person: Person): void {
   sim.notify({
     category: 'school',
     title: 'Welcome To The Class Of ' + school.classOf,
-    body: `You’re one of the ${YALE_DRAMA.classSize} actors in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}, chosen from this year’s auditions with the ${YALE_DRAMA.classSize - 1} others you’ll be cast beside and against. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until ${day(ORIENTATION_2026.ends)}, and classes start on ${day(ORIENTATION_2026.classesBegin)}, at 9 a.m.`,
+    body: `You’re one of ${YALE_DRAMA.classSize} actors starting the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}, chosen at this year’s auditions. You’ll be cast beside and against the other ${YALE_DRAMA.classSize - 1}. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until ${day(ORIENTATION_2026.ends)}, and classes start on ${day(ORIENTATION_2026.classesBegin)}, at 9 a.m.`,
     importance: 80, route: '/workspace/school',
   });
 }
@@ -1920,7 +1931,7 @@ export function setStanding(sim: Simulation, person: Person, to: Standing, reaso
   // the end does above: the course record isn't touched, the runs played go on the Profile (`keepCredit`), the hours
   // worked are paid (`PAYDAY_KIND`), and practice and the briefs read the craft, not the School (`practiceRefusal`,
   // `tapeRefusal`). A withdrawal's own words already said the hours (school.withdraw).
-  const stands = 'What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.';
+  const stands = 'What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. You can still practice, and tape the practice briefs on your Profile, outside the School.';
   // The decision is SLATE's simulation of the faculty's, so the notice says what the program's chair and faculty do and
   // names nobody as having said it (from 2026-10-16, the owner's brief's “do not present … simulated staff feedback as
   // authentic”: until then each was put in the words of the chair of Acting by her name, which the Standing tab's Your
@@ -1930,7 +1941,7 @@ export function setStanding(sim: Simulation, person: Person, to: Standing, reaso
   const words: Record<Standing, [string, string]> = {
     good: ['In Good Standing', `The acting faculty find you in good standing. ${reason}`],
     concern: ['A Notice Of Academic Concern', `The chair of Acting has raised a concern about your work. ${reason} If your next term review finds you short again, the faculty would ${shortTermWords(school, school.termsBegun)}. A term that meets what’s asked puts you back in good standing.`],
-    warning: ['Academic Warning', `You’re on academic warning, given at a formal meeting with the chair of Acting and an associate dean, as the Bulletin sets out. ${reason} If your next term review finds you short, you’ll be dismissed from the School. While you’re on warning, you can’t take part in the Yale Cabaret.`],
+    warning: ['Academic Warning', `You’ve been placed on academic warning at a formal meeting with the chair of Acting and an associate dean, as the Bulletin sets out. ${reason} If your next term review finds you short, you’ll be dismissed from the School. While you’re on warning, you can’t take part in the Yale Cabaret.`],
     dismissed: ['Dismissed From The School', `${reason} A dismissed student can’t return to the School. ${stands}`],
     graduated: ['Your MFA Is Conferred', reason],
     withdrawn: ['You Withdrew From The School', reason],
@@ -1954,7 +1965,7 @@ export function leaveCabaret(sim: Simulation, person: Person, why: string): void
   if (!ahead.length) return;
   for (const i of ahead) sim.timeline.cancel(i.id, sim.now);
   cab.withdrawn = { at: sim.now, why };
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Out Of The Cabaret Show', body: `On ${why}, you can’t take part in the Yale Cabaret, so ${ahead.length === 1 ? 'the one call still to come is' : `the ${ahead.length} calls still to come are`} off and the show goes on without you. What you rehearsed and played stays on your record, and it isn’t held against you as a missed call.`, importance: 70, route: '/workspace/school' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Out Of The Cabaret Show', body: `On ${why}, you can’t take part in the Yale Cabaret, so ${ahead.length === 1 ? 'the one call still to come is' : `the ${countWords(ahead.length)} calls still to come are`} off, and the show goes on without you. What you rehearsed and played stays on your record, and the calls you won’t make don’t count as missed.`, importance: 70, route: '/workspace/school' });
 }
 
 /**
@@ -2443,12 +2454,14 @@ export function teachersNotes(person: Person, term: number): { course: string; t
     // Every skill the course trains, as its growth is measured over them all (from 2026-10-17, brief 14: until then the
     // note named the first alone).
     const names = c.skills.map((id) => SKILLS.find((k) => k.id === id)!.label.toLowerCase());
-    const skill = names.length < 2 ? names[0]! : `${names.slice(0, -1).join(', ')}${names.some((n) => n.includes(' and ')) ? ', and' : ' and'} ${names.at(-1)}`;
+    // Two skills where one has an “and” of its own each keep their preposition or “your” (from 2026-10-19, brief 15:
+    // until then “in speech, and accents and dialects”).
+    const joined = (lead: string) => (names.length < 2 ? `${lead}${names[0]!}` : names.length === 2 && names.some((n) => n.includes(' and ')) ? `${lead}${names[0]} and ${lead}${names[1]}` : `${lead}${names.slice(0, -1).join(', ')}${names.some((n) => n.includes(' and ')) ? ', and' : ' and'} ${names.at(-1)}`);
     const note = mine >= 1.25 * middle
-      ? `Real progress this term: you’re pulling ahead of the class in ${skill}.`
+      ? `Real progress this term: you’re pulling ahead of the class ${joined('in ')}.`
       : mine >= 0.75 * middle
-      ? `Steady work, in step with the class. Keep at your ${skill}.`
-      : `You’ve grown less than the class in ${skill} this term. Come to class rested, and do the work between classes.`;
+      ? `Steady work, in step with the class. Keep at ${joined('your ')}.`
+      : `You’ve grown less than the class ${joined('in ')} this term. Come to class rested, and do the work between classes.`;
     return { course: c.name, teacher: c.teachers.split(', ')[0]!, note };
   });
 }
@@ -2893,7 +2906,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     }
     const r = school.rep;
     if (r) parts.push(r.kind === 'role' ? `and, at the director’s invitation with the dean’s approval, in the company of ${r.production}` : `and to understudy ${term === 1 ? `${r.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : `in ${r.production}`}, in New Haven and reachable at every performance`);
-    if (parts.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair of Acting has cast you ${parts.join(', ')}. Once cast, you play the part through the run, and a missed call counts against you.`, importance: 75, route: '/workspace/school' });
+    if (parts.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair of Acting has cast you ${parts.join(', ')}. You play the part through the run, and its calls are on your calendar. A missed call counts against you: ${countWords(ESTIMATE.missedCallsOut)} in a term take you out of the casting pool.`, importance: 75, route: '/workspace/school' });
   }
 }
 
@@ -2993,11 +3006,11 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   // From 2026-10-17 (`shortCause`): every part of each short, or no part short on more than one, said as that, and not a
   // part named by its tie.
   const most = shortCause(person, tally.unreadyShown);
-  const why = most?.kind === 'part' ? ` What held most of them back was “${most.label}”, unfinished on ${most.n} of them. ${most.remedy.charAt(0).toUpperCase()}${most.remedy.slice(1)} works on it.` : most?.kind === 'every' ? ' Every part of each one was unfinished.' : most?.kind === 'scattered' ? ' Each was short on a different part.' : '';
+  const why = most?.kind === 'part' ? ` What held most of them back was “${most.label}”, unfinished on ${most.n} of them. To work on it: ${most.remedy}.` : most?.kind === 'every' ? ' None of them had a single part finished.' : most?.kind === 'scattered' ? ' Each fell short on a different part.' : '';
   const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were Unready or not shown. That’s short of what the program asks.${why}` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces were Strong or better.` : '';
   const notPassed = failedNow.length ? ` You didn’t pass ${failedNow.length === 1 ? failedNow[0]!.name : `${failedNow.slice(0, -1).map((r) => r.name).join(', ')} and ${failedNow.at(-1)!.name}`}.` : '';
   const breached = t.breaches > 0 ? ' A grave breach of professionalism this term keeps you from good standing.' : '';
-  const reason = `You came to ${pct(attendance)} of the classes, calls and shifts asked of you. Your craft grew ${growth.toFixed(1)} points, and the class’s middle student’s grew ${classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ${pace} the class.${onStage}${inClass}${notPassed}${breached}`;
+  const reason = `You came to ${pct(attendance)} of the classes, calls and shifts asked of you. Your craft grew ${growth.toFixed(1)} points this term, and the middle student in your class grew ${classGrowth.toFixed(1)}. Allowing for how much room each of you had to grow, that’s ${pace} the class.${onStage}${inClass}${notPassed}${breached}`;
   const extraTerm = school.extra?.term === term;
   const last = academicTerm(school, term) === YALE_DRAMA.terms - 1 || extraTerm;
   // A faculty review this term that kept them on warning (`facultyReview`) has judged these Fails: the evaluation doesn't
@@ -3105,7 +3118,7 @@ export function registerSchool(sim: Simulation): void {
     const school = person.school!;
     if (school.awaitingDegree && !schoolEnded(school.standing)) {
       delete school.awaitingDegree;
-      setStanding(s, person, 'withheld', `${r.name} wasn’t made up in its month, and the degree needs every course passed.`);
+      setStanding(s, person, 'withheld', `${r.name} wasn’t made up in time, and the degree needs every course passed.`);
     }
   }, repeatRoom, extraLater);
   const personOf = (item: { payload: Record<string, unknown> }) => sim.universe.people[String(item.payload.personId)];
@@ -3185,8 +3198,8 @@ export function registerSchool(sim: Simulation): void {
         body: need
           // What reached the account, less what was withheld for the IRS and what the Yale account took (from 2026-10-16:
           // until then the whole refund, so an F-1 student was told $13,318.50 was in her account where $11,356.54 was).
-          ? `Your living-expense scholarship of ${formatMoney(account.livingScholarship, cur)} met this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${!applied ? `and ${formatMoney(account.refund - withheld, cur)} is` : account.refund - withheld - applied > 0 ? `and the ${formatMoney(applied, cur)} your Yale account owed; ${formatMoney(account.refund - withheld - applied, cur)} is` : `and ${formatMoney(applied, cur)} of what your Yale account owed${accountOwed(s, person) > 0 ? `, which still owes ${formatMoney(accountOwed(s, person), cur)}` : ''}; none of it is`} in your ${current?.name ?? 'account'}${withheld ? `, after ${formatMoney(withheld, cur)} withheld for the IRS` : ''}. Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship.`
-          : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${planPaid ? 'was paid from your bank, and living costs are yours.' : 'and living costs are yours. Your bank couldn’t cover the plan: it’s owed, and comes out of your bank the first day there’s money for it.'}`,
+          ? `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Your living-expense scholarship of ${formatMoney(account.livingScholarship, cur)} paid this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${!applied ? `and ${formatMoney(account.refund - withheld, cur)} is` : account.refund - withheld - applied > 0 ? `and the ${formatMoney(applied, cur)} your Yale account owed; ${formatMoney(account.refund - withheld - applied, cur)} is` : `and ${formatMoney(applied, cur)} of what your Yale account owed${accountOwed(s, person) > 0 ? `, which still owes ${formatMoney(accountOwed(s, person), cur)}` : ''}; none of it is`} in your ${current?.name ?? 'account'}${withheld ? `, after ${formatMoney(withheld, cur)} withheld for the IRS` : ''}.`
+          : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${planPaid ? 'was paid from your bank, and living costs are yours.' : 'and living costs are yours. Your bank couldn’t cover the plan, so it’s owed: it comes out of your bank the first day there’s money for it.'}`,
         importance: 55, route: '/workspace/school',
       });
     }
@@ -3255,8 +3268,8 @@ export function registerSchool(sim: Simulation): void {
       // Under a financial hold, which stops registration (`school.reregister`), the hold is the step first (from 2026-10-16:
       // until then this said to register, which the hold refused, every class day of a term the hold had begun; played,
       // tests/remaining-school.test.ts, a term's nine courses failed at none of their meetings and the faculty dismissed).
-      const held = school.hold !== undefined ? ` A financial hold stops registration: ${formatMoney(accountOwed(s, person), saveCurrency(s.universe))} is owed on your Yale account. Pay it on the Terms And Award tab, then register on the Standing tab.` : ' Register on the School screen. Registering late takes the chair’s written permission, which the game assumes you have.';
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Not Registered', body: `You haven’t registered, so today’s classes didn’t count your attendance.${held}`, importance: 75, route: '/workspace/school' });
+      const held = school.hold !== undefined ? ` A financial hold stops registration: ${formatMoney(accountOwed(s, person), saveCurrency(s.universe))} is owed on your Yale account. Pay it on the Terms And Award tab, then press Register on the Standing And Craft tab.` : ` ${registerWay(school)} Registering late takes the chair’s written permission, which the game assumes you have.`;
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Not Registered', body: `You haven’t registered, so you were counted absent from today’s classes.${held}`, importance: 75, route: '/workspace/school' });
       return;
     }
     if (present(person, item.at)) {
@@ -3282,7 +3295,7 @@ export function registerSchool(sim: Simulation): void {
     // A day in hospital is excused, as a sick day called in is.
     meet(false, offSick(person, item.at));
     if (offSick(person, item.at)) { school.tally.excused += 1; considerWelfare(s, person); return; }
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence. The faculty count it at the term review.`, importance: 65, route: '/workspace/school' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `You missed ${spokenList(courses.map((one) => one.name))} today, unexcused. The faculty count it at the term review. If you’re unwell, call in sick before classes start.`, importance: 65, route: '/workspace/school' });
   });
 
   sim.onCommand<Record<string, never>, { cost: Money }>('school.buy_ppe', (_p, { sim: s }) => {
@@ -3317,14 +3330,14 @@ export function registerSchool(sim: Simulation): void {
     if (!registered(school, courseworkOf(s, person))) {
       item.status = 'missed';
       if (elective) school.workStudy.electiveHours -= hours;
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'A Shift You Couldn’t Work', body: 'Work-study starts with registration, when the I-9 is done. Register on the School screen.', importance: 60, route: '/workspace/school' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'A Shift You Couldn’t Work', body: `You can’t work a shift until you’ve registered, which completes your I-9. ${registerWay(school)}`, importance: 60, route: '/workspace/school' });
       return;
     }
     // The crew's Saturday needs the protective equipment: bought there if not before, through the bank; the bank short of
     // it, the supervisor sends them home and the shift is missed (`REQUIRED_PPE`, from 2026-10-08).
     if (!elective && present(person, item.at) && !school.ppe && !buyPpe(s, person)) {
       item.status = 'missed';
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Sent Home From Work-Study', body: `The shift needs the required protective equipment, ${formatMoney(ppeCost(s), saveCurrency(s.universe))}, and your bank couldn’t cover it. The shift counts as missed. Buy it on the School’s Shifts And Pay tab once you can.`, importance: 70, route: '/workspace/school' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Sent Home From Work-Study', body: `Your bank couldn’t cover the required protective equipment, ${formatMoney(ppeCost(s), saveCurrency(s.universe))}, which the shift needs, so you were sent home and the shift counts as missed. Buy it on the School’s Shifts And Pay tab once you can.`, importance: 70, route: '/workspace/school' });
       return;
     }
     if (present(person, item.at)) {
@@ -3346,7 +3359,7 @@ export function registerSchool(sim: Simulation): void {
     item.status = 'missed';
     // An elective evening not worked frees its hours to be asked for again.
     if (elective) school.workStudy.electiveHours -= hours;
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed A Work-Study Shift', body: 'Unworked hours aren’t paid, and a missed assigned shift counts against your attendance at the term review.', importance: 60, route: '/workspace/school' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed A Work-Study Shift', body: 'You missed today’s work-study shift. Hours not worked aren’t paid, and a missed assigned shift counts against your attendance at the term review.', importance: 60, route: '/workspace/school' });
   });
 
   /**
@@ -3628,7 +3641,7 @@ export function registerSchool(sim: Simulation): void {
     // casting reads, as a classmate's delivery is the share of calls they keep (from 2026-10-10).
     if (call === 'performance') { noteRun(school, casting, item.payload.which === 'rep', item.at, 'missed'); breach(s, person, `missed a performance of ${casting.kind === 'project' ? 'the ' : ''}${casting.production}`); if (item.payload.last === true) closeRun(s, person, casting, item.at); return; }
     if (missedCallsOut(s, person)) return;
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed A Rehearsal Call', body: `${ESTIMATE.missedCallsOut === 2 ? 'Two' : ESTIMATE.missedCallsOut} missed calls in a term take you out of the casting pool.`, importance: 65, route: '/workspace/school' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed A Rehearsal Call', body: `You missed a rehearsal call. ${school.castable ? `${(() => { const left = ESTIMATE.missedCallsOut - (school.tally.calls - school.tally.answered); return `${countWords(left).replace(/^\w/, (x) => x.toUpperCase())} more missed ${left === 1 ? 'call' : 'calls'} this term would take you out of the casting pool.`; })()}` : 'You’re already out of the casting pool until a term review finds you in good standing.'}`, importance: 65, route: '/workspace/school' });
   });
 
   sim.onSchedule(EVALUATION_KIND, (item, s) => {
@@ -3689,8 +3702,8 @@ export function registerSchool(sim: Simulation): void {
     if (!person || !school || schoolEnded(school.standing)) return;
     const open = degreeShortfall(school);
     if (open.failed.length) { setStanding(s, person, 'withheld', `The degree needs every course passed, and ${open.failed.map((r) => r.name).join(', ')} ${open.failed.length === 1 ? 'wasn’t' : 'weren’t'}.`); return; }
-    if (school.hold !== undefined || open.incomplete.length) { school.awaitingDegree = true; if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Not Conferred In December', body: school.hold !== undefined ? 'A financial hold on your Yale account keeps the degree until it’s paid.' : `${open.incomplete.map((r) => r.name).join(', ')} still incomplete: the degree waits for ${open.incomplete.length === 1 ? 'it' : 'them'}.`, importance: 85, route: '/workspace/school' }); return; }
-    setStanding(s, person, 'graduated', `The ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} is conferred at Yale’s December conferral, your last courses retaken in an additional term; the diploma is mailed in about ${DEGREE_DATES.mailedWeeks} weeks.`);
+    if (school.hold !== undefined || open.incomplete.length) { school.awaitingDegree = true; if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Not Conferred In December', body: school.hold !== undefined ? 'A financial hold on your Yale account keeps the degree until it’s paid. Pay it on the Terms And Award tab.' : `With ${spokenList(open.incomplete.map((r) => r.name))} still incomplete, the degree waits until ${open.incomplete.length === 1 ? 'it’s' : 'they’re'} made up.`, importance: 85, route: '/workspace/school' }); return; }
+    setStanding(s, person, 'graduated', `Your ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} is conferred at Yale’s December conferral, after the courses you retook in an additional term. The diploma is mailed in about ${countWords(DEGREE_DATES.mailedWeeks)} weeks.`);
   });
 
   sim.onCommand<Record<string, never>, { week: string }>('school.cabaret', (_p, { sim: s }) => {
@@ -3936,7 +3949,7 @@ export function registerSchool(sim: Simulation): void {
   sim.onSchedule(RECESS_KIND, (item, s) => {
     const person = personOf(item);
     if (!person || !summerOf(person, item.at)) return;
-    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'The Summer Is Yours', body: 'Classes are done until the fall term.', importance: 60, route: '/workspace/school' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'The Summer Is Yours', body: 'Classes are done until the fall term, and nothing at the School calls on you until then.', importance: 60, route: '/workspace/school' });
   });
 
   sim.onSchedule(STIPEND_KIND, (item, s) => {
@@ -4026,9 +4039,9 @@ export function registerSchool(sim: Simulation): void {
     const ends = from < s.now ? `is canceled back to ${formatDate(from, zone())}, the start of its insurance term` : 'ends today';
     setStanding(s, person, 'withdrawn', [
       'You gave up your place at the School today.',
-      early ? `It was by the fifteenth day of classes, so Yale Health’s cover ${ends}${refund > 0 ? `, and its ${formatMoney(refund, cur)} premium is refunded` : ''}.` : 'Yale Health covers you for thirty days more.',
+      early ? `Because it was within the first fifteen days of classes, Yale Health’s cover ${ends}${refund > 0 ? `, and its ${formatMoney(refund, cur)} premium is refunded` : ''}.` : 'Yale Health covers you for thirty days more.',
       'Hours you worked are still paid.',
-      f1 ? 'As an F-1 student you have fifteen days’ grace, and OPT isn’t open to you.' : '',
+      f1 ? 'As an F-1 student, you have a fifteen-day grace period, and OPT isn’t open to you.' : '',
       'The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.',
     ].filter(Boolean).join(' '));
     return { early, refund };

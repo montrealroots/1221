@@ -1,0 +1,1220 @@
+{
+ "src/engine/content/body.ts#BODY": {
+  "status": "Retained",
+  "hash": "4fa84758134d",
+  "on": "2026-10-19",
+  "reason": "A citation line of the published studies behind body weight and energy, kept as the sources cite themselves so a reader can look them up.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/body.ts#ONSET": {
+  "status": "Retained",
+  "hash": "646ba301b8f9",
+  "on": "2026-10-19",
+  "reason": "The citations behind when a long-term condition begins, kept exactly as the CDC report and the papers name themselves, with their links.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/body.ts#TRAINING_CLASS_NAMES": {
+  "status": "Rewritten",
+  "hash": "9ee20c985826",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition: the Looking After Yourself entry lists Acting Intimacy And Combat For The Stage in the spring term",
+  "first": "Pending"
+ },
+ "src/engine/content/carevisits.ts#US_PHARMACIES [costco]": {
+  "status": "Retained",
+  "hash": "23216c4c222e",
+  "on": "2026-10-19",
+  "reason": "A real US pharmacy chain by the name its stores carry, offered on Your Pharmacy beside the typical-price choice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/carevisits.ts#US_PHARMACIES [cvs]": {
+  "status": "Retained",
+  "hash": "fe598f4e16be",
+  "on": "2026-10-19",
+  "reason": "A real US pharmacy chain by the name its stores carry, offered on Your Pharmacy beside the typical-price choice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/carevisits.ts#US_PHARMACIES [kroger]": {
+  "status": "Retained",
+  "hash": "82a3d9b5ab4d",
+  "on": "2026-10-19",
+  "reason": "A real US pharmacy chain by the name its stores carry, offered on Your Pharmacy beside the typical-price choice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/carevisits.ts#US_PHARMACIES [walmart]": {
+  "status": "Retained",
+  "hash": "716ba339365e",
+  "on": "2026-10-19",
+  "reason": "A real US pharmacy chain by the name its stores carry, offered on Your Pharmacy beside the typical-price choice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/clinics.ts#CLINICS": {
+  "status": "Retained",
+  "hash": "955e96e6dcf5",
+  "on": "2026-10-19",
+  "reason": "Real practices, urgent care centers, hospitals and pharmacies by their own names and street addresses, kept as each publishes them so a player can find them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/clinics.ts#SELF_PAY": {
+  "status": "Retained",
+  "hash": "db5e8217e06a",
+  "on": "2026-10-19",
+  "reason": "The self-pay price lines as each provider labels them, the Bupa private GP and the Farmacias Similares consulta among them, in their own words. Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the two pages CityMD's self-pay prices come from, each address as published",
+  "first": "Pending"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ae-du-dubai]": {
+  "status": "Retained",
+  "hash": "78ef136f5db4",
+  "on": "2026-10-19",
+  "reason": "Dubai as the gazetteer spells it, the name a player picks and reads on every screen; Asia/Dubai is its time zone id, never shown; its tags (no income tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [au-nsw-sydney]": {
+  "status": "Retained",
+  "hash": "802445c51d59",
+  "on": "2026-10-19",
+  "reason": "Sydney as the gazetteer spells it, the name a player picks and reads on every screen; Australia/Sydney is its time zone id, never shown; its tags (southern hemisphere, production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [au-qld-goldcoast]": {
+  "status": "Retained",
+  "hash": "863cd8243326",
+  "on": "2026-10-19",
+  "reason": "Gold Coast as the gazetteer spells it, the name a player picks and reads on every screen; Australia/Brisbane is its time zone id, never shown; its tags (no daylight saving) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [au-vic-melbourne]": {
+  "status": "Retained",
+  "hash": "589994e65eed",
+  "on": "2026-10-19",
+  "reason": "Melbourne as the gazetteer spells it, the name a player picks and reads on every screen; Australia/Melbourne is its time zone id, never shown; its tags (southern hemisphere) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ca-bc-vancouver]": {
+  "status": "Retained",
+  "hash": "7a56c4ba83e4",
+  "on": "2026-10-19",
+  "reason": "Vancouver as the gazetteer spells it, the name a player picks and reads on every screen; America/Vancouver is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ca-on-toronto]": {
+  "status": "Retained",
+  "hash": "63955c831bca",
+  "on": "2026-10-19",
+  "reason": "Toronto as the gazetteer spells it, the name a player picks and reads on every screen; America/Toronto is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ca-qc-montreal]": {
+  "status": "Retained",
+  "hash": "9dc614466063",
+  "on": "2026-10-19",
+  "reason": "Montreal as the gazetteer spells it, the name a player picks and reads on every screen; America/Toronto is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [de-be-berlin]": {
+  "status": "Retained",
+  "hash": "ad37e977ec6d",
+  "on": "2026-10-19",
+  "reason": "Berlin as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Berlin is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [es-cat-barcelona]": {
+  "status": "Retained",
+  "hash": "c65d2f401162",
+  "on": "2026-10-19",
+  "reason": "Barcelona as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Madrid is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [es-md-madrid]": {
+  "status": "Retained",
+  "hash": "87ef567d99e4",
+  "on": "2026-10-19",
+  "reason": "Madrid as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Madrid is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [fr-idf-paris]": {
+  "status": "Retained",
+  "hash": "427d53b78164",
+  "on": "2026-10-19",
+  "reason": "Paris as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Paris is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [fr-paca-cannes]": {
+  "status": "Retained",
+  "hash": "a2d0b4b955e1",
+  "on": "2026-10-19",
+  "reason": "Cannes as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Paris is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [ie-lei-dublin]": {
+  "status": "Retained",
+  "hash": "3055f4136418",
+  "on": "2026-10-19",
+  "reason": "Dublin as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Dublin is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [it-laz-rome]": {
+  "status": "Retained",
+  "hash": "f1d9b269641e",
+  "on": "2026-10-19",
+  "reason": "Rome as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Rome is its time zone id, never shown; its tags (historic studios) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [jp-13-tokyo]": {
+  "status": "Retained",
+  "hash": "e7e415c408dc",
+  "on": "2026-10-19",
+  "reason": "Tokyo as the gazetteer spells it, the name a player picks and reads on every screen; Asia/Tokyo is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [kr-11-seoul]": {
+  "status": "Retained",
+  "hash": "ea75c8b413e7",
+  "on": "2026-10-19",
+  "reason": "Seoul as the gazetteer spells it, the name a player picks and reads on every screen; Asia/Seoul is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [mx-cmx-mexicocity]": {
+  "status": "Retained",
+  "hash": "e913362a1212",
+  "on": "2026-10-19",
+  "reason": "Mexico City as the gazetteer spells it, the name a player picks and reads on every screen; America/Mexico_City is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [nz-akl-auckland]": {
+  "status": "Retained",
+  "hash": "9e21454132ef",
+  "on": "2026-10-19",
+  "reason": "Auckland as the gazetteer spells it, the name a player picks and reads on every screen; Pacific/Auckland is its time zone id, never shown; its tags (southern hemisphere) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [nz-wgn-wellington]": {
+  "status": "Retained",
+  "hash": "49f67bad2c82",
+  "on": "2026-10-19",
+  "reason": "Wellington as the gazetteer spells it, the name a player picks and reads on every screen; Pacific/Auckland is its time zone id, never shown; its tags (southern hemisphere) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [uk-eng-london]": {
+  "status": "Retained",
+  "hash": "f812b14374bf",
+  "on": "2026-10-19",
+  "reason": "London as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [uk-eng-manchester]": {
+  "status": "Retained",
+  "hash": "90fd5330f349",
+  "on": "2026-10-19",
+  "reason": "Manchester as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [uk-sct-glasgow]": {
+  "status": "Retained",
+  "hash": "4adc4ae90b5a",
+  "on": "2026-10-19",
+  "reason": "Glasgow as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-az-phoenix]": {
+  "status": "Retained",
+  "hash": "1f6218fc4251",
+  "on": "2026-10-19",
+  "reason": "Phoenix as the gazetteer spells it, the name a player picks and reads on every screen; America/Phoenix is its time zone id, never shown; its tags (no daylight saving) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-burbank]": {
+  "status": "Retained",
+  "hash": "8c52466a1683",
+  "on": "2026-10-19",
+  "reason": "Burbank as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-losangeles]": {
+  "status": "Retained",
+  "hash": "27a5ce5ba988",
+  "on": "2026-10-19",
+  "reason": "Los Angeles as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown; its tags (entertainment capital) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-sandiego]": {
+  "status": "Retained",
+  "hash": "ef56739d684d",
+  "on": "2026-10-19",
+  "reason": "San Diego as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-sanfrancisco]": {
+  "status": "Retained",
+  "hash": "11b195109b82",
+  "on": "2026-10-19",
+  "reason": "San Francisco as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ca-santamonica]": {
+  "status": "Retained",
+  "hash": "793137138e12",
+  "on": "2026-10-19",
+  "reason": "Santa Monica as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-co-denver]": {
+  "status": "Retained",
+  "hash": "0cbd6f149847",
+  "on": "2026-10-19",
+  "reason": "Denver as the gazetteer spells it, the name a player picks and reads on every screen; America/Denver is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-fl-miami]": {
+  "status": "Retained",
+  "hash": "450d20777146",
+  "on": "2026-10-19",
+  "reason": "Miami as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ga-atlanta]": {
+  "status": "Retained",
+  "hash": "9670cd0c6a0f",
+  "on": "2026-10-19",
+  "reason": "Atlanta as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown; its tags (production hub) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-hi-honolulu]": {
+  "status": "Retained",
+  "hash": "58a096876f2e",
+  "on": "2026-10-19",
+  "reason": "Honolulu as the gazetteer spells it, the name a player picks and reads on every screen; Pacific/Honolulu is its time zone id, never shown; its tags (no daylight saving) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-il-chicago]": {
+  "status": "Retained",
+  "hash": "aecc81b8cb48",
+  "on": "2026-10-19",
+  "reason": "Chicago as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-la-neworleans]": {
+  "status": "Retained",
+  "hash": "bec506eeb2cc",
+  "on": "2026-10-19",
+  "reason": "New Orleans as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ma-boston]": {
+  "status": "Retained",
+  "hash": "4c9b2ddf7f23",
+  "on": "2026-10-19",
+  "reason": "Boston as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-nc-wilmington]": {
+  "status": "Retained",
+  "hash": "465f799ec02f",
+  "on": "2026-10-19",
+  "reason": "Wilmington as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-nm-santafe]": {
+  "status": "Retained",
+  "hash": "5f71b838960a",
+  "on": "2026-10-19",
+  "reason": "Santa Fe as the gazetteer spells it, the name a player picks and reads on every screen; America/Denver is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-nv-lasvegas]": {
+  "status": "Retained",
+  "hash": "63577627c8f2",
+  "on": "2026-10-19",
+  "reason": "Las Vegas as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown; its tags (no state income tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-ny-newyork]": {
+  "status": "Retained",
+  "hash": "37ee498a8260",
+  "on": "2026-10-19",
+  "reason": "New York as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown; Manhattan is its other name a search matches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-or-portland]": {
+  "status": "Retained",
+  "hash": "0f3ed5ce06ee",
+  "on": "2026-10-19",
+  "reason": "Portland as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown; its tags (no sales tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-tn-nashville]": {
+  "status": "Retained",
+  "hash": "f6d765d80be7",
+  "on": "2026-10-19",
+  "reason": "Nashville as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown; its tags (no state income tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-tx-austin]": {
+  "status": "Retained",
+  "hash": "1da860ff03d6",
+  "on": "2026-10-19",
+  "reason": "Austin as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-tx-dallas]": {
+  "status": "Retained",
+  "hash": "f085597b5c1a",
+  "on": "2026-10-19",
+  "reason": "Dallas as the gazetteer spells it, the name a player picks and reads on every screen; America/Chicago is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#CALIBRATED_CITIES [us-wa-seattle]": {
+  "status": "Retained",
+  "hash": "4133e3dffc05",
+  "on": "2026-10-19",
+  "reason": "Seattle as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown; its tags (no state income tax) are Home's short place line, accurate of the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#city": {
+  "status": "Rewritten",
+  "hash": "6dc3b5e7f7ae",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/care-after-2.txt, rendered by render-care.ts: Los Angeles's note",
+  "first": "Pending"
+ },
+ "src/engine/content/geography.ts#CONTINENT_NAMES": {
+  "status": "Retained",
+  "hash": "5c133ac08f8c",
+  "on": "2026-10-19",
+  "reason": "The seven continents by their everyday English names, which the place look shows under a country's capital.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#COUNTRY_ALIASES": {
+  "status": "Retained",
+  "hash": "1c1d8cb108f2",
+  "on": "2026-10-19",
+  "reason": "Other names a player may type for a country, Britain, Holland, DR Congo, matched to the gazetteer's own name and never shown in place of it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#deriveCity": {
+  "status": "Rewritten",
+  "hash": "3c41279586aa",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/care-after-2.txt, rendered by render-care.ts: the first derived city's note",
+  "first": "Pending"
+ },
+ "src/engine/content/geography.ts#loadCountryCities": {
+  "status": "Rewritten",
+  "hash": "414c275aa7ac",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/care-after-2.txt, rendered by render-care.ts: the town list for a country that can't be loaded, played with a failing fetch",
+  "first": "Pending"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [ca-02-sechelt]": {
+  "status": "Retained",
+  "hash": "e43e53b2e477",
+  "on": "2026-10-19",
+  "reason": "Sechelt as the gazetteer spells it, the name a player picks and reads on every screen; America/Vancouver is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [ca-02-victoria]": {
+  "status": "Retained",
+  "hash": "a0ee54a616b2",
+  "on": "2026-10-19",
+  "reason": "Victoria as the gazetteer spells it, the name a player picks and reads on every screen; America/Vancouver is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [ca-08-millbrook]": {
+  "status": "Retained",
+  "hash": "bb1337e6fc6d",
+  "on": "2026-10-19",
+  "reason": "Millbrook as the gazetteer spells it, the name a player picks and reads on every screen; America/Toronto is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [ie-l-naas]": {
+  "status": "Retained",
+  "hash": "a507a60a5210",
+  "on": "2026-10-19",
+  "reason": "Naas as the gazetteer spells it, the name a player picks and reads on every screen; Europe/Dublin is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [is-39-mosfellsbr]": {
+  "status": "Retained",
+  "hash": "f68ba755401d",
+  "on": "2026-10-19",
+  "reason": "Mosfellsbær as the gazetteer spells it, the name a player picks and reads on every screen; Atlantic/Reykjavik is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [mx-15-toluca]": {
+  "status": "Retained",
+  "hash": "ccf8a4da4926",
+  "on": "2026-10-19",
+  "reason": "Toluca as the gazetteer spells it, the name a player picks and reads on every screen; America/Mexico_City is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [uk-nir-belfast]": {
+  "status": "Retained",
+  "hash": "06492dc80a49",
+  "on": "2026-10-19",
+  "reason": "Belfast as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [uk-sct-edinburgh]": {
+  "status": "Retained",
+  "hash": "4d92aa0b60ec",
+  "on": "2026-10-19",
+  "reason": "Edinburgh as the gazetteer spells it, the name a player picks and reads on every screen; Europe/London is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [us-ca-bakersfield]": {
+  "status": "Retained",
+  "hash": "474c832c696b",
+  "on": "2026-10-19",
+  "reason": "Bakersfield as the gazetteer spells it, the name a player picks and reads on every screen; America/Los_Angeles is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [us-ct-litchfield]": {
+  "status": "Retained",
+  "hash": "5426a85d77d7",
+  "on": "2026-10-19",
+  "reason": "Litchfield as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [us-ct-newhaven]": {
+  "status": "Retained",
+  "hash": "2f8c5cc7487b",
+  "on": "2026-10-19",
+  "reason": "New Haven as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/geography.ts#NEEDED_AT_BOOT [us-ny-hudson]": {
+  "status": "Retained",
+  "hash": "181cee9dc95c",
+  "on": "2026-10-19",
+  "reason": "Hudson as the gazetteer spells it, the name a player picks and reads on every screen; America/New_York is its time zone id, never shown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/body.ts#BODY [body.how]": {
+  "status": "Rewritten",
+  "hash": "2af175939757",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section; tests/guide-examples-start-day-body.test.ts plays the example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/body.ts#BODY [body.look-after]": {
+  "status": "Rewritten",
+  "hash": "17ed32d7b44b",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section; tests/guide-examples-start-day-body.test.ts plays the example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/body.ts#BODY [body.sleep]": {
+  "status": "Rewritten",
+  "hash": "86bff835ed93",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section; tests/guide-examples-start-day-body.test.ts plays the example",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/body.ts#BODY [evaluation]": {
+  "status": "Retained",
+  "hash": "7f8c0b8d7e7a",
+  "on": "2026-10-19",
+  "reason": "Each How It Connects line names one link in plain words with its figure: readiness sets what a class builds, under 60 a tired night on stage costs you, missed classes are absences, the weather decides a run.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/body.ts#BODY [history]": {
+  "status": "Retained",
+  "hash": "4279bbc057a7",
+  "on": "2026-10-19",
+  "reason": "Three short lines that say where each thing is kept: long-term conditions on Papers, slept-through commitments in the next morning's notice, and fitness as the Profile's Stamina.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/body.ts#BODY [immediate]": {
+  "status": "Rewritten",
+  "hash": "57f188c89b2c",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section's connections",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/body.ts#BODY [optional]": {
+  "status": "Retained",
+  "hash": "b5fea7cd0d80",
+  "on": "2026-10-19",
+  "reason": "Two concrete options with their catch stated: under 55 condition a sick day is excused, and skipping through the night sleeps for you but stops at 74 energy.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/body.ts#BODY [scheduled]": {
+  "status": "Rewritten",
+  "hash": "4664cde3eba9",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section's connections",
+  "first": "Pending"
+ },
+ "src/engine/content/injury.ts#INJURY": {
+  "status": "Retained",
+  "hash": "ceb5fd6e33a8",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the injury rates' sources, the Bureau of Labor Statistics' tables for performing arts and private industry by address and year, and the studies by author and year, each a citation a reader can look up",
+  "first": "Pending"
+ },
+ "src/engine/content/injury.ts#INJURY_KIND": {
+  "status": "Retained",
+  "hash": "591f72560c1b",
+  "on": "2026-10-19",
+  "reason": "Seven injuries by their everyday names in Title Case, A Sprained Ankle and A Broken Bone, the titles of their notices and looks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/lifespan.ts#AGING": {
+  "status": "Retained",
+  "hash": "47000170ec9c",
+  "on": "2026-10-19",
+  "reason": "Each age band's line follows the fitness figure and says, in plain everyday words, what age does to training and to a night's rest at that age, true to the band's own rates.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/plans.ts#INTEREST_PLANS": {
+  "status": "Retained",
+  "hash": "a57fc9890f94",
+  "on": "2026-10-19",
+  "reason": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): CaixaBank's and BBVA's card-instalment pages, each with the rates it gives (TIN 20.40%; 0%, 4.30%, 5.20% or 6% over 3 to 6 months), the bank's own terms said in English",
+  "first": "Pending"
+ },
+ "src/engine/content/revolving.ts#REVOLVING_COURSE": {
+  "status": "Rewritten",
+  "hash": "6a72893328bb",
+  "on": "2026-10-19",
+  "evidence": "Newly read by the inventory from brief 15's coordinator on (a citation that starts with a web address): the Japanese and Korean revolving-credit courses' pages with each one's minimum. Two said SLATE's estimate, the engine-speak the glossary sets aside: now the game's estimate, said once in each, read in the inventory's print after the change (node tools/text-inventory.mjs)",
+  "first": "Pending"
+ },
+ "src/engine/content/world-data.ts#CITY_COUNTS": {
+  "status": "Retained",
+  "hash": "49f2f2284c40",
+  "on": "2026-10-19",
+  "reason": "How many towns each country's list holds, which the location picker says as a figure, N towns and cities on record, counted from the published gazetteer.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/world-data.ts#CITY_TABLE": {
+  "status": "Retained",
+  "hash": "ac28fbafc3e3",
+  "on": "2026-10-19",
+  "reason": "GeoNames' largest towns by their own names, with coordinates, time zone and population, which the picker lists and the place look describes, each spelled as its country does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/world-data.ts#COUNTRY_TABLE": {
+  "status": "Retained",
+  "hash": "f68ae64f4d58",
+  "on": "2026-10-19",
+  "reason": "GeoNames' country table as published, but for two overrides the generator names: the place look shows a country's name, capital, currency name, calling code, languages by name, population and area, each a real fact kept exact; Cambodia's currency is the Riel, singular like every other, from the coordinator's cross-area review",
+  "first": "Pending"
+ },
+ "src/engine/content/world-data.ts#REGION_TABLE": {
+  "status": "Retained",
+  "hash": "108cc8f9bc61",
+  "on": "2026-10-19",
+  "reason": "GeoNames' first-level regions by their own names and codes, as each country names its states and provinces, shown as a town's region in the picker and the place look.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/deciders.ts#defineDecider": {
+  "status": "Retained",
+  "hash": "643f6ab04c96",
+  "on": "2026-10-19",
+  "reason": "Errors a developer sees at startup when two deciders share a name or one reads nothing, never shown to a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/deciders.ts#sweepOne": {
+  "status": "Retained",
+  "hash": "8870b7906b5c",
+  "on": "2026-10-19",
+  "reason": "An error a developer sees when a decider reads a field it didn't declare, raised in the deciders check and never on a player's screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/invariants.ts#breaches": {
+  "status": "Retained",
+  "hash": "c9bee3613c2e",
+  "on": "2026-10-19",
+  "reason": "Ledger and schedule faults named for a developer's test failure, posting not whole cents and the rest, which no screen shows a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/performer.ts#PERFORMER_NOUN": {
+  "status": "Retained",
+  "hash": "628580f0ff5c",
+  "on": "2026-10-19",
+  "reason": "The two words a player chooses at creation to be called, Actor or Actress, shown on the top bar and the last page of a life.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/rng.ts#makeRng": {
+  "status": "Retained",
+  "hash": "a3e645ce7c54",
+  "on": "2026-10-19",
+  "reason": "Two programming errors for a random pick from an empty list, thrown to a developer's console and never shown to a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/appointments.ts#bookIn": {
+  "status": "Rewritten",
+  "hash": "72ae2f0f8ea2",
+  "on": "2026-10-19",
+  "evidence": "tests/guide-examples-papers.test.ts, papers.doctor: the played Monday's notice equals the guide's quote, new next step included; fails with the old notice",
+  "first": "Pending"
+ },
+ "src/engine/systems/appointments.ts#mayRefer": {
+  "status": "Retained",
+  "hash": "fb52cf5ae094",
+  "on": "2026-10-19",
+  "reason": "Says where a referral came from, Referred after a doctor's visit, so the specialist's appointment is tied to the visit that led to it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/appointments.ts#registerAppointments": {
+  "status": "Rewritten",
+  "hash": "cd2576317388",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g05-life.test.ts asserts Missed The Doctor and tests/scope-health.test.ts Not Seen At Your Practice, played",
+  "first": "Pending"
+ },
+ "src/engine/systems/appointments.ts#registerAppointments <health.book>": {
+  "status": "Retained",
+  "hash": "19260fcc83d3",
+  "on": "2026-10-19",
+  "reason": "Book An Appointment's refusals name the one obstacle: nothing to see a doctor about, an appointment already booked, or no published wait where you live, so care comes when needed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/appointments.ts#registerAppointments <health.cancel_appointment>": {
+  "status": "Rewritten",
+  "hash": "807ad7ff33b5",
+  "on": "2026-10-19",
+  "evidence": "care-after-2.txt, rendered by render-care.ts: Call It Off pressed on an appointment that isn't booked",
+  "first": "Pending"
+ },
+ "src/engine/systems/appointments.ts#SPECIALIST": {
+  "status": "Retained",
+  "hash": "2408263c92a5",
+  "on": "2026-10-19",
+  "reason": "The appointment's name once a doctor refers you, A specialist, referred, said the same way on Papers and in its notice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/body.ts#bmiWord": {
+  "status": "Retained",
+  "hash": "7be5b52fb98c",
+  "on": "2026-10-19",
+  "reason": "The WHO's four body mass index ranges by their published names, in Title Case where they stand as labels and lowered where a sentence uses them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/body.ts#bodyUnits": {
+  "status": "Retained",
+  "hash": "1ce77dbe703a",
+  "on": "2026-10-19",
+  "reason": "Says which units a body is shown in and why, in one plain sentence: in feet, inches and pounds, the units of the United States, where you live.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/clinics.ts#clinicRefusal": {
+  "status": "Retained",
+  "hash": "7d286c58ae1b",
+  "on": "2026-10-19",
+  "reason": "Three short refusals of Your Doctor that name what's wrong: no such practice, your doctor has to be in your own town, or it isn't a doctor's practice.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/clinics.ts#MEMBERS_ONLY": {
+  "status": "Retained",
+  "hash": "59e187648476",
+  "on": "2026-10-19",
+  "reason": "Says in one sentence why Yale Health's practice won't see you: it sees the Yale students it covers, and it doesn't cover you now.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#aidRefusal": {
+  "status": "Retained",
+  "hash": "8dbfa1353a3f",
+  "on": "2026-10-19",
+  "reason": "Four short refusals beside Apply For Assistance, each naming the one reason: not a Connecticut hospital's bill, already settled or past due, or already applied.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#appealRefusal": {
+  "status": "Retained",
+  "hash": "c4bd2d9e436a",
+  "on": "2026-10-19",
+  "reason": "Three short refusals of Appeal It: the claim wasn't denied, it's already been appealed, or the days to appeal have passed, with the figure.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#applyRefusal": {
+  "status": "Rewritten",
+  "hash": "135438ff4a62",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-health-eligibility.test.ts asserts the refusal of a second application, played",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#applyRenewal": {
+  "status": "Rewritten",
+  "hash": "826980fe56dd",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g8-4.test.ts, tests/need-paths.test.ts, tests/scope-cover.test.ts and tests/remaining-health-billing.test.ts assert the renewal notices; care-after-2.txt (render-care.ts) the age and SNAP variants",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#armHealth": {
+  "status": "Retained",
+  "hash": "052f2297dd51",
+  "on": "2026-10-19",
+  "reason": "Calendar labels for the health system's own monthly and weekly runs, Health Cover and Health, which happen without you and are named by what they look after.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#billCare": {
+  "status": "Retained",
+  "hash": "2c00f04d1b56",
+  "on": "2026-10-19",
+  "reason": "The calendar entry for a bill's due date, Medical Bill Due and what the bill is for, the day the money leaves your checking account.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#byWords": {
+  "status": "Retained",
+  "hash": "8c756c1d6d7d",
+  "on": "2026-10-19",
+  "reason": "Each way a month meets HUSKY D's work rules, said as the reason after it: with income over the line, with time at the School, or because an exemption applies.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#careFor": {
+  "status": "Rewritten",
+  "hash": "c6e0d115dd2d",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-health.test.ts and tests/evidence-g05-life.test.ts assert A Doctor's Visit, In Hospital, The Emergency Room and A Claim Denied whole, played",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#CONDITION_LABEL": {
+  "status": "Retained",
+  "hash": "455b1e11e29d",
+  "on": "2026-10-19",
+  "reason": "The five long-term conditions by their plain medical names, as a label on Papers and on the person page; Diabetes takes its type beside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#COVER_LABEL": {
+  "status": "Retained",
+  "hash": "e2833d47ba8f",
+  "on": "2026-10-19",
+  "reason": "Each kind of cover by the name a player knows it by, Yale Health or a Marketplace Plan, where a state's own program name doesn't apply.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#dueWords": {
+  "status": "Rewritten",
+  "hash": "f1060ad1b647",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-health.test.ts, tests/evidence-g05-life.test.ts, tests/evidence-g07-life.test.ts and tests/evidence-g01-life.test.ts assert the bill sentence in the visit, stay, emergency and injury notices",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#endAhead": {
+  "status": "Retained",
+  "hash": "1f2f54b82749",
+  "on": "2026-10-19",
+  "reason": "Says why public cover ends, the exact last day, and what that opens next, the marketplace's 60 days, or that being out of status shuts it too.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#extraSupplyRefusal": {
+  "status": "Retained",
+  "hash": "68eda0fd5090",
+  "on": "2026-10-19",
+  "reason": "Says plainly why a longer supply can't be filled: no medicine to fill, or the most days the pharmacy fills at once there, with the figure.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#fillMedicine": {
+  "status": "Retained",
+  "hash": "c88ab2d04bbf",
+  "on": "2026-10-19",
+  "reason": "A ledger line for a fill at the pharmacy, Medicine for asthma, naming the condition it was for on Money's list.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#fluMeans": {
+  "status": "Retained",
+  "hash": "46ee57ee6e35",
+  "on": "2026-10-19",
+  "reason": "The flu's notice says when it ends, what it cost, that Work Out waits, and that Call In Sick on School excuses a day of classes, all a player needs that week.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#grantPending": {
+  "status": "Rewritten",
+  "hash": "372341185abf",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-health-eligibility.test.ts asserts Public Cover Approved on its notice and on Home, played",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#hardshipRefusal": {
+  "status": "Retained",
+  "hash": "27655aa39388",
+  "on": "2026-10-19",
+  "reason": "Each refusal of a hardship request names what is missing, no notice waiting, the 30 days ended on a date, or no stay in hospital in the months checked.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#healthMonth": {
+  "status": "Rewritten",
+  "hash": "51c14cf8a147",
+  "on": "2026-10-19",
+  "evidence": "tests/scope-cover.test.ts asserts Your Public Cover Has Ended with Yale Health's student cover again, played",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#HOME": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-19",
+  "reason": "A time zone id the cover's dates are worked out in, never put on a screen; the dates it gives are said through formatDate.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#illnessWeek": {
+  "status": "Retained",
+  "hash": "d05b8120a885",
+  "on": "2026-10-19",
+  "reason": "What each piece of care is called on a bill and a notice, a doctor's visit, the flu at urgent care, new glasses, in sentence case so a notice can carry it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#inMonths": {
+  "status": "Retained",
+  "hash": "988a6e8aa163",
+  "on": "2026-10-19",
+  "reason": "Names the months assessed as a calendar would, in December 2026 or in any month from May to October 2027, so the notice can't misstate the range.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#keepUp": {
+  "status": "Retained",
+  "hash": "1818fd4b0bb8",
+  "on": "2026-10-19",
+  "reason": "A ledger line for a month's care, Care for depression, that names the condition the payment is for on Money's list.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#marketplaceOpen": {
+  "status": "Retained",
+  "hash": "4cb1859c228f",
+  "on": "2026-10-19",
+  "reason": "Says why the marketplace is open or shut in one plain line each: open enrollment, the 60 days around a loss of cover, or outside both, with the window's own dates.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#mayEnroll": {
+  "status": "Retained",
+  "hash": "0fe6d6746210",
+  "on": "2026-10-19",
+  "reason": "Enroll's refusals and reasons say exactly why, with the date or the rule: Yale Health covers you until a day, you can enroll from a day, last month's income qualifies you, with no premium.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#MONTH_NAMES": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The twelve month names a date in a cover notice is spelled with, as formatDate spells them everywhere else in the game.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#NAMED_TEETH_EYES": {
+  "status": "Retained",
+  "hash": "33a07456bf7e",
+  "on": "2026-10-19",
+  "reason": "Real dental practices and opticians by the names they trade under, as their own signs spell them, hi sonrisa and Ópticas Devlyn among them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#noticeOfNoncompliance": {
+  "status": "Rewritten",
+  "hash": "d3bb6358d64c",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g8-4.test.ts, tests/need-paths.test.ts, tests/remaining-09-hardship.test.ts and tests/remaining-health-eligibility.test.ts assert both notices whole",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#onsetMonth": {
+  "status": "Retained",
+  "hash": "c4ea2c979dad",
+  "on": "2026-10-19",
+  "reason": "A diagnosis notice that says what happened, what it costs each month and where to see or stop the care, with the button's own name, Let It Go.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#prepayRefusal": {
+  "status": "Retained",
+  "hash": "de7df03a56df",
+  "on": "2026-10-19",
+  "reason": "Four short refusals of England's prepayment certificate, each with its one reason: not England, not NHS care, prescriptions already free at that age, or the certificate still has time left.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#PROGRAM_NAMES": {
+  "status": "Retained",
+  "hash": "4bc4ccb4e3a4",
+  "on": "2026-10-19",
+  "reason": "Each state program by the name its agency gives it, HUSKY D, Medi-Cal, Covered Connecticut, the Essential Plan, so a player can look it up.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#registerHealth": {
+  "status": "Rewritten",
+  "hash": "4e87953ba14d",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g05-life.test.ts, tests/evidence2-b02.test.ts and tests/evidence-g03-life.test.ts assert A Medical Bill Went Unpaid; tests/evidence-g02-life.test.ts Appeal Lost; tests/remaining-health-eligibility.test.ts Public Cover Denied",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#registerHealth [loan]": {
+  "status": "Retained",
+  "hash": "a62cb05cfff9",
+  "on": "2026-10-19",
+  "reason": "The medical debt account by what it holds, Owed For Medical Care, owed to Your Providers, as Money lists an account and who it is with.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.appeal>": {
+  "status": "Retained",
+  "hash": "d1266cd0cb54",
+  "on": "2026-10-19",
+  "reason": "The calendar's name for the day an appeal is answered, An Appeal Decided, plain and specific to the bill under appeal.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.apply_aid>": {
+  "status": "Retained",
+  "hash": "f55cb2613b29",
+  "on": "2026-10-19",
+  "reason": "A one-line refusal for a bill that isn't there, There's no such bill, beside the button that names the bill it acts on.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.choose_pharmacy>": {
+  "status": "Retained",
+  "hash": "077f9dca15c6",
+  "on": "2026-10-19",
+  "reason": "Two refusals of Your Pharmacy that say why: no such pharmacy, or choosing a pharmacy is only possible in the United States.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.dental>": {
+  "status": "Retained",
+  "hash": "782604ff5e2c",
+  "on": "2026-10-19",
+  "reason": "Each dental refusal names its rule or what blocks it: no plan to cancel, Yale's can't be canceled once paid, where a plan can be bought, and the bank refusal in the game's one shape.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.drop>": {
+  "status": "Retained",
+  "hash": "270d621a2582",
+  "on": "2026-10-19",
+  "reason": "Two refusals of Drop The Plan that say what blocks it: no plan of your own, or it's already dropped and ends on a date.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.extra_supply>": {
+  "status": "Retained",
+  "hash": "50ce06883fc9",
+  "on": "2026-10-19",
+  "reason": "The bank refusal in the game's one shape: the amount the bank can't cover for every condition's fill, and that nothing was filled or charged.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.pay_bill>": {
+  "status": "Rewritten",
+  "hash": "59480e8b8e9d",
+  "on": "2026-10-19",
+  "evidence": "care-after-2.txt, rendered by render-care.ts: Pay It Off with no checking account and with nothing entered; tests/commands-kept.test.ts and tests/evidence-g03-life.test.ts assert the amount refusal",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.prepay>": {
+  "status": "Retained",
+  "hash": "05b8b1555aaa",
+  "on": "2026-10-19",
+  "reason": "Names the certificate and its months on the ledger, and refuses in the one shape when the bank can't cover it, saying nothing was charged.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#registerHealth <health.treat>": {
+  "status": "Retained",
+  "hash": "e0b39cce5700",
+  "on": "2026-10-19",
+  "reason": "Keep It Up's one refusal says what's wrong, you don't have that condition, and its ledger line names the condition the month's care is for.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#renewalDue": {
+  "status": "Retained",
+  "hash": "659927af4fcc",
+  "on": "2026-10-19",
+  "reason": "Says the prescription has run out, why it can't be filled, and what happens next: a renewal visit is booked, or Book An Appointment to have one.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/health.ts#renewProgram": {
+  "status": "Rewritten",
+  "hash": "6de3166ac318",
+  "on": "2026-10-19",
+  "evidence": "tests/defects4.test.ts asserts Your Public Cover Ends at a renewal out of status, played",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#repriceCare": {
+  "status": "Rewritten",
+  "hash": "92c7706d66a9",
+  "on": "2026-10-19",
+  "evidence": "tests/remaining-health-billing.test.ts asserts Care Billed Again and Care Credited whole, played through a withdrawal and Affiliate cover",
+  "first": "Pending"
+ },
+ "src/engine/systems/health.ts#reviewWhat": {
+  "status": "Retained",
+  "hash": "0cc56a637772",
+  "on": "2026-10-19",
+  "reason": "Names a condition's check-up the way a booking notice and Papers list it: a review of your asthma, said of the condition it reviews.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#RX": {
+  "status": "Retained",
+  "hash": "f3e3e952e9dc",
+  "on": "2026-10-19",
+  "reason": "The appointment's own name when a prescription needs a doctor's renewal, said the same way on Papers and in the booking notice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/health.ts#workWords": {
+  "status": "Retained",
+  "hash": "af674ac98d0f",
+  "on": "2026-10-19",
+  "reason": "The work rules in what a player can meet them with, an amount of income, time at the School or an exception, worked out from the rule's own figure.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/injury.ts#CARE_WORDS": {
+  "status": "Retained",
+  "hash": "f39a3438f04e",
+  "on": "2026-10-19",
+  "reason": "What care an injury needs, in the words a notice uses: a doctor's visit, a visit to urgent care or a trip to the emergency room.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/injury.ts#compWeek": {
+  "status": "Retained",
+  "hash": "c8857468d385",
+  "on": "2026-10-19",
+  "reason": "The ledger line and income account for a week of workers' compensation, named as the payment the state calls it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/injury.ts#mayHurt": {
+  "status": "Rewritten",
+  "hash": "8fc432ac1a1b",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g07-life.test.ts, tests/evidence2-b03.test.ts and tests/evidence2-b02.test.ts assert A Sprained Ankle whole and its bill's name, played",
+  "first": "Pending"
+ },
+ "src/engine/systems/injury.ts#registerInjury": {
+  "status": "Retained",
+  "hash": "b2522f90ba1f",
+  "on": "2026-10-19",
+  "reason": "The calendar's name for the weekly workers' compensation payment, Workers' Compensation, which happens without you while you're laid up.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/injury.ts#shareWords": {
+  "status": "Retained",
+  "hash": "228e4fea023b",
+  "on": "2026-10-19",
+  "reason": "The wage workers' compensation pays while you're laid up, as the state's own share, two-thirds or 75% after tax, of your week's wage.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/injury.ts#trainingRefusal": {
+  "status": "Retained",
+  "hash": "79f33f76e1bd",
+  "on": "2026-10-19",
+  "reason": "A short refusal beside a training button that names the injury stopping it and how many days it has left to mend.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/mortality.ts#decideStretch": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "An internal calendar label for the world's own run, which the clock names as background work and never shows by this name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/mortality.ts#registerMortality": {
+  "status": "Retained",
+  "hash": "40ae4cbc5189",
+  "on": "2026-10-19",
+  "reason": "The last notice of a life says it plainly and once, A Life, Ended, with the name and the age, and no melodrama.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/mortality.ts#starvedPastTheLimit": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "An internal calendar label for the world's own run, which the clock names as background work and never shows by this name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/therapy.ts#registerTherapy": {
+  "status": "Retained",
+  "hash": "c88df0e68211",
+  "on": "2026-10-19",
+  "reason": "A course's three endings in a notice each: stopped when Yale Health ended, with what to do next; the depression lifted and what that changes; or done, with how to start another.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/therapy.ts#THERAPISTS": {
+  "status": "Retained",
+  "hash": "3f624e669e1d",
+  "on": "2026-10-19",
+  "reason": "Real practices by the names they trade under, NHS Talking Therapies and R&A Psicólogos among them, spelled as their own sites spell them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/therapy.ts#therapyRefusal": {
+  "status": "Retained",
+  "hash": "349a5a1d81a1",
+  "on": "2026-10-19",
+  "reason": "Four short refusals of Start A Course, each with its reason: choose one where you live, Yale's counseling is for students Yale Health covers, therapy here is for depression, or a course is already running.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/wellbeing.tsx#bodyWords": {
+  "status": "Retained",
+  "hash": "0519bb0c8399",
+  "on": "2026-10-19",
+  "reason": "Says a body in the units where the person lives, with its WHO range in words: 5 ft 7 in and 143 lb, with a body mass index of 22.5, in the healthy weight range.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [condition]": {
+  "status": "Rewritten",
+  "hash": "01a5aef002d8",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition; tests/evidence-g33-ui.test.ts l-person and tests/scope-people.test.ts assert the words",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [energy]": {
+  "status": "Retained",
+  "hash": "a8da6e49648b",
+  "on": "2026-10-19",
+  "reason": "A one-line way into Energy beside its figure: what is left in you for today, and that sleep is what brings it back, said in the pronouns of whoever it belongs to.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [fitness]": {
+  "status": "Rewritten",
+  "hash": "61cd4292d73b",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition; tests/evidence-g33-ui.test.ts l-person and tests/scope-people.test.ts assert the words",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [hygiene]": {
+  "status": "Retained",
+  "hash": "ccf95150b28c",
+  "on": "2026-10-19",
+  "reason": "Says how clean you are and what low hygiene costs, your morale and a little readiness, the two things the figure actually moves.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [morale]": {
+  "status": "Retained",
+  "hash": "71fcc7ee22d7",
+  "on": "2026-10-19",
+  "reason": "Calls morale your mood, as the glossary does, and gives its one effect a player can use: when it is up, a night clears more of the day's stress.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [nourishment]": {
+  "status": "Retained",
+  "hash": "3626e27282a9",
+  "on": "2026-10-19",
+  "reason": "Two short sentences beside the figure, how well fed you are and that a meal puts it back, which is all the line needs before it opens.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [sleepDebt]": {
+  "status": "Retained",
+  "hash": "e8e11c40af67",
+  "on": "2026-10-19",
+  "reason": "Beside a figure in hours, it says sleep debt is sleep you owe and that a night pays it back, the one fact the player needs to act on it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#DIALS [stress]": {
+  "status": "Retained",
+  "hash": "548e2f936d1b",
+  "on": "2026-10-19",
+  "reason": "Names stress in the everyday phrase, how wound up you are, and gives the consequence a player feels next, that high stress spoils the night's sleep.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/wellbeing.tsx#leftAlone": {
+  "status": "Rewritten",
+  "hash": "1ab9ad17a7c4",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition (conditions and a broken bone, type 2 diabetes left untreated)",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#sentenceFor": {
+  "status": "Rewritten",
+  "hash": "0e22190ab72c",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition; tests/evidence-g06-life.test.ts asserts each dial sentence played (energy, condition, fitness, nourishment, morale)",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#top": {
+  "status": "Rewritten",
+  "hash": "6a0ea1d6a950",
+  "on": "2026-10-19",
+  "evidence": "looks-final.txt (render-looks.ts) and the built app's looks-walk/ (looks-walk.mjs, port 4288); tests/evidence-g06-life.test.ts asserts Readiness at 100 and under it, and tests/evidence-g33-ui.test.ts the person page",
+  "first": "Pending"
+ },
+ "src/ui/looks/wellbeing.tsx#WHAT": {
+  "status": "Rewritten",
+  "hash": "12e25c03ccfe",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition (each measure's body)",
+  "first": "Pending"
+ }
+}

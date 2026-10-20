@@ -1,0 +1,396 @@
+{
+ "commit": "aabfc1b2",
+ "inventory": {
+  "start": {
+   "sources": 4151,
+   "strings": 34202,
+   "words": 550968,
+   "speak": 332,
+   "Rewritten And Verified": 1285,
+   "Reviewed And Retained": 2866,
+   "Pending": 0,
+   "Blocked": 0
+  },
+  "now": {
+   "sources": 4177,
+   "strings": 35893,
+   "words": 566322,
+   "speak": 321,
+   "Rewritten And Verified": 733,
+   "Reviewed And Retained": 2415,
+   "Pending": 1029,
+   "Blocked": 0,
+   "second Rewritten": 916,
+   "second Retained": 3261,
+   "second Pending": 0,
+   "second Blocked": 0
+  },
+  "second": {
+   "Rewritten": 916,
+   "Retained": 3261
+  },
+  "firstNow": {
+   "Pending": 1029,
+   "Rewritten And Verified": 733,
+   "Reviewed And Retained": 2415
+  },
+  "byArea": {
+   "frame": {
+    "sources": 490,
+    "words": 32683,
+    "second Rewritten": 75,
+    "second Retained": 415,
+    "second Pending": 0,
+    "second Blocked": 0
+   },
+   "profile": {
+    "sources": 615,
+    "words": 55712,
+    "second Rewritten": 114,
+    "second Retained": 501,
+    "second Pending": 0,
+    "second Blocked": 0
+   },
+   "money-data": {
+    "sources": 522,
+    "words": 99446,
+    "second Rewritten": 162,
+    "second Retained": 360,
+    "second Pending": 0,
+    "second Blocked": 0
+   },
+   "health": {
+    "sources": 174,
+    "words": 38616,
+    "second Rewritten": 31,
+    "second Retained": 143,
+    "second Pending": 0,
+    "second Blocked": 0
+   },
+   "material-a": {
+    "sources": 508,
+    "words": 80158,
+    "second Rewritten": 91,
+    "second Retained": 417,
+    "second Pending": 0,
+    "second Blocked": 0
+   },
+   "material-b": {
+    "sources": 492,
+    "words": 74122,
+    "second Rewritten": 118,
+    "second Retained": 374,
+    "second Pending": 0,
+    "second Blocked": 0
+   },
+   "money": {
+    "sources": 261,
+    "words": 54351,
+    "second Rewritten": 102,
+    "second Retained": 159,
+    "second Pending": 0,
+    "second Blocked": 0
+   },
+   "school": {
+    "sources": 599,
+    "words": 63181,
+    "second Rewritten": 123,
+    "second Retained": 476,
+    "second Pending": 0,
+    "second Blocked": 0
+   },
+   "papers": {
+    "sources": 469,
+    "words": 56353,
+    "second Rewritten": 74,
+    "second Retained": 395,
+    "second Pending": 0,
+    "second Blocked": 0
+   },
+   "tutorial": {
+    "sources": 47,
+    "words": 11700,
+    "second Rewritten": 26,
+    "second Retained": 21,
+    "second Pending": 0,
+    "second Blocked": 0
+   }
+  },
+  "movedFromFirst": {
+   "Pending → Rewritten": 910,
+   "Rewritten And Verified → Retained": 727,
+   "Reviewed And Retained → Retained": 2415,
+   "Pending → Retained": 119,
+   "Rewritten And Verified → Rewritten": 6
+  },
+  "engineSpeak": {
+   "start": 332,
+   "ratchet": 321
+  }
+ },
+ "examples": {
+  "count": 875,
+  "byArea": {
+   "frame": 55,
+   "health": 45,
+   "material-a": 128,
+   "material-b": 261,
+   "money-data": 56,
+   "money": 82,
+   "papers": 45,
+   "profile": 66,
+   "school": 87,
+   "tutorial": 50
+  }
+ },
+ "tests": {
+  "added": {
+   "tests/editorial-money-screens.test.ts": 7,
+   "tests/editorial-money.test.ts": 17,
+   "tests/editorial-papers.test.ts": 13,
+   "tests/guide-chapter-facts.test.ts": 4
+  },
+  "changedFiles": 135
+ },
+ "final": {
+  "gate": 0,
+  "suite": [
+   "4771",
+   "4771"
+  ],
+  "files": [
+   "395",
+   "395"
+  ],
+  "build": 0,
+  "lanes": {
+   "runs/exits-A.txt": {
+    "steps": 6,
+    "notZero": []
+   },
+   "runs/exits-ADVF.txt": {
+    "steps": 13,
+    "notZero": []
+   },
+   "runs/exits-ADVR.txt": {
+    "steps": 18,
+    "notZero": []
+   },
+   "runs/exits-B.txt": {
+    "steps": 13,
+    "notZero": []
+   },
+   "runs/exits-C.txt": {
+    "steps": 13,
+    "notZero": []
+   },
+   "runs/exits-D.txt": {
+    "steps": 14,
+    "notZero": []
+   },
+   "runs/exits-J.txt": {
+    "steps": 4,
+    "notZero": []
+   },
+   "runs/exits-JR1.txt": {
+    "steps": 32,
+    "notZero": []
+   },
+   "runs/exits-JR2.txt": {
+    "steps": 32,
+    "notZero": []
+   },
+   "runs/exits-JR3.txt": {
+    "steps": 36,
+    "notZero": []
+   },
+   "runs/exits-JRC.txt": {
+    "steps": 2,
+    "notZero": []
+   },
+   "runs/exits-M1.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-M2.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-M3.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-M4.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-MF.txt": {
+    "steps": 0,
+    "notZero": []
+   },
+   "runs/exits-UI.txt": {
+    "steps": 19,
+    "notZero": [
+     "ui-banking-1440 exit=1 secs=58",
+     "ui-banking-390 exit=1 secs=61"
+    ]
+   }
+  },
+  "numbersSame": {
+   "final": {
+    "files": 35,
+    "same": 35,
+    "explained": {},
+    "unexplained": {},
+    "missing": [],
+    "skipped": [
+     "figures.json"
+    ]
+   },
+   "runs": {
+    "files": 17,
+    "same": 17,
+    "explained": {},
+    "unexplained": {},
+    "missing": [],
+    "skipped": [
+     "figures.json"
+    ]
+   },
+   "advice": {
+    "files": 31,
+    "same": 0,
+    "explained": {
+     "the run’s own record: its commit, the files it read, its seconds": 61
+    },
+    "unexplained": {},
+    "missing": [],
+    "skipped": []
+   },
+   "journeys-final": {
+    "files": 102,
+    "same": 4,
+    "explained": {
+     "the run’s own record: its commit, the files it read, its seconds": 189,
+     "a measure of words: the journeys’ continuity counts text": 66,
+     "the OPT check before its fix read the refusal’s old words; J16’s final part, checked again, passes": 4
+    },
+    "unexplained": {},
+    "missing": [],
+    "skipped": []
+   }
+  }
+ },
+ "builtApp": {
+  "screens": {
+   "1440": [
+    375,
+    375
+   ],
+   "390": [
+    375,
+    375
+   ]
+  },
+  "omissionsBefore": [
+   3706,
+   3057,
+   0,
+   649
+  ],
+  "omissionsAfter": [
+   3704,
+   3060,
+   0,
+   644
+  ],
+  "journeys": {
+   "New-player onboarding": {
+    "ui-normal-1440": 0,
+    "ui-normal-390": 0,
+    "acceptance-1440": 0,
+    "acceptance-390": 0
+   },
+   "School: preparation, a showing, feedback, improvement": {
+    "ui-normal-1440": 0,
+    "ui-normal-390": 0
+   },
+   "Attributes, genres, interpretation and advice": {
+    "ui-specialist-1440": 0,
+    "ui-specialist-390": 0
+   },
+   "A setback and recovery": {
+    "ui-setback-1440": 0,
+    "ui-setback-390": 0
+   },
+   "Banking with a restriction or a pending state": {
+    "ui-banking-1440": 1,
+    "ui-banking-390": 1
+   },
+   "Papers and a document on its way": {
+    "ui-document-1440": 0,
+    "ui-document-390": 0
+   },
+   "A health interruption": {
+    "ui-health-1440": 0,
+    "ui-health-390": 0
+   },
+   "Saving, exiting and continuing": {
+    "ui-normal-1440": 0,
+    "ui-normal-390": 0,
+    "ui-specialist-1440": 0,
+    "ui-specialist-390": 0,
+    "acceptance-1440": 0,
+    "acceptance-390": 0
+   }
+  },
+  "follow": {
+   "1440": 0,
+   "390": 0
+  }
+ },
+ "defects": {
+  "total": 74,
+  "by_status": {
+   "fixed": 66,
+   "left": 8
+  },
+  "by_kind": {
+   "words": {
+    "fixed": 62,
+    "total": 62
+   },
+   "data": {
+    "left": 3,
+    "total": 3
+   },
+   "behavior": {
+    "left": 3,
+    "total": 3
+   },
+   "unwired": {
+    "left": 2,
+    "total": 3,
+    "fixed": 1
+   },
+   "accessibility": {
+    "fixed": 1,
+    "total": 1
+   },
+   "layout": {
+    "fixed": 2,
+    "total": 2
+   }
+  }
+ },
+ "route": {
+  "on the built app": 23,
+  "in the code only": 5
+ },
+ "open": [
+  "For the owner:",
+  "The engine-speak ratchet",
+  "For the owner, from money-data's defects (3, 7 to 10)."
+ ],
+ "problems": []
+}

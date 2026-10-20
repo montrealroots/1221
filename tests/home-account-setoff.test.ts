@@ -61,7 +61,7 @@ describe('the set-off against an overdraft', () => {
     emptied(sim, current);
     sim.advanceTo(Date.UTC(2026, 11, 29, 12));
     // France's letters in euros, the dollars beside: €15 twice and 24 cents of interest by 1 October.
-    expect(titled(sim, 'BNP Paribas Wrote About Your Overrun')).toEqual(['Your account has been past its overdraft limit for a month, by €30.24 ($32.86) at 18.40% a year, with the charges each month brings. French law has the bank tell you after a month.']);
+    expect(titled(sim, 'BNP Paribas Wrote About Your Overrun')).toEqual(['Your account has been past its overdraft limit for a month, by €30.24 ($32.86). The bank charges 18.40% a year on what’s overdrawn, as well as its monthly charges. French law has the bank tell you after a month.']);
     // No loan for the overrun from a bank abroad, which opens nothing new for a customer abroad: until 2026-10-16 it
     // offered one, and lent it.
     expect(titled(sim, 'BNP Paribas Offered A Loan For The Overrun')).toEqual([]);
@@ -69,7 +69,7 @@ describe('the set-off against an overdraft', () => {
     expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: { accountId: current.id } }).error).toBe('Your bank has offered no loan for an overrun.');
     // TEST SETUP: an offer made before 2026-10-16, kept in an older save, is refused in the bank's words.
     current.creditOffered = { amount: 4_970, apr: 0.0607, months: 12 };
-    expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: { accountId: current.id } }).error).toBe('No way to open anything new at BNP Paribas from America was found, so the game assumes there’s none.');
+    expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: { accountId: current.id } }).error).toBe('There’s no known way to open anything new at BNP Paribas from America, so the game assumes there’s none.');
     delete current.creditOffered;
     expect(titled(sim, 'BNP Paribas Gave Notice To Close')).toEqual(['Your account has been past its overdraft limit for 60 days, so it closes in two months, on December 29, 2026, unless it’s back within the limit by then.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     const owedHeld = -current.held!;
@@ -161,7 +161,7 @@ describe('the set-off against an overdraft', () => {
     expect(sim.universe.transactions.some((t) => t.memo === 'Set off against the overdraft')).toBe(true);
     expect(chase.closedAt).toBeUndefined();
     expect(sim.player.primaryAccountId).toBe(chase.id);
-    expect(titled(sim, 'Chase Took What It Was Owed')).toEqual([`It had been below zero for 60 days, so the bank took what it was owed from your other money there. ${chase.name} and ${savings.name} stay open.`]);
+    expect(titled(sim, 'Chase Took What It Was Owed')).toEqual([`${chase.name} had been below zero for 60 days, so the bank took what it was owed from your other money there. ${chase.name} and ${savings.name} stay open.`]);
     expect(breaches(sim.universe)).toEqual([]);
   }, 120_000);
 });

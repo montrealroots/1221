@@ -268,8 +268,10 @@ function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: 
   if (days >= FRANCE.informAfterDays && !current.overrunInformed) {
     current.overrunInformed = true;
     const terms = lendingOf(bank).overdraft;
-    const rate = terms && 'rate' in terms && terms.rate !== undefined ? ` at ${(terms.rate * 100).toFixed(2)}% a year` : '';
-    if (player) sim.notify({ category: 'bank', title: `${bank.name} Wrote About Your Overrun`, body: `Your account has been past its overdraft limit for a month, by ${money(past)}${rate}, with the charges each month brings. French law has the bank tell you after a month.`, importance: 70 });
+    // The rate as what it's charged on (from brief 15, 2026-10-19): until then “by €120.00 at 7.00% a year, with the
+    // charges each month brings”, which read as if the rate were the overrun's.
+    const rate = terms && 'rate' in terms && terms.rate !== undefined ? ` The bank charges ${(terms.rate * 100).toFixed(2)}% a year on what’s overdrawn, as well as its monthly charges.` : '';
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Wrote About Your Overrun`, body: `Your account has been past its overdraft limit for a month, by ${money(past)}.${rate} French law has the bank tell you after a month.`, importance: 70 });
   }
   const loan = lendingOf(bank).loan;
   // Not where a loan is held at this bank (from 2026-10-12: until then a loan at any bank stopped the offer, though a
@@ -451,7 +453,7 @@ export function overdraftOffer(sim: Simulation, person: Person, account?: Accoun
   if (!bank || !terms) return { refused: `No overdraft terms were found for ${bank?.name ?? 'your bank'}.` };
   if (terms.kind !== 'arranged') return { refused: `${bank.name} doesn’t arrange overdrafts. It handles them its own way, as the Overdraft panel says.` };
   const score = person.credit?.score ?? 0;
-  if (score < ESTIMATE.scoreFloor) return { refused: 'Your credit record isn’t strong enough for the bank.' };
+  if (score < ESTIMATE.scoreFloor) return { refused: `Your credit score is below ${ESTIMATE.scoreFloor}, and in the game a bank doesn’t arrange an overdraft below that.` };
   const pay = wagesLastMonth(sim, person);
   const elsewhere = checkingsOf(sim, person).filter((a) => a.id !== current!.id).reduce((sum, a) => sum + (a.overdraftLimit ?? 0), 0);
   const max = Math.min(Math.round(pay * ESTIMATE.overdraftOfPay) - elsewhere, terms.maxLimit !== undefined ? inSaveMoney(sim, terms.maxLimit, bank.currency) : Number.POSITIVE_INFINITY);
@@ -481,14 +483,14 @@ export function loanOffer(sim: Simulation, person: Person, amount: Money, months
   // Its customers, as the bank says: a current account there (for so many months where it says), unless it lends to
   // new customers too, to a lower ceiling (Citi). SLATE's reading where a bank says nothing: its customers.
   const there = checkingAt(sim, person, bank.id);
-  if (!there && terms.newCustomerMax === undefined) return { refused: `${bank.name} only lends to its customers. Open a current account there first.` };
+  if (!there && terms.newCustomerMax === undefined) return { refused: `${bank.name} only lends to its customers. Open a checking account there first.` };
   if (there && terms.customerMonths !== undefined && sim.now - there.openedAt < terms.customerMonths * 30.44 * MS_DAY) return { refused: `${bank.name} lends to customers of ${terms.customerMonths} months or more, and your account there opened ${formatDate(there.openedAt, sim.zone)}.` };
   if (!there && terms.newCustomerMax !== undefined && amount > inSaveMoney(sim, terms.newCustomerMax, bank.currency)) return { refused: `${bank.name} lends a new customer up to ${formatMoney(inSaveMoney(sim, terms.newCustomerMax, bank.currency), saveCurrency(sim.universe), { cents: false })}.` };
   if (loanOf(sim, person, bank.id)) return { refused: `You already have a loan with ${bank.name}.` };
   const score = person.credit?.score ?? 0;
-  if (score < ESTIMATE.scoreFloor) return { refused: 'Your credit record isn’t strong enough for the bank.' };
+  if (score < ESTIMATE.scoreFloor) return { refused: `Your credit score is below ${ESTIMATE.scoreFloor}, and in the game a bank doesn’t lend below that.` };
   if (terms.to === undefined && !terms.market && score < ESTIMATE.scoreGood) {
-    return { refused: `${bank.name} publishes only its lowest rate, so in the game it lends only to a good credit record.` };
+    return { refused: `${bank.name} publishes only its lowest rate, so in the game it lends only with a credit score of ${ESTIMATE.scoreGood} or more.` };
   }
   const [least, most] = [terms.minMonths ?? ESTIMATE.loanMonths[0], terms.maxMonths ?? ESTIMATE.loanMonths[1]];
   if (months < least || months > most) return { refused: `The bank lends for ${least} to ${most} months.` };
@@ -506,9 +508,13 @@ export function loanOffer(sim: Simulation, person: Person, amount: Money, months
   if (pay <= 0) return { refused: 'The bank lends against wages paid in over the last 30 days, and none has been paid in.' };
   const existing = loansOf(sim, person).reduce((sum, l) => sum + (l.loanPayment ?? 0), 0);
   if (payment + existing > pay * ESTIMATE.loanShareOfPay) {
+    // The share and its figure, which the sentence turns on (from brief 15, 2026-10-19): until then “is more than the bank
+    // lets a loan take of $2,000 of wages”, with no share and no figure to compare.
+    const most = formatMoney(Math.floor(pay * ESTIMATE.loanShareOfPay), cur, { cents: false });
+    const share = `${Math.round(ESTIMATE.loanShareOfPay * 100)}%`;
     return { refused: existing > 0
-      ? `A payment of ${formatMoney(payment, cur, { cents: false })} a month with the ${formatMoney(existing, cur, { cents: false })} you already pay on loans is more than the bank lets loans take of ${formatMoney(pay, cur, { cents: false })} of wages.`
-      : `A payment of ${formatMoney(payment, cur, { cents: false })} a month is more than the bank lets a loan take of ${formatMoney(pay, cur, { cents: false })} of wages.` };
+      ? `A payment of ${formatMoney(payment, cur, { cents: false })} a month, with the ${formatMoney(existing, cur, { cents: false })} you already pay on loans, is more than the ${share} of your wages loans can take: ${most} of the ${formatMoney(pay, cur, { cents: false })} paid in over the last 30 days.`
+      : `A payment of ${formatMoney(payment, cur, { cents: false })} a month is more than the ${share} of your wages a loan can take: ${most} of the ${formatMoney(pay, cur, { cents: false })} paid in over the last 30 days.` };
   }
   return { apr, payment, terms };
 }
@@ -1088,7 +1094,9 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
       // What happened first (from 2026-10-17, brief 14's editorial review): until then the reason opened it, “It had been
       // below zero …”, and the account closed came after.
       const why = `had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there.`;
-      sim.notify({ category: 'bank', title: closed.length > 0 ? `${bank.name} Closed An Account` : `${bank.name} Took What It Was Owed`, body: closed.length > 0 ? `${bank.name} closed ${closed.map((a) => a.name).join(' and ')}. ${closed.length > 1 ? 'They' : 'It'} ${why}${kept.length > 0 ? ` ${kept.map((a) => a.name).join(' and ')} ${kept.length > 1 ? 'stay' : 'stays'} open.` : ''}${endedWords(sim, ended)}` : `It ${why}${which}${endedWords(sim, ended)}`, importance: 60 });
+      // The account named where nothing closed (from brief 15, 2026-10-19): until then “It had been below zero …” with no
+      // account before it.
+      sim.notify({ category: 'bank', title: closed.length > 0 ? `${bank.name} Closed An Account` : `${bank.name} Took What It Was Owed`, body: closed.length > 0 ? `${bank.name} closed ${closed.map((a) => a.name).join(' and ')}. ${closed.length > 1 ? 'They' : 'It'} ${why}${kept.length > 0 ? ` ${kept.map((a) => a.name).join(' and ')} ${kept.length > 1 ? 'stay' : 'stays'} open.` : ''}${endedWords(sim, ended)}` : `${current.name} ${why}${which}${endedWords(sim, ended)}`, importance: 60 });
     }
     return;
   }
@@ -1312,7 +1320,9 @@ export function registerLending(sim: Simulation): void {
       if (person.id === s.universe.playerId) {
         s.notify({
           category: 'bank', title: 'A Missed Loan Payment',
-          body: `${formatMoney(due, saveCurrency(s.universe))} was due, and there was only ${formatMoney(paid, saveCurrency(s.universe))} to pay it with. It’s on your credit record, and what’s left is still owed.`,
+          // The loan and the account named, and nothing paid said as nothing (from brief 15, 2026-10-19): until then “$157.00
+          // was due, and there was only $0.00 to pay it with.”
+          body: `Your ${loan.name} payment of ${formatMoney(due, saveCurrency(s.universe))} was due, and ${paid > 0 ? `only ${formatMoney(paid, saveCurrency(s.universe))} of it could be paid` : `${from?.name ?? 'your account'} had nothing available to pay it`}. It’s on your credit record, and what’s left is still owed.`,
           importance: 80,
         });
       }
@@ -1388,10 +1398,10 @@ export function registerLending(sim: Simulation): void {
     const debt = named && named.ownerId === person.id && !named.closedAt && named.category === COLLECTIONS ? named : collectionsOf(s, person);
     if (!debt) throw new CommandError('You don’t owe anything in collections.');
     const current = currentOf(s, person);
-    if (!current) throw new CommandError('You have no account to pay from.');
+    if (!current) throw new CommandError('You don’t have a checking account to pay it from.');
     const owed = -debt.balance;
     const paid = Math.min(Math.round(Number(p.amount)), owed, Math.max(0, current.balance));
-    if (!(paid > 0)) throw new CommandError('There’s nothing in the account to pay it with.');
+    if (!(paid > 0)) throw new CommandError(`${current.name} has nothing available to pay it with, so nothing was paid.`);
     post(s, `Paid to collections: ${debt.institution}`, 'transfer', [{ accountId: current.id, amount: -paid }, { accountId: debt.id, amount: paid }]);
     if (debt.balance === 0) debt.closedAt = s.now;
     return { paid, left: -debt.balance };
@@ -1401,9 +1411,9 @@ export function registerLending(sim: Simulation): void {
     const person = s.player;
     // On the current account named, at whichever bank (from 2026-10-10), else the primary.
     const named = p.accountId ? checkingsOf(s, person).find((a) => a.id === p.accountId) : undefined;
-    if (p.accountId && !named) throw new CommandError('That isn’t an open current account of yours.');
+    if (p.accountId && !named) throw new CommandError('That isn’t one of your open checking accounts.');
     const current = named ?? currentOf(s, person);
-    if (!current) throw new CommandError('There’s no current account to arrange an overdraft on.');
+    if (!current) throw new CommandError('You don’t have a checking account to arrange an overdraft on.');
     const limit = Math.round(Number(p.limit));
     if (limit === 0) {
       // Nothing arranged, nothing to close (from 2026-10-15: until then it answered as closed and changed nothing, at a
@@ -1459,7 +1469,7 @@ export function registerLending(sim: Simulation): void {
     const at = checkingAt(s, person, bank.id) ?? currentOf(s, person)!;
     const into = p.intoId ? checkingsOf(s, person).find((a) => a.id === p.intoId) : at;
     const repay = p.repayFromId ? checkingsOf(s, person).find((a) => a.id === p.repayFromId) : at;
-    if (!into || !repay) throw new CommandError('The loan is paid into, and repaid from, an open current account of yours.');
+    if (!into || !repay) throw new CommandError('The loan has to be paid into, and repaid from, one of your open checking accounts.');
     const loan = s.openAccount({
       id: s.nextId('account'), kind: 'loan', category: 'personal', name: `${bank.name} Personal Loan`, ownerId: person.id,
       institution: bank.name, bankId: bank.id, openedAt: s.now, apr: offer.apr, loanPayment: offer.payment, loanMonths: months, repayFromId: repay.id,
@@ -1474,8 +1484,8 @@ export function registerLending(sim: Simulation): void {
     const loan = loansOf(s, person).find((l) => l.id === p.loanId);
     if (!loan) throw new CommandError('That isn’t an open loan of yours.');
     const account = checkingsOf(s, person).find((a) => a.id === p.accountId);
-    if (!account) throw new CommandError('A loan is repaid from an open current account of yours.');
-    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
+    if (!account) throw new CommandError('A loan has to be repaid from one of your open checking accounts.');
+    if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing, so the loan can’t be repaid from it.`);
     loan.repayFromId = account.id;
     return { repayFromId: account.id };
   });
@@ -1485,7 +1495,7 @@ export function registerLending(sim: Simulation): void {
     // The offer on the current account named, at whichever bank made it, else the primary's (from 2026-10-12: until
     // then only the primary's was read, so a second bank's offer was refused as none made).
     const named = p?.accountId ? checkingsOf(s, person).find((a) => a.id === p.accountId) : undefined;
-    if (p?.accountId && !named) throw new CommandError('That isn’t an open current account of yours.');
+    if (p?.accountId && !named) throw new CommandError('That isn’t one of your open checking accounts.');
     const current = named ?? currentOf(s, person);
     const bank = current?.bankId ? bankById(current.bankId) : undefined;
     const offer = current?.creditOffered;
@@ -1551,14 +1561,14 @@ export function registerLending(sim: Simulation): void {
     if (away) throw new CommandError(away);
     if (!bank || !term) throw new CommandError(`No term deposit rate was found for ${bank?.name ?? 'your bank'}.`);
     const current = checkingAt(s, person, bank.id);
-    if (!current) throw new CommandError(`A term deposit at ${bank.name} is paid for from your current account there. Open a current account at ${bank.name} first.`);
+    if (!current) throw new CommandError(`A term deposit at ${bank.name} is paid for from your checking account there. Open a checking account at ${bank.name} first.`);
     const amount = Math.round(Number(p.amount));
     if (!(amount > 0)) throw new CommandError('Enter how much to put away.');
     const cur = saveCurrency(s.universe);
     if (term.minAmount !== undefined && amount < inSaveMoney(s, term.minAmount, bank.currency)) {
       throw new CommandError(`A term deposit there needs at least ${formatMoney(inSaveMoney(s, term.minAmount, bank.currency), cur, { cents: false })}.`);
     }
-    if (amount > current.balance) throw new CommandError(`${current.name} ${current.balance > 0 ? `has only ${formatMoney(current.balance, cur)}` : 'has nothing in it'}, so no term deposit was opened.`);
+    if (amount > current.balance) throw new CommandError(`${current.name} has ${current.balance > 0 ? `only ${formatMoney(current.balance, cur)}` : 'nothing'} available, so no term deposit was opened.`);
     const number = accountNumber(s, person, bank, 'savings');
     const maturesAt = addMonths(s.now, term.months, s.homeZone);
     const account = s.openAccount({
@@ -1588,7 +1598,7 @@ export function registerLending(sim: Simulation): void {
     const person = s.player;
     const from = bankOf(s, person);
     const to = banksFor(homeOf(person)).find((b) => b.id === p.bankId);
-    if (!to) throw new CommandError('You can only switch to a bank where you live.');
+    if (!to) throw new CommandError('You can only switch to a bank in the country you live in.');
     if (from?.id === to.id) throw new CommandError(`You already bank with ${to.name}.`);
     // Already keeping an account there, there's nothing to switch to (from 2026-10-10: until then a second one opened).
     if (checkingAt(s, person, to.id)) throw new CommandError(`You already have an account at ${to.name}. Make it your primary account, move the payments from the old one, and close it.`);

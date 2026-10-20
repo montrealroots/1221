@@ -1,0 +1,36 @@
+{
+ "base": "http://localhost:4284",
+ "width": 1440,
+ "visited": [
+  {
+   "save": "brief.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "direction.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "health.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "nonfiler.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "rehearsal.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "workload.json",
+   "screens": 25,
+   "failed": []
+  }
+ ]
+}

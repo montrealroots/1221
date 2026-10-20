@@ -123,4 +123,7 @@ writeFileSync('src/engine/content/entry.ts', text);
 execSync('node tools/voice-check.mjs --fix src/engine/content/entry.ts', { stdio: 'ignore' });
 // And in American spelling, as the game is, but for an authority's own names (tools/spelling.mjs).
 execSync('node tools/spelling.mjs --write', { stdio: 'ignore' });
+// And each note as the player reads it under Going Abroad, sentences for the research's shorthand (from 2026-10-19,
+// brief 15: tools/entry-notes.mjs, keyed by the note as the two steps above leave it).
+execSync('node tools/entry-notes.mjs --write', { stdio: 'ignore' });
 console.log('wrote', Object.keys(out).length, 'destinations');

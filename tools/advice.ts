@@ -225,9 +225,10 @@ function measure(spec: CaseSpec) {
   const f = { ladder, falls: exactLadder ? falling(exactLadder) : undefined, leastDrop: exactLadder ? drop(exactLadder) : undefined, every: everyLadder ? { n: Object.keys(everyLadder).length, falling: Object.values(everyLadder).filter(falling).length, rising: Object.entries(everyLadder).filter(([, l]) => !falling(l)).map(([k, l]) => `${k} ${l.map((x) => x.toFixed(5)).join(' → ')}`) } : undefined, prep: { limited: prepChief, largest: r3(chiefGap), same: chiefGap < 1e-9, stepsLimited: prepSteps, stepsLargest: r3(stepsGap), stepsSame: stepsGap < 1e-9, anyLimited: prepAny, anyLargest: r3(anyGap), anySame: anyGap < 1e-9, preparation } };
 
   // (g) the reason: the gain it expects, how many of the pieces it read, and a piece by name. One piece read is said as
-  // “your last piece” (from 2026-10-17, brief 14): until then “1 of your last 1 piece”, which the count's match found.
+  // “your last piece” (from 2026-10-17, brief 14): until then “1 of your last 1 piece”, which the count's match found. All
+  // of several is “your last 6 pieces all call on it” (from 2026-10-19, brief 15): until then “6 of your last 6 pieces”.
   const titles = [...new Set(takes.slice(-RECENT).map((t) => BRIEF_BY_ID[t.brief]!.title))];
-  const counted = (x: Recommendation) => (x.forecast!.of === 1 && x.forecast!.pieces === 1 ? x.why.includes('(your last piece calls on it') : x.why.includes(`${x.forecast!.pieces} of `));
+  const counted = (x: Recommendation) => (x.forecast!.of === 1 && x.forecast!.pieces === 1 ? x.why.includes('(your last piece calls on it') : x.forecast!.pieces === x.forecast!.of ? x.why.includes(`(your last ${x.forecast!.of} pieces all call on it`) : x.why.includes(`${x.forecast!.pieces} of `));
   const says = (x: Recommendation) => x.why.includes(String(x.points)) && counted(x) && titles.some((t) => x.why.includes(t));
   const g = { recs: training.length, ok: training.filter(says).length, missing: training.filter((x) => !says(x)).map((x) => x.target) };
 
@@ -251,7 +252,7 @@ function measure(spec: CaseSpec) {
     const byRecords = assumedByRecords(x);
     const assumedMatch = a !== undefined && a.pieces === byRecords.pieces && a.complete === byRecords.complete && a.short === byRecords.short && a.genreCount === byRecords.genreCount && a.genreShort === byRecords.genreShort && a.genreBetter === byRecords.genreBetter && JSON.stringify(a.prepared.map((p) => p.what)) === JSON.stringify(byRecords.prepared);
     const says = top?.assumes ?? '';
-    const assumedSaid = top !== undefined && says.startsWith(`What the forecast assumes of your last ${byRecords.pieces === 1 ? 'piece' : `${byRecords.pieces} pieces`}:`) && (byRecords.genreCount === 0 || (says.includes(`${byRecords.genreShort} ${byRecords.genreShort === 1 ? 'is' : 'are'} short of complete and ${byRecords.genreBetter} known better than when taped`)));
+    const assumedSaid = top !== undefined && says.startsWith(`What the forecast assumes of your last ${byRecords.pieces === 1 ? 'piece' : `${byRecords.pieces} pieces`}:`) && (byRecords.genreCount === 0 || (says.includes(byRecords.genreCount === 1 ? `counted as you know it today: it’s ${byRecords.genreShort ? 'short of complete' : 'complete'}${byRecords.genreBetter ? ', and you know it better than when you taped it' : ''}.` : `${byRecords.genreShort} ${byRecords.genreShort === 1 ? 'is' : 'are'} short of complete and ${byRecords.genreBetter} ${byRecords.genreBetter === 1 ? 'is' : 'are'} known better than when you taped them`)));
     // F4: each piece read as prepared named, what the first-named's figure would be read as taped (the forecast's own,
     // checked against the measure's reading), and no other piece read better prepared than its record.
     const taped = top ? forecastByRecords(x, top.target, true) : undefined;
@@ -263,7 +264,7 @@ function measure(spec: CaseSpec) {
     const att = attentionOf(x, x.player, top);
     const byRec = attentionByRecords(x, top ? pointsOf(top.forecast) : undefined);
     const worth = preparationWorth(x, x.player);
-    const verdictWords = { both: 'Both ', preparation: 'Preparation deserves attention now', training: 'Training deserves attention now', neither: 'Neither preparation nor training' } as const;
+    const verdictWords = { both: 'Both ', preparation: 'Preparation is worth your time now', training: 'Training is worth your time now', neither: 'Neither preparation nor training' } as const;
     const lead = top ?? recs[0];
     const attention = { verdict: att?.verdict ?? null, own: worth ? r3(worth.own) : null, genres: worth ? r3(worth.genre) : null, matches: att !== undefined && worth !== undefined && Math.abs(worth.own - byRec.own) < 1e-9 && Math.abs(worth.genre - byRec.genre) < 1e-9 && att.verdict === byRec.verdict, said: att !== undefined && (lead?.attention ?? '').startsWith(verdictWords[att.verdict]) };
     return { apart, prepWorked, assumedMatch, assumedSaid, counterfactual, attention, ok: { F1: apart && prepWorked, F2: assumedMatch && assumedSaid, F4: counterfactual.named && counterfactual.taped && counterfactual.readAsSaid, F5: attention.matches && attention.said } };

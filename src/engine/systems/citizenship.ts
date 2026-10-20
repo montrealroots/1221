@@ -36,7 +36,9 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { citizenOf } from './documents';
+import { COUNTRIES } from '../content/geography';
+import { countryOfIso } from '../content/bankdays';
+import { citizenOf, theCountry } from './documents';
 import { payFromBank } from './spending';
 import { MEXICO_UNREAD, continuousSince, residenceIn } from './residence';
 
@@ -101,6 +103,8 @@ export function registerCitizenship(sim: Simulation): void {
     if (!person || !n) return;
     delete person.naturalizing;
     person.naturalized = [...(person.naturalized ?? []), { iso: n.iso, at: s.now }];
-    if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'A Citizen', body: `You were naturalized on ${formatDate(s.now, s.zone)}. You’re now a citizen there, and still a citizen of the country you were born in.`, importance: 70, route: '/workspace/papers' });
+    // The country by name (from 2026-10-19, brief 15: until then "A Citizen" and "a citizen there", with no country named).
+    const country = theCountry(COUNTRIES.get(countryOfIso(n.iso))?.name ?? n.iso);
+    if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: `A Citizen Of ${country.replace(/^./, (c) => c.toUpperCase())}`, body: `You were naturalized on ${formatDate(s.now, s.zone)}. You’re now a citizen of ${country}, and still a citizen of the country you were born in.`, importance: 70, route: '/workspace/papers' });
   });
 }

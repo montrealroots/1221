@@ -451,7 +451,7 @@ describe('card.request_hardship', () => {
 
   it('is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee', () => {
     const { sim, card } = shortOfThePlan('g12-plan-short');
-    expect(notes(sim, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $52.00, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(notes(sim, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['The Chase Freedom Unlimited’s autopay of $52.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     // A US card's first late fee, the $30 safe harbor, under the $100 due; no returned payment's fee beside it.
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
     expect(moved(sim, card, 'Returned payment fee')).toEqual([]);
@@ -857,16 +857,16 @@ describe('cash.deposit', () => {
     must(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' });
     const term = must<{ accountId: string }>(sim, 'bank.open_term', { amount: 1_000_00 });
     const into = (toId: string, at = 'counter') => run(sim, 'cash.deposit', { amount: 40_00, toId, at });
-    expect(into(term.accountId).error).toBe('Cash goes into your current account or savings.');
+    expect(into(term.accountId).error).toBe('Cash goes into your checking account or savings.');
     const classmate = Object.keys(sim.universe.people).find((id) => id !== sim.player.id)!;
     // TEST SETUP: a classmate's account, which a New Haven world gives nobody but the player.
     const theirs = sim.openAccount({ id: sim.nextId('account'), kind: 'checking', name: 'A Classmate’s Checking', ownerId: classmate, openedAt: sim.now });
-    expect(into(theirs.id).error).toBe('Cash goes into your current account or savings.');
+    expect(into(theirs.id).error).toBe('Cash goes into your checking account or savings.');
     expect(into(checking(sim).id, 'post_office').error).toBe('Chase’s customers can’t pay cash in at the Post Office.');
     const sv = savings(sim);
     must(sim, 'bank.close_savings', { accountId: sv.id });
     expect(sv.closedAt).toBeDefined();
-    expect(into(sv.id).error).toBe('Cash goes into your current account or savings.');
+    expect(into(sv.id).error).toBe('Cash goes into your checking account or savings.');
     expect(inHand(sim)).toBe(100_00);
     expect(theirs.balance).toBe(0);
   });
@@ -877,8 +877,8 @@ describe('cash.deposit', () => {
     const sv = savings(sim);
     const kept = sv.balance;
     sv.dormant = true; // TEST SETUP: dormant, as thirty months untouched at Chase would make it
-    expect(run(sim, 'cash.deposit', { amount: 40_00, toId: sv.id, at: 'counter' }).error).toBe('Chase Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
-    expect(run(sim, 'bank.transfer', { fromId: checking(sim).id, toId: sv.id, amount: 40_00 }).error).toBe('Chase Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
+    expect(run(sim, 'cash.deposit', { amount: 40_00, toId: sv.id, at: 'counter' }).error).toBe('Chase Savings is dormant, so nothing was paid in. Reactivate it under Your Accounts Over Time, then try again.');
+    expect(run(sim, 'bank.transfer', { fromId: checking(sim).id, toId: sv.id, amount: 40_00 }).error).toBe('Chase Savings is dormant, so nothing was moved. Reactivate it under Your Accounts Over Time, then try again.');
     expect(sv.balance).toBe(kept);
     expect(inHand(sim)).toBe(100_00);
     must(sim, 'bank.reactivate', { accountId: sv.id });
@@ -977,10 +977,10 @@ describe('cash.withdraw', () => {
     expect(out(20_00, 'bank').error).toBe('Choose where to take it from: your bank’s ATM, another bank’s, the counter, the Post Office or the card.');
     expect(out(20_00, 'post_office').error).toBe('Chase’s customers can’t use the Post Office for cash.');
     setBalance(sim, account, 250_00); // TEST SETUP
-    expect(out(300_00, 'counter').error).toBe('Chase Total Checking has only $250.00.');
+    expect(out(300_00, 'counter').error).toBe('Chase Total Checking has only $250.00 available.');
     account.dormant = true; // TEST SETUP: dormant, as thirty months untouched at Chase would make it
-    expect(out(20_00, 'atm').error).toBe('Chase Total Checking is dormant. Reactivate it first, under Your Accounts Over Time.');
-    expect(out(20_00, 'counter').error).toBe('Chase Total Checking is dormant. Reactivate it first, under Your Accounts Over Time.');
+    expect(out(20_00, 'atm').error).toBe('Chase Total Checking is dormant. Reactivate it under Your Accounts Over Time to take cash out of it.');
+    expect(out(20_00, 'counter').error).toBe('Chase Total Checking is dormant. Reactivate it under Your Accounts Over Time to take cash out of it.');
     must(sim, 'bank.reactivate', { accountId: account.id });
     must(sim, 'card.report', { which: 'debit', why: 'stolen' });
     expect(out(20_00, 'atm').error).toBe('Your debit card is stopped. You can still take cash out at the counter.');
@@ -1004,7 +1004,7 @@ describe('cash.withdraw', () => {
     must(sim, 'bank.set_primary', { accountId: opened.accountId });
     const wf = sim.universe.accounts[opened.accountId]!;
     expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card hasn’t arrived yet. You can still take cash out at the counter.');
-    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' }).error).toBe(`${wf.name} has nothing in it.`);
+    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' }).error).toBe(`${wf.name} has nothing available.`);
     sim.advanceTo(opened.arrivesAt + 60_000);
     expect(wf.balance).toBe(100_00);
     expect(must(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' })).toEqual({ fee: 0 });
@@ -1033,7 +1033,7 @@ describe('cash.withdraw', () => {
     setBalance(sim, account, 0); // TEST SETUP
     must(sim, 'card.lock', { which: 'credit', locked: true });
     hungry(sim); // TEST SETUP
-    expect(eat(sim).error).toBe('The bank and the card can’t pay it. Cash in hand pays for the day where The Day’s Spending is In Cash, Then The Debit Card.');
+    expect(eat(sim).error).toBe('Your bank and card can’t cover it. Your cash in hand would, but it isn’t spent while The Day’s Spending is on a card. Set it to In Cash, Then The Debit Card, under How You Pay.');
     expect(inHand(sim)).toBe(100_00 - MEAL);
     // Behind a stopped debit card, anybody's meal comes out of the cash.
     must(sim, 'card.report', { which: 'debit', why: 'lost' });

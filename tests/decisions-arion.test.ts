@@ -203,8 +203,8 @@ function closeVoxtur(sim: Simulation): void {
 /** Close It on the Veltureikningur, into Chase, by the command Your Banks sends. */
 const closeVeltu = (sim: Simulation) => sim.execute({ kind: 'bank.close_current', payload: { accountId: veltu(sim).id, remainderTo: sim.player.primaryAccountId } });
 
-const LABEL = 'Estimated: Arion’s price list and terms don’t say when in the year it’s charged.';
-const LAW_AHEAD = 'Iceland’s Act on Payment Services, art. 57, gives a fee paid ahead back in proportion.';
+const LABEL = 'The timing is estimated: Arion’s price list and terms don’t say when in the year it’s charged.';
+const LAW_AHEAD = 'Under Iceland’s Act on Payment Services, art. 57, a fee paid in advance is refunded in proportion when the account closes.';
 
 // ---------------------------------------------------------------------------
 // AR1 and AR0: the first charge, and the words
@@ -223,14 +223,14 @@ describe('arion.AR1: Arion’s debit card, its first year charged on the first n
     expect([arion.cardFeeAt, arion.cardFeePaid, arion.cardYearRule]).toEqual([at(2026, 8, 25, 0), 950_00, 'ahead']);
     balancedAgainstBankFees(sim, arion.id);
     // Its panel: the confirmed amount and age apart, then the card year, the close, a short account, and the label.
-    expect(drawn(sim, createElement(BankWorkspace))).toContain(`Its debit card costs 950 kr a year from age 24, and nothing at 23 and under. This card year began August 25, 2026, paid in advance with 950 kr, and runs to August 24, 2027. The next year is charged August 25, 2027. Closing the account refunds the days left in the year. Its days are counted by Reykjavík’s calendar. If the account can’t cover the year’s fee, it’s charged anyway, and the account goes below zero by the difference. ${LABEL}`);
+    expect(drawn(sim, createElement(BankWorkspace))).toContain(`Its debit card costs 950 kr a year from age 24, and nothing at 23 and under. The current card year runs from August 25, 2026 to August 24, 2027, and you paid 950 kr for it in advance. The next year’s fee is charged on August 25, 2027. Closing the account refunds the days left in the year. The bank counts the card year’s days by the date in Reykjavík. If the account can’t cover the fee, the bank charges it anyway and the account goes overdrawn by the difference. ${LABEL}`);
     expect(breaches(sim.universe)).toEqual([]);
     const young = await keeping('ar10-young', 2006);
     young.advanceTo(at(2026, 8, 25, 9));
     const hers = veltu(young);
     expect(cardPosts(young, hers.id)).toEqual([]);
     expect([hers.cardFeeAt, hers.cardFeePaid, hers.cardYearRule]).toEqual([at(2026, 8, 25, 0), 0, 'ahead']);
-    expect(drawn(young, createElement(BankWorkspace))).toContain('This card year began August 25, 2026, with nothing paid for it, and runs to August 24, 2027. The next year is charged August 25, 2027.');
+    expect(drawn(young, createElement(BankWorkspace))).toContain('The current card year runs from August 25, 2026 to August 24, 2027, and nothing was charged for it. The next year’s fee is charged on August 25, 2027.');
   }, 300_000);
 
   it('FIXTURE, Mosfellsbær: an Arion account a life opens is charged its first night, 6 January 2026, and renewed on 6 January 2027, where until brief 10 it waited a year for its first', () => {
@@ -270,7 +270,7 @@ describe('arion.AR3: a close gives back the card year’s days left', () => {
     sim.advanceTo(sim.now + 60_000);
     // From 25 August: 7 + 30 + 14 = 51 days used to the 14th, 314 left: 95,000 × 314 / 365 = 81,726.0, 817 kr to the
     // whole króna; 81,700 / 138 = 592.0, $5.92.
-    expect(drawn(sim, createElement(BankMoves))).toContain(`Closing it now refunds 817 kr ($5.92) of its debit card’s 950 kr for the year, paid ahead: the 314 of its 365 days left. ${LAW_AHEAD} ${LABEL}`);
+    expect(drawn(sim, createElement(BankMoves))).toContain(`Closing it now refunds 817 kr ($5.92) of the 950 kr you paid in advance for its debit card’s year: the 314 days of its 365 still to run. ${LAW_AHEAD} ${LABEL}`);
     const held = arion.held!;
     press('Close It');
     expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.close_current', ok: true });
@@ -280,7 +280,7 @@ describe('arion.AR3: a close gives back the card year’s days left', () => {
     // Everything that left it at the close is what it held and the refund: it holds nothing, closed, its fees ended.
     const left = sim.universe.transactions.filter((t) => t.at === closedAt).flatMap((t) => t.postings).filter((q) => q.accountId === arion.id).reduce((n, q) => n + (q.native ?? 0), 0);
     expect([left, arion.held, arion.closedAt, arion.feesEndedAt, arion.cardFeePaid]).toEqual([-held, 0, closedAt, closedAt, 0]);
-    expect(refusal(sim, 'bank.close_current', { accountId: arion.id, remainderTo: primary(sim).id })).toBe('Only a current account of yours can be closed here.');
+    expect(refusal(sim, 'bank.close_current', { accountId: arion.id, remainderTo: primary(sim).id })).toBe('Only one of your own checking accounts can be closed here.');
     const back = reload(sim);
     back.advanceTo(at(2027, 9, 1, 9));
     expect(cardPosts(back, arion.id)).toEqual(cardPosts(sim, arion.id));
@@ -332,7 +332,7 @@ describe('arion.AR2: the card year renewed once a year, on its date in Reykjaví
     expect(onAccount(steps, arion.id, at(2028, 8, 20, 9))).toEqual(onAccount(jump, arion.id, at(2028, 8, 20, 9)));
     expect(onAccount(minutes, arion.id, at(2028, 8, 20, 9))).toEqual(onAccount(jump, arion.id, at(2028, 8, 20, 9)));
     // The year from 25 August 2027 held 29 February 2028: 366 days, and the next began on its date.
-    expect(drawn(jump, createElement(BankWorkspace))).toContain('This card year began August 25, 2028, paid in advance with 950 kr, and runs to August 24, 2029. The next year is charged August 25, 2029.');
+    expect(drawn(jump, createElement(BankWorkspace))).toContain('The current card year runs from August 25, 2028 to August 24, 2029, and you paid 950 kr for it in advance. The next year’s fee is charged on August 25, 2029.');
     balancedAgainstBankFees(jump, arion.id);
     expect(breaches(jump.universe)).toEqual([]);
   }, 600_000);
@@ -345,7 +345,7 @@ describe('arion.AR2: the card year renewed once a year, on its date in Reykjaví
     sim.advanceTo(sim.now + 60_000);
     // 7 + 30 + 31 + 30 + 31 + 31 + 29 = 189 days used, 25 August to 29 February; 366 − 189 = 177 left:
     // 95,000 × 177 / 366 = 45,942.6, 459 kr; 45,900 / 138 = 332.6, $3.33.
-    expect(drawn(sim, createElement(BankMoves))).toContain(`Closing it now refunds 459 kr ($3.33) of its debit card’s 950 kr for the year, paid ahead: the 177 of its 366 days left. ${LAW_AHEAD}`);
+    expect(drawn(sim, createElement(BankMoves))).toContain(`Closing it now refunds 459 kr ($3.33) of the 950 kr you paid in advance for its debit card’s year: the 177 days of its 366 still to run. ${LAW_AHEAD}`);
     expect(closeVeltu(sim).ok).toBe(true);
     expect(cardPosts(sim, arion.id).at(-1)).toEqual([sim.now, 'Debit card yearly fee refunded: Veltureikningur', 3_33, 459_00]);
     balancedAgainstBankFees(sim, arion.id);
@@ -373,14 +373,14 @@ describe('arion.AR7: the close’s days by Reykjavík’s calendar', () => {
     const eve = freeze(sim);
     // 7 + 30 + 31 + 30 + 31 + 1 = 130 days used, 235 left: 95,000 × 235 / 365 = 61,164.4, 612 kr; 61,200 / 138 = 443.5,
     // $4.43. By New Haven's date, 31 December: 129 used, 236 left, 61,424.7, 614 kr.
-    expect(drawn(sim, createElement(BankMoves))).toContain('Closing it now refunds 612 kr ($4.43) of its debit card’s 950 kr for the year, paid ahead: the 235 of its 365 days left.');
+    expect(drawn(sim, createElement(BankMoves))).toContain('Closing it now refunds 612 kr ($4.43) of the 950 kr you paid in advance for its debit card’s year: the 235 days of its 365 still to run.');
     expect(closeVeltu(sim).ok).toBe(true);
     expect(cardPosts(sim, arion.id).at(-1)).toEqual([at(2026, 12, 31, 21, 0), 'Debit card yearly fee refunded: Veltureikningur', 4_43, 612_00]);
     // Kept instead to the eve of the year's date: 9 PM in New Haven on 24 August 2027 is 1 AM on the 25th in Reykjavík,
     // the year from 25 August 2026 used up there, and New Haven's midnight, when SLATE opens the next, not yet come.
     const kept = thaw(eve);
     kept.advanceTo(at(2027, 8, 24, 21, 0));
-    expect(drawn(kept, createElement(BankMoves))).not.toContain('of its debit card’s');
+    expect(drawn(kept, createElement(BankMoves))).not.toContain('its debit card’s');
     expect(closeVeltu(kept).ok).toBe(true);
     kept.advanceTo(at(2027, 9, 1, 9));
     expect(cardPosts(kept, arion.id)).toEqual([[at(2026, 8, 25, 0), 'Debit card yearly fee', -6_88, -950_00]]);
@@ -402,8 +402,8 @@ describe('arion.AR5: an account that can’t cover the year’s fee', () => {
     sim.advanceTo(at(2027, 8, 25, 9));
     expect(cardPosts(sim, arion.id).at(-1)).toEqual([at(2027, 8, 25, 0), 'Debit card yearly fee', -6_88, -950_00]);
     expect([arion.held, arion.balance]).toEqual([-650_00, -4_71]);
-    expect(drawn(sim, createElement(BankWorkspace))).toContain('If the account can’t cover the year’s fee, it’s charged anyway, and the account goes below zero by the difference.');
-    expect(refusal(sim, 'bank.close_current', { accountId: arion.id, remainderTo: primary(sim).id })).toBe('It’s overdrawn by $4.71. The bank only closes it once that’s paid off.');
+    expect(drawn(sim, createElement(BankWorkspace))).toContain('If the account can’t cover the fee, the bank charges it anyway and the account goes overdrawn by the difference.');
+    expect(refusal(sim, 'bank.close_current', { accountId: arion.id, remainderTo: primary(sim).id })).toBe('It’s overdrawn by $4.71, and the bank only closes it once that’s paid off. Move money into it first.');
     sim.advanceTo(at(2027, 8, 26, 9));
     setTo(sim, arion, arion.balance + 7_25, arion.held! + 1_000_00); // TEST SETUP: 100,000 / 138 = 724.6, $7.25.
     closeVoxtur(sim);
@@ -434,7 +434,7 @@ describe('arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other 
     closeVoxtur(sim);
     sim.advanceTo(sim.now + 60_000);
     // 95,000 × 51 / 365 = 13,274.0, 133 kr; 13,300 / 138 = 96.4, $0.96.
-    expect(drawn(sim, createElement(BankMoves))).toContain(`Closing it now charges 133 kr ($0.96) of its debit card’s 950 kr for the year, charged at its end: the 51 of its 365 days so far. Iceland’s Act on Payment Services, art. 57, owes a regular fee only in proportion to the close. ${LABEL}`);
+    expect(drawn(sim, createElement(BankMoves))).toContain(`Closing it now charges 133 kr ($0.96) of its debit card’s 950 kr yearly fee, which is charged at the end of the year: the 51 days of its 365 used so far. Under Iceland’s Act on Payment Services, art. 57, a regular fee is owed only in proportion to the time before the account closes. ${LABEL}`);
     expect(closeVeltu(sim).ok).toBe(true);
     expect(cardPosts(sim, arion.id)).toEqual([[sim.now, 'Debit card yearly fee to the closing day: Veltureikningur', -96, -133_00]]);
     balancedAgainstBankFees(sim, arion.id);

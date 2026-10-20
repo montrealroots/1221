@@ -39,6 +39,8 @@ const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const dayOfKey = (key: string) => { const [y, m, d] = key.split('-').map(Number); return formatDate(instantFromZoned({ year: y!, month: m!, day: d!, hour: 12 }, zone()), zone()); };
 const courseName = (code: string) => COURSES.find((c) => c.code === code)?.name ?? code;
+/** How many times, as prose says it: twice, four times, 12 times. */
+const timesWords = (n: number) => ['no times', 'once', 'twice', 'three times', 'four times', 'five times', 'six times', 'seven times', 'eight times', 'nine times'][n] ?? `${n} times`;
 
 export function CourseworkPane() {
   const { sim } = useGame();
@@ -58,7 +60,7 @@ export function CourseworkPane() {
           <ul className="small" data-due-soonest="" style={{ margin: 0, paddingLeft: '1.1rem' }}>
             {short.map(({ a, due, forecast, short: parts }) => {
               const t = templateById(a.template)!;
-              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}. Shown today, it would come to about {forecast.toFixed(1)} ({BAND_LABEL[bandFor(a, forecast)]}). Still to finish: {parts.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</li>;
+              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}. Shown today, it would come to about {forecast.toFixed(1)} of 100 ({BAND_LABEL[bandFor(a, forecast)]}). Still to finish: {parts.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</li>;
             })}
           </ul>
         </Panel>
@@ -140,13 +142,16 @@ function AssignmentCard({ a }: { a: Assignment }) {
           {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Note priority ${pct(weights[d] ?? 0)}; complete at ${pct(EVALUATION.complete.coursework)}`} />)}
         </div>
         {/* What the showing would make of it today (from 2026-10-16, `showingForecast`): until then a part at nothing that
-            "weighed 15%" said nothing of holding the dimensions that read it to a third of themselves. */}
+            "weighed 15%" said nothing of holding the dimensions that read it to a third of themselves. Brief 15's school area
+            wrote its figure, and Due Soonest's, in whole points; its final runs found a day's step on a scene that left
+            "about 52 of 100" where it was, so the work didn't show (normal at 390, step 11), and the forecast went back to a
+            tenth, as a brief's Taped Now writes its own. The score a showing gets stays whole. */}
         {(a.status === 'open' || a.status === 'revising') && (() => {
           const now = showingForecast(sim, person, a);
           const short = shortParts(person, a);
           return (
             <div className="small" data-shown-today={a.id}>
-              <strong>Shown Today:</strong> if you showed it today on a good day, it would come to about {now.overall.toFixed(1)} ({BAND_LABEL[bandFor(a, now.overall)]}). {chiefLimit(withPartLabels(now, a), 'now') ? `${chiefLimit(withPartLabels(now, a), 'now')}.` : 'There’s nothing holding it back.'}
+              <strong>Shown Today:</strong> if you showed it today, on a good day, it would come to about {now.overall.toFixed(1)} of 100 ({BAND_LABEL[bandFor(a, now.overall)]}). {chiefLimit(withPartLabels(now, a), 'now') ? `${chiefLimit(withPartLabels(now, a), 'now')}.` : 'There’s nothing holding it back.'}
               {short.length > 0 && <span> Still to finish: {short.map((d) => `${t.dims[d]!.label} (${remedyWords(a, d)})`).join('; ')}.</span>}
             </div>
           );
@@ -201,7 +206,7 @@ function TableWork({ a }: { a: Assignment }) {
           {a.shown && (() => { const o = options.find((x) => x.id === a.answers[q.id]); return o?.why ? <div className="xs dim">{o.supported ? 'Why the text supports it' : 'Why the text doesn’t support it'}: {o.why}</div> : null; })()}
         </div>
       ))}
-      <Fine>Each answer takes ten minutes. Some questions have more than one reading the text supports, and each supported reading counts the same. Once the piece is shown, each answer says why the text supports it or doesn’t. Which readings the text supports is the game’s own reading of the play.</Fine>
+      <Fine>Each answer takes ten minutes. Some questions have more than one answer the text supports, and each of them counts the same. Once the piece is shown, each answer says why the text supports it or doesn’t. Which answers the text supports is the game’s own judgment of the play.</Fine>
     </div>
   );
 }
@@ -270,7 +275,7 @@ function Rehearsals({ a }: { a: Assignment }) {
             ? <Gated feature="school.cancel_rehearsal" className="btn btn-sm btn-ghost" title={r.at - sim.now < 86_400_000 ? `Short notice: ${first} will mind` : 'With notice'} onClick={() => { if (run('school.cancel_rehearsal', { assignmentId: a.id, rehearsalId: r.id }).ok) toast('Called off.', 'neutral'); }}>Call It Off</Gated>
             : <span className="xs">{{ kept: 'Rehearsed', missedByYou: 'You Didn’t Come', missedByThem: `${first} Didn’t Come`, cancelled: 'Called Off', excused: 'You Were Ill', booked: '' }[r.status]}</span>}
         </div>
-        {r.said && <div className="xs dim">{r.said} <span>(Simulated: the game’s words.)</span></div>}
+        {r.said && <div className="xs dim">{r.said} <span>(A summary of your preparation, not {first}’s own words.)</span></div>}
         </div>
       ))}
     </div>
@@ -298,7 +303,7 @@ const KIND_LABEL: Record<NoteKind, string> = { new: 'A New Note', recurring: 'St
 function objectiveWhy(a: Assignment, notes: readonly NoteRecord[]): string {
   const dim = OBJECTIVE_DIM[a.objective!];
   const rec = notes.find((n) => n.key === `dim:${dim}` && n.status === 'open' && n.given >= 2);
-  return rec ? `Your notes have named it ${rec.given} times since ${dayOfKey(rec.first)}, so it counts for more when this piece is shown.` : 'The course hasn’t asked for it lately, so it counts for more when this piece is shown.';
+  return rec ? `Your notes have named it ${timesWords(rec.given)} since ${dayOfKey(rec.first)}, so it counts for more when you show this piece.` : 'Your course hasn’t asked for it lately, so it counts for more when you show this piece.';
 }
 
 /** The ledger: every note given, by what it's about, across courses; open ones first. */
@@ -318,7 +323,7 @@ function NotesLedger() {
             <span className="xs">{n.status === 'resolved' ? `Taken ${dayOfKey(n.resolvedOn!)}` : n.history.at(-1)?.kind === 'partial' ? 'Better, Not There Yet' : 'Open'}</span>
           </div>
         ))}
-        <Fine>These notes are simulated: the game’s reading of your work, never a real teacher’s words. Once you take a note, it isn’t given again unless that part slips back.</Fine>
+        <Fine>These notes are simulated: the game’s assessment of your work, never a real teacher’s words. Once you take a note, it isn’t given again unless that part slips back.</Fine>
       </div>
     </Panel>
   );
@@ -390,12 +395,12 @@ function AnotherWay({ a }: { a: Assignment }) {
   const person = useWorld((s) => s.player);
   const cw = courseworkOf(sim, person)!;
   const weak = persistentFor(cw, a)[0];
-  if (a.approach) return <div className="small"><strong>Another Way At It: {APPROACHES[a.approach.kind].label}.</strong> <span className="xs dim">For {noteSubject(a.approach.key).toLowerCase()}: {APPROACHES[a.approach.kind].words}. It won’t take the note on its own.</span></div>;
+  if (a.approach) return <div className="small"><strong>Another Way At It: {APPROACHES[a.approach.kind].label}.</strong> <span className="xs dim">For {noteSubject(a.approach.key).toLowerCase()}: {APPROACHES[a.approach.kind].words}. It won’t take the note by itself: you still take it at a showing.</span></div>;
   if (!weak) return null;
   return (
     <div className="col gap-1">
       <div className="row-between" style={{ alignItems: 'flex-start' }}>
-        <div className="small"><strong>A Note That Keeps Coming Back:</strong> {noteSubject(weak.key)}, given {weak.given} times. <span className="xs dim">Choose one other way to work on it for this piece.</span></div>
+        <div className="small"><strong>A Note That Keeps Coming Back:</strong> {noteSubject(weak.key)}, given {timesWords(weak.given)}. <span className="xs dim">Choose one other way to work on it for this piece.</span></div>
         <HowItWorks help="school.approach" />
       </div>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>

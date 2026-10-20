@@ -83,7 +83,7 @@ describe('the plays, as facts', () => {
 describe('reading one at school', () => {
   it('needs the library known, takes its time, works the text craft, and leaves a note on what was read', () => {
     const sim = life('pl-read');
-    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
+    expect(sim.execute({ kind: 'plays.read', payload: { playId: 'sweat' } }).error).toBe('You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
     tended(sim, at(9, 5, 18));
     expect(sim.execute({ kind: 'plays.read', payload: { playId: 'nothing' } }).error).toBe('There’s no such play.');
     const before = sim.player.craft!.script;
@@ -92,7 +92,7 @@ describe('reading one at school', () => {
     expect(r.minutes).toBe(PLAYREADING.minutes.full);
     expect(sim.now - t0).toBe(r.minutes * 60_000);
     expect(sim.player.craft!.script).toBeGreaterThan(before);
-    expect(r.note).toBe('Sweat, by Lynn Nottage, read through. It reads as a drama, based on interviews with residents. The cast as published: 3 women and 6 men. There’s a part in it for you. It’s set: Reading, Pennsylvania, the time not given.');
+    expect(r.note).toBe('You read Sweat, by Lynn Nottage, all the way through. It reads as a drama, based on interviews with residents. The published cast is 3 women and 6 men. There’s a part in it for you. It’s set: Reading, Pennsylvania, the time not given.');
     // A monologue is the short read.
     expect(sim.must<{ minutes: number }>({ kind: 'plays.read', payload: { playId: 'fleabag' } }).minutes).toBe(PLAYREADING.minutes.short);
   });

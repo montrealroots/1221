@@ -1,0 +1,3432 @@
+{
+ "index.html#head": {
+  "status": "Rewritten",
+  "hash": "a7f345b8a8d7",
+  "on": "2026-10-18",
+  "evidence": "The built app's page head after npm run build (dist/index.html) holds the new description; the title SLATE stays.",
+  "first": "Pending"
+ },
+ "public/holidays#names": {
+  "status": "Retained",
+  "hash": "9f3838c1376f",
+  "on": "2026-10-18",
+  "reason": "The names of real public holidays and observances as the published calendar data spells them in English; the calendar shows each verbatim beside its date, and a proper name isn't the game's to reword.",
+  "first": "Pending"
+ },
+ "src/app/game-context.tsx#CLOCK_FAULT": {
+  "status": "Retained",
+  "hash": "c6f95e70c084",
+  "on": "2026-10-19",
+  "reason": "Says an error stopped the clock, that what already happened stands because the move is not rolled back, and that moving the clock again is the way on.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/game-context.tsx#GameProvider": {
+  "status": "Retained",
+  "hash": "558f1ca1c430",
+  "on": "2026-10-19",
+  "reason": "The fallback refusal says nothing changed when a command gives no reason of its own; the breadcrumb names are the rail’s own, Home, Calendar and Player Profile.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/game-context.tsx#LIVE_CLOCK_FAULT": {
+  "status": "Retained",
+  "hash": "582217452c07",
+  "on": "2026-10-19",
+  "reason": "Says an error stopped the clock and paused it, that what happened stands, and that pressing Play in the top bar is how to try again.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/game-context.tsx#ROUTE_LABELS": {
+  "status": "Retained",
+  "hash": "9a87b6b0c5d6",
+  "on": "2026-10-19",
+  "reason": "The rail’s destination names, the same words the rail, the breadcrumbs and the keyboard shortcuts use, so each screen keeps one name everywhere.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/game-context.tsx#useGame": {
+  "status": "Retained",
+  "hash": "096c46174044",
+  "on": "2026-10-19",
+  "reason": "A developer’s error thrown only when code renders outside the provider; no player reaches it, and it names the cause for whoever does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/app/SlateApp.tsx#OPEN_FAILURE": {
+  "status": "Retained",
+  "hash": "fbc4c36e2d68",
+  "on": "2026-10-19",
+  "reason": "Says what failed, that an error in the game caused it, and both ways on: Restart SLATE, the button right under it, or the slot’s backup.",
+  "first": "Rewritten And Verified"
+ },
+ "src/app/SlateApp.tsx#SlateApp": {
+  "status": "Retained",
+  "hash": "498962c834a9",
+  "on": "2026-10-19",
+  "reason": "A plain heading over the failure’s own sentence, and Restart SLATE, the one button there, named for exactly what it does: it reloads the game.",
+  "first": "Reviewed And Retained"
+ },
+ "src/app/SlateApp.tsx#startFailure": {
+  "status": "Rewritten",
+  "hash": "ae3d349b917a",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do', both variants word for word",
+  "first": "Pending"
+ },
+ "src/engine/content/climate.ts#CLIMATE_NAMES": {
+  "status": "Retained",
+  "hash": "eb7b9310fb17",
+  "on": "2026-10-19",
+  "reason": "The standard names of climate types, Oceanic, Continental, Subarctic, as atlases name them, shown beside the weather.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/entry.ts#ENTRY .AU": {
+  "status": "Rewritten",
+  "hash": "0f0986379ead",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .BR": {
+  "status": "Rewritten",
+  "hash": "67093b400f6a",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .CA": {
+  "status": "Rewritten",
+  "hash": "8c3bb66fe6c3",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .DE": {
+  "status": "Rewritten",
+  "hash": "c0b419de7615",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .ES": {
+  "status": "Rewritten",
+  "hash": "549ebbdb8ecd",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .FR": {
+  "status": "Rewritten",
+  "hash": "8000e3c5e805",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .GB": {
+  "status": "Rewritten",
+  "hash": "4a9117f4b9a8",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .IE": {
+  "status": "Rewritten",
+  "hash": "324bc0266fad",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .IS": {
+  "status": "Rewritten",
+  "hash": "ecec54962111",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .JP": {
+  "status": "Rewritten",
+  "hash": "2dcd38b44091",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .KR": {
+  "status": "Rewritten",
+  "hash": "de4e904d692b",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .LV": {
+  "status": "Rewritten",
+  "hash": "ea150433b041",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .MX": {
+  "status": "Rewritten",
+  "hash": "b374937084c5",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .NZ": {
+  "status": "Rewritten",
+  "hash": "a2363c24ea16",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY .US": {
+  "status": "Rewritten",
+  "hash": "d2b18ccd0ede",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', which reads every destination's notes, and 'keeps a note’s first word whole, and says a country’s own citizen is one'",
+  "first": "Pending"
+ },
+ "src/engine/content/entry.ts#ENTRY_UNCERTAIN": {
+  "status": "Retained",
+  "hash": "2721041afa4a",
+  "on": "2026-10-19",
+  "reason": "The research’s own list of what it could not confirm, in its words, which no screen shows; each note now says the doubt that applies to it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [american-indian]": {
+  "status": "Retained",
+  "hash": "8514eaaa4518",
+  "on": "2026-10-19",
+  "reason": "Census-style categories, written in full and capitalized as a choice is, so a player can find themselves without a code or an abbreviation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [asian]": {
+  "status": "Retained",
+  "hash": "652670c84ed3",
+  "on": "2026-10-19",
+  "reason": "Census-style categories, written in full and capitalized as a choice is, so a player can find themselves without a code or an abbreviation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [black]": {
+  "status": "Retained",
+  "hash": "e52560746927",
+  "on": "2026-10-19",
+  "reason": "Census-style categories, written in full and capitalized as a choice is, so a player can find themselves without a code or an abbreviation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [hispanic]": {
+  "status": "Retained",
+  "hash": "b56843dc496b",
+  "on": "2026-10-19",
+  "reason": "Census-style categories, written in full and capitalized as a choice is, so a player can find themselves without a code or an abbreviation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [mena]": {
+  "status": "Retained",
+  "hash": "54fb34963338",
+  "on": "2026-10-19",
+  "reason": "Census-style categories, written in full and capitalized as a choice is, so a player can find themselves without a code or an abbreviation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [other]": {
+  "status": "Retained",
+  "hash": "f5453140efc5",
+  "on": "2026-10-19",
+  "reason": "Census-style categories, written in full and capitalized as a choice is, so a player can find themselves without a code or an abbreviation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [pacific]": {
+  "status": "Retained",
+  "hash": "d99f9e5595ac",
+  "on": "2026-10-19",
+  "reason": "Census-style categories, written in full and capitalized as a choice is, so a player can find themselves without a code or an abbreviation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITIES [white]": {
+  "status": "Retained",
+  "hash": "37619fc13053",
+  "on": "2026-10-19",
+  "reason": "Census-style categories, written in full and capitalized as a choice is, so a player can find themselves without a code or an abbreviation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/ethnicity.ts#ETHNICITY_NOTE": {
+  "status": "Retained",
+  "hash": "345f89e6ab6b",
+  "on": "2026-10-19",
+  "reason": "Says the choice is free and many-valued, that nothing in the game uses or guesses it, and that leaving it blank is allowed: what a player wants to know before answering.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.advance]": {
+  "status": "Rewritten",
+  "hash": "d456cd7b6aab",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under Moving Time On",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.calendar]": {
+  "status": "Rewritten",
+  "hash": "5a41edebf96d",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Calendar",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.clock]": {
+  "status": "Rewritten",
+  "hash": "1db03f32ae6f",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Clock: Play And Pause",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.needs]": {
+  "status": "Rewritten",
+  "hash": "fdd3cdf8fcf5",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under What Needs You; its later lines held by tests/defects3-50-70.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.plans]": {
+  "status": "Rewritten",
+  "hash": "6351727d98c7",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under Your Own Plans",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [day.weather]": {
+  "status": "Rewritten",
+  "hash": "1f9dd966fc36",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Weather",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [evaluation]": {
+  "status": "Rewritten",
+  "hash": "54e4c460fb7a",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Counts Toward",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [history]": {
+  "status": "Retained",
+  "hash": "0cd47ebc9dda",
+  "on": "2026-10-19",
+  "reason": "Lines under Kept In Your Record: a notice for a plan skipped or slept through, said where it appears.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#DAY [immediate]": {
+  "status": "Retained",
+  "hash": "bfb5624d3dc8",
+  "on": "2026-10-19",
+  "reason": "Lines under Changes Straight Away, each naming what the other feature does at once, in the screens’ own words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#DAY [optional]": {
+  "status": "Retained",
+  "hash": "70cc43c91d64",
+  "on": "2026-10-19",
+  "reason": "Lines under Worth Doing With It, each one plain sentence on why the two features go together.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#DAY [prerequisite]": {
+  "status": "Rewritten",
+  "hash": "ea803feaf6d7",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under How It Connects, Comes First",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/day.ts#DAY [scheduled]": {
+  "status": "Retained",
+  "hash": "0e5b5a43be30",
+  "on": "2026-10-19",
+  "reason": "Lines under Changes Later: midnight’s groceries, and a plan stopping the clock, each said as what happens when.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#HAVEN_THUNDER_FROM": {
+  "status": "Retained",
+  "hash": "736ae15f31a8",
+  "on": "2026-10-19",
+  "reason": "Says where New Haven’s thunder figure comes from, as published or estimated for its climate, inside a How This Works figure.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/day.ts#RUN_COLD": {
+  "status": "Retained",
+  "hash": "9b086f13e429",
+  "on": "2026-10-19",
+  "reason": "A temperature in both scales, the run’s lowest, as the weather entry gives it beside the rule.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/day.ts#RUN_HOT": {
+  "status": "Retained",
+  "hash": "9b086f13e429",
+  "on": "2026-10-19",
+  "reason": "A temperature in both scales, the run’s highest feels-like, as the weather entry gives it beside the rule.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/guide/start.ts#START [immediate]": {
+  "status": "Rewritten",
+  "hash": "5fbbcf24cf9d",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs, under How It Connects, Changes Straight Away",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/start.ts#START [optional]": {
+  "status": "Retained",
+  "hash": "38c3a669bb27",
+  "on": "2026-10-19",
+  "reason": "Two short lines under Worth Doing With It: the weather is the same town hour by hour, and Go There on a notice opens its screen.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/start.ts#START [prerequisite]": {
+  "status": "Rewritten",
+  "hash": "8231a56efb89",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs, under How It Connects, Comes First",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/start.ts#START [start.find]": {
+  "status": "Rewritten",
+  "hash": "465dec015c8e",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs, under Finding Your Way",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/start.ts#START [start.guide]": {
+  "status": "Rewritten",
+  "hash": "2cc23e1f31d6",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs; its example held by tests/guide-examples-start-day-body.test.ts, 'start.guide: two chapters read…'",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/start.ts#START [start.home]": {
+  "status": "Rewritten",
+  "hash": "3f0a5360bd98",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs; its example's result held by tests/guide-examples-start-day-body.test.ts, 'start.home: New Haven opens under its line…'",
+  "first": "Pending"
+ },
+ "src/engine/content/holiday-data.ts#HOLIDAY_FILES": {
+  "status": "Retained",
+  "hash": "47dd92c67d42",
+  "on": "2026-10-19",
+  "reason": "A table of each country’s holiday file size and count, read by the loader and never shown as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/holidays.ts#loadCountryHolidays": {
+  "status": "Retained",
+  "hash": "161ffe931bab",
+  "on": "2026-10-19",
+  "reason": "The holiday file’s path and a developer’s error if it can’t be fetched, neither of them words a player reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/identity.ts#ID_CARDS": {
+  "status": "Retained",
+  "hash": "ef19e6e2e2cd",
+  "on": "2026-10-19",
+  "reason": "Each state or country’s own name for its photo ID card, as the issuer spells it, which Papers shows beside the card.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .aa": {
+  "status": "Retained",
+  "hash": "5a209a74a1b6",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ab": {
+  "status": "Retained",
+  "hash": "03c80eef8587",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .af": {
+  "status": "Retained",
+  "hash": "40604522f225",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ak": {
+  "status": "Retained",
+  "hash": "b42c988b75b2",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .am": {
+  "status": "Retained",
+  "hash": "13bf461c7432",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ar": {
+  "status": "Retained",
+  "hash": "af4f4762f9bd",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .as": {
+  "status": "Retained",
+  "hash": "a1f73fc9077d",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ay": {
+  "status": "Retained",
+  "hash": "b92b66b38efc",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .az": {
+  "status": "Retained",
+  "hash": "68852895e057",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ba": {
+  "status": "Retained",
+  "hash": "06e28ce784d9",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .be": {
+  "status": "Retained",
+  "hash": "2c7205595032",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .bg": {
+  "status": "Retained",
+  "hash": "cebed7688a5b",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .bi": {
+  "status": "Retained",
+  "hash": "634aef873fe4",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .bm": {
+  "status": "Retained",
+  "hash": "89d821a9a2d3",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .bn": {
+  "status": "Retained",
+  "hash": "198e9c0851a2",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .bo": {
+  "status": "Retained",
+  "hash": "8b6a4f79c67e",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .bs": {
+  "status": "Retained",
+  "hash": "71d67418f341",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ca": {
+  "status": "Retained",
+  "hash": "2c5e77fc08a7",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ch": {
+  "status": "Retained",
+  "hash": "a08119acc386",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ckb": {
+  "status": "Retained",
+  "hash": "a0220001c7a2",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .crs": {
+  "status": "Retained",
+  "hash": "0b5fb20ff92d",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .cs": {
+  "status": "Retained",
+  "hash": "eea467c6cfe0",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .cy": {
+  "status": "Retained",
+  "hash": "e71d224a2fc2",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .da": {
+  "status": "Retained",
+  "hash": "9f9f264815f8",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .de": {
+  "status": "Retained",
+  "hash": "da91388c72d3",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .dv": {
+  "status": "Retained",
+  "hash": "bcf95f225aa6",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .dz": {
+  "status": "Retained",
+  "hash": "579a26333f44",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .el": {
+  "status": "Retained",
+  "hash": "59d5f5b13f13",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .en": {
+  "status": "Retained",
+  "hash": "649df08a448e",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .es": {
+  "status": "Retained",
+  "hash": "8df7f1b361b2",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .et": {
+  "status": "Retained",
+  "hash": "3cffdaf0e846",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .eu": {
+  "status": "Retained",
+  "hash": "c87df04a6212",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .fa": {
+  "status": "Retained",
+  "hash": "1ab65965d820",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ff": {
+  "status": "Retained",
+  "hash": "7b5e13449f10",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .fi": {
+  "status": "Retained",
+  "hash": "57eef27b1643",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .fil": {
+  "status": "Retained",
+  "hash": "cd9a55543561",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .fj": {
+  "status": "Retained",
+  "hash": "6aecb90f2b00",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .fo": {
+  "status": "Retained",
+  "hash": "0e9430a5c15a",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .fr": {
+  "status": "Retained",
+  "hash": "44389f6a466e",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ga": {
+  "status": "Retained",
+  "hash": "2bddaea17434",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .gd": {
+  "status": "Retained",
+  "hash": "28804ff5d9f3",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .gil": {
+  "status": "Retained",
+  "hash": "0069d707cfad",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .gl": {
+  "status": "Retained",
+  "hash": "ccece2966ff8",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .gn": {
+  "status": "Retained",
+  "hash": "e96b7da29181",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .gsw": {
+  "status": "Retained",
+  "hash": "3602ea2c46bb",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .gu": {
+  "status": "Retained",
+  "hash": "c06c55a5bcd0",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .gv": {
+  "status": "Retained",
+  "hash": "a27665e6323c",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ha": {
+  "status": "Retained",
+  "hash": "c6198e106567",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .hak": {
+  "status": "Retained",
+  "hash": "79556c367c90",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .haw": {
+  "status": "Retained",
+  "hash": "cd7668c561bd",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .he": {
+  "status": "Retained",
+  "hash": "348d00693e12",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .hi": {
+  "status": "Retained",
+  "hash": "c9e6b253fc34",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .hr": {
+  "status": "Retained",
+  "hash": "3e5488aa8c48",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ht": {
+  "status": "Retained",
+  "hash": "59269e099c20",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .hu": {
+  "status": "Retained",
+  "hash": "80cb96f852d1",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .hy": {
+  "status": "Retained",
+  "hash": "1a0d21145500",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .id": {
+  "status": "Retained",
+  "hash": "2339b8ad3625",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ig": {
+  "status": "Retained",
+  "hash": "99db9970ef63",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .is": {
+  "status": "Retained",
+  "hash": "4908b12c142b",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .it": {
+  "status": "Retained",
+  "hash": "485b57adcc80",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ja": {
+  "status": "Retained",
+  "hash": "9239c22d1d1c",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .jv": {
+  "status": "Retained",
+  "hash": "4d3bb51ea74d",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ka": {
+  "status": "Retained",
+  "hash": "aca441ddd2e8",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .kg": {
+  "status": "Retained",
+  "hash": "16d15b76add1",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .kk": {
+  "status": "Retained",
+  "hash": "b9fedaa07b20",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .kl": {
+  "status": "Retained",
+  "hash": "4f3cadca02ab",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .km": {
+  "status": "Retained",
+  "hash": "3db4bac2e32c",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .kn": {
+  "status": "Retained",
+  "hash": "c3ed665577f9",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ko": {
+  "status": "Retained",
+  "hash": "dec66c5bf0f7",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ku": {
+  "status": "Retained",
+  "hash": "a06efeaf4455",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ky": {
+  "status": "Retained",
+  "hash": "5aea8700748f",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .la": {
+  "status": "Retained",
+  "hash": "9bde795b72be",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .lb": {
+  "status": "Retained",
+  "hash": "7f9d01a36854",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ln": {
+  "status": "Retained",
+  "hash": "bdf581cc1c81",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .lo": {
+  "status": "Retained",
+  "hash": "c1439807deac",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .lt": {
+  "status": "Retained",
+  "hash": "553c519c9add",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .lv": {
+  "status": "Retained",
+  "hash": "9ed6ae997b16",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .mg": {
+  "status": "Retained",
+  "hash": "83037e8cfdd2",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .mh": {
+  "status": "Retained",
+  "hash": "ab2813b7a83c",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .mi": {
+  "status": "Retained",
+  "hash": "5ef5762b0da0",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .mk": {
+  "status": "Retained",
+  "hash": "b3fe571f349f",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ml": {
+  "status": "Retained",
+  "hash": "c730df3afaaa",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .mn": {
+  "status": "Retained",
+  "hash": "c3bdbab40a4b",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .mr": {
+  "status": "Retained",
+  "hash": "6bb4b981fc36",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ms": {
+  "status": "Retained",
+  "hash": "08f0c0cf5188",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .mt": {
+  "status": "Retained",
+  "hash": "cfb5310c4958",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .my": {
+  "status": "Retained",
+  "hash": "460ce8e9a083",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .na": {
+  "status": "Retained",
+  "hash": "77e63f92fc93",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .nan": {
+  "status": "Retained",
+  "hash": "4afe98825485",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .nb": {
+  "status": "Retained",
+  "hash": "e33f6153e1a6",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .nd": {
+  "status": "Retained",
+  "hash": "41369887d4bb",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ne": {
+  "status": "Retained",
+  "hash": "16e340746126",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .niu": {
+  "status": "Retained",
+  "hash": "a63009ebc630",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .nl": {
+  "status": "Retained",
+  "hash": "334a85f1b16e",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .nn": {
+  "status": "Retained",
+  "hash": "0b68ece2bf15",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .no": {
+  "status": "Retained",
+  "hash": "79b723002f87",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .nso": {
+  "status": "Retained",
+  "hash": "2557a704b85e",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ny": {
+  "status": "Retained",
+  "hash": "eba66d78c177",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .om": {
+  "status": "Retained",
+  "hash": "cdde40b7cdbd",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .or": {
+  "status": "Retained",
+  "hash": "3ef1f1886f82",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .pa": {
+  "status": "Retained",
+  "hash": "feaafc60ba98",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .pap": {
+  "status": "Retained",
+  "hash": "5db30345f511",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .pl": {
+  "status": "Retained",
+  "hash": "d011986407b1",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .prs": {
+  "status": "Retained",
+  "hash": "b7170c965050",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ps": {
+  "status": "Retained",
+  "hash": "cc50b3253c9e",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .pt": {
+  "status": "Retained",
+  "hash": "23882c575954",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .qu": {
+  "status": "Retained",
+  "hash": "2307d71ee74a",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .rm": {
+  "status": "Retained",
+  "hash": "409295866100",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .rn": {
+  "status": "Retained",
+  "hash": "ce155817c569",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ro": {
+  "status": "Retained",
+  "hash": "cfd5233f6c25",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ru": {
+  "status": "Retained",
+  "hash": "74ad93cbebf5",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .rw": {
+  "status": "Retained",
+  "hash": "d628ecf3df69",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sd": {
+  "status": "Retained",
+  "hash": "e0330c530209",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sg": {
+  "status": "Retained",
+  "hash": "92abd78f9709",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .si": {
+  "status": "Retained",
+  "hash": "0d8bc28bd230",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sk": {
+  "status": "Retained",
+  "hash": "d6a8b06eb489",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sl": {
+  "status": "Retained",
+  "hash": "e1c6d823cb20",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sm": {
+  "status": "Retained",
+  "hash": "c95fa4a5fe1a",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sn": {
+  "status": "Retained",
+  "hash": "5b84cc8c584f",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .so": {
+  "status": "Retained",
+  "hash": "2ed94ff47ed1",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sq": {
+  "status": "Retained",
+  "hash": "d71c45b3d8a8",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sr": {
+  "status": "Retained",
+  "hash": "a75ee8482a2c",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ss": {
+  "status": "Retained",
+  "hash": "a223186bc523",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .st": {
+  "status": "Retained",
+  "hash": "3e8e2c04f6c6",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .su": {
+  "status": "Retained",
+  "hash": "14bb55d7d743",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sv": {
+  "status": "Retained",
+  "hash": "04a422d38c95",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .sw": {
+  "status": "Retained",
+  "hash": "4d07764fc120",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ta": {
+  "status": "Retained",
+  "hash": "86c2b6275f07",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .te": {
+  "status": "Retained",
+  "hash": "ea6c03461dc3",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .tet": {
+  "status": "Retained",
+  "hash": "6ccaaacc2aa2",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .tg": {
+  "status": "Retained",
+  "hash": "e301d53adc28",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .th": {
+  "status": "Retained",
+  "hash": "c32767e0541f",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ti": {
+  "status": "Retained",
+  "hash": "671d7b141c95",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .tk": {
+  "status": "Retained",
+  "hash": "24a49d0317fb",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .tkl": {
+  "status": "Retained",
+  "hash": "f10261ef2104",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .tl": {
+  "status": "Retained",
+  "hash": "68ddd91d0b96",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .tn": {
+  "status": "Retained",
+  "hash": "5b95a8145a01",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .to": {
+  "status": "Retained",
+  "hash": "4d339fb58043",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .tr": {
+  "status": "Retained",
+  "hash": "ab650a1a4b8f",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ts": {
+  "status": "Retained",
+  "hash": "1183487f6492",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .tt": {
+  "status": "Retained",
+  "hash": "586e90006bbb",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .tvl": {
+  "status": "Retained",
+  "hash": "c09bf38c8cbe",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ty": {
+  "status": "Retained",
+  "hash": "cded132a0b13",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .uk": {
+  "status": "Retained",
+  "hash": "515451058797",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ur": {
+  "status": "Retained",
+  "hash": "412e31909b8a",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .uz": {
+  "status": "Retained",
+  "hash": "d67a39a9d54b",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .ve": {
+  "status": "Retained",
+  "hash": "928ceab09c23",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .vi": {
+  "status": "Retained",
+  "hash": "1d6b8a691f0d",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .wo": {
+  "status": "Retained",
+  "hash": "552dd93788f9",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .xh": {
+  "status": "Retained",
+  "hash": "97f5bcf8cd35",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .yo": {
+  "status": "Retained",
+  "hash": "e5a54e6915f5",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .yue": {
+  "status": "Retained",
+  "hash": "b75dba358e03",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .zh": {
+  "status": "Retained",
+  "hash": "15dc18865567",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#NAMES .zu": {
+  "status": "Retained",
+  "hash": "ea200453e7bf",
+  "on": "2026-10-19",
+  "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#KNOB_READS": {
+  "status": "Rewritten",
+  "hash": "29f82e3fbd9d",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'a trait’s look names what a session of preparation gets done, and how soon you need a shower, for each trait that moves one', and tests/evidence3-person.test.ts, Chaotic's rows",
+  "first": "Pending"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_GROUPS": {
+  "status": "Retained",
+  "hash": "915a2b223c99",
+  "on": "2026-10-19",
+  "reason": "The six group headings over the trait pairs, each one plain word for what its traits touch: Temperament, Habits, Body, Money, People, Mind.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [burns_out]": {
+  "status": "Retained",
+  "hash": "5edcd43b9467",
+  "on": "2026-10-19",
+  "reason": "Going very hard for a long time and then not at all, with the crash at the worst moment: the shape of burning out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [chaotic]": {
+  "status": "Retained",
+  "hash": "956f7a1ce379",
+  "on": "2026-10-19",
+  "reason": "The mess is invisible and never weighs on you, and it shows on you sooner: the second line is the hygiene the trait speeds up.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [curious]": {
+  "status": "Rewritten",
+  "hash": "ab6e31d931f4",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'a trait’s look names what a session of preparation gets done…', the description on creation’s Traits, and tests/evidence-g33-ui.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [detached]": {
+  "status": "Retained",
+  "hash": "050b6fe025ae",
+  "on": "2026-10-19",
+  "reason": "Able to walk away from anything, people included, and the cost said plainly in game terms: a classmate comes closer more slowly.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [disciplined_body]": {
+  "status": "Retained",
+  "hash": "047ed9dde659",
+  "on": "2026-10-19",
+  "reason": "Training, sleeping and eating like someone who means to work at sixty, and the hours it takes as the honest cost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [early_riser]": {
+  "status": "Retained",
+  "hash": "f6cef50e25b8",
+  "on": "2026-10-19",
+  "reason": "Up before anybody wants you, and flat at an evening call, which is exactly what the trait changes: sharper mornings, duller evenings.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [even_tempered]": {
+  "status": "Retained",
+  "hash": "5d9f6d37c401",
+  "on": "2026-10-19",
+  "reason": "Says in two plain lines that bad news barely lands and that people take the calm for not caring: the trait and its price.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [forgiving]": {
+  "status": "Retained",
+  "hash": "7e20b6bb8829",
+  "on": "2026-10-19",
+  "reason": "Letting it go so the next conversation starts fresh, and letting the same thing happen twice: a clear trait and cost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [frugal]": {
+  "status": "Retained",
+  "hash": "1993c774391b",
+  "on": "2026-10-19",
+  "reason": "Knowing what everything costs, the day’s food costing less, and a meal doing less for your morale: both effects it really has.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [generous]": {
+  "status": "Retained",
+  "hash": "05d8e348e589",
+  "on": "2026-10-19",
+  "reason": "Picking up the check and lending without chasing, remembered fondly and poorer for it: a clear trait and price.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [guarded]": {
+  "status": "Retained",
+  "hash": "2372ac263356",
+  "on": "2026-10-19",
+  "reason": "Slow to let anyone in, and the few who are in carrying a lot: the trait and its cost in the words of a person.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [highly_strung]": {
+  "status": "Retained",
+  "hash": "5165f2cf345f",
+  "on": "2026-10-19",
+  "reason": "Feeling everything at full volume, where the work comes from, and stress and sleep as what it costs: a clear pair.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [holds_grudges]": {
+  "status": "Retained",
+  "hash": "266b95072645",
+  "on": "2026-10-19",
+  "reason": "Remembering exactly what was said and when, and losing people slowly over years: the trait and its long cost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [homebody]": {
+  "status": "Retained",
+  "hash": "3492d57e5d17",
+  "on": "2026-10-19",
+  "reason": "Your own bed puts back more, and a full room does less: the cost names the cast friends the trait makes count for less.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [independent]": {
+  "status": "Retained",
+  "hash": "468e0bf3bdf0",
+  "on": "2026-10-19",
+  "reason": "Not needing the room or the reassurance, and people unsure they matter to you: a recognizable person and their cost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [indulgent]": {
+  "status": "Retained",
+  "hash": "7648cf48b38b",
+  "on": "2026-10-19",
+  "reason": "Late food, late nights and the belief you will deal with it later; the cost turns the same words back on the player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [keeps_accounts]": {
+  "status": "Retained",
+  "hash": "e19b7cfc8335",
+  "on": "2026-10-19",
+  "reason": "Remembering who owes what down to the coffee, and others doing the same about you: a slight cuts deeper both ways, as it does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [light_sleeper]": {
+  "status": "Retained",
+  "hash": "96efeda95d6e",
+  "on": "2026-10-19",
+  "reason": "A door, a car or a thought waking you for the night, and never quite rested: the trait in the images a light sleeper knows.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [loyal]": {
+  "status": "Retained",
+  "hash": "38d44f80fe4b",
+  "on": "2026-10-19",
+  "reason": "The people from the start still there, and staying too long as what it costs you: the trait in two plain lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [needs_people]": {
+  "status": "Retained",
+  "hash": "c4df945245ff",
+  "on": "2026-10-19",
+  "reason": "Better with somebody in the room, and coming apart alone: the company of a cast that the trait makes count for more.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [night_owl]": {
+  "status": "Retained",
+  "hash": "f196fb813896",
+  "on": "2026-10-19",
+  "reason": "Good hours after midnight and none before noon, with morning classes and poor sleep as its cost, which the trait moves.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [open_book]": {
+  "status": "Retained",
+  "hash": "d73fd8e17302",
+  "on": "2026-10-19",
+  "reason": "Saying the thing and being known within a minute, and never keeping anything to yourself: a light, clear pair.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [orderly]": {
+  "status": "Retained",
+  "hash": "a1e381023aad",
+  "on": "2026-10-19",
+  "reason": "Noticing at once when a thing is out of place, and disorder costing you more: a short, recognizable pair for the trait.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [peacemaker]": {
+  "status": "Retained",
+  "hash": "e818dc86a720",
+  "on": "2026-10-19",
+  "reason": "Feeling a room going wrong and getting in front of it, then carrying the trouble all day: the trait and its price.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [quick_tempered]": {
+  "status": "Retained",
+  "hash": "f4dad8e2d540",
+  "on": "2026-10-19",
+  "reason": "A temper that flares and fades, said the way someone would describe themselves, with stress and wearing friendships as its cost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [resilient]": {
+  "status": "Retained",
+  "hash": "56f66113fcf2",
+  "on": "2026-10-19",
+  "reason": "Illness, injury and a bad year clearing faster, and a cost that says plainly there is none: this one is simply luck.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [restless]": {
+  "status": "Retained",
+  "hash": "a3e2347e986c",
+  "on": "2026-10-19",
+  "reason": "Stillness beyond you and a full room bringing you alive, with poor rest and a friendless cast as its plain cost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [scattered]": {
+  "status": "Rewritten",
+  "hash": "6f2cbbbdf6c8",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'a trait’s look names what a session of preparation gets done, and how soon you need a shower, for each trait that moves one', its cost in the trait's look",
+  "first": "Pending"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [self_assured]": {
+  "status": "Retained",
+  "hash": "1f8b9d41bf79",
+  "on": "2026-10-19",
+  "reason": "Settled about what you can do without anyone confirming it, and the last to hear something isn’t working: a clear pair.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [self_critical]": {
+  "status": "Rewritten",
+  "hash": "0ed576a060c8",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'a trait’s look names what a session of preparation gets done…', the description on creation’s Traits",
+  "first": "Pending"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [sentimental]": {
+  "status": "Retained",
+  "hash": "9ec6102da8d7",
+  "on": "2026-10-19",
+  "reason": "Keeping birthdays, first drafts and the people from the start, and endings going badly: concrete images a player recognizes.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [single_minded]": {
+  "status": "Retained",
+  "hash": "9a7ae8a636af",
+  "on": "2026-10-19",
+  "reason": "One thing at a time to the bottom of it, lines drilled until they are yours, and everything else piling up meanwhile.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [sleeps_anywhere]": {
+  "status": "Retained",
+  "hash": "825876a29ca8",
+  "on": "2026-10-19",
+  "reason": "Floors, chairs and the twenty minutes between two things, and a cost that points back to Resilient: simply luck.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [spender]": {
+  "status": "Retained",
+  "hash": "8547b34963f0",
+  "on": "2026-10-19",
+  "reason": "Money for turning into things and a good meal lifting you more, with money going out faster as the plain cost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [unshakeable]": {
+  "status": "Retained",
+  "hash": "3d49779793ef",
+  "on": "2026-10-19",
+  "reason": "Clear-headed twenty minutes after anything, and slow to notice when something is wrong with you: the trait and its blind spot.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/thunder.ts#THUNDER_DAYS": {
+  "status": "Retained",
+  "hash": "8ff70cfb06f1",
+  "on": "2026-10-19",
+  "reason": "Each city’s thunder-day source, as the weather service or the study names itself, shown after Source in the weather look.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/events.ts#EventBus": {
+  "status": "Retained",
+  "hash": "1297b86e52d0",
+  "on": "2026-10-19",
+  "reason": "A developer’s diagnosis of a runaway event, which reaches the player only as the fault sentence the provider says instead.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/simulation.ts#FAULT_ROLLED_BACK": {
+  "status": "Retained",
+  "hash": "d1adf3b405bd",
+  "on": "2026-10-19",
+  "reason": "Says an error stopped it, that nothing changed and nothing was charged, and that the player can carry on: every part an error owes.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/core/simulation.ts#FAULT_WHILE_TIME_PASSED": {
+  "status": "Retained",
+  "hash": "ed1749ee8919",
+  "on": "2026-10-19",
+  "reason": "Says an error stopped something as time passed, that what came before still stands, and that the clock went on: true of a move not rolled back.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/core/simulation.ts#Simulation": {
+  "status": "Retained",
+  "hash": "ef43d67b34da",
+  "on": "2026-10-19",
+  "reason": "The notice titled with the item that failed and saying it shows as missed, beside developer errors the player never sees.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/core/simulation.ts#UNKNOWN_COMMAND": {
+  "status": "Retained",
+  "hash": "5f89c1bfa3e0",
+  "on": "2026-10-19",
+  "reason": "Says the game can’t do that and changed nothing, for a press no screen should offer, without a command’s id.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/core/sun.ts#formatDaylight": {
+  "status": "Retained",
+  "hash": "7ccd3730eb99",
+  "on": "2026-10-19",
+  "reason": "The short form of a day’s daylight, 10h 26m, in a stat beside Daylight, where the glossary keeps the short form.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/time.ts#formatDuration": {
+  "status": "Retained",
+  "hash": "2b7139cbeeda",
+  "on": "2026-10-19",
+  "reason": "Weekday and month names, the seasons’ names, and the short durations a chip or a stat shows, as the glossary keeps them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/time.ts#MONTH_NAMES": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "Weekday and month names, the seasons’ names, and the short durations a chip or a stat shows, as the glossary keeps them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/time.ts#seasonOf": {
+  "status": "Retained",
+  "hash": "c7f87f4dbe51",
+  "on": "2026-10-19",
+  "reason": "Weekday and month names, the seasons’ names, and the short durations a chip or a stat shows, as the glossary keeps them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/core/time.ts#WEEKDAY_NAMES": {
+  "status": "Retained",
+  "hash": "82bc8fd83504",
+  "on": "2026-10-19",
+  "reason": "Weekday and month names, the seasons’ names, and the short durations a chip or a stat shows, as the glossary keeps them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#skyFor": {
+  "status": "Retained",
+  "hash": "ad07cf6a779e",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#SPREAD_OF_BANKS": {
+  "status": "Retained",
+  "hash": "2a643084dc86",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#SPREAD_OF_PLACES": {
+  "status": "Retained",
+  "hash": "18fa3c14b79f",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [attributes.presence]": {
+  "status": "Retained",
+  "hash": "219444ef6bd2",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [bank.chex]": {
+  "status": "Retained",
+  "hash": "f3a7ddfe3175",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [bank.fraud]": {
+  "status": "Retained",
+  "hash": "f9ddaf25507a",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [bank.number]": {
+  "status": "Retained",
+  "hash": "3552d8876da8",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [body.draw]": {
+  "status": "Retained",
+  "hash": "17cb5465c2ae",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [documents.start]": {
+  "status": "Retained",
+  "hash": "ec9e351ba863",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [health.appointment]": {
+  "status": "Retained",
+  "hash": "26588c90f528",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [health.chronic]": {
+  "status": "Retained",
+  "hash": "e5daa11c778c",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [health.illness]": {
+  "status": "Retained",
+  "hash": "899db6c87991",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [health.injury]": {
+  "status": "Retained",
+  "hash": "0c46b97e8b24",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [health.onset]": {
+  "status": "Retained",
+  "hash": "1cceb555e2f5",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [health.referral]": {
+  "status": "Retained",
+  "hash": "5b111fbd3254",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [health.therapy]": {
+  "status": "Retained",
+  "hash": "18b03cbd2ed1",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [life.end]": {
+  "status": "Retained",
+  "hash": "8d27bf139d96",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [production.direction]": {
+  "status": "Retained",
+  "hash": "9ce9ed69790f",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [school.attendance]": {
+  "status": "Retained",
+  "hash": "75d7a17ca97b",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [school.cabaret_mates]": {
+  "status": "Retained",
+  "hash": "5cc4384b8f71",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [school.class]": {
+  "status": "Retained",
+  "hash": "f861f853ac35",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [school.classmates]": {
+  "status": "Retained",
+  "hash": "0bed2444b290",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [school.coursework]": {
+  "status": "Retained",
+  "hash": "f16687a6a3b6",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [school.night]": {
+  "status": "Retained",
+  "hash": "6ae632d4629e",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [school.partner]": {
+  "status": "Retained",
+  "hash": "25eada5b9392",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [school.understudy]": {
+  "status": "Retained",
+  "hash": "3047eed0a857",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [weather.day]": {
+  "status": "Retained",
+  "hash": "c083d52cd3c3",
+  "on": "2026-10-19",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#armWorldClock [life.day_rollover]": {
+  "status": "Retained",
+  "hash": "f83957f209ca",
+  "on": "2026-10-19",
+  "reason": "The label of the midnight item in the system category, which no calendar screen draws; New Day says what it is to a developer reading the timeline.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#armWorldClock [world.tick]": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "The label of the background item that runs every two days, in the system category no calendar screen draws; it names what it does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#loadSave": {
+  "status": "Retained",
+  "hash": "ede827ce7502",
+  "on": "2026-10-19",
+  "reason": "A repair of an older save’s note text that puts the capital I back where a note began with it; the replacement is the note’s own words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#loadSave [life.day_rollover]": {
+  "status": "Retained",
+  "hash": "f83957f209ca",
+  "on": "2026-10-19",
+  "reason": "The same New Day label for the midnight item, put back on an older save; no calendar screen draws a system item, and it keeps one name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#loadSave [world.tick]": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "The same World Simulation label put back on an older save, in the system category no calendar screen draws; one name for one item.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#migrate": {
+  "status": "Rewritten",
+  "hash": "3ba06f6144de",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither'; the other lines are its migration log, which no screen shows",
+  "first": "Pending"
+ },
+ "src/engine/index.ts#openSlot": {
+  "status": "Rewritten",
+  "hash": "54ce256a398b",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither', and tests/persistence.test.ts, 'refuses a save from a newer build'",
+  "first": "Pending"
+ },
+ "src/engine/index.ts#populateWorld": {
+  "status": "Retained",
+  "hash": "779c46efb0a2",
+  "on": "2026-10-19",
+  "reason": "The card’s opening balance memo says it was carried from before the life began, which is exactly what that posting is, and the spending it came from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#populateWorld [checking]": {
+  "status": "Rewritten",
+  "hash": "ed9ef8525e9d",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'a life where the game has no bank keeps a checking account by that name, and a home’s money given back says what it was'",
+  "first": "Pending"
+ },
+ "src/engine/index.ts#populateWorld [credit_card]": {
+  "status": "Retained",
+  "hash": "0395bef39412",
+  "on": "2026-10-19",
+  "reason": "A card named for its bank, or plainly Credit Card where there is none, used only where the bank’s own product has no name of its own.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#populateWorld [savings]": {
+  "status": "Retained",
+  "hash": "e1d97947ab43",
+  "on": "2026-10-19",
+  "reason": "The plain name of the savings account opened where the game has no bank, beside Checking Account, read as exactly what it is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#refreshMeta": {
+  "status": "Retained",
+  "hash": "1eecd6680581",
+  "on": "2026-10-19",
+  "reason": "The slot card’s line under the name: the title, the year at Yale, graduated or left, and the age at death, as a list of plain facts the slots also match.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/index.ts#returnTheHomesMoney": {
+  "status": "Rewritten",
+  "hash": "50b805de9eb2",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'a life where the game has no bank keeps a checking account by that name, and a home’s money given back says what it was', both memos found in the opened save",
+  "first": "Pending"
+ },
+ "src/engine/index.ts#validateUniverse": {
+  "status": "Retained",
+  "hash": "31162146a2d1",
+  "on": "2026-10-19",
+  "reason": "A developer’s diagnosis, shown only behind What’s Wrong With It under the plain sentence that the save is damaged, as the brief keeps technical detail apart.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/persistence/adapter.ts#deserialise": {
+  "status": "Retained",
+  "hash": "53d7ecd485e1",
+  "on": "2026-10-19",
+  "reason": "Shown on a slot card under Unreadable Save, above Restore Backup and Delete: it says the save is damaged, or is not a SLATE save, without a parser’s error.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/persistence/base44.ts#Base44SaveAdapter": {
+  "status": "Rewritten",
+  "hash": "efeb902fb8fb",
+  "on": "2026-10-19",
+  "evidence": "tests/base44-adapter.test.ts, 'says something useful when the connection simply fails' and 'does not mistake an empty reply for an empty slot', and tests/language-frame-ui.test.ts, 'says a server that couldn’t be reached left the saves where they were, and that the next save tries again'",
+  "first": "Pending"
+ },
+ "src/engine/persistence/local.ts#BACKUP_KEY": {
+  "status": "Retained",
+  "hash": "5c85c5822a35",
+  "on": "2026-10-19",
+  "reason": "A browser storage key for a slot’s backup, which no screen shows; renaming it would orphan every backup already kept on the device.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/persistence/local.ts#KEY": {
+  "status": "Retained",
+  "hash": "24d264d4eefd",
+  "on": "2026-10-19",
+  "reason": "A browser storage key, slate.save and the slot number, which no screen shows; renaming it would lose every save already kept on the device.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/persistence/local.ts#LocalSaveAdapter": {
+  "status": "Rewritten",
+  "hash": "10b17e851ebc",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'says a save the device couldn’t write left the slot as it was, full or broken, and the toast and the button say it', and 'says what a browser that can’t keep or open saves lacks, and what to do'",
+  "first": "Pending"
+ },
+ "src/engine/persistence/local.ts#localStore": {
+  "status": "Retained",
+  "hash": "8870dee79d6e",
+  "on": "2026-10-19",
+  "reason": "Says why no save can be kept, a browser with no storage SLATE can use, and the one thing to check, whether the site may store data.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/persistence/local.ts#unpack": {
+  "status": "Retained",
+  "hash": "4d6e1875f983",
+  "on": "2026-10-19",
+  "reason": "Names the cause, a compressed save this browser cannot open, and the one real way out, opening SLATE in an up-to-date browser.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/birthdays.ts#registerBirthdays": {
+  "status": "Retained",
+  "hash": "c10625f7529a",
+  "on": "2026-10-19",
+  "reason": "Your Birthday on the calendar, and Happy Birthday with your name and You’re 24 today: what a birthday says.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/birthdays.ts#schedule": {
+  "status": "Retained",
+  "hash": "2ebf63086756",
+  "on": "2026-10-19",
+  "reason": "Your Birthday on the calendar, and Happy Birthday with your name and You’re 24 today: what a birthday says.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#commitmentWithin": {
+  "status": "Retained",
+  "hash": "7048358356d0",
+  "on": "2026-10-19",
+  "reason": "Names the commitment and its time and says there isn’t the time before it; several guides quote it word for word.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#lookAfterRefusal": {
+  "status": "Retained",
+  "hash": "a329c223d1fa",
+  "on": "2026-10-19",
+  "reason": "Each says why the action is gray in a few words a person would say: not hungry, already clean, too tired, the flu, no time before a commitment.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#LOOKING_AFTER": {
+  "status": "Retained",
+  "hash": "4b9854d7af16",
+  "on": "2026-10-19",
+  "reason": "The Look After Yourself menu’s five actions, each a plain verb for what the hour is: Eat A Meal, Order In, Shower, Work Out, Unwind.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#registerLife [life.day_rollover]": {
+  "status": "Retained",
+  "hash": "f83957f209ca",
+  "on": "2026-10-19",
+  "reason": "The label of the midnight item in the system category, which no calendar screen draws; New Day says what it is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#registerLife <life.look_after>": {
+  "status": "Retained",
+  "hash": "0516016b1353",
+  "on": "2026-10-19",
+  "reason": "A refusal no menu can reach now, and the meal memos a statement lists; the guide’s body entry quotes the payment line as it stands.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#registerLife <life.sleep>": {
+  "status": "Retained",
+  "hash": "d3937a9ef2a9",
+  "on": "2026-10-19",
+  "reason": "Each refusal names the obstacle, a time in the past, more than a day ahead, or where you are until when, and the missed notice names what you slept through.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/life.ts#sleepReason": {
+  "status": "Retained",
+  "hash": "6104fe975954",
+  "on": "2026-10-19",
+  "reason": "Says why a night takes longer or can’t make up a day, from the one reason that applies: debt, stress, a late start, or a body that rests less.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/life.ts#startRefusal": {
+  "status": "Retained",
+  "hash": "684fd4e984b4",
+  "on": "2026-10-19",
+  "reason": "Short and in the player’s situation: not from a hospital bed, or where you are and until when.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#suggestedSleep": {
+  "status": "Retained",
+  "hash": "05516ff8b442",
+  "on": "2026-10-19",
+  "reason": "Says why the Sleep dialog suggests its hours: a clear calendar, a commitment you are standing at, or one too soon for a full night.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/life.ts#wellbeingSummary": {
+  "status": "Rewritten",
+  "hash": "aab6e9e8d18a",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g32-ui.test.ts, 'Energy is red under 15 and amber the fifteen above it; Stress red over 75 and amber the fifteen under; each summary said for the dial that’s out…'",
+  "first": "Pending"
+ },
+ "src/engine/systems/life.ts#WET": {
+  "status": "Retained",
+  "hash": "dbdd19bbdf67",
+  "on": "2026-10-19",
+  "reason": "The weather conditions that make a run a bad idea, named as the weather names them: Rain, Thunderstorm, Snow, Drizzle.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/life.ts#whyNow": {
+  "status": "Rewritten",
+  "hash": "597fd87b1a62",
+  "on": "2026-10-19",
+  "evidence": "tests/defects-g4-1.test.ts, 'reads the weather as the hour ends, where the workout does, and says whether it’ll be a run', and tests/evidence-g07-life.test.ts, the dry hour under freezing journey",
+  "first": "Pending"
+ },
+ "src/engine/systems/life.ts#WORKOUTS_TODAY": {
+  "status": "Retained",
+  "hash": "3eaa433b25df",
+  "on": "2026-10-19",
+  "reason": "A key for counting the day’s workouts, stamina<workout, never shown; its words name the record, not a label.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/seasons.ts#FLU_TIMING": {
+  "status": "Retained",
+  "hash": "a452549f980a",
+  "on": "2026-10-19",
+  "reason": "The study the flu’s timing comes from, cited as its authors and journal give it, as a source line should.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/weather.ts#hourCondition": {
+  "status": "Retained",
+  "hash": "2781667bda6a",
+  "on": "2026-10-19",
+  "reason": "The weather’s conditions by the words forecasts use, Clear, Overcast, Drizzle, and the day’s line with its high and low.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/weather.ts#SHORT": {
+  "status": "Retained",
+  "hash": "2c85deb99518",
+  "on": "2026-10-19",
+  "reason": "The weather’s conditions by the words forecasts use, Clear, Overcast, Drizzle, and the day’s line with its high and low.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/weather.ts#weatherAt": {
+  "status": "Retained",
+  "hash": "7d7c1fd00b48",
+  "on": "2026-10-19",
+  "reason": "The weather’s conditions by the words forecasts use, Clear, Overcast, Drizzle, and the day’s line with its high and low.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/weather.ts#weatherOn": {
+  "status": "Retained",
+  "hash": "af3fbd3b9906",
+  "on": "2026-10-19",
+  "reason": "The weather’s conditions by the words forecasts use, Clear, Overcast, Drizzle, and the day’s line with its high and low.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/bootstrap.ts#createUniverse": {
+  "status": "Retained",
+  "hash": "4e72d5095744",
+  "on": "2026-10-19",
+  "reason": "A developer’s error for a place id the gazetteer lacks, thrown before any life exists; creation only offers places that are there.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/bootstrap.ts#defaultConfig": {
+  "status": "Retained",
+  "hash": "083dd9c6392c",
+  "on": "2026-10-19",
+  "reason": "The placeholder name of a life made without creation, Alex Rivera, a plain name a tester or a quick save carries.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/bootstrap.ts#WEALTH_PROFILE": {
+  "status": "Retained",
+  "hash": "4631a6329f5d",
+  "on": "2026-10-19",
+  "reason": "One line of character for each family, said to the player in their own terms, before the figures that follow it in the same callout.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/calendar.ts#CALENDAR_LEGEND": {
+  "status": "Retained",
+  "hash": "cfc941a4f6e4",
+  "on": "2026-10-19",
+  "reason": "Each kind on the legend with what it holds on hover, the School row naming each term’s review, the glossary’s word.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/calendar.ts#skipTargets": {
+  "status": "Retained",
+  "hash": "8d9dc32d3d55",
+  "on": "2026-10-19",
+  "reason": "Says where you are and where the event is when they differ, the one fact Skip To Event needs to warn of.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/place.ts#placeKindLabel": {
+  "status": "Retained",
+  "hash": "5eeeb6cce064",
+  "on": "2026-10-19",
+  "reason": "Capital and Regional, the plain words a place’s look uses for a national or a regional capital.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/place.ts#placeProfile": {
+  "status": "Retained",
+  "hash": "596a52fa3c0f",
+  "on": "2026-10-19",
+  "reason": "Only the en-US locale tag for grouping a population’s digits, never words a player reads as such.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/place.ts#REGION_WORD": {
+  "status": "Retained",
+  "hash": "69f6cf57c617",
+  "on": "2026-10-19",
+  "reason": "Each country’s own word for its regions’ capitals, State, Provincial, Prefectural, Cantonal, as a place’s look names them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/plans.ts#ALREADY_OVER": {
+  "status": "Retained",
+  "hash": "3e4941e37232",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#checkPlan": {
+  "status": "Retained",
+  "hash": "5bc6ff20be10",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#NOT_ON_CALENDAR": {
+  "status": "Retained",
+  "hash": "fd4f5d276f59",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#PLAN_LENGTHS": {
+  "status": "Retained",
+  "hash": "d65ee042d074",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/plans.ts#registerPlans": {
+  "status": "Retained",
+  "hash": "8487281efae0",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#registerPlans <calendar.cancel>": {
+  "status": "Retained",
+  "hash": "2c6ed39b6cae",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/plans.ts#registerPlans <calendar.skip>": {
+  "status": "Retained",
+  "hash": "59a6d1e809c0",
+  "on": "2026-10-19",
+  "reason": "Each plan refusal names the obstacle and the next step in the form’s own words, and the missed and skipped notices say it cost nothing else.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/world.ts#NOT_THERE": {
+  "status": "Retained",
+  "hash": "4b53f4110543",
+  "on": "2026-10-19",
+  "reason": "Says the question pressed is no longer in What Needs You, the panel the player pressed it on, in one sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/world.ts#registerWorld [world.tick]": {
+  "status": "Retained",
+  "hash": "9ab7fb716fd8",
+  "on": "2026-10-19",
+  "reason": "The label of the background item that runs every two days, in the system category no calendar screen draws.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/world/world.ts#registerWorld <world.dismiss_decision>": {
+  "status": "Retained",
+  "hash": "89a754c85968",
+  "on": "2026-10-19",
+  "reason": "A refusal that says the question is already dismissed, which is the only reason Dismiss would be pressed twice.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/world.ts#registerWorld <world.set_preferences>": {
+  "status": "Retained",
+  "hash": "aadc742f4c59",
+  "on": "2026-10-19",
+  "reason": "Says the setting doesn’t exist, or that the clock has two settings, Play and Pause, the top bar’s own words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/world/world.ts#registerWorld <world.take_decision_action>": {
+  "status": "Retained",
+  "hash": "3ff2ecbd591b",
+  "on": "2026-10-19",
+  "reason": "Each refusal says why the answer did nothing: already settled and how, dismissed, not one of its answers, or nothing changed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/main.tsx#top": {
+  "status": "Retained",
+  "hash": "f86945acdc94",
+  "on": "2026-10-19",
+  "reason": "A developer’s error for a page with no element to mount on; a working page never shows it, and it names the missing mount point exactly.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#Empty": {
+  "status": "Retained",
+  "hash": "5a603280a77f",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#Fine": {
+  "status": "Retained",
+  "hash": "7c989d88af67",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#FOCUSABLE": {
+  "status": "Retained",
+  "hash": "2eca2fc5368c",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#Modal": {
+  "status": "Retained",
+  "hash": "e7ba1e2bd479",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/components/primitives.tsx#WhyNot": {
+  "status": "Retained",
+  "hash": "db15620b9e5e",
+  "on": "2026-10-19",
+  "reason": "Shared controls’ few words: Not now with its reason, Sources And Estimates over fine print, Close, and layout strings no one reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#BankChoice": {
+  "status": "Rewritten",
+  "hash": "e07c1b6527c5",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'creation says what it’s for, a draft put back, each disposition and trait’s reach, the family’s card, and the guide’s choice', the town with no bank",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#BeforeYale": {
+  "status": "Rewritten",
+  "hash": "3392512ef933",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'Before Yale says where the savings go and what the account kept there opens with, for each choice'",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#billedAs": {
+  "status": "Retained",
+  "hash": "41ff8a99f1fc",
+  "on": "2026-10-19",
+  "reason": "Actor Or Actress stands in only while someone on They/Them hasn’t picked, so the header says both words until they choose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#blockedTraitReason": {
+  "status": "Rewritten",
+  "hash": "d9ecceb090e5",
+  "on": "2026-10-19",
+  "evidence": "tests/creation.test.ts, 'says why a trait can’t be picked, and says nothing when it can', and tests/evidence-g28-ui.test.ts, the Early Riser and four-held journey",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#BodyFields": {
+  "status": "Rewritten",
+  "hash": "071cf5e1b041",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g28-ui.test.ts, 'PLAYER JOURNEY: Your Body says at once, in feet and pounds for a New Yorker, when the size is out of range and when one is missing…', and tests/language-frame-ui.test.ts, 'says each step’s guidance in the player’s words…'",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#CharacterCreation": {
+  "status": "Rewritten",
+  "hash": "f61be7a1857b",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'creation says what it’s for, a draft put back, each disposition and trait’s reach, the family’s card, and the guide’s choice'",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#DRAFT_KEY": {
+  "status": "Retained",
+  "hash": "e0f2c11f747f",
+  "on": "2026-10-19",
+  "reason": "A browser storage key for a half-filled form, never shown; renaming it would lose the draft a player left in each slot.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#FamilyChoice": {
+  "status": "Rewritten",
+  "hash": "268a101c3b26",
+  "on": "2026-10-19",
+  "evidence": "tests/need-paths.test.ts, 'Genres & Background offers the six families…', and tests/language-frame-ui.test.ts, 'creation says what it’s for…', the card owed on and owing nothing",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#IdentityStep": {
+  "status": "Rewritten",
+  "hash": "90a98a6619db",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'says each step’s guidance in the player’s words…', and tests/evidence-g27-ui.test.ts, 'PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused…'",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#MONTHS": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The months spelled out in full in the date of birth and Since selects, as the game writes every date.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [agreeableness]": {
+  "status": "Retained",
+  "hash": "b743caf6e3b8",
+  "on": "2026-10-19",
+  "reason": "The slider’s name and its two ends, Blunt and Accommodating, plain words for how someone takes a room.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [ambition]": {
+  "status": "Retained",
+  "hash": "cf3674dcbf6f",
+  "on": "2026-10-19",
+  "reason": "The slider’s name and its two ends, Content and Driven, the everyday words for how much someone wants.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [conscientiousness]": {
+  "status": "Retained",
+  "hash": "af473d7a0f9d",
+  "on": "2026-10-19",
+  "reason": "The slider’s name and its two ends, Loose and Meticulous, which say at a glance what moving it toward either side means.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [emotionalStability]": {
+  "status": "Retained",
+  "hash": "84c8b8218862",
+  "on": "2026-10-19",
+  "reason": "The slider’s name and its two ends, Volatile and Steady, which say what the number means without explaining stress.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [extraversion]": {
+  "status": "Retained",
+  "hash": "f7e22dedf0c7",
+  "on": "2026-10-19",
+  "reason": "The slider’s name and its two ends, Reserved and Outgoing, the words a person would use of themselves.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [openness]": {
+  "status": "Retained",
+  "hash": "91f5ed432af0",
+  "on": "2026-10-19",
+  "reason": "The slider’s name and its two ends, Conventional and Experimental, the everyday words for how open someone is to new work.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES [riskTolerance]": {
+  "status": "Retained",
+  "hash": "88ba91074d07",
+  "on": "2026-10-19",
+  "reason": "The slider’s name and its two ends, Cautious and Reckless, which the list above it explains in money terms.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PersonalityStep": {
+  "status": "Rewritten",
+  "hash": "fbdf74f1a1ea",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'creation says what it’s for, a draft put back, each disposition and trait’s reach…', and tests/evidence-g28-ui.test.ts and tests/evidence-g27-ui.test.ts, each disposition's line",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#PersonalStep": {
+  "status": "Rewritten",
+  "hash": "8056fcffa260",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g28-ui.test.ts, 'PLAYER JOURNEY: Genres & Background marks every chip no play’s kind names with ·…', and tests/language-frame-ui.test.ts, 'creation says what it’s for…', the background's line",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#ReviewStep": {
+  "status": "Rewritten",
+  "hash": "8f15752feafa",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'says each step’s guidance in the player’s words, with what each choice does, and why Continue waits', and 'creation says what it’s for…', the guide's two choices",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#StartingPointStep": {
+  "status": "Rewritten",
+  "hash": "b4ec698aade4",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g29-ui.test.ts, 'shows Starting Point’s tiles as the accounts Begin opens, with no picker, and Money shows the same balances', and tests/creation.test.ts, Your Money after Your Body",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#STEPS": {
+  "status": "Retained",
+  "hash": "0cd110b3c044",
+  "on": "2026-10-19",
+  "reason": "The five step names along the top of creation, each the plain name of what that step asks: Identity, Dispositions & Traits, Genres & Background, Starting Point, Review.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/CharacterCreation.tsx#validate": {
+  "status": "Rewritten",
+  "hash": "5d5e2effcc7c",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g27-ui.test.ts, the over-95 refusal, tests/home-account-creation.test.ts, 'refuses to go on with a refused bank ticked, or a time before birth…', and tests/language-frame-ui.test.ts, Before Yale's three refusals",
+  "first": "Pending"
+ },
+ "src/ui/creation/CharacterCreation.tsx#WEALTH_LABEL": {
+  "status": "Rewritten",
+  "hash": "7e334bd41d2e",
+  "on": "2026-10-19",
+  "evidence": "tests/need-paths.test.ts, 'Genres & Background offers the six families, Wealthy chosen as creation chose before; each, chosen on the select, is what Review says and what the save opens', the select's six options and Review's Family line",
+  "first": "Pending"
+ },
+ "src/ui/creation/LocationPicker.tsx#LocationPicker": {
+  "status": "Rewritten",
+  "hash": "8ced6e416151",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the place picker says what a country has, and a search that finds nothing what to try'",
+  "first": "Pending"
+ },
+ "src/ui/creation/portrait.ts#CANNOT_DECODE": {
+  "status": "Rewritten",
+  "hash": "4d3cff998e7a",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do'",
+  "first": "Pending"
+ },
+ "src/ui/creation/portrait.ts#CANNOT_ENCODE": {
+  "status": "Retained",
+  "hash": "78d2b0edc357",
+  "on": "2026-10-19",
+  "reason": "Says the photo couldn’t be saved and the one thing to do, try a different one, in two short sentences under the frame.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/portrait.ts#describeRejection": {
+  "status": "Rewritten",
+  "hash": "6acebbd36c1d",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do', three refusals word for word, and tests/portrait.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/creation/PortraitPicker.tsx#PortraitPicker": {
+  "status": "Rewritten",
+  "hash": "b2be5d81dd11",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'says each step’s guidance in the player’s words…', the empty picker's hint, and 'the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do', the framing hint",
+  "first": "Pending"
+ },
+ "src/ui/creation/world-map.ts#loadWorldMap": {
+  "status": "Retained",
+  "hash": "56b043b6bdf8",
+  "on": "2026-10-19",
+  "reason": "Each says the map couldn’t be loaded or read, and the map adds Use the country list below instead, so the player has the way on.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/world-map.ts#MAP_URL": {
+  "status": "Retained",
+  "hash": "7260c3e9c686",
+  "on": "2026-10-19",
+  "reason": "The path the world map file is fetched from, never shown; its words are a file name the build serves, not text a player reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/creation/WorldMap.tsx#WorldMap": {
+  "status": "Rewritten",
+  "hash": "3f06e0adcf03",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do', drawn over the real world map file",
+  "first": "Pending"
+ },
+ "src/ui/looks/attention.tsx#ABOUT": {
+  "status": "Retained",
+  "hash": "245fd2b92d35",
+  "on": "2026-10-19",
+  "reason": "What a question or notice is about, by who raised it, in the player’s own terms: your bank, your school, your health.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#aboutOf": {
+  "status": "Retained",
+  "hash": "62563d42cfbc",
+  "on": "2026-10-19",
+  "reason": "The fallback when a category has no name of its own, something in your life, which still reads as a sentence.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#ago": {
+  "status": "Retained",
+  "hash": "a7f8e7cc0d43",
+  "on": "2026-10-19",
+  "reason": "Says just now where the relative time is now, so a sentence reads It came in just now and not It came in now.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#categoryLabel": {
+  "status": "Retained",
+  "hash": "45c9e0013576",
+  "on": "2026-10-19",
+  "reason": "Not Recorded stands in the About figure only when a record has no category, and says exactly that.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#decisionSentence": {
+  "status": "Retained",
+  "hash": "c75e40b3605b",
+  "on": "2026-10-19",
+  "reason": "One sentence for each state of a question, true at the moment: answer it by a date, its date passed, dealt with, closed, or dismissed.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#nameOf": {
+  "status": "Retained",
+  "hash": "5a7bd4149d0d",
+  "on": "2026-10-19",
+  "reason": "Only the en-US locale tag for grouping a long run of digits in a title, never words a player reads as such.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/attention.tsx#STAGE_WORD": {
+  "status": "Retained",
+  "hash": "29968628a2f7",
+  "on": "2026-10-19",
+  "reason": "Open, Dealt With, Closed After Its Date and Dismissed: one short phrase for each way a question ends, under Place On Home.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/attention.tsx#stageOf": {
+  "status": "Retained",
+  "hash": "a2ca6c79eb38",
+  "on": "2026-10-19",
+  "reason": "The internal names of a question’s stages, let go and ran out, which the figure grid turns into STAGE_WORD’s words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/attention.tsx#top": {
+  "status": "Rewritten",
+  "hash": "ae3e4ec7e4c7",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame.test.ts, 'says when to answer it, where it sits among the rest, its buttons on Home, and what closes it, for one and for several', 'says an overdue question comes first and closes itself within the world tick’s two days, and each way one closes', and 'says when it came, where it sits among the unread, what Mark Read does, and how long it’s kept, for one, for many and read'",
+  "first": "Pending"
+ },
+ "src/ui/looks/attention.tsx#weightOf": {
+  "status": "Retained",
+  "hash": "515f8bb758a3",
+  "on": "2026-10-19",
+  "reason": "Very high, high, ordinary or low: one plain word for an urgency out of 100, with the figure beside it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#dayKindOf": {
+  "status": "Retained",
+  "hash": "3f3a47b725a9",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#daySentence": {
+  "status": "Retained",
+  "hash": "3d23a56af97c",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#entryDetail": {
+  "status": "Retained",
+  "hash": "4fadcb04d6a6",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#entrySentence": {
+  "status": "Retained",
+  "hash": "891603125786",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#lightDetail": {
+  "status": "Retained",
+  "hash": "549adceeed3c",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#lightSentence": {
+  "status": "Retained",
+  "hash": "0a3205f226cf",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#loadOf": {
+  "status": "Retained",
+  "hash": "f21876af1988",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#missCost": {
+  "status": "Retained",
+  "hash": "55b525d12256",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#quarterSentence": {
+  "status": "Retained",
+  "hash": "f3ba9c86a6d7",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#SEASONS": {
+  "status": "Retained",
+  "hash": "88c746e7b299",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#spokenWhen": {
+  "status": "Retained",
+  "hash": "4764b570b64a",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#STATUS_WORD": {
+  "status": "Retained",
+  "hash": "e51558ed4f3b",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/day.tsx#top": {
+  "status": "Retained",
+  "hash": "48b44a0462b2",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/day.tsx#top [observed]": {
+  "status": "Retained",
+  "hash": "837e43d3c920",
+  "on": "2026-10-19",
+  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/Look.tsx#LookHeader": {
+  "status": "Retained",
+  "hash": "bbfa773e5a63",
+  "on": "2026-10-19",
+  "reason": "Close on a look and its header, and where you are beside a place you stand in: plain words for the drill-down’s frame.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/Look.tsx#LookPanel": {
+  "status": "Retained",
+  "hash": "bbfa773e5a63",
+  "on": "2026-10-19",
+  "reason": "Close on a look and its header, and where you are beside a place you stand in: plain words for the drill-down’s frame.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/Look.tsx#Ways": {
+  "status": "Retained",
+  "hash": "fda8460f766d",
+  "on": "2026-10-19",
+  "reason": "Close on a look and its header, and where you are beside a place you stand in: plain words for the drill-down’s frame.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/place.tsx#clockAgainstHome": {
+  "status": "Retained",
+  "hash": "260a8f47bbb9",
+  "on": "2026-10-19",
+  "reason": "How far a place’s clock is from home’s in words, on the same clock or half an hour ahead, as a person says it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/place.tsx#latitudeLine": {
+  "status": "Retained",
+  "hash": "59cec42c98f5",
+  "on": "2026-10-19",
+  "reason": "Says what a latitude means for the light over the year in one plain clause for each band, from the polar circles to the equator.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#lightLine": {
+  "status": "Retained",
+  "hash": "4ddd98b9e081",
+  "on": "2026-10-19",
+  "reason": "The day’s light as one line beside Daylight: the sun never sets, never rises, or the hours from sunrise to sunset.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#rateLine": {
+  "status": "Retained",
+  "hash": "11f06f32227b",
+  "on": "2026-10-19",
+  "reason": "A currency’s rate said as about so much to the US dollar, estimated, as the glossary words an estimated exchange rate.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#REGION_WORD": {
+  "status": "Retained",
+  "hash": "abfdff8989b4",
+  "on": "2026-10-19",
+  "reason": "Each country’s own word for its regions, State, Province, Prefecture, Canton, as a place’s look names them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/place.tsx#regionWord": {
+  "status": "Retained",
+  "hash": "0f217179940c",
+  "on": "2026-10-19",
+  "reason": "Region, the plain fallback for a country whose word for its divisions the game doesn’t hold.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/place.tsx#spokenName": {
+  "status": "Retained",
+  "hash": "5a7bd4149d0d",
+  "on": "2026-10-19",
+  "reason": "Only the en-US locale tag for grouping digits in a place’s name, never words a player reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/place.tsx#summaryOfPlace": {
+  "status": "Retained",
+  "hash": "85975a0126a1",
+  "on": "2026-10-19",
+  "reason": "One sentence for where a place stands to you: where you live, or how far its clock is from home.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#swingLine": {
+  "status": "Retained",
+  "hash": "9a32555b5884",
+  "on": "2026-10-19",
+  "reason": "Says whether the days are getting longer or shorter, and by how many minutes a day, in a phrase a person would use.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/place.tsx#top": {
+  "status": "Rewritten",
+  "hash": "16a00893e115",
+  "on": "2026-10-19",
+  "evidence": "the coordinator's change at the health and frame areas' report: a place's tags say In short, where What it’s known for read an adjective as a thing (Phoenix: no daylight saving, desert and affordable); read on the place look in the final walk of the built app",
+  "first": "Pending"
+ },
+ "src/ui/looks/place.tsx#yearLine": {
+  "status": "Retained",
+  "hash": "8e5ada2fef34",
+  "on": "2026-10-19",
+  "reason": "The longest and shortest days of the year in one sentence, with the midnight sun and the polar night said in words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/plans.tsx#top": {
+  "status": "Rewritten",
+  "hash": "288fff011c41",
+  "on": "2026-10-19",
+  "evidence": "docs/verification/editorial-2026-10-19/frame/looks-b4.txt, the looks rendered for six lives by render-looks.mjs, under Your Own Plans and its hours",
+  "first": "Pending"
+ },
+ "src/ui/looks/registry.ts#defineLook": {
+  "status": "Retained",
+  "hash": "78ef50f62edd",
+  "on": "2026-10-19",
+  "reason": "Developer errors for a look declared twice or parenting itself, thrown while the game is built, never shown to a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/registry.ts#trailTo": {
+  "status": "Retained",
+  "hash": "f44a5d98177a",
+  "on": "2026-10-19",
+  "reason": "Developer errors for a look declared twice or parenting itself, thrown while the game is built, never shown to a player.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#againstNormal": {
+  "status": "Retained",
+  "hash": "bb519502cfc6",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#BAND": {
+  "status": "Retained",
+  "hash": "12c5d765a845",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#BRINGS": {
+  "status": "Retained",
+  "hash": "5ddbeec95022",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#clockWord": {
+  "status": "Retained",
+  "hash": "d4581152eee8",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#DOING": {
+  "status": "Retained",
+  "hash": "1663506e1152",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#spellSentence": {
+  "status": "Retained",
+  "hash": "b5bb974f2104",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#stretchOf": {
+  "status": "Retained",
+  "hash": "68866a1c342d",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#top": {
+  "status": "Retained",
+  "hash": "42e3b7a21a59",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#top [band]": {
+  "status": "Retained",
+  "hash": "8c4849b53707",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/looks/weather.tsx#weekdayAt": {
+  "status": "Retained",
+  "hash": "24345a14377f",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#WHEN_KIND": {
+  "status": "Retained",
+  "hash": "018ae60744f3",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/looks/weather.tsx#windOf": {
+  "status": "Retained",
+  "hash": "b3dc206d196d",
+  "on": "2026-10-19",
+  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/saves/SaveSlots.tsx#BackupNote": {
+  "status": "Rewritten",
+  "hash": "c4018aac5248",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'an empty slot with a backup says so, and a backup with no date says the date isn’t known', both notes rendered under Restore Backup",
+  "first": "Pending"
+ },
+ "src/ui/saves/SaveSlots.tsx#formatPlaytime": {
+  "status": "Retained",
+  "hash": "7ccd3730eb99",
+  "on": "2026-10-19",
+  "reason": "The short form of time played, 2h 5m, in the Played stat on a slot card, where the glossary keeps a chip or stat’s short duration.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/saves/SaveSlots.tsx#SaveSlots": {
+  "status": "Rewritten",
+  "hash": "ddce45421e9d",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts: 'says what each slot holds: one empty, one a life saved by an older version, and the delete that keeps a backup or doesn’t', 'says a damaged save can’t be opened, its backup the way on, and what’s wrong behind a disclosure', and 'an empty slot with a backup says so, and a backup with no date says the date isn’t known'",
+  "first": "Pending"
+ },
+ "src/ui/screens/Home.tsx#Home": {
+  "status": "Rewritten",
+  "hash": "9b3f0f91a4c3",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g33-ui.test.ts, 'three days past its day unfiled…', and tests/evidence-g32-ui.test.ts, 'PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight…', Home's No Questions Waiting",
+  "first": "Pending"
+ },
+ "src/ui/screens/Home.tsx#PapersLine": {
+  "status": "Retained",
+  "hash": "a20cd8938d32",
+  "on": "2026-10-19",
+  "reason": "Says the one thing that matters on Papers in a line: no health cover, a return due with what it will cost, tax owed and growing, or unemployment paid.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/screens/Home.tsx#partOfDay": {
+  "status": "Retained",
+  "hash": "eede2a706b4a",
+  "on": "2026-10-19",
+  "reason": "The four words the greeting uses, Good Morning, Afternoon, Evening or Night, by the hour where you are.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/screens/Home.tsx#SchoolLine": {
+  "status": "Retained",
+  "hash": "d59e534f85bf",
+  "on": "2026-10-19",
+  "reason": "The year, the standing and the place in the class, then the next class with its date, and a pointer to the School screen when the standing needs explaining.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/destinations.ts#DESTINATIONS": {
+  "status": "Retained",
+  "hash": "69497279cf89",
+  "on": "2026-10-19",
+  "reason": "The rail’s names and one line under each listing what that screen holds, in the tabs’ own words.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/GameShell.tsx#GameShell": {
+  "status": "Retained",
+  "hash": "f734191fe185",
+  "on": "2026-10-19",
+  "reason": "The top bar and rail’s labels, each the plain name of where it goes or what it does: Save & Exit, Menu, Skip To Content, All Read.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/GameShell.tsx#SaveIndicator": {
+  "status": "Retained",
+  "hash": "c6c1d2fe26e7",
+  "on": "2026-10-19",
+  "reason": "Four states of the save button, each a word or two: Saved, Saving…, Not Saved Yet, and Save Failed: Try Again, which says the way on.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/LifeEnded.tsx#LifeEnded": {
+  "status": "Rewritten",
+  "hash": "8473b9e50431",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g04-life.test.ts and tests/evidence2-b03.test.ts and tests/evidence-g08-life.test.ts render the ended life's screen and hold its new notes and closing line word for word",
+  "first": "Pending"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [accounts]": {
+  "status": "Retained",
+  "hash": "36bae31694f8",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [benefits]": {
+  "status": "Retained",
+  "hash": "0ae981803c85",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [borrowing]": {
+  "status": "Retained",
+  "hash": "9f5c5c049105",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [cards]": {
+  "status": "Retained",
+  "hash": "0f830bc25e52",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [casting]": {
+  "status": "Retained",
+  "hash": "e0f540f92c72",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [classes]": {
+  "status": "Retained",
+  "hash": "ed1846afee3b",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [coursework]": {
+  "status": "Retained",
+  "hash": "a1da98d95263",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [health]": {
+  "status": "Retained",
+  "hash": "5fdbe30e8fb0",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [passport]": {
+  "status": "Retained",
+  "hash": "83e5e372ec2f",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [payments]": {
+  "status": "Retained",
+  "hash": "0be4502f405a",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [returns]": {
+  "status": "Retained",
+  "hash": "c294c31ec89f",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [standing]": {
+  "status": "Retained",
+  "hash": "f726693805de",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [statements]": {
+  "status": "Retained",
+  "hash": "5653cebc057d",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [terms]": {
+  "status": "Retained",
+  "hash": "7924ffbc22e7",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [work]": {
+  "status": "Retained",
+  "hash": "f29c41d765fd",
+  "on": "2026-10-19",
+  "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/TimeControls.tsx#AdvanceMenu": {
+  "status": "Retained",
+  "hash": "789810fc3e7d",
+  "on": "2026-10-19",
+  "reason": "Each line names where it lands, One Hour, Tonight, Tomorrow Morning, with the time beside it, and Next Event names the thing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/TimeControls.tsx#DIAL_LABEL": {
+  "status": "Retained",
+  "hash": "61e8509e7a0b",
+  "on": "2026-10-19",
+  "reason": "The eight wellbeing measures by the names How You Are gives them, so the menu’s figures match the panel’s.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/TimeControls.tsx#DueNow": {
+  "status": "Rewritten",
+  "hash": "8163eef59f71",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the stop says it needs you now, what going takes, and what a plan of your own and the world’s own each offer', both variants",
+  "first": "Pending"
+ },
+ "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
+  "status": "Retained",
+  "hash": "8ac8efdf6a2d",
+  "on": "2026-10-19",
+  "reason": "Each line gives its time, its cost and why it stands where it does, with Needed Now or Most Worth It on the first, and the toast says when it was done.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/TimeControls.tsx#MENU_FOOT": {
+  "status": "Retained",
+  "hash": "a08a4ddfa5d5",
+  "on": "2026-10-19",
+  "reason": "Layout values for the foot of a top-bar menu, padding and a border, which no player reads as words.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/TimeControls.tsx#SkipDialog": {
+  "status": "Retained",
+  "hash": "60a6ec4e51e0",
+  "on": "2026-10-19",
+  "reason": "Lists what the clock will stop at on the way and what else happens in order, and says why Skip is gray, with the event named on its button.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/TimeControls.tsx#SleepDialog": {
+  "status": "Retained",
+  "hash": "7dd33eebc608",
+  "on": "2026-10-19",
+  "reason": "Says when you would wake, what you would sleep through, and when a sleep stands for the night, with Sleep N Hours and Not Yet as the two buttons.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/shell/TimeControls.tsx#TimeControls": {
+  "status": "Rewritten",
+  "hash": "f72913b743cb",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'On The Way says how many commitments the clock stops at and what each stop offers, for one and for two'",
+  "first": "Pending"
+ },
+ "src/ui/startup/StartupSequence.tsx#currentLabel": {
+  "status": "Retained",
+  "hash": "7725e05476ed",
+  "on": "2026-10-19",
+  "reason": "The one word the status line shows before the first stage begins, Starting, which is all a player needs for that half second.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/startup/StartupSequence.tsx#STAGES [migrations]": {
+  "status": "Rewritten",
+  "hash": "395307448887",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the startup sequence says what it found in each slot: damaged, with a backup or without, newer and older', the newer and older warnings word for word",
+  "first": "Pending"
+ },
+ "src/ui/startup/StartupSequence.tsx#STAGES [saves]": {
+  "status": "Retained",
+  "hash": "184216227298",
+  "on": "2026-10-19",
+  "reason": "Names the save slots the next screen shows, and its failure says plainly that SLATE could not find the saves, above the Try Again button that retries.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/startup/StartupSequence.tsx#STAGES [storage]": {
+  "status": "Retained",
+  "hash": "3dea99113675",
+  "on": "2026-10-19",
+  "reason": "The first stage label, saying in a phrase players know from any loading screen that SLATE is finding where the saves are kept.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/startup/StartupSequence.tsx#STAGES [validate]": {
+  "status": "Rewritten",
+  "hash": "ce910e4a7935",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'the startup sequence says what it found in each slot: damaged, with a backup or without, newer and older', word for word with and without a backup",
+  "first": "Pending"
+ },
+ "src/ui/startup/StartupSequence.tsx#StartupSequence": {
+  "status": "Retained",
+  "hash": "84a23ef20916",
+  "on": "2026-10-19",
+  "reason": "Short status words over the bar (Ready, Startup Stopped), Try Again under a failure and Before You Continue over warnings, each naming its moment; the version line is the slot card’s own.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace": {
+  "status": "Rewritten",
+  "hash": "2557eef85ee3",
+  "on": "2026-10-19",
+  "evidence": "tests/language-frame-ui.test.ts, 'says what the calendar holds, a clash in the next month, the legend’s kinds, and a day with nothing on it, still to come or gone'",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail": {
+  "status": "Rewritten",
+  "hash": "f39d6673b827",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g02-life.test.ts, 'PLAYER JOURNEY: a Call at 7:40 refuses a shower at 7:30 in its words; Call It Off on the Calendar takes it off the month, and the shower is taken'",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#MONTHS": {
+  "status": "Retained",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-19",
+  "reason": "The months spelled out in full in the month picker, as the game writes every date.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#PlanForm": {
+  "status": "Rewritten",
+  "hash": "b79b5ac325d7",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g01-life.test.ts, 'PLAYER JOURNEY: the Calendar’s form puts Gym on the day where the player is; after a reload the clock stops at it and its handler keeps it'",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#statusWords": {
+  "status": "Retained",
+  "hash": "f840ac65b3e5",
+  "on": "2026-10-19",
+  "reason": "Canceled, the one status word the entry needs spelled for the screen, in American spelling.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/CalendarWorkspace.tsx#WEEKDAYS": {
+  "status": "Retained",
+  "hash": "acdfe17785fa",
+  "on": "2026-10-19",
+  "reason": "The three-letter weekday heads of the month grid, the short form every calendar uses.",
+  "first": "Reviewed And Retained"
+ },
+ "src/ui/workspaces/cell.ts#dayLabel": {
+  "status": "Retained",
+  "hash": "12f8fef58d25",
+  "on": "2026-10-19",
+  "reason": "A calendar day’s accessible name, the date then how many things are on it in words, which a screen reader reads aloud.",
+  "first": "Rewritten And Verified"
+ },
+ "src/ui/workspaces/WorkspaceRouter.tsx#LockedScreen": {
+  "status": "Rewritten",
+  "hash": "a13c17b6c227",
+  "on": "2026-10-19",
+  "evidence": "tests/evidence-g31-ui.test.ts, 'PLAYER JOURNEY: in a guided life, Money and Papers pressed on the Profile open Locked screens…', and tests/evidence-g29-ui.test.ts, Your Bank locked",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/WorkspaceRouter.tsx#NoSuchScreen": {
+  "status": "Retained",
+  "hash": "3a463e4b5a94",
+  "on": "2026-10-19",
+  "reason": "Says the address isn’t a screen in this game and offers Go Home, the one way back, in two lines.",
+  "first": "Reviewed And Retained"
+ }
+}

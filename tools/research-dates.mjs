@@ -81,6 +81,45 @@ function outsideKept(text, edit) {
   return out + edit(text.slice(at));
 }
 
+/**
+ * How the research reached a page, said as a reader would say it (from 2026-10-19, brief 15's coordinator). "HTTP 403",
+ * "timed out", "direct fetch", "search snippet" and "Wayback snapshot" are the research tool's words for a page it
+ * couldn't open, one it read through a search engine's summary, and the Internet Archive's copy of one. They were in
+ * source lines a screen shows (the bank screens' sources, a genre's small print), where a player read them as the
+ * engine showing. Each rule is an exact phrase, as the fields say it. A quotation, a web address and a file's name are
+ * kept, as `gameDates` keeps them. The research files keep their own words.
+ */
+const ACCESS = [
+  [/\(403 and timeout; read via search snippets\)/g, '(the pages couldn’t be opened, so they were read through search summaries)'],
+  [/\(timeouts; read via search snippets\)/g, '(the pages didn’t load, so they were read through search summaries)'],
+  [/(\S+) blocks direct fetch, read via Wayback/g, '$1 couldn’t be opened, so it was read through the Internet Archive'],
+  [/\bread via Wayback Machine snapshot of /g, 'read in the Internet Archive’s copy of '],
+  [/\bread via Wayback snapshot (?=[A-Z])/g, 'read in the Internet Archive’s copy of '],
+  [/\bread via Wayback snapshot\b/g, 'read in the Internet Archive’s copy'],
+  [/\bvia Wayback\b/g, 'through the Internet Archive'],
+  [/\btimed out on every request\b/g, 'didn’t load'],
+  [/\bpage timed out\b/g, 'page didn’t load'],
+  [/\bseen only via search snippet\b/g, 'seen only in a search summary'],
+  [/\bfrom search snippet\b/g, 'from a search summary'],
+  [/\bsearch snippets\b/g, 'search summaries'],
+  [/\bsearch snippet\b/g, 'search summary'],
+];
+
+/** A sentence with the research's reports of how it reached a page said in a reader's words, everything else as it was. */
+export function gameAccess(text) {
+  return outsideKept(text, (t) => ACCESS.reduce((s, [re, to]) => s.replace(re, to), t));
+}
+
+/**
+ * The house's apostrophe (’) inside a word, quotation or not, as `tools/build-attribute-content.mjs` writes the genre
+ * research's: "the bank’s", "l’usure". A web address is kept as it is. From 2026-10-19 (brief 15's coordinator): until
+ * then the bank files' shown fields kept the research's straight marks, 112 of them, beside the game's own.
+ */
+export function houseApostrophe(text) {
+  if (typeof text !== 'string') return text;
+  return text.replace(/\S+/g, (w) => (/^(?:https?:|www\.)|\/\S/.test(w) ? w : w.replace(/(\p{L})'(\p{L})/gu, '$1’$2')));
+}
+
 /** A sentence with its dates written the game's way, everything else as it was. */
 export function gameDates(text) {
   return outsideKept(text, prose);
@@ -168,7 +207,7 @@ function main() {
       if (!paths) continue;
       // The generator's form: the data stringified, inside JSON.parse. A file not in that form isn't rewritten.
       if (JSON.stringify(JSON.stringify(one.data)) !== one.literal) { console.error(`${file} ${one.name}: not in the generator's form, left as it is`); process.exitCode = 2; continue; }
-      const changes = editFields(one.data, paths, (t) => noSpaceBefore(gameDates(t)));
+      const changes = editFields(one.data, paths, (t) => noSpaceBefore(gameAccess(gameDates(houseApostrophe(t)))));
       for (const [f, name, key, field, was, now] of BY_HAND) {
         if (f !== file || name !== one.name) continue;
         const text = one.data[key]?.[field];

@@ -1,0 +1,343 @@
+{
+ "criterion": "ST6-R2.c and ST6-R2.e clarified (docs/verification/playthroughs-2026-10-17/acting-criteria.md)",
+ "cases": 784,
+ "c": {
+  "verdict": {
+   "c21": {
+    "met": true,
+    "of": 9702,
+    "failingCount": 0,
+    "failing": []
+   },
+   "c22": {
+    "met": true,
+    "of": 10976,
+    "wrongWay": [],
+    "notStrict": [],
+    "excusedMoved": [],
+    "excusedNotTheRule": [],
+    "ruleMissed": [],
+    "disconnected": []
+   },
+   "c23": {
+    "met": true,
+    "hundredthBad": [],
+    "floorBad": [],
+    "realBad": [],
+    "holdBad": []
+   },
+   "c41": {
+    "met": true,
+    "of": 131712,
+    "failingCount": 0,
+    "failing": []
+   },
+   "c42": {
+    "met": true,
+    "of": 1368,
+    "failingCount": 0,
+    "failing": []
+   },
+   "c43": {
+    "met": true,
+    "of": 37632,
+    "failingCount": 0,
+    "failing": [],
+    "nineFailing": []
+   }
+  },
+  "met": true,
+  "figures": {
+   "c21": {
+    "changes": 9702,
+    "actors": 14
+   },
+   "c22": {
+    "actorCases": 10976,
+    "kept": 10556,
+    "atZero": 280,
+    "excused": {
+     "count": 140,
+     "pieces": [
+      "brief-grindhouse/terror",
+      "brief-isekai/nobody",
+      "brief-rockumentary/relief",
+      "brief-science_fantasy/wonder",
+      "brief-dance-2/two",
+      "brief-melodrama-2/pride",
+      "brief-musical-2/love",
+      "brief-mystery-2/cornered",
+      "brief-psychological_horror-2/together",
+      "brief-psychological_horror-2/loop"
+     ],
+     "atFullPrecision": {
+      "least": 0.0035,
+      "most": 0.0777,
+      "byActor": {
+       "beginner": 0.0629,
+       "even": 0.0462,
+       "restrainedSpecialist": 0.0258,
+       "expansiveSpecialist": 0.0501,
+       "nearMaster": 0.0093,
+       "V1": 0.0745,
+       "V2": 0.0777,
+       "V3": 0.0629,
+       "V4": 0.0774,
+       "V5": 0.0361,
+       "V1′": 0.0359,
+       "V2′": 0.0304,
+       "V3′": 0.0255,
+       "V4′": 0.0435
+      },
+      "shownTenthMoved": 47
+     }
+    },
+    "leastStrict": 0.0061,
+    "floorHeld": 0
+   },
+   "c23": {
+    "piece": "brief-psychological_horror-2/together",
+    "hundredth": [
+     {
+      "actor": "beginner",
+      "below": 0.0984,
+      "above": 0.1622
+     },
+     {
+      "actor": "even",
+      "below": 0.0885,
+      "above": 0.0879
+     },
+     {
+      "actor": "restrainedSpecialist",
+      "below": 0.0596,
+      "above": 0.0594
+     },
+     {
+      "actor": "expansiveSpecialist",
+      "below": 0.0953,
+      "above": 0.0945
+     },
+     {
+      "actor": "nearMaster",
+      "below": 0.0181,
+      "above": 0.0181
+     },
+     {
+      "actor": "V1",
+      "below": 0.0948,
+      "above": 0.094
+     },
+     {
+      "actor": "V2",
+      "below": 0.099,
+      "above": 0.1093
+     },
+     {
+      "actor": "V3",
+      "below": 0.0798,
+      "above": 0.1438
+     },
+     {
+      "actor": "V4",
+      "below": 0.1607,
+      "above": 0.1985
+     },
+     {
+      "actor": "V5",
+      "below": 0.0698,
+      "above": 0.1046
+     },
+     {
+      "actor": "V1′",
+      "below": 0.0804,
+      "above": 0.0799
+     },
+     {
+      "actor": "V2′",
+      "below": 0.0708,
+      "above": 0.0705
+     },
+     {
+      "actor": "V3′",
+      "below": 0.0586,
+      "above": 0.0584
+     },
+     {
+      "actor": "V4′",
+      "below": 0.0952,
+      "above": 0.0943
+     }
+    ],
+    "floor": [
+     {
+      "actor": "beginner",
+      "belowLessAt": 0,
+      "atLessAbove": 0.1834
+     },
+     {
+      "actor": "even",
+      "belowLessAt": 0,
+      "atLessAbove": 0.1323
+     },
+     {
+      "actor": "restrainedSpecialist",
+      "belowLessAt": 0,
+      "atLessAbove": 0.0733
+     },
+     {
+      "actor": "expansiveSpecialist",
+      "belowLessAt": 0,
+      "atLessAbove": 0.1588
+     },
+     {
+      "actor": "nearMaster",
+      "belowLessAt": 0,
+      "atLessAbove": 0.019
+     },
+     {
+      "actor": "V1",
+      "belowLessAt": 0,
+      "atLessAbove": 0.1541
+     },
+     {
+      "actor": "V2",
+      "belowLessAt": 0,
+      "atLessAbove": 0.1774
+     },
+     {
+      "actor": "V3",
+      "belowLessAt": 0,
+      "atLessAbove": 0.1096
+     },
+     {
+      "actor": "V4",
+      "belowLessAt": 0,
+      "atLessAbove": 0.2087
+     },
+     {
+      "actor": "V5",
+      "belowLessAt": 0,
+      "atLessAbove": 0.0899
+     },
+     {
+      "actor": "V1′",
+      "belowLessAt": 0,
+      "atLessAbove": 0.1117
+     },
+     {
+      "actor": "V2′",
+      "belowLessAt": 0,
+      "atLessAbove": 0.0922
+     },
+     {
+      "actor": "V3′",
+      "belowLessAt": 0,
+      "atLessAbove": 0.0712
+     },
+     {
+      "actor": "V4′",
+      "belowLessAt": 0,
+      "atLessAbove": 0.1598
+     }
+    ],
+    "real": {
+     "0": {
+      "actorCases": 280,
+      "same": 280,
+      "strictRightWay": 0,
+      "leastStrict": null
+     },
+     "0.01": {
+      "actorCases": 140,
+      "same": 140,
+      "strictRightWay": 0,
+      "leastStrict": null
+     },
+     "0.02": {
+      "actorCases": 56,
+      "same": 0,
+      "strictRightWay": 56,
+      "leastStrict": 0.0061
+     }
+    },
+    "hold": {
+     "inside": 1324,
+     "reaching": 36,
+     "past": 26,
+     "across": 0
+    }
+   },
+   "c41": {
+    "checks": 131712,
+    "byClass": {
+     "direct": 113974,
+     "indirect": 10976,
+     "small": 1974,
+     "none": 4788
+    },
+    "leastMovedWithAPath": 0.0312
+   },
+   "c42": {
+    "pairs": 1368,
+    "byAbility": {
+     "vocal brief12": 201,
+     "vocal beginner": 201,
+     "vocal stronger": 201,
+     "vocal nearMaster": 201,
+     "physical brief12": 141,
+     "physical beginner": 141,
+     "physical stronger": 141,
+     "physical nearMaster": 141
+    },
+    "mostLead": -0.4937
+   },
+   "c43": {
+    "specialists": 37632,
+    "leastTogether": {
+     "brief12": 1.8114,
+     "beginner": 1.8148,
+     "stronger": 2.3451,
+     "nearMaster": 0.3747
+    },
+    "leastEach": 0.0028,
+    "leastNine": 3.8369
+   },
+   "c44": {
+    "pairs": 6344,
+    "ahead": 65,
+    "aheadByClass": {
+     "direct": 61,
+     "indirect": 3,
+     "small": 1
+    },
+    "pairsByClass": {
+     "direct": 5364,
+     "indirect": 507,
+     "small": 131,
+     "none": 342
+    },
+    "aheadByWay": {
+     "against": 65
+    },
+    "gain": [
+     2.3656,
+     3.2484
+    ],
+    "cost": [
+     -2.6816,
+     -2.2772
+    ],
+    "interaction": [
+     -0.1654,
+     0.0165
+    ],
+    "leastShareAhead": 0.0876,
+    "underTwelfth": {
+     "pairs": 5101,
+     "aboveTheEvenActor": 0
+    }
+   }
+  }
+ }
+}

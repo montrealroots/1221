@@ -185,7 +185,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
 
   // --- Accounts -----------------------------------------------------------
   // At a real bank where they live (`systems/banking.ts`). A country the
-  // tables have no bank for keeps a plain current account and savings.
+  // tables have no bank for keeps a plain checking account and savings.
   const bank = startingBank(config.startLocationId, config.bankId, player.citizenshipId === 'us');
   // An account kept from where they lived before (from 2026-10-16, `systems/homeaccount.ts`), where the rule offers it,
   // and the money split as the screen said: savings kept there, or moved here as every life's opened before.
@@ -195,7 +195,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     openAt(sim, player, bank, { checking: split.checking, savings: split.savings });
   } else {
     const checking = sim.openAccount({
-      id: sim.nextId('account'), kind: 'checking', name: 'Current Account', ownerId: player.id,
+      id: sim.nextId('account'), kind: 'checking', name: 'Checking Account', ownerId: player.id,
       openedAt: sim.now, balance: wealth.checking,
     });
     player.primaryAccountId = checking.id;
@@ -563,14 +563,14 @@ function returnTheHomesMoney(sim: Simulation): void {
     if (!current) continue;
     for (const held of Object.values(sim.universe.accounts)) {
       if (held.ownerId !== person.id || held.kind !== 'escrow' || held.category !== 'deposit' || held.closedAt || held.balance <= 0) continue;
-      sim.post({ memo: 'The deposit back: the home went', category: 'rent', postings: [{ accountId: current.id, amount: held.balance }, { accountId: held.id, amount: -held.balance }] });
+      sim.post({ memo: 'Home deposit returned', category: 'rent', postings: [{ accountId: current.id, amount: held.balance }, { accountId: held.id, amount: -held.balance }] });
       held.closedAt = sim.now;
     }
     // Read off the save as it was written: the settings dropped it from their shape with the rent (schema 91).
     const old = person.payments as unknown as { rentCredit?: number } | undefined;
     const ahead = old?.rentCredit ?? 0;
     if (ahead > 0 && old) {
-      sim.post({ memo: 'Rent paid ahead, back: the home went', category: 'rent', postings: [{ accountId: current.id, amount: ahead }, { accountId: sim.nominalAccount('liability_other', 'Rent Paid Ahead').id, amount: -ahead }] });
+      sim.post({ memo: 'Rent paid ahead, returned', category: 'rent', postings: [{ accountId: current.id, amount: ahead }, { accountId: sim.nominalAccount('liability_other', 'Rent Paid Ahead').id, amount: -ahead }] });
       delete old.rentCredit;
     }
   }
@@ -634,7 +634,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
   if (from > SAVE_SCHEMA_VERSION) {
     problems.push(
-      `This save was made by a newer version of SLATE, so this version can’t open it without risking damage to it. It hasn’t been changed.`,
+      `This save was made by a newer version of SLATE, so this version won’t open it. SLATE hasn’t changed anything in it.`,
     );
     return { migrated: false, from, to: SAVE_SCHEMA_VERSION, steps, problems };
   }
@@ -1031,7 +1031,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // The audit's own words are a developer's, in the console (from 2026-10-17, brief 14: until then in the sentence).
     if (unbalanced.length > 0) {
       console.error('The ledger audit, bringing a save forward:', unbalanced);
-      problems.push('This save’s accounts don’t add up, so it can’t be updated safely. It hasn’t been changed. If the slot has a backup, you can restore that instead.');
+      problems.push('This save’s accounts don’t add up, so SLATE can’t update it safely and hasn’t changed anything in it. If the slot has a backup, you can restore that instead.');
     }
   }
 
@@ -1183,7 +1183,7 @@ export async function openSlot(
   const from = universe.meta.schemaVersion ?? 1;
   if (from > SAVE_SCHEMA_VERSION) {
     return {
-      error: `Slot ${slot} was saved by a newer version of SLATE, so this version won’t open it: that could damage it. It hasn’t been opened or changed.`,
+      error: `Slot ${slot} was saved by a newer version of SLATE, so this version won’t open it. SLATE hasn’t changed anything in it.`,
     };
   }
 

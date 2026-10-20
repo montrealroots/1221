@@ -1,0 +1,454 @@
+## Papers (papers.overview)
+
+Papers is where your official paperwork lives: each year’s tax return, your health cover and the bills for your care, unemployment, SNAP and pensions, your passport and ID, and your permission to work. Its five tabs are Tax Returns, Health Cover, Unemployment, Passport And ID and Permission To Work. You reach it from the Papers button on the Papers line in Your Affairs on Home, from Papers on the menu, or from Go There on a notice about any of these.
+
+Where To Find It: Papers, Your Affairs On Home, Or The Menu
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”.
+
+What To Press:
+  1. Read “Cover, Benefits And Returns” in the guide and press I’ve Read It. Papers joins the menu, and the Papers line in Your Affairs on Home gets its Papers button.
+  2. Press Papers on that line, or on the menu.
+  3. Pick a tab. Papers opens on Tax Returns the first time. After that, while the game stays open, it opens on the tab you left it on. The tab is remembered on screen, not in your save.
+  4. With a tab focused, the arrow keys move between tabs, and Home and End jump to the first and the last.
+
+What You Need First:
+  - Your Affairs shows the Papers line from a school life’s first day. Until you’ve read “Cover, Benefits And Returns”, the line is a locked panel with Read About It.
+
+What It Costs:
+  - Time: None: opening Papers and moving between its tabs doesn’t move the clock
+  - Money: None
+
+What Happens:
+  - Opening the screen and its tabs changes nothing in the game. Each button on it does what its own entry says.
+
+How It Connects:
+  - [prerequisite] start.guide: “Cover, Benefits And Returns” in the guide opens Papers and every button on it.
+  - [optional] papers.health-cover: The Health Cover tab holds your cover, your doctor, your conditions and your medical bills.
+  - [optional] taxes.return: The Tax Returns tab holds each year’s return, ready each February for a year where you owe tax or are due a refund, or had income of the standard deduction or more, and every year for a student on an F-1.
+  - [optional] day.needs: Notices about your cover, a bill, an appointment, a claim or a document carry Go There, which opens Papers.
+
+What To Do Next:
+  - Start with whatever the Papers line on Home flags: a return due, tax owed, or no health cover.
+  - Each tab’s panels have their own How This Works, which explains that part in detail.
+
+If You Can’t:
+  - Until you’ve read “Cover, Benefits And Returns”, Papers is off the menu, and Home’s Papers line is a panel marked Locked. Its Read About It opens the guide at that chapter.
+  - (mistake) Each tab is a view: moving between tabs files, pays and claims nothing, so there’s nothing to undo.
+  - (mistake) Leaving Papers, or switching to another of its tabs, with an amount half typed in a payment box loses it: only the tab showing is kept on screen. Opening How This Works over it doesn’t lose it.
+
+What Decides It:
+  - The Papers Line On Home: What covers you this month and an open unemployment claim’s weekly amount, with an alert for no cover, a return due and tax owed
+  - Each Tab: Read from the rules behind it the moment you look: your returns, your cover and bills, your claims and pensions, your documents
+  - The Papers line on Home shows what needs doing as an alert: “You have no health cover.”, a return that’s due with what filing it would pay, and tax owed, with its interest and a late penalty growing each month once its return’s due date has passed.
+  - Cover on the line names what covers you this month: Yale Health, HUSKY D, Covered Connecticut or Marketplace Plan, or none. A program shows by its own name, as Your Cover shows it.
+
+A Worked Example:
+  A first-year in New Haven, the day “Cover, Benefits And Returns” is read.
+  1. Press Papers on the Papers line in Your Affairs.
+  2. Open the Health Cover tab.
+  3. Press H for Home, then Papers on the menu.
+  Papers opens on Tax Returns; Health Cover shows Yale Health under Your Cover, This Month; back from Home, the screen is on Health Cover, where you left it. The clock didn’t move, and nothing in the world changed.
+
+
+## Health Cover (papers.health-cover)
+
+Health cover pays for your care. Yale Health covers you while you’re at the School, and the School bills it each term. When it’s about to end, from 60 days before, press Enroll on The Marketplace. If last month’s income is low enough, that takes you into HUSKY D or Covered Connecticut, with no premium. Otherwise it buys Access Health CT’s silver plan, which you can do in open enrollment, in those 60 days, or within 60 days of losing cover. Each piece of care brings a bill for your share, due in 30 days. Under Care And Its Bills you can appeal a denied claim, ask a Connecticut hospital for financial assistance, and pay off anything that went to medical debt.
+
+Where To Find It: Papers, Health Cover: Your Cover, The Marketplace, A Dental Plan, Care And Its Bills
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”. Enroll shows when you may enroll. While Yale Health covers you, that’s only in its last 60 days, once its end is set.
+
+What To Press:
+  1. Open Papers, then Health Cover. Your Cover says what covers you This Month.
+  2. Read the line under The Marketplace: it says whether you may enroll now, and why. When Enroll shows beside the title, press it. The toast names what you’re enrolled in and the day it starts.
+  3. Once you’re enrolled, Drop The Plan, in the same place, ends a plan of your own at the end of the month.
+  4. In Care And Its Bills, each row has its care, its date, Your Share and Due. In the Assistance column, Appeal It answers a denied claim, and Apply For Assistance asks a Connecticut hospital to apply its financial assistance to a bill.
+  5. When a bill has gone to medical debt, Pay It Off beside the panel’s title pays all of it.
+  6. While Yale Health covers you, A Dental Plan offers Buy Dental: Yale Delta Dental Basic, paid once for Yale’s plan year, to September 30.
+
+What You Need First:
+  - Enroll: no plan of your own already, and Yale Health ended, in its last 60 days once its end is set, or lapsed on a personal leave without Affiliate cover.
+  - HUSKY D: last month’s income at or under 138% of the poverty line, $1,835 a month in 2026, and from October 1, 2026 US citizenship or a green card held five years. From January 1, 2027, some of the month before you enroll spent at the School, or $580 of income of any kind in it, or an exception: 65 or over, SNAP received under its work rules, or a stay in hospital you ask for.
+  - Covered Connecticut: last month’s income over HUSKY D’s line and at or under 175% of the year before’s poverty line, $2,282 a month in 2026, and at least 100% of it, since it comes with the premium tax credit; an income HUSKY D’s line takes isn’t Covered Connecticut’s, whatever your status. For a citizen or anyone lawfully present, and from January 1, 2027 for a citizen or a green card holder, not a student in F-1 status or a graduate on OPT.
+  - Apply For HUSKY D: HUSKY D’s income and status met, and its work rules not shown in the month before, with no application of yours waiting. Request A Hardship Exception: a notice of noncompliance waiting on its answer, and a stay in hospital in a month it assessed.
+  - The marketplace: Connecticut’s open enrollment, October 23 to January 15; the 60 days before Yale Health’s cover ends, once its end is set by the degree, a withdrawal or a dismissal; or within 60 days of losing cover, which a plan you dropped or left unpaid isn’t. And not having stayed past your US status.
+  - Appeal It: a denied claim, within 180 days of the care. Apply For Assistance: a Connecticut hospital’s bill for an emergency or a stay, before it’s due.
+
+What It Costs:
+  - Yale Health: Billed by the School each term: your living-expense scholarship meets it where Yale finds need, and otherwise it’s taken from your bank. It leaves you $0 for a visit or urgent care, $50 for the emergency room and $200 an admission to $1,000 a year, $9,100 a year at most
+  - HUSKY D And Covered Connecticut: No premium, and $0 for a visit, urgent care, the emergency room, a stay and a prescription
+  - The Marketplace Premium: The benchmark silver plan, $706 a month in 2026 and $786 a month from 2027, taken in full on the first of each month (estimated)
+  - Access Health CT Standard Silver: $45 a visit, $75 urgent care, $450 the emergency room, a stay $1,500 after a $5,000 deductible, $9,400 a year at most
+  - Uninsured: The commercial price times 1.75: a visit $175 at 2024’s prices and an emergency $4,287.50 at 2019’s, each grown since by its price index. An emergency or a stay at a Connecticut hospital has its financial assistance taken off as it’s billed: free to 250% of the poverty line, 67% off to 550% (estimated)
+  - Yale Delta Dental Basic: $312.72 for Yale’s plan year, paid at once and covering from that day: bought in August or September, to September 30 a year on; bought from October to July, to the next September 30. Cleanings in full, and 80% of a filling paid by the plan after a $50 deductible, to $1,000, both kept by Yale’s plan year, October 1 to September 30: bought in August or September, the weeks before October 1 are the plan year then ending, with a deductible and a maximum of their own
+  - Time: None: enrolling, appealing, applying and paying move no clock
+
+What Happens:
+  - Enroll: HUSKY D starts on the first of the month you enroll, and reaches back to the first of an earlier month in which you had care with nothing covering you and HUSKY D would have taken you, three months back for an application in 2026 and one from 2027, the care since priced again as HUSKY D’s; another program or a plan starts on the first of next month. Enrolled before Yale Health’s cover ends, each starts on the first of the month on or after its end, so a graduate’s starts August 1 with no gap. The toast names it and its day.
+  - Drop The Plan: it ends on the first of next month, and no later premium is taken. The toast says “Your plan ends at the end of the month. Dropping it doesn’t open a special enrollment period.”, and the panel says “Dropped: it ends on …” instead of the button. A renewal’s notice of noncompliance waiting on an answer goes with the program it would renew, and so does its decision.
+  - Apply For HUSKY D: the notice “A Notice Of Noncompliance” comes at once, naming the month read, the day to answer by (5 days for it to reach you, then 30 more) and what follows. Applying isn’t being covered: you aren’t covered by HUSKY D yet, and you can still buy a marketplace plan.
+  - Request A Hardship Exception: decided at once. A renewal is renewed, with “Your Public Cover Is Renewed” or, moving from Covered Connecticut, “Your Public Cover Changed At Renewal”; an application is approved, “Public Cover Approved”, from the first of the month you applied in, or of an earlier month with care in it as Enroll reaches back, and a marketplace plan bought meanwhile ends as it begins.
+  - Appeal It: the bill reads Appealed, and its answer comes 60 days on.
+  - Apply For Assistance: decided at once. Free Care clears the bill, 67% Off cuts it, and Over The Limit leaves it as it was. The toast for a bill helped says “The hospital applied its financial assistance to this bill.”
+  - Pay It Off: the whole debt is paid from your checking account, and every bill that went to it reads Settled.
+  - Buy Dental: Yale’s year is paid at once, and the dentist is covered from today.
+  - (later) On the first of each month the marketplace premium is taken from your checking account, then the easy-access savings at its bank where Savings Covers The Current Account is On, then its overdraft. If it can’t be paid, the plan ends that day, and a plan left unpaid opens no special enrollment.
+  - (later) A program comes up for renewal: in Connecticut every 12 months, and from January 1, 2027 every 6. It’s checked on last month’s income again and, for HUSKY D from January 1, 2027, on its work rules in any one of the 6 months before. Kept, the notice “Your Public Cover Is Renewed” says to when, and which month met its work rules, and how. Where last month’s income now places you in the other program, under HUSKY D’s line from Covered Connecticut or over it and within Covered Connecticut’s from HUSKY D, you’re renewed into that one from the same day, with no gap and no premium, and the notice “Your Public Cover Changed At Renewal” says so; into HUSKY D its work rules are asked first. Over every line, or out of the status it asks, it ends at the end of the month at least 10 days on, with the notice “Your Public Cover Ends” naming the day.
+  - (later) Short of HUSKY D’s work rules at a renewal, or on Apply For HUSKY D, “A Notice Of Noncompliance” comes: you have 5 days for it to reach you and 30 more to answer, and a member stays covered meanwhile. Request A Hardship Exception answers it where a month it read had a stay in hospital. Unanswered, it’s decided the day after: a renewal’s cover ends at the end of the month at least 10 days on, with “Your Public Cover Ends”; an application is denied, with “Public Cover Denied”. Either way you can apply again in any month after one that meets the rules, and the marketplace sells to you, without the premium tax credit while HUSKY D would take you but for its work rules.
+  - (later) Covered Connecticut held by a student in F-1 status or a graduate on OPT ends on January 1, 2027, with the notice “Your Public Cover Has Ended”: from then the premium tax credit it comes with is a citizen’s or a green card holder’s. The marketplace still sells to you, with no credit.
+  - (later) Back at the School from a leave, with Yale Health’s student cover again, Covered Connecticut ends at the next month’s start, with the notice “Your Public Cover Has Ended”: it’s for a person with no other cover that counts. HUSKY D stays beside Yale Health, which pays first.
+  - (later) Stay past your US status and, at the next month’s start, a marketplace plan ends with the notice “Your Marketplace Plan Has Ended”, and Covered Connecticut with “Your Public Cover Has Ended”, or, where you enrolled ahead, “Your Marketplace Plan Won’t Begin” and “Your Public Cover Won’t Begin”.
+  - (later) A bill still open on its due date, 30 days on, is taken from your checking account, then the easy-access savings at its bank where Savings Covers The Current Account is On, then its overdraft, if between them they can cover all of it. If not, it’s medical debt, owed to Your Providers, with the notice “A Medical Bill Went Unpaid”.
+  - (later) A medical debt of $500 or more, 365 days after its first bill went unpaid, is reported to your credit record once, at the next month’s start, since you live in Connecticut. The notice is “A Medical Debt Is On Your Record”.
+  - (later) An appeal is decided 60 days on. Overturned, you owe only the plan’s share: what you paid over it comes back into the account your payments go to, what went to debt over it comes off the debt, and what you’d paid toward that debt past what’s left of it comes back too; a debt it clears settles every bill that went to it. Upheld, the bill stands.
+  - (later) Each Monday may bring care at an adult’s rates: about 2 doctor’s visits a year, 0.45 emergency visits, a stay in hospital one year in 25 (3 days), and the flu about one year in 11, likelier when you’re short of sleep or stressed.
+  - (later) On the first of a month that finds you without cover, a notice says “Your Health Cover Ended”, beginning “You’re uncovered from …” and the day your last cover ended. Your 60 days to enroll run from that day: Yale Health’s own end, after the degree August 1, after a withdrawal thirty days from it, which can be weeks before the notice; a program’s at its renewal, at a month’s end; and Yale Health canceled back in time, by a withdrawal by the fifteenth day of classes or a leave begun before them, from the day it was canceled. Told on the day, the notice says “You have 60 days to enroll in the marketplace”; told later, it names the last day, “You can enroll in the marketplace until …”; and where last month’s income qualifies you for HUSKY D or Covered Connecticut, that it takes you at any time, with no premium. A plan you dropped or left unpaid opens no such days, and the notice says the way back is open enrollment, or a month’s income that qualifies you for HUSKY D or Covered Connecticut. Out of status, it says neither the marketplace nor Covered Connecticut will take you.
+  - (later) Yale Delta Dental Basic runs to its September 30 whatever happens to Yale Health, through August and September after the degree too. Paid for the year, it can’t be dropped.
+
+How It Connects:
+  - [prerequisite] school.leave: Yale Health covers you while you’re at the School; the degree, a withdrawal, a dismissal or a personal leave without Affiliate cover ends it. A withdrawal by the fifteenth day of a term’s classes, or such a leave, ends the cover then or back to its insurance term’s start, and Enroll waits for the first of the next month, unless it’s open enrollment or last month’s income qualifies you for HUSKY D or Covered Connecticut. Otherwise Enroll shows from 60 days before the cover’s end: at once after a dismissal or any other withdrawal.
+  - [history] school.money: The Yale Health plan is billed each term with the School’s charges: the living-expense scholarship meets it where need is found, and your bank pays it where none is.
+  - [evaluation] papers.doctor: Your cover decides your share each time you have care: a visit, urgent care, an emergency or a stay.
+  - [evaluation] papers.conditions: A condition’s month of care and each fill of its medicine are priced at your plan’s copays.
+  - [history] taxes.return: Each marketplace premium paid is kept for the year’s premium tax credit, which the return works out.
+  - [scheduled] money.affairs: A bill unpaid at its due date goes to Owed For Medical Care, a debt your net worth counts; at $500 or more, 365 days on, it marks your credit record.
+  - [optional] school.sick: A stay in hospital excuses you from school of itself; down with the flu, Call In Sick excuses the day.
+
+What To Do Next:
+  - Before Yale Health ends, enroll ahead so your new cover starts the day after it, with no gap.
+  - Keep enough in your checking account on the first of each month for a marketplace premium.
+  - If a claim is denied or a hospital bill comes, use Appeal It or Apply For Assistance before its due date.
+
+If You Can’t:
+  - “You’re already enrolled.”, or “You’re already enrolled, from ….”: one plan at a time.
+  - “Yale Health covers you while you’re at the School.”: Enroll stays off the screen while you study, unless a personal leave without Affiliate cover lapses it.
+  - “Yale Health covers you until …. You can enroll from …, 60 days before that cover ends.”
+  - “It’s outside open enrollment, … to …, and you haven’t lost cover in the last 60 days.”
+  - Stayed past your US status: the marketplace sells only to a citizen or a person lawfully present.
+  - HUSKY D, its work rules not shown: “From January 1, 2027, … asks for … in the month before you apply, and last month had none of them.”, naming HUSKY D and what it asks: $580.00 of income, time at the School or an exception. The line goes on to say whether the marketplace is open to you, and Enroll shows only where it is, and buys its plan; Apply For HUSKY D, beside it, takes the application on a notice.
+  - “Your application waits on its notice: answer it by …”: one application at a time. “Last month meets its work rules, so press Enroll instead.”: Apply For HUSKY D is for a month that doesn’t.
+  - “There’s no notice of noncompliance waiting for an answer.”, “The … days to answer ended on ….” or “None of the months it checked, …, had a stay in hospital, the one hardship the game counts.”: Request A Hardship Exception doesn’t show, and the notice’s line says which.
+  - “You have no plan of your own to drop.”, or, dropped already, “It’s already dropped, and it ends on ….”
+  - “…, so there’s no renewal left to answer.”, saying the program has ended or the day it ends: a renewal’s notice whose program has ended some other way, and Request A Hardship Exception doesn’t show.
+  - “That claim wasn’t denied.”, “It’s been appealed.” or “An appeal has to be filed within 180 days of the denial, and that time has passed.”: Appeal It doesn’t show.
+  - “Only a Connecticut hospital’s bill can be put in for its financial assistance.”, “It’s already settled or past its due date.”, “The hospital’s financial assistance has already come off it.” or “It’s already been put in for the hospital’s financial assistance.”, for a bill applied for or screened over the limit at billing: Apply For Assistance doesn’t show.
+  - “You owe nothing for care.”, or, when your checking account holds less than the debt, “… has only … of the …, so nothing was paid. Move money into it first, on your bank’s Move Money.” (“… has nothing to pay it with, so nothing was paid.” where it holds nothing).
+  - A Dental Plan shows only while Yale Health covers you or a Yale plan you bought runs: once Yale Health ends, New Haven sells none. Pressed, Buy Dental says “Your bank can’t cover … for the year, so nothing was charged.” when the bank can’t pay the year.
+  - Prepay Three Months and Prepay A Year are England’s, for its £9.90 prescription charge: “The prepayment certificate is only for England’s prescription charge.” A life in New Haven never sees them.
+  - (mistake) Waiting for Yale’s cover to end before enrolling: after the degree Yale Health runs to July 31, and Enroll shows from June 2. Enrolled by July 31, cover begins August 1 with no gap; enrolled on August 1 or later, a plan begins the first of the next month, and August goes uncovered, where HUSKY D, if last month’s income and its work rules take you, begins on August 1 all the same.
+  - (mistake) Letting the checking account run dry before the first: the premium isn’t taken, the plan ends, and a plan left unpaid opens no special enrollment. Unless a month’s income qualifies you for HUSKY D or Covered Connecticut, you wait for open enrollment, October 23 to January 15.
+  - (mistake) Leaving a bill to its due date with too little in the bank: it goes to medical debt. Pay It Off takes the whole debt from your checking account at once, so wait until it holds all of it.
+  - (mistake) Missing a denial: “A Claim Denied” comes as a notice, and an appeal is filed within 180 days of the care.
+  - (mistake) Dropping cover to save the premium: care uninsured is billed at 1.75 times the commercial price, less a Connecticut hospital’s financial assistance for an emergency or a stay, and a marketplace plan dropped can’t be bought again until open enrollment.
+  - (mistake) Buying Yale’s dental plan late in its year: bought from October to July, it runs only to the next September 30, so bought in June or July the full year’s premium buys a summer. Bought in August or September, it runs from that day to September 30 a year on.
+
+What Decides It:
+  - Last Month’s Income: All the income your record holds for the calendar month before, against the poverty line: wages and work-study’s pay, and the unemployment benefit, interest and pensions paid that month too
+  - The Work Rules’ Months: For HUSKY D’s work rules: the calendar month before you enroll, and at renewal any one of the 6 calendar months before the renewal’s. A month meets them with any of it spent at the School (the month you leave it, on a leave, by withdrawing or with the degree, counts whole, and so does the month you come back), $580 of income of any kind (pay, an unemployment benefit, interest or a pension), being 65 or over for any of it, SNAP received in it while you were under SNAP’s work rules (out of school, no unemployment claim, 18 to 64), or a stay in hospital in it, if you ask
+  - Your Status: US citizenship or five years with a green card for HUSKY D from October 1, 2026; lawful presence for the marketplace, and for Covered Connecticut until 2027, when it’s a citizen’s or a green card holder’s
+  - A Denied Claim: 20% of a marketplace plan’s claims, billed as if you were uninsured; insurers uphold 56% of appeals (estimated)
+  - The Hospital’s Financial Assistance: Your last twelve months’ income against the poverty line: free to 250%, 67% off to 550%
+  - Medical Debt On Your Record: $500 or more, unpaid 365 days, and you living outside New York and California
+  - Your Cover, This Month, reads None, in amber, when nothing covers you.
+  - The subtitle of Care And Its Bills shows what you’ve paid this year toward the year’s most; past it, your plan leaves you nothing more for care. HUSKY D and Covered Connecticut have no most: care costs you nothing on them, a prescription costs only its copay where the program has one, and the subtitle says only what you’ve paid.
+  - In the bills table, Due shows a date, Settled, Owed As Debt or Credited. A change of cover back in time, a withdrawal by the fifteenth day of classes or Affiliate cover bought on a leave, leaves each bill as it was issued and adds a line of its own: more owed is billed on it; less owed reads below nothing, Credited, and comes off the bill still open first, which then shows what’s left of the share it was issued at; and Plan Paid on the line is the plan’s change, below nothing where the plan took its part back. A prescription filled in that time is priced again the same way, its line Credited with what comes back to the account your payments go to, or billed with what more is owed. In Assistance, Assistance Taken Off means the hospital screened an uninsured bill when it was billed and took something off it; over 550% of the poverty line it took off nothing, and the bill reads Over The Limit.
+  - The toast after Enroll, Your Cover and the subtitle of Care And Its Bills each name a program by its own name, HUSKY D or Covered Connecticut. The marketplace’s plan reads Marketplace Plan in Your Cover, and Access Health CT Standard Silver over the bills.
+  - The Marketplace says Medicaid’s work rules, HUSKY D’s here, are met from 2027 by a month you spend any of at the School, or one with $580 of income: the one before you apply, and any of the 6 before a renewal. Income of any kind counts toward the $580, interest, a benefit and a pension as pay does.
+  - A marketplace premium is paid in full. The return gives back what’s over your share of income, for an income over 138%, or from 100% where your status keeps you from HUSKY D, and up to 400% of the poverty line; on a 1040-NR too, in 2026, and from 2027 only for a citizen or a green card holder.
+
+A Worked Example:
+  A US citizen in New Haven who graduated in the spring of 2027, with no pay in July.
+  1. On August 1 a notice says “Your Health Cover Ended”.
+  2. Open Papers, Health Cover. Under The Marketplace: “From January 1, 2027, HUSKY D asks for $580.00 of income, time at the School or an exception in the month before you apply, and last month had none of them. The marketplace is open to you, because you’re within 60 days of losing cover.”
+  3. Press Enroll.
+  The toast says “Enrolled in the marketplace, from September 1, …”. From September 1 its premium is taken on each month’s first, and a visit costs $45. Care in August, uncovered, is billed at the uninsured price, less the hospital’s financial assistance on an emergency or a stay. Enrolled ahead, from June 2 while Yale Health still covered them, their cover would have begun August 1.
+
+
+## The Doctor And The Pharmacy (papers.doctor)
+
+About twice a year a week brings a doctor’s visit, and the game books it for you at your doctor’s practice, at 10:00 AM on a weekday that isn’t a public holiday. In New Haven, while Yale Health covers you, that’s Yale Health Center, Student Health, the next weekday, for $0, unless you pick Fair Haven Community Health Care, 24 days on at the uninsured price. Once Yale Health no longer covers you, it’s Fair Haven Community Health Care, 24 days on. Keep the appointment and you’re seen and billed your share. Miss it and you aren’t seen: press Book An Appointment to book it again. Your Pharmacy sets the cash price a generic is filled at, from Walmart’s $4 against the $40 median of 2019, grown since, and your plan’s copay is never more than that price.
+
+Where To Find It: Papers, Health Cover, Your Doctor
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”. Your Pharmacy is America’s; Fill A Longer Supply shows while you keep a condition up.
+
+What To Press:
+  1. Open Papers, Health Cover. Your Doctor names where a doctor’s visit, urgent care and an emergency are had where you live, and what each would cost you now.
+  2. The Your Doctor box picks the practice a visit is booked at; it shows where two practices or more would see you, each with what a visit there costs you and how soon it’s booked. A Yale student Yale Health covers picks between Yale Health Center, Student Health, $0 and the next weekday, and Fair Haven Community Health Care, $183.98 in 2026 and 24 days on. Until you pick, The Practice Your Cover Uses sends a visit to Yale Health Center, Student Health. Once Yale Health no longer covers you there’s one practice for you, Fair Haven Community Health Care, and the line names it.
+  3. The Your Pharmacy box, in America, picks the chain whose cash price fills a generic.
+  4. A booked appointment shows below with its date. When the clock reaches it, it stops and asks; be awake and out of hospital at the hour.
+  5. Call It Off cancels an appointment. The visit stays owed, and Book An Appointment books it again.
+  6. Fill A Longer Supply, 90 Days, under Your Long-Term Conditions, fills the medicine of every condition you keep up for that long at once, paid ahead. Where the bank can’t cover every condition’s fill, none is filled.
+
+What You Need First:
+  - Your Doctor: a practice in the town you live in that would see you, two or more of them. In New Haven the game has Fair Haven Community Health Care and Yale Health Center, Student Health; Yale Health Center, Student Health sees only Yale students Yale Health covers: while you’re at the School, thirty days after a withdrawal past the fifteenth day of classes, not after one by it, and to July 31 after the degree.
+  - Book An Appointment: a visit owed, missed or called off, and no appointment booked.
+  - Your Pharmacy: living in America.
+  - Fill A Longer Supply: a condition you keep up, its row showing Let It Go, and the bank able to pay every condition’s fill.
+
+What It Costs:
+  - A Visit: Your plan’s copay: $0 on Yale Health at Yale Health Center, Student Health, HUSKY D and Covered Connecticut, $45 on Access Health CT’s silver plan; uninsured, the commercial price times 1.75, $183.98 in 2026. On Yale Health a visit at Fair Haven Community Health Care is billed at that uninsured price: Yale Health pays for a member’s care at its own Health Center, except in an emergency
+  - Time On The Calendar: 20 minutes, at 10:00 AM local time on a weekday that isn’t a public holiday where you live (estimated)
+  - A Generic, Uninsured: Walmart $4, Costco $4.10, Kroger $5, CVS $12.50; at any pharmacy, the $40 median of 2019, grown by the drug price index (estimated)
+  - A Longer Supply: Up to 90 days at once in America, at 3 fills’ share, paid then (estimated)
+
+What Happens:
+  - Choosing a doctor or a pharmacy sets it at once, and the toast names it: “… is now your doctor.” or “… is now your pharmacy.”
+  - Book An Appointment puts it on the calendar; the toast gives its date, and a notice names the practice.
+  - Call It Off takes it off the calendar, with no toast, and leaves the visit owed: the panel reads “…: not yet seen”.
+  - Fill A Longer Supply pays at once from your checking account, then the easy-access savings at its bank where Savings Covers The Current Account is On, then its overdraft, moves each Medicine until date on by the days filled, and the toast says “90 days of medicine filled.” Where the bank can’t cover every condition’s fill, it’s refused whole, “Your bank can’t cover … for every condition’s fill, so nothing was filled or charged.”, and nothing is filled or paid.
+  - (later) At the hour, kept: “A Doctor’s Visit” comes as a notice, and your share is billed, due in 30 days, under the practice it was booked at; on Yale Health at Yale Health Center, Student Health, HUSKY D or Covered Connecticut that’s $0, and no bill is made. On Yale Health at Fair Haven Community Health Care it’s $183.98 in 2026, and the notice says Yale Health pays for a visit at its own Health Center. On Access Health CT’s silver plan it’s the $45 copay, with no deductible, and Care And Its Bills gives what the plan paid of the visit’s price under Plan Paid. Your prescriptions are renewed, a review visit marks its condition reviewed, and the visit may end in a referral, booked for the specialist’s wait.
+  - (later) At the hour, booked at Yale Health Center, Student Health after Yale Health’s cover has ended: “Not Seen At Your Practice” comes as a notice, the visit goes unbilled and stays owed, and Book An Appointment books it at Fair Haven Community Health Care, for its wait.
+  - (later) At the hour, missed: “Missed The Doctor” comes as a notice, the visit goes unbilled, and it stays owed until you book, or until a Monday brings another visit, which books the one owed.
+  - (later) Booked at Fair Haven Community Health Care while Yale Health didn’t cover you, and Yale Health covering you again before its day (Affiliate cover bought on a leave, or back from the leave): it stays where it was booked, “Your Appointment Is Outside Yale Health” comes as a notice, and its line under Your Doctor says to call it off and Book An Appointment, to be seen at Yale Health Center, Student Health. Kept, it’s billed at Fair Haven Community Health Care’s uninsured price.
+  - (later) Each Monday, a condition’s medicine with 7 days or fewer left is refilled for 30 days: a generic at your pharmacy’s price, a brand at the median.
+  - (later) While an appointment is booked, a new doctor’s visit drawn on a Monday is dropped, never billed, and no condition review is booked. While a visit is owed, no condition review is booked, and the next visit a Monday draws books the one owed, one appointment for both.
+
+How It Connects:
+  - [scheduled] day.calendar: A booked appointment is a commitment on the calendar, 20 minutes at 10:00 AM on a weekday that isn’t a public holiday, and the clock stops at it.
+  - [immediate] papers.health-cover: A visit you keep is billed at once for your share, and its bill joins Care And Its Bills, due in 30 days.
+  - [evaluation] papers.conditions: Your Pharmacy’s cash price is read for every generic fill of a condition’s medicine.
+  - [scheduled] day.needs: Booking sends “A Doctor’s Appointment” to What Needs You, a missed one “Missed The Doctor”, and a referral “A Referral”.
+
+What To Do Next:
+  - If a visit is owed, press Book An Appointment and keep the hour free on its day.
+  - In America, pick the cheapest pharmacy under Your Pharmacy if you fill generics.
+
+If You Can’t:
+  - “There’s nothing to see a doctor about.”: no visit is owed.
+  - “You have an appointment already.”
+  - “No waiting time is published where you live, so there’s nothing to book: you’re seen when you need care.”: Ireland’s way, where a visit comes unbooked.
+  - “Your doctor has to be in the town you live in.” or “That isn’t a doctor’s practice.”
+  - “Yale Health sees Yale students it covers, and it doesn’t cover you now.”: Yale Health’s practice sent once its cover has ended; the box doesn’t offer it then.
+  - “You can choose a pharmacy only in the United States.”
+  - Pressed, Fill A Longer Supply says “Your bank can’t cover … for every condition’s fill, so nothing was filled or charged.” when the bank can’t pay every condition’s fill.
+  - Before the chapter is read, the boxes, Call It Off and Book An Appointment are grayed, their tooltip naming the chapter.
+  - (mistake) Looking to go back to The Practice Your Cover Uses, The First Practice In Town or Any Pharmacy, At The Typical Price: each shows only until you pick, so you can change a choice to another practice or chain, but not undo it.
+  - (mistake) Picking Fair Haven Community Health Care while Yale Health covers you: each visit there is billed $183.98 in 2026, where Yale Health Center, Student Health costs $0. Picking Yale Health Center, Student Health again puts it right for the next visit booked.
+  - (mistake) Sleeping through 10:00 AM on the day: the appointment is missed. Book An Appointment books again, for the full wait.
+  - (mistake) Calling an appointment off and leaving it: the visit stays owed, and no condition review is booked, until you book it or a Monday brings another visit.
+  - (mistake) Filling a longer supply to save: it charges 3 fills’ share at once, the same as 3 ordinary fills. What it buys is medicine paid ahead, which lasts through a month the bank runs too low for Monday’s refill.
+
+What Decides It:
+  - The Wait Where You Live: 4 days in New York, 13 in Los Angeles, 24 in New Haven: the average of fifteen metros, for a town the survey left out (estimated)
+  - A Practice’s Own Wait: Yale Health Center, Student Health offers a same-day or next-day appointment, and the game books the next weekday; Fair Haven Community Health Care publishes none, and New Haven’s 24 days stand there
+  - Being There: Awake and out of hospital at its hour. An injury that keeps you from class doesn’t keep you from the doctor.
+  - A Referral: 9.1% of the visits kept in America end in one, and the specialist is seen 31 days on (estimated)
+  - An Emergency: Keeps you in the department its median time: 189 minutes in Connecticut, at Yale New Haven Hospital, York Street Campus Emergency Department (estimated)
+  - “What it would cost you here now” is your share under today’s cover, for a visit, urgent care and an emergency.
+  - Elsewhere, a practice picked that publishes its own price, as Bupa’s pay-as-you-go GP in London does, bills a visit at that price: a public system pays its own practices, not a private GP. A life in New Haven never meets one.
+  - A visit you keep doesn’t change your wellbeing by itself. It renews prescriptions, records a review and may bring a referral. Connecticut sets no date after which a prescription for a medicine that isn’t controlled can no longer be filled (its pharmacy statutes, read on October 15, 2026), so in New Haven a renewal changes no fill, and the visit is mostly its bill.
+  - In New Haven the game has 2 practices. On Yale Health, picking Fair Haven Community Health Care changes both how soon you’re seen and what a visit costs: 24 days on and $183.98 in 2026, against the next weekday and $0 at Yale Health Center, Student Health, since Yale Health pays for a member’s care at its own Health Center. Fair Haven keeps a sliding fee for the uninsured, but publishes none of its amounts, so the game bills the uninsured price there. An emergency is paid wherever it’s had.
+  - An appointment is had where it was booked. One booked at Fair Haven Community Health Care while Yale Health didn’t cover you, on a leave, is kept there and billed the uninsured price even if Yale Health covers you again before the day; Call It Off and Book An Appointment, and it’s at Yale Health Center, Student Health.
+
+A Worked Example:
+  A student on Yale Health in New Haven, whose Monday brought a doctor’s visit.
+  1. A notice: “A doctor’s visit: booked at Yale Health Center, Student Health for …, the usual wait where you live.”, the next weekday.
+  2. On the day you sleep past 10:00 AM, and “Missed The Doctor” follows.
+  3. Open Papers, Health Cover, and press Book An Appointment beside “A doctor’s visit: not yet seen”.
+  It’s booked again for the next weekday at Yale Health Center, Student Health, moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is. Kept, it costs $0 on Yale Health, renews your prescriptions, and about one time in 11 ends in a referral to a specialist 31 days later.
+
+
+## Conditions And Therapy (papers.conditions)
+
+A long-term condition is an illness that stays with you: depression, asthma, high blood pressure, diabetes or arthritis. Your Long-Term Conditions, on Health Cover, is where you keep each one up or let it go. Kept up, each costs its month of care and its medicine, at what your plan doesn’t cover. Let It Go stops both, and from then the condition, left untreated, takes its toll each week. With depression, a course of eight therapy sessions can lift it for good.
+
+Where To Find It: Papers, Health Cover, Your Long-Term Conditions
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”. Your Long-Term Conditions shows when you have a long-term condition or wear lenses, and Therapist when you have depression.
+
+What To Press:
+  1. Open Papers, Health Cover, Your Long-Term Conditions. Each row reads Kept Up, Left Untreated, Out Of Medicine, or Kept Up, But This Month’s Care Went Unpaid, with the date your medicine lasts to.
+  2. Let It Go stops a condition’s care and its medicine. Keep It Up starts them again.
+  3. With depression, pick a Therapist where you live and press Begin A Course Of 8 Sessions. In New Haven that’s Yale Mental Health & Counseling, Free With Yale Health, or Adna Linden Psychotherapy, $240 A Session.
+  4. While the course runs, the panel reads “Therapy with …: 2 of 8 sessions”, naming Yale Mental Health & Counseling, and so on. Each session is a commitment the clock stops at.
+
+What You Need First:
+  - A long-term condition: drawn once when a life begins; one that begins later comes with a “Diagnosed” notice and is kept up from the start.
+  - Begin A Course Of 8 Sessions: depression, no course running, a therapist in the town you’re in, and for Yale Mental Health & Counseling, Yale Health covering you.
+
+What It Costs:
+  - Depression, A Month: 2 therapy sessions at your plan’s visit copay ($0 on Yale Health, $90 a month on Access Health CT silver; uninsured, $139 a session at 2024’s price), and a generic each fill (estimated)
+  - Asthma: A brand inhaler each fill, and a visit’s copay in about two months of twelve (estimated)
+  - High Blood Pressure: A generic each fill
+  - Diabetes: Type 1: insulin, never more than $35 a fill ($25 on Access Health CT’s silver plan, which Connecticut regulates, and $0 on HUSKY D and Covered Connecticut), and a glucose monitor, never more than $75. Type 2: a generic. A visit’s copay each January, April, July and October.
+  - Arthritis: A generic each fill, and a visit’s copay in about two months of twelve (estimated)
+  - A Course Of Therapy: 8 weekly sessions: 50 minutes at Yale Mental Health & Counseling, free to a student Yale Health covers; or 60 minutes at Adna Linden Psychotherapy, $240 a session whatever your cover, its full fee, paid from your bank as each is held, and billed as care where the bank can’t
+  - Time: Each session on the calendar at 5:00 PM on a weekday (estimated)
+
+What Happens:
+  - Keep It Up: this month’s care is paid at once from your checking account, then the easy-access savings at its bank where Savings Covers The Current Account is On, then its overdraft. If it can’t be, the row says the care went unpaid. The toast says “Kept up from this month.”
+  - Let It Go: care and refills stop at once, and the toast says “Care stopped. It’s left untreated from now on.”
+  - Begin A Course Of 8 Sessions: the first session is set a week later, at 5:00 PM on a weekday, and the toast gives its date. While it runs, depression’s monthly therapy charge stops; each session is paid as it’s held.
+  - (later) On the first of each month, each kept-up condition’s care is paid. If the bank can’t cover it, the condition goes without and counts as left untreated until the next month.
+  - (later) Each Monday, medicine with 7 days or fewer left is refilled for 30 days, and a condition left untreated or out of medicine takes its toll.
+  - (later) Each session at its hour: awake and out of hospital, it’s held, and paid or billed; asleep or in hospital, it moves to the next week. After the last, the depression lifts at the course’s rate or stays, and another course can be had.
+  - (later) Yale Mental Health & Counseling sees students Yale Health covers: if that cover ends mid-course, the course ends with it, and the sessions had stay had. Adna Linden Psychotherapy can then begin a new course of 8, at its fee.
+
+How It Connects:
+  - [scheduled] body.how: Each Monday a long-term condition left untreated takes its toll: depression lowers morale, diabetes your condition, arthritis your energy.
+  - [scheduled] day.calendar: Begin A Course Of 8 Sessions puts a session on the calendar each week, a commitment the clock stops at.
+  - [scheduled] papers.doctor: A condition kept up books its review as a doctor’s appointment when it falls due.
+  - [immediate] bank.accounts: Keep It Up pays the month’s care at once from your checking account, then the easy-access savings at its bank where Savings Covers The Current Account is On, then its overdraft; later months and each fill are paid the same way.
+
+What To Do Next:
+  - Keep enough in your checking account on the first of each month for each condition’s care.
+  - With depression, begin a course of therapy early in your time at the School, while Yale Health covers it.
+
+If You Can’t:
+  - “You don’t have that.”: a condition you don’t have.
+  - “Choose a therapist where you live.”, “A course of therapy here is for depression.” or “You’re in a course already.”
+  - “Yale Mental Health & Counseling sees students Yale Health covers.” After Yale Health, Adna Linden Psychotherapy takes a course in New Haven, at $240 a session.
+  - (mistake) Letting a condition go to save money: the weekly toll keeps coming, and type 1 diabetes left untreated makes the emergency room 4 times as likely, each visit billed.
+  - (mistake) Missing sessions: each one missed asleep or in hospital moves the course a week.
+  - (mistake) Starting late in your last year: if Yale Health ends before the last session, the course at Yale ends there, and finishing means a new course of 8 at Adna Linden Psychotherapy, at $240 a session. Begin early.
+
+What Decides It:
+  - How Often A Life Begins With One: At the rates for adults 18 to 34: depression 25%, asthma 10.1%, high blood pressure 11.5%, diabetes 2% and arthritis 5%. Diabetes, high blood pressure and arthritis can also begin later, likelier in a heavier body
+  - Kept Up: Treated, with this month’s care paid and the medicine not run out: all three at once
+  - Left Untreated, Each Week: Depression takes 3 morale, diabetes 2 condition, arthritis 2 energy; asthma makes an emergency 2 times as likely, and type 1 diabetes 4 times; high blood pressure does nothing a year shows (estimated)
+  - A Course’s Chance: 36% for a private course or Yale’s, 48.5% for NHS Talking Therapies (estimated)
+  - Reviews: A doctor’s visit booked for a condition kept up: high blood pressure and asthma every 12 months, diabetes every 6
+  - “The Depression Has Lifted” takes it off your record: no more care, medicine or weekly loss of morale. “The Course Is Done” means it stayed.
+  - Out Of Medicine means the supply ran out: the condition counts as left untreated until Monday’s fill.
+  - Care and medicine for a condition are paid straight from your bank, so they show on your statements, not as rows in Care And Its Bills.
+
+A Worked Example:
+  A first-year on Yale Health who carries depression.
+  1. Open Papers, Health Cover. Depression reads Kept Up, with its medicine’s date.
+  2. Choose Yale Mental Health & Counseling, Free With Yale Health, and press Begin A Course Of 8 Sessions.
+  3. Be awake and out of hospital at 5:00 PM on each session’s day.
+  Each session costs $0. After the last, 36% of the time a notice says “The Depression Has Lifted”, and depression is gone from Your Long-Term Conditions; otherwise “The Course Is Done”, and another course can begin.
+
+
+## Unemployment And Assistance (papers.benefits)
+
+Unemployment insurance pays you each week when you’re out of work, and SNAP helps pay for food. On the Unemployment tab, File A Claim opens a claim with Connecticut, where you earn your wages: from $44 ($45 from 2027) to $721 a week, by what you earned, for up to 26 weeks, with no waiting week. Connecticut doesn’t pay a full-time student, so a claim waits until you’ve left school. Apply, on the SNAP panel, puts up to $306 a month of food assistance on an EBT card, and each day’s groceries are paid from it first.
+
+Where To Find It: Papers, Unemployment: SNAP And Your Claim
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”.
+
+What To Press:
+  1. Open Papers, then Unemployment.
+  2. The claim panel, No Claim Open, says what filing now would pay, or why it wouldn’t. File A Claim shows beside its title only when a claim would pay.
+  3. Once filed, the panel is A Connecticut Claim: A Week, Paid, and At Most, with the date the claim ends.
+  4. On the SNAP panel, press Apply when it shows. Claim, At Most and On The EBT Card follow the case.
+
+What You Need First:
+  - A claim: covered wages in your base period, at least 40 times the weekly benefit (the Summer Cabaret’s stipend counts; work-study never does); no claim open; out of school; and US citizenship or permission to work, such as OPT.
+  - SNAP: US citizenship, being an adult, and no case open; in the summer recess while you’re at school, 87 hours of work in the last 30 days.
+
+What It Costs:
+  - Time: None: filing and applying move no clock
+  - Money: None. What a claim pays is income on your return.
+
+What Happens:
+  - File A Claim: the claim opens, the toast says “Claim filed: …” with its weekly amount, and the first week is certified the coming Sunday.
+  - Apply: the SNAP case opens, and the toast gives the day the first month comes.
+  - (later) Each Sunday at 8 in the evening the week is certified. In the US, out of school, allowed to work, and out of hospital and not laid up for most of the week’s days, you’re paid the benefit less two-thirds of the week’s pay, into the account your payments go to.
+  - (later) The claim closes when it has paid its most, or a year after filing, with the notice “Your Unemployment Claim Ended”.
+  - (later) SNAP’s month is worked out a week after applying, then every 30 days, and what’s due goes onto the EBT card with the notice “SNAP Paid”. Under the state’s gross limit every month but the first pays at least SNAP’s least, $25 from October 1, 2026; the first, or a month over the limit, whose income leaves nothing due pays nothing and says nothing.
+  - (later) A student in the summer recess without the hours has the case closed, with a notice; apply again once that changes.
+  - (later) Out of school and past the time limit, SNAP pays nothing, and says so each month, until you work the hours. While you’re at school, or while an unemployment claim is open, the time limit doesn’t apply.
+
+How It Connects:
+  - [prerequisite] productions.cabaret: The Summer Cabaret’s stipend is the pay a claim counts: its quarters are your base period’s wages.
+  - [prerequisite] school.standing: A Connecticut claim pays only once you’ve left school: graduated, withdrawn or dismissed.
+  - [history] taxes.return: What a claim pays is kept as the year’s unemployment insurance, income on your return.
+  - [scheduled] body.look-after: Each month’s SNAP goes onto the EBT card, and each morning’s groceries are paid from it first.
+  - [evaluation] school.shifts: In the summer recess, a student’s hours of work in the last 30 days, work-study’s among them, are read against SNAP’s 87; work-study’s pay isn’t counted as income, and at school SNAP’s time limit doesn’t apply.
+
+What To Do Next:
+  - Once a claim is open, stay in New Haven and out of hospital on Sundays, when each week is certified.
+  - In the summer recess, keep 20 hours of work a week if you want SNAP to stay open.
+
+If You Can’t:
+  - “Connecticut treats a full-time student as not available for work (CGS 31-235(b)), so a claim pays only once you’ve left school.”
+  - “Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3304(a)(14)).”
+  - “Connecticut asks for base-period wages of 40 times the weekly benefit: …”, followed by what your base period’s quarters paid.
+  - “You already have a claim open.”
+  - “In the game, SNAP is only for US citizens, because a noncitizen’s eligibility depends on immigration details the game doesn’t track.”
+  - “A student in the summer without work-study or 20 hours of work a week isn’t eligible for SNAP (7 CFR 273.5).”
+  - Universal Credit, Jobseeker’s Allowance, EI Special Benefits with its Register, Ontario Works and Income Assistance show only for a life living in Britain, Ireland or Canada, and the Seguro De Desempleo takes no new claim at all. A life begun now lives in New Haven, so their panels don’t show.
+  - (mistake) Counting on work-study to qualify a claim: Yale’s pay to its own student is outside the base period. The Summer Cabaret’s stipend is what counts.
+  - (mistake) Filing while still enrolled: Connecticut refuses it. File once you’ve graduated, withdrawn or been dismissed.
+  - (mistake) Spending the summer recess without work: a student’s SNAP case closes. Join The Summer Company, or apply again in the fall.
+  - (mistake) Being in hospital or laid up for most of a week: that week pays nothing.
+
+What Decides It:
+  - The Base Period: The first four of the last five completed quarters, or, where those fall short, the last four
+  - Connecticut’s Week: The two highest quarters’ average over 26, down to the dollar, at least $44 in 2026 and $45 from 2027, estimated by the statute’s index, and at most $721; 26 weeks’ worth at most, or a year from filing
+  - A Week With Work: The benefit less two-thirds of the week’s pay, rounded up to the dollar: nothing once the pay reaches one and a half times the benefit
+  - SNAP’s Month: Up to $306 from October 1, 2026, less 30% of net income rounded up to the dollar: last month’s wages and unearned income, less 20% of the wages and a $217 deduction. Work-study pay isn’t counted. Under the state’s gross limit, never less than $25 after the first month.
+  - SNAP’s Time Limit: Out of school, aged 18 to 64, with under 80 hours’ work in the last 30 days: 3 months in 36. A student at school is exempt, through the summer recess too, and so is anyone with an unemployment claim open
+  - A Week is the claim’s benefit, Paid what it has paid, and At Most where it stops, with the date it ends.
+  - For a sense of size: a summer with the company paying $1,500 in June and $3,375 in July and August makes a week’s benefit of $93, and $2,418 at most.
+  - On The EBT Card is what’s left for groceries: each morning’s groceries come off it before your bank.
+  - Past Claims keeps each closed claim, its base period and what it paid.
+
+A Worked Example:
+  A US citizen who graduated in the spring, whose base period holds a summer with the Summer Cabaret: $1,500 in June and $3,375 in July and August.
+  1. Open Papers, Unemployment. No Claim Open reads “Filed now, your base period, …, pays …”.
+  2. Press File A Claim.
+  3. Stay in New Haven, out of hospital, through Sunday evening.
+  The toast says “Claim filed: $93.00 a week.” Each Sunday $93 goes into your account, with no waiting week first, until $2,418 has been paid or a year has passed; it’s income on your return.
+
+
+## Pensions (papers.pensions)
+
+Social Security pays a monthly benefit on your US earnings record: 40 credits qualify, one for each $1,890 of covered wages, four a year at most. Claim Social Security from 62 for a cut benefit, 70% of it at 62, the full one at 67, or more by waiting, 124% at 70. At school, your only covered work is the Summer Cabaret, a credit or two a summer, so your record grows only that far. Britain’s, Ireland’s and Mexico’s pensions have panels of their own, shown only if your record or citizenship qualifies for them.
+
+Where To Find It: Papers, Unemployment: Social Security And The State Pensions
+When You Can Use It: From the guide’s chapter “Cover, Benefits And Returns”. Social Security’s panel shows once your US work has earned a credit.
+
+What To Press:
+  1. Open Papers, then Unemployment. The pension panels sit above the claim panel.
+  2. Social Security shows Credits, At 67, A Month (with what 62 and 70 would pay) and Claimed.
+  3. Claim Social Security shows beside its title once you can claim. The toast gives the monthly amount and its share of the full benefit.
+  4. Each other pension has its own panel and Claim It: State Pension, State Pension (Ireland), IMSS Pension and Pensión Para El Bienestar.
+
+What You Need First:
+  - Social Security: 62 or older, 40 credits, and not drawing it.
+  - State Pension, the UK’s: State Pension age, 68 for anyone born after April 5, 1978, and 10 qualifying years on your National Insurance record.
+  - State Pension (Ireland): 66, and 520 paid contributions, or living in Ireland with means under the non-contributory pension’s.
+  - IMSS Pension: 65, and the year’s weeks of IMSS contributions, 875 in 2026 and 25 more each year to 1,000.
+  - Pensión Para El Bienestar: a Mexican citizen of 65 or over, living in Mexico.
+
+What It Costs:
+  - Time: None: claiming moves no clock
+  - Money: None to claim. A claim stands for life: it can’t be taken back or made again.
+
+What Happens:
+  - Claim Social Security: the month’s amount is fixed from your record and your age that day, and the toast says it.
+  - Claim It on another pension: claimed from today, and the toast gives its week, month or two months.
+  - (later) Social Security is paid a month after claiming and every month after, into the account your payments go to, with a notice. It’s income on your return.
+  - (later) The UK’s State Pension comes every four weeks, Ireland’s every week, the IMSS pension every month, and the Pensión para el Bienestar every two months while you live in Mexico.
+
+How It Connects:
+  - [prerequisite] productions.cabaret: The Summer Cabaret’s stipend, with FICA withheld, is the work that earns a school life its credits.
+  - [history] taxes.return: A pension paid is kept as the year’s pension income, and Social Security is taxed on the return as IRC 86 says.
+  - [scheduled] bank.accounts: Once claimed, each payment goes into the account your payments go to, on its own day.
+  - [evaluation] documents.work: A year as a nonresident on an F-1 earns no credit: your status is read for each year of your record.
+
+What To Do Next:
+
+If You Can’t:
+  - “You can claim it from 62. It’s full at 67, and more if you wait until 70.”
+  - “It takes forty credits to qualify, and your US work has earned …”
+  - “You’ve already claimed it.”
+  - The UK’s, Ireland’s and the IMSS panels show only with a record there: UK earnings, Irish contributions, IMSS days. A life begun now works only in New Haven, so they stay hidden.
+  - (mistake) Claiming at 62 when you could wait: the cut lasts for life. At 62 you keep 70% of the full benefit; at 70, 124%.
+  - (mistake) Counting work-study toward credits: a student working for their own school pays no FICA, and earns none.
+
+What Decides It:
+  - Covered Wages: Each year’s US wages to its taxable maximum, less work-study, which pays no FICA; a year as a nonresident on an F-1 counts nothing. The Summer Cabaret’s stipend counts.
+  - The Benefit At 67: Your best 35 years, indexed to the year you turn 60 and averaged a month, then 90%, 32% and 15% across $1,286 and $7,749
+  - Early Or Late: Cut 5/9 of 1% a month for the first 36 months early and 5/12 of 1% after; raised 8% a year to 70
+  - After 2026: Where SSA hasn’t published the wage index, the maximum, the bend points or the credit yet, the game uses its latest figures (estimated)
+  - Credits says “You need forty to qualify, and years at school earn only a few”. At $375 a week, a summer’s stipend of about 13 weeks earns 2; four a year is the most any year can earn.
+  - At 67, A Month is what today’s record would pay; a later, better year replaces a lower one among your best 35.
+  - A life born in Mexico, a Mexican citizen by its Place Of Birth, sees the Pensión Para El Bienestar panel, and living in New Haven it reads “It’s only for Mexican citizens living in Mexico.”
+
+A Worked Example:
+  A US citizen in the fall of their third year, after two summers with the Summer Cabaret.
+  1. Open Papers, Unemployment.
+  2. Read the Social Security panel.
+  Credits reads 4, against the 40 that qualify, and Claimed reads Not Yet, with “You can claim it from 62. It’s full at 67, and more if you wait until 70.” under it. With no covered work after school in the game, the record stops near there, and Claim Social Security never shows for this life.
+

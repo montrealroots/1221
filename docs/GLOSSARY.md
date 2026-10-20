@@ -5,6 +5,14 @@ in the game (and the code it names, so a writer can check the meaning), and the 
 than one part of the game is here, in Core, and only the coordinator of a pass changes it. A term only one part uses is
 in that part's section. Code identifiers keep their names; only what's shown changes.
 
+Brief 15 (2026-10-19, `docs/verification/briefs-2026-10-16/15-complete-natural-language-editorial-pass.txt`) kept
+this file as its standard. Where a row's word was correct but stiff, the second pass changed the row and kept the old
+word in Instead Of. The first such change is checking account, below, in Money. At the pass's end the coordinator
+added each area's rows from `docs/verification/editorial-2026-10-19/<area>/glossary.md` as brief 14 did, one row a
+term, each at the end of its part's section. Where an area's row added to one already here, the row here took its words
+and its Instead Of: a life, checking account, available, minimum payment, kept up and left untreated, and a plan of
+your own. "On your side of the frame" is the second material area's row, which names the mark and the eyeline too.
+
 Written 2026-10-17 for the owner's brief 14. Where the game said something else until then, the "Instead Of" column
 keeps it. The sections below Core were assembled the same day from each area's `glossary.md`
 (`docs/verification/language-2026-10-17/<area>/`), one row for each term: a term two areas both wrote is in Core, or in
@@ -47,7 +55,7 @@ screens were brought to this file's word (`docs/verification/language-2026-10-17
 | **commitment** | Something on the calendar you need to be at: a class, a call, a shift, a plan of your own. The clock stops at it and asks. Opened, it says A Commitment. | something that wants you, Something You Have To Be At, "two things that want you" |
 | **question** | A row in What Needs You with answers on buttons and Dismiss (`DecisionItem`). It closes when answered, when dealt with on its own screen, or by itself within two days after its date. | decision |
 | **notice** | Something the game tells you, unread until Mark N Read (`Notification`). An authority's letter arrives as one, under its own code and title (CP14, A Notice Of Noncompliance). Money's **notice period** (Money, below) is another word. | notification in prose |
-| **available**, **pending** | Your available balance is what you can spend now. A card payment approved but not yet posted is **pending**: it says the day it posts, and it's already taken off the available balance. Money on its way between accounts has left one and isn't in the other yet, so it isn't available to spend. Never call money on its way in available. | "completed items", "held against the balance" |
+| **available**, **pending** | Your available balance is what you can spend now. A card payment approved but not yet posted is **pending**: it says the day it posts, and it's already taken off the available balance. Money on its way between accounts has left one and isn't in the other yet, so it isn't available to spend. Never call money on its way in available. A refusal says it: "Chase Total Checking has only $40.50 available, so nothing was moved.", or "… has nothing available" at zero or below. | "completed items", "held against the balance", "has only $40.50" without available, "has nothing in it" |
 | **apply**, **applied**, **issued**, **in hand** | Applying for a document starts it. You hold it only once it's issued and arrives. | |
 | **Catch Up**, **Catch Up By** | To make up something missed: an Orientation session, on School's Coursework tab, or a payment plan's missed payment, on Papers, by the date Catch Up By gives. | Caught Up By |
 | **payment plan** | An arrangement to pay what's owed over time: a card's plan (The Card's Offers) and the bank's hardship plan, or the IRS's or a state's plan for tax (the IRS's covers federal tax only; each state has its own). Always "payment plan", never "a plan" alone where it could be read as anything. | installment agreement (except as a state's own name), "a plan" alone |
@@ -76,6 +84,18 @@ From the material area (`material/glossary.md`). The reader, a reading and a tak
 | **staged intimacy**, **intimacy coordinator**, **staged fight**, **marked solo**, **at reduced speed**, **called cues**, **replica**, **eyeline**, **off camera**, **on her side of the frame** | How a brief's contact, intimacy or fight is staged safely for a solo self-tape. Industry words, kept, and said in every brief that asks for them. | |
 | **class scene** | A scene from a play, public domain to 1930, or an original scene written for SLATE, set for a course's table work (`SCENES`). | excerpt |
 | **Why the text supports it** / **Why the text doesn’t support it** | The text’s reason an answer at the Table Work (School) holds, or doesn’t, shown under it once the scene is shown. A reason it doesn’t is the teacher’s note word for word: “<question>: <reason> You played <role> in <play>.” Each is a whole sentence of the play’s facts, written by the material area; the labels are the school’s. | What it rests on, What cuts against it (until the school area’s merge), “Nothing of the kind”, a fragment, “she isn’t in this part” |
+| **Mark it solo …** | A staging note says what to do: "Mark them solo at reduced speed against the reader’s called cues from off camera, with no contact and the keys on your side of the frame, so they repeat exactly on every take." | marked solo …, repeatable on every take (a participle with no one doing it) |
+| **You Speak To: <the person>** | A voice brief's `reader` field, under the pane's heading You Speak To: the person first, then what to do ("Rin, her rival, already recorded on the track. Play against his lines in your headphones."). | The voice speaks to …; the actor plays … |
+| **story** (an anthology's) | One story of several in an anthology film, as the brief's logline calls it. | segment |
+| **the drawn mouth** | In a dub, the animation's mouth movements a line must fit. | the flaps |
+| **Play it as …**, **Sing it as …**, **Handle it as …** | A brief's direction to the actor is said as one: "Sing the song as the character …", "Play the accent as the way Dennis and his mother talk …", "Handle the rifle as stage-combat firearms work …" (batches 3 and 6). | "the song is sung as …", "the accent is played as …", "the rifle is handled as …" |
+| **What she wants**, **he wants** | A reading's "It rests on" line rests on the scene, said as the character's want or act. | "her objective is …", "the brief has her …", "the brief is built on …" |
+| **a one-act play** | A class scene's `where` for a play in one act, as the card and the set notice read it: "The Proposal, a one-act play, the quarrel over Oxen Meadows." (batch 8). Trifles, in school's `coursework.ts`, still says "the one act". | the one act |
+| **The <thing> is in the <act>** | A Table Work reason for an answer the text doesn't support names what it means, because it's also the teacher's note, where the answer isn't repeated: "The screen scene is the fourth act; this one is at home with Sir Peter." (batches 7 and 8). | "That’s the fourth act." alone |
+| **on your side of the frame**, **your mark**, **your eyeline**, **your headphones** | In a brief's staging note, said to the actor as an instruction: "Mark its four moves solo, at reduced speed, …", "keep the props on your side of the frame". The character stays she or he ("React to the hit on her shoulder"). The glossary's staging terms (staged intimacy, intimacy coordinator, marked solo, at reduced speed, called cues, replica, eyeline, off camera) are kept word for word inside the instruction. | "on her side of the frame" in a note that tells the actor what to do; "the actor plays …"; a passive staging note ("the hit is reacted to, never landed", "the child is read off camera") |
+| **You Speak To:** *who* | A voice brief's `reader`, shown under the pane's You Speak To: the person or people spoken to, then, where it helps, how to play to them ("Kenta, her brother, eleven, already recorded on the track. Play against his lines and his frightened breathing in your headphones."). A brief with no one opposite says so last: "There’s no reader." | "The voice speaks to …", which repeated the heading |
+| **You record it alone at a microphone.** | How a voice brief is made, said once, as a sentence, where the circumstances close. | "Recorded alone at a microphone." as a closing fragment |
+| **clowning** | In a techniques note, the work Clown And Mask names: "The fight with the poles and the collapse are clowning, physical comedy you build and repeat exactly." (Core lists the technique as Clown And Mask, clowning.) | "physical comedy" alone, where the heading says Clown And Mask |
 
 ## School
 
@@ -107,6 +127,23 @@ prepared, the forecasts and how you play it are Core's.
 | **Note Priority** | A part's share when the teacher picks what to note on a piece (`weightsOf`, read by `noteCandidates`). It doesn't change the result: the result is held back by the least prepared part, whatever its share. The card says "Note priority N%", the piece's look "Note Priority". | Weighs; counts for |
 | **what counts most**, **the qualities your teacher looks for** | What a way of playing shifts, and what a part's preparation holds back (`Dimension`, `APPROACH_EFFECT.lean`). In a production, the same qualities, judged on the night. | dimension, lean, weight |
 | **rehearse a choice**, **how far it's rehearsed** | Choosing how to play a scene isn't rehearsing it: rehearsal steps, partner rehearsals and a production's calls rehearse it, to the scene's own mark (`PLAYING`, `requiredFor`). | rehearsed in |
+| **points out of 100**, **less than a point** | What a limit cost a quality of a piece, in a teacher's note or Shown Today: whole points on the quality's 0 to 100 scale (`pointsWords`, from `Limit.by`). | 25.7 points, a figure to a tenth in a teacher's words |
+| **your execution**, **your believability** and the other qualities, in lower case mid-sentence | What your teacher looks for, named in a sentence ("held back your execution"); the screen's Title Case names stay on labels. | held back Execution |
+| **“Lines”**, **“Knows The Scene”** (a part named in quotes as a sentence's subject) | A card's own name for a part of a piece, quoted where it's the subject of a sentence so it reads as a name: "“Lines” wasn’t complete". A task's own words ("Learning the lines") aren't quoted. | Lines wasn’t complete |
+| **Start with …: this piece puts it first** | The notice when a piece is set: the part it puts first (the card's Put First), as advice on where to start. | Put … first: it counts for more when this piece is shown |
+| **ask your partner for an evening under Rehearsing With** | What works on a piece's partner part, said where the card's Still to finish and the warning name it. | Rehearse With Your Partner, asked for an evening (a step the card doesn't show) |
+| **That piece is finished.** | The refusal for a step, an answer or a request on a piece already done. | That work is finished. |
+| **The time to make it up ran out** | An Incomplete's deadline passed, whether or not it was extended. | The month to make it up ran out |
+| **you don’t have a scene together right now** | Running lines with a classmate you share no open piece with. | You share no open scene with |
+| **the Standing And Craft tab** | The School screen's tab by its label, in every notice that sends you there. | the Standing tab |
+| **counted absent** | What not being registered does to a class day's attendance. | today’s classes didn’t count your attendance |
+| **1 hour and 40 minutes** (a running time in a sentence) | The glossary's duration form inside a sentence, as the workload says the evening. | 1 h 40 |
+| **averaged 78 of 100** (a figure of 100 on a screen) | A night's or a run's result on its 0 to 100 scale, written "of 100" as the glossary writes trust; tests/looks.test.ts keeps "out of 100" off the screens. | 78 out of 100 |
+| **press Give Notice Of Return on the Standing And Craft tab** | The leave's notices name the button and its tab, as the refusals do. | on the Standing tab, Tell the registrar |
+| **the faculty won’t recommend the degree** | What follows when the thirty days pass with nothing asked, in the words of the notice that ends it ("The faculty didn’t recommend the degree"). | the degree is withheld |
+| **the middle student in your class grew …** | The class's median growth, said as the term review says it. | the class’s middle |
+| **counted as 2.5 nights** | How much a run counts toward what you delivered: its nights, up to eight, a Cabaret's at half. | counted ×2.5 |
+| **a fifteen-day grace period** | An F-1's days in the country after withdrawing, the glossary's grace period. | fifteen days’ grace |
 
 ## Profile, Abilities, Genres And Advice
 
@@ -140,6 +177,12 @@ the forecast, how you play it, suits the scene and audience are Core's.
 | **a day of practice kept** | The day's first hour of practice, which grows discipline once (`PRACTICE.disciplineDay`). | the day kept |
 | **experience of** (a kind of material) | What an exercise's hour or a piece counts toward in the material record, so material that asks for it prepares faster (`practises`, `features`). | practice in |
 | **estimated from its conventions** | A genre's register where the research says nothing of how it's played (`basis: 'reading'`). | SLATE's reading of its conventions |
+| **judged again as you are now** | Your recent pieces judged again at your levels today, which is how the advice's forecast is made (`trainingForecast`): "On your recent work, judged again as you are now, that’s forecast to be worth about 0.8 points a piece". | replayed with you as you are now |
+| **leads the advice on what to train**, **took the lead** | The first training recommendation, and since when it has been first (`Experience.advised`): "It has led the advice on what to train since September 7, 2026", "What moved its forecast since it took the lead: …". | comes first, since the advice first named it, has come first |
+| **when you last saw it** | The last time the advice was noted, which is when it was in front of you: before taping a brief, and before an hour of practice after new work (`noteAdvice`). | the last time the advice was noted |
+| **worth your time** | The advice's verdict on preparation and training, each at a tenth of a point a piece or more (`attentionOf`): "Both preparation and training are worth your time now, preparation more". | deserve attention, deserves attention |
+| **Readiness Today** | The Player Profile's panel of how ready you are for today's work: readiness at this hour, whether anything holds your work back, energy and stress. Not the Condition measure (Core). | Current Condition |
+| **Focus**, **set Focus to Steady** | The practice control's Focus setting, named as the control names it when the advice says which to choose. | Choose Steady |
 
 ## Money
 
@@ -148,22 +191,38 @@ exchange rate and the game are Core's.
 
 | Say | What It Means | Instead Of |
 |---|---|---|
-| **current account** | The everyday account wages are paid into and spending comes from (`kind: 'checking'`). A bank's own name for it is used beside it (Chase Total Checking, AktivKonto). | checking account in prose, "what you spend from" |
-| **primary account** | The current account money comes from unless you say otherwise: the debit card's everyday purchases, cash from a machine, bills paid by hand, a new standing order or autopay (`primaryAccountId`, `PRIMARY_DOES`). Making another account primary moves nothing already set up. | "the account the day comes out of", "Primary." alone |
-| **savings**, **easy-access savings** | A savings account at a bank where you keep a current account, one per bank. Easy-access, as against a term deposit. | "what you put aside" |
+| **checking account** | The everyday account wages are paid into and spending comes from (`kind: 'checking'`). A bank's own name for it is used beside it (Chase Total Checking, AktivKonto). From 2026-10-19 (brief 15): the game is written in US English, and the owner's own example said checking account. Until then this row said current account, with checking account the word to avoid. Where a life starts with no bank the game has, the account it opens is named Checking Account, and the control that lets savings cover it is Savings Covers The Checking Account. | current account, Current Account, "what you spend from" |
+| **primary account** | The checking account money comes from unless you say otherwise: the debit card's everyday purchases, cash from a machine, bills paid by hand, a new standing order or autopay (`primaryAccountId`, `PRIMARY_DOES`). Making another account primary moves nothing already set up. | "the account the day comes out of", "Primary." alone |
+| **savings**, **easy-access savings** | A savings account at a bank where you keep a checking account, one per bank. Easy-access, as against a term deposit. | "what you put aside" |
 | **term deposit** (and the bank's own name: CD, Fixed-Term Savings) | Money locked away at a fixed rate for the bank's term (`category: 'term'`). | |
 | **balance** | What an account holds now, added up from every payment in and out of it. An overdrawn balance is shown with a minus sign (−$3.30) and the word Overdrawn, to the cent; Home's Money line writes a negative worth the same way (−$227). | "the sum of the postings", -$3 |
 | **posted balance** | Only the payments that have gone through; the available balance (Core) has pending card payments taken off too. | "completed items" |
 | **overdrawn**, **overdraft** | Below zero. The overdraft is what the bank pays past zero, arranged or not, on its terms. | "under", "what's under" |
 | **monthly fee**, **waived** | An account's fee and the conditions that cancel it in a month: "waived in any month you keep $1,500 in it all month". | "waived with keeping …", "unless that changes" |
-| **minimum payment** | The least a card statement asks to be paid by its due date. | "the least a statement asks" |
+| **minimum payment** | The least a card statement asks to be paid by its due date. The statement's notice says "The minimum payment is $40.00."; on a hardship plan, "The plan’s payment is …"; where it's the whole statement, "The whole … is due." | "the least a statement asks", "the least you can pay", "at least … has to be paid" |
 | **statement**, **due date** | A card's monthly statement, and the date its payment is due. | |
 | **late fee** | What paying less than the minimum by the due date costs. | "a payment short of the minimum costs" |
 | **credit record**, **credit score** | The record each month's report keeps, and its figure, scored 300 to 850. The guide says credit score for the figure a bank approves from (620) and prices by, and credit record for what a late payment goes on. | "your record" alone where the card's record could be meant |
-| **charged off**, **collections** | A debt the bank stopped pursuing itself and sent to collections; on your record until paid. | |
-| **standing order**, **payment set for a date**, **autopay** | A monthly payment of your own into savings; a one-off payment on a day you choose; a card's automatic payment from a current account. | "scheduled payment" (kept as the notice's title) |
+| **charged off**, **collections** | A debt the bank stopped pursuing itself and sent to collections. The charge-off stays on your credit record for its country's years, paid or not (seven in the US); while the debt is unpaid, no bank approves a card. | "on your record until paid", which `marksFallOff` never did (the money area's m2) |
+| **standing order**, **payment set for a date**, **autopay** | A monthly payment of your own into savings; a one-off payment on a day you choose; a card's automatic payment from a checking account. | "scheduled payment" (kept as the notice's title) |
 | **notice period** | The months a German savings account needs before it closes, past what a month lets out; the days a bank needs to end a term deposit early. Not a notice (Core). | "the notice ran out" |
 | **dormant**, **reactivate** | An account unused for the bank's months is blocked until you press Reactivate. | "untouched … blocked until it's used again" |
+| **strong customer authentication (a second check, such as a code sent to your phone)** | The EU's and the UK's check on a card payment, in the laws on Your Cards. Glossed once in each law that names it. | "strong customer authentication wasn't required", bare |
+| **the game uses N business days**, **the game takes N** | Where a bank gives a range of days and the game had to pick one (`standardDays`, `rushDays`). Said as the game's choice, after the bank's range. | standardDays = N, (standardDays is the upper bound) |
+| **the game prices its credit card as …** | Where a bank has no ordinary credit card and the game took another card's fee for one. | the credit figure is …, the credit figure applies the same line |
+| **a card with your name on it**, **a card without your name** | A personalized card, and one handed over at a branch at once. | personalized, unpersonalized |
+| **faulty** | A card that stops working by itself, as against **damaged**, one of the game's three reasons to replace a card (lost, stolen, damaged). | defective, where damaged could be read |
+| **move money into it** | The way out of an overdraft or a fee owed, in the screen's own control: "Move $0.06 into it first.", "Move money into it first." | "Pay in €0.06 first.", "Pay in what’s owed" |
+| **didn’t go through** | A standing order or a payment set for a date that wasn't made on its day: "Your $50.00 standing order to Chase Savings didn’t go through." The notices' titles keep "Didn’t Go". | "didn’t go." |
+| **It ended the month with …** | The month-end statement notice's body: "It ended the month with $3,025.00 in it.", "the quarter" for a German account, "It ended the month overdrawn by $3.30." | "$3,025.00 at the close." |
+| **The timing is estimated:** | Where the game sets when a fee falls because the bank doesn't say: "The timing is estimated: Arion’s price list and terms don’t say when in the year it’s charged." | "Estimated: Arion’s …" |
+| **held over for the quarter’s closing** | A German account's monthly fees, kept until the quarter's closing posts them: "€9.90 held over for the quarter’s closing". | "kept for the quarter’s closing" |
+| **Autopay pays …** | What a card's autopay will pay on the due date, and from which account: "Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.", "the whole $270.00" where it pays the lot. | |
+| **published**, of a research summary | "Its published rewards:", "The bank’s published plans:": the research's summary of a bank's published terms, not a quotation of them. | "In the bank’s words:", "in its words" (for text that isn't a quotation) |
+| **Until It Closed** | A closed account's or card's last statement period, in the Period list: "September 2026, Until It Closed". | "To Its Closing" |
+| **The law here caps …** | A card held to the country's cap: "The law here caps the rate at 35%, and the card is held to that.", the law's citation in the Source line. | the citation as the sentence's subject |
+| **Moved … to …**, **Sent … to …** | Move Money's confirmation names the account it went to: "Moved $25 to Chase Savings.", "Sent £1,000.00 to Chase Total Checking. It arrives September 2, 2026." | "Moved $25." |
+| **has … available**, in Short For A Payment | "…, and it has $12.00 available.": the account's available balance, which is what the payment can take. | "and it holds $12.00" |
 
 ## Papers And Taxes
 
@@ -201,6 +260,11 @@ Assumed in the game are Core's; health cover and its words are under Health.
 | **base period**, **waiting week** | The quarters a claim's wages come from, and the first unpaid week. | |
 | **claim it**, **You've already claimed it** | Starting a pension. | drawing it |
 | **Your bank can't cover $…, so nothing was charged** (or **paid**, **changed**, **moved**) | The one refusal for a fee or payment your accounts can't meet, on Papers, Health Cover, School and Money alike (`docs/STYLE.md`, Errors and unavailable actions). Where you chose the account and the amount, the figure is what it has: "… has only $…, so nothing was moved." Until 2026-10-17 the health area's and Money's were worded their own way (`editorial/batches.md`, batch 1). | … is more than the bank can cover; It costs …, more than your bank can cover; … only has … in it |
+| **On Its Way** (a document's Status) | An ID card applied for and past every check, in the mail until its day (`idCardOnItsWay`). Beside Being Decided, In Force, Reported Lost, Canceled and Run Out. The guide's Status line lists all six. | Being Decided, for a card already past SAVE's check |
+| **Answered By** (a plan's) | The day an IRS or state payment plan being decided gets its answer, on the plan's panel. | Next Payment reading "Decided …", for a state's plan |
+| **Not by direct debit** | The note beside Each Month for an IRS monthly plan without direct debit. Every plan payment is still taken from your accounts on its day. | Paid by you |
+| **Your Long-Term Conditions** | Health Cover's panel of long-term conditions and lenses, with Keep It Up and Let It Go (Core's long-term condition, the glossary's rule that it's said so wherever it could be confused with condition, the measure). | Your Conditions |
+| **from a secondary source** | A figure read in the press or a guide, not the authority's own page, in a fine print's parenthesis. | read secondhand |
 
 ## Health, Body And Time
 
@@ -213,7 +277,7 @@ stamina, morale, health, wellbeing and readiness are Core's; out of status is Pa
 | **fitness** | How trained your body is: the same figure as Stamina on the Player Profile (`attributes.ts` reads `wellbeing.fitness` for stamina). Work Out and the training classes build it; it holds three days, then falls toward everyday life's 35. Rest doesn't build it. | |
 | **sleep debt**, **sleep owed** | Hours of sleep owed: each waking hour adds about a third of one, a night pays it back. The hours a normal day awake adds are said as that, not as owed. The Profile's Current Condition says it in whole hours: "No sleep owed", "1 hour of sleep owed". | on the books, Sleep owed 1 hours |
 | **a long-term condition** | Depression, asthma, high blood pressure, diabetes or arthritis (`CONDITION_LABEL`, `health.chronic`): kept up or left untreated on Papers, under Health Cover. Said this way wherever it could be confused with condition, the measure. | a condition you carry, A Condition You Carry, a condition, alone |
-| **kept up**, **left untreated** | A long-term condition with its care paid each month, or without it. The buttons are Keep It Up and Let It Go. | kept up / left alone |
+| **kept up**, **left untreated** | A long-term condition with its care paid each month, or without it. The buttons are Keep It Up and Let It Go. Papers' row after Let It Go says Left Untreated, and its toast "Care stopped. It's left untreated from now on." | kept up / left alone, Left Alone, "Left alone." |
 | **laid up** | Kept from classes, work and training by an injury (`laidUp`, `offWorkUntil`); the School excuses the absences. | off work |
 | **health cover**, **public cover** | A plan that pays toward care, by its program's own name: Yale Health, HUSKY D or Medi-Cal (Medicaid), the Essential Plan, Covered Connecticut, or a marketplace plan (`coverLabel`; This Month on Your Cover). Public cover is the state's programs. | Medicaid, for Connecticut's |
 | **the marketplace**, **The Marketplace** | The ACA exchange, and Papers' panel for it: open in open enrollment, or for 60 days around a loss of cover. The panel says where you stand, then a short overview, and its rules behind Who Public Cover Takes, Medicaid's Work Rules From 2027 and Paying For A Marketplace Plan. | |
@@ -224,16 +288,20 @@ stamina, morale, health, wellbeing and readiness are Core's; out of status is Pa
 | **what your plan doesn't cover** | The same, said of a month's care for a long-term condition. | at what the plan leaves |
 | **paid this year** | Care And Its Bills' subtitle: what you've paid for care this year, and, for a plan with a most a year, of how much ("$20.00 of $9,100.00 paid this year"). HUSKY D and Covered Connecticut have no most, and say only what's been paid. | "$20.00 of $0.00 paid this year" |
 | **medical debt** | A bill unpaid at its due date, owed to Your Providers in the Owed For Medical Care account. | |
-| **due on**, **your share is … due on …** | A bill's date (`dueAt`, 30 days after the care): on it the bill is taken from your current account, with its overdraft and any savings linked to it (`payFromCurrent`), or, if it can't be paid, it becomes medical debt. A notice names the date, as Papers does. | due in 30 days |
+| **due on**, **your share is … due on …** | A bill's date (`dueAt`, 30 days after the care): on it the bill is taken from your checking account, with its overdraft and any savings linked to it (`payFromCurrent`), or, if it can't be paid, it becomes medical debt. A notice names the date, as Papers does. | due in 30 days |
 | **financial assistance** (a hospital's) | A Connecticut hospital's discount on a bill, by income against the poverty line (`CHARITY`, `health.apply_aid`): taken off an uninsured bill when it's billed, or off a bill you put in for it with Apply For Assistance. The Assistance column says Free Care, N% Off, Over The Limit or Assistance Taken Off. "Charity care" stays among How This Works' search words. | charity, charity care, the hospital's charity, Charity Taken Off |
 | **Your Doctor**, **Your Pharmacy**, **The Practice Your Cover Uses**, **Any Pharmacy, At The Typical Price** | The practice and chain care is had at, and the choice before you pick one. | As Your Cover Has It, At The Median |
 | **workers' compensation** | What pays an injury at work: its care, and a share of the week's wage while you're laid up. | |
 | **happens without you** | Something on the calendar that runs on its own when the clock reaches it (a payday, a statement). | the world handles it |
-| **a plan of your own**, **your own plans** | What you put on the calendar yourself (`life.commitment`). Only these can be skipped. | |
+| **a plan of your own**, **your own plans**, **Skip It** | What you put on the calendar yourself (`life.commitment`). Only these can be skipped: a plan of your own is the only commitment with a Skip It button, and a class, an appointment or any other commitment has Go and Stand Here. | the school's commitments aren't yours to skip, a Skip option |
 | **Go**, **Stand Here**, **Skip It**, **Call It Off** | A stop's answers: go to it; wait with the clock paused; walk away from a plan of your own; call off a plan before it starts, or a partner's rehearsal at its hour, at a cost to their trust. | |
 | **clash** | Two commitments at the same time; the calendar flags them. | a collision, wanting you at once |
 | **Advance**, **On The Way**, **Skip To Event** | Moving the clock on: the menu's lines; the confirmation listing the commitments the move passes; choosing an event to move to. | jump in the player's sentence (the guide keeps it for a move) |
 | **Sleep**, **Hours**, **Now**, **You'd Wake At**, **Sleep N Hours**, **Not Yet** | The Sleep dialog: the slider, the time now and the time you'd wake, and its buttons (Sleep 1 Hour at one hour). "This would count as tonight's sleep." warns of a sleep that stands for the night. | You'd wake at, Sleep 1 Hours |
+| **running on empty** | Energy under 15 (`EMPTY`), where stress climbs every hour. Said on the Energy look as it's happening, in the words Home's How You Are line already used. | "Under 15, stress starts to climb", said of a figure already under it |
+| **You owe $… . It’s taken from your checking account on …, and if there isn’t enough then, it becomes medical debt.** | A bill's sentence in a care notice (`dueWords`, `careFor`, `mayHurt`), the working reference's words. Health's row "due on, your share is … due on …" in `docs/GLOSSARY.md` should say this, and keep "your share" for Papers' Your Share column and an appeal won's "You owe only your share". | Your share is $…, due on …, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt. |
+| **a sprained ankle’s care** (each injury's) | An injury's bill, as Papers and the unpaid notice name it. | a sprained ankle: its care |
+| **Appeal Lost** | The notice when a plan keeps its denial on appeal. Papers' status for it stays Denial Upheld. | Appeal Upheld (which means the opposite) |
 
 ## Start, Home, Notices And Controls
 
@@ -242,7 +310,7 @@ calendar's words are under Health, Body And Time.
 
 | Say | What It Means | Instead Of |
 |---|---|---|
-| **a life** | One save: a character and their world, in one of the three slots. "That life couldn't be started." | a universe (kept in "This ends that universe."), a save where the character is meant |
+| **a life**, **your new life** | One save: a character and their world, in one of the three slots. A delete names whose life goes ("This deletes Alex Rivera’s life from the slot, with everything that happened in it."); a new life that couldn't start says "Your new life couldn’t be saved, so it hasn’t started." | a universe (kept in "This ends that universe." until 2026-10-19), a save where the character is meant, that life, this life |
 | **slot**, **Slot 1** | Where a life is kept on this device or the server; there are three. | |
 | **backup** | The copy of a slot kept before it's written over, and Restore Backup, which brings it back. | a checkpoint |
 | **save format** | The version of a save's layout, shown as Save Format 94 on a slot. A save made by an older version is updated when opened, a backup kept first. | schema, schema version |
@@ -250,6 +318,17 @@ calendar's words are under Health, Body And Time.
 | **urgency**, **importance** | A question's and a notice's place in the order, out of 100 (estimated). Overdue questions come first, then the most urgent; notices most important first. | weight, heaviest |
 | **School** | The School screen, by the rail's name, the breadcrumb's and the Profile's button to it. | Your School |
 | **an error in the game** | A failure the game didn't foresee. The player's sentence says what changed; the detail is a developer's, in the console. | `<command id> failed: <message>` |
+| **SLATE hasn’t changed anything in it**, **nothing in the slot changed** | Whether a refused open or a failed save touched what's stored: said in every such sentence. | It hasn’t been changed, the slot still holds what it held before |
+| **Your Money** | Starting Point's card with the first morning's money and bank. | What Is Yours |
+| **Next To Nothing**, **Scraping By**, **Modest**, **Comfortable**, **Wealthy**, **Inherited Wealth** | The six families on The Family You Come From and Review's Family line, each in its note's words. | Nothing, Scraping, Inherited (the ids capitalized) |
+| **picks … at random, around the averages** | What SLATE does when Your Body is left blank or half-filled. | drawn from the averages, your body is drawn |
+| **temperament** | What the dispositions are ("Your temperament, not your talent."). Each one's effect is said either way where it goes either way. | how you lean |
+| **Player Profile**, where a trait or a loved genre is shown | The screen a creation note sends the player to. | your page, your own page (the person's look keeps "your own page" in the body guide) |
+| **marked Clash** | How the calendar shows two commitments at once, by the chip's own word. | flagged as a clash |
+| **when it’s time** | When the clock reaches a commitment. | when it comes round |
+| **You can still open it here** | How long a closed question's look stays reachable (180 days), said from the player's side. | the save keeps it, the save forgets |
+| **within two days after its date** | When an unanswered question closes by itself. | at the world's next look, the game checks every two days |
+| **checks the weather** | What Work Out does as its hour ends, to decide whether it was a run. | reads the weather |
 
 ## The Guide And Help
 
@@ -270,3 +349,7 @@ Health's.
 | An entry's parts | **Where To Find It**, **When You Can Use It**, **What To Press**, **What You Need First**, **What Happens**, **How It Connects**, **What To Do Next**, **If You Can't**, then **What Decides It** and **A Worked Example**: the brief's eight questions, in its order. | Steps, What It Needs, What The Game Reads, Connected Systems, Why It Might Not Be Available |
 | How It Connects' headings | **Comes First**, **Changes Straight Away**, **Changes Later**, **Counts Toward**, **Kept In Your Record**, **Worth Doing With It**. | Needs First, Changes At Once, Changes Later, On The Clock, Read When Work Is Judged, Kept In The Record |
 | **the clock waits** | While the guide or How This Works is open, the clock doesn't move. Said under every help page. | the clock holds, paused for help |
+| **What It Opens**, **What It Opened** | The box under a chapter in the guide: what reading it opens, and, once read, what it opened. | What Reading It Opens |
+| **Show Everything**, **Show Less** | An entry's toggle in How This Works: every section open, or back to What To Press alone. The label says what a press does; the button has no pressed state. | Fold It Up |
+| **Read “…” in the guide to open it.** | The callout on an entry not yet open, beside Read About It. | Reading “…” in the guide opens it. |
+| **You started without the guide** | A life begun with I Know SLATE: everything is open, and the guide is there to read in any order. | This life was begun without the guide; Everything is open on this life |

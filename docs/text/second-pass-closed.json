@@ -1,0 +1,6 @@
+{
+ "closed": "2026-10-19",
+ "by": "brief 15's coordinator",
+ "commit": "c3478f9e",
+ "note": "Brief 15's second pass, closed: every source the inventory holds has a current second-pass status (docs/text/second-pass/). From here tools/text-inventory.mjs --check fails a source the second pass hasn't read, or whose words changed since it did. A new or changed source is read and marked with --mark2, as brief 15's areas did, by the area that owns its file."
+}

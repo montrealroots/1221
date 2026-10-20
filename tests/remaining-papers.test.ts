@@ -189,7 +189,7 @@ describe('tax.s8.inventory', () => {
     const before = held(sim);
     // Asked for an hour after the license ran out, on her birthday, Wednesday 14 June 2028: mailed within twenty business
     // days, Juneteenth and the Fourth not among them, Friday 14 July; to her birthday seven years on, 14 June 2035.
-    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes July 14, 2028. It’s good until June 14, 2035.']);
+    expect(press('documents.apply_idcard')).toEqual(['You applied for the Non-Driver Identification Card and paid $28.00. The card comes July 14, 2028, and it’s good until June 14, 2035.']);
     expect(before - held(sim)).toBe(28_00);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     // On its way, it isn't a photo ID yet, and Wells Fargo still turns her away (from 2026-10-17: until then it was in
@@ -505,7 +505,7 @@ describe('tax.s8.idcard', () => {
     // Asked for on Sunday 11 October 2026, 3 PM: SAVE's ten federal workdays, Columbus Day not among them, to Monday 26
     // October, then the mail's twenty, Veterans Day not among them, to Tuesday 24 November.
     expect(sim.now).toBe(Date.UTC(2026, 9, 11, 19));
-    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes November 24, 2026. It’s good until May 31, 2029.']);
+    expect(press('documents.apply_idcard')).toEqual(['You applied for the Non-Driver Identification Card and paid $28.00. The card comes November 24, 2026, and it’s good until May 31, 2029.']);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     expect([card.name, card.status, card.realId, card.readyAt]).toEqual(['Non-Driver Identification Card, Limited Term', 'pending', false, Date.UTC(2026, 10, 24, 19)]);
     const again = reload(sim);
@@ -639,7 +639,7 @@ describe('tax.s8.idcard, its term', () => {
     sim.advanceTo(ssn.arrivesAt + MS_HOUR);
     return sim;
   };
-  const TERM_NOTE = 'You’re not a US citizen, so your card runs to the end of your lawful presence: your program’s end while you’re at school, or your OPT’s end while you’re on OPT. The state publishes no term for a card it doesn’t verify, so this term is assumed. A card already issued keeps its date if the assumption is ever corrected.';
+  const TERM_NOTE = 'You’re not a US citizen, so your card runs to the end of your lawful presence: your program’s end while you’re at school, or your OPT’s end while you’re on OPT. The state doesn’t publish a term for a card it doesn’t verify, so this term is assumed in the game.';
 
   it('PLAYER JOURNEY: Your ID on Papers tells a British student that her card’s term, to the end of her lawful presence, is SLATE’s assumption, not the state’s published policy, and that a card already issued keeps its date if that’s corrected; a New York-born citizen is told nothing of it', () => {
     expect(drawn(life('rp-uk-a', 'uk-eng-london'), PassportPane)).toContain(TERM_NOTE);
@@ -652,7 +652,7 @@ describe('tax.s8.idcard, its term', () => {
   it('PLAYER JOURNEY: the term turned off while her card is on its way (TEST SETUP: `NONCITIZEN_ID.toLawfulPresence`, as a correction would change it): across a save and a load it comes on its day, Monday 2 November 2026, keeping 31 May 2029, its $28 and its notice as they were, and a second card is refused while she holds it; reported lost that day, the next runs seven years to her birthday, 14 June 2034, still after SAVE’s ten federal workdays and the mail’s twenty, coming Wednesday 16 December, still Not For Federal Identification, for $28 again, and Your ID says so', () => {
     const sim = withNumber(life('rp-uk-a', 'uk-eng-london'));
     drawn(sim, PassportPane);
-    expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes November 2, 2026. It’s good until May 31, 2029.']);
+    expect(press('documents.apply_idcard')).toEqual(['You applied for the Non-Driver Identification Card and paid $28.00. The card comes November 2, 2026, and it’s good until May 31, 2029.']);
     const card = documentsOf(sim.player).find((d) => d.kind === 'idcard')!;
     expect([card.status, card.name, card.realId, card.expiresAt]).toEqual(['pending', 'Non-Driver Identification Card, Limited Term', false, Date.UTC(2029, 4, 31, 12)]);
     expect(taken(sim, 'Non-Driver Identification Card')).toEqual([28_00]);
@@ -668,12 +668,12 @@ describe('tax.s8.idcard, its term', () => {
       expect(titled(again, 'Non-Driver Identification Card, Limited Term Arrived')).toHaveLength(1);
       expect(taken(again, 'Non-Driver Identification Card')).toEqual([28_00]);
       expect(refusal(again, 'documents.apply_idcard')).toBe('You already hold one in force.');
-      expect(drawn(again, PassportPane)).toContain('You’re not a US citizen, and your card runs its full term to a birthday, as anyone’s does. The state publishes no term for a card it doesn’t verify, so this term is assumed.');
+      expect(drawn(again, PassportPane)).toContain('You’re not a US citizen, and your card runs its full term to a birthday, as anyone’s does. The state doesn’t publish a term for a card it doesn’t verify, so this term is assumed in the game.');
       // Reported lost, a new card is applied for, and takes the term as it now stands.
       again.must({ kind: 'documents.report_lost', payload: { documentId: kept.id } });
       const asked = again.now;
       drawn(again, PassportPane);
-      expect(press('documents.apply_idcard')).toEqual(['Non-Driver Identification Card: you paid $28.00. The card comes December 16, 2026. It’s good until June 14, 2034.']);
+      expect(press('documents.apply_idcard')).toEqual(['You applied for the Non-Driver Identification Card and paid $28.00. The card comes December 16, 2026, and it’s good until June 14, 2034.']);
       const next = documentsOf(again.player).find((d) => d.kind === 'idcard' && d.status === 'pending')!;
       expect([next.name, next.realId]).toEqual(['Non-Driver Identification Card', false]);
       // Her birthday, 14 June, the first at least seven years on from 2 November 2026; SAVE to Tuesday 17 November,

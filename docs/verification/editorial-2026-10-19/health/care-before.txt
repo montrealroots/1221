@@ -1,0 +1,49 @@
+
+===== London: enroll and apply for public cover, choose a pharmacy, buy a dental plan
+  Enroll: You can enroll in public cover or the marketplace only while you live in New York, Los Angeles or New Haven.
+  mayEnroll: You can enroll in public cover or the marketplace only while you live in New York, Los Angeles or New Haven.
+  Apply For HUSKY D: You can enroll in public cover or the marketplace only while you live in New York, Los Angeles or New Haven.
+  Choose a pharmacy: You can choose a pharmacy only in the United States.
+  Buy Dental: You can buy a dental plan of your own only in New York, alongside a Covered California plan, or at Yale.
+  Prepay, at the start: (offered)
+  Prepay, at 61: Prescriptions are free from age 60.
+  Prepay A Year, with nothing in the bank: Your bank can’t cover £114.50, so nothing was charged.
+
+===== New York: the prescription prepayment, a hospital bill put in for assistance
+  Prepay: The prepayment certificate is only for England’s prescription charge.
+  Apply For Assistance on a New York hospital's bill: Only a Connecticut hospital’s bill can be put in for its financial assistance.
+  … on a Connecticut one past its due date: It’s already settled or past its due date.
+
+===== Los Angeles: a dental plan without Covered California, then a marketplace plan dropped
+  Buy Dental: Covered California sells dental only alongside one of its health plans.
+  Enroll, 3 November: (done)
+  Drop, 5 January: (done)
+  Drop again: It’s already dropped, and it ends on February 1, 2027.
+  Your Health Cover Ended: You have no health cover from February 1, 2026. You have 60 days to enroll in the marketplace. Medi-Cal can take you at any time on last month’s income, with no premium. Enroll on Papers, under Health Cover. Each month without cover in California adds to California’s Penalty For No Cover on your tax return.
+  Your Health Cover Ended: You have no health cover from February 1, 2027. Dropping a plan or leaving it unpaid doesn’t open special enrollment. You can enroll again in open enrollment, or once a month’s income qualifies you for Medi-Cal. Each month without cover in California adds to California’s Penalty For No Cover on your tax return.
+
+===== New Haven, outside the school: Apply For HUSKY D when Enroll would do, and when income is over its line
+  low income, 2026-01-05: Last month meets its work rules, so press Enroll instead.
+  2025-12 at $9,000: Last month’s income or your status doesn’t qualify you for HUSKY D.
+
+===== New Haven: a notice of noncompliance answered too late
+  Request A Hardship Exception, after its day: The 30 days to answer ended on February 7, 2027.
+  … in time, with no stay in hospital: None of the months it checked, November to December 2026, had a stay in hospital, the one hardship the game counts.
+
+===== New Haven: Covered Connecticut, then out of status
+  Enroll on 2025-12's $2,052.00: (done) (essential)
+  Your Public Cover Has Ended: Covered Connecticut is only for citizens and noncitizens lawfully present, and you’re out of status.
+  Your Health Cover Ended: You have no health cover from February 1, 2026. You’re out of status, so neither the marketplace nor Covered Connecticut will take you.
+
+===== Vancouver: a prescription past its date, the renewal booked
+  A Prescription Ran Out: The prescription for your depression medicine has run out, so it can’t be filled until a doctor renews it. A visit to renew it is booked.
+
+===== New Haven: HUSKY D renewed on 1 July 2027, its work rules met by age, and by SNAP
+  under 19: Your Public Cover Is Renewed: HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules because people your age are exempt.
+  SNAP: Your Public Cover Is Renewed: HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and June 2027 met its work rules because you received SNAP, whose own work rules applied to you.
+
+===== Dublin, where no wait is published: Book An Appointment
+  Book An Appointment: No waiting time is published where you live, so there’s nothing to book: you’re seen when you need care.
+
+===== The city list for a country that can’t be loaded
+  This country’s full list of towns couldn’t be loaded, so for now only the towns already listed can be picked. Check your connection, then choose another country and come back to this one.

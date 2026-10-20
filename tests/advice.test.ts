@@ -16,7 +16,8 @@ import { adviceFor } from '@/engine/systems/next-steps';
 import { serialise } from '@/engine/persistence/adapter';
 import { recommendations } from '@/engine/systems/experience';
 import { matchedTier } from '@/engine/systems/practice';
-import { realize, setUp } from '../tools/advice-harness';
+import { realize, setLevel, setUp } from '../tools/advice-harness';
+import { ABILITY_DEFS, TECHNIQUES } from '@/engine/content/abilities';
 
 const nobody = { engagement: { byGenre: {} } } as unknown as Person;
 const rec = (p: number): BriefRecord => ({ prep: { interpretation: p, memorization: p, rehearsal: p }, takes: [] });
@@ -93,5 +94,18 @@ describe('what to improve next, forecast', () => {
     // The forecast said so before the days were played.
     const f = trainingForecast(sim, sim.player);
     expect(f.get(top.target)!.points).toBeGreaterThan(f.get(chief)!.points);
+  }, 120_000);
+
+  it('PLAYER JOURNEY: the next hour names the panel its exercise is in, Attributes And Craft for an ability and Techniques for a technique (brief 15)', () => {
+    // adv-2 again, as taped; then (TEST SETUP) every ability at its full, so a technique leads what to train. Until
+    // 2026-10-19 the next hour sent a technique's exercise to Attributes And Craft too, where it isn't.
+    const { sim } = setUp('adv-2');
+    const lead = adviceFor(sim, sim.player).find((r) => r.forecast)!;
+    expect(ABILITY_DEFS.some((d) => d.id === lead.target)).toBe(true);
+    expect(lead.next).toContain('It’s in the Practice column under Attributes And Craft on your Player Profile');
+    for (const d of ABILITY_DEFS) setLevel(sim, d.id, 'full');
+    const technique = adviceFor(sim, sim.player).find((r) => r.forecast)!;
+    expect(TECHNIQUES).toContain(technique.target);
+    expect(technique.next).toContain('It’s in the Practice column under Techniques on your Player Profile');
   }, 120_000);
 });

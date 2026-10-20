@@ -185,7 +185,7 @@ describe('another way at the table work, where it is the answers alone', () => {
     const a = work(sim, 'scene-study', 'DRAM 103a/b', 'cherry-orchard-4', { familiarity: 0.9 });
     answer(sim, a, true);
     persistentReading(sim, a);
-    const why = 'On this piece the table work is your answers to its questions, so a drill or your partner can’t change it. Change an answer under Table Work.';
+    const why = 'On this piece, Table Work is your answers to its questions, so a drill or your partner can’t change it. Change an answer under Table Work instead.';
     expect(go(sim, 'school.approach', { assignmentId: a.id, kind: 'drill' }).error).toBe(why);
     expect(go(sim, 'school.approach', { assignmentId: a.id, kind: 'partner' }).error).toBe(why);
     expect(a.approach).toBeUndefined();

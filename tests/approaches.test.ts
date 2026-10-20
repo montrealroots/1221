@@ -45,11 +45,11 @@ describe('another way at it', () => {
     const sim = life('ap-offer');
     tended(sim, sim.now + MS_HOUR);
     const a = work(sim, 0.2);
-    expect(approachRefusal(sim, sim.player, a, 'drill')).toBe('None of your recurring notes is one this piece can help with.');
+    expect(approachRefusal(sim, sim.player, a, 'drill')).toBe('This piece can’t help with any of your recurring notes.');
     // Given twice, not yet: three times makes it one that keeps coming back.
     const notes = notesOf(courseworkOf(sim, sim.player)!);
     for (let i = 0; i < LEARNING.persistent - 1; i += 1) recordNote(notes, { kind: 'dim', dim: 'memorization' }, `2026-08-2${i}`, `y${i}`, 'Acting I', 0.2);
-    expect(approachRefusal(sim, sim.player, a, 'drill')).toBe('None of your recurring notes is one this piece can help with.');
+    expect(approachRefusal(sim, sim.player, a, 'drill')).toBe('This piece can’t help with any of your recurring notes.');
     persistent(sim);
     expect(approachRefusal(sim, sim.player, a, 'drill')).toBeUndefined();
     expect(sim.must<{ dim: string }>({ kind: 'school.approach', payload: { assignmentId: a.id, kind: 'drill' } }).dim).toBe('memorization');

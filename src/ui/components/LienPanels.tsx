@@ -27,9 +27,15 @@ const STATUS: Record<Lien['status'], string> = {
 function LienFacts({ l, money, zone }: { l: Lien; money: (c: number) => string; zone: string }) {
   return (
     <>
+      {/* A lien only announced, or announced and never filed, says so (from 2026-10-19, brief 15: until then both said "It
+          was filed for … and recorded in …", which hadn't happened). */}
       <p className="small" style={{ margin: 0 }}>
-        <strong>{l.name}</strong> · {STATUS[l.status]}. It was filed for {money(l.amount)} {l.trigger === 'plan' ? 'because the payment plan requires one' : 'when collection reached that stage'}, and recorded in {l.recordedAt}
-        {l.filedAt !== undefined ? ` on ${formatDate(l.filedAt, zone)}` : ''}.{l.fee ? ` Its recording fee of ${money(l.fee)} was added to what you owe.` : ''}
+        <strong>{l.name}</strong> · {STATUS[l.status]}. {l.status === 'intent'
+          ? `It’s to be filed for ${money(l.amount)}, with ${l.recordedAt}, unless you pay it or set up a payment plan first.`
+          : l.status === 'dropped'
+            ? 'It was never filed, because what it was for was paid or put under a payment plan first.'
+            : <>It was filed for {money(l.amount)} {l.trigger === 'plan' ? 'because the payment plan requires one' : 'when collection reached that stage'}, and recorded in {l.recordedAt}{l.filedAt !== undefined ? ` on ${formatDate(l.filedAt, zone)}` : ''}.</>}
+        {l.fee ? ` Its recording fee of ${money(l.fee)} was added to what you owe.` : ''}
         {l.releaseDue !== undefined && l.status === 'paid' ? ` It’s to be released by ${formatDate(l.releaseDue, zone)}.` : ''}
         {l.releasedAt !== undefined ? ` Released ${formatDate(l.releasedAt, zone)}.` : ''}
         {l.decideAt !== undefined && l.status === 'disputed' ? ` A decision is due by ${formatDate(l.decideAt, zone)}.` : ''}

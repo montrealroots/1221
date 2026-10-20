@@ -320,7 +320,7 @@ export function wellbeingSummary(person: Person, own = true): string {
   if (w.stress > 78) return 'Stretched very thin. Something is going to give.';
   if (w.nourishment < 25) return 'Hungry, and it’s starting to show.';
   if (w.energy > 75 && w.stress < 30) return 'Rested, steady and ready for a real day.';
-  if (w.morale < 30) return 'Flat. The work is fine, the feeling isn’t.';
+  if (w.morale < 30) return 'Feeling low, though the day itself is going fine.';
   return 'Holding up, with nothing out of the ordinary to worry about.';
 }
 
@@ -811,7 +811,7 @@ function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean
   }
   // A workout's worth is mostly fitness, which readiness doesn't read the day it's built; it costs energy now. Whether
   // it'll be a run, and what a repeat the same day keeps, said from 2026-10-12: until then the line said neither.
-  const where = training.where === 'run' ? 'A run in fine weather' : 'Indoors, the weather being no good for a run';
+  const where = training.where === 'run' ? 'A run in fine weather' : 'Indoors, since the weather’s no good for a run';
   // A class that trains the body counts among the day's workouts (`classTrains`, from 2026-10-16), and the line says so
   // where one did: until then it said "workout 2" after a combat class and no workout.
   const again = training.repeats > 0 ? ` It’s workout ${training.repeats + 1} today${training.fromClass ? ', a class that trained the body counting as one' : ''}, so it builds ${Math.round(100 * DEVELOPMENT.repeat ** training.repeats)}% of a first.` : '';

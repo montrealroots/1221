@@ -29,7 +29,7 @@ import {
   documentsOf, inForce, mayDrive, mayEnter, passportOf, theCountry, type PersonDocument,
 } from '@/engine/systems/documents';
 import { idCardOnItsWay } from '@/engine/systems/identity';
-import { VISITS } from '@/engine/systems/papervisits';
+import { VISITS, visitWords } from '@/engine/systems/papervisits';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
@@ -106,13 +106,13 @@ function whatItDoes(sim: Simulation, { doc, person }: ThePaper): string {
     case 'passport': {
       // Said, not played: nothing crosses a border since the scope reset of 2026-10-09. Until 2026-10-12 this called
       // it "the passport you travel on", and said one out of force "takes you across no border now".
-      if (!live) return 'A bank or an office won’t accept it: it’s no longer in force.';
+      if (!live) return 'It’s no longer in force, so a bank or an office won’t accept it.';
       const carried = passportOf(person, now)?.id === doc.id;
       const rules = Object.keys(ENTRY);
       const open = carried ? rules.filter((iso) => mayEnter(person, iso, now).ok).length : 0;
       return carried
         ? `It’s the passport in force in your name. Of the ${rules.length} countries the game has entry rules for, ${open} would let you in on it today for a week’s visit. Travel isn’t part of the game, so this is for reference.`
-        : 'In force, but another passport is the one in force in your name.';
+        : 'It’s in force, but another passport is the one in force in your name.';
     }
     case 'visa':
     case 'authorization': {
@@ -142,7 +142,7 @@ function whatItDoes(sim: Simulation, { doc, person }: ThePaper): string {
 }
 
 defineLook<ThePaper>('document', {
-  gone: 'You don’t hold that paper any more. Whatever it was, it’s out of your hands.',
+  gone: 'You don’t hold that document any more, so there’s nothing to show.',
   resolve: (sim, id) => {
     const person = sim.universe.people[sim.universe.playerId];
     if (!person) return undefined;
@@ -164,13 +164,13 @@ defineLook<ThePaper>('document', {
     const last = lastOf(doc.number);
 
     // The interview or biometrics it waits on, from 2026-10-06 (`systems/papervisits.ts`).
-    const visit = doc.visit && doc.visit.keptAt === undefined ? `It’s waiting on your ${VISITS[doc.visit.rule].what.toLowerCase()} in ${CITIES.get(doc.visit.cityId)?.name ?? 'town'} on ${formatDate(doc.visit.at, zone)}. Be there, or ${VISITS[doc.visit.rule].again && !doc.visit.missed ? 'it’s booked once more, and if you miss that too, the application' : 'the application'} ends. ` : '';
+    const visit = doc.visit && doc.visit.keptAt === undefined ? `It’s waiting on your ${visitWords(doc.visit.rule)} in ${CITIES.get(doc.visit.cityId)?.name ?? 'town'} on ${formatDate(doc.visit.at, zone)}. Be there, or ${VISITS[doc.visit.rule].again && !doc.visit.missed ? 'it’s booked once more, and if you miss that too, the application' : 'the application'} ends. ` : '';
     // An ID card past every check is being made and mailed, not decided (from 2026-10-17, `idCardOnItsWay`): until then
     // a citizen’s said "it’s being decided" while the toast said it was on its way.
     const mailed = idCardOnItsWay(doc, sim.now);
     const summary = state === 'pending'
       ? mailed ? `You’ve applied and paid, and the card is on its way. It should arrive by ${formatDate(doc.readyAt!, zone)}.` : `${visit}You’ve applied, and it’s being decided. It should be ready ${doc.readyAt ? `by ${formatDate(doc.readyAt, zone)}` : 'soon'}.`
-      : state === 'lost' ? `You reported it lost, so the number ending ${last} is canceled.`
+      : state === 'lost' ? `You reported it ${doc.stolen ? 'stolen' : 'lost'}, so the number ending ${last} is canceled.`
         : state === 'cancelled' ? `It’s canceled, so the number ending ${last} is no use to you now.`
           : state === 'expired' ? `It ran out on ${formatDate(doc.expiresAt!, zone)} and no longer counts for anything.`
             : doc.expiresAt ? `It’s in force until ${formatDate(doc.expiresAt, zone)}, and its number ends ${last}.` : `It’s in force with no end date, and its number ends ${last}.`;

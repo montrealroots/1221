@@ -202,7 +202,7 @@ function decisionSentence(decision: DecisionItem, stage: Stage, sim: Simulation)
 }
 
 defineLook<DecisionItem>('decision', {
-  gone: `That question closed more than ${FORGOTTEN_AFTER_DAYS} days ago, so the save no longer keeps it.`,
+  gone: `That question closed more than ${FORGOTTEN_AFTER_DAYS} days ago, so there’s nothing left to open.`,
   resolve: (sim, id) => sim.universe.decisions[id],
   seeds: (sim) => {
     const waiting = openDecisions(sim).map((d) => d.id);
@@ -233,8 +233,8 @@ defineLook<DecisionItem>('decision', {
       : `It closed ${ago(closedAt ?? sim.now, sim.now)}, and Home no longer lists it.`;
 
     const ending = stage === 'open'
-      ? `It closes when you answer it on Home or deal with it on its own screen. Otherwise it closes by itself after ${formatDate(decision.dueAt, sim.zone)}: the game checks every ${countWord(TICK_DAYS)} days, so that happens within ${countWord(TICK_DAYS)} days of its date. The save keeps it for ${FORGOTTEN_AFTER_DAYS} days after it closes.`
-      : `The save keeps it until ${formatDate(forgottenAt, sim.zone)}, ${FORGOTTEN_AFTER_DAYS} days after it closed.`;
+      ? `It closes when you answer it on Home or deal with it on its own screen. If you don’t, it closes by itself within ${countWord(TICK_DAYS)} days after its date, ${formatDate(decision.dueAt, sim.zone)}. You can still open it here for ${FORGOTTEN_AFTER_DAYS} days after it closes.`
+      : `You can still open it here until ${formatDate(forgottenAt, sim.zone)}, ${FORGOTTEN_AFTER_DAYS} days after it closed.`;
 
     // Home renders the actions, Go There where there is a route, and Dismiss on every row it prints, but only for the
     // rows it prints.
@@ -302,7 +302,7 @@ defineLook<DecisionItem>('decision', {
 // ---------------------------------------------------------------------------
 
 defineLook<Notice>('notification', {
-  gone: `That notice is gone. The save keeps the latest ${NOTICES_KEPT}, and this one was older.`,
+  gone: `That notice is gone. SLATE keeps only your latest ${NOTICES_KEPT} notices, and this one was older.`,
   resolve: (sim, id) => sim.universe.notifications.find((n) => n.id === id),
   seeds: (sim) => {
     const unread = unreadNotifications(sim).slice(0, 6).map((n) => n.id);
@@ -349,7 +349,7 @@ defineLook<Notice>('notification', {
           <p className="small muted">
             {`It’s about ${aboutOf(note.category)}, and its importance is ${outOf(importance)}. Unread notices are listed most important first, and the newer first when two are equal. `}
             {note.read
-              ? `The save keeps it until there are more than ${NOTICES_KEPT} notices, when the oldest are dropped.`
+              ? `SLATE keeps your latest ${NOTICES_KEPT} notices, so this one stays until ${NOTICES_KEPT} newer ones have come in.`
               : `Opening it here doesn’t mark it read. ${marking}`}
             {note.route ? ' On Home, Go There opens the screen it’s about.' : ''}
           </p>

@@ -263,12 +263,12 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
     // Encouragement, from a classmate at a bond of `CLASS.encourage.bondFrom` or more, after work of yours that went
     // badly in the last days. Until 2026-10-12 this said from a friend only, a bond the gate doesn't ask (`BONDS.friend`).
     const bad = cw.assignments.find((a) => a.shown?.band === 'unready' && now - a.shown.at < 3 * 86_400_000);
-    if (bad && (mate.bond ?? 0) >= CLASS.encourage.bondFrom && !recent(mate, 'encouragement')) cands.push({ kind: 'encouragement', mate: i, build: () => ({ text: `${first(mate)} caught you after class: everyone has a showing like that, and yours will come back.`, assignmentId: bad.id }) });
+    if (bad && (mate.bond ?? 0) >= CLASS.encourage.bondFrom && !recent(mate, 'encouragement')) cands.push({ kind: 'encouragement', mate: i, build: () => ({ text: `${first(mate)} caught you after class to say everyone has a showing like that, and not to take it to heart.`, assignmentId: bad.id }) });
     // An apology, after a rehearsal they didn't come to, once a time.
     const stood = (mateRecord(mate).stoodUp ?? 0) > (personOf(mate).moments ?? []).filter((m) => m.kind === 'apology').length;
     if (stood && !recent(mate, 'apology')) cands.push({ kind: 'apology', mate: i, build: () => ({ text: `${first(mate)} apologizes for not coming to rehearse: ${pr === 'home' ? 'something at home took the evening' : 'they lost track of the day'}.` }) });
     // A boundary, after you've let them down twice and not made it right.
-    if (!personOf(mate).boundary && unrepaired(mate).length >= CLASS.boundary.after && !recent(mate, 'boundary')) cands.push({ kind: 'boundary', mate: i, build: () => ({ text: `${first(mate)} says that after the last times, they’ll only rehearse with you if you ask a day ahead.` }) });
+    if (!personOf(mate).boundary && unrepaired(mate).length >= CLASS.boundary.after && !recent(mate, 'boundary')) cands.push({ kind: 'boundary', mate: i, build: () => ({ text: `${first(mate)} says that after the last few times, they’ll only rehearse with you if you ask a day ahead.` }) });
   });
   if (!cands.length) return undefined;
   // The kind least recently had across the class first, then the classmate least recently had it with; among equals,
@@ -299,6 +299,9 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
   if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `${first(mate)}: ${MOMENT_TITLE[pick.kind]}`, body: m.text, importance: said ? 40 : 55, route: '/workspace/school' });
   return m;
 }
+
+/** A count of rehearsals in words, as prose says it: two, three, 12. */
+const countWords = (n: number): string => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
 
 export const MOMENT_TITLE: Record<MomentKind, string> = { disagreement: 'A Different Reading', study: 'Run Lines Together?', help: 'A Request For Help', encouragement: 'A Word After Class', apology: 'An Apology', boundary: 'A Boundary' };
 
@@ -352,7 +355,7 @@ export function respondRefusal(sim: Simulation, person: Person, m: Moment | unde
   if (m.status !== 'open') return 'You’ve answered it.';
   if (!CHOICES[m.kind].some((c) => c.id === choice)) return 'That isn’t an answer to it.';
   const a = m.assignmentId ? courseworkOf(sim, person)?.assignments.find((x) => x.id === m.assignmentId) : undefined;
-  if (m.kind === 'disagreement' && (!a || (a.status !== 'open' && a.status !== 'revising'))) return 'That work is finished.';
+  if (m.kind === 'disagreement' && (!a || (a.status !== 'open' && a.status !== 'revising'))) return 'That piece is finished.';
   if (m.kind === 'help' && choice === 'help') {
     // “They’re in New Haven.” went on 2026-10-13, reached by no play: a life is enrolled only where it begins in New
     // Haven (`populateWorld`, `engine/index.ts`), and nothing has moved a person since the scope reset of 2026-10-09.
@@ -476,7 +479,7 @@ export function registerClassmates(sim: Simulation): void {
         if (p?.assignmentId && !chosen) throw new CommandError(`That isn’t a scene you share with ${f}.`);
         s.schedule({ at: m!.when!, kind: STUDY_KIND, label: `Running Lines With ${f}`, category: 'school', priority: 32, requiresPlayer: true, durationMinutes: CLASS.study.minutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id, mate: m!.mate, momentId: m!.id, ...(chosen ? { assignmentId: chosen.id } : {}) } });
         const what = chosen ? sceneById(chosen.sceneId ?? '')?.play ?? 'your scene' : undefined;
-        return { done: what ? `It’s on your calendar: ${what}, with ${f}.` : `It’s on your calendar. You share no open scene with ${f}, so you’ll run their lines.` };
+        return { done: what ? `It’s on your calendar: ${what}, with ${f}.` : `It’s on your calendar. You and ${f} don’t have a scene together right now, so you’ll run their lines.` };
       }
       case 'help': {
         if (choice === 'no') { remember(s, mate, 'Asked for your help; you couldn’t'); return { done: `You told ${f} you can’t.` }; }
@@ -497,12 +500,12 @@ export function registerClassmates(sim: Simulation): void {
           personOf(mate).boundary = { since: s.now, keptSince: 0, accepted: true };
           move(person, mate, CLASS.boundary.respect, 0);
           remember(s, mate, 'Set a boundary; you accepted it');
-          return { done: `From now on, ask ${f} a day ahead. It lifts after ${CLASS.boundary.liftAfterKept.accepted} rehearsals kept.` };
+          return { done: `From now on, ask ${f} a day ahead. That stops once you’ve kept ${countWords(CLASS.boundary.liftAfterKept.accepted)} rehearsals with them.` };
         }
         personOf(mate).boundary = { since: s.now, keptSince: 0, accepted: false };
         move(person, mate, CLASS.boundary.argue.trust, CLASS.boundary.argue.bond);
         remember(s, mate, 'Set a boundary; you pushed back');
-        return { done: `${f} holds to it, and things are cooler between you. It lifts after ${CLASS.boundary.liftAfterKept.pushedBack} rehearsals kept.` };
+        return { done: `${f} holds to it, and things are cooler between you. That stops once you’ve kept ${countWords(CLASS.boundary.liftAfterKept.pushedBack)} rehearsals with them.` };
       }
       default: return { done: '' };
     }
@@ -563,8 +566,8 @@ export function registerClassmates(sim: Simulation): void {
     if (person.id === s.universe.playerId) {
       const pct = (x: number) => `${Math.round(x * 100)}%`;
       s.notify({ category: 'school', title: `Ran Lines With ${first(mate)}`, body: open
-        ? `${sceneById(open.sceneId ?? '')?.play ?? 'Your scene'}: your lines went from ${pct(before)} to ${pct(open.prep.memorization)}.`
-        : `You share no open scene with ${first(mate)}, so you ran their lines. It helped them, but it didn’t move your own work.`, importance: 30, route: '/workspace/school' });
+        ? `Your lines for ${sceneById(open.sceneId ?? '')?.play ?? 'your scene'} went from ${pct(before)} to ${pct(open.prep.memorization)}.`
+        : `You and ${first(mate)} don’t have a scene together right now, so you ran their lines. It helped them, but not your own preparation.`, importance: 30, route: '/workspace/school' });
     }
   });
 }

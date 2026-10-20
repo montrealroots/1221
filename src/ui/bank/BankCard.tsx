@@ -19,6 +19,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { dateKey, formatDate, formatDateKey, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
+import { said } from '@/ui/looks/words';
 import { autopayAsk, cardRoom, cardsOf, cardTerms, DUE_KIND, minimumDue, stateOf, statementDayOf, statementDayRefusal, type CardTerm } from '@/engine/systems/credit';
 import { bankById, banksIn } from '@/engine/content/banks';
 import type { Account } from '@/engine/core/ledger';
@@ -98,7 +99,7 @@ function CardApplication({ held }: { held: Account[] }) {
           ? <p className="small" style={{ margin: 0 }}>{held.length ? 'You already have a card from every bank here that issues one.' : `${home?.name ?? 'Your bank'} doesn’t issue a credit card, and no other bank here does.`}</p>
           : (
             <div className="col gap-3">
-              <p className="small" style={{ margin: 0 }}>You can apply to any bank here, not only yours. It looks at your credit record and whether you have income or money to repay from, and if it says yes, the card arrives a week later. Applying takes a few points off your credit record, whether or not you’re approved.{held.length ? ' Credit bureaus look at how much of all your cards’ limits you use, taken together.' : ''}</p>
+              <p className="small" style={{ margin: 0 }}>You can apply to any bank here, not only yours. The bank checks your credit record and whether you have income or money to repay from. If it approves you, the card arrives a week later. Applying takes a few points off your credit score, whether or not you’re approved.{held.length ? ' Credit bureaus look at how much of all your cards’ limits you use, taken together.' : ''}</p>
               <div className="field-row">
                 <div className="field">
                   <label htmlFor="card-apply-bank">Bank</label>
@@ -155,7 +156,7 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   const lines: string[] = [];
   const intro = terms.standardApr !== undefined ? ` during the introductory months, then ${pct(terms.standardApr)}` : '';
   if (charge) {
-    lines.push(`This is a charge card: ${terms.issuer ?? 'the bank'} takes the whole statement from your current account each month. It can’t carry a balance, and it charges ${pct(terms.apr)} a year on anything the account can’t cover.`);
+    lines.push(`This is a charge card: ${terms.issuer ?? 'the bank'} takes the whole statement from your checking account each month. It can’t carry a balance, and it charges ${pct(terms.apr)} a year on anything the account can’t cover.`);
   } else if (terms.aprFrom !== undefined && terms.aprTo !== undefined) {
     // The rate the card was set at when it opened (`card.apr`, as `cardTerms` reads it), not today's: from 2026-10-17. Until
     // then this said "yours opened at" the rate charged today, which in the introductory months is 0%.
@@ -205,7 +206,7 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   if (bankIso === 'GB' && state.persistentNoticeAt !== undefined && !state.hardship) {
     lines.push(`Persistent debt: over eighteen months, more of what you paid went to interest and fees than to the balance, and the bank wrote to you about it on ${formatDate(state.persistentNoticeAt, sim.zone)}. If that’s still so at thirty-six months, the bank freezes the interest, sets a payment of ${money(Math.ceil(owed / 48 / 100) * 100)} a month, and suspends the card.`);
   }
-  if (state.suspended === 'late') lines.push(`Suspended: you’ve missed ${state.missed ?? 0} ${(state.missed ?? 0) === 1 ? 'payment' : 'payments'} in a row. It works again once you make a payment on time. Miss six in a row, and what’s owed is charged off to collections.`);
+  if (state.suspended === 'late') lines.push(`Suspended: you’ve missed ${said(state.missed ?? 0, 'payment')} in a row. It works again once you make a payment on time. Miss six in a row, and what’s owed is charged off to collections.`);
   // Until 2026-10-13 this said the card couldn’t be used until it was cleared. A plan ends, and its suspension with it,
   // only at the first statement or due date after it’s paid off (`systems/credit.ts`), as the guide says.
   if (plan) lines.push(`${state.suspended === 'persistent' ? `After three years of persistent debt, the bank put it on a payment plan on ${formatDate(plan.since, sim.zone)}` : `It’s been on a payment plan since ${formatDate(plan.since, sim.zone)}`}. There’s no interest, and each statement asks for the plan’s ${money(plan.payment)} instead of the minimum${state.statementBalance > 0 ? `, ${money(Math.min(state.statementBalance, plan.payment))} on this one` : ''}. You can’t use the card until the plan ends, at the first statement or due date after it’s paid off.`);
@@ -217,7 +218,9 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   if (state.overLimitOptIn) lines.push('You’ve opted in to going over the limit: a purchase can take it up to a tenth over, and this card charges nothing for it.');
   if (terms.capped) {
     const caps = [terms.capped.apr !== undefined ? `the rate at ${pct(terms.capped.apr)}` : '', terms.capped.lateFee !== undefined ? `the late fee at ${money(terms.capped.lateFee)}` : ''].filter(Boolean).join(' and ');
-    lines.push(`${terms.capped.law} caps ${caps}, and the card is held to that. Source: ${terms.capped.source}.`);
+    // The law named in the source line, not as the sentence's subject (from brief 15, 2026-10-19): until then the subject
+    // was the whole citation, three statutes long for Canada.
+    lines.push(`The law here caps ${caps}, and the card is held to that. Source: ${terms.capped.law}; ${terms.capped.source}.`);
   }
   const listed = terms.estimated.map((one) => TERM_WORDS[one]);
   const estimated = [terms.estimated.includes('card')

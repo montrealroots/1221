@@ -1,6 +1,133 @@
-# Read First: Brief 14, The Player's Language, 2026-10-18
+# Read First: Brief 15, The Natural-Language Editorial Pass, 2026-10-20
 
 **This section is the current status, and where a new session starts.** It was written at the end of the owner's
+"Complete Natural-Language Editorial Pass, Including All Retained Text"
+(`docs/verification/briefs-2026-10-16/15-complete-natural-language-editorial-pass.txt`, kept verbatim). The work was done
+on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `bdb23949` (#43's merge, the handoff after #42's). Brief
+14's section below was the status until brief 15 began. It is pushed and in pull request #44
+(https://github.com/yvcbcjhsy7-prog/1221/pull/44), opened after the gate. It isn't merged: merging is the owner's.
+**Nothing is deployed.**
+
+## 1. The Repository
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `bdb23949`, #43's merge.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 15's commits on `bdb23949`
+  (`git log --oneline bdb23949..origin/claude/peaceful-hamilton-59zdbb`). It was pushed and never force-pushed. The ten
+  areas were each merged in from their clones with merge commits (`git log --merges bdb23949..HEAD`).
+- **The tested code is `d6f6527a`'s.**
+  - **Every final run ran on it,** in the lanes of `runs15.sh`. Each step's commit, command and exit is in
+    `docs/verification/editorial-2026-10-19/runs/exits-*.txt`.
+  - **They ran first on `c3478f9e`** (`runs/first/`). The interface's lanes found three more things there, and the two
+    commits after it fixed them (section 3).
+  - **The gate** ran last, on `aabfc1b2`, in a clean clone: exit 0, 395 of 395 test files and 4,771 of 4,771 tests
+    passed, none skipped, every one of the twenty checks holding; the build exit 0, in the same clone
+    (`docs/verification/editorial-2026-10-19/runs/gate.txt`, `final-checks/`). Between `d6f6527a` and `aabfc1b2`, only
+    documents changed: the records, the scripts that write them, the matrix and this handoff. After it, only the gate's
+    figures were folded in, with the receipt and this section's account of them.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
+  worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
+
+## 2. Where It Stands
+
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+- **Against brief 14's close:** the same 612 rows Implemented And Verified, each measured again where what it reads
+  changed: 84 on `d6f6527a` (78 by the engine and the judge, 6 on its build), and the gate's on `aabfc1b2`.
+- **Every source of player text was read again, and none is Pending** (`docs/text/INVENTORY.md`):
+  - **The second pass:** 4,177 sources, 916 Rewritten and 3,261 Retained, none Pending or Blocked. Each Retained has a
+    reason the tool checks. Brief 14's statuses are kept as the first pass's history.
+  - **The pass is closed** (`docs/text/second-pass-closed.json`): the gate fails a source it hasn't read.
+  - **The inventory was checked against the game** (`omissions.md`). It took in the page's title, the holiday names and
+    every citation that began with a web address.
+  - **Engine-speak:** 321 hits, from 332, under the ratchet.
+- **The game is the same game.** Every number, id and key in the final runs was compared with brief 14's
+  (`numbers-same.py`, `numbers-same.json`). The judge's 36 figures are brief 14's exactly, so RULESET stays
+  evaluation-11.
+  - **The judge's outputs** (`final/`): 35 of 35 the same in every number.
+  - **The runs** (`runs/`): 17 of 17. The lives, the plans, variety and freshness are byte for byte.
+  - **The workloads** differ only in their notices' words: as many notices, with the same titles on the same days.
+  - **The advice** (`advice/`): only each run's own record differs (its commit, the files it read, its seconds).
+  - **The journeys** (`journeys-final/`): brief 13's 25 played to the end, all ten checks passed on each, and each
+    ending as brief 14's ended. They differ only in the runs' own records and the counts of words.
+- **On the built app** (the tested commit's build, from saves made on it):
+  - **The acceptance walk:** 77 of 77 steps at 1440 and at 390 (`runs/acceptance/`).
+  - **Brief 13's playthroughs at both widths:** normal 14 of 14, setback 9 of 9, specialist 11 of 11
+    (`interface-final/`).
+  - **Brief 14's journeys at both widths** (`journeys14-final/`): document 8 of 8, health 10 of 10, banking 9 of 10.
+    Banking's step 8 is brief 14's `journeys-3`, unchanged.
+  - No errors and no overflows in any of them.
+  - **The final walk** (`final-walk/`): 375 screens of 15 saves at each width, as many as the walk before the pass. Read line by line against the inventory, its 3,704 lines of four words or more are 3,060 held by an inventory string, 644 assembled from values, and none from a file the inventory doesn't read (`final-walk/omissions.json`).
+  - **The guide followed** on the build (`final-follow/`): 252 of 252 checks at 1440 and 253 of 253 at 390, and the routes a new life can't reach, 33 of 33 on the saves. The first follow failed one check at each width, on the follow script's own old name for a renamed control (`final-follow/first/`).
+- **Defects:** 74 found apart from the writing (`DEFECTS.md`): 66 fixed, 8 left, each for the owner.
+- **Not claimed.** No automated run judges how the game reads to a person, and nothing here is human usability
+  approval: `PLAYTEST.md` is the owner's route. The game is not complete, and no score is claimed for it.
+
+## 3. What Brief 15 Did
+
+The record is `docs/verification/editorial-2026-10-19/`. `README.md` there says how the pass was worked. `RECEIPT.md` is
+section 12's receipt, written by `receipt.py`. `crossarea.md` is the reading of every area together.
+- **The standard first:** `docs/STYLE.md`'s "Speak like a finished game", and the working reference (`reference.md`): the
+  eight kinds of text the brief names, rewritten before any area began.
+- **The second pass in the inventory:** `tools/text-inventory.mjs --mark2`, by area, with reasons it checks.
+  `tools/text-omissions.mjs` reads a walk of the built app against it.
+- **Ten areas in clones:** frame, tutorial, school, profile, money, money-data, papers, health, material-a and
+  material-b. Four finished on their own. Six were stopped before they reported, and the coordinator finished each
+  from its clone (`README.md`, How It Went).
+- **The coordinator** merged them and settled everything they left for each other (`coordinator.md`). It read the areas
+  together on the integrated build (`crossarea.md`), and fixed what that found:
+  - the advice's "off the whole a piece";
+  - one control named two ways;
+  - the research's fetch reports and straight apostrophes in shown fine print;
+  - two layout faults at 390 wide.
+- **The final runs** found three more things on `c3478f9e` (`uitools/README.md`):
+  - **The interface tools:** seven matchers that still looked for brief 14's words, moved to brief 15's (`e5fdacb7`).
+  - **The coursework warning** ran past the playthroughs' wall of text. It is 119 words at its longest, from 144, held
+    by a test (`e5fdacb7`).
+  - **Shown Today:** whole points hid a day's work, so it went back to a tenth (`d6f6527a`).
+
+  Every lane then ran again on `d6f6527a`.
+- **The tests:** older tests changed to hold the new words as exactly as they held the old, and new tests where a fix
+  needed one. No test was skipped and no behavioral check loosened.
+
+## 4. What Remains, And What It Waits On
+
+- **For the owner** (`coordinator.md`, Open; `DEFECTS.md`):
+  - **The dead content:** `licensepaths.ts`, most of `licenses.ts`, and `residenceRefusal`.
+  - **Five of money-data's data and rule items:**
+    - card replacement fees;
+    - Claim It Back where the law says the money can't be claimed;
+    - Australia's A$500;
+    - term deposit penalties;
+    - BMO's notice.
+
+    Two of them, Claim It Back and Australia, are a sentence and the game disagreeing, and the words state the law.
+- **From brief 14, unchanged:**
+  - On The Way before Sunday evening (`journeys-3`), which banking's step 8 still finds.
+  - ST6-R2.e is still the owner's question.
+  - Decision 4's rows are unchanged.
+- **What only a person can judge:** whether the voice is natural. `PLAYTEST.md` is the route, about twenty-five
+  minutes. `playtest-check.py` finds each phrase it quotes on the built app or in the code.
+- **Merging and deploying are the owner's.** Base44 deployment waits for the owner and the gate (rule 14). Read section
+  10 further down first.
+
+## 5. The Rules, The Schema And The Model
+
+- **The checks:** CLAUDE.md counts twenty. text-inventory now also fails a source the closed second pass hasn't read.
+- **The save schema is unchanged:** **94** in both places.
+- **RULESET is evaluation-11:** nothing the judge reads changed.
+- **New player-facing text follows `docs/STYLE.md` and `docs/GLOSSARY.md`.** A new or changed source is read and given a
+  second-pass status in the same commit, with
+  `node tools/text-inventory.mjs --mark2 <source> <status> --by <area> --reason|--evidence …`.
+- **The matrix:** `criteria.py` reads brief 15's results after brief 14's, the same three ways:
+  - the judge's figures (`final/figures.json`);
+  - the runs' figures (`runs/figures.json`);
+  - `verify.py` and `advice/close.py`.
+
+# Earlier: Brief 14, The Player's Language, 2026-10-18
+
+**This section was the current status until brief 15** (**Superseded 2026-10-20:** the current status is the first
+section above, brief 15's, and so is the completion line; the line below is brief 14's as it was). It was written at the
+end of the owner's
 "Complete Player-Facing Language And Tutorial Overhaul"
 (`docs/verification/briefs-2026-10-16/14-complete-player-facing-language-and-tutorial-overhaul.txt`, kept verbatim). The
 work was done on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0368d46b` (#41's merge). Brief 13's section

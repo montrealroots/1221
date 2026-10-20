@@ -273,8 +273,10 @@ async function closeLook(name) {
 
 const cardOf = (id) => page.locator('section.card').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last();
 const shownToday = async (id) => clean(await page.locator(`[data-shown-today="${id}"]`).innerText({ timeout: 2000 }).catch(() => ''));
-const figureOf = (s) => Number((s.match(/would come to about (\d+\.\d)/) ?? [])[1] ?? NaN);
-const bandOf = (s) => (s.match(/would come to about \d+\.\d \((\w+)\)/) ?? [])[1] ?? '';
+// "of 100" from brief 15 (f67198f7), which wrote the figure in whole points for a while; these read NaN until matched to
+// them (e5fdacb7), and the figure is a tenth again from brief 15's final runs, as it was before.
+const figureOf = (s) => Number((s.match(/would come to about (\d+\.\d) of 100 /) ?? [])[1] ?? NaN);
+const bandOf = (s) => (s.match(/would come to about \d+\.\d of 100 \((\w+)\)/) ?? [])[1] ?? '';
 /** A card's step buttons: the row under its Shown Today. */
 const stepsOf = (card) => card.locator('[data-shown-today] + div').getByRole('button');
 const whyOf = async (card) => clean(await card.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''));
@@ -340,7 +342,7 @@ async function onTheWayCancelled(item) {
   const d = page.getByRole('dialog', { name: 'On The Way' }).first();
   must(await d.isVisible().catch(() => false), `no On The Way before ${item}: ${clean(await page.locator('[role=dialog]:visible').first().innerText().catch(() => 'no dialog'))}`);
   const words = clean(await d.innerText());
-  must(/passes \w+ commitments?, and the clock stops at each one\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
+  must(/passes \w+ commitments?\. The clock stops at (?:it|each one) so you can choose/.test(words), `On The Way says: ${words.slice(0, 240)}`);
   said(`On The Way: ${words.replace(/^On The Way /, '').slice(0, 400)}`);
   await press(d.getByRole('button', { name: /^Cancel$/ }).first(), 'Cancel'); await wait(600);
   must(!(await page.locator('[role=dialog]:visible').count()), 'a dialog still open after Cancel');
@@ -368,7 +370,7 @@ async function deleteKeptThenContinue() {
   const d = page.getByRole('dialog', { name: 'Confirm Deletion' });
   must(await d.isVisible().catch(() => false), 'no Confirm Deletion');
   const words = clean(await d.innerText());
-  must(/^Delete Slot 1\?/.test(words) && /This ends that universe\./.test(words) && /(A backup is kept|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
+  must(/^Delete Slot 1\?/.test(words) && /This deletes (?:.+’s life from the slot, with everything that happened in it|the save in this slot)\./.test(words) && /(SLATE keeps a backup|This slot has no backup)/.test(words), `Confirm Deletion says: ${words.slice(0, 300)}`);
   said(`Confirm Deletion: ${words}`);
   await shot('confirm-deletion');
   await press(d.getByRole('button', { name: /^Keep It$/ }), 'Keep It'); await wait(600);
@@ -638,9 +640,9 @@ async function setback() {
     trace.startingPoint.command = 'npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json';
     const { body } = await readNotice(/^A Word On Your Coursework$/);
     must(/So far this term, \d+ of the \d+ pieces (you’ve shown|due) were Unready/.test(body), `no count: ${body.slice(0, 200)}`);
-    must(/What held most of them back was [^,]+, unfinished on [^.]+\. To work on it, use .*Run It With A Reader.*\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
-    must(/(One piece is|\d+ pieces are) set and still to be shown/.test(body), `no pieces still to be shown: ${body.slice(0, 300)}`);
-    must(/This is a warning, not the term review\. The faculty reviews the term on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, .* the review would (give you a notice of academic concern|put you on academic warning|keep you on academic warning|dismiss you from the School|not recommend your degree)\./.test(body), `no review day: ${body.slice(0, 400)}`);
+    must(/What held most of them back was [^,]+, unfinished on [^.]+\. To work on it: .*Run It With A Reader.*\./.test(body), `no cause and remedy naming Run It With A Reader: ${body.slice(0, 300)}`);
+    must(/(One piece is|(?:Two|Three|Four|Five|Six|Seven|Eight|Nine|\d+) pieces are) set and still to be shown/.test(body), `no pieces still to be shown: ${body.slice(0, 300)}`);
+    must(/This is a warning\. The term review is on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the review would (give you a notice of academic concern|put you on academic warning|keep you on academic warning|dismiss you from the School|not recommend your degree)\./.test(body), `no review day: ${body.slice(0, 400)}`);
     await shot('warning-on-home');
   });
   await step('the warning opened in place: its look, who sent it and when, and Close', ['drill-down'], async () => {
@@ -658,7 +660,7 @@ async function setback() {
     must(hash().startsWith('#/workspace/school'), `Go There opened ${hash()}`);
     await tab('Coursework');
     const soonest = (await page.locator('[data-due-soonest] li').allInnerTexts()).map(clean);
-    must(soonest.length > 0 && soonest.every((s) => /, due .+\. Shown today, it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\./.test(s)), `Due Soonest: ${soonest.join(' | ').slice(0, 300)}`);
+    must(soonest.length > 0 && soonest.every((s) => /, due .+\. Shown today, it would come to about \d+\.\d of 100 \((Unready|Working|Strong|Exceptional)\)\./.test(s)), `Due Soonest: ${soonest.join(' | ').slice(0, 300)}`);
     said(`Due Soonest: ${soonest.join(' | ')}`);
     const forecast = page.locator('[data-shown-today]').filter({ hasText: /Run It With A Reader/ }).first();
     must(await forecast.count(), 'no open scene whose Shown Today names Run It With A Reader');
@@ -873,9 +875,9 @@ async function specialist() {
     firstTake = Number((said1.match(/Taped: (\d+\.\d)/) ?? [])[1] ?? NaN);
     must(!Number.isNaN(firstTake), `no result said: ${said1}`);
     const text = clean(await briefPane().innerText());
-    const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
+    const grain = text.match(/Played that way, it suited the scene \([^)]*\) and added [\d.]+ points\. Your abilities and techniques cost it [\d.]+ points\./)?.[0];
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.search(/The Last Take/i), text.search(/The Last Take/i) + 400)}`);
-    must(/held back [A-Z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
+    must(/held back your [a-z]|wasn’t complete|didn’t fit|didn’t suit|asked more than/.test(text), 'what held it back isn’t said');
     must(await briefPane().locator('table[data-takes] tbody tr').count() === 1, 'the take isn’t the one row in the takes table');
     said(grain);
     return said1;
@@ -887,9 +889,9 @@ async function specialist() {
     const first = clean(await work.locator('p').first().innerText());
     const assumes = clean(await work.locator('[data-assumes]').innerText().catch(() => ''));
     const attention = clean(await work.locator('[data-attention]').innerText().catch(() => ''));
-    must(/\d+ hours of its exercise(?:, a session a day,)? would take it from \d+ to about \d+\. On your recent work, replayed with you as you are now, that’s forecast to be worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
+    must(/\d+ hours of its exercise(?:, an hour a day,)? would take it from \d+ to about \d+\. On your recent work, judged again as you are now, that’s forecast to be worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
     must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes: ${assumes || 'nothing'}`);
-    must(/deserves? attention|^Neither preparation nor training/.test(attention), `what deserves attention: ${attention || 'nothing'}`);
+    must(/(is|are) worth your time now|^Neither preparation nor training/.test(attention), `what deserves attention: ${attention || 'nothing'}`);
     const ex = work.locator('button', { hasText: /…$/ }).first();
     trains = (await ex.count()) ? clean(await ex.innerText()).replace(/…$/, '') : '';
     said(`${first} / ${assumes} / ${attention} / its exercise: ${trains || 'none offered here'}`);
@@ -1190,7 +1192,7 @@ async function askedFirst(item) {
   }
   await language('On The Way');
   const words = clean(await d.innerText());
-  must(/passes \w+ commitments?, and the clock stops at each one\./.test(words), `On The Way says: ${words.slice(0, 240)}`);
+  must(/passes \w+ commitments?\. The clock stops at (?:it|each one) so you can choose/.test(words), `On The Way says: ${words.slice(0, 240)}`);
   said(`On The Way: ${words.replace(/^On The Way /, '').slice(0, 400)}`);
   await press(d.getByRole('button', { name: /^Cancel$/ }).first(), 'Cancel'); await wait(600);
   must(!(await page.locator('[role=dialog]:visible').count()), 'a dialog still open after Cancel');

@@ -385,7 +385,7 @@ describe('school.extend_incomplete', () => {
     expect(drew('school.extend_incomplete')).toHaveLength(3);
     expect(rowOf(after.html, 'Acting I')).toContain('Make Up A Session');
     expect(rowOf(after.html, 'Acting I')).not.toContain('Ask For A Month More');
-    expect(sim.execute({ kind: 'school.extend_incomplete', payload: { key: ACTING_I } }).error).toBe('It’s been extended once already.');
+    expect(sim.execute({ kind: 'school.extend_incomplete', payload: { key: ACTING_I } }).error).toBe('You’ve already had your one extra month.');
     expect(acting().dueBy).toBe(at(2027, 2, 9, 17));
 
     sim = reload(sim);
@@ -404,13 +404,13 @@ describe('school.extend_incomplete', () => {
     tend(sim, at(2027, 2, 2, 16));
     expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(0);
     tend(sim, at(2027, 2, 2, 18));
-    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['One make-up session still to do, by February 9, 2027. Press Make Up A Session on the Standing tab.']);
+    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['You still have one make-up session to do, by February 9, 2027. Press Make Up A Session on the Standing And Craft tab.']);
     // The new date: Incomplete an hour before, Permanent an hour after.
     tend(sim, at(2027, 2, 9, 16));
     expect(acting().result).toBe('incomplete');
     tend(sim, at(2027, 2, 9, 18));
-    expect(acting()).toMatchObject({ result: 'permanent', why: 'an Incomplete not made up in its month' });
-    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => n.body)).toEqual(['The month to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. At the year’s end you can ask to repeat the year on the Standing tab.']);
+    expect(acting()).toMatchObject({ result: 'permanent', why: 'an Incomplete not made up in time' });
+    expect(titled(sim, 'Permanent Incomplete: Acting I').map((n) => n.body)).toEqual(['The time to make it up ran out, so Acting I carries no credit, and the degree can’t be completed without it. At the year’s end, you can ask to repeat the year on the Standing And Craft tab.']);
 
     // Nothing again through a save; the Standing tab reads it as the degree's shortfall.
     sim = reload(sim);
@@ -418,7 +418,7 @@ describe('school.extend_incomplete', () => {
     expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(1);
     expect(titled(sim, 'Permanent Incomplete: Acting I')).toHaveLength(1);
     const lapsed = drawn(sim, SchoolWorkspace);
-    expect(lapsed.html).toContain('<strong>Acting I</strong>, Permanent Incomplete: an Incomplete not made up in its month.');
+    expect(lapsed.html).toContain('<strong>Acting I</strong>, Permanent Incomplete: an Incomplete not made up in time.');
     expect(lapsed.html).not.toContain('<strong>Acting I</strong>, Incomplete:');
     expect(lapsed.text).toMatch(/The degree still needs [^.]*Acting I[^.]*\./);
     expect(drew('school.extend_incomplete')).toHaveLength(0);
@@ -432,7 +432,7 @@ describe('school.extend_incomplete', () => {
     tend(sim, at(2027, 1, 3, 16));
     expect(titled(sim, 'A Week Left: Acting I')).toHaveLength(0);
     tend(sim, at(2027, 1, 3, 18));
-    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['One make-up session still to do, by January 10, 2027. Press Make Up A Session on the Standing tab.']);
+    expect(titled(sim, 'A Week Left: Acting I').map((n) => n.body)).toEqual(['You still have one make-up session to do, by January 10, 2027. Press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More.']);
     tend(sim, at(2027, 1, 10, 16));
     expect(acting().result).toBe('incomplete');
     tend(sim, at(2027, 1, 10, 18));
@@ -490,7 +490,7 @@ describe('school.request_repeat', () => {
     // eighth, Fall Term 2029 and Spring Term 2030, are billed past six at 2029–30’s tuition, 2026–27’s $40,750.00 grown
     // 3.22% a year three times, half a year’s each: $22,407.28 twice. Until 2026-10-13 the year’s two alone were
     // counted, six terms, and nothing was said of billing; found by the guide audit of that day.
-    expect(asking.text).toContain('the degree reads the pass. The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 would be billed to your Yale account, about $44,814.56 in tuition alone.');
+    expect(asking.text).toContain('the degree reads the pass. The tuition scholarship supports six terms, and with the year again the degree takes eight terms: two would be billed to your Yale account, about $44,814.56 in tuition alone.');
     const ask = drew('school.request_repeat');
     expect(ask.map((a) => a.label)).toEqual(['Ask']);
     ask[0]!.onClick!();
@@ -508,7 +508,7 @@ describe('school.request_repeat', () => {
     expect(school().repeat).toMatchObject({ status: 'granted', decidedAt: at(2027, 4, 30, 18) });
     expect(school()).toMatchObject({ offset: 2, classOf: 2030, repeats: 1, repeatedYears: [1] });
     // The same eight terms, two of them billed (until 2026-10-13 the notice counted six and said nothing of it).
-    expect(titled(sim, 'You’ll Repeat The Year').map((n) => n.body)).toEqual(['The chair and the dean granted it: from Fall Term 2027 you take year 1’s courses again, and what you did the first time stays on your record. The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 terms will be billed to your Yale account. The Bulletin sets no rule for repeating a course; the decision is the game’s.']);
+    expect(titled(sim, 'You’ll Repeat The Year').map((n) => n.body)).toEqual(['The chair and the dean granted it: from Fall Term 2027 you take year 1’s courses again, and what you did the first time stays on your record. The tuition scholarship supports six terms, and with the year again the degree takes eight terms: two will be billed to your Yale account. The Bulletin sets no rule for repeating a course; the decision is the game’s.']);
     // Not a last year's: the next term was on the calendar already, and nothing is added to it.
     expect(pendingOf(sim, TERM_KIND).map((i) => i.payload.term)).toEqual([2]);
     sim = reload(sim);
@@ -550,7 +550,7 @@ describe('school.request_repeat', () => {
     expect(school.reviews).toHaveLength(1);
     expect(school.reviews![0]).toMatchObject({ term: 1, outcome: 'warning' });
     expect(school.standing).toBe('warning');
-    expect(titled(sim, 'A Faculty Review: On Warning').map((n) => n.body)).toEqual([`${fails.length} courses failed in Spring Term 2027: the Bulletin disqualifies a student with 2 Failures in a term. The faculty reviewed it and kept you, on academic warning: the year is to be repeated, which you ask for at its end.`]);
+    expect(titled(sim, 'A Faculty Review: On Warning').map((n) => n.body)).toEqual([`${fails.length} courses failed in Spring Term 2027: the Bulletin disqualifies a student with 2 Failures in a term. The faculty reviewed it and kept you on academic warning, to repeat the year: ask to repeat it at the year’s end, on the Standing And Craft tab.`]);
     const asked = sim.must<{ decideAt: Instant }>({ kind: 'school.request_repeat', payload: {} });
     tend(sim, asked.decideAt + MS_HOUR);
     // Granted, on the Fails the review judged (until 2026-10-13 refused on them, and the warning's remedy never had).
@@ -596,9 +596,9 @@ describe('school.request_repeat', () => {
     expect(last.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('Repeating would make 10 semesters, past the nine the Bulletin allows for the degree.');
     // So the evaluation offered the additional term alone, and the panel offers no repeat. It doesn't say why: with the
     // first year's repeat on the record, the panel shows a refusal only where no repeat was ever asked (`!r`).
-    expect(titled(last, 'Your Degree Isn’t Complete').map((n) => n.body)[0]).toMatch(/you can ask for an additional term, Spring Term 2031, to retake it, on the Standing tab/);
+    expect(titled(last, 'Your Degree Isn’t Complete').map((n) => n.body)[0]).toMatch(/you can ask on the Standing And Craft tab for an additional term, Spring Term 2031, to retake it\./);
     const panel = drawn(last, RepeatPanel);
-    expect(panel.text).toContain('Your last year wasn’t passed. Ask by May 26, 2030, or the degree is withheld.');
+    expect(panel.text).toContain('Your last year wasn’t passed. Ask by May 26, 2030, or the faculty won’t recommend the degree.');
     expect(panel.text).toContain('Or an additional term, Spring Term 2031, to retake Taming The Cyclops alone');
     expect(panel.text).not.toContain('Ask To Repeat The Year…');
     expect(drew('school.request_repeat')).toHaveLength(0);
@@ -647,7 +647,7 @@ describe('school.cancel_repeat', () => {
     expect(first.text).toContain('Year 3, asked April 27, 2029: with the chair and the dean, decided by May 4, 2029, for Movement Invention III.');
     expect(first.text).toContain('Call Off The Request…');
     expect(drew('school.cancel_repeat')).toHaveLength(0);
-    const warning = 'Calling it off leaves the degree withheld if you don’t ask again by May 27, 2029.';
+    const warning = 'If you call it off and don’t ask again by May 27, 2029, the faculty won’t recommend the degree.';
     expect(first.text).not.toContain(warning);
     expect(sim.execute({ kind: 'school.cancel_repeat', payload: {} }).error).toBe(`${warning} Confirm to go ahead.`);
     expect(school().repeat!.status).toBe('pending');
@@ -685,7 +685,7 @@ describe('school.cancel_repeat', () => {
     expect(notices).toHaveLength(1);
     // Until 2026-10-13 it said “You didn’t ask to repeat the year in its thirty days”, whatever was open, and this held it.
     // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
-    expect(notices[0]!.body).toBe('The thirty days to finish the degree ended with nothing asked for, and it needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.');
+    expect(notices[0]!.body).toBe('The thirty days to finish the degree ended with nothing asked for, and it needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. You can still practice, and tape the practice briefs on your Profile, outside the School.');
     const after = drawn(sim, RepeatPanel);
     expect(after.text).toContain('Year 3, asked April 27, 2029: called off, for Movement Invention III.');
     expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
@@ -701,7 +701,7 @@ describe('school.cancel_repeat', () => {
     // The thirty days end on the 27th with the request pending, and withhold nothing.
     tend(sim, at(2029, 5, 28, 10));
     expect(school().standing).toBe('good');
-    expect(sim.execute({ kind: 'school.cancel_repeat', payload: {} }).error).toBe('Calling it off withholds the degree now: its thirty days ended on May 27, 2029. Confirm to go ahead.');
+    expect(sim.execute({ kind: 'school.cancel_repeat', payload: {} }).error).toBe('If you call it off, the faculty won’t recommend the degree: its thirty days ended on May 27, 2029. Confirm to go ahead.');
     // Break: the withholding in `school.cancel_repeat` taken out: still in good standing, and `extraRefusal` and
     // `repeatRefusal`, their old lines back, say “Its thirty days have run out.”
     sim.must({ kind: 'school.cancel_repeat', payload: { confirm: true } });
@@ -724,7 +724,7 @@ describe('school.cancel_repeat', () => {
     expect(pendingOf(sim, TERM_KIND).map((i) => [i.payload.term, i.at])).toEqual([[6, at(2029, 8, 27, 9)]]);
     expect(pendingOf(sim, REPEAT_DUE_KIND)).toHaveLength(0);
     expect(new Date(f1Of(sim.player)!.expiresAt!).toISOString()).toBe('2030-07-30T12:00:00.000Z');
-    expect(titled(sim, 'You’ll Repeat The Year')[0]!.body).toMatch(/The tuition scholarship supports six terms, and with the year again the degree takes 8: 2 terms will be billed to your Yale account\. Your I-20 is extended a year\./);
+    expect(titled(sim, 'You’ll Repeat The Year')[0]!.body).toMatch(/The tuition scholarship supports six terms, and with the year again the degree takes eight terms: two will be billed to your Yale account\. Your I-20 is extended a year\./);
     tend(sim, at(2029, 5, 27, 18));
     expect(school.standing).toBe('good');
     expect(titled(sim, 'The Degree Isn’t Recommended')).toHaveLength(0);
@@ -816,7 +816,7 @@ describe('school.request_extra_term', () => {
     expect(sim.universe.scheduled.filter((i) => i.kind === CONFERRAL_KIND && i.payload.personId === sim.player.id).map((i) => [i.status, i.at])).toEqual([['done', at(2029, 12, 22, 10)]]);
     expect(school.standing).toBe('graduated');
     expect(school.endedAt).toBe(at(2029, 12, 22, 10));
-    expect(titled(sim, 'Your MFA Is Conferred').map((n) => n.body)).toEqual(['The MFA in Acting is conferred at Yale’s December conferral, your last courses retaken in an additional term; the diploma is mailed in about 6 weeks.']);
+    expect(titled(sim, 'Your MFA Is Conferred').map((n) => n.body)).toEqual(['Your MFA in Acting is conferred at Yale’s December conferral, after the courses you retook in an additional term. The diploma is mailed in about six weeks.']);
   }, 120_000);
 
   it('is refused in its own words before the last year, while a repeat is asked for, and with every course passed; and allowed as the ninth semester', () => {
@@ -898,7 +898,7 @@ describe('school.pay_balance', () => {
     const payments = () => sim.universe.transactions.filter((t) => t.memo === 'Payment: Yale Student Account').length;
     const paidBefore = payments();
     // In the bank's words from 2026-10-16, which say what to do; until then “Your bank can’t cover it.”
-    const nothing = 'Your current account and the savings beside it can’t cover any of it. Move money into your current account first.';
+    const nothing = 'Your checking account and your savings can’t cover any of it, so nothing was paid. Move money into your checking account first.';
     expect(sim.execute({ kind: 'school.pay_balance', payload: {} }).error).toBe(nothing);
     expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 100_00 } }).error).toBe(nothing);
     expect(accountOwed(sim, sim.player)).toBe(owed);
@@ -922,7 +922,7 @@ describe('school.pay_balance', () => {
     expect(school().leaves!.at(-1)!.status).toBe('returned');
     expect(school().mustRegister).toBe(true);
     const register = drawn(sim, LeavePanel);
-    expect(register.text).toContain('Register for Spring Term 2028: until you do, classes don’t count your attendance and you can’t work shifts.');
+    expect(register.text).toContain('Register for Spring Term 2028: until you do, you’re counted absent from classes and can’t work shifts.');
     expect(register.text).not.toContain('A financial hold stops it');
     expect(drew('school.reregister').map((c) => c.disabled)).toEqual([false]);
     // The term's scholarship, by hand: 2027–28's living-expense scholarship, $16,128.08, less its plan, $2,034.44, is
@@ -946,7 +946,7 @@ describe('school.pay_balance', () => {
     expect(titled(sim, 'Not Registered')).toHaveLength(0);
     expect(recordsOf(unpaid, 3).map(([k]) => k).sort()).toEqual(met.map(([k]) => k).sort());
     for (const [, r] of recordsOf(unpaid, 3)) expect(r.attended).toBe(0);
-    expect(titled(unpaid, 'Not Registered').map((n) => n.body)).toEqual(['You haven’t registered, so today’s classes didn’t count your attendance. Register on the School screen. Registering late takes the chair’s written permission, which the game assumes you have.']);
+    expect(titled(unpaid, 'Not Registered').map((n) => n.body)).toEqual(['You haven’t registered, so you were counted absent from today’s classes. Press Register on the Standing And Craft tab. Registering late takes the chair’s written permission, which the game assumes you have.']);
     expect(titled(sim, 'The Financial Hold Is Lifted')).toHaveLength(1);
     expect(sim.execute({ kind: 'school.pay_balance', payload: {} }).error).toBe('Your Yale account owes no balance.');
   }, 120_000);

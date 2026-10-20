@@ -1,0 +1,218 @@
+[
+ {
+  "file": "src/engine/content/roundups.ts",
+  "key": "DROPPED_UNSAID",
+  "before": "const DROPPED_UNSAID = 'In the game, nothing moves that day, all or nothing, and never into an overdraft, and what was counted is dropped: the bank doesn’t say whether it’s carried.';",
+  "after": "const DROPPED_UNSAID = 'In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.';"
+ },
+ {
+  "file": "src/engine/content/roundups.ts",
+  "key": "mx-santander.open",
+  "before": "'That credit card round-ups come from the current account is inferred, not stated.'",
+  "after": "'Santander doesn’t say that a credit card purchase’s round-up comes from your checking account; the game takes it from there.'"
+ },
+ {
+  "file": "src/engine/content/roundups.ts",
+  "key": "mx-santander.notHere",
+  "before": "'A meta is a goal kept inside the current account, not a savings product, and Santander’s pages disagree on whether it earns interest; the game moves it to your savings.'",
+  "after": "'A meta is a goal kept inside your checking account, not a savings product, and Santander’s pages disagree on whether it earns interest; the game moves it to your savings.'"
+ },
+ {
+  "file": "src/engine/content/roundups.ts",
+  "key": "kr-kakaobank.words",
+  "before": "words: 'Not a purchase round-up: on each weekday, Monday to Friday, holidays or not, the part of the day before’s closing balance under 1,000원 moves to your savings, the 저금통.',",
+  "after": "words: 'Not a purchase round-up: each weekday, Monday to Friday, holidays or not, the part of the previous day’s closing balance under ₩1,000 moves to your savings, the 저금통.',"
+ },
+ {
+  "file": "src/engine/content/roundups.ts",
+  "key": "kr-kakaobank.short",
+  "before": "short: 'Skipped when the balance is 1,000원 or less, never partial and never overdrawn.',",
+  "after": "short: 'It’s skipped when the balance is ₩1,000 or less, never moves just part, and never overdraws the account.',"
+ },
+ {
+  "file": "src/engine/content/roundups.ts",
+  "key": "kr-kakaobank.open",
+  "before": "'A sweep that would take the 저금통 past its 100,000원 cap: the game skips it.",
+  "after": "'A sweep that would take the 저금통 past its ₩100,000 cap: the game skips it."
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "reykjavik",
+  "before": "'HMS mean market rent for a two-room flat; the area it covers isn’t stated', 'Q3 2025'",
+  "after": "'HMS’s mean market rent for a two-room flat; it doesn’t say what area it covers', 'the third quarter of 2025'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "mosfellsbr",
+  "before": "'HMS capital-region market rent, 3,739 kr a square meter, for 55 square meters'",
+  "after": "'HMS’s market rent for the capital region, 3,739 kr a square meter, for 55 square meters'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "newyork",
+  "before": "'HUD Fair Market Rent, a 40th percentile with utilities; the room is SpareRoom’s', 'FY2026; room Q2 2026'",
+  "after": "'HUD’s Fair Market Rent, the 40th percentile rent, utilities included; the room’s rent is SpareRoom’s', 'fiscal year 2026; the room, the second quarter of 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "newhaven",
+  "before": "'HUD Fair Market Rent for the New Haven–Meriden area, a 40th percentile with utilities', 'FY2026'",
+  "after": "'HUD’s Fair Market Rent for the New Haven–Meriden area, the 40th percentile rent, utilities included', 'fiscal year 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "losangeles",
+  "before": "'HUD Fair Market Rent, a 40th percentile with utilities; the room is SpareRoom’s', 'FY2026; room Q4 2025'",
+  "after": "'HUD’s Fair Market Rent, the 40th percentile rent, utilities included; the room’s rent is SpareRoom’s', 'fiscal year 2026; the room, the fourth quarter of 2025'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "london",
+  "before": "'ONS mean rent across private tenancies; the room is SpareRoom’s', 'August 2026; room Q1 2026'",
+  "after": "'the ONS’s mean rent across private tenancies; the room’s rent is SpareRoom’s', 'August 2026; the room, the first quarter of 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "toronto",
+  "before": "'Statistics Canada mean asking rent for a one-bedroom', 'Q2 2026', STATCAN),\n  r('ca-bc-vancouver'",
+  "after": "'Statistics Canada’s mean asking rent for a one-bedroom', 'the second quarter of 2026', STATCAN),\n  r('ca-bc-vancouver'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "vancouver",
+  "before": "'Statistics Canada mean asking rent for a one-bedroom', 'Q2 2026', STATCAN),\n  r('ca-qc-montreal'",
+  "after": "'Statistics Canada’s mean asking rent for a one-bedroom', 'the second quarter of 2026', STATCAN),\n  r('ca-qc-montreal'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "montreal",
+  "before": "1_480, 'CAD', 'Statistics Canada mean asking rent for a one-bedroom', 'Q2 2026'",
+  "after": "1_480, 'CAD', 'Statistics Canada’s mean asking rent for a one-bedroom', 'the second quarter of 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "sydney",
+  "before": "'NSW median weekly rent on new bonds for a one-bedroom unit, 700 a week'",
+  "after": "'the NSW median rent on new bonds for a one-bedroom unit, A$700 a week'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "melbourne",
+  "before": "'Victorian median on new lettings for a one-bedroom flat, 500 a week; the room is a listing summary', 'September quarter 2025; room April 2026'",
+  "after": "'Victoria’s median rent on new lettings for a one-bedroom flat, A$500 a week; the room’s rent is from a summary of listings', 'the September quarter of 2025; the room, April 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "auckland",
+  "before": "'a summary of Tenancy Services bond data for central Auckland, 463 a week'",
+  "after": "'a summary of Tenancy Services’ bond data for central Auckland, NZ$463 a week'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "berlin",
+  "before": "'IBB median asking rent, warm, about 50 square meters; the room is the Moses Mendelssohn Institut’s', '2025; room September 2026'",
+  "after": "'the IBB’s median asking rent including heating (warm), for about 50 square meters; the room’s rent is the Moses Mendelssohn Institut’s', '2025; the room, September 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "paris",
+  "before": "'OLAP mean for recent movers into a two-room flat, charges excluded'",
+  "after": "'OLAP’s mean rent for recent movers into a two-room flat, without charges'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "madrid",
+  "before": "'idealista asking rent, 23.3 euros a square meter for 50; the room from idealista and OCU'",
+  "after": "'idealista’s asking rent, €23.30 a square meter for 50 square meters; the room’s rent is from idealista and OCU'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "rome",
+  "before": "'Agenzia Entrate registered new contracts, 13.5 euros a square meter for 50, likely under listing prices'",
+  "after": "'the Agenzia Entrate’s registered new contracts, €13.50 a square meter for 50 square meters, likely below listing prices'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "dublin",
+  "before": "'RTB standardised average for a one-bedroom on new tenancies; the room is Daft.ie’s', 'Q4 2025; room Q1 2026'",
+  "after": "'the RTB’s standardized average for a one-bedroom on new tenancies; the room’s rent is Daft.ie’s', 'the fourth quarter of 2025; the room, the first quarter of 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "tokyo",
+  "before": "'At Home average asking rent for 30 to 50 square meters in the 23 wards'",
+  "after": "'At Home’s average asking rent for 30 to 50 square meters in the 23 wards'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "seoul",
+  "before": "'monthly rent (wolse) on small units, normalized to a 10 million won deposit', 'Q1 2026'",
+  "after": "'the monthly rent (wolse) on small units, taken at a ₩10 million deposit', 'the first quarter of 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "mexicocity",
+  "before": "'Inmuebles24 asking rent, 334 pesos a square meter, for 45 to 50'",
+  "after": "'Inmuebles24’s asking rent, 334 pesos a square meter, for 45 to 50 square meters'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "reykjavik (order)",
+  "before": "'HMS’s mean market rent for a two-room flat; it doesn’t say what area it covers', 'the third quarter of 2025'",
+  "after": "'HMS’s mean market rent for a two-room flat', 'the third quarter of 2025, for an area HMS doesn’t name'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "newyork (order)",
+  "before": "'HUD’s Fair Market Rent, the 40th percentile rent, utilities included; the room’s rent is SpareRoom’s', 'fiscal year 2026; the room, the second quarter of 2026'",
+  "after": "'HUD’s Fair Market Rent, the 40th percentile rent, utilities included', 'fiscal year 2026; the room’s rent is SpareRoom’s, for the second quarter of 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "losangeles (order)",
+  "before": "'HUD’s Fair Market Rent, the 40th percentile rent, utilities included; the room’s rent is SpareRoom’s', 'fiscal year 2026; the room, the fourth quarter of 2025'",
+  "after": "'HUD’s Fair Market Rent, the 40th percentile rent, utilities included', 'fiscal year 2026; the room’s rent is SpareRoom’s, for the fourth quarter of 2025'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "london (order)",
+  "before": "'the ONS’s mean rent across private tenancies; the room’s rent is SpareRoom’s', 'August 2026; the room, the first quarter of 2026'",
+  "after": "'the ONS’s mean rent across private tenancies', 'August 2026; the room’s rent is SpareRoom’s, for the first quarter of 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "melbourne (order)",
+  "before": "'Victoria’s median rent on new lettings for a one-bedroom flat, A$500 a week; the room’s rent is from a summary of listings', 'the September quarter of 2025; the room, April 2026'",
+  "after": "'Victoria’s median rent on new lettings for a one-bedroom flat, A$500 a week', 'the September quarter of 2025; the room’s rent is from a summary of listings, April 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "berlin (order)",
+  "before": "'the IBB’s median asking rent including heating (warm), for about 50 square meters; the room’s rent is the Moses Mendelssohn Institut’s', '2025; the room, September 2026'",
+  "after": "'the IBB’s median asking rent including heating (warm), for about 50 square meters', '2025; the room’s rent is the Moses Mendelssohn Institut’s, September 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "madrid (order)",
+  "before": "'idealista’s asking rent, €23.30 a square meter for 50 square meters; the room’s rent is from idealista and OCU', 'August 2026'",
+  "after": "'idealista’s asking rent, €23.30 a square meter for 50 square meters', 'August 2026; the room’s rent is from idealista and OCU'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "dublin (order)",
+  "before": "'the RTB’s standardized average for a one-bedroom on new tenancies; the room’s rent is Daft.ie’s', 'the fourth quarter of 2025; the room, the first quarter of 2026'",
+  "after": "'the RTB’s standardized average for a one-bedroom on new tenancies', 'the fourth quarter of 2025; the room’s rent is Daft.ie’s, for the first quarter of 2026'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "mosfellsbr (span)",
+  "before": "'September–October 2025'",
+  "after": "'September to October 2025'"
+ },
+ {
+  "file": "src/engine/content/rents.ts",
+  "key": "sydney (span)",
+  "before": "'April–June 2026'",
+  "after": "'April to June 2026'"
+ }
+]

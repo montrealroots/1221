@@ -86,7 +86,7 @@ function featureOf(kind: string, payload: Record<string, unknown>): string {
 export function registerTutorial(sim: Simulation): void {
   sim.onCommand<{ chapterId: string }, { read: string; next?: string }>(READ_KIND, (p, { sim: s }) => {
     const state = s.universe.tutorial;
-    if (!state) throw new CommandError('This life was begun without the guide, so everything is already open.');
+    if (!state) throw new CommandError('You started without the guide, so everything is already open.');
     const chapter = CHAPTER_BY_ID[p.chapterId];
     if (!chapter) throw new CommandError('There’s no such chapter.');
     if (state.read.includes(chapter.id)) throw new CommandError(`You’ve already read “${chapter.title}”.`);

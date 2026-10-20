@@ -1,0 +1,36 @@
+{
+ "base": "http://localhost:4287",
+ "width": 390,
+ "visited": [
+  {
+   "save": "health.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "lien.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "missed-plan.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "nonfiler.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "tax.json",
+   "screens": 25,
+   "failed": []
+  },
+  {
+   "save": "withdraw.json",
+   "screens": 25,
+   "failed": []
+  }
+ ]
+}

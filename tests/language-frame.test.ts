@@ -44,7 +44,7 @@ describe('a question in What Needs You, opened', () => {
     expect([seen.kind, seen.name, seen.summary]).toEqual(['Waiting On You', 'Your 2026 Tax Return', `Answer it by ${formatDate(due, sim.zone)}. That’s in 2 months.`]);
     const body = words(seen.body);
     expect(body).toContain('It came up just now, about your taxes. Its urgency is high, at 70/100. If it comes up again while it’s open, its urgency can only go up. It’s the only question waiting on you.');
-    expect(body).toContain(`It closes when you answer it on Home or deal with it on its own screen. Otherwise it closes by itself after ${formatDate(due, sim.zone)}: the game checks every two days, so that happens within two days of its date. The save keeps it for 180 days after it closes.`);
+    expect(body).toContain(`It closes when you answer it on Home or deal with it on its own screen. If you don’t, it closes by itself within two days after its date, ${formatDate(due, sim.zone)}. You can still open it here for 180 days after it closes.`);
     expect(body).toContain('On Home, its buttons are File It, Go There and Dismiss. Reading it here changes nothing.');
     expect(seen.provenance).toBe('Urgency is estimated, from 0 to 100.');
 
@@ -82,7 +82,7 @@ describe('a question in What Needs You, opened', () => {
     seen = look(sim, 'decision', late.id);
     expect([seen.kind, seen.summary]).toEqual(['No Longer Waiting', 'It closed after its date had passed, so it isn’t asking you for anything now.']);
     expect(words(seen.body)).toContain('It closed just now, and Home no longer lists it.');
-    expect(words(seen.body)).toContain(`The save keeps it until ${formatDate(sim.now + 180 * MS_DAY, sim.zone)}, 180 days after it closed.`);
+    expect(words(seen.body)).toContain(`You can still open it here until ${formatDate(sim.now + 180 * MS_DAY, sim.zone)}, 180 days after it closed.`);
     expect(words(seen.body)).toContain('It’s no longer on Home, so there’s nothing to press.');
     expect(words(seen.body)).toContain('Not listed Closed after its date');
 
@@ -102,8 +102,8 @@ describe('a question in What Needs You, opened', () => {
     expect(words(seen.body)).toContain('Not listed Dismissed');
 
     // Gone from the save, and a notice gone from the log.
-    expect(resolveLook(sim, at('decision', 'decision_none'))).toEqual({ gone: 'That question closed more than 180 days ago, so the save no longer keeps it.' });
-    expect(resolveLook(sim, at('notification', 'notice_none'))).toEqual({ gone: 'That notice is gone. The save keeps the latest 500, and this one was older.' });
+    expect(resolveLook(sim, at('decision', 'decision_none'))).toEqual({ gone: 'That question closed more than 180 days ago, so there’s nothing left to open.' });
+    expect(resolveLook(sim, at('notification', 'notice_none'))).toEqual({ gone: 'That notice is gone. SLATE keeps only your latest 500 notices, and this one was older.' });
   });
 });
 
@@ -133,7 +133,7 @@ describe('a notice, opened', () => {
     note = sim.universe.notifications.find((n) => n.id === note.id)!;
     seen = look(sim, 'notification', note.id);
     expect(seen.summary).toBe('You’ve read this notice. It came in 2 hours ago.');
-    expect(words(seen.body)).toContain('The save keeps it until there are more than 500 notices, when the oldest are dropped.');
+    expect(words(seen.body)).toContain('SLATE keeps your latest 500 notices, so this one stays until 500 newer ones have come in.');
     expect(words(seen.body)).toContain('Status Read No longer listed on Home');
   });
 });
@@ -153,9 +153,9 @@ describe('a life’s own words: the night, a failure to start or open', () => {
   it('says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do', async () => {
     const { startFailure, OPEN_FAILURE } = await import('@/app/SlateApp');
     const { PersistenceError } = await import('@/engine/persistence/adapter');
-    expect(startFailure(new PersistenceError('There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.', true)))
-      .toBe('That life couldn’t be saved, so it wasn’t started. There isn’t enough storage space on this device to save, so the slot still holds what it held before. Free some space, or delete a save you no longer want, then try again.');
-    expect(startFailure(new TypeError('Cannot read properties of undefined (reading \'countryId\')'))).toBe('That life couldn’t be started because of an error in the game, so nothing was saved to the slot.');
+    expect(startFailure(new PersistenceError('There isn’t enough storage space on this device to save, so nothing in the slot changed. Free some space, or delete a save you no longer want, then try again.', true)))
+      .toBe('Your new life couldn’t be saved, so it hasn’t started. There isn’t enough storage space on this device to save, so nothing in the slot changed. Free some space, or delete a save you no longer want, then try again.');
+    expect(startFailure(new TypeError('Cannot read properties of undefined (reading \'countryId\')'))).toBe('Your new life couldn’t start because of an error in the game, and nothing was saved to the slot.');
     expect(OPEN_FAILURE).toBe('That save couldn’t be opened because of an error in the game. Restart SLATE to try again, or restore the slot’s backup if it has one.');
   });
 });
@@ -164,10 +164,22 @@ describe('the entry rules’ notes, as the Papers screen’s fine print shows th
   it('keeps a note’s first word whole, and says a country’s own citizen is one', async () => {
     const { ENTRY } = await import('@/engine/content/entry');
     // Until 2026-10-17 the builder took "Visa exempt" off "Visa exemption", and Japan's rule read "Ion for short-term stay".
-    expect(ENTRY.JP!.citizens.US!.note).toBe('Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).');
+    expect(ENTRY.JP!.citizens.US!.note).toBe('No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.');
     expect(Object.values(ENTRY).flatMap((d) => Object.values(d.citizens)).filter((r) => /^Ion\b/.test(r.note))).toEqual([]);
     expect(ENTRY.US!.citizens.US).toMatchObject({ status: 'citizen', note: 'You’re one of its citizens.' });
     expect(Object.values(ENTRY).flatMap((d) => Object.values(d.citizens)).filter((r) => r.note === 'Own nationals.')).toEqual([]);
+  });
+
+  // From 2026-10-19 (brief 15): the research's shorthand said as sentences (`tools/entry-notes.mjs`). Until then a note
+  // pointed at "see uncertain", a list no screen shows, named agencies by their initials alone, and ran on semicolons.
+  it('says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone', async () => {
+    const { ENTRY } = await import('@/engine/content/entry');
+    const notes = Object.values(ENTRY).flatMap((d) => Object.values(d.citizens)).map((r) => r.note);
+    expect(notes.filter((n) => /see uncertain|\bCBP\b|\bMOFA\b|authoris|scrutinis|;/.test(n))).toEqual([]);
+    expect(ENTRY.US!.citizens.GB!.note).toBe('Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.');
+    expect(ENTRY.FR!.citizens.GB!.note).toBe('Under Regulation (EU) 2018/1806, Annex II: up to 90 days in any 180-day period across the whole Schengen area. Since October 12, 2025, visitors register their fingerprints and a photo in the Entry/Exit System (EES) at the external border, fully running from April 10, 2026. ETIAS will be required once it launches. It wasn’t live on September 29, 2026. UK nationals have been treated as non-EU nationals since January 1, 2021.');
+    expect(ENTRY.NZ!.citizens.US!.note).toBe('No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.');
+    expect(ENTRY.DE!.citizens.FR!.note).toBe('Free movement within the EU and EEA.');
   });
 });
 

@@ -1,0 +1,40 @@
+/**
+ * Prints every genre's look on a new life, drawn as the game draws it (summary, what it asks, how its scenes are played
+ * and where that comes from, the research's small print, provenance), and the ways of playing a scene with how well each
+ * suits it, for brief 15's profile area. Kept as .txt so the lint and the typecheck leave it be: copy it out as a .ts,
+ * then from the clone run npx vite-node <that file> -- <out.txt>
+ */
+import { writeFileSync } from 'node:fs';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { FILM_GENRES } from '@/engine/content/film-genres';
+import { APPROACH_EFFECT, AXES } from '@/engine/content/approaches';
+import { GRAIN_LABEL } from '@/engine/content/interpretation';
+import '@/ui/looks/all';
+import { resolveLook, type Looked } from '@/ui/looks/registry';
+import { at } from '@/ui/looks/subject';
+import { grainWords, takeGrainWords } from '@/engine/systems/interpretation-read';
+
+const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<\/(p|li|div)>/g, '\n').replace(/<[^>]+>/g, ' ')
+  .replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ').replace(/\n\s*/g, '\n    ').trim();
+const out: string[] = [];
+const sim = createSave(1, 'p15-genres', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+for (const g of FILM_GENRES) {
+  const l = resolveLook(sim, at('genre', g.id)) as Looked;
+  out.push(`## ${l.name} (${g.id})\n  summary: ${l.summary}\n  body:\n    ${onScreen(renderToStaticMarkup(createElement('div', null, l.body)))}\n  ways: ${(l.ways ?? []).map((w) => `${w.label} (${w.detail})`).join(' | ')}\n  provenance: ${l.provenance}`);
+}
+out.push('## The ways of playing a scene');
+for (const [axis, a] of Object.entries(AXES)) for (const v of a.values) out.push(`  ${a.label}: ${APPROACH_EFFECT[v].label}: ${APPROACH_EFFECT[v].words}`);
+out.push(`  bands: ${Object.values(GRAIN_LABEL).join(', ')}`);
+out.push('## A take’s account of how it was played');
+const on = [{ dimension: 'believability' as const, points: 1.5, why: 'Restrained, Suits The Scene' }, { dimension: 'connection' as const, points: -0.4, why: 'Restrained, Suits The Scene' }];
+out.push(`  suited: ${grainWords({ points: 1.1, on, ability: 4.2 } as never)}`);
+out.push(`  against: ${grainWords({ points: -2.3, on: on.map((x) => ({ ...x, points: -Math.abs(x.points), why: 'Expansive, Works Against The Scene' })), ability: 3 } as never)}`);
+out.push(`  neither: ${grainWords({ points: 0, on: [{ dimension: 'believability', points: 0, why: 'Measured, Either Way' }], ability: 2.5 } as never)}`);
+out.push(`  kept, suited: ${takeGrainWords({ points: 1.1, ability: 4.2, why: 'Restrained, Suits The Scene' })}`);
+out.push(`  kept, against: ${takeGrainWords({ points: -2.3, ability: 3, why: 'Expansive, Works Against The Scene' })}`);
+out.push(`  kept, neither: ${takeGrainWords({ points: 0, ability: 2.5, why: 'Measured, Either Way' })}`);
+writeFileSync(process.argv[2] ?? 'genres.txt', `${out.join('\n\n')}\n`);
+console.log(`${out.length} blocks written`);

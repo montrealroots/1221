@@ -766,7 +766,7 @@ export const SCENES: readonly Scene[] = [
     summary: 'With Duncan at supper under his roof, Macbeth decides to go no further with the murder. Lady Macbeth finds him and turns him back.',
     circumstances: [
       yes('feast', 'Night at Inverness, Duncan at supper in the hall, Macbeth having left the table', 'Servants carry dishes past, and she asks why he has left the chamber when Duncan has almost supped.'),
-      no('battle', 'The battlefield after the victory', 'That’s the first scenes; this is the night of Duncan’s visit.'),
+      no('battle', 'The battlefield after the victory', 'Those are the first scenes; this is the night of Duncan’s visit.'),
       no('after', 'The morning after the murder', 'Duncan is still alive at supper.'),
     ],
     relationship: [
@@ -1183,7 +1183,7 @@ export const TEMPLATES: readonly Template[] = [
     activities: [read, learn, alone],
     reads: { audition: 2, coldReading: 1, scene: 1 }, dueAfter: 4, revised: false, par: 60,
     notes: {
-      memorization: 'The pieces weren’t secure.',
+      memorization: 'The lines of the two pieces weren’t secure.',
       interpretation: 'The two weren’t contrasting enough to show range.',
       rehearsal: 'They needed more rehearsal to land in the room.',
     },

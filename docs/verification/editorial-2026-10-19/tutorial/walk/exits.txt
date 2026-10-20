@@ -1,0 +1,11 @@
+build exit=0
+same-build exit=0
+follow-1440 exit=0
+follow-390 exit=0
+follow-saves exit=0
+walk-1440 exit=0
+walk-390 exit=0
+render-check exit=0
+routes-capture exit=0
+routes-report exit=0
+DONE

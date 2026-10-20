@@ -89,7 +89,7 @@ export const LEARNING = {
 export type Approach = 'drill' | 'objective' | 'partner' | 'smaller';
 export const APPROACHES: Record<Approach, { label: string; words: string }> = {
   drill: { label: 'A Targeted Drill', words: 'a half-hour drill of it, once a day' },
-  objective: { label: 'Put It First', words: 'it comes first, and counts for more when the work is shown' },
+  objective: { label: 'Put It First', words: 'it comes first, and counts for more when the piece is shown' },
   partner: { label: 'Work On It With Your Partner', words: 'your next rehearsal with your partner works on it too' },
   smaller: { label: 'A Smaller Piece Of It', words: 'you show a smaller piece of it, which can be judged no better than Working' },
 };
@@ -98,13 +98,13 @@ export const APPROACH = { drill: { minutes: 30, gain: 0.3 }, partner: 0.2, small
 /** The steps beyond the work, by what they ask: SLATE's, given in the game's words and shown as simulated. */
 export type Challenge = 'stakes' | 'listening' | 'economy' | 'contrast' | 'text' | 'release' | 'precision';
 export const ADVANCED: Record<Challenge, string> = {
-  release: 'Take it slower than feels safe, and let go of what you’re holding to get through it: the effort shouldn’t show.',
-  precision: 'Make one moment exact: choose where it starts and ends, and repeat it the same way twice.',
-  stakes: 'Raise what it costs: play it as though the scene decides everything for your character, and see what that does to the pace.',
-  listening: 'Let the other person change you: take your next line from what you were just given, not from what you planned.',
-  economy: 'Do less: find the moments that need nothing added, and trust the text in them.',
-  contrast: 'Find the turn: where your character wants the opposite of what they wanted a minute ago, and make the change visible.',
-  text: 'Go back to the words: one image or one repeated word you’ve played past, and what it tells you.',
+  release: 'Take it slower than feels safe, and let go of what you’re holding on to just to get through it. The effort shouldn’t show.',
+  precision: 'Make one moment exact. Choose where it starts and ends, and repeat it the same way twice.',
+  stakes: 'Raise what it costs. Play it as though the scene decides everything for your character, and see what that does to the pace.',
+  listening: 'Let the other person change you. Take your next line from what you were just given, not from what you planned.',
+  economy: 'Do less. Find the moments that need nothing added, and trust the text in them.',
+  contrast: 'Find the turn, where your character wants the opposite of what they wanted a minute ago, and make the change visible.',
+  text: 'Go back to the words. Find one image or one repeated word you’ve played past, and see what it tells you.',
 };
 
 export const noteKey = (f: NoteFocus): string =>

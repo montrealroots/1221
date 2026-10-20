@@ -284,7 +284,7 @@ describe('c-disp-riskTolerance', () => {
     ] as const) {
       const { sim, page } = slidTo(`g28-risk-page-${risk}`, 'riskTolerance', risk);
       // With a curly apostrophe from 2026-10-13, as the page’s other words have it; until then this held the straight one.
-      expect(page).toContain('Risk Tolerance: over 65, your card’s autopay starts on the minimum payment, so you carry a balance.');
+      expect(page).toContain('Risk Tolerance: above 65, your card’s autopay starts out paying only the minimum, so you carry a balance.');
       expect(sim.player.credit!.autopay, String(risk)).toBe(autopay);
       expect(profile(sim)).toContain(`Risk Tolerance ${risk}, ${said};`);
       const shown = bankCard(sim);
@@ -303,7 +303,9 @@ describe('c-disp-riskTolerance', () => {
     for (const sim of Object.values(lives)) sim.advanceTo(EDT(2026, 10, 11, 13));
     // Sunday 20 September, 9 AM: twenty-seven midnights of New Haven's $10.00 of groceries, and Chase's minimum, 1% and
     // the month's interest, never under $40 (its published terms): $40.00.
-    for (const sim of Object.values(lives)) expect(statements(sim)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.']]);
+    // The same statement for both, and what each one's autopay will pay that day (from brief 15, 2026-10-19).
+    expect(statements(lives[66])).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.']]);
+    expect(statements(lives[65])).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.']]);
     // Noon on Sunday 11 October, 21 days on: autopay pays the minimum, or the whole statement.
     expect(onCard(lives[66], 'Paid Chase Freedom Unlimited')).toEqual([40_00]);
     expect(onCard(lives[65], 'Paid Chase Freedom Unlimited')).toEqual([270_00]);
@@ -314,9 +316,9 @@ describe('c-disp-riskTolerance', () => {
     // Tuesday 20 October: $270 − $40 + thirty more days of groceries, with no interest yet (the card's introductory 0%,
     // Chase's fifteen months, from an account opened before the first morning, ran to that day); the life at 65, the
     // thirty days alone. Friday 20 November: the life at 65, thirty-one days of groceries.
-    expect(statements(lives[66]).slice(0, 2)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.'], [EDT(2026, 10, 20, 9), 'The statement comes to $530.00, due November 10, 2026. At least $40.00 has to be paid by then.']]);
+    expect(statements(lives[66]).slice(0, 2)).toEqual([[EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.'], [EDT(2026, 10, 20, 9), 'The statement comes to $530.00, due November 10, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.']]);
     expect(statements(lives[65])).toEqual([
-      [EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. At least $40.00 has to be paid by then.'], [EDT(2026, 10, 20, 9), 'The statement comes to $300.00, due November 10, 2026. At least $40.00 has to be paid by then.'], [EST(2026, 11, 20, 9), 'The statement comes to $310.00, due December 11, 2026. At least $40.00 has to be paid by then.'],
+      [EDT(2026, 9, 20, 9), 'The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.'], [EDT(2026, 10, 20, 9), 'The statement comes to $300.00, due November 10, 2026. The minimum payment is $40.00. Autopay pays the whole $300.00 from Chase Total Checking that day, if there’s enough in it.'], [EST(2026, 11, 20, 9), 'The statement comes to $310.00, due December 11, 2026. The minimum payment is $40.00. Autopay pays the whole $310.00 from Chase Total Checking that day, if there’s enough in it.'],
     ]);
     expect(onCard(lives[66], 'Paid Chase Freedom Unlimited')).toEqual([40_00, 40_00]);
     expect(onCard(lives[65], 'Paid Chase Freedom Unlimited')).toEqual([270_00, 300_00]);
@@ -334,7 +336,7 @@ describe('c-disp-riskTolerance', () => {
     const charged = -interest[0]![1];
     expect(charged).toBeGreaterThan(Math.floor(530_00 * 0.1824 * 30 / 365));
     expect(charged).toBeLessThan(Math.ceil(800_00 * ((1 + 0.2774 / 365) ** 31 - 1)));
-    expect(statements(lives[66])[2]).toEqual([EST(2026, 11, 20, 9), `The statement comes to $${((530_00 - 40_00 + 310_00 + charged) / 100).toFixed(2)}, due December 11, 2026. At least $40.00 has to be paid by then.`]);
+    expect(statements(lives[66])[2]).toEqual([EST(2026, 11, 20, 9), `The statement comes to $${((530_00 - 40_00 + 310_00 + charged) / 100).toFixed(2)}, due December 11, 2026. The minimum payment is $40.00. Autopay pays $40.00 from Chase Total Checking that day, if there’s enough in it.`]);
     expect(lives[66].player.credit!.carrying).toBe(true);
     expect(interestOn(lives[65])).toEqual([]);
     expect(lives[65].player.credit!.carrying).toBe(false);
@@ -391,7 +393,7 @@ describe('c-disp-extraversion', () => {
 
   it('PLAYER JOURNEY: says on Dispositions & Traits and on the Profile what Extraversion sets, how a house watching sits with you', () => {
     const { sim, page } = slidTo('g28-house-page', 'extraversion', 5);
-    expect(page).toContain('Extraversion: how being watched as you perform, by an audience or a class, affects your stress.');
+    expect(page).toContain('Extraversion: whether performing in front of people, an audience or your class, raises your stress or eases it.');
     expect(profile(sim)).toContain('Extraversion 5, how being watched as you perform, by an audience or a class, affects your stress;');
   });
 });
@@ -441,7 +443,7 @@ describe('c-disp-openness', () => {
 
   it('PLAYER JOURNEY: Openness slid to 90 reads 90/100 on Review, and the page and the Profile say it’s how rehearsing new work does', () => {
     const { sim, page, review } = slidTo('g28-new-work-page', 'openness', 90);
-    expect(page).toContain('Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale.');
+    expect(page).toContain('Openness: whether rehearsing new work, a festival’s new play or a Cabaret piece, lifts your morale or lowers it.');
     expect(review).toContain('Openness 90/100');
     expect(profile(sim)).toContain('Openness 90, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale;');
   });
@@ -477,7 +479,7 @@ describe('c-disp-agreeableness', () => {
 
   it('PLAYER JOURNEY: Agreeableness slid to 10 reads 10/100 on Review, and the page and the Profile say it’s how a rehearsal does', () => {
     const { sim, page, review } = slidTo('g28-company-page', 'agreeableness', 10);
-    expect(page).toContain('Agreeableness: how a day of rehearsal affects your morale.');
+    expect(page).toContain('Agreeableness: whether a day of rehearsal lifts your morale or lowers it.');
     expect(review).toContain('Agreeableness 10/100');
     expect(profile(sim)).toContain('Agreeableness 10, how a day of rehearsal affects your morale.');
   });
@@ -514,7 +516,7 @@ describe('c-traits', () => {
     // Early Riser: Night Owl alone grayed, saying why.
     expect(one.text).toContain('1 / 4');
     expect(buttonOf(one, 'Early Riser').props['aria-pressed']).toBe(true);
-    expect(traitButtons(one).filter((b) => b.props.disabled).map((b) => [b.first, b.why])).toEqual([['Night Owl', 'Can’t be held with Early Riser.']]);
+    expect(traitButtons(one).filter((b) => b.props.disabled).map((b) => [b.first, b.why])).toEqual([['Night Owl', 'It clashes with Early Riser, which you’ve picked.']]);
     // The page's own toggle keeps it out too, were the button pressed: nothing changes.
     expect(press(ada({ personalityTraits: ['early_riser'] }), one, 'Night Owl').personalityTraits).toEqual(['early_riser']);
     // Four held.
@@ -523,9 +525,9 @@ describe('c-traits', () => {
     const CLASH: Record<string, string> = { 'Night Owl': 'Early Riser', Spender: 'Frugal', 'Burns Out': 'Resilient', 'Single Minded': 'Curious' };
     for (const b of traitButtons(four)) {
       const held = HELD.includes(b.first);
-      expect([b.first, b.props.disabled, b.props['aria-pressed'], b.why]).toEqual([b.first, !held, held, held ? '' : CLASH[b.first] ? `Can’t be held with ${CLASH[b.first]}.` : 'You already hold four traits.']);
+      expect([b.first, b.props.disabled, b.props['aria-pressed'], b.why]).toEqual([b.first, !held, held, held ? '' : CLASH[b.first] ? `It clashes with ${CLASH[b.first]}, which you’ve picked.` : 'You already have four traits, the most you can pick.']);
     }
-    expect(traitButtons(four).filter((b) => b.why === 'You already hold four traits.')).toHaveLength(27);
+    expect(traitButtons(four).filter((b) => b.why === 'You already have four traits, the most you can pick.')).toHaveLength(27);
     // A fifth pressed anyway: the toggle keeps four.
     const held4 = ada({ personalityTraits: ['early_riser', 'frugal', 'resilient', 'curious'] });
     expect(press(held4, four, 'Even Tempered').personalityTraits).toEqual(['early_riser', 'frugal', 'resilient', 'curious']);
@@ -632,11 +634,11 @@ describe('c-genres', () => {
   it('PLAYER JOURNEY: Genres & Background marks every chip no play’s kind names with ·, a chip pressed is chosen, Select All takes all 149 and Clear These puts them back; Review, the Profile and Yourself say the one loved back', () => {
     let config = ada();
     let page = creation(STEP.genres, config);
-    expect(page.text).toContain('Rehearsing or performing a play of a genre you love, a comedy or a tragedy, lifts your morale and eases your stress. It doesn’t make you any better at it. A genre marked · has no plays of its kind here, so it’s only shown on your page.');
+    expect(page.text).toContain('Rehearsing or performing a play in a genre you love, a comedy or a tragedy, lifts your morale and eases your stress, though it doesn’t make you any better at it. A genre marked · has no plays here, so it’s only shown on your Player Profile.');
     expect(chips(page)).toHaveLength(149);
     expect(chips(page).filter((c) => !c.text.endsWith(' ·')).map((c) => c.first)).toEqual(READ);
     const western = chips(page).find((c) => c.first === 'Western')!;
-    expect([western.text, western.props.title]).toEqual(['Western ·', 'Shown on your page, but nothing in a student’s life uses it']);
+    expect([western.text, western.props.title]).toEqual(['Western ·', 'Shown on your Player Profile, but nothing in a student’s life uses it']);
     expect(chips(page).find((c) => c.first === 'Drama')!.props.title).toBeUndefined();
     expect(page.text).toContain('0 Chosen');
 
@@ -663,7 +665,7 @@ describe('c-genres', () => {
     expect(sim.player.genres).toEqual(['drama']);
     const shown = profile(sim);
     expect(shown).toContain('1 loved;');
-    expect(shown).toContain('You love: Drama. Drama is the one you love and know least, and no part asks for a kind yet.');
+    expect(shown).toContain('You love: Drama. Drama is worth studying next: of the genres you love, it’s the one you know least.');
     expect(look(sim, 'person', sim.player.id).body).toContain('The films you love. Drama.');
   });
 
@@ -794,7 +796,7 @@ describe('c-body', () => {
     config = typeInto(config, page, 'height-ft', '7');
     expect(config.heightCm).toBe(213.4);
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Give both, or neither. With only one, your body is drawn from the averages where you were born.');
+    expect(page.text).toContain('Enter both, or neither. With only one, SLATE picks your height and weight at random, around the averages where you were born.');
     config = typeInto(config, page, 'height-in', '11');
     expect(config.heightCm).toBe(241.3);
     page = creation(STEP.starting, config);
@@ -802,12 +804,12 @@ describe('c-body', () => {
     expect(config.weightKg).toBe(89.8);
     page = creation(STEP.starting, config);
     // 120 cm is 47.2 inches, so 4′0″ the least whole; 230 cm, 90.6, so 7′6″ the most; 35 kg 77.2 pounds and 250 kg 551.2.
-    expect(page.text).toContain('That’s out of range, so your body will be drawn instead. Use a height from 4′0″ to 7′6″ and a weight from 78 to 551 pounds.');
+    expect(page.text).toContain('That’s out of range, so SLATE will pick your height and weight instead. Use a height from 4′0″ to 7′6″ and a weight from 78 to 551 pounds.');
     expect(begun('g28-body-page', config).sim.player.body).toEqual(drawnTwin);
     config = typeInto(config, page, 'weight-lb', '');
     expect(config.weightKg).toBeUndefined();
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Give both, or neither. With only one, your body is drawn from the averages where you were born.');
+    expect(page.text).toContain('Enter both, or neither. With only one, SLATE picks your height and weight at random, around the averages where you were born.');
     expect(begun('g28-body-page', config).sim.player.body).toEqual(drawnTwin);
 
     // 5 feet 7, 67 inches, 170.2 cm; 145 pounds, 65.8 kg; 65.8 / 1.702² = 22.7.
@@ -822,7 +824,7 @@ describe('c-body', () => {
     page = creation(STEP.starting, config);
     expect(page.text).not.toContain('Out of range');
     expect(page.text).not.toContain('Give both, or neither');
-    expect(page.text).toContain('A body mass index of 22.7.');
+    expect(page.text).toContain('That’s a body mass index of 22.7.');
     const { sim } = begun('g28-body-page', config);
     expect(sim.player.body).toMatchObject({ heightCm: 170.2, weightKg: 65.8, startKg: 65.8 });
     expect(look(sim, 'person', sim.player.id).body).toContain('Your body. 5 ft 7 in and 145 lb, with a body mass index of 22.7, in the healthy weight range.');
@@ -842,13 +844,13 @@ describe('c-body', () => {
     page = creation(STEP.starting, config);
     config = typeInto(config, page, 'weight-kg', '90');
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('That’s out of range, so your body will be drawn instead. Use a height from 120 to 230 centimeters and a weight from 35 to 250 kilograms.');
+    expect(page.text).toContain('That’s out of range, so SLATE will pick your height and weight instead. Use a height from 120 to 230 centimeters and a weight from 35 to 250 kilograms.');
     // 90 / 2.41² = 15.5.
     expect(inputOf(page, 'bmi').props.value).toBe('15.5');
     expect(begun('g28-body-london', config).sim.player.body).toEqual(drawnTwin);
     config = typeInto(config, page, 'weight-kg', '');
     page = creation(STEP.starting, config);
-    expect(page.text).toContain('Give both, or neither. With only one, your body is drawn from the averages where you were born.');
+    expect(page.text).toContain('Enter both, or neither. With only one, SLATE picks your height and weight at random, around the averages where you were born.');
     expect(inputOf(page, 'bmi').props.value).toBe('');
   });
 });

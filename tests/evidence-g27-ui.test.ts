@@ -304,20 +304,20 @@ describe('c-performerTitle', () => {
       const sim = ada('g27-read', { pronouns });
       // Before the tour (Thursday 27 August), refused in its words.
       sim.advanceTo(ET(2026, 8, 26, 18));
-      expect(sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } }).error).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
+      expect(sim.execute({ kind: 'plays.read', payload: { playId: 'fleabag' } }).error).toBe('You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
       sim.advanceTo(ET(2026, 8, 27, 18));
       return sim.must<{ minutes: number; note: string }>({ kind: 'plays.read', payload: { playId: 'fleabag' } }).note;
     };
     // Its cast as Nick Hern Books publish it: one woman, no men.
-    expect(read('she/her')).toBe('Fleabag, by Phoebe Waller-Bridge, read through. It reads as a monologue for a female performer (solo). The cast as published: 1 woman and 0 men. There’s a part in it for you.');
-    expect(read('he/him')).toBe('Fleabag, by Phoebe Waller-Bridge, read through. It reads as a monologue for a female performer (solo). The cast as published: 1 woman and 0 men. Nothing in it is written for you now.');
+    expect(read('she/her')).toBe('You read Fleabag, by Phoebe Waller-Bridge, all the way through. It reads as a monologue for a female performer (solo). The published cast is 1 woman. There’s a part in it for you.');
+    expect(read('he/him')).toBe('You read Fleabag, by Phoebe Waller-Bridge, all the way through. It reads as a monologue for a female performer (solo). The published cast is 1 woman. Nothing in it is written for you now.');
   });
 
   it('PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused, Actress pressed, and moved with the pronouns; the slot, the Profile and Home say the title stored', () => {
     // Settled: the word said back, and nothing to pick.
     const settled = creation(STEP.Identity, answers());
-    expect(settled.text).toContain('Billed As Actress Your pronouns say which of the two words is yours, so there’s nothing to pick.');
-    expect(settled.text).toContain('This is the actress you play.');
+    expect(settled.text).toContain('Billed As Actress Your pronouns decide this, so there’s nothing to pick.');
+    expect(settled.text).toContain('Here you create the actress you’ll play.');
     expect(settled.els.some((e) => e.type === 'button' && (e.text === 'Actor' || e.text === 'Actress'))).toBe(false);
     expect(settled.continues()).toBe(true);
 
@@ -325,10 +325,10 @@ describe('c-performerTitle', () => {
     const open = creation(STEP.Identity, answers({ pronouns: 'they/them', performerTitle: undefined }));
     expect(open.button('Actor').props['aria-pressed']).toBe(false);
     expect(open.button('Actress').props['aria-pressed']).toBe(false);
-    expect(open.text).toContain('at school you’re cast in parts written for it, or written for anyone.');
+    expect(open.text).toContain('at school you’re cast in parts written for it, or for anyone.');
     expect(issuesOn(open.html)).toEqual(['Choose whether you’re billed as an actor or an actress.']);
     expect(open.continues()).toBe(false);
-    expect(open.text).toContain('This is the actor or actress you play.');
+    expect(open.text).toContain('Here you create the actor or actress you’ll play.');
 
     // Actress pressed: held, and Continue opens.
     const picked = open.press(() => (open.button('Actress').props.onClick as () => void)());
@@ -343,7 +343,7 @@ describe('c-performerTitle', () => {
     const select = chosen.els.find((e) => e.type === 'select' && e.props.id === 'pronouns')!;
     const he = chosen.press(() => (select.props.onChange as (e: unknown) => void)({ target: { value: 'he/him' } }));
     expect(he).toMatchObject({ pronouns: 'he/him', performerTitle: 'actor' });
-    expect(creation(STEP.Identity, he).text).toContain('Billed As Actor Your pronouns say');
+    expect(creation(STEP.Identity, he).text).toContain('Billed As Actor Your pronouns decide');
     const back = creation(STEP.Identity, he);
     const select2 = back.els.find((e) => e.type === 'select' && e.props.id === 'pronouns')!;
     const they = back.press(() => (select2.props.onChange as (e: unknown) => void)({ target: { value: 'they/them' } }));
@@ -380,7 +380,7 @@ describe('c-birthdate', () => {
     expect(leap.continues()).toBe(true);
     expect(leap.els.find((e) => e.type === 'input' && e.props.id === 'birth-day')!.props.max).toBe(29);
     // 29 February 2004 to Monday 24 August 2026: 22, the birthday in February already had.
-    expect(leap.text).toContain('You’ll be 22 when this life begins.');
+    expect(leap.text).toContain('You’ll be 22 when you start.');
     // And 30 April, which April hasn't.
     expect(issuesOn(creation(STEP.Identity, answers({ birthYear: 2002, birthMonth: 4, birthDay: 31 })).html)).toEqual(['April 2002 has no day 31.']);
   });
@@ -393,9 +393,9 @@ describe('c-birthdate', () => {
     expect(late.els.find((e) => e.type === 'input' && e.props.id === 'birth-year')!.props.max).toBe(2005);
     const year = creation(STEP.Identity, answers({ birthYear: 2005, birthMonth: 12, birthDay: 31 }));
     expect(issuesOn(year.html)).toEqual([]);
-    expect(year.text).toContain('You’ll be 20 when this life begins.');
+    expect(year.text).toContain('You’ll be 20 when you start.');
     // 14 June 1930 is 96 on 24 August 2026; 14 June 1931 is 95.
-    expect(issuesOn(creation(STEP.Identity, answers({ birthYear: 1930 })).html)).toEqual(['Your character would be over 95 when this life begins. Choose a later year of birth.']);
+    expect(issuesOn(creation(STEP.Identity, answers({ birthYear: 1930 })).html)).toEqual(['Your character would be over 95 at the start. Choose a later year of birth.']);
     expect(issuesOn(creation(STEP.Identity, answers({ birthYear: 1931 })).html)).toEqual([]);
     // Review says the date as it was entered.
     expect(creation(STEP.Review, answers({ birthYear: 2004, birthMonth: 2, birthDay: 29 })).text).toContain('Born February 29, 2004');
@@ -487,7 +487,7 @@ describe('c-birthplace', () => {
     expect(us.text).toContain('Weight (Pounds)');
     expect(us.text).not.toContain('Centimeters');
     expect([input(us, 'height-ft'), input(us, 'height-in'), input(us, 'weight-lb')]).toEqual([5, 10, 160]);
-    expect(us.text).toContain('A body mass index of 23.0.');
+    expect(us.text).toContain('That’s a body mass index of 23.0.');
     const jpAtYale = creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo', ...body }));
     expect(jpAtYale.text).toContain('Height (Feet)');
     expect([input(jpAtYale, 'height-ft'), input(jpAtYale, 'height-in'), input(jpAtYale, 'weight-lb')]).toEqual([5, 10, 160]);
@@ -500,7 +500,7 @@ describe('c-birthplace', () => {
     const taller = us.press(() => (us.els.find((e) => e.type === 'input' && e.props.id === 'height-ft')!.props.onChange as (e: unknown) => void)({ target: { value: '6' } }));
     expect(taller.heightCm).toBe(208.3);
     // Left blank, the step says where the body comes from.
-    expect(creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo' })).text).toContain('Leave them blank and your body is drawn from the averages where you were born.');
+    expect(creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo' })).text).toContain('Leave them blank and SLATE picks them at random, around the averages where you were born.');
   });
 
   it('PLAYER JOURNEY: gives a license from the birth state, California not Connecticut, and a Tokyo-born student a Japanese passport and an F-1 to 30 July 2029', () => {
@@ -614,8 +614,8 @@ describe('c-disp-emotionalStability', () => {
     expect(ada('g27-calm', leaning('emotionalStability', 95)).player.attrs!.composure).toBe(58.3);
     const shown = dispositionsShown(answers(leaning('emotionalStability', 5)));
     expect(shown.step).toContain('Emotional Stability 5 Volatile Steady');
-    expect(shown.step).toContain('Emotional Stability: how quickly stress builds and how quickly it clears, and where your Composure starts.');
-    expect(shown.step).toContain('Composure is an ability your work is judged on. Apart from where Composure and Discipline start, none of these makes you better or worse at anything.');
+    expect(shown.step).toContain('Emotional Stability: how fast stress builds and clears, and how much Composure you start with.');
+    expect(shown.step).toContain('Apart from your starting Composure and Discipline, none of these makes you a better or worse actor. Composure is one of the abilities your performances are judged on.');
     expect(shown.profile).toContain('Emotional Stability 5, how quickly stress builds and how quickly it clears, and where your Composure starts');
   });
 
@@ -657,7 +657,7 @@ describe('c-disp-conscientiousness', () => {
     expect(ada('g27-order', leaning('conscientiousness', 95)).player.attrs!.discipline).toBe(77.5);
     const shown = dispositionsShown(answers(leaning('conscientiousness', 95)));
     expect(shown.step).toContain('Conscientiousness 95 Loose Meticulous');
-    expect(shown.step).toContain('Conscientiousness: how well you sleep, and where your Discipline starts.');
+    expect(shown.step).toContain('Conscientiousness: how well you sleep, and how much Discipline you start with.');
     expect(shown.profile).toContain('Conscientiousness 95, how well you sleep, and where your Discipline starts');
   });
 
@@ -733,7 +733,7 @@ describe('c-disp-ambition', () => {
   it('says what ambition does on the Dispositions step and the Profile, by the slider’s number', () => {
     const shown = dispositionsShown(answers(leaning('ambition', 95)));
     expect(shown.step).toContain('Ambition 95 Content Driven');
-    expect(shown.step).toContain('Ambition: how quickly stress builds, from work and from money alike.');
+    expect(shown.step).toContain('Ambition: how fast stress builds, from work and from money alike.');
     expect(shown.profile).toContain('Ambition 95, how quickly stress builds, from work and from money alike');
   });
 });

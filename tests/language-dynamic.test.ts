@@ -26,7 +26,8 @@ import type { Simulation } from '@/engine/core/simulation';
 import { newLifeFrom, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { deserialise } from '@/engine/persistence/adapter';
 import { MS_DAY, MS_HOUR, formatDate, formatRelative, instantFromZoned, type Instant } from '@/engine/core/time';
-import { mateRecord, setWork, termWarning, weightsOf } from '@/engine/systems/coursework';
+import { mateRecord, questionsFor, setWork, termWarning, weightsOf } from '@/engine/systems/coursework';
+import { TEMPLATES } from '@/engine/content/coursework';
 import { personOf } from '@/engine/systems/classmates';
 import { healthOf } from '@/engine/systems/health';
 import { trainingRefusal } from '@/engine/systems/injury';
@@ -226,16 +227,51 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const one = warned('dyn-warn-one', 1, 2, 1, true);
     expect(one.body).toMatch(/^So far this term, 3 of the 6 pieces due were Unready or not shown\./);
     // The one Unready piece shown, short on one part: that part, on the one you showed, and the steps that answer it.
-    expect(one.body).toMatch(/ What held most of them back was “[^”]+”, unfinished on the one you showed\. To work on it, use [^.]+\./);
+    expect(one.body).toMatch(/ What held most of them back was “[^”]+”, unfinished on the one you showed\. To work on it: [^.]+\./);
     expect(one.body).toContain('One piece is set and still to be shown.');
     const many = warned('dyn-warn-many', 3, 0, 2);
-    expect(many.body).toContain('2 pieces are set and still to be shown.');
+    expect(many.body).toContain('Two pieces are set and still to be shown.');
     for (const { sim, body } of [none, one, many]) {
-      expect(body).toContain(`The faculty reviews the term on ${formatDate(on(2026, 12, 11, 17), NY)}.`);
+      expect(body).toContain(`This is a warning. The term review is on ${formatDate(on(2026, 12, 11, 17), NY)}.`);
       expect(body).toContain('the review would give you a notice of academic concern.');
       sound(body); whole(body); dated(body); agrees(body, ['piece']);
       expect(sim.player.school!.standing).toBe('good');
     }
+  });
+
+  it('the term’s coursework warning at its longest stays inside the playthroughs’ wall of text, 120 words', () => {
+    // Brief 15's final runs: the health journey read this warning at 121 words in one block (`tools/playthroughs-ui.mjs`
+    // fails a block of more than 120). Its longest cause is a part short, the partner part, whose remedy is the longest
+    // of any part's in every template (measured on 2026-10-19), with the count of pieces not shown, two pieces still set
+    // and the review's longest words. Played here on one scene; two of its words vary and are counted at their longest:
+    // the part's label (the longest partner label any template has) and the pieces it was short on, "the one you showed"
+    // here and "3 of the 3 you showed" where several share a label. TEST SETUP as above: Scene Study first, prepared but
+    // for its partner part (its Table Work answered as the text supports) and shown Unready, two pieces missed, two set.
+    const sim = student('dyn-warn-long');
+    const courses = ['DRAM 113a/b', 'DRAM 103a/b', 'DRAM 123a/b', 'DRAM 133a/b', 'DRAM 143a/b', 'DRAM 873a/b', 'DRAM 403a/b', 'DRAM 153a'];
+    const set = courses.map((c, i) => setWork(sim, sim.player, c, { year: 2026, month: 9, day: 1 + i })!);
+    const scene = set[1]!;
+    expect(scene.template).toBe('scene-study');
+    const order = [scene, ...set.filter((a) => a !== scene)];
+    for (const d of Object.keys(scene.prep) as (keyof typeof scene.prep)[]) scene.prep[d] = 1;
+    scene.prep.partner = 0;
+    for (const { q, options } of questionsFor(scene)) scene.answers[q.id] = options.find((o) => o.supported)!.id;
+    order.forEach((a, i) => {
+      if (i === 0) { a.shown = { band: 'unready', score: 0.3, at: sim.now, strengths: [] }; a.status = 'done'; }
+      else if (i < 3) a.status = 'missed';
+      else if (i < 6) { a.shown = { band: 'working', score: 0.55, at: sim.now, strengths: [] }; a.status = 'done'; }
+      else a.status = 'open';
+    });
+    termWarning(sim, sim.player, scene);
+    const body = titled(sim, 'A Word On Your Coursework')[0]!.body;
+    expect(body).toMatch(/^So far this term, 3 of the 6 pieces due were Unready or not shown\./);
+    const label = body.match(/What held most of them back was “([^”]+)”, unfinished on the one you showed\. To work on it: ask your partner for an evening under Rehearsing With, at least/)?.[1];
+    expect(label).toBe('With Your Partner');
+    expect(body).toContain('Two pieces are set and still to be shown.');
+    expect(body).toContain('the review would give you a notice of academic concern.');
+    const count = (t: string) => t.split(/\s+/).filter(Boolean).length;
+    const longestLabel = Math.max(...TEMPLATES.map((t) => t.dims.partner?.label).filter((l): l is string => Boolean(l)).map(count));
+    expect(count(body) - count(label!) + longestLabel - count('the one you showed') + count('3 of the 3 you showed')).toBeLessThanOrEqual(120);
   });
 
   it('a course’s meetings and the term’s class days on the first day of classes, and make-up sessions owed, one or several', () => {
@@ -331,10 +367,10 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const state = stateOf(sim.player, card);
     const cardText = () => drawn(sim, (() => createElement(BankCard, { bankId: card.bankId! })) as FunctionComponent);
     // TEST SETUP: the card's record as missed due dates leave it (`SUSPEND_AFTER`, two in a row, suspends it).
-    for (const missed of [2, 5]) {
+    for (const [missed, words] of [[2, 'two'], [5, 'five']] as const) {
       Object.assign(state, { suspended: 'late', missed });
       const line = cardText().split('\n').find((l) => l.startsWith('Suspended:'))!;
-      expect(line).toBe(`Suspended: you’ve missed ${missed} payments in a row. It works again once you make a payment on time. Miss six in a row, and what’s owed is charged off to collections.`);
+      expect(line).toBe(`Suspended: you’ve missed ${words} payments in a row. It works again once you make a payment on time. Miss six in a row, and what’s owed is charged off to collections.`);
       sound(line);
     }
     delete state.suspended; state.missed = 0;
@@ -349,7 +385,7 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const papers = () => drawn(sim, PassportPane);
     const held = () => documentsOf(sim.player).filter((d) => ['passport', 'visa', 'authorization'].includes(d.kind));
     expect(held()).toHaveLength(0);
-    expect(papers()).toContain('None held.');
+    expect(papers()).toContain('You don’t hold any.');
     const applied = sim.must<{ readyAt: number; fee: number }>({ kind: 'documents.apply_passport', payload: {} });
     expect(held()).toHaveLength(1);
     const row = papers().split('\n');
@@ -375,11 +411,11 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     type Limit = { kind: string; what: string; label: string; by: number; whole: number };
     const why = (limit: Limit) => recommendations(() => 50, () => 100, [{ at: 1, limits: [limit], inputs: { abilities: { focus: 50 } } }], (id) => ({ id: `ex-${id}` }), matchedTier, 12).map((r) => r.why).join(' ');
     for (const [whole, said] of [[1, '1 point'], [2.5, '2.5 points']] as const) {
-      expect(why({ kind: 'preparation', what: 'memorization', label: 'Lines', by: 4, whole })).toContain(`Coming to your work short on lines cost about ${said} off the whole a piece. That’s preparation, not training.`);
-      expect(why({ kind: 'condition', what: 'injury', label: 'An Injury Still Mending', by: 4, whole })).toContain(`An Injury Still Mending cost about ${said} off the whole a piece. Come to the work rested and well`);
-      expect(why({ kind: 'condition', what: 'stamina', label: 'Stamina, By Beat 2', by: 4, whole })).toContain(`Tiring through the later moments of a piece cost about ${said} off the whole a piece.`);
-      expect(why({ kind: 'fit', what: 'tempo', label: 'Played Against The Scene', by: 4, whole })).toContain(`Playing it a way that didn’t fit cost about ${said} off the whole a piece.`);
-      expect(why({ kind: 'ability', what: 'focus', label: 'Focus', by: 4, whole })).toContain(`It cost your recent work about ${said} off the whole a piece`);
+      expect(why({ kind: 'preparation', what: 'memorization', label: 'Lines', by: 4, whole })).toContain(`Coming to your work short on lines cost each piece about ${said} off the whole. That’s preparation, not training: prepare that part further before you show or tape the next piece.`);
+      expect(why({ kind: 'condition', what: 'injury', label: 'An Injury Still Mending', by: 4, whole })).toContain(`An Injury Still Mending cost each piece about ${said} off the whole. Come to the work rested and well`);
+      expect(why({ kind: 'condition', what: 'stamina', label: 'Stamina, By Beat 2', by: 4, whole })).toContain(`Tiring through a piece’s later moments cost each one about ${said} off the whole.`);
+      expect(why({ kind: 'fit', what: 'tempo', label: 'Played Against The Scene', by: 4, whole })).toContain(`Playing it a way that didn’t fit cost each piece about ${said} off the whole.`);
+      expect(why({ kind: 'ability', what: 'focus', label: 'Focus', by: 4, whole })).toContain(`It cost each of your recent pieces about ${said} off the whole`);
     }
     // A forecast's count of the recent pieces that call on it: the verb agrees with the count that leads.
     const forecast = (pieces: number, of?: number) => recommendations(() => 50, () => 100, [], (id) => ({ id: `ex-${id}` }), matchedTier, 12, undefined, undefined, new Map([['focus', { points: 0.8, from: 50, to: 55, hours: 20, pieces, ...(of !== undefined ? { of } : {}) }]]))[0]!.why;
@@ -399,10 +435,10 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     const note = (taken: boolean) => ({ at: sim.now, text: 'Find the turn.', focus: { kind: 'lines' as const }, taken });
     const run = (calls: number, of: number, notes: ReturnType<typeof note>[], together?: { sum: number; n: number; slips: number; covered: number }) =>
       reflect(sim, sim.player, { process: { lines: 0, blocking: 0, calls, of, blockingMissed: 0, notes, trained: 0, ...(together ? { together } : {}) } }, 'The Seagull')!;
-    expect(run(1, 1, [note(true)])).toBe('The Seagull: you answered your one call. The director gave you 1 note, and you took it.');
+    expect(run(1, 1, [note(true)])).toBe('The Seagull: you answered your one call. The director gave you one note, and you took it.');
     expect(run(0, 3, [])).toBe('The Seagull: you answered none of your 3 calls. The director gave you no notes.');
     const many = run(5, 6, [note(true), note(false)], { sum: 312, n: 4, slips: 1, covered: 1 });
-    expect(many).toBe('The Seagull: you answered 5 of your 6 calls. The director gave you 2 notes. You took 1. With the company, your nights averaged 78 out of 100, with a slip by others, which you covered. What’s still open goes with you into class.');
+    expect(many).toBe('The Seagull: you answered 5 of your 6 calls. The director gave you two notes, and you took one. With the company, your nights averaged 78 out of 100, with a slip by others, which you covered. What’s still open goes with you into class.');
     for (const s of [many]) { sound(s); whole(s); }
   });
 });
@@ -524,14 +560,14 @@ describe('missing optional information: each part absent, and the sentence still
     expect(soloNotice.body).not.toMatch(/ plays /);
     expect(pairedNotice.body).toContain(`, and ${sim.player.school!.classmates[paired.partner!]!.name} plays `);
     for (const n of [soloNotice, pairedNotice]) {
-      expect(n.body).toMatch(/It’s due in class on [A-Z][a-z]+ \d{1,2}, \d{4}\.$/);
+      expect(n.body).toMatch(/It’s due in class on [A-Z][a-z]+ \d{1,2}, \d{4}\.(?: Start with [^:]+: this piece puts it first, so it counts for more when you show it\.)?$/);
       sound(n.body); whole(n.body); dated(n.body);
     }
     const partner = sim.player.school!.classmates[paired.partner!]!.name;
     const firstName = partner.split(' ')[0]!;
     // The partner part's note: no partner named, a partner and no reader, then a reader's evenings, one and three.
     expect(noteText(paired, { kind: 'dim', dim: 'partner' }, 0.2)).not.toMatch(/rehears|reader/i);
-    expect(noteText(paired, { kind: 'dim', dim: 'partner' }, 0.2, partner)).toContain(`You and ${firstName} hadn’t rehearsed together. Run It With A Reader lets you work on your side of it without them.`);
+    expect(noteText(paired, { kind: 'dim', dim: 'partner' }, 0.2, partner)).toContain(`You and ${firstName} hadn’t rehearsed together. To work on your side of it without them, use Run It With A Reader.`);
     // TEST SETUP: a reader's evenings, as the step counts them.
     paired.steps.reader = 1;
     expect(noteText(paired, { kind: 'dim', dim: 'partner' }, 0.2, partner)).toContain('You ran it with a reader once.');
@@ -587,8 +623,8 @@ describe('missing optional information: each part absent, and the sentence still
     const pane = drawn(sim, WorkPane).split('\n');
     // No number is kept (`systems/taxid.ts`): its status stands in its place, and the button says why it can't be pressed yet.
     const at = pane.indexOf('Social Security Number');
-    expect(pane[at + 1]).toBe('Not yet');
-    const why = 'On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.';
+    expect(pane[at + 1]).toBe('None yet');
+    const why = 'On an F-1, you can get a number only with on-campus work that has started or starts within 30 days. Register at the School first: once you’re registered, the School’s work-study counts.';
     expect(pane).toContain(why);
     expect(sim.execute({ kind: 'documents.apply_ssn', payload: {} })).toMatchObject({ ok: false, error: why });
     expect(pane.find((l) => l.startsWith('Source: SSA POMS'))).toContain('read October 10, 2026.');
@@ -740,13 +776,16 @@ describe('success, partial progress, failure and recovery', () => {
       const label = { familiarity: 'Knows The Scene', memorization: 'Lines', interpretation: 'Table Work', rehearsal: 'Rehearsal', partner: 'With Your Partner', revision: 'Revision' }[dim];
       const after = Math.round((preparedParts(sim.player, a, a.revision!.dueOn)[dim] ?? 0) * 100);
       const shownOn = formatDate(on(year, month, day, 12), NY);
-      const band = { unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' }[a.revision!.band!];
+      const bands = { unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' };
+      const band = bands[a.revision!.band!];
+      const was = bands[a.shown!.band];
+      const again = was === band ? `It was ${band} again.` : `It was ${band} this time, after ${was} the first time.`;
       if (worked) {
         expect(notice.title).toBe('Note Taken: Scene Study');
-        expect(notice.body).toBe(`You showed Scene Study again on ${shownOn}, and took the note on ${label}. ${label} went from ${before}% to ${after}%. Shown again: ${band}.`);
+        expect(notice.body).toBe(`You showed Scene Study again on ${shownOn}, and took the note on ${label}. ${label} went from ${before}% to ${after}%. ${again}`);
       } else {
         expect(notice.title).toBe('Note Not Taken Yet: Scene Study');
-        expect(notice.body).toBe(`You showed Scene Study again on ${shownOn}, but the note on ${label} isn’t taken yet. ${label} stayed at ${after}%. Shown again: ${band}. It stays open under Your Notes.`);
+        expect(notice.body).toBe(`You showed Scene Study again on ${shownOn}, but you haven’t taken the note on ${label} yet. ${label} is still at ${after}%. ${again} The note stays open under Your Notes until you take it.`);
       }
       const shown = drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' });
       expect(shown).toContain(`${worked ? 'Note Taken' : 'Note Not Taken'}, Shown Again ${band}`);
@@ -799,12 +838,12 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     const [year, month, day] = a.dueOn.split('-').map(Number) as [number, number, number];
     const dueOn = formatDate(on(year, month, day, 12), NY);
     const soonest = drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' }).split('\n').find((l) => l.startsWith('Acting I: Scene Study, due '))!;
-    expect(soonest).toMatch(new RegExp(`^Acting I: Scene Study, due ${dueOn}\\. Shown today, it would come to about \\d+\\.\\d \\((Unready|Working|Strong|Exceptional)\\)\\. Still to finish: .+\\.$`));
+    expect(soonest).toMatch(new RegExp(`^Acting I: Scene Study, due ${dueOn}\\. Shown today, it would come to about \\d+\\.\\d of 100 \\((Unready|Working|Strong|Exceptional)\\)\\. Still to finish: .+\\.$`));
     sound(soonest); whole(soonest); dated(soonest);
     // Its day, and not there: not shown, counted, and what that means for the course.
     meetingWeight(sim, sim.player, 'DRAM 103a/b', { year, month, day }, on(year, month, day, 10), false, false);
     const missed = titled(sim, 'Not Shown: Acting I')[0]!;
-    expect(missed.body).toBe('You weren’t in class when it was due, and it can’t be shown later. The term review counts it as Unready. A course isn’t passed if half or more of the pieces due in the term weren’t shown: in Acting I, that’s 1 of 1 so far.');
+    expect(missed.body).toBe('You weren’t in class when it was due, and it can’t be shown later, so the term review counts it as Unready. You don’t pass a course if half or more of its pieces due in the term aren’t shown. In Acting I, that’s 1 of 1 so far.');
     expect(a.status).toBe('missed');
     const shown = drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' });
     expect(shown).toContain('Acting I: Scene Study, ');
@@ -871,12 +910,12 @@ describe('deadlines upcoming, due and missed: coursework, a document’s renewal
     spendAll(sim);
     tended(sim, on(2026, 10, 10, 12));
     const short = sim.universe.notifications.find((n) => n.title === 'Short For A Payment: Chase Total Checking')!;
-    expect(short.body).toMatch(/^The Chase Freedom Unlimited’s autopay, \$\d+\.\d{2}, comes from Chase Total Checking at Chase on October 11, 2026, and it holds \$\d+\.\d{2}\. Move money into it, pay the card by hand, or have autopay pay from another account\.$/);
+    expect(short.body).toMatch(/^The Chase Freedom Unlimited’s autopay, \$\d+\.\d{2}, comes from Chase Total Checking at Chase on October 11, 2026, and it has \$\d+\.\d{2} available\. Move money into it, pay the card by hand, or have autopay pay from another account\.$/);
     expect(drawn(sim, Home)).toContain('Card Payment Due in ');
     spendAll(sim);
     tended(sim, on(2026, 10, 12, 12));
     const late = titled(sim, 'A Late Card Payment')[0]!;
-    expect(late.body).toMatch(/^The minimum payment was \$\d+\.\d{2}, and only \$\d+\.\d{2} was paid\. That costs a \$\d+\.\d{2} late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late\.$/);
+    expect(late.body).toMatch(/^The minimum payment on the Chase Freedom Unlimited was \$\d+\.\d{2}, and (only \$\d+\.\d{2} was paid|nothing was paid) by the due date\. That costs a \$\d+\.\d{2} late fee\. If the payment is still short at the next due date, thirty days late, it goes on your credit record\. Pay the card on Money, under Cards\.$/);
     for (const s of [short.body, late.body]) { sound(s); whole(s); dated(s); }
   });
 });
@@ -1015,7 +1054,7 @@ describe('a new player, an advanced one and a finished school journey: the Profi
       if (stage === 'new') {
         expect(affairs).toMatch(/^School Arriving, good standing, \d+(?:st|nd|rd|th) of 16 in the class\. Next: Registration And Your Account, August 24, 2026 at 10:00 AM\.$/);
         expect(profileSchool).toEqual(['School', 'Year 1', 'Class of 2029, good standing']);
-        expect(screens.profile).toContain('None of your work has been judged yet. What to work on comes from what holds judged work back, so it starts after your first showing, night on stage or self-tape.');
+        expect(screens.profile).toContain('None of your work has been judged yet. After your first showing, night on stage or self-tape, this will say what to work on next, from what held that work back.');
         expect(head).toBe('MFA in Acting, class of 2029. Arriving for the fall term.');
         expect(screens.school).toContain('Attendance This Term\nNone Yet');
         expect(screens.school).toContain('Coursework This Term\nNone Yet');
@@ -1083,15 +1122,16 @@ describe('repetition: a note said before says so, a warning repeated says what c
     expect(recurring.length).toBeGreaterThan(3);
     for (const a of given) {
       const t = a.feedback!.text;
-      const said = /^(?:You had the same note in .+ on (\w+ \d{1,2}, \d{4}), and it’s still there\.|This is the (\d+)(st|nd|rd|th) time you’ve had this note \(last in .+ on (\w+ \d{1,2}, \d{4})\), and it’s still there\.|You’d put this right on .+, but it has slipped back\.)/.exec(t);
+      const said = /^(?:You had this note in .+ on (\w+ \d{1,2}, \d{4}) too, and it’s still there\.|This is the (third|fourth|fifth|sixth|seventh|eighth|ninth|(\d+)(st|nd|rd|th)) time you’ve had this note, the last in .+ on (\w+ \d{1,2}, \d{4}), and it’s still there\.|You fixed this on .+, but it has slipped back\.)/.exec(t);
       if (a.feedback!.kind === 'recurring') {
         expect(said, t).not.toBeNull();
         // Said before: on this piece's day or one before it.
-        expect(Date.parse(`${said![1] ?? said![4]} 00:00 EDT`)).toBeLessThanOrEqual(a.shown!.at);
-        if (said![2]) {
-          const n = Number(said![2]);
-          expect(n).toBeGreaterThanOrEqual(3);
-          expect(said![3]).toBe(n % 100 >= 11 && n % 100 <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'));
+        expect(Date.parse(`${said![1] ?? said![5]} 00:00 EDT`)).toBeLessThanOrEqual(a.shown!.at);
+        // From the third time in words to the ninth (from 2026-10-19, brief 15), then as a figure with its suffix.
+        if (said![3]) {
+          const n = Number(said![3]);
+          expect(n).toBeGreaterThanOrEqual(10);
+          expect(said![4]).toBe(n % 100 >= 11 && n % 100 <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'));
         }
       } else expect(said, t).toBeNull();
       sound(t); whole(t); dated(t);
@@ -1101,9 +1141,9 @@ describe('repetition: a note said before says so, a warning repeated says what c
     expect(still.length).toBeGreaterThan(0);
     const bySubject = new Map<string, number[]>();
     for (const n of still) {
-      const m = /, and the same note came back: (\d+) times now\. It stays open under Your Notes\./.exec(n.body)!;
+      const m = /, but the same note came back, for the (fourth|fifth|sixth|seventh|eighth|ninth|(\d+)(?:st|nd|rd|th)) time\. It stays open under Your Notes\./.exec(n.body)!;
       expect(m, n.body).not.toBeNull();
-      expect(Number(m[1])).toBeGreaterThan(3);
+      expect(m[2] ? Number(m[2]) : ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth'].indexOf(m[1]!) + 1).toBeGreaterThan(3);
       (bySubject.get(n.title) ?? bySubject.set(n.title, []).get(n.title)!).push(n.at);
       sound(n.body); whole(n.body);
     }
@@ -1111,16 +1151,16 @@ describe('repetition: a note said before says so, a warning repeated says what c
     const open = cw.assignments.find((a) => (a.status === 'open' || a.status === 'revising') && persistentFor(cw, a).length > 0)!;
     expect(open).toBeDefined();
     const weak = persistentFor(cw, open)[0]!;
-    expect(drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' })).toContain(`A Note That Keeps Coming Back: ${noteSubject(weak.key)}, given ${weak.given} times.`);
+    expect(drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' })).toContain(`A Note That Keeps Coming Back: ${noteSubject(weak.key)}, given ${['no times', 'once', 'twice', 'three times', 'four times', 'five times', 'six times', 'seven times', 'eight times', 'nine times'][weak.given] ?? `${weak.given} times`}.`);
     // Better but not there, and back after it was taken: each says so, with the day and the figures.
     expect(feedbackWords('partial', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', level: 0.2 }, 0.5)).toBe('This has improved since September 8, 2026 (20% then, 50% now), but it isn’t there yet. Lines weren’t secure.');
-    expect(feedbackWords('recurring', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', given: 1, taken: '2026-09-15' })).toBe('You’d put this right on September 15, 2026, but it has slipped back. Lines weren’t secure.');
-    expect(feedbackWords('recurring', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', given: 10 })).toBe('This is the 11th time you’ve had this note (last in Acting I on September 8, 2026), and it’s still there. Lines weren’t secure.');
+    expect(feedbackWords('recurring', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', given: 1, taken: '2026-09-15' })).toBe('You fixed this on September 15, 2026, but it has slipped back. Lines weren’t secure.');
+    expect(feedbackWords('recurring', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', given: 10 })).toBe('This is the 11th time you’ve had this note, the last in Acting I on September 8, 2026, and it’s still there. Lines weren’t secure.');
   });
 
   it('a warning repeated says what changed and what’s still open: an Incomplete, then a week before its deadline, after a session made up', async () => {
     const { settleCourses } = await import('@/engine/systems/courserecord');
-    for (const [made, left] of [[1, '2 make-up sessions'], [2, 'One make-up session']] as const) {
+    for (const [made, left] of [[1, 'two make-up sessions'], [2, 'one make-up session']] as const) {
       const sim = student(`dyn-week-left-${made}`);
       tended(sim, on(2026, 9, 14, 17));
       const courses = sim.player.school!.courses as Record<string, { code: string; term: number; meetings: number; excused: number; attended: number; name: string; dueBy?: number }>;
@@ -1131,7 +1171,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
       settleCourses(sim, sim.player, courses[key]!.term, () => ({ due: 0, notShown: 0 }));
       const due = formatDate(courses[key]!.dueBy!, sim.zone);
       const first = titled(sim, 'Incomplete: Acting I')[0]!;
-      expect(first.body).toBe(`You were ill for 10 of its 28 classes. To complete it, make up 3 sessions of work with its teachers by ${due}, each covering a week of the course: press Make Up A Session on the Standing tab. You can ask for a month more once. If it isn’t made up in time, it becomes a Permanent Incomplete, with no credit, and the degree can’t be completed without it.`);
+      expect(first.body).toBe(`You were ill for 10 of its 28 classes, so it’s an Incomplete for now. To complete it, make up three sessions with its teachers by ${due}, each covering a week of the course: press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`);
       // Made up, one evening at a time, as the Standing tab's Make Up A Session does it.
       for (let i = 1; i <= made; i += 1) {
         tended(sim, on(2026, 9, 14 + i, 18));
@@ -1140,7 +1180,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
       tended(sim, courses[key]!.dueBy! - 7 * MS_DAY + MS_HOUR);
       const week = titled(sim, 'A Week Left: Acting I');
       expect(week).toHaveLength(1);
-      expect(week[0]!.body).toBe(`${left} still to do, by ${due}. Press Make Up A Session on the Standing tab.`);
+      expect(week[0]!.body).toBe(`You still have ${left} to do, by ${due}. Press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More.`);
       for (const s of [first.body, week[0]!.body]) { sound(s); whole(s); dated(s); }
     }
   });
@@ -1157,7 +1197,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
     expect(once.ok).toBe(false);
     expect(twice.error).toBe(once.error);
     // Why (the number needs on-campus work) and the next step (register, and the School's work-study is yours).
-    expect(once.error).toMatch(/^On an F-1, the number needs on-campus work that has begun or starts within 30 days\. Register at the School first, and the School’s work-study is yours\.$/);
+    expect(once.error).toMatch(/^On an F-1, you can get a number only with on-campus work that has started or starts within 30 days\. Register at the School first: once you’re registered, the School’s work-study counts\.$/);
     expect(sim.player.ssn).toBeUndefined();
     expect(balance()).toBeLessThanOrEqual(before);
     // And a medical leave asked twice with nothing to recommend it: the same reason each time, with its lookback.

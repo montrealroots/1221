@@ -21,8 +21,8 @@ describe('the school’s words: one name for each thing, and each said as a sent
     expect(t.dims.revision!.label).toBe('The Presentation Prepared');
     const limit: Limit = { kind: 'preparation', what: 'revision', label: 'The revision', dimension: 'execution', by: 43.9 };
     const a = { template: 'context-presentation' } as unknown as Assignment;
-    expect(chiefLimit({ limits: [limit] }, 'now')).toBe('The revision isn’t complete, which costs Execution 43.9 points');
-    expect(chiefLimit(withPartLabels({ limits: [limit] }, a), 'now')).toBe('The Presentation Prepared isn’t complete, which costs Execution 43.9 points');
+    expect(chiefLimit({ limits: [limit] }, 'now')).toBe('The revision isn’t complete, and that costs your execution 44 points out of 100');
+    expect(chiefLimit(withPartLabels({ limits: [limit] }, a), 'now')).toBe('“The Presentation Prepared” isn’t complete, and that costs your execution 44 points out of 100');
     // Only a part's label: an ability, and a part the card doesn't have, keep theirs.
     const other: Limit = { kind: 'ability', what: 'focus', label: 'Focus', dimension: 'execution', by: 4 };
     const approach: Limit = { kind: 'preparation', what: 'approach', label: 'Rehearsing the way you chose to play it', dimension: 'execution', by: 2 };

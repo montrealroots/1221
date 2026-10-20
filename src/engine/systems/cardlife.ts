@@ -126,12 +126,14 @@ export function registerCardLife(sim: Simulation): void {
     const means = heldInBanks(s, person);
     const collections = Object.values(s.universe.accounts).some((a) => a.ownerId === person.id && !a.closedAt && a.category === 'collections' && a.balance < 0);
     const age = ageOn(s, person, s.now);
+    // Why, in the bank's terms, and what the application cost (from brief 15, 2026-10-19): until then “your credit record
+    // isn’t strong enough”, with no figure, and nothing of the points the inquiry took.
     let reason = '';
-    if (credit.score < APPROVE_FROM) reason = 'your credit record isn’t strong enough';
-    else if (collections) reason = 'you have a debt in collections';
-    else if (means <= 0) reason = bank.iso === 'US' && age < 21 ? 'under 21, you need income or money of your own' : 'you have no money to repay it from';
+    if (credit.score < APPROVE_FROM) reason = `your credit score is below ${APPROVE_FROM}, the lowest it approves`;
+    else if (collections) reason = 'you have a debt in collections. You can pay it on Money, under Borrowing';
+    else if (means <= 0) reason = bank.iso === 'US' && age < 21 ? 'applicants under 21 need income or money of their own, and you have none in the bank' : 'you have no money in the bank to repay it from';
     if (reason) {
-      s.notify({ category: 'bank', title: 'Card Application Declined', body: `${bank.name} turned down your application: ${reason}.`, importance: 50 });
+      s.notify({ category: 'bank', title: 'Card Application Declined', body: `${bank.name} turned down your application because ${reason}. Applying still took a few points off your credit score.`, importance: 50 });
       return { approved: false };
     }
     const limit = limitFor(s, credit.score);

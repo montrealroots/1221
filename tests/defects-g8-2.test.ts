@@ -149,7 +149,7 @@ describe('PLAYER JOURNEY: Call Off The Request on a pending repeat', () => {
     expect(school.repeat!.status).toBe('pending');
     // Asked: the command's own warning, and the choice.
     const warning = cancelRepeatWarning(sim, school);
-    expect(warning).toMatch(/the degree withheld if you don’t ask again by/);
+    expect(warning).toMatch(/If you call it off and don’t ask again by .+, the faculty won’t recommend the degree\./);
     expect(sim.execute({ kind: 'school.cancel_repeat', payload: {} }).error).toBe(`${warning} Confirm to go ahead.`);
     expect(first.text).not.toContain(warning);
     // FIXTURE: Call Off The Request… pressed, as the screen's choice would be.
@@ -222,10 +222,10 @@ describe('A Term Without Tuition Support', () => {
     // The tuition less the living aid paid onto it, by hand $22,407.28 − $15,781.87 (the test above), from 2026-10-16 (brief
     // 09's journeys); until then the tuition whole, the aid paid to the bank beside it.
     expect(accountOwed(met.sim, met.sim.player)).toBe(6_625_41);
-    expect(said).toContain('the term’s living scholarship meets its $2,377.37 Yale Health fee and pays $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by');
+    expect(said).toContain('the term’s living scholarship pays its $2,377.37 Yale Health fee and $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by');
     expect(said).not.toMatch(/for Yale Health are on your Yale account/);
     expect(said).toContain(`${money(met.account.tuition)} tuition is on your Yale account`);
-    expect(said).toContain(`the term’s living scholarship meets its ${money(met.account.healthPlan)} Yale Health fee`);
+    expect(said).toContain(`the term’s living scholarship pays its ${money(met.account.healthPlan)} Yale Health fee`);
     // Without need it's charged, and said.
     const charged = additionalTermBegun('g8-2-noneed', { wealth: 'comfortable' });
     const a = termAccount(saveCurrency(charged.sim.universe), false, charged.term);

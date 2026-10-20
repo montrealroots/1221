@@ -1,0 +1,59 @@
+
+ RUN  v2.1.9 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/e15-money-data
+
+ ✓ tests/evidence-g12-money.test.ts (33 tests) 3004ms
+   ✓ card.request_hardship > freezes a Capital One card’s 28.99% on a plan: no interest at the statement after a due date the plan’s payment met, where its twin off a plan is charged it nightly 441ms
+   ✓ card.request_limit > is read by the record at the due date: the same $2,960 owed costs a $3,750 limit ten points of utilization and a raised $4,500 one seven 307ms
+ ✓ tests/evidence-g11-money.test.ts (21 tests) 4301ms
+   ✓ bank.repay_loan > pays a Citi loan off from the Personal Loan panel 20 days into a 30-day month: refused first where the account can’t cover it, then $3,000 and 20 days’ interest from Citi Access Checking, the next payment called off, and Citi lending again 400ms
+   ✓ bank.set_alerts > tells of a statement ready only while Statement Ready is pressed On on the Alerts form, and of a card’s statement with a payment due whatever it is 430ms
+   ✓ bank.set_payments > takes a Citi loan’s monthly payment from Chase Savings when it falls due, with the link pressed On, and misses it onto the record with the link Off 302ms
+   ✓ bank.take_term_interest > takes a Chase CD’s $174.52 from the panel 30 days before its end: refused with nothing earned, the penalty falling from $172.60 to nothing, and the renewal reinvesting only what the 30 days after earned 808ms
+   ✓ card.close > leaves Citi’s $2,500 of $5,000 alone in what’s used once Chase’s card is closed from the panel, owing nothing: Citi’s due date moves the record a point down, where beside Chase’s it moves 1.5 up 493ms
+   ✓ card.close > charges no yearly fee on a closing card: AIB’s €30 on December’s statement, the month it was opened, to the card left open and not to the one closing (a quick-save life in Dublin, since no New Haven card has a yearly fee) 1011ms
+ ✓ tests/evidence2-b04.test.ts (8 tests) 2825ms
+   ✓ card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record 1291ms
+   ✓ card.request_hardship > is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48 881ms
+ ✓ tests/language-money.test.ts (20 tests) 845ms
+   ✓ PLAYER JOURNEY: a New York student closes Citi while its groceries are pending > refuses what a closing account can’t take, saying why, and says where what it held went when it closes 417ms
+ ✓ tests/evidence-g13-money.test.ts (25 tests) 13422ms
+   ✓ finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30 589ms
+   ✓ finance.pay_card > paid in full by hand, the statement keeps its grace period and the next charges no interest; with the minimum alone it carries, and the next charges the $62.47 that $2,000 built a day at a time at 18.46% 824ms
+   ✓ finance.pay_card > paid by hand, a US card takes the minimum to the cheapest balance and the rest to the dearest: $540 clears a cash advance at 28.49%, and the next statement charges it no interest; the $40 minimum alone leaves it to draw 491ms
+   ✓ bank.scheduled_payment > from a current account Chase closed for sixty days overdrawn doesn’t go, and says so: nothing leaves it, nothing is in transit; the twin never overdrawn sends it 788ms
+   ✓ card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it 2727ms
+   ✓ card.statement > charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements (Dublin, Bank of Ireland: no US card in SLATE has a yearly fee) 721ms
+   ✓ credit score > asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and at day 125 the score has gained nothing on a twin’s who never moved it 2891ms
+   ✓ credit score > a mark seven years old leaves the record at the month’s end on the clock and gives 25 back, which an application then reads and the card’s screen reprices; one not yet seven years old waits for its own month’s end 338ms
+   ✓ credit score > reads what’s used of the limit at the due date: 80% of it costs ten points of the month’s three, 20% costs none 684ms
+   ✓ credit score > with no card open, the record ages back 2 a month on the 1st, to 680 and no further, and not at all with a payment late in the year 1105ms
+   ✓ credit score > prices a Citi loan by the record: 12.10% at 735, and 12.30% once a card application has taken its five points 503ms
+   ✓ statements > shows a card’s kept cuts as its periods, a transition cycle’s charge under one statement, the minimum and the minimum-only warning, as the player has it 593ms
+   ✓ statements > ends a closed card’s last period at its closing, as the row says a closed account’s does, not So Far 506ms
+ ✓ tests/language-data-dates.test.ts (12 tests) 572ms
+ ✓ tests/guide-examples-money.test.ts (16 tests) 15055ms
+   ✓ the money entries’ worked examples, played > money.affairs: Your Affairs And What You’re Worth 579ms
+   ✓ the money entries’ worked examples, played > bank.term: Term Deposits 415ms
+   ✓ the money entries’ worked examples, played > bank.upkeep: Keeping An Account 5881ms
+   ✓ the money entries’ worked examples, played > bank.card-offers: A Card’s Offers 483ms
+   ✓ the money entries’ worked examples, played > leaves a live save byte for byte as it was, every example played beside it 7193ms
+ ✓ tests/defects3-bank.test.ts (5 tests) 1567ms
+   ✓ a card paid off before its statement owes no missed payment > PLAYER JOURNEY: late once, on a plan, paid off: the 20 October statement owes nothing, the miss is behind it, and Home says nothing of the card 693ms
+   ✓ a card’s due date across a month’s end comes at noon > PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 10 November 507ms
+ ✓ tests/defects-r1-1.test.ts (11 tests) 6622ms
+   ✓ `spendRefusal`, against what `spend` does > says why exactly when `spend` can’t pay, and `spend` takes nothing then and owes nothing otherwise, for every way of paying, in New York and Paris 4376ms
+   ✓ `spendRefusal`, against what `spend` does > is what the menu says and what the command does, for a meal, for every way of paying, in New York and Paris 2101ms
+ ✓ tests/bank-moves-card-line.test.ts (6 tests) 108ms
+ ✓ tests/defects-g17-1.test.ts (3 tests) 282ms
+ ✓ tests/security.test.ts (11 tests) 916ms
+   ✓ somebody else’s use > can’t be reported past the law’s days from the statement 603ms
+ ✓ tests/defects-r6-2.test.ts (1 test) 104ms
+ ✓ tests/coverage-gaps-number.test.ts (4 tests) 1229ms
+   ✓ a debit tried on an exposed number > stops being tried after its year, and the account’s own payments go on 1134ms
+
+ Test Files  14 passed (14)
+      Tests  176 passed (176)
+   Start at  04:24:43
+   Duration  32.27s (transform 7.03s, setup 1.22s, collect 33.15s, tests 50.85s, environment 3ms, prepare 1.78s)
+
+exit=0

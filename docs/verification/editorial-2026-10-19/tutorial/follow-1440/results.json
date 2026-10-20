@@ -1,0 +1,1513 @@
+{
+ "base": "http://localhost:4282",
+ "width": 1440,
+ "problems": [],
+ "results": [
+  {
+   "chapter": "start",
+   "what": "a new life opens on the guide by itself",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Next 2 What’s Coming Later 3 The Clock Later 4"
+  },
+  {
+   "chapter": "start",
+   "what": "the clock starts paused: the top bar offers Play",
+   "ok": true,
+   "seen": "🎬 SLATE 7:30 AM · August 24, 2026 EDT Play LOCKED Sleep LOCKED Look After Yourself ▾ LOCKED Advance ▾ LOCKED Guide (17"
+  },
+  {
+   "chapter": "welcome",
+   "what": "Chapter 1 Of 17 shows “Your Life, Hour By Hour”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Next 2 What’s Coming Later 3 The Clock Later 4 Moving Time On Later 5 What Needs You L"
+  },
+  {
+   "chapter": "welcome",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "How SLATE works, and how to read Home."
+  },
+  {
+   "chapter": "welcome",
+   "what": "all 8 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "welcome",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "welcome",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "welcome",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own"
+  },
+  {
+   "chapter": "welcome",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "he date, the town, its region and country, its money, the season and the daylight, when you press them It’s open now. Press Try It to go and use it, or go straight on to “What’s Coming”. Next time you open the guide, it starts there. Try It Next: What’s Coming"
+  },
+  {
+   "chapter": "welcome",
+   "what": "the line under the greeting shows the time, the town, its time zone, the season and the weather",
+   "ok": true,
+   "seen": "Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ☁️ 68°F Overcast"
+  },
+  {
+   "chapter": "welcome",
+   "what": "Where You Are is on Home",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "welcome",
+   "what": "pressing the town’s name opens it just below",
+   "ok": true,
+   "seen": "New Haven: WHERE YOU LIVE New Haven Close This is where you live. It’s 7:30 AM, and 130K people live here. 130K people live here, in Connecticut, and the climate is contin"
+  },
+  {
+   "chapter": "welcome",
+   "what": "with links inside for its region, its country and its money",
+   "ok": true,
+   "seen": "Close | Connecticut | United States | Dollar | Daylight"
+  },
+  {
+   "chapter": "welcome",
+   "what": "the date opens the same way",
+   "ok": true,
+   "seen": "Monday, August 24"
+  },
+  {
+   "chapter": "welcome",
+   "what": "the season opens the same way",
+   "ok": true,
+   "seen": "Summer"
+  },
+  {
+   "chapter": "welcome",
+   "what": "the daylight opens the same way",
+   "ok": true,
+   "seen": "Daylight"
+  },
+  {
+   "chapter": "welcome",
+   "what": "a panel you can’t use yet says Locked and names the chapter to read",
+   "ok": true,
+   "seen": "Calendar LOCKED This opens when you read “What’s Coming” in the guide: what’s coming up, and what to do when the clock stops for it. Read About It"
+  },
+  {
+   "chapter": "welcome",
+   "what": "its Read About It button goes straight to that chapter",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You La"
+  },
+  {
+   "chapter": "welcome",
+   "what": "How This Works on a panel explains it, and says the clock waits",
+   "ok": true,
+   "seen": "How This Works ✕ Contents › Home And Where You Are Search How This Works Search Home And Where You Are Show Everything Home is your day at a glance. The line un"
+  },
+  {
+   "chapter": "welcome",
+   "what": "the ? key opens the help’s contents",
+   "ok": true,
+   "seen": "How This Works ✕ Contents Search How This Works Search The Guide. You’ve read 1 of its 17 chapters. Each one you read opens a part of the game. Open The Guide On This Screen Home: what you can do here"
+  },
+  {
+   "chapter": "welcome",
+   "what": "the contents show every group with its lead",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "welcome",
+   "what": "the / key opens its search, with an example",
+   "ok": true,
+   "seen": "How This Works ✕ Contents › Search Search How This Works Search Type a feature’s name, a word for it or a question, such as “clock stopped” or “how do I pay my card”. The clock waits while you read. B"
+  },
+  {
+   "chapter": "welcome",
+   "what": "a search that finds nothing says so and how to go on",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "welcome",
+   "what": "the menu down the left is there, with Home",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "welcome",
+   "what": "Save & Exit takes you back to the save slots",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "welcome",
+   "what": "Continue there picks up at the same moment",
+   "ok": true,
+   "seen": "7:30 AM → 7:30 AM"
+  },
+  {
+   "chapter": "calendar",
+   "what": "Guide, in the top bar, opens at “What’s Coming”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8"
+  },
+  {
+   "chapter": "calendar",
+   "what": "Chapter 2 Of 17 shows “What’s Coming”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You La"
+  },
+  {
+   "chapter": "calendar",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "What’s coming up, and what to do when the clock stops for it."
+  },
+  {
+   "chapter": "calendar",
+   "what": "all 6 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "calendar",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "calendar",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "calendar",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Next 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own P"
+  },
+  {
+   "chapter": "calendar",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "nk Later 17 A Whole Life Later OPENED What’s Coming Calendar Go Skip It The entries on it, when you press them It’s open now. Press Try It to go and use it, or go straight on to “The Clock”. Next time you open the guide, it starts there. Try It Next: The Clock"
+  },
+  {
+   "chapter": "calendar",
+   "what": "the Calendar panel shows the next thing you need to be at and how soon",
+   "ok": true,
+   "seen": "Calendar What’s coming up, and when. Open Calendar LOCKED How This Works in 2h 30m Registration And Your Account August 24, 2026 at 10:00 AM The Fall Term Begins in 1h 30m Meeting Your Class in 1d 3h"
+  },
+  {
+   "chapter": "calendar",
+   "what": "and up to five more after it",
+   "ok": true,
+   "seen": "5 more"
+  },
+  {
+   "chapter": "calendar",
+   "what": "pressing an entry’s name shows when it starts, how long it lasts, where it is and what missing it costs",
+   "ok": true,
+   "seen": "Registration And Your Account: A COMMITMENT Registration And Your Account Close You need to be at it in three hours, at 10:00 AM, in New Haven. You need to be there, awake and in New Haven, when the clock reaches it. If you aren’t, it’s missed. It runs 2 hours, 10:00 AM to 12:00 PM. It’s in New Haven, where you already are. It doesn’t clash with anything else. WHEN 10:00 AM August 24, 2026 LENGTH "
+  },
+  {
+   "chapter": "clock",
+   "what": "Guide, in the top bar, opens at “The Clock”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Next 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 L"
+  },
+  {
+   "chapter": "clock",
+   "what": "Chapter 3 Of 17 shows “The Clock”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Next 4 Moving Time On Later 5 What Needs You Lat"
+  },
+  {
+   "chapter": "clock",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Starting and stopping time."
+  },
+  {
+   "chapter": "clock",
+   "what": "all 4 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "clock",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "clock",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "clock",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own Pl"
+  },
+  {
+   "chapter": "clock",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "And ID Later 15 Money Later 16 Your Bank Later 17 A Whole Life Later OPENED The Clock Play and Pause It’s open now. Press Try It to go and use it, or go straight on to “Moving Time On”. Next time you open the guide, it starts there. Try It Next: Moving Time On"
+  },
+  {
+   "chapter": "clock",
+   "what": "Play starts the clock, and the button then says Pause",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "clock",
+   "what": "the clock runs in real time: a minute later, the time has moved on a minute",
+   "ok": true,
+   "seen": "7:30 AM → 7:31 AM"
+  },
+  {
+   "chapter": "clock",
+   "what": "Pause stops it, and the button says Play again",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "advance",
+   "what": "Guide, in the top bar, opens at “Moving Time On”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Lo"
+  },
+  {
+   "chapter": "advance",
+   "what": "Chapter 4 Of 17 shows “Moving Time On”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Late"
+  },
+  {
+   "chapter": "advance",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Jumping ahead, and what happens on the way."
+  },
+  {
+   "chapter": "advance",
+   "what": "all 4 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "advance",
+   "what": "The Details opens onto its 1 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "advance",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "advance",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "advance",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Next 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own Pla"
+  },
+  {
+   "chapter": "advance",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "5 Money Later 16 Your Bank Later 17 A Whole Life Later OPENED Moving Time On Advance Choose An Event It’s open now. Press Try It to go and use it, or go straight on to “What Needs You”. Next time you open the guide, it starts there. Try It Next: What Needs You"
+  },
+  {
+   "chapter": "advance",
+   "what": "Advance offers One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.), One Week and Choose An Event",
+   "ok": true,
+   "seen": "One Hour 8:31 AM This Evening 6:00 PM · August 24, 2026 Tonight 10:00 PM · August 24, 2026 Tomorrow Morning 7:00 AM · August 25, 2026 Next Event The Fall Term Begins · August 24, 2026 at 9:00 AM Next Monday 9:00 AM · August 31, 2026 One Week August 31, 2026 at 7:31 AM Choose An Event… Pick from everything on the calendar How This Works How Play And Pause Work"
+  },
+  {
+   "chapter": "advance",
+   "what": "Choose An Event lets you pick from the next things on your calendar, at most fourteen",
+   "ok": true,
+   "seen": "8 listed"
+  },
+  {
+   "chapter": "advance",
+   "what": "One Hour moves the clock on an hour",
+   "ok": true,
+   "seen": "7:31 AM → 8:31 AM"
+  },
+  {
+   "chapter": "advance",
+   "what": "a jump past commitments first shows On The Way, saying how many",
+   "ok": true,
+   "seen": "On The Way ✕ Moving the clock to Tonight (August 24, 2026 at 10:00 PM) passes one commitment, and the clock stops at each one. At each, you can go, or press Stand Here and the clock waits. A plan of your own can also be skipped, and a rehearsal with a partner"
+  },
+  {
+   "chapter": "advance",
+   "what": "the clock stops at the commitment, and a dialog with its name asks what you want to do",
+   "ok": true,
+   "seen": "Registration And Your Account ✕ It’s 10:00 AM on August 24, 2026, and this needs you now. Going takes 2 hours, and the clock moves on to August 24, 2026 at 10:00 PM. Only a plan of your own can be skipped. Go, or press Stand Here and the clock waits. Whatever"
+  },
+  {
+   "chapter": "advance",
+   "what": "a school commitment has Go and Stand Here, and no Skip It",
+   "ok": true,
+   "seen": "Go 1, Stand Here 1, Skip It 0"
+  },
+  {
+   "chapter": "advance",
+   "what": "Stand Here closes the dialog and keeps the clock paused at the commitment",
+   "ok": true,
+   "seen": "10:00 AM → 10:00 AM"
+  },
+  {
+   "chapter": "advance",
+   "what": "the jump ends tonight, after going to each commitment",
+   "ok": true,
+   "seen": "10:00 PM"
+  },
+  {
+   "chapter": "needs",
+   "what": "Guide, in the top bar, opens at “What Needs You”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Next 6 How You Are Later 7 Sleep Later 8 Loo"
+  },
+  {
+   "chapter": "needs",
+   "what": "Chapter 5 Of 17 shows “What Needs You”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Next"
+  },
+  {
+   "chapter": "needs",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "What happened while you weren’t looking, and what’s waiting on you."
+  },
+  {
+   "chapter": "needs",
+   "what": "all 5 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "needs",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "needs",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "needs",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Next 7 Sleep Later 8 Looking After Yourself Later 9 Your Own Plan"
+  },
+  {
+   "chapter": "needs",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "h counts the notices it clears A question’s answers, and Dismiss A notice or a question, when you press it It’s open now. Press Try It to go and use it, or go straight on to “How You Are”. Next time you open the guide, it starts there. Try It Next: How You Are"
+  },
+  {
+   "chapter": "needs",
+   "what": "What Needs You is on Home, with notices",
+   "ok": true,
+   "seen": "What Needs You No questions are waiting on you. Mark 3 Read How This Works Welcome To The Class Of 2029 You’re one of the 16 actors in the MFA in Acting at the David Geffen School of Drama at Yale Uni"
+  },
+  {
+   "chapter": "needs",
+   "what": "the number beside Home in the menu counts what’s waiting",
+   "ok": true,
+   "seen": "Home 3"
+  },
+  {
+   "chapter": "needs",
+   "what": "pressing a notice’s title opens it in full",
+   "ok": true,
+   "seen": "Welcome To The Class Of 2029: NOTICE Welcome To The Class Of 2029 Close It came in 14 hours and 30 minutes ago. It’s first of your three unread notices. You’re one of the 16 actors in the MF"
+  },
+  {
+   "chapter": "needs",
+   "what": "a notice with somewhere to go has Go There",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "needs",
+   "what": "Mark Read shows how many are unread",
+   "ok": true,
+   "seen": "Mark 3 Read"
+  },
+  {
+   "chapter": "needs",
+   "what": "and pressed, it clears them from the panel",
+   "ok": true,
+   "seen": "What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you w"
+  },
+  {
+   "chapter": "needs",
+   "what": "with nothing waiting, the panel says what still needs attention, or All Clear",
+   "ok": true,
+   "seen": "What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you w"
+  },
+  {
+   "chapter": "body",
+   "what": "Guide, in the top bar, opens at “How You Are”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Next 7 Sleep Later 8 Look"
+  },
+  {
+   "chapter": "body",
+   "what": "Chapter 6 Of 17 shows “How You Are”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "body",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Energy, stress, readiness, and the rest of your wellbeing."
+  },
+  {
+   "chapter": "body",
+   "what": "all 4 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "body",
+   "what": "The Details opens onto its 2 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "body",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "body",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "body",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Next 8 Looking After Yourself Later 9 Your Own Plans"
+  },
+  {
+   "chapter": "body",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "ife Later OPENED How You Are How You Are Energy, stress, readiness and the rest of your wellbeing, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Sleep”. Next time you open the guide, it starts there. Try It Next: Sleep"
+  },
+  {
+   "chapter": "body",
+   "what": "How You Are shows Energy, Stress and Readiness",
+   "ok": true,
+   "seen": "How You Are How This Works Holding up, with nothing out of the ordinary to worry about. Energy 39 Stress 13 Readiness 48"
+  },
+  {
+   "chapter": "body",
+   "what": "pressing Readiness shows the measures costing it most, up to three",
+   "ok": true,
+   "seen": "Readiness: Energy, Nourishment, Morale"
+  },
+  {
+   "chapter": "body",
+   "what": "and pressing one of those shows where it stands and what it does",
+   "ok": true,
+   "seen": "Energy"
+  },
+  {
+   "chapter": "sleep",
+   "what": "Guide, in the top bar, opens at “Sleep”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Next 8 Looki"
+  },
+  {
+   "chapter": "sleep",
+   "what": "Chapter 7 Of 17 shows “Sleep”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "sleep",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Going to sleep, and getting your energy back."
+  },
+  {
+   "chapter": "sleep",
+   "what": "all 6 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "sleep",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "sleep",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "sleep",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Next 9 Your Own Plans"
+  },
+  {
+   "chapter": "sleep",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "ID Later 15 Money Later 16 Your Bank Later 17 A Whole Life Later OPENED Sleep Sleep It’s open now. Press Try It to go and use it, or go straight on to “Looking After Yourself”. Next time you open the guide, it starts there. Try It Next: Looking After Yourself"
+  },
+  {
+   "chapter": "sleep",
+   "what": "Sleep opens the Sleep dialog, asking how many hours, from half an hour to 14 hours",
+   "ok": true,
+   "seen": "0.5 to 14"
+  },
+  {
+   "chapter": "sleep",
+   "what": "it suggests a number and shows when you’d wake",
+   "ok": true,
+   "seen": "Sleep ✕ A normal night. Hours 8 NOW 10:00 PM YOU’D WAKE AT 6:00 AM, August 25, 2026 Your next commitment is in 12 hours. The world keeps running while you sleep. The clock moves on, and anything on your calendar in those hours happens without you. How This Wor"
+  },
+  {
+   "chapter": "sleep",
+   "what": "the button has the hours on it, such as Sleep 8 Hours",
+   "ok": true,
+   "seen": "Sleep 8 Hours"
+  },
+  {
+   "chapter": "sleep",
+   "what": "Not Yet closes the dialog",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "sleep",
+   "what": "while you’re at a commitment, Sleep is grayed out and the top bar says when you’ll be free",
+   "ok": true,
+   "seen": "Meeting Your Class: Sleep: You’re at Meeting Your Class until 1:00 PM."
+  },
+  {
+   "chapter": "sleep",
+   "what": "a night’s sleep gives your energy back",
+   "ok": true,
+   "seen": "energy 67 this morning, 31 at bedtime, 100 after Sleep 8 Hours (10:00 PM → 6:00 AM)"
+  },
+  {
+   "chapter": "looking-after",
+   "what": "Guide, in the top bar, opens at “Looking After Yourself”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "looking-after",
+   "what": "Chapter 8 Of 17 shows “Looking After Yourself”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "looking-after",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Eating, washing, working out and unwinding."
+  },
+  {
+   "chapter": "looking-after",
+   "what": "all 6 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "looking-after",
+   "what": "The Details opens onto its 2 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "looking-after",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "looking-after",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "looking-after",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "looking-after",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "ney Later 16 Your Bank Later 17 A Whole Life Later OPENED Looking After Yourself Look After Yourself It’s open now. Press Try It to go and use it, or go straight on to “Your Own Plans”. Next time you open the guide, it starts there. Try It Next: Your Own Plans"
+  },
+  {
+   "chapter": "looking-after",
+   "what": "Look After Yourself offers Eat A Meal, Order In, Shower, Work Out and Unwind",
+   "ok": true,
+   "seen": "Eat A MealMost Worth It 40 minutes · $5.00 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 100 · readiness +2.5 Order In 50 minutes · $34.65 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 100 · readiness +2.5 Shower 20 minutes · Hygiene at 82, and stress at 0 it would ease. Hygiene 82 → 100 · readiness +1.9 Unwind 1 hour · Stress at 0 and mo"
+  },
+  {
+   "chapter": "looking-after",
+   "what": "the top line is marked Needed Now or Most Worth It",
+   "ok": true,
+   "seen": "Eat A MealMost Worth It 40 minutes · $5.00 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 1"
+  },
+  {
+   "chapter": "looking-after",
+   "what": "each line shows how long it takes",
+   "ok": true,
+   "seen": "Eat A MealMost Worth It 40 minutes · $5.00 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 100 · readiness +2.5 Order In 50 minutes · $34.65 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 100 · readiness +2.5 Shower 20 minutes · Hygiene at 82, and stress at 0 it would ease. Hygiene 82 → 100 · readiness +1.9 Unwind 1 hour · Stress at 0 and mo"
+  },
+  {
+   "chapter": "looking-after",
+   "what": "pressing one does it, and says when it’s done",
+   "ok": true,
+   "seen": "Eat: Eat A Meal: done at 6:40 AM."
+  },
+  {
+   "chapter": "plans",
+   "what": "Guide, in the top bar, opens at “Your Own Plans”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "plans",
+   "what": "Chapter 9 Of 17 shows “Your Own Plans”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "plans",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Putting something of your own on the calendar."
+  },
+  {
+   "chapter": "plans",
+   "what": "all 5 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "plans",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "plans",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "plans",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "plans",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "s Open Calendar Put Something On It and Call It Off Your plans and the stretches between them, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Weather”. Next time you open the guide, it starts there. Try It Next: Weather"
+  },
+  {
+   "chapter": "plans",
+   "what": "Open Calendar shows the whole month",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "plans",
+   "what": "pressing a day offers Put Something On It",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "plans",
+   "what": "it asks what it is, when it starts and how long it lasts, from half an hour to all day",
+   "ok": true,
+   "seen": "Half An Hour, An Hour, Two Hours, Half A Day, A Working Day, All Day"
+  },
+  {
+   "chapter": "plans",
+   "what": "Put It On adds it to the day",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "plans",
+   "what": "pressed on the Calendar screen, a plan of your own offers Call It Off",
+   "ok": true,
+   "seen": "Lunch With Sam ✕ WHEN 9:00 AM September 5, 2026 LENGTH 1 hour KIND Personal New Haven STATUS Pending You need to be there. The clock stops when it comes round, so you can go. You put it there, so you"
+  },
+  {
+   "chapter": "plans",
+   "what": "and Call It Off takes it off before it starts",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "weather",
+   "what": "Guide, in the top bar, opens at “Weather”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "weather",
+   "what": "Chapter 10 Of 17 shows “Weather”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "weather",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "The weather in your town, today and the days ahead."
+  },
+  {
+   "chapter": "weather",
+   "what": "all 4 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "weather",
+   "what": "The Details opens onto its 1 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "weather",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "weather",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "weather",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "weather",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "A Whole Life Later OPENED Weather Weather The sky, the week, each day and each hour, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Drama School”. Next time you open the guide, it starts there. Try It Next: Drama School"
+  },
+  {
+   "chapter": "weather",
+   "what": "the Weather panel shows the weather now and the next few days",
+   "ok": true,
+   "seen": "Weather How This Works ☁️69°F Overcast · High 77°F · Low 66°F Humidity 73% · Wind 17 mph · Continental Thu ☁️ Overcast 81° / 63° Fri ⛅ Cloudy 80° / 62° Sat ⛅ Cloudy 70° / 52° Sun 🌧️ Rain 68° / 57° Mo"
+  },
+  {
+   "chapter": "weather",
+   "what": "today’s weather and the days are links",
+   "ok": true,
+   "seen": "20 links"
+  },
+  {
+   "chapter": "weather",
+   "what": "pressing it shows more: the week, each day and each hour",
+   "ok": true,
+   "seen": "Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 69°F and overcast where you are, with a high of 77°F and a low of 66°F today. The wind is 17 mph and the humidity is 73%. Today is about normal for the date"
+  },
+  {
+   "chapter": "school",
+   "what": "Guide, in the top bar, opens at “Drama School”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "school",
+   "what": "Chapter 11 Of 17 shows “Drama School”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "school",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Classes, coursework, casting and your degree at Yale."
+  },
+  {
+   "chapter": "school",
+   "what": "all 17 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "The Details opens onto its 11 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "school",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "Learn The Part, Catch Up The Blocking and Work On The Note Plays To Read: Read It and Research It It’s open now. Press Try It to go and use it, or go straight on to “You As An Actor”. Next time you open the guide, it starts there. Try It Next: You As An Actor"
+  },
+  {
+   "chapter": "school",
+   "what": "the School line in Your Affairs shows your year or arrival, your standing, your place in the class and what’s next",
+   "ok": true,
+   "seen": "Your Affairs How This Works Money LOCKED This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It School Year 1, good standing, 7th of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works Papers LOCKED This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and"
+  },
+  {
+   "chapter": "school",
+   "what": "the Yale button opens the School screen, with the tabs the chapter names",
+   "ok": true,
+   "seen": "Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, Terms And Award"
+  },
+  {
+   "chapter": "school",
+   "what": "Standing And Craft shows your craft, Composure beside it and Coursework This Term",
+   "ok": true,
+   "seen": "GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye"
+  },
+  {
+   "chapter": "school",
+   "what": "on the School screen, the school’s name is a link",
+   "ok": true,
+   "seen": "David Geffen School of Drama at Yale University"
+  },
+  {
+   "chapter": "school",
+   "what": "on the School screen, a technique is a link",
+   "ok": true,
+   "seen": "Scene Study"
+  },
+  {
+   "chapter": "school",
+   "what": "on the School screen, a course is a link",
+   "ok": true,
+   "seen": "Acting I"
+  },
+  {
+   "chapter": "school",
+   "what": "Classes shows the week, nine to three on class days",
+   "ok": true,
+   "seen": "GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale Uni"
+  },
+  {
+   "chapter": "school",
+   "what": "Take An Elective Shift, on Shifts And Pay, signs you up for an evening front of house",
+   "ok": true,
+   "seen": "Front of house, August 31, 2026 at 7:00 PM."
+  },
+  {
+   "chapter": "school",
+   "what": "Casting is there to show your part, and the Cabaret",
+   "ok": true,
+   "seen": "GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye"
+  },
+  {
+   "chapter": "school",
+   "what": "Coursework holds Plays To Read",
+   "ok": true,
+   "seen": "GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye"
+  },
+  {
+   "chapter": "profile",
+   "what": "Guide, in the top bar, opens at “You As An Actor”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "profile",
+   "what": "Chapter 12 Of 17 shows “You As An Actor”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "profile",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Your abilities, your practice, and the genres you work in."
+  },
+  {
+   "chapter": "profile",
+   "what": "all 14 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "The Details opens onto its 5 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "profile",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "r Work So Far An ability, a genre and a piece of work, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Cover, Benefits And Returns”. Next time you open the guide, it starts there. Try It Next: Cover, Benefits And Returns"
+  },
+  {
+   "chapter": "profile",
+   "what": "Player Profile, in the menu, lists the twelve abilities",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "pressing an ability shows what it is, how it grows and where it counts",
+   "ok": true,
+   "seen": "Presence: AN ACTING ABILITY Presence Close You’re at 67.2 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 67.2 32.8 to full CLASSES REACH — Classes don’t build it; performing in front of people d"
+  },
+  {
+   "chapter": "profile",
+   "what": "the exercise beside a technique, such as Comic Timing, offers a Tier, a Focus and Practice An Hour",
+   "ok": true,
+   "seen": "Tier 1, Focus 1"
+  },
+  {
+   "chapter": "profile",
+   "what": "before the hour, it says about how much it will add",
+   "ok": true,
+   "seen": "Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.26 to comedy (now 48.6), and +0.18 to disci"
+  },
+  {
+   "chapter": "profile",
+   "what": "Practice An Hour practices for an hour and says what it added",
+   "ok": true,
+   "seen": "Comic Timing: +0.26."
+  },
+  {
+   "chapter": "profile",
+   "what": "under Genres, Study It reads a play or watches a film of the genre",
+   "ok": true,
+   "seen": "Absurdist: an hour and a half with a film of its kind. Familiarity 8.0 of 100."
+  },
+  {
+   "chapter": "profile",
+   "what": "Open Its Brief shows where and when, the two of you, what you want and what’s in the way",
+   "ok": true,
+   "seen": "Skip To Content 🎬 SLATE 9:10 AM · August 26, 2026 EDT Play Sleep Look After Yourself ▾ Advance ▾ Guide (5 Left) Not Saved Yet Save & Exit Home 1 YOU Player Profile YOUR TRAINING School YOU Alex River"
+  },
+  {
+   "chapter": "profile",
+   "what": "and the brief offers Break It Down, Learn The Lines, Rehearse It On Your Feet, Read With and Tape It",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "Your Work So Far is on the Player Profile",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "pressing your name at the foot of the menu opens the Player Profile",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "Guide, in the top bar, opens at “Cover, Benefits And Returns”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "papers",
+   "what": "Chapter 13 Of 17 shows “Cover, Benefits And Returns”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "papers",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Health cover, benefits, pensions and tax returns."
+  },
+  {
+   "chapter": "papers",
+   "what": "all 10 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "The Details opens onto its 10 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "papers",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "ial Security and Claim It File It and Pay, on Tax Returns File A Police Report and Report Stolen It’s open now. Press Try It to go and use it, or go straight on to “Passports And ID”. Next time you open the guide, it starts there. Try It Next: Passports And ID"
+  },
+  {
+   "chapter": "papers",
+   "what": "the Papers line in Your Affairs shows what covers you",
+   "ok": true,
+   "seen": "Papers Cover: Yale Health. Papers How This Works"
+  },
+  {
+   "chapter": "papers",
+   "what": "the Papers button opens Papers, with the tabs the chapter names",
+   "ok": true,
+   "seen": "Tax Returns, Health Cover, Unemployment, Passport And ID, Permission To Work"
+  },
+  {
+   "chapter": "papers",
+   "what": "Your Cover, on Health Cover, shows Yale Health",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "Your Doctor chooses the practice, and Yale Health Center sees a student it covers the next weekday, at no charge",
+   "ok": true,
+   "seen": "The Practice Your Cover Uses | Fair Haven Community Health Care, A Visit $183.98, A 24-Day Wait | Yale Health Center, Student Health, A Visit $0.00, The Next Weekday"
+  },
+  {
+   "chapter": "papers",
+   "what": "with no visit owed there’s no Book An Appointment: the game books a visit itself when one is needed",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "The Marketplace and Care And Its Bills are on Health Cover",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "Unemployment has SNAP with Apply, and says a Connecticut claim pays only once you’ve left school",
+   "ok": true,
+   "seen": "SNAP Food assistance, onto an EBT card for groceries Apply How This Works CLAIM None Open You can apply now AT MOST $298.00 A month, less 30% of net income ON T"
+  },
+  {
+   "chapter": "documents",
+   "what": "Guide, in the top bar, opens at “Passports And ID”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "documents",
+   "what": "Chapter 14 Of 17 shows “Passports And ID”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "documents",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Your passport and ID, what other countries ask of you, and your student status."
+  },
+  {
+   "chapter": "documents",
+   "what": "all 8 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "documents",
+   "what": "The Details opens onto its 2 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "documents",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "documents",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "documents",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "documents",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "state’s ID card Report Lost and Replace It File A Police Report Permission To Work and Apply For OPT Residence Abroad It’s open now. Press Try It to go and use it, or go straight on to “Money”. Next time you open the guide, it starts there. Try It Next: Money"
+  },
+  {
+   "chapter": "documents",
+   "what": "Passport And ID has Your Passport, with Renew It or Apply For One, and the faster service",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "documents",
+   "what": "Report Lost and Report Stolen are beside a document",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "documents",
+   "what": "Your ID offers Get with the card’s name",
+   "ok": true,
+   "seen": "Get Non-Driver Identification Card"
+  },
+  {
+   "chapter": "documents",
+   "what": "pressing a document you hold shows who issued it, its number’s last digits, when it was issued and runs out, and what it lets you do",
+   "ok": true,
+   "seen": "PERMISSION TO DRIVE Class D (Operator) Driver License Close It’s in force until June 14, 2028, and its number ends 5846. New York State Department of Motor Vehicles (NY DMV) issued it on June 14, 2020. In New Haven, it would let you drive. Driving isn’t part of the game, so this is for reference. NU"
+  },
+  {
+   "chapter": "documents",
+   "what": "Going Abroad: picking a country shows what it asks of your citizenship, or what you’re missing",
+   "ok": true,
+   "seen": "You need a passport in force, and you don’t have one. Apply for one under Your Passport. Australia asks citizens of the → You need a passport in force, and you don’t have one. Apply for one under Your Passport."
+  },
+  {
+   "chapter": "documents",
+   "what": "Permission To Work has Apply For OPT and Residence Abroad",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "money",
+   "what": "Guide, in the top bar, opens at “Money”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "money",
+   "what": "Chapter 15 Of 17 shows “Money”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "money",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Everything you have and owe, at a glance."
+  },
+  {
+   "chapter": "money",
+   "what": "all 5 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "money",
+   "what": "The Details opens onto its 1 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "money",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "money",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "money",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "money",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "our Bank Next 17 A Whole Life Later OPENED Money Money Your accounts, net worth and debts, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Your Bank”. Next time you open the guide, it starts there. Try It Next: Your Bank"
+  },
+  {
+   "chapter": "money",
+   "what": "the Money line shows your checking account and your net worth",
+   "ok": true,
+   "seen": "Money Chase Total Checking: $90,484.00. Worth $503,527. Chase LOCKED How This Works School Year 1, good standing, 7th of"
+  },
+  {
+   "chapter": "money",
+   "what": "pressing Your Affairs, the panel’s title, shows what you’re worth, and from there each account",
+   "ok": true,
+   "seen": "Net Worth: Close, Chase Total Checking, Chase Freedom Unlimited, Chase Savings"
+  },
+  {
+   "chapter": "bank",
+   "what": "Guide, in the top bar, opens at “Your Bank”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "bank",
+   "what": "Chapter 16 Of 17 shows “Your Bank”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "bank",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Your accounts, cards, payments and borrowing, at a real bank where you live."
+  },
+  {
+   "chapter": "bank",
+   "what": "all 12 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "The Details opens onto its 16 paragraph(s), word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "bank",
+   "what": "and offers Try It or the next chapter, in its words",
+   "ok": true,
+   "seen": "Borrow, and pay a loan off Opt in or out of debit card overdrafts Pay a debt in collections Switch bank It’s open now. Press Try It to go and use it, or go straight on to “A Whole Life”. Next time you open the guide, it starts there. Try It Next: A Whole Life"
+  },
+  {
+   "chapter": "bank",
+   "what": "the button with the bank’s name opens it, with the tabs the chapter names",
+   "ok": true,
+   "seen": "Accounts, Cards, Payments And Cash, Borrowing, Statements"
+  },
+  {
+   "chapter": "bank",
+   "what": "Move Money, on Accounts: where from, where to, how much, Move It; at the same bank it moves at once",
+   "ok": true,
+   "seen": "90,484 → 90,494 · Moved $10."
+  },
+  {
+   "chapter": "bank",
+   "what": "Cards has the credit card, Pay Card In Full and Autopay",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "a card can be locked and reported",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "How You Pay is on Payments And Cash, with Savings Covers The Current Account",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "bank",
+   "what": "Statements, its own tab, has The Year and Alerts, with Statement Ready and Short For A Payment",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "life",
+   "what": "Guide, in the top bar, opens at “A Whole Life”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki"
+  },
+  {
+   "chapter": "life",
+   "what": "Chapter 17 Of 17 shows “A Whole Life”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read"
+  },
+  {
+   "chapter": "life",
+   "what": "its lead is on the page",
+   "ok": true,
+   "seen": "Your own page, birthdays, age, and the end."
+  },
+  {
+   "chapter": "life",
+   "what": "all 5 paragraphs are on the page, word for word",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "life",
+   "what": "What It Opens lists every name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "life",
+   "what": "I’ve Read It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "life",
+   "what": "the dialog says what opened",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans"
+  },
+  {
+   "chapter": "life",
+   "what": "and says it was the last chapter",
+   "ok": true,
+   "seen": "ENED A Whole Life You, when you press your name That was the last chapter, and every part of the game is open now. To read any chapter again, press Guide at the top of the screen. Try It Start Playing"
+  },
+  {
+   "chapter": "life",
+   "what": "pressing your name on Home opens your own page: your wellbeing, your readiness and your traits",
+   "ok": true,
+   "seen": "YOURSELF Alex Rivera Close Rested, steady and ready for a real day. Your body. 5 ft 7 in and 191 lb, with a body mass index of 30.0, in the obese range. In feet, inches and pounds, the units of the United States, where you live. On your papers. Pronouns they/them. A citizen of the United States. Ene"
+  },
+  {
+   "chapter": "life",
+   "what": "so does the line at the top of How You Are",
+   "ok": true,
+   "seen": "Alex Rivera"
+  },
+  {
+   "chapter": "end",
+   "what": "with every chapter read, nothing is locked",
+   "ok": true,
+   "seen": "0 locked"
+  }
+ ]
+}

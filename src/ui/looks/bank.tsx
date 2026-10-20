@@ -22,6 +22,7 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { bankById, type Bank } from '@/engine/content/banks';
 import { COUNTRIES } from '@/engine/content/geography';
 import { bankOf } from '@/engine/systems/banking';
+import { theCountry } from '@/engine/systems/documents';
 import { balanceText, heldOf } from '@/engine/systems/abroad';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
@@ -94,7 +95,7 @@ function nativeOn(txn: LedgerTransaction, account: Account): number | undefined 
 interface TheBank { bank: Bank; accounts: Account[]; home: boolean }
 
 defineLook<TheBank>('bank', {
-  gone: 'You don’t hold anything at that bank any more, so there’s nothing of yours to show.',
+  gone: 'You don’t have anything at that bank anymore, so there’s nothing to show.',
   resolve: (sim, id) => {
     const bank = bankById(id);
     if (!bank) return undefined;
@@ -150,9 +151,9 @@ defineLook<TheBank>('bank', {
       body: (
         <>
           <p className="small">
-            {bank.name} is a {country ? `${country.name} ` : ''}bank and keeps its accounts in {bank.currency}.
+            {bank.name} is a bank{country ? ` in ${theCountry(country.name)}` : ''}, and keeps its accounts in {bank.currency}.
             {named.length > 0 ? ` You have ${spokenList(named)} here.` : ''}
-            {home ? ' Your primary account is here, so your everyday spending and your pay go through it.' : ' Your primary account is at another bank. What’s here stays here until you move it.'}
+            {home ? ' Your primary account is here, so your debit card’s everyday purchases come from it.' : ' Your primary account is at another bank. What’s here stays here until you move it.'}
           </p>
           <div className="grid grid-3">
             <Stat label="Held Here" value={<span className="mono">{kept ? heldWords : formatMoney(held, cur)}</span>} note="In your accounts here" />
@@ -190,7 +191,7 @@ function movedWords(account: Account, delta: number, cur: string, native?: numbe
 }
 
 defineLook<TheLine>('transaction', {
-  gone: 'That entry isn’t on any of your statements any more. It has been removed from the records.',
+  gone: 'That entry is no longer on any of your statements.',
   resolve: (sim, id) => {
     const txn = transactionById(sim, id);
     if (!txn) return undefined;
@@ -244,7 +245,7 @@ defineLook<TheLine>('transaction', {
           <p className="small">
             The bank files it under {category.toLowerCase() || 'nothing in particular'}.{' '}
             {pending
-              ? `It’s pending. It already counts in your available balance, and it posts on ${formatDate(txn.postsAt!, zone)}.`
+              ? `It’s pending: it’s already taken off your available balance, and it posts on ${formatDate(txn.postsAt!, zone)}.`
               : txn.reversedBy ? 'It was reversed later, so it no longer counts against you.' : 'It has posted.'}
           </p>
           <div className="grid grid-3">

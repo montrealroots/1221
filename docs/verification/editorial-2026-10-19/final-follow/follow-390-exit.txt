@@ -1,0 +1,1 @@
+follow-390 exit=0 secs=285 cmd: (in the branch, at c92c6fed with follow.mjs's bank check moved) SLATE_BASE=<lane A's d6f6527a build> npx vite-node docs/verification/editorial-2026-10-19/tutorial/follow.mjs -- final-follow/follow-390 390

@@ -36,7 +36,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-martial_arts-2', title: 'Level Six, After Midnight', kinds: ['martial_arts'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'unpredictable',
     logline: 'On the empty top deck of a parking garage, a woman who took over her father’s school after his stroke fights the former student who has challenged it, and tries to end it without hurting him.',
-    circumstances: 'The open top level of a downtown parking garage, past midnight, under orange lights. Her father’s old student left the school on bad terms and now runs a gym across town; he called her out in front of both schools’ students and agreed to settle it here, alone. On the tape the deck is a bare floor, and he’s off camera calling every attack.',
+    circumstances: 'The open top level of a downtown parking garage, past midnight, under orange lights. Her father’s old student left the school on bad terms and now runs a gym across town; he called her out in front of both schools’ students and agreed to settle it here, alone. For the tape, the deck is a bare floor, and the reader is off camera calling every attack.',
     relationship: 'He trained beside her for ten years under her father, as close as a brother, and walked out the week her father named her his successor.',
     you: 'Mireille Tanaka-Osei, thirty-three, who has taught every class at the school since her father’s stroke in March.',
     reader: 'Callum Reyes, thirty-six, faster than she remembers, who talks between exchanges and never calls the same combination twice.',
@@ -55,7 +55,7 @@ export const SECOND_D: readonly Brief[] = [
       timing: 'Each exchange answers a call he varies from take to take, and the lines land in the breaths between them.',
       physical: 'The scene is a full fight: footwork, defense, a hit taken and a finishing strike, sustained through three of its five beats and marked solo on a bare floor.',
       partner: 'His taunts and his calls decide what she does next, and the turn comes when she stops waiting for them.',
-      techniques: 'The fight is staged for a solo tape: every exchange is marked at reduced speed to the reader’s called attacks from off camera, the hit she takes is reacted to with no contact, and her finishing strike stops open-handed, well short of his eyeline.',
+      techniques: 'The fight is staged for a solo tape. Mark every exchange at reduced speed to the reader’s called attacks from off camera, react to the hit she takes with no contact, and stop her finishing strike open-handed, well short of his eyeline.',
       beats: 'A formal bow with an insult in it, patient defense, a hit that costs her and a laugh at it, her attack, then the visiting hours.',
     },
     readings: [
@@ -67,7 +67,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-medical_drama-2', title: 'First Touch, Bay Four', kinds: ['medical_drama'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'pressing',
     logline: 'A neonatal nurse coaxes a frightened father into touching his premature daughter for the first time, through the ports of her incubator.',
-    circumstances: 'Bay four of a neonatal intensive care unit, a little after three in the morning, the monitors ticking over. The baby came eleven weeks early, two days ago; the mother is still recovering upstairs, and the father has stood by the incubator every night without putting his hands in. On the tape the incubator is below frame, and her hands work on her own side of it.',
+    circumstances: 'Bay four of a neonatal intensive care unit, a little after three in the morning, the monitors ticking over. The baby came eleven weeks early, two days ago; the mother is still recovering upstairs, and the father has stood by the incubator every night without putting his hands in. For the tape, the incubator is below the frame, and your hands work on your side of it.',
     relationship: 'Night nurse and a new father she has met twice; he trusts the machines more than himself, and she has seen a hundred parents stand exactly where he’s standing.',
     you: 'Nurse Bisi Adeyemi, forty, eighteen years on the unit, unhurried and impossible to rush.',
     reader: 'Gareth Pell, thirty, the father, who fires a question every time she gets close to the point.',
@@ -82,7 +82,7 @@ export const SECOND_D: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 1, partner: 3, vocal: 1, improvisation: 0,
     why: {
       partner: 'Every step depends on how close he’ll come, and his questions are what she has to get past without brushing them off.',
-      physical: 'The hand wash is mimed, with no water, and the cupped hands are shown on her own side of the frame. The incubator sits below the shot, and she never reaches toward him.',
+      physical: 'Mime the hand wash, with no water, and show the cupped hands on your side of the frame. The incubator sits below the shot, and she never reaches toward him.',
       beats: 'Gentle teasing at the sink, a fright handled plainly, the lesson in her hands, then the moment she’s been working toward, said quietly.',
     },
     readings: [
@@ -123,7 +123,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-military-2', title: 'Twelve Minutes Home', kinds: ['military'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'unpredictable',
     logline: 'On a forward base, a corporal gets twelve minutes on a satellite phone on her daughter’s birthday, the evening her unit lost a man, and can’t tell her wife why her voice sounds wrong.',
-    circumstances: 'A plywood phone booth at a forward operating base, evening, a line of soldiers waiting outside. A communications blackout lifted an hour ago; calls are capped at twelve minutes, the line lags a second and a half each way, and she can’t say where she is or what happened this morning. On the tape she holds a handset on her side of the frame, and the reader plays the delay.',
+    circumstances: 'A plywood phone booth at a forward operating base, evening, a line of soldiers waiting outside. A communications blackout lifted an hour ago; calls are capped at twelve minutes, the line lags a second and a half each way, and she can’t say where she is or what happened this morning. For the tape, hold a handset on your side of the frame; the reader plays the delay.',
     relationship: 'Married eight years; her wife runs the house alone through every deployment and can hear a lie down a bad line.',
     you: 'Corporal Dana Whitlock-Baez, thirty-one, a vehicle mechanic on her second tour.',
     reader: 'Priya, her wife, at the kitchen table at home with a birthday cake and a six-year-old who wants the phone; the reader also reads the girl’s few lines when she takes it.',
@@ -150,7 +150,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-mockumentary-2', title: 'Room Three Opens At Seven', kinds: ['mockumentary'], medium: 'camera', size: 'medium', stakes: 3, readerPlays: 'pressing',
     logline: 'The owner of a small-town escape room gives a documentary crew the first walkthrough of her new room, two hours before the opening party, and the final lock won’t open.',
-    circumstances: 'A converted shoe store on a quiet main street, late afternoon. Room Three is a haunted lighthouse built from thrift-store furniture over six months; the crew have filmed every step, and the opening party, with the mayor, starts at seven. Her tour and her answers are improvised around fixed points: the tour, the stuck lock, and the question about who built it. On the tape the props sit on her side of the frame, light or mimed.',
+    circumstances: 'A converted shoe store on a quiet main street, late afternoon. Room Three is a haunted lighthouse built from thrift-store furniture over six months; the crew have filmed every step, and the opening party, with the mayor, starts at seven. You improvise her answers around three fixed points: the written tour, the stuck lock, and the question about who built it. For the tape, keep the props on your side of the frame, light or mimed.',
     relationship: 'She treats the crew as the team who’ll make her famous; the producer, off camera, is kind, curious and very interested in her brother-in-law.',
     you: 'Rhonda Feeney, fifty-two, a former bank teller and the escape room’s owner and only full-time employee.',
     reader: 'The producer, off camera, who presses with short follow-up questions and keeps coming back to the man who built the last puzzle.',
@@ -169,7 +169,7 @@ export const SECOND_D: readonly Brief[] = [
       timing: 'The comedy is in how long she keeps trying the lock before she explains it away, and in the silences the producer leaves.',
       partner: 'The producer’s questions steer her toward the subject she’s avoiding, and every answer swerves around it.',
       physical: 'The bookshelf, the door and the padlock are props on her own side of the frame, light or mimed.',
-      techniques: 'Her answers are improvised in character between written stretches, so the scene needs the improviser’s habit of saying yes to a question she’d sooner refuse.',
+      techniques: 'You improvise her answers in character between written stretches, so the scene needs the improviser’s habit of saying yes to a question she’d sooner refuse.',
       beats: 'A proud tour, a lock that won’t open, a story that gets away from her, then a confession to the lens.',
     },
     readings: [
@@ -181,7 +181,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-monster_movie-2', title: 'Aisle Eleven', kinds: ['monster_movie'], medium: 'camera', size: 'medium', stakes: 3, readerPlays: 'unpredictable',
     logline: 'Hiding behind the paint counter of a hardware store after closing, a stock clerk has to get her injured manager across the open floor to the stockroom while the thing that came through the garden center is busy at the far end.',
-    circumstances: 'A big-box hardware store at eleven at night, the lights on their dimmest setting. Something came through the glass of the garden center an hour ago; the doors are on lockdown, and the only room with a steel door is the stockroom, forty yards across the open floor. On the tape she crouches alone at the edge of the frame, with her manager off camera beside her and the store only in her eyes.',
+    circumstances: 'A big-box hardware store at eleven at night, the lights on their dimmest setting. Something came through the glass of the garden center an hour ago; the doors are on lockdown, and the only room with a steel door is the stockroom, forty yards across the open floor. For the tape, crouch alone at the edge of the frame, with the reader off camera beside you as her manager and the store only in your eyes.',
     relationship: 'Coworkers of two years who can’t stand each other: he writes her up for lateness, and she does impressions of him in the break room.',
     you: 'Kenna Bright, twenty-two, a stock clerk who knows every aisle by its smell.',
     reader: 'Doug Ferreira, forty-five, the night manager, with a twisted ankle and a rising panic, who changes his mind every few seconds.',
@@ -195,7 +195,7 @@ export const SECOND_D: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     why: {
       timing: 'The crossing stops and starts with what she hears from the far end, and her last instructions are timed to its silences.',
-      physical: 'A few crouched steps within the frame stand for the crossing, and she freezes mid-stride at the end of the aisle, all on her own side of the frame. She reaches back toward his eyeline and never touches him.',
+      physical: 'Play the crossing as a few crouched steps within the frame, freezing mid-stride at the end of the aisle, all on your side of the frame. Reach back toward his eyeline, and never touch the reader.',
       partner: 'He changes his mind from one moment to the next, and she has to read whether he’s about to bolt or freeze.',
       beats: 'A whispered plan, a joke at his expense that gets him moving, then a crossing she leads without looking back.',
     },
@@ -207,7 +207,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-mumblecore-2', title: 'Allen Key', kinds: ['mumblecore'], medium: 'camera', size: 'short', stakes: 0, readerPlays: 'withholding',
     logline: 'Helping the man she’s been seeing for three months put together a bookcase, a woman tries to find out whether she’s invited to his sister’s wedding.',
-    circumstances: 'His new studio apartment on a Sunday afternoon, everything still in boxes, an instruction sheet with no words on it. His sister’s wedding is in three weeks; she saw the invitation on his fridge with “and guest” written on it. The talk is improvised around fixed points: the missing screw, the question, and his answer.',
+    circumstances: 'His new studio apartment on a Sunday afternoon, everything still in boxes, an instruction sheet with no words on it. His sister’s wedding is in three weeks; she saw the invitation on his fridge with “and guest” written on it. You and the reader improvise the talk around three fixed points: the missing screw, the question, and his answer.',
     relationship: 'Three months of casual dates neither has named; they’re easy together and have never once talked about what this is.',
     you: 'Maren Oduya, twenty-seven, a dental hygienist, who rehearsed the question on the bus.',
     reader: 'Sam, twenty-nine, reading the wordless instructions and answering everything with a shrug or a joke.',
@@ -221,8 +221,8 @@ export const SECOND_D: readonly Brief[] = [
     techniques: { improv: 1 },
     why: {
       partner: 'He gives her almost nothing, and the scene is in what she makes of a shrug, a joke and a pause.',
-      improvisation: 'The talk between the fixed points is invented live with the reader, so no two takes circle the subject the same way.',
-      physical: 'The bookcase is built on the floor on her side of the frame, with light real parts or mimed ones.',
+      improvisation: 'You invent the talk between the fixed points live with the reader, so no two takes circle the subject the same way.',
+      physical: 'Build the bookcase on the floor on your side of the frame, with light real parts or mimed ones.',
       techniques: 'The dialogue is improvised to fixed points, so she builds each take from the reader’s offers and still lands the question and the laugh.',
       beats: 'A long sideways approach under cover of the furniture, then the question, a non-answer and a laugh that covers it.',
     },
@@ -298,15 +298,15 @@ export const SECOND_D: readonly Brief[] = [
     circumstances: 'A recording booth, a weekday morning. The sequence is cut and locked: a boulder field high on a mountain in late summer, one pika dashing back and forth with mouthfuls of flowers, a neighbor raiding its pile, a hawk’s shadow, and snow by the final shot. The script is written for children on a Saturday morning, with each line fitted to a shot.',
     relationship: 'The narration is for young viewers on a weekend morning: a grown-up voice, fond of this small animal, hoping they’ll root for it.',
     you: 'The narrator, telling the pika’s summer over the pictures at a child’s pace.',
-    reader: 'Children at home, watching the program; the voice speaks to them alone, at the microphone.',
+    reader: 'Children at home, watching the program.',
     objective: 'Make the children cheer for the pika by the time the snow falls.',
     obstacle: 'The shots are fast and short, the lines must fit them exactly, and the hawk has to frighten without upsetting a six-year-old.',
     beats: [
-      { what: 'The boulder field at dawn, and the tiny animal no one notices.', tones: ['lyric'] },
-      { what: 'The pika’s dashes, cut quick, each line racing to keep up.', tones: ['comic'] },
+      { what: 'The narration opens on the boulder field at dawn and the tiny animal no one notices.', tones: ['lyric'] },
+      { what: 'The pika dashes back and forth, cut quick, and each line races to keep up.', tones: ['comic'] },
       { what: 'A neighbor steals from the pile while the owner is away, and the narration is outraged on its behalf.', tones: ['comic'] },
       { what: 'A hawk’s shadow crosses the rocks; every pika freezes, and the narration drops to a whisper.', tones: ['grave'] },
-      { what: 'Snow on the last shot, and the pile is finished.', tones: ['lyric', 'comic'] },
+      { what: 'Snow falls on the last shot, and the pile is finished.', tones: ['lyric', 'comic'] },
     ],
     language: 'everyday', timing: 3, physical: 0, partner: 0, vocal: 2, improvisation: 0,
     techniques: { voiceover: 3 },
@@ -327,12 +327,12 @@ export const SECOND_D: readonly Brief[] = [
     circumstances: 'A recording booth; the reel plays on a monitor in front of the microphone. On screen: a hotel lobby at four in the morning, wet streets, a bridge, and the concierge’s own face in a taxi window at dawn. The narration is written to the cut, in her voice, from some time after the night it tells.',
     relationship: 'The narrator speaks to no one in particular, the way a person talks to herself on a long ride home, and lets the audience overhear.',
     you: 'Odile Varga, forty-four, night concierge at a hotel that has seen better decades, telling it after the fact.',
-    reader: 'The audience in the dark; the narration is recorded alone at the microphone, to picture.',
+    reader: 'The audience in the dark. You record the narration alone at the microphone, to picture.',
     objective: 'Tell the story straight to the end without admitting what she knew when she handed him the key.',
     obstacle: 'The pictures keep showing the part she leaves out, and the narration has to sound like it believes itself.',
     beats: [
-      { what: 'The lobby at four in the morning, the city flat and wet, told dry and unhurried.', tones: ['grave'] },
-      { what: 'The guest’s offer, a folded bill for the passkey, described with a joke at her own expense.', tones: ['grave', 'comic'] },
+      { what: 'She sets the scene, the lobby at four in the morning and the city flat and wet, dry and unhurried.', tones: ['grave'] },
+      { what: 'She describes the guest’s offer, a folded bill for the passkey, with a joke at her own expense.', tones: ['grave', 'comic'] },
       { what: 'The bridge at dawn; the narration falls silent across the shot, then says one plain sentence.', tones: ['grave'] },
       { what: 'Her face in the taxi window: she admits, almost tenderly, that she’d hand him the key again.', tones: ['lyric', 'grave'] },
     ],
@@ -353,7 +353,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-neorealism-2', title: 'The Bricks Of Number Nine', kinds: ['neorealism'], medium: 'camera', size: 'medium', stakes: 3, readerPlays: 'withholding',
     logline: 'In a city still clearing its rubble, a man cleaning bricks to sell from the ruin of his family’s house is stopped by a new municipal guard who says the rubble belongs to the city now.',
-    circumstances: 'A bomb site on a narrow street, 1947, at first light, before the clearance crews arrive. The house he grew up in, number nine, fell in the last winter of the war; the city has since claimed every ruin for its rebuilding scheme, and a builder across the river pays cash for clean bricks. He has come at dawn all week to knock the old mortar off them. On the tape he works alone on his own side of the frame with light prop bricks and a prop hammer, or mimes them, and the guard is off camera.',
+    circumstances: 'A bomb site on a narrow street, 1947, at first light, before the clearance crews arrive. The house he grew up in, number nine, fell in the last winter of the war; the city has since claimed every ruin for its rebuilding scheme, and a builder across the river pays cash for clean bricks. He has come at dawn all week to knock the old mortar off them. For the tape, work alone on your side of the frame with light prop bricks and a prop hammer, or mime them; the guard is off camera.',
     relationship: 'Strangers on opposite sides of an order: the guard is about his age, new to the post, and was told yesterday that his own job depends on stopping the thefts.',
     you: 'Bruno Castagna, thirty, a tram mechanic out of work since the depot was bombed, with a wife and a baby in one rented room.',
     reader: 'Corrado, the guard, in a uniform that doesn’t fit him, who says as little as he can and won’t meet his eye.',
@@ -367,7 +367,7 @@ export const SECOND_D: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 2, partner: 2, vocal: 1, improvisation: 1,
     why: {
-      physical: 'The work is the scene’s argument: he knocks off mortar and stacks bricks the whole time he talks, with light props or mimed on his own side of the frame, and the labor has to read as real.',
+      physical: 'The work is the scene’s argument: he knocks off mortar and stacks bricks the whole time he talks, with light props or mimed ones on your side of the frame, and the labor has to look real.',
       partner: 'He gets almost nothing from the guard, a notebook and a silence, and has to read his chances from that.',
       beats: 'Work as an alibi, the house rebuilt in words, a bribe offered and taken back in shame, then the stack left behind with its history.',
     },
@@ -384,7 +384,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-new_wave-3', title: 'The Long Take On The Quay', kinds: ['new_wave'], medium: 'camera', size: 'long', stakes: 2, readerPlays: 'withholding',
     logline: 'In one unbroken take along a river, a young woman tells the man she lives with that she’s leaving, making up the talk as they walk, while her own written narration, laid over the picture, says what she won’t.',
-    circumstances: 'A stone quay along a river in a city, an overcast morning, shot in a single take with the camera walking backward ahead of them. They have lived together a year in two rooms over a bakery. She has a train at noon and hasn’t told him. The talk is improvised around fixed points, and over the take she will lay a narration she has written, literary and exact, recorded in the same session at a microphone. For the tape she walks in place before the lens, the reader keeping pace off camera.',
+    circumstances: 'A stone quay along a river in a city, an overcast morning, shot in a single take with the camera walking backward ahead of them. They have lived together a year in two rooms over a bakery. She has a train at noon and hasn’t told him. You improvise the talk around fixed points, and over the take goes a narration she has written, literary and exact, which you record in the same session at a microphone. For the tape, walk in place before the lens, with the reader keeping pace off camera.',
     relationship: 'Lovers for a year, who have stopped saying most things to each other and both know it.',
     you: 'Anouk Delmas, twenty-four, a translator, who writes everything down and says almost nothing.',
     reader: 'Raoul, a painter, who answers in single words and won’t ask her the question she’s waiting for.',
@@ -392,19 +392,19 @@ export const SECOND_D: readonly Brief[] = [
     obstacle: 'He gives her nothing to push against, the take can’t be cut, and the narration already knows how it ends.',
     beats: [
       { what: 'Narration over the walk: she describes the morning as if it were already a memory.', tones: ['lyric'] },
-      { what: 'Talk made up as they walk, about the bakery, the rent and a dog on the quay; he answers in single words.', tones: ['comic'] },
+      { what: 'They make up talk as they walk, about the bakery, the rent and a dog on the quay; he answers in single words.', tones: ['comic'] },
       { what: 'She tells him about a translation she can’t finish, a story about a woman who leaves, and waits for him to hear it.', tones: ['grave', 'comic'] },
       { what: 'He says nothing; she stops walking, then starts again.', tones: ['grave'] },
-      { what: 'Narration again, over her face, cool and exact: what she did at noon.', tones: ['lyric', 'grave'] },
+      { what: 'In narration again, over her face, cool and exact, she tells what she did at noon.', tones: ['lyric', 'grave'] },
     ],
     language: 'everyday', timing: 2, physical: 1, partner: 2, vocal: 2, improvisation: 2,
     techniques: { improv: 1, voiceover: 2 },
     why: {
       timing: 'The take is unbroken from the first step to the bridge: every fixed point comes at its place on the walk, and the narration is timed to the picture under it.',
       partner: 'He answers in single words and won’t ask, so everything she tries is built on how little he gives.',
-      vocal: 'Two voices: the improvised one on the quay, and the narration at a microphone, close and cool and knowing how it ends.',
-      improvisation: 'The talk between the fixed points is invented live, and she has to steer it toward the translation without a script.',
-      techniques: 'The walking talk is improvised to fixed points. The narration is voice-over, her own written prose, literary and exact, recorded in the same session and laid over the opening and the close of the take, so it’s played to a microphone with no face to show it.',
+      vocal: 'She has two voices: the improvised one on the quay, and the narration at a microphone, close and cool and knowing how it ends.',
+      improvisation: 'You invent the talk between the fixed points live, and she has to steer it toward the translation without a script.',
+      techniques: 'The walking talk is improvised to fixed points. The narration is voice-over, her own written prose, literary and exact, laid over the opening and the close of the take: record it in the same session, and play it to a microphone with no face to show it.',
       beats: 'A remembered morning, idle talk, a story of her own, a silence, then the narration that says what she did.',
     },
     readings: [
@@ -473,7 +473,7 @@ export const SECOND_D: readonly Brief[] = [
     circumstances: 'A recording booth, late in a long day of sessions. The trailer is cut: slow-motion recycling bins, a tenants’ meeting lit like a war council, a sticky note on a fridge, a single crushed can. The script is written in the swollen, booming style of the epic film trailer, and the director wants it played absolutely straight.',
     relationship: 'The voice speaks to a cinema audience the way a trailer always does, as if they’re about to witness history.',
     you: 'The trailer voice, a seasoned voice actor who gives every line the weight of an empire falling.',
-    reader: 'A cinema audience waiting for the feature; the voice speaks to them alone, at the microphone.',
+    reader: 'A cinema audience waiting for the feature.',
     objective: 'Make a fight about recycling sound like the most important story ever told.',
     obstacle: 'The pictures are a bin, a sticky note and a tenants’ meeting, and the joke dies the moment the voice admits it.',
     beats: [
@@ -530,10 +530,10 @@ export const SECOND_D: readonly Brief[] = [
     objective: 'Get her to offer him the spare room for a week, without his ever having to ask.',
     obstacle: 'She has heard versions of these stories all her life, the battery is dying, and asking outright would mean admitting the year has beaten him.',
     beats: [
-      { what: 'A breezy hello from the back of the bus, and how he left the cruise ship at its first port, in a hurry.', tones: ['comic'] },
-      { what: 'Next, the mattress store, where he outsold everyone for a week by napping in the window display, until the owner found him.', tones: ['comic'] },
-      { what: 'Then a summer as a ghost-tour guide in a town he’d arrived in that afternoon, inventing every ghost on the walk.', tones: ['comic'] },
-      { what: 'Told more quietly, a fourth note: the town where he had a room of his own for a month, and why he left it.', tones: ['lyric', 'grave'] },
+      { what: 'He says a breezy hello from the back of the bus and tells how he left the cruise ship at its first port, in a hurry.', tones: ['comic'] },
+      { what: 'Next comes the mattress store, where he outsold everyone for a week by napping in the window display, until the owner found him.', tones: ['comic'] },
+      { what: 'Then he tells of a summer as a ghost-tour guide in a town he’d arrived in that afternoon, inventing every ghost on the walk.', tones: ['comic'] },
+      { what: 'More quietly, in a fourth note, he tells of the town where he had a room of his own for a month, and why he left it.', tones: ['lyric', 'grave'] },
       { what: 'He catches himself making the fourth sound better than it was, laughs, and tells it again plainly.', tones: ['comic', 'grave'] },
       { what: 'With the battery nearly gone, he mentions the spare room as a joke, and the phone dies before he can take it back.', tones: ['grave', 'lyric'] },
     ],
@@ -568,7 +568,7 @@ export const SECOND_D: readonly Brief[] = [
     why: {
       timing: 'The procedure fixes the pace: the same script, the same pause before each folder, and her stillness held through every question.',
       partner: 'Everything he does is pressure on her to give a sign, and she answers every push the same way without going cold on him.',
-      physical: 'The folders are turned one at a time on her own side of the table, angled toward his eyeline, never handed across.',
+      physical: 'Turn the folders one at a time on your side of the table, angled toward his eyeline, and never hand them across.',
       beats: 'The rules read aloud, the folders turned, an outburst met with the script, then his words written down exactly.',
     },
     readings: [
@@ -609,10 +609,10 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-political_thriller-2', title: 'Booth C', kinds: ['political_thriller'], medium: 'voice', size: 'medium', stakes: 3,
     logline: 'In the booth at a border summit, a simultaneous interpreter is told to soften one sentence of the other side’s statement, and has seconds to decide whether to do it.',
-    circumstances: 'An interpreting booth above the floor of a summit on a disputed border, the second afternoon. She interprets the other delegation’s statement into English for every headset in the hall; a note from her own delegation’s head, pushed under the booth door a minute ago, asks her to render one threat in it as a mere concern, so her side won’t have to answer it in public. On the recording she hears the statement in her headphones and speaks the interpretation a beat behind it.',
-    relationship: 'The voice speaks to a hall of delegates through their headsets, and above all to the head of her own delegation, who is listening for whether she obeys.',
+    circumstances: 'An interpreting booth above the floor of a summit on a disputed border, the second afternoon. She interprets the other delegation’s statement into English for every headset in the hall; a note from her own delegation’s head, pushed under the booth door a minute ago, asks her to render one threat in it as a mere concern, so her side won’t have to answer it in public. For the recording, you hear the statement in your headphones and speak the interpretation a beat behind it.',
+    relationship: 'Her voice reaches a hall of delegates through their headsets, and above all the head of her own delegation, who is listening for whether she obeys.',
     you: 'Danica Horvat, thirty-five, a staff interpreter for her country’s foreign ministry, eleven years in the booth.',
-    reader: 'The delegates on the floor, hearing her through their headsets; she speaks to them alone, at the microphone.',
+    reader: 'The delegates on the floor, hearing her through their headsets.',
     objective: 'Get through the statement without betraying either the speaker or her own side.',
     obstacle: 'The interpretation can’t stop, there’s no time to think, and whatever she says in the third paragraph, everyone in the hall will hear it.',
     beats: [
@@ -662,7 +662,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-prison_film-2', title: 'First Night On The Tier', kinds: ['prison_film'], medium: 'camera', size: 'medium', stakes: 2,
     logline: 'On a new arrival’s first night, an older prisoner in the bottom bunk has until lights out to talk his cellmate out of a favor a man on the tier offered him in the yard.',
-    circumstances: 'A two-man cell on the intake unit of a state prison, nine at night, twenty minutes before lights out. The young man arrived this afternoon; in the yard a man everyone steers clear of offered him phone credit and tobacco, no strings, and he took the first packet. On the tape the older man sits alone on the lower bunk, with his cellmate off camera above him and the upper bunk only in his eyeline; the lights-out is played, not made, and the frame stays lit.',
+    circumstances: 'A two-man cell on the intake unit of a state prison, nine at night, twenty minutes before lights out. The young man arrived this afternoon; in the yard a man everyone steers clear of offered him phone credit and tobacco, no strings, and he took the first packet. For the tape, sit alone on the lower bunk, with the reader off camera above you as his cellmate and the upper bunk only in your eyeline. Act the lights going out without dimming them: the frame stays lit.',
     relationship: 'Cellmates of six hours; the older man has done eleven years of a fifteen and asked for a quiet cellmate.',
     you: 'Lionel Baptiste, fifty-three, eleven years in, who teaches the wing’s literacy class and keeps his own counsel.',
     reader: 'Kyle Danner, nineteen, first time inside, scared and pretending otherwise, on the top bunk where he can’t be seen.',
@@ -678,7 +678,7 @@ export const SECOND_D: readonly Brief[] = [
     why: {
       timing: 'The deadline is lights out, and it falls in the middle of his last sentence, which he finishes in the dark.',
       partner: 'The kid’s pride and fear come down from the bunk above, and he has to work on a voice he can’t see.',
-      physical: 'He makes the bed on his own bunk on his side of the frame, and plays every line up to an eyeline above the lens.',
+      physical: 'Make the bed on his bunk on your side of the frame, and play every line up to an eyeline above the lens.',
       beats: 'Dry house rules, a proud confession, a warning kept quiet, then darkness and a wait.',
     },
     readings: [
@@ -690,7 +690,7 @@ export const SECOND_D: readonly Brief[] = [
     id: 'brief-psychological_horror-2', title: 'Night Log, Day Nine', kinds: ['psychological_horror'], medium: 'voice', size: 'short', stakes: 2,
     logline: 'A participant in a sleep study records her nightly log for the clinic, after playing back last night’s and hearing a voice like her own describe her room.',
     circumstances: 'Her bedroom at midnight, the ninth night of a two-week home sleep study. The clinic gave her a recorder and asked for a two-minute log before bed and after any waking. Tonight she played back last night’s file and heard herself, at three in the morning, describing this room from the corner of the ceiling.',
-    relationship: 'The voice speaks to the researcher who will hear the file in the morning, a young man she has met once and has been trying to sound sensible for.',
+    relationship: 'She’s speaking to the researcher who will hear the file in the morning, a young man she has met once and has been trying to sound sensible for.',
     you: 'Ruth Adebayo-Kerr, thirty-four, an air-traffic controller on extended leave, who needs the study to clear her to go back.',
     reader: 'The researcher who’ll hear the file in the morning, and the recorder in her hand; she speaks to it alone.',
     objective: 'Record a calm, sensible log, so the clinic clears her to go back to work.',

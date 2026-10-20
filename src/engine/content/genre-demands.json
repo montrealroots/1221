@@ -88,7 +88,7 @@
   "uncertainty": "This is one film. Physical transformation is shown there but not established as a convention of the genre, so the research doesn’t name Physical Transformation. 'Sustained fear, grief and desperation played truthfully' isn’t supported by any source found."
  },
  "art_house": {
-  "claim": "In the modernist strand of art cinema (Bresson, Antonioni), directors hold actors' physical and vocal expressivity so far down that framing, editing and sound carry the characters' inner life. Bresson called his performers 'models', not actors, and repeated lines until the 'acting' was gone.",
+  "claim": "In the modernist strand of art cinema (Bresson, Antonioni), directors hold actors’ physical and vocal expressivity so far down that framing, editing and sound carry the characters’ inner life. Bresson called his performers 'models', not actors, and repeated lines until the 'acting' was gone.",
   "source": "Cynthia Baron, Acting (Schirmer Encyclopedia of Film, ed. Barry Keith Grant (Schirmer Reference/Thomson Gale), via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/acting [read directly]; Tom Ryall, Art Cinema (Schirmer Encyclopedia of Film, via Encyclopedia.com, 2007), https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/art-cinema [read directly]; Donato Totaro, \"Notes\" on Notes on the Cinematographer (Offscreen, 2004), https://offscreen.com/view/bresson_notes [read directly]; David Bordwell, The Art Cinema as a Mode of Film Practice (Film Criticism 4:1, 1979), http://hybridstyle.com/wp-content/uploads/2015/04/Bordwell-The-Art-Cinema-as-a-Mode-of-Film-Practice.pdf [from a search summary]",
   "sourceSupports": "Acting: In modernist films by Bresson and Antonioni, 'actors' use of their physical and vocal expressivity is so delimited by the directors that glimpses of their characters' inner experiences often are more clearly conveyed by the directors' framing, editing, sound, and production design choices.' Also: 'The scale and quality of actors' physical and vocal expressions are also keyed to the film’s style or genre.' Art Cinema: It says nothing about an acting method for art cinema as a whole; only that 'art films tended to delve into character psychology and sensibility, to investigate the drama of the interior'. This is evidence against an acting convention for the whole genre. \"Notes\" on Notes on the Cinematographer: The Bressonian 'model' differs from an actor and 'encompasses an attitude ... which goes beyond performance'; repetition of lines is Bresson’s way of 'recovering the automatism of real life' (quoting Bresson, Notes on the Cinematographer, p. 59). The Art Cinema as a Mode of Film Practice: Art cinema motivates its narratives by realism and authorial expressivity and uses 'realistic', psychologically complex characters. It describes characters and narration, not an acting technique.",
   "how": "three of its four sources read directly and the remaining one from a search summary, reviewed October 10, 2026",
@@ -296,7 +296,7 @@
   "belongsTo": "concert films of singers and vocal acts, where the performers sing as themselves"
  },
  "conspiracy_thriller": {
-  "claim": "Only critics' writing on one film was found: The Conversation, the high point of the 1970s paranoia thriller, is praised for Hackman’s subdued, interior performance of rising paranoia.",
+  "claim": "Only critics’ writing on one film was found: The Conversation, the high point of the 1970s paranoia thriller, is praised for Hackman’s subdued, interior performance of rising paranoia.",
   "source": "Emanuel Levy, 'Conversation, The (1974)', https://emanuellevy.com/review/conversation-the-7/; The Film Experience, 'Almost There: Gene Hackman in The Conversation', http://thefilmexperience.net/blog/2024/4/8/almost-there-gene-hackman-in-the-conversation.html",
   "sourceSupports": "From a search summary: the film is 'a subdued, existential exploration' and 'the peak of the paranoia thriller craze'; Hackman plays 'someone who’s turned himself into a non-person' and conveys panic when he learns he is being tapped.",
   "how": "from a search summary",
@@ -334,7 +334,7 @@
  "creature_feature": {
   "claim": "Creature films with practical creatures have used a recognized specialty, the creature or prosthetic performer, who acts head to toe in suits and prosthetics with restricted sight and hearing. That demand belongs to the creature role, not to the human cast.",
   "source": "James Ostime, Doug Jones, Unmasked (Interview Magazine, 2013), https://www.interviewmagazine.com/culture/doug-jones-falling-skies [read directly]; Witney Seibold, The Shape Of Water And Pan's Labyrinth Were Very Different Prosthetics Experiences For Doug Jones (SlashFilm, 2022), https://www.slashfilm.com/1021091/the-shape-of-water-and-pans-labyrinth-were-very-different-prosthetics-experiences-for-doug-jones/ [read directly]; NPR, Creature Actor Doug Jones Shares How He Transforms Into Movie Monsters (NPR, 2018), https://www.npr.org/2018/02/22/588069904/creature-actor-doug-jones-shares-how-he-transforms-into-movie-monsters [from a search summary]",
-  "sourceSupports": "Doug Jones, Unmasked: Jones: 'I’m one of the top \"makeup actors\" in the movie business, appearing head to toe in prosthetic pieces and elaborate costumes.' The Shape Of Water And Pan’s Labyrinth Were Very Different Prosthetics Experiences For Doug Jones: Jones: 'Any creature suit that I’ve worn over the last 31 years hampers your eyesight, your hearing'; Pan’s Labyrinth makeup took five to six hours, The Shape of Water three. Creature Actor Doug Jones Shares How He Transforms Into Movie Monsters: Only its title was read, as the page timed out. It names 'creature actor' as a role, and transformation into monsters.",
+  "sourceSupports": "Doug Jones, Unmasked: Jones: 'I’m one of the top \"makeup actors\" in the movie business, appearing head to toe in prosthetic pieces and elaborate costumes.' The Shape Of Water And Pan’s Labyrinth Were Very Different Prosthetics Experiences For Doug Jones: Jones: 'Any creature suit that I’ve worn over the last 31 years hampers your eyesight, your hearing'; Pan’s Labyrinth makeup took five to six hours, The Shape of Water three. Creature Actor Doug Jones Shares How He Transforms Into Movie Monsters: Only its title was read, as the page didn’t load. It names 'creature actor' as a role, and transformation into monsters.",
   "how": "two of its three sources read directly and the remaining one from a search summary, reviewed October 10, 2026",
   "confidence": "low",
   "tags": [
@@ -373,13 +373,13 @@
  "dance": {
   "claim": "Screendance asks its performers for trained dance: choreographed movement made specifically to be filmed, shaped with the camera and the edit.",
   "source": "San Francisco Conservatory of Dance, Dance Theory Glossary: 'Screendance' — https://sfconservatoryofdance.org/dance-theory-glossary/screendance/; corroborated by BFI, 'Maya Deren: 7 films that guarantee her legend' — https://www.bfi.org.uk/features/maya-deren-meshes-of-the-afternoon",
-  "sourceSupports": "SFCD: 'Screendance, also known as dance film or dance on screen, is a genre of filmmaking that combines dance and cinematography'; the dancers' movement is 'captured and presented on screen' with multiple angles, close-ups and editing that 'highlight the nuances of the choreography and the dancers' performances.' BFI: in A Study in Choreography for Camera, 'Dancer Talley Beatty moves freely ... with careful choreographed movements'; Deren 'collaborated with ... Antony Tudor, who brought a young crew of ballet dancers.'",
+  "sourceSupports": "SFCD: 'Screendance, also known as dance film or dance on screen, is a genre of filmmaking that combines dance and cinematography'; the dancers’ movement is 'captured and presented on screen' with multiple angles, close-ups and editing that 'highlight the nuances of the choreography and the dancers' performances.' BFI: in A Study in Choreography for Camera, 'Dancer Talley Beatty moves freely ... with careful choreographed movements'; Deren 'collaborated with ... Antony Tudor, who brought a young crew of ballet dancers.'",
   "how": "read directly",
   "confidence": "high",
   "tags": [
    {
     "tag": "dance",
-    "why": "The conservatory glossary defines the genre as combining dance and cinematography, with the dancers' performances as its subject; BFI names trained dancers (Talley Beatty, Tudor’s ballet dancers) as its performers."
+    "why": "The conservatory glossary defines the genre as combining dance and cinematography, with the dancers’ performances as its subject; BFI names trained dancers (Talley Beatty, Tudor’s ballet dancers) as its performers."
    }
   ],
   "uncertainty": "Neither source speaks to stamina or to repeating choreography across takes; that part of the earlier reading is unsourced. A search summary (edukatesg.com, not used) says dancers need screen-specific timing before the shoot day."
@@ -440,7 +440,7 @@
  "documentary": {
   "claim": "Actors in documentaries mostly appear as voices reading letters or narration, or as performers in reenactments, sometimes lip-syncing to real interview audio.",
   "source": "Bonnie Yates, 'On the Use of Actors and Re-enactments in Documentaries', Alternative Considerations of Jonestown and Peoples Temple (San Diego State University) — https://jonestown.sdsu.edu/?page_id=81711; Girish Shambu, 'Past Performance: Reviving Reenactment', Film Comment — https://www.filmcomment.com/blog/past-performance-reviving-reenactment-girish-shambu-documentary/",
-  "sourceSupports": "Yates: reenactments 'provide a context, to show what things looked or sounded like'; on voice-overs, 'the tone of voice used by the actor is likely to give the audience the impression that the individual quoted was, indeed, given to the emotion associated with that tone.' Shambu: in The Arbor 'actors lip-sync to audio recordings of Dunbar’s family members, following the practices of \"verbatim theater\"'; in Framing Agnes the performers' lines 'are drawn from the original interview transcripts.'",
+  "sourceSupports": "Yates: reenactments 'provide a context, to show what things looked or sounded like'; on voice-overs, 'the tone of voice used by the actor is likely to give the audience the impression that the individual quoted was, indeed, given to the emotion associated with that tone.' Shambu: in The Arbor 'actors lip-sync to audio recordings of Dunbar’s family members, following the practices of \"verbatim theater\"'; in Framing Agnes the performers’ lines 'are drawn from the original interview transcripts.'",
   "how": "read directly",
   "confidence": "medium",
   "tags": [
@@ -627,12 +627,12 @@
   "how": "read directly",
   "confidence": "medium",
   "tags": [],
-  "uncertainty": "None of the requirements the game can ask for fits a 'tough physical demeanour'. The regional and ethnic speech in the earlier reading is supported only by Wikipedia on The Godfather’s dialogue coach Al Lettieri, so the research didn’t name Accents. The violence is the characters', and no source says actors do stunt work."
+  "uncertainty": "None of the requirements the game can ask for fits a 'tough physical demeanour'. The regional and ethnic speech in the earlier reading is supported only by Wikipedia on The Godfather’s dialogue coach Al Lettieri, so the research didn’t name Accents. The violence is the characters’, and no source says actors do stunt work."
  },
  "giallo": {
   "claim": "Gialli were shot without sync sound, often with an international cast each speaking their own language in the same take, and the whole soundtrack, dialogue included, was dubbed afterwards.",
   "source": "CineMedia, 'In What Tongue Do Gialli Speak? Dubbing, Language, and the Affective Experience in Giallo Cinema' (no author shown) — https://cinemedia.media/in-what-tongue-do-gialli-speak/",
-  "sourceSupports": "'Italian films were almost exclusively shot without sync sound. Boom microphones were rarely used on set'; 'a British actor speaking English, an Italian actress speaking Italian, and a Spanish actor speaking Spanish—all in the very same take'; 'Voice actors were brought into recording booths to dub the dialogue into various languages.' A search summary of Backstage (not read directly) adds that English dubs often used the lead English-speaking actors' own voices.",
+  "sourceSupports": "'Italian films were almost exclusively shot without sync sound. Boom microphones were rarely used on set'; 'a British actor speaking English, an Italian actress speaking Italian, and a Spanish actor speaking Spanish—all in the very same take'; 'Voice actors were brought into recording booths to dub the dialogue into various languages.' A search summary of Backstage (not read directly) adds that English dubs often used the lead English-speaking actors’ own voices.",
   "how": "read directly",
   "confidence": "low",
   "tags": [
@@ -761,7 +761,7 @@
     "why": "StageMilk says the running, crawling and struggling in horror is 'unparalleled' and recommends stage combat grounding because fight instruction on set is limited."
    }
   ],
-  "uncertainty": "StageMilk is an acting-advice site written by practitioners, not a textbook or a union source. Screaming is vocal stamina, which isn’t one of the requirements the game can ask for; Voice-Led Performance wasn’t applied, because the source is about screaming on camera, not performing with the voice alone. The Mandy, StarNow and Backstage articles on horror acting couldn’t be opened, and weren’t read. On review (October 10, 2026), one advice site generalizing exertion and some fight work to all horror wasn’t enough to make it a requirement of the whole genre.",
+  "uncertainty": "StageMilk is an acting-advice site written by practitioners, not a textbook or a union source. Screaming is vocal stamina, which isn’t one of the requirements the game can ask for. The research didn’t name Voice-Led Performance, because the source is about screaming on camera, not performing with the voice alone. The Mandy, StarNow and Backstage articles on horror acting couldn’t be opened, and weren’t read. On review (October 10, 2026), one advice site generalizing exertion and some fight work to all horror wasn’t enough to make it a requirement of the whole genre.",
   "belongsTo": "chase-and-struggle roles (see the Slasher genre’s final girl)"
  },
  "horror_comedy": {
@@ -891,7 +891,7 @@
   "how": "read directly",
   "confidence": "low",
   "tags": [],
-  "uncertainty": "This is one director on one comic whodunit. Nothing found says what mystery asks of actors generally; 'withholding and layering' remains the researcher’s own reading. Shannon’s ad-libs don’t establish improvisation as a convention of the form."
+  "uncertainty": "This is one director on one comic whodunit. Nothing found says what mystery asks of actors generally; 'withholding and layering' remains an unsourced reading. Shannon’s ad-libs don’t establish improvisation as a convention of the form."
  },
  "neo_noir": {
   "claim": "Film reference works name first-person voice-over narration as a convention of classic film noir. No credible source found says neo-noir keeps it as a convention; neo-noir is described by its self-consciousness and nostalgia for noir, and many neo-noirs have no narrator.",
@@ -939,7 +939,7 @@
  "parody": {
   "claim": "Screen parody of the Airplane! school asks actors to deliver absurd material with complete dramatic seriousness, deadpan, oblivious to the gags around them.",
   "source": "'R.I.P. Leslie Nielsen', The A.V. Club, https://www.avclub.com/r-i-p-leslie-nielsen-1798223005",
-  "sourceSupports": "Nielsen could invest \"the most ridiculous lines of dialogue with a delivery that was serious as a heart attack\"; the Zucker-Abrahams-Zucker team cast him as \"an archetypal straight man oblivious to the constant stream of gags going on around him.\" A search summary of Nielsen’s 1993 Fresh Air interview (NPR; the page timed out): approaching the material \"with the same seriousness and the same gravity\" as their police shows \"would be very funny.\"",
+  "sourceSupports": "Nielsen could invest \"the most ridiculous lines of dialogue with a delivery that was serious as a heart attack\"; the Zucker-Abrahams-Zucker team cast him as \"an archetypal straight man oblivious to the constant stream of gags going on around him.\" A search summary of Nielsen’s 1993 Fresh Air interview (NPR; the page didn’t load): approaching the material \"with the same seriousness and the same gravity\" as their police shows \"would be very funny.\"",
   "how": "read directly",
   "confidence": "medium",
   "tags": [
@@ -976,7 +976,7 @@
   "how": "read directly",
   "confidence": "low",
   "tags": [],
-  "uncertainty": "This is one writer’s style on one show, not the genre. Heightened Language was considered (the 'meter' claim), but that rests on a search summary and on one writer, so it isn’t applied. 'Quiet calculation of characters wielding power' is unsupported."
+  "uncertainty": "This is one writer’s style on one show, not the genre. Heightened Language was considered (the 'meter' claim), but that rests on a search summary and on one writer, so the research didn’t name it. 'Quiet calculation of characters wielding power' is unsupported."
  },
  "political_thriller": {
   "claim": "A leading conspiracy-thriller performance was built on stillness and near-invisibility rather than display; nothing found makes this a stated genre convention.",
@@ -1178,7 +1178,7 @@
   "belongsTo": "the final girl"
  },
  "slice_of_life": {
-  "claim": "'Slice of life' comes from Jean Jullien’s naturalist theater (tranche de vie) and names everyday depiction without conventional plot. No source states a naturalistic acting demand for slice-of-life film. Its canonical film master, Ozu, dictated actors' every gesture, which runs against a naturalistic method.",
+  "claim": "'Slice of life' comes from Jean Jullien’s naturalist theater (tranche de vie) and names everyday depiction without conventional plot. No source states a naturalistic acting demand for slice-of-life film. Its canonical film master, Ozu, dictated actors’ every gesture, which runs against a naturalistic method.",
   "source": "Ryu Chishu, There was a father: Ryu Chishu remembers Ozu Yasujiro (BFI, Sight and Sound, 1964), https://www.bfi.org.uk/sight-and-sound/interviews/there-was-father-ryu-chishu-remembers-ozu-yasujiro [read directly]; Wikipedia contributors, Slice of life (Wikipedia (pointer only)), https://en.wikipedia.org/wiki/Slice_of_life [from a search summary]",
   "sourceSupports": "There was a father: Ryu Chishu remembers Ozu Yasujiro: Ozu 'made up the complete picture in his head before he went on the set'; actors had to 'follow his directions, from the way we lifted and dropped our arms to the way we blinked our eyes'. Slice of life, used only as a lead: the term is a calque of Jullien’s tranche de vie ('A play is a slice of life put onstage with art'); in theater the term refers to naturalism. It’s a storytelling definition, not about acting.",
   "how": "one of its two sources read directly and the other from a search summary, reviewed October 10, 2026",
@@ -1241,7 +1241,7 @@
     "why": "The sources show sustained athletic physical action trained for the role, which the vocabulary’s 'sustained physical action' covers."
    }
   ],
-  "uncertainty": "The NPR page timed out; only its headline and a search summary were read. Fights And Stunts is trained as Stage Combat, which fits combat sports (boxing films) better than rowing or baseball, so the fit is partial. On review (October 10, 2026), a fit with combat sports alone wasn’t enough to make it a requirement of the whole genre.",
+  "uncertainty": "The NPR page didn’t load; only its headline and a search summary were read. Fights And Stunts is trained as Stage Combat, which fits combat sports (boxing films) better than rowing or baseball, so the fit is partial. On review (October 10, 2026), a fit with combat sports alone wasn’t enough to make it a requirement of the whole genre.",
   "belongsTo": "combat-sport films such as boxing films"
  },
  "spy": {
@@ -1424,7 +1424,7 @@
   "how": "from a search summary",
   "confidence": "low",
   "tags": [],
-  "uncertainty": "TV Tropes isn’t credible enough to support a requirement. The Stan Winston School page on Interview with the Vampire returned no text when opened. Fang work is minor prosthetics, not heavy Physical Transformation."
+  "uncertainty": "TV Tropes isn’t credible enough to support a requirement. The Stan Winston School page on Interview with the Vampire showed no text when opened. Fang work is minor prosthetics, not heavy Physical Transformation."
  },
  "war": {
   "claim": "War films routinely put casts through military boot camps run by advisers so they can play soldiers credibly.",
@@ -1470,7 +1470,7 @@
   "belongsTo": "foreign-detective roles such as Poirot"
  },
  "yakuza": {
-  "claim": "The 1960s ninkyo (chivalry) yakuza film formulaically climaxed in the hero’s katana showdown against a rival gang. The 1970s jitsuroku cycle replaced it with chaotic, unheroic brawls and gunplay. Sources describe the fights, not actors' training.",
+  "claim": "The 1960s ninkyo (chivalry) yakuza film formulaically climaxed in the hero’s katana showdown against a rival gang. The 1970s jitsuroku cycle replaced it with chaotic, unheroic brawls and gunplay. Sources describe the fights, not actors’ training.",
   "source": "David Hanley, Tradition and Modernity in Japanese Yakuza Films of the 1960s and 70s (Offscreen, 2011), https://offscreen.com/view/japanese_yakuza_films [read directly]; David Wilentz, Yakuza Films at the Asia Society (The Brooklyn Rail, 2008), https://brooklynrail.org/2008/03/film/yakuza-films-at-the-asia-society/ [read directly]; Jasper Sharp, 10 great Japanese gangster films (BFI, 2013), https://www.bfi.org.uk/lists/10-great-japanese-gangster-films [read directly]",
   "sourceSupports": "Tradition and Modernity in Japanese Yakuza Films of the 1960s and 70s: Ninkyo climaxes feature 'the hero armed only with a traditional katana sword slicing his way through a gang of bad yakuza with guns'; in Battles Without Honor and Humanity yakuza’s 'hands shake when they fire a gun'; 'a free-for-all brawl, with Tetsuya Watari fighting in a downpour'. Yakuza Films at the Asia Society: 1960s yakuza films were 'always climaxing in a showdown where the anti-hero takes down all nemeses with a katana', 'a bloody ballet of sword swinging'. 10 great Japanese gangster films: Ken Takakura as 'the stoic, tattooed, katana-wielding tough guy'; Fukasaku’s jitsuroku style 'stripped away the mythos and surface sheen of the old-school ninkyo eiga of the 1960s'.",
   "how": "all three of its sources read directly, reviewed October 10, 2026",
@@ -1499,7 +1499,7 @@
   "uncertainty": "Wikipedia was used only as a lead. Stunt work is often done by doubles, so the page doesn’t say the actor does it."
  },
  "action_comedy": {
-  "claim": "Action comedy combines action with humor that plays a central role, descended from silent comedians' chases, gags and stunts.",
+  "claim": "Action comedy combines action with humor that plays a central role, descended from silent comedians’ chases, gags and stunts.",
   "source": "Wikipedia, 'Action comedy', https://en.wikipedia.org/wiki/Action_comedy (pointer)",
   "sourceSupports": "Read through an automatic summary of the page: humor 'plays a relatively central role'; silent comedians such as Chaplin and Keaton featured 'chases, gags and stunts'. The earlier quoted phrase 'relies on the characters to bring out the humor' didn’t come back in this reading.",
   "how": "read directly",
@@ -1514,7 +1514,7 @@
     "why": "Humor 'plays a relatively central role' by definition."
    }
   ],
-  "uncertainty": "The tool that read the page summarized it, and its remarks on Jackie Chan may be the summary’s own gloss, so the research didn’t name Physical Comedy."
+  "uncertainty": "The page was read through an automatic summary, and its remarks on Jackie Chan may be the summary’s own, so the research didn’t name Physical Comedy."
  },
  "backstage_musical": {
   "claim": "In a backstage musical the story stops for diegetic performance numbers in a show being produced.",
@@ -1551,7 +1551,7 @@
  "docufiction": {
   "claim": "Docufiction’s main characters are often non-professionals essentially playing themselves, unscripted, with improvised dialogue and genuine reactions.",
   "source": "Wikipedia, 'Docufiction', https://en.wikipedia.org/wiki/Docufiction (pointer)",
-  "sourceSupports": "'The main character or characters—often portrayed by non-professional or amateur actors—are essentially playing themselves'; docufictions 'are usually not scripted' and use participants' 'own genuine reactions and their own improvisational dialogue'.",
+  "sourceSupports": "'The main character or characters—often portrayed by non-professional or amateur actors—are essentially playing themselves'; docufictions 'are usually not scripted' and use participants’ 'own genuine reactions and their own improvisational dialogue'.",
   "how": "read directly",
   "confidence": "medium",
   "tags": [
@@ -1828,7 +1828,7 @@
  "social_realism": {
   "claim": "Ken Loach, the touchstone of British social realism, casts non-professionals alongside actors, withholds the full script, shoots in sequence and encourages improvisation.",
   "source": "No Film School, 'Ten Directing Lessons Inspired by Ken Loach', https://nofilmschool.com/directed-by-ken-loach; Into Film, 'Ken Loach, social realism...', https://www.intofilm.org/news-and-views/articles/ken-loach-feature",
-  "sourceSupports": "From search summaries: Loach uses non-professionals, limits actors' access to the script, shoots chronologically, 'avoids extensive rehearsals and encourages actors to improvise as a way of achieving spontaneity'.",
+  "sourceSupports": "From search summaries: Loach uses non-professionals, limits actors’ access to the script, shoots chronologically, 'avoids extensive rehearsals and encourages actors to improvise as a way of achieving spontaneity'.",
   "how": "from a search summary",
   "confidence": "low",
   "tags": [
@@ -1841,7 +1841,7 @@
     "why": "The method aims at spontaneous, naturalistic on-camera behavior."
    }
   ],
-  "uncertainty": "The Into Film page returned no text when opened. One director’s method stands in for the genre. On review (October 10, 2026), one director’s method wasn’t enough to make it a requirement of the whole genre.",
+  "uncertainty": "The Into Film page showed no text when opened. One director’s method stands in for the genre. On review (October 10, 2026), one director’s method wasn’t enough to make it a requirement of the whole genre.",
   "belongsTo": "Ken Loach’s productions and those that work his way"
  },
  "swashbuckler": {

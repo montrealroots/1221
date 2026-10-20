@@ -11,13 +11,14 @@ import { Fine, Stat } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { spokenList } from '@/engine/core/text';
 import { formatDate, instantFromZoned } from '@/engine/core/time';
 import { EXTENDED_STUDY, LEAVE_RULES, MANDATORY_LEAVE, WORK_LIMITS, WORK_STUDY, YALE_DRAMA } from '@/engine/content/school';
 import {
   LEAVE_REASONS, accountOwed, affiliateQuote, aidReviewRefusal, cancelRepeatWarning, clearedToReturn, enrolledTerms, extraRefusal, formerStage, leaveLengths, leaveRefusal, leaveStart, leaveTermsUsed, repeatCourses, repeatRefusal, termsInWords, withRepeat, yaleAccount,
   type Leave, type LeaveKind, type LeaveReason,
 } from '@/engine/systems/leave';
-import { termAccount, academicTerm, conversionRefusal, convertibleHours, unassignedKnown, hasNeed, schoolEnded, termLabel, termStart, weekCap, weekHours, yearKeyOf, hourlyIn } from '@/engine/systems/school';
+import { countWords, termAccount, academicTerm, conversionRefusal, convertibleHours, unassignedKnown, hasNeed, schoolEnded, termLabel, termStart, weekCap, weekHours, yearKeyOf, hourlyIn } from '@/engine/systems/school';
 import { inSaveMoney } from '@/engine/systems/banking';
 
 const STATUS: Record<Leave['status'], string> = {
@@ -65,7 +66,7 @@ export function LeavePanel() {
           {l.status === 'on' && (
             <div className="col gap-2">
               <p className="small" style={{ margin: 0 }}>
-                {l.withdrawnCourses?.length ? `Left unfinished, to take again: ${l.withdrawnCourses.join(', ')}. ` : ''}
+                {l.withdrawnCourses?.length ? `Left unfinished, to take again: ${spokenList(l.withdrawnCourses)}. ` : ''}
                 {l.aidReturned ? `${money(l.aidReturned)} of the term’s scholarship was returned on the rebate schedule, through your Yale account. ` : ''}
                 {l.kind === 'medical' ? 'Yale Health covers you as Affiliate cover the School pays for. ' : l.affiliate ? `Affiliate cover bought on ${formatDate(l.affiliate.at, sim.zone)}, ${money(l.affiliate.cost)}. ` : `Yale Health’s student cover ${l.coverEnds! > sim.now ? `ends ${formatDate(l.coverEnds!, sim.zone)}` : `ended ${formatDate(l.coverEnds!, sim.zone)}`}${l.retro ? ', back to the insurance term’s start, with the fee refunded' : ''}. `}
                 {l.f1Extended ? 'Your I-20 runs a year longer, as a reduced course load. ' : ''}
@@ -106,7 +107,7 @@ export function LeavePanel() {
       {/* Not on a leave, from 2026-10-17: the return asks for registration again (`school.reregister`). */}
       {school.mustRegister && !ended && l?.status !== 'on' && (
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          <span className="small">Register for {termLabel(Math.max(0, school.termsBegun - 1))}: until you do, classes don’t count your attendance and you can’t work shifts.{school.hold !== undefined ? ' A financial hold stops it until your Yale account is paid.' : ''}</span>
+          <span className="small">Register for {termLabel(Math.max(0, school.termsBegun - 1))}: until you do, you’re counted absent from classes and can’t work shifts.{school.hold !== undefined ? ' A financial hold stops it until your Yale account is paid.' : ''}</span>
           <Gated feature="school.reregister" className="btn btn-sm" disabled={school.hold !== undefined} onClick={() => { if (run('school.reregister').ok) toast('Registered.', 'positive'); }}>Register</Gated>
         </div>
       )}
@@ -171,7 +172,7 @@ function DeanLeave() {
   const open = !m.appeal && sim.now <= m.appealBy;
   return (
     <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
-      <span className="small"><strong>Imposed by the dean</strong> on Yale Health’s recommendation{l.status === 'granted' ? `, from ${termLabel(l.firstTerm)}` : ''}: {m.why} {m.appeal ? (m.appeal.outcome ? `Your appeal was ${m.appeal.outcome === 'rescinded' ? 'granted' : 'turned down'}: ${m.appeal.why}` : `Your appeal is with the dean, decided by ${formatDate(m.appeal.decideAt, sim.zone)}.`) : open ? `You can appeal in writing to the dean until ${formatDate(m.appealBy, sim.zone)}; the leave stands meanwhile, and it’s overturned if you’re cleared while enough of the term is left to resume${l.status === 'granted' ? ', as all of it is before the leave begins' : ''}. It isn’t yours to call off.` : 'It isn’t yours to call off.'}</span>
+      <span className="small"><strong>Imposed by the dean</strong> on Yale Health’s recommendation{l.status === 'granted' ? `, from ${termLabel(l.firstTerm)}` : ''}: {m.why} {m.appeal ? (m.appeal.outcome ? `Your appeal was ${m.appeal.outcome === 'rescinded' ? 'granted' : 'turned down'}: ${m.appeal.why}` : `Your appeal is with the dean, decided by ${formatDate(m.appeal.decideAt, sim.zone)}.`) : open ? `You can appeal in writing to the dean until ${formatDate(m.appealBy, sim.zone)}. The leave stands while the appeal is heard, and it’s overturned if you’re cleared with enough of the term left to resume${l.status === 'granted' ? ', as all of it is before the leave begins' : ''}. It isn’t yours to call off.` : 'It isn’t yours to call off.'}</span>
       {open && <Gated feature="school.appeal_leave" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ decideAt: number }>('school.appeal_leave'); if (r.ok) toast(`Appealed: decided by ${formatDate(r.value!.decideAt, sim.zone)}.`, 'positive'); }}>Appeal To The Dean</Gated>}
     </div>
   );
@@ -205,11 +206,11 @@ export function RepeatPanel() {
   return (
     <div className="col gap-2">
       <div className="row-between"><div className="eyebrow">Finishing The Degree</div><HowItWorks help="school.repeat" /></div>
-      {r && <p className="small" style={{ margin: 0 }}>Year {r.year}, asked {formatDate(r.requestedAt, sim.zone)}: {r.status === 'pending' ? `with the chair and the dean, decided by ${formatDate(r.decideAt, sim.zone)}` : r.status === 'granted' ? 'granted' : r.status === 'refused' ? `refused. ${r.why ?? ''}` : 'called off'}{r.courses.length ? `, for ${r.courses.join(', ')}` : ''}.</p>}
-      {school.repeatBy !== undefined && <p className="small" style={{ margin: 0 }}>Your last year wasn’t passed. Ask by {formatDate(school.repeatBy, sim.zone)}, or the degree is withheld.</p>}
+      {r && <p className="small" style={{ margin: 0 }}>Year {r.year}, asked {formatDate(r.requestedAt, sim.zone)}: {r.status === 'pending' ? `with the chair and the dean, decided by ${formatDate(r.decideAt, sim.zone)}` : r.status === 'granted' ? 'granted' : r.status === 'refused' ? `refused. ${r.why ?? ''}` : 'called off'}{r.courses.length ? `, for ${spokenList(r.courses)}` : ''}.</p>}
+      {school.repeatBy !== undefined && <p className="small" style={{ margin: 0 }}>Your last year wasn’t passed. Ask by {formatDate(school.repeatBy, sim.zone)}, or the faculty won’t recommend the degree.</p>}
       {!no && (
         <div className="col gap-2">
-          {asking === 'request' && <p className="small" style={{ margin: 0 }}>Asking puts it to the chair and the dean, decided in five working days. Granted, you take year {Math.floor(academicTerm(school, t) / 2) + 1}’s courses again from {termLabel(t + 1)}, and what you did the first time stays on your record; the degree reads the pass.{past > 0 ? ` The tuition scholarship supports six terms, and with the year again the degree takes ${total}: ${past} would be billed to your Yale account, about ${formatMoney(billed, cur)} in tuition alone.` : ''}{f1(person) ? ' Your I-20 would be extended a year.' : ''}</p>}
+          {asking === 'request' && <p className="small" style={{ margin: 0 }}>Asking puts it to the chair and the dean, decided in five working days. Granted, you take year {Math.floor(academicTerm(school, t) / 2) + 1}’s courses again from {termLabel(t + 1)}, and what you did the first time stays on your record; the degree reads the pass.{past > 0 ? ` The tuition scholarship supports six terms, and with the year again the degree takes ${countWords(total)} terms: ${countWords(past)} would be billed to your Yale account, about ${formatMoney(billed, cur)} in tuition alone.` : ''}{f1(person) ? ' Your I-20 would be extended a year.' : ''}</p>}
           <div className="row gap-2">
             {asking !== 'request'
               ? <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('request')}>Ask To Repeat The Year…</button>
@@ -220,11 +221,11 @@ export function RepeatPanel() {
           </div>
         </div>
       )}
-      {ex && <p className="small" style={{ margin: 0 }}>An additional term, {termLabel(ex.term)}, asked {formatDate(ex.requestedAt, sim.zone)} to retake {ex.courses.map((c) => c.name).join(', ')}: {ex.status === 'pending' ? `with the chair and the dean, decided by ${formatDate(ex.decideAt, sim.zone)}` : ex.status === 'granted' ? 'granted' : `refused. ${ex.why ?? ''}`}.</p>}
-      {school.extra && <p className="small" style={{ margin: 0 }}>In {termLabel(school.extra.term)} you take only {school.extra.courses.map((c) => c.name).join(', ')}; passed, the degree is {termStart(school.extra.term).fall ? 'conferred at Yale’s December conferral' : 'conferred at Commencement in May'}.</p>}
+      {ex && <p className="small" style={{ margin: 0 }}>An additional term, {termLabel(ex.term)}, asked {formatDate(ex.requestedAt, sim.zone)} to retake {spokenList(ex.courses.map((c) => c.name))}: {ex.status === 'pending' ? `with the chair and the dean, decided by ${formatDate(ex.decideAt, sim.zone)}` : ex.status === 'granted' ? 'granted' : `refused. ${ex.why ?? ''}`}.</p>}
+      {school.extra && <p className="small" style={{ margin: 0 }}>In {termLabel(school.extra.term)} you take only {spokenList(school.extra.courses.map((c) => c.name))}; passed, the degree is {termStart(school.extra.term).fall ? 'conferred at Yale’s December conferral' : 'conferred at Commencement in May'}.</p>}
       {!extra.why && !ex && (
         <div className="col gap-1">
-          <p className="small" style={{ margin: 0 }}>Or an additional term, {termLabel(extra.term!)}, to retake {extra.courses!.map((c) => c.name).join(', ')} alone, with the class then in that year{termStart(extra.term!).fall ? ', the degree conferred in December' : ''}.</p>
+          <p className="small" style={{ margin: 0 }}>Or an additional term, {termLabel(extra.term!)}, to retake {spokenList(extra.courses!.map((c) => c.name))} alone, with the class then in that year{termStart(extra.term!).fall ? ', the degree conferred in December' : ''}.</p>
           <div><Gated feature="school.request_extra_term" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('school.request_extra_term'); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For An Additional Term</Gated></div>
         </div>
       )}
@@ -326,7 +327,7 @@ export function WorkLimitsBlock() {
         <HowItWorks help="school.request_conversion" />
         {no && <span className="xs dim">{no}</span>}
       </div>
-      <Fine>Yale’s cap: no more than {WORK_LIMITS.weekHours} hours a week across all its jobs in an academic term, {WORK_LIMITS.recessWeekHours} in recess, summer or on leave; a booking past it is refused, and a shift that would pass it is worked to the cap. How Yale bounds the week wasn’t found, so the game counts Monday to Sunday. A student on aid short of the {WORK_STUDY.assignedHours} assigned hours through illness, injury or the School’s calls, or never assigned them, can ask for up to {WORK_LIMITS.convertibleHours} hours converted to grant-in-aid, processed in January and May (Bulletin p.189); it’s a scholarship for living costs, taxable. Hours missed absent, late or before the I-9 can’t be. Each shift carries its work’s own risk of injury, BLS’s rates: the crew’s in the shops higher than front of house. In {YALE_DRAMA.name}’s year {Math.floor(academicTerm(school, term) / 2) + 1}. Source: {WORK_LIMITS.source}.</Fine>
+      <Fine>Yale’s cap: no more than {WORK_LIMITS.weekHours} hours a week across all its jobs in an academic term, {WORK_LIMITS.recessWeekHours} in recess, summer or on leave; a booking past it is turned down, and a shift that would pass it is worked to the cap. How Yale bounds the week wasn’t found, so the game counts Monday to Sunday. A student on aid short of the {WORK_STUDY.assignedHours} assigned hours through illness, injury or the School’s calls, or never assigned them, can ask for up to {WORK_LIMITS.convertibleHours} hours converted to grant-in-aid, processed in January and May (Bulletin p.189); it’s a scholarship for living costs, taxable. Hours missed absent, late or before the I-9 can’t be. Each shift carries its work’s own risk of injury, BLS’s rates: the crew’s in the shops higher than front of house. In {YALE_DRAMA.name}’s year {Math.floor(academicTerm(school, term) / 2) + 1}. Source: {WORK_LIMITS.source}.</Fine>
     </div>
   );
 }

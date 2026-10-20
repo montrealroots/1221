@@ -457,7 +457,7 @@ describe('a program taken on a personal leave without Affiliate cover, and Yale 
     expect(healthOf(sim.player).program!.until).toBeUndefined();
     tend(sim, at(2028, 2, 1, 9));
     expect(healthOf(sim.player).program!.until).toBe(at(2028, 2, 1, 0, 30));
-    expect(titled(sim, 'Your Public Cover Has Ended').map((n) => [n.at, n.body])).toEqual([[at(2028, 2, 1, 0, 30), 'Covered Connecticut is only for people with no other qualifying cover, and Yale Health’s student cover covers you again.']]);
+    expect(titled(sim, 'Your Public Cover Has Ended').map((n) => [n.at, n.body])).toEqual([[at(2028, 2, 1, 0, 30), 'You have Yale Health’s student cover again, and Covered Connecticut is only for people with no other qualifying cover.']]);
     expect(coverOn(sim.player, sim.now)).toBe('yale');
     expect(titled(sim, 'Your Health Cover Ended').filter((n) => n.at >= at(2028, 1, 1, 0))).toEqual([]);
     expect(healthOf(sim.player).covered).toBe(true);
@@ -509,7 +509,7 @@ describe('health.enroll: a renewal kept by a month at the School, played', () =>
    * February to July, all on the leave, with under $580 of income in each, no SNAP and no stay: a notice of noncompliance.
    * Each is said on Home, as What Needs You draws it once the player has read what was there.
    */
-  const RENEWED = 'HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and January 2027 met its work rules with time at the School.';
+  const RENEWED = 'HUSKY D is renewed. Its next renewal is on January 1, 2028. Last month’s income is within its limit, and you met its work rules in January 2027, with time at the School.';
   const NOTICE = 'HUSKY D couldn’t find $580.00 of income, time at the School or an exception in any month from February to July 2027.';
 
   it('PLAYER JOURNEY: on a personal leave from 20 January 2027, she enrolls in HUSKY D on Papers on 21 January, from 1 January; its renewal on 1 July is kept, Home saying January 2027 met its work rules at the School, said once across a reload; her twin who enrolls on 1 February is renewed on 1 August with no month at the School, and Home draws the notice of noncompliance', async () => {

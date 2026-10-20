@@ -1,0 +1,1110 @@
+=== us-chase (the life banks at us-chase)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+CD, $1,000.00 at 3.50%
+On March 24, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: An automatically renewable CD renews on its maturity date for the same term, at the standard CD rate or your relationship rate. A single-maturity CD doesn’t renew, and stops earning interest on its maturity date.
+Sources And Estimates
+Breaking it now costs $0.67. The bank’s terms: Taking money out of a personal CD early costs interest on the amount you take out: 90 days’ worth for a term under 6 months, 180 days’ for 6 months to under 24, and 365 days’ for 24 months or more, never more than the interest earned in the current term. Within 7 days of opening, or of another early withdrawal, it’s at least 7 days’ interest. The penalty comes out of the principal.
+Pay It Out At The End Break It Early Take The Interest So Far ($0.00) How This Works 
+The bank’s terms: A checking or savings account you haven’t used yourself for 24 months may become inactive; a CD counts as inactive from when it’s funded until it matures or you take money out early. After 30 months it may become dormant: no debit card purchases, transfers, deposits or withdrawals, no online or mobile banking, and the debit card is restricted. After a longer period set by state law, it may be closed and the money handed to the state as unclaimed property, with a letter first.
+Chase Savings is dormant: the bank has blocked it until you reactivate it. Reactivate 
+$123.45 went to the state’s unclaimed-property office after years unused. It can be claimed back from that office. Claim It Back 
+Source: the bank’s terms, https://www.chase.com/content/dam/chase-ux/documents/personal/checking/deposit-account-agreement.pdf, read September 26, 2026. The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, October 13, 2026); the game uses the three years for every state.
+
+=== us-bank-of-america (the life banks at us-bank-of-america)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+CD, $1,000.00 at 3.75%
+On March 24, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically on its maturity date, with the principal and interest reinvested at the rate offered then, unless you say otherwise before the grace period ends. A CD that doesn’t renew stops earning interest at maturity.
+Sources And Estimates
+Breaking it now costs $9.25. The bank’s terms: The penalty is interest on the amount you take out, at the account’s rate: for a term under 90 days, all the interest earned on that amount or 7 days’ interest, whichever is more; 90 days up to 12 months, 90 days’ interest; 12 up to 60 months, 180 days’; 60 months or longer, 365 days’. Any cash bonus paid when it opened or renewed is added to the penalty. It comes out of the interest first, then the principal. The fee schedule adds 7 days’ interest for a withdrawal in a term’s first 6 days.
+Pay It Out At The End Break It Early Take The Interest So Far ($0.00) How This Works 
+Round-Ups, Keep the Change. Each Bank of America debit card purchase is rounded up to the next whole dollar, and the difference moves to your savings in one transfer at the end of each business day.
+Round-Ups: Off How This Works 
+When the account is short: If the account can’t cover the day’s transfer, that day’s round-ups are canceled, not carried, and it never overdraws.
+What The Bank Leaves Open, And What The Game Leaves Out
+A purchase of whole dollars: the terms say “the amount in excess of the purchase price”, so the game moves nothing.
+An account overdrawn during the day and back in credit by its end: the terms cancel the day; the game looks at the balance at the day’s end.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A purchase refunded leaves its round-up in savings, as the terms say; purchases in the game aren’t refunded.
+Source: bankofamerica.com, Personal Schedule of Fees, effective August 7, 2026; Keep the Change page and FAQ, checked October 13, 2026.
+The bank’s terms: State law sets how long an account can sit unused before it counts as abandoned, usually the law of the state on your statements, and bank charges, interest and automatic deposits or withdrawals usually don’t count as using it. Before the money goes to the state, the bank may mark the account inactive, then charge its usual monthly and other fees, stop sending statements, stop paying interest and refuse to pay items. Once the money has gone to the state, you claim it back from the state.
+Advantage Savings is dormant: the bank has blocked it until you reactivate it. Reactivate 
+$123.45 went to the state’s unclaimed-property office after years unused. It can be claimed back from that office. Claim It Back 
+Source: the bank’s terms, https://www.bankofamerica.com/salesservices/deposits/resources/deposit-agreements/, read September 26, 2026. The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, October 13, 2026); the game uses the three years for every state.
+
+=== us-wells-fargo (the life banks at us-wells-fargo)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+CD, $1,000.00 at 3.89%
+On July 24, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically at maturity, usually for the same term at the standard rate on that day, unless you take the money out.
+Sources And Estimates
+Breaking it now costs $9.70. The bank’s terms: For a Fixed Rate CD, the penalty depends on the term: 1 month’s interest for under 90 days; 3 months’ for 90 to 365 days; 6 months’ for over 12 to 24 months; 12 months’ for over 24 months. A month’s interest is the rate times the principal you take out, divided by 12. It comes out of the interest earned first, then the principal. Under Regulation D, a withdrawal within 7 days of opening, or of an earlier penalized withdrawal, costs 7 days’ simple interest.
+Pay It Out At The End Break It Early Take The Interest So Far ($0.00) How This Works 
+Round-Ups, Way2Save Save As You Go. Not a round-up: a flat $1 for each one-time debit card purchase, counted at the end of each business day and moved to your savings on the next business day.
+Round-Ups: Off How This Works 
+When the account is short: If the account doesn’t have the funds or is overdrawn, the transfer doesn’t happen. The game drops it: the terms don’t say it’s tried again.
+What The Bank Leaves Open, And What The Game Leaves Out
+Which day’s balance decides: the game looks when the transfer is made.
+A day Overdraft Protection was used, Wells Fargo makes no transfer: the game doesn’t look for it, and moves it if the account covers it.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: Online Bill Pay payments count at Wells Fargo too; bills in the game aren’t paid through Bill Pay.
+Not in the game: Wells Fargo names Way2Save Savings as the account it goes into; the game has one savings account at a bank.
+Source: wellsfargo.com, Consumer Account Fee and Information Schedule, effective July 28, 2026, checked October 13, 2026.
+The bank’s terms: An account usually goes dormant when you haven’t used it yourself (a deposit or withdrawal at a branch or ATM, or a check) for 12 months for checking, 34 months for savings, or 34 months after a CD first renews. Automatic transfers and direct deposits don’t count unless state law says they do. While it’s dormant, Wells Fargo may restrict ATM and debit card transfers between your Wells Fargo accounts, transfers by phone, online, mobile and text banking, Bill Pay and wires. A dormant account linked to Prime or Premier Checking may be unlinked and lose its benefits. If you don’t get in touch within the state’s unclaimed-property period, usually 3 or 5 years, the bank closes the account, sends the money to the state and stops your statements.
+Way2Save Savings is dormant: the bank has blocked it until you reactivate it. Reactivate 
+$123.45 went to the state’s unclaimed-property office after years unused. It can be claimed back from that office. Claim It Back 
+Source: the bank’s terms, https://www.wellsfargo.com/assets/pdf/small-business/agreement.pdf, read September 26, 2026. The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, October 13, 2026); the game uses the three years for every state.
+
+=== us-citi (the life banks at us-citi)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+CD, $1,000.00 at 4.25%
+On August 24, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically at maturity for the same term, at the rate in effect that day, unless you change the term or Citi no longer offers it.
+Sources And Estimates
+Breaking it now costs $10.48. The bank’s terms: The penalty is simple interest on the amount you take out: 90 days’ for a CD of 1 year or less, 180 days’ for a longer one. It may come partly or wholly out of the principal. It’s waived if the owner dies or is found legally incompetent. The 12-month No Penalty CD lets you take out the whole balance and interest with no penalty after its first 6 days, but not part of it.
+Pay It Out At The End Break It Early Take The Interest So Far ($0.00) How This Works 
+Round-Ups, Spend & Save. Each purchase on your Citi debit card or Citi credit card is rounded up to the next whole dollar into a running tally, paid from your checking account, and moved to your savings daily or weekly, as you choose, at most $15 a transfer with the rest carried to the next.
+How Often Choose… Daily Weekly Minimum Balance, At Least $50.00 
+Round-Ups: Off How This Works 
+Not now: Choose how often it moves: daily, weekly.
+When the account is short: You set a minimum balance, at least $50. Below it on the day a transfer is due, Citi tries the next two days, and after three days below it turns Spend & Save off.
+What The Bank Leaves Open, And What The Game Leaves Out
+What happens to the tally when it’s turned off, by you or by Citi: the game drops it.
+A purchase of whole dollars: the game moves nothing.
+Daily on calendar days or business days: the game moves it every day; weekly from the day you turn it on, the game’s reading of “the next occurrence of the chosen weekday”.
+Source: citi.com/online-services/ways-to-save, Spend & Save terms (undated, read October 13, 2026), checked October 13, 2026.
+The bank’s terms: How long an account can go unused follows the abandoned-property law of the state of your last known address, or South Dakota’s if that address is outside the US. Money in an account you haven’t used yourself may be sent to the state. A CD renewing by itself doesn’t count as using it, and the state’s period can start after its first maturity. Citi may also restrict an account it finds inactive.
+Citi Savings is dormant: the bank has blocked it until you reactivate it. Reactivate 
+$123.45 went to the state’s unclaimed-property office after years unused. It can be claimed back from that office. Claim It Back 
+Source: the bank’s terms, https://online.citi.com/JRS/popups/ao/CDAA.pdf, read September 26, 2026. The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, October 13, 2026); the game uses the three years for every state.
+
+=== us-capital-one (the life banks at us-capital-one)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+CD, $1,000.00 at 4.30%
+On July 24, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically into a CD of the same term, or the nearest term on offer, at the rate offered on its maturity date.
+Sources And Estimates
+Breaking it now costs $10.72. The bank’s terms: Breaking a 360 CD costs 3 months’ interest for a term of 12 months or less, and 6 months’ for a longer one, however far into the term you are. It’s waived if an owner dies or is found legally incompetent. You can’t take out part of the principal during the term: only the whole CD can be cashed early.
+Pay It Out At The End Break It Early Take The Interest So Far ($0.00) How This Works 
+The bank’s terms: An account goes dormant after 24 months with no transactions. Paper statements may stop, but you can still see the account online. Once state law presumes it abandoned, it stops earning interest. After the state’s period, all your deposit accounts are closed and the money goes to the state, where you can claim it.
+360 Performance Savings is dormant: the bank has blocked it until you reactivate it. Reactivate 
+$123.45 went to the state’s unclaimed-property office after years unused. It can be claimed back from that office. Claim It Back 
+Source: the bank’s terms, https://www.capitalone.com/bank/disclosures/cds/online-cds/, read September 26, 2026. The country’s rules: each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, October 13, 2026); the game uses the three years for every state.
+
+=== ca-rbc (the life banks at ca-rbc)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+GIC, C$1,000.00 at 2.45%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically, for the same term and type at RBC’s rate then for similar deposits, unless you tell RBC otherwise. A GIC in a registered plan renews for one year.
+Sources And Estimates
+Breaking it now costs nothing.
+Pay It Out At The End Break It Early Take The Interest So Far (C$0.00) How This Works 
+Savings here: 1 free withdrawal a month, counting any payment the savings makes, then C$2.00 each.
+The bank’s terms: An account becomes inactive after 12 months with no transactions. RBC writes to you after 2, 5 and 9 years. It charges an Inactive Account fee of C$20 for each year from the 2nd to the 8th and C$40 in the 9th, or the balance if that’s less. An inactive account that reaches C$0.00 is closed without notice. At 10 years the account is closed and the balance sent to the Bank of Canada.
+RBC High Interest eSavings is dormant: the bank has blocked it until you reactivate it. Reactivate 
+RBC High Interest eSavings is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+GIC is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+C$123.45 went to the Bank of Canada’s Unclaimed Properties Office after years unused. That’s the rule for federally regulated banks. You can claim it back from the Bank of Canada, which holds a balance under C$1,000 for 30 years and one of C$1,000 or more for 100 years. Claim It Back 
+Source: the bank’s terms, https://www.rbcroyalbank.com/onlinebanking/servicech/pdf/PDA_Account_Disclosure_Booklet.pdf, read September 26, 2026. The country’s rules: https://www.canada.ca/en/financial-consumer-agency/services/banking/unclaimed-balances.html, read September 26, 2026.
+
+=== ca-td (the life banks at ca-td)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+GIC, C$1,000.00 at 3.00%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: It does what you chose: pays out by check or into an account, or renews automatically (a cashable GIC renews its principal and interest into a TD 1-Year Cashable GIC). No interest is paid after the maturity date.
+Sources And Estimates
+Breaking it now costs nothing.
+Renew It At The End Break It Early Take The Interest So Far (C$0.00) How This Works 
+Savings here: 1 free withdrawal a month, counting any payment the savings makes, then C$3.00 each.
+Round-Ups, Simply Save. Not a round-up: a fixed amount you choose, from $0.50 to $5.00, for each debit purchase, moved from checking to your savings daily, weekly or every two weeks, as you choose.
+Each Purchase, C$0.50 To C$5.00 How Often Choose… Daily Weekly Every two weeks 
+Round-Ups: Off How This Works 
+Not now: Choose the amount each purchase, C$0.50 to C$5.00.
+When the account is short: TD won’t make the transfer if checking doesn’t have enough to cover it. The game drops it: TD doesn’t say whether it’s carried to the next.
+What The Bank Leaves Open, And What The Game Leaves Out
+The steps between $0.50 and $5.00: the game takes any amount in cents.
+Which weekday a weekly transfer falls on: the game counts from the day you turn it on.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: TD can count ATM withdrawals as well as, or instead of, purchases; the game counts purchases.
+Source: td.com, automated savings and TD Ask Us (Simply Save), undated, read October 13, 2026, checked October 13, 2026.
+The bank’s terms: A checking or savings account unused for a year becomes dormant. TD writes after the 2nd, 5th and 9th years with ways to reactivate it. An account dormant for 10 years goes to the Bank of Canada, US dollar and other foreign-currency accounts too since November 2024. You can reactivate it through EasyLine or at a branch.
+TD ePremium Savings is dormant: the bank has blocked it until you reactivate it. Reactivate 
+TD ePremium Savings is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+GIC is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+C$123.45 went to the Bank of Canada’s Unclaimed Properties Office after years unused. That’s the rule for federally regulated banks. You can claim it back from the Bank of Canada, which holds a balance under C$1,000 for 30 years and one of C$1,000 or more for 100 years. Claim It Back 
+Source: the bank’s terms, https://www.td.com/content/dam/tdct/document/pdf/accounts/802228-non-registered-without-coversheet.pdf, read September 26, 2026. The country’s rules: https://www.canada.ca/en/financial-consumer-agency/services/banking/unclaimed-balances.html, read September 26, 2026.
+
+=== ca-scotiabank (the life banks at ca-scotiabank)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+GIC, C$1,000.00 at 2.45%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: A GIC with automatic renewal renews for the same term at the rate on the renewal date. Otherwise it follows the instructions you give up to maturity.
+Sources And Estimates
+Breaking it now costs nothing.
+Pay It Out At The End Break It Early Take The Interest So Far (C$0.00) How This Works 
+Savings here: 0 free withdrawals a month, counting any payment the savings makes, then C$5.00 each.
+Round-Ups, Bank The Rest. Every ScotiaCard debit purchase is rounded up to the next multiple of $1 or $5, as you choose, and the day’s round-ups move to your Money Master savings at the end of each business day.
+Round Up To Choose… The next C$1.00 The next C$5.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: C$1.00, C$5.00.
+When the account is short: If the balance at the business day’s end is less than the day’s round-ups, that day’s transfer is canceled, even with overdraft protection.
+What The Bank Leaves Open, And What The Game Leaves Out
+A purchase already at a multiple of the unit: the game moves nothing.
+Whether a canceled day is tried again: the game drops it.
+Closing the Money Master account turns it off, as the terms say.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A canceled or reversed purchase leaves its round-up in savings, as the terms say; purchases in the game aren’t refunded.
+Not in the game: The investment option moving a month’s round-ups to a fund.
+Source: Scotiabank, Day-to-Day Banking Companion Booklet, September 2026, Part 16, checked October 13, 2026.
+The bank’s terms: An inactive-account fee comes with each yearly notice that the account is inactive: C$20.00 after 2, 3 and 4 years, C$30.00 after 5 to 8 years, and C$40.00 with the ninth-year notice that it’s going to the Bank of Canada. To reactivate it, you visit a branch with ID and proof of address.
+MomentumPLUS Savings is dormant: the bank has blocked it until you reactivate it. Reactivate 
+MomentumPLUS Savings is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+GIC is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+C$123.45 went to the Bank of Canada’s Unclaimed Properties Office after years unused. That’s the rule for federally regulated banks. You can claim it back from the Bank of Canada, which holds a balance under C$1,000 for 30 years and one of C$1,000 or more for 100 years. Claim It Back 
+Source: the bank’s terms, https://www.scotiabank.com/content/dam/scotiabank/canada/en/documents/Scotiabank_Non-Registered_TFSA_RESP_and_RDSP_Guaranteed_Investment_Certificates_terms.pdf, read September 26, 2026. The country’s rules: https://www.canada.ca/en/financial-consumer-agency/services/banking/unclaimed-balances.html, read September 26, 2026.
+
+=== ca-bmo (the life banks at ca-bmo)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+GIC, C$1,000.00 at 3.00%
+On January 5, 2027 it is paid, with its interest, into your current account. You can change that until December 15, 2026.
+The bank’s terms at the end: In a registered account it reinvests automatically into a BMO GIC with the same term and interest option, at the rate then. Otherwise it follows the instructions you gave when you bought it, and reinvests only if you asked it to. You can change those instructions only in writing, within 21 days before maturity.
+Sources And Estimates
+Breaking it now costs nothing.
+Renew It At The End Break It Early Take The Interest So Far (C$0.00) How This Works 
+Savings here: 0 free withdrawals a month, counting any payment the savings makes, then C$5.00 each.
+The bank’s terms: An account with a C$0 balance that you haven’t used for at least a year is closed. After 2 years without you using it, it’s dormant. BMO writes after 2 and 5 years, and if you don’t answer within 60 days it charges a Dormant Account Fee: C$20 at 2 years, C$30 at 5. If the account can’t cover the fee, it’s closed without notice. After 9 years it’s closed with a final notice, and in year 10 the balance goes to the Bank of Canada, with a C$40 fee.
+Savings Amplifier Account is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Savings Amplifier Account is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+GIC is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+C$123.45 went to the Bank of Canada’s Unclaimed Properties Office after years unused. That’s the rule for federally regulated banks. You can claim it back from the Bank of Canada, which holds a balance under C$1,000 for 30 years and one of C$1,000 or more for 100 years. Claim It Back 
+Source: the bank’s terms, https://www.bmo.com/pdf/Agreements_Bank_Plans_and_Fees_for_Everyday_Banking.pdf, read September 26, 2026. The country’s rules: https://www.canada.ca/en/financial-consumer-agency/services/banking/unclaimed-balances.html, read September 26, 2026.
+
+=== ca-cibc (the life banks at ca-cibc)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+GIC, C$1,000.00 at 2.45%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically into the same product and term, unless you change that with an advisor before maturity.
+Sources And Estimates
+Breaking it now costs nothing.
+Pay It Out At The End Break It Early How This Works 
+Savings here: 0 free withdrawals a month, counting any payment the savings makes, then C$5.00 each.
+The bank’s terms: An account is dormant after 24 months with no transactions of yours, and its monthly statements become quarterly. There’s a yearly fee of C$20 while it’s 2 to 4 years dormant, C$30 at 5 to 8 years and C$40 at 9, or the balance if that’s less, and none where every holder is 18 or younger. After 10 years the Canadian-dollar balance goes to the Bank of Canada.
+CIBC eAdvantage Savings is dormant: the bank has blocked it until you reactivate it. Reactivate 
+CIBC eAdvantage Savings is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+GIC is new enough to cancel, until January 23, 2026, its money back with its interest, and its fees refunded. Cancel It 
+C$123.45 went to the Bank of Canada’s Unclaimed Properties Office after years unused. That’s the rule for federally regulated banks. You can claim it back from the Bank of Canada, which holds a balance under C$1,000 for 30 years and one of C$1,000 or more for 100 years. Claim It Back 
+Source: the bank’s terms, https://www.cibc.com/content/dam/personal_banking/bank_accounts/pdfs/cibc-pasf-en.pdf, read September 26, 2026. The country’s rules: https://www.canada.ca/en/financial-consumer-agency/services/banking/unclaimed-balances.html, read September 26, 2026.
+
+=== mx-bbva (the life banks at mx-bbva)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Round-Ups, Plan, Redondeo. Each purchase on your BBVA debit or credit card is rounded up to the next $10, $50 or $100, as you choose, and the difference goes to your Plan savings; a purchase already at a multiple moves a whole unit.
+Round Up To Choose… The next MX$10.00 The next MX$50.00 The next MX$100.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: MX$10.00, MX$50.00, MX$100.00.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+When each amount posts: BBVA says “with each purchase”, and the game moves the day’s together at its end.
+BBVA may cap it at amounts it doesn’t publish: the game sets none.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: The Porcentaje rule, a share of each purchase.
+Not in the game: The Plan account pays no interest; the game moves it to your savings.
+Source: BBVA México, Contrato de Productos y Servicios Múltiples, chapter I.IV (Plan), RECA 0305-999-037855/09-01904-0826; ficha Plan, January 5, 2023, checked October 13, 2026.
+The bank’s terms: After 3 years with no deposits or withdrawals, the bank moves the balance to its cuenta global, a general holding account, after writing to your registered address 90 days before. The money is still yours there: it’s charged no fees and earns interest each month, and fees the bank charges don’t count as using the account. After 3 more years there with no claim or movement, 6 years in all, a balance of up to 300 days of the Mexico City minimum wage goes to the Beneficencia Pública (Ley de Instituciones de Crédito, art. 61).
+Libretón is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Libretón is new enough to cancel, until January 19, 2026, its money back without the interest it earned, and its fees refunded. Cancel It 
+MX$123.45 went to the Beneficencia Pública after years unused. After 3 years without movement it first went to the bank’s cuenta global, with 90 days’ written notice, where it could still be claimed with your contract and official ID. After 3 more years there, an amount up to 300 days of the minimum wage goes to the Beneficencia Pública, and can’t be claimed back. Claim It Back 
+Source: the bank’s terms, https://www.bbva.mx/personas/productos/inversion/inversion-a-plazo/pagare.html, read September 26, 2026. The country’s rules: https://www.gob.mx/condusef/prensa/sabias-que-si-tu-cuenta-bancaria-no-registra-movimiento-tus-recursos-pueden-pasar-a-la-beneficencia-publica, read September 26, 2026.
+
+=== mx-banorte (the life banks at mx-banorte)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+The bank’s terms: After 3 years with no deposits or withdrawals, the bank moves the balance to its cuenta global, a general holding account, after writing to your registered address 90 days before. The money is still yours there: it’s charged no fees and earns interest each month, and fees the bank charges don’t count as using the account. After 3 more years there with no claim or movement, 6 years in all, a balance of up to 300 days of the Mexico City minimum wage goes to the Beneficencia Pública (Ley de Instituciones de Crédito, art. 61).
+Inversión Enlace is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Inversión Enlace is new enough to cancel, until January 19, 2026, its money back without the interest it earned, and its fees refunded. Cancel It 
+MX$123.45 went to the Beneficencia Pública after years unused. After 3 years without movement it first went to the bank’s cuenta global, with 90 days’ written notice, where it could still be claimed with your contract and official ID. After 3 more years there, an amount up to 300 days of the minimum wage goes to the Beneficencia Pública, and can’t be claimed back. Claim It Back 
+Source: the bank’s terms, https://web.archive.org/web/20260410151848/https://www.banorte.com/Personal/Ahorro-e-Inversion/Inversiones-a-Plazo/Pagare-Digital.html, read September 26, 2026. The country’s rules: https://www.gob.mx/condusef/prensa/sabias-que-si-tu-cuenta-bancaria-no-registra-movimiento-tus-recursos-pueden-pasar-a-la-beneficencia-publica, read September 26, 2026.
+
+=== mx-santander (the life banks at mx-santander)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Round-Ups, Mis Metas, Redondeo. Each purchase on your Santander debit or credit card is rounded up to the next $10, and the difference goes to your savings.
+Round-Ups: Off How This Works 
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+A purchase already at a multiple of $10: the game moves nothing.
+When it posts: Santander says with each purchase, and the game moves the day’s together at its end.
+Santander doesn’t say that a credit card purchase’s round-up comes from your checking account; the game takes it from there.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: Disfruta y guarda, a set amount at participating merchants, whose list isn’t published.
+Not in the game: A meta is a goal kept inside your checking account, not a savings product, and Santander’s pages disagree on whether it earns interest; the game moves it to your savings.
+Source: Santander México, Mis Metas page and FAQ (read live October 13, 2026); contract clause V.28, checked October 13, 2026.
+The bank’s terms: After 3 years with no deposits or withdrawals, the bank moves the balance to its cuenta global, a general holding account, after writing to your registered address 90 days before. The money is still yours there: it’s charged no fees and earns interest each month, and fees the bank charges don’t count as using the account. After 3 more years there with no claim or movement, 6 years in all, a balance of up to 300 days of the Mexico City minimum wage goes to the Beneficencia Pública (Ley de Instituciones de Crédito, art. 61).
+Débito LikeU is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Débito LikeU is new enough to cancel, until January 19, 2026, its money back without the interest it earned, and its fees refunded. Cancel It 
+MX$123.45 went to the Beneficencia Pública after years unused. After 3 years without movement it first went to the bank’s cuenta global, with 90 days’ written notice, where it could still be claimed with your contract and official ID. After 3 more years there, an amount up to 300 days of the minimum wage goes to the Beneficencia Pública, and can’t be claimed back. Claim It Back 
+Source: the bank’s terms, https://web.archive.org/web/20260517151339/https://www.santander.com.mx/personas/inversiones/inversion-digital.html, read September 26, 2026. The country’s rules: https://www.gob.mx/condusef/prensa/sabias-que-si-tu-cuenta-bancaria-no-registra-movimiento-tus-recursos-pueden-pasar-a-la-beneficencia-publica, read September 26, 2026.
+
+=== mx-banamex (the life banks at mx-banamex)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+The bank’s terms: After 3 years with no deposits or withdrawals, the bank moves the balance to its cuenta global, a general holding account, after writing to your registered address 90 days before. The money is still yours there: it’s charged no fees and earns interest each month, and fees the bank charges don’t count as using the account. After 3 more years there with no claim or movement, 6 years in all, a balance of up to 300 days of the Mexico City minimum wage goes to the Beneficencia Pública (Ley de Instituciones de Crédito, art. 61).
+Ahorro Fácil is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Ahorro Fácil is new enough to cancel, until January 19, 2026, its money back without the interest it earned, and its fees refunded. Cancel It 
+MX$123.45 went to the Beneficencia Pública after years unused. After 3 years without movement it first went to the bank’s cuenta global, with 90 days’ written notice, where it could still be claimed with your contract and official ID. After 3 more years there, an amount up to 300 days of the minimum wage goes to the Beneficencia Pública, and can’t be claimed back. Claim It Back 
+Source: the bank’s terms, https://www.banamex.com/es/centro-de-ayuda/cuentas/ahorro-facil/pagare_banamex.htm, read September 26, 2026. The country’s rules: https://www.gob.mx/condusef/prensa/sabias-que-si-tu-cuenta-bancaria-no-registra-movimiento-tus-recursos-pueden-pasar-a-la-beneficencia-publica, read September 26, 2026.
+
+=== gb-barclays (the life banks at gb-barclays)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+The bank’s terms: Barclays may close an account you don’t use after trying to contact you: within 90 days of first getting in touch, if you don’t reply. The money goes to a central holding account and keeps earning the same interest. After 15 years or more unused, it may go to Reclaim Fund Ltd, and you can still claim it back.
+Everyday Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Everyday Saver is new enough to cancel, until January 19, 2026, its money back with its interest. Cancel It 
+£123.45 went to the Reclaim Fund after years unused. Under the UK Dormant Assets Scheme, a bank chooses whether to send it. You can claim it back at any time, through the bank or building society you had it with. Claim It Back 
+Source: the bank’s terms, https://www.barclays.co.uk/content/dam/documents/personal/savings/savingsbondterms.pdf, read September 26, 2026. The country’s rules: https://www.reclaimfund.co.uk/the-schemes/the-main-scheme/, read September 26, 2026.
+
+=== gb-lloyds (the life banks at gb-lloyds)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Round-Ups, Save the Change. Every Lloyds debit card purchase is rounded up to the next whole pound, and the day’s change moves to your savings at the start of the next working day: Friday’s on Monday, and Saturday’s to Monday’s together on Tuesday.
+Round-Ups: Off How This Works 
+When the account is short: It moves only as long as it doesn’t take the account overdrawn, or more overdrawn. The game drops what couldn’t move: the conditions don’t say whether it’s carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+What happens to change not yet moved when an account closes: the game drops it.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A refunded purchase’s change stays in savings, as the conditions say; purchases in the game aren’t refunded.
+Source: Lloyds Save the Change conditions M57299 (04/26), read from the Wayback Machine’s capture of September 22, 2026, checked October 13, 2026.
+The bank’s terms: Money in an account unused for 15 years or more may go to Reclaim Fund Ltd under the unclaimed assets scheme, and you keep the right to claim it back.
+Easy Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Easy Saver is new enough to cancel, until January 19, 2026, its money back with its interest. Cancel It 
+£123.45 went to the Reclaim Fund after years unused. Under the UK Dormant Assets Scheme, a bank chooses whether to send it. You can claim it back at any time, through the bank or building society you had it with. Claim It Back 
+Source: the bank’s terms, https://www.lloydsbank.com/savings/online-fixed-bonds.html (read via web.archive.org 2026 snapshot; live site returned an error page), read September 26, 2026. The country’s rules: https://www.reclaimfund.co.uk/the-schemes/the-main-scheme/, read September 26, 2026.
+
+=== gb-natwest (the life banks at gb-natwest)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Fixed-Term Savings, £1,000.00 at 4.11%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day. You can change that until December 31, 2026.
+The bank’s terms at the end: It reinvests automatically for a new fixed term unless you opt out, with the opt-out form at least 5 days before maturity. If you opt out, it becomes a Primary Saver on the maturity date.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: A Fixed Term Savings Account allows no withdrawals during the term. Closing it early takes 35 days’ notice and costs the interest earned or 90 days’ interest, whichever is lower, and you never get back less than you put in.
+Move It To Savings At The End Give 35 Days’ Notice Take The Interest So Far (£0.00) How This Works 
+Round-Ups, Round Ups. Debit card payments in pounds are rounded up to the next whole pound, and the change, times the multiplier you pick from 1 to 5, moves to your savings at the day’s end.
+Multiplier Choose… ×1, just the change ×2 ×3 ×4 ×5 
+Round-Ups: Off How This Works 
+When the account is short: Round Ups never take you into an overdraft, and don’t move while you’re already in one. The game drops what couldn’t move: NatWest doesn’t say whether it’s tried again.
+What The Bank Leaves Open, And What The Game Leaves Out
+The multiplier is optional, so ×1 is the plain change and the game’s starting choice; NatWest doesn’t call it a default in so many words.
+NatWest moves them when the payments clear, which can take up to 4 days; the game moves them at the day’s end.
+Closing the current or savings account stops Round Ups, and what hasn’t moved doesn’t, as NatWest says.
+Source: natwest.com/savings/tools-for-savings/round-ups.html and the support FAQ, read live and checked October 13, 2026.
+The bank’s terms: An account unused for 5 years or more counts as dormant. NatWest writes to give you 9 months to use it, and after that, 5 years and 9 months in all, it’s closed. You can still claim the money back.
+Flexible Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Flexible Saver is new enough to cancel, until January 19, 2026, its money back with its interest. Cancel It 
+£123.45 went to the Reclaim Fund after years unused. Under the UK Dormant Assets Scheme, a bank chooses whether to send it. You can claim it back at any time, through the bank or building society you had it with. Claim It Back 
+Source: the bank’s terms, https://www.natwest.com/savings/fixed-term-savings-account.html, read September 26, 2026. The country’s rules: https://www.reclaimfund.co.uk/the-schemes/the-main-scheme/, read September 26, 2026.
+
+=== gb-hsbc (the life banks at gb-hsbc)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+The bank’s terms: An account unused for usually 2 years is inactive. HSBC freezes an inactive account with money in it, closes one with nothing in it, and may close one with £10 or less and give the balance to charity, which you can still claim back. After 15 years or more, the money may go to Reclaim Fund Ltd.
+Flexible Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Flexible Saver is new enough to cancel, until January 19, 2026, its money back with its interest. Cancel It 
+£123.45 went to the Reclaim Fund after years unused. Under the UK Dormant Assets Scheme, a bank chooses whether to send it. You can claim it back at any time, through the bank or building society you had it with. Claim It Back 
+Source: the bank’s terms, https://www.hsbc.co.uk/savings/products/fixed-rate/, read September 26, 2026. The country’s rules: https://www.reclaimfund.co.uk/the-schemes/the-main-scheme/, read September 26, 2026.
+
+=== gb-santander (the life banks at gb-santander)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+The bank’s terms: After a year with no transactions for a banking account, or 3 years for a savings account, Santander may treat it as dormant: no transactions, statements, letters or cards until you reactivate it, though it keeps earning interest. After 15 years, the money may go to Reclaim Fund Ltd.
+Easy Access Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Easy Access Saver is new enough to cancel, until January 19, 2026, its money back with its interest. Cancel It 
+£123.45 went to the Reclaim Fund after years unused. Under the UK Dormant Assets Scheme, a bank chooses whether to send it. You can claim it back at any time, through the bank or building society you had it with. Claim It Back 
+Source: the bank’s terms, https://www.santander.co.uk/assets/s3fs-public/AD_documents/fixed_rate_bonds_save0009oct23hcd_lr.pdf, read September 26, 2026. The country’s rules: https://www.reclaimfund.co.uk/the-schemes/the-main-scheme/, read September 26, 2026.
+
+=== gb-nationwide (the life banks at gb-nationwide)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+The bank’s terms: After 15 years in a row with no contact or transactions, Nationwide closes the account and moves the money to Reclaim Fund Ltd, with a letter first at 14 years and 10 months. You can always claim it back, with the interest it would have earned.
+Flex Instant Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Flex Instant Saver is new enough to cancel, until January 19, 2026, its money back with its interest. Cancel It 
+£123.45 went to the Reclaim Fund after years unused. Under the UK Dormant Assets Scheme, a bank chooses whether to send it. You can claim it back at any time, through the bank or building society you had it with. Claim It Back 
+Source: the bank’s terms, https://www.nationwide.co.uk/savings/fixed-rate-online-bond, read September 26, 2026. The country’s rules: https://www.reclaimfund.co.uk/the-schemes/the-main-scheme/, read September 26, 2026.
+
+=== ie-aib (the life banks at ie-aib)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Fixed Term Deposit, €1,000.00 at 2.00%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day. You can change that until January 4, 2027.
+The bank’s terms at the end: It reinvests automatically for the same or a similar term at the rate then, unless you say otherwise; you can change that in the app until 6 p.m. on the business day before maturity.
+Sources And Estimates
+Breaking it now costs nothing.
+Pay It Out At The End Break It Early Take The Interest So Far (€0.00) How This Works 
+The bank’s terms: Under the Dormant Accounts Act 2001, 15 years with no activity makes an account dormant. You can bring it back with a transaction until the next March 31; after that the money goes to the Dormant Accounts Fund, run by the NTMA, and you can still claim it back with interest.
+Demand Deposit Account is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Demand Deposit Account is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Fixed Term Deposit is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the Dormant Accounts Fund after years unused. An account becomes dormant on September 30 after 15 years with no transaction, and its money moves after the following March 31. You can always claim it back, with interest, with a Dormant Account Claim Form sent to the bank. Claim It Back 
+Source: the bank’s terms, https://www.aib.ie/our-products/savings-and-deposits/personal-fixed-term-deposit-account, read September 26, 2026. The country’s rules: https://www.citizensinformation.ie/en/money-and-tax/personal-finance/banking/dormant-bank-accounts-in-ireland/, read September 26, 2026.
+
+=== ie-bank-of-ireland (the life banks at ie-bank-of-ireland)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Fixed Term Deposit, €1,000.00 at 2.15%
+On January 5, 2027 it moves, with its interest, into the bank’s easy-access savings.
+The bank’s terms at the end: If you give no instructions, the whole balance goes into the Variable Rate Call account (0.10% AER, variable). Bank of Ireland contacts you before the term ends.
+Sources And Estimates
+Breaking it now costs nothing.
+Renew It At The End Pay It Out At The End Break It Early How This Works 
+The bank’s terms: Under the Dormant Accounts Act 2001, 15 years with no activity makes an account dormant. You can bring it back with a transaction until the next March 31; after that the money goes to the Dormant Accounts Fund, run by the NTMA, and you can still claim it back with interest.
+Demand Deposit Account is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Demand Deposit Account is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Fixed Term Deposit is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the Dormant Accounts Fund after years unused. An account becomes dormant on September 30 after 15 years with no transaction, and its money moves after the following March 31. You can always claim it back, with interest, with a Dormant Account Claim Form sent to the bank. Claim It Back 
+Source: the bank’s terms, https://personalbanking.bankofireland.com/save-and-invest/savings/fixed-term-savings-accounts/advantage-deposit-account/features-and-benefits/, read September 26, 2026. The country’s rules: https://www.citizensinformation.ie/en/money-and-tax/personal-finance/banking/dormant-bank-accounts-in-ireland/, read September 26, 2026.
+
+=== ie-ptsb (the life banks at ie-ptsb)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Fixed Term Deposit, €1,000.00 at 2.00%
+On January 5, 2027 it moves, with its interest, into the bank’s easy-access savings.
+The bank’s terms at the end: A fixed deposit opened at a branch moves into an Instant Access Account (0.01%, variable) unless you say otherwise. One opened online renews for a similar term at the rate then.
+Sources And Estimates
+Breaking it now costs nothing.
+Renew It At The End Pay It Out At The End Break It Early How This Works 
+The bank’s terms: Three years in a row with no transactions makes an account inactive, and PTSB may check your identity and address before you can use it. After 15 years with no transaction of yours it’s dormant, and if you don’t reactivate it by the next March 31, the money goes to the NTMA, where you can still claim it back.
+Demand Deposit Account is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Demand Deposit Account is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Fixed Term Deposit is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the Dormant Accounts Fund after years unused. An account becomes dormant on September 30 after 15 years with no transaction, and its money moves after the following March 31. You can always claim it back, with interest, with a Dormant Account Claim Form sent to the bank. Claim It Back 
+Source: the bank’s terms, https://www.ptsb.ie/saving-and-investing/deposit-accounts/fixed-term-deposit-account/ (via web.archive.org; the live site couldn’t be opened) and PTSB T&C PDF https://www.ptsb.ie/globalassets/pdf-documents/terms-and-conditions/current-account-including-online-explore-account-savings--investments/, read September 26, 2026. The country’s rules: https://www.citizensinformation.ie/en/money-and-tax/personal-finance/banking/dormant-bank-accounts-in-ireland/, read September 26, 2026.
+
+=== is-landsbankinn (the life banks at is-landsbankinn)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, 1,000 kr at 7.80%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: At the end of the term the account closes, and the balance and interest, less capital income tax, are paid into the Landsbankinn account it was funded from.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early How This Works 
+Round-Ups, Sparað með kortanotkun. Each debit card purchase is either rounded up to the next 100, 500 or 1,000 kr, or raised by a set 100, 250, 500 or 1,000 kr, as you choose, and the day’s saving moves at the end of each banking day.
+How It Counts Choose… Rounded Up A Set Amount 
+Round-Ups: Off How This Works 
+Not now: Choose how it counts: rounded up, or a set amount.
+When the account is short: If the account has no funds at the banking day’s end, that day’s saving is canceled, and it’s never made on an overdraft.
+What The Bank Leaves Open, And What The Game Leaves Out
+The detailed rules are from 2019 and 2020; the bank’s page still offers the next hundred or thousand and a set amount.
+A purchase already at a multiple of the unit: the game moves nothing.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: On a Visa credit card it’s worked out at the statement’s end and moved on the due date.
+Not in the game: Spara í appi’s set amount a purchase, whose choices the bank doesn’t give.
+Not in the game: Another customer’s account or a charity can receive it.
+Source: landsbankinn.is/einstaklingar/sparnadur (read live October 13, 2026); terms, Wayback capture of December 8, 2019, checked October 13, 2026.
+The bank’s terms: Landsbankinn may close an account unused for 2 years or more, after writing to you. Any balance moves to another of your accounts, or to an account at the bank if you have none.
+Vaxtareikningur is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Vaxtareikningur is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Term Deposit is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+123 kr went to the bank after years unused. Iceland has no state scheme for unclaimed money: your claim on a deposit lapses 20 years after its last deposit or withdrawal, and only if the bank has warned you in a way it can prove. You can claim it until then; after that, the claim is gone. Claim It Back 
+Source: the bank’s terms, https://www.landsbankinn.is/Uploads/documents/UmLandsbankann/Skilmalar/1515_Fastvaxtareikningur.pdf, read September 26, 2026. The country’s rules: https://www.althingi.is/lagas/nuna/2007150.html, read September 26, 2026.
+
+=== is-arion (the life banks at is-arion)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, 1,000 kr at 8.05%
+On January 5, 2027 it is paid, with its interest, into your current account.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early How This Works 
+The bank’s terms: If an account hasn’t been used for 2 years or more, Arion may close it. The balance goes to another of your accounts or, if you have none, to an interest-free holding account at the bank.
+Vöxtur is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Vöxtur is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Term Deposit is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+123 kr went to the bank after years unused. Iceland has no state scheme for unclaimed money: your claim on a deposit lapses 20 years after its last deposit or withdrawal, and only if the bank has warned you in a way it can prove. You can claim it until then; after that, the claim is gone. Claim It Back 
+Source: the bank’s terms, https://www.arionbanki.is/einstaklingar/sparnadur/sparnadarreikningar/voxtur-fastir-vextir/, read September 26, 2026. The country’s rules: https://www.althingi.is/lagas/nuna/2007150.html, read September 26, 2026.
+
+=== is-islandsbanki (the life banks at is-islandsbanki)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, 1,000 kr at 7.50%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: When the term ends, the balance goes to the account you chose when you opened it, and the Fastvaxtareikningur closes.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early Take The Interest So Far (0 kr) How This Works 
+Round-Ups, Eigðu afganginn. Each debit card purchase is rounded up to the next 100, 500 or 1,000 kr, as you choose, and the day’s difference moves to your savings at the end of each working banking day.
+Round Up To Choose… The next 100 kr The next 500 kr The next 1,000 kr 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: 100 kr, 500 kr, 1,000 kr.
+When the account is short: If the balance goes below the withdrawal limit, 0 kr, that day’s saving is canceled; the overdraft is never used for it.
+What The Bank Leaves Open, And What The Game Leaves Out
+The detailed rules are from the bank’s pages of 2009 and 2018; its page now still offers 100, 500 or 1,000 kr.
+A purchase already at a multiple of the unit: the game moves nothing.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: ATM withdrawals counted too, in the 2009 rules.
+Not in the game: Someone else’s account, or a charity’s, can receive it.
+Source: islandsbanki.is, Eigðu afganginn (read live October 13, 2026); rules, archived August 25, 2018, checked October 13, 2026.
+The bank’s terms: Íslandsbanki may close an empty account left unused over 4 year-ends, without notice. No rule was found for an account with money in it.
+Vaxtaþrep is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Vaxtaþrep is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Term Deposit is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+123 kr went to the bank after years unused. Iceland has no state scheme for unclaimed money: your claim on a deposit lapses 20 years after its last deposit or withdrawal, and only if the bank has warned you in a way it can prove. You can claim it until then; after that, the claim is gone. Claim It Back 
+Source: the bank’s terms, https://cdn.islandsbanki.is/image/upload/v1/documents/Fastvaxtareikningur.pdf, read September 26, 2026. The country’s rules: https://www.althingi.is/lagas/nuna/2007150.html, read September 26, 2026.
+
+=== fr-bnp-paribas (the life banks at fr-bnp-paribas)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Dépôt à terme, €1,000.00 at 2.38%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: It closes automatically at maturity, and the capital and interest are paid into the checking account (compte chèque) you named when you opened it.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early How This Works 
+The bank’s terms: Under the Loi Eckert, a checking account is inactive after 12 months unused, and savings after 5 years. Fees on it are capped. After 10 years with no transactions, the money goes to the Caisse des Dépôts and the account closes.
+Livret A is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Livret A is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Dépôt à terme is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the Caisse des Dépôts after years unused. It goes there after 10 years without activity, or 3 years after the holder’s death, and you can find it on Ciclade. The Caisse des Dépôts holds it for 20 years (27 after a death), and you can claim it back through Ciclade until it passes to the State. Claim It Back 
+Source: the bank’s terms, https://mabanque.bnpparibas/fr/epargner/comptes-livrets-epargne/depot-a-terme, read September 26, 2026. The country’s rules: https://www.caissedesdepots.fr/rechercher-des-assurances-vie-et-des-comptes-bancaires-inactifs, read September 26, 2026.
+
+=== fr-societe-generale (the life banks at fr-societe-generale)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Dépôt à terme, €1,000.00 at 2.38%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: A CAT Taux Fixe closes automatically at maturity, and pays the capital and interest in one go into your checking account.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early How This Works 
+The bank’s terms: Under the Loi Eckert, 12 months with no transaction or contact from you makes a checking account inactive. There’s a fee for each 12 months it stays inactive, and after 10 years the money goes to the Caisse des Dépôts. Société Générale doesn’t charge the fee on savings accounts (livrets).
+Livret A is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Livret A is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Dépôt à terme is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the Caisse des Dépôts after years unused. It goes there after 10 years without activity, or 3 years after the holder’s death, and you can find it on Ciclade. The Caisse des Dépôts holds it for 20 years (27 after a death), and you can claim it back through Ciclade until it passes to the State. Claim It Back 
+Source: the bank’s terms, https://static.sg.fr/bigfiles/pri/notices/SG_CAT-Taux-Fixe-7-24-mois_NIP.pdf, read September 26, 2026. The country’s rules: https://www.caissedesdepots.fr/rechercher-des-assurances-vie-et-des-comptes-bancaires-inactifs, read September 26, 2026.
+
+=== fr-lcl (the life banks at fr-lcl)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Dépôt à terme, €1,000.00 at 2.38%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: Optilion doesn’t renew: at maturity the capital and all its interest go automatically to the checking account it’s linked to. A CAT Libre renews each month.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early How This Works 
+Round-Ups, System’Épargne. Every card payment in euros is rounded up to the next 1 € or the next 5 €, as you choose, and the total moves to your savings twice a month.
+Round Up To Choose… The next €1.00 The next €5.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: €1.00, €5.00.
+When the account is short: If the period’s transfer would leave the account in debit, it’s canceled in full for that period, not carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+The day of the twice-monthly transfer: the terms say each “quinzaine”, so the game moves it on the 1st and the 16th.
+A payment already at a whole euro (or a multiple of 5 €): the game moves nothing.
+Turned off, the round-ups counted before aren’t credited, as the terms say; switching your primary account to another bank drops them too.
+Not in the game: A deferred-debit card’s round-ups move at the month’s end; the game’s card is an immediate-debit one.
+Not in the game: A child’s account or an LCL-chosen charity can receive them; the game moves them to your savings.
+Source: LCL, Carte Visa Cléo Dispositions Générales, Option System’Épargne, in force from January 1, 2026, checked October 13, 2026.
+The bank’s terms: Under the Loi Eckert, a checking account is inactive after 12 months. There’s a yearly fee, never more than what’s in the account, and after 10 years the money goes to the Caisse des Dépôts.
+Livret A is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Livret A is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Dépôt à terme is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the Caisse des Dépôts after years unused. It goes there after 10 years without activity, or 3 years after the holder’s death, and you can find it on Ciclade. The Caisse des Dépôts holds it for 20 years (27 after a death), and you can claim it back through Ciclade until it passes to the State. Claim It Back 
+Source: the bank’s terms, https://www.lcl.fr/livrets-epargne-logement/compte-a-terme-optilion-strategique-plus, read September 26, 2026. The country’s rules: https://www.caissedesdepots.fr/rechercher-des-assurances-vie-et-des-comptes-bancaires-inactifs, read September 26, 2026.
+
+=== fr-credit-agricole (the life banks at fr-credit-agricole)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Dépôt à terme, €1,000.00 at 2.38%
+On January 5, 2027 it is paid, with its interest, into your current account.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early How This Works 
+The bank’s terms: Under the Loi Eckert, an account with no transactions except the bank’s own is inactive. A yearly fee is taken from each inactive account, at most €30 and never more than what’s in it. After 10 years the money goes to the Caisse des Dépôts.
+Livret A is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Livret A is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Dépôt à terme is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the Caisse des Dépôts after years unused. It goes there after 10 years without activity, or 3 years after the holder’s death, and you can find it on Ciclade. The Caisse des Dépôts holds it for 20 years (27 after a death), and you can claim it back through Ciclade until it passes to the State. Claim It Back 
+Source: the bank’s terms, https://communication.ca-nord-est.fr/pdf/conditions-tarifaires/Plaquette_Prix_PART_2026.pdf, read September 26, 2026. The country’s rules: https://www.caissedesdepots.fr/rechercher-des-assurances-vie-et-des-comptes-bancaires-inactifs, read September 26, 2026.
+
+=== fr-la-banque-postale (the life banks at fr-la-banque-postale)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Dépôt à terme, €1,000.00 at 2.38%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: The capital and interest are paid at maturity, or it renews automatically if you chose that when you opened it.
+Sources And Estimates
+Breaking it now costs nothing.
+Renew It At The End Break It Early How This Works 
+The bank’s terms: Under the Loi Eckert, an account with no movement for more than 12 months is charged the “Tenue de compte sans mouvement ou inactif” fee, except a minor’s account. The fees on an inactive account are capped at €30, and after 10 years the money goes to the Caisse des Dépôts.
+Livret A is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Livret A is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Dépôt à terme is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the Caisse des Dépôts after years unused. It goes there after 10 years without activity, or 3 years after the holder’s death, and you can find it on Ciclade. The Caisse des Dépôts holds it for 20 years (27 after a death), and you can claim it back through Ciclade until it passes to the State. Claim It Back 
+Source: the bank’s terms, https://www.labanquepostale.fr/particulier/epargner/compte-a-terme.html, read September 26, 2026. The country’s rules: https://www.caissedesdepots.fr/rechercher-des-assurances-vie-et-des-comptes-bancaires-inactifs, read September 26, 2026.
+
+=== de-deutsche-bank (the life banks at de-deutsche-bank)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+FestzinsSparen, €1,000.00 at 2.30%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day. You can change that until October 7, 2026.
+The bank’s terms at the end: It renews automatically for the same term at the rate then, at present for 1 year at most unless you ask otherwise. To be paid out, give at least 3 months’ notice before the end, with a transfer order.
+Sources And Estimates
+Breaking it now costs nothing.
+Pay It Out At The End Break It Early Take The Interest So Far (€0.00) How This Works 
+The bank’s terms: No German law makes an unused account inactive: it keeps running. After 30 years with no movement, banks take the balance off their books, but your claim to it can be revived.
+Flexgeld is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Flexgeld is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+FestzinsSparen is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to none: Germany has no legal framework or official definition for dormant accounts; the balance stays with the bank until claimed; the state only takes it as statutory heir after years unused. yes, no time limit (per Deutsche Welle) Claim It Back 
+Source: the bank’s terms, https://www.deutsche-bank.de/dam/deutschebank/de/shared/pdf/pk-sparen_geldanlage-festzinssparen-pib.pdf, read September 26, 2026. The country’s rules: https://uk.news.yahoo.com/owns-billions-germanys-forgotten-accounts-084300580.html, read September 26, 2026.
+
+=== de-commerzbank (the life banks at de-commerzbank)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Festgeld, €1,000.00 at 2.22%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: When you open it, you choose whether it renews automatically on the same terms or pays out. A payout goes to its linked account (Verrechnungskonto).
+Sources And Estimates
+Breaking it now costs nothing.
+Renew It At The End Break It Early How This Works 
+The bank’s terms: No German law makes an unused account inactive: it keeps running. After 30 years with no movement, banks take the balance off their books, but your claim to it can be revived.
+Tagesgeld is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Tagesgeld is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Festgeld is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to none: Germany has no legal framework or official definition for dormant accounts; the balance stays with the bank until claimed; the state only takes it as statutory heir after years unused. yes, no time limit (per Deutsche Welle) Claim It Back 
+Source: the bank’s terms, https://www.commerzbank.de/privatkunden/sparen-anlegen/festgeld/, read September 26, 2026. The country’s rules: https://uk.news.yahoo.com/owns-billions-germanys-forgotten-accounts-084300580.html, read September 26, 2026.
+
+=== de-postbank (the life banks at de-postbank)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Festgeld, €1,000.00 at 2.22%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day. You can change that until October 7, 2026.
+The bank’s terms at the end: It keeps running for the same term at the rate then, until you give notice at least 3 months before the end, with a transfer order.
+Sources And Estimates
+Breaking it now costs nothing.
+Pay It Out At The End Break It Early Take The Interest So Far (€0.00) How This Works 
+The bank’s terms: No German law makes an unused account inactive: it keeps running. After 30 years with no movement, banks take the balance off their books, but your claim to it can be revived.
+Tagesgeld is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Tagesgeld is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Festgeld is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to none: Germany has no legal framework or official definition for dormant accounts; the balance stays with the bank until claimed; the state only takes it as statutory heir after years unused. yes, no time limit (per Deutsche Welle) Claim It Back 
+Source: the bank’s terms, https://www.postbank.de/privatkunden/produkte/wertpapiere-sparen/sparen/zinssparen.html, read September 26, 2026. The country’s rules: https://uk.news.yahoo.com/owns-billions-germanys-forgotten-accounts-084300580.html, read September 26, 2026.
+
+=== de-ing (the life banks at de-ing)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Round-Ups, Kleingeld Plus. Every card payment is rounded up to the next 1 € or the next 5 €, as you choose, and the day’s amounts move to your Extra-Konto savings each day.
+Round Up To Choose… The next €1.00 The next €5.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: €1.00, €5.00.
+When the account is short: It pauses while the current account holds less than 20 €, so it doesn’t go into the red, and starts again above it.
+What The Bank Leaves Open, And What The Game Leaves Out
+Round-ups from payments made while it’s paused: the game counts none.
+Whether a refunded payment takes its round-up back: purchases in the game aren’t refunded.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: With Girokonto Future, the change can go to a charity instead of savings.
+Source: ing.de, Kleingeld Plus product page and FAQ; Bedingungen Girokonto Future, June 19, 2026, checked October 13, 2026.
+The bank’s terms: No German law makes an unused account inactive: it keeps running. After 30 years with no movement, banks take the balance off their books, but your claim to it can be revived.
+Extra-Konto is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Extra-Konto is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to none: Germany has no legal framework or official definition for dormant accounts; the balance stays with the bank until claimed; the state only takes it as statutory heir after years unused. yes, no time limit (per Deutsche Welle) Claim It Back 
+Source: the bank’s terms, https://www.ing.de/sparen-anlegen/sparen/festgeld/kundenservice/, read September 26, 2026. The country’s rules: https://uk.news.yahoo.com/owns-billions-germanys-forgotten-accounts-084300580.html, read September 26, 2026.
+
+=== de-berliner-sparkasse (the life banks at de-berliner-sparkasse)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Festgeld, €1,000.00 at 2.22%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day. You can change that until December 29, 2026.
+The bank’s terms at the end: S-Festgeld renews automatically for the same term at the rate then. To get the money instead, tell your adviser (Kundenbetreuer) at least 5 working days before the term ends.
+Sources And Estimates
+Breaking it now costs nothing.
+Pay It Out At The End Break It Early Take The Interest So Far (€0.00) How This Works 
+The bank’s terms: No German law makes an unused account inactive: it keeps running. After 30 years with no movement, banks take the balance off their books, but your claim to it can be revived.
+Tagesgeld is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Tagesgeld is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Festgeld is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to none: Germany has no legal framework or official definition for dormant accounts; the balance stays with the bank until claimed; the state only takes it as statutory heir after years unused. yes, no time limit (per Deutsche Welle) Claim It Back 
+Source: the bank’s terms, https://www.berliner-sparkasse.de/content/dam/myif/berliner-sk/work/dokumente/pdf/preise-leistungen/preis-leistungsverzeichnis.pdf, read September 26, 2026. The country’s rules: https://uk.news.yahoo.com/owns-billions-germanys-forgotten-accounts-084300580.html, read September 26, 2026.
+
+=== es-santander (the life banks at es-santander)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Depósito a plazo fijo, €1,000.00 at 2.02%
+On January 5, 2027 it is paid, with its interest, into your current account.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early How This Works 
+Round-Ups, Cuenta Hucha, redondeo. Each card purchase is rounded up to the next euro, and the difference goes to your Hucha savings.
+Round-Ups: Off How This Works 
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+Santander also offers “two units up” and “another figure”, without saying how either is worked out: the game offers the next euro only.
+A purchase of whole euros: the game moves nothing.
+When it moves: the game moves the day’s at its end.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Source: bancosantander.es, Cuenta Hucha Digital page and precontract (read live October 13, 2026), checked October 13, 2026.
+The bank’s terms: In Spain, an account with no activity from you for 20 years is legally abandoned, and the balance becomes the State’s (Ley 33/2003, art. 18, as the Banco de España’s Portal del Cliente Bancario explains it). The bank must write to you by certified mail at least 3 months before the 20 years are up, unless the letter would cost more than the balance.
+Cuenta Hucha is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Cuenta Hucha is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Depósito a plazo fijo is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the State after years unused. Under article 18 of Ley 33/2003, money in an account where you’ve done nothing to show it’s yours for 20 years passes to the Administración General del Estado, and funds education and accessibility programs for people with disabilities. No way to claim it back was found: the law makes it the State’s. Claim It Back 
+Source: the bank’s terms, https://roams.es/actualidad/finanzas/depositos-santander-rinden-mas-2-tae-15000-euros-nuevas-condiciones/, read September 26, 2026. The country’s rules: https://www.boe.es/buscar/act.php?id=BOE-A-2003-20254, read September 26, 2026.
+
+=== es-bbva (the life banks at es-bbva)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Depósito a plazo fijo, €1,000.00 at 2.02%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: It’s paid out at maturity and doesn’t renew by itself (“Renovación tácita... NO”). The capital and interest go into the linked account.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early How This Works 
+Round-Ups, Programa tu Cuenta, Redondeo en compras. Each BBVA debit card purchase that isn’t a whole euro is rounded up to the next euro; the day’s round-ups are added up at its end and move to your savings.
+Round-Ups: Off How This Works 
+When the account is short: If the account doesn’t have what the rule needs, it doesn’t run. The game drops that day’s: BBVA doesn’t say whether it’s tried again.
+What The Bank Leaves Open, And What The Game Leaves Out
+A multiplier from x2 to x4, in BBVA’s 2019 and 2020 news and on none of its pages now: not offered.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A purchase refunded leaves its round-up where it went, as BBVA says; purchases in the game aren’t refunded.
+Not in the game: A pension plan or a fund can receive them.
+Source: bbva.es, reglas de Programa tu Cuenta (updated July 28, 2025) and app-redondeo-ahorro (updated October 13, 2025), checked October 13, 2026.
+The bank’s terms: In Spain, an account with no activity from you for 20 years is legally abandoned, and the balance becomes the State’s (Ley 33/2003, art. 18, as the Banco de España’s Portal del Cliente Bancario explains it). The bank must write to you by certified mail at least 3 months before the 20 years are up, unless the letter would cost more than the balance.
+Cuenta Metas is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Cuenta Metas is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Depósito a plazo fijo is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the State after years unused. Under article 18 of Ley 33/2003, money in an account where you’ve done nothing to show it’s yours for 20 years passes to the Administración General del Estado, and funds education and accessibility programs for people with disabilities. No way to claim it back was found: the law makes it the State’s. Claim It Back 
+Source: the bank’s terms, https://www.bbva.es/content/dam/public-web/bbvaes/documents/productos/depositos/deposito-combinado/precontractual-deposito-combinado-70-30.pdf (read via Wayback snapshot June 12, 2025), read September 26, 2026. The country’s rules: https://www.boe.es/buscar/act.php?id=BOE-A-2003-20254, read September 26, 2026.
+
+=== es-caixabank (the life banks at es-caixabank)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Depósito a plazo fijo, €1,000.00 at 2.02%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: It’s paid out at maturity into the linked checking account, and it’s “No prorrogable”: it can’t be renewed.
+Sources And Estimates
+Breaking it now costs nothing.
+Break It Early How This Works 
+The bank’s terms: In Spain, an account with no activity from you for 20 years is legally abandoned, and the balance becomes the State’s (Ley 33/2003, art. 18, as the Banco de España’s Portal del Cliente Bancario explains it). The bank must write to you by certified mail at least 3 months before the 20 years are up, unless the letter would cost more than the balance.
+Cuenta Online sin Comisiones is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Cuenta Online sin Comisiones is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Depósito a plazo fijo is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the State after years unused. Under article 18 of Ley 33/2003, money in an account where you’ve done nothing to show it’s yours for 20 years passes to the Administración General del Estado, and funds education and accessibility programs for people with disabilities. No way to claim it back was found: the law makes it the State’s. Claim It Back 
+Source: the bank’s terms, https://www.caixabank.es/deployedfiles/particulares/Estaticos/pdf/Depositos/Precontrato-Bonificado-CAS.pdf, read September 26, 2026. The country’s rules: https://www.boe.es/buscar/act.php?id=BOE-A-2003-20254, read September 26, 2026.
+
+=== es-sabadell (the life banks at es-sabadell)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Depósito a plazo fijo, €1,000.00 at 2.02%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically for the same amount and term at the rate then, unless you ask before maturity for it not to, and then the capital and interest go into the linked account.
+Sources And Estimates
+Breaking it now costs nothing.
+Pay It Out At The End Break It Early How This Works 
+Round-Ups, Ahorro Sabadell, redondeo de cada compra. Each purchase is rounded up to the next euro, and the week’s round-ups move to your Ahorro Sabadell overnight from Friday to Saturday.
+Round-Ups: Off How This Works 
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+The next euro is only in Sabadell’s 2020 brochure; its pages now give no unit.
+Whether a “compra” is a card purchase only or, as in 2020, any payment from the account: the game counts card purchases.
+A multiplier is reported only outside Sabadell: not offered.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Source: bancsabadell.com, Ahorro Sabadell page and help center (when the saving moves, May 1, 2024), checked October 13, 2026.
+The bank’s terms: In Spain, an account with no activity from you for 20 years is legally abandoned, and the balance becomes the State’s (Ley 33/2003, art. 18, as the Banco de España’s Portal del Cliente Bancario explains it). The bank must write to you by certified mail at least 3 months before the 20 years are up, unless the letter would cost more than the balance.
+Cuenta Ahorro Sabadell is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Cuenta Ahorro Sabadell is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Depósito a plazo fijo is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the State after years unused. Under article 18 of Ley 33/2003, money in an account where you’ve done nothing to show it’s yours for 20 years passes to the Administración General del Estado, and funds education and accessibility programs for people with disabilities. No way to claim it back was found: the law makes it the State’s. Claim It Back 
+Source: the bank’s terms, https://www.bancsabadell.com/bsnacional/en/personal/savings/deposits/, read September 26, 2026. The country’s rules: https://www.boe.es/buscar/act.php?id=BOE-A-2003-20254, read September 26, 2026.
+
+=== es-bankinter (the life banks at es-bankinter)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Depósito a plazo fijo, €1,000.00 at 2.02%
+On January 5, 2027 it is paid, with its interest, into your current account. You can change that until January 2, 2027.
+The bank’s terms at the end: It can renew automatically for the same term at the rate on the business day before maturity. To stop it renewing, or to set it to, tell Bankinter at least 3 business days before maturity.
+Sources And Estimates
+Breaking it now costs nothing.
+Renew It At The End Break It Early Take The Interest So Far (€0.00) How This Works 
+Round-Ups, Cuenta Modo Ahorro, redondeo. Each card purchase moves the change to the next euro and the rest of the amount you choose, €1 or €2 (€6.30 at €2 moves €1.70), in one charge the day after.
+Amount Choose… €1.00 €2.00 
+Round-Ups: Off How This Works 
+Not now: Choose the amount: €1.00 or €2.00.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+Bankinter also lets you pick any other amount, with no limits stated: the game offers the two it names.
+A purchase of whole euros: the game moves the amount past the first euro, nothing at €1.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A round-up set on several goals moves once for each; the game has one.
+Source: bankinter.com, Cuenta Modo Ahorro (read live October 13, 2026), checked October 13, 2026.
+The bank’s terms: In Spain, an account with no activity from you for 20 years is legally abandoned, and the balance becomes the State’s (Ley 33/2003, art. 18, as the Banco de España’s Portal del Cliente Bancario explains it). The bank must write to you by certified mail at least 3 months before the 20 years are up, unless the letter would cost more than the balance.
+Cuenta Nómina is dormant: the bank has blocked it until you reactivate it. Reactivate 
+Cuenta Nómina is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+Depósito a plazo fijo is new enough to cancel, until January 19, 2026, its money back without the interest it earned. Cancel It 
+€123.45 went to the State after years unused. Under article 18 of Ley 33/2003, money in an account where you’ve done nothing to show it’s yours for 20 years passes to the Administración General del Estado, and funds education and accessibility programs for people with disabilities. No way to claim it back was found: the law makes it the State’s. Claim It Back 
+Source: the bank’s terms, https://www.bankinter.com/banca/en/investment-savings/savings/features-of-deposits, read September 26, 2026. The country’s rules: https://www.boe.es/buscar/act.php?id=BOE-A-2003-20254, read September 26, 2026.
+
+=== jp-mufg (the life banks at jp-mufg)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+定期預金 (Time Deposit), ¥1,000 at 0.50%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically (自動継続) for the same term at the rate on the renewal date. To stop it, tell the bank by the maturity date, and it’s paid out at maturity into the account you named.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: A スーパー定期 (自動継続型), MUFG’s automatically renewing time deposit, can’t be ended before maturity unless the bank agrees it’s unavoidable (やむを得ない). Ended early, it earns a lower rate by how long it ran: under 6 months, the ordinary savings rate on the day you end it; 6 months to a year, 70% of the 6-month rate shown when you deposited; 1 to 2 years, 70% of the 1-year rate; 2 to 3 years, 70% of the 2-year rate; and so on, to 70% of the 9-year rate for 9 to 10 years. Each band uses the rate for the time it actually ran, not the term you chose, and it’s never below the ordinary savings rate. Interest already paid above that is taken from the principal.
+Pay It Out At The End Break It Early Take The Interest So Far (¥0) How This Works 
+The bank’s terms: MUFG’s unused-account fee (未利用口座管理手数料): an ordinary savings account (普通預金) opened on or after July 1, 2021, with no deposit or withdrawal for 2 years, not counting interest or the fee, gets a notice. If it’s still unused about 3 months later, ¥1,320 a year is taken. If the balance is less than the fee, the whole balance is taken and the account closed. Accounts opened by June 30, 2021, and holders with other savings, investments or loans at the bank, are exempt. After 10 years with no deposits or withdrawals, under the Dormant Deposits Act (休眠預金等活用法, in force since January 2018), the balance may go to the Deposit Insurance Corporation (預金保険機構) as a dormant deposit (休眠預金), after a public notice, and you can still claim it back at the bank’s counter. That last rule is the law for every Japanese bank, as Japan Post Bank’s page states it.
+普通預金 (Ordinary Deposit) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+¥123 went to the Deposit Insurance Corporation of Japan (預金保険機構) after years unused. That’s for deposits with no transactions for 10 years or more, since January 1, 2009. You can claim it back at your bank, with no time limit: “期限はありません。いつでも引き出すことができます” (there’s no deadline, and you can withdraw it at any time). Claim It Back 
+Source: the bank’s terms, https://www.bk.mufg.jp/regulation/teiki_super_jido.html, read September 26, 2026. The country’s rules: https://www.fsa.go.jp/policy/kyuminyokin/kyuminyokin.html, read September 26, 2026.
+
+=== jp-smbc (the life banks at jp-smbc)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+定期預金 (Time Deposit), ¥1,000 at 0.50%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically for the same term at the bank’s rate on the renewal date. To stop it, tell the bank by the maturity date, and it’s paid into the account you named at maturity.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: A スーパー定期 (自動継続), SMBC’s automatically renewing time deposit, can’t be ended before maturity unless the bank agrees it’s unavoidable. Ended early, it earns a lower rate, set by its term and how long it ran, as a share of the agreed rate. For a term of 1 month to under 3 years: under 6 months, the ordinary savings rate; 6 months to a year, 50%; 1 to 3 years, 70%. For a 3-year term: under 6 months, the ordinary rate; then 40% (6 months to a year), 50% (1 to 1½ years), 60% (1½ to 2), 70% (2 to 2½) and 90% (2½ to 3). Over 3 to 4 years: 10% (6 months to a year), 20% (1 to 1½), 30% (1½ to 2), 40% (2 to 3) and 70% (3 to 4). Over 4 to 5 years: 10% (6 months to a year), 20% (1 to 2), 30% (2 to 3), 50% (3 to 4) and 70% (4 to 5). Over 5 to 7 years: as for 5 years, then 80% (5 to 6) and 90% (6 to 7). It’s never below the ordinary savings rate, and interest already paid is settled against it.
+Pay It Out At The End Break It Early Take The Interest So Far (¥0) How This Works 
+The bank’s terms: SMBC’s digital unused-account fee (デジタル未利用手数料, from April 1, 2024): an ordinary savings account (普通預金) with no deposit, transfer or withdrawal for 2 years or more gets a letter. If it’s still unused about 3 months later, ¥1,100 a year is taken, each later year without another notice. If the balance is less than the fee, the balance is taken and the account closed. You’re exempt if the account was opened by March 31, 2021, holds ¥10,000 or more, or is set up for digital banking (Web通帳 with a one-time password or SMBC Safety Pass); if you’re under 18 or 75 or over; or if you have other term or investment accounts at the branch, or a loan. After 10 years with no deposits or withdrawals, under the Dormant Deposits Act (休眠預金等活用法, in force since January 2018), the balance may go to the Deposit Insurance Corporation (預金保険機構) as a dormant deposit (休眠預金), after a public notice, and you can still claim it back at the bank’s counter. That last rule is the law for every Japanese bank, as Japan Post Bank’s page states it.
+普通預金 (Ordinary Deposit) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+¥123 went to the Deposit Insurance Corporation of Japan (預金保険機構) after years unused. That’s for deposits with no transactions for 10 years or more, since January 1, 2009. You can claim it back at your bank, with no time limit: “期限はありません。いつでも引き出すことができます” (there’s no deadline, and you can withdraw it at any time). Claim It Back 
+Source: the bank’s terms, https://www.smbc.co.jp/kojin/sougou/ippan/pdf/jido_teiki_super.pdf?version=231101, read September 26, 2026. The country’s rules: https://www.fsa.go.jp/policy/kyuminyokin/kyuminyokin.html, read September 26, 2026.
+
+=== jp-mizuho (the life banks at jp-mizuho)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+定期預金 (Time Deposit), ¥1,000 at 0.50%
+On January 5, 2027 it moves, with its interest, into the bank’s easy-access savings.
+The bank’s terms at the end: On fixed-term types, it renews automatically (自動継続) if you chose that when you deposited; otherwise it’s paid out. After maturity it earns the ordinary savings rate.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Ended before maturity, a みずほスーパー定期 earns an early rate set by its term and how long it ran, as a share of the agreed rate, and it can be 0%. For a term of 1 month to under 3 years: under 6 months, the ordinary savings rate; 6 months to a year, 50%; 1 to 3 years, 70%. For a 3-year term: 20% (6 months to 2 years), 40% (2 to 2½) and 60% (2½ to 3). Over 3 to 4 years: 20% (6 months to 2 years), 40% (2 to 2½) and 60% (2½ to 4). Over 4 to 5 years: 10% (6 months to 2 years), 20% (2 to 3), 40% (3 to 4) and 70% (4 to 5). Over 5 years: the ordinary savings rate for the first year; the rest of that table wasn’t read. You pay back any interest already paid above the early rate.
+Renew It At The End Break It Early Take The Interest So Far (¥0) How This Works 
+The bank’s terms: No unused-account fee was found for Mizuho. A passbook account whose passbook hasn’t been updated (記帳) for its deposit term plus a year, as of each January 31, is switched automatically to a みずほe-口座, with no paper passbook. A paper passbook on an account opened from January 18, 2021, costs ¥1,100 a book. After 10 years with no deposits or withdrawals, under the Dormant Deposits Act (休眠預金等活用法, in force since January 2018), the balance may go to the Deposit Insurance Corporation (預金保険機構) as a dormant deposit (休眠預金), after a public notice, and you can still claim it back at the bank’s counter. That last rule is the law for every Japanese bank, as Japan Post Bank’s page states it.
+普通預金 (Ordinary Deposit) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+¥123 went to the Deposit Insurance Corporation of Japan (預金保険機構) after years unused. That’s for deposits with no transactions for 10 years or more, since January 1, 2009. You can claim it back at your bank, with no time limit: “期限はありません。いつでも引き出すことができます” (there’s no deadline, and you can withdraw it at any time). Claim It Back 
+Source: the bank’s terms, https://www.mizuhobank.co.jp/setsumeisho/pdf/teiki_super.pdf (read via Wayback snapshot; document dated January 17, 2021), read September 26, 2026. The country’s rules: https://www.fsa.go.jp/policy/kyuminyokin/kyuminyokin.html, read September 26, 2026.
+
+=== jp-resona (the life banks at jp-resona)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+The bank’s terms: Resona’s unused-account fee (未利用口座管理手数料): an ordinary savings account (普通預金) opened on or after April 1, 2004, with no deposit or withdrawal for 2 years or more and under ¥10,000 in it, among other conditions, gets a notice. Use or close the account within about 3 months to avoid the fee; otherwise it’s ¥1,320 a year. A passbook account opened from January 16, 2023, may pay a passbook fee of ¥550 a year. After 10 years with no deposits or withdrawals, under the Dormant Deposits Act (休眠預金等活用法, in force since January 2018), the balance may go to the Deposit Insurance Corporation (預金保険機構) as a dormant deposit (休眠預金), after a public notice, and you can still claim it back at the bank’s counter. That last rule is the law for every Japanese bank, as Japan Post Bank’s page states it.
+普通預金 (Ordinary Deposit) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+¥123 went to the Deposit Insurance Corporation of Japan (預金保険機構) after years unused. That’s for deposits with no transactions for 10 years or more, since January 1, 2009. You can claim it back at your bank, with no time limit: “期限はありません。いつでも引き出すことができます” (there’s no deadline, and you can withdraw it at any time). Claim It Back 
+Source: the bank’s terms, https://www.resonabank.co.jp/pdf/teiki_super.pdf (read via Wayback snapshot; document dated April 1, 2014), read September 26, 2026. The country’s rules: https://www.fsa.go.jp/policy/kyuminyokin/kyuminyokin.html, read September 26, 2026.
+
+=== jp-japan-post-bank (the life banks at jp-japan-post-bank)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+定期貯金 (Time Savings), ¥1,000 at 0.50%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: You choose when you deposit: renew the principal and interest for the same term (継続預入), renew the principal and move the interest to ordinary savings (再預入), or move it all to ordinary savings (通常貯金, 満期振替預入). A time deposit held as security (担保定期貯金) moves to ordinary savings unless you choose otherwise. Renewals are capped (a 1-year deposit, 9 times over 10 years), and a 10-year deposit can’t renew. After maturity it earns about the ordinary savings rate.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Take a 定期貯金 (time deposit) out before its term ends, and it earns the early-withdrawal rate (預入期間内払戻利率), never below the ordinary savings (通常貯金) rate when you deposited: under 6 months, that ordinary rate; 6 months to a year, 60% of the 6-month time deposit rate when you deposited; 1 to 2 years, 60% of the 1-year rate; 2 to 3 years, 60% of the 2-year rate; and so on, to 60% of the 9-year rate for 9 to 10 years. Each band uses the rate for the time it actually ran.
+Renew It At The End Break It Early Take The Interest So Far (¥0) How This Works 
+The bank’s terms: After 10 years or more with no activity, and a notice on the bank’s website, the balance may go to the Deposit Insurance Corporation as a dormant deposit (休眠貯金). Cash machines and ゆうちょダイレクト stop working for it, but you can still take it out or use it again at a counter. Postal savings (定額, 定期 or 積立郵便貯金) deposited before October 1, 2007, are lost if not claimed 20 years and 2 months after maturity, under the old Postal Savings Act.
+通常貯金 (Ordinary Savings) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+¥123 went to the Deposit Insurance Corporation of Japan (預金保険機構) after years unused. That’s for deposits with no transactions for 10 years or more, since January 1, 2009. You can claim it back at your bank, with no time limit: “期限はありません。いつでも引き出すことができます” (there’s no deadline, and you can withdraw it at any time). Claim It Back 
+Source: the bank’s terms, https://www.jp-bank.japanpost.jp/setumeisho/pdf/teiki.pdf, read September 26, 2026. The country’s rules: https://www.fsa.go.jp/policy/kyuminyokin/kyuminyokin.html, read September 26, 2026.
+
+=== kr-kb-kookmin (the life banks at kr-kb-kookmin)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+정기예금 (Time Deposit), ₩1,000 at 3.50%
+On January 5, 2027 it moves, with its interest, into the bank’s easy-access savings.
+The bank’s terms at the end: When you open it, you pick one: close automatically, with the principal and interest paid to the linked account; renew the principal only, with the interest paid out; or renew both, at the rate posted on the renewal day, for up to 10 years in all. Left open after maturity, it earns the post-maturity rate (만기후이율): half the base rate within a month, 30% of it from 1 to 3 months, and 0.1% after 3 months.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Ended early, a KB Star 정기예금 earns a lower rate, not a penalty in days of interest: under 1 month, 0.1% a year; from 1 to 3 months, half the base rate times the months it ran over the months agreed, at least 0.3%; 3 to 6 months, 50% (at least 0.5%); 6 to 8 months, 60%; 8 to 10 months, 70%; 10 to 11 months, 80%; 11 months or more, 90%, each at least 0.5%. The base rate leaves out preferential rates.
+Renew It At The End Pay It Out At The End Break It Early Take The Interest So Far (₩0) How This Works 
+The bank’s terms: An everyday account (입출금) with under ₩100,000 in it becomes a suspended account (거래중지계좌) after 1 to 3 years without transactions: 12 months for under ₩10,000, 24 for under ₩50,000 and 36 for under ₩100,000. Deposits and withdrawals are then blocked until you release it at a branch with proof of what it’s for, or close it. After 5 years without a transaction, or 5 years past maturity for a term deposit, it becomes a dormant deposit (휴면예금): the account’s contract ends and the balance may go to the Korea Inclusive Finance Agency (서민금융진흥원), where you can claim it back.
+KB국민ONE통장 (everyday account) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+₩123 went to the Korea Inclusive Finance Agency (서민금융진흥원) after years unused. It goes there once your claim lapses, 5 years after the last transaction, such as the last interest payment. You can still claim it back, and no deadline is stated; online, up to ₩20 million an item, paid the same day. Claim It Back 
+Source: the bank’s terms, https://obank.kbstar.com/quics?page=C016613&cc=b061496%3Ab061645&isNew=Y&prcode=DP01000938, read September 26, 2026. The country’s rules: https://www.kinfa.or.kr/cyber/appInfo/sleepMoneyInf.do, read September 26, 2026.
+
+=== kr-shinhan (the life banks at kr-shinhan)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+정기예금 (Time Deposit), ₩1,000 at 3.40%
+On January 5, 2027 it moves, with its interest, into the bank’s easy-access savings.
+The bank’s terms at the end: You can have it renew automatically (자동재예치), the principal or the principal and interest, at the base rate posted on the renewal day, for up to 10 years in all, or close automatically into the linked account. You can also extend its maturity once, by up to 3 months, at the original rate. Otherwise, after maturity it earns the post-maturity rate (만기후이자율): half the posted rate for an ordinary time deposit (일반정기예금) of that term within a month, a quarter of it from 1 to 6 months, each at least 0.10%, and 0.10% after 6 months.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Ended early, a 쏠편한 정기예금 earns a lower rate: under 1 month, 0.10% a year; from 1 month, a share of the base rate times the months it ran over the months agreed, at least 0.10%. The share, by how long it ran: 20% from 1 to 3 months, 30% from 3 to 6, 70% from 6 to 9, 80% from 9 to 11, and 90% from 11 months on.
+Renew It At The End Pay It Out At The End Break It Early Take The Interest So Far (₩0) How This Works 
+The bank’s terms: An everyday account (입출금) with under ₩100,000 in it becomes a suspended account (거래중지계좌) after 1 to 3 years without transactions: 12 months for under ₩10,000, 24 for under ₩50,000 and 36 for under ₩100,000. Deposits and withdrawals are then blocked until you release it at a branch with proof of what it’s for, or close it. After 5 years without a transaction, or 5 years past maturity for a term deposit, it becomes a dormant deposit (휴면예금): the account’s contract ends and the balance may go to the Korea Inclusive Finance Agency (서민금융진흥원), where you can claim it back.
+쏠편한 입출금통장 (everyday account) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+₩123 went to the Korea Inclusive Finance Agency (서민금융진흥원) after years unused. It goes there once your claim lapses, 5 years after the last transaction, such as the last interest payment. You can still claim it back, and no deadline is stated; online, up to ₩20 million an item, paid the same day. Claim It Back 
+Source: the bank’s terms, https://img.shinhan.com/sbank2016/seol/20180220862400000030LC000030.PDF, read September 26, 2026. The country’s rules: https://www.kinfa.or.kr/cyber/appInfo/sleepMoneyInf.do, read September 26, 2026.
+
+=== kr-hana (the life banks at kr-hana)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+정기예금 (Time Deposit), ₩1,000 at 3.30%
+On January 5, 2027 it moves, with its interest, into the bank’s easy-access savings. You can change that until January 4, 2027.
+The bank’s terms at the end: A 하나의 정기예금 can renew automatically at maturity (만기자동재예치) if you ask by the day before: the principal, or the principal and interest after tax, for the same term at the rate posted on the renewal day. Otherwise it stays in at the post-maturity rate: half the posted base rate for an ordinary monthly-interest time deposit (일반정기예금 월이자지급식) within a month, and a quarter of it after that.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Ended early, a Hana 정기예금 earns a lower rate: 0.10% a year under 1 month, 0.15% from 1 to 3 months and 0.20% from 3 to 6 months. From 6 months, it’s a share of the base rate times the days it ran over the days agreed, at least 0.20%: 60% from 6 to 9 months, 70% from 9 to 11, and 90% from 11 months on. The rate is cut to 3 decimal places.
+Renew It At The End Break It Early Take The Interest So Far (₩0) How This Works 
+The bank’s terms: An everyday account (입출금) with under ₩100,000 in it becomes a suspended account (거래중지계좌) after 1 to 3 years without transactions: 12 months for under ₩10,000, 24 for under ₩50,000 and 36 for under ₩100,000. Deposits and withdrawals are then blocked until you release it at a branch with proof of what it’s for, or close it. After 5 years without a transaction, or 5 years past maturity for a term deposit, it becomes a dormant deposit (휴면예금): the account’s contract ends and the balance may go to the Korea Inclusive Finance Agency (서민금융진흥원), where you can claim it back.
+달달 하나 통장 (everyday account) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+₩123 went to the Korea Inclusive Finance Agency (서민금융진흥원) after years unused. It goes there once your claim lapses, 5 years after the last transaction, such as the last interest payment. You can still claim it back, and no deadline is stated; online, up to ₩20 million an item, paid the same day. Claim It Back 
+Source: the bank’s terms, https://m.hanabank.com/cont/product/product02/product021/1448964_134045.jsp, read September 26, 2026. The country’s rules: https://www.kinfa.or.kr/cyber/appInfo/sleepMoneyInf.do, read September 26, 2026.
+
+=== kr-nh (the life banks at kr-nh)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+정기예금 (Time Deposit), ₩1,000 at 3.45%
+On January 5, 2027 it moves, with its interest, into the bank’s easy-access savings.
+The bank’s terms at the end: It doesn’t renew (재예치 불가), but you can have it close automatically at maturity (자동 만기해지 서비스). Left open, it earns the post-maturity rate (만기후이자율): 50% of the 큰만족실세예금 base rate for its term within 3 months, 20% from 3 to 6 months, and 10% after 6 months.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Ended early, an NH올원e예금 earns the early rates of the 큰만족실세예금: 0.1% a year under 3 months, then a share of the base rate times the months it ran over the months agreed: 50% from 3 to 6 months, 60% from 6 to 9, 70% from 9 to 11, and 80% from 11 months on. It’s at least 0.1%, cut to 3 decimal places, and part-months don’t count.
+Pay It Out At The End Break It Early Take The Interest So Far (₩0) How This Works 
+The bank’s terms: An everyday account (입출금) with under ₩100,000 in it becomes a suspended account (거래중지계좌) after 1 to 3 years without transactions: 12 months for under ₩10,000, 24 for under ₩50,000 and 36 for under ₩100,000. Deposits and withdrawals are then blocked until you release it at a branch with proof of what it’s for, or close it. After 5 years without a transaction, or 5 years past maturity for a term deposit, it becomes a dormant deposit (휴면예금): the account’s contract ends and the balance may go to the Korea Inclusive Finance Agency (서민금융진흥원), where you can claim it back.
+NH올원e통장 (everyday account) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+₩123 went to the Korea Inclusive Finance Agency (서민금융진흥원) after years unused. It goes there once your claim lapses, 5 years after the last transaction, such as the last interest payment. You can still claim it back, and no deadline is stated; online, up to ₩20 million an item, paid the same day. Claim It Back 
+Source: the bank’s terms, https://img.nonghyup.com/file/ebank/product/guide/10001160_pi.pdf, read September 26, 2026. The country’s rules: https://www.kinfa.or.kr/cyber/appInfo/sleepMoneyInf.do, read September 26, 2026.
+
+=== kr-kakaobank (the life banks at kr-kakaobank)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+정기예금 (Time Deposit), ₩1,000 at 3.60%
+On January 5, 2027 it moves, with its interest, into the bank’s easy-access savings.
+The bank’s terms at the end: You choose: close automatically; renew automatically, with the principal and interest after tax put back for the same term at the posted rate, up to 5 times (not for a 비과세종합저축 or an account under a legal hold); or close it yourself. Left open, it earns the post-maturity rate (만기후금리): half the base rate within a month, 30% of it from 1 to 3 months, and 0.20% after 3 months.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Ended early, a 카카오뱅크 정기예금 earns a share of its base rate at opening, times the days it ran over the days agreed: 10% under 1 month (at least 0.10%), 30% from 1 to 3 months (at least 0.30%), then 50% from 3 to 6 months, 70% from 6 to 9, 80% from 9 to 11 and 90% from 11 months on, each at least 0.50%.
+Renew It At The End Pay It Out At The End Break It Early How This Works 
+Round-Ups, 저금통, 동전 모으기. Not a purchase round-up: each weekday, Monday to Friday, holidays or not, the part of the previous day’s closing balance under ₩1,000 moves to your savings, the 저금통.
+Round-Ups: Off How This Works 
+When the account is short: It’s skipped when the balance is ₩1,000 or less, never moves just part, and never overdraws the account.
+What The Bank Leaves Open, And What The Game Leaves Out
+A sweep that would take the 저금통 past its ₩100,000 cap: the game skips it. Your KakaoBank savings stand in for the 저금통, and the cap counts what the sweeps have put in, never more than the savings hold.
+Stopping it stops saving from that moment, as KakaoBank says.
+Not in the game: 자동 모으기, an amount KakaoBank works out each Saturday.
+Not in the game: 캐시백 모으기, cashback from brand coupons.
+Source: kakaobank.com/products/coinbox; 저금통 특약 (부칙 September 23, 2026), checked October 13, 2026.
+The bank’s terms: An everyday account (입출금) with under ₩100,000 in it becomes a suspended account (거래중지계좌) after 1 to 3 years without transactions: 12 months for under ₩10,000, 24 for under ₩50,000 and 36 for under ₩100,000. Deposits and withdrawals are then blocked until you release it at a branch with proof of what it’s for, or close it. After 5 years without a transaction, or 5 years past maturity for a term deposit, it becomes a dormant deposit (휴면예금): the account’s contract ends and the balance may go to the Korea Inclusive Finance Agency (서민금융진흥원), where you can claim it back.
+세이프박스 (savings box) is dormant: the bank has blocked it until you reactivate it. Reactivate 
+₩123 went to the Korea Inclusive Finance Agency (서민금융진흥원) after years unused. It goes there once your claim lapses, 5 years after the last transaction, such as the last interest payment. You can still claim it back, and no deadline is stated; online, up to ₩20 million an item, paid the same day. Claim It Back 
+Source: the bank’s terms, https://www.kakaobank.com/products/deposit, read September 26, 2026. The country’s rules: https://www.kinfa.or.kr/cyber/appInfo/sleepMoneyInf.do, read September 26, 2026.
+
+=== au-commbank (the life banks at au-commbank)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, A$1,000.00 at 4.90%
+On January 5, 2027 it moves, with its interest, into the bank’s easy-access savings.
+The bank’s terms at the end: CommBank sends a Renewal Notice before maturity. If you give no instructions by then, the money goes to its at-call holding facility, at a lower variable rate with interest paid every 7 days; it isn’t renewed automatically. A 7-day term goes to the holding facility by itself.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Breaking it early takes 31 days’ notice, and the agreed rate is then cut by how much of the term has run: by 90% if less than 20% has, 80% from 20% to under 40%, 60% from 40% to under 60%, 40% from 60% to under 80%, and 20% from 80% on. There’s also an A$30 prepayment administration fee. You never get back less than the principal, before the A$30 fee.
+Renew It At The End Pay It Out At The End Break It Early Take The Interest So Far (A$0.00) How This Works 
+The bank’s terms: CommBank may close an account with under A$10 in it that hasn’t been used for at least 3 months. After 7 years with no deposit or withdrawal, and no request to keep it open, a balance over a set amount goes to the Commonwealth’s unclaimed money fund, where you can claim it back and it may earn interest; a smaller balance earns no interest. A debit card or Keycard may be canceled if it’s unused for 6 months. The monthly fee on Passbook Savings and Savings Investment accounts isn’t charged while the account is inactive.
+NetBank Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+A$123.45 went to ASIC after years unused. ASIC holds it as Commonwealth unclaimed money. That’s the rule for a bank account with no deposit or withdrawal for 7 years and A$500 or more in it. You can claim it back through Moneysmart, free. Claim It Back 
+Source: the bank’s terms, https://www.commbank.com.au/personal/apply-online/download-printed-forms/TermDeposit_ADB202.pdf, read September 26, 2026. The country’s rules: https://www.asic.gov.au/regulatory-resources/financial-services/unclaimed-money/changes-to-the-commonwealth-unclaimed-money-laws, read September 26, 2026.
+
+=== au-westpac (the life banks at au-westpac)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, A$1,000.00 at 5.30%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It renews automatically on the same conditions as the last term, at the rate in the Maturity Advice, unless you give other instructions; a special rate may roll over to a lower one. From maturity you have a 6-business-day Variation Period to change it once, and the On Demand rate applies until it’s renewed or closed.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Breaking it early takes 31 days’ notice, unless you’re in hardship. Closed within 7 days of the term starting, it earns no interest. Otherwise the account’s rate is cut by how much of the term has run: by 90% if less than 20% has, 80% from 20% to under 40%, 60% from 40% to under 60%, 40% from 60% to under 80%, and 20% from 80% on. There’s no cut on death or hardship. Interest already paid may be taken back.
+Move It To Savings At The End Pay It Out At The End Break It Early Take The Interest So Far (A$0.00) How This Works 
+The bank’s terms: An account is inactive after 6 months in a row with no deposits or withdrawals, if it’s also empty or overdrawn, and Westpac may then close it without notice. After 7 years with no deposit or withdrawal, Westpac may close the account and send the money to the government as unclaimed money, where the law requires, usually with notice. Bump Savings is exempt until its holder turns 18.
+Westpac Life is dormant: the bank has blocked it until you reactivate it. Reactivate 
+A$123.45 went to ASIC after years unused. ASIC holds it as Commonwealth unclaimed money. That’s the rule for a bank account with no deposit or withdrawal for 7 years and A$500 or more in it. You can claim it back through Moneysmart, free. Claim It Back 
+Source: the bank’s terms, https://www.westpac.com.au/content/dam/public/wbc/documents/pdf/pb/TermDeposits-tandc.pdf, read September 26, 2026. The country’s rules: https://www.asic.gov.au/regulatory-resources/financial-services/unclaimed-money/changes-to-the-commonwealth-unclaimed-money-laws, read September 26, 2026.
+
+=== au-nab (the life banks at au-nab)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, A$1,000.00 at 5.30%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: If you give no instructions, NAB may reinvest it for the same term at the rate on the maturity day, though it doesn’t have to, and a deposit under A$5,000 may be paid back instead. You can change the term, the amount or how often interest is paid up to 7 calendar days after the new term starts.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: Breaking it early takes 31 calendar days’ notice, which may be waived for hardship. The interest is cut by how much of the term is still to run: you keep 80% of the interest earned if less than 20% remains, 60% from 20% to under 40%, 40% from 40% to under 60%, 20% from 60% to under 80%, and 10% from 80% on. Interest already paid is counted and taken off the payout, but you never get back less than you put in.
+Pay It Out At The End Break It Early Take The Interest So Far (A$0.00) How This Works 
+The bank’s terms: NAB may close an empty account without notice, and may cancel a debit card unused for at least two years. When an account with money in it closes, the money may have to go to the government as unclaimed money; the Commonwealth’s rule, as ASIC gives it, is 7 years without a deposit or withdrawal.
+NAB Reward Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+A$123.45 went to ASIC after years unused. ASIC holds it as Commonwealth unclaimed money. That’s the rule for a bank account with no deposit or withdrawal for 7 years and A$500 or more in it. You can claim it back through Moneysmart, free. Claim It Back 
+Source: the bank’s terms, https://www.nab.com.au/content/dam/nab/documents/terms-and-conditions/investment/term-deposit-terms-and-conditions-260430.pdf, read September 26, 2026. The country’s rules: https://www.asic.gov.au/regulatory-resources/financial-services/unclaimed-money/changes-to-the-commonwealth-unclaimed-money-laws, read September 26, 2026.
+
+=== au-anz (the life banks at au-anz)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, A$1,000.00 at 5.20%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: With no instructions and A$5,000 or more in it, it reinvests automatically into a new ANZ term deposit with the same term and interest frequency; ANZ may stop doing so after 3 years without instructions. Under A$5,000, it may be paid out. You have 7 days after maturity to change your reinvestment instructions without it counting as an early withdrawal.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: An ANZ Advance Notice Term Deposit needs 31 days’ notice to break, or less in hardship. Any early withdrawal, except after an account holder’s death, costs an A$30 administration fee, and the interest on the amount taken out is cut by how much of the original term has run: by 90% if less than 20% has, 80% from 20% to under 40%, 60% from 40% to under 60%, 40% from 60% to under 80%, and 20% from 80% on.
+Pay It Out At The End Break It Early Take The Interest So Far (A$0.00) How This Works 
+Round-Ups, ANZ Plus Round Ups. Each ANZ Plus Visa Debit purchase is rounded up to the next $1, $2, $5 or $10, as you choose, and the difference moves to your ANZ Plus savings the same day.
+Round Up To Choose… The next A$1.00 The next A$2.00 The next A$5.00 The next A$10.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: A$1.00, A$2.00, A$5.00, A$10.00.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+ANZ Plus accounts only: the game takes your ANZ account as one.
+A $2 default appears only in ANZ’s 2023 launch release, and its pages now state none: you choose.
+Each purchase’s round-up moves on its own; the game moves the day’s together at its end.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: ANZ won’t reverse a Round Up when the purchase changes, as its terms say; purchases in the game aren’t refunded.
+Source: anz.com.au, ANZ Plus terms and conditions, November 24, 2025; Round Ups support page, October 27, 2025, checked October 13, 2026.
+The bank’s terms: If you haven’t used the account for 7 years and it holds more than A$0 but under A$500, ANZ may close it. If it holds over A$500 after 7 years unused, the law may require ANZ to send it to the government as unclaimed money, which you can claim back at any time.
+ANZ Plus Growth Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+A$123.45 went to ASIC after years unused. ASIC holds it as Commonwealth unclaimed money. That’s the rule for a bank account with no deposit or withdrawal for 7 years and A$500 or more in it. You can claim it back through Moneysmart, free. Claim It Back 
+Source: the bank’s terms, https://www.anz.com.au/content/dam/anzcomau/documents/pdf/saving-transaction-products-tcs.pdf, read September 26, 2026. The country’s rules: https://www.asic.gov.au/regulatory-resources/financial-services/unclaimed-money/changes-to-the-commonwealth-unclaimed-money-laws, read September 26, 2026.
+
+=== nz-anz (the life banks at nz-anz)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, NZ$1,000.00 at 4.00%
+On January 5, 2027 it renews for the same term at the bank’s rate on the day.
+The bank’s terms at the end: It reinvests automatically for a similar term at the rate then, unless you say otherwise. Each reinvestment starts a new 7-calendar-day cooling-off period, in which you can cancel or change the term or amount; canceling gives up the interest for that period.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: You can withdraw early only with 31 days’ notice or in hardship, and outside the 7-day cooling-off period ANZ doesn’t have to agree. If it does, the rate on the amount taken out is cut by the early withdrawal rate reduction, now 1% a year, and the return can’t go below 0%: the amount withdrawn times the reduction rate, divided by 365, times the days it was invested. There’s no break fee.
+Pay It Out At The End Break It Early Take The Interest So Far (NZ$0.00) How This Works 
+Savings here: 1 free withdrawal a month, counting any payment the savings makes, then NZ$5.00 each.
+The bank’s terms: ANZ can close an empty account that’s been inactive for at least a year. Under the Unclaimed Money Act 1971, if none of your accounts has had a transaction for 5 years, you’ve had no other contact and ANZ can’t reach you, a balance over NZ$100 goes to Inland Revenue, where you can claim it back, and NZ$100 or less goes to charity. For a term deposit, the 5 years count from the end of its first term.
+Serious Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+NZ$123.45 went to Inland Revenue after years unused. Inland Revenue holds it as unclaimed money: it goes there after 5 years with no contact, or less in a few cases. You can claim it back within 20 years; after that, no claim can be made. Claim It Back 
+Source: the bank’s terms, https://www.anz.co.nz/content/dam/anzconz/documents/personal/accounts/Term-Deposit-Info-Brochure.pdf, read September 26, 2026. The country’s rules: https://www.ird.govt.nz/unclaimed-money/claiming-unclaimed-money, read September 26, 2026.
+
+=== nz-asb (the life banks at nz-asb)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, NZ$1,000.00 at 4.00%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: It’s reinvested or paid out as you’ve told ASB. A deposit of 30 days or longer has a 5-calendar-day grace period, counting the day it’s opened or reinvested, to change your instructions or close it; one under 30 days has 1 day.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: ASB agrees to an early withdrawal only on 31 days’ notice, or in an approved “exceptional circumstance”, when the money is released the same day. In the first 5 calendar days you need neither. The amount taken out earns the rate that applied, when the deposit was opened or reinvested, for the term it actually ran, less 2% a year, with a minimum (0.05% a year in ASB’s example). Interest already paid above that comes out of the principal.
+Renew It At The End Break It Early Take The Interest So Far (NZ$0.00) How This Works 
+Round-Ups, Save the Change. Each EFTPOS and Visa Debit purchase is rounded up to the next $1, $2, $5 or $10, as you choose, and the day’s change moves to your savings overnight.
+Round Up To Choose… The next NZ$1.00 The next NZ$2.00 The next NZ$5.00 The next NZ$10.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: NZ$1.00, NZ$2.00, NZ$5.00, NZ$10.00.
+When the account is short: When the account can’t cover the day’s change, nothing moves that day, all or nothing.
+What The Bank Leaves Open, And What The Game Leaves Out
+That the skipped change isn’t carried, ASB doesn’t say in so many words: the game drops it.
+ASB’s current pages state no default: you choose.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: With an arranged overdraft it moves within the limit; the game has no arranged overdraft.
+Not in the game: One to ten savings accounts, or Donate the Change; the game moves it to your savings.
+Source: asb.co.nz, Save the Change and help pages, read from Wayback copies of 2025 and 2026, checked October 13, 2026.
+The bank’s terms: Under the Unclaimed Money Act, if 5 or more years pass since you last transacted and ASB has had no other contact with you, ASB tries to reach you. Without new activity by the deadline the accounts are closed and the money transferred to Inland Revenue.
+Savings Plus is dormant: the bank has blocked it until you reactivate it. Reactivate 
+NZ$123.45 went to Inland Revenue after years unused. Inland Revenue holds it as unclaimed money: it goes there after 5 years with no contact, or less in a few cases. You can claim it back within 20 years; after that, no claim can be made. Claim It Back 
+Source: the bank’s terms, https://www.asb.co.nz/content/dam/asb/documents/term-investments/2023/asb-term-deposit-early-withdrawal-information-april-2023.pdf, read September 26, 2026. The country’s rules: https://www.ird.govt.nz/unclaimed-money/claiming-unclaimed-money, read September 26, 2026.
+
+=== nz-bnz (the life banks at nz-bnz)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, NZ$1,000.00 at 4.05%
+On January 5, 2027 it is paid, with its interest, into your current account. You can change that until January 4, 2027.
+The bank’s terms at the end: It does what you told BNZ at setup: pay into an account you named, reinvest for another term, or repay another way you agreed. You can change that as often as you like up to the business day before maturity. No grace period after maturity was found.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: From 7 days after opening, an early withdrawal needs 31 days’ notice or approved financial hardship, and is then paid the next business day. The rate is cut by how much of the term is still to run: you get 80% of it if less than 20% remains, 60% from 20% to under 40%, 40% from 40% to under 60%, 20% from 60% to under 80%, and 10% from 80% on. The cut can leave no interest, and interest already paid can be taken back.
+Renew It At The End Break It Early Take The Interest So Far (NZ$0.00) How This Works 
+Savings here: 1 free withdrawal a month, counting any payment the savings makes, then NZ$3.00 each.
+The bank’s terms: If you haven’t touched an account for 5 years, haven’t dealt with BNZ in any other way and can’t be reached, BNZ closes it and pays the money to Inland Revenue (Unclaimed Money Act 1971). A balance of NZ$100 or less goes to charity. For a term deposit, the 5 years count from the end of its first term. BNZ warns you first, by letter, email, text or phone.
+Rapid Save is dormant: the bank has blocked it until you reactivate it. Reactivate 
+NZ$123.45 went to Inland Revenue after years unused. Inland Revenue holds it as unclaimed money: it goes there after 5 years with no contact, or less in a few cases. You can claim it back within 20 years; after that, no claim can be made. Claim It Back 
+Source: the bank’s terms, https://www.bnz.co.nz/support/investments/term-deposits/making-an-early-term-deposit-withdrawal, read September 26, 2026. The country’s rules: https://www.ird.govt.nz/unclaimed-money/claiming-unclaimed-money, read September 26, 2026.
+
+=== nz-westpac (the life banks at nz-westpac)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, NZ$1,000.00 at 4.00%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: When you open it, you choose to have it paid into a New Zealand bank account at maturity, or reinvested. You can give instructions within the 15 working days before the term ends. Reinvesting starts a new 7-working-day cooling-off period.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: After the 7-working-day cooling-off period, Westpac may agree to an early withdrawal only on 32 days’ notice or for hardship, and doesn’t have to agree even with notice. The amount taken out then earns the lower of the agreed rate less 2%, or the rate offered at opening for a term as long as the time it was actually invested, less 2%, and never below 0%. There’s no cut if you take out no more than 20%, once, from a term of a year or more, keep the minimum balance and make no other early withdrawal. Hardship is worked out differently. There are no fees.
+Renew It At The End Break It Early Take The Interest So Far (NZ$0.00) How This Works 
+The bank’s terms: Under the Unclaimed Money Act, Westpac pays the money to Inland Revenue if you haven’t touched the account for 5 years (for a term deposit, 5 years after its first term ended), haven’t dealt with Westpac in any other way and can’t be reached. It writes to warn you first if it has a valid address.
+Bonus Saver is dormant: the bank has blocked it until you reactivate it. Reactivate 
+NZ$123.45 went to Inland Revenue after years unused. Inland Revenue holds it as unclaimed money: it goes there after 5 years with no contact, or less in a few cases. You can claim it back within 20 years; after that, no claim can be made. Claim It Back 
+Source: the bank’s terms, https://assets.dam.westpac.co.nz/is/content/wnzl/dist/kiwisaver-investments-and-managed-funds/term-investments/westpac-term-deposit/Term-Deposit_Term-Sheet_brochure.pdf, read September 26, 2026. The country’s rules: https://www.ird.govt.nz/unclaimed-money/claiming-unclaimed-money, read September 26, 2026.
+
+=== nz-kiwibank (the life banks at nz-kiwibank)
+Your Accounts Over Time
+Term deposits, round-ups, accounts left unused, and canceling something new.
+How This Works 
+Term Deposit, NZ$1,000.00 at 4.05%
+On January 5, 2027 it is paid, with its interest, into your current account.
+The bank’s terms at the end: It follows your instructions: reinvest the principal and interest automatically for the same term at the rate on the maturity day, or pay it all into an account you choose. After a reinvestment you have up to 5 business days to make changes.
+Sources And Estimates
+Breaking it now costs nothing. The bank’s terms: To break it, you apply, and Kiwibank has to agree. In the first 30 days you get your principal back with no interest. After 30 days, an early termination charge cuts the rate on the amount taken out to the lower of the advertised rates, on the day it’s approved or on the opening day, for the term nearest the time it was actually invested, less 2 percentage points, and never below 0%. No notice period is stated.
+Renew It At The End Break It Early Take The Interest So Far (NZ$0.00) How This Works 
+The bank’s terms: Kiwibank’s own page couldn’t be read. The Unclaimed Money Act 1971 applies to every New Zealand bank: as ANZ, BNZ, ASB and Westpac NZ describe it, after 5 years with no transactions and no contact the money goes to Inland Revenue, and a balance of NZ$100 or less may go to charity.
+Online Call is dormant: the bank has blocked it until you reactivate it. Reactivate 
+NZ$123.45 went to Inland Revenue after years unused. Inland Revenue holds it as unclaimed money: it goes there after 5 years with no contact, or less in a few cases. You can claim it back within 20 years; after that, no claim can be made. Claim It Back 
+Source: the bank’s terms, https://www.kiwibank.co.nz/personal-banking/investments/rates-and-charges/breaking-term-deposit/, read September 26, 2026. The country’s rules: https://www.ird.govt.nz/unclaimed-money/claiming-unclaimed-money, read September 26, 2026.

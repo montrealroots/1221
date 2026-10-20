@@ -52,7 +52,7 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 0, partner: 1, vocal: 3, improvisation: 1,
     techniques: { singing: 2 },
     why: {
-      timing: 'The tech’s estimates are called by the reader, never at the same moment twice, and each change has to land on her face before she turns back to the crowd. On the tape she stands at a mic stand and plays him to an eyeline at the side of the lens.',
+      timing: 'The reader calls the tech’s estimates, never at the same moment twice, and each change has to land on her face before she turns back to the crowd. For the tape, stand at a mic stand and play him to an eyeline at the side of the lens.',
       vocal: 'She talks to a festival crowd over a stage’s sound and then sings to it unaccompanied, so the voice carries the scene’s size and then its quiet.',
       techniques: 'She sings a verse of an original song, written for this tape, unaccompanied at a mic stand: in tune, with its breaths where the line asks, the same on every take.',
       beats: 'A joke that works, a story that doesn’t, then the song she didn’t want to sing, and a finish she makes look planned.',
@@ -71,15 +71,15 @@ export const SECOND_B: readonly Brief[] = [
   {
     id: 'brief-conspiracy_thriller-3', title: 'Everything In Order', kinds: ['conspiracy_thriller'], medium: 'voice', size: 'long', stakes: 3,
     logline: 'In a parked car at night, an accounts clerk records for a reporter everything she knows about her employer’s payments, in order and with every name and figure, before the car that has followed her twice this week comes round again.',
-    circumstances: 'A supermarket parking lot at eleven at night, her car under a light, the engine off. For two years she has processed payments from the port authority to a consultancy that has no staff and no office. The reporter she wrote to has asked for a recorded statement: names, dates and amounts, in order. A gray sedan has followed her home twice this week. Recorded alone at a microphone, as the statement she makes into her phone.',
+    circumstances: 'A supermarket parking lot at eleven at night, her car under a light, the engine off. For two years she has processed payments from the port authority to a consultancy that has no staff and no office. The reporter she wrote to has asked for a recorded statement: names, dates and amounts, in order. A gray sedan has followed her home twice this week. You record it alone at a microphone, as the statement she makes into her phone.',
     relationship: 'The reporter is a stranger she has spoken to once, for four minutes, from a pay phone.',
     you: 'Margit Hale, fifty-one, a senior accounts clerk, careful, exact and more frightened than she has ever been.',
-    reader: 'No reader: the voice speaks into the phone for the reporter, and now and then to herself, about the headlights.',
+    reader: 'The reporter, through the phone she’s recording on, and now and then herself, about the headlights. There’s no reader.',
     objective: 'Get the whole statement recorded, exactly, before she loses her nerve.',
     obstacle: 'There’s a great deal to say and all of it has to be exact, nobody is there to steady her, and every pair of headlights might be the sedan.',
     beats: [
       { what: 'She gives her name, her employer and the date, as plainly as the first line of a ledger.', tones: ['grave'] },
-      { what: 'The payments in order: dates, amounts, the consultancy’s name and the account it pays into.', tones: ['grave'] },
+      { what: 'She goes through the payments in order: dates, amounts, the consultancy’s name and the account it pays into.', tones: ['grave'] },
       { what: 'Headlights sweep the car; she stops mid-figure, and goes back to the start of the line.', tones: ['grave', 'grotesque'] },
       { what: 'She says the name she has been avoiding, the man who signs the payments, and her voice changes.', tones: ['grave'] },
       { what: 'She tells the reporter where the copies are and that she’s going home now, and makes a joke about the groceries she didn’t buy.', tones: ['comic', 'lyric'] },
@@ -87,12 +87,12 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 0, partner: 0, vocal: 2, improvisation: 0,
     why: {
       timing: 'The statement goes in order, each figure in its place, and the break for the headlights has to stop it and start it again exactly where it broke.',
-      vocal: 'A voice alone at a microphone keeping its evenness through two years of figures, and changing once, on one name.',
+      vocal: 'Alone at a microphone, her voice has to stay even through two years of figures and change once, on one name.',
       beats: 'A plain opening, the figures in order, an interruption, the name, then a joke on the way home.',
     },
     readings: [
-      { id: 'ledger', label: 'Like A Ledger', reading: 'She’s an accountant giving evidence: the exactness is her armor, and the figures do the frightening.', rests: 'Names, dates and amounts, in order, as plainly as the first line of a ledger.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'memory', weight: 0.6 }, { dim: 'consistency', ability: 'discipline', weight: 0.4 }] },
-      { id: 'nerve', label: 'Before Her Nerve Goes', reading: 'She’s holding on by her fingernails, and every figure is said to keep the fear down.', rests: 'She stops mid-figure at the headlights and goes back to the start of the line.', lean: { consistency: 1.2, believability: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.4 }] },
+      { id: 'ledger', label: 'Like A Ledger', reading: 'She’s an accountant giving evidence: the exactness is her armor, and the figures do the frightening.', rests: 'The reporter asked for names, dates and amounts, in order, and she begins as plainly as the first line of a ledger.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'memory', weight: 0.6 }, { dim: 'consistency', ability: 'discipline', weight: 0.4 }] },
+      { id: 'nerve', label: 'Before Her Nerve Goes', reading: 'She’s holding on by her fingernails, and she says every figure to keep the fear down.', rests: 'She stops mid-figure at the headlights and goes back to the start of the line.', lean: { consistency: 1.2, believability: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.4 }] },
       { id: 'name', label: 'The Name', reading: 'The whole statement is a run-up to one name, and the scene is whether she can say it.', rests: 'She says the name she has been avoiding, and her voice changes.', lean: { interpretation: 1.2, believability: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.5 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }] },
     ],
   },
@@ -102,11 +102,11 @@ export const SECOND_B: readonly Brief[] = [
     circumstances: 'A recording booth, for an audio drama. In the story, a research observatory on a high plateau, the eleventh night of a winter maintenance shift, with the road closed until the relief team arrives in four days and the satellite link down since the first night’s storm. She keeps an audio log by habit. A patch of sky no bigger than a thumbnail at arm’s length held forty-one cataloged stars when the shift began. Tonight she counts fifty-two, the eleven new ones in no catalog, and every instrument agrees with her.',
     relationship: 'The log is written for colleagues she respects and barely knows; its last minute is for her husband, Tomas, who leads the relief team and will hear it first.',
     you: 'Dr. Signe Brask, fifty-one, astronomer, very tired and very precise.',
-    reader: 'The voice speaks to the log’s microphone, to the relief team who will play it back, and at the end to Tomas.',
+    reader: 'The log’s microphone, the relief team who will play it back, and at the end, Tomas.',
     objective: 'Leave a record plain enough that the relief team counts the stars before they decide she was ill.',
     obstacle: 'The count sounds impossible, she can’t know whether anyone else has seen it, the log is an official document, and the longer she talks the closer she comes to saying what she believes it means.',
     beats: [
-      { what: 'The routine entry: date, temperatures, the state of the generator, read the way she’s read it for eleven nights.', tones: ['grave'] },
+      { what: 'She reads the routine entry, date, temperatures and the state of the generator, the way she has for eleven nights.', tones: ['grave'] },
       { what: 'She gives the count for each night, as data, with the time and the instrument it was checked on.', tones: ['grave'] },
       { what: 'She laughs, once, telling the log how she cleaned the mirror three times in case the new ones were dust, and apologizes to it.', tones: ['comic', 'grotesque'] },
       { what: 'She describes the quiet over the plateau at night, and how she’s stopped being afraid of it.', tones: ['lyric'] },
@@ -116,7 +116,7 @@ export const SECOND_B: readonly Brief[] = [
     techniques: { voiceover: 2 },
     why: {
       vocal: 'With no picture, the eleven nights, the cold and the fear are all in the voice, and a scientist’s precision has to hold until the last minute.',
-      techniques: 'Recorded alone at a microphone for an audio drama: the log, the laugh and the quiet are played to a microphone and to no one else.',
+      techniques: 'You record it alone at a microphone for an audio drama, and play the log, the laugh and the quiet to the microphone and no one else.',
       beats: 'A routine entry, the impossible count given as data, a laugh she apologizes for, the quiet she’s made peace with, then a minute for her husband and the number.',
     },
     readings: [
@@ -135,7 +135,7 @@ export const SECOND_B: readonly Brief[] = [
     objective: 'Let Clara know she has guessed, and that the gown will keep the secret, without saying a word that could be repeated.',
     obstacle: 'A dressmaker known to have hidden such a thing would lose every customer in the county, the girl’s mother pays the bills and will inspect every seam at four, and Clara is too frightened to say anything but how happy she is.',
     beats: [
-      { what: 'Pleasantries over the bodice, while Clara chatters from behind the screen about the wedding breakfast.', tones: ['comic'] },
+      { what: 'Martha makes pleasantries over the bodice while Clara chatters from behind the screen about the wedding breakfast.', tones: ['comic'] },
       { what: 'Martha says, as if in passing, that brides often change a little in the last month, and Clara goes quiet behind the screen.', tones: ['grave'] },
       { what: 'Martha announces that a fuller cut is the fashion in town this season, a reason so poor that Clara laughs at it.', tones: ['comic', 'grave'] },
       { what: 'Clara comes to the edge of the screen and asks what Martha means to tell her mother, and Martha answers with one plain sentence.', tones: ['grave'] },
@@ -192,8 +192,8 @@ export const SECOND_B: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     why: {
-      timing: 'The sounds from the corridor are called by the reader at set moments, and she has to freeze on each one and pick the whisper up where she left it.',
-      physical: 'She plays the scene crouched by the drug cabinet with her back to the barricaded door, a flat on her own side of frame, drawing a dose into a capped prop syringe from a prop vial. The handle turning is a sound cue, and she reacts to it alone.',
+      timing: 'The reader calls the sounds from the corridor at set moments, and she has to freeze on each one and pick the whisper up where she left it.',
+      physical: 'Play the scene crouched by the drug cabinet with your back to the barricaded door, a flat on your side of the frame, drawing a dose into a capped prop syringe from a prop vial. The handle turning is a sound cue: react to it alone.',
       partner: 'He’s pushing to run the whole time, and she has to read when he’s about to bolt and stop him with a whisper.',
       beats: 'An argument held in whispers, a sound that ends it, a dose so large it’s funny, then a plan she won’t argue about.',
     },
@@ -273,8 +273,8 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 3, partner: 2, vocal: 0, improvisation: 0,
     techniques: { dance: 2 },
     why: {
-      timing: 'The waltz is counted in threes, called by the reader, and the steps have to land on the counts every take.',
-      physical: 'He dances a full waltz solo in an open hold, his arms framed around an absent partner, then talks through being out of breath. The reader calls from a chair off camera, and the dance is never partnered.',
+      timing: 'The reader calls the waltz in threes, and the steps have to land on the counts every take.',
+      physical: 'He dances a full waltz solo in an open hold, his arms framed around an absent partner, then talks through being out of breath. The reader calls from a chair off camera, and nobody dances with him.',
       partner: 'Every correction comes from Mr. Abara, and the lesson moves only when he’s satisfied.',
       techniques: 'He dances a set waltz, choreographed for this tape and repeatable on every take, with the box step, a turn and the closing hold, danced alone to the eyeline beside the lens.',
       beats: 'Nerves, mistakes, the waltz danced alone, a portrait of her from the man who danced with her, then the last turn again.',
@@ -290,7 +290,7 @@ export const SECOND_B: readonly Brief[] = [
     circumstances: 'A recording booth, before any of the animation is drawn. In the story, a ruined manor on a moor at dusk. A girl has climbed in through a broken window to pry the silver frame off a tall mirror and sell it. The mirror has hung there ninety years and can speak only in the voices of people who have looked into it, and one of them belongs to the lady of the house, sealed in the glass by a curse and beginning to stir.',
     relationship: 'Strangers: the first living person to stand before the mirror in ninety years, and the only one it has ever wanted to save.',
     you: 'The mirror, which has no voice of its own left, only borrowed ones.',
-    reader: 'The voice speaks to Wren, twelve, a scavenger with a chisel, whose lines aren’t in the booth; the actor plays to her as if she were.',
+    reader: 'Wren, twelve, a scavenger with a chisel. Her lines aren’t in the booth, so play to her as if she were.',
     objective: 'Get her out of the house before the lady wakes, without telling her what’s in the glass.',
     obstacle: 'She thinks a talking mirror is a trick worth more money, the mirror can use only voices that belonged to others, and the lady’s voice keeps breaking through.',
     beats: [
@@ -304,7 +304,7 @@ export const SECOND_B: readonly Brief[] = [
     why: {
       timing: 'The voices change inside a line, and each switch has to land on the exact word the script marks.',
       vocal: 'The mirror speaks in three borrowed voices and at last one of its own, every one of them built and held in the voice alone.',
-      techniques: 'Recorded alone at a microphone before the animation exists, it asks for voice-over. Building four distinct people by voice, each with its own age, pitch and manner, kept apart on every take, is character work.',
+      techniques: 'You record it alone at a microphone before the animation exists, so it asks for voice-over. Building four distinct people by voice, each with its own age, pitch and manner, kept apart on every take, is character work.',
       beats: 'Flattery in a borrowed voice, a child’s voice that slips out, the lady breaking through, then a voice of its own.',
     },
     readings: [
@@ -346,7 +346,7 @@ export const SECOND_B: readonly Brief[] = [
     circumstances: 'A recording booth, for a radio drama. In the story, the studio of a small coastal radio station at three in the morning, as a hurricane makes landfall. The power went an hour ago, and the station runs on a generator with fuel for about twenty minutes. Hers is the only signal still reaching the coast road, and every call line is lit.',
     relationship: 'A host and listeners she’s talked to every night for nine years without seeing; the caller, Mr. Petrakis, has phoned in about the weather every week since she started.',
     you: 'June Abernathy, fifty, the overnight host, alone in the studio.',
-    reader: 'The voice speaks to the listeners along the coast, and to Mr. Petrakis, eighty-eight, on the line, whose answers the actor hears in headphones.',
+    reader: 'The listeners along the coast, and Mr. Petrakis, eighty-eight, on the line. You hear his answers in your headphones.',
     objective: 'Get her listeners, and Mr. Petrakis above all, to the shelters before the storm surge.',
     obstacle: 'She can’t see what’s happening outside, the generator is running down, and Mr. Petrakis says he’s ridden out worse and won’t leave his late wife’s garden.',
     beats: [
@@ -358,10 +358,10 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 0, partner: 2, vocal: 3, improvisation: 1,
     techniques: { voiceover: 2 },
     why: {
-      timing: 'The generator’s failing is cued in the headphones, and the last instructions have to fit before it cuts out.',
+      timing: 'You hear the generator failing as a cue in your headphones, and the last instructions have to fit before it cuts out.',
       vocal: 'Her voice is the only steady thing on the coast, held calm and clear for the length of the scene over the storm in her headphones.',
       partner: 'She plays against Mr. Petrakis’s recorded answers, and every argument she makes has to come from what he just said.',
-      techniques: 'Recorded alone at a microphone for a radio drama, against the caller’s lines in the headphones: the performance is only what’s heard.',
+      techniques: 'You record it alone at a microphone for a radio drama, against the caller’s lines in your headphones, and the performance is only what’s heard.',
       beats: 'Plain information, a joke for company, a caller who won’t leave, then the last words before the power fails.',
     },
     readings: [
@@ -388,9 +388,9 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 1, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     techniques: { character: 2 },
     why: {
-      physical: 'Sixteen days of walking are built into her body: the blistered feet, the cold, the stiffness of standing still, and a moment when her legs give, a set dip she catches herself from and never a fall, played alone on her own side of frame.',
+      physical: 'Sixteen days of walking are in her body: the blistered feet, the cold, the stiffness of standing still. When her legs give, play it as a set dip you catch yourself from, never a fall, alone on your side of the frame.',
       partner: 'The doorkeeper is decent and immovable, and every move she makes comes from finding the man under the uniform.',
-      techniques: 'The role asks for character work: building an invented woman of 1931, sixteen days on the road, so the reconstruction reads as the record, in her posture, her hands and the way she stands.',
+      techniques: 'The role asks for character work: you build an invented woman of 1931, sixteen days on the road, in her posture, her hands and the way she stands, so the reconstruction looks like the record.',
       beats: 'A rehearsed request, a joke about boots, a name that reaches him, a body that gives, then an offer she has to weigh.',
     },
     readings: [
@@ -401,14 +401,14 @@ export const SECOND_B: readonly Brief[] = [
   {
     id: 'brief-docufiction-2', title: 'The Claim Ticket', kinds: ['docufiction'], medium: 'camera', size: 'medium', stakes: 0, readerPlays: 'unpredictable',
     logline: 'At a city transit lost-property counter, a clerk played close to yourself helps a father look for his daughter’s stuffed rabbit, with an outline in place of a script.',
-    circumstances: 'The lost-property counter of a city transit system, ten minutes before it shuts on a Saturday, its shelves crowded with umbrellas, gloves and single shoes. Filmed handheld, in the style of an observational film. The dialogue is found in the moment from the outline, by you and a reader improvising together, the way two strangers at that counter would talk.',
+    circumstances: 'The lost-property counter of a city transit system, ten minutes before it shuts on a Saturday, its shelves crowded with umbrellas, gloves and single shoes. It’s filmed handheld, in the style of an observational film. You and the reader improvise the dialogue from the outline in the moment, the way two strangers at that counter would talk.',
     relationship: 'Strangers across a counter: a clerk who has worked this window for six years and a father who has never set foot in a lost-property office.',
     you: 'The lost-property clerk, played close to yourself, at the end of a long Saturday.',
     reader: 'A father, improvising too, whose four-year-old is waiting in the hallway outside.',
     objective: 'Find the rabbit, or send him away kindly, before the counter shuts.',
     obstacle: 'He has no claim ticket, he can only half describe it, and the rules say no item leaves without one.',
     beats: [
-      { what: 'The forms: when, which line, what it looks like; his description of the rabbit gets longer and stranger.', tones: ['comic'] },
+      { what: 'She goes through the forms (when, which line, what it looks like), and his description of the rabbit gets longer and stranger.', tones: ['comic'] },
       { what: 'She brings down three rabbits from the shelf, and none of them is the one.', tones: ['comic', 'grave'] },
       { what: 'He points past her to a box marked for disposal; she brings it down, the rabbit is in it, and she has to decide about the ticket with no line prepared.', tones: ['comic', 'lyric'] },
     ],
@@ -416,10 +416,10 @@ export const SECOND_B: readonly Brief[] = [
     techniques: { improv: 3 },
     allows: { structure: ['open'] },
     why: {
-      physical: 'The rabbits and the box come down from shelves on her own side of frame and are searched through on camera.',
+      physical: 'She brings the rabbits and the box down from shelves on her side of the frame and searches through them on camera.',
       partner: 'Every line comes from what the reader offers, and his description changes from take to take.',
-      improvisation: 'There’s no script: the dialogue is found from the outline, and the reader brings new details to it on every take.',
-      techniques: 'The scene is improvised to an outline, playing close to yourself the way a docufiction participant does, opposite a reader who improvises too: improvisation, carried through a whole transaction.',
+      improvisation: 'There’s no script. You find the dialogue from the outline, and the reader brings new details to it on every take.',
+      techniques: 'You improvise the scene to an outline, playing close to yourself the way a docufiction participant does, opposite a reader who improvises too, so it asks for improvisation carried through a whole transaction.',
       allows: 'The brief gives an outline and no lines, so there’s no set text to fix. It can only be played open, found fresh from the reader each time.',
       beats: 'Forms that turn comic, the wrong rabbits, then the right one found where it nearly went, and a rule to bend on camera.',
     },
@@ -431,7 +431,7 @@ export const SECOND_B: readonly Brief[] = [
   {
     id: 'brief-documentary-2', title: 'Scratch Narration', kinds: ['documentary'], medium: 'camera', size: 'medium', stakes: 1, readerPlays: 'pressing',
     logline: 'In an edit suite the night before picture lock, a documentary director records her own narration while the film’s subject, a retired printer, sits beside her and objects to every line about him.',
-    circumstances: 'A small edit suite, late on the night before the documentary’s picture is locked. The film is about the last letterpress print shop in a mill town and the printer who set its type by hand for fifty-one years. The narration is recorded to picture at a desk microphone. He asked to hear it before it was final, and he has been listening for an hour.',
+    circumstances: 'A small edit suite, late on the night before the documentary’s picture is locked. The film is about the last letterpress print shop in a mill town and the printer who set its type by hand for fifty-one years. She records the narration to picture at a desk microphone. He asked to hear it before it was final, and he has been listening for an hour.',
     relationship: 'Director and subject after two years of filming: he trusts her with his life’s work and with not a single adjective about himself.',
     you: 'Zainab Holloway, thirty-six, the director, at the microphone with the script marked up in pencil.',
     reader: 'Mr. Leopold Kask, seventy-nine, the printer, in the chair beside the edit desk.',
@@ -446,10 +446,10 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 0, partner: 2, vocal: 2, improvisation: 1,
     techniques: { voiceover: 2 },
     why: {
-      timing: 'Each narration line is recorded to a cut that’s already fixed, so it has to fit its length to the frame.',
+      timing: 'She records each narration line to a cut that’s already fixed, so each line has to fit the picture exactly.',
       vocal: 'She switches between the narrator’s voice at the microphone and her own voice to him, and the last line has to carry both.',
       partner: 'He objects line by line, and every take she records answers what he just said.',
-      techniques: 'She records documentary narration to picture at a desk microphone, on camera: voice-over work, with a narrator’s timing and read, between the arguments.',
+      techniques: 'She records documentary narration to picture at a desk microphone, on camera, between the arguments, so it asks for voice-over work: a narrator’s timing and delivery.',
       beats: 'A clean take he rejects, a pedantic correction, the truth he never told her, then a line recorded for him.',
     },
     readings: [
@@ -527,7 +527,7 @@ export const SECOND_B: readonly Brief[] = [
     ],
     language: 'everyday', timing: 2, physical: 1, partner: 2, vocal: 1, improvisation: 0,
     why: {
-      timing: 'The approved cadence and the joke at the board are both placed for the microphones, and each pause is chosen for what it keeps off the recording.',
+      timing: 'She places the approved cadence and the joke at the board for the microphones, and chooses each pause for what it keeps off the recording.',
       physical: 'She writes on a small board on her own side of frame, and the exercise is written, never spoken.',
       partner: 'He gives her a look and little else, so every choice she makes comes from reading whether he’s a student or a test.',
       beats: 'An approved text in an approved voice, the question again, the approved answer, a lesson hidden in a spelling test, then an ordinary dismissal.',
@@ -556,7 +556,7 @@ export const SECOND_B: readonly Brief[] = [
     why: {
       physical: 'She works in a prop respirator she can speak through and gloves, on her own side of frame, and taking them off is the scene’s turn.',
       partner: 'He’s calm one moment and strange the next, and she has to find, in what he says, whatever is still himself.',
-      beats: 'Procedure and a polite offer, a strange invitation, the moment she feels it too, then her face shown to ask him out.',
+      beats: 'Procedure and a polite offer, a strange invitation, the moment she feels it too, then her face shown as she asks him to leave with her.',
     },
     readings: [
       { id: 'out', label: 'Get Him Out', reading: 'She’s there to save a man who doesn’t want saving, and every choice is aimed at the door.', rests: 'Her objective is to get him out before morning, and she takes off the respirator to ask him plainly.', lean: { responsiveness: 1.2, connection: 1.1 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.5 }, { dim: 'connection', ability: 'listening', weight: 0.5 }] },
@@ -582,10 +582,10 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 3, partner: 2, vocal: 1, improvisation: 0,
     techniques: { combat: 2 },
     why: {
-      timing: 'The drill is called by the reader, command by command, and each stance has to land on its call.',
-      physical: 'The spear drill is the center of the scene, performed solo with a replica spear on her own side of frame, every thrust aimed past the lens at no one, then a last guard held while she gets her breath back and talks through it.',
+      timing: 'The reader calls the drill command by command, and each stance has to land on its call.',
+      physical: 'The spear drill is the center of the scene. Perform it solo with a replica spear on your side of the frame, every thrust aimed past the lens at no one, then hold the last guard while she gets her breath back and talks through it.',
       partner: 'He commands and refuses her, and she has to read, through the captain, whether her son is still there.',
-      techniques: 'A set weapons drill with a replica spear, choreographed for this tape and marked solo to the reader’s called commands, with no partner and no contact: stage combat carries its stances, its thrusts and its safety.',
+      techniques: 'It’s a set weapons drill with a replica spear, choreographed for this tape and marked solo to the reader’s called commands, with no partner and no contact, so it asks for stage combat: its stances, its thrusts and its safety.',
       beats: 'A formal report he laughs at, a refusal, the drill itself, a clean finish that changes nothing, then a smaller request.',
     },
     readings: [
@@ -613,7 +613,7 @@ export const SECOND_B: readonly Brief[] = [
     why: {
       physical: 'The embrace is the scene’s turn: she crosses, holds and steps back as set moves, and the stillness inside the embrace is where she gives her answer.',
       partner: 'He gives her calm and little else, and she has to find in what he leaves out whether he’s as sure as he sounds.',
-      techniques: 'The embrace is staged intimacy, agreed in advance with an intimacy coordinator and played solo. She steps toward his eyeline beside the lens and holds the embrace in the air, never touching the reader, the same on every take. None of it is explicit: the scene is about power.',
+      techniques: 'The embrace is staged intimacy, agreed in advance with an intimacy coordinator and played solo. Step toward his eyeline beside the lens and hold the embrace in the air, never touching the reader, the same on every take. None of it is explicit: the scene is about power.',
       beats: 'An ending he accepts too easily, the threat said calmly, her answer given inside a last embrace, then the door.',
     },
     readings: [
@@ -631,7 +631,7 @@ export const SECOND_B: readonly Brief[] = [
     objective: 'Get on the plane as Hanna Wirth, whatever he says or knows.',
     obstacle: 'He knows her real name, his questions find the thin places in a cover she has worn for a year, and halfway through she can’t tell whether he’s warning her or working for the other side.',
     beats: [
-      { what: 'Routine questions about the textiles trade, answered fluently with details invented on the spot, while neither mentions the house they shared.', tones: ['comic', 'grave'] },
+      { what: 'He asks routine questions about the textiles trade, and she answers fluently with details invented on the spot, while neither mentions the house they shared.', tones: ['comic', 'grave'] },
       { what: 'He presses on the details, faster, and she holds every one.', tones: ['grave'] },
       { what: 'He puts her passport down and says quietly, in her real name, that the cover was sold yesterday and she should drop it now if she wants to live.', tones: ['grave', 'grotesque'] },
       { what: 'She has to decide whether it’s an old friend’s warning or the other side’s last trick, and answers him as Hanna Wirth.', tones: ['grave'] },
@@ -654,7 +654,7 @@ export const SECOND_B: readonly Brief[] = [
     circumstances: 'A recording booth, for an experimental sound piece. The text is an auction house’s list of the contents of one house, forty lots in order from the front door to the attic, with lot numbers, descriptions and estimates. The text gives no story and names no one: the reading supplies both. It’s played straight through in one take.',
     relationship: 'The voice and the woman whose things are listed never met; by the end of the list the voice knows her better than anyone living.',
     you: 'The voice reading the catalog, unnamed, with the list in front of it.',
-    reader: 'The voice speaks to whoever hears the piece, and at the end to the woman whose things these were.',
+    reader: 'Whoever hears the piece, and at the end, the woman whose things these were.',
     objective: 'Read the list exactly as written, and let the woman it describes come into the room.',
     obstacle: 'The words are an auctioneer’s, flat and priced, every lot has to be read as written, and the piece forbids any word that isn’t on the list.',
     beats: [
@@ -669,9 +669,9 @@ export const SECOND_B: readonly Brief[] = [
     techniques: { voiceover: 2 },
     allows: { structure: ['set'] },
     why: {
-      timing: 'Each lot is read at an auctioneer’s even pace, and every change in the voice has to happen inside that pace without breaking it.',
+      timing: 'Read each lot at an auctioneer’s even pace, and make every change in the voice inside that pace without breaking it.',
       vocal: 'The voice does everything: one flat list made into a woman’s life, with no other words to help.',
-      techniques: 'Recorded alone at a microphone for a sound piece: a fixed text read in one take, with the voice carrying all of it.',
+      techniques: 'You record it alone at a microphone for a sound piece: a fixed text read in one take, with the voice carrying all of it.',
       allows: 'The piece forbids any word that isn’t on the list, in any order but its own. It can only be played set, the same way every time.',
       beats: 'A plain hallway, a comic kitchen, a room that slows the voice, a bedroom that tells too much, a cheer that turns, then one lot read last.',
     },
@@ -699,9 +699,9 @@ export const SECOND_B: readonly Brief[] = [
     techniques: { intimacy: 2 },
     why: {
       timing: 'The song is the clock: she has to keep her face still for as long as it plays, and the lie lands as the music stops.',
-      physical: 'The slow dance is the scene’s center, a set of choreographed moves held through dialogue, danced solo toward his eyeline beside the lens with the jukebox on her own side of frame: he leads, and she keeps her face still at the distance he chooses.',
+      physical: 'The slow dance is the scene’s center: a set of choreographed moves held through dialogue. Dance it solo toward his eyeline beside the lens, with the jukebox on your side of the frame. He leads, and she keeps her face still at the distance he chooses.',
       partner: 'He’s pressing the whole time, and she has to judge from his guesses how near the truth he’s getting.',
-      techniques: 'The slow dance is staged intimacy, agreed in advance with an intimacy coordinator and played solo. She sways in a hold around no one toward his eyeline, never touching the reader, the same on every take. None of it is explicit: the closeness is his, used to read her.',
+      techniques: 'The slow dance is staged intimacy, agreed in advance with an intimacy coordinator and played solo. Sway in a hold around no one toward his eyeline, never touching the reader, the same on every take. None of it is explicit: the closeness is his, used to read her.',
       beats: 'Boredom played to keep him out, a dance he uses to search her face, a right guess she laughs off, then the lie as the music stops.',
     },
     readings: [

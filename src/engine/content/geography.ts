@@ -182,7 +182,7 @@ function city(spec: CitySpec): City {
     source: 'calibrated_estimate',
     confidence: 'medium',
     version: V,
-    note: 'Location, time zone and administrative parentage are public reference data. Cost figures are SLATE calibrations.',
+    note: 'Its location, time zone, region and country are public reference data. Its costs are estimated.',
   };
 }
 
@@ -301,8 +301,8 @@ function deriveCity(raw: RawCity): City {
     source: 'calibrated_estimate',
     confidence: 'low',
     version: V,
-    note: 'Location, time zone and administrative parentage are public reference data. '
-      + 'The cost figures are derived from the country and the population, not looked up.',
+    note: 'Its location, time zone, region and country are public reference data. '
+      + 'Its costs are estimated from its country and its population, not looked up.',
   };
 }
 
@@ -409,7 +409,7 @@ export async function loadCountryCities(countryId: string): Promise<number> {
 
   const response = await fetch(`${import.meta.env.BASE_URL}geo/${countryId}.tsv`);
   if (!response.ok) {
-    throw new Error('This country’s full list of towns couldn’t be loaded, so for now only the towns already listed can be picked. Check your connection, then choose another country and come back to this one.');
+    throw new Error('This country’s full list of towns couldn’t be loaded, so for now you can only pick from the towns already listed. Check your connection, then choose another country and come back to this one.');
   }
   return addCountryCities(countryId, await response.text());
 }

@@ -110,7 +110,7 @@ export const PUBLIC_SCENES: readonly Scene[] = [
     circumstances: [
       yes('board', 'Noon on February 7th, the manager’s dining room set out as a Board table; the directors, the Union’s man and the men’s committee are all in the room', 'Roberts says the men will stand in the presence of the Board, and men and directors listen throughout as though to words they wouldn’t have spoken themselves.'),
       no('alone', 'A private word between the two of them', 'Every word is said before the Board and the committee, and Roberts goes out with his men.'),
-      no('settled', 'The end of the day, when the strike is settled', 'That’s the last act, at five o’clock, and the settlement is made over both their heads.'),
+      no('settled', 'The end of the day, when the strike is settled', 'The strike is settled in the last act, at five o’clock, over both their heads.'),
     ],
     relationship: [
       yes('enemies', 'Old antagonists: the Chairman who has beaten the men four times, and the workman with a grievance over his own discovery', 'Roberts tells him he has fought them down four times, and the Board knows the grievance: a discovery the Company paid him seven hundred for.'),
@@ -168,7 +168,7 @@ export const PUBLIC_SCENES: readonly Scene[] = [
     ],
     relationship: [
       yes('crown', 'The Crown’s counsel, an old advocate, and the prisoner in the box', 'The play calls Cleaver an old advocate, and he has just closed the case for the Crown.'),
-      no('defender', 'His own counsel, drawing his story out of him', 'That’s Frome, who sits down as Cleaver rises.'),
+      no('defender', 'His own counsel, drawing his story out of him', 'His own counsel is Frome, who sits down as Cleaver rises.'),
       no('employer', 'The clerk and the solicitor he worked for', 'Falder clerked for James and Walter How, who gave their evidence before this; Cleaver he meets only in court.'),
     ],
     roles: [

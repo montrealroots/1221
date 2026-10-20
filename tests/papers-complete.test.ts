@@ -53,7 +53,7 @@ describe('PLAYER JOURNEY: an international student’s banks and Social Security
     sim = reload(sim);
     tended(sim, applied.arrivesAt + MS_HOUR);
     expect(hasSsn(sim.player)).toBe(true);
-    expect(sim.universe.notifications.some((n) => n.title === 'Your Social Security Card Came')).toBe(true);
+    expect(sim.universe.notifications.some((n) => n.title === 'Your Social Security Card Has Arrived')).toBe(true);
   });
 
   it('a US citizen holds a number already, and opens online, no branch hour', () => {
@@ -139,7 +139,7 @@ describe('bank history and cards', () => {
     tended(sim, sim.now + 70 * MS_DAY);
     const periods = periodsOf(sim, sim.universe.accounts[cap]!);
     expect(periods[0]!.to).toBe(closedAt);
-    expect(periods[0]!.label).toMatch(/To Its Closing/);
+    expect(periods[0]!.label).toMatch(/Until It Closed/);
   });
 });
 

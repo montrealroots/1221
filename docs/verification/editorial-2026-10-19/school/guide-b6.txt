@@ -1,0 +1,488 @@
+=== school.standing: Your Standing And Classes
+Where To Find It: School, Standing And Craft
+When You Can Use It: From the guide’s chapter “Drama School”: the School line in Your Affairs on Home, and School on the menu.
+
+Your standing is how the faculty judge each term, and it decides whether you stay, whether you’re cast and whether you get your degree. Classes run nine to three on class days, and each grows the skills its course trains. At five on the last day of each term’s classes the faculty review the term. Fall short of anything they ask and your standing drops a step, from Good Standing to Academic Concern, then Academic Warning, then dismissal; meet everything and you’re back in Good Standing. The School screen shows where you stand, how this term is going, your 21 skills against the other 15 students in your class, and every review so far.
+
+What To Press
+  - Open School from the menu, or press Yale on the School line in Your Affairs on Home.
+  - Standing And Craft opens first. Under Your Standing are Standing, Attendance This Term, Growth This Term and Coursework This Term, each with what’s asked, and a line saying whether you’re in the casting pool.
+  - Your Craft Against The Class lists each skill with You, You Can Reach, Class Best, Class Median and Your Place. Press a skill to open it.
+  - Term Reviews keeps every term’s review: its standing, attendance, growth, coursework and why. From Your Teachers keeps last term’s notes, written by the game, not by the teachers.
+  - On the Classes tab, Your Week is the timetable with the next classes, and the courses table lists each course, its teachers and what it trains. Press a course, or the school’s name at the top, to open it.
+
+What You Need First
+  - A life that began at drama school. Any other life shows No School.
+  - On a guided life, the guide’s chapter “Drama School” read first.
+
+Costs
+  - Time: None to read. Classes take nine to three on each class day (estimated)
+  - Money: None to read. Tuition, $20,375 a term in 2026–27, is met by the tuition scholarship for 6 terms
+
+What Happens
+  - Opening the screen, a tab or an underlined word changes nothing and moves no clock.
+  - The screen remembers the tab you were on, and opens on it next time.
+
+Later
+  - Classes meet at nine on each class day. If you’re there, awake and in New Haven, each course grows its skills. Asleep or away, it’s an absence, and an unexcused one unless you called in sick, were in hospital or were laid up.
+  - At five on the last class day the faculty review the term. Short on anything they ask and your standing drops a step, from Good Standing to Academic Concern, to Academic Warning, to dismissal. Meeting everything puts you back in Good Standing and in the casting pool.
+  - The same review settles each course as passed, Incomplete or failed.
+  - After the last term, the degree is conferred at Commencement, on the Monday before Memorial Day, if you’ve passed every course and are in good standing or have a notice of concern. If the last term ends with you on academic warning, the faculty don’t recommend the degree. With a course not passed, you have 30 days to ask to repeat the year or for an additional term; if you don’t, the degree isn’t recommended.
+  - Every Sunday at six, the next week’s classes and Saturday shift go on your calendar.
+
+Reading What Comes Back
+  - Attendance This Term reads None Yet until something has been asked of you, and shows a warning under 90%.
+  - Growth This Term says whether you’re ahead of, in line with or behind the class, allowing for the room each of you had to grow. It’s the pace that counts, so the strongest in the class, close to their reach, aren’t marked down for gaining fewer points.
+  - Your Place counts the classmates above you, from 1 to 16. Overall is the average of all 21 skills, and Acting counts scene study twice, with character work and emotional depth.
+  - A line under the figures says whether you’re in the casting pool, or out of it after missed calls until a review finds you in good standing.
+  - Coursework This Term counts this term’s pieces that were due, shown or missed without an excuse, and how many of them were Unready or not shown, as the review will count them. It shows a warning once 3 or more are due and half of them are.
+  - Once the School has ended, by the degree, a withdrawal, a dismissal or the degree not recommended, the three figures read Last Term, each with what was asked, the casting pool’s line goes, and Courses And The Degree says how it ended: every course passed and the day the degree was conferred, or how you left and what you didn’t pass. You can’t ask for anything more. A course the School ended in the middle of reads Not Finished.
+  - Each Term Reviews row shows the term’s attendance, your growth and the class’s, its coursework as the review counted it, and why your standing came out as it did.
+  - Whose rules these are: the four standings, the faculty’s majority vote on the degree and no return after a dismissal are the Bulletin’s (2026–27 pp.151, 154, 157). One review a term at the end of its classes, what it asks, and a standing that moves one step at a time are the game’s reading of a Bulletin that has the faculty evaluate regularly and act at any time. The notices that tell you your standing are the game’s words for the faculty’s decision, not the School’s or its staff’s.
+  - The school’s own page gives the year you’re in and Terms Begun: how many of the program’s 6 terms have begun. It leaves out terms a leave or a repeated year took, which its note counts separately, as it does an additional term. On a leave it counts the terms before the one the leave began in, since you take that one again when you’re back, and the year you’re in comes from the same count.
+
+If You Can’t
+  - No School: this life didn’t begin at drama school.
+  - Locked, on a guided life, until “Drama School” has been read.
+  - After a dismissal, a withdrawal or the degree, Classes shows no classes ahead and Casting no production.
+
+Common Mistakes
+  - Being asleep or out of New Haven at nine is an unexcused absence. If you’re unwell, press Call In Sick before the classes run.
+  - Your standing drops one step at a review, and one term that meets everything asked takes it back to good standing from a notice of concern or academic warning.
+  - A grave breach puts you on Academic Warning at once, or dismisses you if you’re on it already, and stops that term’s review putting you back in good standing: on its own it leaves you on the warning it brought, and with anything else short the review dismisses you. Be in New Haven for every performance and every night on call.
+  - A rehearsal, a run-through or a lab missed without an excuse is a missed call. When the term’s missed calls reach 2, you’re out of the casting pool until a review finds you in good standing, and a notice says so. A missed performance counts among them, and is a grave breach as well.
+  - A dismissal is final: the Bulletin doesn’t readmit a dismissed student. Its notice, like the notice that the degree isn’t recommended, says what stays: every course and its result on your record, the productions you played on your Profile, the hours you worked paid; and that you can still practice, and tape the practice briefs, outside the School.
+  - A term that begins under a financial hold counts you absent from classes until you register, and the hold stops you registering. Pay your Yale account on the Terms And Award tab first, then press Register on the Standing And Craft tab, or the term’s classes go by as unexcused absences. A term’s living-expense scholarship pays what the account owes before any of it reaches your bank, and a hold it clears lifts as the term begins. The Not Registered notice says what’s owed.
+
+What To Do Next
+  - Be awake and in New Haven at nine on each class day, and press Call In Sick on the Classes tab when you’re unwell.
+  - Keep an eye on Coursework This Term, and prepare each piece on the Coursework tab before it’s due.
+  - If a notice of concern or a warning comes, read its reason under Term Reviews and work on what it names before the next review.
+
+What Decides It
+  - Attendance: The class days, calls and assigned shifts you came to, out of those asked of you, leaving out days you were excused. Under 90% is short (estimated)
+  - Growth: How much your craft grew this term against the middle of the class, allowing for the room each of you had to grow. Under 50% of the class’s pace is short (estimated)
+  - Work On Stage: A run with 3 nights or more by the review, most of them off, is short (estimated)
+  - Coursework: Once 3 or more pieces are due, 50% or more of them Unready or not shown is short (estimated)
+  - A Course Failed: Any course failed in the term is short. This is the game’s rule; the Bulletin lets the faculty act on a student’s progress at any time
+  - A Grave Breach: A missed performance or understudy call, which the Bulletin calls a grave breach that may be grounds for dismissal, puts you on Academic Warning at once, or dismisses you if you’re on it already. This is the game’s rule
+  - A Class Meeting: Grows each skill its course trains: more when you come rested, and less the nearer the skill is to your reach (the skill as you were admitted, plus 26 points) (estimated)
+
+How It Connects
+  - school.sick (evaluation): A day you call in sick is left out of the attendance the review counts.
+  - productions.nights (evaluation): Once a run has had 3 nights, the term’s review counts how they went.
+  - coursework.feedback (evaluation): The review counts the term’s coursework as shown: once 3 or more pieces are due, 50% or more Unready or not shown is short.
+  - productions.casting (immediate): A review that finds you in good standing puts you back in the pool the chair casts from.
+  - school.repeat (scheduled): The review settles each course as passed, Incomplete or failed, and making up or repeating is how you put an Incomplete or a failed course right.
+  - craft.profile (immediate): Each class grows its skills, and some of the abilities they’re related to.
+  - body.how (evaluation): How rested you come sets how much a class grows you.
+
+A Worked Example
+  Your first fall: 65 class days, 14 Drama 50 lab calls and 12 assigned Saturday shifts.
+  - You sleep through 8 class days, call in sick on 2, and keep every lab and shift.
+  - Asked of you: 65 days less the 2 excused, and 26 calls and shifts, 89 in all. Kept: 81.
+  - Attendance comes to 91%, against a floor of 90%.
+  At 91% the floor is met. Sleep through two more days and it comes to 88.8%, under it: with every other part met, your standing still drops a step, from Good Standing to Academic Concern.
+
+=== school.sick: Calling In Sick
+Where To Find It: School, Classes, Your Week
+When You Can Use It: From the guide’s chapter “Drama School”, on any day with something at school, until it has run; not once you’ve left the School.
+
+When you’re unwell, Call In Sick excuses today at school, so the day doesn’t count against your attendance. It covers everything at school that day: classes, rehearsal and performance calls, a night on call, labs, a work-study shift, Cabaret and Summer Cabaret calls, and a rehearsal booked with a classmate. You have to be unwell for it: condition under 55, the flu, or an injury that limits the work. If you’re well enough to go, it’s refused, and staying away counts as an unexcused absence.
+
+What To Press
+  - Open School, then the Classes tab.
+  - Press Call In Sick on the Your Week panel. It shows on any day with something at school, until you’ve left the School. When it can’t be used it’s grayed, with the reason under the panel’s title.
+  - On a class day, press it before nine. If the clock stops at nine for the classes, press Stand Here, then Call In Sick.
+
+What You Need First
+  - To be unwell: condition under 55, the flu, or an injury that limits the body or the mind (a cut or a knock limits neither).
+  - Something at school today: classes, a rehearsal or performance call, a lab, a shift, or a Cabaret or Summer Cabaret call.
+  - On a day with only classes, the classes not yet over; and not having called in sick already today.
+
+Costs
+  - Time: None: it’s a message to the School, and the clock doesn’t move
+  - Money: None
+
+What Happens
+  - Today is marked as your sick day, and the rest of it is yours.
+  - A message confirms you called in sick and that today’s absence is excused.
+
+Later
+  - At nine the classes count you as excused: each course marks the meeting excused, the term counts an excused day, and work due at that meeting moves to the course’s next one, or is excused if none is left this term.
+  - A rehearsal or performance call, a night on call or a lab that day is excused: it isn’t counted as missed, and isn’t a breach. Blocking set without you is still a gap in the book to catch up on.
+  - Called in after the classes are over, on a day with a call still to come, it excuses the call and leaves the classes as they were counted.
+  - An assigned Saturday shift is excused, and if you’re on aid you can convert its hours to grant aid. An elective evening is dropped and its hours freed.
+  - Each class day you miss ill counts toward Yale Health’s concern: once 12 class days have passed, missing 60% or more of a term’s class days brings a request to assess you.
+  - A Cabaret or Summer Cabaret call that day is excused as a School call is: blocking an evening sets without you is still a gap to catch up on, a show missed this way isn’t held against your run, and the summer company keeps you.
+  - A rehearsal booked with a classmate that day is excused: they’re told you’re ill, and don’t hold it against you.
+
+Reading What Comes Back
+  - Attendance This Term, on Standing And Craft, counts the day among those excused.
+  - A day in hospital, or laid up by an injury, is excused without calling in.
+  - When the button is grayed, its reason shows under the panel’s title and when you point at it: you’re well enough to go, you’ve already called in, or the classes are over.
+
+If You Can’t
+  - “You’re not at school.”: the button stops showing once you’ve left.
+  - “You’ve called in sick today already.”
+  - “There’s nothing at school today to miss.”: the button doesn’t show on such a day.
+  - “Today’s classes are over, so calling in sick now wouldn’t excuse anything.”
+  - “You’re well enough to go. Staying away would count as an unexcused absence.”
+  - Locked, on a guided life, until “Drama School” has been read.
+
+Common Mistakes
+  - You can’t call in after the classes are over on a day with nothing else at school: the classes have already counted you. Call in first thing.
+  - Counting on a sick day for a rehearsal booked with a classmate on a day with nothing else at school: Call In Sick needs something else at school, so the rehearsal stands unless you’re in hospital, laid up, or too hurt to train for partner work in a studio. Call it off on the Coursework tab a day or more ahead, or it’s short notice and costs their trust.
+  - A sick day excuses the absence but doesn’t make you well. Rest and sleep do, and too many excused meetings leave a course Incomplete.
+
+What To Do Next
+  - Rest: sleep, eat and look after yourself until your condition is back over the line.
+  - If you missed a rehearsal call, press Catch Up The Blocking on the Casting tab to learn it from the book.
+  - If many class days go by ill, watch the course record on Standing And Craft: an Incomplete is made up there.
+
+What Decides It
+  - Your Condition: Under 55 counts as unwell (estimated)
+  - The Flu: With the flu, you’re sick whatever your condition reads
+  - An Injury: One that limits the body or the mind, as a doctor’s note would excuse
+  - Today At School: What’s on your calendar today, by New Haven’s day, and whether the classes are over
+
+How It Connects
+  - body.how (prerequisite): Condition under 55, the flu or a limiting injury is what lets you call in.
+  - school.standing (evaluation): An excused day is left out of the attendance the term’s review counts.
+  - school.repeat (history): Each meeting missed ill stays on the course’s record as excused, and enough of them make it Incomplete.
+  - school.shifts (scheduled): A Saturday shift that day is excused when it comes, and its hours can be converted to grant aid.
+  - school.leave (scheduled): Missing most of a term’s class days ill brings Yale Health’s assessment, which can end in a medical leave.
+  - productions.part (scheduled): A rehearsal call that day is excused when it comes, and the blocking set without you is still there to catch up on from the book.
+  - coursework.partners (scheduled): A rehearsal booked with a classmate that day is excused when it comes, and costs none of their trust.
+
+A Worked Example
+  A first-year’s Monday, September 14, 2026, down with the flu at condition 70, with a call for Drama 50: The Theatrical Event at 3 p.m. after Acting I and the day’s other classes at nine.
+  - At eight, open School, Classes, and press Call In Sick.
+  - Sleep the day through.
+  The classes count you excused, Acting I’s meeting among them, and the lab call is excused, not counted as missed, and kept as excused on the lab’s own course record. Without the flu, at condition 70, the button would have said you’re well enough to go.
+
+=== school.orientation: Orientation Week
+Where To Find It: School, Coursework, Orientation
+When You Can Use It: A first-year’s first week, August 24 to August 28, from the guide’s chapter “Drama School”; a life that starts after classes have begun has it behind it.
+
+Orientation is your first week in New Haven: 5 sessions, one each morning from August 24 to August 28, that get you started. Registration lets classes count you and work-study pay you. Meeting your class lets you ask classmates to rehearse. The faculty set out what the School asks, which the screen keeps either way. The tour opens the studios and the library for your preparation, and the courses session sets your first work. Be in New Haven and awake when a session starts and it happens; if you miss one, Catch Up does it later, taking the session’s length.
+
+What To Press
+  - Be in New Haven and awake for each session. It’s on your calendar, and the clock stops at it and asks.
+  - Go, and it runs its length and says what it did.
+  - Missed one? Open School, then the Coursework tab. The Orientation panel lists each session: press Catch Up beside one whose time has passed.
+
+What You Need First
+  - To be a first-year who arrived before the sessions.
+  - For Catch Up: to be out of hospital, free now, and clear of anything you’re expected at before the session would end.
+
+Costs
+  - Time: Each session’s length: Registration And Your Account, 120 minutes; Meeting Your Class, 180 minutes; Meeting The Acting Faculty, 120 minutes; The Building, The Studios And The Library, 120 minutes; The Courses And What They Ask, 150 minutes. Catch Up moves the clock on by the same (estimated)
+  - Money: None
+
+What Happens
+  - Registration And Your Account: you’re registered, so classes count you and you can work shifts, and you’re told what tuition, Yale Health and work-study come to.
+  - Meeting Your Class: you’ve met every classmate, and can ask any of them to rehearse.
+  - Meeting The Acting Faculty: you meet the chair and your teachers, and they set out what the School asks. What The School Asks, on Standing And Craft, lists it whether you went or not; going adds the day it was set out, and changes nothing else.
+  - The Building, The Studios And The Library: the studios and the Haas Arts Library open for your preparation.
+  - The Courses And What They Ask: the first-year fall courses set their first work, so you can start before classes.
+
+Later
+  - If you’re not registered when classes begin on August 31, each class day counts as an unexcused absence and you can’t work a shift, until you catch up registration. From the second term on, every student counts as registered.
+  - A classmate you haven’t met, you meet at the first class you go to.
+  - A session done stays done.
+
+Reading What Comes Back
+  - Each line reads Done with its date, On The Calendar while it’s still to come, or Catch Up once it’s past and not done.
+  - A grayed Catch Up gives its reason beside it.
+  - A session’s notice, or Catch Up’s message, says what it told you or arranged.
+
+If You Can’t
+  - “Orientation is over.”: the life began after the first week.
+  - “Done on …”
+  - “This session is still to come. It’s on your calendar.”
+  - “Not from a hospital bed.”
+  - At something else, or due somewhere before it would end: it names what, and when.
+
+Common Mistakes
+  - Sleeping through Registration And Your Account costs the most: classes count you absent until you catch it up. Catch it up before August 31.
+  - Catching up takes the session’s whole length, so leave room for it.
+
+What To Do Next
+  - Once you’ve met your class, ask a scene partner to rehearse on the Coursework tab.
+  - Start your first pieces on the Coursework tab: the studios and the library are open to you after the tour.
+  - Check Your Week on the Classes tab for your first classes.
+
+What Decides It
+  - Where You Are: In New Haven and awake when it starts. In hospital, it’s missed, and waits to be caught up
+  - The Session’s Time: Catch Up opens only once the session’s time has passed
+  - Your Calendar: Catch Up needs the session’s length clear of anything you’re expected at
+
+How It Connects
+  - school.standing (prerequisite): Until you’re registered, every class day counts as an unexcused absence.
+  - school.shifts (prerequisite): Work-study’s I-9 is done at registration. Unregistered, a shift is missed and can’t be converted.
+  - coursework.partners (prerequisite): You can’t ask a classmate you haven’t met to rehearse, and meeting your class meets them all.
+  - coursework.prepare (immediate): The tour opens the studios and the library, and the courses session sets your first work.
+  - day.calendar (scheduled): Each session is on your calendar, and the clock stops at it.
+
+A Worked Example
+  A new life in New Haven, asleep at 10 a.m. on August 24.
+  - The clock reaches Registration And Your Account at 10 a.m. while you sleep, so it’s missed.
+  - At noon, open School, Coursework, and press Catch Up beside it.
+  The clock moves on 120 minutes and you’re registered, so the classes from August 31 count you. Left undone, each of them would count you absent, unexcused.
+
+=== school.money: What You Owe The School
+Where To Find It: School, Terms And Award, Your Yale Account
+When You Can Use It: From the guide’s chapter “Drama School”: the account once anything is billed to it, a review with a seventh term coming, conversion for a student on aid.
+
+Your Yale account is what you owe the School. The tuition scholarship pays tuition for 6 terms, so the account usually owes nothing. It’s charged for a term past those 6, for a scholarship returned on a leave, and for late fees, and Pay From Your Bank settles it. Unpaid past its due date, it brings a financial hold, which stops registration and the diploma, and a late fee each month. Ask For An Aid Review asks the aid office to support a term past 6, and a student on aid can ask to convert work-study hours missed ill into grant aid.
+
+What To Press
+  - Open School, Terms And Award. Your Yale Account shows what each term bills and credits and, once anything is billed, Owed On Your Yale Account, Financial Hold and Terms Enrolled.
+  - Type an amount in Pay (Blank Pays It All), or leave it blank, and press Pay From Your Bank.
+  - With a seventh term coming, press Ask For An Aid Review.
+  - On Shifts And Pay, press Ask For Conversion To Grant Aid when Convertible To Grant Aid shows hours.
+
+What You Need First
+  - To pay: something owed, no more than is owed, and that much in your checking account and your easy-access savings, since Yale takes a payment from a checking or savings account.
+  - For an aid review: six terms enrolled, or a repeat or an additional term granted. Each student gets one review.
+  - For conversion: need found by Yale’s assessment, not being on leave, and hours to convert.
+
+Costs
+  - A Term Past Six: $22,407.28 tuition and $2,377.37 for Yale Health in the fall of 2029, due in 30 days (estimated)
+  - Late Fee: $125 a month while it’s owed, up to $375 a term
+  - Paying: From your checking account, then your easy-access savings, at once, with no time taken
+  - Grant Aid: $23 for each hour converted, up to 150 hours a year, taxed as a scholarship
+  - Asking For Conversion: No time and no money. The grant comes at the processing it’s booked for
+
+What Happens
+  - A payment moves from your bank onto the account at once. Paid in full, a hold lifts, and a degree waiting on it is conferred.
+  - An aid review goes to the aid office, and is decided in 5 working days.
+  - A conversion is booked for the next processing, on the 15th of January or May.
+
+Later
+  - If anything is still owed 30 days after a term is billed, or after a leave returns a scholarship to it, the account goes on a financial hold with a $125 late fee, then another each month while it’s owed, up to $375 a term.
+  - Under a hold at a term’s start, you must register again once it’s paid; until then you’re counted absent from classes and can’t work shifts. With need found, the term’s living-expense scholarship pays the account first, and only what’s left reaches your bank: a hold it clears lifts then, and “The Financial Hold Is Lifted” says so.
+  - Under a hold at Commencement, the diploma waits until it’s paid.
+  - The aid review’s answer is applied when the next term begins. With an exception, the term’s tuition isn’t billed and it runs as one of the first six; with need found, living aid goes on either way and pays the term’s Yale Health fee. A term billed before the answer isn’t credited back.
+  - Converted hours are paid into your bank as grant aid on the processing day. For a nonresident on an F-1, 14% is withheld for tax.
+  - A credit on the account (a leave’s tuition rebate or Yale Health fee refunded, or a scholarship restored on appeal) that leaves nothing owed lifts a hold as a payment does, and “The Financial Hold Is Lifted” says so. A credit left over is refunded to your bank.
+
+Reading What Comes Back
+  - Owed On Your Yale Account shows a warning when anything is owed, and Financial Hold gives the day it began.
+  - The table lists the account’s last twelve entries, each a charge, a payment or a credit.
+  - Convertible To Grant Aid reads Not On Aid where no need was found; otherwise it shows the hours, and what they’d come to.
+  - Each Term ends Paid To Your Bank where need was found and Paid From Your Bank where it wasn’t, including a term past six where the aid office granted an exception. A term past six without one shows On Your Yale Account: its tuition, and its Yale Health fee too unless the review kept your living aid, which then pays the fee and the tuition before any of it reaches your bank, as Applied To Your Yale Account shows, and the term ends Paid To Your Bank with what’s left, if anything.
+  - Terms Enrolled counts the terms you’ve been enrolled in, the figure the degree’s 9 semesters are counted against. A leave’s terms aren’t among them.
+  - A hold’s notice, and a held diploma’s, says to pay on the Terms And Award tab, where Your Yale Account and Pay From Your Bank are.
+  - A scholarship returned on a leave is due 30 days after the leave begins, as a term’s bill is, and the “Your Leave Has Begun” notice gives the date. Unpaid by then, it brings the hold and the late fee.
+  - The figures here are the dollars Yale bills; the screen shows them in your save’s money.
+
+If You Can’t
+  - “Your Yale account owes no balance.”, “Enter an amount to pay.”, “… is owed. Pay that or less.”, “Your checking account and your savings can cover only … of it now, so nothing was paid.”, going on “Pay that or less, or move money into your checking account first.”, or “Your checking account and your savings can’t cover any of it, so nothing was paid. Move money into your checking account first.”
+  - “Support past six terms is reviewed once a seventh is coming: you’re within the six.”
+  - “It’s with the aid office, decided by …” or “The aid office has reviewed your support.”
+  - “Converting hours to grant aid is only for students on financial aid, and the aid office found no need for you.”
+  - “You can’t while you’re on leave: a student on leave has no aid.”
+  - “Your request is already in for the next processing.”
+  - “There are no hours to convert. …”; before May, “There are no hours to convert yet. …”; and from May 15 to January 14, when the next processing is January’s, “There are no hours to convert at January’s processing. …”.
+
+Common Mistakes
+  - Leaving a term’s bill, or a scholarship a leave returned, past its 30 days: the hold stops registration at the next term and the diploma at the end. Pay before it’s due.
+  - Asking for the aid review once the seventh term has begun: that term is already billed and isn’t credited back. Ask as soon as the extra term is granted.
+  - A shift you missed by staying away can’t be converted: only hours missed ill or hurt, or never assigned, can.
+
+What To Do Next
+  - When a term is billed, pay it on Terms And Award before its due date, or plan the money to.
+  - With a seventh term granted, ask for the aid review straight away.
+  - On aid, check Convertible To Grant Aid on Shifts And Pay after a shift missed ill, and ask for the conversion.
+
+What Decides It
+  - The Balance: The sum of the account’s entries: what was charged, less what was paid or credited
+  - Need: Yale’s assessment of your family’s means: the family you chose when you created the life, beside your background. Nothing, Scraping, Modest or Comfortable: need is found, and the living-expense scholarship, $15,200.50 a term in 2026–27, pays the term’s Yale Health plan, $1,882, and the rest, $13,318.50, into your bank each fall and spring; hours missed ill can be converted, and a leave begun mid-term returns part of the scholarship. Wealthy or Inherited: the family’s means rule need out, so there’s no living aid and no hours to convert, and the plan comes from your bank
+  - Your Family’s Money: What each family puts in your name on the first morning: Nothing, $43 in checking and $0 in savings; Scraping, $1,348 in checking and $326 in savings; Modest, $5,217 in checking and $7,065 in savings; Comfortable, $19,565 in checking and $45,652 in savings; Wealthy, $92,391 in checking and $413,043 in savings; Inherited, $260,870 in checking and $2,608,696 in savings
+  - The Aid Office: Makes an exception to six terms of tuition support only where you’ve had a medical leave, and keeps living aid, which pays the term’s Yale Health fee, only where need was found (estimated)
+  - Hours To Convert: Assigned hours excused ill or hurt this year; and hours never assigned, counted in May until its processing, once the spring’s shifts are done, and paid only at May’s processing, never January’s; up to 150 less any already converted. A repeated year counts as a year of its own: its hours are counted and converted separately from the first time
+
+How It Connects
+  - school.repeat (prerequisite): A repeated year or an additional term past six terms is what bills tuition to the account.
+  - school.leave (evaluation): The aid office grants tuition past six terms only to a student who has had a medical leave.
+  - school.shifts (prerequisite): Assigned hours excused ill or hurt are the hours conversion turns into grant aid.
+  - bank.accounts (immediate): Payments come out of your bank, and grant aid and refunds go into it.
+  - taxes.return (history): Grant aid is a taxable scholarship, kept for the year’s tax return.
+  - school.standing (scheduled): A hold at a term’s start means registering again before classes count you.
+
+A Worked Example
+  A repeated third year puts you in a seventh term, the fall of 2029, with no aid review asked for.
+  - The term begins: $22,407.28 tuition and $2,377.37 for Yale Health go on your Yale account, due in 30 days.
+  - You pay $10,000 from your bank, leaving $14,784.65.
+  - The due date passes.
+  A financial hold begins with a $125 late fee, and another comes each month to $375 for the term. Paying the rest lifts the hold at once.
+
+=== productions.casting: Casting
+Where To Find It: School, Casting, Why This Cast
+When You Can Use It: From the guide’s chapter “Drama School”. The chair casts as each term begins, from the first spring.
+
+Casting decides which part you play in each term’s production. The chair of Acting, Tamilla Woodard, casts every student in the casting pool as each term begins, from the first spring. Everyone is read the same way for the play: their fit for it (what a night of it would come to from their abilities and the techniques it asks, fully prepared on a good day), with 20% of that fit depending on how much of themselves they delivered in their runs since the last casting, and a balance for the size of their last part. The best read takes the biggest part still open that’s written for them. Why This Cast, on the Casting tab, shows every read in your production.
+
+What To Press
+  - As each term begins, read the notice “Cast: …”: your part, the play, and who plays the lead if it isn’t you.
+  - Open School, then the Casting tab. Each production you’re in has a panel with Role, Performed (Went On for an understudy) and Calls Ahead, then its rehearsal process.
+  - Why This Cast lists each student in your production with Fit, Delivered, Balance, Read and Part, best read first, and above the table the runs your own Delivered was read from.
+  - Around The Class shows who’s playing what this term, each classmate’s Last Run, and what they are to you.
+  - Calls Ahead, at the foot of the tab, lists the next eight School and Rep calls and labs; press one to look at the call, or its date to look at that day.
+
+What You Need First
+  - A place in the casting pool: two missed calls in a term take you out of it until a term review finds you in good standing. A rehearsal, a run-through or a lab missed without an excuse takes you out when it brings the count there; a missed performance counts toward it, and is a grave breach as well.
+  - A first-year is first cast in the spring; the first fall has Drama 50 and no production.
+  - For Yale Rep, good standing: an understudy in the first spring and in the second and third years’ falls, or, as a third-year with acting at 77 or more, a part in the Rep’s company in place of a School production.
+
+Costs
+  - Time: None to be cast. A School production calls you Tuesday to Friday from three for six hours through its rehearsal weeks, and plays at eight. A Rep understudy rehearses Wednesday and Friday from three to six and is on call at every performance; a company member rehearses Tuesday to Saturday from three to nine (estimated)
+  - Money: None: casting is part of the program, and unpaid
+
+What Happens
+  - The cast list goes up as the term begins: every rehearsal call and performance goes on your calendar, from the first call, and a notice names your part.
+  - When the list goes up, a lead of your own lifts your morale 2, a friend’s lead 0.5, and a rival’s adds 1.5 stress, each by your nature.
+  - Each classmate in your cast comes 10 closer for the weeks you share, or 12 less close where a lead written for either of you went to the other, by your warmth or how much a slight hurts you.
+  - The runs the chair read are marked as read: the next casting reads what you play after this one, with this read counting 50% as much as it does now.
+
+Later
+  - The School and the Rep never call you to two places at once: a School rehearsal gives way to a Rep rehearsal, performance or run-through, and ends where a Rep night on call begins; a Rep night on call gives way to your own School performance, and a School performance to a Rep performance in a role.
+  - On call, the Rep calls you three hours before each curtain, at five for an evening and at eleven for a Sunday matinee. Most nights you aren’t needed; on about 2% of them you go on, and the performance goes on your calendar.
+  - An understudy plays one run-through for the director, on the dark Monday of the run’s second week.
+  - When a run ends, the classmates in it grow from its rehearsals and nights, and their own run is judged and kept as their Last Run.
+
+Reading What Comes Back
+  - The read decides it: a higher fit can lose a lead to a balance of 4 points between a lead last time and a featured part.
+  - Delivered at 100% means every night came fully prepared, on a good enough day: tiredness, the flu, an injury or a concussion that day count as less delivered. Tiring late in the play, and a slip carried into the next movement, don’t, since the fit and the night’s luck already count them. A night missed without an excuse (not in hospital, laid up or called in sick) counts as nothing delivered.
+  - Fit uses the same abilities a night does, so the work that grows them raises it. Who you are as an actor plays no part in it.
+  - A part called In The Company means no part written for you was left when your read came up.
+  - Why This Cast shows the production you’re in; Around The Class shows the whole class, the Rep’s company included.
+
+If You Can’t
+  - “Not Cast Yet”, out of the pool: “You’re out of the casting pool after missed calls. A term review that finds you in good standing puts you back.”
+  - Not Cast Yet, in the first fall: the chair casts from the first spring.
+  - No Rep part: a term with no Rep production for your year, or a standing below good.
+  - On a leave, after a withdrawal or a dismissal, or after the degree, the chair casts you in no production. Once the School has ended, No Casting Ahead says so in place of Not Cast Yet, and that the productions you played stay on your Profile.
+
+Common Mistakes
+  - Missing calls: two in a term and you’re out of the pool for every casting until a term review finds you in good standing. If you’re unwell, press Call In Sick before the call: an excused call isn’t a missed one.
+  - Skipping nights: a night missed without an excuse counts as nothing delivered, and the next casting counts the run for up to 8 nights.
+  - Counting on a lead every term: a lead takes 2 off your next read, and a featured part adds 2.
+  - Being away from New Haven at five on a night you’re on call, if the Rep needs you: that’s a grave breach, as a missed performance is. It puts you on academic warning, or dismisses you if you’re already on warning.
+
+What To Do Next
+  - Read your part on the Casting tab, then check your calendar for the first rehearsal call.
+  - Before the first call, read the play from the Plays To Read list so you come to it knowing it.
+
+What Decides It
+  - Fit: What a night of the play would come to with no luck either way: your abilities and the techniques it asks, adjusted for the play’s material (its kinds of play, where the game has no profile of it), preparation complete and a good enough day. Stamina and discipline count as full for everyone, since the game doesn’t simulate the class’s bodies and habits (estimated)
+  - Delivered: How much of yourself you brought to your runs since the last casting: each night’s preparation and your condition that day, each run counted by its nights up to 8, a Cabaret or Summer run’s nights counting 50% as much as a School production’s, and your record before counting 50% as much as it did. A classmate’s is the share of calls they keep, 72% to 98% (estimated)
+  - Balance: Your last School production’s part: a lead -2, a supporting part 0, a featured part +2 (estimated)
+  - Read: The fit, with 20% of it scaled by Delivered, plus the balance. Best read first, each takes the biggest part still open written for an actor, an actress or either; with none left, In The Company (estimated)
+  - Which Production: The first spring, the Carlotta Festival for the whole class. In the second and third years’ falls, a directors’ thesis for the upper half of the read and the Langston Hughes Festival for the rest; the second spring, a thesis or the Carlotta; the last spring, a Shakespeare Repertory Project by place in the read (estimated)
+  - Yale Rep: Good standing, in a term with a Rep production for your year. A third-year with acting at 77 or more is asked into the company, in a featured part; everyone else understudies (estimated)
+
+How It Connects
+  - school.standing (prerequisite): Only a student in the casting pool is cast, and only one in good standing goes to Yale Rep; two missed calls take you out until a term review finds you in good standing.
+  - productions.part (immediate): Being cast puts every rehearsal call on your calendar with its stage, and opens the part’s rehearsal process.
+  - day.calendar (scheduled): Each call and performance goes on your calendar, and the clock stops at it.
+  - productions.nights (evaluation): The part’s size and stage set how hard each night is: a lead harder than a featured part, and the Rep harder than the School.
+  - coursework.partners (immediate): The cast list changes bonds: a classmate in your cast comes 10 closer, or 12 less close where a lead went between you.
+  - body.how (immediate): When the list goes up, your own lead lifts morale 2, a friend’s 0.5, and a rival’s adds 1.5 stress.
+  - productions.cabaret (optional): A Cabaret show is set in a week clear of your casting calls; cast at the School and the Rep at once, you can’t take one.
+
+A Worked Example
+  A play both of you could lead. You read with a fit of 62, after a lead last time, 90% delivered; a classmate reads 58, after a featured part, keeping 95% of their calls.
+  - Yours: 62 with 20% of it scaled by 90%, then -2 for the lead: 58.8.
+  - Theirs: 58 with 20% of it scaled by 95%, then +2 for the featured part: 59.4.
+  The classmate is read first, 59.4 to your 58.8, and takes the lead written for either of you; you take the biggest part still open for you. Why This Cast shows both rows, and next term the chair reads the part you play now.
+
+=== productions.notes: The Director’s Notes
+Where To Find It: School, Casting, The Rehearsal Process, The Director’s Last Note
+When You Can Use It: From the guide’s chapter “Drama School”, from a production’s first work-through rehearsal. An understudy’s rehearsals bring no notes.
+
+The director’s notes tell you what to fix in your part before the nights. At each work-through rehearsal the director gives one note, on what most needs it now: a blocking call missed, the lines after the off-book call, the blocking short, or else something the part’s own forecast shows, put as a director would put it (what you want, listening, pacing, the physical life, a change, a relationship) and placed in the play. If it’s the weakness your work keeps coming back to, the note says so, and how many of your pieces it has held back. Work On The Note before the next call, one of the ways to work on it, and the next call shows whether you answered it. A note taken makes that call grow you 10% more, and the share of notes taken is part of a night’s preparation.
+
+What To Press
+  - Open School, then the Casting tab. Under The Rehearsal Process, read the director’s last note, its date, and whether it’s Not Worked On Yet, Worked On, Taken or Not Taken.
+  - For a note on the craft, choose one of the ways to work on it from the list beside “Ways to work on it:”, and read what the chosen way does.
+  - Press Work On The Note, which names the way chosen. It takes the way’s time, and a message gives the figure before and after.
+  - A way that plays a movement differently, or finds places to breathe, waits under Work It Through: Keep It or Put It Back. If you leave it, the next call keeps it.
+  - A note on the lines or the blocking is an hour’s work on them. A note on the director’s request is answered by changing How You’ll Play It, and Work On The Note won’t take it.
+
+What You Need First
+  - A note given and not yet settled: the next call settles it either way.
+  - For a craft note: being awake and out of hospital, 30% of the part learned, free now with the way’s own minutes clear of anything you’re expected at, and, for a way on your feet, energy of 25 or more and no injury that stops training. For any other note: free now, with an hour clear.
+  - For a craft note, a way to work on it not already tried and put back, and no change waiting to be kept or put back.
+
+Costs
+  - Time: A note on the craft: the way’s own time, 30 to 45 minutes. Any other note: an hour (estimated)
+  - Money: None
+
+What Happens
+  - A craft note: the way is tried on the part, its time spent, and its figure before and after kept on the note. The note shows Worked On.
+  - A way that changes how a movement is played, or places to breathe, waits to be kept or put back.
+  - Any other note: an hour on it. A note on the lines moves them 30% of what’s left, and one on the blocking moves it 50% of what’s left and closes one missed call’s gap where one is open, as Catch Up The Blocking does.
+  - Each craft note and each request of the director’s, given and answered, is counted for life, and each craft note worked with the way you used.
+
+Later
+  - At the next call the note is settled, Taken or Not Taken, with its figure then kept beside it, and a change still waiting is kept and played at that call.
+  - Once another note comes, the settled one moves under The Director’s Notes So Far, below the last note: each earlier note with what came of it, and the way it was worked with its figure before, after and at the next call.
+  - At the next work-through, if the same note comes again: “Better since the last note.” if it was taken, and “Still:” if it wasn’t; either way, if you worked on it a way, the way you tried with its figure then and now.
+  - When the run closes, the notes still open go into your notes from the courses: what you want as the choices, listening and a relationship as the work with your partner, lines as the lines, a skill as that skill, the rest as rehearsal on your feet. A note on the director’s request stays with the part.
+  - Looking Back, at the closing, counts the notes you took and those you worked on that didn’t move.
+
+Reading What Comes Back
+  - The note names its place, “in the second half”, “by the close”; a note on the whole part says “the whole play”.
+  - The words come from what holds the place back most, by the quality it costs: believability or interpretation is “I don’t know what you want…”, connection “Who are they to you…?”, responsiveness “You’re not taking what they give you…”, execution “The physical life … isn’t clean yet”, consistency “It sags in…”. Tiring named as a problem of its own is “You’re spent by…”, and a turn into a movement “The change into … lurches”. A movement held back most by tiring is given “It sags in…”, a note on its pacing.
+  - “Still:” is the same note again, not answered. “Better since the last note.” means it was answered, and more is asked.
+  - A craft note on an ability or technique your work keeps coming back to, the one Your Work So Far names, ends “It’s your … again: it’s held back … of your pieces before this.” The words change; the note, its figure and what answers it stay the same.
+  - Under the note, the figure before, after and at the next call says whether the change held.
+
+If You Can’t
+  - “There’s no note to work on.”: none given yet, or the last one settled at a call.
+  - “You’ve worked on it: the next call will show it.”
+  - “This note asks for the part played another way: change it under How You’ll Play It.” and, once you have, “You’ve changed how you play it: the next call will show it.”
+  - “That isn’t one of the ways at this note.”
+  - “There’s no way left at this note that hasn’t been tried and put back, or tried and found to change nothing.”
+  - “Keep or put back the change you tried first.”
+  - “Learn some of the part first: there’s nothing to rehearse without it.”
+  - “Not from a hospital bed.”, “You’re asleep.”, “You’re too tired to work on your feet. Sleep first.” or an injury’s “Not with …; it has … yet to mend.”
+  - “You’re at … until ….”, or “… starts at …: there isn’t the time before it.”
+  - “You aren’t cast in anything there.” and “The run is over.”
+  - Locked, on a guided life, until “Drama School” has been read.
+
+Common Mistakes
+  - Leaving a note on the director’s request to the calls: Work On The Note won’t take it, and it comes back at each work-through until you change How You’ll Play It to the way asked for.
+  - Putting a way back and counting the note answered: the note stays open, and that way isn’t offered for it again. Work on it another way before the next call.
+  - Leaving a craft note to the calls: it’s taken only if the next call finds its problem gone from the forecast, and if the director gives it again, it comes back as “Still:”.
+
+What To Do Next
+  - Work on the note before the next call, and keep the change if its figure went up.
+  - At the next call, check whether it shows Taken; if it comes back as “Still:”, try another way.
+
+What Decides It
+  - What The Note Is About: In order: a blocking call missed and not caught up; lines under 70% once 40% of the calls are past; blocking under 70%; else the worst problem in the part’s forecast that has a way to work on it, leaving out the one just answered; else the play’s skill that’s weakest in you (estimated)
+  - The Director’s Request: In 50% of productions, one way on one aspect, set at the first call you come to. A choice against it is the note at the next work-through, ahead of any other (estimated)
+  - Answered: A craft note: worked a way that left its figure no more than 0.05 lower, and the way kept; or its problem gone from the forecast, whatever did it. A note on the lines or the blocking: worked, or the calls got them there. A note on a skill the play asks: worked. A note on the request: the choice no longer against it
+  - A Note Taken: That call’s growth ×1.1. The share of notes taken is a night’s third part of preparation, counted 0.2 in Growth From A Night (estimated)
+  - Working On It: Trains adaptability each time. A way you try trains what it works on too: working a movement slowly, or playing it another way, trains the ability or technique holding it back, where one does; running into it from the one before trains adaptability (estimated)
+
+How It Connects
+  - productions.part (prerequisite): A note comes at a work-through call you come to; one on the lines or the blocking comes first while either is short.
+  - coursework.workbook (immediate): A craft note’s ways are Work It Through’s, and working on one is a try kept in the part’s workbook.
+  - productions.nights (evaluation): The share of notes taken is part of a night’s preparation, and of Growth From A Night.
+  - craft.identity (history): Each note on the craft given, worked on and answered counts for life in Taking Direction, with the way you reach for most; a note on the weakness your work keeps coming back to names it, with its count.
+  - coursework.feedback (history): Notes still open when the run closes go into your notes from the courses, and the next piece can ask for them.
+  - craft.profile (immediate): Working on a note trains adaptability, and a note taken makes that call grow you 10% more.
+  - productions.playing (optional): A choice against the director’s request comes back as a note until the choice changes.
+
+A Worked Example
+  In the Carlotta Festival Of New Plays, as a lead, off book and with the blocking set, at stamina half of full and rested, at readiness 100. A new play is judged in its two halves, and at a work-through the director says “You’re spent by the second half: find where the play lets you breathe.”
+  - From the ways to work on the note, choose Find Places To Breathe.
+  - Press Work On The Note: Find Places To Breathe. It takes 45 minutes, and a message gives the second half’s figure before and after.
+  - Under Work It Through, press Keep It.
+  Tiring took 5% off what it reaches in the second half; now it takes 4%, as places to breathe leave 70% of the evening’s load on stamina. At the next call the note shows Taken, its figure kept beside it, and that call grows you 10% more.
+

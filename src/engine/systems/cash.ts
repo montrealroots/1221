@@ -124,8 +124,8 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
   const current = currentOf(sim, person);
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
   const rules = bank ? CASH[bank.id] : undefined;
-  if (!current || !bank) return { fee: 0, refused: 'You need a bank account to take cash out of.' };
-  if (current.dormant) return { fee: 0, refused: `${current.name} is dormant. Reactivate it first, under Your Accounts Over Time.` };
+  if (!current || !bank) return { fee: 0, refused: 'You need a checking account to take cash out of.' };
+  if (current.dormant) return { fee: 0, refused: `${current.name} is dormant. Reactivate it under Your Accounts Over Time to take cash out of it.` };
   // A machine needs the debit card; the counter doesn't.
   if (from !== 'counter' && current.plastic && (current.plastic.locked || current.plastic.stopped)) return { fee: 0, refused: current.plastic.stopped === 'new' ? 'Your debit card hasn’t arrived yet. You can still take cash out at the counter.' : current.plastic.stopped ? 'Your debit card is stopped. You can still take cash out at the counter.' : 'Your debit card is locked. Unlock it under Your Cards, or take cash out at the counter.' };
   // A card from a bank kept at home (from 2026-10-16): another bank's machine here, for its fee abroad in its own money,
@@ -160,7 +160,7 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
  */
 function shortWords(sim: Simulation, current: Account, has: string, amount: Money, fees: Money): string {
   const cur = saveCurrency(sim.universe);
-  const holds = current.balance > 0 ? `has only ${has}` : 'has nothing in it';
+  const holds = current.balance > 0 ? `has only ${has} available` : 'has nothing available';
   return fees > 0 && current.balance > 0
     ? `${current.name} ${holds}, and ${formatMoney(amount, cur)} in cash with its fees comes to ${formatMoney(amount + fees, cur)}.`
     : `${current.name} ${holds}.`;
@@ -250,13 +250,13 @@ export function registerCash(sim: Simulation): void {
     if (!(amount > 0)) throw new CommandError('Enter how much cash to pay in.');
     if (!wallet || wallet.balance < amount) throw new CommandError(`You have only ${formatMoney(Math.max(0, wallet?.balance ?? 0), saveCurrency(s.universe))} in cash, so nothing was paid in.`);
     const to = s.universe.accounts[p.toId];
-    if (!to || to.ownerId !== person.id || to.closedAt || (to.kind !== 'checking' && to.kind !== 'savings') || to.category === 'term') throw new CommandError('Cash goes into your current account or savings.');
+    if (!to || to.ownerId !== person.id || to.closedAt || (to.kind !== 'checking' && to.kind !== 'savings') || to.category === 'term') throw new CommandError('Cash goes into your checking account or savings.');
     const bank = to.bankId ? bankById(to.bankId) : undefined;
     if (p.at === 'post_office' && (!bank || CASH[bank.id]?.postOffice !== 'both')) throw new CommandError(`${bank?.name ?? 'Your bank'}’s customers can’t pay cash in at the Post Office.`);
     // A dormant account takes nothing until it's reactivated, as Move Money into it is refused; and a machine needs the
     // debit card, as one paying out does (from 2026-10-13: until then cash went into a dormant account and it stayed
     // dormant, and an ATM took a deposit with the card locked; found by the review of that day).
-    if (to.dormant) throw new CommandError(`${to.name} is dormant. Reactivate it first, under Your Accounts Over Time.`);
+    if (to.dormant) throw new CommandError(`${to.name} is dormant, so nothing was paid in. Reactivate it under Your Accounts Over Time, then try again.`);
     // A bank kept at home takes cash only at its own counters and machines, in its country.(from 2026-10-16).
     if (heldFromAbroad(s, to)) throw new CommandError(`${bank?.name ?? 'That bank'} takes cash only at its own counters and machines, in its country.`);
     // The card is the one the bank taking the money issued: the current account’s own, or for savings the current

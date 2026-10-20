@@ -1,0 +1,14 @@
+brief.json: 25 screens
+decision.json: 25 screens
+dir1.json: 25 screens
+dir2.json: 22 screens
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+browser.newPage: Target page, context or browser has been closed
+    at /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/e15-money-data/tools/text-walk.mjs:43:30 {
+  log: []
+}
+
+Node.js v22.22.0

@@ -60,7 +60,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
               {p.locked && !p.stopped && <p className="small" style={{ margin: 0 }}>Locked: nothing new can go on it until you unlock it.</p>}
               {which === 'debit' && ceiling && (
                 <p className="small" style={{ margin: 0 }}>
-                  It pays up to {money(inSaveMoney(sim, ceiling.ceiling, 'EUR'))} {ceiling.window === 'month' ? 'a calendar month' : 'over any 30 days'}. {room !== undefined ? `${money(room)} of that is left. ` : ''}Past it, a purchase goes on the credit card, or isn’t made. Source: {FRENCH_CARDS_SOURCE}. Estimated: the lowest limit the bank sets.
+                  It pays up to {money(inSaveMoney(sim, ceiling.ceiling, 'EUR'))} {ceiling.window === 'month' ? 'a calendar month' : 'over any 30 days'}. {room !== undefined ? `${money(room)} of that is left. ` : ''}Past it, a purchase goes on the credit card, or isn’t made. Source: {FRENCH_CARDS_SOURCE}. The limit shown is the lowest the bank sets, which is estimated.
                 </p>
               )}
               <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -90,7 +90,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
               <Fine>
                 {fee === undefined && own?.replaceWords ? `The bank’s terms: ${own.replaceWords} The game charges nothing for it. ` : ''}
                 {fee === undefined && !own?.replaceWords ? 'The bank lists no fee for a new card, so the game charges nothing for one.' : fee === undefined ? '' : fee === 0 ? 'A new card is free.' : `A new card costs ${money(inSaveMoney(sim, fee, ownCurrency))}${own?.freeFor?.length ? `, or nothing when it’s ${own.freeFor.map((w) => w).join(' or ')}` : ''}.`}
-                {own?.rushFee !== undefined ? ` A rushed one costs ${money(inSaveMoney(sim, own.rushFee, ownCurrency))} more.`
+                {own?.rushFee !== undefined ? (own.rushFee === 0 ? ' A rushed one costs nothing more.' : ` A rushed one costs ${money(inSaveMoney(sim, own.rushFee, ownCurrency))} more.`)
                   : own?.rushDays !== undefined ? ` A rushed one comes in ${own.rushDays} business ${own.rushDays === 1 ? 'day' : 'days'}. The bank lists no fee for it, so the game charges nothing.`
                   // A rush the bank charges for and doesn’t price (from 2026-10-13): said, and not offered.
                   : own?.rushUnpublished ? ` ${own.rushUnpublished} With no fee published, the game doesn’t offer a rushed card.` : ''}

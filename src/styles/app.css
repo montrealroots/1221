@@ -765,6 +765,21 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   /* The date comes back, shortened by the room, never pushing a button off. */
   .topbar-clock-sep, .topbar-clock-date { display: inline; }
   .topbar-clock-date { min-width: 0; font-size: var(--size-xs); }
+  /* A locked time control says Locked under its name (from 2026-10-19, brief 15's coordinator, at the tutorial area's
+     report): beside it, in a quarter of a phone's width, the word wrapped one letter to a line and the buttons stood
+     114 pixels tall (docs/verification/editorial-2026-10-19/tutorial/phone/first-screen-390.png). */
+  .topbar-time .btn.is-locked { flex-direction: column; gap: 0; }
+  .topbar-time .btn.is-locked .lock-word { margin-left: 0; white-space: nowrap; }
+}
+/* On a narrow phone (from 2026-10-19, the same report) the guide and Save & Exit take a row of their own: the menu, the
+   name, the clock, the guide, the save's state and Save & Exit came to more than 390 pixels, and the clock ran over the
+   guide's button. */
+@media (max-width: 480px) {
+  header.topbar {
+    grid-template-columns: auto auto minmax(0, 1fr);
+    grid-template-areas: "menu brand clock" "save save save" "time time time";
+  }
+  .topbar > .topbar-group { justify-content: flex-end; }
 }
 
 /* Below a laptop the rail folds away and comes back as a drawer. */
@@ -1417,4 +1432,8 @@ td, th { overflow-wrap: break-word; }
   /* The chapter titles stay readable on a phone: the contents wrap as a list instead of hiding them. */
   .guide-toc { flex-direction: column; max-height: 30vh; overflow-y: auto; }
   .guide-toc-item .grow { display: inline; }
+  /* The chapter scrolls with the dialog, not in a box of its own (from 2026-10-19, brief 15's coordinator, at the
+     tutorial area's report): under the contents' 30vh, its own 60vh box left a long chapter about 250 pixels to be read
+     in (docs/verification/editorial-2026-10-19/tutorial/phone/guide-school-details-390.png). */
+  .guide-page { max-height: none; overflow-y: visible; }
 }

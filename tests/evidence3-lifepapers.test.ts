@@ -366,7 +366,7 @@ describe('health.appeal_decided, on the marketplace a family’s savings reach (
     expect(bill.denied!.outcome).toBe('upheld');
     expect(bill.amount).toBe(UNINSURED);
     expect(memos(sim, /^Appeal won: /)).toHaveLength(0);
-    expect(titled(sim, 'Appeal Upheld').map((n) => n.body)).toEqual([`The plan kept its denial for ${bill.what.charAt(0).toLowerCase()}${bill.what.slice(1)}, so the full bill stands.`]);
+    expect(titled(sim, 'Appeal Lost').map((n) => n.body)).toEqual([`The plan kept its denial for ${bill.what.charAt(0).toLowerCase()}${bill.what.slice(1)}, so the full bill stands.`]);
     expect(titled(sim, 'Appeal Won')).toHaveLength(0);
     expect(papers(sim).text).toContain('$183.98 Settled Denial Upheld');
     // Nothing about the bill moved money at the decision: no posting at its hour names it.
@@ -399,7 +399,7 @@ describe('health.appeal_decided, on the marketplace a family’s savings reach (
     const text = papers(sim).text;
     expect(text).toContain('$45.00 Owed As Debt Denial Overturned');
     const bank = checking(sim).balance;
-    expect(press('health.pay_bill')).toEqual(['Paid off.']);
+    expect(press('health.pay_bill')).toEqual(['Your medical debt is paid off.']);
     expect(checking(sim).balance).toBe(bank - SHARE);
     expect(debtOf(sim)!.balance).toBe(0);
     expect(billOf(sim, billId)).toMatchObject({ paid: true });
@@ -641,7 +641,7 @@ describe('the trait knobs, nine of the row’s ten live (round three)', () => {
     const keeps = look(sim, 'trait', 'keeps_accounts');
     expect(keeps).toContain('How hard a slight from a classmate cuts +10%');
     const chaotic = look(sim, 'trait', 'chaotic');
-    expect(chaotic).toContain('How fast you stop being clean +30%');
+    expect(chaotic).toContain('How soon you need a shower +30%');
     expect(chaotic).toContain('How much stress a hard hour, a performance’s nerves or an injury adds −8%');
     for (const words of [keeps, chaotic]) expect(words).not.toMatch(/receipt/i);
     expect(Object.keys(KNOB_LIMITS).sort()).toEqual(Object.keys(KNOB_READS).sort());

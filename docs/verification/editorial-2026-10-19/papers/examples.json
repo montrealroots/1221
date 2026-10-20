@@ -1,0 +1,452 @@
+[
+ {
+  "batch": 1,
+  "source": "src/engine/systems/identity.ts#registerIdentity",
+  "kind": "notification",
+  "before": "Non-Driver Identification Card Arrived: It’s in your hands and in force from today.",
+  "after": "Non-Driver Identification Card Arrived: It’s arrived, and you can use it from today.",
+  "why": "The working reference’s example 5: “in your hands and in force” is an official letter’s phrasing; the player wants to know they have it and can use it.",
+  "meaningSensitive": true,
+  "verified": "The notice fires when the card is issued (ID_CARD_KIND sets status valid and issuedAt today), so “use it from today” is exact; tests/evidence-g16-papers.test.ts and tests/defects3-50-70.test.ts assert it."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/papers/Documents.tsx#IdPanel",
+  "kind": "feedback",
+  "before": "Non-Driver Identification Card: you paid $28.00. The card comes September 22, 2026. It’s good until June 14, 2034.",
+  "after": "You applied for the Non-Driver Identification Card and paid $28.00. The card comes September 22, 2026, and it’s good until June 14, 2034.",
+  "why": "Says what the player did (applied) before what it cost, so the toast can’t be read as the card in hand.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-papers.test.ts presses Get on four lives; tools/acceptance-ui.mjs’s matcher moved with it."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/papers/Documents.tsx#IdPanel",
+  "kind": "feedback",
+  "before": "Non-Driver ID Card: you paid $14.00. It’s good until June 14, 2034.",
+  "after": "You have your Non-Driver ID Card now, for $14.00. It’s good until June 14, 2034.",
+  "why": "The counter-issued variant: the card is held at once, and the toast says so.",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-papers.test.ts presses Get in New York, where the card is valid at once."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/papers/Documents.tsx#IdPanel",
+  "kind": "feedback",
+  "before": "Credencial Para Votar (INE): you paid $0.00.",
+  "after": "You have your Credencial Para Votar (INE) now.",
+  "why": "A free card no longer reports paying nothing.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-papers.test.ts presses Get in Mexico City."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/documents.ts#issue",
+  "kind": "notification",
+  "before": "Your U.S. Passport Book, …, has arrived. It’s good until … A travel authorization issued on the passport it replaces ended with that passport.",
+  "after": "Your U.S. Passport Book, …, has arrived. It’s good until …",
+  "why": "A first passport replaced nothing: the last sentence was said on every arrival. Now a renewal says “Your old passport is canceled.”, adding “, and the travel authorization issued on it ended with it” only when there was one.",
+  "meaningSensitive": true,
+  "verified": "The replaced passports and their authorizations are read before issuePassport cancels them; tests/editorial-papers.test.ts plays a first passport and two renewals (defects.md, 1)."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/documents.ts#mayEnter",
+  "kind": "other",
+  "before": "It would let you in for a week’s visit. Up to 180 days as a visitor.",
+  "after": "The United Kingdom would let you in for a week’s visit. A visitor can stay up to 180 days.",
+  "why": "Names the country instead of “It”, and the stay line becomes a sentence (it was one of three fragments: “As a citizen, as long as you like.”, “Free movement: to live and work as well as visit.”).",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g25-1.test.ts (Australia would let you in …) and tests/editorial-papers.test.ts (the stay)."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/taxid.ts#ssnRefusal",
+  "kind": "error",
+  "before": "On an F-1, the number needs on-campus work that has begun or starts within 30 days. Register at the School first, and the School’s work-study is yours.",
+  "after": "On an F-1, you can get a number only with on-campus work that has started or starts within 30 days. Register at the School first: once you’re registered, the School’s work-study counts.",
+  "why": "A clear subject (you) and what the registration does, in place of “is yours”, which read as a gift.",
+  "meaningSensitive": true,
+  "verified": "The refusal is `registered(...)` false; registering is what makes work-study count as on-campus work. tests/language-dynamic.test.ts and tests/evidence-g17-papers.test.ts assert it."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/taxid.ts#registerTaxId",
+  "kind": "notification",
+  "before": "Your Social Security Card Came: Give the number to the School’s payroll and your bank. A bank that opens accounts online for people with a number can now open one for you online.",
+  "after": "Your Social Security Card Has Arrived: You now have a Social Security number. A bank that opens accounts online for people with a number can now open one for you that way.",
+  "why": "The first sentence told the player to do something the game has no control for. It now says what happened and what it opens.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g17-papers.test.ts asserts title and body; the guide’s next step for the number changed with it."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/identity.ts#idCardRefusal",
+  "kind": "error",
+  "before": "The DMV checks lawful presence through SAVE, and you stayed past the end of your status.",
+  "after": "The DMV checks lawful presence through SAVE, and you’re out of status, so it won’t issue you a card.",
+  "why": "Says the consequence (no card) after the reason, in the present.",
+  "meaningSensitive": true,
+  "verified": "The branch is `person.usOutOfStatus !== undefined`; tests/evidence-g15-papers.test.ts, tests/evidence-g16-papers.test.ts and tests/remaining-09-journeys.test.ts assert it, and the guide quotes it."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/identity.ts#noncitizenTermNote",
+  "kind": "official",
+  "before": "… The state publishes no term for a card it doesn’t verify, so this term is assumed. A card already issued keeps its date if the assumption is ever corrected.",
+  "after": "… The state doesn’t publish a term for a card it doesn’t verify, so this term is assumed in the game.",
+  "why": "The last sentence described the game’s own maintenance, not anything the player does; the glossary’s “Assumed in the game” labels the assumption.",
+  "meaningSensitive": true,
+  "verified": "tests/remaining-papers.test.ts renders both variants under Your ID."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/papers/Documents.tsx#WorkPane",
+  "kind": "label",
+  "before": "Since February 16, 2027. In the game, the Visa Waiver Program is now closed to you",
+  "after": "Since February 16, 2027. In the game, you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you",
+  "why": "Under Out Of Status, the note named one consequence of three; it now says all three the out-of-status notice gives.",
+  "meaningSensitive": true,
+  "verified": "permission.ts cancels the visa and sets usOutOfStatus, which the work and waiver checks read; tests/evidence-g16-papers.test.ts renders it."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/papers/Documents.tsx#WorkPane",
+  "kind": "official",
+  "before": "OPT gives you up to twelve months to work in your field, from the later of your program’s end and the approval, … It costs $470.00. Premium processing adds $1,780.00 and gets a decision within 30 business days.",
+  "after": "OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval, … It costs $470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.",
+  "why": "Says what OPT is first; the months and the window’s days now read the rule (`opt.months`, `opt.windowBeforeDays`, `opt.windowAfterDays`).",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g15-papers.test.ts renders the panel."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/papers/Documents.tsx#DocumentList",
+  "kind": "empty",
+  "before": "None held.",
+  "after": "You don’t hold any.",
+  "why": "A full sentence for the empty table.",
+  "meaningSensitive": false,
+  "verified": "tests/language-dynamic.test.ts draws the empty passport table."
+ },
+ {
+  "batch": 1,
+  "source": "src/ui/looks/papers.tsx#top",
+  "kind": "narration",
+  "before": "You don’t hold that paper any more. Whatever it was, it’s out of your hands.",
+  "after": "You don’t hold that document any more, so there’s nothing to show.",
+  "why": "The second sentence was literary filler on a page that can’t be shown.",
+  "meaningSensitive": false,
+  "verified": "Read in the look’s `gone`; the stolen and lost variants of the summary in tests/editorial-papers.test.ts."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/papervisits.ts#registerPaperVisits",
+  "kind": "notification",
+  "before": "You missed the biometrics at a ukvcas service point for Global Talent Visa. It’s booked again for April 2, 2026, the last chance before the application ends.",
+  "after": "You missed your biometrics at a UKVCAS service point for your Global Talent Visa. It’s booked again for April 2, 2026, your last chance before the application ends.",
+  "why": "The visit’s name was lowercased whole, acronyms too (defects.md, 2).",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b03.test.ts plays the London enrolment missed and kept."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/systems/papervisits.ts#VISITS",
+  "kind": "notification",
+  "before": "You missed the visa interview: a no-show closes the application, and its fee isn’t refunded. Apply again to book another.",
+  "after": "You missed the visa interview: a no-show closes the application, and its fee isn’t refunded.",
+  "why": "The game no longer takes visa applications (scope reset of 2026-10-09), so the next step it promised doesn’t exist (defects.md, 3).",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-papers.test.ts plays the missed interview."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/visas.ts#US_B1B2",
+  "kind": "official",
+  "before": "B-1/B-2 Visitor Visa: The $185 application fee; the interview about five months out at the Mexico City consulate (September 29, 2026, read secondhand), and a week to issue it (estimated); good for ten years, multiple entry, by reciprocity.",
+  "after": "B-1/B-2 Visitor Visa: The application fee is $185. The interview is about five months away at the Mexico City consulate (as of September 29, 2026, from a secondary source), and issuing it takes a week (estimated). It’s good for ten years, for multiple entries, by reciprocity.",
+  "why": "Research notes in semicolons became sentences; “read secondhand” became “from a secondary source”. Every figure, date and qualifier kept.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-papers.test.ts asserts each visa’s fine print as Going Abroad joins it."
+ },
+ {
+  "batch": 1,
+  "source": "src/engine/content/guide/documents.ts#DOCUMENTS [documents.passport-id]",
+  "kind": "tutorial",
+  "before": "Passport And ID holds the papers that prove who you are: your passport, from the country you’re a citizen of, and the state ID card where you live, beside any license you carry. …",
+  "after": "Your passport and your state ID card prove who you are. A bank you don’t bank with yet asks to see one of them in force before it opens an account. …",
+  "why": "The overview starts with the thing and why it matters, not the tab’s contents; the Now line corrected to On Its Way (defects.md, 5).",
+  "meaningSensitive": true,
+  "verified": "Rendered with every figure in guide-documents.txt (vite-node over GUIDE_BY_ID); quotes held by tools/guide-quotes.mjs --check."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/components/LienPanels.tsx#LienFacts",
+  "kind": "official",
+  "before": "Notice Of State Tax Lien · Notice Of Intent Sent. It was filed for $600.00 when collection reached that stage, and recorded in the county recorder and the Secretary of State.",
+  "after": "Notice Of State Tax Lien · Notice Of Intent Sent. It’s to be filed for $600.00, with the county recorder and the Secretary of State, unless you pay it or set up a payment plan first.",
+  "why": "It said a lien only announced had been filed and recorded (defects.md, 4): a warning read as a formal consequence.",
+  "meaningSensitive": true,
+  "verified": "stateLienStep sets status intent and schedules the filing in the intent's days unless paid or under a plan; tests/editorial-papers.test.ts renders it."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/components/LienPanels.tsx#LienFacts",
+  "kind": "official",
+  "before": "Notice Of State Tax Lien · Not Filed. It was filed for $600.00 when collection reached that stage, and recorded in …",
+  "after": "Notice Of State Tax Lien · Not Filed. It was never filed, because what it was for was paid or put under a payment plan first.",
+  "why": "The dropped lien said the opposite of its status.",
+  "meaningSensitive": true,
+  "verified": "`dropped` is set only by payment first or a plan set up first (statetax.ts); tests/editorial-papers.test.ts renders it."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/taxreturn.ts#COLLECTION [CP503]",
+  "kind": "notification",
+  "before": "Notice CP503: you owe $1,748.92 on your 2027 return. The IRS hasn’t heard from you and expects it paid. Pay it on Papers, under Tax Returns, or apply for a payment plan there.",
+  "after": "Notice CP503: you owe $1,748.92 on your 2027 return. The IRS hasn’t heard from you since its first reminder, and it expects payment. Pay it on Papers, under Tax Returns, or apply for a payment plan there.",
+  "why": "A repeated letter says why it’s back (brief 15, section 8): it follows the first reminder, unanswered.",
+  "meaningSensitive": false,
+  "verified": "CP503 is the second of COLLECTION.notices, sent only after CP501; tests/remaining-tax.test.ts plays the sequence."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/taxreturn.ts#COLLECTION [LT11]",
+  "kind": "notification",
+  "before": "… In 30 days the IRS takes what you owe from your bank accounts. Paying it, or a payment plan, stops the levy.",
+  "after": "… In 30 days the IRS takes what you owe from your bank accounts. Paying it, or setting up a payment plan, stops the levy: both are on Papers, under Tax Returns.",
+  "why": "The final notice gave the way out without saying where it is; “a payment plan” stopping a levy became the act of setting one up.",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-tax.test.ts and tests/scope-taxpapers.test.ts assert it."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/taxreturn.ts#billed",
+  "kind": "notification",
+  "before": "… and the IRS’s reminders begin 5 weeks after the due date. Pay it on Papers, under Tax Returns.",
+  "after": "… and the IRS’s reminders begin five weeks after the due date. Pay it on Papers, under Tax Returns.",
+  "why": "A number under ten in words in prose (docs/STYLE.md, Prose).",
+  "meaningSensitive": false,
+  "verified": "tests/remaining-tax.test.ts asserts both CP14 variants."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/taxreturn.ts#registerTaxReturn",
+  "kind": "notification",
+  "before": "Your IRS Payment Plan Has Ended: The missed payment wasn’t made up within its thirty days. Collection resumes on what you owe, and the final notice before a levy comes next.",
+  "after": "Your IRS Payment Plan Has Ended: You didn’t make up the missed payment within its thirty days. Collection resumes on what you owe, and the final notice before a levy comes next.",
+  "why": "A clear subject and verb in place of the passive.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-taxpapers.test.ts now asserts the body."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel",
+  "kind": "official",
+  "before": "… A monthly plan for up to $50,000.00 is approved online and has a setup fee. …",
+  "after": "… A monthly plan for up to $50,000.00 has a setup fee. With a Social Security number you apply online, and the IRS answers within a minute. Without one, your application goes by mail and the answer takes 30 days. …",
+  "why": "Without a number the IRS answers a mailed Form 9465 in 30 days; most F-1 students meet the panel before they have one (defects.md, 8).",
+  "meaningSensitive": true,
+  "verified": "`tax.apply_plan` decides at once with hasSsn, else in PLAN.mailDays; tests/editorial-papers.test.ts renders the panel."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#TaxPlanPanel",
+  "kind": "label",
+  "before": "Paid by you",
+  "after": "Not by direct debit",
+  "why": "Every plan payment is taken from your accounts on its day either way; the note beside Each Month said otherwise (defects.md, 9).",
+  "meaningSensitive": true,
+  "verified": "tests/editorial-papers.test.ts applies off direct debit and reads the note."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#StatePlanPanel",
+  "kind": "official",
+  "before": "This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It takes up to $50,000.00, paid over 2 to 12 months.",
+  "after": "This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It covers up to $50,000.00, paid over 2 to 12 months.",
+  "why": "“Takes” read as the plan taking money; it covers a balance up to the limit.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-papers.test.ts renders the panel on a played 2027 return."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ReturnsPane",
+  "kind": "other",
+  "before": "2026–27: $4,000.00 earned and $500.00 withheld by payers. It settles on January 31 2028. As things stand, $500.00 comes back to you.",
+  "after": "2026–27: $4,000.00 earned and $500.00 withheld by payers. It settles on January 31, 2028. As things stand, you’d get a refund of $500.00.",
+  "why": "The date as the game writes one, and the glossary’s refund for “comes back to you”.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-papers.test.ts renders a UK year."
+ },
+ {
+  "batch": 2,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#WhoIsOwed",
+  "kind": "label",
+  "before": "None added: this state’s rules aren’t researched",
+  "after": "None added: the game doesn’t have this state’s rules",
+  "why": "Research-speak in a note under Penalties and Interest; the guide quotes it and moved with it.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-papers.test.ts renders both notes for New Jersey."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/statetax.ts#STATE_UNRESEARCHED",
+  "kind": "official",
+  "before": "This state’s collection rules haven’t been researched for the game, so the balance is kept with no penalty, interest, notice or plan added.",
+  "after": "The game doesn’t have this state’s collection rules, so the balance is kept with no penalty, interest, notice or plan added.",
+  "why": "The same plain words as the notes beside it.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-papers.test.ts renders and asserts it, and the plan refusal that returns it."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/statetax.ts#STATE_TAX [bL0006]",
+  "kind": "notification",
+  "before": "bL0006: you owe $… on your 2027 Ohio return. 60 days to pay or appeal. You can pay it on Papers, under Tax Returns.",
+  "after": "bL0006: you owe $… on your 2027 Ohio return. You have 60 days to pay or appeal. You can pay it on Papers, under Tax Returns.",
+  "why": "A fragment opening on a figure became a sentence; Louisiana’s and Hawaii’s letters, Columbus’s lien effect and New Mexico’s long-term agreement the same.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-papers.test.ts asserts each."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/statetax.ts#waiverRefusal",
+  "kind": "error",
+  "before": "A waiver must be asked for before full payment or within a year after it, and that year has passed.",
+  "after": "You have to ask for a waiver before paying in full or within a year after, and that year has passed.",
+  "why": "Active voice, the player as the subject.",
+  "meaningSensitive": false,
+  "verified": "tests/editorial-papers.test.ts asserts it on a fixture year."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/systems/taxreturn.ts#registerTaxReturn <tax.revise_plan>",
+  "kind": "error",
+  "before": "Only a monthly plan that’s in force can be revised.",
+  "after": "You can revise only a monthly plan that’s in force.",
+  "why": "Active voice.",
+  "meaningSensitive": false,
+  "verified": "tests/scope-taxpapers.test.ts asserts it."
+ },
+ {
+  "batch": 2,
+  "source": "src/engine/content/guide/taxes.ts#TAXES [taxes.pay]",
+  "kind": "tutorial",
+  "before": "… Pay takes any part of it from your bank now, or all of it if you leave the box blank. If you leave it, the IRS levies your accounts 170 days after the deadline …",
+  "after": "… Pay takes any part of it from your bank now, or all of it if you leave the box blank. If you don’t pay, the IRS levies your accounts 170 days after the deadline …",
+  "why": "“If you leave it” could mean the box; the entry’s money is now the checking account throughout (the glossary’s word from brief 15).",
+  "meaningSensitive": false,
+  "verified": "Rendered in guide-taxes.txt; tests/guide-examples-papers.test.ts plays its example."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ConditionsPanel",
+  "kind": "feedback",
+  "before": "Left alone.",
+  "after": "Care stopped. It’s left untreated from now on.",
+  "why": "Let It Go’s toast said “left alone”, the word the glossary replaced; it now says what pressing it did and what follows.",
+  "meaningSensitive": true,
+  "verified": "`health.treat` with on false stops the care and the refills at once (the guide’s Now line); tests/evidence-g04-life.test.ts presses it."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#ConditionsPanel",
+  "kind": "heading",
+  "before": "Your Conditions … Depression: Left Alone",
+  "after": "Your Long-Term Conditions … Depression: Left Untreated",
+  "why": "“Your Conditions” beside the wellbeing measure called Condition read as one thing; the glossary’s long-term condition and left untreated.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g04-life.test.ts draws Health Cover; renames.json records both."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HealthPane",
+  "kind": "feedback",
+  "before": "Your income is over the hospital policy’s limit of 650% of the poverty line.",
+  "after": "Your income is over the hospital policy’s limit of 650% of the poverty line, so nothing came off this bill.",
+  "why": "A refusal-shaped toast now says what changed: nothing.",
+  "meaningSensitive": true,
+  "verified": "The over-the-limit branch leaves the bill as it was (aid set to refused); tests/defects-g8-6.test.ts presses it."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#HealthPane",
+  "kind": "feedback",
+  "before": "Paid off.",
+  "after": "Your medical debt is paid off.",
+  "why": "Says what was paid off.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g05-life.test.ts, tests/evidence3-lifepapers.test.ts, tests/evidence2-b02.test.ts and tests/evidence-g03-life.test.ts press Pay It Off."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#DentalPanel",
+  "kind": "feedback",
+  "before": "Covered for the dentist from today.",
+  "after": "You’re covered for the dentist from today.",
+  "why": "A whole sentence with its subject; Drop Dental’s “It ends at the month’s end.” now names the plan.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g03-life.test.ts presses Buy Dental."
+ },
+ {
+  "batch": 3,
+  "source": "src/ui/workspaces/PapersWorkspace.tsx#BenefitsPane",
+  "kind": "official",
+  "before": "Each Sunday the week is certified for you, from anywhere in the country, as an interstate claim is.",
+  "after": "The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows.",
+  "why": "Says who does it (the game, standing in for the player’s certification) in the active voice.",
+  "meaningSensitive": true,
+  "verified": "BENEFIT_WEEK_KIND certifies each Sunday without a player’s action; read on the built app’s Unemployment tab in the text walk."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/unemployment.ts#registerUnemployment",
+  "kind": "notification",
+  "before": "Your Unemployment Claim Ended: A year from filing, the benefit year is over.",
+  "after": "Your Unemployment Claim Ended: The benefit year ended a year after you filed.",
+  "why": "A plain subject and verb.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g16-papers.test.ts plays a claim to its year’s end."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/systems/abroad.ts#abroadRefusal",
+  "kind": "error",
+  "before": "No way to open anything new at BNP Paribas from America was found, so the game assumes there’s none.",
+  "after": "There’s no known way to open anything new at BNP Paribas from America, so the game assumes there’s none.",
+  "why": "Research-speak in the passive (“was found”) said plainly; decision 4’s `bank.take_overrun_loan` reads it, and only its words changed.",
+  "meaningSensitive": false,
+  "verified": "tests/home-account-setoff.test.ts and tests/remaining-09-banking.test.ts assert it."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]",
+  "kind": "tutorial",
+  "before": "… Each piece of care brings a bill for what your plan leaves you to pay, due in 30 days. Care And Its Bills is where you appeal a denied claim, ask a Connecticut hospital for its charity care and pay off anything that went to medical debt.",
+  "after": "… Each piece of care brings a bill for your share, due in 30 days. Under Care And Its Bills you can appeal a denied claim, ask a Connecticut hospital for financial assistance, and pay off anything that went to medical debt.",
+  "why": "The glossary’s words (your share, financial assistance), and the first action, Enroll, said as a step.",
+  "meaningSensitive": false,
+  "verified": "Rendered in guide-papers.txt (vite-node over GUIDE_BY_ID); its quotes held by tools/guide-quotes.mjs --check."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]",
+  "kind": "tutorial",
+  "before": "A doctor’s visit comes up when a week brings one, about 2 a year, and the game books it for you at your doctor’s practice, after its wait: in New Haven, while Yale Health covers you, the next weekday at Yale Health Center, Student Health for $0, unless you pick …; once it doesn’t, 24 days on at …; at 10:00 AM on a weekday that isn’t a public holiday there. …",
+  "after": "About twice a year a week brings a doctor’s visit, and the game books it for you at your doctor’s practice, at 10:00 AM on a weekday that isn’t a public holiday. In New Haven, while Yale Health covers you, that’s Yale Health Center, Student Health, the next weekday, for $0, unless you pick …. Once Yale Health no longer covers you, it’s …, 24 days on. …",
+  "why": "One sentence with two semicolons and three conditions became four sentences, the when and where first.",
+  "meaningSensitive": false,
+  "verified": "Rendered in guide-papers.txt; tests/guide-examples-papers.test.ts plays the doctor’s example."
+ },
+ {
+  "batch": 3,
+  "source": "src/engine/content/guide/papers.ts#PAPERS [papers.conditions]",
+  "kind": "tutorial",
+  "before": "A condition is a long-term illness you carry, and this is where you keep it treated or not. A life may begin with one, at the rates for adults 18 to 34: depression 25%, asthma 10.1%, …",
+  "after": "A long-term condition is an illness that stays with you: depression, asthma, high blood pressure, diabetes or arthritis. Your Long-Term Conditions, on Health Cover, is where you keep each one up or let it go. …",
+  "why": "The overview says what it is and where; the rates moved to What Decides It (How Often A Life Begins With One).",
+  "meaningSensitive": false,
+  "verified": "Rendered in guide-papers.txt; tests/guide-examples-papers.test.ts plays the therapy example."
+ }
+]

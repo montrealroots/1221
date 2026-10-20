@@ -254,7 +254,7 @@ describe('holidays', () => {
     // visit outside its Health Center, and Fair Haven, publishing no fee, bills SLATE's uninsured price: $100 of 2024
     // grown by the physicians' services index to 2027, the last print (439.389, 2026) carried on at 1.75% a year:
     // 10,000 × 439.389 × 1.0175 ÷ 417.93 = 10,697.44, 10,697 cents, times 1.75 = 18,719.75, $187.20, due in 30 days.
-    expect(notices(again, 'A Doctor’s Visit').filter((x) => x.at === Date.UTC(2027, 2, 29, 14)).map((x) => x.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. Your share is $187.20, due on April 28, 2027, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']);
+    expect(notices(again, 'A Doctor’s Visit').filter((x) => x.at === Date.UTC(2027, 2, 29, 14)).map((x) => x.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. You owe $187.20. It’s taken from your checking account on April 28, 2027, and if there isn’t enough then, it becomes medical debt.']);
     expect(healthOf(again.player).bills.filter((b) => b.at === Date.UTC(2027, 2, 29, 14)).map((b) => [b.amount, b.covered])).toEqual([[187_20, undefined]]);
     expect((healthOf(again.player).appointments ?? []).filter((a) => a.what === 'A doctor’s visit')).toEqual([]);
     again.advanceTo(Date.UTC(2027, 2, 29, 23) + 1000);
@@ -400,12 +400,14 @@ describe('holidays', () => {
     // The Home Office's ten days from the miss end on Sunday 5 April; Easter Monday and Good Friday aren't business
     // days, so the last ten o'clock by then is Thursday 2 April's, in British Summer Time.
     expect(doc.visit!.at).toBe(Date.UTC(2026, 3, 2, 9));
-    expect(notices(sim, 'An Appointment Missed').map((n) => n.body)).toEqual(['You missed the biometrics at a ukvcas service point for Global Talent Visa. It’s booked again for April 2, 2026, the last chance before the application ends.']);
+    expect(notices(sim, 'An Appointment Missed').map((n) => n.body)).toEqual(['You missed your biometrics at a UKVCAS service point for your Global Talent Visa. It’s booked again for April 2, 2026, your last chance before the application ends.']);
     const again = reload(sim);
     again.advanceTo(Date.UTC(2026, 3, 2, 9) + 60_000);
     const kept = documentsOf(again.player).find((d) => d.id === 'gt-visa')!;
     expect(kept.visit!.keptAt).toBe(Date.UTC(2026, 3, 2, 9));
     expect(notices(again, 'Biometrics Done')).toHaveLength(1);
+    // Its words, the visit named in a sentence with its acronym kept (brief 15, 2026-10-19).
+    expect(notices(again, 'Biometrics Done').map((n) => n.body)).toEqual(['You went to your biometrics at a UKVCAS service point for your Global Talent Visa. It’s decided on April 2, 2026.']);
   });
 });
 
@@ -431,12 +433,12 @@ describe('injuries', () => {
     sim.advanceTo(midnight + 1000);
     expect(healthOf(sim.player).injury).toMatchObject({ kind: 'sprain', at: midnight });
     // Named in sentence case, as every other bill is, from 2026-10-13: until then “A Sprained Ankle: its care”.
-    expect(healthOf(sim.player).bills.map((b) => ({ what: b.what, amount: b.amount, dueAt: b.dueAt }))).toEqual([{ what: 'A sprained ankle: its care', amount: care, dueAt: midnight + 30 * MS_DAY }]);
-    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('It takes 10 days to mend, and you can’t work out until then. Your share of its care is $699.13, due on February 5, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.');
+    expect(healthOf(sim.player).bills.map((b) => ({ what: b.what, amount: b.amount, dueAt: b.dueAt }))).toEqual([{ what: 'A sprained ankle’s care', amount: care, dueAt: midnight + 30 * MS_DAY }]);
+    expect(notices(sim, 'A Sprained Ankle')[0]!.body).toBe('It takes 10 days to mend, and you can’t work out until then. You owe $699.13 for its care. It’s taken from your checking account on February 5, 2026, and if there isn’t enough then, it becomes medical debt.');
     const again = reload(sim);
     setBalance(again, again.player.primaryAccountId!, 2_000_00); // TEST SETUP: enough in checking when it falls due
     again.advanceTo(midnight + 31 * MS_DAY);
-    expect(postedTo(again, 'Medical bill: A sprained ankle: its care', again.player.primaryAccountId!)).toEqual([{ at: midnight + 30 * MS_DAY, amount: -care }]);
+    expect(postedTo(again, 'Medical bill: A sprained ankle’s care', again.player.primaryAccountId!)).toEqual([{ at: midnight + 30 * MS_DAY, amount: -care }]);
   });
 
   it('PLAYER JOURNEY: Canada’s EI, which a week laid up would draw on (`eiWeek`), is refused a New Haven student in its own words, nothing registered', () => {
@@ -662,7 +664,7 @@ describe('mortality', () => {
       expect(text).toContain('Ada Cole');
       expect(text).toContain('August 25, 1940 – September 13, 2026 · Aged 86 · Actress · New Haven');
       expect(text).toContain(`Earned ${dollars(6 * 23_00)} Wages, before tax Left Behind`);
-      expect(text).toContain(`Left Behind ${dollars(left)} What they were worth`);
+      expect(text).toContain(`Left Behind ${dollars(left)} Their net worth at the end`);
       expect(buttons.map((b) => b.text)).toEqual(['Back To The Slots']);
       buttons[0]!.onClick!();
       expect(h.exits).toBe(1);
@@ -673,7 +675,7 @@ describe('mortality', () => {
     const { sim } = ended();
     // From 7:30 AM on 24 August to 13 September: 19.9 days, 0.65 of a month, which the screen rounds to one.
     expect(Math.round(((sim.universe.meta.endedAt! - sim.universe.meta.createdAt) / MS_YEAR) * 12)).toBe(1);
-    expect(drawn2(sim).text).toContain('Years In The World 1 Month From the first morning to the last');
+    expect(drawn2(sim).text).toContain('Years In The World 1 Month From the first day to the last');
   });
 });
 

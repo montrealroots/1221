@@ -338,13 +338,13 @@ describe('health.treat', () => {
     const letGo = conditionButton(sim, 0);
     expect(letGo.text).toBe('Let It Go');
     letGo.onClick!();
-    expect(h.toasts).toEqual(['Left alone.']);
-    expect(drawn(sim, PapersWorkspace, HEALTH_TAB).text).toContain('Depression: Left Alone');
+    expect(h.toasts).toEqual(['Care stopped. It’s left untreated from now on.']);
+    expect(drawn(sim, PapersWorkspace, HEALTH_TAB).text).toContain('Depression: Left Untreated');
     emptied(sim, true); // TEST SETUP: and the current account overdrawn to its limit.
     const keep = conditionButton(sim, 0);
     expect(keep.text).toBe('Keep It Up');
     keep.onClick!();
-    expect(h.toasts).toEqual(['Left alone.', 'Kept up from this month.']);
+    expect(h.toasts).toEqual(['Care stopped. It’s left untreated from now on.', 'Kept up from this month.']);
     expect(healthOf(sim.player).chronic!.depression).toMatchObject({ treated: true, lapsed: true });
     expect(memos(sim, 'Care for depression')).toHaveLength(0);
     expect(drawn(sim, PapersWorkspace, HEALTH_TAB).text).toContain('Depression: Kept Up, But This Month’s Care Went Unpaid');
@@ -376,7 +376,7 @@ describe('health.treat', () => {
       expect(drawn(left, PapersWorkspace, HEALTH_TAB).text).toContain(`${label}: Kept Up`);
       conditionButton(left, 0).onClick!();
       expect(healthOf(left.player).chronic![condition]!.treated).toBe(false);
-      expect(drawn(left, PapersWorkspace, HEALTH_TAB).text).toContain(`${label}: Left Alone`);
+      expect(drawn(left, PapersWorkspace, HEALTH_TAB).text).toContain(`${label}: Left Untreated`);
       // Monday 31 August: the toll, against the twin, at the week's own instant.
       const [k1, l1] = [atHealthWeek(kept, dial), atHealthWeek(left, dial)];
       expect(k1.at).toBe(EDT(2026, 8, 31, 9));
@@ -689,7 +689,7 @@ describe('life.end', () => {
     expect(sim.universe.scheduled.filter((i) => i.kind === END_KIND && i.status === 'done').map((i) => i.payload.cause)).toEqual(['starved']);
     const shell = drawn(sim, GameShell);
     expect(shell.text).toContain('A Life, Ended Ada Cole June 14, 2002 – August 25, 2026 · Aged 24 · Actress');
-    expect(shell.text).toContain('The clock has stopped for this life.');
+    expect(shell.text).toContain('The clock won’t run in this save again.');
     // No clock, no rail, no Home: one way on.
     expect(shell.buttons.map((b) => b.text)).toEqual(['Back To The Slots']);
     // The slot, as the app writes it (`refreshMeta` before every save) and the real adapter lists it.

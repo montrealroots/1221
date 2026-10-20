@@ -225,7 +225,7 @@ describe('repriceCare: a bill as issued stands, and a change of cover is a line 
     expect(issued.covered!.planPaid + lines[0]!.covered!.planPaid).toBe(0);
     expect([lineOf('visit').share, lineOf('visit').planPaid, lineOf('visit').billId]).toEqual([183_98, 0, lines[1]!.id]);
     expect(Math.round(105_13 * 1.75)).toBe(183_98);
-    expect(titled(sim, 'Care Billed Again').map((n) => n.body)).toEqual(['Yale Health cover canceled back to the insurance term’s start, on withdrawing: care you had from August 1, 2026 is billed again as that cover pays, $133.98 more, on a bill of its own.']);
+    expect(titled(sim, 'Care Billed Again').map((n) => n.body)).toEqual(['Yale Health cover canceled back to the insurance term’s start, on withdrawing: the care you’ve had since August 1, 2026 has been priced again. You owe $133.98 more, on a new bill.']);
     // Nothing went back to the bank: the credit came off the bill still open.
     expect(careRefunds(sim)).toEqual([]);
     // Papers: the issued bill shows what's left of the share it was issued at, and Credited; the line, its credit
@@ -276,7 +276,7 @@ describe('repriceCare: a bill as issued stands, and a change of cover is a line 
       const log = h1.careLog!.find((e) => e.care === 'urgent')!;
       // Yale Health leaves urgent care $0: $0 + $192.55, the price.
       expect([log.share, log.planPaid, log.share + log.planPaid!]).toEqual([0, 192_55, 192_55]);
-      expect(titled(s, 'Care Credited').map((n) => n.body)).toEqual(['Yale Health Affiliate cover, back to the day student cover ended: care you had from January 20, 2027 is billed again as that cover pays, $336.96 less, taken off what was open or owed, with the rest back in your bank.']);
+      expect(titled(s, 'Care Credited').map((n) => n.body)).toEqual(['Yale Health Affiliate cover, back to the day student cover ended: the care you’ve had since January 20, 2027 has been priced again. You owe $336.96 less. It comes off anything still unpaid or owed as debt, and the rest goes back to your bank.']);
     }
     // Its due day, 24 February, takes nothing, and nothing came back to the bank.
     back.advanceTo(at(2027, 2, 26, 12));
@@ -335,7 +335,7 @@ describe('HUSKY D kept at its renewal through work, read over Connecticut’s si
     }
     expect(healthOf(worked.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 3, 1, 0), band: 'low', renewAt: at(2027, 9, 1, 0) });
     // Until 2026-10-17 “by 80 hours’ work”: since then the hours aren’t read, and the $600 they were paid is (brief 12, health-criteria.md).
-    expect(titled(worked, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 3, 1, 0, 30), 'HUSKY D is renewed. Its next renewal is on September 1, 2027. Last month’s income is within its limit, and November 2026 met its work rules with $580.00 or more of income.']]);
+    expect(titled(worked, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 3, 1, 0, 30), 'HUSKY D is renewed. Its next renewal is on September 1, 2027. Last month’s income is within its limit, and you met its work rules in November 2026, with $580.00 or more of income.']]);
     expect(titled(worked, 'A Notice Of Noncompliance')).toEqual([]);
     expect(memoed(worked, /premium/i)).toEqual([]);
     const reloaded = loadSave(JSON.parse(snap) as never);
@@ -348,7 +348,7 @@ describe('HUSKY D kept at its renewal through work, read over Connecticut’s si
     expect(healthOf(idle.player).pending).toMatchObject({ kind: 'renewal', noticeAt: at(2027, 3, 1, 0, 30), decideAt: at(2027, 4, 5, 0), months: ['2027-02', '2027-01', '2026-12', '2026-11', '2026-10', '2026-09'] });
     idle.advanceTo(at(2027, 4, 30, 12));
     expect(coverOn(idle.player, idle.now)).toBe('medicaid');
-    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 4, 5, 0), 'No month from September 2026 to February 2027 showed $580.00 of income, time at the School or an exception, and none was shown by April 4, 2027, so HUSKY D ends on April 30, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']]);
+    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 4, 5, 0), 'HUSKY D still couldn’t find $580.00 of income, time at the School or an exception in any month from September 2026 to February 2027, and nothing was shown by April 4, 2027, so HUSKY D ends on April 30, 2027. Losing it gives you 60 days to enroll in the marketplace, but without the premium tax credit while HUSKY D would take you if not for its work rules. You can apply for HUSKY D again in any month after one that meets them.']]);
     idle.advanceTo(at(2027, 5, 1, 9));
     expect(coverOn(idle.player, idle.now)).toBeUndefined();
     expect(healthOf(idle.player).program!.until).toBe(at(2027, 5, 1, 0));

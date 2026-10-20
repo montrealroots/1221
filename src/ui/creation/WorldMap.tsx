@@ -141,7 +141,7 @@ export function WorldMap({
               <title>
                 {known
                   ? nameOf(id)
-                  : `${nameOf(id)} — no settlements on record`}
+                  : `${nameOf(id)}: no towns or cities on record`}
               </title>
             </path>
           );

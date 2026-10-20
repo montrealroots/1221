@@ -30,6 +30,14 @@ const CURATED = {
   NZ: { days: 28, expedite: { extra: 247, days: 5, note: 'Urgent service; its fee is from search extracts, not read from the office itself' } },
   LV: { days: 14, expedite: { extra: 25, days: 3, note: 'Two working days, €75 in all' }, young: { under: 20, years: 5, fee: 25 } },
 };
+/**
+ * A fee basis the research wrote as a note, given in sentences as Your Passport shows it (from 2026-10-19, brief 15's
+ * coordinator, at the papers area's report): the US basis ended "Two separate payments.", a fragment. The fee itself is
+ * the research's, unchanged.
+ */
+const FEE_BASIS_WORDS = {
+  US: 'First-time adult (16+) passport book on Form DS-11: a $130 application fee paid to the Department of State, and a $35 acceptance fee paid separately to the acceptance facility.',
+};
 const out = {};
 for (const x of j) {
   const c = CURATED[x.iso2];
@@ -37,7 +45,7 @@ for (const x of j) {
   out[x.iso2] = {
     // The fee's basis and the note on applying from abroad are shown under Your Passport, so their dates are the game's
     // (from 2026-10-17, brief 14: until then "Fees effective 8 April 2026."); the research keeps its own.
-    issuer: x.issuer, name: x.docName, fee: x.fee.amount, currency: x.fee.currency, feeBasis: gameDates(x.fee.feeBasis),
+    issuer: x.issuer, name: x.docName, fee: x.fee.amount, currency: x.fee.currency, feeBasis: gameDates(FEE_BASIS_WORDS[x.iso2] ?? x.fee.feeBasis),
     days: c.days, daysEstimated: Boolean(c.estimated), expedite: c.expedite, validityYears: x.validityYears,
     ...(c.young ? { young: c.young } : {}),
     lost: typeof x.lostReplacement === 'string' ? x.lostReplacement : JSON.stringify(x.lostReplacement ?? null),

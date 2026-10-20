@@ -5,6 +5,56 @@ from it, the screen is wrong, not the convention. The checks that hold it in
 place are named at the end. The words a player sees for each concept are in
 `docs/GLOSSARY.md`.
 
+## Speak like a finished game
+
+From 2026-10-19, at the owner's brief 15 ("Complete Natural-Language Editorial
+Pass, Including All Retained Text",
+`docs/verification/briefs-2026-10-16/15-complete-natural-language-editorial-pass.txt`).
+Brief 14 made the text accurate and taught the tasks, but much of it still
+read stiff, indirect or like the engine's own notes: "a word stays plain text
+until the chapter that opens it has been read", "put Knows The Scene first: it
+counts for more when this piece is shown", "on October 14, 2026, the last time
+the advice was noted, the first was composure". This section is the standard
+now. Where an older convention below would keep a sentence like those, this
+one wins. Real examples, each checked against the code, are in
+`docs/verification/editorial-2026-10-19/reference.md`.
+
+Say it the way a well-made game says it to its player:
+- **Familiar words, direct instructions.** "Press Go, or Stand Here to wait."
+- **A clear subject and verb.** The player, a person or a thing does
+  something. Not "is counted", "was begun", "has been read" where someone did
+  it.
+- **Contractions** where speech has them.
+- **Specific consequences.** What happened, what it costs, what it changes.
+- **Short first, detail after.** The first sentence says what matters. The
+  qualifications follow it, or go behind a drill-down, and never make the
+  first sentence unreadable.
+- **One word for one thing,** the glossary's, and the screen's exact labels.
+- **A voice that fits the speaker:** a teacher, a bank, a friend, the game's
+  own guide.
+
+Never:
+- the engine's words as ordinary narration ("reads", "inputs", "the work",
+  "the game judges", "this life");
+- an awkward passive, a cryptic fragment, or a literary sentence about a
+  basic control;
+- slang, cheerleading or filler;
+- one obscure phrase swapped for another. Read the whole sentence, and the
+  screens before and after it, not a list of banned words.
+
+Each change keeps exactly what the game does. Read the code that writes or
+acts on a consequential sentence before changing it. A sentence that's already
+clear, natural and accurate stays, and its status says why in words specific
+to it: "already reviewed", "grammatically correct" and "no flagged words"
+aren't reasons (`tools/text-inventory.mjs --mark2` refuses them). A quotation
+stays as its source wrote it, and the game's explanation around it is marked
+as the game's.
+
+Read whole interactions, not lone sentences: what a feature says it's for,
+the action, any refusal, the confirmation, the result, the later notice, and
+the How This Works and drill-down behind it. Each says what the player needs
+at that moment, once, in the same words, with the next step.
+
 ## Talking to the player
 
 From 2026-10-17, at the owner's brief 14 ("Complete Player-Facing Language And
@@ -195,6 +245,14 @@ Status is a word or a chip: **Locked**, **Real**, **Pending**, **Saved**.
 Weather is a word: **Cloudy**, **Storm**. Play and pause are the words Play
 and Pause.
 
+The weather keeps a picture beside its word, the one exception
+(`WEATHER_EMOJI` in `systems/weather.ts`): it's the place a picture reads
+faster than a word, and every forecast uses one. It never stands for the word,
+and a screen reader is never given it (`aria-hidden`).
+`tests/interface.test.ts` holds both. Brief 15's tutorial area reported the
+picture on Home against this section's first paragraph. The code was right,
+and this paragraph was missing until 2026-10-19.
+
 ## Voice
 
 Narration is second person, present tense, plain. It knows what the
@@ -282,6 +340,22 @@ screen.
   Until then Pending was counted and allowed while the areas worked. So a
   change to anything a player reads is read again and marked in the same
   commit: `--mark <source> "<status>" --by <area> --reason|--evidence …`.
+  From brief 15 (2026-10-19) every source is read again in a second pass,
+  with statuses of its own in `docs/text/second-pass/` (Rewritten, Retained,
+  Pending, Blocked) and the first pass kept as history. `--mark2` records one,
+  only by the area that owns the source, and refuses a reason that isn't
+  specific. A source counts as read when either pass matches its words. The
+  coordinator closed the second pass at brief 15's end
+  (`docs/text/second-pass-closed.json`). Since then `--check` fails a source
+  the second pass hasn't read, so a change to anything a player reads is read
+  again and marked with `--mark2` in the same commit. The inventory also holds
+  the page's title and description in `index.html`, the holiday names under
+  `public/holidays/`, and, from brief 15's cross-area review, a citation that
+  begins with a web address (a bare address isn't words, and stays out).
+- `tools/text-omissions.mjs` — what a walk of the built app shows, line by
+  line, against the inventory: held by it, in a file it doesn't read (an
+  omission), or built from values by a template. From brief 15, to check the
+  inventory covers the game, not just the code it was built from.
 - `tools/guide-quotes.mjs` — every sentence the guide quotes in curly quotes,
   five words or more, found in what the game says outside the guide; a quote
   built from parts counts where each stretch between the parts is said whole.

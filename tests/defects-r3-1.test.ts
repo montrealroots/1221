@@ -90,7 +90,7 @@ describe('the course record’s header, against a leave', () => {
     expect(enrolledTerms(school)).toEqual([]);
     // Its own limit: two more terms would make four of the three the Bulletin allows, with no semester enrolled.
     expect(leaveTermsUsed(school)).toBe(2);
-    expect(leaveLengths(sim, school, 'medical').find((x) => x.terms === 2)!.why).toMatch(new RegExp(`allows ${LEAVE_RULES.maxTerms} in all`));
+    expect(leaveLengths(sim, school, 'medical').find((x) => x.terms === 2)!.why).toMatch(new RegExp(`allows ${['no', 'one', 'two', 'three', 'four', 'five'][LEAVE_RULES.maxTerms]} in all`));
 
     const h = header('engine', 'systems', 'courserecord.ts');
     expect(h).not.toMatch(/a leave, a repeated year or an additional term can reach/);

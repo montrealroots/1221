@@ -249,7 +249,7 @@ describe('banking.1.pro-rata: a German account’s month’s fee on a close, to 
     const chase = primary(sim);
     expect([chase.name, k.feesDue]).toEqual(['Chase Total Checking', 0]);
     // 690 × 14 / 31 = 311.6, €3.12; in dollars 312 / 0.92 = 339.1, $3.39. Until 2026-10-16 the whole €6.90.
-    const said = 'Closing it now charges its fees to the day, €3.12 ($3.39): October’s €6.90 for the 14 days of its 31 it’s been open, €3.12. German law charges a month’s fee only to the day an account closes.';
+    const said = 'Closing it now charges €3.12 ($3.39) in fees: €3.12 of October’s €6.90 fee, for the 14 days of its 31 the account has been open. Under German law, a month’s fee is charged only up to the day an account closes.';
     expect(drawn(sim, createElement(BankMoves))).toContain(said);
     expect(buttons('Close It').map((b) => b.disabled)).toEqual([false]);
     const held = k.held!;
@@ -270,7 +270,7 @@ describe('banking.1.pro-rata: a German account’s month’s fee on a close, to 
     drawn(sim, createElement(BankMoves));
     expect(buttons('Close It')).toEqual([]);
     const count = sim.universe.transactions.length;
-    expect(refusal(sim, 'bank.close_current', { accountId: k.id, remainderTo: chase.id })).toBe('Only a current account of yours can be closed here.');
+    expect(refusal(sim, 'bank.close_current', { accountId: k.id, remainderTo: chase.id })).toBe('Only one of your own checking accounts can be closed here.');
     expect(sim.universe.transactions.length).toBe(count);
     // Reloaded, and on past October's end and the quarter's: nothing more on the closed account.
     const back = reload(sim);
@@ -288,7 +288,7 @@ describe('banking.1.pro-rata: a German account’s month’s fee on a close, to 
     oct.advanceTo(at(2026, 10, 31, 23, 30));
     expect(konto(oct).feesDueHeld).toBe(6_90);
     // €6.90 is $7.50 (690 / 0.92).
-    expect(drawn(oct, createElement(BankMoves))).toContain('Closing it now charges €6.90 ($7.50), the €6.90 kept for the quarter’s closing: October’s was counted at the month’s end.');
+    expect(drawn(oct, createElement(BankMoves))).toContain('Closing it now charges €6.90 ($7.50): the €6.90 held over for the quarter’s closing. October’s fee was already counted at the month’s end.');
     expect(closeKonto(oct).ok).toBe(true);
     expect(heldBy(oct, 'Closing fees: AktivKonto', konto(oct).id)).toEqual([-6_90]);
 
@@ -312,7 +312,7 @@ describe('banking.1.pro-rata: a German account’s month’s fee on a close, to 
     const after = thaw(snap2);
     after.advanceTo(at(2027, 3, 31, 23, 30));
     expect(heldBy(after, 'Quarterly closing, fees: AktivKonto', konto(after).id)).toEqual([-13_80, -20_70, -20_70]);
-    expect(drawn(after, createElement(BankMoves))).toContain('Closing it now charges no fees: March’s was counted at the month’s end.');
+    expect(drawn(after, createElement(BankMoves))).toContain('Closing it now charges no fees. March’s fee was already counted at the month’s end.');
     expect(closeKonto(after).ok).toBe(true);
     expect(heldBy(after, 'Closing fees: AktivKonto', konto(after).id)).toEqual([]);
     for (const s of [oct, first, late, after]) expect(breaches(s.universe)).toEqual([]);
@@ -325,7 +325,7 @@ describe('banking.1.pro-rata: a German account’s month’s fee on a close, to 
     // 690 × 15 / 28 = 369.6, €3.70.
     const jump = thaw(snap);
     jump.advanceTo(at(2027, 2, 15, 9));
-    expect(drawn(jump, createElement(BankMoves))).toContain('Closing it now charges its fees to the day, €10.60 ($11.52): €6.90 kept for the quarter’s closing, and February’s €6.90 for the 15 days of its 28 it’s been open, €3.70.');
+    expect(drawn(jump, createElement(BankMoves))).toContain('Closing it now charges €10.60 ($11.52) in fees: €6.90 held over for the quarter’s closing, and €3.70 of February’s €6.90 fee, for the 15 days of its 28 the account has been open.');
     expect(closeKonto(jump).ok).toBe(true);
     expect(heldBy(jump, 'Closing fees: AktivKonto', konto(jump).id)).toEqual([-10_60]);
     // Its twin, a day at a time from 2 February, reloaded on the 8th: the same postings on the AktivKonto, to the cent.
@@ -365,10 +365,10 @@ describe('banking.1.pro-rata: a German account’s month’s fee on a close, to 
     sim.advanceTo(Math.max(out.arrivesAt + MS_HOUR, at(2026, 10, 20, 9)));
     expect(sim.now).toBe(at(2026, 10, 20, 9));
     // 20 October: 690 × 20 / 31 = 445.2, €4.45, $4.84 (445 / 0.92 = 483.7); short by that less what it holds in dollars.
-    const words = `Its fees, $4.84, are more than it holds. Pay in ${usd(4_84 - k.balance)} first.`;
+    const words = `Its fees, $4.84, are more than it holds. Move ${usd(4_84 - k.balance)} into it first.`;
     const text = drawn(sim, createElement(BankMoves));
     expect(buttons('Close It').map((b) => [b.disabled, b.title])).toEqual([[true, words]]);
-    expect(text).toContain(`You can’t close it yet. ${words} Closing it now charges its fees to the day, €4.45 ($4.84): October’s €6.90 for the 20 days of its 31 it’s been open, €4.45.`);
+    expect(text).toContain(`You can’t close it yet. ${words} Closing it now charges €4.45 ($4.84) in fees: €4.45 of October’s €6.90 fee, for the 20 days of its 31 the account has been open.`);
     expect(refusal(sim, 'bank.close_current', { accountId: k.id, remainderTo: chase.id })).toBe(words);
     expect([k.closedAt, heldBy(sim, 'Closing fees: AktivKonto', k.id)]).toEqual([undefined, []]);
     // $50 from Chase, a payment abroad, lands in Deutsche Bank's days; pressed on Monday 26 October.
@@ -381,7 +381,7 @@ describe('banking.1.pro-rata: a German account’s month’s fee on a close, to 
     expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.close_current', ok: true });
     // 690 × 26 / 31 = 578.7, €5.79: the day it closed, not the day it was first refused.
     expect(heldBy(sim, 'Closing fees: AktivKonto', k.id)).toEqual([-5_79]);
-    expect(refusal(sim, 'bank.close_current', { accountId: k.id, remainderTo: chase.id })).toBe('Only a current account of yours can be closed here.');
+    expect(refusal(sim, 'bank.close_current', { accountId: k.id, remainderTo: chase.id })).toBe('Only one of your own checking accounts can be closed here.');
     expect(heldBy(reload(sim), 'Closing fees: AktivKonto', k.id)).toEqual([-5_79]);
     expect(breaches(sim.universe)).toEqual([]);
   }, 300_000);
@@ -396,8 +396,8 @@ describe('banking.1.pro-rata: a German account’s month’s fee on a close, to 
     expect(giro.balance).toBe(0);
     // Commerzbank charges 14.40% past its Dispo, and none is arranged: 10,000 × 0.144 / 365 = 3.945205¢ a day's end,
     // eleven of them, 6 to 16 January: 43.4¢, 43 cents. Its fee: 490 × 12 / 31 (5 to 16 January) = 189.7, €1.90.
-    const words = 'Its overdraft interest, €0.43, and its fees, €1.90, are more than it holds. Pay in €2.33 first.';
-    const said = 'Canceling it now charges its fees to the day, €1.90: January’s €4.90 for the 12 days of its 31 it’s been open, €1.90. German law charges a month’s fee only to the day an account closes.';
+    const words = 'Its overdraft interest, €0.43, and its fees, €1.90, are more than it holds. Move €2.33 into it first.';
+    const said = 'Canceling it now charges €1.90 in fees: €1.90 of January’s €4.90 fee, for the 12 days of its 31 the account has been open. Under German law, a month’s fee is charged only up to the day an account closes.';
     expect(drawn(sim, createElement(BankAccountLife, { bankId: 'de-deutsche-bank' }))).toContain(`less the fees it owes. ${said} ${words}`);
     expect(refusal(sim, 'bank.cancel_new', { accountId: giro.id })).toBe(words);
     ok(sim, 'bank.transfer', { fromId: db.id, toId: giro.id, amount: 2_33 });
@@ -422,7 +422,7 @@ describe('banking.1.pro-rata.opening-month: Deutsche Bank’s month of opening, 
     const sim = inBerlin('de-commerzbank', 'rb9-opening');
     const db = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-deutsche-bank' }).accountId]!;
     setTo(sim, db, 100_00); // TEST SETUP
-    expect(drawn(sim, createElement(BankMoves))).toContain('Closing it now charges no fees: January’s is free, the month it opened.');
+    expect(drawn(sim, createElement(BankMoves))).toContain('Closing it now charges no fees: January is free, because the account opened this month.');
     const snap = freeze(sim);
     const late = thaw(snap);
     late.advanceTo(berlin(2026, 1, 31, 22));
@@ -506,7 +506,7 @@ describe('banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €
     sim.advanceTo(sim.now + 60_000);
     // October's €4.95, 14 of its 31 days: 495 × 14 / 31 = 223.5, €2.24 ($2.43, 224 / 0.92 = 243.5). The card's year runs
     // from 25 August: 7 + 30 + 14 = 51 days used to the 14th, 314 left: 1,200 × 314 / 365 = 1,032.3, €10.32 ($11.22).
-    const said = 'Closing it now charges its fees to the day, €2.24 ($2.43): October’s €4.95 for the 14 days of its 31 it’s been open, €2.24. German law charges a month’s fee only to the day an account closes. It refunds €10.32 ($11.22) of its debit card’s €12.00 for the year, paid ahead: the 314 of its 365 days left.';
+    const said = 'Closing it now charges €2.24 ($2.43) in fees: €2.24 of October’s €4.95 fee, for the 14 days of its 31 the account has been open. Under German law, a month’s fee is charged only up to the day an account closes. It refunds €10.32 ($11.22) of the €12.00 you paid in advance for its debit card’s year: the 314 days of its 365 still to run.';
     expect(drawn(sim, createElement(BankMoves))).toContain(said);
     const held = giro.held!;
     press('Close It');
@@ -522,7 +522,7 @@ describe('banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €
     // Everything that left it at the close is what it held and the refund, less the fees: it holds nothing, closed.
     const left = sim.universe.transactions.filter((t) => t.at === closedAt).flatMap((t) => t.postings).filter((q) => q.accountId === giro.id).reduce((n, q) => n + (q.native ?? 0), 0);
     expect([left, giro.held, giro.closedAt]).toEqual([-held, 0, closedAt]);
-    expect(refusal(sim, 'bank.close_current', { accountId: giro.id, remainderTo: chase.id })).toBe('Only a current account of yours can be closed here.');
+    expect(refusal(sim, 'bank.close_current', { accountId: giro.id, remainderTo: chase.id })).toBe('Only one of your own checking accounts can be closed here.');
     const back = reload(sim);
     back.advanceTo(at(2027, 9, 1, 9));
     // Nothing more: no second refund, and no year's fee on the closed account's anniversary.
@@ -553,7 +553,7 @@ describe('banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €
     // The card's year from 25 August: 8 days used to 1 September, 357 left: 1,200 × 357 / 365 = 1,173.7, €11.74.
     // In dollars each part as it was converted when kept: 495 / 0.92 = 538.0, $5.38 twice, and 17 / 0.92 = 18.5, 18 cents:
     // $10.94; the refund 1,174 / 0.92 = 1,276.1, $12.76.
-    expect(drawn(jump, createElement(BankMoves))).toContain('Closing it now charges its fees to the day, €10.07 ($10.94): €9.90 kept for the quarter’s closing, and September’s €4.95 for the one day of its 30 it’s been open, €0.17. German law charges a month’s fee only to the day an account closes. It refunds €11.74 ($12.76) of its debit card’s €12.00 for the year, paid ahead: the 357 of its 365 days left.');
+    expect(drawn(jump, createElement(BankMoves))).toContain('Closing it now charges €10.07 ($10.94) in fees: €9.90 held over for the quarter’s closing, and €0.17 of September’s €4.95 fee, for the one day of its 30 the account has been open. Under German law, a month’s fee is charged only up to the day an account closes. It refunds €11.74 ($12.76) of the €12.00 you paid in advance for its debit card’s year: the 357 days of its 365 still to run.');
     expect(closeKonto2(jump, 'de-berliner-sparkasse').ok).toBe(true);
     expect(heldBy(jump, 'Debit card yearly fee refunded: Giro Digital', giro.id)).toEqual([11_74]);
     expect(heldBy(jump, 'Closing fees: Giro Digital', giro.id)).toEqual([-10_07]);
@@ -573,7 +573,7 @@ describe('banking.4.sparkassen-card: on a Giro Digital opened in Berlin', () => 
     setTo(sim, giro, 0); // TEST SETUP
     // January from the 5th to the 12th, 8 of 31 days: 495 × 8 / 31 = 127.7, €1.28. The card's year from the 6th, 7 days
     // used: 1,200 × 358 / 365 = 1,177.0, €11.77. Owed net, nothing: no refusal at €0.
-    const said = 'Canceling it now charges its fees to the day, €1.28: January’s €4.95 for the 8 days of its 31 it’s been open, €1.28. German law charges a month’s fee only to the day an account closes. It refunds €11.77 of its debit card’s €12.00 for the year, paid ahead: the 358 of its 365 days left.';
+    const said = 'Canceling it now charges €1.28 in fees: €1.28 of January’s €4.95 fee, for the 8 days of its 31 the account has been open. Under German law, a month’s fee is charged only up to the day an account closes. It refunds €11.77 of the €12.00 you paid in advance for its debit card’s year: the 358 days of its 365 still to run.';
     expect(drawn(sim, createElement(BankAccountLife, { bankId: 'de-deutsche-bank' }))).toContain(`less the fees it owes. ${said}`);
     pressAfter(giro.name, 'Cancel It');
     expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.cancel_new', ok: true });
@@ -675,7 +675,7 @@ describe('banking.6.fee-schedule: ING’s month’s fee in the month after, Comm
     expect([ing.feesDue, ing.feesDueHeld]).toEqual([5_33, 4_90]);
     const saver = mine(sim).find((a) => a.bankId === 'de-ing' && a.kind === 'savings');
     if (saver) ok(sim, 'bank.close_savings', { accountId: saver.id });
-    expect(drawn(sim, createElement(BankMoves))).toContain('Closing it now charges €4.90 ($5.33), the €4.90 for last month, due on the 1st: October’s was counted at the month’s end.');
+    expect(drawn(sim, createElement(BankMoves))).toContain('Closing it now charges €4.90 ($5.33): the €4.90 for October, which would come off on the 1st. October’s fee was already counted at the month’s end.');
     expect(closeKonto2(sim, 'de-ing').ok).toBe(true);
     sim.advanceTo(at(2026, 11, 2, 9));
     expect(heldBy(sim, 'Closing fees: Girokonto', ing.id)).toEqual([-4_90]);
@@ -707,7 +707,7 @@ describe('banking.6.fee-schedule: ING’s month’s fee in the month after, Comm
 
 describe('banking.2: what a student keeping an account at home meets at the eight unresolved bank rows', () => {
   it('PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set', async () => {
-    const away = (bank: string) => `No way to open anything new at ${bank} from America was found, so the game assumes there’s none.`;
+    const away = (bank: string) => `There’s no known way to open anything new at ${bank} from America, so the game assumes there’s none.`;
     const lives = [
       ['uk-eng-london', 'gb-hsbc', 2010, 'HSBC UK', 'HSBC UK opens its accounts for people living in the UK; for a customer abroad it has HSBC Expat, from £75,000.', 'gb-barclays'],
       ['fr-idf-paris', 'fr-bnp-paribas', 2010, 'BNP Paribas', away('BNP Paribas'), 'gb-hsbc'],
@@ -728,7 +728,7 @@ describe('banking.2: what a student keeping an account at home meets at the eigh
       expect(refusal(sim, 'bank.arrange_overdraft', { limit: 100_00, accountId: home.id })).toBe(overdraft);
       // Born abroad, not a US citizen: Citi's opening refuses first; a bank abroad isn't one where she lives.
       expect(refusal(sim, 'bank.switch', { bankId: 'us-citi' })).toBe('Citi only opens this account for US citizens and permanent residents.');
-      expect(refusal(sim, 'bank.switch', { bankId: other })).toBe('You can only switch to a bank where you live.');
+      expect(refusal(sim, 'bank.switch', { bankId: other })).toBe('You can only switch to a bank in the country you live in.');
       expect(refusal(sim, 'bank.cancel_switch', {})).toBe('No switch is under way.');
       expect(refusal(sim, 'bank.stop_balance_transfer', {})).toBe('No switch is under way.');
       expect(refusal(sim, 'bank.take_overrun_loan', { accountId: home.id })).toBe('Your bank has offered no loan for an overrun.');

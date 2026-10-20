@@ -1,0 +1,28 @@
+== Work It Through, one problem of each kind ==
+turn: The Loading Bay, after read, lines | The Turn Into Beat 3: The change into beat 3 needs more rehearsal than the rest: it’s at 0% of the 73% it needs. It comes to 25, against 27 for the whole piece.
+segment: The Loading Bay, after read, lines | Beat 1 Isn’t Secure: Beat 1 hasn’t been rehearsed enough: it’s at 0% of the 50% it needs. It comes to 28.9, against 27 for the whole piece.
+limit: The Loading Bay, after read, lines | Emotional Depth Holds It Back: Your emotional depth costs your believability 19.7 points, and the whole piece 3.3. The piece is weakest in beat 3, at 25. Working on it trains it a little, and playing one part of the scene another way can lean on a different ability.
+stamina: The Loading Bay, after read, lines | Tiring Late In The Piece: Your stamina costs the piece 0.7 points, most of it in beat 3, which comes to 25.
+prep: The Loading Bay, after read, lines | Knowing The Genre: Not There Yet: It costs your interpretation 9.5 points, and the whole piece 0.8. Its own preparation step works on it.
+objective: The Loading Bay, after read, lines, lines, rehearse | What You Want Isn’t Clear Yet: The Breakdown And Your Reading is at 66%, which costs your believability 5.1 points.
+segment, held back: The Loading Bay, after read, read, read, lines, lines, lines, lines, rehearse, rehearse, rehearse, rehearse, rehearse | Beat 3 Holds It Back: Beat 3 comes to 49.4, against 52.4 for the whole piece. What costs it most: physical expression, in its execution.
+
+== The audition’s notes ==
+memorization: The lines of the two pieces weren’t secure.
+interpretation: The two weren’t contrasting enough to show range.
+rehearsal: They needed more rehearsal to land in the room.
+
+== The concerns’ sources ==
+Feeling Held In: Subtext, the life under the lines (Stanislavski, in the project’s acting research, topic 1); the genre claims are actors’ and critics’ accounts of contained, controlled performances.
+Played Straight: Truth and belief, the “magic if” (Stanislavski, topic 1); the genre claims are advice to play sentiment, or absurdity, with complete earnestness.
+Played Large: Melodrama’s exaggerated emotion and silent film’s mime (Britannica, topic 10); Lecoq’s melodrama as a dramatic territory with its own structures in the body (topic 10).
+Comic Rhythm: Comic timing, the pauses, cadence and pacing that land a joke (the comedy genre’s claim, and Attardo and Pickering 2011 on timing in jokes, topic 10); Stanislavski’s tempo-rhythm (topic 9).
+Caught Live: Naturalism, the Moscow Art Theater’s and Stanislavski’s realistic acting (topic 10); the genre claims are non-professional casting, improvised dialogue and withheld scripts.
+Dense Text, Exact: Fluency from memory (LAMDA’s criteria, topic 1); the genre claims are dense, fast dialogue mastered by repetition, memorized closing arguments and medical jargon drilled before the shoot.
+Another Age’s Manners: Period movement, deportment and speech, assessed by LAMDA and taught by conservatories (topic 10); the genre claims are historical advisers and period voice and movement lessons.
+Belief In What Isn’t There: Imagination and the “magic if” (Stanislavski, topics 1 and 9); the science-fiction claim, that playing against things not there takes imagination and specificity.
+States At The Limit: Emotional truth under extreme circumstances (topic 1); the genre claims are sustained fear, screaming and real reactions to absent threats, and grief pushed to extremes.
+Played Between Two: Ensemble playing in place of the star turn (the realist stage, topic 10); the genre claims are chemistry reads, contrasting leads and a crew in which each actor must establish a distinct role.
+Suspense Held: Concentration and the through-line (Stanislavski, topic 1); the genre claims are tension built by silence, close-ups and pacing, with the performance holding it.
+The World’s Own Logic: Stylised forms as dramatic territories (Lecoq, topic 10); Beckett’s exact timing and silence; Buñuel’s direction through outward gesture (the genre claims).
+Command Of The Frame: Presence, one of the trained skills the acting schools name (topic 1); the genre claims are the gangster film’s tough, physically marked style and the western’s economy of words in close-up.

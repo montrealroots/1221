@@ -203,7 +203,7 @@ describe('alerts', () => {
     const before = ready();
     expect(before).toBeGreaterThan(0);
     // On, a statement with nothing to pay tells them too: what turning it off stops.
-    const quiet = (from: number) => sim.universe.notifications.slice(from).filter((n) => n.title.startsWith('Statement Ready') && !/has to be paid by then/.test(n.body)).length;
+    const quiet = (from: number) => sim.universe.notifications.slice(from).filter((n) => n.title.startsWith('Statement Ready') && !/^The statement comes to /.test(n.body)).length;
     expect(quiet(0)).toBeGreaterThan(0);
     sim.execute({ kind: 'bank.set_alerts', payload: { statements: false } });
     const notices = sim.universe.notifications.length;

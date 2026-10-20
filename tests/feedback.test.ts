@@ -45,7 +45,7 @@ describe('a note on the same thing, over time', () => {
     const a2 = prepared(sim, 0.22);
     showAt(sim, a2, 8);
     expect(a2.feedback!.kind).toBe('recurring');
-    expect(a2.feedback!.text).toMatch(/^You had the same note in Acting I on October 1, 2026, and it’s still there\./);
+    expect(a2.feedback!.text).toMatch(/^You had this note in Acting I on October 1, 2026 too, and it’s still there\./);
     const a3 = prepared(sim, 0.5);
     showAt(sim, a3, 15);
     expect(a3.feedback!.kind).toBe('partial');
@@ -77,7 +77,7 @@ describe('a note on the same thing, over time', () => {
     showAt(sim, a2, 8);
     expect(a1.feedback!.kind).toBe('advanced');
     expect(a2.feedback!.kind).toBe('advanced');
-    expect(a1.feedback!.text).toMatch(/^It held together\. Here’s a next step to try\. /);
+    expect(a1.feedback!.text).toMatch(/^It came together\. Here’s what to try next\. /);
     expect(a2.feedback!.focus).not.toEqual(a1.feedback!.focus);
   });
 });
@@ -127,7 +127,7 @@ describe('a weakness that keeps coming back', () => {
     const shown = days.map((d) => { const a = prepared(sim, 0.2); showAt(sim, a, d); return a; });
     expect(shown.map((a) => a.feedback!.kind)).toEqual(['new', 'recurring', 'recurring', 'recurring']);
     expect(shown[1]!.feedback!.text).not.toMatch(/ time you’ve had this note/);
-    expect(shown[2]!.feedback!.text).toMatch(/^This is the 3rd time you’ve had this note \(last in Acting I on October 8, 2026\), and it’s still there\./);
-    expect(shown[3]!.feedback!.text).toMatch(/the 4th time you’ve had this note/);
+    expect(shown[2]!.feedback!.text).toMatch(/^This is the third time you’ve had this note, the last in Acting I on October 8, 2026, and it’s still there\./);
+    expect(shown[3]!.feedback!.text).toMatch(/the fourth time you’ve had this note/);
   });
 });

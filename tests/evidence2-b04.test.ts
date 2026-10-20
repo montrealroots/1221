@@ -264,7 +264,7 @@ describe('bank.break_term', () => {
     expect(between(sim, term, barclays)).toEqual([]);
     // The £10,000.00 is what arrived, the charge already taken: until 2026-10-13 this held “less £39.41”, which read as
     // £9,960.59 to come (defect 57 of that day’s third round).
-    expect(notes(sim, 'Your Fixed-Term Savings Closed').map((n) => n.body)).toEqual([`Your notice period ended: £10,000.00 went to your current account, after a £${(CHARGE / 100).toFixed(2)} penalty for closing early.`]);
+    expect(notes(sim, 'Your Fixed-Term Savings Closed').map((n) => n.body)).toEqual([`Your notice period ended: £10,000.00 went to your checking account, after a £${(CHARGE / 100).toFixed(2)} penalty for closing early.`]);
     // No Early Withdrawal Penalty: the charge came out of the interest, none from the deposit.
     expect(moved(sim, sim.nominalAccount('expense', 'Early Withdrawal Penalty'), 'Fixed-Term Savings broken early')).toEqual([]);
     expect(draw(sim, createElement(BankAccountLife, { bankId: 'gb-natwest' })).text).not.toContain('Fixed-Term Savings, £10,000.00');
@@ -298,7 +298,7 @@ describe('bank.break_term', () => {
     ]);
     expect(between(sim, term, select)).toHaveLength(1); // its opening, from the NatWest account, and nothing since
     expect(barclays.balance).toBe(10_000_00);
-    expect(notes(sim, 'Your Fixed-Term Savings Closed').map((n) => n.body)).toEqual([`Your notice period ended: £10,000.00 went to your current account, after a £${(CHARGE / 100).toFixed(2)} penalty for closing early.`]);
+    expect(notes(sim, 'Your Fixed-Term Savings Closed').map((n) => n.body)).toEqual([`Your notice period ended: £10,000.00 went to your checking account, after a £${(CHARGE / 100).toFixed(2)} penalty for closing early.`]);
     hungry(sim); // TEST SETUP
     must(sim, 'life.look_after', { action: 'eat' });
     const meal = moved(sim, barclays, 'A meal');
@@ -392,7 +392,7 @@ describe('card.report', () => {
     const wfScreen = draw(wf, createElement(BankSecurity, { bankId: 'us-wells-fargo' }));
     expect(wfScreen.all('Report It And Rush The New One')).toHaveLength(0);
     expect(wfScreen.all('Report It').length).toBeGreaterThan(0);
-    expect(wfScreen.text).toContain('Wells Fargo’s rush is for credit cards: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet), and its Active Cash card agreement names a Rush Plastic Fee without an amount. With no fee published, the game doesn’t offer a rushed card.');
+    expect(wfScreen.text).toContain('Wells Fargo can rush a new credit card: “We may be able to replace your card in as little as 24 hours (additional fees may apply)” (wellsfargo.com/help/lost-wallet). Its Active Cash card agreement names a Rush Plastic Fee but gives no amount. With no fee published, the game doesn’t offer a rushed card.');
     for (const which of ['debit', 'credit'] as const) {
       const refused = wf.execute({ kind: 'card.report', payload: { which, why: 'lost', rush: true } });
       expect(refused.error).toBe('Wells Fargo doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.');
@@ -427,7 +427,7 @@ describe('card.request_hardship', () => {
     setBalance(sim, mine(sim, 'savings'), 0); // TEST SETUP
     sim.advanceTo(edt(10, 11, 12, 5));
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
-    expect(notes(sim, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment was $48.00, and only $0.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.']);
+    expect(notes(sim, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment on the Chase Freedom Unlimited was $48.00, and nothing was paid by the due date. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record. Pay the card on Money, under Cards.']);
     expect(stateOf(sim.player, card).missed).toBe(1);
     expect(sim.player.credit!.late).toEqual([]);
     expect(sim.player.credit!.score).toBe(795);
@@ -435,7 +435,7 @@ describe('card.request_hardship', () => {
     setBalance(sim, checking, 1_000_00); // TEST SETUP: the means to pay the plan, come since
     // The statement of 20 October asks the plan's payment, and charges no interest on a plan.
     sim.advanceTo(edt(10, 20, 9, 1));
-    expect(notes(sim, 'Statement Ready: Chase Freedom Unlimited').at(-1)!.body).toContain('The statement comes to $4,830.00, due November 10, 2026. At least $101.00 has to be paid by then.');
+    expect(notes(sim, 'Statement Ready: Chase Freedom Unlimited').at(-1)!.body).toContain('The statement comes to $4,830.00, due November 10, 2026. The plan’s payment is $101.00. Autopay pays $101.00 from Chase Total Checking that day, if there’s enough in it.');
     expect(moved(sim, card, 'Interest')).toEqual([]);
     return { sim, card, checking };
   }
@@ -464,7 +464,7 @@ describe('card.request_hardship', () => {
 
     // The twin: the plan's $101 bounced, a second miss, thirty days past due, on the record. A repeat within six cycles
     // may be the safe harbor's $41, and Chase's card agreement says "up to $40": $40.
-    expect(notes(short.sim, 'A Card Payment Bounced').at(-1)!.body).toBe('Autopay asked for $101.00, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(notes(short.sim, 'A Card Payment Bounced').at(-1)!.body).toBe('The Chase Freedom Unlimited’s autopay of $101.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     expect(stateOf(short.sim.player, short.card).missed).toBe(2);
     expect(moved(short.sim, short.card, 'Late fee')).toEqual([-30_00, -40_00]);
     // The record’s mark is that due date’s: 10 November, at its noon. Until the third round of 2026-10-13 this was held
@@ -473,7 +473,7 @@ describe('card.request_hardship', () => {
     const second = short.sim.universe.transactions.filter((t) => t.memo === 'Late fee').at(-1)!.at;
     expect(short.sim.player.credit!.late).toEqual([second]);
     expect(second).toBe(est(11, 10, 12, 0));
-    expect(notes(short.sim, 'A Late Card Payment').at(-1)!.body).toBe('The plan’s payment was $101.00, and only $0.00 was paid. That costs a $40.00 late fee, and it’s on your credit record.');
+    expect(notes(short.sim, 'A Late Card Payment').at(-1)!.body).toBe('The plan’s payment on the Chase Freedom Unlimited was $101.00, and nothing was paid by the due date. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.');
   });
 
   it('is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48', () => {
@@ -488,11 +488,11 @@ describe('card.request_hardship', () => {
     ]);
     const october = draw(sim, createElement(BankStatements), [card.id, 1]).text;
     expect(october).toContain('Brought Forward $4,800.00 Payments And Credits $0.00 Spending $0.00 Fees $30.00 Interest $0.00 New Balance $4,830.00');
-    expect(october).toContain('The least you can pay is $101.00, the plan’s payment, by November 10, 2026.');
+    expect(october).toContain('The plan’s payment is $101.00, due November 10, 2026.');
     const september = draw(sim, createElement(BankStatements), [card.id, 2]).text;
-    expect(september).not.toContain('Rebuilt: this statement comes from before the card’s statements were kept');
+    expect(september).not.toContain('Rebuilt: this statement is from before the game kept card statements');
     expect(september).toContain('New Balance $4,800.00');
-    expect(september).toContain('The least you can pay is $48.00, by October 11, 2026.');
+    expect(september).toContain('The minimum payment is $48.00, due October 11, 2026.');
     expect(september).not.toContain('the plan’s payment');
   });
 });

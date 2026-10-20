@@ -618,7 +618,7 @@ PLAYS['taxes.return'] = () => {
   const interest = total - owed - penalty;
   const months = Math.ceil(late / 30.4375);
   const payLate = Math.round(Math.min(RETURN.lateCap, RETURN.payLateMonthly * months) * owed);
-  expect(ex.result).toContain(`On ${day(filedLate)} the IRS adds ${usd(penalty)} of late penalties, ${usd(penalty - payLate)} for filing late and ${usd(payLate)} for paying late`);
+  expect(ex.result).toContain(`On ${day(filedLate)}, the IRS adds ${usd(penalty)} of late penalties, ${usd(penalty - payLate)} for filing late and ${usd(payLate)} for paying late`);
   // Past its days the filing share is at least the minimum, or the whole balance under it: here the balance.
   expect(late).toBeGreaterThan(RETURN.lateMinimumAfterDays);
   expect(owed).toBeLessThan(RETURN.lateMinimum);
@@ -752,7 +752,7 @@ PLAYS['taxes.plan'] = () => {
 
 PLAYS['taxes.lien'] = () => {
   const ex = example('taxes.lien');
-  const filedOn = dateOf(grab(ex.setup, /return on ([A-Z][a-z]+ \d+, \d{4}) with/));
+  const filedOn = dateOf(grab(ex.setup, /return on ([A-Z][a-z]+ \d+, \d{4}), with/));
   const ct = centsOf(grab(ex.setup, /with (\$[\d,.]+) owed to Connecticut/));
   const rules = STATE_TAX['us-ct'];
   /** Their 2026 return, filed on the example's day with Connecticut's balance and nothing in the bank. */

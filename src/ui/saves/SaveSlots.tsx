@@ -52,7 +52,7 @@ export function SaveSlots({
       // What the check found is a developer's words, kept behind What’s Wrong With It (from 2026-10-17, brief 14):
       // until then the sentence was "That save didn’t pass validation: <the first of them> (and n more)."
       if (!validation.ok) {
-        setError(`The save in Slot ${slot} is damaged, so it can’t be opened.${slots.find((s) => s.slot === slot)?.hasBackup ? ' Its backup can be restored instead: press Restore Backup.' : ''}`);
+        setError(`The save in Slot ${slot} is damaged, so it can’t be opened.${slots.find((s) => s.slot === slot)?.hasBackup ? ' Press Restore Backup to open its backup instead.' : ''}`);
         setErrorDetail(validation.errors);
         return;
       }
@@ -77,6 +77,9 @@ export function SaveSlots({
       setBusy(null);
     }
   };
+
+  /** Whose life a delete would end, where the slot can read the name. */
+  const doomed = confirmDelete === null ? undefined : slots.find((s) => s.slot === confirmDelete)?.meta?.characterName;
 
   return (
     <div className="main">
@@ -112,7 +115,7 @@ export function SaveSlots({
                   <div className="slot-number">Slot {slot}</div>
                   <p className="small dim center" style={{ maxWidth: 220 }}>
                     {info.hasBackup
-                      ? 'Empty, but a backup of the save that was here is kept.'
+                      ? 'Empty, but there’s a backup of the save that was here.'
                       : 'An empty slot. Press New Save to start a life here.'}
                   </p>
                   <div className="col gap-2" style={{ alignItems: 'center' }}>
@@ -235,13 +238,17 @@ export function SaveSlots({
             </div>
             <div className="modal-body">
               <p>
-                This ends that universe. The character, everywhere they’ve been and everything that happened to them
-                is gone from the slot.
+                {/* The life by its character’s name, where the slot can read one (from 2026-10-19, brief 15: until then
+                    “This ends that universe. The character, everywhere they’ve been and everything that happened to
+                    them is gone from the slot.”, the save’s own word for itself). */}
+                {doomed
+                  ? `This deletes ${doomed}’s life from the slot, with everything that happened in it.`
+                  : 'This deletes the save in this slot.'}
               </p>
               <p className="muted small">
                 {restorableAfterDelete(slots.find((s) => s.slot === confirmDelete))
-                  ? 'A backup is kept, so if you change your mind you can bring it back here with Restore Backup.'
-                  : 'This slot has no backup, so it can’t be brought back afterwards.'}
+                  ? 'SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back.'
+                  : 'This slot has no backup, so you can’t bring it back afterwards.'}
               </p>
             </div>
             <div className="modal-foot">
@@ -265,7 +272,7 @@ export function SaveSlots({
 function BackupNote({ label, center = false }: { label?: string; center?: boolean }) {
   return (
     <div className={`xs dim${center ? ' center' : ''}`}>
-      {label ? `Backup from ${label}` : 'Backup from an unrecorded date'}
+      {label ? `Backup from ${label}` : 'Backup from an unknown date'}
     </div>
   );
 }

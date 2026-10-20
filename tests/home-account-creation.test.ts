@@ -94,14 +94,14 @@ describe('the rule, step by step, in its words', () => {
     expect(homeAccountRefusal(london('de-deutsche-bank'), 'de-deutsche-bank')).toBe('Deutsche Bank isn’t a bank in United Kingdom.');
     const rome = banksIn('IT')[0]!;
     expect(homeAccountRefusal(life({ priorResidence: { cityId: 'it-laz-rome', fromYear: 2010, fromMonth: 1 } }), rome.id))
-      .toBe(`There’s no research on what ${rome.name} does when a customer moves to America, so the game can’t offer it.`);
+      .toBe(`The game doesn’t know what ${rome.name} does when a customer moves to America, so it can’t offer this account.`);
     expect(homeAccountRefusal(life({ priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2010, fromMonth: 1 } }), 'jp-japan-post-bank'))
       .toBe('Japan Post Bank asks a customer going abroad to close the account, and keeps one open only if someone in Japan acts for them, which the game doesn’t offer.');
   });
 
   it('4: an account not open before Yale: moved there after, or too young for the bank', () => {
     expect(homeAccountRefusal(london('gb-hsbc', { priorResidence: { cityId: 'uk-eng-london', fromYear: 2026, fromMonth: 9 } }), 'gb-hsbc'))
-      .toBe('You began living there after Yale began.');
+      .toBe('You moved there after Yale began.');
     // TEST SETUP: a bank opening from 30, which no researched bank does; born 14 June 2002, 24 at the start.
     addHomeTerms({ ...homeTerms('gb-hsbc')!, openFromAge: 30 });
     expect(homeAccountRefusal(london('gb-hsbc'), 'gb-hsbc')).toBe('HSBC UK opens an account from age 30, and you left at 24.');
@@ -119,7 +119,7 @@ describe('the rule, step by step, in its words', () => {
     expect(whatFollows(london('gb-hsbc'), 'gb-hsbc')).toEqual([
       'HSBC UK keeps it for a customer who lives abroad.',
       'The bank says so in its own words.',
-      'The research found no opening age for HSBC UK, so the game assumes 16.',
+      'No opening age was found for HSBC UK, so the game assumes 16.',
     ]);
     // Opened 14 June 2018, at 16, before 28 April 2026: two months, 60 days, from Monday 24 August 2026.
     expect(homeAccountRefusal(london('gb-barclays'), 'gb-barclays')).toBeUndefined();
@@ -221,7 +221,7 @@ describe('the creation screen', () => {
     expect(words).toContain('It charges ¥300 a month for a customer abroad.');
     // ¥: 706,500 × 150 = 105,975,000, ¥1,059,750 exactly, less the ¥10,200 its current account opens with.
     expect(words).toContain('Kept At MUFG Bank: ¥1,049,550 In 普通預金 (Ordinary Deposit)');
-    expect(words).toContain('Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥10,200, from your savings, as far as that goes: move more in before it runs low.');
+    expect(words).toContain('Its 普通預金 (Ordinary Deposit) opens with ¥10,200 from your savings, what its fees come to until you graduate in May 2029, or as much of that as there is. Move more in before it runs low.');
     // Each held at home in dollars as Money says it, from 2026-10-17 (brief 14's cross-area pass): until then “$68 at the
     // estimated rate”. ¥10,200 and ¥1,049,550 at 150 to the dollar.
     expect(words).toContain('¥10,200 About $68 at an estimated exchange rate');
@@ -246,6 +246,6 @@ describe('the creation screen', () => {
     expect(validate(london('gb-hsbc'), STARTING_POINT as never)).toEqual([]);
     expect(validate(life({ priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-japan-post-bank' }), STARTING_POINT as never))
       .toEqual(['Japan Post Bank asks a customer going abroad to close the account, and keeps one open only if someone in Japan acts for them, which the game doesn’t offer.']);
-    expect(validate(london('gb-hsbc', { priorResidence: { cityId: 'uk-eng-london', fromYear: 1999, fromMonth: 1 } }), STARTING_POINT as never)).toContain('You can’t have lived there from before you were born.');
+    expect(validate(london('gb-hsbc', { priorResidence: { cityId: 'uk-eng-london', fromYear: 1999, fromMonth: 1 } }), STARTING_POINT as never)).toContain('You can’t have moved there before you were born.');
   });
 });

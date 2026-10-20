@@ -278,9 +278,9 @@ describe('bank.open_current', () => {
   it('refuses a bank in London as no bank where she lives, and a deposit from the books’ own Wages account as no account of hers; a life holds no other person’s account to try', () => {
     const sim = student('b05-where');
     const before = untouched(sim);
-    expect(refused(sim, 'bank.open_current', { bankId: 'gb-barclays' })).toBe('You can only open an account at a bank where you live.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'gb-barclays' })).toBe('You can only open an account at a bank in the country you live in.');
     const wages = sim.nominalAccount('income', 'Wages').id;
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: wages, amount: 10_00 })).toBe('Pay the opening deposit from one of your own current or savings accounts.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: wages, amount: 10_00 })).toBe('Pay the opening deposit from one of your own checking or savings accounts.');
     expect(untouched(sim)).toEqual(before);
     // Every account a life holds that isn't the books' own is hers: there's no one else's to send from.
     expect(Object.values(sim.universe.accounts).filter((a) => !a.nominal && a.ownerId !== sim.player.id)).toEqual([]);
@@ -401,7 +401,7 @@ describe('bank.set_order_source', () => {
     expect(was.cap).toBe(0);
     sim.advanceTo(at(2026, 8, 28, 9, 1));
     expect({ chase: acct(sim, chase).balance, savings: acct(sim, savings).balance, cap: acct(sim, cap).balance, transit: inTransitOf(sim, sim.player).balance }).toEqual(was);
-    expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => [n.at, n.body])).toEqual([[at(2026, 8, 28, 9), 'Your $50.00 standing order to Chase Savings didn’t go. There wasn’t enough in 360 Checking on the day. Move money into it before the order’s next date.']]);
+    expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => [n.at, n.body])).toEqual([[at(2026, 8, 28, 9), 'Your $50.00 standing order to Chase Savings didn’t go through. There wasn’t enough available in 360 Checking that day. Move money into it before the order’s next date.']]);
 
     // $100 from Chase, in Chase's three business days: Wednesday 2 September.
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase, toId: cap, amount: 100_00 });
@@ -470,7 +470,7 @@ describe('bank.close_current', () => {
     sim = reload(sim);
     sim.advanceTo(at(2026, 9, 11, 8, 1));
     expect([transfersOf(sim, sim.player), sim.universe.transactions.filter((t) => t.postsAt !== undefined && t.postsAt > sim.now && t.postings.some((p) => p.accountId === chase))]).toEqual([[], []]);
-    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('A payment set for a date uses it. Move it first.');
+    expect(refused(sim, 'bank.close_current', { accountId: chase, remainderTo: cap })).toBe('A payment set for a date uses it. Move that to another account first.');
     run(sim, 'bank.cancel_scheduled', { id: into });
     const august = periodsOf(sim, acct(sim, chase)).find((p) => p.label === 'August 2026')!;
     const augustBefore = accountStatement(sim, acct(sim, chase), august);
@@ -490,7 +490,7 @@ describe('bank.close_current', () => {
     expect(postingsTo(sim, cap, at(2026, 9, 11, 8, 1)).filter((p) => p.memo === 'From Chase Total Checking').map((p) => [p.at, p.amount])).toEqual([[at(2026, 9, 16, 8, 1), holding]]);
     // Two months on: no October or November for it, only September to its closing and August, as August was.
     const periods = periodsOf(sim, acct(sim, chase));
-    expect(periods.map((p) => [p.label, p.to])).toEqual([['September 2026, To Its Closing', closed.closedAt], ['August 2026', at(2026, 9, 1, 0)]]);
+    expect(periods.map((p) => [p.label, p.to])).toEqual([['September 2026, Until It Closed', closed.closedAt], ['August 2026', at(2026, 9, 1, 0)]]);
     expect(accountStatement(sim, acct(sim, chase), periods[1]!)).toEqual(augustBefore);
     expect(checkingsOf(sim, sim.player).map((a) => a.id)).toEqual([cap]);
   });
@@ -503,7 +503,7 @@ describe('bank.close_current', () => {
     const closed = run<{ closedAt: number }>(sim, 'bank.close_current', { accountId: chase, remainderTo: cap });
     sim.advanceTo(at(2026, 10, 2));
     const last = accountStatement(sim, acct(sim, chase), periodsOf(sim, acct(sim, chase))[0]!);
-    expect(last.period.label).toBe('September 2026, To Its Closing');
+    expect(last.period.label).toBe('September 2026, Until It Closed');
     // What the account held went out at its closing, and its last statement says so: it closes at nothing.
     expect(last.lines.at(-1)).toMatchObject({ at: closed.closedAt, memo: 'To Capital One: 360 Checking', amount: -holding, balance: 0 });
     expect(last.closing).toBe(0);
@@ -593,7 +593,7 @@ describe('documents.report_lost', () => {
     const shown = papers(sim, 'passport');
     // From 2026-10-16 the row says what replaces it after Run Out (brief 09's journeys, tests/remaining-09-journeys.test.ts):
     // until then nothing came after it, and this read the row's end there.
-    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out A driving license can’t be renewed in the game\. A passport or ID card in force is your photo ID: see Your Passport and Your ID\.$/);
+    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out You can’t renew a driving license in the game\. Use a passport or ID card in force as your photo ID: see Your Passport and Your ID\.$/);
     expect([named(shown, 'Report Lost…'), named(shown, 'Report Stolen…')]).toEqual([[], []]);
   }, 60_000);
 

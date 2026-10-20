@@ -1,0 +1,3558 @@
+{
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [banter]": {
+  "status": "Retained",
+  "hash": "c92c3e9a3bf4",
+  "on": "2026-10-19",
+  "reason": "Banter As Armor says what her jokes are for, keeping him out, in one plain sentence resting on her objective of not telling him why she transferred.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [betrayed]": {
+  "status": "Retained",
+  "hash": "4130de6bed9e",
+  "on": "2026-10-19",
+  "reason": "She Trusted Him names the scene as a personal reckoning in one sentence, resting on the two weeks he guided her and the water he took.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [block]": {
+  "status": "Retained",
+  "hash": "a23b93b4be14",
+  "on": "2026-10-19",
+  "reason": "Her Block says whose authority she speaks with, the neighbors' as much as hers, resting on the clinic the block keeps open itself and the stoops behind her.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brag]": {
+  "status": "Retained",
+  "hash": "a3d6f20b522f",
+  "on": "2026-10-19",
+  "reason": "All Bluster gives a plain direction, keep boasting to the end and let the courage show in how the boasts change, resting on Flap's character and his fright in the second beat.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brave]": {
+  "status": "Retained",
+  "hash": "b0b9c1050451",
+  "on": "2026-10-19",
+  "reason": "Brave For Her (High Wind) and Owning Up (The Greenhouse Window) each say in one sentence what the courage is for, resting on a fact of the brief: the string cutting her hands, and nobody having seen him.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [breath]": {
+  "status": "Rewritten",
+  "hash": "687af9591291",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders the reading No Breath Left on Through The Back's pane, its new sentence whole (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-absurdist]": {
+  "status": "Retained",
+  "hash": "795b7d1cdb42",
+  "on": "2026-10-19",
+  "reason": "Proof Of Arrival sets out the witness rule's loop in plain, playable facts (one window, closing at five, a clerk who means every word kindly), and each beat says what Margit does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-action_comedy]": {
+  "status": "Rewritten",
+  "hash": "0800530446c2",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene...: renders BriefPane for Second Tier and finds the new staging note (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-action]": {
+  "status": "Rewritten",
+  "hash": "610ae33f377b",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Loading Bay and finds the new staging note and reasons (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-adventure]": {
+  "status": "Rewritten",
+  "hash": "a08df4e2249c",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene...: renders BriefPane for The Last Well and finds the new physical and staging notes (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-alternate_history]": {
+  "status": "Retained",
+  "hash": "276449ca125b",
+  "on": "2026-10-19",
+  "reason": "The Receiver sets up an invented 1971 with one clear rule (every broadcast through the state wire set), a boy's schooling on one form, and three plain beats from procedure to a quiet decision.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-animated]": {
+  "status": "Rewritten",
+  "hash": "db2dec182558",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for High Wind, its You Speak To line and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-anime]": {
+  "status": "Rewritten",
+  "hash": "19e88fe0165d",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders BriefPane for Last Launch From The Roof and finds the new You Speak To line, beat and voice-over note (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-anthology]": {
+  "status": "Rewritten",
+  "hash": "7c98089142de",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders BriefPane for Seat Fourteen and finds the new circumstances (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-apocalyptic]": {
+  "status": "Retained",
+  "hash": "78da0d84955b",
+  "on": "2026-10-19",
+  "reason": "The Seed Corn puts a hard choice between neighbors in plain words, with the debt (he helped bury her husband) and the stakes (seed for planting against hungry children) both playable.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-art_house]": {
+  "status": "Retained",
+  "hash": "0f38dcaecd48",
+  "on": "2026-10-19",
+  "reason": "Oranges builds a scene of silence and one long take from exact, unshowy facts an actor can play: three lines, a peel in one piece, one sentence about the table.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-avant_garde]": {
+  "status": "Rewritten",
+  "hash": "34f4b8ce97e2",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders BriefPane for Instructions For Leaving A Room and finds the new improvisation note after its '. ' (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-backstage_musical]": {
+  "status": "Rewritten",
+  "hash": "a30d71d58571",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders BriefPane for Places For The Finale and finds the new techniques note (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-biker]": {
+  "status": "Retained",
+  "hash": "116044d5f79c",
+  "on": "2026-10-19",
+  "reason": "No Patch Tonight delivers a hard message kindly in a truck-stop diner at two in the morning, with plain beats (an easy meal, no patch, the gloves) and a reason she can't say.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-biographical]": {
+  "status": "Rewritten",
+  "hash": "bf6a78990c33",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders BriefPane for The Last Broadcast and finds the new physical note and first beat (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-black_comedy]": {
+  "status": "Retained",
+  "hash": "9f76517fa3f6",
+  "on": "2026-10-19",
+  "reason": "The Wrong Urn tells a grief comedy in specific facts (a shopping bag, a fifteen percent credit, ashes already scattered at sea), and each beat names its laugh or its turn.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-blaxploitation]": {
+  "status": "Rewritten",
+  "hash": "f325260c71aa",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders BriefPane for Sundown On Calloway Street and finds the new beats note under Where It Turns (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-body_horror]": {
+  "status": "Retained",
+  "hash": "22ce2604429e",
+  "on": "2026-10-19",
+  "reason": "The Left Hand tells body horror in a consulting room with exact, playable facts (clean scans, a hand that behaves while he looks), in three beats from calm to the request to take it off.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-buddy_comedy]": {
+  "status": "Retained",
+  "hash": "2a0ee7c8bab3",
+  "on": "2026-10-19",
+  "reason": "Three States For A Cake is a two-hander in plain comic facts (six hours of arguing, a bought map, keys on the hood), each beat saying who does what and the confession named outright.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-buddy_cop]": {
+  "status": "Retained",
+  "hash": "af729032cd4a",
+  "on": "2026-10-19",
+  "reason": "Stakeout On Pell Avenue sets out a car, a broken heater and the ninth hour plainly, with three beats from bickering to her answer and a secret she can play from the first line.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-caper]": {
+  "status": "Retained",
+  "hash": "76e5391dbce2",
+  "on": "2026-10-19",
+  "reason": "Forty Seconds In Gallery Nine gives a heist an exact clock (forty seconds, eleven flat, eight to spare) and a printed card the scene turns on, and its beats say what each does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-chanbara]": {
+  "status": "Rewritten",
+  "hash": "4bbf14ff3e9e",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders BriefPane for The Checkpoint At Usui and finds the new partner and staging notes (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-chase]": {
+  "status": "Retained",
+  "hash": "200130c1990c",
+  "on": "2026-10-19",
+  "reason": "Through The Back gives a chase a plain clock (half a block behind) and a stranger with a rule, and its allows note names the one way to play it, driven, and why.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-childrens]": {
+  "status": "Retained",
+  "hash": "65dd20c17c12",
+  "on": "2026-10-19",
+  "reason": "The Greenhouse Window tells a child's apology in specific facts (eleven rehearsals in the mirror, a neighbor who has already found the ball), with three beats that say what each does.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-christmas]": {
+  "status": "Retained",
+  "hash": "4a009915d000",
+  "on": "2026-10-19",
+  "reason": "The Christmas Eve Loaf keeps a holiday scene specific and unsentimental (a braided loaf, a till that won't open, one string of lights), with an obstacle said in a single line.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brief-comedy]": {
+  "status": "Retained",
+  "hash": "a6e02048940b",
+  "on": "2026-10-19",
+  "reason": "The Best Man's Draft is a comedy of corrections with a plain objective (one laugh before the bar closes), a sister with a perfect memory, and notes on where each laugh lands.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [brisk]": {
+  "status": "Retained",
+  "hash": "e093d99e3be1",
+  "on": "2026-10-19",
+  "reason": "Trying To Leave says she fights the feeling all the way and the invitation surprises her, resting on her wish to be back on the road before she feels anything.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [cake]": {
+  "status": "Retained",
+  "hash": "50904f953bd5",
+  "on": "2026-10-19",
+  "reason": "The Cake Comes First names what she protects and where the laughs come from, in two short sentences, resting on the three days she spent on the cake.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [calm]": {
+  "status": "Retained",
+  "hash": "3769e215ec48",
+  "on": "2026-10-19",
+  "reason": "Terribly Calm gives a clear playing note, polite to the end with the comedy in her stillness, resting on her calm question and the manager's forms.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [clock]": {
+  "status": "Retained",
+  "hash": "01f2d854c77c",
+  "on": "2026-10-19",
+  "reason": "Against The Clock makes the shutter the scene's subject in a plain sentence and rests it on the brief's own fact, the timer, with her colleague behind it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [control]": {
+  "status": "Retained",
+  "hash": "5973e1d12728",
+  "on": "2026-10-19",
+  "reason": "Holding It Down names the effort as the horror, the reasonable patient fighting her own body, resting on the hand held in her lap with the right.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [debt]": {
+  "status": "Retained",
+  "hash": "7ad4c91d1a6f",
+  "on": "2026-10-19",
+  "reason": "What She Owes Him says she's torn all the way and what her rations are, resting on the two facts that pull against each other: his help last winter and his hungry children.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [dread]": {
+  "status": "Retained",
+  "hash": "ccd500c4dc53",
+  "on": "2026-10-19",
+  "reason": "The Floor Gives Way names what she slowly understands under the patience and rests it on two moments an actor can find: the laugh catching, and the suitcase she ends on.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [form]": {
+  "status": "Retained",
+  "hash": "75a579b07d54",
+  "on": "2026-10-19",
+  "reason": "The Old Forms says the feeling is carried by keeping the forms exactly, resting on the duel's three fixed exchanges and the formal first bow.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [found]": {
+  "status": "Retained",
+  "hash": "bba4bb9868d1",
+  "on": "2026-10-19",
+  "reason": "Found Each Time says each pass is a new discovery, resting on the brief's two openings: the performer decides who the voice is, and the coat changes meaning.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [friction]": {
+  "status": "Retained",
+  "hash": "a860cd4ea2e6",
+  "on": "2026-10-19",
+  "reason": "Pure Friction says the comedy is the clash, played fast, and that the softening surprises both, resting on six hours of polite dislike.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [grief]": {
+  "status": "Retained",
+  "hash": "2b2dc262fa37",
+  "on": "2026-10-19",
+  "reason": "Laughing At The Sea says why the joke is real to her and how the grief comes up through it, resting on her husband's hating the sea.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [hard]": {
+  "status": "Retained",
+  "hash": "e5b799990078",
+  "on": "2026-10-19",
+  "reason": "Tough Love says why she's hard on him in one plain sentence, because a soft no would bring him back, resting on her objective of sending him home.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [keeper]": {
+  "status": "Retained",
+  "hash": "4d3e5b85b131",
+  "on": "2026-10-19",
+  "reason": "The Keeper says she has already decided and what she holds the line for, the town's next year, resting on seed that has to last until planting.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [known]": {
+  "status": "Retained",
+  "hash": "34003dec7600",
+  "on": "2026-10-19",
+  "reason": "She Knew Him First says how she wins, by reminding him who he was, resting on their growing up four doors apart and her ending on his mother.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [laugh]": {
+  "status": "Retained",
+  "hash": "3e9ed3728672",
+  "on": "2026-10-19",
+  "reason": "Laughing It Off is a short, vivid reading, the laugh is what breaks, resting on Haru's habit of laughing when she's about to cry.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [likeness]": {
+  "status": "Retained",
+  "hash": "c94be057b1a1",
+  "on": "2026-10-19",
+  "reason": "Close Likeness says the documented habits are the way in and the performance keeps every one, resting on the research pack's recordings and photographs.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [listening]": {
+  "status": "Retained",
+  "hash": "cd7f530d6400",
+  "on": "2026-10-19",
+  "reason": "Every Word Lands says the scene is how she lets his words in without answering, resting on his silences and the piece of orange she offers instead; the segment is the orange's.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [loss]": {
+  "status": "Retained",
+  "hash": "6e0f360be7ee",
+  "on": "2026-10-19",
+  "reason": "Losing The Music says what she's afraid for, her playing more than her life, resting on a living that depends on that hand.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [memory]": {
+  "status": "Retained",
+  "hash": "062a50053291",
+  "on": "2026-10-19",
+  "reason": "She Built One Too says what she sees across the desk and what the scene becomes, resting on the circumstance only she knows: she built a receiver at his age.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [mother]": {
+  "status": "Retained",
+  "hash": "60feb5ae3076",
+  "on": "2026-10-19",
+  "reason": "The One Who Brought Him says what she sees she did and what the scene undoes, resting on her having brought him in and his year on her floor.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [nerve]": {
+  "status": "Retained",
+  "hash": "d41459304c56",
+  "on": "2026-10-19",
+  "reason": "Finding Her Nerve says what the scene is about and where the decision lands, the last line, resting on his belief in her and the green cue light.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [number]": {
+  "status": "Retained",
+  "hash": "fca9203fe9e7",
+  "on": "2026-10-19",
+  "reason": "Nail The Number says to play it as a show-business sprint and where the fun is, resting on the band already playing and the eight bars and time step to get right.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [ordinary]": {
+  "status": "Rewritten",
+  "hash": "19acb2629e49",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders the reading Just Another File on The Receiver's pane as '<label>. <reading> It rests on: <rests> Fully prepared' (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [partners]": {
+  "status": "Retained",
+  "hash": "ee626844068c",
+  "on": "2026-10-19",
+  "reason": "Becoming Partners says each exchange brings them closer and what telling him is, the first act of trust, resting on his having worked it out already.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [person]": {
+  "status": "Retained",
+  "hash": "d0e8c63c9227",
+  "on": "2026-10-19",
+  "reason": "The Woman Under It says to wear the habits lightly and what the scene is underneath, resting on her last program and the light going out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [persuade]": {
+  "status": "Retained",
+  "hash": "ac1126465e5d",
+  "on": "2026-10-19",
+  "reason": "Winning The Stranger says what she does, reads him fast and finds the one thing that makes him say yes, resting on his rule and the package she leaves.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [pro]": {
+  "status": "Retained",
+  "hash": "12892ccffee6",
+  "on": "2026-10-19",
+  "reason": "The Professional says she's at her best when the plan breaks, resting on her clean record and the night she rebuilds with eight seconds to spare.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [quest]": {
+  "status": "Retained",
+  "hash": "a0985e5500a3",
+  "on": "2026-10-19",
+  "reason": "The Flats Beyond gives the actor a short image to play (the guide as weather, the flats past him), resting on her twenty-two days' walk and the rising sun.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [reason]": {
+  "status": "Retained",
+  "hash": "82c957f7c19e",
+  "on": "2026-10-19",
+  "reason": "Talking Him Down gives the order the scene is played in, talk first and the fight only when that fails, resting on the offer she makes him in the first beat.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [reasonable]": {
+  "status": "Retained",
+  "hash": "9c9d4fbcfe82",
+  "on": "2026-10-19",
+  "reason": "Perfectly Reasonable says in one sentence how to play Margit, taking every rule in good faith, and where the laughs come from, resting on the clerk's kindness.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [scared]": {
+  "status": "Retained",
+  "hash": "da4c42fcda73",
+  "on": "2026-10-19",
+  "reason": "The Frightened Groom says what his fussing has been all along and who he admits it to, resting on his own line about being a bad husband.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [secret]": {
+  "status": "Retained",
+  "hash": "7d3e3b634467",
+  "on": "2026-10-19",
+  "reason": "Keeping The Secret says what he never does and what the scene is for him, resting on the objective of finding out without telling her who he is.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [sincere]": {
+  "status": "Retained",
+  "hash": "dc0467f8b74f",
+  "on": "2026-10-19",
+  "reason": "With Her Whole Heart says to play it with complete sincerity and where its heart is, the invitation, resting on Christmas Eve and the loaf's long tradition.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [speech]": {
+  "status": "Retained",
+  "hash": "0a0ceecbebab",
+  "on": "2026-10-19",
+  "reason": "The Big Speech says where the comedy is, in how hard he tries to finish, resting on his eleven rehearsals in the mirror.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [still]": {
+  "status": "Retained",
+  "hash": "8e889540c331",
+  "on": "2026-10-19",
+  "reason": "The Frame Holds It says what she gives the camera and what carries the feeling instead, resting on the fixed camera and her three lines.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [student]": {
+  "status": "Retained",
+  "hash": "10a7210858dc",
+  "on": "2026-10-19",
+  "reason": "Meeting Her Match says the scene is her deciding to trust someone as good as she is, resting on her rule about trust and the idea that saves the job.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [sync]": {
+  "status": "Retained",
+  "hash": "233867deda23",
+  "on": "2026-10-19",
+  "reason": "Inside The Lines says plainly what the craft of a dub is, fitting the feeling to drawn mouths without seams, resting on the lip movements every line must land on.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [tale]": {
+  "status": "Rewritten",
+  "hash": "d4bd5c1bf773",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane: renders the reading A Story With An Ending on Seat Fourteen's pane, its new rests whole (passed, batch 1)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [task]": {
+  "status": "Retained",
+  "hash": "7bfe905d3949",
+  "on": "2026-10-19",
+  "reason": "Only The Task gives the performer a clear rule, add nothing and let the repetition do the work, resting on instructions that never change.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [teacher]": {
+  "status": "Retained",
+  "hash": "26bad30ca6f0",
+  "on": "2026-10-19",
+  "reason": "Last Lesson says the duel is a lesson and sparing him is the teaching, resting on what the student owes him and the sword sheathed at the end.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [timing]": {
+  "status": "Retained",
+  "hash": "92bde8597d45",
+  "on": "2026-10-19",
+  "reason": "Saving Every Joke says where the fun is, the speed of his rescues, resting on the beat where he fixes each story faster and faster.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [truth]": {
+  "status": "Retained",
+  "hash": "a614f0704c57",
+  "on": "2026-10-19",
+  "reason": "The True Thing says what the scene is about under the jokes, resting on the true thing he finally tells her and her laugh.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-a.ts#BRIEFS_A [whisper]": {
+  "status": "Retained",
+  "hash": "85bd995d7cc9",
+  "on": "2026-10-19",
+  "reason": "Not A Sound gives one plain, playable rule for the scene, fight it at a whisper, and rests it on the speeches beyond a thin door.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [afraid]": {
+  "status": "Retained",
+  "hash": "d611a4a921c2",
+  "on": "2026-10-19",
+  "reason": "Frightened For Two says her calm is a performance for his sake, resting on concrete facts: pajamas under her coat, a night call, a shed gone quiet.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [bargainer]": {
+  "status": "Retained",
+  "hash": "8d247414edb9",
+  "on": "2026-10-19",
+  "reason": "The Last Bargain says she came with the trade decided and the scene is getting the form exactly right, resting on eleven years of bargaining and the old form.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-coming_of_age]": {
+  "status": "Retained",
+  "hash": "837d5b248dae",
+  "on": "2026-10-19",
+  "reason": "Last Week’s Pay tells a boy's first adult disappointment in plain facts (a sign in the window, nobody paid on Friday, her car payment), and its three beats move from a muddled speech to his hand held out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-concert_film]": {
+  "status": "Rewritten",
+  "hash": "82654805f083",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Count-In, its timing note and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-conspiracy_thriller]": {
+  "status": "Retained",
+  "hash": "b67b1262feb2",
+  "on": "2026-10-19",
+  "reason": "The Amended Minutes builds a quiet trap from specific facts (a vote remembered the other way, a copy in her coat, a wrong number placed on purpose) and says where the trap turns around.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-cosmic_horror]": {
+  "status": "Retained",
+  "hash": "f441cf200dfd",
+  "on": "2026-10-19",
+  "reason": "The Same Depth makes cosmic horror from one impossible number and a calm woman, in plain survey facts (three days of soundings, the same depth to the centimeter), with a supervisor who never checked.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-costume_drama]": {
+  "status": "Retained",
+  "hash": "551d3b0fde0d",
+  "on": "2026-10-19",
+  "reason": "Quarter Day sets out 1847's rules for a governess plainly (she may not sit, may not name a sum first) and makes the scene from them, with a reference offered in place of wages.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-courtroom_drama]": {
+  "status": "Retained",
+  "hash": "d8e5f50edd05",
+  "on": "2026-10-19",
+  "reason": "Redirect gives a courtroom scene one exact rule (she may not lead) and a frightened witness, and its beats name each move from safe questions to the open one and the wait.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-creature_feature]": {
+  "status": "Rewritten",
+  "hash": "29a46aeaa139",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Boat Shed, its second beat and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-crime]": {
+  "status": "Retained",
+  "hash": "834353410198",
+  "on": "2026-10-19",
+  "reason": "Friday’s Count gives a crime scene a ledger, eleven hundred dollars skimmed a little at a time and a brother nobody names aloud, and three beats from denial to a rescue with a price.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-cyberpunk]": {
+  "status": "Retained",
+  "hash": "371144d7e83b",
+  "on": "2026-10-19",
+  "reason": "Reclamation Window makes a near future concrete (a leased hearing implant, a midnight deadline, a clerk reading a recorded script) and says the one human moment the scene is after.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-dance]": {
+  "status": "Retained",
+  "hash": "f46066958b0c",
+  "on": "2026-10-19",
+  "reason": "The Phrase gives a dance scene its exact material (thirty-two counts, a strapped knee, a replacement who learned it from a recording) and a techniques note that says the scene is the dance.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-dark_fantasy]": {
+  "status": "Retained",
+  "hash": "e40d8df80248",
+  "on": "2026-10-19",
+  "reason": "The Well Tithe gives a dark bargain clear rules (salt, iron and a name, an old form that won't let her lie) and an opponent who is courteous and has never lost.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-detective]": {
+  "status": "Retained",
+  "hash": "3c3f618f5041",
+  "on": "2026-10-19",
+  "reason": "Three Cups builds an interview around one countable clue, three cups for two people, and a housekeeper whose answers are polite, true and leave her son out.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-disaster]": {
+  "status": "Retained",
+  "hash": "4cc52aa785b0",
+  "on": "2026-10-19",
+  "reason": "Floor Eleven keeps a disaster to one floor and two people (a pinned leg, a radio, forty minutes out, a building that shifts), with beats from procedure to fantasy football to a confession.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-docudrama]": {
+  "status": "Rewritten",
+  "hash": "0de71cde3b08",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Inquiry Room, its physical and vocal notes and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-docufiction]": {
+  "status": "Rewritten",
+  "hash": "ebd331d9b8e1",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Closing Day, its circumstances and techniques note and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-documentary]": {
+  "status": "Rewritten",
+  "hash": "8525777e62e5",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Letters From The Lock, its circumstances, You Speak To line and techniques note and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-domestic_drama]": {
+  "status": "Retained",
+  "hash": "3d27b3b70a4d",
+  "on": "2026-10-19",
+  "reason": "The Thermostat puts a big argument under a small one in plain domestic facts (the heating turned up again, a mother arriving Saturday, eighteen years of careful arguing).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-drama]": {
+  "status": "Retained",
+  "hash": "c9bd613ee10e",
+  "on": "2026-10-19",
+  "reason": "The Spare Key tells a grief scene in a neighbor's kitchen with exact, playable facts (a key held for thirty years, an old joke, the coat still on), and three beats ending on her sitting down.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-dystopian]": {
+  "status": "Retained",
+  "hash": "188fc629675b",
+  "on": "2026-10-19",
+  "reason": "The Household Count makes a dystopia's rule concrete (flats by headcount, over-eighties moved out) and stages the lie against a coughing grandmother and a recording badge.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-eco_horror]": {
+  "status": "Retained",
+  "hash": "4b39c9e3b98e",
+  "on": "2026-10-19",
+  "reason": "The Bloom makes ecological horror from one wrong detail, algae moving against the wind and birds that stop flying off, against a festival opening tomorrow.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-epic]": {
+  "status": "Rewritten",
+  "hash": "c863dce2fd40",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Ford Before Winter, its vocal note and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-erotic_thriller]": {
+  "status": "Rewritten",
+  "hash": "1ed5d98a86da",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Second Key, its staged-intimacy note and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-espionage]": {
+  "status": "Retained",
+  "hash": "544169794cbd",
+  "on": "2026-10-19",
+  "reason": "The Launderette plays a spy's fear entirely in small talk and folding shirts, with a coded question about a birthday and an answer he has to take without reacting.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-experimental]": {
+  "status": "Retained",
+  "hash": "7fb29e0739ca",
+  "on": "2026-10-19",
+  "reason": "The Glass Of Water states its rules exactly (six lines, four passes, one changed line each time, unknown to you) and says what each pass becomes, so the experiment is playable.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [brief-exploitation]": {
+  "status": "Rewritten",
+  "hash": "ece3a9887c89",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Closed For The Season, its staged-intimacy note and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [business]": {
+  "status": "Retained",
+  "hash": "f06dc2ec14f7",
+  "on": "2026-10-19",
+  "reason": "Twenty Years Without A Short says she protects her record first and her kindness is business, resting on twenty years without a short count.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [care]": {
+  "status": "Retained",
+  "hash": "d2e9d4fa5757",
+  "on": "2026-10-19",
+  "reason": "For Mrs. Lyle says she's there for the woman on the stand first and the jury follows, resting on the grandmother's trust and her shaking hands.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [chess]": {
+  "status": "Retained",
+  "hash": "00a27e6ff889",
+  "on": "2026-10-19",
+  "reason": "Two Moves Ahead says she knows from the first beat whose cup it is and the scene is her patience, resting on her watching the cups and naming the son only at the end.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [control]": {
+  "status": "Retained",
+  "hash": "d095c51653f1",
+  "on": "2026-10-19",
+  "reason": "She’s In Control says the embrace is her plan carried out and the attraction a tool, resting on her coming for the key and stepping close on purpose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [courtier]": {
+  "status": "Retained",
+  "hash": "54ebe28fbf2b",
+  "on": "2026-10-19",
+  "reason": "Duty To The Crown says his formality is a form of courage, resting on his formal report and the plain no he saves for the end.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [craft]": {
+  "status": "Retained",
+  "hash": "d4d856ff4f30",
+  "on": "2026-10-19",
+  "reason": "The Careful Lawyer says her care with the rules is her skill on show, resting on the rule against leading and the small, safe questions she builds with.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [danger]": {
+  "status": "Retained",
+  "hash": "3d49deea8bbf",
+  "on": "2026-10-19",
+  "reason": "Too Close says the attraction is real and the danger is not knowing what she wants, resting on years of attraction and neither knowing who's searching whom.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [decided]": {
+  "status": "Retained",
+  "hash": "9316d6ac3cd8",
+  "on": "2026-10-19",
+  "reason": "She Already Changed It says she made the call twenty minutes ago and the scene is holding her nerve, resting on her telling the drummer before Nico and the running count.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [detached]": {
+  "status": "Retained",
+  "hash": "5bb6f885cf78",
+  "on": "2026-10-19",
+  "reason": "Too Calm says she has already accepted what the number means and that her calm is the frightening part, resting on the brief's line that the calmer she is, the more he worries.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [expert]": {
+  "status": "Retained",
+  "hash": "bf62cb2bb480",
+  "on": "2026-10-19",
+  "reason": "The Expert In Charge says she knows more than she says and decides how much to frighten him, resting on the trawler photograph she has seen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [farewell]": {
+  "status": "Retained",
+  "hash": "edf1363d8c40",
+  "on": "2026-10-19",
+  "reason": "The Last Time says she dances it for herself and Hana is only allowed to watch, resting on her retirement tomorrow and the one full-out run her knee allows.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [father]": {
+  "status": "Retained",
+  "hash": "25e9e49e089b",
+  "on": "2026-10-19",
+  "reason": "Thinking Of His Daughter says he's a father first and the scene is whether he'll see her birthday, resting on the birthday question and a handler his daughter's age.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [form]": {
+  "status": "Retained",
+  "hash": "3c777cef8de8",
+  "on": "2026-10-19",
+  "reason": "Within The Form says she wins by being more correct than her mistress and every courtesy is a pressure, resting on the custom that forbids her to sit or to name a sum first.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [grieving]": {
+  "status": "Retained",
+  "hash": "8c7d59a4a2e1",
+  "on": "2026-10-19",
+  "reason": "The Song From The Kitchen says who she's doing it for and what she's asking of him, resting on the one time she heard the song, alone in his kitchen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [growing]": {
+  "status": "Rewritten",
+  "hash": "96cbe311ff02",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Hand Held Out on Last Week’s Pay and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [guarded]": {
+  "status": "Rewritten",
+  "hash": "4c6822b11d10",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Guarded To The Last on The Spare Key and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [holding]": {
+  "status": "Retained",
+  "hash": "7731b26d3261",
+  "on": "2026-10-19",
+  "reason": "Holding On says she's fighting to stay a scientist and names the crack, the laugh, resting on the printout she folds smaller and the laugh that comes once.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [hunted]": {
+  "status": "Retained",
+  "hash": "0c88526954f3",
+  "on": "2026-10-19",
+  "reason": "Who’s Watching Whom says how she comes in and how she leaves, hunting then frightened, resting on his too-light question about her copies.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [hunter]": {
+  "status": "Retained",
+  "hash": "cf69caea3ed6",
+  "on": "2026-10-19",
+  "reason": "Setting The Trap says she's in control and plays the scene as a test, resting on the number she gets wrong on purpose and his correction to the altered one.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [legacy]": {
+  "status": "Retained",
+  "hash": "2fad64af34c5",
+  "on": "2026-10-19",
+  "reason": "Passing It On says every move is for Hana and is danced to be remembered exactly, resting on her wish that the phrase outlive her and her explaining each move.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [letters]": {
+  "status": "Retained",
+  "hash": "a52e706b0ab8",
+  "on": "2026-10-19",
+  "reason": "Writing To Her Sister says each letter is private and the audience only overhears, resting on twelve years of letters to a sister she met twice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [liar]": {
+  "status": "Retained",
+  "hash": "8f54400999a2",
+  "on": "2026-10-19",
+  "reason": "The Steady Lie says he holds the lie without a crack and her mercy comes from his nerve, resting on his saying two over the coughing.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [listening]": {
+  "status": "Rewritten",
+  "hash": "af82aaf73c89",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Hearing Him Out on The Spare Key and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [loyal]": {
+  "status": "Rewritten",
+  "hash": "e35b3062dce8",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Still Her Right Hand on Last Week’s Pay and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [memory]": {
+  "status": "Retained",
+  "hash": "1e9217720311",
+  "on": "2026-10-19",
+  "reason": "The Voice On The Line says the scene is her memory of the night and the grief that comes with it, resting on the voice that told her not to fuss.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [mother]": {
+  "status": "Retained",
+  "hash": "5f6c541963fb",
+  "on": "2026-10-19",
+  "reason": "A Mother At The Well says she came hoping for another way and finds there isn't one, resting on the demand for her daughter's name and her own name offered last.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [narration]": {
+  "status": "Retained",
+  "hash": "2391ebeb012d",
+  "on": "2026-10-19",
+  "reason": "Under The Picture says the voice serves the footage and its craft is fitting the letters to the cut, resting on footage already cut to length.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [open]": {
+  "status": "Retained",
+  "hash": "4e60edeceb6c",
+  "on": "2026-10-19",
+  "reason": "Taken By Surprise says she lets the regular lead and meets the gift for real on camera, resting on the absence of written lines and the thing he brings.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [ordinary]": {
+  "status": "Rewritten",
+  "hash": "0c5bf8f5b6f5",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Just Another Day on Closing Day and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [partners]": {
+  "status": "Retained",
+  "hash": "dc13fe1802e7",
+  "on": "2026-10-19",
+  "reason": "Eighteen Years Of Care says she protects the marriage first and the argument is how they reach each other, resting on their never shouting and her yes at the end.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [person]": {
+  "status": "Retained",
+  "hash": "de533689839c",
+  "on": "2026-10-19",
+  "reason": "The Person Behind The Counter says she looks for the young man under the uniform from the first line, resting on the moment he looks away from the screen.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [player]": {
+  "status": "Retained",
+  "hash": "5727bd548063",
+  "on": "2026-10-19",
+  "reason": "Playing Him says she enjoys outplaying him and the broadness is her weapon until he catches her, resting on her too-broad act and her asking him here.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [pleader]": {
+  "status": "Retained",
+  "hash": "53664a17be00",
+  "on": "2026-10-19",
+  "reason": "Begging Without Words says he pleads the whole time without saying so, resting on the shared pretense and the badge turned face down.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [precision]": {
+  "status": "Retained",
+  "hash": "514849138245",
+  "on": "2026-10-19",
+  "reason": "The Fixed Line says the scene is the discipline of keeping the words exact while the meaning moves, resting on lines that never change.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [pride]": {
+  "status": "Rewritten",
+  "hash": "59b65c1157f8",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Nine Months Of Pride on Quarter Day and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [professional]": {
+  "status": "Retained",
+  "hash": "d55c124d9e62",
+  "on": "2026-10-19",
+  "reason": "Procedure Holds says she holds herself together by doing her job, resting on the work voice, the plain facts and the first-aid kit she starts with.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [protector]": {
+  "status": "Retained",
+  "hash": "0d1e1a2196ff",
+  "on": "2026-10-19",
+  "reason": "Saving The Kid says she's trying to save him and why she's hard, resting on her aim of keeping him alive and her offer to cover the money herself.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [reaction]": {
+  "status": "Retained",
+  "hash": "c6a871ef405f",
+  "on": "2026-10-19",
+  "reason": "Four Different Rooms says each repetition is a new scene found from the reader's changed line, resting on the change made unknown to you.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [revenge]": {
+  "status": "Retained",
+  "hash": "9e6be05d247b",
+  "on": "2026-10-19",
+  "reason": "For Her Sister says she's doing it for her sister and every moment of the kiss costs her, resting on the sister run off the road and the deputy's cover-up.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [scientist]": {
+  "status": "Retained",
+  "hash": "7fbeaf28fc1f",
+  "on": "2026-10-19",
+  "reason": "The Facts First says she trusts her instruments over her fear, with the terror under every fact, resting on her technical voice and the lab results that haven't come.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [son]": {
+  "status": "Retained",
+  "hash": "ba770c0f4517",
+  "on": "2026-10-19",
+  "reason": "His Father’s Son says he speaks for his father and the queen hears the man she trusted, resting on her question about what his father would have advised.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [still]": {
+  "status": "Retained",
+  "hash": "42e0b6d65889",
+  "on": "2026-10-19",
+  "reason": "All In The Folding says he gives nothing away and the scene is played in the folding of the shirts, resting on what fear makes a source and his folding on after he understands.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [strangers]": {
+  "status": "Retained",
+  "hash": "8201b108c7bc",
+  "on": "2026-10-19",
+  "reason": "Two Strangers says the disaster makes two people friends and the scene is how fast, resting on a year on one floor without a real conversation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [sympathy]": {
+  "status": "Retained",
+  "hash": "862d36f14ba9",
+  "on": "2026-10-19",
+  "reason": "Woman To Woman says she understands the lie and offers a way out of it, resting on the son named gently and the housekeeper's choice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [system]": {
+  "status": "Retained",
+  "hash": "a9d74990902f",
+  "on": "2026-10-19",
+  "reason": "Against The Script says she's arguing with a system and the clerk is only its voice until the last beat, resting on the scripted answers and the recording.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [tired]": {
+  "status": "Rewritten",
+  "hash": "28bbf098923c",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Too Tired To Pretend on The Thermostat and finds the new words whole (passed, batch 2)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-b.ts#BRIEFS_B [witness]": {
+  "status": "Retained",
+  "hash": "8bf322af4486",
+  "on": "2026-10-19",
+  "reason": "Two readings: The Record Corrected (The Inquiry Room) says her purpose is accuracy after sixty years, resting on the wrong time in her statement; What She Saw (The Bloom) says she's still at the water, resting on the birds facing the shore.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [angry]": {
+  "status": "Retained",
+  "hash": "0df388de29e5",
+  "on": "2026-10-19",
+  "reason": "Angry Young Man says Dennis is furious at the life laid out for him and finds the one person who'll hear it, resting on the row with the foreman and his refusal of the loom.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [apology]": {
+  "status": "Retained",
+  "hash": "784c86c6cd10",
+  "on": "2026-10-19",
+  "reason": "The Apology In It says the song is the apology she has never managed to say, resting on the chorus she sings to him alone.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [audit]": {
+  "status": "Retained",
+  "hash": "7f3890a1dd72",
+  "on": "2026-10-19",
+  "reason": "The Audit says Dolores copes by treating the impossible as a ledger that has to balance, resting on her auditing the panel and finding Bookkeeping at maximum.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [awe]": {
+  "status": "Retained",
+  "hash": "871559f2f90c",
+  "on": "2026-10-19",
+  "reason": "Seeing It For Him says she lets herself see the creature in describing it and the wonder is the scene, resting on her description turning from plain to wonder.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-fairy_tale]": {
+  "status": "Retained",
+  "hash": "e203c138f5c8",
+  "on": "2026-10-19",
+  "reason": "One Thing She Doesn’t Know sets a fairy-tale riddle with one exact rule (a true thing the well doesn't already know) and lets the answer, forgiveness tomorrow, come from the girl's own story.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-family]": {
+  "status": "Rewritten",
+  "hash": "7a5aed1dcd52",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Treehouse Treaty, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-fantasy]": {
+  "status": "Retained",
+  "hash": "d482ae22687f",
+  "on": "2026-10-19",
+  "reason": "The Cartographer’s Debt gives an invented city one rule an actor can play (a drawn road is real by morning, and every road owes a toll) and a bargain where every road she could pay with has someone on it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-farce]": {
+  "status": "Rewritten",
+  "hash": "7e99048f064f",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Second Cake, its techniques and allows notes and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-film_noir]": {
+  "status": "Rewritten",
+  "hash": "9e945b647747",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Night Line, its voice-over note and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-folk_horror]": {
+  "status": "Retained",
+  "hash": "c59a525fc51a",
+  "on": "2026-10-19",
+  "reason": "The Last Sheaf builds folk horror from manners (an honor he can't refuse, keys kept safe, a village quiet and pleased) and ends on one ordinary, wrong image, the sheaf in a shirt like his.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-found_footage]": {
+  "status": "Rewritten",
+  "hash": "fe0818c7e963",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Night Two At Juniper Creek, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-gangster]": {
+  "status": "Retained",
+  "hash": "a10dca01ac8a",
+  "on": "2026-10-19",
+  "reason": "The Back Of The Bakery gives a gangster's retirement plain, specific weight (ovens just lit, a ledger of thirty years, a nephew talking to the wrong people) in four beats from breakfast to a warning.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-giallo]": {
+  "status": "Retained",
+  "hash": "e3506e56a9eb",
+  "on": "2026-10-19",
+  "reason": "The Dry Umbrella turns on one clue an actor can see and hold (an umbrella closed and dry in the rain) and ends with that umbrella in the room, a discovery she has to hide.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-gothic_horror]": {
+  "status": "Retained",
+  "hash": "979a0d00257a",
+  "on": "2026-10-19",
+  "reason": "The Steward’s Ledger finds horror in a ledger entry (his own birth, a sum paid every quarter) and a housekeeper who thinks he already knows, ending on keys handed over like a sentence.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-grindhouse]": {
+  "status": "Rewritten",
+  "hash": "d2d318d92d0c",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Last Gas For Ninety Miles, its partner note and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-hangout]": {
+  "status": "Rewritten",
+  "hash": "a5624cf85eee",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Sunday At The Laundromat, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-heist]": {
+  "status": "Retained",
+  "hash": "b893587060a3",
+  "on": "2026-10-19",
+  "reason": "The Walkthrough sets a heist scene inside a recital (the guard rotation from memory, against a stopwatch) and hides the real stake, her brother on the dock, from the planner and in plain sight for the actor.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-historical_drama]": {
+  "status": "Retained",
+  "hash": "ccba0b378cdf",
+  "on": "2026-10-19",
+  "reason": "Across Her Own Key explains the 1944 practice it needs in one plain sentence (a death came by telegram, and a small town's operator knew the family) and plays a duty that breaks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-historical_fiction]": {
+  "status": "Retained",
+  "hash": "ed3603871269",
+  "on": "2026-10-19",
+  "reason": "Proof Of Birth explains the 1906 history it rests on plainly (records burned, birth sworn before a clerk, citizenship and a son's future at stake) and stages a test the rehearsal wasn't built for.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-holiday]": {
+  "status": "Retained",
+  "hash": "20513217374c",
+  "on": "2026-10-19",
+  "reason": "The Last Thanksgiving Plate keeps a holiday scene in earnest and specific (eleven years of the same plate, a card against the napkin holder, a paper turkey on a toothpick) with news slipped between the laughs.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-hood_film]": {
+  "status": "Retained",
+  "hash": "d36204258ea4",
+  "on": "2026-10-19",
+  "reason": "The Summer Program puts a young man's good news against family duty in plain facts (a letter in his back pocket, nine days, a grandmother who can't manage the stairs) and ends in pride shared with the block.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-horror_comedy]": {
+  "status": "Retained",
+  "hash": "16952e6ae190",
+  "on": "2026-10-19",
+  "reason": "The Open House says exactly where its comedy is (a salesperson covering for a haunting, funny only if the fear is played straight) and gives each beat a scare and a cover line.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-horror]": {
+  "status": "Rewritten",
+  "hash": "94b974201f88",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Someone Behind You, its physical note and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-isekai]": {
+  "status": "Rewritten",
+  "hash": "af48aa8946f3",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Level One, Again, its You Speak To line and voice-over note and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-jidaigeki]": {
+  "status": "Rewritten",
+  "hash": "a9bac21e033b",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Petition For Vengeance, its physical and staging notes and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-jukebox_musical]": {
+  "status": "Rewritten",
+  "hash": "ed8789c2dabb",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Reunion Set, its singing note and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-kaiju]": {
+  "status": "Retained",
+  "hash": "dfc5d54aff8d",
+  "on": "2026-10-19",
+  "reason": "Tell Me What It Looks Like plays a monster movie entirely through a registration line and a blind man's question, with the creature only in what she describes, and a gentle ending.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-kitchen_sink]": {
+  "status": "Rewritten",
+  "hash": "78edf5f7e5c4",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Not Going Back, its accent note and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brief-legal_drama]": {
+  "status": "Retained",
+  "hash": "a4f8a27b9985",
+  "on": "2026-10-19",
+  "reason": "The Recess sets a legal decision inside fifteen minutes with the terms exact (manslaughter, eight years, an offer that lapses when the judge returns) and an honest reason that's hard to say.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brother]": {
+  "status": "Retained",
+  "hash": "6d3319cc5aa0",
+  "on": "2026-10-19",
+  "reason": "The Road Was For Him says every move is about her brother and the bargain matters only while he might come back, resting on the road she drew and the news that he chose to stay.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [brothers]": {
+  "status": "Retained",
+  "hash": "1162923fe8f5",
+  "on": "2026-10-19",
+  "reason": "More Like Brothers says the bond is the scene and every line checks that it survives, resting on the shared apartment and the bike lessons on these steps.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [calm]": {
+  "status": "Retained",
+  "hash": "81d33bc23dde",
+  "on": "2026-10-19",
+  "reason": "Never Let Them See says Gary believes he's smooth and the comedy is a calm that never cracks while his body does everything wrong, resting on 'unflappable in theory' and the napkin talk.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [cool]": {
+  "status": "Retained",
+  "hash": "ed38003e5e4a",
+  "on": "2026-10-19",
+  "reason": "Cool Under The Lamp says Vera is as cool as her narration and the danger is in what she leaves unsaid, resting on the flat narration and her joke about the board.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [counsel]": {
+  "status": "Retained",
+  "hash": "11c300e0e3ed",
+  "on": "2026-10-19",
+  "reason": "For The State says Joanne gives the clearest account she can under pressure and her care shows in her plainness, resting on the offer and odds laid out against the clock.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [craft]": {
+  "status": "Retained",
+  "hash": "143962f99048",
+  "on": "2026-10-19",
+  "reason": "A Dispute Over Sums says she handles the strangest night of her life as a contract dispute, with the wonder leaking in, resting on her disputing the arithmetic.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [dare]": {
+  "status": "Retained",
+  "hash": "ddae5a2cc4e4",
+  "on": "2026-10-19",
+  "reason": "Half A Joke says Carla keeps it light to protect herself and the song is a dare he can refuse, resting on her teasing and the rusty first verse.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [deal]": {
+  "status": "Retained",
+  "hash": "78c90f323b99",
+  "on": "2026-10-19",
+  "reason": "The Negotiation says he takes her list as seriously as a contract and the comedy is his care, resting on her written demands and his bargaining item by item.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [dread]": {
+  "status": "Retained",
+  "hash": "a878e6213495",
+  "on": "2026-10-19",
+  "reason": "Alone In A Strange City says she's far from home and frightened and the last beat confirms it, resting on her sleepless night and the dry umbrella at the end.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [duty]": {
+  "status": "Retained",
+  "hash": "0913c11068ee",
+  "on": "2026-10-19",
+  "reason": "The Office’s Words says the formal words of her job carry her as far as they can, resting on her having said them to other families and coming to deliver it properly.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [easy]": {
+  "status": "Retained",
+  "hash": "00b496d8a1f5",
+  "on": "2026-10-19",
+  "reason": "Easy Company says she's happy and the afternoon is well spent, with the news sitting lightly under it, resting on six years of Sundays and the fitted-sheet argument.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [forgive]": {
+  "status": "Retained",
+  "hash": "76321bf63399",
+  "on": "2026-10-19",
+  "reason": "The Answer She Put Off says she has known the answer all along and the first tries put it off, resting on her leaving home angry and the forgiveness that wins.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [forms]": {
+  "status": "Retained",
+  "hash": "23ef76c7bd5d",
+  "on": "2026-10-19",
+  "reason": "The Forms Hold says Fumi keeps every courtesy because the forms are a widow's only ground in the hall, resting on the set phrases and the petition repeated word for word.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [grief]": {
+  "status": "Retained",
+  "hash": "dbef7ba11980",
+  "on": "2026-10-19",
+  "reason": "Her Husband’s Sword says the cut is the one place her grief shows under the formal speech, resting on her mourning dress, the wrapped sword and the magistrate's question about her son.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [hustle]": {
+  "status": "Retained",
+  "hash": "b3997811af6b",
+  "on": "2026-10-19",
+  "reason": "The Hustle says she's a pro with debts and each scare is one more objection to handle, resting on the commission and her praising the airflow when a door slams.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [inquiry]": {
+  "status": "Retained",
+  "hash": "875f11ec6030",
+  "on": "2026-10-19",
+  "reason": "The Clerk’s Inquiry says he holds to procedure as the only firm ground and the fear shows in his care, resting on his businesslike showing of the entry.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [king]": {
+  "status": "Retained",
+  "hash": "c39d7b00a573",
+  "on": "2026-10-19",
+  "reason": "The King Abdicates says he plays the room as if it's still his and gives up power by choice, resting on his taking the news standing and setting the terms himself.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [learned]": {
+  "status": "Retained",
+  "hash": "0ee28ffc22a0",
+  "on": "2026-10-19",
+  "reason": "A Life Learned By Heart says he learned a life from someone else's telling and must not be seen performing it, resting on a month of rehearsal and a memory that may not be his.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [lesson]": {
+  "status": "Retained",
+  "hash": "adf7a8df5e7d",
+  "on": "2026-10-19",
+  "reason": "The Last Lesson says Danny is the son Lou made and the scene is his teaching used on him, resting on the first job sweeping this floor and everything he taught.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [light]": {
+  "status": "Retained",
+  "hash": "b87f7678c2a4",
+  "on": "2026-10-19",
+  "reason": "Keeping It Light says she keeps the routine bright so he won't worry and the effort is what we watch, resting on the gravy jokes before the news and his yearly card.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [liked]": {
+  "status": "Retained",
+  "hash": "3b1f70c82b2f",
+  "on": "2026-10-19",
+  "reason": "She Liked Him says the fear is tangled with liking him all week and the narration is her forgiving herself, resting on his nightly friendliness and the ending kept back.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [line]": {
+  "status": "Retained",
+  "hash": "63c0d5d6b485",
+  "on": "2026-10-19",
+  "reason": "Keep The Line Moving says she's doing her job against impossible odds and the description is one more task, resting on two hundred people and the clipboard she was handed that morning.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [live]": {
+  "status": "Retained",
+  "hash": "eb9fb3c69771",
+  "on": "2026-10-19",
+  "reason": "Found In The Moment says she improvises toward getting out, each line a fresh try, resting on a scene with no written lines and a brother who thinks it's a prank.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [longing]": {
+  "status": "Retained",
+  "hash": "829ba49b5604",
+  "on": "2026-10-19",
+  "reason": "The Boy Who Wanted Parents says the horror is how much he wants the keys, resting on the aunt who never spoke of his parents and a house that has waited for him.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [mom]": {
+  "status": "Retained",
+  "hash": "6040bd6ed50a",
+  "on": "2026-10-19",
+  "reason": "For Mom’s Sake says she performs calm for the person who will watch, with the fear showing only when she forgets the camera, resting on her promise and her calm description of the lure.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [nerve]": {
+  "status": "Retained",
+  "hash": "f6974c6b172f",
+  "on": "2026-10-19",
+  "reason": "A Contest Of Nerve says Cheryl is tougher than he expects and means to win, resting on her working the night shift alone and the pizza order she invents on the spot.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [nobody]": {
+  "status": "Retained",
+  "hash": "fc73768a4c13",
+  "on": "2026-10-19",
+  "reason": "Nobody Waiting says the comedy holds off the fact that no one at home will miss her, resting on the panel's 'no record of a home' and her falling asleep at her desk alone.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [own]": {
+  "status": "Retained",
+  "hash": "5d5e8a7fe394",
+  "on": "2026-10-19",
+  "reason": "His Own Way says Terrell has already decided and needs Andre to see it, resting on the letter in his pocket all day and the program starting in nine days.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [panic]": {
+  "status": "Retained",
+  "hash": "62e90f610377",
+  "on": "2026-10-19",
+  "reason": "Visible Panic says Gary knows from the first second he's doomed and each move is a bigger gamble, resting on the one door behind her and each hiding place worse than the last.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [polite]": {
+  "status": "Retained",
+  "hash": "58f17f7c0a09",
+  "on": "2026-10-19",
+  "reason": "Too Polite To Run says he understands early and stays because his manners won't let him leave, resting on his politeness and the insult refusing would give.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [promise]": {
+  "status": "Retained",
+  "hash": "62c2c48a8587",
+  "on": "2026-10-19",
+  "reason": "The Promise She Made says she keeps the part of her promise she still can, resting on the promise to hear everything first and the honest reason that the state might lose.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [reason]": {
+  "status": "Retained",
+  "hash": "50bad17afa6e",
+  "on": "2026-10-19",
+  "reason": "The Real Reason says the recital is cover for the one change she cares about, resting on the dock guard being her brother, which the planner doesn't know.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [recall]": {
+  "status": "Retained",
+  "hash": "451091c24f05",
+  "on": "2026-10-19",
+  "reason": "Perfect Recall says she's the best at what she does and the change is one more fact delivered on time, resting on the flawless recital against his stopwatch.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [riddle]": {
+  "status": "Retained",
+  "hash": "5b59f2dd2294",
+  "on": "2026-10-19",
+  "reason": "Wits Against The Well says Mette is a problem-solver cracking a riddle, resting on the rule that the woman knows everything that has happened and the winning answer is about tomorrow.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [scared]": {
+  "status": "Retained",
+  "hash": "4f02d2026bc2",
+  "on": "2026-10-19",
+  "reason": "Scared Too says he's held his fear back for her and the treehouse is where it shows, resting on his admitting it only once she asks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [sincere]": {
+  "status": "Retained",
+  "hash": "74f5bc87ab38",
+  "on": "2026-10-19",
+  "reason": "Meant Every Word says Gloria means every bit of the holiday and the paper turkey is the most serious thing she's done, resting on the swapped shift and her sitting down at the end.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [sister]": {
+  "status": "Retained",
+  "hash": "72716fc06569",
+  "on": "2026-10-19",
+  "reason": "His Sister says she came as his sister and can't hide behind the job, resting on the telegram addressed to her brother's wife and her refusal to let a stranger deliver it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [sleuth]": {
+  "status": "Retained",
+  "hash": "95e4e735c9fd",
+  "on": "2026-10-19",
+  "reason": "The Amateur Sleuth says Hanne is sharper than the inspector and lays out her case like a drawing, resting on the sketch she made at midnight.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [slow]": {
+  "status": "Retained",
+  "hash": "dc39537becd4",
+  "on": "2026-10-19",
+  "reason": "The Slow Realization says he suspects little until the last beat, one long turn from guest to something else, resting on the shirt he sees on the sheaf.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [son]": {
+  "status": "Retained",
+  "hash": "e71f11557125",
+  "on": "2026-10-19",
+  "reason": "Her Son says under the anger he needs his mother's blessing, resting on her being the one he tells first and telling him to hide the timetable.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [straight]": {
+  "status": "Retained",
+  "hash": "7feca2f6a5e8",
+  "on": "2026-10-19",
+  "reason": "Dead Straight says Bev never winks and the comedy is the gap between what she sees and what she says, resting on her being the only one who sees the house at work.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [terror]": {
+  "status": "Rewritten",
+  "hash": "99c3479ed8a5",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Shaking Hands on Last Gas For Ninety Miles and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [training]": {
+  "status": "Retained",
+  "hash": "ef338240d0b0",
+  "on": "2026-10-19",
+  "reason": "Training Holds says she falls back on her training, steady breathing and short questions, resting on her being an emergency-room nurse still in scrubs.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [true]": {
+  "status": "Retained",
+  "hash": "a8e35cb377da",
+  "on": "2026-10-19",
+  "reason": "His Own Memory says every word is true and being doubted is what he has to swallow, resting on records that burned for people truly born there and the vivid memory in his second beat.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [trust]": {
+  "status": "Retained",
+  "hash": "a10e666433da",
+  "on": "2026-10-19",
+  "reason": "His Voice says Grace survives on trust, handing every decision to the man on the screen, resting on her trusting his voice more than anything and his guiding each step.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [two]": {
+  "status": "Rewritten",
+  "hash": "fbaca0f70c50",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Two Women on The Night Line and finds the new words whole (passed, batch 3)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [unsaid]": {
+  "status": "Retained",
+  "hash": "dedac3c0d27b",
+  "on": "2026-10-19",
+  "reason": "The Thing Unsaid says the lease is in every pause and the laughs are her hiding, resting on the lease signed Friday and never mentioned.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-c.ts#BRIEFS_C [wonder]": {
+  "status": "Retained",
+  "hash": "160515899cee",
+  "on": "2026-10-19",
+  "reason": "A City That Answers Maps says she plays the city's rules as a wonder and the toll as the price of a gift, resting on the drawn road made real and the unfinished map she offers.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [appeal]": {
+  "status": "Retained",
+  "hash": "ec675dd46d6a",
+  "on": "2026-10-19",
+  "reason": "One Trade To Another says beneath the manners she appeals to a fellow working woman, resting on the dressmaker's name going into the ballroom with the gown.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [believes]": {
+  "status": "Retained",
+  "hash": "1ed531d6f14b",
+  "on": "2026-10-19",
+  "reason": "Every Word True says she believes her own account and the comedy is the gap between certainty and facts, resting on her treating the crew as her big opportunity and the award.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [betrayal]": {
+  "status": "Retained",
+  "hash": "f00cc64245d8",
+  "on": "2026-10-19",
+  "reason": "Mentor And Protégée says the fear is losing the man who believed in her, resting on his bringing her from opposition and his goodness to her.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-magical_realism]": {
+  "status": "Retained",
+  "hash": "8f01d7465bdc",
+  "on": "2026-10-19",
+  "reason": "The Back Bedroom treats a miracle as a household fact (towels, buckets, dates on the wall, warm rain on a son's bed) and gives the assessor's hand under the rain as the turn.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-martial_arts]": {
+  "status": "Rewritten",
+  "hash": "18620fec45db",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Return Bow, its staged-fight note and finds the new words whole (passed, batch 4)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-medical_drama]": {
+  "status": "Rewritten",
+  "hash": "d3b3dbefb40f",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Handover At Seven, its circumstances and finds the new words whole (passed, batch 4)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-melodrama]": {
+  "status": "Retained",
+  "hash": "1452e8a5d42a",
+  "on": "2026-10-19",
+  "reason": "The Sewing Box gives melodrama its full size honestly (a ticket in the sewing box, a laugh that turns terrible, a secret ticket of her own) and says what the heightened lines ask: every feeling named aloud.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-military]": {
+  "status": "Retained",
+  "hash": "2a87421a4af9",
+  "on": "2026-10-19",
+  "reason": "Box Seven finds a whole scene in one empty box on a form, with a joke answer she nearly takes and a sergeant's own first form as the turn.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-mockumentary]": {
+  "status": "Rewritten",
+  "hash": "9eb73b8e282f",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Pool Manager Of The Year, its circumstances and improvisation note and finds the new words whole (passed, batch 4)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-monster_movie]": {
+  "status": "Rewritten",
+  "hash": "ed79c7659696",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Pump House, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-mumblecore]": {
+  "status": "Retained",
+  "hash": "456818172f83",
+  "on": "2026-10-19",
+  "reason": "The Second Bedroom keeps mumblecore's small scale (noodles from the carton, a lease signed without a word, who keeps the couch) and puts the scene in reactions close to the camera.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-musical]": {
+  "status": "Retained",
+  "hash": "bc36211b907c",
+  "on": "2026-10-19",
+  "reason": "Last Frame At The Bluebird Lanes builds a musical number from a real place (pinsetters as a rhythm section, notes under the shoe counter's bell) and says how a solo tape stages the dance.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-mystery]": {
+  "status": "Retained",
+  "hash": "07b8a0295242",
+  "on": "2026-10-19",
+  "reason": "The Wrong Peg makes a mystery from one countable detail (a coat two pegs down by the vestry door) between friends who share a lift every Thursday.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-nature_documentary]": {
+  "status": "Rewritten",
+  "hash": "6e9a34a3a65b",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Last Pool, its You Speak To line and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-neo_noir]": {
+  "status": "Retained",
+  "hash": "0bc9d531742d",
+  "on": "2026-10-19",
+  "reason": "Lost Property plays a neo-noir threat as kindness (two coffees, a debt named to the penny) and gives her one card to hold back: the bag is already logged and signed for.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-neorealism]": {
+  "status": "Retained",
+  "hash": "4ff8bc07994c",
+  "on": "2026-10-19",
+  "reason": "The Sewing Machine tells neorealism through objects and money (a machine in a wooden case, a doctor who won't come back unpaid, a tin of needles kept back) with no word wasted.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-new_wave]": {
+  "status": "Retained",
+  "hash": "b9920c549546",
+  "on": "2026-10-19",
+  "reason": "The Night Train South states its form plainly (handheld camera, talk improvised around three fixed points) and keeps the impulse and the exit quick and unsentimental.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-nordic_noir]": {
+  "status": "Retained",
+  "hash": "80aa19a048dd",
+  "on": "2026-10-19",
+  "reason": "The Ferry Timetable makes the obstacle her own habit (she fills the silences he needs) and gives the clerk a plain, playable sign, squaring timetables that are already straight.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-occult]": {
+  "status": "Retained",
+  "hash": "99f32e6753c1",
+  "on": "2026-10-19",
+  "reason": "The Locked Room At Aunt Bea’s sets an occult scene with plain facts (a door bolted from the hall side, painted symbols, the key from her purse) and a skeptic's retreat she can't explain.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-parody]": {
+  "status": "Retained",
+  "hash": "dc454bba9e48",
+  "on": "2026-10-19",
+  "reason": "The Big Speech says exactly what it parodies (the sports film's locker-room speech, delivered to a chess team) and that the laughs come from never winking.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-period_drama]": {
+  "status": "Retained",
+  "hash": "131558ad1953",
+  "on": "2026-10-19",
+  "reason": "The Gown For Tonight sets out 1911's rules for a lady's maid plainly (she may not accuse, mention debts or go home without the gown) and stages a contest fought inside good manners.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-picaresque]": {
+  "status": "Retained",
+  "hash": "cb28b9431b58",
+  "on": "2026-10-19",
+  "reason": "The Guesser Of Weights gives a con artist's scene a plain test she fails out loud (guess his weight) and turns her honesty into the best pitch yet.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-police_procedural]": {
+  "status": "Retained",
+  "hash": "022e3968fa79",
+  "on": "2026-10-19",
+  "reason": "The Sign-Out Sheet makes integrity concrete: one entry out and none back in, a friendly offer to fill it in, and a dated note and a phone call as her choice.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-political_drama]": {
+  "status": "Retained",
+  "hash": "842f8e64243c",
+  "on": "2026-10-19",
+  "reason": "Forty Votes gives a concession scene exact stakes (forty votes, a recount they can't afford, volunteers next door) and a turn played for a laugh, the two speeches already written.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-political_thriller]": {
+  "status": "Retained",
+  "hash": "a68ae0a8017f",
+  "on": "2026-10-19",
+  "reason": "Who Had A Copy puts the leaker in charge of the leak inquiry and makes the suspense one thing an actor can play: keeping her voice at the same pace when he reads her name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-post_apocalyptic]": {
+  "status": "Retained",
+  "hash": "f676728fdeec",
+  "on": "2026-10-19",
+  "reason": "Channel Sixteen gives a post-apocalyptic choice its rule (any answer can be traced, the settlement voted never to transmit) and a careful answer: a channel and an hour, not a place.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-prison_film]": {
+  "status": "Rewritten",
+  "hash": "15d93e27272d",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Table Nine, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [brief-psychological_horror]": {
+  "status": "Retained",
+  "hash": "2326c088a821",
+  "on": "2026-10-19",
+  "reason": "Ten Past Four keeps its horror domestic and open (a stopped clock, dishes that come back, a husband who can see them), ending on grief that might or might not explain it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [charm]": {
+  "status": "Retained",
+  "hash": "614c2e87b9a3",
+  "on": "2026-10-19",
+  "reason": "All Charm says she enjoys every moment of the con and the audience is on her side, resting on eleven jobs in eleven towns and a fair invented on the spot.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [closed]": {
+  "status": "Retained",
+  "hash": "3d044995cbfd",
+  "on": "2026-10-19",
+  "reason": "Closed And Exact says her precision finally earns his trust, resting on her being from the city and her exact questions about times and tickets.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [cool]": {
+  "status": "Retained",
+  "hash": "d2e97fd379e5",
+  "on": "2026-10-19",
+  "reason": "Cool Under The Lights says she's tougher than he expects and plays him from the first sip, resting on the bag already logged and held back until the last beat.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [deadpan]": {
+  "status": "Retained",
+  "hash": "8ce94edd8977",
+  "on": "2026-10-19",
+  "reason": "Never Winking says he means every word and the comedy is never winking at the camera, resting on too many comeback films and a speech prepared in earnest.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [dignity]": {
+  "status": "Retained",
+  "hash": "706936453e8f",
+  "on": "2026-10-19",
+  "reason": "Letting Her Go says he signs with dignity and keeps his grief from her, resting on her coming for a signature and his signing after one question.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [dread]": {
+  "status": "Retained",
+  "hash": "84bcf81e9cfa",
+  "on": "2026-10-19",
+  "reason": "Listening To The Water says her attention is on what she can't see and her brother is one more thing to keep quiet, resting on the hunting by sound and the shifting water.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [family]": {
+  "status": "Retained",
+  "hash": "f1788bb25bd6",
+  "on": "2026-10-19",
+  "reason": "The Family Secret says she half knew about her aunt and his fear confirms it, resting on the aunt's never-discussed ways and her last request.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [farewell]": {
+  "status": "Retained",
+  "hash": "5894c3c530c6",
+  "on": "2026-10-19",
+  "reason": "Sung To Say Goodbye says she knows the sale is done and the song is a farewell more than a plea, resting on the signed sale and the keys she gives up.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [fear]": {
+  "status": "Retained",
+  "hash": "8c3dcbe35008",
+  "on": "2026-10-19",
+  "reason": "Hoping She’s Wrong says she asks because she needs an innocent answer and loses that hope, resting on twenty years of singing together and what asking outright would mean.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [form]": {
+  "status": "Retained",
+  "hash": "811eb2dceb52",
+  "on": "2026-10-19",
+  "reason": "Two readings: Control As Craft (The Return Bow) says she passes the test by keeping every movement clean; Within The Forms (The Gown For Tonight) says she wins by being more correct than the dressmaker. Each rests on its brief's rule.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [friend]": {
+  "status": "Retained",
+  "hash": "0d273ca1b67a",
+  "on": "2026-10-19",
+  "reason": "The Friend Who Asked says she talked Bianca into this and takes responsibility for the loss, resting on her having asked her to run and the two speeches.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [friends]": {
+  "status": "Retained",
+  "hash": "1d8b6d95a203",
+  "on": "2026-10-19",
+  "reason": "Two People Talking says the scene is the friendship itself, played loose and alive to Jules, resting on roommates since college, closer than family.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [full]": {
+  "status": "Retained",
+  "hash": "3da2ba24e540",
+  "on": "2026-10-19",
+  "reason": "Full Out says to play the melodrama to the hilt, giving the outrage, the laugh and the confession everything, resting on lines that name every feeling and a year of rehearsing.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [grief]": {
+  "status": "Retained",
+  "hash": "6c94863bac50",
+  "on": "2026-10-19",
+  "reason": "It’s Grief says the horror is grief turned strange, a woman coming apart with love for her mother, resting on the funeral two weeks ago and the clock stopped at her mother's teatime.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [held]": {
+  "status": "Retained",
+  "hash": "4f639a599321",
+  "on": "2026-10-19",
+  "reason": "Held Back says she makes the same declarations under tight control, the size in what she won't let out, resting on the lifelong secret that comes out only with the ticket.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [hope]": {
+  "status": "Retained",
+  "hash": "4e73b5876fe6",
+  "on": "2026-10-19",
+  "reason": "More Than A Game says the proposal matters more than she lets on and the shrug covers it, resting on six hours of talk last night and the joke turning serious.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [human]": {
+  "status": "Retained",
+  "hash": "5d52ae41a532",
+  "on": "2026-10-19",
+  "reason": "Off The Record says the rank falls away when she tells him about her first form, resting on that story and her waiting.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [hunch]": {
+  "status": "Retained",
+  "hash": "fc038a41048f",
+  "on": "2026-10-19",
+  "reason": "What She Saw says the numbers are her cover and the scene is a doctor trusting what she noticed, resting on the jokes that stopped at six and the proof she lacks.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [keeping]": {
+  "status": "Retained",
+  "hash": "4daf0ab50985",
+  "on": "2026-10-19",
+  "reason": "Keeping Him Here says the rain is the last of her son in the house and every practical word is a plea, resting on the rain starting the morning he left.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [lens]": {
+  "status": "Retained",
+  "hash": "1e43b0fd7d88",
+  "on": "2026-10-19",
+  "reason": "Playing To The Lens says she knows what the camera has and every answer is a fresh attempt to manage it, resting on the producer's footage and silences.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [loyalty]": {
+  "status": "Retained",
+  "hash": "b7e21b26675f",
+  "on": "2026-10-19",
+  "reason": "Loyalty Tested says recording the gap feels like betraying a friend and the struggle shows before the phone, resting on her partner being her friend.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [numbers]": {
+  "status": "Retained",
+  "hash": "53e215a67628",
+  "on": "2026-10-19",
+  "reason": "The Case On Paper says she wins him with a precise, ordered handover and lets the trend speak, resting on readings each inside range that move together over the night.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [observer]": {
+  "status": "Retained",
+  "hash": "e1c3d3622f39",
+  "on": "2026-10-19",
+  "reason": "The Patient Observer says the voice stays even and exact and lets the pictures carry the feeling, resting on lines fixed to shots and a narrator who has been there.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [operator]": {
+  "status": "Retained",
+  "hash": "bf1dbc8ca1f4",
+  "on": "2026-10-19",
+  "reason": "Working The Count says she's done this before and works the numbers like a closing argument, resting on eight campaigns, six lost, and the count ward by ward.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [persuade]": {
+  "status": "Retained",
+  "hash": "54c4b6f812b8",
+  "on": "2026-10-19",
+  "reason": "Sung To Win Him says every verse is an argument and the song lifts when it works, resting on tonight being her only chance before the sale.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [plain]": {
+  "status": "Retained",
+  "hash": "83e3e627bc8b",
+  "on": "2026-10-19",
+  "reason": "Two readings: Perfectly Ordinary (The Back Bedroom) says the rain is a household fact and the strangeness lives in his reactions; Just The Errand (The Sewing Machine) says she plays a job to get done, the strain only in her hands. Each rests on a fact of its brief.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [pride]": {
+  "status": "Retained",
+  "hash": "3c361304ec1a",
+  "on": "2026-10-19",
+  "reason": "What It Costs says the machine is her living and her independence, resting on her naming what it cost new and keeping back the needles and thread.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [procedure]": {
+  "status": "Retained",
+  "hash": "21f173dedf8f",
+  "on": "2026-10-19",
+  "reason": "By The Sheet says procedure is her certainty and she follows it without visible doubt, resting on the sign-out rule and her reading the sheet line by line.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [rank]": {
+  "status": "Retained",
+  "hash": "3d6ed0d82006",
+  "on": "2026-10-19",
+  "reason": "By The Book says she stays his sergeant and the kindness comes inside an order, resting on the end-of-day deadline and his form last on her desk.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [reach]": {
+  "status": "Retained",
+  "hash": "1c2fd9c37070",
+  "on": "2026-10-19",
+  "reason": "Reaching Him says she learns the coast's pace mid-scene and he answers her patience, resting on his near-smile and his answer once she lets a silence run.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [reaching]": {
+  "status": "Retained",
+  "hash": "8f013064ab4c",
+  "on": "2026-10-19",
+  "reason": "Every Minute Counts says he fights for every moment of the hour, resting on his weekly letters, two replies, and the school questions that end in her laugh.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [real]": {
+  "status": "Retained",
+  "hash": "7e2dd516fbf5",
+  "on": "2026-10-19",
+  "reason": "It’s Happening says she's right and the dread is that the one person who could help doesn't believe it, resting on his seeing dishes he doesn't remember.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [sister]": {
+  "status": "Retained",
+  "hash": "c647971708ef",
+  "on": "2026-10-19",
+  "reason": "Holding On To Him says the danger forces the closeness they'd lost, resting on years of disagreeing and the story about their father.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [size]": {
+  "status": "Retained",
+  "hash": "9aa8f8f306ad",
+  "on": "2026-10-19",
+  "reason": "Full Sports Film says to play the convention at full size and let the scale do the joke, resting on the slow walk, the whiteboard and every trimming of the form.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [skeptic]": {
+  "status": "Retained",
+  "hash": "2047bb92c50e",
+  "on": "2026-10-19",
+  "reason": "The Skeptic Shaken says she disbelieves until the last second and the step back is her whole change, resting on her believing what she can count and stepping back only at the scrape.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [sleuth]": {
+  "status": "Retained",
+  "hash": "cc94532540d4",
+  "on": "2026-10-19",
+  "reason": "Building The Case says she's three steps ahead and enjoying it, with the friendship as cover, resting on her habit of noticing small things and her look along the pegs.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [small]": {
+  "status": "Retained",
+  "hash": "45170be1c881",
+  "on": "2026-10-19",
+  "reason": "Barely There says everything is underplayed and the feeling is in where her eyes go, resting on their habit of talking about everything but what matters.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [steward]": {
+  "status": "Retained",
+  "hash": "72cdb68ef69b",
+  "on": "2026-10-19",
+  "reason": "The Steward says his answer is a hard calculation more than a kindness, resting on the settlement's vote and the log he keeps.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [still]": {
+  "status": "Rewritten",
+  "hash": "7c50e8c6e08f",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Invisible on Who Had A Copy and finds the new words whole (passed, batch 4)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [story]": {
+  "status": "Retained",
+  "hash": "7c6f4f0d1265",
+  "on": "2026-10-19",
+  "reason": "Telling A Story says the narrator lives through the season with the heron and cares how it ends, resting on the drought-to-rain sequence and the smile at the heron.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [survival]": {
+  "status": "Retained",
+  "hash": "86c62364ac6f",
+  "on": "2026-10-19",
+  "reason": "Getting By says the charm is how she eats and the truth shows how tired she's grown, resting on her empty pockets and the eleven towns she admits to.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [temper]": {
+  "status": "Retained",
+  "hash": "229f4aa7d952",
+  "on": "2026-10-19",
+  "reason": "The Temper Underneath says she's fighting herself and the kick that gets away shows what the stopped strike costs, resting on the kick after he names the night at the bar.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [tempted]": {
+  "status": "Retained",
+  "hash": "2e09286a162f",
+  "on": "2026-10-19",
+  "reason": "Tempted says the offer is real to her and the scene is her refusing it under his eyes, resting on her missed payments and his knowing exactly how much she needs it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [unsure]": {
+  "status": "Retained",
+  "hash": "538a2a73596f",
+  "on": "2026-10-19",
+  "reason": "Neither Knows says she holds both possibilities and the audience ends as unsure as she is, resting on her no longer being certain he's wrong.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [voice]": {
+  "status": "Retained",
+  "hash": "428c71dacf00",
+  "on": "2026-10-19",
+  "reason": "One Voice To Another says her voice reaches the man he was before, resting on his answering after four years of silence.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-d.ts#BRIEFS_D [whim]": {
+  "status": "Retained",
+  "hash": "359f38c0ae59",
+  "on": "2026-10-19",
+  "reason": "Pure Impulse says she lives in the moment and walking away costs her nothing she shows, resting on the whim of the proposal and her shrug.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [believer]": {
+  "status": "Retained",
+  "hash": "7387b4cc4557",
+  "on": "2026-10-19",
+  "reason": "The True Believer says he believes in the index and her question is his first doubt, resting on his warm presentation of the score as good news.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [bluff]": {
+  "status": "Retained",
+  "hash": "2dcfe1d65c91",
+  "on": "2026-10-19",
+  "reason": "The Bluff says she means to bluff all the way and showing the valves is a defeat that turns into a win, resting on her blaming the gauge and stopping his hand.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-psychological_thriller]": {
+  "status": "Retained",
+  "hash": "773dab352cf4",
+  "on": "2026-10-19",
+  "reason": "The Rehung Frames builds a psychological thriller from one fact an actor can hold (a message from her own number she doesn't remember sending) and a family history that makes it frightening.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-queer_cinema]": {
+  "status": "Retained",
+  "hash": "678a6bde19b0",
+  "on": "2026-10-19",
+  "reason": "The Toast lets a love story happen inside a rehearsal (a toast that turns out to be about the person listening, a ring in a pocket since spring) and ends on a private choice to wait.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-revenge]": {
+  "status": "Retained",
+  "hash": "a856025b4ab3",
+  "on": "2026-10-19",
+  "reason": "The Retirement Folder makes revenge quiet and specific (a dinner planned to the minute, a folder on the table, a man who can't place her father's name) with the laugh as the worst moment.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-road_movie]": {
+  "status": "Rewritten",
+  "hash": "6e9a0bc7385b",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Mile Marker 212, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-rockumentary]": {
+  "status": "Retained",
+  "hash": "1cb31765c8dd",
+  "on": "2026-10-19",
+  "reason": "The Long Version turns an interview on one slip (correcting a date in her own letter) and gives her a plain ending: the camera kept on for the long version.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-romance]": {
+  "status": "Retained",
+  "hash": "cb22c43ef793",
+  "on": "2026-10-19",
+  "reason": "One Stem On Fridays tells a romance through a routine (one flower every Friday for a year, fifty-two Fridays of weather talk) and an admission that's funny and tender.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-romantic_comedy]": {
+  "status": "Rewritten",
+  "hash": "efda72c3d749",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Parrot Knows, its timing note and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-romantic_drama]": {
+  "status": "Rewritten",
+  "hash": "682b4c9756a6",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The House Sale, its timing note and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-samurai]": {
+  "status": "Rewritten",
+  "hash": "c374f78c7e5b",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Crossing At Dawn, its staging note and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-satire]": {
+  "status": "Retained",
+  "hash": "f3f6b5ee876e",
+  "on": "2026-10-19",
+  "reason": "The Contentment Index gives satire a plain, absurd rule (complaints lower a street's happiness score) and a resident who just wants the pothole filled, ending on one honest answer.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-science_fantasy]": {
+  "status": "Retained",
+  "hash": "3b9f0b7eacb3",
+  "on": "2026-10-19",
+  "reason": "The Messenger In The Shrine sets a con against a believer who knows more than she lets on (a drone's serial number read aloud) and a price that shows how long she has waited.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-science_fiction]": {
+  "status": "Retained",
+  "hash": "e429d9a5f1d4",
+  "on": "2026-10-19",
+  "reason": "Eight Years Out explains its science in one plain sentence (eight months for him, eight years at home) and plays it as a father with a toy bought for a nine-year-old.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-screwball_comedy]": {
+  "status": "Rewritten",
+  "hash": "12a4de1dd2f1",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Wardrobe In Suite Nine, its techniques note and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-sea_adventure]": {
+  "status": "Retained",
+  "hash": "bd9332e9fdf0",
+  "on": "2026-10-19",
+  "reason": "Below The Waterline gives a sea scene a physical problem (a crack in the foremast) and a captain's cost (a day promised to the owners), with every line said over a gale.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-silent_film]": {
+  "status": "Retained",
+  "hash": "fdda4d18c370",
+  "on": "2026-10-19",
+  "reason": "The Telegram For Miss Avery says plainly how a silent scene works (no spoken lines, every thought in face and hands, held for the camera) and gives each beat one clear piece of business.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-slapstick]": {
+  "status": "Rewritten",
+  "hash": "3655629e1c71",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Last Strip, its techniques note and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-slasher]": {
+  "status": "Retained",
+  "hash": "5c63e6ff6540",
+  "on": "2026-10-19",
+  "reason": "Last Night Of The Season builds dread from a phone on a short cord and footsteps that stop when she raises her voice, with a dispatcher who thinks it's a prank.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-slice_of_life]": {
+  "status": "Rewritten",
+  "hash": "f6bdd3d51f7e",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Late Number Nine, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-social_realism]": {
+  "status": "Rewritten",
+  "hash": "a31c770e2d39",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Between Clients, its improvisation note and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-space_opera]": {
+  "status": "Retained",
+  "hash": "a12bf1b5ae0f",
+  "on": "2026-10-19",
+  "reason": "The Blockade At Corvane keeps space opera personal (two sisters, an old cadets' oath, four hundred refugees) and ends on a dare made in the open.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-spaghetti_western]": {
+  "status": "Retained",
+  "hash": "2a7e2a144991",
+  "on": "2026-10-19",
+  "reason": "The Relay Station At Dry Fork plays a western in silences and looks (a cigarette rolled, a poster handed back) and ends on a lie with a dry joke in it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-splatter]": {
+  "status": "Retained",
+  "hash": "6e5e6cf38424",
+  "on": "2026-10-19",
+  "reason": "Paint Department makes horror comedy from a lie held too long (paint, a gallon of bleach) and says how a tape handles the blood: stage blood, or played without.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-sports]": {
+  "status": "Retained",
+  "hash": "3b8a177be70c",
+  "on": "2026-10-19",
+  "reason": "The Last Lap sets a sports scene in the tunnel before a race (ten minutes, a final race, a partner's times) with a body warming up the whole way through.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-spy]": {
+  "status": "Rewritten",
+  "hash": "226fb9d91d2d",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Two Coffees, its timing note and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [brief-steampunk]": {
+  "status": "Retained",
+  "hash": "b32868f21225",
+  "on": "2026-10-19",
+  "reason": "The Pressure Certificate gives steampunk a real engineering problem (a gauge above the limit, valves redesigned without approval) and turns the bluff into pride.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [catchup]": {
+  "status": "Rewritten",
+  "hash": "87a5f0353da7",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Catching Up on Eight Years Out and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [chance]": {
+  "status": "Rewritten",
+  "hash": "bc33148c7184",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for His Last Chance on The Retirement Folder and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [clear]": {
+  "status": "Retained",
+  "hash": "6b78b580de39",
+  "on": "2026-10-19",
+  "reason": "Thinking Clearly says she stays practical and her calm keeps her alive, resting on the line she keeps open and the hiding she chooses at the end.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [clown]": {
+  "status": "Retained",
+  "hash": "77db8ad03700",
+  "on": "2026-10-19",
+  "reason": "The Comic Clerk says he's a figure of fun, broad and clear, with the last smile played small, resting on his falling face and the telegram in the hatband.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [coach]": {
+  "status": "Retained",
+  "hash": "0245db2937e7",
+  "on": "2026-10-19",
+  "reason": "The Coach says she's already coaching and the plan is her last session, resting on three years as Liv's unofficial coach and the plan laid out as if agreed.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [comedy]": {
+  "status": "Retained",
+  "hash": "caadc272845e",
+  "on": "2026-10-19",
+  "reason": "The Warm-Up says Jo is a performer finding her laughs when the feeling ambushes her, resting on her being funny in front of a class and the jokes tried on Yusra.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [con]": {
+  "status": "Retained",
+  "hash": "23cd9f30f9e7",
+  "on": "2026-10-19",
+  "reason": "The Con says Aster is a practiced liar enjoying being out-played, resting on her blessing story and the serial number read aloud.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [craft]": {
+  "status": "Retained",
+  "hash": "20e9df56a10c",
+  "on": "2026-10-19",
+  "reason": "She Knows Wood says her authority is her craft and she argues from what the wood will do, resting on her finding the crack and his trust in her work.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [debt]": {
+  "status": "Retained",
+  "hash": "ea33563f58f7",
+  "on": "2026-10-19",
+  "reason": "The Old Debt says he walked all night to reach the ford first so he could let his friend go, resting on the life he owes Sakon and his arriving ahead of the lord's men.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [decision]": {
+  "status": "Retained",
+  "hash": "9e0f86e04b75",
+  "on": "2026-10-19",
+  "reason": "Choosing The Day says she has known what the toast says and decides happily to wait, resting on the ring in her pocket since spring.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [dignity]": {
+  "status": "Retained",
+  "hash": "9aee13c263d9",
+  "on": "2026-10-19",
+  "reason": "Dignity At All Costs says he insists it's all part of the job and the comedy is his calm, resting on his promise of a minute and the strip presented as if meant.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [drawn]": {
+  "status": "Rewritten",
+  "hash": "8c4995ede11e",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Drawn In on The Late Number Nine and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [dread]": {
+  "status": "Retained",
+  "hash": "abfd9565bb42",
+  "on": "2026-10-19",
+  "reason": "The Dread Rises says she knows from the first rattle it isn't kids and fear grows under every line, resting on the rattled doors and the steps at the window.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [driver]": {
+  "status": "Rewritten",
+  "hash": "c00ee3f0c579",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Eyes On The Road on Mile Marker 212 and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [duty]": {
+  "status": "Retained",
+  "hash": "1d442174b850",
+  "on": "2026-10-19",
+  "reason": "Duty First says he means to bring Sakon back and the stopped blade is where duty fails him, resting on the formal order that leaves him no honorable way to let Sakon pass.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [fear]": {
+  "status": "Retained",
+  "hash": "31fd861037b6",
+  "on": "2026-10-19",
+  "reason": "She’s Frightened says she has seen what a broken mast does and her fear moves him, resting on her telling him what the mast will do to the hull.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [flustered]": {
+  "status": "Retained",
+  "hash": "714297965ffb",
+  "on": "2026-10-19",
+  "reason": "Already Lost says she's liked him since the date and the comedy is her failing to hide it, resting on her leaving before dessert and what the parrot repeats.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [friends]": {
+  "status": "Retained",
+  "hash": "77ac6e68cf7c",
+  "on": "2026-10-19",
+  "reason": "Two Days In says they've become friends and she keeps him going with a joke, resting on the trip spent finding out they like each other and the next town's name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [glad]": {
+  "status": "Retained",
+  "hash": "04efc5b9145e",
+  "on": "2026-10-19",
+  "reason": "Glad Of It says he has hoped for a reason to talk to the old man for a year and the card is the excuse, resting on a year of Sunday nods.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [goodbye]": {
+  "status": "Retained",
+  "hash": "0d9cfffa3944",
+  "on": "2026-10-19",
+  "reason": "The Goodbye says the plan is a way to say goodbye to running without saying it, resting on her last race and the truth told as the start is called.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [grand]": {
+  "status": "Retained",
+  "hash": "960058a75a3e",
+  "on": "2026-10-19",
+  "reason": "The Grand Stand says to play it at full size, a captain defying a fleet, resting on the blockade, the failing ship and four hundred refugees.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [heart]": {
+  "status": "Retained",
+  "hash": "71f435592265",
+  "on": "2026-10-19",
+  "reason": "The Quiet Heart says he's a man in love giving her up and the comedy is his body letting the feeling out, resting on his unspoken love and the telegram handed over.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [hoping]": {
+  "status": "Retained",
+  "hash": "c5a916fd6f62",
+  "on": "2026-10-19",
+  "reason": "She’s Hoping says she has wanted it to be her for months and asks at the last minute, resting on the shop sold and three days left.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [listening]": {
+  "status": "Retained",
+  "hash": "8be0869f185b",
+  "on": "2026-10-19",
+  "reason": "Hearing The Answer says he answers before she asks without knowing it, resting on his mentioning his daughter just before she would have spoken.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [loss]": {
+  "status": "Retained",
+  "hash": "0154662b8b79",
+  "on": "2026-10-19",
+  "reason": "What It Cost says he sees from the first line what the voyage took and bears it in front of her, resting on the eight years and the gift bought for a nine-year-old.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [marriage]": {
+  "status": "Retained",
+  "hash": "5284fa6b5599",
+  "on": "2026-10-19",
+  "reason": "The Marriage says she hates lying to him and the marriage has one locked room, resting on his knowing everything but her job and her watching him trust her.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [organizer]": {
+  "status": "Retained",
+  "hash": "3f15f8140116",
+  "on": "2026-10-19",
+  "reason": "The Organizer says she came prepared to win and turns sympathy into a signature, resting on her tickets, her sum and her waiting until Bev signs.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [pair]": {
+  "status": "Retained",
+  "hash": "73b00fb09712",
+  "on": "2026-10-19",
+  "reason": "Already A Pair says they fell for each other at registration and the argument is a way of being in the same room, resting on the quarrel they both enjoyed.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [panic]": {
+  "status": "Retained",
+  "hash": "7e175f3de1ee",
+  "on": "2026-10-19",
+  "reason": "Rising Panic says every gag makes him more desperate with the fall as the peak, resting on guests at the door and paper that sticks to everything but the wall.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [plan]": {
+  "status": "Retained",
+  "hash": "ad11934672fd",
+  "on": "2026-10-19",
+  "reason": "The Plan says she came to destroy him and his forgetting makes it easier, resting on the dinner planned to the minute and the folder always meant for the table.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [politeness]": {
+  "status": "Retained",
+  "hash": "c685ff4a7852",
+  "on": "2026-10-19",
+  "reason": "Good Manners says she clings to politeness and it's the most frightening thing about her, resting on the church organist's smile and the bleach aisle.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [pride]": {
+  "status": "Retained",
+  "hash": "b03b252c5088",
+  "on": "2026-10-19",
+  "reason": "Showing Her Work says she has wanted someone who'd understand and the inspector is the first, resting on what the guild says can't be built and his asking how.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [pro]": {
+  "status": "Retained",
+  "hash": "74a4c4a1e181",
+  "on": "2026-10-19",
+  "reason": "On The Record says she's a practiced interviewee and the polished version holds until it can't, resting on twenty years of telling it the same way.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [relief]": {
+  "status": "Retained",
+  "hash": "7da578044702",
+  "on": "2026-10-19",
+  "reason": "Setting It Down says she has waited twenty years for someone to find the letter, resting on her correcting the date herself and asking the camera to stay on.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [right]": {
+  "status": "Retained",
+  "hash": "87ef94cba625",
+  "on": "2026-10-19",
+  "reason": "She’s Right says someone is doing this to her and her calm is what she holds on with, resting on the brief's leaving open who sent the message.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [sacrifice]": {
+  "status": "Retained",
+  "hash": "cd08210bfe57",
+  "on": "2026-10-19",
+  "reason": "Letting Him Go Again says she protects his happiness in the last beat, a second time, resting on the engagement she ended for someone else's sake.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [shock]": {
+  "status": "Retained",
+  "hash": "4e8859f24e5f",
+  "on": "2026-10-19",
+  "reason": "In Shock says the smile is something her face is doing without her, resting on her realizing she doesn't know if she's hurt.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [sisters]": {
+  "status": "Retained",
+  "hash": "bed4d43e1a80",
+  "on": "2026-10-19",
+  "reason": "Two Sisters says the fleet is background and the scene is two sisters who haven't spoken in ten years, resting on the desertion and the oath.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [slipping]": {
+  "status": "Retained",
+  "hash": "71923691d926",
+  "on": "2026-10-19",
+  "reason": "Slipping says she believes her own words and learns she can't trust her mind, resting on their mother's illness and her missing memory of the message.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [sparring]": {
+  "status": "Rewritten",
+  "hash": "d704a2a9b0c9",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Winning The Round on The Parrot Knows and finds the new words whole (passed, batch 5)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [speed]": {
+  "status": "Retained",
+  "hash": "b05062787419",
+  "on": "2026-10-19",
+  "reason": "Faster Than Him says she wins by speed and loses only when the fall stops her talking, resting on the rapid-fire talk and the confession flat on her back.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [stone]": {
+  "status": "Retained",
+  "hash": "11fc5e795767",
+  "on": "2026-10-19",
+  "reason": "Face Like Stone says she gives him nothing to read and wins a contest of stillness, resting on twelve years alone at the station and the poster handed back without a word.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [surprised]": {
+  "status": "Retained",
+  "hash": "9a52be71da11",
+  "on": "2026-10-19",
+  "reason": "Taken By Surprise says she's only curious and his answer catches her off guard, resting on a year of weather talk and his admission coming last.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [tired]": {
+  "status": "Retained",
+  "hash": "62104d5ee885",
+  "on": "2026-10-19",
+  "reason": "Too Tired To Fight says she's exhausted and asking costs her, resting on her unpaid hour between visits and eleven clients across the city.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [trade]": {
+  "status": "Retained",
+  "hash": "b5bdbd7f7986",
+  "on": "2026-10-19",
+  "reason": "The Trade says she knows he knows and the lie is an offer he can take, resting on the fresh tracks he has seen and her holding his look.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [tradecraft]": {
+  "status": "Retained",
+  "hash": "7c9003d3a585",
+  "on": "2026-10-19",
+  "reason": "Tradecraft says she handles him like a source and only the last beat shows her what she's doing, resting on a cover that is her whole public life and the name she gives.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [trapped]": {
+  "status": "Retained",
+  "hash": "d68041baec75",
+  "on": "2026-10-19",
+  "reason": "The Trapped Clerk says he knows it's absurd and has a target, resting on the weekly target and his one truthful second.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-e.ts#BRIEFS_E [wonder]": {
+  "status": "Retained",
+  "hash": "7e3808fca248",
+  "on": "2026-10-19",
+  "reason": "Seeing The Shrine says Aster is moved before she admits it and the bargain is a relief, resting on forty years under a woven canopy and the keeper's own escape as the price.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [blade]": {
+  "status": "Retained",
+  "hash": "f043b236e95d",
+  "on": "2026-10-19",
+  "reason": "The Blade Decides says she's done talking once she hears the price and the fight is the honest part, resting on the toll she won't pay.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [body]": {
+  "status": "Retained",
+  "hash": "a4cf40ea8708",
+  "on": "2026-10-19",
+  "reason": "The Cold Wins Ground says the scene is a body failing and the words come through it, resting on thirty hours awake in the cold.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-stoner_comedy]": {
+  "status": "Retained",
+  "hash": "7511b0ce3ca9",
+  "on": "2026-10-19",
+  "reason": "The Wrong Couch builds its comedy on one exact, playable thing, his thinking arriving a sentence late, and turns it on her kindness in the last beat.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-superhero]": {
+  "status": "Rewritten",
+  "hash": "ab1374effeaa",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Holding Breath, its staged-fight note and finds the new words whole (passed, batch 6)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-supernatural]": {
+  "status": "Retained",
+  "hash": "f776858fd33c",
+  "on": "2026-10-19",
+  "reason": "The Kettle At Six makes a ghost story of one domestic detail (bread and jam cut into four squares, crusts off) and ends on a creaking stair and a word left unfinished.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-surrealist]": {
+  "status": "Rewritten",
+  "hash": "7fb16f546e1f",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Interview In The Wet Office, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-survival]": {
+  "status": "Retained",
+  "hash": "6d79061ab1cb",
+  "on": "2026-10-19",
+  "reason": "Four Percent gives a survival scene one exact clock, a phone battery, and makes every word cost, with the mile marker said one more time at the end.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-swashbuckler]": {
+  "status": "Rewritten",
+  "hash": "d149a259ab0a",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Customs House Stair, its physical and staging notes and finds the new words whole (passed, batch 6)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-sword_and_sandal]": {
+  "status": "Retained",
+  "hash": "915a0e9e064e",
+  "on": "2026-10-19",
+  "reason": "The Games Account sets a Roman household's money trouble in wax tablets and an old champion's knees, and ends with the steward speaking as a father would.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-sword_and_sorcery]": {
+  "status": "Rewritten",
+  "hash": "e9e88426c0c9",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Bridge Toll, its physical and staging notes and finds the new words whole (passed, batch 6)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-techno_thriller]": {
+  "status": "Retained",
+  "hash": "2a4ba6c74852",
+  "on": "2026-10-19",
+  "reason": "The Dosing Pump makes a cyber intrusion physical (a bench test against a screen, a setpoint changed from a login nobody used) and ends on a cable pulled from the wall.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-teen]": {
+  "status": "Retained",
+  "hash": "baa32477544b",
+  "on": "2026-10-19",
+  "reason": "The Permission Slip turns a teenager's prepared case on one line from her mother ('she’d have signed it') and ends on an apology with a request inside it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-thriller]": {
+  "status": "Retained",
+  "hash": "096673544564",
+  "on": "2026-10-19",
+  "reason": "The Night Hatch builds a thriller at a pharmacy hatch from plain facts (a dead woman's prescription, a silent alarm, an invented printer jam) and an allows note that names the one way to play it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-time_travel]": {
+  "status": "Retained",
+  "hash": "71248d4466ab",
+  "on": "2026-10-19",
+  "reason": "The Ninth Afternoon gives a time loop one cruel rule (every warning so far caused the fall) and a proof an actor can play, saying his next sentence with him.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-tokusatsu]": {
+  "status": "Retained",
+  "hash": "02700303cdc1",
+  "on": "2026-10-19",
+  "reason": "The Observation Tower tells a giant-monster scene from a spotter's tower, with radio procedure for rhythm and an egg on the sand as the one fact that changes the order.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-tragedy]": {
+  "status": "Retained",
+  "hash": "477389eb6765",
+  "on": "2026-10-19",
+  "reason": "The Floodgates puts a tragic choice in plain facts (the town dry, eleven drowned, her brother among them, the order given at midnight) and an obstacle in two short sentences.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-tragicomedy]": {
+  "status": "Rewritten",
+  "hash": "6452790777f6",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for Three Minutes, its comic-timing note and finds the new words whole (passed, batch 6)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-true_crime]": {
+  "status": "Rewritten",
+  "hash": "05e4b513bb50",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Register At The Starlite, its circumstances and finds the new words whole (passed, batch 6)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-vampire]": {
+  "status": "Retained",
+  "hash": "dd97de698aee",
+  "on": "2026-10-19",
+  "reason": "The Threshold uses a vampire's rule as its clock (he can't cross uninvited, ten minutes to sunrise) and a sister who has had forty years to decide what to say.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-war]": {
+  "status": "Rewritten",
+  "hash": "953bbf100dcc",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Culvert, its physical and staging notes and finds the new words whole (passed, batch 6)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-werewolf]": {
+  "status": "Retained",
+  "hash": "f2908c669460",
+  "on": "2026-10-19",
+  "reason": "The Cold Store gives a werewolf scene a practical plan (a padlock, a key, the hours) and a rehearsal of what she'll say through the door that turns the stomach.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-western]": {
+  "status": "Rewritten",
+  "hash": "7951eaa91de8",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Well At Cutbank, its firearms note and finds the new words whole (passed, batch 6)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-whodunit]": {
+  "status": "Retained",
+  "hash": "4c8eaf9c794a",
+  "on": "2026-10-19",
+  "reason": "The Cloakroom Ticket solves a murder from coats and tickets and turns on one detail an actor can see, snow melting on his shoulders from a door locked all night.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-wuxia]": {
+  "status": "Rewritten",
+  "hash": "10239020f329",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Teahouse Oath, its physical and staging notes and finds the new words whole (passed, batch 6)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-yakuza]": {
+  "status": "Retained",
+  "hash": "41ae014c9604",
+  "on": "2026-10-19",
+  "reason": "The Last Lesson keeps a crime-family scene in a noodle-shop kitchen (two bowls, a father's regret, his son's terrible knife work) and ends on a joke that says goodbye.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brief-zombie]": {
+  "status": "Rewritten",
+  "hash": "0ef2516668e5",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound: renders BriefPane for The Last Stop, its staging for the tape and finds the new words whole (passed, batch 9, the conventions shared with material-b)",
+  "first": "Pending"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [brother]": {
+  "status": "Retained",
+  "hash": "837436b33f9c",
+  "on": "2026-10-19",
+  "reason": "Still Her Brother says he's a frightened younger brother ashamed of the monster, resting on forty years apart and the truth he tells her.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [caught]": {
+  "status": "Retained",
+  "hash": "368fda8600ef",
+  "on": "2026-10-19",
+  "reason": "Caught Out says she knew she was wrong from the start and the charts are a way of not looking at her mother, resting on a mother hurt more than angry.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [code]": {
+  "status": "Retained",
+  "hash": "fd8c481f69b9",
+  "on": "2026-10-19",
+  "reason": "The Code Is Everything says she keeps her oath and courtesy perfectly and the feeling is in the form, resting on the tea poured and the bow.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [cost]": {
+  "status": "Retained",
+  "hash": "28a5b0fcc153",
+  "on": "2026-10-19",
+  "reason": "The Cost Of It says the scene is the strain of a power that runs on her breath, resting on a hold that lasts only as long as her breath, which he knows.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [dam]": {
+  "status": "Retained",
+  "hash": "c5ab32b16ccb",
+  "on": "2026-10-19",
+  "reason": "The Dam Breaks says the jokes hold back the grief until they stop working, resting on his not having cried and the last story he can't finish.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [danger]": {
+  "status": "Retained",
+  "hash": "95da97ce44b3",
+  "on": "2026-10-19",
+  "reason": "Keep Talking says the last beat is the scene, alone with a killer and talking to stay alive, resting on her realizing and talking on.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [daughter]": {
+  "status": "Retained",
+  "hash": "b74bd1ef57ec",
+  "on": "2026-10-19",
+  "reason": "For His Daughter says he's staying alive for the school play, resting on the story the dispatcher draws out of him.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [dawning]": {
+  "status": "Retained",
+  "hash": "fe1417f63ff3",
+  "on": "2026-10-19",
+  "reason": "Slow Dawning says the hour of confusion catches up with him all at once, resting on his taking in the truth a sentence late, piece by piece.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [dream]": {
+  "status": "Retained",
+  "hash": "8be8db6c8f0a",
+  "on": "2026-10-19",
+  "reason": "The Dreamer Knows says part of her knows this is about her mother, resting on the question about the drawer and the drawer opened in the air.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [duty]": {
+  "status": "Retained",
+  "hash": "32e40840b4f1",
+  "on": "2026-10-19",
+  "reason": "The Office Holds says she speaks as governor to the end and the grief is in how hard she holds to the office, resting on the formal account.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [elder]": {
+  "status": "Retained",
+  "hash": "7cebed822b08",
+  "on": "2026-10-19",
+  "reason": "The Elder’s Order says he gives it as an order and the love is in refusing to argue, resting on the decision told formally.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [expert]": {
+  "status": "Retained",
+  "hash": "daa954027bd4",
+  "on": "2026-10-19",
+  "reason": "The Expert says she knows the plant better than anyone and the technical lines are fluent and certain, resting on the setpoints, pumps and times given exactly.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [father]": {
+  "status": "Retained",
+  "hash": "dbd6c161f432",
+  "on": "2026-10-19",
+  "reason": "The Second Father says he forgets his place by the end and talks to the boy he raised, resting on the shoulders he carried him on and the wrestling he taught.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [fear]": {
+  "status": "Retained",
+  "hash": "9bc6a547fe6d",
+  "on": "2026-10-19",
+  "reason": "Afraid Of Herself says the plan is how she keeps from screaming, resting on her rehearsing the things she might say through the door.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [fraying]": {
+  "status": "Retained",
+  "hash": "3c35be26b70a",
+  "on": "2026-10-19",
+  "reason": "Barely Holding says she's terrified and the calm comes within an inch of cracking, resting on his watching her face.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [friend]": {
+  "status": "Retained",
+  "hash": "d24b5e4d8c89",
+  "on": "2026-10-19",
+  "reason": "Nine Years says the scene is a friendship ending and the danger only the reason, resting on nine years of a shared route and each other's children's names.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [grief]": {
+  "status": "Retained",
+  "hash": "b69a098ff21c",
+  "on": "2026-10-19",
+  "reason": "Grief In The Form says under the courtesy she wants vengeance as much as he does, resting on a month of shame keeping her oath.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [guilt]": {
+  "status": "Retained",
+  "hash": "24485b540fea",
+  "on": "2026-10-19",
+  "reason": "Thirty Years Of It says she has known all along and the confession is a weight she wants lifted, resting on her saying she saw a face because the police were sure.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [host]": {
+  "status": "Retained",
+  "hash": "71b1928f77c9",
+  "on": "2026-10-19",
+  "reason": "The Perfect Host says he stays courteous to the end and the comedy is his good intentions, resting on his offering her a seat on her own couch.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [hunger]": {
+  "status": "Retained",
+  "hash": "acd48da5f9f1",
+  "on": "2026-10-19",
+  "reason": "The Hunger Under It says the charm masks something starving, resting on his telling her how hungry he is a foot from her.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [iron]": {
+  "status": "Retained",
+  "hash": "358df3c3b9ee",
+  "on": "2026-10-19",
+  "reason": "Iron At The Well says she holds the well like a fort and gives ground only on her terms, resting on the rifle already up and properly learned.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [medic]": {
+  "status": "Retained",
+  "hash": "31a047fe6e7d",
+  "on": "2026-10-19",
+  "reason": "Just The Job says he's a patient like any other and the humanity is in her hands, resting on three years as a medic, tired past fear.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [mirror]": {
+  "status": "Retained",
+  "hash": "c0ed1a4d128a",
+  "on": "2026-10-19",
+  "reason": "Her Own Future says she sees in him what twenty more years would make her, resting on his old life as a sell-sword and his forgotten name.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [mother]": {
+  "status": "Retained",
+  "hash": "d20dd1b222a7",
+  "on": "2026-10-19",
+  "reason": "Someone’s Son says she sees a boy and reaches him with only her voice and hands, resting on his age, hers, and the language they don't share.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [neighbor]": {
+  "status": "Retained",
+  "hash": "395b5f39d6eb",
+  "on": "2026-10-19",
+  "reason": "A Neighbor’s Choice says she knows she'll share the water and the rifle is how a woman alone gets fair terms, resting on the funeral and her knowing thirst.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [performer]": {
+  "status": "Retained",
+  "hash": "a7882fc6b0e5",
+  "on": "2026-10-19",
+  "reason": "Her Son The Comic says keeping his mother's stories funny is how he keeps her alive, resting on every true story about her being a joke.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [planner]": {
+  "status": "Retained",
+  "hash": "6abfeccafe8d",
+  "on": "2026-10-19",
+  "reason": "The Plan Holds says she stays practical because the plan stands between her and the moon, resting on a night planned to the minute like a milking rota.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [play]": {
+  "status": "Retained",
+  "hash": "f3f4ac5cb1e9",
+  "on": "2026-10-19",
+  "reason": "For The Joy Of It says she's having the time of her life and the duel is a game she has waited years to play, resting on their childhood fencing.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [procedure]": {
+  "status": "Retained",
+  "hash": "1548089360c7",
+  "on": "2026-10-19",
+  "reason": "By The Numbers says he holds himself together by being exact, resting on the mile marker, the last town and the bend in the road given in order.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [puzzle]": {
+  "status": "Retained",
+  "hash": "fc0d55b8c490",
+  "on": "2026-10-19",
+  "reason": "Solving It says she's a scientist working a problem and the goodbye is her last experiment, resting on the eight warnings she has tracked.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [recruit]": {
+  "status": "Retained",
+  "hash": "5df6d749aeb1",
+  "on": "2026-10-19",
+  "reason": "The Junior Voice says the scene is about rank, a recruit overruling the man who recruited her, resting on her being the most junior on the channel.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [regret]": {
+  "status": "Retained",
+  "hash": "c6ef9cb06c19",
+  "on": "2026-10-19",
+  "reason": "A Life Undone says he confesses a wasted life to spare his son from it, resting on his regret for forty years and his plain account of them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [righteous]": {
+  "status": "Retained",
+  "hash": "cda0fac7effb",
+  "on": "2026-10-19",
+  "reason": "Righteous To The End says she keeps her pride all the way and even the apology is half an argument, resting on her prepared case.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [rote]": {
+  "status": "Retained",
+  "hash": "3fc4d80e27c9",
+  "on": "2026-10-19",
+  "reason": "The Story Tells Itself says she has told it so often she believes it and hears it as a story for the first time, resting on her stopping mid-sentence at the register.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [route]": {
+  "status": "Retained",
+  "hash": "4e1c8cc4e1aa",
+  "on": "2026-10-19",
+  "reason": "The Children First says the grief is held in check by the job of driving, resting on her eyes on the road and the children behind them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [scale]": {
+  "status": "Retained",
+  "hash": "33f9ddde1ed5",
+  "on": "2026-10-19",
+  "reason": "Something Enormous says the scene is the size of what she sees and how the genre's actors play it, to a suit performer's eyeline on a miniature set.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [servant]": {
+  "status": "Retained",
+  "hash": "6c087ee7b706",
+  "on": "2026-10-19",
+  "reason": "The Faithful Steward says he keeps his place throughout and the love is in how carefully he serves, resting on the formal reading of the accounts.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [sister]": {
+  "status": "Retained",
+  "hash": "08a044931117",
+  "on": "2026-10-19",
+  "reason": "Two readings: Sister First (Holding Breath) says the power is the least of it, resting on her asking him to put the bag down first; His Father’s Sister (The Floodgates) says the office falls away at his question, resting on that question.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [skeptic]": {
+  "status": "Retained",
+  "hash": "8185b585cbb6",
+  "on": "2026-10-19",
+  "reason": "The Skeptic says she's certain there's a reason and looks for it out loud, resting on her plumbing-problem report and her disbelief.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [sleuth]": {
+  "status": "Retained",
+  "hash": "92ad759bb9da",
+  "on": "2026-10-19",
+  "reason": "The Born Sleuth says she has waited two years for someone to need what she notices, resting on her memory for coats and being treated as furniture.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [stall]": {
+  "status": "Retained",
+  "hash": "95868829288f",
+  "on": "2026-10-19",
+  "reason": "Buying Time says every flourish is a delay with the seconds counted underneath, resting on her objective of holding him until the tide.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [steady]": {
+  "status": "Retained",
+  "hash": "afb4bb84b713",
+  "on": "2026-10-19",
+  "reason": "Eleven Years Steady says her calm is real and the fear is only in her hands, resting on eleven years of nights.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [straight]": {
+  "status": "Retained",
+  "hash": "fe261956ac9c",
+  "on": "2026-10-19",
+  "reason": "Played Dead Straight says she takes it as a normal interview and the strangeness is the audience's, resting on the unmentioned water and her preparation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [town]": {
+  "status": "Retained",
+  "hash": "8a85aaf84ee1",
+  "on": "2026-10-19",
+  "reason": "For The Town says she's thinking of the people drinking the water and pulls the cable for them, resting on her objective of keeping it safe whatever it does to his trace.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [weary]": {
+  "status": "Retained",
+  "hash": "40edce9cfee8",
+  "on": "2026-10-19",
+  "reason": "The Ninth Time says she's worn down by the loop and the goodbye is what's left, resting on eight lived hours.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/briefs-f.ts#BRIEFS_F [welcome]": {
+  "status": "Retained",
+  "hash": "469f22f9bb99",
+  "on": "2026-10-19",
+  "reason": "Someone Wants Her says she half believes her grandmother is still keeping house, resting on the bread cut the way her grandmother cut it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/briefs/index.ts#RETIRED_BRIEFS": {
+  "status": "Retained",
+  "hash": "d9c6498d91ab",
+  "on": "2026-10-19",
+  "reason": "The fourteen retired scenes' own invented titles, in Title Case; only their genres are read (briefKinds), so a save's old takes keep their genre, and no screen offers these scenes again.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/plays.ts#PLAY_ALIASES": {
+  "status": "Retained",
+  "hash": "1f1a07b56446",
+  "on": "2026-10-19",
+  "reason": "Two lowercase titles compared and never shown: they let Chekhov's The Proposal find A Marriage Proposal's genres in genresOfPlay, so they're a lookup key, not words a player reads.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/plays.ts#REP_PLAYS": {
+  "status": "Retained",
+  "hash": "db3b62297690",
+  "on": "2026-10-19",
+  "reason": "The Rep's classics, their authors and their parts as published (Doctor Rank, The Widow Quin, Mrs Kitty Warren); a title is matched by exact text against the casting a save keeps (school.ts), so it holds.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/plays.ts#SHAKESPEARE_PLAYS": {
+  "status": "Retained",
+  "hash": "7e1a0ae7a859",
+  "on": "2026-10-19",
+  "reason": "Shakespeare's titles and characters as the plays have them (Sir Andrew Aguecheek, Mistress Overdone, The First Witch); each title is matched by exact text against a save's casting in school.ts, so it stays.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/plays.ts#SIZE_WORD": {
+  "status": "Retained",
+  "hash": "62b26aa48552",
+  "on": "2026-10-19",
+  "reason": "Three plain part sizes the Role card shows (A Leading Part); SchoolWorkspace and school.ts read the leading 'A ' back to tell an unnamed part from a named one, so the words are keys.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/plays.ts#SUMMER_PLAYS": {
+  "status": "Retained",
+  "hash": "15f4de745d7b",
+  "on": "2026-10-19",
+  "reason": "The Summer Cabaret's short plays, authors and parts as published (Salomé and Jokanaan, Mrs Hale and Mrs Peters); each title is matched by exact text against a save's casting (school.ts), so it stays.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/plays.ts#THESIS_PLAYS": {
+  "status": "Retained",
+  "hash": "eb796752f7f4",
+  "on": "2026-10-19",
+  "reason": "The thesis plays' real titles, authors and characters as their plays name them (Hedda Tesman, Judge Brack); a title is matched by exact text against the casting a save holds (school.ts, p.title === c.play), so it's a key too.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [asyoulike-3-2]": {
+  "status": "Rewritten",
+  "hash": "b5cbf7ca97f8",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for As You Like It 3.2, the wedding answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [caesar-2-1]": {
+  "status": "Rewritten",
+  "hash": "727ecf54b789",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Julius Caesar 2.1, the Capitol answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [caesar-4-3]": {
+  "status": "Retained",
+  "hash": "4ac4c8834d35",
+  "on": "2026-10-19",
+  "reason": "Julius Caesar 4.3: the quarrel in Brutus's tent, its reasons naming the bribes, the gold and Portia's death as the scene has them, with Shakespeare's lines kept exact.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [dream-3-2]": {
+  "status": "Rewritten",
+  "hash": "9766813e9371",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for A Midsummer Night’s Dream 3.2, the wedding-night answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [faustus-3]": {
+  "status": "Rewritten",
+  "hash": "d9366de2402f",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Doctor Faustus, the bond answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [hamlet-3-1]": {
+  "status": "Retained",
+  "hash": "dc36467f72ef",
+  "on": "2026-10-19",
+  "reason": "Hamlet 3.1: the nunnery scene with its watchers, each answer's reason resting on the text ('Are you honest?', the returned remembrances), the quotations kept as Shakespeare wrote them.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [hamlet-3-4]": {
+  "status": "Rewritten",
+  "hash": "6f182dd63162",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Hamlet 3.4, the poisoned-cup answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [lear-4-7]": {
+  "status": "Rewritten",
+  "hash": "308ed0ea6082",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for King Lear 4.7, the blind answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [malfi-1]": {
+  "status": "Rewritten",
+  "hash": "ac446fcc718a",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for The Duchess of Malfi, the prison answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [measure-2-4]": {
+  "status": "Retained",
+  "hash": "bc783ff86a72",
+  "on": "2026-10-19",
+  "reason": "Measure for Measure 2.4: Angelo's bargain set out plainly, each reason resting on what the scene says or does ('Plainly conceive, I love you', the rubies of keen whips).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [othello-4-3]": {
+  "status": "Retained",
+  "hash": "fb360d2f3c34",
+  "on": "2026-10-19",
+  "reason": "Othello 4.3: the willow song scene, its reasons quoting the play exactly ('Wouldst thou do such a deed for all the world?') and saying plainly why the wrong answers don't fit.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [richard3-1-2]": {
+  "status": "Retained",
+  "hash": "009b557cb14d",
+  "on": "2026-10-19",
+  "reason": "Richard III 1.2: the wooing over Henry's coffin told plainly, and each reason rests on a line or act of the scene (the sword offered, the ring taken, his gloating alone after).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [scandal-2-1]": {
+  "status": "Rewritten",
+  "hash": "8e2b439b137c",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for The School for Scandal, the screen answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [shrew-2-1]": {
+  "status": "Retained",
+  "hash": "8cd74edc60ef",
+  "on": "2026-10-19",
+  "reason": "The Taming of the Shrew 2.1: the first meeting at Baptista's, each reason pointing to what the scene shows (the stool, the wasp, the strike, Sunday), with every quotation the play's own.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [stoops-2]": {
+  "status": "Rewritten",
+  "hash": "5f8eb7ce2717",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for She Stoops to Conquer, the alehouse and two barmaid answers' reasons and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [twelfth-1-5]": {
+  "status": "Retained",
+  "hash": "db5d041683ce",
+  "on": "2026-10-19",
+  "reason": "Twelfth Night 1.5: Olivia's house, the veil and the ring, set out as the play has them; each answer's reason names the line or the moment that settles it ('two lips, indifferent red').",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [twelfth-2-4]": {
+  "status": "Rewritten",
+  "hash": "a8b8d15a42a1",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Twelfth Night 2.4, the shore answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [wayoftheworld-4]": {
+  "status": "Rewritten",
+  "hash": "94e91fdf7f43",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for The Way of the World, the park and already-married answers' reasons and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 7)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [agamemnon-855]": {
+  "status": "Retained",
+  "hash": "1f5a97f68f8d",
+  "on": "2026-10-19",
+  "reason": "Murray's Agamemnon and the crimson tapestries: Clytemnestra's welcome and the quick exchange told as the play has them, each reason pointing to the moment that settles it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [antigone-441]": {
+  "status": "Retained",
+  "hash": "375b15365586",
+  "on": "2026-10-19",
+  "reason": "Jebb's Antigone before Creon: the unwritten laws and the tempered iron paraphrased plainly, each reason naming the exchange it rests on, with no wording put in Jebb's mouth.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [bacchae-451]": {
+  "status": "Retained",
+  "hash": "404610451cda",
+  "on": "2026-10-19",
+  "reason": "Murray's Bacchae, the Stranger brought in bound: Pentheus's jeers and the god's calm riddles as the translation has them, including Murray's stage direction, named as his.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [electra-328]": {
+  "status": "Retained",
+  "hash": "8aa059ee3f40",
+  "on": "2026-10-19",
+  "reason": "Jebb's Electra and Chrysothemis: the offerings, the dream and the locks of hair as the play has them, and each reason contrasts the wrong answer with what the sisters do.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [medea-446]": {
+  "status": "Retained",
+  "hash": "cee898ec232d",
+  "on": "2026-10-19",
+  "reason": "Murray's Medea and Jason: the debt she recites and his cool case paraphrased plainly, each reason resting on a named exchange of the scene.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-greek.ts#GREEK_SCENES [oedipus-300]": {
+  "status": "Retained",
+  "hash": "e09ebd038555",
+  "on": "2026-10-19",
+  "reason": "Jebb's Oedipus and Teiresias: the accusation and the riddle of his parents told as the scene has them, each reason saying what Teiresias or Oedipus actually says.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-house.ts#HOUSE_SCENES [caesar-3-2]": {
+  "status": "Retained",
+  "hash": "9510f929f7de",
+  "on": "2026-10-19",
+  "reason": "Julius Caesar's Forum: Brutus's prose and Antony's 'honourable men' quoted as the text has them, its British spellings kept, and each reason resting on the speech it names.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-house.ts#HOUSE_SCENES [dream-5-1]": {
+  "status": "Retained",
+  "hash": "7136a4f4ecca",
+  "on": "2026-10-19",
+  "reason": "Pyramus and Thisbe before the court: Bottom's 'Deceiving me is Thisbe's cue' and the deaths quoted as Shakespeare wrote them, and each reason says what the court or the players do.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-house.ts#HOUSE_SCENES [henry5-4-3]": {
+  "status": "Retained",
+  "hash": "b78f5a64609d",
+  "on": "2026-10-19",
+  "reason": "Henry V before Agincourt: the Crispin's day speech quoted exactly, the odds and the passport given as the scene states them, and each wrong answer answered from the text.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-house.ts#HOUSE_SCENES [oedipus-1]": {
+  "status": "Retained",
+  "hash": "cc9020dbdf44",
+  "on": "2026-10-19",
+  "reason": "Murray's Oedipus with the suppliants: the plague, the Sphinx and Creon's coming as the translation tells them, its verse quoted exactly and its spellings kept.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-meeting.ts#MEETING_SCENES [enemy-4]": {
+  "status": "Retained",
+  "hash": "a49fca1ed910",
+  "on": "2026-10-19",
+  "reason": "An Enemy of the People's public meeting, Sharp's translation quoted exactly ('the compact majority'), and every reason says what in the meeting settles the answer.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-meeting.ts#MEETING_SCENES [strife-2-2]": {
+  "status": "Retained",
+  "hash": "d6032cec689e",
+  "on": "2026-10-19",
+  "reason": "Strife's meeting outside the works: Harness and Roberts each quoted as Galsworthy wrote them, and each reason names the stage direction or line that settles it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [anna-christie-1]": {
+  "status": "Retained",
+  "hash": "2af3bf9f9cad",
+  "on": "2026-10-19",
+  "reason": "Anna Christie's first act: Marthy's guess and Anna's truth told as O'Neill has them ('Me? On a dirty coal barge!'), and each reason rests on a fact of the scene.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [arms-1]": {
+  "status": "Retained",
+  "hash": "62c65e8d5163",
+  "on": "2026-10-19",
+  "reason": "Arms and the Man's first act: the chocolate cream soldier, the cloak and the unloaded pistol as Shaw has them, with each wrong answer corrected by a plain fact of the scene.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [creditors]": {
+  "status": "Rewritten",
+  "hash": "4cf0f874cd60",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's card for Creditors and finds '<where>: you play <role>' with the new where (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [ghosts-1]": {
+  "status": "Retained",
+  "hash": "66533277527a",
+  "on": "2026-10-19",
+  "reason": "Ghosts' first act: Manders's reproaches and Mrs. Alving's answer told plainly, each reason short and true to the scene (he preaches; she tells him what happened).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [hedda-2]": {
+  "status": "Retained",
+  "hash": "8ac7f3d5cdd7",
+  "on": "2026-10-19",
+  "reason": "Hedda Gabler over the photograph album: the comradeship, the du and the pistol told plainly from the play, and each reason says what Hedda or Lovborg does or refuses in the scene.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [masterbuilder-1]": {
+  "status": "Rewritten",
+  "hash": "4adcbfd46456",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for The Master Builder, the tower answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [proposal]": {
+  "status": "Rewritten",
+  "hash": "ba3647e59b4d",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's card for The Proposal and finds '<where>: you play <role>' with the new where (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [riders-sea]": {
+  "status": "Retained",
+  "hash": "16860e52af03",
+  "on": "2026-10-19",
+  "reason": "Riders to the Sea: the bundle from Donegal and the stocking known by its stitches, told in plain words, with each reason saying what the sisters do with it.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [rising-moon]": {
+  "status": "Rewritten",
+  "hash": "8b865776998a",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's card for The Rising of the Moon and finds '<where>: you play <role>' with the new where (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [suppressed-2]": {
+  "status": "Retained",
+  "hash": "f01eb3efed5c",
+  "on": "2026-10-19",
+  "reason": "Suppressed Desires' second scene: the receding walls and Henrietta's faith turned on her, told plainly, with each reason naming what Stephen or Henrietta says.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-modern.ts#MODERN_SCENES [windermere-1]": {
+  "status": "Retained",
+  "hash": "4e0bf4c4a1d7",
+  "on": "2026-10-19",
+  "reason": "Lady Windermere's Fan's morning room: the roses, the imaginary husband and 'fascinating Puritan' as Wilde wrote them, each reason resting on what the two say.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-original.ts#BY": {
+  "status": "Retained",
+  "hash": "60488439df38",
+  "on": "2026-10-19",
+  "reason": "The credit line every original class scene carries, word for word as the glossary and tests/scenes.test.ts hold it, and as the brief pane, the guide and the profile say it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-bed-fourteen]": {
+  "status": "Retained",
+  "hash": "216e748f8533",
+  "on": "2026-10-19",
+  "reason": "Bed Fourteen: an original scene of a reported error, each reason resting on one of its five given facts (ten minutes, one report on file, the charge nurse's own unreported error).",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-hundred-questions]": {
+  "status": "Retained",
+  "hash": "21aed6e7cf11",
+  "on": "2026-10-19",
+  "reason": "The Hundred Questions: a citizenship rehearsal whose reasons rest on its facts (six of ten, freezing out loud, his exam on Friday) and keep the comedy in the situation.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-night-desk]": {
+  "status": "Retained",
+  "hash": "b1d25c3900f2",
+  "on": "2026-10-19",
+  "reason": "The Night Desk: an original scene whose reasons each name the given fact they rest on (eleven dollars, one room left, the report at seven), so the table work is checkable from the facts alone.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-office-hours]": {
+  "status": "Retained",
+  "hash": "8118e19dc9c9",
+  "on": "2026-10-19",
+  "reason": "Office Hours: a parent and a teacher, each reason resting on the given numbers (58, five reports, Friday) and the sister the teacher once taught.",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-runway]": {
+  "status": "Rewritten",
+  "hash": "2709c8221101",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Runway, the lawsuit answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-the-reception]": {
+  "status": "Retained",
+  "hash": "f959814748ad",
+  "on": "2026-10-19",
+  "reason": "The Reception: two estranged friends at a funeral, each reason resting on a given fact (eleven years, the missed wedding, an answer owed tonight).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-two-time-zones]": {
+  "status": "Retained",
+  "hash": "e108a71fe35d",
+  "on": "2026-10-19",
+  "reason": "Two Time Zones: a long-distance couple's last night, each reason resting on a given fact (the six o'clock flight, the June lease, the promotion).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-what-we-keep]": {
+  "status": "Retained",
+  "hash": "50156bd7613f",
+  "on": "2026-10-19",
+  "reason": "What We Keep: siblings, records and a drawer of postcards, each reason tied to a given fact (Sunday's keys, four years of appointments, no will).",
+  "first": "Rewritten And Verified"
+ },
+ "src/engine/content/scenes-public.ts#PUBLIC_SCENES [enemy-2]": {
+  "status": "Retained",
+  "hash": "0366641c0490",
+  "on": "2026-10-19",
+  "reason": "An Enemy of the People's second act: the brothers alone, Peter's cost and his order, quoted from Sharp exactly ('I forbid it—I, your chief'), each reason naming its moment.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-public.ts#PUBLIC_SCENES [justice-2]": {
+  "status": "Rewritten",
+  "hash": "9ea6811bb99f",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Justice, the defender answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-public.ts#PUBLIC_SCENES [strife-1]": {
+  "status": "Rewritten",
+  "hash": "0493317201af",
+  "on": "2026-10-19",
+  "evidence": "tests/material-words.test.ts, a class scene’s words, at the table and in the note > shows every scene’s summary and each answer’s reason once it’s shown, and a cut-against reason is the note’s: renders CourseworkPane's table work for Strife Act One, the settled answer's reason and checks the note is '<question>: <reason> You played <role> in <play>.' (passed, batch 8)",
+  "first": "Pending"
+ },
+ "src/engine/content/scenes-public.ts#PUBLIC_SCENES [weavers-1]": {
+  "status": "Retained",
+  "hash": "0773f965d5f3",
+  "on": "2026-10-19",
+  "reason": "The Weavers' pay day: Becker and Dreissiger quoted from Morison's translation as written ('it’s not pay'), and each reason resting on the line or direction that settles it.",
+  "first": "Reviewed And Retained"
+ },
+ "src/engine/content/scenes-scored.ts#SCORED_SCENES [scapin-3-2]": {
+  "status": "Retained",
+  "hash": "55591a47c0e6",
+  "on": "2026-10-19",
+  "reason": "The Impostures of Scapin's sack scene, with each voice Scapin puts on quoted from Wall's translation as written and the footnote about the inverted commas given as the translation's own.",
+  "first": "Rewritten And Verified"
+ }
+}

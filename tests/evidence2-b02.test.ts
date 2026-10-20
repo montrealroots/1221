@@ -332,7 +332,7 @@ describe('health.appeal_decided', () => {
       const row = billRow(sim, 'Visit', bill.at);
       fund(sim, 300_00); // TEST SETUP
       drawn(sim);
-      expect(press('health.pay_bill')).toEqual(['Paid off.']);
+      expect(press('health.pay_bill')).toEqual(['Your medical debt is paid off.']);
       const paid = memos(sim, 'Paid toward medical debt');
       expect(paid).toHaveLength(1);
       return { sim, bill, row, paid: into(paid[0]!, checking(sim)) };
@@ -341,7 +341,7 @@ describe('health.appeal_decided', () => {
     expect(upheld.bill.denied!.outcome).toBe('upheld');
     expect(upheld.row).toContain('$183.98 Owed As Debt Denial Upheld');
     expect(appealWon(upheld.sim)).toEqual([]);
-    expect(titled(upheld.sim, 'Appeal Upheld').map((n) => n.body)).toEqual([`The plan kept its denial for a doctor’s visit, ${CLINIC}, so the full bill stands.`]);
+    expect(titled(upheld.sim, 'Appeal Lost').map((n) => n.body)).toEqual([`The plan kept its denial for a doctor’s visit, ${CLINIC}, so the full bill stands.`]);
     expect(upheld.paid).toBe(-183_98);
 
     const overturned = twin(true);
@@ -391,7 +391,7 @@ describe('health.appointment', () => {
     expect(visitsLogged(sim).map((c) => c.at)).toEqual([visit.at]);
     const specialist = appointmentsOf(sim.player);
     expect(specialist.map((a) => [a.what, a.at])).toEqual([[SPECIALIST, at(2026, 10, 9, 10)]]);
-    expect(titled(sim, 'A Referral').map((n) => n.body)).toEqual(['Referred after a doctor’s visit: a specialist, booked for October 9, 2026, the usual wait where you live.']);
+    expect(titled(sim, 'A Referral').map((n) => n.body)).toEqual(['Referred after a doctor’s visit: a specialist, booked for October 9, 2026, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.']);
     expect(drawn(sim).text).toContain(`${SPECIALIST}: an appointment October 9, 2026, ${YALE_CLINIC} Call It Off`);
     // Seen, and a specialist refers no further, though the draw is still forced to. Both at Yale Health (until
     // 2026-10-15, both at Fair Haven).
@@ -485,7 +485,7 @@ describe('health.appointment', () => {
 /** A sprained ankle's care uninsured: urgent care and two sessions of physical therapy at a visit's price. */
 const SPRAIN_CARE = UNINSURED_URGENT + 2 * UNINSURED_VISIT;
 /** What the bill is for, in either case: the defect below is its capitals. */
-const SPRAIN_BILL = /^A sprained ankle: its care$/i;
+const SPRAIN_BILL = /^A sprained ankle’s care$/i;
 
 /**
  * PLAYER JOURNEY: withdrawn, uninsured from 1 September; a workout at eight on Wednesday 2 September through Look After
@@ -508,7 +508,7 @@ function sprainBilled(): Simulation {
     const bill = healthOf(sim.player).bills.find((b) => b.at === ends)!;
     expect(bill.what).toMatch(SPRAIN_BILL);
     expect(bill.dueAt).toBe(ends + 30 * MS_DAY);
-    expect(titled(sim, 'A Sprained Ankle').map((n) => n.body)).toEqual(['It takes 5 days to mend, and you can’t work out until then. Your share of its care is $699.13, due on October 2, 2026, when it’s taken from your current account. If it can’t be paid then, it becomes medical debt.']);
+    expect(titled(sim, 'A Sprained Ankle').map((n) => n.body)).toEqual(['It takes 5 days to mend, and you can’t work out until then. You owe $699.13 for its care. It’s taken from your checking account on October 2, 2026, and if there isn’t enough then, it becomes medical debt.']);
     sim.advanceTo(bill.dueAt - 2 * MS_HOUR);
     expect(bill.paid).toBeFalsy();
     sprainSave = serialise(sim.universe);
@@ -526,7 +526,7 @@ describe('health.bill', () => {
     expect(billRow(sim, 'Sprained', bill.at)).toContain('$699.13 October 2, 2026');
     sim.advanceTo(bill.dueAt + MS_HOUR);
     expect(bill.paid).toBe(true);
-    const paid = memos(sim, /^Medical bill: A sprained ankle: its care$/i);
+    const paid = memos(sim, /^Medical bill: A sprained ankle’s care$/i);
     expect(paid.map((t) => [t.at, into(t, checking(sim)), into(t, sim.nominalAccount('expense', 'Medical Care').id)])).toEqual([[bill.dueAt, -699_13, 699_13]]);
     expect(medicalDebtOf(sim, sim.player)).toBeUndefined();
     expect(billRow(sim, 'Sprained', bill.at)).toContain('$699.13 Settled');
@@ -561,7 +561,7 @@ describe('health.bill', () => {
     const sim = sprainBilled();
     broke(sim); // TEST SETUP
     sim.advanceTo(sprainBill(sim).dueAt + MS_HOUR);
-    expect(titled(sim, 'A Medical Bill Went Unpaid').map((n) => n.body)).toEqual(['$699.13 for a sprained ankle: its care couldn’t be paid from your current account on its due date, so it’s medical debt now. Pay It Off, on Papers under Health Cover, clears it.']);
+    expect(titled(sim, 'A Medical Bill Went Unpaid').map((n) => n.body)).toEqual(['Your bank couldn’t cover a $699.13 medical bill when it came due, so it’s now medical debt. The bill was for a sprained ankle’s care. To clear it, press Pay It Off on Papers, under Health Cover.']);
   });
 });
 

@@ -43,21 +43,21 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // Until 2026-10-16 this said believability in a scene, a song, a self-tape, an audition and a night on stage, and left out
     // the improvisation, the clown turn and the partnered physical work that read it too (attributes-matrix.md).
     // From 2026-10-16 more where a piece is played grave (`DEMAND_EFFECT`); until then the same share of every piece.
-    affects: 'Your believability in everything you perform (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), most of all when the material is grave; and your connection with a partner in a fight or an intimacy scene.',
-    derivedFrom: 'It started with the rest of your training, as your techniques did. Older saves called it Emotional Access.',
+    affects: 'How believable you are in everything you perform: a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition and a night on stage. It matters most when the material is grave. It also shapes your connection with a partner in a fight or an intimacy scene.',
+    derivedFrom: 'It was set with your techniques when the school admitted you. Older saves called it Emotional Access.',
     source: 'Source: Stanislavski, An Actor Prepares (1936), on emotion memory and the given circumstances.',
   },
   {
     id: 'presence', label: 'Presence',
     definition: 'The pull of being fully there, which an audience or a camera sees beyond your technique.',
-    develops: 'Every night in front of an audience, a little at a time, and more on a remarkable night; the exercise A Showing For Classmates; and part of what Graded Exposure and Clown Practice build carries over to it.',
+    develops: 'Every night in front of an audience, a little at a time, and more on a remarkable night. The exercise A Showing For Classmates builds it too, and part of what Graded Exposure and Clown Practice build carries over to it.',
     // Until 2026-10-16 this left out a scene and a taped brief, which read it too; from then more the less a piece has a
     // partner to play off, and more in front of a house (`DEMAND_EFFECT`, the night's profile). Until 2026-10-17 it said
     // "most in front of a house": a clown turn's +10 moves its whole 1.6 on the mean and an improvisation's 1.0, against a
     // night's 0.65, a scene's 0.47, an audition's 0.38 and a taped brief's 0.29 (brief 11, A4,
     // tests/attributes-phase-2b.test.ts).
-    affects: 'Your connection on stage and in an audition, a clown turn, a scene and a taped brief: more the less of a partner you have to play off, and more on a night in front of an audience than in a scene, an audition or a taped brief.',
-    derivedFrom: 'It was set once, at the start: from 55 to 80 for a student the faculty chose.',
+    affects: 'Your connection on stage and in an audition, a clown turn, a scene and a taped brief. It matters more the less of a partner you have to play off, and more on a night in front of an audience than in a scene, an audition or a taped brief.',
+    derivedFrom: 'It was set when your life began, somewhere from 55 to 80 and most often near the middle, as it is for every student the school admits.',
     source: 'How it starts and how it grows are estimated.',
   },
   {
@@ -67,7 +67,7 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Rehearsing with a partner, classes that train Scene Study or Improvisation, every night in front of an audience, improvisation games in class and in An Improv Session, and The Repetition Exercise.',
     // From 2026-10-16 it also speeds an evening with a partner or a reader and a brief rehearsed against its reader
     // (`stepSpeed`); until then this said partnered work read it, and only the judged work did.
-    affects: 'Your responsiveness and connection in partnered physical work and on stage, more the more the piece depends on a partner and on timing; how much an evening rehearsing with a partner or a reader gets done; and how much rehearsing a brief on its feet with its reader gets done.',
+    affects: 'How responsive and connected you are in a fight or an intimacy scene with a partner, and on stage. It matters more the more a piece depends on your partner and on timing. It also sets how much you get done in an evening rehearsing with a partner or a reader, and when you rehearse a brief on its feet with its reader.',
     derivedFrom: 'It started at the average of your Scene Study and Improvisation.',
     source: 'Source: Meisner & Longwell, Sanford Meisner on Acting (1987), on the repetition exercise.',
   },
@@ -80,7 +80,7 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Table work on your coursework, breaking down a brief, classes that train Character Work or Script Analysis, reading plays, and The Given Circumstances exercise.',
     // From 2026-10-16 believability reads a little of it too (the magic if), and interpretation more where the language,
     // a beat held two ways or a lyric or grotesque tone asks invention (`DEMAND_EFFECT`).
-    affects: 'Your interpretation in every kind of work that asks for one, more where the language is heightened or verse, a beat plays two tones at once, or the piece is lyric or grotesque; a little of your believability; and how much a session of table work or of breaking down a brief gets done.',
+    affects: 'Your interpretation in every kind of work that asks for one. It matters more where the language is heightened or verse, where a beat plays two tones at once, or where the piece is lyric or grotesque. It adds a little to your believability, and sets how much you get done in a session of table work or of breaking down a brief.',
     derivedFrom: 'It started at the average of your Character Work and Script Analysis.',
     source: 'Sources: Stanislavski, An Actor Prepares (1936), on imagination and the magic if; Chekhov, To the Actor (1953).',
   },
@@ -92,7 +92,7 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // `focusAt`) and never this ability. From 2026-10-16 it speeds getting to know coursework's material (`STEP_SPEED`).
     // From 2026-10-16 execution reads it more in comedy and in heightened or verse language (`DEMAND_EFFECT`); and from the
     // integration pass of that day consistency reads it in any piece played Restrained, the inner line held (`APPROACH_EFFECT`).
-    affects: 'How much a session getting to know your coursework’s material gets done; your interpretation and execution in written work; your execution in voice work, a self-tape and a taped brief, more where the material depends on timing, is comic, or is in heightened or verse language; your consistency in any piece you play Restrained, holding the inner line through it; and your consistency in movement work and partnered physical work. Focus on the day is something else: it’s your readiness at that hour, and this ability doesn’t change it.',
+    affects: 'How much you get done in a session getting to know your coursework’s material. In written work it counts toward your interpretation and execution, and in voice work, a self-tape and a taped brief toward your execution, more where the material depends on timing, is comic, or is in heightened or verse language. It keeps you consistent in any piece you play Restrained, holding the inner line through it, and in movement work and in a fight or an intimacy scene with a partner. Focus on the day is something else: it’s your readiness at that hour, and this ability doesn’t change it.',
     derivedFrom: 'It started at the average of your Script Analysis and Cold Reading.',
     source: 'Source: Stanislavski, An Actor Prepares (1936), on concentration of attention and its circles.',
   },
@@ -105,8 +105,8 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // From later that day (brief 10) a night's part more the longer it's on stage (`PART_TEXT`); until then every part alike.
     // Until 2026-10-17 it said execution "wherever lines are spoken": a voice sequence's text and a speech drill's are
     // spoken, learned as lines are, and voice work's execution reads no memory (brief 11, A4).
-    affects: 'How much a session learning lines gets done (for a scene, a brief or a part); and your execution wherever you speak a part’s lines (a scene, a self-tape, a taped brief, an audition, a night on stage), more the longer the text: a medium or long brief, verse, and a whole part on a night, more the longer your part is on stage.',
-    derivedFrom: 'It started with the rest of your training, as your techniques did. Older saves called it Memorization.',
+    affects: 'How much you get done in a session learning lines, for a scene, a brief or a part. It also counts toward your execution wherever you speak a part’s lines: a scene, a self-tape, a taped brief, an audition, a night on stage. It matters more the longer the text, so a medium or long brief, verse and a whole part on a night ask more of it, and a part asks more of it the longer you’re on stage.',
+    derivedFrom: 'It was set with your techniques when the school admitted you. Older saves called it Memorization.',
     source: 'Sources: Noice & Noice (2006) on how actors learn a role by its meaning; Roediger & Karpicke (2006) on learning by recalling.',
   },
   {
@@ -116,21 +116,21 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // Until 2026-10-16 this said how fully a note is taken in a revision, which read no ability. From 2026-10-16 it speeds
     // a step of revision (`STEP_SPEED`), and a revision worked far enough takes the note (`noteTaken`).
     // From 2026-10-16 a director's note on the blocking worked into a part reads it too (`stepSpeed`, `school.work_note`).
-    affects: 'Your responsiveness in every kind of work judged on it; staying believable through a change of tone; recovering from a slip and covering a partner’s; how much a session revising after a note gets done, so you take the note sooner; and how much working a director’s note on the blocking into your part gets done.',
+    affects: 'Your responsiveness in every kind of work judged on it. It keeps you believable through a change of tone, and helps you recover from a slip and cover a partner’s. It sets how much you get done in a session revising after a note, so you take the note sooner, and how much you get done working a director’s note on the blocking into your part.',
     derivedFrom: 'It started at your Improvisation level.',
     source: 'Source: Johnstone, Impro (1979), on accepting offers.',
   },
   {
     id: 'composure', label: 'Composure',
     definition: 'Keeping your nerves steady under the pressure of an audience, an audition or a camera.',
-    develops: 'A little with every night in front of an audience and every solo showing, as performance anxiety falls with exposure; the Graded Exposure exercise; and part of what Circles Of Attention and A Showing For Classmates build carries over to it.',
+    develops: 'A little with every night in front of an audience and every solo showing, as performance anxiety falls with exposure. The Graded Exposure exercise builds it, and part of what Circles Of Attention and A Showing For Classmates build carries over to it.',
     // From 2026-10-16 more the more rides on a piece, and believability a little where it does (`DEMAND_EFFECT`); and from
     // the integration pass of that day believability in any piece played Restrained, the calm that lets a held feeling read
     // (`APPROACH_EFFECT`). From later that day (brief 10) a night before a house rides on more than a class scene
     // (`NIGHT_STAKES`); until then a night read the same stakes as a scene, and only its own profile's composure.
     // Until 2026-10-17 it said "on a night in front of a house, more than in class": a self-tape and an audition shown in
     // class move with +10 of it 0.95 and 0.93 on the mean, a night 0.69 and a scene shown in class 0.53 (brief 11, A4).
-    affects: 'Your consistency under pressure, more the more is riding on the piece (a brief’s stakes), and more on a night in front of an audience than in a scene shown in class; a little of your believability when the stakes are high; your believability in any piece you play Restrained, where calm lets a held-back feeling come through; recovering from a slip; and how much stress your nerves add before a performance.',
+    affects: 'Your consistency under pressure. It matters more the more is riding on a piece (a brief’s stakes), and more on a night in front of an audience than in a scene shown in class. When the stakes are high it adds a little to your believability. In any piece you play Restrained it adds to your believability too, since calm lets a held-back feeling come through. It helps you recover from a slip, and sets how much stress your nerves add before a performance.',
     derivedFrom: 'It started from your Emotional Stability: from 25 to 60, higher the steadier you are.',
     source: 'How it starts and how it grows are estimated. That performance anxiety falls with exposure is from Reeves et al. (2022).',
   },
@@ -139,7 +139,7 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     definition: 'A free, supported voice that carries the thought and the feeling of the text.',
     develops: 'Classes that train the voice, practicing voice sequences, songs, and the Voice Work exercise.',
     affects: 'Your execution in voice work, songs, classical text and on stage.',
-    derivedFrom: 'It started with the rest of your training, as your techniques did. Older saves called it Voice.',
+    derivedFrom: 'It was set with your techniques when the school admitted you. Older saves called it Voice.',
     source: 'Sources: Linklater, Freeing the Natural Voice (1976); Berry, Voice and the Actor (1973).',
   },
   {
@@ -147,7 +147,7 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     definition: 'A body that’s free, specific and readable on stage.',
     develops: 'Classes that train movement, such as The Body As Source and Alexander Technique, rehearsing movement scores, fights, and the Movement Work exercise.',
     affects: 'Your execution in movement work, fights, intimacy work and on stage.',
-    derivedFrom: 'It started with the rest of your training, as your techniques did. Older saves called it Movement.',
+    derivedFrom: 'It was set with your techniques when the school admitted you. Older saves called it Movement.',
     source: 'Sources: Laban, The Mastery of Movement on the Stage (1950); Lecoq, The Moving Body (2000).',
   },
   {
@@ -162,20 +162,20 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // Until 2026-10-17 it said consistency in every task "but the audition, where nerves are what's held": an audition is
     // shown on a scene, and from evaluation-10 a scene of more than three units reads discipline as a brief's beats do, so
     // an audition on The Seagull's fourth act read it and one on A Doll's House's third didn't (brief 11, A4).
-    affects: 'How much you gain from classes, nights on stage, preparation and practice, a tenth more with discipline at 100 and a tenth less at 0 (but not the fitness a workout builds); your consistency in every kind of work judged on it, more the more beats a piece has and on a night of a run, and in an audition only when its scene has many beats, since there your nerves are what’s tested; your execution in physical work set to a score; and your execution in written work.',
+    affects: 'How much you gain from classes, nights on stage, preparation and practice: a tenth more with discipline at 100 and a tenth less at 0 (but not the fitness a workout builds). It keeps your work consistent wherever consistency is judged, more the more beats a piece has and on a night of a run. In an audition it counts only when the scene has many beats, since there your nerves are what’s tested. It also counts toward your execution in physical work set to a score, and in written work.',
     derivedFrom: 'It started from the Conscientiousness you set when you made your character: self-discipline is part of it.',
     source: 'Source: Costa & McCrae, NEO PI-R Professional Manual (1992), where self-discipline is a facet of conscientiousness.',
   },
   {
     id: 'stamina', label: 'Stamina', general: true,
     definition: 'Lasting through long days, a run of nights and physical work without your work falling off.',
-    develops: 'Workouts, and more on a run when the weather’s fine; it holds for three days after each one; then it slowly falls, as fitness does.',
+    develops: 'Workouts, and more on a run when the weather’s fine. It holds for three days after each one, then slowly falls, as fitness does.',
     // Until 2026-10-16 this said consistency in movement, fights, songs and every night on stage; a night reads it as the
     // drain through the piece, never as consistency (`systems/piece.ts`). From 2026-10-16 a night's and a long brief's load
     // rose to their length (`PIECE.load`). Later that day (brief 10) a night's is its workload, the running time, the part's
     // share of it and the body's and the voice's work (`systems/workload.ts`), and it spares the energy a night costs after,
     // which until then was 10 whatever the stamina; this said a whole night, any part, was the heaviest until then.
-    affects: 'In a piece judged moment by moment (a scene, a brief, a night on stage), how well you hold up in its later moments, more the longer the piece and the more physical and vocal work it asks; on a night, how much its workload asks (the production’s running time, your part’s share of it and how intense it is), with less strain just after an interval; the energy a night costs you afterward, up to half of it spared at full stamina; and in work shown whole, without a scene (voice work, a song, movement, a fight), your consistency.',
+    affects: 'How well you hold up through the later moments of a piece judged moment by moment (a scene, a brief, a night on stage), more the longer the piece and the more physical and vocal work it asks. On a night, how much it’s asked depends on the workload: the production’s running time, your part’s share of it and how intense it is, with less strain just after an interval. At full stamina it spares up to half the energy a night costs you afterward. In work shown whole, without a scene (voice work, a song, movement, a fight), it keeps you consistent.',
     derivedFrom: 'It’s your fitness, so it started where your fitness was. Full is the fittest a body your age can be.',
     source: 'Sources: Hickson et al. (1981), where half the gain in aerobic fitness came in 10.3 to 10.8 days and it leveled off by three weeks; Hickson & Rosenkoetter (1981) on keeping it; Mujika & Padilla (2000) on losing it.',
   },

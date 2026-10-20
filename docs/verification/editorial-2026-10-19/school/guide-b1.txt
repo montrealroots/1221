@@ -1,0 +1,483 @@
+=== school.repeat: Repeating, Extra Terms And Incompletes
+Where To Find It: School, Standing And Craft, Courses And The Degree
+When You Can Use It: From the guide’s chapter “Drama School”: an Incomplete after a term’s review, a repeat at a year’s end, an additional term after the last year’s review.
+
+The degree needs every course passed, and each term’s review settles every course as passed, Incomplete or failed. To put an Incomplete right, make it up in sessions of two hours with its teachers within 30 days, the Bulletin’s month: press Make Up A Session on Standing And Craft. Left undone, it becomes a Permanent Incomplete. Ask For A Month More moves the deadline once, by as long again. To put a failed course right, ask to repeat its year at the year’s end, once, with the chair’s and the dean’s approval; or, after your last year, ask for an additional term that retakes only what you didn’t pass. Some of this is the game’s own rule, not the Bulletin’s: an Incomplete coming from classes you missed while excused (the Bulletin has the student ask the instructor for one), the limit of one extension, and the repeat and the additional term, for which the Bulletin has no rule.
+
+What To Press
+  - Open School, Standing And Craft. Courses And The Degree lists each Incomplete with its sessions left and its deadline.
+  - Press Make Up A Session for each session owed. Ask For A Month More moves the deadline, once.
+  - At the end of a year with a failed course, Finishing The Degree offers Ask To Repeat The Year…: read what it would do, then press Ask. While it’s being decided, Call Off The Request… says what calling it off would leave; Call It Off withdraws it, and Keep It keeps it.
+  - After the last year, with a course not passed, press Ask For An Additional Term to retake only those.
+  - Every Course, folded at the foot of Courses And The Degree, lists each attempt and how it ended.
+
+What You Need First
+  - For a make-up session: an Incomplete whose deadline is two hours or more away, still being at the School, out of hospital, and two hours free.
+  - To repeat a year: the spring’s review past and the next year not yet begun (after the last year, within 30 days of it); a course failed in that year’s fall or spring, with or without a leave between them; no leave under way and no additional term asked for; that year not repeated before; and 9 semesters at most, counting the repeat’s two and the terms still to come, but not a leave’s terms.
+  - For an additional term: the last year’s review past and its 30 days not over, a course not passed, no repeat being decided, 9 semesters enrolled at most with it, and no disqualification standing.
+
+Costs
+  - A Make-Up Session: 120 minutes, with the clock moved on. Each makes up a week of the course’s meetings (estimated)
+  - Asking: Free. It’s decided in 5 working days (estimated)
+  - A Term Past Six: Tuition and Yale Health billed to your Yale account: $22,407.28 and $2,377.37 in the fall of 2029 (estimated)
+
+What Happens
+  - Making up a session moves the clock two hours on, and the course passes once every session owed is done.
+  - Asking for a month more moves the deadline 30 days on, with a new reminder.
+  - Asking to repeat the year, or for an additional term, puts the request with the chair and the dean, and the decision goes on your calendar.
+  - Calling off a request to repeat ends it at once.
+
+Later
+  - A reminder comes 7 days before an Incomplete is due. At the deadline it becomes a Permanent Incomplete, with no credit.
+  - If a repeat is granted, from the next term you take that year’s courses again with the class a year below. What you did the first time stays on your record, and the degree counts the pass. On an F-1, the I-20 runs a year longer.
+  - A request you’re allowed to make is granted at its decision, as long as you’re still at the School and haven’t called it off: the chair and the dean decide on what let you ask.
+  - If you repeat the last year, its courses meet again the next fall and spring. Terms past six are billed to your Yale account, and with every course passed the degree comes at that year’s Commencement.
+  - If an additional term is granted, you take only the retakes in it, with the class then in that year. Passed in a fall, the degree comes at Yale’s December conferral on December 22; in a spring, at Commencement. A retake not passed in it means the degree isn’t recommended at that review, and nothing more can be asked.
+  - After the last year’s review, with a course not passed, you have 30 days to ask for either, or the degree isn’t recommended. If neither is open to you, it isn’t recommended at the review.
+  - At a review where the Bulletin’s count of Failures is reached, with a Failure the faculty haven’t judged before, they review your record. Already on warning, reviewed before, or with no room to repeat, you’re dismissed; otherwise you’re placed on warning to repeat the year, and the Failures they kept you through don’t count against the repeat or an additional term. The count is the Bulletin’s, which says a student “may be” disqualified; the review and its outcomes are the game’s model of the faculty.
+  - A failed course or a Permanent Incomplete whose year can’t be repeated within the nine semesters (none can after a repeat has been granted) names what’s left instead: an additional term after the last year’s review, unless that review puts you on academic warning. Where neither is left, it says so.
+  - An Incomplete still open at Commencement keeps you from the ceremony, and the degree comes once it’s made up in time.
+
+Reading What Comes Back
+  - Each Incomplete shows how many of its make-up sessions are left, and by when.
+  - A failed course says why: the meetings you came to, or the work not shown. Its notice comes after the review’s word on your standing, and offers the year’s end to ask to repeat the year only where you can still ask: not where the same review dismissed you or the degree wasn’t recommended (as when a retake isn’t passed in an additional term), and not where the repeat would take the degree past 9 semesters, counted as the year’s end will count them (after any repeat granted, that’s every year, the repeated one with the rest). There it names the additional term after the last year’s review instead. A Permanent Incomplete’s notice offers it on the same terms, and not where the degree is waiting on it.
+  - Every Course marks each attempt Passed, Incomplete, Not Passed, Permanent Incomplete, Left On Leave or In Progress.
+  - Finishing The Degree says where a request stands: with the chair and the dean, granted, or called off.
+
+If You Can’t
+  - “There’s no Incomplete in that course to make up.” or “Its deadline is at …, and there isn’t time for a session before then.”
+  - “You’re not at school.”: Make Up A Session then stops showing.
+  - “You’re not at school.” or “You’ve already had your one extra month.”: Ask For A Month More then stops showing.
+  - “You can ask to repeat a year only at its end, after the spring’s term review.”
+  - “You passed every course this year, so there’s nothing to repeat it for.”
+  - “In the game, the faculty don’t approve repeating year N a second time.”
+  - “Your request for an additional term is with the chair and the dean, decided by …” or “Your additional term is …”: you can’t ask to repeat beside one; and for an additional term, “Your request to repeat the year is being decided.”
+  - “Not while a leave is under way.”
+  - “Repeating would make N semesters, past the nine the Bulletin allows for the degree.”, counting the semesters enrolled, the year’s two again and the program’s terms still to come after it; and for an additional term “It would make N semesters, past the nine the Bulletin allows.”, counting the semesters enrolled and the term itself. A leave’s terms are left out of both.
+  - “The next year has begun.”
+  - “You can ask for an additional term after your last year’s term review, to retake what you didn’t pass.”
+  - “The faculty’s disqualification stands against it.”
+
+Common Mistakes
+  - Leaving make-up sessions to the last week: each takes two hours, and a busy week leaves no room. Start as soon as the Incomplete is set.
+  - Calling off a request to repeat without reading what Call Off The Request… says it leaves: after a middle year you go on with the course not passed, and the degree can’t be completed without it; after the last year, the degree isn’t recommended unless you ask again within its 30 days.
+  - A course left on a leave is taken again when you’re back, so you don’t ask to repeat it.
+  - Letting the 30 days after the last year run out means the degree isn’t recommended: ask for one path or the other in time.
+
+What To Do Next
+  - With an Incomplete: press Make Up A Session now, a session at a time, well before the deadline.
+  - With a failed course: ask to repeat the year at its end, or for an additional term after the last year, and watch Finishing The Degree for the decision.
+  - Once a repeat is granted, plan for the year’s courses again on the Classes tab, and for the bill on Terms And Award if it runs past six terms.
+
+What Decides It
+  - A Course’s Pass: Coming to 75% or more of the meetings you weren’t excused from, and, where two or more pieces were due, showing more than half of them (estimated)
+  - An Incomplete: Passed on the meetings you weren’t excused from, but at under 75% of all of them. This is the game’s rule (estimated)
+  - Sessions Owed: What it takes to reach 75% of the meetings, a week’s meetings for each session (estimated)
+  - Disqualification: The Bulletin’s: 2 Failures in a term, 3 by the end of the second term, 4 by the third, 5 by the fourth, 6 by the fifth, or 7 in all
+  - Semesters: The degree within 9 semesters enrolled, with tuition support for 6. A leave’s terms aren’t enrolled ones and don’t count: a leave has its own limit, 3 terms in all
+
+How It Connects
+  - school.standing (evaluation): A course failed in a term keeps that term from good standing.
+  - school.money (scheduled): A repeated year or an additional term past six terms is billed to your Yale account.
+  - school.sick (history): Meetings missed ill stay excused on the record, and enough of them make an Incomplete, not a failed course.
+  - school.leave (optional): A leave is refused while a request to repeat is being decided, and courses left on a leave are taken again when you’re back.
+  - documents.work (scheduled): On an F-1, a repeat or an additional term extends the I-20 a year when it’s granted.
+
+A Worked Example
+  Laid up and then down with the flu, you’re excused from 15 of Acting I’s 39 fall meetings and come to the rest.
+  - At the term review Acting I has you at 24 of 39: every meeting you weren’t excused from, so it isn’t failed.
+  - Under 75% of all 39, it’s Incomplete. Reaching 30 needs 6 more meetings, and at 3 a week that comes to 2 make-up sessions.
+  - Press Make Up A Session twice within 30 days.
+  Acting I passes, made up after an Incomplete, and the degree no longer waits on it. Leave the sessions undone and at the deadline it becomes a Permanent Incomplete, which only a repeated year or an additional term puts right.
+
+=== coursework.prepare: Preparing Coursework
+Where To Find It: School, Coursework
+When You Can Use It: From the guide’s chapter “Drama School”, once a course has set a piece: at one of its classes, or for the first-year fall courses at orientation’s session on the courses.
+
+Your courses set pieces of coursework: a scene, a song, a movement score, a written analysis. You prepare each one with the steps on its card on the Coursework tab, then show it in class on the day it’s due, and the better prepared it is, the better it goes. A course sets a piece at one of its classes, due a set number of classes later (four for Scene Study in Acting I), with a scene, your part and a partner from the class where the work has them. Each step moves its part of the preparation by a share of what’s left, so the same step again moves it less. When the piece is shown, its band (Unready, Working, Strong or Exceptional) sets how much that class grows your skills.
+
+What To Press
+  - Open School, then the Coursework tab. Due Soonest, at the top, names up to three pieces still short of complete, the one due soonest first: what each would come to if shown today, and what’s still to finish. Under it, each open piece has a card, in the same order, headed by its course and title, with the day it’s due and the skills it’s shown for.
+  - Read what it is: the play, the scene and where it falls, your part and who plays the other, and Put First, the part this piece counts for more.
+  - Each part of the preparation shows how far it’s prepared, with its Note Priority and what completes it, 90%. Press a step to do it. Pointing at a step shows how many minutes it takes, or why it can’t be done now, and the reasons are listed under the buttons.
+  - Read Shown Today: what the piece would come to if you showed it today on a good day, what’s holding it back most, and each part still to finish with the steps that work on it.
+  - Press the card’s title to open the piece itself: each part with Prepared and Note Priority, the same figures as the card’s, with links to the course, the day it’s due and your readiness.
+  - On the day it’s due, be awake and in New Haven at nine: it’s shown at the course’s class.
+
+What You Need First
+  - A piece set and open. A course sets its next piece at a class when none of its own is open and the term still has the class it would be due at.
+  - For a step that builds on another: Learn Lines needs the scene read to 30%, and Rehearse Alone the lines learned to 25%.
+  - For a step in a studio or on your feet: energy of 25 or more and no injury that stops training. A studio or the library also needs orientation’s tour behind you.
+  - New feedback on the piece read, and anything your partner has asked about it answered.
+  - Free time for the step’s length: at nothing else, and due nowhere before it would end. Learn Lines is checked for the scene’s own length, 45, 75 or 105 minutes, the time it takes.
+
+Costs
+  - Time: Each step its own. In Scene Study: Read The Scene, 40 minutes; Learn Lines, 45, 75 or 105 by the scene’s length; Rehearse Alone, 60; Work On The Note, 60; Rehearse With Your Partner, a rehearsal of 90 minutes agreed with them (estimated)
+  - Money: None
+  - Your Body: Desk work counts as activity at 1.5 METs, and a step that needs a studio or your feet at 2.5. Rehearse Alone is on your feet, so it counts at the higher figure (estimated)
+
+What Happens
+  - The clock moves on by the step’s minutes, and its part rises by its share of what’s left. A part at 97% or more has nothing more to gain from it.
+  - A step that trains a skill trains it at 25% of a class’s weight, for at most 3 such steps on one piece.
+  - While it still moves the piece, a step practices the ability it calls on: knowing the scene your focus, lines your memory, a step at the table your imagination, a note your adaptability.
+  - A rehearsal step, Rehearse Alone and the steps like it, also rehearses the way you chose to play the scene, if you chose one. A daily step counts once a day.
+
+Later
+  - At nine on the day it’s due the course meets, and the piece is shown once, in place of the class’s usual growth: the course’s skills grow 85% of a usual class’s for Unready, 100% for Working, 110% for Strong and 120% for Exceptional.
+  - If you’re away with an excuse (called in sick, in hospital or laid up), it moves to the course’s next class, or is excused if none is left. Away without one, it’s Not Shown and can’t be shown later: it counts as due and Unready at the term’s review, a course with half or more of its pieces due not shown isn’t passed, and a partner’s trust falls 12. Its notice says so, with the course’s count so far.
+  - Once 6 of the term’s pieces have been due and 35% or more of them were Unready or not shown, as the review counts them, A Word On Your Coursework comes, once. It’s a warning, not the term review: it says how many, the day the faculty review the term and what the review would do to your standing if the term ends short, then what they were short on (the part most often unfinished on two or more of them with the steps that work on it, or that every part of each was unfinished, or that each was short on a different part). The review’s notice says what they were short on the same way.
+  - At the term’s review, once 3 or more pieces are due, 50% or more of them Unready or not shown is short, and 50% or more Strong or better is noted.
+  - A piece the course revises comes back to be shown again at its next class, with the note to take; a piece in rounds is shown a round at a time. A piece still open when the term’s classes end lapses.
+
+Reading What Comes Back
+  - A part’s figure is how far it’s prepared. Note Priority is how much the part counts when the teacher picks what to note; the result reads each part through the qualities it affects. The part put first counts for more in both, and the line beside it says why it was chosen.
+  - At 90% a part is complete for the showing. Below it, the qualities it affects are held back: a part at nothing holds them to 35% of themselves, whatever its Note Priority.
+  - Shown Today is how the showing would judge it with the luck of the day taken out, and you as rested as you could be. It moves when a part does, and the band beside the figure says what it would earn. It’s a forecast, not a result.
+  - A scene you’ve worked before says so, and asks for the other part, or for another answer at the table.
+  - Work Shown keeps your last twelve pieces and how each went: its band, or Not Shown, Excused, Not Shown, or Not Shown Before The Term Ended; and for a piece shown again, Note Taken or Note Not Taken with the band it was shown again at, or Not Shown Again, Counted Unready. Coursework This Term on Standing And Craft counts the term’s pieces as the review will.
+
+If You Can’t
+  - “That piece is finished.”
+  - “Read the scene first: you learn lines from a scene you know.” and “Learn some of the lines first.”: a step that builds on another.
+  - “You can revise once it’s been shown and you have a note to work on.”
+  - “There’s new feedback on this piece. Read it, then press Mark As Read.”
+  - “… has asked to rehearse. Answer them first, under Rehearsing With ….” and “… reads the scene differently from you. Answer them first, under Your Class.”
+  - “You’ve done all this step can do.” and “You’ve done this today. It builds over several days, not in one long session.”
+  - “You’re too tired to work on your feet. Sleep first.” and an injury’s “Not with …; it has … yet to mend.”: a step in a studio or on your feet, Rehearse Alone among them.
+  - “Not from a hospital bed.”: a step in a studio, on your feet or at the library.
+  - “You don’t know where the studios are yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.”, and the same for the library.
+  - At something else, or due somewhere before it would end: it names what, and when.
+  - Locked, on a guided life, until “Drama School” has been read.
+
+Common Mistakes
+  - Doing one step over and over: each moves its part by a share of what’s left, so a fourth Learn Lines moves the lines less than the first. Spread the hours over the parts that are lowest, since each quality your teacher looks for is held back by the least prepared part that affects it.
+  - Starting a long step just before a class: Learn Lines on a long scene takes 105 minutes. Leave room for it.
+  - Sleeping through the class it’s due at: the piece isn’t shown and can’t be shown later. If you’re unwell, call in sick before nine and it moves to the next class.
+  - Leaving it to the day before: a daily step counts once a day, and a rehearsal with your partner has to be agreed at least 2 hours ahead.
+  - Leaving a scene’s partner part at nothing because its Note Priority is low: the qualities it affects are held to 35% of themselves however well the rest is prepared, and Shown Today says what that costs before the showing. Ask your partner for an evening a few days ahead, or use Run It With A Reader.
+
+What To Do Next
+  - Start with Due Soonest: press the steps for what it says is still to finish.
+  - Ask your partner for a rehearsal a few days before it’s due, under Rehearsing With on the piece’s card.
+  - After the showing, read the feedback under Work Shown and press Mark As Read, then work on the note before the piece is shown again.
+
+What Decides It
+  - Your Focus: Your readiness against 80, adjusted for how the hour suits you, between half and 110% for a step: the more rested you are, the further a step moves its part (estimated)
+  - Your Nature: How far each kind of step goes for you: reading around for the table work, drilling for lines, skimming for knowing the scene, revising for a note
+  - Kinds You Know: A play in a genre you know, or material whose features you’ve met, prepares faster, by the better of the two
+  - The Ability It Practices: Learning lines goes further with memory, the table work with imagination, knowing the scene with focus, and a revision with adaptability: 85% as far at 0, as far as the step says at 50, and 115% as far at 100 (estimated)
+  - What’s Left: Each step moves its part by its share of what’s left: Read The Scene 55%, Learn Lines 32%, Rehearse Alone 28%, Work On The Note 45%, at an ordinary focus (estimated)
+  - The Showing: Each part is complete at 90%, and each quality your teacher looks for is held back by the least prepared part that affects it, whatever its Note Priority. Also counted: the skills it’s shown for against what the piece asks of your year, your condition in class, the scene’s material and the way you chose to play it. A scene is judged part by part, by its tones or, with one tone, in two halves, and your stamina counts as tiring that grows toward the end
+  - The Band: Working from 50, Strong from 65, Exceptional from 80; under 50, Unready
+
+How It Connects
+  - school.orientation (prerequisite): The tour opens the studios and the library for your steps, and the session on the courses sets the first-year fall’s first pieces.
+  - coursework.playing (immediate): Each rehearsal step rehearses the way you chose to play the scene.
+  - craft.profile (immediate): A step trains its skill for up to 3 steps a piece, and practices the ability it calls on.
+  - coursework.feedback (scheduled): In the class it’s due, the preparation is judged and the showing gives its band and its note.
+  - school.standing (evaluation): The term’s review counts each piece’s band: once 3 or more are due, 50% Unready or not shown is short.
+  - body.how (evaluation): Readiness sets how far each step moves its part, and your condition in class counts in the showing.
+  - craft.identity (history): Each showing is kept on your record, where Your Work So Far reads your strengths and what keeps holding you back.
+
+A Worked Example
+  Acting III sets Scene Study on The Seagull, Act Four: you play Nina, a long scene, with Lines put first. You work at readiness 80, with an even nature, your focus and memory at 50, in a kind of play and material new to you.
+  - Read The Scene twice, 40 minutes each.
+  - Learn Lines three times, 105 minutes each.
+  - Rehearse Alone twice, 60 minutes each.
+  8 hours and 35 minutes in all. Knows The Scene reads 80%, Lines 69% and Rehearsal 48%. Put first, the Note Priority under Lines reads 33% in place of its own 25%, and the qualities of the result the lines affect count 1.5 times as much before the parts are rebalanced. The three of Learn Lines were the piece’s three steps that train a skill, so a fourth moves the lines and practices your memory, the skill they train, with none of the training on top: it grows by the practice alone.
+
+=== coursework.table: Table Work
+Where To Find It: School, Coursework, Table Work
+When You Can Use It: From the guide’s chapter “Drama School”, on any open piece with a scene and a part of yours in it, once the scene is read to 30%.
+
+Table Work is where you decide what the scene is about, one question at a time: Given Circumstances, The Relationship, Your Objective, The Obstacle and A Choice To Play. For each question you pick an answer from a list. The text supports some answers and not others, and some questions have more than one answer the text supports, each worth the same. The more of your answers the text supports, the further along your Table Work is when the piece is shown. Where the course has a step of its own at the table, your answers count for half and that step for the other half.
+
+What To Press
+  - Open School, then the Coursework tab, and find Table Work on the piece’s card.
+  - Choose an answer for each question from its list. Each takes 10 minutes, and a message says “Answer chosen.”
+  - Watch the part’s figure on the card: an answer the text supports raises it at once, and one it doesn’t support doesn’t.
+  - Once the piece is shown, each answer says why the text supports it or doesn’t.
+
+What You Need First
+  - The scene read to 30%, with Read The Scene.
+  - An open piece with a scene and your part in it.
+  - 10 minutes free.
+
+Costs
+  - Time: 10 minutes a question, and 10 more for each answer you change (estimated)
+  - Money: None
+
+What Happens
+  - Your answer is kept, and the clock moves on 10 minutes.
+  - The table work’s figure on the card moves with it.
+
+Later
+  - In class, your partner may answer one of your questions another way, and you choose between Keep Your Reading, Try Theirs and Try Both Next Rehearsal.
+  - When the piece is shown, the table work is one part of the preparation, and each quality it affects is held back by the least prepared part. Its Note Priority only decides what the note is about.
+  - A note about an answer is taken when the piece is shown again with an answer the text supports.
+  - If you come back to a scene and are asked to read it another way, your answers are compared with last time’s.
+
+Reading What Comes Back
+  - The figure under the course’s name for it (Table Work in Scene Study, Scansion And Table Work in Heightened Text Scene) is the table work as the showing will count it.
+  - After the showing, each answer says “Why the text supports it” or “Why the text doesn’t support it”.
+  - For a scene you’ve come back to, “Your answers differ from last time’s.” or “So far your answers match last time’s.” says whether you’ve found another reading yet.
+  - Which answers the text supports is the game’s own judgment of each play, written so you can check it against the text.
+
+If You Can’t
+  - “Read the text first. You can answer the Table Work questions once you know it.”
+  - “That’s your answer already.”
+  - “That piece is finished.”
+  - At something else, or due somewhere in the next ten minutes: it names what, and when.
+  - Locked, on a guided life, until “Drama School” has been read.
+
+Common Mistakes
+  - Answering by what sounds strongest: an answer the text doesn’t support lowers the table work and can become the note. The scene’s summary, and an original scene’s facts, are what the answers rest on.
+  - Taking your partner’s reading on trust: Try Theirs puts their answer in place of yours, and where the text doesn’t support theirs, the table work falls.
+  - On a scene you’re asked to read another way, changing nothing: it counts 80% until one answer differs where the text supports another.
+
+What To Do Next
+  - Answer every question before the showing: one left undecided counts for nothing.
+  - Then rehearse the scene on its card, and ask your partner for an evening under Rehearsing With.
+
+What Decides It
+  - Answers The Text Supports: The share of the 5 questions answered the way the text supports; a question left undecided counts for nothing
+  - A Step At The Table: Where the course has one (Scan The Verse in Heightened Text Scene, Speak The Text Aloud in A Scene From The Greeks), the table work is half your answers and half that step
+  - Another Reading Asked: A scene you’re asked to read another way, answered as last time where the text allows another answer, counts 80% of itself (estimated)
+  - The Note: An answer the text doesn’t support can be what the teacher’s note is about, giving the text’s own reason
+
+How It Connects
+  - coursework.prepare (prerequisite): Reading the scene to 30% with Read The Scene opens the questions.
+  - coursework.class (scheduled): A partner may come to class with another answer to a question you’ve answered, and ask you to keep yours, take theirs or try both.
+  - coursework.feedback (evaluation): The showing counts your answers as the table work, and an answer the text doesn’t support can be its note.
+  - coursework.partners (evaluation): An answer that differs from your partner’s leaves the scene together at 90% agreement until you’ve tried both.
+  - coursework.workbook (optional): On Scene Study and courses like it, Work It Through can name the table work as a problem, with no way to work on it there: an answer the text supports is what fixes it.
+
+A Worked Example
+  Scene Study on The Seagull, Act Four, as Nina, the scene read once.
+  - Answer all five questions: four with answers the text supports, one with an answer it doesn’t.
+  - Change that one to an answer the text supports.
+  The answers take 50 minutes, and Table Work reads 80%. The change takes 10 more and brings it to 100%. In Heightened Text Scene, with Scan The Verse done twice, four of five answers supported would read 69%, then 79%.
+
+=== coursework.approach: Another Way At A Note
+Where To Find It: School, Coursework, A Note That Keeps Coming Back
+When You Can Use It: From the guide’s chapter “Drama School”, on an open piece, once a note on a part it prepares has been given 3 times and is still open.
+
+When the same note keeps coming back, given 3 times and still open, a piece that prepares its part offers four other ways to work on it, one per piece: A Targeted Drill, Put It First, Work On It With Your Partner and A Smaller Piece Of It. Each changes how this piece goes at the weakness. None of them takes the note by itself: the part still has to be prepared far enough by the time the piece is shown.
+
+What To Press
+  - Open School, then the Coursework tab. A piece the note can help shows “A Note That Keeps Coming Back:”, the note, and how often it’s been given.
+  - Point at a way to see what it does, or read why it can’t be chosen under the buttons.
+  - Press one. It stays for this piece, and the card says which you chose.
+  - Then do the work: the drill each day, the steps on the part, or the rehearsal with your partner.
+
+What You Need First
+  - A note that’s open and has been given 3 or more times, on a part this piece prepares; a note about an answer at the table counts as one on the table work.
+  - The piece open, with no way chosen for it yet.
+  - For Put It First, a part this piece can put first. For Work On It With Your Partner, a partner still willing to work with you, on a note that isn’t already about work with your partner.
+  - For A Targeted Drill or Work On It With Your Partner on the table work, a piece with a step of its own at the table, or with no scene: on Scene Study and courses like it the table work is your answers alone, and neither changes them.
+
+Costs
+  - Time: None to choose. A Targeted Drill adds a step of 30 minutes, once a day (estimated)
+  - Money: None
+
+What Happens
+  - The way is kept on the piece, with the note it’s for and the day, and the card reads “Another Way At It:” and what it does.
+  - A Targeted Drill: a new step on the card, named for the part.
+  - Put It First: Put First changes to that part, and its Note Priority rises.
+
+Later
+  - When the piece is shown, a part a note named that stands at 75% or more takes the note, however it got there.
+  - A Smaller Piece Of It: shown as no better than Working, since less was shown.
+  - Work On It With Your Partner: worked once, at the next rehearsal you keep.
+
+Reading What Comes Back
+  - The note it’s for is the one given most often among those the piece can help.
+  - The card’s “It won’t take the note by itself: you still take it at a showing.” means the part still has to be prepared far enough by the time you show the piece.
+  - When a way is grayed, its reason shows under the buttons.
+
+If You Can’t
+  - “You’ve already chosen … for this piece.”
+  - “This piece can’t help with any of your recurring notes.”
+  - “This piece can’t put that part first.”
+  - “This piece has no partner.” and “That note is already about working with your partner, so this wouldn’t add anything.”
+  - “… would rather work alone, after last time.”
+  - “On this piece, Table Work is your answers to its questions, so a drill or your partner can’t change it. Change an answer under Table Work instead.”
+  - “That piece is finished.”
+  - Locked, on a guided life, until “Drama School” has been read.
+
+Common Mistakes
+  - Choosing a way and not doing the work: the drill still has to be done a day at a time, and the rehearsal still has to be kept.
+  - Choosing A Smaller Piece Of It on a piece that could be Strong: it caps the band at Working.
+  - Choosing Work On It With Your Partner with a partner whose trust in you is under 25: it’s refused. Make amends first.
+
+What To Do Next
+  - Do the work the way asks: the a targeted drill once a day, or the steps on the part, or book the rehearsal with your partner.
+  - Watch the part’s figure on the card: the note is taken once it’s far enough at the showing.
+
+What Decides It
+  - A Targeted Drill: A step on that part, 30 minutes once a day, moving it 30% of what’s left (estimated)
+  - Put It First: The part’s Note Priority is 1.5 times its own before the parts are rebalanced, the qualities of the result it affects count 1.5 times as much, and it becomes the piece’s Put First (estimated)
+  - Work On It With Your Partner: The next rehearsal kept with your partner also moves that part 20% of what’s left, once (estimated)
+  - A Smaller Piece Of It: 60% of the part counts as complete, and the band can be no better than Working (estimated)
+
+How It Connects
+  - coursework.feedback (prerequisite): It opens once a note has been given 3 times on the same part and is still open.
+  - coursework.prepare (immediate): A Targeted Drill adds a step to the piece, and Put It First changes what counts most in it.
+  - coursework.partners (scheduled): Work On It With Your Partner works on the part at the next rehearsal kept with your partner.
+  - school.standing (evaluation): A Smaller Piece Of It caps the band at Working, and the term’s review counts a Working piece as neither Unready nor Strong.
+
+A Worked Example
+  Lines named three times and still open, on a piece of Scene Study with the lines at 40%, at readiness 80, an even nature and memory at 50, in material new to you.
+  - Choose A Targeted Drill.
+  - Do it once a day for three days.
+  The lines go to 58%, then 71%, then 79%: past 75%, so a showing then takes the note. With A Smaller Piece Of It instead, the 40% would read as 67%, and the band could be no better than Working.
+
+=== coursework.class: Your Class
+Where To Find It: School, Coursework, Your Class And Your Partners
+When You Can Use It: From the guide’s chapter “Drama School”, from the first class you’re at with them.
+
+On a class day you’re there, a classmate may bring you something, on about 30% of such days and one at a time: another reading of your shared scene, an evening to run lines, a request for help, a word after a hard showing, an apology, or a boundary. Answer it under Your Class on the Coursework tab within 22 hours. Your answer can change their trust in you, the bond between you, or your work, and who brings what depends on what each cares about most and what has happened between you. If you’ve let someone down, press Make Amends beside them under Your Partners.
+
+What To Press
+  - Read the notice, or Your Class on the Coursework tab: who, what, and when the answer is due.
+  - Press an answer. When one is grayed, its reason shows under the buttons.
+  - For an evening of running lines, choose Which Scene You Share where there’s more than one.
+  - Your Partners lists each classmate you’ve worked with: trust, how often they came, reliability, what they care about most, any boundary, and the last thing that happened.
+  - Beside one you’ve let down, press Make Amends.
+
+What You Need First
+  - Being in class that day, with no other moment from the class waiting for your answer.
+  - For Help Now: 45 minutes free now. For Say Yes: the evening still ahead and clear.
+  - For Make Amends: something between you to put right, and 20 minutes free.
+
+Costs
+  - Time: Help Now: 45 minutes then and there. Running lines: 60 minutes at 7 p.m. on the evening agreed. Make Amends: 20 minutes. Any other answer takes no time (estimated)
+  - Money: None
+
+What Happens
+  - Your answer is kept, and a message says what came of it. A bond moves as your nature takes it.
+  - Make Amends: everything between you so far is marked as put right.
+
+Later
+  - An answer not given in time lapses; only an invitation to run lines costs anything for it.
+  - An evening of running lines you agree goes on your calendar as Running Lines With …. Kept, it works on the scene you share; with no scene shared, it works on their lines and none of yours.
+  - With both readings tried at the next rehearsal you keep, the scene together counts your answers as one again, and where the course has a step of its own at the table, that step’s half of the table work moves 15% of what’s left. Where the table work is your answers alone, none of your figures moves.
+  - A bond of 25 makes them a friend, 50 a close friend, and −20 or lower a rival.
+
+Reading What Comes Back
+  - Your Class lists what’s waiting with the time to answer by, and the last six moments with how you answered, or Not Answered.
+  - Your Partners shows “Wants A Day’s Notice” for a boundary, with how many more rehearsals must be kept before it lifts, and “Has Stopped Asking You To Run Lines” or “Owes You Lines” where those apply.
+  - “You let them down once and haven’t made it right.” counts what Make Amends would put right.
+
+If You Can’t
+  - “It’s too late to answer. The moment has passed.”
+  - “You’ve answered it.”
+  - “That piece is finished.”: another reading of a piece already shown.
+  - “You have … then, so you’ll have to say no.”
+  - “Your terms at the School are over: there’s no scene left to run lines for. Say no instead.”: an invitation to run lines still open when the School ends can be declined, not taken.
+  - “There’s nothing between you to make right.”
+  - Locked, on a guided life, until “Drama School” has been read.
+
+Common Mistakes
+  - Keeping an answer the text doesn’t support against theirs that it does: it costs trust, and your answers stay apart in the scene together until both are tried.
+  - Letting an invitation lapse: it costs a little trust, and two in a row stop them asking for a while. A no costs nothing.
+  - Letting two let-downs stand: a boundary can follow. Make amends before it does.
+  - Pushing back on a boundary: it costs trust and closeness, and takes four rehearsals kept to lift, where accepting takes two.
+
+What To Do Next
+  - Answer what’s waiting under Your Class before its time runs out.
+  - If you’ve let someone down, press Make Amends beside them under Your Partners before you next ask them to rehearse.
+
+What Decides It
+  - A Different Reading: Keep Your Reading: trust holds, or falls 1 where the text supports their answer and not yours, and the scene together counts your answers as apart. Try Theirs: their answer replaces yours, trust up 2, bond up 1. Try Both Next Rehearsal: trust up 3, bond up 1, and both are tried at the next rehearsal you keep, the scene together counting them as apart until then (estimated)
+  - An Evening Running Lines: Say Yes: kept, the lines of the scene you share rise 20% of what’s left, trust up 2, bond up 2; missed, trust down 6, bond down 3. Say No: no cost, though after two turned down or unanswered in a row they stop asking for 45 days. Unanswered: trust down 1 (estimated)
+  - A Request For Help: Help Now: trust up 4, bond up 3, and they may ask to run your lines in return within 60 days. Say You Can’t: no cost (estimated)
+  - A Word After Class: From a classmate at a bond of 10 or more, after an Unready showing in the last three days: morale up 3, with no answer to give (estimated)
+  - An Apology: After a rehearsal they didn’t come to. Accept It: bond up 2. Take It Coolly: bond down 2 (estimated)
+  - A Boundary: After you’ve let them down twice without making it right: from then on, ask them a day ahead. Accept It: trust up 2, lifting after two rehearsals kept. Push Back: trust down 3, bond down 4, lifting after four (estimated)
+  - Make Amends: For each rehearsal or evening you missed: trust up 6, bond up 2. For each one called off late: trust up 4, what it took (estimated)
+  - What They Care About: Set once, the more driven caring most about the work: The Work Itself, The People In The Room, Getting Seen And Working and A Life Outside School. Those who care about the work and the room ask you to run lines; those who care about being seen and a life outside ask for help
+
+How It Connects
+  - school.orientation (prerequisite): A classmate brings you something once you’ve met them, at Meeting Your Class or in class.
+  - coursework.table (immediate): Try Theirs replaces your answer to the question with theirs at once.
+  - coursework.partners (immediate): An answer can change their trust, which counts when you ask them to rehearse; a boundary asks for a day’s notice.
+  - coursework.prepare (scheduled): An evening of running lines kept moves the lines of the scene you share 20% of what’s left.
+  - body.how (immediate): A word after a hard showing lifts your morale 3.
+
+A Worked Example
+  Your partner trusts you at 50. You sleep through a rehearsal with them, then call the next one off the same afternoon.
+  - In class, they set a boundary: they’ll only rehearse if asked a day ahead. Press Accept It.
+  - Press Make Amends beside them on Your Partners.
+  Their trust falls to 38, then 34; accepting the boundary brings it to 36, and making amends to 46, with the bond 2 closer. The boundary stays until two rehearsals are kept; until then, an ask less than a day ahead gets a no.
+
+=== productions.plays: Plays To Read
+Where To Find It: School, Coursework, Plays To Read
+When You Can Use It: From the guide’s chapter “Drama School”. A copy is lent once orientation’s tour has shown you the library.
+
+Plays To Read is a reading list for building your craft between classes: 29 plays first staged since 2000, with their facts as their theaters and publishers give them. Read It borrows the Haas Arts Library’s copy for a close first read, two hours, or an hour for a short play or a monologue, and leaves a note on its form, its published cast and whether there’s a part in it for you, and its setting. Research It, once you’ve read it, finds its first production, its first edition and who licenses it. Each trains your script analysis, and a read your imagination too. None of them is performed in the game, because their texts are under copyright.
+
+What To Press
+  - Open School, then the Coursework tab, and find Plays To Read below the coursework.
+  - Each row has the play, its playwright, where it was first staged, its cast as published, and whether there’s a part for you.
+  - Press Read It, or Read It Again; the note shows as a message and under Your Latest Notes.
+  - Once you’ve read a play, press Research It.
+
+What You Need First
+  - Being at school, with orientation’s tour done or orientation behind you.
+  - Free time for the read.
+  - For Research It: the play read first, and not researched yet.
+
+Costs
+  - Time: Read It: 120 minutes, 60 for a short play or a monologue; read again, 75% of that. Research It: 90 minutes (estimated)
+  - Money: None: the library lends it
+
+What Happens
+  - The clock moves on by the read’s time, and the note is kept with the play, its last 6.
+  - Read It becomes Read It Again, the Read column counts the reads, and Research It appears.
+  - Research It: the play shows Researched, and the note gives its first production, first edition and who licenses it.
+
+Later
+  - The training shows as your craft grows, each step kept in your development history.
+
+Reading What Comes Back
+  - Read shows Not Yet, Once, or how many times; Researched shows under it once you’ve researched it.
+  - “A part for you” or “No part for you” goes by the published cast’s women and men; neither shows where they aren’t on record, and the Cast column says “Not on record” where the cast isn’t.
+  - “It’s too soon after that one to see it fresh.” means no training this time.
+  - Your Latest Notes shows the five most recent, one for each play.
+
+If You Can’t
+  - “You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.”
+  - “The Haas Arts Library lends only to students, so there’s no copy for you to borrow now.”: after you’ve left the School.
+  - “Read the play first. You need questions before you can research it.”
+  - “You’ve already researched its first production, and there’s nothing more on record to find.”
+  - “You’re at … until ….”, or “… starts at …: there isn’t the time before it.”
+  - Locked, on a guided life, until “Drama School” has been read.
+
+Common Mistakes
+  - Reading the same play again within 30 days: it costs 75% of the time and trains no craft. Wait a month.
+  - Missing orientation’s tour: you don’t know where the library is until you catch up on the tour.
+  - Expecting to perform one: none of them is performed in the game. The scenes for class are public-domain plays and scenes written for the game.
+
+What To Do Next
+  - Read a play a week on a free evening, and research the ones you’ve read.
+  - Come back to one after a month for a fresh read.
+
+What Decides It
+  - A First Read: Trains script analysis and imagination, each as much as a step of coursework that trains it (estimated)
+  - A Read Again: Half the training, and none within 30 days of the last read. The note turns to what you didn’t notice before (estimated)
+  - Research: Script analysis once more, as much as a first read (estimated)
+  - A Part For You: By the published cast: a part for an actress where it has women, for an actor where it has men, and none where you’re more than ten years younger than its youngest part
+
+How It Connects
+  - school.orientation (prerequisite): The tour shows you the Haas Arts Library, where every copy is borrowed.
+  - craft.profile (immediate): A read trains script analysis and imagination, and research trains script analysis again, each kept in your development history.
+  - coursework.prepare (optional): Script analysis, which every read trains, is part of the craft a scene’s preparation uses.
+
+A Worked Example
+  A first-year in New Haven, the tour done, with a free evening.
+  - Press Read It on Clybourne Park, by Bruce Norris.
+  - 120 minutes later, read the note.
+  - Press Research It.
+  The note reads “You read Clybourne Park, by Bruce Norris, all the way through.”, then its form, “The published cast is 3 women and 5 men.”, whether there’s a part for you, and its setting. Research, 90 minutes more, finds it first staged in 2010 at Playwrights Horizons, New York, first published in 2011 by Nick Hern Books, and who licenses it. Read again the next week, it takes 90 minutes and trains nothing.
+

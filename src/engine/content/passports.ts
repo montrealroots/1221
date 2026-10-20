@@ -38,7 +38,7 @@ export const PASSPORTS: Readonly<Record<string, PassportRule>> = {
     "name": "U.S. Passport Book",
     "fee": 165,
     "currency": "USD",
-    "feeBasis": "First-time adult (16+) passport book on Form DS-11: $130 application fee paid to the Department of State plus $35 facility acceptance fee paid to the acceptance facility. Two separate payments.",
+    "feeBasis": "First-time adult (16+) passport book on Form DS-11: a $130 application fee paid to the Department of State, and a $35 acceptance fee paid separately to the acceptance facility.",
     "days": 42,
     "daysEstimated": false,
     "expedite": {

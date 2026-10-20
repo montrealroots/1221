@@ -1,0 +1,497 @@
+[
+ {
+  "source": "src/ui/startup/StartupSequence.tsx#STAGES [migrations]",
+  "kind": "other",
+  "before": "Slot 3 was saved by an older version of SLATE. It’s updated when you open it, and a backup of it is kept first.",
+  "after": "Slot 3 was saved by an older version of SLATE. When you open it, SLATE keeps a backup and then updates it.",
+  "why": "Two passives (is updated, is kept) became one subject doing two things in the order they happen.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'the startup sequence says what it found in each slot…'; the order checked in openSlot (adapter.backup, then adapter.save)"
+ },
+ {
+  "source": "src/ui/startup/StartupSequence.tsx#STAGES [migrations]",
+  "kind": "error",
+  "before": "Slot 2 was saved by a newer version of SLATE. This version won’t open it, so it can’t be damaged.",
+  "after": "Slot 2 was saved by a newer version of SLATE, so this version won’t open it. That keeps the save safe.",
+  "why": "The cause and the refusal in one sentence, then why that's good for the player; 'so it can’t be damaged' read as if the save were indestructible.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, same test"
+ },
+ {
+  "source": "src/ui/startup/StartupSequence.tsx#STAGES [validate]",
+  "kind": "error",
+  "before": "Slot 1: That save file is damaged and can’t be read. Its backup can be restored from the save slots.",
+  "after": "Slot 1: That save file is damaged and can’t be read. You can restore its backup from the save slots.",
+  "why": "The way out said as something the player does, not a passive about the backup.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, same test, with and without a backup"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "error",
+  "before": "The save in Slot 1 is damaged, so it can’t be opened. Its backup can be restored instead: press Restore Backup.",
+  "after": "The save in Slot 1 is damaged, so it can’t be opened. Press Restore Backup to open its backup instead.",
+  "why": "The button and what it does in one direct instruction.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says a damaged save can’t be opened, its backup the way on, and what’s wrong behind a disclosure'"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "empty",
+  "before": "Empty, but a backup of the save that was here is kept.",
+  "after": "Empty, but there’s a backup of the save that was here.",
+  "why": "A passive ('is kept') about the game's storage became what the player has.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'an empty slot with a backup says so, and a backup with no date says the date isn’t known'"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "confirmation",
+  "before": "This ends that universe. The character, everywhere they’ve been and everything that happened to them is gone from the slot.",
+  "after": "This deletes Alex Rivera’s life from the slot, with everything that happened in it. (A slot that can't be read: This deletes the save in this slot.)",
+  "why": "'Universe' is the save's internal word for itself. The confirmation now names whose life is deleted, the one fact a player needs before pressing Delete Slot 1.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'says what each slot holds…', the name read from the slot's meta; tools/playthroughs-ui.mjs's Confirm Deletion check moved with it"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#SaveSlots",
+  "kind": "confirmation",
+  "before": "A backup is kept, so if you change your mind you can bring it back here with Restore Backup. / This slot has no backup, so it can’t be brought back afterwards.",
+  "after": "SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. / This slot has no backup, so you can’t bring it back afterwards.",
+  "why": "Both variants active, with the button named as the step.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'says what each slot holds…', both variants; restorableAfterDelete unchanged"
+ },
+ {
+  "source": "src/ui/saves/SaveSlots.tsx#BackupNote",
+  "kind": "label",
+  "before": "Backup from an unrecorded date",
+  "after": "Backup from an unknown date",
+  "why": "The everyday word.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'an empty slot with a backup says so…'"
+ },
+ {
+  "source": "src/engine/persistence/base44.ts#Base44SaveAdapter",
+  "kind": "error",
+  "before": "Loading that save couldn’t reach the server. Check your connection, then try again.",
+  "after": "SLATE couldn’t reach the server while opening that save. Check your connection, then try again.",
+  "why": "The act ('Loading that save') was the one reaching the server; SLATE is the subject now, and 'opening' is the slots' own word (Continue opens a save).",
+  "meaningSensitive": false,
+  "verified": "tests/base44-adapter.test.ts, 'says something useful when the connection simply fails' (and 'does not mistake an empty reply for an empty slot' for: SLATE got no answer from the server while opening that save.)"
+ },
+ {
+  "source": "src/engine/persistence/local.ts#LocalSaveAdapter",
+  "kind": "error",
+  "before": "The save couldn’t be written to this device, so the slot still holds what it held before. Try again in a moment.",
+  "after": "SLATE couldn’t save to this device, so nothing in the slot changed. Try again in a moment.",
+  "why": "What happened and whether anything changed, in plain words; 'still holds what it held before' made the player work it out.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'says a save the device couldn’t write left the slot as it was…', which also checks the slot's stored text is unchanged"
+ },
+ {
+  "source": "src/app/SlateApp.tsx#startFailure",
+  "kind": "error",
+  "before": "That life couldn’t be started because of an error in the game, so nothing was saved to the slot.",
+  "after": "Your new life couldn’t start because of an error in the game, and nothing was saved to the slot.",
+  "why": "'That life' pointed at a life the player had only just made; 'your new life' is the one they pressed Begin on.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts, 'says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do'"
+ },
+ {
+  "source": "src/ui/shell/LifeEnded.tsx#LifeEnded",
+  "kind": "narration",
+  "before": "The clock has stopped for this life. It stays in its slot until you delete it, and another can begin in any slot that’s free.",
+  "after": "The clock won’t run in this save again. It stays in its slot until you delete it, and you can start a new life in any empty slot.",
+  "why": "'This life' and 'another can begin' made the game the subject; the player starts the next one.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g04-life.test.ts renders the ended life's screen"
+ },
+ {
+  "source": "src/ui/shell/LifeEnded.tsx#LifeEnded",
+  "kind": "label",
+  "before": "Years In The World: From the first morning to the last, in the world’s time / Left Behind: What they were worth",
+  "after": "From the first day to the last, in game time / Their net worth at the end",
+  "why": "Plain words under each stat; 'the world's time' was the engine's phrase for game time.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence2-b03.test.ts and tests/evidence-g08-life.test.ts"
+ },
+ {
+  "source": "src/engine/index.ts#openSlot",
+  "kind": "error",
+  "before": "Slot 2 was saved by a newer version of SLATE, so this version won’t open it: that could damage it. It hasn’t been opened or changed.",
+  "after": "Slot 2 was saved by a newer version of SLATE, so this version won’t open it. SLATE hasn’t changed anything in it.",
+  "why": "The same refusal as the startup warning, with whether anything changed said once and actively.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither', which also checks the stored slot is byte for byte the same"
+ },
+ {
+  "source": "src/engine/index.ts#populateWorld [checking]",
+  "kind": "label",
+  "before": "Current Account",
+  "after": "Checking Account",
+  "why": "The glossary's everyday account is a checking account from brief 15.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'a life where the game has no bank keeps a checking account by that name…'"
+ },
+ {
+  "source": "src/engine/index.ts#returnTheHomesMoney",
+  "kind": "label",
+  "before": "The deposit back: the home went / Rent paid ahead, back: the home went",
+  "after": "Home deposit returned / Rent paid ahead, returned",
+  "why": "A transaction memo is read in a statement list: cryptic fragments became what the money is.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, same test, both memos found in an opened save at 90"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "How you lean, not what you can do. Each one shapes a part of your life:",
+  "after": "Your temperament, not your talent. Each one changes a part of your life:",
+  "why": "A new player meets this before knowing anything; 'how you lean' was the engine's word for a disposition's direction.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says each step’s guidance in the player’s words…'"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "Extraversion: how being watched as you perform, by an audience or a class, affects your stress. / Openness: how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale.",
+  "after": "Extraversion: whether performing in front of people, an audience or your class, raises your stress or eases it. / Openness: whether rehearsing new work, a festival’s new play or a Cabaret piece, lifts your morale or lowers it.",
+  "why": "'Affects' hid that it goes either way; the slider's side decides which.",
+  "meaningSensitive": true,
+  "verified": "enjoyment.ts: lean() is positive above 50 and negative below, for DISPOSED.room (stress) and DISPOSED.away and DISPOSED.rehearsal (morale); tests/evidence-g28-ui.test.ts's disposition journeys measure both sides"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "Composure is an ability your work is judged on. Apart from where Composure and Discipline start, none of these makes you better or worse at anything.",
+  "after": "Apart from your starting Composure and Discipline, none of these makes you a better or worse actor. Composure is one of the abilities your performances are judged on.",
+  "why": "What matters first (they don't make you better) leads; 'your work' was the engine's word for a performance.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g27-ui.test.ts, 'starts composure at 26.8 at stability 5 and at 58.3 at 95, as creation and the Profile say'"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "Pick up to four. Traits come in opposing pairs, and you can’t hold both sides of a pair. For now they change how stress builds and clears, how well you sleep and how much a night restores, how quickly you need a shower, … and how you warm to classmates and how much a slight from one hurts. Frugal, Spender and Generous also change what your food costs and how much a meal lifts you.",
+  "after": "Pick up to four. Traits come in opposing pairs, and you can’t have both of a pair. Between them, they change: [a list of nine] … and, for Frugal, Spender and Generous, what your food costs and how much a meal lifts you.",
+  "why": "A ninety-word sentence became a list a new player can scan; 'for now' promised a future the game doesn't have.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'creation says what it’s for…', and tests/evidence2-b10.test.ts, the Keeps Accounts line"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+  "kind": "tutorial",
+  "before": "Each description and cost is written for a whole life, and the game applies only the parts that reach those. Once you’re playing, each trait opens from your own page to show what it changes.",
+  "after": "A trait’s description and cost describe the whole person, but the game uses only the effects above. Once you’re playing, open a trait on your Player Profile to see exactly what it changes.",
+  "why": "'The parts that reach those' pointed at nothing a player could find; the place is named by its screen, the Player Profile, where 'Traits you chose.' lists them.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'creation says what it’s for…'; ProfileWorkspace.tsx lists the traits with links"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#blockedTraitReason",
+  "kind": "error",
+  "before": "Can’t be held with Even Tempered or Unshakeable. / You already hold four traits.",
+  "after": "It clashes with Even Tempered and Unshakeable, which you’ve picked. / You already have four traits, the most you can pick.",
+  "why": "A subjectless passive became a sentence about what the player did and why the button is gray; the list uses spokenList.",
+  "meaningSensitive": false,
+  "verified": "tests/creation.test.ts, 'says why a trait can’t be picked, and says nothing when it can', one clash, two and the full four"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#BodyFields",
+  "kind": "feedback",
+  "before": "Give both, or neither. With only one, your body is drawn from the averages where you were born.",
+  "after": "Enter both, or neither. With only one, SLATE picks your height and weight at random, around the averages where you were born.",
+  "why": "'Drawn' is the engine's word for a random draw; the player reads it as a picture.",
+  "meaningSensitive": true,
+  "verified": "systems/body.ts draws height and BMI from the birth country's adult mean and spread when either is missing (decided.ts's body.draw); tests/evidence-g28-ui.test.ts's Your Body journey"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#IdentityStep",
+  "kind": "tutorial",
+  "before": "With They/Them, the choice is yours. Actor and Actress are two words for the same craft, and the game treats them as equals. Pick the one you want to be called: the game calls you by it, and at school you’re cast in parts written for it, or written for anyone.",
+  "after": "With They/Them, you choose. Actor and Actress are two words for the same craft, and neither counts for more. The game calls you by the one you pick, and at school you’re cast in parts written for it, or for anyone.",
+  "why": "Shorter sentences, one fact each, and the repeated 'written' dropped.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says each step’s guidance…', and tests/evidence-g27-ui.test.ts's Billed As journey"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#IdentityStep",
+  "kind": "label",
+  "before": "You’ll be 22 when this life begins.",
+  "after": "You’ll be 22 when you start.",
+  "why": "The brief names 'this life' as a phrase to drop.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g27-ui.test.ts, the leap-day and year tests"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#BeforeYale",
+  "kind": "other",
+  "before": "Your savings stay where you saved them. Your everyday money is in your account here, and the card stays with Chase. Your 普通預金 (Ordinary Deposit) opens with nothing in it.",
+  "after": "(Kept At MUFG Bank) Your savings stay at MUFG Bank. Your everyday money is in your account here, and your card stays with Chase. / (Moved To Chase) Your savings move to Chase. … Your HSBC current account opens with nothing in it.",
+  "why": "A defect: the line said the savings stayed even with Moved To chosen, and that the account opened empty right under the sentence that gave it its fees. Each variant now says what splitOf does.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'Before Yale says where the savings go and what the account kept there opens with, for each choice', which fails on the old line (defects.md 1)"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#FamilyChoice",
+  "kind": "official",
+  "before": "Yale finds that you need aid. Its living-expense scholarship, $15,200.50 a term, pays the term’s Yale Health plan, $1,882.00, and the rest, $13,318.50, goes into your bank each fall and spring. Work-study hours you miss while ill can be converted to grant aid, and a leave that begins mid-term means giving back part of the scholarship.",
+  "after": "Yale finds that you need aid. Its living-expense scholarship of $15,200.50 a term pays for that term’s Yale Health plan, $1,882.00, and puts the rest, $13,318.50, into your bank each fall and spring. If you miss work-study hours while you’re ill, you can convert them to grant aid. If you take a leave in the middle of a term, you give back part of the scholarship.",
+  "why": "Every amount kept; each condition its own sentence, with the player as the subject.",
+  "meaningSensitive": true,
+  "verified": "tests/need-paths.test.ts and tests/evidence3-person.test.ts, each family; the amounts are termAccount's"
+ },
+ {
+  "source": "src/ui/creation/CharacterCreation.tsx#WEALTH_LABEL",
+  "kind": "label",
+  "before": "Family Nothing, Need Found (the select: Nothing, Scraping, Modest, Comfortable, Wealthy, Inherited)",
+  "after": "Family Next To Nothing, Need Found (Next To Nothing, Scraping By, Modest, Comfortable, Wealthy, Inherited Wealth)",
+  "why": "The labels were the ids capitalized; two read as nonsense on Review. Each now says what its note says.",
+  "meaningSensitive": false,
+  "verified": "tests/need-paths.test.ts's six families, and tests/evidence3-person.test.ts's Review"
+ },
+ {
+  "source": "src/ui/creation/LocationPicker.tsx#LocationPicker",
+  "kind": "empty",
+  "before": "No town or city matches “” there. Try a different spelling, or widen the region.",
+  "after": "(nothing typed) There’s no town or city on record there. / (typed, in a state) No town or city matches “Zzyzxq” there. Try a different spelling, or choose Anywhere in United States.",
+  "why": "An empty search printed empty quotes; 'widen the region' named no control, and the select's first option is Anywhere in the country.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'the place picker says what a country has, and a search that finds nothing what to try', three variants"
+ },
+ {
+  "source": "src/ui/creation/portrait.ts#describeRejection",
+  "kind": "error",
+  "before": "That photo is 30.0MB. The limit is 24MB.",
+  "after": "That photo is 30.0MB, over the 24MB limit. Try a smaller one.",
+  "why": "The refusal now gives the way out.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do'"
+ },
+ {
+  "source": "src/engine/content/personality-traits.ts#KNOB_READS",
+  "kind": "label",
+  "before": "How far a step on a part’s interpretation goes / How fast you stop being clean",
+  "after": "How much a session on how to play a part gets done / How soon you need a shower",
+  "why": "The glossary's 'how much a session gets done' and 'how you play it'; 'stop being clean' was the hygiene measure's mechanism, not the player's experience.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'a trait’s look names what a session of preparation gets done…', five traits' looks"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.home]",
+  "kind": "tutorial",
+  "before": "A word stays plain text until the guide’s chapter that opens it has been read.",
+  "after": "Some words only become links once you’ve read the guide chapter that covers them.",
+  "why": "The owner's own example, adapted to the guide's name for itself (the reference, row 1).",
+  "meaningSensitive": false,
+  "verified": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, drawn through the Help dialog"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.guide]",
+  "kind": "tutorial",
+  "before": "Two things share one button. The guide’s 17 chapters teach the game in order: … The reference is everything else: an entry for each feature, opened by How This Works beside it, and searchable, … Reading either moves no clock, and changes nothing in your save but which chapters you’ve read.",
+  "after": "SLATE has two kinds of help. The guide’s 17 chapters teach the game in order, and each one opens a part of it: a part you haven’t opened yet shows as Locked. How This Works has an entry for every feature, … Reading either doesn’t move the clock, and the only thing it changes in your save is which chapters you’ve read.",
+  "why": "'Two things share one button' named no button; 'the reference' isn't a name on any screen, How This Works is (glossary).",
+  "meaningSensitive": false,
+  "verified": "help-b2.txt"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.find]",
+  "kind": "tutorial",
+  "before": "The menu down the left lists every place the guide has opened, with Home at the top wearing the count of what’s waiting on you.",
+  "after": "The menu down the left lists every place the guide has opened. Home is at the top, with the number of things waiting for you.",
+  "why": "A literary sentence about a basic control (the brief, section 3).",
+  "meaningSensitive": false,
+  "verified": "help-b2.txt"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "other",
+  "before": "It closes when you answer it on Home or deal with it on its own screen. Otherwise it closes by itself after March 3, 2027: the game checks every two days, so that happens within two days of its date. The save keeps it for 180 days after it closes.",
+  "after": "It closes when you answer it on Home or deal with it on its own screen. If you don’t, it closes by itself within two days after its date, March 3, 2027. You can still open it here for 180 days after it closes.",
+  "why": "'The game checks every two days' and 'the save keeps it' were the engine's bookkeeping; the player wants when it closes and how long they can open it.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts, 'says when to answer it, where it sits among the rest…'; expireDecisions runs at the world tick, every two days, and the look resolves until FORGOTTEN_AFTER_DAYS after closing"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "empty",
+  "before": "That question closed more than 180 days ago, so the save no longer keeps it. / That notice is gone. The save keeps the latest 500, and this one was older.",
+  "after": "That question closed more than 180 days ago, so there’s nothing left to open. / That notice is gone. SLATE keeps only your latest 500 notices, and this one was older.",
+  "why": "What the player meets when a link points at something gone: said from their side.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts, 'says an overdue question comes first…', the gone look of each"
+ },
+ {
+  "source": "src/ui/looks/attention.tsx#top",
+  "kind": "other",
+  "before": "The save keeps it until there are more than 500 notices, when the oldest are dropped.",
+  "after": "SLATE keeps your latest 500 notices, so this one stays until 500 newer ones have come in.",
+  "why": "The rule said as what happens to this notice.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts, 'says when it came, where it sits among the unread…'; NOTICES_KEPT keeps the latest 500, so a notice goes once 500 newer ones exist"
+ },
+ {
+  "source": "src/ui/screens/Home.tsx#Home",
+  "kind": "notification",
+  "before": "A tax return is past its due date and unfiled: $174, with its penalty so far.",
+  "after": "A tax return is past its due date and not filed yet. You owe $174, including the penalty so far.",
+  "why": "A colon and an amount with no verb; the figure is what's owed, penalty included.",
+  "meaningSensitive": true,
+  "verified": "tests/evidence-g33-ui.test.ts, 'three days past its day unfiled…': troubles' return_late amount is the balance with the penalty so far"
+ },
+ {
+  "source": "src/ui/workspaces/WorkspaceRouter.tsx#LockedScreen",
+  "kind": "empty",
+  "before": "It opens once you read “Your Bank” in the guide.",
+  "after": "Read “Your Bank” in the guide to open it.",
+  "why": "The step first, as the guide's own locked sentences put it (Read “…” in the guide first.).",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g31-ui.test.ts and tests/evidence-g29-ui.test.ts, Money and Papers locked"
+ },
+ {
+  "source": "src/engine/systems/life.ts#wellbeingSummary",
+  "kind": "feedback",
+  "before": "Flat. The work is fine, the feeling isn’t.",
+  "after": "Feeling low, though the day itself is going fine.",
+  "why": "'The work' is the engine's word; the line is how you are, said under How You Are when morale is under 30 and nothing worse is wrong.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g32-ui.test.ts, 'Energy is red under 15 and amber the fifteen above it…', morale 29"
+ },
+ {
+  "source": "src/engine/systems/life.ts#whyNow",
+  "kind": "label",
+  "before": "Indoors, the weather being no good for a run: builds fitness, at 48 now, and eases stress; costs 12 energy.",
+  "after": "Indoors, since the weather’s no good for a run: builds fitness, at 48 now, and eases stress; costs 12 energy.",
+  "why": "An absolute construction that reads like a form; 'since' says the reason.",
+  "meaningSensitive": false,
+  "verified": "tests/defects-g4-1.test.ts, 'reads the weather as the hour ends…', and tests/evidence-g07-life.test.ts"
+ },
+ {
+  "source": "src/engine/content/guide/start.ts#START [start.guide]",
+  "kind": "tutorial",
+  "before": "A chapter can only be marked read when it’s the next one; any chapter can be opened and read at any time.",
+  "after": "You can open and read any chapter at any time, but I’ve Read It only works on the next one.",
+  "why": "Two passives and a semicolon became one sentence that names the button.",
+  "meaningSensitive": true,
+  "verified": "help-b2.txt; tutorial.read refuses a chapter that isn't the next (world/tutorial.ts)"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#DueNow",
+  "kind": "dialog",
+  "before": "Only a plan of your own can be skipped. Go, or press Stand Here and the clock waits. Whatever moves the clock next runs this, with you there if you’re awake and in the right city.",
+  "after": "You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. It happens the next time the clock moves, and you’re there if you’re awake and in the right city.",
+  "why": "The reference's own row, adapted: this dialog shows for a class or a call and also for an appointment or a paper visit, so it says 'a plan of your own' rather than 'school events', and names the button that isn't there.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame-ui.test.ts, 'the stop says it needs you now…', for a plan and for a passport office visit; DueNow shows Skip It only where item.kind is PLAN_KIND"
+ },
+ {
+  "source": "src/ui/shell/TimeControls.tsx#TimeControls",
+  "kind": "confirmation",
+  "before": "Moving the clock to One Week (October 26, 2026 at 6:00 PM) passes one commitment, and the clock stops at each one. At each, you can go, or press Stand Here and the clock waits. A plan of your own can also be skipped, and a rehearsal with a partner called off, though at short notice that costs their trust.",
+  "after": "Moving the clock to One Week (October 26, 2026 at 6:00 PM) passes one commitment. The clock stops at it so you can choose: press Go, or Stand Here to wait. You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust. (Two: The clock stops at each one so you can choose…)",
+  "why": "'Stops at each one' after 'one commitment' read oddly; the buttons are named, and the passives became the player's choices.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'On The Way says how many commitments the clock stops at…', one and two; tools/playthroughs-ui.mjs's On The Way check moved with it"
+ },
+ {
+  "source": "src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace",
+  "kind": "heading",
+  "before": "Everything on your calendar, and the holidays kept where you are. When two things you need to be at overlap, they’re flagged here as a clash.",
+  "after": "Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.",
+  "why": "The chip's own word, Clash, and 'public holidays' for 'holidays kept'.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame-ui.test.ts, 'says what the calendar holds, a clash in the next month…'"
+ },
+ {
+  "source": "src/ui/workspaces/CalendarWorkspace.tsx#PlanForm",
+  "kind": "label",
+  "before": "You’ll need to be in New Haven for it, and the clock stops when it comes round. Two things at the same time are allowed, and the calendar flags the clash.",
+  "after": "You’ll need to be in New Haven for it, and the clock stops when it’s time. You can have two things at the same time, and the calendar marks the clash.",
+  "why": "'Comes round' is British; the second sentence becomes something the player can do.",
+  "meaningSensitive": false,
+  "verified": "tests/evidence-g01-life.test.ts, the Gym journey"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.clock]",
+  "kind": "tutorial",
+  "before": "The clock at the top runs one to one with real time: a minute of yours is a minute of your character’s. Play starts it and Pause stops it. … It holds while the guide or this help is open.",
+  "after": "Press Play at the top of the screen to start the clock, and Pause to stop it. While it runs, a minute passes in the game for every real minute: you get tired and hungry, what’s on your calendar happens, and the clock pauses itself at each commitment. It waits while the guide or this help is open.",
+  "why": "The first action first, as the brief asks of every How This Works overview; 'the clock waits' is the glossary's word.",
+  "meaningSensitive": false,
+  "verified": "help-b4.txt, drawn through the Help dialog"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.needs]",
+  "kind": "tutorial",
+  "before": "Every question has a date, and closes on it, answered or not, at the world’s next look, which comes every 2 days. / The save forgets a closed question 180 days after it closed, and keeps your last 500 notices.",
+  "after": "Every question has a date. If you don’t answer it, it closes by itself within two days after that date. / You can still open a closed question for 180 days after it closes, and SLATE keeps your latest 500 notices.",
+  "why": "'The world's next look' and 'the save forgets' were the engine; the same facts, said as what the player sees, match the question look's words (batch 3).",
+  "meaningSensitive": true,
+  "verified": "help-b4.txt, drawn through the Help dialog; tests/defects3-50-70.test.ts holds both lines; expireDecisions at the two-day world tick, FORGOTTEN_AFTER_DAYS 180, NOTICES_KEPT 500"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.calendar]",
+  "kind": "tutorial",
+  "before": "To be counted there, you have to be awake, out of hospital and in the commitment’s town when it runs; only Yale Health’s assessment counts a hospital bed as there. … No move in the game takes you out of your town, and a plan names the town you made it in.",
+  "after": "To count as there, you need to be awake, out of hospital and in the commitment’s town when it runs. Yale Health’s assessment is the only commitment you can be at from a hospital bed. … The game never moves you to another town, and a plan is in the town where you made it.",
+  "why": "A semicolon chain became one fact to a sentence; the exception said as what it means for the player.",
+  "meaningSensitive": true,
+  "verified": "help-b4.txt, drawn through the Help dialog; present() in systems/school.ts and systems/health.ts, and the assessment's own check in systems/leave.ts, as the entry's header comment records"
+ },
+ {
+  "source": "src/engine/content/guide/day.ts#DAY [day.weather]",
+  "kind": "tutorial",
+  "before": "… It’s calculated from the town’s climate, its season and the day’s own luck, so it’s the same every time you look. One thing in the game reads it: whether a workout is a run. / Work Out reads the weather as its hour ends.",
+  "after": "… The weather changes one thing in the game: whether a workout is a run. It’s worked out from your town’s climate, the season and a little chance, so it’s the same every time you look. / Work Out checks the weather as its hour ends.",
+  "why": "What it changes leads; 'reads' was the engine's verb for a rule taking an input.",
+  "meaningSensitive": false,
+  "verified": "help-b4.txt, drawn through the Help dialog"
+ },
+ {
+  "source": "src/ui/looks/place.tsx#top",
+  "kind": "other",
+  "before": "The game has no income tax table for Svalbard and Jan Mayen, so the tile below says Not On File instead of showing a zero. / A country’s towns are loaded once your life has a place in it.",
+  "after": "The game has no income tax table for Svalbard and Jan Mayen, so Tax On A Wage says Not On File rather than zero. / A country’s towns show up once your life has a place in it.",
+  "why": "The figure named by its label, not 'the tile below'; 'loaded' was the browser's word.",
+  "meaningSensitive": false,
+  "verified": "looks-b4.txt, the Longyearbyen life and the state's source line"
+ },
+ {
+  "source": "src/ui/looks/plans.tsx#top",
+  "kind": "label",
+  "before": "Your plans are ordinary items on the calendar, so the clock stops at them and a clash is flagged.",
+  "after": "Your plans are ordinary calendar items: the clock stops at them, and a clash is marked.",
+  "why": "Marked, as the Calendar screen now says it.",
+  "meaningSensitive": false,
+  "verified": "looks-b4.txt, Your Own Plans"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .US",
+  "kind": "official",
+  "before": "Visa Waiver Program: 90 days per admission, not extendable; no fixed rolling window, but CBP scrutinises frequent or long cumulative stays. Requires an e-passport.",
+  "after": "Under the Visa Waiver Program: up to 90 days each visit, with no extension. There’s no fixed limit over a year, but border officers look closely at frequent or long stays. You need an e-passport.",
+  "why": "The researcher's shorthand under Going Abroad, said as sentences with every fact kept; CBP's initials and a British spelling went.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts, 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone'"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .JP",
+  "kind": "official",
+  "before": "Visa exemption for short-term stay up to 90 days. No pre-travel authorisation in force (JESTA planned, see uncertain).",
+  "after": "No visa is needed for a short stay of up to 90 days. There’s no travel authorization to apply for yet: Japan plans one, JESTA, but when it starts wasn’t confirmed.",
+  "why": "'See uncertain' pointed at the research's list, which no screen shows; the uncertainty is now said in the note.",
+  "meaningSensitive": true,
+  "verified": "tests/language-frame.test.ts, 'keeps a note’s first word whole…' and 'says each rule in sentences…'"
+ },
+ {
+  "source": "src/engine/content/entry.ts#ENTRY .NZ",
+  "kind": "official",
+  "before": "Visa waiver country: stay up to 3 months per visit; NZeTA plus IVL (NZD 100) required before travel.",
+  "after": "No visa is needed for up to 3 months each visit, but you need an NZeTA and must pay the visitor levy (IVL, NZD 100) before you travel.",
+  "why": "A label-and-semicolons note became a sentence; the levy is named for what it is.",
+  "meaningSensitive": false,
+  "verified": "tests/language-frame.test.ts, 'says each rule in sentences…'"
+ }
+]

@@ -15,6 +15,11 @@
  *   node tools/text-inventory.mjs --speak [<pattern>] prints each engine-speak hit, with its source
  *   node tools/text-inventory.mjs --bless             sets docs/text/engine-speak.json to today's counts (they may fall)
  *   node tools/text-inventory.mjs --prune             removes the statuses of sources that are gone, and lists them
+ *   node tools/text-inventory.mjs --mark2 <pattern> <status> --by <area> [--reason <text>] [--evidence <text>]
+ *                                                     records a second-pass status (brief 15) for the matching sources, in
+ *                                                     docs/text/second-pass/<area>.json; only the area that owns a source
+ *                                                     (AREAS2) may mark it
+ *   node tools/text-inventory.mjs --todo2 [<area>]    lists the sources still Pending in the second pass, by area and file
  *
  * A string is a string literal, a template (its ${…} written as {…}) or JSX text, in `src/` but the tests and the
  * gazetteer's data, or a string in a JSON file under `src/` the game imports, that reads as words: two or more of them, or one capitalised word a label would be. Ids, keys,
@@ -29,11 +34,21 @@
  * A status is one of the brief's four. Each is recorded with a hash of its source's strings, so a source whose text has
  * changed since is counted Pending again, "changed since it was reviewed", until it's read again: a status is never a
  * word somebody typed and left. Each source belongs to one of the brief's subsystems, by its file (SUBSYSTEMS below).
+ *
+ * The second pass (from 2026-10-19, the owner's brief 15, "Complete Natural-Language Editorial Pass, Including All
+ * Retained Text"): every source is read again, whatever its first status, and given a second-pass status of its own in
+ * docs/text/second-pass/<area>.json. The first pass's statuses stay as they were, the history the brief keeps. A source
+ * counts as read when either pass's status matches its text. A rewrite in the second pass leaves the first's stale, and
+ * that's expected, not a failure. Each source belongs to one second-pass area, by its file (AREAS2), and only that area
+ * marks it. A Retained source gives a reason specific to it: "already reviewed", "grammatically correct" or "no flagged
+ * words" isn't one (the brief, section 10). Once docs/text/second-pass-closed.json exists, --check also fails a source
+ * the second pass hasn't read.
  */
 import ts from 'typescript';
 import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 
 const ROOT = 'src';
@@ -63,6 +78,26 @@ const SUBSYSTEMS = [
   ['world', 'The World: Places, Countries, Weather And Reference Data', [/^src\/engine\/content\//, /^src\/engine\//]],
 ];
 const subsystemOf = (file) => (SUBSYSTEMS.find(([, , rules]) => rules.some((r) => r.test(file))) ?? SUBSYSTEMS.at(-1))[0];
+
+/**
+ * The second pass's areas (brief 15), by file, the first rule that matches winning; a file no rule names goes by its
+ * subsystem (BY_SUBSYSTEM). The guide's topic entries stay with the area whose screens they teach, as in brief 14.
+ */
+const AREAS2 = [
+  ['tutorial', [/^src\/engine\/content\/tutorial\.ts$/, /^src\/engine\/content\/guide\/(index|types)\.ts$/, /^src\/ui\/guide\//, /^src\/engine\/world\/tutorial\.ts$/]],
+  ['material-a', [/^src\/engine\/content\/briefs\/(briefs-[a-z]|index)\.ts$/, /^src\/engine\/content\/(scenes-[\w-]+|plays|monologues?|sides)\.ts$/]],
+  ['material-b', [/^src\/engine\/content\/briefs\/second-[a-z]\.ts$/]],
+  ['money-data', [/^src\/engine\/content\/(banks?-[\w-]+|bankopening|homeaccounts|security|accountlife|pending|cash|rents|roundups)\.ts$/, /^src\/engine\/content\/home-accounts\.json$/]],
+  ['frame', [/^index\.html$/, /^public\//]],
+];
+const BY_SUBSYSTEM = { start: 'frame', home: 'frame', calendar: 'frame', notifications: 'frame', controls: 'frame', tutorial: 'tutorial', profile: 'profile', school: 'school', money: 'money', papers: 'papers', health: 'health', world: 'health', material: 'material-a' };
+const areaOf2 = (file) => AREAS2.find(([, rules]) => rules.some((r) => r.test(file)))?.[0] ?? BY_SUBSYSTEM[subsystemOf(file)] ?? 'frame';
+const SECOND_STATUSES = ['Rewritten', 'Retained', 'Pending', 'Blocked'];
+const NEEDS2 = { Retained: 'reason', Blocked: 'reason', Rewritten: 'evidence' };
+/** Reasons the brief rules out for keeping a sentence (section 10), and a floor on how much a reason says. */
+const GENERIC_REASON = /\b(already (been )?(reviewed|rewritten|read|checked)|grammatical(ly)? (correct|fine)|no flagged|reads (fine|well|ok)|(is|was) fine|fine as (it is|is)|ok as is|no change(s)? needed|unchanged|good as is|nothing to change|looks good|kept as is|as before)\b/i;
+const reasonProblem = (r) => (!r ? 'a reason is needed' : r.trim().split(/\s+/).length < 8 ? 'a reason says why this source stays, in at least eight words' : GENERIC_REASON.test(r) ? 'that reason is one the brief rules out (section 10): say what this text does well for its player' : null);
+const evidenceProblem = (e) => (!e ? 'evidence is needed' : e.trim().split(/\s+/).length < 4 || !/test|tools\/|\.mjs|\.ts\b|walk|screen|built app|played|render|journey|harness|examples|save/i.test(e) ? 'evidence names the test, the tool output, or the screen of the built app where the new words were read' : null);
 
 /** Engine-speak: the internal concepts the brief names, and the shapes they take here (section 3). A hit is a question
  * for a writer, not a verdict: some are the right word in their place, and the reviewer says so in the status. */
@@ -114,7 +149,10 @@ function walkJson(dir) {
 function isWords(t) {
   const s = t.trim();
   if (s.length < 2 || !/[A-Za-z]/.test(s)) return false;
-  if (/^(https?:|mailto:|\/|\.\/|\.\.\/|#|var\(|rgba?\(|calc\()/.test(s)) return false;
+  // A web address alone isn't words, but one followed by words is a citation a screen shows: until 2026-10-19 (brief 15's
+  // coordinator) any string that began with an address was set aside, and with it every genre's "Source for its
+  // definition" line and 22 other citations.
+  if (/^(https?:\S*$|mailto:|\/|\.\/|\.\.\/|#|var\(|rgba?\(|calc\()/.test(s)) return false;
   if (/^[a-z0-9_.:/\-#@$%*+=,]+$/.test(s)) return false; // ids, kinds, keys, class lists without spaces
   if (/^[a-z][\w-]*( [a-z][\w-]*)+$/.test(s) && /-/.test(s) && !/[.?!’']/.test(s)) return false; // class lists
   if (/^[\w-]+:\s*[^ ]+;/.test(s) || /^[A-Z0-9_]+$/.test(s)) return false; // css, CONSTANT_IDS, ISO codes
@@ -248,6 +286,20 @@ export function inventory() {
       else leaves(v, (t) => add(`${file}#${top}`, top, null, t));
     }
   }
+  // Outside src/ (from 2026-10-19, brief 15's check of the inventory against the built app, `tools/text-omissions.mjs`):
+  // the page's own title and description in index.html, and the holiday names the calendar shows from
+  // public/holidays/, one source of every distinct English name. The gazetteer's place names in public/geo/ are proper
+  // names, shown as the data spells them, and are recorded as an omission with that reason, not read here.
+  if (existsSync('index.html')) {
+    const html = readFileSync('index.html', 'utf8');
+    const head = [...html.matchAll(/<title>([^<]+)<\/title>|<meta name="description" content="([^"]+)"/g)].map((m) => m[1] ?? m[2]);
+    if (head.length) sources.set('index.html#head', { id: 'index.html#head', file: 'index.html', decl: 'head', anchor: null, subsystem: 'start', strings: head.map((text) => ({ line: html.split('\n').findIndex((l) => l.includes(text)) + 1, kind: 'label', text })) });
+  }
+  if (existsSync('public/holidays')) {
+    const names = new Set();
+    for (const f of readdirSync('public/holidays').filter((x) => x.endsWith('.tsv')).sort()) for (const l of readFileSync(`public/holidays/${f}`, 'utf8').split('\n')) { const c = l.split('\t'); if (!l.startsWith('#') && c.length >= 3 && c[2].trim()) names.add(c[2].trim()); }
+    if (names.size) sources.set('public/holidays#names', { id: 'public/holidays#names', file: 'public/holidays', decl: 'names', anchor: null, subsystem: 'calendar', strings: [...names].sort().map((text) => ({ line: 0, kind: 'label', text })) });
+  }
   for (const s of sources.values()) {
     s.hash = createHash('sha1').update(s.strings.map((x) => x.text).join('\u0000')).digest('hex').slice(0, 12);
     s.words = s.strings.reduce((n, x) => n + (x.text.match(/[A-Za-z][A-Za-z’']*/g) ?? []).length, 0);
@@ -284,41 +336,80 @@ function statusOf(s, statuses) {
   return st;
 }
 
-function write(srcs, statuses, toDisk) {
-  const rows = srcs.map((s) => ({ ...s, ...statusOf(s, statuses), strings: s.strings }));
+const SECOND_DIR = `${OUT}/second-pass`;
+const SECOND_CLOSED = `${OUT}/second-pass-closed.json`;
+/** The second pass's statuses, one file per area; a record in a file other than its source's area is a problem. */
+function loadSecond() {
+  const all = {}, misfiled = [];
+  if (!existsSync(SECOND_DIR)) return { all, misfiled };
+  for (const f of readdirSync(SECOND_DIR).filter((x) => x.endsWith('.json')).sort()) {
+    const area = f.slice(0, -5);
+    for (const [id, st] of Object.entries(JSON.parse(readFileSync(`${SECOND_DIR}/${f}`, 'utf8')))) {
+      if (all[id]) misfiled.push(`${id} (${all[id].area} and ${area})`);
+      all[id] = { ...st, area };
+    }
+  }
+  return { all, misfiled };
+}
+function secondOf(s, second) {
+  const st = second[s.id];
+  if (!st) return { status: 'Pending', why: 'not yet read in the second pass' };
+  if (st.hash !== s.hash) return { status: 'Pending', why: `changed since the second pass marked it ${st.status} (${st.on ?? ''})`, was: st.status };
+  return st;
+}
+/** Read by either pass: its first status or its second matches its words, and neither of those is Pending. */
+const isRead = (s, statuses, second) => (statuses[s.id] && statusOf(s, statuses).status !== 'Pending') || (second[s.id] && secondOf(s, second).status !== 'Pending');
+
+function write(srcs, statuses, toDisk, second = {}) {
+  const rows = srcs.map((s) => { const two = secondOf(s, second); return { ...s, ...statusOf(s, statuses), strings: s.strings, area2: areaOf2(s.file), second: two.status, secondWhy: two.reason ?? two.evidence ?? two.why ?? '' }; });
   const totals = {};
-  for (const [key, name] of SUBSYSTEMS) totals[key] = { name, sources: 0, strings: 0, words: 0, speak: 0, ...Object.fromEntries(STATUSES.map((x) => [x, 0])) };
-  for (const r of rows) { const t = totals[r.subsystem]; t.sources++; t.strings += r.strings.length; t.words += r.words; t.speak += r.speak.length; t[r.status]++; }
-  const all = { sources: rows.length, strings: rows.reduce((n, r) => n + r.strings.length, 0), words: rows.reduce((n, r) => n + r.words, 0), speak: rows.reduce((n, r) => n + r.speak.length, 0), ...Object.fromEntries(STATUSES.map((x) => [x, rows.filter((r) => r.status === x).length])) };
-  if (!toDisk) return { totals, all };
+  const zero2 = () => Object.fromEntries(SECOND_STATUSES.map((x) => [`second ${x}`, 0]));
+  for (const [key, name] of SUBSYSTEMS) totals[key] = { name, sources: 0, strings: 0, words: 0, speak: 0, ...Object.fromEntries(STATUSES.map((x) => [x, 0])), ...zero2() };
+  for (const r of rows) { const t = totals[r.subsystem]; t.sources++; t.strings += r.strings.length; t.words += r.words; t.speak += r.speak.length; t[r.status]++; t[`second ${r.second}`]++; }
+  const areas2 = {};
+  for (const r of rows) { const a = (areas2[r.area2] ??= { sources: 0, words: 0, ...zero2() }); a.sources++; a.words += r.words; a[`second ${r.second}`]++; }
+  const all = { sources: rows.length, strings: rows.reduce((n, r) => n + r.strings.length, 0), words: rows.reduce((n, r) => n + r.words, 0), speak: rows.reduce((n, r) => n + r.speak.length, 0), ...Object.fromEntries(STATUSES.map((x) => [x, rows.filter((r) => r.status === x).length])), ...Object.fromEntries(SECOND_STATUSES.map((x) => [`second ${x}`, rows.filter((r) => r.second === x).length])) };
+  if (!toDisk) return { totals, all, areas2 };
   mkdirSync(OUT, { recursive: true });
-  writeFileSync(`${OUT}/inventory.json`, `${JSON.stringify({ written: 'by tools/text-inventory.mjs --write, from src/ and docs/text/statuses/', totals, all, sources: rows.map(({ strings, speak, ...r }) => ({ ...r, strings: strings.length, lines: [...new Set(strings.map((x) => x.line))], speak: speak.map((h) => `${h.line} ${h.label}`) })) })}\n`);
+  writeFileSync(`${OUT}/inventory.json`, `${JSON.stringify({ written: 'by tools/text-inventory.mjs --write, from src/ and docs/text/statuses/', totals, all, areas2, sources: rows.map(({ strings, speak, ...r }) => ({ ...r, strings: strings.length, lines: [...new Set(strings.map((x) => x.line))], speak: speak.map((h) => `${h.line} ${h.label}`) })) })}\n`);
   const esc = (t) => String(t).replace(/\|/g, '/').replace(/\n/g, ' ');
   const md = ['# The Text Inventory', '', 'Every string the game can show, by source and subsystem, written by `tools/text-inventory.mjs --write` from `src/` and `statuses/`. Nothing here is typed. A status is recorded with a hash of its source’s strings; a source changed since is Pending again until it’s read again.', '',
-    '| Subsystem | Sources | Strings | Words | Engine-Speak Hits | Rewritten And Verified | Reviewed And Retained | Pending | Blocked |', '|---|---|---|---|---|---|---|---|---|',
-    ...SUBSYSTEMS.map(([k]) => { const t = totals[k]; return `| ${t.name} | ${t.sources} | ${t.strings} | ${t.words} | ${t.speak} | ${t['Rewritten And Verified']} | ${t['Reviewed And Retained']} | ${t.Pending} | ${t.Blocked} |`; }),
-    `| **All** | ${all.sources} | ${all.strings} | ${all.words} | ${all.speak} | ${all['Rewritten And Verified']} | ${all['Reviewed And Retained']} | ${all.Pending} | ${all.Blocked} |`, ''];
+    'Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verified, Reviewed And Retained, Pending, Blocked (`statuses/`). The second, brief 15’s, read every source again: Rewritten, Retained, Pending, Blocked (`second-pass/`). A source rewritten in the second pass shows its first status as changed since; that’s the history, not a gap.', '',
+    '## The Second Pass, By Subsystem', '',
+    '| Subsystem | Sources | Strings | Words | Engine-Speak Hits | Rewritten | Retained | Pending | Blocked |', '|---|---|---|---|---|---|---|---|---|',
+    ...SUBSYSTEMS.map(([k]) => { const t = totals[k]; return `| ${t.name} | ${t.sources} | ${t.strings} | ${t.words} | ${t.speak} | ${t['second Rewritten']} | ${t['second Retained']} | ${t['second Pending']} | ${t['second Blocked']} |`; }),
+    `| **All** | ${all.sources} | ${all.strings} | ${all.words} | ${all.speak} | ${all['second Rewritten']} | ${all['second Retained']} | ${all['second Pending']} | ${all['second Blocked']} |`, '',
+    '## The Second Pass, By Area', '', '| Area | Sources | Words | Rewritten | Retained | Pending | Blocked |', '|---|---|---|---|---|---|---|',
+    ...Object.entries(areas2).sort().map(([a, x]) => `| ${a} | ${x.sources} | ${x.words} | ${x['second Rewritten']} | ${x['second Retained']} | ${x['second Pending']} | ${x['second Blocked']} |`), '',
+    '## The First Pass, By Subsystem', '',
+    '| Subsystem | Sources | Rewritten And Verified | Reviewed And Retained | Pending | Blocked |', '|---|---|---|---|---|---|',
+    ...SUBSYSTEMS.map(([k]) => { const t = totals[k]; return `| ${t.name} | ${t.sources} | ${t['Rewritten And Verified']} | ${t['Reviewed And Retained']} | ${t.Pending} | ${t.Blocked} |`; }),
+    `| **All** | ${all.sources} | ${all['Rewritten And Verified']} | ${all['Reviewed And Retained']} | ${all.Pending} | ${all.Blocked} |`, ''];
   for (const [k] of SUBSYSTEMS) {
     const rs = rows.filter((r) => r.subsystem === k);
     if (!rs.length) continue;
-    md.push(`## ${totals[k].name}`, '', '| Source | Strings | Kinds | Engine-Speak | Status | Reason Or Evidence |', '|---|---|---|---|---|---|');
-    for (const r of rs) md.push(`| \`${esc(r.id)}\` | ${r.strings.length} | ${r.kinds.join(', ')} | ${r.speak.length} | ${r.status} | ${esc(r.reason ?? r.evidence ?? r.why ?? '')} |`);
+    md.push(`## ${totals[k].name}`, '', '| Source | Strings | Engine-Speak | Second Pass | Area | Reason Or Evidence | First Pass |', '|---|---|---|---|---|---|---|');
+    for (const r of rs) md.push(`| \`${esc(r.id)}\` | ${r.strings.length} | ${r.speak.length} | ${r.second} | ${r.area2} | ${esc(r.secondWhy)} | ${r.status} |`);
     md.push('');
   }
   writeFileSync(`${OUT}/INVENTORY.md`, md.join('\n'));
-  return { totals, all };
+  return { totals, all, areas2 };
 }
 
-const args = process.argv.slice(2);
+// Run as a command, not when another tool imports `inventory` (from 2026-10-19: `tools/text-omissions.mjs` reads it).
+const MAIN = process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url;
+const args = MAIN ? process.argv.slice(2) : ['--quiet'];
 const flag = (f) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] : undefined; };
-const srcs = inventory();
+const srcs = MAIN ? inventory() : [];
 const { all: statuses, twice } = loadStatuses();
+const { all: second, misfiled } = loadSecond();
 
 if (args[0] === '--show') {
   const re = glob(args[1] ?? '*');
   for (const s of srcs.filter((x) => re.test(x.id))) {
     const st = statusOf(s, statuses);
-    console.log(`\n## ${s.id}  [${s.subsystem}; ${st.status}; ${s.speak.length} engine-speak]`);
+    const two = secondOf(s, second);
+    console.log(`\n## ${s.id}  [${s.subsystem}; area ${areaOf2(s.file)}; second pass ${two.status}; first pass ${st.status}; ${s.speak.length} engine-speak]`);
     for (const x of s.strings) console.log(`  ${String(x.line).padStart(5)} ${x.kind.padEnd(11)} ${x.text}`);
   }
 } else if (args[0] === '--speak') {
@@ -345,14 +436,41 @@ if (args[0] === '--show') {
   mkdirSync(STATUS_DIR, { recursive: true });
   writeFileSync(file, `${JSON.stringify(Object.fromEntries(Object.entries(mine).sort(([a], [b]) => a.localeCompare(b))), null, 1)}\n`);
   console.log(`${hit.length} sources marked ${status}`);
+} else if (args[0] === '--mark2') {
+  const re = glob(args[1]);
+  const status = args[2];
+  if (!SECOND_STATUSES.includes(status)) { console.error(`a second-pass status is one of: ${SECOND_STATUSES.join('; ')}`); process.exit(2); }
+  const reason = flag('--reason'), evidence = flag('--evidence'), by = flag('--by');
+  if (!by || !/^[a-z0-9-]+$/.test(by)) { console.error('--by <area> names the second-pass area: docs/text/second-pass/<area>.json'); process.exit(2); }
+  const need = NEEDS2[status];
+  const bad = need === 'reason' ? reasonProblem(reason) : need === 'evidence' ? evidenceProblem(evidence) : null;
+  if (bad) { console.error(`${status}: ${bad}`); process.exit(2); }
+  const hit = srcs.filter((x) => re.test(x.id));
+  if (!hit.length) { console.error(`no source matches ${args[1]}`); process.exit(2); }
+  const others = hit.filter((x) => areaOf2(x.file) !== by);
+  if (others.length) { console.error(`${others.length} of these sources aren't ${by}'s to mark (AREAS2): ${others.slice(0, 5).map((x) => `${x.id} (${areaOf2(x.file)})`).join(', ')}`); process.exit(2); }
+  const on = flag('--on') ?? execFileSync('git', ['log', '-1', '--format=%cs'], { encoding: 'utf8' }).trim();
+  const file = `${SECOND_DIR}/${by}.json`;
+  const mine = load(file, {});
+  for (const s of hit) mine[s.id] = { status, hash: s.hash, on, ...(reason ? { reason } : {}), ...(evidence ? { evidence } : {}), first: statusOf(s, statuses).status };
+  mkdirSync(SECOND_DIR, { recursive: true });
+  writeFileSync(file, `${JSON.stringify(Object.fromEntries(Object.entries(mine).sort(([a], [b]) => a.localeCompare(b))), null, 1)}\n`);
+  console.log(`${hit.length} sources marked ${status} in the second pass`);
+} else if (args[0] === '--todo2') {
+  const want = args[1];
+  const left = srcs.filter((s) => (!want || areaOf2(s.file) === want) && secondOf(s, second).status === 'Pending');
+  const byFile = {};
+  for (const s of left) { const k = `${areaOf2(s.file)}  ${s.file}`; (byFile[k] ??= { n: 0, words: 0 }); byFile[k].n++; byFile[k].words += s.words; }
+  for (const [k, v] of Object.entries(byFile).sort()) console.log(`${k}: ${v.n} sources, ${v.words} words`);
+  console.log(`${left.length} sources Pending in the second pass${want ? ` for ${want}` : ''}`);
 } else if (args[0] === '--prune') {
   const ids = new Set(srcs.map((s) => s.id));
   let n = 0;
-  for (const f of existsSync(STATUS_DIR) ? readdirSync(STATUS_DIR).filter((x) => x.endsWith('.json')) : []) {
-    const mine = JSON.parse(readFileSync(`${STATUS_DIR}/${f}`, 'utf8'));
+  for (const dir of [STATUS_DIR, SECOND_DIR]) for (const f of existsSync(dir) ? readdirSync(dir).filter((x) => x.endsWith('.json')) : []) {
+    const mine = JSON.parse(readFileSync(`${dir}/${f}`, 'utf8'));
     const gone = Object.keys(mine).filter((id) => !ids.has(id));
-    for (const id of gone) { delete mine[id]; console.log(`  ${f}: ${id}`); n++; }
-    if (gone.length) writeFileSync(`${STATUS_DIR}/${f}`, `${JSON.stringify(mine, null, 1)}\n`);
+    for (const id of gone) { delete mine[id]; console.log(`  ${dir}/${f}: ${id}`); n++; }
+    if (gone.length) writeFileSync(`${dir}/${f}`, `${JSON.stringify(mine, null, 1)}\n`);
   }
   console.log(`${n} statuses removed, their sources gone`);
 } else if (args[0] === '--bless') {
@@ -360,19 +478,32 @@ if (args[0] === '--show') {
   for (const s of srcs) for (const h of s.speak) by[h.label] = (by[h.label] ?? 0) + 1;
   writeFileSync(RATCHET, `${JSON.stringify({ note: 'Set by tools/text-inventory.mjs --bless. These may fall. They may not rise.', counts: by }, null, 1)}\n`);
   console.log(by);
-} else {
-  const { totals, all } = write(srcs, statuses, args.includes('--write'));
-  for (const [k] of SUBSYSTEMS) { const t = totals[k]; console.log(`${k.padEnd(14)} ${String(t.sources).padStart(5)} sources ${String(t.strings).padStart(6)} strings ${String(t.words).padStart(7)} words ${String(t.speak).padStart(5)} engine-speak; RV ${t['Rewritten And Verified']} RR ${t['Reviewed And Retained']} P ${t.Pending} B ${t.Blocked}`); }
-  console.log(`all: ${all.sources} sources, ${all.strings} strings, ${all.words} words, ${all.speak} engine-speak hits; Rewritten And Verified ${all['Rewritten And Verified']}, Reviewed And Retained ${all['Reviewed And Retained']}, Pending ${all.Pending}, Blocked ${all.Blocked}`);
+} else if (MAIN) {
+  const { totals, all, areas2 } = write(srcs, statuses, args.includes('--write'), second);
+  for (const [k] of SUBSYSTEMS) { const t = totals[k]; console.log(`${k.padEnd(14)} ${String(t.sources).padStart(5)} sources ${String(t.strings).padStart(6)} strings ${String(t.words).padStart(7)} words ${String(t.speak).padStart(5)} engine-speak; second pass: Rewritten ${t['second Rewritten']} Retained ${t['second Retained']} Pending ${t['second Pending']} Blocked ${t['second Blocked']}; first: RV ${t['Rewritten And Verified']} RR ${t['Reviewed And Retained']} P ${t.Pending} B ${t.Blocked}`); }
+  for (const [a, x] of Object.entries(areas2).sort()) console.log(`area ${a.padEnd(11)} ${String(x.sources).padStart(5)} sources ${String(x.words).padStart(7)} words; Rewritten ${x['second Rewritten']} Retained ${x['second Retained']} Pending ${x['second Pending']} Blocked ${x['second Blocked']}`);
+  console.log(`all: ${all.sources} sources, ${all.strings} strings, ${all.words} words, ${all.speak} engine-speak hits; second pass: Rewritten ${all['second Rewritten']}, Retained ${all['second Retained']}, Pending ${all['second Pending']}, Blocked ${all['second Blocked']}; first pass: Rewritten And Verified ${all['Rewritten And Verified']}, Reviewed And Retained ${all['Reviewed And Retained']}, Pending ${all.Pending}, Blocked ${all.Blocked}`);
   if (args.includes('--check')) {
     const problems = [];
-    const unknown = srcs.filter((s) => !statuses[s.id]);
+    // A source either pass names (from brief 15, 2026-10-19: a source new in the second pass has no first status).
+    const unknown = srcs.filter((s) => !statuses[s.id] && !second[s.id]);
     if (unknown.length) problems.push(`${unknown.length} sources no status names (a new source of player-facing text: review it and mark it): ${unknown.slice(0, 5).map((s) => s.id).join(', ')}${unknown.length > 5 ? ', …' : ''}`);
     // Nothing a player reads is left unread (from the end of brief 14, 2026-10-17, once every source had been read): a
     // source whose words changed since its status, or one marked Pending, fails until it's read again and marked. Until
-    // then Pending was counted and allowed, while the areas worked through 4,147 sources.
-    const pending = srcs.filter((s) => statuses[s.id] && statusOf(s, statuses).status === 'Pending');
-    if (pending.length) problems.push(`${pending.length} sources Pending, their words changed since they were read (read each against docs/STYLE.md, then --mark it): ${pending.slice(0, 5).map((s) => s.id).join(', ')}${pending.length > 5 ? ', …' : ''}`);
+    // then Pending was counted and allowed, while the areas worked through 4,147 sources. From brief 15 (2026-10-19) a
+    // source is read when either pass's status matches its words: a second-pass rewrite leaves the first stale.
+    const pending = srcs.filter((s) => (statuses[s.id] || second[s.id]) && !isRead(s, statuses, second));
+    if (pending.length) problems.push(`${pending.length} sources Pending, their words changed since they were read (read each against docs/STYLE.md, then --mark2 it): ${pending.slice(0, 5).map((s) => s.id).join(', ')}${pending.length > 5 ? ', …' : ''}`);
+    // The second pass closed (brief 15): every source read in it.
+    if (existsSync(SECOND_CLOSED)) {
+      const unread = srcs.filter((s) => secondOf(s, second).status === 'Pending');
+      if (unread.length) problems.push(`${unread.length} sources the second pass hasn't read, or whose words changed since (--todo2 lists them): ${unread.slice(0, 5).map((s) => s.id).join(', ')}${unread.length > 5 ? ', …' : ''}`);
+    }
+    const wrongArea = Object.entries(second).filter(([id, st]) => { const s = srcs.find((x) => x.id === id); return s && areaOf2(s.file) !== st.area; });
+    if (wrongArea.length) problems.push(`${wrongArea.length} second-pass statuses in another area's file: ${wrongArea.slice(0, 3).map(([id, st]) => `${id} in ${st.area}`).join('; ')}`);
+    if (misfiled.length) problems.push(`${misfiled.length} sources with two second-pass statuses: ${misfiled.slice(0, 3).join('; ')}`);
+    const weak = Object.entries(second).filter(([, st]) => st.status === 'Retained' && reasonProblem(st.reason));
+    if (weak.length) problems.push(`${weak.length} Retained sources whose reason the brief rules out: ${weak.slice(0, 3).map(([id]) => id).join(', ')}`);
     const ratchet = load(RATCHET, null);
     if (ratchet) {
       const by = {};
@@ -380,7 +511,7 @@ if (args[0] === '--show') {
       for (const [label, n] of Object.entries(by)) if (n > (ratchet.counts[label] ?? 0)) problems.push(`engine-speak "${label}" rose to ${n}, over ${ratchet.counts[label] ?? 0} (docs/text/engine-speak.json): say it the player's way, or, where the word is right, say why in the source's status`);
     }
     const ids = new Set(srcs.map((s) => s.id));
-    const gone = Object.keys(statuses).filter((id) => !ids.has(id));
+    const gone = [...Object.keys(statuses), ...Object.keys(second)].filter((id) => !ids.has(id));
     if (gone.length) problems.push(`${gone.length} statuses name sources that are gone: ${gone.slice(0, 3).join(', ')}${gone.length > 3 ? ', …' : ''} (--prune removes them)`);
     if (twice.length) problems.push(`${twice.length} sources claimed by two areas: ${twice.slice(0, 3).join('; ')}`);
     for (const p of problems) console.error(`  ${p}`);

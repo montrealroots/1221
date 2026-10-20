@@ -64,6 +64,7 @@ import { journeyOf } from '@/engine/systems/evaluation';
 import { returnsOf } from '@/engine/systems/taxreturn';
 import { openDecisions } from '@/engine/world/world';
 import { FEATURE_LABEL } from '@/engine/systems/experience';
+import { TASK_PROFILES } from '@/engine/content/tasks';
 import { BRIEFS } from '@/engine/content/briefs';
 import { BRIEF, genreKnown } from '@/engine/systems/briefs';
 
@@ -457,17 +458,18 @@ describe('p-journey-history', () => {
     out.push(`Not met yet: ${unmet.map((f) => FEATURE_LABEL[f]).join(', ')}. When you open a brief, one built on these is suggested beside it.`);
     // Range.
     const kinds = Object.values(j.totals).filter((t) => (t?.n ?? 0) > 0).length;
+    const kindNames = Object.entries(j.totals).filter(([, t]) => (t?.n ?? 0) > 0).map(([k]) => TASK_PROFILES[k]!.label);
     const genres = Object.values(p.engagement?.byGenre ?? {}).filter((g) => (g.practice ?? 0) > 0).length;
-    section('Range', [{ line: `${kinds} kinds of work judged, ${genres} genres worked in, ${12 - unmet.length} of 12 kinds of material met.`, evidence: [`Kinds of work on your record: ${kinds}`] }]);
+    section('Range', [{ line: `${kinds} kinds of work judged, ${genres} genres worked in, ${12 - unmet.length} of 12 kinds of material met.`, evidence: [`${kindNames.slice(0, -1).join(', ')} and ${kindNames.at(-1)}`] }]);
     const dir = j.direction!;
-    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered}.`, evidence: [`Worked ${dir.worked}, answered ${dir.answered}`] }]);
+    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered || 'none'}.`, evidence: [`${dir.given} notes given, ${dir.worked} worked on and ${dir.answered} answered`] }]);
     const school = p.school as unknown as { tally: { calls: number; answered: number }; callsBefore?: { calls: number; answered: number } };
     const calls = (school.callsBefore?.calls ?? 0) + school.tally.calls;
     const answered = (school.callsBefore?.answered ?? 0) + school.tally.answered;
     const kept = (p.school!.classmates as unknown as { kept?: number }[]).reduce((a, m) => a + (m.kept ?? 0), 0);
     section('Reliability', [{ line: `${answered} of ${calls} calls answered; ${kept} rehearsals with a partner kept.`, evidence: ['The school’s record of calls; your partners’ records'] }]);
     const tog = j.together!;
-    section('Playing With Others', [{ line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}.`, evidence: [`Scenes, takes and nights together: ${tog.n}`] }]);
+    section('Playing With Others', [{ line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}.`, evidence: [`${tog.n} scenes, takes and nights with others`] }]);
     return words(out.join(' '));
   }
 
@@ -482,7 +484,7 @@ describe('p-journey-history', () => {
     // Each of the sections the first round didn't read is there, and the habit nobody chose isn't.
     for (const title of ['What Your Work Shows Most', 'What Keeps Holding It Back', 'Material You Know', 'Not met yet:', 'Range', 'Taking Direction', 'Reliability', 'Playing With Others']) expect(shown, title).toContain(title);
     expect(shown).not.toContain('How You Tend To Play It');
-    expect(shown).toContain('Taking Direction Of 9 notes and requests on your craft, you answered 0. From: Worked 0, answered 0.');
+    expect(shown).toContain('Taking Direction Of 9 notes and requests on your craft, you answered none. From: 9 notes given, 0 worked on and 0 answered.');
     expect(shown).toContain('Reliability 68 of 68 calls answered; 0 rehearsals with a partner kept.');
     expect(between(drawn(reload(sim), ProfileWorkspace).text, 'Your Work So Far', 'Sources And Estimates')).toBe(shown);
   });
@@ -496,8 +498,8 @@ describe('p-journey-history', () => {
       });
       return between(drawn(sim, ProfileWorkspace).text, 'Your Work So Far', 'Sources And Estimates');
     };
-    expect(chose('b11-habit-5', ['driven', 'driven', 'driven', 'driven', 'driven'])).toContain('How You Tend To Play It You play it driven: 5 of 5 choices on pace. From: Ways chosen: Measured 0, Driven 5; Shown in work: Measured 0, Driven 0.');
-    expect(chose('b11-habit-41', ['driven', 'measured', 'driven', 'driven', 'driven'])).toContain('How You Tend To Play It You play it driven: 4 of 5 choices on pace. From: Ways chosen: Measured 1, Driven 4; Shown in work: Measured 0, Driven 0.');
+    expect(chose('b11-habit-5', ['driven', 'driven', 'driven', 'driven', 'driven'])).toContain('How You Tend To Play It You tend to play it driven: 5 of your 5 choices of pace. From: Ways chosen: Measured 0, Driven 5; Shown in work: Measured 0, Driven 0.');
+    expect(chose('b11-habit-41', ['driven', 'measured', 'driven', 'driven', 'driven'])).toContain('How You Tend To Play It You tend to play it driven: 4 of your 5 choices of pace. From: Ways chosen: Measured 1, Driven 4; Shown in work: Measured 0, Driven 0.');
     expect(chose('b11-habit-4', ['driven', 'driven', 'driven', 'driven'])).not.toContain('How You Tend To Play It');
     expect(chose('b11-habit-32', ['driven', 'measured', 'driven', 'measured', 'driven'])).not.toContain('How You Tend To Play It');
   });
@@ -661,14 +663,14 @@ describe('h-needs', () => {
     };
     const first = toDue();
     expect(written(first)).toBe('October 11, 2026');
-    expect(needs(sim)).toContain('A Late Card Payment The minimum payment was $40.00, and only $0.00 was paid. That costs a $30.00 late fee, and it goes on your credit record if it’s still short at the next due date, thirty days late.');
+    expect(needs(sim)).toContain('A Late Card Payment The minimum payment on the Chase Freedom Unlimited was $40.00, and nothing was paid by the due date. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record. Pay the card on Money, under Cards.');
     markRead(sim);
     // New Haven's $10.00 of groceries on the card each midnight from 25 August to 11 October, 48 of them, and the late
     // fee: Regulation Z's safe harbor, $30 for a first, never over the $40 minimum it was late on.
     expect(needs(sim)).toBe(`What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is a payment behind, owing $${48 * 10 + 30}.`);
     const second = toDue();
     expect(written(second)).toBe('November 10, 2026');
-    expect(needs(sim)).toContain('Your Card Is Suspended You’ve missed 2 payments in a row, so Chase has suspended the Chase Freedom Unlimited until you catch up.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(needs(sim)).toContain('Your Card Is Suspended You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you make a payment on time.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     markRead(sim);
     // 78 days of groceries to 10 November, the first fee and a repeat within six cycles: the safe harbor's $41, held to
     // the $40 minimum.

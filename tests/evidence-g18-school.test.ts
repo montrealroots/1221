@@ -248,10 +248,10 @@ describe('school.prepare', () => {
     expect(m).toMatchObject({ assignmentId: a.id, mate: a.partner, question: 'obstacle' });
     expect(a.asks?.filter((k) => k.status === 'open') ?? []).toEqual([]);
     dials(sim);
-    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'learn' })).toBe('Priya reads the scene differently from you. Answer them first.');
+    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'learn' })).toBe('Priya reads the scene differently from you. Answer them first, under Your Class.');
     sim = reload(sim);
     dials(sim);
-    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'learn' })).toBe('Priya reads the scene differently from you. Answer them first.');
+    expect(no(sim, 'school.prepare', { assignmentId: a.id, activity: 'learn' })).toBe('Priya reads the scene differently from you. Answer them first, under Your Class.');
     go(sim, 'school.respond', { momentId: m!.id, choice: 'hold' });
     const t0 = sim.now;
     const learned = step(sim, a.id, 'learn');
@@ -272,8 +272,8 @@ describe('school.prepare', () => {
     const score = byTemplate(sim, 'movement-score');
     const context = byTemplate(sim, 'context-presentation');
     dials(sim);
-    expect(no(sim, 'school.prepare', { assignmentId: score.id, activity: 'devise' })).toBe('You don’t know where the studios are yet. The building tour in Orientation shows you.');
-    expect(no(sim, 'school.prepare', { assignmentId: context.id, activity: 'research' })).toBe('You don’t know where the library is yet. The building tour in Orientation shows you.');
+    expect(no(sim, 'school.prepare', { assignmentId: score.id, activity: 'devise' })).toBe('You don’t know where the studios are yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
+    expect(no(sim, 'school.prepare', { assignmentId: context.id, activity: 'research' })).toBe('You don’t know where the library is yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.');
     // Desk work isn't held by it: the play is read.
     expect(step(sim, context.id, 'read-play').moved).toBeGreaterThan(0);
     const t0 = sim.now;
@@ -516,18 +516,18 @@ describe('school.approach', () => {
     noteThreeTimes(sim, 'memorization');
     sim.advanceTo(at(8, 31, 15, 30));
     const { text } = drawn(sim);
-    expect(text).toContain('A Note That Keeps Coming Back: Lines, given 3 times.');
+    expect(text).toContain('A Note That Keeps Coming Back: Lines, given three times.');
     // Acting I's card comes first, with the four ways; the speech drill, which prepares a text too, has its own.
     const first = <T,>(all: T[]) => { expect(all.length).toBeGreaterThan(0); return all[0]!; };
     expect(first(buttons('school.approach', 'A Targeted Drill'))).toMatchObject({ disabled: false, title: 'a half-hour drill of it, once a day' });
     expect(first(buttons('school.approach', 'A Smaller Piece Of It'))).toMatchObject({ disabled: false });
     expect(first(buttons('school.approach', 'Work On It With Your Partner'))).toMatchObject({ disabled: true, title: 'Hannah would rather work alone, after last time.' });
     const put = first(buttons('school.approach', 'Put It First'));
-    expect(put).toMatchObject({ disabled: false, title: 'it comes first, and counts for more when the work is shown' });
-    expect(press(put)).toEqual(['Put It First: it comes first, and counts for more when the work is shown.']);
+    expect(put).toMatchObject({ disabled: false, title: 'it comes first, and counts for more when the piece is shown' });
+    expect(press(put)).toEqual(['Put It First: it comes first, and counts for more when the piece is shown.']);
     expect(work(sim, id).approach?.kind).toBe('objective');
     expect(cwOf(sim).assignments.filter((a) => a.approach).map((a) => a.id)).toEqual([id]);
-    expect(drawn(sim).text).toContain('Another Way At It: Put It First. For lines: it comes first, and counts for more when the work is shown. It won’t take the note on its own.');
+    expect(drawn(sim).text).toContain('Another Way At It: Put It First. For lines: it comes first, and counts for more when the piece is shown. It won’t take the note by itself: you still take it at a showing.');
   });
 });
 
@@ -549,7 +549,7 @@ describe('school.choose', () => {
     Object.assign(a.prep, { memorization: 0.9, rehearsal: 0.9, partner: 0.9 });
     toMeeting(sim, a.dueOn);
     expect(a.feedback?.focus).toEqual({ kind: 'choice', question: odd.q.id });
-    expect(a.feedback?.text).toContain(`${odd.q.label}: ${against.why}`);
+    expect(a.feedback?.text).toContain(`${odd.q.label}: you answered “${against.text},” but the text doesn’t support it. ${against.why}`);
     const key = `choice:${odd.q.id}`;
     expect(notesOf(cwOf(sim)).find((n) => n.key === key)).toMatchObject({ status: 'open', given: 1 });
     // Shown again at the next meeting with the answer as it was: not taken there.
@@ -588,7 +588,7 @@ describe('school.choose', () => {
     const [first, second] = questionsFor(a);
     const supported = first!.options.find((o) => o.supported)!;
     dials(sim);
-    expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toBe('Read the text first. You can only do table work on a text you know.');
+    expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toBe('Read the text first. You can answer the Table Work questions once you know it.');
     // TEST SETUP: worn out, readiness under 40, as a night without sleep leaves one, so a step reads at the floor of its
     // focus, a half. Read The Scene's 0.55 at half: 0.275, under the 0.3 the table asks.
     Object.assign(sim.player.wellbeing, { energy: 15, stress: 85, sleepDebt: 12, nourishment: 25, morale: 25, hygiene: 40, condition: 100 });
@@ -598,7 +598,7 @@ describe('school.choose', () => {
     // further by focus, 85% at 0 to 115% at 100, this student's about 101%. Still under the 0.3 the table asks.
     expect(a.prep.familiarity).toBeCloseTo(0.55 * 0.5 * speed, 12);
     expect(a.prep.familiarity).toBeLessThan(0.3);
-    expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toBe('Read the text first. You can only do table work on a text you know.');
+    expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toBe('Read the text first. You can answer the Table Work questions once you know it.');
     step(sim, a.id, 'read');
     expect(a.prep.familiarity).toBeGreaterThanOrEqual(0.3);
     expect(no(sim, 'school.choose', { assignmentId: byTemplate(sim, 'movement-score').id, question: first!.q.id, option: supported.id })).toBe('That isn’t a question this piece asks.');
@@ -623,7 +623,7 @@ describe('school.choose', () => {
     // Shown, shown again, and done.
     sim.advanceTo(at(9, 12, 20));
     expect(work(sim, a.id).status).toBe('done');
-    expect(no(sim, 'school.choose', { assignmentId: a.id, question: third.q.id, option: third.options[0]!.id })).toBe('That work is finished.');
+    expect(no(sim, 'school.choose', { assignmentId: a.id, question: third.q.id, option: third.options[0]!.id })).toBe('That piece is finished.');
   });
 
   it('draws the table work’s questions as selects with the scene’s readings, and once shown says what cuts against a choice', () => {
@@ -784,7 +784,7 @@ describe('school.cancel_rehearsal', () => {
     expect(go<{ late: boolean }>(sim, 'school.cancel_rehearsal', { assignmentId: a.id, rehearsalId: monday.rehearsalId })).toEqual({ late: false });
     expect(trustOf(mate())).toBe(50);
     expect(personOf(mate()).incidents ?? []).toEqual([]);
-    expect(mateRecord(mate()).log![0]!.what).toBe('You moved a rehearsal, with notice');
+    expect(mateRecord(mate()).log![0]!.what).toBe('You called off a rehearsal, with notice');
     expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.payload.rehearsalId === monday.rehearsalId)).toBe(false);
     expect(no(sim, 'school.cancel_rehearsal', { assignmentId: a.id, rehearsalId: monday.rehearsalId })).toBe('There’s no such rehearsal booked.');
     sim = reload(sim);
@@ -810,7 +810,7 @@ describe('school.cancel_rehearsal', () => {
     // The first class, Monday 31 August.
     sim.advanceTo(at(8, 31, 15, 30));
     const brought = openMoments(sim).filter((m) => m.mate === work(sim, id).partner);
-    expect(brought.map((m) => [m.kind, m.text])).toEqual([['boundary', 'Hannah says that after the last times, they’ll only rehearse with you if you ask a day ahead.']]);
+    expect(brought.map((m) => [m.kind, m.text])).toEqual([['boundary', 'Hannah says that after the last few times, they’ll only rehearse with you if you ask a day ahead.']]);
   });
 
   it('with the partner’s trust under wary, an ask is declined in their words, and the evening isn’t booked', () => {
@@ -1038,8 +1038,8 @@ describe('school.respond', () => {
     expect(m).toMatchObject({ mate: work(sim, id).partner });
     mateRecord(mateOf(sim, work(sim, id))).reliability = 1; // TEST SETUP: Hannah comes when she says.
     for (const [choice, done, trust, b, lifts] of [
-      ['argue', 'Hannah holds to it, and things are cooler between you. It lifts after 4 rehearsals kept.', 31, -9, 4],
-      ['respect', 'From now on, ask Hannah a day ahead. It lifts after 2 rehearsals kept.', 36, -5, 2],
+      ['argue', 'Hannah holds to it, and things are cooler between you. That stops once you’ve kept four rehearsals with them.', 31, -9, 4],
+      ['respect', 'From now on, ask Hannah a day ahead. That stops once you’ve kept two rehearsals with them.', 36, -5, 2],
     ] as const) {
       const s = reload(sim);
       const mate = () => mateOf(s, work(s, id));

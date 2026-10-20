@@ -1,0 +1,371 @@
+=== us-chase (the life banks at us-chase)
+
+
+=== us-bank-of-america (the life banks at us-bank-of-america)
+Round-Ups, Keep the Change. Each Bank of America debit card purchase is rounded up to the next whole dollar, and the difference moves to your savings in one transfer at the end of each business day.
+Round-Ups: Off How This Works 
+When the account is short: If the account can’t cover the day’s transfer, that day’s round-ups are canceled, not carried, and it never overdraws.
+What The Bank Leaves Open, And What The Game Leaves Out
+A purchase of whole dollars: the terms say “the amount in excess of the purchase price”, so the game moves nothing.
+An account overdrawn during the day and back in credit by its end: the terms cancel the day; the game looks at the balance at the day’s end.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A purchase refunded leaves its round-up in savings, as the terms say; purchases in the game aren’t refunded.
+Source: bankofamerica.com, Personal Schedule of Fees, effective August 7, 2026; Keep the Change page and FAQ, checked October 13, 2026.
+
+=== us-wells-fargo (the life banks at us-wells-fargo)
+Round-Ups, Way2Save Save As You Go. Not a round-up: a flat $1 for each one-time debit card purchase, counted at the end of each business day and moved to your savings on the next business day.
+Round-Ups: Off How This Works 
+When the account is short: If the account doesn’t have the funds or is overdrawn, the transfer doesn’t happen. The game drops it: the terms don’t say it’s tried again.
+What The Bank Leaves Open, And What The Game Leaves Out
+Which day’s balance decides: the game looks when the transfer is made.
+A day Overdraft Protection was used, Wells Fargo makes no transfer: the game doesn’t look for it, and moves it if the account covers it.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: Online Bill Pay payments count at Wells Fargo too; bills in the game aren’t paid through Bill Pay.
+Not in the game: Wells Fargo names Way2Save Savings as the account it goes into; the game has one savings account at a bank.
+Source: wellsfargo.com, Consumer Account Fee and Information Schedule, effective July 28, 2026, checked October 13, 2026.
+
+=== us-citi (the life banks at us-citi)
+Round-Ups, Spend & Save. Each purchase on your Citi debit card or Citi credit card is rounded up to the next whole dollar into a running tally, paid from your checking account, and moved to your savings daily or weekly, as you choose, at most $15 a transfer with the rest carried to the next.
+How Often Choose… Daily Weekly Minimum Balance, At Least $50.00 
+Round-Ups: Off How This Works 
+Not now: Choose how often it moves: daily, weekly.
+When the account is short: You set a minimum balance, at least $50. Below it on the day a transfer is due, Citi tries the next two days, and after three days below it turns Spend & Save off.
+What The Bank Leaves Open, And What The Game Leaves Out
+What happens to the tally when it’s turned off, by you or by Citi: the game drops it.
+A purchase of whole dollars: the game moves nothing.
+Daily on calendar days or business days: the game moves it every day; weekly from the day you turn it on, the game’s reading of “the next occurrence of the chosen weekday”.
+Source: citi.com/online-services/ways-to-save, Spend & Save terms (undated, read October 13, 2026), checked October 13, 2026.
+
+=== us-capital-one (the life banks at us-capital-one)
+
+
+=== ca-rbc (the life banks at ca-rbc)
+
+
+=== ca-td (the life banks at ca-td)
+Round-Ups, Simply Save. Not a round-up: a fixed amount you choose, from $0.50 to $5.00, for each debit purchase, moved from checking to your savings daily, weekly or every two weeks, as you choose.
+Each Purchase, C$0.50 To C$5.00 How Often Choose… Daily Weekly Every two weeks 
+Round-Ups: Off How This Works 
+Not now: Choose the amount each purchase, C$0.50 to C$5.00.
+When the account is short: TD won’t make the transfer if checking doesn’t have enough to cover it. The game drops it: TD doesn’t say whether it’s carried to the next.
+What The Bank Leaves Open, And What The Game Leaves Out
+The steps between $0.50 and $5.00: the game takes any amount in cents.
+Which weekday a weekly transfer falls on: the game counts from the day you turn it on.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: TD can count ATM withdrawals as well as, or instead of, purchases; the game counts purchases.
+Source: td.com, automated savings and TD Ask Us (Simply Save), undated, read October 13, 2026, checked October 13, 2026.
+
+=== ca-scotiabank (the life banks at ca-scotiabank)
+Round-Ups, Bank The Rest. Every ScotiaCard debit purchase is rounded up to the next multiple of $1 or $5, as you choose, and the day’s round-ups move to your Money Master savings at the end of each business day.
+Round Up To Choose… The next C$1.00 The next C$5.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: C$1.00, C$5.00.
+When the account is short: If the balance at the business day’s end is less than the day’s round-ups, that day’s transfer is canceled, even with overdraft protection.
+What The Bank Leaves Open, And What The Game Leaves Out
+A purchase already at a multiple of the unit: the game moves nothing.
+Whether a canceled day is tried again: the game drops it.
+Closing the Money Master account turns it off, as the terms say.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A canceled or reversed purchase leaves its round-up in savings, as the terms say; purchases in the game aren’t refunded.
+Not in the game: The investment option moving a month’s round-ups to a fund.
+Source: Scotiabank, Day-to-Day Banking Companion Booklet, September 2026, Part 16, checked October 13, 2026.
+
+=== ca-bmo (the life banks at ca-bmo)
+
+
+=== ca-cibc (the life banks at ca-cibc)
+
+
+=== mx-bbva (the life banks at mx-bbva)
+Round-Ups, Plan, Redondeo. Each purchase on your BBVA debit or credit card is rounded up to the next $10, $50 or $100, as you choose, and the difference goes to your Plan savings; a purchase already at a multiple moves a whole unit.
+Round Up To Choose… The next MX$10.00 The next MX$50.00 The next MX$100.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: MX$10.00, MX$50.00, MX$100.00.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+When each amount posts: BBVA says “with each purchase”, and the game moves the day’s together at its end.
+BBVA may cap it at amounts it doesn’t publish: the game sets none.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: The Porcentaje rule, a share of each purchase.
+Not in the game: The Plan account pays no interest; the game moves it to your savings.
+Source: BBVA México, Contrato de Productos y Servicios Múltiples, chapter I.IV (Plan), RECA 0305-999-037855/09-01904-0826; ficha Plan, January 5, 2023, checked October 13, 2026.
+
+=== mx-banorte (the life banks at mx-banorte)
+
+
+=== mx-santander (the life banks at mx-santander)
+Round-Ups, Mis Metas, Redondeo. Each purchase on your Santander debit or credit card is rounded up to the next $10, and the difference goes to your savings.
+Round-Ups: Off How This Works 
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+A purchase already at a multiple of $10: the game moves nothing.
+When it posts: Santander says with each purchase, and the game moves the day’s together at its end.
+Santander doesn’t say that a credit card purchase’s round-up comes from your checking account; the game takes it from there.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: Disfruta y guarda, a set amount at participating merchants, whose list isn’t published.
+Not in the game: A meta is a goal kept inside your checking account, not a savings product, and Santander’s pages disagree on whether it earns interest; the game moves it to your savings.
+Source: Santander México, Mis Metas page and FAQ (read live October 13, 2026); contract clause V.28, checked October 13, 2026.
+
+=== mx-banamex (the life banks at mx-banamex)
+
+
+=== gb-barclays (the life banks at gb-barclays)
+
+
+=== gb-lloyds (the life banks at gb-lloyds)
+Round-Ups, Save the Change. Every Lloyds debit card purchase is rounded up to the next whole pound, and the day’s change moves to your savings at the start of the next working day: Friday’s on Monday, and Saturday’s to Monday’s together on Tuesday.
+Round-Ups: Off How This Works 
+When the account is short: It moves only as long as it doesn’t take the account overdrawn, or more overdrawn. The game drops what couldn’t move: the conditions don’t say whether it’s carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+What happens to change not yet moved when an account closes: the game drops it.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A refunded purchase’s change stays in savings, as the conditions say; purchases in the game aren’t refunded.
+Source: Lloyds Save the Change conditions M57299 (04/26), read from the Wayback Machine’s capture of September 22, 2026, checked October 13, 2026.
+
+=== gb-natwest (the life banks at gb-natwest)
+Round-Ups, Round Ups. Debit card payments in pounds are rounded up to the next whole pound, and the change, times the multiplier you pick from 1 to 5, moves to your savings at the day’s end.
+Multiplier Choose… ×1, just the change ×2 ×3 ×4 ×5 
+Round-Ups: Off How This Works 
+When the account is short: Round Ups never take you into an overdraft, and don’t move while you’re already in one. The game drops what couldn’t move: NatWest doesn’t say whether it’s tried again.
+What The Bank Leaves Open, And What The Game Leaves Out
+The multiplier is optional, so ×1 is the plain change and the game’s starting choice; NatWest doesn’t call it a default in so many words.
+NatWest moves them when the payments clear, which can take up to 4 days; the game moves them at the day’s end.
+Closing the current or savings account stops Round Ups, and what hasn’t moved doesn’t, as NatWest says.
+Source: natwest.com/savings/tools-for-savings/round-ups.html and the support FAQ, read live and checked October 13, 2026.
+
+=== gb-hsbc (the life banks at gb-hsbc)
+
+
+=== gb-santander (the life banks at gb-santander)
+
+
+=== gb-nationwide (the life banks at gb-nationwide)
+
+
+=== ie-aib (the life banks at ie-aib)
+
+
+=== ie-bank-of-ireland (the life banks at ie-bank-of-ireland)
+
+
+=== ie-ptsb (the life banks at ie-ptsb)
+
+
+=== is-landsbankinn (the life banks at is-landsbankinn)
+Round-Ups, Sparað með kortanotkun. Each debit card purchase is either rounded up to the next 100, 500 or 1,000 kr, or raised by a set 100, 250, 500 or 1,000 kr, as you choose, and the day’s saving moves at the end of each banking day.
+How It Counts Choose… Rounded Up A Set Amount 
+Round-Ups: Off How This Works 
+Not now: Choose how it counts: rounded up, or a set amount.
+When the account is short: If the account has no funds at the banking day’s end, that day’s saving is canceled, and it’s never made on an overdraft.
+What The Bank Leaves Open, And What The Game Leaves Out
+The detailed rules are from 2019 and 2020; the bank’s page still offers the next hundred or thousand and a set amount.
+A purchase already at a multiple of the unit: the game moves nothing.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: On a Visa credit card it’s worked out at the statement’s end and moved on the due date.
+Not in the game: Spara í appi’s set amount a purchase, whose choices the bank doesn’t give.
+Not in the game: Another customer’s account or a charity can receive it.
+Source: landsbankinn.is/einstaklingar/sparnadur (read live October 13, 2026); terms, Wayback capture of December 8, 2019, checked October 13, 2026.
+
+=== is-arion (the life banks at is-arion)
+
+
+=== is-islandsbanki (the life banks at is-islandsbanki)
+Round-Ups, Eigðu afganginn. Each debit card purchase is rounded up to the next 100, 500 or 1,000 kr, as you choose, and the day’s difference moves to your savings at the end of each working banking day.
+Round Up To Choose… The next 100 kr The next 500 kr The next 1,000 kr 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: 100 kr, 500 kr, 1,000 kr.
+When the account is short: If the balance goes below the withdrawal limit, 0 kr, that day’s saving is canceled; the overdraft is never used for it.
+What The Bank Leaves Open, And What The Game Leaves Out
+The detailed rules are from the bank’s pages of 2009 and 2018; its page now still offers 100, 500 or 1,000 kr.
+A purchase already at a multiple of the unit: the game moves nothing.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: ATM withdrawals counted too, in the 2009 rules.
+Not in the game: Someone else’s account, or a charity’s, can receive it.
+Source: islandsbanki.is, Eigðu afganginn (read live October 13, 2026); rules, archived August 25, 2018, checked October 13, 2026.
+
+=== fr-bnp-paribas (the life banks at fr-bnp-paribas)
+
+
+=== fr-societe-generale (the life banks at fr-societe-generale)
+
+
+=== fr-lcl (the life banks at fr-lcl)
+Round-Ups, System’Épargne. Every card payment in euros is rounded up to the next 1 € or the next 5 €, as you choose, and the total moves to your savings twice a month.
+Round Up To Choose… The next €1.00 The next €5.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: €1.00, €5.00.
+When the account is short: If the period’s transfer would leave the account in debit, it’s canceled in full for that period, not carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+The day of the twice-monthly transfer: the terms say each “quinzaine”, so the game moves it on the 1st and the 16th.
+A payment already at a whole euro (or a multiple of 5 €): the game moves nothing.
+Turned off, the round-ups counted before aren’t credited, as the terms say; switching your primary account to another bank drops them too.
+Not in the game: A deferred-debit card’s round-ups move at the month’s end; the game’s card is an immediate-debit one.
+Not in the game: A child’s account or an LCL-chosen charity can receive them; the game moves them to your savings.
+Source: LCL, Carte Visa Cléo Dispositions Générales, Option System’Épargne, in force from January 1, 2026, checked October 13, 2026.
+
+=== fr-credit-agricole (the life banks at fr-credit-agricole)
+
+
+=== fr-la-banque-postale (the life banks at fr-la-banque-postale)
+
+
+=== de-deutsche-bank (the life banks at de-deutsche-bank)
+
+
+=== de-commerzbank (the life banks at de-commerzbank)
+
+
+=== de-postbank (the life banks at de-postbank)
+
+
+=== de-ing (the life banks at de-ing)
+Round-Ups, Kleingeld Plus. Every card payment is rounded up to the next 1 € or the next 5 €, as you choose, and the day’s amounts move to your Extra-Konto savings each day.
+Round Up To Choose… The next €1.00 The next €5.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: €1.00, €5.00.
+When the account is short: It pauses while the current account holds less than 20 €, so it doesn’t go into the red, and starts again above it.
+What The Bank Leaves Open, And What The Game Leaves Out
+Round-ups from payments made while it’s paused: the game counts none.
+Whether a refunded payment takes its round-up back: purchases in the game aren’t refunded.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: With Girokonto Future, the change can go to a charity instead of savings.
+Source: ing.de, Kleingeld Plus product page and FAQ; Bedingungen Girokonto Future, June 19, 2026, checked October 13, 2026.
+
+=== de-berliner-sparkasse (the life banks at de-berliner-sparkasse)
+
+
+=== es-santander (the life banks at es-santander)
+Round-Ups, Cuenta Hucha, redondeo. Each card purchase is rounded up to the next euro, and the difference goes to your Hucha savings.
+Round-Ups: Off How This Works 
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+Santander also offers “two units up” and “another figure”, without saying how either is worked out: the game offers the next euro only.
+A purchase of whole euros: the game moves nothing.
+When it moves: the game moves the day’s at its end.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Source: bancosantander.es, Cuenta Hucha Digital page and precontract (read live October 13, 2026), checked October 13, 2026.
+
+=== es-bbva (the life banks at es-bbva)
+Round-Ups, Programa tu Cuenta, Redondeo en compras. Each BBVA debit card purchase that isn’t a whole euro is rounded up to the next euro; the day’s round-ups are added up at its end and move to your savings.
+Round-Ups: Off How This Works 
+When the account is short: If the account doesn’t have what the rule needs, it doesn’t run. The game drops that day’s: BBVA doesn’t say whether it’s tried again.
+What The Bank Leaves Open, And What The Game Leaves Out
+A multiplier from x2 to x4, in BBVA’s 2019 and 2020 news and on none of its pages now: not offered.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A purchase refunded leaves its round-up where it went, as BBVA says; purchases in the game aren’t refunded.
+Not in the game: A pension plan or a fund can receive them.
+Source: bbva.es, reglas de Programa tu Cuenta (updated July 28, 2025) and app-redondeo-ahorro (updated October 13, 2025), checked October 13, 2026.
+
+=== es-caixabank (the life banks at es-caixabank)
+
+
+=== es-sabadell (the life banks at es-sabadell)
+Round-Ups, Ahorro Sabadell, redondeo de cada compra. Each purchase is rounded up to the next euro, and the week’s round-ups move to your Ahorro Sabadell overnight from Friday to Saturday.
+Round-Ups: Off How This Works 
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+The next euro is only in Sabadell’s 2020 brochure; its pages now give no unit.
+Whether a “compra” is a card purchase only or, as in 2020, any payment from the account: the game counts card purchases.
+A multiplier is reported only outside Sabadell: not offered.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Source: bancsabadell.com, Ahorro Sabadell page and help center (when the saving moves, May 1, 2024), checked October 13, 2026.
+
+=== es-bankinter (the life banks at es-bankinter)
+Round-Ups, Cuenta Modo Ahorro, redondeo. Each card purchase moves the change to the next euro and the rest of the amount you choose, €1 or €2 (€6.30 at €2 moves €1.70), in one charge the day after.
+Amount Choose… €1.00 €2.00 
+Round-Ups: Off How This Works 
+Not now: Choose the amount: €1.00 or €2.00.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+Bankinter also lets you pick any other amount, with no limits stated: the game offers the two it names.
+A purchase of whole euros: the game moves the amount past the first euro, nothing at €1.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: A round-up set on several goals moves once for each; the game has one.
+Source: bankinter.com, Cuenta Modo Ahorro (read live October 13, 2026), checked October 13, 2026.
+
+=== jp-mufg (the life banks at jp-mufg)
+
+
+=== jp-smbc (the life banks at jp-smbc)
+
+
+=== jp-mizuho (the life banks at jp-mizuho)
+
+
+=== jp-resona (the life banks at jp-resona)
+
+
+=== jp-japan-post-bank (the life banks at jp-japan-post-bank)
+
+
+=== kr-kb-kookmin (the life banks at kr-kb-kookmin)
+
+
+=== kr-shinhan (the life banks at kr-shinhan)
+
+
+=== kr-hana (the life banks at kr-hana)
+
+
+=== kr-nh (the life banks at kr-nh)
+
+
+=== kr-kakaobank (the life banks at kr-kakaobank)
+Round-Ups, 저금통, 동전 모으기. Not a purchase round-up: each weekday, Monday to Friday, holidays or not, the part of the previous day’s closing balance under ₩1,000 moves to your savings, the 저금통.
+Round-Ups: Off How This Works 
+When the account is short: It’s skipped when the balance is ₩1,000 or less, never moves just part, and never overdraws the account.
+What The Bank Leaves Open, And What The Game Leaves Out
+A sweep that would take the 저금통 past its ₩100,000 cap: the game skips it. Your KakaoBank savings stand in for the 저금통, and the cap counts what the sweeps have put in, never more than the savings hold.
+Stopping it stops saving from that moment, as KakaoBank says.
+Not in the game: 자동 모으기, an amount KakaoBank works out each Saturday.
+Not in the game: 캐시백 모으기, cashback from brand coupons.
+Source: kakaobank.com/products/coinbox; 저금통 특약 (부칙 September 23, 2026), checked October 13, 2026.
+
+=== au-commbank (the life banks at au-commbank)
+
+
+=== au-westpac (the life banks at au-westpac)
+
+
+=== au-nab (the life banks at au-nab)
+
+
+=== au-anz (the life banks at au-anz)
+Round-Ups, ANZ Plus Round Ups. Each ANZ Plus Visa Debit purchase is rounded up to the next $1, $2, $5 or $10, as you choose, and the difference moves to your ANZ Plus savings the same day.
+Round Up To Choose… The next A$1.00 The next A$2.00 The next A$5.00 The next A$10.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: A$1.00, A$2.00, A$5.00, A$10.00.
+When the account is short: In the game, none of that day’s round-ups move, never just some of them and never into an overdraft, and they’re dropped: the bank doesn’t say whether they’re carried.
+What The Bank Leaves Open, And What The Game Leaves Out
+ANZ Plus accounts only: the game takes your ANZ account as one.
+A $2 default appears only in ANZ’s 2023 launch release, and its pages now state none: you choose.
+Each purchase’s round-up moves on its own; the game moves the day’s together at its end.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: ANZ won’t reverse a Round Up when the purchase changes, as its terms say; purchases in the game aren’t refunded.
+Source: anz.com.au, ANZ Plus terms and conditions, November 24, 2025; Round Ups support page, October 27, 2025, checked October 13, 2026.
+
+=== nz-anz (the life banks at nz-anz)
+
+
+=== nz-asb (the life banks at nz-asb)
+Round-Ups, Save the Change. Each EFTPOS and Visa Debit purchase is rounded up to the next $1, $2, $5 or $10, as you choose, and the day’s change moves to your savings overnight.
+Round Up To Choose… The next NZ$1.00 The next NZ$2.00 The next NZ$5.00 The next NZ$10.00 
+Round-Ups: Off How This Works 
+Not now: Choose what to round up to: NZ$1.00, NZ$2.00, NZ$5.00, NZ$10.00.
+When the account is short: When the account can’t cover the day’s change, nothing moves that day, all or nothing.
+What The Bank Leaves Open, And What The Game Leaves Out
+That the skipped change isn’t carried, ASB doesn’t say in so many words: the game drops it.
+ASB’s current pages state no default: you choose.
+In the game, turning it off, or switching your primary account to another bank, drops what was counted and hasn’t moved. The bank doesn’t say what happens.
+Not in the game: With an arranged overdraft it moves within the limit; the game has no arranged overdraft.
+Not in the game: One to ten savings accounts, or Donate the Change; the game moves it to your savings.
+Source: asb.co.nz, Save the Change and help pages, read from Wayback copies of 2025 and 2026, checked October 13, 2026.
+
+=== nz-bnz (the life banks at nz-bnz)
+
+
+=== nz-westpac (the life banks at nz-westpac)
+
+
+=== nz-kiwibank (the life banks at nz-kiwibank)
+

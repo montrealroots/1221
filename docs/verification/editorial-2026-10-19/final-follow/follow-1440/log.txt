@@ -1,0 +1,273 @@
+[start] ok   a new life opens on the guide by itself — Guide ✕ 1 Your Life, Hour By Hour Next 2 What’s Coming Later 3 The Clock Later 4
+[start] ok   the clock starts paused: the top bar offers Play — 🎬 SLATE 7:30 AM · August 24, 2026 EDT Play LOCKED Sleep LOCKED Look After Yourself ▾ LOCKED Advance ▾ LOCKED Guide (17
+[welcome] ok   Chapter 1 Of 17 shows “Your Life, Hour By Hour” — Guide ✕ 1 Your Life, Hour By Hour Next 2 What’s Coming Later 3 The Clock Later 4 Moving Time On Later 5 What Needs You L
+[welcome] ok   its lead is on the page — How SLATE works, and how to read Home.
+[welcome] ok   all 8 paragraphs are on the page, word for word
+[welcome] ok   What It Opens lists every name
+[welcome] screenshot 01-chapter-welcome.png
+[welcome] ok   I’ve Read It is offered
+[welcome] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own
+[welcome] ok   and offers Try It or the next chapter, in its words — he date, the town, its region and country, its money, the season and the daylight, when you press them It’s open now. Press Try It to go and use it, or go straight on to “What’s Coming”. Next time you open the guide, it starts there. Try It Next: What’s Coming
+[welcome] ok   the line under the greeting shows the time, the town, its time zone, the season and the weather — Monday, August 24, 2026 · ACTRESS Good Morning, Alex. 7:30 AM in New Haven · EDT · Summer · ⛅ 79°F Partly Cloudy
+[welcome] ok   Where You Are is on Home
+[welcome] ok   pressing the town’s name opens it just below — New Haven: WHERE YOU LIVE New Haven Close This is where you live. It’s 7:30 AM, and 130K people live here. 130K people live here, in Connecticut, and the climate is contin
+[welcome] ok   with links inside for its region, its country and its money — Close | Connecticut | United States | Dollar | Daylight
+[welcome] ok   the date opens the same way — Monday, August 24
+[welcome] ok   the season opens the same way — Summer
+[welcome] ok   the daylight opens the same way — Daylight
+[welcome] ok   a panel you can’t use yet says Locked and names the chapter to read — Calendar LOCKED This opens when you read “What’s Coming” in the guide: what’s coming up, and what to do when the clock stops for it. Read About It
+[welcome] ok   its Read About It button goes straight to that chapter — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You La
+[welcome] ok   How This Works on a panel explains it, and says the clock waits — How This Works ✕ Contents › Home And Where You Are Search How This Works Search Home And Where You Are Show Everything Home is your day at a glance. The line un
+[welcome] ok   the ? key opens the help’s contents — How This Works ✕ Contents Search How This Works Search The Guide. You’ve read 1 of its 17 chapters. Each one you read opens a part of the game. Open The Guide On This Screen Home: what you can do here
+[welcome] ok   the contents show every group with its lead
+[welcome] screenshot 02-help-contents.png
+[welcome] ok   the / key opens its search, with an example — How This Works ✕ Contents › Search Search How This Works Search Type a feature’s name, a word for it or a question, such as “clock stopped” or “how do I pay my card”. The clock waits while you read. B
+[welcome] ok   a search that finds nothing says so and how to go on
+[welcome] ok   the menu down the left is there, with Home
+[welcome] ok   Save & Exit takes you back to the save slots
+[welcome] ok   Continue there picks up at the same moment — 7:30 AM → 7:30 AM
+[calendar] ok   Guide, in the top bar, opens at “What’s Coming” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8
+[calendar] ok   Chapter 2 Of 17 shows “What’s Coming” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Next 3 The Clock Later 4 Moving Time On Later 5 What Needs You La
+[calendar] ok   its lead is on the page — What’s coming up, and what to do when the clock stops for it.
+[calendar] ok   all 6 paragraphs are on the page, word for word
+[calendar] ok   What It Opens lists every name
+[calendar] ok   I’ve Read It is offered
+[calendar] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Next 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own P
+[calendar] ok   and offers Try It or the next chapter, in its words — nk Later 17 A Whole Life Later OPENED What’s Coming Calendar Go Skip It The entries on it, when you press them It’s open now. Press Try It to go and use it, or go straight on to “The Clock”. Next time you open the guide, it starts there. Try It Next: The Clock
+[calendar] ok   the Calendar panel shows the next thing you need to be at and how soon — Calendar What’s coming up, and when. Open Calendar LOCKED How This Works in 2h 30m Registration And Your Account August 24, 2026 at 10:00 AM The Fall Term Begins in 1h 30m Meeting Your Class in 1d 3h
+[calendar] ok   and up to five more after it — 5 more
+[calendar] ok   pressing an entry’s name shows when it starts, how long it lasts, where it is and what missing it costs — Registration And Your Account: A COMMITMENT Registration And Your Account Close You need to be at it in three hours, at 10:00 AM, in New Haven. You need to be there, awake and in New Haven, when the clock reaches it. If you aren’t, it’s missed. It runs 2 hours, 10:00 AM to 12:00 PM. It’s in New Have
+[clock] ok   Guide, in the top bar, opens at “The Clock” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Next 4 Moving Time On Later 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 L
+[clock] ok   Chapter 3 Of 17 shows “The Clock” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Next 4 Moving Time On Later 5 What Needs You Lat
+[clock] ok   its lead is on the page — Starting and stopping time.
+[clock] ok   all 4 paragraphs are on the page, word for word
+[clock] ok   What It Opens lists every name
+[clock] ok   I’ve Read It is offered
+[clock] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own Pl
+[clock] ok   and offers Try It or the next chapter, in its words — And ID Later 15 Money Later 16 Your Bank Later 17 A Whole Life Later OPENED The Clock Play and Pause It’s open now. Press Try It to go and use it, or go straight on to “Moving Time On”. Next time you open the guide, it starts there. Try It Next: Moving Time On
+[clock] ok   Play starts the clock, and the button then says Pause
+[clock] ok   the clock runs in real time: a minute later, the time has moved on a minute — 7:30 AM → 7:31 AM
+[clock] ok   Pause stops it, and the button says Play again
+[advance] ok   Guide, in the top bar, opens at “Moving Time On” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Lo
+[advance] ok   Chapter 4 Of 17 shows “Moving Time On” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Late
+[advance] ok   its lead is on the page — Jumping ahead, and what happens on the way.
+[advance] ok   all 4 paragraphs are on the page, word for word
+[advance] ok   The Details opens onto its 1 paragraph(s), word for word
+[advance] ok   What It Opens lists every name
+[advance] ok   I’ve Read It is offered
+[advance] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Next 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own Pla
+[advance] ok   and offers Try It or the next chapter, in its words — 5 Money Later 16 Your Bank Later 17 A Whole Life Later OPENED Moving Time On Advance Choose An Event It’s open now. Press Try It to go and use it, or go straight on to “What Needs You”. Next time you open the guide, it starts there. Try It Next: What Needs You
+[advance] ok   Advance offers One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.), One Week and Choose An Event — One Hour 8:31 AM This Evening 6:00 PM · August 24, 2026 Tonight 10:00 PM · August 24, 2026 Tomorrow Morning 7:00 AM · August 25, 2026 Next Event The Fall Term Begins · August 24, 2026 at 9:00 AM Next Monday 9:00 AM · August 31, 2026 One Week August 31, 2026 at 7:31 AM Choose An Event… Pick from ever
+[advance] ok   Choose An Event lets you pick from the next things on your calendar, at most fourteen — 8 listed
+[advance] ok   One Hour moves the clock on an hour — 7:31 AM → 8:31 AM
+[advance] ok   a jump past commitments first shows On The Way, saying how many — On The Way ✕ Moving the clock to Tonight (August 24, 2026 at 10:00 PM) passes one commitment. The clock stops at it so you can choose: press Go, or Stand Here to wait. You can also skip a plan of your own, or call off a rehearsal with a partner, though at shor
+[advance] screenshot 03-on-the-way.png
+[advance] ok   the clock stops at the commitment, and a dialog with its name asks what you want to do — Registration And Your Account ✕ It’s 10:00 AM on August 24, 2026, and this needs you now. Going takes 2 hours, and the clock moves on to August 24, 2026 at 10:00 PM. You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand He
+[advance] ok   a school commitment has Go and Stand Here, and no Skip It — Go 1, Stand Here 1, Skip It 0
+[advance] screenshot 04-a-commitment-stops-the-clock.png
+[advance] ok   Stand Here closes the dialog and keeps the clock paused at the commitment — 10:00 AM → 10:00 AM
+[advance] went to 0 commitment(s) on the way to tonight: 10:00 PM
+[advance] ok   the jump ends tonight, after going to each commitment — 10:00 PM
+[needs] ok   Guide, in the top bar, opens at “What Needs You” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Next 6 How You Are Later 7 Sleep Later 8 Loo
+[needs] ok   Chapter 5 Of 17 shows “What Needs You” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Next
+[needs] ok   its lead is on the page — What happened while you weren’t looking, and what’s waiting on you.
+[needs] ok   all 5 paragraphs are on the page, word for word
+[needs] ok   What It Opens lists every name
+[needs] ok   I’ve Read It is offered
+[needs] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Next 7 Sleep Later 8 Looking After Yourself Later 9 Your Own Plan
+[needs] ok   and offers Try It or the next chapter, in its words — h counts the notices it clears A question’s answers, and Dismiss A notice or a question, when you press it It’s open now. Press Try It to go and use it, or go straight on to “How You Are”. Next time you open the guide, it starts there. Try It Next: How You Are
+[needs] ok   What Needs You is on Home, with notices — What Needs You No questions are waiting on you. Mark 3 Read How This Works Welcome To The Class Of 2029 You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale U
+[needs] ok   the number beside Home in the menu counts what’s waiting — Home 3
+[needs] ok   pressing a notice’s title opens it in full — Welcome To The Class Of 2029: NOTICE Welcome To The Class Of 2029 Close It came in 14 hours and 30 minutes ago. It’s first of your three unread notices. You’re one of 16 actors starting the
+[needs] ok   a notice with somewhere to go has Go There
+[needs] ok   Mark Read shows how many are unread — Mark 3 Read
+[needs] ok   and pressed, it clears them from the panel — What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you w
+[needs] ok   with nothing waiting, the panel says what still needs attention, or All Clear — What Needs You No questions are waiting on you. How This Works All Clear You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you w
+[body] ok   Guide, in the top bar, opens at “How You Are” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Next 7 Sleep Later 8 Look
+[body] ok   Chapter 6 Of 17 shows “How You Are” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[body] ok   its lead is on the page — Energy, stress, readiness, and the rest of your wellbeing.
+[body] ok   all 4 paragraphs are on the page, word for word
+[body] ok   The Details opens onto its 2 paragraph(s), word for word
+[body] ok   What It Opens lists every name
+[body] ok   I’ve Read It is offered
+[body] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Next 8 Looking After Yourself Later 9 Your Own Plans
+[body] ok   and offers Try It or the next chapter, in its words — ife Later OPENED How You Are How You Are Energy, stress, readiness and the rest of your wellbeing, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Sleep”. Next time you open the guide, it starts there. Try It Next: Sleep
+[body] ok   How You Are shows Energy, Stress and Readiness — How You Are How This Works Holding up, with nothing out of the ordinary to worry about. Energy 39 Stress 13 Readiness 48
+[body] ok   pressing Readiness shows the measures costing it most, up to three — Readiness: Energy, Nourishment, Morale
+[body] ok   and pressing one of those shows where it stands and what it does — Energy
+[sleep] ok   Guide, in the top bar, opens at “Sleep” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Next 8 Looki
+[sleep] ok   Chapter 7 Of 17 shows “Sleep” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[sleep] ok   its lead is on the page — Going to sleep, and getting your energy back.
+[sleep] ok   all 6 paragraphs are on the page, word for word
+[sleep] ok   What It Opens lists every name
+[sleep] ok   I’ve Read It is offered
+[sleep] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Next 9 Your Own Plans
+[sleep] ok   and offers Try It or the next chapter, in its words — ID Later 15 Money Later 16 Your Bank Later 17 A Whole Life Later OPENED Sleep Sleep It’s open now. Press Try It to go and use it, or go straight on to “Looking After Yourself”. Next time you open the guide, it starts there. Try It Next: Looking After Yourself
+[sleep] ok   Sleep opens the Sleep dialog, asking how many hours, from half an hour to 14 hours — 0.5 to 14
+[sleep] ok   it suggests a number and shows when you’d wake — Sleep ✕ A normal night. Hours 8 NOW 10:00 PM YOU’D WAKE AT 6:00 AM, August 25, 2026 Your next commitment is in 12 hours. The world keeps running while you sleep. The clock moves on, and anything on your calendar in those hours happens without you. How This Wor
+[sleep] ok   the button has the hours on it, such as Sleep 8 Hours — Sleep 8 Hours
+[sleep] screenshot 05-sleep-dialog.png
+[sleep] ok   Not Yet closes the dialog
+[sleep] ok   while you’re at a commitment, Sleep is grayed out and the top bar says when you’ll be free — Meeting Your Class: Sleep: You’re at Meeting Your Class until 1:00 PM.
+[sleep] screenshot 06-sleep-grayed-at-a-commitment.png
+[sleep] ok   a night’s sleep gives your energy back — energy 67 this morning, 31 at bedtime, 100 after Sleep 8 Hours (10:00 PM → 6:00 AM)
+[looking-after] ok   Guide, in the top bar, opens at “Looking After Yourself” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[looking-after] ok   Chapter 8 Of 17 shows “Looking After Yourself” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[looking-after] ok   its lead is on the page — Eating, washing, working out and unwinding.
+[looking-after] ok   all 6 paragraphs are on the page, word for word
+[looking-after] ok   The Details opens onto its 2 paragraph(s), word for word
+[looking-after] ok   What It Opens lists every name
+[looking-after] ok   I’ve Read It is offered
+[looking-after] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[looking-after] ok   and offers Try It or the next chapter, in its words — ney Later 16 Your Bank Later 17 A Whole Life Later OPENED Looking After Yourself Look After Yourself It’s open now. Press Try It to go and use it, or go straight on to “Your Own Plans”. Next time you open the guide, it starts there. Try It Next: Your Own Plans
+[looking-after] ok   Look After Yourself offers Eat A Meal, Order In, Shower, Work Out and Unwind — Eat A MealMost Worth It 40 minutes · $5.00 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 100 · readiness +2.5 Order In 50 minutes · $34.65 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 100 · readiness +2.5 Shower 20 minutes · Hygiene at 82,
+[looking-after] ok   the top line is marked Needed Now or Most Worth It — Eat A MealMost Worth It 40 minutes · $5.00 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 1
+[looking-after] ok   each line shows how long it takes — Eat A MealMost Worth It 40 minutes · $5.00 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 100 · readiness +2.5 Order In 50 minutes · $34.65 · Nourishment at 63 is costing readiness. Morale 74 → 76 · Nourishment 63 → 100 · readiness +2.5 Shower 20 minutes · Hygiene at 82,
+[looking-after] screenshot 07-look-after-menu.png
+[looking-after] ok   pressing one does it, and says when it’s done — Eat: Eat A Meal: done at 6:40 AM.
+[plans] ok   Guide, in the top bar, opens at “Your Own Plans” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[plans] ok   Chapter 9 Of 17 shows “Your Own Plans” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[plans] ok   its lead is on the page — Putting something of your own on the calendar.
+[plans] ok   all 5 paragraphs are on the page, word for word
+[plans] ok   What It Opens lists every name
+[plans] ok   I’ve Read It is offered
+[plans] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[plans] ok   and offers Try It or the next chapter, in its words — s Open Calendar Put Something On It and Call It Off Your plans and the stretches between them, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Weather”. Next time you open the guide, it starts there. Try It Next: Weather
+[plans] ok   Open Calendar shows the whole month
+[plans] ok   pressing a day offers Put Something On It
+[plans] ok   it asks what it is, when it starts and how long it lasts, from half an hour to all day — Half An Hour, An Hour, Two Hours, Half A Day, A Working Day, All Day
+[plans] ok   Put It On adds it to the day
+[plans] ok   pressed on the Calendar screen, a plan of your own offers Call It Off — Lunch With Sam ✕ WHEN 9:00 AM September 5, 2026 LENGTH 1 hour KIND Personal New Haven STATUS Pending You need to be there. The clock stops when it’s time, so you can go. You put it there, so you can t
+[plans] screenshot 08-plan-call-it-off.png
+[plans] ok   and Call It Off takes it off before it starts
+[weather] ok   Guide, in the top bar, opens at “Weather” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[weather] ok   Chapter 10 Of 17 shows “Weather” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[weather] ok   its lead is on the page — The weather in your town, today and the days ahead.
+[weather] ok   all 4 paragraphs are on the page, word for word
+[weather] ok   The Details opens onto its 1 paragraph(s), word for word
+[weather] ok   What It Opens lists every name
+[weather] ok   I’ve Read It is offered
+[weather] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[weather] ok   and offers Try It or the next chapter, in its words — A Whole Life Later OPENED Weather Weather The sky, the week, each day and each hour, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Drama School”. Next time you open the guide, it starts there. Try It Next: Drama School
+[weather] ok   the Weather panel shows the weather now and the next few days — Weather How This Works ⛅63°F Partly Cloudy · High 77°F · Low 59°F Humidity 56% · Wind 6 mph · Continental Thu 🌧️ Rain 72° / 61° Fri ⛈️ Storm 83° / 65° Sat ⛈️ Storm 81° / 70° Sun ☁️ Overcast 77° / 59°
+[weather] ok   today’s weather and the days are links — 20 links
+[weather] ok   pressing it shows more: the week, each day and each hour — Weather In New Haven: WEATHER NOW Weather In New Haven Close It’s 63°F and partly cloudy where you are, with a high of 77°F and a low of 59°F today. The wind is 6 mph and the humidity is 56%. Today is 5° colder than normal
+[school] ok   Guide, in the top bar, opens at “Drama School” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[school] ok   Chapter 11 Of 17 shows “Drama School” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[school] ok   its lead is on the page — Classes, coursework, casting and your degree at Yale.
+[school] ok   all 17 paragraphs are on the page, word for word
+[school] ok   The Details opens onto its 11 paragraph(s), word for word
+[school] ok   What It Opens lists every name
+[school] screenshot 09-chapter-school.png
+[school] ok   I’ve Read It is offered
+[school] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[school] ok   and offers Try It or the next chapter, in its words — Learn The Part, Catch Up The Blocking and Work On The Note Plays To Read: Read It and Research It It’s open now. Press Try It to go and use it, or go straight on to “You As An Actor”. Next time you open the guide, it starts there. Try It Next: You As An Actor
+[school] ok   the School line in Your Affairs shows your year or arrival, your standing, your place in the class and what’s next — Your Affairs How This Works Money LOCKED This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It School Year 1, good standing, 5th of 16 in the class. Next: Meeting The Acting Faculty, August 26, 2026 at 10:00 AM. Yale How This Works Papers LOCKED This 
+[school] ok   the Yale button opens the School screen, with the tabs the chapter names — Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, Terms And Award
+[school] ok   Standing And Craft shows your craft, Composure beside it and Coursework This Term — GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye
+[school] ok   on the School screen, the school’s name is a link — David Geffen School of Drama at Yale University
+[school] ok   on the School screen, a technique is a link — Scene Study
+[school] ok   on the School screen, a course is a link — Acting I
+[school] ok   Classes shows the week, nine to three on class days — GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale Uni
+[school] Call In Sick on a new life’s first morning: not offered (nothing at school to miss yet, or orientation only); followed on the brief save (follow-saves.mjs)
+[school] ok   Take An Elective Shift, on Shifts And Pay, signs you up for an evening front of house — Front of house, August 31, 2026 at 7:00 PM.
+[school] Casting on a new life: GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Year 1 of 3, good standing. Standing And C
+[school] ok   Casting is there to show your part, and the Cabaret — GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye
+[school] ok   Coursework holds Plays To Read — GUIDE · 12 OF 17 You As An Actor · Your abilities, your practice, and the genres you work in. Read Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Ye
+[profile] ok   Guide, in the top bar, opens at “You As An Actor” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[profile] ok   Chapter 12 Of 17 shows “You As An Actor” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[profile] ok   its lead is on the page — Your abilities, your practice, and the genres you work in.
+[profile] ok   all 14 paragraphs are on the page, word for word
+[profile] ok   The Details opens onto its 5 paragraph(s), word for word
+[profile] ok   What It Opens lists every name
+[profile] ok   I’ve Read It is offered
+[profile] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[profile] ok   and offers Try It or the next chapter, in its words — r Work So Far An ability, a genre and a piece of work, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Cover, Benefits And Returns”. Next time you open the guide, it starts there. Try It Next: Cover, Benefits And Returns
+[profile] ok   Player Profile, in the menu, lists the twelve abilities
+[profile] ok   pressing an ability shows what it is, how it grows and where it counts — Presence: AN ACTING ABILITY Presence Close You’re at 63.4 of 100.0: the pull of being fully there, which an audience or a camera sees beyond your technique. NOW 63.4 36.6 to full CLASSES REACH — Classes don’t build it; performing in front of people d
+[profile] ok   the exercise beside a technique, such as Comic Timing, offers a Tier, a Focus and Practice An Hour — Tier 1, Focus 1
+[profile] ok   before the hour, it says about how much it will add — Comic Timing. The set-up, the pause, the turn: placed exactly. Tier Foundation Developing (Your Level) Advanced An epigram duel, line on line Focus Steady Precision Spaced Variation Live With A Partner The exercise as it comes, for the whole hour. About +0.27 to comedy (now 46.7), and +0.18 to disci
+[profile] ok   Practice An Hour practices for an hour and says what it added — Comic Timing: +0.27.
+[profile] ok   under Genres, Study It reads a play or watches a film of the genre — Absurdist: an hour and a half with a film of its kind. Familiarity 8.0 of 100.
+[profile] ok   Open Its Brief shows where and when, the two of you, what you want and what’s in the way — Skip To Content 🎬 SLATE 9:10 AM · August 26, 2026 EDT Play Sleep Look After Yourself ▾ Advance ▾ Guide (5 Left) Not Saved Yet Save & Exit Home 1 YOU Player Profile YOUR TRAINING School YOU Alex River
+[profile] ok   and the brief offers Break It Down, Learn The Lines, Rehearse It On Your Feet, Read With and Tape It
+[profile] screenshot 10-a-practice-brief.png
+[profile] ok   Your Work So Far is on the Player Profile
+[profile] ok   pressing your name at the foot of the menu opens the Player Profile
+[papers] ok   Guide, in the top bar, opens at “Cover, Benefits And Returns” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[papers] ok   Chapter 13 Of 17 shows “Cover, Benefits And Returns” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[papers] ok   its lead is on the page — Health cover, benefits, pensions and tax returns.
+[papers] ok   all 10 paragraphs are on the page, word for word
+[papers] ok   The Details opens onto its 10 paragraph(s), word for word
+[papers] ok   What It Opens lists every name
+[papers] ok   I’ve Read It is offered
+[papers] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[papers] ok   and offers Try It or the next chapter, in its words — ial Security and Claim It File It and Pay, on Tax Returns File A Police Report and Report Stolen It’s open now. Press Try It to go and use it, or go straight on to “Passports And ID”. Next time you open the guide, it starts there. Try It Next: Passports And ID
+[papers] ok   the Papers line in Your Affairs shows what covers you — Papers Cover: Yale Health. Papers How This Works
+[papers] ok   the Papers button opens Papers, with the tabs the chapter names — Tax Returns, Health Cover, Unemployment, Passport And ID, Permission To Work
+[papers] ok   Your Cover, on Health Cover, shows Yale Health
+[papers] ok   Your Doctor chooses the practice, and Yale Health Center sees a student it covers the next weekday, at no charge — The Practice Your Cover Uses | Fair Haven Community Health Care, A Visit $183.98, A 24-Day Wait | Yale Health Center, Student Health, A Visit $0.00, The Next Weekday
+[papers] ok   with no visit owed there’s no Book An Appointment: the game books a visit itself when one is needed
+[papers] ok   The Marketplace and Care And Its Bills are on Health Cover
+[papers] ok   a long-term condition under Your Long-Term Conditions (Your Conditions until the papers area’s rename) has Let It Go or Keep It Up — Your Long-Term Conditions How This Works Diabetes, Type 2: Kept Up Let It Go Fill A Longer Supply, 90 Days How This Works Sources And Estimates A Dental Plan Ya
+[papers] screenshot 11-health-cover.png
+[papers] ok   Unemployment has SNAP with Apply, and says a Connecticut claim pays only once you’ve left school — SNAP Food assistance, onto an EBT card for groceries Apply How This Works CLAIM None Open You can apply now AT MOST $298.00 A month, less 30% of net income ON T
+[papers] Tax Returns before the first February: Tax Returns Health Cover Unemployment Passport And ID Permission To Work No Returns Yet How This Works Each February, last year’s return is ready here if you owe tax, are due a refund, or had income o
+[documents] ok   Guide, in the top bar, opens at “Passports And ID” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[documents] ok   Chapter 14 Of 17 shows “Passports And ID” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[documents] ok   its lead is on the page — Your passport and ID, what other countries ask of you, and your student status.
+[documents] ok   all 8 paragraphs are on the page, word for word
+[documents] ok   The Details opens onto its 2 paragraph(s), word for word
+[documents] ok   What It Opens lists every name
+[documents] ok   I’ve Read It is offered
+[documents] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[documents] ok   and offers Try It or the next chapter, in its words — state’s ID card Report Lost and Replace It File A Police Report Permission To Work and Apply For OPT Residence Abroad It’s open now. Press Try It to go and use it, or go straight on to “Money”. Next time you open the guide, it starts there. Try It Next: Money
+[documents] ok   Passport And ID has Your Passport, with Renew It or Apply For One, and the faster service
+[documents] ok   Report Lost and Report Stolen are beside a document
+[documents] ok   Your ID offers Get with the card’s name — Get Non-Driver Identification Card
+[documents] ok   pressing a document you hold shows who issued it, its number’s last digits, when it was issued and runs out, and what it lets you do — PERMISSION TO DRIVE Class D (Operator) Driver License Close It’s in force until June 14, 2028, and its number ends 5846. New York State Department of Motor Vehicles (NY DMV) issued it on June 14, 2020. In New Haven, it would let you drive. Driving isn’t part of the game, so this is for reference. NU
+[documents] ok   Going Abroad: picking a country shows what it asks of your citizenship, or what you’re missing — You need a passport in force, and you don’t have one. Apply for one under Your Passport. Australia asks citizens of the → You need a passport in force, and you don’t have one. Apply for one under Your Passport.
+[documents] screenshot 12-passport-and-id.png
+[documents] ok   Permission To Work has Apply For OPT and Residence Abroad
+[money] ok   Guide, in the top bar, opens at “Money” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[money] ok   Chapter 15 Of 17 shows “Money” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[money] ok   its lead is on the page — Everything you have and owe, at a glance.
+[money] ok   all 5 paragraphs are on the page, word for word
+[money] ok   The Details opens onto its 1 paragraph(s), word for word
+[money] ok   What It Opens lists every name
+[money] ok   I’ve Read It is offered
+[money] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[money] ok   and offers Try It or the next chapter, in its words — our Bank Next 17 A Whole Life Later OPENED Money Money Your accounts, net worth and debts, when you press them It’s open now. Press Try It to go and use it, or go straight on to “Your Bank”. Next time you open the guide, it starts there. Try It Next: Your Bank
+[money] ok   the Money line shows your checking account and your net worth — Money Chase Total Checking: $90,484.00. Worth $503,527. Chase LOCKED How This Works School Year 1, good standing, 5th of
+[money] ok   pressing Your Affairs, the panel’s title, shows what you’re worth, and from there each account — Net Worth: Close, Chase Total Checking, Chase Freedom Unlimited, Chase Savings
+[bank] ok   Guide, in the top bar, opens at “Your Bank” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[bank] ok   Chapter 16 Of 17 shows “Your Bank” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[bank] ok   its lead is on the page — Your accounts, cards, payments and borrowing, at a real bank where you live.
+[bank] ok   all 12 paragraphs are on the page, word for word
+[bank] ok   The Details opens onto its 16 paragraph(s), word for word
+[bank] ok   What It Opens lists every name
+[bank] screenshot 13-chapter-bank.png
+[bank] ok   I’ve Read It is offered
+[bank] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[bank] ok   and offers Try It or the next chapter, in its words — Borrow, and pay a loan off Opt in or out of debit card overdrafts Pay a debt in collections Switch bank It’s open now. Press Try It to go and use it, or go straight on to “A Whole Life”. Next time you open the guide, it starts there. Try It Next: A Whole Life
+[bank] ok   the button with the bank’s name opens it, with the tabs the chapter names — Accounts, Cards, Payments And Cash, Borrowing, Statements
+[bank] ok   Move Money, on Accounts: where from, where to, how much, Move It; at the same bank it moves at once — 90,484 → 90,494 · Moved $10 to Chase Total Checking.
+[bank] ok   Cards has the credit card, Pay Card In Full and Autopay
+[bank] ok   a card can be locked and reported
+[bank] ok   How You Pay is on Payments And Cash, with Savings Covers The Checking Account
+[bank] ok   Statements, its own tab, has The Year and Alerts, with Statement Ready and Short For A Payment
+[bank] screenshot 14-bank-statements.png
+[bank] Borrowing on a new life: is declined, and costs no fee. Other payments, like autopay and standing orders, go into the overdraft either way. The law requires a US bank to ask you first. Opt In To Debit Card Overdrafts Sources And Estimates Personal Loan None on record How This Works No personal loan rate was found for Chase.
+[life] ok   Guide, in the top bar, opens at “A Whole Life” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looki
+[life] ok   Chapter 17 Of 17 shows “A Whole Life” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read
+[life] ok   its lead is on the page — Your own page, birthdays, age, and the end.
+[life] ok   all 5 paragraphs are on the page, word for word
+[life] ok   What It Opens lists every name
+[life] ok   I’ve Read It is offered
+[life] ok   the dialog says what opened — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Read 5 What Needs You Read 6 How You Are Read 7 Sleep Read 8 Looking After Yourself Read 9 Your Own Plans
+[life] ok   and says it was the last chapter — ENED A Whole Life You, when you press your name That was the last chapter, and every part of the game is open now. To read any chapter again, press Guide at the top of the screen. Try It Start Playing
+[life] ok   pressing your name on Home opens your own page: your wellbeing, your readiness and your traits — YOURSELF Alex Rivera Close Rested, steady and ready for a real day. Your body. 5 ft 3 in and 134 lb, with a body mass index of 23.5, in the healthy weight range. In feet, inches and pounds, the units of the United States, where you live. On your papers. Pronouns they/them. A citizen of the United St
+[life] screenshot 15-your-own-page.png
+[life] ok   so does the line at the top of How You Are — Alex Rivera
+[end] ok   with every chapter read, nothing is locked — 0 locked
+[end] screenshot 16-home-everything-open.png

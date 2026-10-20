@@ -25,7 +25,7 @@ import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
 import { copyAt, partFor, readRefusal, researchRefusal } from '@/engine/systems/playreading';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
-import { plural } from '@/engine/core/text';
+import { plural, spokenList } from '@/engine/core/text';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { COST_2026_27, COURSES, REQUIRED_PPE, SCHOOL_POLICIES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
@@ -161,11 +161,11 @@ function StandingPane() {
             <div className="grid grid-4">
               <Stat label="Standing" value={STANDING_LABEL[school.standing]} tone={school.standing === 'good' || school.standing === 'graduated' ? undefined : 'warning'} />
               <Stat label={ended ? 'Attendance Last Term' : 'Attendance This Term'} value={attendance === undefined ? (ended ? 'None' : 'None Yet') : pct(attendance)} note={ended ? `${pct(ESTIMATE.attendanceFloor)} was the minimum` : `You need ${pct(ESTIMATE.attendanceFloor)} or more`} tone={attendance !== undefined && attendance < ESTIMATE.attendanceFloor ? 'warning' : undefined} />
-              <Stat label={ended ? 'Growth Last Term' : 'Growth This Term'} value={growth.toFixed(1)} note={`The class’s middle: ${classGrowth.toFixed(1)}. Allowing for room to grow, ${ended ? 'you were' : 'you’re'} ${pace} the class, and ${ended ? 'half its pace was the minimum' : 'you need at least half its pace'}`} tone={grewTooLittle ? 'warning' : undefined} />
-              <Stat label={ended ? 'Coursework Last Term' : 'Coursework This Term'} value={work.shown ? `${work.unready} of ${work.shown}` : ended ? 'None' : 'None Yet'} note={`Unready or not shown, of the pieces due. Once ${ESTIMATE.coursework.shown} or more are due, half or more ${ended ? 'was' : 'is'} short of what’s asked`} tone={workShort ? 'warning' : undefined} />
+              <Stat label={ended ? 'Growth Last Term' : 'Growth This Term'} value={growth.toFixed(1)} note={`The middle student in your class grew ${classGrowth.toFixed(1)}. Allowing for how much room each of you ${ended ? 'had' : 'has'} to grow, ${ended ? 'you were' : 'you’re'} ${pace} the class, and ${ended ? 'half its pace was the minimum' : 'you need at least half its pace'}`} tone={grewTooLittle ? 'warning' : undefined} />
+              <Stat label={ended ? 'Coursework Last Term' : 'Coursework This Term'} value={work.shown ? `${work.unready} of ${work.shown}` : ended ? 'None' : 'None Yet'} note={`How many of the pieces due were unready or not shown. Once ${ESTIMATE.coursework.shown} or more are due, half or more ${ended ? 'fell' : 'falls'} short of what’s asked`} tone={workShort ? 'warning' : undefined} />
             </div>
             <p className="small" style={{ margin: 0 }}>
-              {t.classDays - t.excused + t.calls + t.shifts === 0 ? (ended ? 'There was no class day, call or shift to count toward attendance last term. ' : 'There’s been no class day, call or shift to count toward attendance this term yet. ') : <>Attendance counts {t.attended} of {plural(t.classDays - t.excused, 'class day')}{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {plural(t.calls, 'call')} and {t.worked} of {plural(t.shifts, 'assigned shift')}. </>}At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once {ESTIMATE.coursework.shown} or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing. Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
+              {t.classDays - t.excused + t.calls + t.shifts === 0 ? (ended ? 'There was no class day, call or shift to count toward attendance last term. ' : 'There’s been no class day, call or shift to count toward attendance this term yet. ') : <>Attendance counts {spokenList([...(t.classDays ? [`${t.attended} of ${plural(t.classDays - t.excused, 'class day')}${t.excused ? ` (${t.excused} excused)` : ''}`] : []), ...(t.calls ? [`${t.answered} of ${plural(t.calls, 'call')}`] : []), ...(t.shifts ? [`${t.worked} of ${plural(t.shifts, 'assigned shift')}`] : [])])}. </>}At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once {ESTIMATE.coursework.shown} or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing. Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
             </p>
             {!ended && <p className="small" style={{ margin: 0 }}>{school.castable ? 'You’re in the casting pool.' : 'You’re out of the casting pool after missed calls, until a term review finds you in good standing.'}</p>}
             <WithdrawControl />
@@ -223,7 +223,7 @@ function StandingPane() {
             </table>
           </LookRegion>
           <Fine>
-            You began among the class’s strongest from this year’s auditions, not ahead of everyone, and each classmate grows at their own pace. Classes, rehearsals, performances and later the work grow your craft: more when you come rested, and less the nearer you are to what you can reach, which is each skill’s starting level plus {CEILING.headroom} points. Experience gives most in the first years and little past twelve (McDaniel, Schmidt and Hunter, 1988), and practice is a fifth of what an actor becomes in the performing arts (Macnamara, Hambrick and Oswald, 2014); the ceiling is fitted to both. The scale and the rate of a session are estimated.
+            You came in among the strongest of this year’s auditions, not ahead of everyone, and each classmate grows at their own pace. Classes, rehearsals, performances and later the work grow your craft: more when you come rested, and less the nearer you are to what you can reach, which is each skill’s starting level plus {CEILING.headroom} points. Experience gives most in the first years and little past twelve (McDaniel, Schmidt and Hunter, 1988), and practice is a fifth of what an actor becomes in the performing arts (Macnamara, Hambrick and Oswald, 2014); the ceiling is fitted to both. The scale and the rate of a session are estimated.
           </Fine>
         </div>
       </Panel>
@@ -384,12 +384,12 @@ function CastReadPanel() {
   if (!read) return null;
   const rows = [...read.rows].sort((a, b) => b.score - a.score);
   const you = read.rows.find((r) => r.you);
-  const asks = Object.keys(read.reads).map((k) => SKILLS.find((x) => x.id === k)?.label ?? k).join(', ');
+  const asks = spokenList(Object.keys(read.reads).map((k) => SKILLS.find((x) => x.id === k)?.label ?? k));
   return (
     <Panel title="Why This Cast" subtitle={`${read.play}, ${termLabel(read.term)}`} help="productions.casting">
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.map((k) => GENRE_BY_ID[k]?.label ?? k).join(', ')})` : ''}. The chair judges every student’s fit for it the same way, weighs a fifth of it by how much of themselves they delivered in their runs since the last casting, and balances who had the big parts in the School’s last productions. The best read gets the biggest part written for them.</p>
-        {you?.from && you.from.length > 0 && <p className="small" style={{ margin: 0 }}>Your {Math.round(you.delivery * 100)}% delivered comes from {you.from.map((f) => `${f.what}${f.source === 'before' ? '' : `, ${SOURCE_WORD[f.source]}, ${f.nights} night${f.nights === 1 ? '' : 's'}`} (${Math.round(f.delivery * 100)}%, counted ×${f.weight})`).join('; ')}. A Cabaret or Summer run counts half as much as a School production, each run up to eight nights, and a night missed when you weren’t in hospital counts as nothing delivered. How the nights were judged doesn’t count here: that’s in your work.</p>}
+        <p className="small" style={{ margin: 0 }}>The play asks for {asks}{read.kinds.length ? `, as its kinds of play do (${read.kinds.map((k) => GENRE_BY_ID[k]?.label ?? k).join(', ')})` : ''}. The chair reads every student for it the same way: their fit for the play, with a fifth of it scaled by how much of themselves they delivered in their runs since the last casting, and then a balance for who had the big parts in the School’s last productions. The best read gets the biggest part written for them.</p>
+        {you?.from && you.from.length > 0 && <p className="small" style={{ margin: 0 }}>Your {Math.round(you.delivery * 100)}% delivered comes from {you.from.map((f) => `${f.what}${f.source === 'before' ? '' : `, ${SOURCE_WORD[f.source]}, ${f.nights} night${f.nights === 1 ? '' : 's'}`} (${Math.round(f.delivery * 100)}%, counted as ${plural(f.weight, 'night')})`).join('; ')}. A Cabaret or Summer run counts half as much as a School production, each run up to eight nights, and a night missed when you weren’t in hospital counts as nothing delivered. How the nights were judged doesn’t count here: that’s in your work.</p>}
         <LookRegion className="table-scroll">
           <table>
             <thead><tr><th scope="col">Student</th><th scope="col" className="num">Fit</th><th scope="col" className="num">Delivered</th><th scope="col" className="num">Balance</th><th scope="col" className="num">Read</th><th scope="col">Part</th></tr></thead>
@@ -495,7 +495,7 @@ function CastingPane() {
         </Panel>
       )}
       <Fine>
-        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfills it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how you delivered in the last run (not how its nights were banded). The best read gets the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the chair’s reading are estimated, since the seasons you’re cast in aren’t announced. The characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
+        Casting is the Bulletin’s: the chair assigns every role, balancing what each student needs; a student who’s cast is expected to play the part; missed calls take an actor out of the pool; and a missed performance is a grave breach. The chair reads each student for the play: the skills it asks, a lead last time counting against the next and a featured part for it, and how much of yourself you delivered in the last runs (not how the nights were judged). The best read gets the biggest part written for them. Which play each thesis and Shakespeare project is, the festivals’ and later years’ dates, the rehearsal weeks and the chair’s reading are estimated, since the seasons you’re cast in aren’t announced. The characters are the plays’ own. Source: {SCHOOL_SEASON.source}.
       </Fine>
 
       <CabaretPanel />
@@ -541,7 +541,7 @@ function CabaretPanel() {
             <Stat label="Performed" value={`${mine.performed} of ${YALE_CABARET.shows.length}`} note={`${calls.length} calls ahead`} />
           </div>
         )}
-        {mine?.withdrawn && <p className="small" style={{ margin: 0 }}>Out of the show on {mine.withdrawn.why}, {formatDate(mine.withdrawn.at, sim.zone)}. The calls after it were called off, and they aren’t held against you.</p>}
+        {mine?.withdrawn && <p className="small" style={{ margin: 0 }}>Out of the show from {formatDate(mine.withdrawn.at, sim.zone)}, on {mine.withdrawn.why}. The calls after it were called off, and they don’t count against you.</p>}
         {why && <p className="small muted" style={{ margin: 0 }}>{why}</p>}
         {mine?.nights && <p className="small" style={{ margin: 0 }}>{nightsLine(mine)}</p>}
         {mine && <RehearsalProcess casting={mine} which="cabaret" />}
@@ -590,7 +590,7 @@ function CoursesPanel() {
   // with a course failed was told a year “can be repeated, below”, which nothing then offered). Each clause is what
   // `setStanding` says of the end.
   const unpassed = [...failed, ...incomplete].map((r) => r.name);
-  const notPassed = unpassed.length ? `, with ${unpassed.join(', ')} not passed` : '';
+  const notPassed = unpassed.length ? `, with ${spokenList(unpassed)} not passed` : '';
   const endedWords = school.standing === 'graduated'
     ? `Every course the degree needs was passed, and it was conferred${school.endedAt !== undefined ? ` on ${formatDate(school.endedAt, zone())}` : ''}.`
     : school.standing === 'withdrawn' ? `You withdrew${notPassed}. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.`
@@ -601,7 +601,7 @@ function CoursesPanel() {
       <div className="row-between"><div className="eyebrow">Courses And The Degree</div><HowItWorks help="school.repeat" /></div>
       <p className="small" style={{ margin: 0 }}>
         {passed} of {all.length} courses passed{ended ? '' : ' so far'}.{' '}
-        {ended ? endedWords : failed.length ? `The degree still needs ${failed.map((r) => r.name).join(', ')}. A course left on a leave is taken on your return, and a year with a failed course can be repeated, below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
+        {ended ? endedWords : failed.length ? `The degree still needs ${spokenList(failed.map((r) => r.name))}. A course left on a leave is taken again on your return, and a year with a failed course can be repeated, under Finishing The Degree below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
       </p>
       {incomplete.map((r) => {
         const key = `${r.term}:${r.code}`;
@@ -647,7 +647,7 @@ function WithdrawControl() {
     <div className="col gap-2">
       {asking && (
         <p className="small" style={{ margin: 0 }}>
-          Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. By the fifteenth day of a term’s classes Yale Health’s cover ends the day you withdraw, or goes back to the start of its insurance term (August 1, for a fall term) where that came first, and its premium is refunded; after it, you’re covered thirty days more. On an F-1 you’d have fifteen days’ grace and no OPT. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.
+          Withdrawing gives up your place today: classes, calls, shifts and coursework end, and hours you worked are still paid. Within the first fifteen days of a term’s classes, Yale Health’s cover ends the day you withdraw, or goes back to the start of its insurance term (August 1, for a fall term) where that came first, and its premium is refunded; after that, you’re covered thirty days more. On an F-1, you’d have a fifteen-day grace period and no OPT. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.
         </p>
       )}
       <div className="row gap-2">
@@ -829,7 +829,7 @@ function TermsPane() {
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            {unsupported ? `This term is past the six the tuition scholarship supports, so its tuition${need ? ' is billed to your Yale account, and the living scholarship the aid office kept meets its health fee and pays what the account owes before any reaches your bank' : ' and health fee are billed to your Yale account'}. ` : waived ? 'This term is past the six the tuition scholarship supports, and the aid office granted an exception: it’s supported as the six were. ' : ''}Tuition is met in full for every student’s six terms, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, judged from your family’s means. {found ? (need ? 'Yours show need, and the scholarship meets it.' : 'Yours show need, but a term past six has living aid only where the aid office’s review keeps it.') : 'Yours rule it out, so the health plan and living costs come from your bank.'}
+            {unsupported ? `This term is past the six the tuition scholarship supports, so its tuition${need ? ' is billed to your Yale account, and the living scholarship the aid office kept pays its health fee and what the account owes before any reaches your bank' : ' and health fee are billed to your Yale account'}. ` : waived ? 'This term is past the six the tuition scholarship supports, and the aid office granted an exception: it’s supported as the six were. ' : ''}Tuition is covered in full for every student’s six terms, by the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, judged from your family’s means. {found ? (need ? 'Yours show need, and the scholarship meets it.' : 'Yours show need, but a term past six has living aid only where the aid office’s review keeps it.') : 'Yours rule it out, so the health plan and living costs come from your bank.'}
           </p>
           <YaleAccountPanel />
           <Fine>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, estimated until they’re published. Source: {COST_2026_27.source}.</Fine>

@@ -1,0 +1,204 @@
+{
+ "base": "http://localhost:4241",
+ "problems": [],
+ "results": [
+  {
+   "chapter": "school",
+   "what": "Coursework shows each piece with Shown Today: what it would come to if shown today, and what’s still to finish",
+   "ok": true,
+   "seen": "Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Year 1 of 3, good standing. Standing And Craft Classes Coursework Casting Shifts And Pay Terms And Aw"
+  },
+  {
+   "chapter": "school",
+   "what": "a scene has its Table Work, its parts, and How You’ll Play It",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "a scene with a partner has Rehearsing With them: a day, a time and Ask with their name",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "and Run It With A Reader",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "a step, Read The Scene, prepares its part of the piece, one step at a time",
+   "ok": true,
+   "seen": "Read The Scene: 40 minutes, Knows The Scene up 54%. · Knows The Scene 0% → 54%"
+  },
+  {
+   "chapter": "school",
+   "what": "Ask Jordan asks for the evening chosen, and the answer comes back",
+   "ok": true,
+   "seen": "Jordan said yes."
+  },
+  {
+   "chapter": "school",
+   "what": "Work It Through names a problem (The Opening Isn’t Secure); pressed, it offers ways at it with the figure before and after",
+   "ok": true,
+   "seen": "The Opening Isn’t Secure. The Opening hasn’t been rehearsed enough: it’s at 0% of the 90% it needs. It comes to 22.2, against 21.3 for the whole piece. Work It Slowly (30 Min) Take this part on its own, slowly, until it’s secure: its own rehearsal rises. Play The Opening Measured (30 Min) Taking the"
+  },
+  {
+   "chapter": "school",
+   "what": "Plays To Read: Read It reads the library’s copy",
+   "ok": true,
+   "seen": "You read Proof, by David Auburn, all the way through. It reads as a drama."
+  },
+  {
+   "chapter": "school",
+   "what": "and once it’s read, Research It is offered",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "Shifts And Pay says the Saturday hours and the elective evenings, paid on Fridays",
+   "ok": true,
+   "seen": "Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Year 1 of 3, good standing. Standing And Craft Classes Coursework Casting Shifts And Pay Terms And Award Work-Study 150 assigned hours and at least 50 elective a year Take An Elective Shift How This Wo"
+  },
+  {
+   "chapter": "school",
+   "what": "on a class day, when the clock stops at nine for the classes, Call In Sick is on Classes",
+   "ok": true,
+   "seen": "9:00 AM · September 14, 2026"
+  },
+  {
+   "chapter": "school",
+   "what": "for someone well, it’s grayed and says why",
+   "ok": true,
+   "seen": "Not now: You’re well enough to go. Staying away would count as an unexcused absence."
+  },
+  {
+   "chapter": "profile",
+   "what": "What To Work On Next is on the Player Profile once there’s work to forecast",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "Your Work So Far looks across your pieces",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "the brief shows Break It Down",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "the brief shows Learn The Lines",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "the brief shows Rehearse It On Your Feet",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "the brief shows Read It This Way",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "the brief shows Read With",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "the brief shows Tape It",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "profile",
+   "what": "the brief shows The Genre Asks",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "Casting shows your part and Why This Cast",
+   "ok": true,
+   "seen": "Home › School SCHOOL David Geffen School of Drama at Yale University MFA in Acting, class of 2029. Year 1 of 3, good standing. Standing And Craft Classes Coursework Casting Shifts And Pay Terms And Aw"
+  },
+  {
+   "chapter": "school",
+   "what": "Learn The Part, Catch Up The Blocking and Work On The Note work on the part",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "A Night Now and The Evening’s Workload say the night before the curtain",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "school",
+   "what": "Learn The Part works on the part between calls",
+   "ok": true,
+   "seen": "An hour on the part: lines at 76%."
+  },
+  {
+   "chapter": "school",
+   "what": "Join The Summer Company is offered in the spring of the first year",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "needs",
+   "what": "a question in What Needs You has its answers on buttons, and Dismiss",
+   "ok": true,
+   "seen": "What Needs You 1 open Mark 205 Read How This Works Your 2026 Tax Return in 2 months You owe $7,221.63, on $41,670.59 of income. File it by April 15, 2027. File It Go There Dismiss A Deep Cut It takes 5 days to mend. It happened at work, so workers’ compensation pays for the care. 3 months ago Go The"
+  },
+  {
+   "chapter": "needs",
+   "what": "Dismiss takes the question off the list",
+   "ok": true,
+   "seen": "Your 2026 Tax Return in 2 months You owe $7,221.63, on $41,670.59 of income. Fil → What Needs You No questions are waiting on you. Mark 205 Read How This Works A Deep Cut It takes 5 days to mend. It happened at work, so workers’ compensation p"
+  },
+  {
+   "chapter": "papers",
+   "what": "what the question was about still stands: the return is on Tax Returns, with File It",
+   "ok": true,
+   "seen": "Home › Papers YOUR AFFAIRS Papers Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work. Tax Returns Health Cover Unemployment Passport And ID Permission To Work 2026 Return Due April 15, 2027 File It How This Works Acting Wages, With Residuals $40,000.00 Wor"
+  },
+  {
+   "chapter": "papers",
+   "what": "depression: choose a Therapist where you live and press Begin A Course Of 8 Sessions",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "chapter": "papers",
+   "what": "and the first session is booked",
+   "ok": true,
+   "seen": "Your first session is August 31, 2026."
+  },
+  {
+   "chapter": "papers",
+   "what": "Let It Go stops the care, and Keep It Up is offered to start it again",
+   "ok": true,
+   "seen": "Your Long-Term Conditions You wear prescription lenses How This Works Depression: Left Untreated Keep It Up Therapy with Yale Mental Health & Counseling: 0 of 8"
+  },
+  {
+   "chapter": "papers",
+   "what": "Keep It Up starts it again",
+   "ok": true,
+   "seen": ""
+  }
+ ]
+}

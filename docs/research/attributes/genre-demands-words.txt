@@ -1241,3 +1241,66 @@
 @ zombie uncertainty
 - Applies to undead performers (largely extras), not the living leads. Survival physicality for the living cast was not sourced. Reviewed 2026-10-10: Undead performers, largely extras, not the living leads. Not applied genre-wide.
 + It applies to the undead performers, largely extras, not the living leads. Survival physicality for the living cast wasn’t sourced. On review (2026-10-10), a demand on the undead performers alone wasn’t enough to make it a requirement of the whole genre.
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Brief 15 (2026-10-19, the profile area's second pass): what the genre look shows of the research, read again. The
+# research's sentences keep their substance and their caution; these change a plural possessive's straight apostrophe
+# outside a quotation to the house's, and the few words left from how the research was done ("the tool that read the
+# page", "isn't applied", "the researcher's own reading", "returned no text") into what a player reads.
+
+@ action_comedy claim
+- silent comedians' chases
++ silent comedians’ chases
+@ art_house claim
+- directors hold actors' physical
++ directors hold actors’ physical
+- carry the characters' inner life
++ carry the characters’ inner life
+@ conspiracy_thriller claim
+- Only critics' writing on one film was found
++ Only critics’ writing on one film was found
+@ dance sourceSupports
+- ; the dancers' movement is
++ ; the dancers’ movement is
+@ dance why:dance
+- with the dancers' performances as its subject
++ with the dancers’ performances as its subject
+@ docufiction sourceSupports
+- and use participants' 'own genuine
++ and use participants’ 'own genuine
+@ documentary sourceSupports
+- in Framing Agnes the performers' lines
++ in Framing Agnes the performers’ lines
+@ gangster uncertainty
+- The violence is the characters', and
++ The violence is the characters’, and
+@ giallo sourceSupports
+- English-speaking actors' own voices.
++ English-speaking actors’ own voices.
+@ slice_of_life claim
+- Ozu, dictated actors' every gesture
++ Ozu, dictated actors’ every gesture
+@ social_realism sourceSupports
+- limits actors' access to the script
++ limits actors’ access to the script
+@ yakuza claim
+- not actors' training.
++ not actors’ training.
+@ action_comedy uncertainty
+- The tool that read the page summarized it, and its remarks on Jackie Chan may be the summary’s own gloss, so
++ The page was read through an automatic summary, and its remarks on Jackie Chan may be the summary’s own, so
+@ political_drama uncertainty
+- so it isn’t applied.
++ so the research didn’t name it.
+@ horror uncertainty
+- ; Voice-Led Performance wasn’t applied, because the source is about screaming on camera, not performing with the voice alone.
++ . The research didn’t name Voice-Led Performance, because the source is about screaming on camera, not performing with the voice alone.
+@ mystery uncertainty
+- remains the researcher’s own reading.
++ remains an unsourced reading.
+@ social_realism uncertainty
+- returned no text when opened.
++ showed no text when opened.
+@ vampire uncertainty
+- returned no text when opened.
++ showed no text when opened.
