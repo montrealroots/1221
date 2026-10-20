@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -1963,7 +1963,7 @@
    "saveLoad": "settings | Person.alerts, roundUps, unclaimed; account dormancy and escheatWarned",
    "failure": "each refusal said in the player's words (above) | Open: No test sets largePayment through the command and shows it changing a dispute's outcome (the falsifiability test): with the alert, learnedAt is the charge's day; without it, the statement.; The rollover 'A Large Payment' notice for an ordinary payment over the line (statements.ts:425-437) is untested, as are its skipping of transfers and largePayment:null turning it off.; The statements toggle test is weak (see weakTests).; No render of the alerts form.; The row cites none of account-alerts.test.ts or the guide example, and its Changes leave out `upcoming`, which the command sets and obligations.ts reads.",
    "implementation": "`systems/statements.ts` | BankStatements.tsx:229 Save Alerts (run at :213), :230 Statement Ready, :233 Short For A Payment",
-   "evidence": "evidence-g11-money.test.ts ‘leaves Regulation E’s $500 of a stranger’s $855.06 caught by A Payment Over, typed on the Alerts form, and reported four business days on, and $50 to a twin who learned of it from the statement’, ‘tells of the school’s $1,882.00 and the dental plan’s $312.72 at the day’s end, not of a $300 transfer or $10 of groceries, once across a reload, and nothing once the line is turned off’, ‘names Yale’s plans as they’re called in A Large Payment’, ‘tells of a statement ready only while Statement Ready is pressed On on the Alerts form, and of a card’s statement with a payment due whatever it is’; account-alerts.test.ts:31,58,85; statements.test.ts:174,208; security.test.ts ‘leaves a US holder $50 of a debit card’s use reported at once, $500 later, and refunds the rest’ | journeys: journey-money.test.ts",
+   "evidence": "evidence-g11-money.test.ts ‘leaves Regulation E’s $500 of a stranger’s $855.06 caught by A Payment Over, typed on the Alerts form, and reported four business days on, and $50 to a twin who learned of it from the statement’, ‘tells of the school’s $1,882.00 and the dental plan’s $312.72 at the day’s end, not of a $300 transfer or $10 of groceries, once across a reload, and nothing once the line is turned off’, ‘names Yale’s plans as they’re called in A Large Payment’, ‘tells of a statement ready only while Statement Ready is pressed On on the Alerts form, and of a card’s statement with a payment due whatever it is’; account-alerts.test.ts:31,59,86; statements.test.ts:174,208; security.test.ts ‘leaves a US holder $50 of a debit card’s use reported at once, $500 later, and refunds the rest’ | journeys: journey-money.test.ts",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -2737,7 +2737,7 @@
    "saveLoad": "ledger + record",
    "failure": "Open: A hardship plan's payment standing in as the due (credit.ts:1046) and the plan ending once the card is paid off (credit.ts:899-902) are not tested through a due date. cardlife.test.ts:227 checks only the statement's interest freeze.; A payment made by hand before the due date (autopay asking less) is untested here too. See finance.pay_card.; Many tests set credit.autopay by hand instead of running finance.set_autopay.",
    "implementation": "`systems/credit.ts` | card.statement",
-   "evidence": "tests/defects3-bank.test.ts:223 ‘PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 10 November’; tests/evidence-g12-money.test.ts:412 ‘has autopay on the minimum ask the plan’s $100 at the due date rather than the card’s $48…’, :474 ‘ends at the due date once the card is paid off before it…’; tests/evidence2-b04.test.ts:443 ‘puts a missed payment back to none once the plan’s $101 is met at the next due date…’; tests/evidence-g13-money.test.ts:167 ‘paid by hand to the minimum before its due date: autopay asks nothing…’; tests/money-fixes.test.ts:58 ‘late, is charged the late fee, and no returned payment’s fee beside it’; tests/cardlife.test.ts ‘a late payment on the record’ and ‘missed payments’ (its describes; their tests at :268 and :294); interest.test.ts:62,81,102,125,136,166,187,216; tests/defects5.test.ts card.due ‘judges a Nordea statement due after the next one on its own figures: February’s, paid in full, isn’t taken for March’s’",
+   "evidence": "tests/defects3-bank.test.ts:223 ‘PLAYER JOURNEY: owing at the 20 October statement, the payment is due on the calendar at 12:00 on 10 November’; tests/evidence-g12-money.test.ts:412 ‘has autopay on the minimum ask the plan’s $100 at the due date rather than the card’s $48…’, :475 ‘ends at the due date once the card is paid off before it…’; tests/evidence2-b04.test.ts:443 ‘puts a missed payment back to none once the plan’s $101 is met at the next due date…’; tests/evidence-g13-money.test.ts:167 ‘paid by hand to the minimum before its due date: autopay asks nothing…’; tests/money-fixes.test.ts:58 ‘late, is charged the late fee, and no returned payment’s fee beside it’; tests/cardlife.test.ts ‘a late payment on the record’ and ‘missed payments’ (its describes; their tests at :268 and :294); interest.test.ts:62,81,102,125,136,166,187,216; tests/defects5.test.ts card.due ‘judges a Nordea statement due after the next one on its own figures: February’s, paid in full, isn’t taken for March’s’",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -10251,7 +10251,7 @@
    "disposition": "verified as it stands",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): The same commands and seeds on the tested commit, 81eadac9, through measure.sh (genres-a, genres-b, stage, ag): every output byte for byte brief 10’s final, so each genre criterion holds where it held and fails where it failed: S1 designed 0.905 (least 0.847); held out 0.884 (least 0.793); fresh designed 0.903 (least 0.847); fresh held out 0.877 (least 0.784); S2 designed 1.597×; held out 1.615×; fresh designed 1.598×; fresh held out 1.615×; S3 designed 12,742 of 14,350 (88.8%); held out 11,670 of 14,350 (81.3%); fresh designed 24,871 of 28,413 (87.5%); fresh held out 23,222 of 28,413 (81.7%); S4 0 briefs of different genres identical in every number; Genre Audit helps its own brief in 149 of 149, moves another genre’s in 0; G3 Meets: the most any actor is best on: 49 of 149; 8 actors best on 10 or more; G4 Meets: 2 briefs, 4 readings at least; 4 reader behaviors; G5 Meets: 50.66 at 30 known, 53.1 at 100",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -11052,7 +11052,7 @@
    "disposition": "verified as it stands",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): tools/ag-baseline.ts and tools/ag-criteria.mjs on the tested commit, 81eadac9 (measure.sh ag): F2 as written fails as before, named 2.43 against 1.14 (2.13×), unread 0, the largest gain in 308 of 447 (68.9%), reported beside F2-A10 and not counted for the advice; the output is byte for byte brief 10’s",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -11125,9 +11125,9 @@
    "sourceStatus": "verified as it stands",
    "status": "Implemented And Verified",
    "disposition": "verified as it stands",
-   "override": "Brief 16, the final area (docs/verification/voices-2026-10-20/final-result.json): The held-out set, regression coverage from brief 12, on brief 16's commit 4ef5e961 (runs16.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); by stratum beginner 1.864, developing 2.057, advanced 1.961, nearMastery 2.046, firstWeek 1.976, midTerm 1.855, later 2.079; F2-A's 30 held out, 2.187.",
+   "override": "Brief 17, the final area (docs/verification/continuity-2026-10-20/final-result.json): The held-out set, regression coverage from brief 12, on brief 17's commit a683f9ea (runs17.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.763 against 0.388 for an input chosen at random, 1.965 times (1.5 asked); by stratum beginner 1.864, developing 2.057, advanced 1.961, nearMastery 2.046, firstWeek 1.976, midTerm 1.855, later 2.079; F2-A's 30 held out, 2.187.",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "a683f9ea",
     "watch": "engine"
    }
   },
@@ -11199,9 +11199,9 @@
    "sourceStatus": "owner decision",
    "status": "Implemented And Verified",
    "disposition": "owner decision",
-   "override": "Brief 16, the final area (docs/verification/voices-2026-10-20/final-result.json): The fresh set, adv-v-0 to 119, run again on brief 16's commit 4ef5e961, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs16.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
+   "override": "Brief 17, the final area (docs/verification/continuity-2026-10-20/final-result.json): The fresh set, adv-v-0 to 119, run again on brief 17's commit a683f9ea, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs17.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "a683f9ea",
     "watch": "engine"
    }
   },
@@ -11250,9 +11250,9 @@
    "sourceStatus": "owner decision",
    "status": "Implemented And Verified",
    "disposition": "owner decision",
-   "override": "Brief 16, the final area (docs/verification/voices-2026-10-20/final-result.json): The fresh set on 4ef5e961: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 75 and another led on 45, changed on 45; rose 5, attributed 5, explained 5; 1965 reads with 0 stale, 3371 forecast changes (1348 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 115 of 120, its own level's part on 120.",
+   "override": "Brief 17, the final area (docs/verification/continuity-2026-10-20/final-result.json): The fresh set on a683f9ea: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 75 and another led on 45, changed on 45; rose 5, attributed 5, explained 5; 1965 reads with 0 stale, 3371 forecast changes (1348 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 115 of 120, its own level's part on 120.",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "a683f9ea",
     "watch": "engine"
    }
   },
@@ -11325,9 +11325,9 @@
    "sourceStatus": "implemented",
    "status": "Implemented And Verified",
    "disposition": "implemented",
-   "override": "Brief 16, the final area (docs/verification/voices-2026-10-20/final-result.json): Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 16's commit 4ef5e961 in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
+   "override": "Brief 17, the final area (docs/verification/continuity-2026-10-20/final-result.json): Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 17's commit a683f9ea in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "a683f9ea",
     "watch": "engine"
    }
   },
@@ -12180,7 +12180,7 @@
    "disposition": "verified as it stands",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): measure.sh journeys-a, journeys-b and l3r on the tested commit, 81eadac9, seeds bj-0 and bj-1, all four profiles: l3r.json byte for byte brief 10’s, met: (b) met on 8 journeys, beginner 2, developing 2, generalist 2, specialist 2; (c) growth 1.253 at least, 0 falls unexplained; L3-R met: True",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -12326,7 +12326,7 @@
    "disposition": "verified as it stands",
    "override": "Brief 11, the integration area (docs/verification/completion-2026-10-16/integration-result.json): Every part of measure.sh but the two mutation runs on the tested commit, 81eadac9: every output byte for byte brief 10’s final but for the fields this pass added to two tools, so every criterion that held holds and those that failed (ST6-R (a), (c), (e), (g); F2, ST3, ST6, H4 and L3 as written) fail as they did; L1 as written fails as it did and holds as clarified (final/README.md)",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -12789,15 +12789,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89; on the integrated tree, brief 09 (c9cba9c8): restrained 50, expansive 42 of 94; on brief 10's tested commit (567d27dd): restrained 50, expansive 44 of 96; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89; on the integrated tree, brief 09 (c9cba9c8): restrained 50, expansive 42 of 94; on brief 10's tested commit (567d27dd): restrained 50, expansive 44 of 96; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "restrained 50, expansive 33 of 85",
    "after": "restrained 49, expansive 37 of 89",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -12817,15 +12817,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80, no house signal on any material; on brief 10's tested commit (567d27dd): 82 of 82, no house signal on any material; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80, no house signal on any material; on brief 10's tested commit (567d27dd): 82 of 82, no house signal on any material; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -12870,15 +12870,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16; on the integrated tree, brief 09 (c9cba9c8): drama {\"r\": 25, \"e\": 5, \"n\": 30}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}; on brief 10's tested commit (567d27dd): drama {\"r\": 25, \"e\": 7, \"n\": 32}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16; on the integrated tree, brief 09 (c9cba9c8): drama {\"r\": 25, \"e\": 5, \"n\": 30}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}; on brief 10's tested commit (567d27dd): drama {\"r\": 25, \"e\": 7, \"n\": 32}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "drama 25 / 0",
    "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -12898,15 +12898,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385; on the integrated tree, brief 09 (c9cba9c8): 2,520 of 2,520 at 100; on brief 10's tested commit (567d27dd): 2,574 of 2,574 at 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385; on the integrated tree, brief 09 (c9cba9c8): 2,520 of 2,520 at 100; on brief 10's tested commit (567d27dd): 2,574 of 2,574 at 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "2,277 of 2,277",
    "after": "2,385 of 2,385",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -12951,15 +12951,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 84 of 86; after: 88 of 90; on the integrated tree, brief 09 (c9cba9c8): 95 of 95; on brief 10's tested commit (567d27dd): 97 of 97; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 84 of 86; after: 88 of 90; on the integrated tree, brief 09 (c9cba9c8): 95 of 95; on brief 10's tested commit (567d27dd): 97 of 97; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "84 of 86",
    "after": "88 of 90",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -12979,15 +12979,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80; on brief 10's tested commit (567d27dd): 82 of 82; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80; on brief 10's tested commit (567d27dd): 82 of 82; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13007,15 +13007,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2; on the integrated tree, brief 09 (c9cba9c8): I1 to I5, S1 to S4 and G2 as their rows say; on brief 10's tested commit (567d27dd): I1 to I5, S1 to S4 and G2 as their rows say; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2; on the integrated tree, brief 09 (c9cba9c8): I1 to I5, S1 to S4 and G2 as their rows say; on brief 10's tested commit (567d27dd): I1 to I5, S1 to S4 and G2 as their rows say; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "held",
    "after": "see I1 to I5, S1 to S4 and G2",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13035,15 +13035,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27; on brief 10's tested commit (567d27dd): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27; on brief 10's tested commit (567d27dd): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13063,15 +13063,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): 40: ST1 50 / 42 of 94, ST8 80 of 80; 75: ST1 51 / 41 of 94, ST8 80 of 80; on brief 10's tested commit (567d27dd): 40: ST1 50 / 45 of 96, ST8 82 of 82; 75: ST1 52 / 42 of 96, ST8 82 of 82; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): 40: ST1 50 / 42 of 94, ST8 80 of 80; 75: ST1 51 / 41 of 94, ST8 80 of 80; on brief 10's tested commit (567d27dd): 40: ST1 50 / 45 of 96, ST8 82 of 82; 75: ST1 52 / 42 of 96, ST8 82 of 82; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13091,15 +13091,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100; on the integrated tree, brief 09 (c9cba9c8): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,520 of 2,520; on brief 10's tested commit (567d27dd): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,574 of 2,574; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100; on the integrated tree, brief 09 (c9cba9c8): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,520 of 2,520; on brief 10's tested commit (567d27dd): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,574 of 2,574; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "8,010 and 9,117 at 100",
    "after": "8,010, 9,117 and 2,385 at 100",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13119,15 +13119,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same; on the integrated tree, brief 09 (c9cba9c8): pace 26.8%, scale 23.5%, structure 35.6%; on brief 10's tested commit (567d27dd): pace 26.8%, scale 23.5%, structure 35.6%; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same; on the integrated tree, brief 09 (c9cba9c8): pace 26.8%, scale 23.5%, structure 35.6%; on brief 10's tested commit (567d27dd): pace 26.8%, scale 23.5%, structure 35.6%; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "pace 24.2%, scale 20.8%, structure 32.9%",
    "after": "the same",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13147,15 +13147,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%; on the integrated tree, brief 09 (c9cba9c8): designed sd 1.28, restrained ahead 70.3%, expansive 27%, heldOut sd 1.15, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.4, restrained ahead 53.2%, expansive 44.7%; on brief 10's tested commit (567d27dd): designed sd 1.26, restrained ahead 69.6%, expansive 28.4%, heldOut sd 1.14, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.38, restrained ahead 52.1%, expansive 45.8%; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%; on the integrated tree, brief 09 (c9cba9c8): designed sd 1.28, restrained ahead 70.3%, expansive 27%, heldOut sd 1.15, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.4, restrained ahead 53.2%, expansive 44.7%; on brief 10's tested commit (567d27dd): designed sd 1.26, restrained ahead 69.6%, expansive 28.4%, heldOut sd 1.14, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.38, restrained ahead 52.1%, expansive 45.8%; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "spread 1.29 / 1.19; expansive ahead 27.0%",
    "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13175,15 +13175,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 100%; after: 100% on every sample; on the integrated tree, brief 09 (c9cba9c8): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 47.1, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 80, \"evenActorFollowsSuitability\": 100}; on brief 10's tested commit (567d27dd): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 44.3, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 82, \"evenActorFollowsSuitability\": 100}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 100%; after: 100% on every sample; on the integrated tree, brief 09 (c9cba9c8): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 47.1, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 80, \"evenActorFollowsSuitability\": 100}; on brief 10's tested commit (567d27dd): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 44.3, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 82, \"evenActorFollowsSuitability\": 100}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "100%",
    "after": "100% on every sample",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13203,15 +13203,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%; on the integrated tree, brief 09 (c9cba9c8): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 97.3}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}; on brief 10's tested commit (567d27dd): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 98}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%; on the integrated tree, brief 09 (c9cba9c8): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 97.3}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}; on brief 10's tested commit (567d27dd): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 98}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "≥ 98.7%",
    "after": "99.3%, 98.0%, 97.8%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13231,15 +13231,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: every ability at 0.5 or more on a kind of work; on brief 10's tested commit (567d27dd): Meets: every ability at 0.5 or more on a kind of work; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: every ability at 0.5 or more on a kind of work; on brief 10's tested commit (567d27dd): Meets: every ability at 0.5 or more on a kind of work; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13259,15 +13259,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: highest 0.536; after: highest 0.527; on the integrated tree, brief 09 (c9cba9c8): Meets: highest 0.532 (discipline, stamina); on brief 10's tested commit (567d27dd): Meets: highest 0.444 (presence, listening); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: highest 0.536; after: highest 0.527; on the integrated tree, brief 09 (c9cba9c8): Meets: highest 0.532 (discipline, stamina); on brief 10's tested commit (567d27dd): Meets: highest 0.444 (presence, listening); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "highest 0.536",
    "after": "highest 0.527",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13287,15 +13287,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, memory cv 0.75, adaptability cv 0.4, composure cv 0.43; on brief 10's tested commit (567d27dd): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, adaptability cv 0.39, composure cv 0.41; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, memory cv 0.75, adaptability cv 0.4, composure cv 0.43; on brief 10's tested commit (567d27dd): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, adaptability cv 0.39, composure cv 0.41; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13315,15 +13315,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 1.875 of 4; after: 1.875 of 4; on the integrated tree, brief 09 (c9cba9c8): Meets: 1.875 sessions' worth against 4; on brief 10's tested commit (567d27dd): Meets: 1.875 sessions' worth against 4; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 1.875 of 4; after: 1.875 of 4; on the integrated tree, brief 09 (c9cba9c8): Meets: 1.875 sessions' worth against 4; on brief 10's tested commit (567d27dd): Meets: 1.875 sessions' worth against 4; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "1.875 of 4",
    "after": "1.875 of 4",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13343,15 +13343,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 36%; after: 36%; on the integrated tree, brief 09 (c9cba9c8): Meets: 0.105 at 90 against 0.294 at 30 (36%); on brief 10's tested commit (567d27dd): Meets: 0.105 at 90 against 0.294 at 30 (36%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 36%; after: 36%; on the integrated tree, brief 09 (c9cba9c8): Meets: 0.105 at 90 against 0.294 at 30 (36%); on brief 10's tested commit (567d27dd): Meets: 0.105 at 90 against 0.294 at 30 (36%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "36%",
    "after": "36%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13371,15 +13371,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors; on the integrated tree, brief 09 (c9cba9c8): Meets: the most any actor is best on: 50 of 149; 8 actors best on 10 or more; on brief 10's tested commit (567d27dd): Meets: the most any actor is best on: 49 of 149; 8 actors best on 10 or more; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors; on the integrated tree, brief 09 (c9cba9c8): Meets: the most any actor is best on: 50 of 149; 8 actors best on 10 or more; on brief 10's tested commit (567d27dd): Meets: the most any actor is best on: 49 of 149; 8 actors best on 10 or more; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "53 of 149; 8 actors",
    "after": "53 of 149; 8 actors",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13399,15 +13399,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: 2 briefs, 4 readings at least; 4 reader behaviors; on brief 10's tested commit (567d27dd): Meets: 2 briefs, 4 readings at least; 4 reader behaviors; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: 2 briefs, 4 readings at least; 4 reader behaviors; on brief 10's tested commit (567d27dd): Meets: 2 briefs, 4 readings at least; 4 reader behaviors; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13427,15 +13427,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86; on the integrated tree, brief 09 (c9cba9c8): Meets: 51.13 at 30 known, 53.74 at 100; on brief 10's tested commit (567d27dd): Meets: 50.66 at 30 known, 53.1 at 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86; on the integrated tree, brief 09 (c9cba9c8): Meets: 51.13 at 30 known, 53.74 at 100; on brief 10's tested commit (567d27dd): Meets: 50.66 at 30 known, 53.1 at 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "51.23 → 53.86",
    "after": "51.22 → 53.86",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13455,15 +13455,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; on the integrated tree, brief 09 (c9cba9c8): Meets: briefs 4560 of 4560; scenes 65 of 65; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0; on brief 10's tested commit (567d27dd): Meets: briefs 4560 of 4560; scenes 67 of 67; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; on the integrated tree, brief 09 (c9cba9c8): Meets: briefs 4560 of 4560; scenes 65 of 65; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0; on brief 10's tested commit (567d27dd): Meets: briefs 4560 of 4560; scenes 67 of 67; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13483,15 +13483,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes; on the integrated tree, brief 09 (c9cba9c8): Meets: own 100 to 100 on 65 scenes, the partner never coming; on brief 10's tested commit (567d27dd): Meets: own 100 to 100 on 67 scenes, the partner never coming; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes; on the integrated tree, brief 09 (c9cba9c8): Meets: own 100 to 100 on 65 scenes, the partner never coming; on brief 10's tested commit (567d27dd): Meets: own 100 to 100 on 67 scenes, the partner never coming; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "own 100 on 56 scenes, the partner never coming (the reader)",
    "after": "own 100 on 60 scenes",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13511,15 +13511,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: sd 0; after: sd 0; on the integrated tree, brief 09 (c9cba9c8): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0; on brief 10's tested commit (567d27dd): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: sd 0; after: sd 0; on the integrated tree, brief 09 (c9cba9c8): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0; on brief 10's tested commit (567d27dd): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "sd 0",
    "after": "sd 0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13539,15 +13539,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100; on the integrated tree, brief 09 (c9cba9c8): Meets: together 93.05, 86.1, 100; on brief 10's tested commit (567d27dd): Meets: together 93.05, 86.1, 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100; on the integrated tree, brief 09 (c9cba9c8): Meets: together 93.05, 86.1, 100; on brief 10's tested commit (567d27dd): Meets: together 93.05, 86.1, 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "93.1, 86.1, 100",
    "after": "93.1, 86.1, 100",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13567,15 +13567,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60; on the integrated tree, brief 09 (c9cba9c8): Meets: brief: emotionalDepth specialist 94 of 298; scene: emotionalDepth specialist 17 of 65; night: emotionalDepth specialist 7 of 30; casting: listening specialist 8 of 30; on brief 10's tested commit (567d27dd): Meets: brief: emotionalDepth specialist 93 of 298; scene: listening specialist 17 of 67; night: discipline specialist 7 of 30; casting: emotionalDepth specialist 6 of 30; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60; on the integrated tree, brief 09 (c9cba9c8): Meets: brief: emotionalDepth specialist 94 of 298; scene: emotionalDepth specialist 17 of 65; night: emotionalDepth specialist 7 of 30; casting: listening specialist 8 of 30; on brief 10's tested commit (567d27dd): Meets: brief: emotionalDepth specialist 93 of 298; scene: listening specialist 17 of 67; night: discipline specialist 7 of 30; casting: emotionalDepth specialist 6 of 30; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "briefs 96 of 298; scenes 20 of 56",
    "after": "briefs 96 of 298; scenes 20 of 60",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13595,15 +13595,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%; on the integrated tree, brief 09 (c9cba9c8): Meets: ahead of half on 436 of 436; within a point of the best on 126 (28.9%); on brief 10's tested commit (567d27dd): Meets: ahead of half on 438 of 438; within a point of the best on 131 (29.9%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%; on the integrated tree, brief 09 (c9cba9c8): Meets: ahead of half on 436 of 436; within a point of the best on 126 (28.9%); on brief 10's tested commit (567d27dd): Meets: ahead of half on 438 of 438; within a point of the best on 131 (29.9%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "427 of 427; 26.5%",
    "after": "431 of 431; 26.9%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13623,15 +13623,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0%; 2.61; after: 0%; 2.62; on the integrated tree, brief 09 (c9cba9c8): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.62; on brief 10's tested commit (567d27dd): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.58; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 0%; 2.61; after: 0%; 2.62; on the integrated tree, brief 09 (c9cba9c8): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.62; on brief 10's tested commit (567d27dd): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.58; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "0%; 2.61",
    "after": "0%; 2.62",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -13701,15 +13701,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise; brief 10 (57b64401): 40 of 40 advice cases: the first named input the best to raise; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same",
+   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise; brief 10 (57b64401): 40 of 40 advice cases: the first named input the best to raise; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md",
    "status": "Implemented And Verified",
    "before": "40 of 40; the exact best in 38",
    "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -13898,9 +13898,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3; on the integrated tree, brief 09 (c9cba9c8): specialist 4, beginner 3 weeks; on brief 10's tested commit (567d27dd): specialist 8, beginner 6 weeks; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3; on the integrated tree, brief 09 (c9cba9c8): specialist 4, beginner 3 weeks; on brief 10's tested commit (567d27dd): specialist 8, beginner 6 weeks; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/completion-2026-10-16/advice-result.json",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/completion-2026-10-16/advice-result.json",
    "status": "Implemented And Verified",
    "before": "specialist 4, beginner 3",
    "after": "specialist 4, beginner 3",
@@ -13922,15 +13922,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): specialist 0, beginner 0; on brief 10's tested commit (567d27dd): specialist 0, beginner 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): specialist 0, beginner 0; on brief 10's tested commit (567d27dd): specialist 0, beginner 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -14119,15 +14119,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 10 (57b64401): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-28, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same",
+   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 10 (57b64401): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-28, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-29, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md",
    "status": "Implemented And Verified",
    "before": "all six plans (journeys-2026-10-16)",
    "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -14171,15 +14171,15 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880; on the integrated tree, brief 09 (c9cba9c8): designed 0.901 (least 0.842); held out 0.885 (least 0.807); fresh designed 0.904 (least 0.845); fresh held out 0.881 (least 0.786); on brief 10's tested commit (567d27dd): designed 0.905 (least 0.847); held out 0.884 (least 0.793); fresh designed 0.903 (least 0.847); fresh held out 0.877 (least 0.784); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880; on the integrated tree, brief 09 (c9cba9c8): designed 0.901 (least 0.842); held out 0.885 (least 0.807); fresh designed 0.904 (least 0.845); fresh held out 0.881 (least 0.786); on brief 10's tested commit (567d27dd): designed 0.905 (least 0.847); held out 0.884 (least 0.793); fresh designed 0.903 (least 0.847); fresh held out 0.877 (least 0.784); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "0.90, 0.88, 0.90, 0.87",
    "after": "0.901, 0.883, 0.904, 0.880",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -14199,15 +14199,15 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%; on the integrated tree, brief 09 (c9cba9c8): designed 1.599×; held out 1.614×; fresh designed 1.598×; fresh held out 1.614×; on brief 10's tested commit (567d27dd): designed 1.597×; held out 1.615×; fresh designed 1.598×; fresh held out 1.615×; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%; on the integrated tree, brief 09 (c9cba9c8): designed 1.599×; held out 1.614×; fresh designed 1.598×; fresh held out 1.614×; on brief 10's tested commit (567d27dd): designed 1.597×; held out 1.615×; fresh designed 1.598×; fresh held out 1.615×; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "1.60, 1.61, 1.60, 1.61; 98.7%",
    "after": "1.599, 1.612, 1.598, 1.613; 98.7%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -14227,15 +14227,15 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest); on the integrated tree, brief 09 (c9cba9c8): designed 12,744 of 14,350 (88.8%); held out 11,676 of 14,350 (81.4%); fresh designed 24,838 of 28,413 (87.4%); fresh held out 23,206 of 28,413 (81.7%); on brief 10's tested commit (567d27dd): designed 12,742 of 14,350 (88.8%); held out 11,670 of 14,350 (81.3%); fresh designed 24,871 of 28,413 (87.5%); fresh held out 23,222 of 28,413 (81.7%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest); on the integrated tree, brief 09 (c9cba9c8): designed 12,744 of 14,350 (88.8%); held out 11,676 of 14,350 (81.4%); fresh designed 24,838 of 28,413 (87.4%); fresh held out 23,206 of 28,413 (81.7%); on brief 10's tested commit (567d27dd): designed 12,742 of 14,350 (88.8%); held out 11,670 of 14,350 (81.3%); fresh designed 24,871 of 28,413 (87.5%); fresh held out 23,222 of 28,413 (81.7%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413",
    "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -14255,15 +14255,15 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): 0 briefs of different genres identical in every number; on brief 10's tested commit (567d27dd): 0 briefs of different genres identical in every number; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): 0 briefs of different genres identical in every number; on brief 10's tested commit (567d27dd): 0 briefs of different genres identical in every number; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -14283,15 +14283,15 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md); on the integrated tree, brief 09 (c9cba9c8): helps its own brief in 149 of 149, moves another genre’s in 0; on brief 10's tested commit (567d27dd): helps its own brief in 149 of 149, moves another genre’s in 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same",
+   "failure": "The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md); on the integrated tree, brief 09 (c9cba9c8): helps its own brief in 149 of 149, moves another genre’s in 0; on brief 10's tested commit (567d27dd): helps its own brief in 149 of 149, moves another genre’s in 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md",
    "status": "Implemented And Verified",
    "before": "149 of 149; 0; 56 to weigh",
    "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "judge"
    }
   },
@@ -14421,13 +14421,13 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): no step skipped at either width: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): no step skipped at either width: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): no step skipped at either width: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): no step skipped at either width: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md",
    "status": "Implemented And Verified",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "app"
    }
   },
@@ -14447,13 +14447,13 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): the built app at 1440: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): the built app at 1440: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): the built app at 1440: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): the built app at 1440: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md",
    "status": "Implemented And Verified",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "app"
    }
   },
@@ -14473,13 +14473,13 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 10 (57b64401): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 15 of 15; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 10 (57b64401): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 15 of 15; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same",
    "implementation": "src/engine, src/ui",
-   "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md",
    "status": "Implemented And Verified",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -14502,12 +14502,13 @@
    "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 10 (d9b631ba): npm run gate on d9b631ba: 375 of 375 files, 4479 of 4479 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 11 (12f58cec): npm run gate on 12f58cec: 376 of 376 files, 4537 of 4537 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 12 (ac79bf4a): npm run gate on ac79bf4a: 376 of 376 files, 4566 of 4566 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 13 (0cf3a9bc): npm run gate on 0cf3a9bc: 376 of 376 files, 4587 of 4587 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 14 (a51b0e15): npm run gate on a51b0e15: 391 of 391 files, 4713 of 4713 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 15 (aabfc1b2): npm run gate on aabfc1b2: 395 of 395 files, 4771 of 4771 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 16 (eabb9ef5): npm run gate on eabb9ef5: 398 of 398 files, 4781 of 4781 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
    "implementation": "src/engine, src/ui",
    "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "Met",
    "measured": {
     "commit": "eabb9ef5",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on eabb9ef5, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14783,11 +14784,11 @@
    "saveLoad": "Not recorded",
    "failure": "Not recorded",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "app"
    }
   },
@@ -14809,11 +14810,11 @@
    "saveLoad": "Not recorded",
    "failure": "Not recorded",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "app"
    }
   },
@@ -14835,11 +14836,11 @@
    "saveLoad": "Not recorded",
    "failure": "Not recorded",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "app"
    }
   },
@@ -14861,11 +14862,11 @@
    "saveLoad": "Not recorded",
    "failure": "Not recorded",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "app"
    }
   },
@@ -14887,11 +14888,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -14913,11 +14914,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -14939,11 +14940,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -14965,11 +14966,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -14991,11 +14992,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15017,11 +15018,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15043,11 +15044,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15069,11 +15070,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15095,11 +15096,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15121,11 +15122,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15147,11 +15148,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15173,11 +15174,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15199,11 +15200,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15225,11 +15226,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15251,11 +15252,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15277,11 +15278,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15303,11 +15304,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15329,11 +15330,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15355,11 +15356,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15381,11 +15382,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15407,11 +15408,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15433,11 +15434,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15459,11 +15460,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15485,11 +15486,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15533,11 +15534,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15559,11 +15560,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15585,11 +15586,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15611,11 +15612,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15637,11 +15638,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15663,11 +15664,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15689,11 +15690,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   },
@@ -15715,11 +15716,11 @@
    "saveLoad": "Not recorded",
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json",
    "status": "Implemented And Verified",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
-    "commit": "4ef5e961",
+    "commit": "ecd961cc",
     "watch": "engine"
    }
   }

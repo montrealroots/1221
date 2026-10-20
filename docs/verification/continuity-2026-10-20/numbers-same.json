@@ -1,0 +1,305 @@
+{
+ "words": {
+  "final": {
+   "before": "docs/verification/voices-2026-10-20/final",
+   "after": "docs/verification/continuity-2026-10-20/final",
+   "files": 35,
+   "same": 35,
+   "explained": {},
+   "unexplained": {},
+   "missing": []
+  },
+  "runs": {
+   "before": "docs/verification/voices-2026-10-20/runs",
+   "after": "docs/verification/continuity-2026-10-20/fixoff/runs",
+   "files": 17,
+   "same": 17,
+   "explained": {},
+   "unexplained": {},
+   "missing": []
+  },
+  "advice": {
+   "before": "docs/verification/voices-2026-10-20/advice",
+   "after": "docs/verification/continuity-2026-10-20/fixoff/advice",
+   "files": 31,
+   "same": 0,
+   "explained": {
+    "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 92
+   },
+   "unexplained": {},
+   "missing": []
+  },
+  "journeys-final": {
+   "before": "docs/verification/voices-2026-10-20/journeys-final",
+   "after": "docs/verification/continuity-2026-10-20/fixoff/journeys-final",
+   "files": 102,
+   "same": 1,
+   "explained": {
+    "a count of notices: a rewrite changes which merge; the events are compared apart": 8058,
+    "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 193,
+    "a measure of words: the journeys’ continuity counts text": 118
+   },
+   "unexplained": {},
+   "missing": []
+  },
+  "notice events": {
+   "journeys": 25,
+   "every day and title kept": 25,
+   "more only of a body that differs now": 25,
+   "fewer only of Incompletes": 25,
+   "more": {
+    "A classmate: An Apology": 63,
+    "Ran Lines With a classmate": 1,
+    "A Late Card Payment": 4,
+    "A classmate: A Word After Class": 10,
+    "A classmate: A Request For Help": 1
+   },
+   "fewer": {
+    "Incomplete": 18
+   }
+  }
+ },
+ "fix": {
+  "runs": {
+   "files": 17,
+   "same": 7,
+   "differ": {
+    "lives.jsonl": 171,
+    "plan-nordic_noir-m-0.json": 95,
+    "plan-nordic_noir-m-1.json": 119,
+    "plan-slapstick-m-0.json": 154,
+    "plan-social_realism-m-0.json": 97,
+    "plan-social_realism-m-1.json": 118,
+    "variety-v-0.json": 2,
+    "workload-mexico-city-lives-0-attentive.json": 20,
+    "workload-new-york-lives-0-attentive.json": 16,
+    "workload-scraping-lives-0-attentive.json": 20
+   }
+  },
+  "advice": {
+   "files": 31,
+   "same": 31,
+   "differ": {}
+  },
+  "journeys-final": {
+   "files": 102,
+   "same": 83,
+   "differ": {
+    "F1-p4.json": 436,
+    "F2-p4.json": 284,
+    "J01-p4.json": 321,
+    "J02-p4.json": 326,
+    "J03-p4.json": 381,
+    "J04-p4.json": 6,
+    "J05-p4.json": 15,
+    "J10-p3.json": 1,
+    "J10-p4.json": 449,
+    "J11-p4.json": 660,
+    "J12-p4.json": 586,
+    "J17-p4.json": 25,
+    "J19-p4.json": 196,
+    "J20-p4.json": 199,
+    "J21-p2.json": 2,
+    "J21-p3.json": 471,
+    "J21-p4.json": 471,
+    "J22-p4.json": 379,
+    "compare.json": 166
+   }
+  },
+  "journeys": {
+   "F1": {
+    "same": false,
+    "from": "2027-02-25",
+    "first": [
+     "Aaliyah: An Apology",
+     "Grace: A Different Reading"
+    ],
+    "aClassmates": true
+   },
+   "F2": {
+    "same": false,
+    "from": "2028-01-25",
+    "first": [
+     "Sofia: An Apology",
+     "Theo: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J01": {
+    "same": false,
+    "from": "2027-02-12",
+    "first": [
+     "Imani: An Apology",
+     "Priya: A Different Reading"
+    ],
+    "aClassmates": true
+   },
+   "J02": {
+    "same": false,
+    "from": "2027-10-05",
+    "first": [
+     "Maya: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J03": {
+    "same": false,
+    "from": "2028-01-10",
+    "first": [
+     "Nadia: An Apology",
+     "Priya: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J04": {
+    "same": false,
+    "from": "2027-11-17",
+    "first": [
+     "Nadia: An Apology",
+     "Priya: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J05": {
+    "same": false,
+    "from": "2027-11-17",
+    "first": [
+     "Nadia: An Apology",
+     "Priya: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J06": {
+    "same": false,
+    "from": "2029-01-29",
+    "first": [
+     "Imani: An Apology",
+     "Nadia: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J07": {
+    "same": true
+   },
+   "J08": {
+    "same": true
+   },
+   "J09": {
+    "same": false,
+    "from": "2027-04-14",
+    "first": [
+     "Ethan: An Apology",
+     "Julian: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J10": {
+    "same": false,
+    "from": "2027-09-03",
+    "first": [
+     "Nadia: An Apology",
+     "Priya: Run Lines Together?"
+    ],
+    "aClassmates": true
+   },
+   "J11": {
+    "same": false,
+    "from": "2027-01-26",
+    "first": [
+     "Ethan: An Apology",
+     "Julian: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J12": {
+    "same": false,
+    "from": "2027-09-27",
+    "first": [
+     "Marcus: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J13": {
+    "same": false,
+    "from": "2027-02-17",
+    "first": [
+     "Julian: A Different Reading",
+     "Sofia: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J14": {
+    "same": false,
+    "from": "2028-02-15",
+    "first": [
+     "Elena: An Apology",
+     "Priya: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J15": {
+    "same": true
+   },
+   "J16": {
+    "same": true
+   },
+   "J17": {
+    "same": false,
+    "from": "2027-02-05",
+    "first": [
+     "Marcus: An Apology",
+     "Theo: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J18": {
+    "same": true
+   },
+   "J19": {
+    "same": false,
+    "from": "2027-10-20",
+    "first": [
+     "Ethan: An Apology",
+     "Theo: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J20": {
+    "same": false,
+    "from": "2029-04-02",
+    "first": [
+     "Jordan: A Request For Help",
+     "Theo: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J21": {
+    "same": false,
+    "from": "2027-04-02",
+    "first": [
+     "Isaiah: An Apology",
+     "Julian: A Different Reading"
+    ],
+    "aClassmates": true
+   },
+   "J22": {
+    "same": false,
+    "from": "2028-02-10",
+    "first": [
+     "Chloe: A Different Reading",
+     "Nadia: An Apology"
+    ],
+    "aClassmates": true
+   },
+   "J23": {
+    "same": false,
+    "from": "2028-09-26",
+    "first": [
+     "Daniel: An Apology",
+     "Mateo: An Apology"
+    ],
+    "aClassmates": true
+   }
+  }
+ }
+}

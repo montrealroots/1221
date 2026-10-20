@@ -22,14 +22,14 @@ measurements watch. So each measurement brief 16 made went stale. Running them a
 They ran in clones of the branch, one per lane, through `runs17.sh`, which is brief 16's `runs16.sh` writing to brief
 17's folder. `queue17.sh` ran the lanes four at a time, then the journeys' compare (JRC) and the judge's merge (MF) once
 their parts were done, and `collect17.sh` gathered them here.
-- **One commit:** every lane ran on `ecd961cc`, from 15:43 to 18:55 UTC.
+- **One game:** every lane ran on `ecd961cc`'s game. The first play of every lane ran on `ecd961cc` itself, from 15:43
+  to 18:55 UTC.
 - **Started again once:** the session stops a background command at two hours, and it stopped the queue's shell two
   hours in with eight lanes not done (C, D, ADVF, ADVR, J, UI, JRC, MF). They were started again by name at 17:52,
-  detached (`queue17.sh <commit> "<lanes>"`), and each skipped the steps it had passed. No step has two exit lines. A step the
-  stop cut short left none, and ran again in full.
-- **The trees:** each lane's `exits-<lane>.txt` starts with its commit and "0 tracked files uncommitted", but the advice's
-  and the journeys' (below). The judge's `../final/exits.txt` counts one: its lanes' own `runs/` folder, which isn't
-  tracked.
+  detached (`queue17.sh <commit> "<lanes>"`), and each skipped the steps it had passed. No step has two exit lines. A
+  step the stop cut short left none, and ran again in full.
+- **The trees:** each lane's `exits-<lane>.txt` starts with its commit and "0 tracked files uncommitted", but the
+  journeys' (below). The judge's `../final/exits.txt` counts one: its lanes' own `runs/` folder, which isn't tracked.
 - **Each step's command and exit** is in `exits-<lane>.txt`. All exit 0 but banking's two (below).
 
 **The fix taken out** (`fixoff17.sh`, `fixoff-lanes17.sh`): the lanes whose games have a class in them ran again in
@@ -38,20 +38,29 @@ clones of `ecd961cc` with one line of `src/engine/systems/classmates.ts` put bac
 that one file uncommitted. The judge's lanes and the built app's weren't run that way: the judge reads no classmate, and
 its outputs are brief 16's byte for byte.
 
-**Two lanes played again,** after the first play was read (Found In The Runs, below), each in both kinds of clone:
-- the advice's two lanes, ADVF and ADVR (`advice-again17.sh`), with `tools/advice-harness.ts` reading the Profile's
-  standing line as brief 17 words it;
-- the journeys, JR1 to JR3 and then JRC (`journeys-again17.sh`), with `tools/journeys.ts`'s check 8 reading a revision
-  after a warning, and its recheck leaving the parts it didn't play.
+**Lanes played again,** after the first play was read (Found In The Runs, below):
+- **The journeys,** JR1 to JR3 and then JRC (`journeys-again17.sh`), from 19:34 to 20:57 UTC, in the clones of
+  `ecd961cc` and of the fix taken out, with `tools/journeys.ts`'s check 8 reading a revision after a warning, and its
+  recheck leaving the parts it didn't play. That tool isn't the game, and their exits count it uncommitted: one file in
+  the tested commit's clones, two in the counterfactual's.
+- **The advice,** ADVF and ADVR, twice:
+  - a second time (`advice-again17.sh`), from 19:25 to 20:11 UTC, in the same clones, with `tools/advice-harness.ts`
+    reading the Profile's standing line as brief 17 words it. That play's files record a tree that wasn't clean, and
+    `../advice/close.py`, brief 16's carried, holds the advice's rows to a clean one. The counterfactual's advice is
+    that play's (`../fixoff/advice/`): it's compared, not held.
+  - a third time (`advice-third17.sh`), from 21:01 to 21:28 UTC, each in a clean clone of `a683f9ea`, the commit that holds both tools and the test of S3.
+    Between `ecd961cc` and `a683f9ea` nothing changed in `src/`, `base44/` or the package files: the game is the
+    tested commit's. `../advice/` is that play, and `exits-ADVF.txt` and `exits-ADVR.txt` its exits, "0 tracked files
+    uncommitted". Against the second play, every value in its 31 files is the same, the
+    words too, but the commit each records and whether its tree was clean.
 
-Those are tools, not the game, and their exits count them uncommitted: one file in the tested commit's clones, two in
-the counterfactual's. The first play's exits are in `first-play/` (and `../fixoff/runs/first-play/`), every step in them exit 0, with F1's
-part 4 log, whose check 8 failed.
+The first play's exits are in `first-play/` (and `../fixoff/runs/first-play/`), every step in them exit 0, with F1's
+part 4 log, whose check 8 failed, and the first play's S3 count, file by file.
 
 `figures.py` reads each figure from these outputs into `figures.json`. `../../integration-2026-10-16/criteria.py` reads
 that for the matrix, and `../verify.py` reads the journeys' and the interface's results into
 `../verification-result.json`. The gate ran after the runs, on the commit `gate.txt` names on its first line, with only
-documents and the two tools above changed in between.
+documents changed after `a683f9ea`.
 
 ## The Outputs
 

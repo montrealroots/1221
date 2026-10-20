@@ -16,8 +16,9 @@ The owner's "Final Comprehensive Writing And Continuity Pass"
 - **What was merged, from Git.** `origin/main` is `bbb82253`, a merge commit whose second parent is `9b45b0ee`: #45,
   brief 16, merged at the owner's "Both.". `dffc6ea0`, the handoff's account of it, is not on `main`. Nothing is
   deployed. The handoff said so already; this pass found nothing in it stale on that.
-- **The tested commit** is `ecd961cc`. Every measurement after and every final run was made on it (The Final Runs,
-  below), and the gate ran last on the branch's head (The Gate, below).
+- **The tested commit** is `ecd961cc`. Every measurement after and every final run was made on its game: on it, but
+  the advice's last play, made on `a683f9ea`, which adds to it two tools put right, a test of one and records, nothing in `src/`
+  (The Final Runs, below). The gate ran last on the branch's head (The Gate, below).
 
 ## The Coverage Matrix
 
@@ -311,7 +312,7 @@ was run again with one line put back as brief 16 had it (`fix-off.patch`): an ap
 classmate's misses outnumber the apologies among their last 20 moments. Nothing else changed, and the words stayed brief
 17's.
 - **Against brief 16** (`same-play-words.json`): all 24 runs are the same event for event, with the same notices on the
-  same days and the same reloads and last days. Every word brief 17 changed changed no play.
+  same days and the same reloads and last days. None of the words brief 17 changed moved any play.
 - **Against the tested commit** (`same-play-fix.json`): the same four runs differ, from the same four days. The fix is
   the whole of the difference.
 - **The other lanes:** the same was done for the lanes whose games have a class in them (`runs/fixoff-lanes17.sh`): the
@@ -383,8 +384,9 @@ session, the before walk's), so both walks read the same lives.
 
 ## The Final Runs
 
-`runs/README.md` has each output, its command and its result, and `final/README.md` the judge's. Every one ran on
-`ecd961cc`, in clones, each step's exit written to `runs/exits-<lane>.txt`, every one 0 but banking's two (below).
+`runs/README.md` has each output, its command and its result, and `final/README.md` the judge's. Every one ran in
+clones of `ecd961cc`, but the advice's last play, in clean clones of `a683f9ea`, whose game is `ecd961cc`'s. Each
+step's exit is written to `runs/exits-<lane>.txt`, every one 0 but banking's two (below).
 
 - **The judge** (`final/`): all 37 JSON and Markdown outputs are brief 16's byte for byte, so the 36 figures are, and
   RULESET stays evaluation-11.
@@ -406,7 +408,7 @@ session, the before walk's), so both walks read the same lives.
 - **Brief 16's runs against the fix taken out:** every number the same, the judge's 35 files and the runs' 17 identical, the
   advice's and the journeys' differing only in each run's own record, the notices' counts and the counts of words. Every
   day and title brief 16's journeys had is kept; what's had more is notices that now differ from the one before, and
-  what's had fewer is Incompletes, now one notice a review. Every word brief 17 changed changed no play.
+  what's had fewer is Incompletes, now one notice a review. None of the words brief 17 changed moved any play.
 - **The fix taken out against the tested commit:** 10 of the runs' 17 files differ (the lives, five plans, variety and three
   workloads), none of the advice's, and 20 of the 25 journeys. Each journey first differs on a classmate's day, with
   everything before it the same. The fix is the whole of the difference.
@@ -421,10 +423,14 @@ its lanes played again on the tested commit's game:
 - **The journeys' recheck,** run for the corrected check 8, wrote each journey's first three parts again without what
   they'd counted at their end. It leaves them now, and the journeys were played again from the start, so every part's
   output is the one its play wrote.
+- **The advice's second play** recorded a tree that wasn't clean, since the harness fix wasn't yet committed, and the
+  advice's rows ask for a clean one. Its lanes were played a third time from `a683f9ea`, which holds the fix.
 
 ## The Gate
 
-⟦gate⟧
+The gate runs in a clean clone of the commit that holds these records (`final-checks/gate17.sh`), its exit written
+to a file, never read through a pipe. Its result is folded in by the commit after it. Until then this says it hasn't
+run.
 
 ## Tests
 
@@ -511,4 +517,12 @@ merely to improve the sentence"). Each editor's report has its detail.
 
 ## How It Ended
 
-⟦end⟧
+- **The tested commit** is `ecd961cc`: its game is what every final run played, the advice's last play on `a683f9ea`,
+  which changed nothing in `src/`. The gate's commit and result are under The Gate, above.
+- **Merged:** no. Nothing of brief 17 is in `main`, which is at `bbb82253`, and no pull request is open for it (read
+  from GitHub on 2026-10-20). Merging is the owner's.
+- **Deployed:** no. Base44 deployment waits for the owner and the gate (rule 14).
+- **The matrix:** **Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred. INT-gate is the one row open, waiting for the gate.
+- **What's left** is under What Was Found And Not Changed, above, and in the handoff's section 4.
+- **To judge it by playing:** `PLAYTEST.md`, a thirty-minute route: the first week, the teachers each in their own
+  voice, the class and an apology for its misses, what a screen says first, a save and a load, and a save from before.
