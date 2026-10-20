@@ -526,8 +526,9 @@ merely to improve the sentence"). Each editor's report has its detail.
 
 - **The tested commit** is `ecd961cc`: its game is what every final run played, the advice's last play on `a683f9ea`,
   which changed nothing in `src/`. The gate's commit and result are under The Gate, above.
-- **Merged:** no. Nothing of brief 17 is in `main`, which is at `bbb82253`, and no pull request is open for it (read
-  from GitHub on 2026-10-20). Merging is the owner's.
+- **Merged:** yes, in #46 (https://github.com/yvcbcjhsy7-prog/1221/pull/46), opened and merged at the owner's "Yes. And
+  the merge it." with a merge commit, `f615caea`, whose tree is `9a87bda4`'s. Until then this said nothing of brief 17
+  was in `main`, which was at `bbb82253`.
 - **Deployed:** no. Base44 deployment waits for the owner and the gate (rule 14).
 - **The matrix:** **Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred. The same 612 rows as brief 16's close.
 - **What's left** is under What Was Found And Not Changed, above, and in the handoff's section 4.

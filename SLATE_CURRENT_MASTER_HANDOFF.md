@@ -5,16 +5,21 @@
 (`docs/verification/briefs-2026-10-16/17-final-comprehensive-writing-and-continuity-pass.txt`, kept verbatim).
 - **Where the work was done:** `claude/peaceful-hamilton-59zdbb`, from `dffc6ea0`, which is `main` at `bbb82253`
   (#45's merge, brief 16) with the handoff's account of that merge.
-- **Where it is:** pushed, and never force-pushed. **None of it is in `main`:** no pull request was opened for it, and
-  `dffc6ea0` isn't in `main` either.
-- **Nothing is deployed.**
+- **Where it is:** pushed, and never force-pushed. It's in pull request #46
+  (https://github.com/yvcbcjhsy7-prog/1221/pull/46), opened at the owner's word after the gate and merged to `main` with
+  a merge commit ("Yes. And the merge it.", 2026-10-20, asked whether to open one; `f615caea`). Its tree is `9a87bda4`'s,
+  the head the gate's figures were folded into, so `dffc6ea0` is in `main` now too. Until then this said none of it was
+  in `main` and no pull request was opened. This account of the merge went to `main` in #47, at the owner's "Now.",
+  with `main` merged into the branch first, never rewritten.
+- **Merged isn't deployed: nothing is.**
 
 Brief 16's section below was the status until brief 17 began.
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `bbb82253`, #45's merge,
-  as it was when brief 17 began (`git log -1 origin/main`, read on 2026-10-20).
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `f615caea`, #46's merge
+  (`git log -1 origin/main`, read on 2026-10-20); until then this said `bbb82253`, #45's, as it was when brief 17
+  began.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 17's commits on `dffc6ea0`
   (`git log --oneline dffc6ea0..origin/claude/peaceful-hamilton-59zdbb`). Eight editors worked in clones, and each area
   came in as a merge of its own branch: material `cf3d9153`, school `96a20937`, money `e37e0bf3`, health `46d335d4`,
@@ -148,8 +153,9 @@ The record is `docs/verification/continuity-2026-10-20/`:
 - **What only a person can judge:** whether the voices read as people and a first view as easy to follow.
   `docs/verification/continuity-2026-10-20/PLAYTEST.md` is a thirty-minute route for it; every phrase it quotes was
   found where the game says it.
-- **Merging and deploying are the owner's.** Nothing of brief 17 is in `main`, and no pull request is open for it.
-  Base44 deployment waits for the owner and the gate (rule 14). Read section 10 further down first.
+- **Deploying is the owner's.** #46 was merged at the owner's "Yes. And the merge it." (`f615caea`); until then this
+  said merging was the owner's too, and that nothing of brief 17 was in `main`. Base44 deployment waits for the owner and
+  the gate (rule 14). Read section 10 further down first.
 
 ## 5. The Rules, The Schema And The Model
 
