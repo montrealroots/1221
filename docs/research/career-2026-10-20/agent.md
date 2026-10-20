@@ -33,7 +33,7 @@ Inconsistencies: the Actors Connection page calls his department both "Legit" an
 
 ## What the game may use, and what it must not
 
-**May use** (published, cited above): the name "Jordan Parente"; "Stewart Talent"; "New York office"; "Agent, Theatrical (Legit) Department"; that he represents actors for film, TV and theatre; and the policy "does not accept unsolicited legit submissions".
+**May use** (published, cited above): the name "Jordan Parente"; "Stewart Talent"; "New York office"; "Agent, Theatrical (Legit) Department"; that he represents actors for film, TV and theater; and the policy "does not accept unsolicited legit submissions".
 
 **Must not use:** any email address, phone number or street address; clients, real or implied; commission or contract terms (none published); his tastes, temperament, opinions or way of speaking (none published, so anything would be invented but read as real); the seminar listing's "always looking for…" line as his words; any claim that he saw a showcase, tape or player; any union-franchise claim (unverified); his education.
 
@@ -43,7 +43,7 @@ Inconsistencies: the Actors Connection page calls his department both "Legit" an
    - Agency staff page: "Jay Schachter / Theatrical Agent" (contact_new_york, as above).
    - Deadline, 2025-09-18: "Jay Schachter (Head of Film and Television)".
    - Most recent source: https://www.actorsconnection.com/classes/2026-08-20-img-3728lzoom-online-seminar-with-jay-schachter-head-of-film-television-agent-stewart-talent/ · "Zoom: Online SEMINAR with JAY SCHACHTER, Head of Film & Television / Agent, Stewart Talent | Actors Connection" · "Thursday, August 20, 2026" · "is Head of Film & Television at Stewart Talent's New York office" and "Schachter has focused on both established and emerging talent".
-   - Fit: he leads the screen side, not theatre, so he fits a stage-first New York start less well. He has the larger public professional profile of the two (trade coverage, seminars), which lowers the risk of the game inventing things about him.
+   - Fit: he leads the screen side, not theater, so he fits a stage-first New York start less well. He has the larger public professional profile of the two (trade coverage, seminars), which lowers the risk of the game inventing things about him.
 2. **Justin Busch, Director, NY Film/TV & Theatrical Agent, Clear Talent Group, New York.** A different agency, in case Stewart itself becomes unsuitable.
    - Agency page: https://www.cleartalentgroup.com/about-team · "Our Team | CTG" · "©2023 by CTG" · "Justin Busch / Director, NY Film/TV & Theatrical Agent". His bio page (https://www.cleartalentgroup.com/about/justin-busch, title "Justin Busch") says: "He is currently a Theatre Agent and the Director of NY Film/TV."
    - Trade press: Deadline, syndicated at https://uk.news.yahoo.com/clear-talent-group-promotes-2-192846280.html · "Clear Talent Group Promotes 2 Agents To Director" · published 2024-04-25 · "Clear Talent Group has promoted agent Justin Busch to Director of NY Film & TV".
@@ -59,7 +59,7 @@ Inconsistencies: the Actors Connection page calls his department both "Legit" an
 | Hartig Hilepo | A SAG-AFTRA notice (seen only as a search result: sagaftra.org/status-union-franchise-hartig-hilepo-talent-agency-inc) says it closed and surrendered its franchise on 2016-04-29. Excluded. |
 | DGRW | Its website didn't resolve on 2026-10-20, so **unverified**. Agent Jeremy Sickles appears in 2026 Actors Connection listings. The agency leans toward musical theatre. |
 | Avalon Artists Group | The site names "NY LEGIT DIVISION / Craig Holzberg \| Owner/Agent", takes submissions by form or email, and shows "Copyright 2018". I found no 2025–2026 trade source. |
-| CGF Talent | Boutique that leans toward musical theatre. Its bios include personal details. |
+| CGF Talent | Boutique that leans toward musical theater. Its bios include personal details. |
 
 ## Risks, and how the game should label it
 

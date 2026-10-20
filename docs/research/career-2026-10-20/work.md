@@ -33,7 +33,7 @@ Read on 2026-10-20 (all sources). Bracketed tags like [S9] point to the source l
 - Joining while enrolled: no SAG-AFTRA source restricts students. Unknown rather than permitted.
 
 **Actors' Equity.**
-- Routes: an Equity contract (valid during its term); **Open Access**, for anyone "paid to work as an actor or stage manager in theatre in the United States"; or a Four A's sibling union after a year of membership [S25, S26]. The EMC programme was "phased out" in favour of Open Access (announced 2023) [S28]. "Membership candidate" and "eligible performer" no longer exist as routes on Equity's pages.
+- Routes: an Equity contract (valid during its term); **Open Access**, for anyone "paid to work as an actor or stage manager in theatre in the United States"; or a Four A's sibling union after a year of membership [S25, S26]. The EMC program was "phased out" in favor of Open Access (announced 2023) [S28]. "Membership candidate" and "eligible performer" no longer exist as routes on Equity's pages.
 - Students: "Students who have participated ... on Equity/URTA contracts as part of a degree-granting theatre program are also eligible ... whether or not the work was paid" [S26]. Yale: students who are not already members "will attain membership to the union upon graduation" through Yale Rep work [S9]. Citizenship is no bar [S26]. Any non-union theatre job must be finished first [S26].
 - Fees: initiation fee $1,800, payable over three years, with $600 down; basic dues $176 a year ($88 each May and November); working dues 2.5% of Equity-contract gross [S27].
 

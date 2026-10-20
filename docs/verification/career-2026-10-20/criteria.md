@@ -3,7 +3,7 @@
 The owner's "Professional Career Foundation And The First Individual Agent"
 (`../briefs-2026-10-16/19-professional-career-foundation-and-the-first-individual-agent.txt`, kept verbatim). Each item
 is **Open** until the game does it and a test fails with it taken out; then **Fixed And Verified**, or **Blocked** with
-what blocks it, or **Deferred** with whose word. The research these rest on is in `research/`, each fact with its
+what blocks it, or **Deferred** with whose word. The research these rest on is in `../../research/career-2026-10-20/`, each fact with its
 source, the date it was read and its words.
 
 Where it started: `main` at `469f8448` (#47), the branch at `c9769be0` with brief 18's paused records. Nothing else in

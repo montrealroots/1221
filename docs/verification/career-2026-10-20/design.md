@@ -1,6 +1,6 @@
 # Brief 19's Design: The Professional Beginning, 2026-10-20
 
-What's built, where, and on which rules. The research is in `research/` (each fact with its source, the date read and
+What's built, where, and on which rules. The research is in `../../research/career-2026-10-20/` (each fact with its source, the date read and
 its words); this says which facts the game uses, which it assumes and labels, and which it leaves out. The criteria are
 `criteria.md`. Nothing here restores the deleted industry engine (`git show bcc30c88^:src/engine/systems/career.ts` is
 read for ideas only) or any personal-life system the scope reset removed.
@@ -8,14 +8,14 @@ read for ideas only) or any personal-life system the scope reset removed.
 ## Three Kinds Of Statement
 
 Every rule in the code carries one of three marks in its comment, and the player-facing text never blurs them:
-- **Verified:** a published rule, with the research file and source id (e.g. `research/yale.md` B27 p.148).
+- **Verified:** a published rule, with the research file and source id (e.g. `../../research/career-2026-10-20/yale.md` B27 p.148).
 - **Assumption:** the game's stand-in where sources are silent, said as one (`ASSUMPTION:` in the code, listed below).
 - **Fictional:** an event or a line that is the game's invention: every word and decision of the agent, every project
   and every casting office.
 
 ## The Agent: One Real Person, Depicted With Care
 
-- **Jordan Parente, agent in the Legit (Theatrical) Department of Stewart Talent's New York office** (`research/agent.md`:
+- **Jordan Parente, agent in the Legit (Theatrical) Department of Stewart Talent's New York office** (`../../research/career-2026-10-20/agent.md`:
   the agency's own New York staff page, read 2026-10-20; Deadline, 2025-09-18; the Actors Connection listing, 2025-06-02).
   His published scope: television, film, Broadway, Off-Broadway, national tours and regional theatre.
 - **The agency's policy, verified:** "We do not accept unsolicited submissions at this time" (New York legit). The game
@@ -39,7 +39,7 @@ Every rule in the code carries one of three marks in its comment, and the player
 
 ## The School's Rules, And The Five Pathways
 
-From `research/yale.md` (Bulletin 2026–2027, dated 2026-08-30):
+From `../../research/career-2026-10-20/yale.md` (Bulletin 2026–2027, dated 2026-08-30):
 - **A, the degree:** three years in residence, six terms; the final term holds DRAM 793b, the Actor Showcase, presented
   to "agents, managers, casting directors" in New York and Los Angeles after spring classes end and before
   Commencement (2026: New York April 27–28, Los Angeles May 5; Commencement May 18). An Incomplete must be cleared by the
@@ -191,7 +191,7 @@ the terms keep owed.
 - **Casting is competitive and explained:** the audition's band (quality), the role's fit (genre familiarity and the
   role's demands against the actor's strengths), availability and eligibility (checked, not drawn), then the field of
   other actors (decider `pro.casting`). A developing actor can book a role that suits them; a skilled one can lose one.
-- **Rates (verified, `research/work.md`):** SAG-AFTRA TV/Theatrical day performer $1,283, weekly $4,456 (from
+- **Rates (verified, `../../research/career-2026-10-20/work.md`):** SAG-AFTRA TV/Theatrical day performer $1,283, weekly $4,456 (from
   2026-07-01); Low Budget $834 a day; Ultra Low Budget $257 a day; student films deferred; LORT minimums $889 to $1,453
   a week (from 2026-06-29). Off-Broadway's minimums aren't public: ASSUMPTION, between LORT D and LORT B.
 - **Pay:** union work is W-2 wages through the production's payroll (ASSUMPTION: paid the Thursday after each week's
@@ -209,7 +209,7 @@ the terms keep owed.
 
 `usWorkAuthorized(person, at)` decides every paid or unpaid engagement's acceptance, for each of its dates:
 - a US citizen or permanent resident: authorized;
-- F-1 in the program: not authorized for outside acting (CPT isn't offered for Acting: `research/yale.md` §6), so an
+- F-1 in the program: not authorized for outside acting (CPT isn't offered for Acting: `../../research/career-2026-10-20/yale.md` §6), so an
   offer can't be accepted in session or out; on-campus work stays as it is;
 - F-1 after the degree on OPT: authorized from the EAD's start for 12 months, each engagement's days counted as days
   worked, at most 90 unemployed days (8 CFR 214.2, SEVP guidance: gigs and 1099 work allowed);

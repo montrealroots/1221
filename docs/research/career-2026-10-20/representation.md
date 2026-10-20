@@ -2,7 +2,7 @@
 
 All sources were read on **2026-10-20**. These are public pages only, and nobody was contacted.
 
-**Access limits.** `sagaftra.org` returns a bot challenge (HTTP 403) to every reader I tried, the Wayback Machine included. Sources tagged **[snippet]** are quoted from search-engine excerpts; I never loaded those pages. SAG-AFTRA's help centre (custhelp) did load and is quoted directly. `leginfo.legislature.ca.gov` also blocked me, so California statutes come from the California.Public.Law mirror.
+**Access limits.** `sagaftra.org` returns a bot challenge (HTTP 403) to every reader I tried, the Wayback Machine included. Sources tagged **[snippet]** are quoted from search-engine excerpts; I never loaded those pages. SAG-AFTRA's help center (custhelp) did load and is quoted directly. `leginfo.legislature.ca.gov` also blocked me, so California statutes come from the California.Public.Law mirror.
 
 ## Sources
 
