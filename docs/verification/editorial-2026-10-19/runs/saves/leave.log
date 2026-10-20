@@ -1,0 +1,60 @@
+{
+ "scenario": "leave",
+ "seed": "sc-0",
+ "ended": "2028-02-23",
+ "log": [
+  "2027-01-20 school.request_leave",
+  "2027-01-28 school.return_notice",
+  "2028-01-03 school.reregister"
+ ],
+ "school": {
+  "standing": "good",
+  "classOf": 2030,
+  "offset": 2,
+  "leaves": [
+   {
+    "kind": "personal",
+    "status": "returned",
+    "terms": 2,
+    "mandatory": false
+   }
+  ],
+  "welfares": [],
+  "formerClasses": [
+   {
+    "classOf": 2029,
+    "mates": 15,
+    "playedTo": 2,
+    "leftBehind": false,
+    "productions": 2,
+    "cabaret": 0
+   }
+  ],
+  "classmates": 15,
+  "terms": [
+   "0:good"
+  ],
+  "conferred": [],
+  "credits": [],
+  "joinedHistory": [
+   "2 Yale Cabaret, Season 60"
+  ],
+  "firstClassGraduated": [
+   false
+  ],
+  "duringLeave": [
+   1
+  ]
+ },
+ "accounts": [
+  "Chase checking",
+  "Chase savings"
+ ],
+ "owedIrs": 0,
+ "irsSubstitute": [],
+ "states": {},
+ "statePlans": {},
+ "breaches": 0,
+ "unbalanced": 0,
+ "reloads": 18
+}

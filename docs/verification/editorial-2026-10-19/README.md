@@ -77,6 +77,13 @@ behind it, or the file outside the inventory that holds it, or the template that
   - in the areas' own records.
 
   The coordinator's list (`coordinator.md`) settles everything the areas left for others.
+- **The final runs** (`runs/README.md`) ran first on `c3478f9e`. The engine's lanes passed, and the interface's found
+  three more things (`uitools/README.md`, `coordinator.md`, In The Final Runs):
+  - matchers in the interface tools that looked for brief 14's words;
+  - a warning past the playthroughs' wall of text;
+  - a forecast too coarse to show a day's work.
+
+  Each was fixed, and every lane ran again on `d6f6527a`.
 - **The defects** found apart from the writing are indexed in `DEFECTS.md`.
 - **The owner's route by hand** is `PLAYTEST.md`.
 - **The receipt** is `RECEIPT.md`, written by `receipt.py` from these records.

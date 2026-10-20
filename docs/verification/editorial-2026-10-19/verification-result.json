@@ -1,0 +1,2350 @@
+{
+ "rows": [
+  {
+   "id": "journeys.4-complete-journeys",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Run at least twelve complete school journeys across multiple seeds and distinct player profiles. Reuse existing simulation tools where appropriate, but play through normal commands and progression rather than directly assigning successful outcomes.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"How A Journey Is Played\" and \"The Journeys\": each journey played hour by hour through sim.execute and the clock by a public-command player, nothing after creation written by hand except what a profile names TEST SETUP, run to the end the game gives it.",
+   "exercised": "tools/journeys.ts (beside tools/lives.ts, with tools/policy.ts's players) played J01 to J23 and F1, F2 on 25 seeds (j13-1 to j13-17, j13-f1, j13-f2), each in four foreground parts under ten minutes, saving and opening every thirty days. 23 journeys and 2 focused scenarios: 22 graduated (J20 and J22 in 2030), J15 and J16 dismissed, J21's life ended by the mortality draw in its third year.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the 25 journeys on 0bc829ec: profile, seed, played, expected, actual, the ten checks",
+     "kind": "measurement",
+     "proves": "every journey run to the end the game gave it, each of the ten checks passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/exits.txt",
+     "title": "each part's command, exit and seconds on 0bc829ec",
+     "kind": "measurement",
+     "proves": "100 parts and the two comparisons, each exit 0, each under ten minutes (the longest 204 s)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md",
+     "title": "the plan, each journey's expected outcome and the ten checks, committed at 546bb26e before any journey ran",
+     "kind": "measurement",
+     "proves": "the expectations came first"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-profiles",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Include: Beginners. Balanced generalists. Specialists with different strengths. Highly developed or mastered actors. Players who follow advice. Players who partly follow or ignore advice. Players who experience missed work, financial restrictions, or health interruptions.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Journeys\": each kind on two seeds or more, a hand-set start named TEST SETUP in the profile.",
+   "exercised": "Beginners J01, J02 (and J03 to J08 as made); generalists J09, J10; specialists J11 (feeling) and J12 (voice and body), each on its generalist's seed and budget; mastered J13, J14; follows J03, J06, J09 to J12; partly J04, J07; ignores J05, J08; missed work J15 to J18, J20; financial restriction J16, J18, J19, J20 and F2; health J21, J22, J23.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the 25 journeys on 0bc829ec: profile, seed, played, expected, actual, the ten checks",
+     "kind": "measurement",
+     "proves": "every journey run to the end the game gave it, each of the ten checks passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md",
+     "title": "the plan, each journey's expected outcome and the ten checks, committed at 546bb26e before any journey ran",
+     "kind": "measurement",
+     "proves": "the expectations came first"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-expected-first",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Set expected outcomes before running each scenario.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md committed at 546bb26e, before the harness (baf5fa4f) and before any journey; J23's at 1b7431cc before it ran. A difference is a defect (fixed, tested, run again) or an expectation that was wrong (said so, not moved).",
+   "exercised": "Every outcome read against its expectation. Defects: D1 to D5. Expectations that were wrong, each kept as written: J02's path (stage work, a warning), the partly-follower's favorite at the scale's top (J03 to J05), the specialists' 49s rising past 90 and a 90 named in 6 and 15 weeks (J11, J12), stamina as the ability that limits a mastered actor (J13, J14), J21's life ended, F2's plan paid from savings.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md",
+     "title": "the plan, each journey's expected outcome and the ten checks, committed at 546bb26e before any journey ran",
+     "kind": "measurement",
+     "proves": "the expectations came first"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the 25 journeys on 0bc829ec: profile, seed, played, expected, actual, the ten checks",
+     "kind": "measurement",
+     "proves": "every journey run to the end the game gave it, each of the ten checks passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-neglect",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "A deliberate neglect scenario may legitimately fail academically; the game must explain and apply the consequences correctly. Do not count every dismissal as a defect or force every player to graduate.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, J15 and J16: a concern in December 2026, a warning in April 2027, dismissed at the third review on 10 December 2027, each review warned in its term, every notice saying what was short and what follows; J16's F-1 status ending with no grace, OPT refused for leaving without the degree.",
+   "exercised": "Both played to 23 February 2028. Each as written; nothing of the school's after the end; J16 out of status on 10 December 2027 and its cover ended; J15 refused OPT as a citizen. D2 and D4 were found in their notices and fixed.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J15-p4.json",
+     "title": "J15: reviews, warnings, standings",
+     "kind": "measurement",
+     "proves": "concern, warning, dismissed, each warned"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J16-p4.json",
+     "title": "J16: reviews, warnings, status and OPT",
+     "kind": "measurement",
+     "proves": "the dismissal applied to status and OPT"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload",
+     "kind": "player journey",
+     "proves": "D2: a wholly unprepared term's warning says every part of each was short, not a part picked by its tie"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared",
+     "kind": "player journey",
+     "proves": "D2: the review says the same"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)",
+     "kind": "player journey",
+     "proves": "D4: the round shown, not the next, is what a warning and review read"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A term's coursework warning and its review named the part most often short whatever its count, by its tie in the list's order, with a remedy that answered one piece: J15 was told \"Most often short on them: knows the scene, on 1 of the 6 shown. Read The Scene answers it.\" of six pieces each short on every part, and \"knows the scene, on 8\" of 47 at review. `shortCause` says it as it is: every part of each short, no part short on more than one, or the part short on two or more as before.",
+     "where": "src/engine/systems/coursework.ts (shortCause, termWarning), src/engine/systems/school.ts (the review's why), src/engine/content/guide/coursework.ts",
+     "failingTest": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload",
+     "commit": "5d69d230"
+    },
+    {
+     "summary": "Work shown in rounds goes on to its next round once one is shown, and `shortParts` reads the round it's on: the term's warning and review counted the next round's parts as the cause of an Unready round (a Simulated Rehearsal shown Unready At The Table counted short on lines, on its feet and with its partner, parts not yet due; J15 and J16). `shortAtShowing` reads the round last shown, for `mostShort` and `shortCause`.",
+     "where": "src/engine/systems/coursework.ts (shortAtShowing, mostShort, shortCause)",
+     "failingTest": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)",
+     "commit": "905c39d1"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "M1: shortCause's \"every\" taken out",
+     "caughtBy": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload; school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared; school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "what": "M2: shortCause's \"scattered\" taken out",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "what": "M3: the review says nothing for \"every\"",
+     "caughtBy": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared"
+    },
+    {
+     "what": "M4: \"scattered\" at fewer than three (off by one)",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "what": "the warning's \"No one part was short on more than one of them\" words taken out",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)"
+    },
+    {
+     "what": "R1: shortAtShowing is shortParts",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R2: mostShort reads the next round",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R3: \"every\" weighs the next round's parts",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R4: \"every\" reads the next round's shortness",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    }
+   ],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-recovery",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "At least some journeys must recover from setbacks through available gameplay.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J17 (warned, then keeps up), J18 (a concern, then keeps up), J20 (a course failed, a repeat, a hold), J22 (a medical leave), J21's illnesses.",
+   "exercised": "J17 good after its first-term warning; J18 good at the review after its concern; J20 repeated the year, paid its holds, graduated in 2030; J22 returned from the dean's medical leave and graduated in 2030; J02 back to good after a warning; J19, J21 and F2 back to good after a concern; J23 through the flu and a broken bone.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J17-p4.json",
+     "title": "J17: the warning and the review after it",
+     "kind": "measurement",
+     "proves": "recovery from a warning through play"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J18-p4.json",
+     "title": "J18: the concern and the review after it",
+     "kind": "measurement",
+     "proves": "recovery from a concern"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: the repeat, the holds, the degree",
+     "kind": "measurement",
+     "proves": "recovery from a failed course and a hold"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J22-p4.json",
+     "title": "J22: the leave and the return",
+     "kind": "measurement",
+     "proves": "recovery from a health interruption"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-1",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Creation choices affect the intended state.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 1: what it reads and what fails it, written before any journey ran.",
+   "exercised": "At creation: bank by family, need, citizenship and F-1, discipline from conscientiousness, the title from the pronouns; at the first term, the scholarship or the plan paid. The same seed made again with one choice changed (family across the line of need, conscientiousness +20, home across the US border, pronouns) moved need, discipline by 10, the visa and the title in all 25.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 1, creation, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: check 1",
+     "kind": "measurement",
+     "proves": "family wealthy, need false, citizenship us, F-1 false, title actress, discipline 57.5 (conscientiousness 55), bank 505434 / counterfactual: family moved, conscientiousness moved, home moved, pronouns moved"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J14-p4.json",
+     "title": "J14: check 1",
+     "kind": "measurement",
+     "proves": "family none, need true, citizenship kr, F-1 true, title actress, discipline 57.5 (conscientiousness 55), bank 12282 / counterfactual: family moved, conscientiousness moved, home moved, pronouns moved"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-2",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Classes, preparation, rehearsal, interpretation, and showings connect.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 2: what it reads and what fails it, written before any journey ran.",
+   "exercised": "Every showing has its one record with its band; each term's last piece judged again with preparation at nothing comes out lower and complete no lower (a neglect journey's higher); table-work answers and ways of playing on the records; class days and calls kept.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 2, classes to showings, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J12-p4.json",
+     "title": "J12: check 2",
+     "kind": "measurement",
+     "proves": "275 showings, each with its record; 78 with table work answered; 47 with a way of playing / 6 terms' last pieces judged again: 22.6 < 63.3 ≤ 64.2; 24.6 < 70.2 ≤ 70.2; 25.8 < 72.9 ≤ 72.9; 29.3 < 80.1 ≤ 83.8; 27.0 < 75.3 ≤ 76.3; 27.4 < 76.2 ≤ 77.3"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J15-p4.json",
+     "title": "J15: check 2",
+     "kind": "measurement",
+     "proves": "138 showings, each with its record; 0 with table work answered; 0 with a way of playing / 3 terms' last pieces judged again: 22.3 < 22.3 ≤ 62.6; 22.4 < 22.4 ≤ 64.1; 20.6 < 20.6 ≤ 57.9"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked",
+     "kind": "player journey",
+     "proves": "D3: written work is refused a way of playing, by the command and the pane's gate"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)",
+     "kind": "fixture",
+     "proves": "D3: an older save opens through writtenUnplayed"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Written work accepted a way of playing: J12 chose ways for seven pieces of Table Work, which is presented at the table and never rehearsed on its feet; the preview read the way as rehearsed in full and promised more, the showing read it at nothing (seed written-playing: previewed 64.6 open and 64.9 expansive, shown 44.4 open against 44.2 with the choice). `playingRefusal` refuses it in its words, which the Coursework pane reads to draw the choice; an older save's way on written work still to be shown is taken off once on opening (`writtenUnplayed`, `ONCE_ON_OPENING`).",
+     "where": "src/engine/systems/coursework.ts (playingRefusal, writtenUnplayed), src/engine/index.ts (ONCE_ON_OPENING), src/engine/content/guide/coursework.ts",
+     "failingTest": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked",
+     "commit": "34c4120a"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "W1: playingRefusal's written-work refusal taken out",
+     "caughtBy": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked"
+    },
+    {
+     "what": "W2: the opening step marked taken without running writtenUnplayed",
+     "caughtBy": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    },
+    {
+     "what": "W3: writtenUnplayed clears every way, performed ones too",
+     "caughtBy": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    },
+    {
+     "what": "W4: writtenUnplayed clears shown pieces' ways too",
+     "caughtBy": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken) (survived the first FIXTURE, which had no shown piece; caught once a shown copy was added)"
+    }
+   ],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-3",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Attributes and genres develop and influence applicable work.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 3: what it reads and what fails it, written before any journey ran.",
+   "exercised": "Every ability at creation and the end; the last twelve pieces judged again at the levels the journey began with (`replayAs`): what rose never lowers the work, and what fell is costed apart (only stamina fell, unworked, `settleTheBody`); genres met known better, unmet ones not (speed 1 for an unmet genre).",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 3, development, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: check 3",
+     "kind": "measurement",
+     "proves": "abilities emotionalDepth 100→100, presence 100→100, listening 100→100, imagination 100→100, focus 100→100, memory 100→100, adaptability 100→100, composure 100→100, vocal 100→100, physical 100→100, discipline 100→100, stamina 99.4… / last pieces at their own levels, then with what rose put back: 90.75/90.75 86.4/86.4 86.4/86.4 86.32/86.32 91.95/91.95 94.71/94.71 87.68/87.68 93.22/93.22 97.09/97.09 91.06/91.06 87.48/87.48 89.78/89.78"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J11-p4.json",
+     "title": "J11: check 3",
+     "kind": "measurement",
+     "proves": "abilities emotionalDepth 90→90, presence 90→90.5, listening 49→79.3, imagination 90→98.5, focus 49→98.1, memory 49→64.8, adaptability 49→70.2, composure 90→91.5, vocal 49→98.9, physical 49→73.9, discipline 49→100, stamina 50→35 / last pieces at their own levels, then with what rose put back: 79.56/66.5 75.61/55.13 75.64/55.13 77.5/60.67 87.22/61.9 86.74/72.28 75.65/61.29 82.31/70.02 82.3/66.49 89.98/61.46 78.41/61.97 73.27/56.05"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-4",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Advice responds to progress and changing circumstances.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 4: what it reads and what fails it, written before any journey ran.",
+   "exercised": "Weekly: the first recommendation, level, forecast, standing, next and attention. No run of the same words over four weeks while the level moved a point or the forecast a tenth; no input at full named first; a follower's target moves on once raised; conditions and preparation named where work was judged ill, hurt or unprepared.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 4, advice, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J06-p4.json",
+     "title": "J06: check 4",
+     "kind": "measurement",
+     "proves": "153 weekly reads, 10 first targets: imagination, focus, vocal, listening, composure, script, adaptability, physical, presence, emotionalDepth / all full said in 0 weeks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: check 4",
+     "kind": "measurement",
+     "proves": "153 weekly reads, 1 first targets: full:all / all full said in 151 weeks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-5",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Health, stamina, and energy remain distinct and interact correctly.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 5: what it reads and what fails it, written before any journey ran.",
+   "exercised": "Each morning: energy, stamina, condition, stress. Daily changes of energy and stamina never correlate at 0.9 (-0.01 to 0.07 in the 25); illness tolls condition and energy, not stamina; every class day in hospital, laid up or called in sick excused; work ill or hurt recorded so and lower than well work.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 5, health, stamina, energy, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J21-p4.json",
+     "title": "J21: check 5",
+     "kind": "measurement",
+     "proves": "daily changes of energy and stamina correlate at 0.01 over 808 mornings / health events 17: 2026-10-15 TEST SETUP: the flu (5 days) | 2026-10-15 the flu to 2026-10-20 | 2027-02-02 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-02-15 TEST SETUP: the flu (5 days) | 2027-02-15 the…"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J23-p4.json",
+     "title": "J23: check 5",
+     "kind": "measurement",
+     "proves": "daily changes of energy and stamina correlate at 0.02 over 1077 mornings / health events 27: 2026-10-15 TEST SETUP: the flu (5 days) | 2026-10-15 the flu to 2026-10-20 | 2027-02-15 TEST SETUP: the flu (5 days) | 2027-02-15 the flu to 2027-02-20 | 2027-03-01 TEST SETUP: a fall: fracture, 50 days | 2027-0…"
+    },
+    {
+     "file": "tests/evidence-g22-school.test.ts",
+     "title": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)",
+     "kind": "player journey",
+     "proves": "D5: an evening the School would excuse isn't asked for"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A student hurt or in hospital could ask a partner for an evening the School already knew it would excuse; the partner gave it and it was called off on the night (J23: a bone broken in a fall on 1 March 2027, fifty days to mend, twenty-two such evenings to 19 April). `askRefusal` refuses an evening in hospital, laid up, or, for work on its feet, hurt in a way that stops training, in the words `rehearsalOutcome` excuses it by; a booking made before the injury is excused on the night as before.",
+     "where": "src/engine/systems/coursework.ts (askRefusal), src/engine/content/guide/coursework.ts",
+     "failingTest": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)",
+     "commit": "905c39d1"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "H1: no refusal in hospital",
+     "caughtBy": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    },
+    {
+     "what": "H2: no refusal laid up",
+     "caughtBy": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    },
+    {
+     "what": "H3: no refusal for an injury that stops training",
+     "caughtBy": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    },
+    {
+     "what": "H4: the training refusal for every partner evening, not only work on its feet",
+     "caughtBy": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    }
+   ],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-6",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Money, school charges, holds, and payments reconcile.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 6: what it reads and what fails it, written before any journey ran.",
+   "exercised": "At every reload and the end: the ledger's audit and the save's laws (0 unbalanced, 0 breaches in all 25); each term's scholarship or plan once by memo; holds only with a sum owed past due, lifted when paid; nothing owed at the end.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 6, money, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: check 6",
+     "kind": "measurement",
+     "proves": "47 reloads with the ledger balanced and no breach; at the end audit 0, breaches 0 / memos: Living-expense scholarship, the fall term of 2026: David Gef ×1; Living-expense scholarship, the spring term of 2027: David G ×1; Living-expense scholarship, the fall term of 2027: David Gef ×1; Living-expense scholarship,…"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F2-p4.json",
+     "title": "F2: check 6",
+     "kind": "measurement",
+     "proves": "35 reloads with the ledger balanced and no breach; at the end audit 0, breaches 0 / memos: Yale Health plan, the fall term of 2026 ×1; Yale Health plan, the spring term of 2027, unpaid ×1; Yale Health plan, the fall term of 2027 ×1; Yale Health plan, the spring term of 2028, unpaid ×1; Late fee ×6; Yale Health p…"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-7",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Papers and document status affect the appropriate actions.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 7: what it reads and what fails it, written before any journey ran.",
+   "exercised": "Monthly: documents, photo ID in force, the bank's ask of a new customer, OPT's refusal, status and cover. The bank asks only while no photo ID is in force; OPT refused to citizens, before its window and after leaving without the degree, allowed in its window; status ends by its rule's day; a passport applied for is issued and the old cancelled.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 7, papers, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J16-p4.json",
+     "title": "J16: check 7",
+     "kind": "measurement",
+     "proves": "photo ID in force 19 of 19 months; the bank's asks: Bank of America: Registration And Your Account starts at 10:00 AM: there isn’t the time be | Bank of America: You’re at Classes until 3:00 PM. | Bank of America: would open / OPT: It opens DATE, 90 days before the program ends. | OPT follows a degree completed, and you left without it.; applied 0, approved 0; out of status 2027-12-10"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F1-p4.json",
+     "title": "F1: check 7",
+     "kind": "measurement",
+     "proves": "photo ID in force 36 of 37 months; the bank's asks: Bank of America: Registration And Your Account starts at 10:00 AM: there isn’t the time be | Bank of America: You’re at Classes until 3:00 PM. | Bank of America: Bank of America… / OPT: It opens DATE, 90 days before the program ends. | You’ve applied for OPT already. | It closed DATE, 60 days after the program ended.; applied 1, approved 1; out of status never"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-8",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Warnings arrive consistently with later evaluations.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 8: what it reads and what fails it, written before any journey ran.",
+   "exercised": "Each coursework warning, missed-class, not-registered and not-passed notice against its term's review: no step down for coursework unwarned in its term, no warning counting above the review, each concern or warning followed by what its notice said, the named cause among the parts short on the pieces it counts.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 8, warnings, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J15-p4.json",
+     "title": "J15: check 8",
+     "kind": "measurement",
+     "proves": "coursework warnings 2026-09-14 \"6 of the 6 pieces shown this term so far were Unready. On each of them every part was short of complete: it’s \" | 2027-01-29 \"6 of the 6 pieces shown this term so far were Unready. On each of them … / reviews 0 2026-12-11 concern (47/47 unready); 1 2027-04-23 warning (45/45 unready); 2 2027-12-10 dismissed (46/46 unready)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J02-p4.json",
+     "title": "J02: check 8",
+     "kind": "measurement",
+     "proves": "coursework warnings 2028-02-02 \"4 of the 6 pieces shown this term so far were Unready. Most often short on them: with your partner, on 2 of th\" | 2029-02-09 \"3 of the 8 pieces shown this term so far were Unready. No one part was … / reviews 0 2026-12-11 good (7/47 unready); 1 2027-04-23 good (4/45 unready); 2 2027-12-10 concern (9/46 unready); 3 2028-04-28 warning (9/46 unready); 4 2028-12-08 good (10/44 unready); 5 2029-04-27 concern (12/45 unready)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload",
+     "kind": "player journey",
+     "proves": "D2: a wholly unprepared term's warning says every part of each was short, not a part picked by its tie"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared",
+     "kind": "player journey",
+     "proves": "D2: the review says the same"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)",
+     "kind": "fixture",
+     "proves": "D2: each of shortCause's three kinds"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)",
+     "kind": "fixture",
+     "proves": "D2: the warning's own words where no part is short on two"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)",
+     "kind": "player journey",
+     "proves": "D4: the round shown, not the next, is what a warning and review read"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A term's coursework warning and its review named the part most often short whatever its count, by its tie in the list's order, with a remedy that answered one piece: J15 was told \"Most often short on them: knows the scene, on 1 of the 6 shown. Read The Scene answers it.\" of six pieces each short on every part, and \"knows the scene, on 8\" of 47 at review. `shortCause` says it as it is: every part of each short, no part short on more than one, or the part short on two or more as before.",
+     "where": "src/engine/systems/coursework.ts (shortCause, termWarning), src/engine/systems/school.ts (the review's why), src/engine/content/guide/coursework.ts",
+     "failingTest": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload",
+     "commit": "5d69d230"
+    },
+    {
+     "summary": "Work shown in rounds goes on to its next round once one is shown, and `shortParts` reads the round it's on: the term's warning and review counted the next round's parts as the cause of an Unready round (a Simulated Rehearsal shown Unready At The Table counted short on lines, on its feet and with its partner, parts not yet due; J15 and J16). `shortAtShowing` reads the round last shown, for `mostShort` and `shortCause`.",
+     "where": "src/engine/systems/coursework.ts (shortAtShowing, mostShort, shortCause)",
+     "failingTest": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)",
+     "commit": "905c39d1"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "M1: shortCause's \"every\" taken out",
+     "caughtBy": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload; school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared; school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "what": "M2: shortCause's \"scattered\" taken out",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "what": "M3: the review says nothing for \"every\"",
+     "caughtBy": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared"
+    },
+    {
+     "what": "M4: \"scattered\" at fewer than three (off by one)",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "what": "the warning's \"No one part was short on more than one of them\" words taken out",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)"
+    },
+    {
+     "what": "R1: shortAtShowing is shortParts",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R2: mostShort reads the next round",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R3: \"every\" weighs the next round's parts",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R4: \"every\" reads the next round's shortness",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    }
+   ],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-9",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Term progression and the school endpoint work.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 9: what it reads and what fails it, written before any journey ran.",
+   "exercised": "Each term begun once and in order, each review once, the degree on its rule's day to a student in standing, nothing of the school's done or pending after the end except what `setStanding` keeps on purpose, the standing still after it.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 9, terms and the end, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J22-p4.json",
+     "title": "J22: check 9",
+     "kind": "measurement",
+     "proves": "terms begun 7: Fall Term 2026 Begins, Fall Term 2027 Begins, Spring Term 2028 Begins, Fall Term 2028 Begins, Spring Term 2029 Begins, Fall Term 2029 Begins, Spring Term 2030 Begins / reviews 2,3,4,5,6,7"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J16-p4.json",
+     "title": "J16: check 9",
+     "kind": "measurement",
+     "proves": "terms begun 3: Fall Term 2026 Begins, Spring Term 2027 Begins, Fall Term 2027 Begins / reviews 0,1,2"
+    },
+    {
+     "file": "tests/classmate-moments.test.ts",
+     "title": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)",
+     "kind": "player journey",
+     "proves": "D1: nothing of the School's is booked after its end by a yes"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A classmate's invitation to run lines answered yes after the School had ended put the evening on the calendar, and it was played (J02's first run: the degree withheld at five on 27 April 2029, yes at eight, lines run the next evening). The yes is refused once the School has ended (\"Your terms at the School are over: there’s no scene left to run lines for. Say no instead.\"), the no still taken.",
+     "where": "src/engine/systems/classmates.ts (respondRefusal), src/engine/content/guide/coursework.ts",
+     "failingTest": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)",
+     "commit": "5d69d230"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "the yes refused after the School's end taken out (respondRefusal)",
+     "caughtBy": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)"
+    }
+   ],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-check-10",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Saving, exiting, reloading, and continuing preserve the journey.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 10: what it reads and what fails it, written before any journey ran.",
+   "exercised": "At every reload (every thirty days and each part) the save serialised, opened and serialised again: 931 reloads, every one the same to the byte; 160 kept results replayed from their inputs in each journey, 0 different.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 10, save and reload, on J01 to J23, F1, F2",
+     "kind": "measurement",
+     "proves": "passed on all 25"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: check 10",
+     "kind": "measurement",
+     "proves": "50 reloads (every thirty days and at each part), every one the same to the byte: true / 160 kept results replayed from their inputs, 0 different"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: check 10",
+     "kind": "measurement",
+     "proves": "38 reloads (every thirty days and at each part), every one the same to the byte: true / 160 kept results replayed from their inputs, 0 different"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.4-focused",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Use additional focused scenarios where a full school journey cannot naturally reach an important financial, document, or health branch.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Focused Scenarios\": F1 (a passport running out in the first fall), F2 (the spring plan unpayable from checking); F3 and after for a branch no journey reaches.",
+   "exercised": "F1 and F2 played to 4 August 2029, every check passed (see focusedScenarios). No F3 was needed: the hold and its late fee (J20), the medical leave (J22), the status ended by a dismissal (J16) and after the program with no OPT (J19), OPT approved (J14, J20 and others) and need at $43 (J18, J19) were reached in complete journeys.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F1-p4.json",
+     "title": "F1: documents, photo ID, the bank's ask, monthly",
+     "kind": "measurement",
+     "proves": "the passport branch"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F2-p4.json",
+     "title": "F2: the plan owed and paid, the ledger",
+     "kind": "measurement",
+     "proves": "the plan-unpaid branch"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.6-completed-stay",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Previously completed actions remain completed.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Completed stays completed: a piece shown, a course passed or failed, a credit, a document issued is never undone by a term, a reload or a part's boundary.",
+   "exercised": "continuity.perJourney[*].undone: 0 in all 25, across 931 reloads.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)",
+     "kind": "measurement",
+     "proves": "counted across the journeys"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.6-once",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Consequences and scheduled events occur once.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Each term's begin notice, review, scholarship and plan, each casting's notice, Commencement once; the coursework warning at most once a term; every scheduled item done at most once.",
+   "exercised": "No coursework warning, concern or warning twice in a term in any journey; memos once a term (check 6); nothing of the school's done after the end (check 9) once D1 was fixed.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)",
+     "kind": "measurement",
+     "proves": "counted across the journeys"
+    },
+    {
+     "file": "tests/classmate-moments.test.ts",
+     "title": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)",
+     "kind": "player journey",
+     "proves": "D1: nothing of the School's is booked after its end by a yes"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A classmate's invitation to run lines answered yes after the School had ended put the evening on the calendar, and it was played (J02's first run: the degree withheld at five on 27 April 2029, yes at eight, lines run the next evening). The yes is refused once the School has ended (\"Your terms at the School are over: there’s no scene left to run lines for. Say no instead.\"), the no still taken.",
+     "where": "src/engine/systems/classmates.ts (respondRefusal), src/engine/content/guide/coursework.ts",
+     "failingTest": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)",
+     "commit": "5d69d230"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "the yes refused after the School's end taken out (respondRefusal)",
+     "caughtBy": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)"
+    }
+   ],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.6-advice-acknowledges",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Advice acknowledges what has changed.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": A week whose first recommendation's input moved says something different; a week where nothing moved may say the same, counted justified (check 4's rule: no run over four weeks of the same words while its level moved a point or its forecast a tenth).",
+   "exercised": "3,741 weekly reads; check 4 passed on all 25; the 7 runs the cruder count flags each kept its words over a move of hundredths, under what the screen shows.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)",
+     "kind": "measurement",
+     "proves": "counted across the journeys"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J06-p4.json",
+     "title": "J06: the vocal run of May to September 2028",
+     "kind": "measurement",
+     "proves": "vocal 73.0 to 98.3 under the same advice, its words changing 19 of 20 weeks, the forecast 0.47 to 0.21, then adaptability"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.6-feedback-current",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Repeated feedback reflects the current state.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": A note given again (`recurring`) is on a part short on the piece it's given on, or a choice unsupported there.",
+   "exercised": "1,194 recurring notes of 6,607, 0 on a part not short, read as the showing read it (after D4, the round shown).",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)",
+     "kind": "measurement",
+     "proves": "counted across the journeys"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)",
+     "kind": "player journey",
+     "proves": "D4: the round shown, not the next, is what a warning and review read"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Work shown in rounds goes on to its next round once one is shown, and `shortParts` reads the round it's on: the term's warning and review counted the next round's parts as the cause of an Unready round (a Simulated Rehearsal shown Unready At The Table counted short on lines, on its feet and with its partner, parts not yet due; J15 and J16). `shortAtShowing` reads the round last shown, for `mostShort` and `shortCause`.",
+     "where": "src/engine/systems/coursework.ts (shortAtShowing, mostShort, shortCause)",
+     "failingTest": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)",
+     "commit": "905c39d1"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "R1: shortAtShowing is shortParts",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R2: mostShort reads the next round",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R3: \"every\" weighs the next round's parts",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R4: \"every\" reads the next round's shortness",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    }
+   ],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.6-variety",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Exercises and situations vary where the current catalog supports variation.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Distinct templates, scenes, plays, exercises, moments and targets; the longest run of one, and whether the catalog had another.",
+   "exercised": "18 templates in every complete journey, 62 to 64 scenes; a scene comes back only once every fitting one was studied (`scenesFor`, `revisitOf`). The ignorers' one exercise for up to 669 sessions is the profile, not the catalog.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)",
+     "kind": "measurement",
+     "proves": "counted across the journeys"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.6-words-alone",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Repetition is not disguised by changing words alone.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Advice and notices compared with figures and dates taken out: the same words over a changed state, or new words over an unchanged one, counted and read.",
+   "exercised": "1,094 advice changes in words alone, each a figure moving under the same recommendation; 99 notices the same twice, each a different piece, day or classmate's moment. None hid the same recommendation under new words.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)",
+     "kind": "measurement",
+     "proves": "counted across the journeys"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.6-repetition-record",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Record repeated situations and recommendations, their frequency, and whether they remain justified. Do not rotate to inferior advice just to make a repetition count smaller.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Every repetition recorded with its count and whether it stays justified; nothing in the advice changed to shrink a count.",
+   "exercised": "continuityAndFreshness: per journey and in total, each long run read. Nothing in the advice changed.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)",
+     "kind": "measurement",
+     "proves": "counted across the journeys"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.6-defects-fixed",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Fix concrete defects found during these journeys. Add regression tests and rerun the affected scenarios.",
+   "criterion": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Each defect fixed with a test that fails before and passes after, labeled as the house does; every journey it could touch run again.",
+   "exercised": "D1 to D5 fixed, each with its PLAYER JOURNEY or FIXTURE, every mutation tried in a copy caught (one after the FIXTURE was strengthened); all 25 journeys run again on 0bc829ec, after the last fix.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)",
+     "kind": "measurement",
+     "proves": "counted across the journeys"
+    },
+    {
+     "file": "tests/classmate-moments.test.ts",
+     "title": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)",
+     "kind": "player journey",
+     "proves": "D1: nothing of the School's is booked after its end by a yes"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload",
+     "kind": "player journey",
+     "proves": "D2: a wholly unprepared term's warning says every part of each was short, not a part picked by its tie"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared",
+     "kind": "player journey",
+     "proves": "D2: the review says the same"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)",
+     "kind": "fixture",
+     "proves": "D2: each of shortCause's three kinds"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)",
+     "kind": "fixture",
+     "proves": "D2: the warning's own words where no part is short on two"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked",
+     "kind": "player journey",
+     "proves": "D3: written work is refused a way of playing, by the command and the pane's gate"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)",
+     "kind": "fixture",
+     "proves": "D3: an older save opens through writtenUnplayed"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)",
+     "kind": "player journey",
+     "proves": "D4: the round shown, not the next, is what a warning and review read"
+    },
+    {
+     "file": "tests/evidence-g22-school.test.ts",
+     "title": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)",
+     "kind": "player journey",
+     "proves": "D5: an evening the School would excuse isn't asked for"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A classmate's invitation to run lines answered yes after the School had ended put the evening on the calendar, and it was played (J02's first run: the degree withheld at five on 27 April 2029, yes at eight, lines run the next evening). The yes is refused once the School has ended (\"Your terms at the School are over: there’s no scene left to run lines for. Say no instead.\"), the no still taken.",
+     "where": "src/engine/systems/classmates.ts (respondRefusal), src/engine/content/guide/coursework.ts",
+     "failingTest": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)",
+     "commit": "5d69d230"
+    },
+    {
+     "summary": "A term's coursework warning and its review named the part most often short whatever its count, by its tie in the list's order, with a remedy that answered one piece: J15 was told \"Most often short on them: knows the scene, on 1 of the 6 shown. Read The Scene answers it.\" of six pieces each short on every part, and \"knows the scene, on 8\" of 47 at review. `shortCause` says it as it is: every part of each short, no part short on more than one, or the part short on two or more as before.",
+     "where": "src/engine/systems/coursework.ts (shortCause, termWarning), src/engine/systems/school.ts (the review's why), src/engine/content/guide/coursework.ts",
+     "failingTest": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload",
+     "commit": "5d69d230"
+    },
+    {
+     "summary": "Written work accepted a way of playing: J12 chose ways for seven pieces of Table Work, which is presented at the table and never rehearsed on its feet; the preview read the way as rehearsed in full and promised more, the showing read it at nothing (seed written-playing: previewed 64.6 open and 64.9 expansive, shown 44.4 open against 44.2 with the choice). `playingRefusal` refuses it in its words, which the Coursework pane reads to draw the choice; an older save's way on written work still to be shown is taken off once on opening (`writtenUnplayed`, `ONCE_ON_OPENING`).",
+     "where": "src/engine/systems/coursework.ts (playingRefusal, writtenUnplayed), src/engine/index.ts (ONCE_ON_OPENING), src/engine/content/guide/coursework.ts",
+     "failingTest": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked",
+     "commit": "34c4120a"
+    },
+    {
+     "summary": "Work shown in rounds goes on to its next round once one is shown, and `shortParts` reads the round it's on: the term's warning and review counted the next round's parts as the cause of an Unready round (a Simulated Rehearsal shown Unready At The Table counted short on lines, on its feet and with its partner, parts not yet due; J15 and J16). `shortAtShowing` reads the round last shown, for `mostShort` and `shortCause`.",
+     "where": "src/engine/systems/coursework.ts (shortAtShowing, mostShort, shortCause)",
+     "failingTest": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)",
+     "commit": "905c39d1"
+    },
+    {
+     "summary": "A student hurt or in hospital could ask a partner for an evening the School already knew it would excuse; the partner gave it and it was called off on the night (J23: a bone broken in a fall on 1 March 2027, fifty days to mend, twenty-two such evenings to 19 April). `askRefusal` refuses an evening in hospital, laid up, or, for work on its feet, hurt in a way that stops training, in the words `rehearsalOutcome` excuses it by; a booking made before the injury is excused on the night as before.",
+     "where": "src/engine/systems/coursework.ts (askRefusal), src/engine/content/guide/coursework.ts",
+     "failingTest": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)",
+     "commit": "905c39d1"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "the yes refused after the School's end taken out (respondRefusal)",
+     "caughtBy": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)"
+    },
+    {
+     "what": "M1: shortCause's \"every\" taken out",
+     "caughtBy": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload; school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared; school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "what": "M2: shortCause's \"scattered\" taken out",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "what": "M3: the review says nothing for \"every\"",
+     "caughtBy": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared"
+    },
+    {
+     "what": "M4: \"scattered\" at fewer than three (off by one)",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "what": "the warning's \"No one part was short on more than one of them\" words taken out",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)"
+    },
+    {
+     "what": "W1: playingRefusal's written-work refusal taken out",
+     "caughtBy": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked"
+    },
+    {
+     "what": "W2: the opening step marked taken without running writtenUnplayed",
+     "caughtBy": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    },
+    {
+     "what": "W3: writtenUnplayed clears every way, performed ones too",
+     "caughtBy": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    },
+    {
+     "what": "W4: writtenUnplayed clears shown pieces' ways too",
+     "caughtBy": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken) (survived the first FIXTURE, which had no shown piece; caught once a shown copy was added)"
+    },
+    {
+     "what": "R1: shortAtShowing is shortParts",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R2: mostShort reads the next round",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R3: \"every\" weighs the next round's parts",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "R4: \"every\" reads the next round's shortness",
+     "caughtBy": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "what": "H1: no refusal in hospital",
+     "caughtBy": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    },
+    {
+     "what": "H2: no refusal laid up",
+     "caughtBy": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    },
+    {
+     "what": "H3: no refusal for an injury that stops training",
+     "caughtBy": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    },
+    {
+     "what": "H4: the training refusal for every partner evening, not only work on its feet",
+     "caughtBy": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    }
+   ],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.7-mastery",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Maximum-quality prepared mastery.",
+   "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J13 and J14: a piece shown complete on a sufficient day judged at mastery; one short of it limited by preparation, condition, fit or suitability.",
+   "exercised": "J13 43 of 377 pieces at mastery (overall 100), J14 42 of 379. Short of it: preparation 98 and 102, condition 112 and 115, and stamina 124 and 120, the only ability ever a first limit, detrained unworked from 99.4 to 35; put back up, the last twelve come to 95.8 to 100.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: the records the clause reads",
+     "kind": "measurement",
+     "proves": "J13 43 of 377 pieces at mastery (overall 100), J14 42 of 379. Short of it: preparation 98 and 102, condition 112 and 115, and stamina 124 and 120, the only ability ever a first limit, detrained unworked from 99.4 to 35; put back up, the last twelve come to 95.8 to 100."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J14-p4.json",
+     "title": "J14: the records the clause reads",
+     "kind": "measurement",
+     "proves": "J13 43 of 377 pieces at mastery (overall 100), J14 42 of 379. Short of it: preparation 98 and 102, condition 112 and 115, and stamina 124 and 120, the only ability ever a first limit, detrained unworked from 99.4 to 35; put back up, the last twelve come to 95.8 to 100."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.7-attributes",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Relevant attribute improvement without unintended regression.",
+   "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 3: what rose never lowers the work; a fall only by a recorded cause.",
+   "exercised": "All 25: the last twelve judged at the starting levels with what rose put back never higher; the only fall stamina's, by `settleTheBody`.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J03-p4.json",
+     "title": "J03: the records the clause reads",
+     "kind": "measurement",
+     "proves": "All 25: the last twelve judged at the starting levels with what rose put back never higher; the only fall stamina's, by `settleTheBody`."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J21-p4.json",
+     "title": "J21: the records the clause reads",
+     "kind": "measurement",
+     "proves": "All 25: the last twelve judged at the starting levels with what rose put back never higher; the only fall stamina's, by `settleTheBody`."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.7-genres",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Genre-specific benefits without unrelated leakage.",
+   "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 3: genres met known better; a genre never met known no better (speed 1).",
+   "exercised": "All 25: the best-known genre's steps faster (1.04 to 1.13), a genre never met (absurdist) at 1.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: the records the clause reads",
+     "kind": "measurement",
+     "proves": "All 25: the best-known genre's steps faster (1.04 to 1.13), a genre never met (absurdist) at 1."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: the records the clause reads",
+     "kind": "measurement",
+     "proves": "All 25: the best-known genre's steps faster (1.04 to 1.13), a genre never met (absurdist) at 1."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.7-specialists",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Specialist opportunities and valid limitations.",
+   "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J11 and J12 against J09 and J10 on brief 10's fixed 24 pieces: above where strengths are read, below where weaknesses are.",
+   "exercised": "At the setup levels 24 of 24 and 24 of 24; at the final levels 24 of 24 and 21 of 24, the three within 0.39 points. The 49s did rise past some 90s under the advice (an expectation that was wrong).",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/compare.json",
+     "title": "the advice triples and the specialists against their generalists",
+     "kind": "measurement",
+     "proves": "what the expectations compared across journeys, worked out from the final saves"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J11-p4.json",
+     "title": "J11: the records the clause reads",
+     "kind": "measurement",
+     "proves": "At the setup levels 24 of 24 and 24 of 24; at the final levels 24 of 24 and 21 of 24, the three within 0.39 points. The 49s did rise past some 90s under the advice (an expectation that was wrong)."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J12-p4.json",
+     "title": "J12: the records the clause reads",
+     "kind": "measurement",
+     "proves": "At the setup levels 24 of 24 and 24 of 24; at the final levels 24 of 24 and 21 of 24, the three within 0.39 points. The 49s did rise past some 90s under the advice (an expectation that was wrong)."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.7-advice-forecasts",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Accurate advice forecasts.",
+   "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J03 to J05 and J06 to J08: the advised inputs rise most for the follower, the ignorer's favorite most for the ignorer, and the follower's last twelve, judged again, highest at the follower's levels.",
+   "exercised": "Advised rises 222 / 188.7 / 169.9 and 227 / 223 / 209.1; the last twelve 77.55 / 75.36 / 71.98 and 76.79 / 74.47 / 71.39; the favorite +1.7 / +32.7 / +32.6 and +2.6 / +36.8 / +36.9.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/compare.json",
+     "title": "the advice triples and the specialists against their generalists",
+     "kind": "measurement",
+     "proves": "what the expectations compared across journeys, worked out from the final saves"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J03-p4.json",
+     "title": "J03: the records the clause reads",
+     "kind": "measurement",
+     "proves": "Advised rises 222 / 188.7 / 169.9 and 227 / 223 / 209.1; the last twelve 77.55 / 75.36 / 71.98 and 76.79 / 74.47 / 71.39; the favorite +1.7 / +32.7 / +32.6 and +2.6 / +36.8 / +36.9."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J06-p4.json",
+     "title": "J06: the records the clause reads",
+     "kind": "measurement",
+     "proves": "Advised rises 222 / 188.7 / 169.9 and 227 / 223 / 209.1; the last twelve 77.55 / 75.36 / 71.98 and 76.79 / 74.47 / 71.39; the favorite +1.7 / +32.7 / +32.6 and +2.6 / +36.8 / +36.9."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.7-stamina",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Stamina's duration, participation, intensity, and recovery behavior.",
+   "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 5: stamina distinct from energy, its moves by its own rules, illness not tolling it.",
+   "exercised": "Daily changes of energy and stamina correlated at -0.01 to 0.07 over 549 to 1,441 mornings; stamina detrains to its floor unworked and limits a mastered actor's work.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J21-p4.json",
+     "title": "J21: the records the clause reads",
+     "kind": "measurement",
+     "proves": "Daily changes of energy and stamina correlated at -0.01 to 0.07 over 549 to 1,441 mornings; stamina detrains to its floor unworked and limits a mastered actor's work."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: the records the clause reads",
+     "kind": "measurement",
+     "proves": "Daily changes of energy and stamina correlated at -0.01 to 0.07 over 549 to 1,441 mornings; stamina detrains to its floor unworked and limits a mastered actor's work."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.7-ledger",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Ledger balance.",
+   "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 6.",
+   "exercised": "At every reload of all 25: 0 unbalanced, 0 breaches.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: the records the clause reads",
+     "kind": "measurement",
+     "proves": "At every reload of all 25: 0 unbalanced, 0 breaches."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F2-p4.json",
+     "title": "F2: the records the clause reads",
+     "kind": "measurement",
+     "proves": "At every reload of all 25: 0 unbalanced, 0 breaches."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "journeys.7-save",
+   "group": "Brief 13 Area: journeys",
+   "baselineStatus": "not in brief 11's baseline: brief 13's own clause",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+   "ownersWords": "Save compatibility and historical results.",
+   "criterion": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 10, and an older save opened through the new opening step.",
+   "exercised": "931 reloads the same to the byte; 160 kept results per journey replayed, 0 different; a save from before D3 opens through `writtenUnplayed` (FIXTURE). The schema stayed 94 in both places.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: the records the clause reads",
+     "kind": "measurement",
+     "proves": "931 reloads the same to the byte; 160 kept results per journey replayed, 0 different; a save from before D3 opens through `writtenUnplayed` (FIXTURE). The schema stayed 94 in both places."
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: the records the clause reads",
+     "kind": "measurement",
+     "proves": "931 reloads the same to the byte; 160 kept results per journey replayed, 0 different; a save from before D3 opens through `writtenUnplayed` (FIXTURE). The schema stayed 94 in both places."
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)",
+     "kind": "fixture",
+     "proves": "D3: an older save opens through writtenUnplayed"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "the 25 journeys on the tested commit: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-final/compare.json",
+     "kind": "measurement",
+     "proves": "what the expectations compare across journeys, on the tested commit"
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 14's tested commit"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/journeys-final/summary.json",
+     "kind": "measurement",
+     "proves": "brief 13's 25 journeys on brief 15's tested commit"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "engine"
+   }
+  },
+  {
+   "id": "B13-UI.normal",
+   "group": "Brief 13 Area: interface",
+   "baselineStatus": "new: brief 13, section 5 (a normal student journey)",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "criterion": "interface-criteria.md, Playthrough 1: a new life made through creation, through orientation week to the first Acting I scene shown and its feedback read, then Papers, Money and save and continue, every step showing what it says, at 1440 and at 390, each of the six exercised by a passed step.",
+   "exercised": "tools/playthroughs-ui.mjs normal at 1440 and at 390 on the built app (npx vite preview, port 4187), through its visible controls only; a new life in a browser with no saves, its seed read from the save afterwards.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 1440 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "14 of 14 steps passed at 1440; exercised: navigation (steps 9, 12, 13); drill-down (steps 4, 5); unavailable (steps 2, 10, 12); confirmation (steps 6, 7, 14); notification (steps 4, 7, 9, 12); save-continue (steps 14)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 390 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "14 of 14 steps passed at 390; exercised: navigation (steps 9, 12, 13); drill-down (steps 4, 5); unavailable (steps 2, 10, 12); confirmation (steps 6, 7, 14); notification (steps 4, 7, 9, 12); save-continue (steps 14)"
+    },
+    {
+     "file": "tests/evidence-g32-ui.test.ts",
+     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: more unread than the panel",
+     "kind": "player journey",
+     "proves": "every unread notice reachable from Home, as the run then found The Courses And What They Ask by Show All"
+    },
+    {
+     "file": "tests/evidence-g32-ui.test.ts",
+     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: the first morning",
+     "kind": "player journey",
+     "proves": "the welcome’s look named with its year as written"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on the tested commit 7e7a3af6 (runs13.sh UI, on its build, 9 steps, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on brief 14's commit edd7be91 (runs14.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on brief 15's commit d6f6527a (runs15.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Home drew the six heaviest unread notices and nothing of the rest, while Mark N Read marked every one read, so a notice past the sixth was on no screen. The panel now says “N more waiting.” and offers Show All N (and Show The Heaviest Six back); Mark N Read still marks them all, as the guide and the notice look say.",
+     "where": "src/ui/screens/Home.tsx; the guide’s words, src/engine/content/guide/day.ts (day.needs)",
+     "failingTest": "tests/evidence-g32-ui.test.ts ‘h-needs: What Needs You on Home > PLAYER JOURNEY: more unread than the panel’s six: it says how many more wait and offers Show All; pressed, every one is drawn with its Go There, the seventh heaviest among them; Show The Heaviest Six puts it back; Mark N Read still marks every one’, failing before (“expected … to contain ‘153 more waiting. Show All 159’”) and passing after"
+    },
+    {
+     "summary": "A notice’s or a question’s look grouped every run of four digits as a count, so the first morning’s welcome opened as “Welcome To The Class Of 2,029” and February’s return as “Your 2,026 Tax Return”. nameOf keeps a year as written; the drill-down rule (docs/DRILL-DOWN.md, rule 5 and the name gate) and its guard (tests/looks.test.ts) take a year out before they look for a run of four digits, which is how the looks came to group one.",
+     "where": "src/ui/looks/attention.tsx (nameOf); docs/DRILL-DOWN.md; tests/looks.test.ts",
+     "failingTest": "tests/evidence-g32-ui.test.ts ‘h-needs: What Needs You on Home > PLAYER JOURNEY: the first morning’s Welcome To The Class Of 2029 and February’s Your 2026 Tax Return, each title pressed on Home, open their looks under the year as it’s written, never as a count’, failing before (“Welcome To The Class Of 2,029”) and passing after"
+    }
+   ],
+   "mutations": [
+    {
+     "what": "nameOf grouping every run of four digits again (the year exemption taken out)",
+     "caughtBy": "tests/evidence-g32-ui.test.ts, the year test above (1 failed); tests/looks.test.ts passes, as it now takes years out first: the year test is the guard"
+    },
+    {
+     "what": "nameOf keeping every four-digit run, year or not (YEAR = /^\\d{4}$/)",
+     "caughtBy": "survives: no title any notice or question carries has a four-digit run that isn’t a year, so nothing reaches the difference; the looks crawl’s name gate would fail one that appeared"
+    },
+    {
+     "what": "Show All pressed, and the list still the six",
+     "caughtBy": "tests/evidence-g32-ui.test.ts, the Show All test (1 failed)"
+    },
+    {
+     "what": "the “N more waiting.” line and its Show All taken out",
+     "caughtBy": "tests/evidence-g32-ui.test.ts, the Show All test (1 failed)"
+    },
+    {
+     "what": "Mark N Read marking only the six drawn",
+     "caughtBy": "tests/evidence-g32-ui.test.ts, the Show All test and ‘PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel …’ (2 failed)"
+    }
+   ],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "app"
+   },
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+  },
+  {
+   "id": "B13-UI.setback",
+   "group": "Brief 13 Area: interface",
+   "baselineStatus": "new: brief 13, section 5 (a setback-and-recovery journey)",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "criterion": "interface-criteria.md, Playthrough 2: the workload scenario’s save (no TEST SETUP), the term’s warning on coursework read, opened and followed to the scene it names, its remedy worked each day until the scene is shown Working or better where it stood Unready, then saved and continued, at 1440 and at 390, each of the six exercised.",
+   "exercised": "tools/playthroughs-ui.mjs setback at 1440 and at 390, from npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 1440 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "9 of 9 steps passed at 1440; exercised: navigation (steps 3); drill-down (steps 2, 4); unavailable (steps 5); confirmation (steps 6, 7); notification (steps 1, 8); save-continue (steps 1, 9)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 390 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "9 of 9 steps passed at 390; exercised: navigation (steps 3); drill-down (steps 2, 4); unavailable (steps 5); confirmation (steps 6, 7); notification (steps 1, 8); save-continue (steps 1, 9)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on the tested commit 7e7a3af6 (runs13.sh UI, on its build, 9 steps, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on brief 14's commit edd7be91 (runs14.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on brief 15's commit d6f6527a (runs15.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "gap": "The term’s own review (December 10, 2027) falls after the playthrough ends: whether the warning and the review agree over a whole term is the journeys area’s (section 4).",
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "app"
+   },
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+  },
+  {
+   "id": "B13-UI.specialist",
+   "group": "Brief 13 Area: interface",
+   "baselineStatus": "new: brief 13, section 5 (a specialist’s preparation, performance, advice and training journey)",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "criterion": "interface-criteria.md, Playthrough 3: the specialist scenario’s save (TEST SETUP: four abilities at 90, the rest at 49), Nordic Noir’s brief prepared, played on the side its scene suits, taped and read, What To Work On read (naming none of the four strengths), its exercise trained to the day’s limit and again the next day, the brief taped again higher, then saved and continued, at 1440 and at 390, each of the six exercised.",
+   "exercised": "tools/playthroughs-ui.mjs specialist at 1440 and at 390, from npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 1440 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "11 of 11 steps passed at 1440; exercised: navigation (steps 2); drill-down (steps 2); unavailable (steps 3, 7); confirmation (steps 8, 11); notification (steps 1); save-continue (steps 11)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 390 SAVEDIR, on 695683c4",
+     "kind": "player journey",
+     "proves": "11 of 11 steps passed at 390; exercised: navigation (steps 2); drill-down (steps 2); unavailable (steps 3, 7); confirmation (steps 8, 11); notification (steps 1); save-continue (steps 11)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on the tested commit 7e7a3af6 (runs13.sh UI, on its build, 9 steps, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on brief 14's commit edd7be91 (runs14.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on brief 15's commit d6f6527a (runs15.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "app"
+   },
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+  },
+  {
+   "id": "B13-UI.walkthrough",
+   "group": "Brief 13 Area: interface",
+   "baselineStatus": "new: brief 13, section 5 (a separate short walkthrough for the owner)",
+   "disposition": "closed",
+   "status": "Implemented And Verified",
+   "criterion": "interface-criteria.md, The Owner’s Walkthrough: PLAYTEST.md, a different route from brief 12’s, about twenty minutes from a new life, carrying a setback the game gives and its recovery, and a specialist’s training, each step saying what to press, what to expect and what to report, and saying plainly that the automated runs aren’t a judgment of how the game feels.",
+   "exercised": "Its steps are the normal playthrough’s through orientation and the first showing (the runs above); its leaning, its unprepared scene and the note taken, and its four hours of Graded Exposure were played in the engine through the commands to check the document’s figures (probes in the scratchpad: Composure 58.3 at Emotional Stability 95; the scene left alone Shown Unready at 22 of 100 on 8 September, the note taken the next day and the band still Unready; 58.3 to 58.6 after four hours, the fifth refused in the day’s words). Those probes check the document, not the interface.",
+   "evidence": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/PLAYTEST.md",
+     "title": "the walkthrough",
+     "kind": "fixture",
+     "proves": "the route and its expectations, as the owner plays it"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on the tested commit 7e7a3af6 (runs13.sh UI, on its build, 9 steps, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    },
+    {
+     "file": "docs/verification/language-2026-10-17/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on brief 14's commit edd7be91 (runs14.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/interface-final/summary.json",
+     "kind": "measurement",
+     "proves": "Played again on brief 15's commit d6f6527a (runs15.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "gap": "How the game feels to play is the owner’s to judge, by playing it: no automated run is human usability approval.",
+   "measured": {
+    "commit": "d6f6527a",
+    "watch": "app"
+   },
+   "statusNote": "Played again on brief 15's commit d6f6527a (runs15.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+  }
+ ],
+ "journeys": "Played again on brief 15's commit d6f6527a (runs15.sh JR1 to JR3 and JRC, 102 steps, every one exit 0): 25 journeys, 25 played to the end, 25 with all ten checks passed; each ending as brief 14's final run ended.",
+ "interface": "Played again on brief 15's commit d6f6527a (runs15.sh UI, on its build, 9 steps of brief 13's playthroughs, every one exit 0): normal at 1440: 14 of 14; normal at 390: 14 of 14; setback at 1440: 9 of 9; setback at 390: 9 of 9; specialist at 1440: 11 of 11; specialist at 390: 11 of 11."
+}

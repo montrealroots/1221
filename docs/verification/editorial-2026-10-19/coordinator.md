@@ -151,3 +151,16 @@ them moved in each area's batches.
   the words the papers area had left it. Eight exact assertions in five test files moved with the notice, among them a
   re-booked specialist in `defects-g8-6`. A mutation check showed that `guide-examples-papers` fails when only the notice
   changes. The seven files run: 124 of 124 tests. text-inventory, guide-quotes, traceability, typecheck and lint all hold.
+
+### In The Final Runs
+
+The final runs on `c3478f9e` found what the cross-area review hadn't (`uitools/README.md`):
+- **The interface tools.** Seven matchers in `tools/acceptance-ui.mjs` and `tools/playthroughs-ui.mjs` still looked for
+  brief 14's words. Each was moved to brief 15's, at least as closely as before (`e5fdacb7`).
+- **The coursework warning** ran to 121 words in one block on the health journey, past the playthroughs' wall of text.
+  At its longest it reached 144. It is 119 now, held by a test that builds that longest case (`e5fdacb7`).
+- **Shown Today's figure.** The school area had written it in whole points, and a trial found a day's step that left
+  "about 52 of 100" where it was. It went back to a tenth, as a brief's Taped Now writes its own, and kept the area's
+  "of 100" (`d6f6527a`).
+
+Every lane then ran again on `d6f6527a` (`runs/README.md`).
