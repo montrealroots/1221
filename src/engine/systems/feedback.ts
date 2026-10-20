@@ -291,7 +291,7 @@ function despiteLeads(d: Discipline, f: ShowingFacts): string[] {
 function heldLeads(d: Discipline, f: ShowingFacts): string[] {
   const h = f.held!;
   const b = f.bandLabel;
-  if (h.again) return [`As on ${h.again}, ${low(h.words)}.`, `${h.words}, as it did on ${h.again}.`, `It stayed at ${b}, held back as on ${h.again}: ${low(h.words)}.`];
+  if (h.again) return [`As on ${h.again}, ${low(h.words)}.`, `${h.words}, as it did on ${h.again}.`, `It stayed at ${b}, as on ${h.again}: ${low(h.words)}.`];
   const prep = h.kind === 'preparation';
   const out = [
     `It stayed at ${b}: ${low(h.words)}.`,

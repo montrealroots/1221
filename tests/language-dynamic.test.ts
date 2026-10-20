@@ -1192,7 +1192,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
     const words = 'Your vocal expression held back your execution by 25 points out of 100';
     const heldAgain = showingCandidates({ ...facts, kind: 'advanced', about: undefined, part: undefined, note: 'Choose one phrase.', held: { words, kind: 'ability', what: 'vocalExpression', again: 'October 9, 2026' } });
     expect(heldAgain.length).toBeGreaterThan(0);
-    for (const c of heldAgain) { expect(c).toContain('October 9, 2026'); expect(c).toMatch(/As on October 9, 2026, your vocal|, as it did on October 9, 2026\.|held back as on October 9, 2026: your vocal/); }
+    for (const c of heldAgain) { expect(c).toContain('October 9, 2026'); expect(c).toMatch(/As on October 9, 2026, your vocal|, as it did on October 9, 2026\.|Working, as on October 9, 2026: your vocal/); }
     const sameDay = showingCandidates({ ...facts, kind: 'partial', band: 'working', bandLabel: 'Working', prev: { band: 'unready', label: 'Unready', on: 'February 9, 2027' }, before: { on: 'February 9, 2027', course: 'Acting I', given: 1 } });
     for (const c of sameDay) expect(c.split('February 9, 2027').length - 1, c).toBeLessThanOrEqual(1);
     // Strong though the day cost it, by what the day was and what it cost (a played run seldom shows a piece on such a day).

@@ -73,7 +73,7 @@ import {
   APPROACH, APPROACHES, LEARNING, OBJECTIVE_DIM, challengesFor, mayGive, noteRecord, noteSubject, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
   type Approach, type NoteFocus, type NoteKind, type NoteRecord, type Objective, type Revisit,
 } from './learning';
-import { actingOf } from './school';
+import { actingOf, dayKeyAt } from './school';
 import { CLASS, boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
 import { injuryOf, laidUp, trainingRefusal } from './injury';
 import { INJURY_KIND } from '../content/injury';
@@ -1164,9 +1164,11 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const recent = cw.assignments.filter((x) => x.shown && x.shown.at < when && x.feedback && disciplineOf(courseOf(x.course)?.skills ?? []) === discipline).sort((x, y) => x.shown!.at - y.shown!.at).slice(-8).map((x) => x.feedback!.text);
   const heldLimit = held ? limits.limits[0] : undefined;
   const heldExercise = heldLimit && (heldLimit.kind === 'ability' || heldLimit.kind === 'technique') ? exerciseFor(heldLimit.what as never)?.label : undefined;
-  // The same limit held the course's last piece back, and was said then: said as continuity, with when.
-  // (A round's own record isn't kept apart from its piece's, so a round before is never said as the same limit.)
-  const prevChief = prev && !prev.x.roundsShown?.length && prev.x.feedback?.kind === 'advanced' && !strongBand(prev.band) ? (person.work ?? []).find((w) => w.at === prev.at)?.limits[0] : undefined;
+  // The same limit held the course's last piece back, and was said then: said as continuity, with when. A round's record
+  // is found by its day and its piece (`recordWork` keeps each round), the time of a round not being kept with its band.
+  const prevTitle = prev ? templateById(prev.x.template)?.title : undefined;
+  const prevRecord = prev ? (person.work ?? []).find((w) => (prev.x.roundsShown?.length ? dayKeyAt(w.at) === dayKeyAt(prev.at) && w.what === prevTitle : w.at === prev.at)) : undefined;
+  const prevChief = prev && prev.x.feedback?.kind === 'advanced' && !strongBand(prev.band) ? prevRecord?.limits[0] : undefined;
   const heldAgain = heldLimit && prevChief && prevChief.kind === heldLimit.kind && prevChief.what === heldLimit.what ? formatDate(prev!.at, zone()) : undefined;
   const day = judged.limits.find((l) => l.kind === 'condition');
   const share = showing.together && a.partner !== undefined ? showing.together : undefined;
