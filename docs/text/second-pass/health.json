@@ -652,9 +652,9 @@
  },
  "src/engine/systems/appointments.ts#bookIn": {
   "status": "Rewritten",
-  "hash": "72ae2f0f8ea2",
-  "on": "2026-10-19",
-  "evidence": "tests/guide-examples-papers.test.ts, papers.doctor: the played Monday's notice equals the guide's quote, new next step included; fails with the old notice",
+  "hash": "e7ba150e3b49",
+  "on": "2026-10-20",
+  "evidence": "tests/scope-health.test.ts ('PLAYER JOURNEY: the student who picks Yale Health on Your Doctor is booked the next weekday there…'): Yale Health's own wait said as its own, a town's and a referral's as before",
   "first": "Pending"
  },
  "src/engine/systems/appointments.ts#mayRefer": {
