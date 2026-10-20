@@ -122,7 +122,9 @@ export function identityOf(person: Person): Identity {
     // "A note on memorization", "The class’s notes: dim:memorization".
     const ledger = (person.school as { coursework?: { notes?: { key: string; status: string; given: number }[] } } | undefined)?.coursework?.notes ?? [];
     const back = ledger.filter((n) => n.status === 'open' && n.given >= LEARNING.persistent).sort((a, b) => b.given - a.given)[0];
-    if (back) weaknesses.push({ label: 'A Note That Keeps Coming Back', line: `The same note has been given ${back.given} times and is still open: ${noteSubject(back.key)}.`, evidence: [`The class’s notes: ${noteSubject(back.key)}`] });
+    // What it rests on, without the note's name again (from 2026-10-20, brief 17): until then “From: The class’s notes: Work
+    // With Your Partner.” under a line that had just named it.
+    if (back) weaknesses.push({ label: 'A Note That Keeps Coming Back', line: `The same note has been given ${back.given} times and is still open: ${noteSubject(back.key)}.`, evidence: ['The class’s notes'] });
   }
 
   // Familiar and unfamiliar material: the features met and practised, and those never.
@@ -185,7 +187,9 @@ export function identityOf(person: Person): Identity {
   if (dir && dir.given >= 3) {
     const way = (Object.entries(dir.ways) as [AdjustmentId | 'callback', number][]).sort((a, b) => b[1] - a[1])[0];
     const wayLabel = way ? (way[0] === 'callback' ? 'a callback taken as asked' : ADJUSTMENTS[way[0] as AdjustmentId]?.label.toLowerCase() ?? way[0]) : undefined;
-    direction = { label: 'Taking Direction', line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered || 'none'}${wayLabel ? `. The way you reach for most: ${wayLabel} (${way![1]})` : ''}.`, evidence: [`${dir.given} notes given, ${dir.worked} worked on and ${dir.answered} answered`] };
+    // All three counts in the line, and what it rests on as where they come from (from 2026-10-20, brief 17): until then the
+    // evidence said the counts again, “Of 9 notes … you answered none. From: 9 notes given, 0 worked on and 0 answered.”
+    direction = { label: 'Taking Direction', line: `Of ${dir.given} notes and requests on your craft, you worked on ${dir.worked || 'none'} and answered ${dir.answered || 'none'}${wayLabel ? `. The way you reach for most: ${wayLabel} (${way![1]})` : ''}.`, evidence: ['Directors’ notes on your craft and callbacks on your briefs'] };
   }
 
   // Reliability: calls kept, partners not stood up. The calls are the whole program's, the terms before this one's
@@ -203,7 +207,10 @@ export function identityOf(person: Person): Identity {
   // Collaboration: work played with others.
   let collaboration: Line | undefined;
   const tog = j.together;
-  if (tog && tog.n >= 3) collaboration = { label: 'Playing With Others', line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average${tog.slips ? `; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}` : ''}.`, evidence: [`${tog.n} scenes, takes and nights with others`] };
+  // A subject and a verb, the slips their own sentence, and what it rests on without the count again (from 2026-10-20,
+  // brief 17): until then “42 pieces played with a partner, a reader or a company came to 47.9 together on average; of 5
+  // slips …. From: 42 scenes, takes and nights with others.”
+  if (tog && tog.n >= 3) collaboration = { label: 'Playing With Others', line: `Your ${tog.n} pieces with a partner, a reader or a company averaged ${r1(tog.sum / tog.n)} out of 100.${tog.slips ? ` Of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}.` : ''}`, evidence: ['Scenes, takes and nights played with others'] };
 
   return { pieces, early, strengths, weaknesses, familiar, unfamiliar, habits, versatility, ...(direction ? { direction } : {}), ...(reliability ? { reliability } : {}), ...(collaboration ? { collaboration } : {}), ...(recurring ? { recurring } : {}), ...(untried ? { untried } : {}), ...(habit ? { habit } : {}) };
 }

@@ -85,7 +85,7 @@ vi.mock('@/app/game-context', () => {
   return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
 });
 
-const { ProfileWorkspace } = await import('@/ui/workspaces/ProfileWorkspace');
+const { ProfileWorkspace, nightsWords } = await import('@/ui/workspaces/ProfileWorkspace');
 const { SchoolWorkspace } = await import('@/ui/workspaces/SchoolWorkspace');
 const { ClassMoments } = await import('@/ui/components/ClassMoments');
 await import('@/ui/looks/all');
@@ -538,7 +538,9 @@ describe('work records + journey', () => {
     expect(workOn, 'something held this run back').not.toBe('');
     expect(notices(sim, `The Director’s Note: ${CABARET_SHOW}`).map((n) => n.body)).toEqual([cab.note]);
     // On the Profile's School Journey.
-    expect(shown(sim, ProfileWorkspace)).toContain(`${cab.role}, ${CABARET_SHOW}, the run averaged ${mean.toFixed(1)} (${runs[0]!.detail})`);
+    // Its nights by band in words (from 2026-10-20, brief 17), from the milestone's own count.
+    expect(shown(sim, ProfileWorkspace)).toContain(`${cab.role}, ${CABARET_SHOW}, the run averaged ${mean.toFixed(1)} (${nightsWords(runs[0]!.detail!)})`);
+    expect(nightsWords(runs[0]!.detail!)).toMatch(/^\d+ (?:off|solid|remarkable) nights?(?:, \d+ (?:off|solid|remarkable) nights?)*$/);
     // Once: a reload and days on, the run is closed and counted once.
     sim = reload(sim);
     tended(sim, sim.now + 2 * MS_DAY);
@@ -630,7 +632,9 @@ describe('work records + journey', () => {
     const answered = onCraft.filter((n) => n.taken === true).length;
     expect(onCraft.length).toBeGreaterThanOrEqual(3);
     expect(journeyOf(sim.player).direction).toMatchObject({ given: onCraft.length, answered });
-    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered || 'none'}`);
+    // The notes worked on said too, from the same record (from 2026-10-20, brief 17: until then only in what it rests on).
+    const worked = journeyOf(sim.player).direction!.worked;
+    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you worked on ${worked || 'none'} and answered ${answered || 'none'}`);
   });
 
   it('names a strength at 4 over the mean and not at 3.9', () => {
@@ -667,7 +671,7 @@ describe('work records + journey', () => {
     expect(text).toContain(`${kinds} kinds of work judged, ${practised} genres worked in,`);
     const tog = journeyOf(sim.player).together!;
     expect(tog.n).toBeGreaterThanOrEqual(3);
-    expect(text).toContain(`${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average`);
+    expect(text).toContain(`Your ${tog.n} pieces with a partner, a reader or a company averaged ${r1(tog.sum / tog.n)} out of 100.`);
   });
 });
 

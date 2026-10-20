@@ -1435,7 +1435,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     must((await summary.evaluate((el) => el.closest('details').open)) === true, 'not open to the accessibility tree');
     const assumes = (await briefPane().locator('[data-assumes]').first().innerText().catch(() => '')).trim();
     const attention = (await briefPane().locator('[data-attention]').first().innerText().catch(() => '')).trim();
-    must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
+    must(/^(?:Your last piece was |Of your last \d+ pieces, )/.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
     must(/(is|are) worth your time now|^Neither preparation nor training/.test(attention), `the attention said: ${attention || 'nothing'}`);
     return `${assumes.slice(0, 200)} / ${attention.slice(0, 200)}`;
   });

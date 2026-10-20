@@ -22,7 +22,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate, instantFromZoned } from '@/engine/core/time';
 import { CHAPTERS } from '@/engine/content/tutorial';
 import { abilityFull, levelOf } from '@/engine/systems/attributes';
 import { ABILITY_DEFS, MASTERED, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
@@ -233,7 +233,12 @@ describe('What To Work On, with the work so far', () => {
     // Under From Your Record, behind Why This Recommendation (from 2026-10-20, brief 16): until then "From your record:"
     // inline.
     expect(html).toContain('From Your Record');
-    expect(html).toContain(`${r.evidence.join('; ').replace(/^./, (c) => c.toUpperCase())}.`);
+    // Its points said once (from 2026-10-20, brief 17): until then the line said them again after its date, as what it
+    // rests on, "… the last on January 2, 2027. An ability, 31.5 points in all." Your Work So Far keeps that, as its From.
+    const line = `${r.label} keeps coming back in your work: it has held back ${r.pieces} of your pieces in all, ${r.whole} ${r.whole === 1 ? 'point' : 'points'} off the whole across them, the last on ${formatDate(r.last, sim.zone)}.`;
+    expect(html).toContain(line);
+    expect(html).not.toContain(`${line} ${r.evidence.join('; ').replace(/^./, (c) => c.toUpperCase())}.`);
+    expect(html.replace(/<!-- -->/g, '')).toContain(`From: ${r.evidence.join('; ')}.`);
     // A brief's pane names the first ability or technique and says it as the Profile does. Until 2026-10-16 that was
     // the recurring weakness here, put first within half a point; from then what's first is what training pays most for
     // (`trainingForecast`), and the recurring weakness goes first only where it's about as useful.

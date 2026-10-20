@@ -287,13 +287,18 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     const since = ex ? lastPracticed?.(ex.id) : undefined;
     const focus = since !== undefined && since >= 1 && since <= 7 ? 'spaced' : 'steady';
     const each = Math.round(points * 10) / 10;
-    const said = `It cost each of your recent pieces about ${each} ${each === 1 ? 'point' : 'points'} off the whole, the latest counting most. It’s at ${Math.round(now)} of ${Math.round(full)}.`;
+    // A mean over the recent work, said as one (from 2026-10-20, brief 17; until then “It cost each of your recent pieces”).
+    const said = `It cost your recent work about ${each} ${each === 1 ? 'point' : 'points'} a piece off the whole, the latest counting most. It’s at ${Math.round(now)} of ${Math.round(full)}.`;
     out.push({ target: what, label: c.label, ...(ex ? { exercise: ex.id, tier: matchedTier(now) } : {}), focus, points: each, why: `${said} ${focus === 'spaced' ? SPACED_NOW : STEADY_FIRST}`, now: said });
   }
+  // Said after its label, so the step is “it”, and its figure as what it is, a mean over the recent work (from 2026-10-20,
+  // brief 17). Until then the label came twice, “Work with your partner. Coming to your work short on work with your
+  // partner cost each piece about 6.9 points …”, the step was “that part”, and “each piece” read as every one of them where
+  // the card now says how many it held back: one of twelve, at 0.9 a piece, in brief 17's attentive student.
   for (const [what, c] of prepCost) {
     if (c.points < RECOMMEND.floor) continue;
-    const now = `Coming to your work short on ${c.label.toLowerCase()} cost each piece about ${pointsWords(Math.round(c.points * 10) / 10)} off the whole.`;
-    const act = 'That’s preparation, not training: prepare that part further before you show or tape the next piece.';
+    const now = `Going in short on it cost your recent work about ${pointsWords(Math.round(c.points * 10) / 10)} a piece off the whole.`;
+    const act = 'That’s preparation, not training: give it more time before you show or tape your next piece.';
     out.push({ target: `prep:${what}`, label: c.label, focus: 'preparation', points: Math.round(c.points * 10) / 10, why: `${now} ${act}`, now, act });
   }
   for (const [k, c] of dayCost) {
@@ -306,11 +311,16 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     // find places to breathe in it", at fitness 15 on long taped briefs: rest restores energy, and a brief's drain reads
     // none of it.
     if (k === 'condition:stamina') {
-      const [now, act, more] = [`Tiring through a piece’s later moments cost each one about ${pointsWords(each)} off the whole.`, 'Stamina is your fitness, and Work Out, under Look After Yourself, builds it.', 'Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness.'];
+      const [now, act, more] = [`Tiring through a piece’s later moments cost your recent work about ${pointsWords(each)} a piece off the whole.`, 'Stamina is your fitness, and Work Out, under Look After Yourself, builds it.', 'Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness.'];
       out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `${now} ${act} ${more}`, now, act, more });
       continue;
     }
-    const [now, act] = c.kind === 'fit' ? [`Playing it a way that didn’t fit cost each piece about ${pointsWords(each)} off the whole.`, 'Choose a way the material or the direction allows.'] : [`${c.label} cost each piece about ${pointsWords(each)} off the whole.`, 'Come to the work rested and well, or find places to breathe in it.'];
+    // A day's condition after its label as “it”, and what to do about it as the day, not the ability (from 2026-10-20,
+    // brief 17). Until then “An Injury Still Mending. An Injury Still Mending cost each piece …”, told to “find places to
+    // breathe in it”: places to breathe are a night's workbook adjustment (`workbook.ts`), and leave less of a night's
+    // stamina to drain (said above), not less of the day's tiredness, flu or injury.
+    // A slip's shake is its own: composure and adaptability recover it (`judgePiece`'s `recover`, systems/piece.ts).
+    const [now, act] = c.kind === 'fit' ? [`Playing it a way that didn’t fit cost your recent work about ${pointsWords(each)} a piece off the whole.`, 'Choose a way the material or the direction allows.'] : [`It cost your recent work about ${pointsWords(each)} a piece off the whole.`, k === 'condition:shaken' ? 'That’s a slip carried into the moments after it: composure and adaptability help you recover from one.' : 'That’s how you were on the day, not your ability: come to the next piece rested and well.'];
     out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: `${now} ${act}`, now, act });
   }
   // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't. From

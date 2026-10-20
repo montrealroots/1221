@@ -46,7 +46,8 @@ describe('Your Work So Far: a note that keeps coming back', () => {
     const line = identityOf(person).weaknesses.find((w) => w.label === 'A Note That Keeps Coming Back');
     expect(line).toBeDefined();
     expect(line!.line).toBe('The same note has been given 3 times and is still open: Lines.');
-    expect(line!.evidence).toEqual(['The class’s notes: Lines']);
+    // The note named in the line, not again in what it rests on (from 2026-10-20, brief 17: until then 'The class’s notes: Lines').
+    expect(line!.evidence).toEqual(['The class’s notes']);
     expect(`${line!.line} ${line!.evidence.join(' ')}`).not.toMatch(/memorization|dim:/);
   });
 });
