@@ -10,7 +10,8 @@
  * debt and the five of real rest a night must pass to mend, readiness's 5 to 100, Home's bars' 25 and 50, a French
  * debit card's last 30 days (a literal in `cardCeilingRoom`, `systems/lending.ts`), and a workout's 0.6 at readiness
  * 75 (`WORKOUT_FITNESS`). The Sleep dialog's hours were among them, as 1 to 14, until
- * 2026-10-12: they're 0.5 to 14 now, imported (`SHORTEST_SLEEP`, `LONGEST_NIGHT`).
+ * 2026-10-12: they're 0.5 to 14 now, imported (`SHORTEST_SLEEP`, `LONGEST_NIGHT`). Sleep's summary gave them as bare
+ * figures, "from 0.5 to 14", until 2026-10-20 (brief 17); it says them as the chapter does, half an hour to 14 hours.
  *
  * Checked against the code on 2026-10-12. Until then the menu's affordability counted an overdraft a meal couldn't
  * always use (`lookAfterRefusal` against `spend`), and the entry listed “The payment didn’t go through.” for that
@@ -43,6 +44,9 @@ import { formatMoney } from '../../core/money';
 import { plural } from '../../core/text';
 import type { Person } from '../../domain/model';
 import type { GuideEntry } from './types';
+
+/** Hours in a sentence, as the guide's chapter says them: half an hour, or the count (from 2026-10-20, brief 17). */
+const hoursWords = (hours: number): string => (hours === 0.5 ? 'half an hour' : plural(hours, 'hour'));
 
 /** A chapter's title, in quotes, as the guide names it. */
 const chapter = (id: string): string => `“${CHAPTER_BY_ID[id]!.title}”`;
@@ -169,7 +173,7 @@ export const BODY: readonly GuideEntry[] = [
     questions: ['How long should I sleep?', 'What happens if I sleep through a class?', 'Why is the Sleep button gray?', 'Does a short night hurt?', 'What does sleep debt do?'],
     where: { route: '/home', label: 'The Top Bar’s Sleep Button' },
     available: `It opens with ${chapter('sleep')}.`,
-    short: `Sleep, in the top bar, asks how many hours, from ${SHORTEST_SLEEP} to ${LONGEST_NIGHT}, and suggests a number from when you’re next needed and how much sleep you owe. Then the clock runs straight through to when you wake.\n\nAnything on the calendar in those hours happens without you. A night eases stress, pays back sleep debt and brings back your energy, less of it when you owe sleep.`,
+    short: `Sleep, in the top bar, asks how many hours, from ${hoursWords(SHORTEST_SLEEP)} to ${hoursWords(LONGEST_NIGHT)}, and suggests a number from when you’re next needed and how much sleep you owe. Then the clock runs straight through to when you wake.\n\nAnything on the calendar in those hours happens without you. A night eases stress, pays back sleep debt and brings back your energy, less of it when you owe sleep.`,
     steps: [
       'Press Sleep in the top bar.',
       'Read the suggestion at the top: how many hours it suggests, and why.',

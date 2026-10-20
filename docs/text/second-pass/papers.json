@@ -162,9 +162,9 @@
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.doctor]": {
   "status": "Rewritten",
-  "hash": "84639425243c",
+  "hash": "d226c4b02d1d",
   "on": "2026-10-20",
-  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check; the short's practice and wait still parsed by tests/guide-examples-papers.test.ts",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.health-cover]": {
@@ -302,9 +302,9 @@
  },
  "src/engine/content/guide/taxes.ts#TAXES [taxes.return]": {
   "status": "Rewritten",
-  "hash": "78df8467a08c",
+  "hash": "2c7798ce14e3",
   "on": "2026-10-20",
-  "evidence": "brief 16: read rendered with every figure by vite-node over GUIDE_BY_ID (scratchpad papers-work/show.ts, later.ts), measured by tools/voices.ts --guide (no string of five sentences or more), quotes held by tools/guide-quotes.mjs --check",
+  "evidence": "Brief 17 tutorial area, the papers editor's finding: the first step says the day the return is due or the day it was filed, which the year's panel shows (PapersWorkspace.tsx) here and on the papers branch; tests/guide-examples-papers.test.ts ('taxes.return: on time costs the balance') draws the panel before and after filing; read word for word on the built app (docs/verification/continuity-2026-10-20/tutorial/after/entries-read-1440/log.txt)",
   "first": "Pending"
  },
  "src/engine/content/licensepaths.ts#LICENSE_EXCHANGES": {

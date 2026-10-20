@@ -1,0 +1,16 @@
+preview-4301 exit=0 cmd: the dist/index.html of /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-tutorial-frozen-before served (a copy of b84a82cf)
+follow-1440 exit=0 secs=252 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/editorial-2026-10-19/tutorial/follow.mjs -- <scratchpad>/follow-1440 1440
+follow-390 exit=0 secs=296 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/editorial-2026-10-19/tutorial/follow.mjs -- <scratchpad>/follow-390 390
+walk-1440 exit=0 secs=396 cmd: SLATE_BASE=http://localhost:4301 node tools/text-walk.mjs <scratchpad>/walk-1440 1440 <b17>/saves-before
+help-follow-1440 exit=1 secs=686 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/continuity-2026-10-20/tutorial/help-follow.mjs -- <scratchpad>/help-follow-1440 1440 <b17>/saves-before (in the frozen copy)
+walk-390 exit=0 secs=470 cmd: SLATE_BASE=http://localhost:4301 node tools/text-walk.mjs <scratchpad>/walk-390 390 <b17>/saves-before
+capture exit=0 secs=465 cmd: SLATE_BASE=http://localhost:4301 npx vite-node tools/tutorial-routes.mjs -- --capture <scratchpad>/capture <b17>/saves-before
+routes exit=0 secs=98 cmd: npx vite-node tools/tutorial-routes.mjs -- <scratchpad>/walk-1440 <scratchpad>/walk-390 <scratchpad>/capture --out routes.md --json routes.json --check
+FOLLOW17 before DONE 11:13:50
+help-follow-1440 (the line above): the follow's own locator for Locked in the search results was wrong in that run (its other FAIL, no School breadcrumb on Home, was the guide's: Finding Your Way's example); it was run again below with the locator fixed
+help-follow-1440 exit=1 secs=460 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/continuity-2026-10-20/tutorial/help-follow.mjs -- <scratchpad>/help-follow-1440 1440 <b17>/saves-before (in the frozen copy, served again)
+help-follow-390 exit=1 secs=232 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/continuity-2026-10-20/tutorial/help-follow.mjs -- <scratchpad>/help-follow-390 390 <b17>/saves-before (in the frozen copy, served again)
+help-follow-1440 and help-follow-390 (the two lines above): their pages crashed partway (Target crashed), while the shared machine was short of memory and, by the coordinator's report, out of disk around 11:35 UTC; not results: run again alone by help-follow-before.sh, below
+help-follow-1440 exit=1 secs=681 cmd: (help-follow-before.sh, the frozen copy served alone) SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/continuity-2026-10-20/tutorial/help-follow.mjs -- <scratchpad>/help-follow-1440 1440 <b17>/saves-before
+help-follow-390 exit=1 secs=678 cmd: (help-follow-before.sh, the frozen copy served alone) SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/continuity-2026-10-20/tutorial/help-follow.mjs -- <scratchpad>/help-follow-390 390 <b17>/saves-before
+HELP-FOLLOW BEFORE DONE 12:19:15

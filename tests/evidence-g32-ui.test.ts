@@ -610,7 +610,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(h.went).toEqual(['/workspace/calendar']);
     const guided = ada('g32-calendar-guided', { tutorial: true });
     const read = (id: string) => expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: id } }).ok, id).toBe(true);
-    expect(drawn(guided, Home).text).toContain('Calendar Locked This opens when you read “What’s Coming” in the guide');
+    expect(drawn(guided, Home).text).toContain('Calendar Locked What’s coming up, and when. It opens when you read “What’s Coming” in the guide. Read About It');
     read('welcome');
     read('calendar');
     const { text } = drawn(guided, Home);
@@ -1023,6 +1023,21 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
   /** Minutes past midnight on a clock 4 hours behind UTC, as New Haven's is in August. */
   const edtMinutes = (utc: number) => { const d = new Date(utc - 4 * MS_HOUR); return d.getUTCHours() * 60 + d.getUTCMinutes() + d.getUTCSeconds() / 60; };
   const clockMinutes = (said: string) => { const [, hh, mm, half] = said.match(/^(\d+):(\d+) ([AP]M)$/)!; return (Number(hh) % 12 + (half === 'PM' ? 12 : 0)) * 60 + Number(mm); };
+
+  it('PLAYER JOURNEY, guided: Where You Are and the Weather, locked, say what each shows and the chapter that opens it, and open, show it', () => {
+    const guided = ada('g32-where-locked', { tutorial: true });
+    const before = drawn(guided, Home).text;
+    // Until 2026-10-20 (brief 17, the frame editor's finding) a locked panel said its chapter's lead, and Where You
+    // Are's was chapter 1's, “how SLATE works, and how to read Home”, which says nothing of the panel.
+    expect(before).toContain('Where You Are Locked The town you live in, its local time and its daylight. It opens when you read “Your Life, Hour By Hour” in the guide. Read About It');
+    expect(before).not.toContain('how SLATE works');
+    expect(before).toContain('Weather Locked The weather in your town, today and the days ahead. It opens when you read “Weather” in the guide. Read About It');
+    expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: 'welcome' } }).ok).toBe(true);
+    const shown = where(drawn(guided, Home).text);
+    // What the locked line said it would show: the town you live in, its local time and its daylight.
+    expect(shown).toContain('New Haven, Connecticut · United States Your home.');
+    expect(shown).toContain('Local Time 7:30 AM EDT Daylight ');
+  });
 
   it('PLAYER JOURNEY: on the first morning Where You Are names New Haven, Connecticut · United States, says Home. 130K people., Local Time 7:30 AM EDT, and Daylight within two minutes of the sunrise equation’s at each end', () => {
     const sim = ada('g32-where');

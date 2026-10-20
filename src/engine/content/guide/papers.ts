@@ -49,6 +49,10 @@
  * student has two, what each takes, how soon each sees you and when Yale Health stops, and that Care And Its Bills says
  * what a plan paid. It said a prescription doesn’t run out in America without having read Connecticut’s rule; it gives
  * the rule now.
+ *
+ * Until 2026-10-20 (brief 17) the doctor's entry opened "About twice a year a week brings a doctor's visit", the
+ * weekly roll and the yearly rate in one clause (`CARE.perYear.visit`, drawn each Monday): it says you need a doctor
+ * about twice a year now, and the rest of the sentence is as it was.
  */
 
 import { formatMoney } from '../../core/money';
@@ -405,7 +409,7 @@ export const PAPERS: readonly GuideEntry[] = [
     where: { route: ROUTE, tab: HEALTH, label: 'Papers, Health Cover, Your Doctor' },
     available: `From the guide’s chapter “${CHAPTER}”. Your Pharmacy is America’s; Fill A Longer Supply shows while you keep a condition up.`,
     // What a pharmacy charges, which this said until 2026-10-20 (brief 16), is the Your Pharmacy step's.
-    short: `About ${CARE.perYear.visit === 2 ? 'twice' : `${CARE.perYear.visit} times`} a year a week brings a doctor’s visit, and the game books it for you at your doctor’s practice, at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday. In New Haven, while Yale Health covers you, that’s ${YALE_PRACTICE}, ${YALE_SOON}, for $0, unless you pick ${PRACTICE}, ${WAIT} days on at the uninsured price. Once Yale Health no longer covers you, it’s ${PRACTICE}, ${WAIT} days on.\n\nMiss the appointment and you aren’t seen or billed: press Book An Appointment to book it again.`,
+    short: `About ${CARE.perYear.visit === 2 ? 'twice' : `${CARE.perYear.visit} times`} a year you need a doctor, and the game books the visit for you at your doctor’s practice, at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday. In New Haven, while Yale Health covers you, that’s ${YALE_PRACTICE}, ${YALE_SOON}, for $0, unless you pick ${PRACTICE}, ${WAIT} days on at the uninsured price. Once Yale Health no longer covers you, it’s ${PRACTICE}, ${WAIT} days on.\n\nMiss the appointment and you aren’t seen or billed: press Book An Appointment to book it again.`,
     steps: [
       'Open Papers, Health Cover. Your Doctor names where a doctor’s visit, urgent care and an emergency are had where you live, and what each would cost you now.',
       // Your Doctor's box shows only where the town keeps two practices or more (from 2026-10-13: until then New Haven's

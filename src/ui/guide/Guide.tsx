@@ -102,13 +102,26 @@ export function Gated({
 }
 
 /**
- * A panel on Home before its chapter is read: its name, and the chapter
- * that opens it.
+ * A panel on Home before its chapter is read: its name, what it shows, and the chapter that opens it.
+ *
+ * Until 2026-10-20 (brief 17, the frame editor's finding) it said only the chapter's lead after the chapter's title,
+ * which is the chapter's subject and not the panel's: on a first Home, Where You Are's ended with chapter 1's, “how
+ * SLATE works, and how to read Home”. Each panel says what it shows now, read from what Home draws in it.
  */
 export function LockedPanel({ feature, title }: { feature: string; title: string }) {
   const { open, ask } = useFeature(feature);
   const chapter = chapterFor(feature);
   if (open || !chapter) return null;
+  const shows: Readonly<Record<string, string>> = {
+    'ui.calendar': 'What’s coming up, and when.',
+    'ui.needs': 'What happened while you weren’t looking, and the questions waiting on you.',
+    'ui.how': 'Your energy, stress and readiness, and a line on how you are.',
+    'ui.where': 'The town you live in, its local time and its daylight.',
+    'ui.weather': 'The weather in your town, today and the days ahead.',
+    'ui.money': 'What your main account holds, and what you’re worth after what you owe.',
+    'ui.school': 'Your year at the School, your standing, your place in the class and what’s next.',
+    'ui.papers': 'Your health cover, and any tax return due, tax owed or unemployment you’re paid.',
+  };
   return (
     <section className="card card-tight panel-locked" aria-label={`${title}, Locked`}>
       <div className="panel-head">
@@ -116,7 +129,7 @@ export function LockedPanel({ feature, title }: { feature: string; title: string
         <span className="lock-word">Locked</span>
       </div>
       <p className="small muted" style={{ margin: '0 0 var(--s3)' }}>
-        This opens when you read “{chapter.title}” in the guide: {chapter.lead.charAt(0).toLowerCase() + chapter.lead.slice(1)}
+        {shows[feature] ?? chapter.lead} It opens when you read “{chapter.title}” in the guide.
       </p>
       <button type="button" className="btn btn-sm" onClick={ask}>Read About It</button>
     </section>

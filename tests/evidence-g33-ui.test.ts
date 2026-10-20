@@ -256,10 +256,11 @@ describe('h-money', () => {
   it('PLAYER JOURNEY, guided: Money is its LockedPanel until “Money” is read; then Chase is Locked until “Your Bank” is, a press goes nowhere and the bank refuses a transfer in the guide’s words, across a reload; read, Chase opens the bank screen', () => {
     const sim = life('g33-money-guided', { tutorial: true });
     const before = drawn(sim).affairs;
-    expect(before).toContain('Money Locked This opens when you read “Money” in the guide: everything you have and owe, at a glance. Read About It');
+    // Until 2026-10-20 (brief 17) the line was the chapter's lead, “everything you have and owe, at a glance”; it says what the panel shows now.
+    expect(before).toContain('Money Locked What your main account holds, and what you’re worth after what you owe. It opens when you read “Money” in the guide. Read About It');
     expect(before).not.toContain('Chase Total Checking');
     readTo(sim, 'documents');
-    expect(drawn(sim).affairs).toContain('Money Locked This opens when you read “Money” in the guide');
+    expect(drawn(sim).affairs).toContain('Money Locked What your main account holds, and what you’re worth after what you owe. It opens when you read “Money” in the guide');
     readTo(sim, 'money');
     expect(drawn(sim).affairs).toContain('Money Chase Total Checking: $92,391.00. Worth $505,434. Chase Locked How This Works');
     const locked = button('ChaseLocked');
@@ -354,7 +355,8 @@ describe('h-school', () => {
     const sim = life('g33-school-guided', { tutorial: true });
     readTo(sim, 'weather');
     const before = drawn(sim).affairs;
-    expect(before).toContain('School Locked This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale. Read About It');
+    // Until 2026-10-20 (brief 17) the line was the chapter's lead; it says what the line will show now.
+    expect(before).toContain('School Locked Your year at the School, your standing, your place in the class and what’s next. It opens when you read “Drama School” in the guide. Read About It');
     expect(before).not.toContain('Arriving');
     readTo(sim, 'school');
     expect(drawn(sim).affairs).toContain(`School Arriving, good standing, ${ordinal(rankOf(sim))} of 16 in the class. Next: Registration And Your Account`);

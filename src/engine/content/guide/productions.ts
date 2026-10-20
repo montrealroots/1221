@@ -39,6 +39,13 @@
  * Later that day “A copy is at the Haas Arts Library, in New Haven.” went from the engine (`copyAt`), reached by no
  * play, since every student is in New Haven and nothing moves one; until then the plays-to-read entry listed it, and
  * said a read needed New Haven.
+ *
+ * Until 2026-10-20 (brief 17, section 9) the notes entry named a settled note's status as Taken or Not Taken alone, where
+ * a note on the craft shows Resolved, Taken: Better or Tried: Learned From, Not Moved (`OUTCOME_WORD` in
+ * `ui/components/RehearsalProcess.tsx`, from `addressed`), and it and How You'll Play A Part said a note "is taken" at a
+ * call: they name what the call marks it now. That day too, Learning A Part says what blocking and being off book are
+ * where it first names them, and the nights' entry names Moment By Moment, the heading a night's look has, where it
+ * said Part By Part; its example gives the workload to one place, as the screen does (`workloadWords`).
  */
 
 import { formatMoney } from '../../core/money';
@@ -332,7 +339,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     questions: ['How do I learn my lines?', 'When do I have to be off book?', 'I missed a blocking call: what now?', 'What happens at each rehearsal call?', 'What does Growth From A Night mean?', 'Why is Learn The Part grayed?'],
     where: { route: ROUTE, tab: TAB.casting, label: 'School, Casting, The Rehearsal Process' },
     available: `${OPENED}, while a part you’re cast in has calls to come: a School production, Yale Rep, a Cabaret show or a Summer Cabaret show.`,
-    short: `You learn a part’s lines and blocking for a production’s nights at its rehearsal calls and between them. Each call you come to learns ${pct(PROCESS.call.lines)} of the lines you still have to learn, and a blocking or technical call sets ${pct(PROCESS.call.blocking)} of the blocking still to set. Between calls, press Learn The Part for an hour on the lines, or Catch Up The Blocking for an hour with the blocking book after a blocking or technical call you missed.\n\nA night counts both against what coming to every call would give you, and never asks less than ${pct(NIGHT_LEAST.lines)} of either.`,
+    short: `You learn a part’s lines and its blocking, where you move on stage, for a production’s nights at its rehearsal calls and between them. Each call you come to learns ${pct(PROCESS.call.lines)} of the lines you still have to learn, and a blocking or technical call sets ${pct(PROCESS.call.blocking)} of the blocking still to set. Between calls, press Learn The Part for an hour on the lines, or Catch Up The Blocking for an hour with the blocking book after a blocking or technical call you missed.\n\nA night counts both against what coming to every call would give you, and never asks less than ${pct(NIGHT_LEAST.lines)} of either.`,
     steps: [
       'Open School, then the Casting tab. Under your production, The Rehearsal Process shows Lines, Blocking (with any blocking calls Missed To Catch Up), Growth From A Night and A Night Now.',
       `Come to the calls on your calendar: the read-through first, blocking for the first ${pct(PROCESS.blockingShare)} of the calls, then rehearsals, and the technical and dress rehearsals last.`,
@@ -353,7 +360,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       { label: 'A Call Kept', value: `Learns ${pct(PROCESS.call.lines)} of the lines still to learn. A blocking or technical call, and every understudy rehearsal, sets ${pct(PROCESS.call.blocking)} of the blocking still to set`, estimate: true },
       { label: 'Learn The Part', value: `${pct(PROCESS.own.lines)} of the lines still to learn, more at a sharp hour and less at a tired one, faster in a kind of play you know, and from ${pct(STEP_SPEED.least)} as far with memory at 0 to ${pct(STEP_SPEED.most)} at 100. It trains memory the first ${word(PROCESS.own.trainsAtMost)} times for each part`, estimate: true },
       { label: 'Catch Up The Blocking', value: `Closes one missed call’s gap and sets ${pct(PROCESS.own.blocking)} of the blocking still to set. It trains memory each time`, estimate: true },
-      { label: 'Off Book', value: `Asked for ${pct(PROCESS.blockingShare)} of the way through the calls: from then, lines under ${pct(PROCESS.offBook)} are the director’s note at a work-through, after any blocking call still to catch up`, estimate: true },
+      { label: 'Off Book', value: `Knowing your lines without the script, asked for ${pct(PROCESS.blockingShare)} of the way through the calls: from then, lines under ${pct(PROCESS.offBook)} are the director’s note at a work-through, after any blocking call still to catch up`, estimate: true },
       { label: 'Complete For A Night', value: `What coming to every call gives you of the lines and the blocking, and never under ${pct(NIGHT_LEAST.lines)} of either` },
       { label: 'Growth From A Night', value: `${pct(PROCESS.factor.least)} to ${pct(PROCESS.factor.most)}: the lines, the blocking and the notes taken, counted ${PROCESS.factor.lines}, ${PROCESS.factor.blocking} and ${PROCESS.factor.notes}, against what keeping every call and no more gives you, which grows at 100%`, estimate: true },
     ],
@@ -421,7 +428,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     available: `${OPENED}, from a production’s first work-through rehearsal. An understudy’s rehearsals bring no notes.`,
     short: `At each work-through rehearsal, the director gives you one note on what most needs fixing in your part before the nights. Press Work On The Note before the next call, and that call shows whether you answered it.\n\nA note taken makes that call grow you ${pct(PROCESS.noteTaken - 1)} more, and the share of notes taken is part of a night’s preparation.`,
     steps: [
-      'Open School, then the Casting tab. Under The Rehearsal Process, read the director’s last note, its date, and whether it’s Not Worked On Yet, Worked On, Taken or Not Taken.',
+      'Open School, then the Casting tab. Under The Rehearsal Process, read the director’s last note, its date, and where it stands: Not Worked On Yet or Worked On until the next call, then Taken or Not Taken. A note on the craft shows Resolved where its problem has gone, Taken: Better where your work moved it, or Tried: Learned From, Not Moved.',
       'For a note on the craft, choose one of the ways to work on it from the list beside “Ways to work on it:”, and read what the chosen way does.',
       'Press Work On The Note, which names the way chosen. It takes the way’s time, and a message gives the figure before and after.',
       'A way that plays a movement differently, or finds places to breathe, waits under Work It Through: Keep It or Put It Back. If you leave it, the next call keeps it.',
@@ -480,11 +487,11 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     mistakes: [
       'Leaving a note on the director’s request to the calls: Work On The Note won’t take it, and it comes back at each work-through until you change How You’ll Play It to the way asked for.',
       'Putting a way back and counting the note answered: the note stays open, and that way isn’t offered for it again. Work on it another way before the next call.',
-      'Leaving a craft note to the calls: it’s taken only if the next call finds its problem gone from the forecast, and if the director gives it again, it comes back as “Still:”.',
+      'Leaving a craft note to the calls: the next call marks it Resolved only if its problem has gone from the forecast by then, and if the director gives it again, it comes back as “Still:”.',
     ],
     next: [
       'Work on the note before the next call, and keep the change if its figure went up.',
-      'At the next call, check whether it shows Taken; if it comes back as “Still:”, try another way.',
+      'At the next call, check whether it shows Taken, or for a note on the craft Resolved or Taken: Better; if it comes back as “Still:”, try another way.',
     ],
     related: ['productions.part', 'coursework.workbook', 'productions.playing', 'productions.nights', 'craft.identity'],
     connections: [
@@ -543,7 +550,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     ],
     later: [
       'Each call after the read-through rehearses it further.',
-      'At a work-through, a choice against the director’s request is the note, “I want it …”, and it’s taken at the next call if the choice has changed.',
+      'At a work-through, a choice against the director’s request is the note, “I want it …”, and the next call marks it Taken if you’ve changed the choice by then.',
       'Each night counts it: what it favors, the abilities it uses, and how far it’s rehearsed.',
       'Work It Through offers a movement played another way only on an aspect the whole part leaves open.',
     ],
@@ -644,7 +651,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'Your own night is the judgment of your work, and a partner’s slip can’t lower it. The night together can come out above or below it.',
       'The Nights Together gives their average, the slips in the company, and how many you covered.',
       `For the director’s note and the term’s review, an Off night counts ${NIGHT_VALUE.off}, Solid ${NIGHT_VALUE.solid}, Strong ${NIGHT_VALUE.strong} and Remarkable ${NIGHT_VALUE.remarkable}.`,
-      'Open a night in your work, and Part By Part shows each movement: its result, its own rehearsal, Tiring or Holding, and a slip or what cost it most. Continuity comes from the movements and isn’t added to the night.',
+      'Open a night in your work, and Moment By Moment shows each movement: its result, its own rehearsal, Tiring or Holding, and a slip or what cost it most. Continuity comes from the movements and isn’t added to the night.',
     ],
     unavailable: [
       'An understudy has a night only when sent on, and at the one run-through.',
@@ -675,7 +682,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     example: {
       setup: `A part in ${W_TITLE}, if a thesis deals it to you, a lead: it plays in ${word(W_SEGMENTS.length)} movements, ${W_MOVEMENTS}, over ${runWords(W_RUNNING.minutes)} with no interval as Vesturport played it, and its body’s work makes it a hard evening on stamina for its length. Your stamina is at half of full, your composure and adaptability at ${pct(W_RECOVER)}, and you’re rested, at readiness 100.`,
       steps: [
-        `${W_SEGMENTS[W_SEGMENTS.length - 1]!.label} falls last: its Stamina reads “Tiring: ${pct(1 - W_LATE)} off”, and the first “Tiring: ${pct(1 - W_EARLY)} off”. The night’s workload line says ${W_NIGHT.workload.toFixed(2)}, and the evening costs ${Math.round(W_COST.energy)} energy.`,
+        `${W_SEGMENTS[W_SEGMENTS.length - 1]!.label} falls last: its Stamina reads “Tiring: ${pct(1 - W_LATE)} off”, and the first “Tiring: ${pct(1 - W_EARLY)} off”. The night’s workload line says ${W_NIGHT.workload.toFixed(1)}, and the evening costs ${Math.round(W_COST.energy)} energy.`,
         `A slip in ${lower(W_SEGMENTS[0]!.label)}, ${W_SLIP} under what was expected, carries into the next: “Shaken by the slip before: ${pct(1 - W_SHAKEN)} off”.`,
         `Your classmates in the cast keep ${pct(COMPANY_KEEPS)} of their calls, with a timing of ${pct(COMPANY_TIMING)}: they bring ${pct(COMPANY_BRINGS)}, and a slip of theirs is ${pct(COMPANY_SLIPS)} likely.`,
       ],

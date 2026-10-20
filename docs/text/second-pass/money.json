@@ -85,9 +85,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-offers]": {
   "status": "Rewritten",
-  "hash": "8c8eab555e7b",
-  "on": "2026-10-19",
-  "evidence": "Checking account for the money transfer and its refusal; tests/defects-g21-1.test.ts and the example's play read the entry",
+  "hash": "ed34c15a105f",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), its two-missed rule played by tests/guide-chapter-facts.test.ts and its example by tests/guide-examples-money.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-security]": {
@@ -99,9 +99,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card]": {
   "status": "Rewritten",
-  "hash": "d86558e4acfd",
+  "hash": "18f37d2fb2fd",
   "on": "2026-10-20",
-  "evidence": "tests/editorial16-money.test.ts (How This Works on money keeps each explanation short) and tools/voices.ts --guide; guide-quotes.mjs --check holds each quoted refusal; brief 16: the summary in two paragraphs, read in tests/language-money.test.ts's guide check",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), its two-missed rule played by tests/guide-chapter-facts.test.ts and its example by tests/guide-examples-money.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.cash]": {

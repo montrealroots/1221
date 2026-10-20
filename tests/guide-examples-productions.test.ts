@@ -415,7 +415,7 @@ const PLAY: Record<string, () => void> = {
     expect(run.performed).toBe(1);
     const record = sim.player.work!.at(-1)!;
     expect(record.what).toBe(title);
-    // Part By Part, as the screen works it out again from the night kept.
+    // Moment By Moment, as the screen works it out again from the night kept.
     const night = replay(record, TASK_PROFILES.performance!)!;
     const segs = night.piece!.segments;
     // Listed as English lists them, commas and a last "and": from evaluation-10 Woyzeck plays in four, its two tones each
@@ -431,7 +431,7 @@ const PLAY: Record<string, () => void> = {
     const r = record.inputs.condition.readiness;
     segs.forEach((x, i) => expect(x.drain, x.label).toBeCloseTo(1 - drainOf(shares[i]!, stamina, r), 3));
     expect(ex.steps[0]).toContain(`${segs.at(-1)!.label} falls last: its Stamina reads “Tiring: ${pct(drainOf(shares.at(-1)!, stamina, 100))} off”, and the first “Tiring: ${pct(drainOf(shares[0]!, stamina, 100))} off”`);
-    expect(ex.steps[0]).toContain(`The night’s workload line says ${night.inputs.piece!.night!.workload.toFixed(2)}, and the evening costs ${Math.round(eveningCost(night.inputs.piece!.night!, stamina, 100).energy)} energy.`);
+    expect(ex.steps[0]).toContain(`The night’s workload line says ${night.inputs.piece!.night!.workload.toFixed(1)}, and the evening costs ${Math.round(eveningCost(night.inputs.piece!.night!, stamina, 100).energy)} energy.`);
     // A hard evening on stamina: its load against a new play's, which stages no body's or voice's work.
     expect(ex.setup).toContain('a hard evening on stamina');
     expect(night.inputs.piece!.load).toBeGreaterThan(playPiece({}).load);

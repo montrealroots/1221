@@ -498,9 +498,9 @@
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.approach]": {
   "status": "Rewritten",
-  "hash": "767452bb7671",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide.test.ts and tests/guide-examples-coursework.test.ts; tools/guide-quotes.mjs --check",
+  "hash": "55d115a1237e",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.class]": {
@@ -512,9 +512,9 @@
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.feedback]": {
   "status": "Rewritten",
-  "hash": "301872a0cb55",
+  "hash": "0a06853df428",
   "on": "2026-10-20",
-  "evidence": "Brief 16 sec. 7: summary 6 to 4 sentences (tools/voices.ts --guide), read against systems/feedback.ts (each course in its terms, the last piece where the band moved, what held it back, what to try); note taken moved to Later; tests pass",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.partners]": {
@@ -540,9 +540,9 @@
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.table]": {
   "status": "Rewritten",
-  "hash": "52f257e510ac",
+  "hash": "b8b8b00a58d0",
   "on": "2026-10-20",
-  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), the 30% read and 10 minutes from tableWorkRefusal and CHOOSE_MINUTES, the course step left to Reads; tests/guide-examples-coursework and table-work-unread pass",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.workbook]": {
@@ -736,31 +736,31 @@
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.nights]": {
   "status": "Rewritten",
-  "hash": "34968124e1bf",
+  "hash": "439adc52a71f",
   "on": "2026-10-20",
-  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), how a night divides into movements moved to Interpret, LAMDA left to The Bands; tests/guide-examples-productions passes",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-productions.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]": {
   "status": "Rewritten",
-  "hash": "007e56936e70",
+  "hash": "920e6c538e7d",
   "on": "2026-10-20",
-  "evidence": "Brief 16 sec. 7: summary 5 to 3 sentences (tools/voices.ts --guide), what a note is about moved to the head of Interpret; tests/guide-examples-productions passes",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.part]": {
   "status": "Rewritten",
-  "hash": "4fb42e217336",
+  "hash": "2748ce540c74",
   "on": "2026-10-20",
-  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide); a blocking or technical call, as callMissed in systems/production.ts counts it, where it said a blocking call; tests/guide-examples-productions passes",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-productions.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.playing]": {
-  "status": "Retained",
-  "hash": "60ef5ea9a25f",
-  "on": "2026-10-19",
-  "reason": "Choosing how to play a part, against the director's request and the play's material, each rule with its figure and the refusals in the game's words.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "11a09c46aa10",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
+  "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.plays]": {
   "status": "Rewritten",
