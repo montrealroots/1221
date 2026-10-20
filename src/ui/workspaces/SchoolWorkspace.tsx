@@ -164,10 +164,21 @@ function StandingPane() {
               <Stat label={ended ? 'Growth Last Term' : 'Growth This Term'} value={growth.toFixed(1)} note={`The middle student in your class grew ${classGrowth.toFixed(1)}. Allowing for how much room each of you ${ended ? 'had' : 'has'} to grow, ${ended ? 'you were' : 'you’re'} ${pace} the class, and ${ended ? 'half its pace was the minimum' : 'you need at least half its pace'}`} tone={grewTooLittle ? 'warning' : undefined} />
               <Stat label={ended ? 'Coursework Last Term' : 'Coursework This Term'} value={work.shown ? `${work.unready} of ${work.shown}` : ended ? 'None' : 'None Yet'} note={`How many of the pieces due were unready or not shown. Once ${ESTIMATE.coursework.shown} or more are due, half or more ${ended ? 'fell' : 'falls'} short of what’s asked`} tone={workShort ? 'warning' : undefined} />
             </div>
+            {/* Where you stand, what not to miss, then what the review does with it, each its own paragraph (from 2026-10-20,
+                brief 16, section 7). Until then one paragraph of six sentences, the attendance first and the casting pool last. */}
             <p className="small" style={{ margin: 0 }}>
-              {t.classDays - t.excused + t.calls + t.shifts === 0 ? (ended ? 'There was no class day, call or shift to count toward attendance last term. ' : 'There’s been no class day, call or shift to count toward attendance this term yet. ') : <>Attendance counts {spokenList([...(t.classDays ? [`${t.attended} of ${plural(t.classDays - t.excused, 'class day')}${t.excused ? ` (${t.excused} excused)` : ''}`] : []), ...(t.calls ? [`${t.answered} of ${plural(t.calls, 'call')}`] : []), ...(t.shifts ? [`${t.worked} of ${plural(t.shifts, 'assigned shift')}`] : [])])}. </>}At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once {ESTIMATE.coursework.shown} or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing. Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
+              {t.classDays - t.excused + t.calls + t.shifts === 0 ? (ended ? 'There was no class day, call or shift to count toward attendance last term.' : 'There’s been no class day, call or shift to count toward attendance this term yet.') : <>Attendance counts {spokenList([...(t.classDays ? [`${t.attended} of ${plural(t.classDays - t.excused, 'class day')}${t.excused ? ` (${t.excused} excused)` : ''}`] : []), ...(t.calls ? [`${t.answered} of ${plural(t.calls, 'call')}`] : []), ...(t.shifts ? [`${t.worked} of ${plural(t.shifts, 'assigned shift')}`] : [])])}.</>}
             </p>
             {!ended && <p className="small" style={{ margin: 0 }}>{school.castable ? 'You’re in the casting pool.' : 'You’re out of the casting pool after missed calls, until a term review finds you in good standing.'}</p>}
+            <p className="small" style={{ margin: 0 }}>
+              Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}.
+            </p>
+            <p className="small" style={{ margin: 0 }}>
+              At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once {ESTIMATE.coursework.shown} or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing.
+            </p>
+            <p className="small" style={{ margin: 0 }}>
+              After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
+            </p>
             <WithdrawControl />
             <LeavePanel />
             <CoursesPanel />
@@ -323,7 +334,14 @@ function ClassesPane() {
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            {next ? <>Next classes: <Open subject={at('day', dateKey(next, sim.homeZone))}>{formatDateTime(next, zone())}</Open>.</> : 'No classes ahead.'} This term’s classes run from {dayOf(period.from)} to {dayOf(period.to)}, with {off === 1 ? 'one break' : `${off} breaks`} for holidays, Community Days, work periods and recesses. If you’re asleep or away from New Haven at nine, it counts as an absence. Calling in sick excuses it only when you’re unwell (condition under {ESTIMATE.sickBelow}) or down with the flu. A day in hospital is excused automatically.
+            {next ? <>Next classes: <Open subject={at('day', dateKey(next, sim.homeZone))}>{formatDateTime(next, zone())}</Open>.</> : 'No classes ahead.'} This term’s classes run from {dayOf(period.from)} to {dayOf(period.to)}, with {off === 1 ? 'one break' : `${off} breaks`} for holidays, Community Days, work periods and recesses.
+          </p>
+          {/* The day's rule its own paragraph from 2026-10-20 (brief 16), and calling in sick's three ways to be unwell, as
+              `sickRefusal` reads them: until then this named two, condition and the flu, and left out an injury that limits
+              the work, which has excused the day since 2026-10-10. It doesn't name the button: once the School has ended the
+              button goes and the tab says nothing of it (tests/defects-g8-3.test.ts). */}
+          <p className="small" style={{ margin: 0 }}>
+            If you’re asleep or away from New Haven at nine on a class day, the day counts as an absence. Calling in sick excuses it only when you’re unwell: condition under {ESTIMATE.sickBelow}, the flu, or an injury that limits the work. A day in hospital is excused automatically.
           </p>
           <Fine>
             {period.estimate ? 'This term’s dates are estimated from the 2026–2027 pattern. ' : 'Source: the Yale Bulletin, for the class days. '}The courses are the Bulletin’s. How often each meets isn’t published, so the week is estimated.

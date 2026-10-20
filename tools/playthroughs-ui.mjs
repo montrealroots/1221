@@ -279,7 +279,7 @@ const figureOf = (s) => Number((s.match(/would come to about (\d+\.\d) of 100 /)
 const bandOf = (s) => (s.match(/would come to about \d+\.\d of 100 \((\w+)\)/) ?? [])[1] ?? '';
 /** A card's step buttons: the row under its Shown Today. */
 const stepsOf = (card) => card.locator('[data-shown-today] + div').getByRole('button');
-const whyOf = async (card) => clean(await card.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''));
+const whyOf = async (card) => clean(await card.locator('[data-shown-today] ~ .why-not').first().innerText({ timeout: 1000 }).catch(() => ''));
 const partsOf = async (card) => Object.fromEntries((await card.locator('.stat').evaluateAll((els) => els.map((e) => [e.querySelector('.stat-label')?.textContent ?? '', e.querySelector('.stat-value')?.textContent ?? '']))).map(([k, v]) => [clean(k), clean(v)]));
 /** A card's title, by its heading. */
 const titleOf = async (card) => clean(await card.locator('h2').first().innerText().catch(() => ''));
@@ -587,12 +587,12 @@ async function normal() {
     if (await again.count()) {
       feedback = clean(await again.locator('.eyebrow', { hasText: /^Feedback: / }).first().innerText());
       const gray = again.locator('[data-shown-today] + div').getByRole('button').first();
-      const why = await refused(gray, async () => clean(await again.locator('[data-shown-today] ~ p.why-not').first().innerText()));
+      const why = await refused(gray, async () => clean(await again.locator('[data-shown-today] ~ .why-not').first().innerText()));
       must(/There’s new feedback on this piece\. Read it, then press Mark As Read\./.test(why), `refused for another reason: ${why}`);
       await press(again.getByRole('button', { name: /^Mark As Read$/ }), 'Mark As Read'); await wait(800);
-      must(!/new feedback/.test(clean(await again.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''))), 'the steps still wait on the feedback after Mark As Read');
+      must(!/new feedback/.test(clean(await again.locator('[data-shown-today] ~ .why-not').first().innerText({ timeout: 1000 }).catch(() => ''))), 'the steps still wait on the feedback after Mark As Read');
       const note = again.getByRole('button', { name: /^Work On The Note$/ }).first();
-      must(await note.count() && !(await note.isDisabled()), `Work On The Note not open after Mark As Read: ${clean(await again.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''))}`);
+      must(await note.count() && !(await note.isDisabled()), `Work On The Note not open after Mark As Read: ${clean(await again.locator('[data-shown-today] ~ .why-not').first().innerText({ timeout: 1000 }).catch(() => ''))}`);
       await press(note, 'Work On The Note'); await wait(1300); await settle();
       said(`To Show Again: refused “${why}”, then Mark As Read, and Work On The Note: ${await newestToast()}`);
     } else {

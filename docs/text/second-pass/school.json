@@ -512,9 +512,9 @@
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.feedback]": {
   "status": "Rewritten",
-  "hash": "9d6a38030d74",
+  "hash": "301872a0cb55",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "evidence": "Brief 16 sec. 7: summary 6 to 4 sentences (tools/voices.ts --guide), read against systems/feedback.ts (each course in its terms, the last piece where the band moved, what held it back, what to try); note taken moved to Later; tests pass",
   "first": "Pending"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.partners]": {
@@ -533,24 +533,24 @@
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.prepare]": {
   "status": "Rewritten",
-  "hash": "e546c19af746",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide.test.ts and tests/guide-examples-coursework.test.ts; tools/guide-quotes.mjs --check",
+  "hash": "0b472de481b3",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), when a piece is set moved to Needs; read whole with its card in CourseworkPane; tests/guide.test.ts and guide-examples-coursework pass",
   "first": "Pending"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.table]": {
   "status": "Rewritten",
-  "hash": "7eede058f3cc",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide.test.ts and tests/guide-examples-coursework.test.ts; tools/guide-quotes.mjs --check",
+  "hash": "52f257e510ac",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), the 30% read and 10 minutes from tableWorkRefusal and CHOOSE_MINUTES, the course step left to Reads; tests/guide-examples-coursework and table-work-unread pass",
   "first": "Pending"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.workbook]": {
-  "status": "Retained",
-  "hash": "ba6ac5809c9a",
-  "on": "2026-10-19",
-  "reason": "Work It Through: the forecast, a problem and its evidence, each way's minutes and what it moves, keeping or putting back, and what is never luck.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "9ca4be477a11",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), the kinds of problem moved into its second step; Keep It and Put It Back as WorkThrough.tsx labels them; tests/guide-examples-coursework passes",
+  "first": "Pending"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [evaluation]": {
   "status": "Retained",
@@ -729,31 +729,31 @@
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.casting]": {
   "status": "Rewritten",
-  "hash": "835ca7725714",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); Delivered's row, a Cabaret or Summer run’s nights counting 50% as much as a School production’s and your record before counting 50% as much as it did, for \"at 50% of its weight\"; tools/guide-quotes.mjs --check and tests/guide-examples-productions.test.ts",
+  "hash": "bf7d2c18f879",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), the fit defined in Reads only; 20% from C.delivery kept; tests/guide-examples-productions passes",
   "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.nights]": {
-  "status": "Retained",
-  "hash": "64a38ee1640c",
-  "on": "2026-10-19",
-  "reason": "A night on stage: preparation, condition, nerves, the company and what a night grows, each with its figure and the result's words as the screens give them.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "34968124e1bf",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), how a night divides into movements moved to Interpret, LAMDA left to The Bands; tests/guide-examples-productions passes",
+  "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.notes]": {
   "status": "Rewritten",
-  "hash": "d73231c0e790",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); Looking Back counts the notes you took and those you worked on that didn’t move, as the director's closing says them since batch 2 (production.ts reflect); tools/guide-quotes.mjs --check",
+  "hash": "007e56936e70",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 3 sentences (tools/voices.ts --guide), what a note is about moved to the head of Interpret; tests/guide-examples-productions passes",
   "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.part]": {
-  "status": "Retained",
-  "hash": "b66964411a19",
-  "on": "2026-10-19",
-  "reason": "Learning a part: the lines, the blocking and the book, each with its time, what moves it and the refusals quoted as the game says them.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "4fb42e217336",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide); a blocking or technical call, as callMissed in systems/production.ts counts it, where it said a blocking call; tests/guide-examples-productions passes",
+  "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.playing]": {
   "status": "Retained",
@@ -764,9 +764,9 @@
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [productions.plays]": {
   "status": "Rewritten",
-  "hash": "e3db65e2ce64",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide-examples-productions.test.ts; tools/guide-quotes.mjs --check",
+  "hash": "d6776af83487",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), what a read note holds moved to Now; tests/playreading and whynot-school pass",
   "first": "Pending"
  },
  "src/engine/content/guide/productions.ts#PRODUCTIONS [scheduled]": {
@@ -897,30 +897,30 @@
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.leave]": {
   "status": "Rewritten",
-  "hash": "a98416cda0f5",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b3.txt (guide.mts, the entry printed with its figures); tests/guide-examples-school.test.ts; tools/guide-quotes.mjs --check",
+  "hash": "9fbc14f88d53",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 6 to 4 and the assessment later item 5 to 2 and 3 sentences (tools/voices.ts --guide); notice deadline, dismissal, Affiliate cover and withdrawal kept in the summary; noticeBy in systems/leave.ts read",
   "first": "Pending"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.money]": {
   "status": "Rewritten",
-  "hash": "d81dd0341154",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); under a hold at a term’s start you’re counted absent from classes and can’t work shifts until you register, as the Leave panel and Not Registered say it; tools/guide-quotes.mjs --check and tests/guide-examples-school.test.ts",
+  "hash": "016c5f95affb",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), the account and why it usually owes nothing joined; the hold and late fee stay in it; tests/guide-examples-school passes",
   "first": "Pending"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.orientation]": {
   "status": "Rewritten",
-  "hash": "dcd57045cfe6",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); Sleeping through registration costs the most: classes count you absent until you catch it up, as Not Registered says it; tools/guide-quotes.mjs --check and tests/guide-examples-school.test.ts",
+  "hash": "0c11b812c0f8",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 6 to 4 sentences (tools/voices.ts --guide), the vague it happens replaced, Catch Up placed under Orientation as CourseworkPane draws it, registration first; tests/guide-examples-school passes",
   "first": "Pending"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.repeat]": {
   "status": "Rewritten",
-  "hash": "a2b52267bbc4",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b1.txt (guide.mts, the entry printed with its figures); tests/guide-examples-school.test.ts; tools/guide-quotes.mjs --check",
+  "hash": "27f34c7be98b",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 6 to 4 sentences (tools/voices.ts --guide), whose rules these are moved to Interpret; tests/remaining-school.test.ts holds it there word for word",
   "first": "Pending"
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.shifts]": {
@@ -939,9 +939,9 @@
  },
  "src/engine/content/guide/school.ts#SCHOOL [school.standing]": {
   "status": "Rewritten",
-  "hash": "fc2c71e24fee",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/guide-b6.txt (rendered by guide.mts, the entry printed with its figures); what stays after a dismissal said as the notice says it (you can still practice, and tape the practice briefs, outside the School), and the hold's paragraph with counted absent and press Register on the Standing And Craft tab; tools/guide-quotes.mjs --check and tests/guide-examples-school.test.ts",
+  "hash": "d34e480f9165",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: summary 5 to 4 sentences (tools/voices.ts --guide), the class day moved to Later with its nine-o-clock check; Standing And Craft holds the tables named (StandingPane); tests/guide-examples-school passes",
   "first": "Pending"
  },
  "src/engine/content/guide/school.ts#season": {
@@ -4193,11 +4193,11 @@
   "first": "Pending"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#ClassesPane": {
-  "status": "Retained",
-  "hash": "9240a8a2aeb5",
-  "on": "2026-10-19",
-  "reason": "The week's timetable, Call In Sick with what it excuses, and a line on the term's dates, its breaks and what counts as an absence, each with its rule.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "a6d2493a6249",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: five sentences now 2 and 3 (tools/screen-text.mjs on the built app); the injury that limits the work added, as sickRefusal in systems/school.ts reads it; tests/defects-g8-3 and whynot-school pass",
+  "first": "Pending"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#CoursesPanel": {
   "status": "Rewritten",
@@ -4271,9 +4271,9 @@
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane": {
   "status": "Rewritten",
-  "hash": "ee85c8a65953",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/school-tabs.txt (school-tabs.mts, the six tabs rendered for a life in its first spring): the growth note (The middle student in your class grew 0.6), the coursework note, Attendance counts 35 of 35 class days and 7 of 7 assigned shifts, the craft note; tests/language-dynamic.test.ts (Attendance counts 1 of 1 class day) and tests/remaining-09-journeys.test.ts (half or more fell short of what’s asked, once the School has ended)",
+  "hash": "b628866cd86b",
+  "on": "2026-10-20",
+  "evidence": "Brief 16 sec. 7: the six-sentence paragraph now five, at most three sentences each (tools/screen-text.mjs on the built app, a save of 2027-09-22): attendance, the casting pool, the grave breach, the review, the degree; tests/whynot-school passes",
   "first": "Pending"
  },
  "src/ui/workspaces/SchoolWorkspace.tsx#SummerPanel": {
