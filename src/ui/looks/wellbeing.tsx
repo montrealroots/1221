@@ -561,7 +561,7 @@ defineLook<Carried>('condition', {
         // What it keeps them from, by what it limits (from 2026-10-17, brief 14): until then only an injury that lays them
         // up said so, and a sprained ankle, which keeps them from training too (`trainingRefusal`), said nothing. The same
         // day, the health journey found it didn’t say Call In Sick excuses a day of classes for it, as the flu’s notice does.
-        // From 2026-10-20 (brief 17) in the notice's words (`injuryKeeps`): until then a laid-up injury didn't say the
+        // From 2026-10-20 (brief 17) in the notice’s words (`injuryKeeps`): until then a laid-up injury didn’t say the
         // classes it keeps them from are excused, a cut or a knock said nothing of what it keeps them from, though the
         // way in promised it, and Call In Sick "excuses a day of classes" read as one day in all.
         summary: `It mends by ${formatDate(hurt.until, sim.zone)}. ${injuryKeeps(hurt.kind, isYou && Boolean(person.school && !schoolEnded(person.school.standing)), { they: p.they, them: p.them, their: p.their, theyAre })}`,

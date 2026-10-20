@@ -11,6 +11,7 @@ import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
 import { COURSES, SKILLS } from '@/engine/content/school';
+import { directorVoiceFor } from '@/engine/systems/production';
 import { TOGETHER_BOND, courseworkOf } from '@/engine/systems/coursework';
 import { EVALUATION } from '@/engine/content/tasks';
 
@@ -226,7 +227,8 @@ describe('a night’s reading', () => {
     }
     const nights = Object.values(c.nights ?? {}).reduce((a, b) => a + b, 0);
     expect(nights).toBe(shows.length);
-    expect(c.note).toContain(directorsNote(nightsMean(c.nights!)));
+    // In the voice its director gave at the calls (from 2026-10-20, brief 17).
+    expect(c.note).toContain(directorsNote(nightsMean(c.nights!), directorVoiceFor('school', c)));
     // And names what held the run's nights back most, by the evaluation (from 2026-10-12: until then the play's weakest
     // raw craft skill, named even where nothing held the nights back).
     expect(c.note).toMatch(/ Work on your [a-z -]+: it held your nights back most\.$/);
