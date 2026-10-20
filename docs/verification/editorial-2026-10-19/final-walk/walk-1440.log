@@ -5,3 +5,6 @@ dir2.json: 25 screens
 direction.json: 25 screens
 health.json: 25 screens
 leave.json: 25 screens
+lien.json: 25 screens
+missed-plan.json: 25 screens
+nonfiler.json: 25 screens
