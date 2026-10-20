@@ -45,8 +45,8 @@ holds it as a queued message). Its "Yes." answered whether to watch #44, and the
 request for page captures after it was answered with images sent in the session. Brief 16's "Both." answered whether to
 merge #45 or watch it: #45 was watched and merged. "Is it merged now?" was answered from Git: #45 was, and the
 handoff's account of it on the branch (`dffc6ea0`) wasn't. Brief 17's "Yes. And the merge it." answered whether to open
-a pull request after its gate: #46 was opened and merged, and the handoff's account of that merge is on the branch, not
-in `main`.
+a pull request after its gate: #46 was opened and merged. "Now." asked for the handoff's account of that merge in
+`main` too, and #47 took it there.
 
 What isn't here: the session's own summaries of itself, written when its context ran out, are the model's words, not
 the owner's, and the briefs of the sessions before this one are in `../prompts-2026-10-16/` where they were kept.

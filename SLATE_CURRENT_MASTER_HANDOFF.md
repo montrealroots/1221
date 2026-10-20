@@ -9,7 +9,8 @@
   (https://github.com/yvcbcjhsy7-prog/1221/pull/46), opened at the owner's word after the gate and merged to `main` with
   a merge commit ("Yes. And the merge it.", 2026-10-20, asked whether to open one; `f615caea`). Its tree is `9a87bda4`'s,
   the head the gate's figures were folded into, so `dffc6ea0` is in `main` now too. Until then this said none of it was
-  in `main` and no pull request was opened. This account of the merge is on the branch, not in `main`.
+  in `main` and no pull request was opened. This account of the merge went to `main` in #47, at the owner's "Now.",
+  with `main` merged into the branch first, never rewritten.
 - **Merged isn't deployed: nothing is.**
 
 Brief 16's section below was the status until brief 17 began.
