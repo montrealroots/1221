@@ -1,0 +1,509 @@
+{
+ "openings": {
+  "showings": 3090,
+  "distinct": 421,
+  "repeatedWithinFiveFromSameCourse": 253,
+  "top": [
+   {
+    "opening": "Strong.",
+    "n": 104
+   },
+   {
+    "opening": "Strong, and it rested on preparation that was all there.",
+    "n": 68
+   },
+   {
+    "opening": "Strong, with nothing in the preparation short.",
+    "n": 62
+   },
+   {
+    "opening": "Everything you prepared came through: Strong.",
+    "n": 60
+   },
+   {
+    "opening": "Note # on rehearsal.",
+    "n": 57
+   },
+   {
+    "opening": "Strong again.",
+    "n": 52
+   },
+   {
+    "opening": "The preparation was complete.",
+    "n": 50
+   },
+   {
+    "opening": "Strong, matching the piece on DATE.",
+    "n": 38
+   },
+   {
+    "opening": "Strong for the second time running.",
+    "n": 34
+   },
+   {
+    "opening": "You were prepared.",
+    "n": 33
+   },
+   {
+    "opening": "Your composure held back your consistency by # points out of #, though the preparation was all there.",
+    "n": 33
+   },
+   {
+    "opening": "Same as on DATE: your composure held back your consistency by # points out of #.",
+    "n": 33
+   }
+  ]
+ },
+ "duplicates": {
+  "notices": 9697,
+  "exactRepeats": 45,
+  "byTitle": [
+   {
+    "title": "A Doctor’s Visit",
+    "n": 26
+   },
+   {
+    "title": "Ran Lines With Chloe",
+    "n": 9
+   },
+   {
+    "title": "Ran Lines With Aaliyah",
+    "n": 2
+   },
+   {
+    "title": "Ran Lines With Nadia",
+    "n": 2
+   },
+   {
+    "title": "The Summer Is Yours",
+    "n": 2
+   },
+   {
+    "title": "Ran Lines With Hannah",
+    "n": 1
+   },
+   {
+    "title": "Ran Lines With Julian",
+    "n": 1
+   },
+   {
+    "title": "Ran Lines With Lucia",
+    "n": 1
+   },
+   {
+    "title": "Ran Lines With Ethan",
+    "n": 1
+   }
+  ],
+  "showingFeedbackExactRepeats": 8
+ },
+ "shared": {
+  "sentencesFromTwoOrMoreCourses": 279,
+  "showingsWithOne": 2665,
+  "top": [
+   {
+    "sentence": "Strong.",
+    "courses": 15,
+    "times": 105
+   },
+   {
+    "sentence": "This piece was worked with A Smaller Piece Of It.",
+    "courses": 14,
+    "times": 35
+   },
+   {
+    "sentence": "This piece was worked with A Targeted Drill.",
+    "courses": 13,
+    "times": 28
+   },
+   {
+    "sentence": "Let your weight drop.",
+    "courses": 9,
+    "times": 75
+   },
+   {
+    "sentence": "Find the moments where stillness says enough, and let them stand.",
+    "courses": 9,
+    "times": 66
+   },
+   {
+    "sentence": "That’s what held it back most.",
+    "courses": 9,
+    "times": 29
+   },
+   {
+    "sentence": "The note closes when a piece is shown with it at # or more.",
+    "courses": 8,
+    "times": 189
+   },
+   {
+    "sentence": "Work Out, under Look After Yourself, builds stamina.",
+    "courses": 8,
+    "times": 93
+   },
+   {
+    "sentence": "This piece was worked with Put It First.",
+    "courses": 8,
+    "times": 23
+   },
+   {
+    "sentence": "A Note That Keeps Coming Back, on the piece’s card, lists the other ways at it.",
+    "courses": 7,
+    "times": 165
+   },
+   {
+    "sentence": "A showing at # or more closes the note.",
+    "courses": 7,
+    "times": 157
+   },
+   {
+    "sentence": "Strong, with nothing in the preparation short.",
+    "courses": 7,
+    "times": 62
+   }
+  ]
+ },
+ "voices": {
+  "acting": {
+   "showings": 887,
+   "distinctOpenings": 185,
+   "withAStep": 161,
+   "stepInAnotherDisciplinesWords": 0
+  },
+  "text": {
+   "showings": 567,
+   "distinctOpenings": 91,
+   "withAStep": 376,
+   "stepInAnotherDisciplinesWords": 0
+  },
+  "movement": {
+   "showings": 846,
+   "distinctOpenings": 135,
+   "withAStep": 257,
+   "stepInAnotherDisciplinesWords": 0
+  },
+  "voice": {
+   "showings": 790,
+   "distinctOpenings": 109,
+   "withAStep": 272,
+   "stepInAnotherDisciplinesWords": 0
+  }
+ },
+ "advice": {
+  "blocks": 1619,
+  "meanWords": 82,
+  "maxWords": 154,
+  "meanFigures": 8.1,
+  "meanWordsWithDetails": 544.5,
+  "maxWordsWithDetails": 747,
+  "meanFiguresWithDetails": 43.7,
+  "meanItems": 5,
+  "meanSentencesSaidAgainInTheBlock": 0.5
+ },
+ "directors": {
+  "notes": 291,
+  "distinctOpenings": 31,
+  "repeatedWithinFive": 30,
+  "top": [
+   {
+    "opening": "It sags in part #: hold it the whole way through.",
+    "n": 28
+   },
+   {
+    "opening": "That’s moved since the last note.",
+    "n": 25
+   },
+   {
+    "opening": "Go back through the blocking in the book, so the stage pictures settle where they’re meant to.",
+    "n": 22
+   },
+   {
+    "opening": "Better since the last note.",
+    "n": 22
+   },
+   {
+    "opening": "Think about who they are to you in the second half, and let us see it.",
+    "n": 21
+   },
+   {
+    "opening": "Same note as at the last call.",
+    "n": 17
+   },
+   {
+    "opening": "The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.",
+    "n": 16
+   },
+   {
+    "opening": "Still: it sags in part #: hold it the whole way through.",
+    "n": 15
+   }
+  ]
+ },
+ "moments": {
+  "said": 1137,
+  "distinctOpenings": 317,
+  "top": [
+   {
+    "opening": "With an audition outside school coming up, Grace is behind on their lines and asks for three quarters of an hour of your time, now, to run them.",
+    "n": 40
+   },
+   {
+    "opening": "Ethan is behind on their lines, with an audition outside school, and asks if you’d run them for three quarters of an hour, now.",
+    "n": 22
+   },
+   {
+    "opening": "Daniel has an audition outside school and is behind on their lines.",
+    "n": 21
+   },
+   {
+    "opening": "Lucia suggests an hour running lines together on DATE at #:# PM, so the work keeps moving.",
+    "n": 20
+   },
+   {
+    "opening": "Samuel has had a hard week away from school and is behind on their lines.",
+    "n": 20
+   },
+   {
+    "opening": "Mateo wonders if you’d like to run lines together for an hour on DATE at #:# PM.",
+    "n": 20
+   },
+   {
+    "opening": "Chloe wonders if you’d like to run lines together for an hour on DATE at #:# PM.",
+    "n": 20
+   },
+   {
+    "opening": "Isaiah is behind on their lines, with an audition outside school, and asks if you’d run them for three quarters of an hour, now.",
+    "n": 20
+   }
+  ]
+ },
+ "brief17": {
+  "definitions": {
+   "runs": [
+    "approaches v16-0",
+    "approaches v17-1",
+    "attentive v17-2",
+    "attentive v16-0",
+    "attentive v17-1",
+    "distant v17-2",
+    "distant v16-0",
+    "distant v17-1",
+    "improving v16-0",
+    "improving v17-1",
+    "newplayer v17-3",
+    "practicing v16-0",
+    "practicing v17-1",
+    "pressure v16-0",
+    "pressure v17-1",
+    "regressing v16-0",
+    "regressing v17-1",
+    "skilled v16-0",
+    "skilled v17-1",
+    "tired v16-0",
+    "tired v17-1",
+    "underprepared v17-2",
+    "underprepared v16-0",
+    "underprepared v17-1"
+   ],
+   "window": "the same speaker's last 5 messages, in one run: a course for a showing, a production's director, a classmate, a notice's category, the Profile's card",
+   "exact": "a message whose kind, title and whole text were all said before in the same run",
+   "openings": "a first sentence, with dates, figures, quotes and names taken out, said in the window",
+   "bodies": "everything after the first sentence (the part played aside), as structures, said in the window; denominator: messages of more than one sentence",
+   "sameFinding": "a repeated body whose message is on the same thing as the one it repeats (the note's key, or the director's note and its problem); said continuing: its first sentence says so (again, still, same, as on, last time, before, back, since, keeps, another, running, in a row)",
+   "structures": "a sentence whose structure (dates, figures, quotes, ordinals, counts and runs of capitalised words past the first taken out) was said in the window; allStale: a message every one of whose sentences was",
+   "contradictions": "a showing's claims read from its words against the course's showings before it in the run: a band's move named against the last piece, a best against every piece before, a run against the Strong-or-better run, a note's count against the earlier showings on the same note (any course), either order of a day's two on it allowed, since a showing's recorded time is its day's; the claims a phrasing the parser doesn't know makes aren't counted, so each count of claims is its denominator",
+   "events": "from notices alone: each classmate's apologies against their Didn't Come notices before them; a miss's and a request's stated count against the notices before",
+   "lastAnswer": "a classmate's moment that says how the last of its kind was answered, against the answer the run recorded for the one before it from the same classmate",
+   "excluded": "nothing is left out of a denominator but the sentence naming the part played, which every scene's feedback ends on"
+  },
+  "perKind": {
+   "showing": {
+    "messages": 3090,
+    "exact": 8,
+    "openings": 253,
+    "withBody": 2761,
+    "bodies": 312,
+    "bodiesSameFinding": 196,
+    "bodiesSameFindingSaidContinuing": 125,
+    "sentences": 9669,
+    "structures": 2685,
+    "allStale": 296
+   },
+   "director": {
+    "messages": 291,
+    "exact": 3,
+    "openings": 30,
+    "withBody": 165,
+    "bodies": 39,
+    "bodiesSameFinding": 19,
+    "bodiesSameFindingSaidContinuing": 19,
+    "sentences": 557,
+    "structures": 166,
+    "allStale": 28
+   },
+   "moment": {
+    "messages": 1137,
+    "exact": 0,
+    "openings": 166,
+    "withBody": 530,
+    "bodies": 41,
+    "bodiesSameFinding": 0,
+    "bodiesSameFindingSaidContinuing": 0,
+    "sentences": 1747,
+    "structures": 274,
+    "allStale": 24
+   },
+   "notice": {
+    "messages": 9697,
+    "exact": 45,
+    "openings": 246,
+    "withBody": 8571,
+    "bodies": 2517,
+    "bodiesSameFinding": 359,
+    "bodiesSameFindingSaidContinuing": 194,
+    "sentences": 27226,
+    "structures": 7161,
+    "allStale": 346
+   },
+   "advice": {
+    "messages": 1619,
+    "exact": 144,
+    "openings": 1371,
+    "withBody": 1619,
+    "bodies": 999,
+    "bodiesSameFinding": 995,
+    "bodiesSameFindingSaidContinuing": 10,
+    "sentences": 8845,
+    "structures": 7336,
+    "allStale": 1046
+   }
+  },
+  "commonestRepeatedBodies": [
+   {
+    "body": "notice: It’s due in class on NAME. Start with NAME: this piece puts it NTH, so it counts for more when you show it.",
+    "n": 1923
+   },
+   {
+    "body": "advice: Going in short on it cost your recent work about # points a piece off the whole. It held back # of your last # pieces and # in all, most rec",
+    "n": 651
+   },
+   {
+    "body": "notice: It stays open under NAME. To try something different, find an open piece on the NAME tab that works on it, and choose a way under NAME.",
+    "n": 174
+   },
+   {
+    "body": "notice: Answer by #:# NAME that day, under NAME on the NAME tab. Saying no costs nothing.",
+    "n": 161
+   },
+   {
+    "body": "showing: Classes build it, and so does NAME, in the NAME column on your NAME.",
+    "n": 99
+   },
+   {
+    "body": "advice: Going in short on it cost your recent work about # points a piece off the whole. It held back # of your last # pieces, most recently NAME, o",
+    "n": 68
+   },
+   {
+    "body": "notice: Leaving them without an answer cost a little of their trust, where a no would have cost nothing.",
+    "n": 51
+   },
+   {
+    "body": "notice: Be there then, or press NAME on NAME, under NAME.",
+    "n": 46
+   },
+   {
+    "body": "notice: There’s nothing to pay.",
+    "n": 46
+   },
+   {
+    "body": "notice: It’s the NTH time they haven’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under NAME, or us",
+    "n": 42
+   },
+   {
+    "body": "advice: Of what you can train, it would add most to your recent work: your last # pieces all call on it. Circles NAME at the NAME tier, with NAME on",
+    "n": 40
+   },
+   {
+    "body": "advice: Of what you can train, it would add most to your recent work: # of your last # pieces call on it. Composure and focus would be about as usef",
+    "n": 32
+   }
+  ],
+  "contradictions": {
+   "moveClaims": 523,
+   "moveWrong": 0,
+   "bestClaims": 5,
+   "bestWrong": 0,
+   "firstClaims": 44,
+   "firstWrong": 0,
+   "runClaims": 375,
+   "runWrong": 0,
+   "countClaims": 451,
+   "countWrong": 0,
+   "examples": []
+  },
+  "events": {
+   "apologies": 224,
+   "apologiesBeyondMisses": 0,
+   "missCounts": 194,
+   "missCountWrong": 0,
+   "helpCounts": 120,
+   "helpCountWrong": 0,
+   "examples": []
+  },
+  "lastAnswer": {
+   "claims": 142,
+   "wrong": 0,
+   "examples": []
+  },
+  "speakers": {
+   "pairs": 70,
+   "meanShared": 0.126,
+   "mostShared": [
+    {
+     "a": "Speech And Accents I",
+     "b": "Speech And Accents II",
+     "shared": 0.759
+    },
+    {
+     "a": "Voice I",
+     "b": "Voice II",
+     "shared": 0.647
+    },
+    {
+     "a": "Voice II",
+     "b": "Singing II And Tutorials",
+     "shared": 0.491
+    },
+    {
+     "a": "The Body As Source I",
+     "b": "The Body As Source II",
+     "shared": 0.462
+    },
+    {
+     "a": "Voice I",
+     "b": "Singing II And Tutorials",
+     "shared": 0.403
+    },
+    {
+     "a": "Play",
+     "b": "Clown",
+     "shared": 0.393
+    },
+    {
+     "a": "Movement Invention II",
+     "b": "Commedia",
+     "shared": 0.393
+    },
+    {
+     "a": "Alexander Technique I",
+     "b": "Alexander Technique II Tutorials",
+     "shared": 0.388
+    }
+   ]
+  },
+  "rerolled": {
+   "checked": 40666,
+   "differed": 0
+  }
+ }
+}

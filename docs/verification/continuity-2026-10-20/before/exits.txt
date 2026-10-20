@@ -1,0 +1,27 @@
+at bbb82253, 1 tracked files changed, 2026-10-20T13:24:26Z
+underprepared-v16-0 exit=0 secs=156 cmd: tools/voices.ts --scenario underprepared --seed v16-0 --months 14
+attentive-v16-0 exit=0 secs=156 cmd: tools/voices.ts --scenario attentive --seed v16-0 --months 14
+improving-v16-0 exit=0 secs=157 cmd: tools/voices.ts --scenario improving --seed v16-0 --months 14
+regressing-v16-0 exit=0 secs=163 cmd: tools/voices.ts --scenario regressing --seed v16-0 --months 14
+skilled-v16-0 exit=0 secs=112 cmd: tools/voices.ts --scenario skilled --seed v16-0 --months 14
+pressure-v16-0 exit=0 secs=116 cmd: tools/voices.ts --scenario pressure --seed v16-0 --months 14
+tired-v16-0 exit=0 secs=115 cmd: tools/voices.ts --scenario tired --seed v16-0 --months 14
+distant-v16-0 exit=0 secs=132 cmd: tools/voices.ts --scenario distant --seed v16-0 --months 14
+attentive-v17-1 exit=0 secs=137 cmd: tools/voices.ts --scenario attentive --seed v17-1 --months 14
+approaches-v16-0 exit=0 secs=164 cmd: tools/voices.ts --scenario approaches --seed v16-0 --months 14
+underprepared-v17-1 exit=0 secs=298 cmd: tools/voices.ts --scenario underprepared --seed v17-1 --months 14
+improving-v17-1 exit=0 secs=297 cmd: tools/voices.ts --scenario improving --seed v17-1 --months 14
+regressing-v17-1 exit=0 secs=338 cmd: tools/voices.ts --scenario regressing --seed v17-1 --months 14
+practicing-v16-0 exit=0 secs=690 cmd: tools/voices.ts --scenario practicing --seed v16-0 --months 14
+pressure-v17-1 exit=0 secs=272 cmd: tools/voices.ts --scenario pressure --seed v17-1 --months 14
+skilled-v17-1 exit=0 secs=302 cmd: tools/voices.ts --scenario skilled --seed v17-1 --months 14
+tired-v17-1 exit=0 secs=368 cmd: tools/voices.ts --scenario tired --seed v17-1 --months 14
+distant-v17-1 exit=0 secs=373 cmd: tools/voices.ts --scenario distant --seed v17-1 --months 14
+approaches-v17-1 exit=0 secs=409 cmd: tools/voices.ts --scenario approaches --seed v17-1 --months 14
+underprepared-long-v17-2 exit=0 secs=513 cmd: tools/voices.ts --scenario underprepared --seed v17-2 --months 26
+practicing-v17-1 exit=0 secs=1191 cmd: tools/voices.ts --scenario practicing --seed v17-1 --months 14
+newplayer-v17-3 exit=0 secs=112 cmd: tools/voices.ts --scenario newplayer --seed v17-3 --months 4
+attentive-long-v17-2 exit=0 secs=855 cmd: tools/voices.ts --scenario attentive --seed v17-2 --months 26
+distant-long-v17-2 exit=0 secs=694 cmd: tools/voices.ts --scenario distant --seed v17-2 --months 26
+DONE 2026-10-20T13:59:29Z
+summarize exit=0

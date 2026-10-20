@@ -1,0 +1,56 @@
+{
+ "before": {
+  "showings": 3090,
+  "openings": {
+   "all": 229,
+   "acknowledgment": 0,
+   "sameFinding": 175,
+   "saysSo": 144,
+   "rest": 54
+  },
+  "allStale": {
+   "all": 202,
+   "acknowledgment": 0,
+   "sameFinding": 190,
+   "saysSo": 159,
+   "rest": 12
+  },
+  "rest": [
+   "approaches-v16-0 2027-02-15 Acting I: Up from Unready last time. Your composure held back your consistency by 32 points out of 100, more than anything in the preparation. Classes",
+   "approaches-v17-1 2026-10-08 Play: A fourth time for the note on Played Together: it was last given in Acting I, on October 5, 2026. It’s at 40% now, and the note is taken at ",
+   "approaches-v17-1 2027-02-15 Acting I: Up from Unready last time. Your focus held back your execution by 22 points out of 100, more than anything in the preparation. Classes build",
+   "approaches-v17-1 2027-04-05 Acting I: This is the 44th time you’ve had the note on On Its Feet, the last in Voice I on March 25, 2027. It’s at 0% now, and the note is taken at 75",
+   "approaches-v17-1 2027-10-04 Acting II: Plays Of Extended And Heightened Language: This is the 62nd time you’ve had the note on Rehearsal, the last in Singing II And Tutorials on October 1, 2027. It’s at 0% now, and the not",
+   "attentive-long-v17-2 2027-03-01 Acting I: Your focus held back your execution by 22 points out of 100, as it did on February 23, 2027. Meanwhile, try this: Let the other person chang",
+   "attentive-long-v17-2 2027-03-16 Acting I: Your focus held back your execution by 21 points out of 100, as it did on March 3, 2027. Meanwhile, try this: Do less. Find the moments that",
+   "attentive-long-v17-2 2028-02-08 Voice II: That’s up from Unready on January 25, 2028. Everything the piece asked of the voice was prepared, and it showed. To take it further: Use les"
+  ]
+ },
+ "after": {
+  "showings": 3090,
+  "openings": {
+   "all": 253,
+   "acknowledgment": 4,
+   "sameFinding": 204,
+   "saysSo": 162,
+   "rest": 45
+  },
+  "allStale": {
+   "all": 296,
+   "acknowledgment": 4,
+   "sameFinding": 251,
+   "saysSo": 219,
+   "rest": 41
+  },
+  "rest": [
+   "approaches-v16-0 2027-02-15 Acting I: Working this time, up from Unready. You were prepared. Your composure held back your consistency by 32 points out of 100. Classes build it, ",
+   "approaches-v16-0 2027-02-15 Acting I: Working this time, up from Unready. You were prepared. Your composure held back your consistency by 32 points out of 100. Classes build it, ",
+   "approaches-v16-0 2027-03-01 Acting I: You were prepared. Your composure held back your consistency by 33 points out of 100. Classes build it, and so does Graded Exposure, in the ",
+   "approaches-v16-0 2027-03-22 Acting I: You were prepared. Your composure held back your consistency by 34 points out of 100. Classes build it, and so does Graded Exposure, in the ",
+   "approaches-v16-0 2027-03-22 Acting I: You were prepared. Your composure held back your consistency by 34 points out of 100. Classes build it, and so does Graded Exposure, in the ",
+   "attentive-long-v17-2 2027-01-29 Alexander Technique I: Prepared, but your physical expression held back your execution by 33 points out of 100. Classes build it, and so does Movement Work, in the",
+   "attentive-long-v17-2 2027-02-09 Acting I: Your composure held back your consistency by 21 points out of 100, though the preparation was all there.",
+   "attentive-long-v17-2 2027-02-09 Acting I: Your composure held back your consistency by 21 points out of 100, though the preparation was all there."
+  ]
+ }
+}

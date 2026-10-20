@@ -20,11 +20,12 @@ WANT = [
     ('“Meanwhile, try this”', r'Meanwhile, try this'),
     ('A card label as a prose subject', r'the note on [A-Z][a-z]+ [A-Z]'),
     ('A part named twice', r'held it back most\. The '),
-    ('Strong despite a point', r'Strong, though your \w+ ran low'),
+    ('Strong despite the day, at a point or two', r'(?:came out \w+|Strong, even) though your \w+ ran low'),
 ]
 out = ['# Before And After, From Play', '',
        'Each pair is one event on one day of one student on one seed, before (`bbb82253`) and after. Found by '
        '`examples.py` from the runs, never typed.', '']
+seen = set()   # a pair already shown, from another seed whose first months play the same
 for label, pat in WANT:
     out += [f'## {label}', '']
     shown = 0
@@ -37,7 +38,8 @@ for label, pat in WANT:
         for x in b['said']:
             if x['kind'] != 'showing' or not re.search(pat, x['text']): continue
             twin = by.get((x['at'], x.get('course'), x.get('piece')))
-            if not twin: continue
+            if not twin or x['text'] in seen: continue
+            seen.add(x['text'])
             out += [f"**{n}, {x['at']}, {x.get('course')}, {x.get('piece')} ({x.get('band')})**", '',
                     f"- Before: {x['text']}", f"- After: {twin[0]['text']}", '']
             shown += 1

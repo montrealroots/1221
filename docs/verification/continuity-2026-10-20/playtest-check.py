@@ -10,7 +10,9 @@ names a control the game doesn't have sends its reader looking for nothing, so e
 - **nowhere:** none of these. It exits 1 on one.
 
 The phrases it quotes as the game no longer says them ("the note is taken at", and the like) are in double straight
-quotes, and are looked for too: each must be found nowhere in what the students were told or on the built app.
+quotes, and are looked for too: each must be found nowhere in what the students were told on the tested commit or in the
+code, its comments aside. The walk opens saves written on `bbb82253`, whose delivered feedback is kept as it was delivered (brief 17, section
+7: never reroll it), so a phrase found there alone is said so, apart, and isn't a failure.
 
     python3 docs/verification/continuity-2026-10-20/playtest-check.py
 """
@@ -45,6 +47,9 @@ for f in glob.glob('src/**/*.ts', recursive=True) + glob.glob('src/**/*.tsx', re
     if '/content/guide/' in f or f.endswith('content/tutorial.ts'): continue
     code.append(open(f, encoding='utf-8').read())
 CODE = '\n'.join(code).replace("\\'", "'").replace('&amp;', '&')
+# What the code says, its comments out: a comment says in the past tense what the words were (CLAUDE.md, "Prose here is
+# load-bearing"), so a phrase the game no longer says is still in one.
+SAID = re.sub(r'/\*.*?\*/|(?<![:\w])//[^\n]*', '', CODE, flags=re.S)
 
 out, bad = [], []
 for kind, items in (('quote', quotes), ('label', labels)):
@@ -55,7 +60,7 @@ for kind, items in (('quote', quotes), ('label', labels)):
         if where == 'nowhere': bad.append(q1)
 for q in gone:
     q1 = ' '.join(q.split())
-    where = 'still said' if q1 in TOLD or q1 in APP else 'no longer said'
+    where = 'still said' if q1 in TOLD or q1 in SAID else 'an old save only' if q1 in APP else 'no longer said'
     out.append(('gone', q1, where))
     if where == 'still said': bad.append(q1)
 for k, q, w in out: print(f'{w:18} {k:6} {q}')

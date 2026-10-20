@@ -1,0 +1,38 @@
+{
+ "before": {
+  "runs": 24,
+  "misses": 412,
+  "apologies": 230,
+  "again": 9,
+  "covering": 221,
+  "owedAtEnd": 63,
+  "late28": 101,
+  "late28Said": 0,
+  "early": 120,
+  "earlySaidLate": 0,
+  "examples": [
+   "attentive-long-v17-2 2026-11-30: Zoe apologizes, with no miss since their last apology",
+   "distant-long-v17-2 2027-10-08: Zoe apologizes, with no miss since their last apology",
+   "distant-long-v17-2 2027-10-25: Imani apologizes, with no miss since their last apology",
+   "distant-long-v17-2 2028-03-16: Nadia apologizes, with no miss since their last apology",
+   "regressing-v16-0 2027-09-30: Nadia apologizes, with no miss since their last apology",
+   "regressing-v16-0 2027-10-08: Grace apologizes, with no miss since their last apology",
+   "regressing-v17-1 2027-08-30: Ethan apologizes, with no miss since their last apology",
+   "regressing-v17-1 2027-09-23: Mateo apologizes, with no miss since their last apology",
+   "regressing-v17-1 2027-10-15: Nadia apologizes, with no miss since their last apology"
+  ]
+ },
+ "after": {
+  "runs": 24,
+  "misses": 415,
+  "apologies": 224,
+  "again": 0,
+  "covering": 224,
+  "owedAtEnd": 59,
+  "late28": 103,
+  "late28Said": 103,
+  "early": 121,
+  "earlySaidLate": 0,
+  "examples": []
+ }
+}
