@@ -1029,9 +1029,10 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     // Where it's unsafe to bring forward, it isn't: a ledger that doesn't reconcile is refused, and the slot left as it was.
     const unbalanced = probe.ledger.audit();
     // The audit's own words are a developer's, in the console (from 2026-10-17, brief 14: until then in the sentence).
+    // The way on by the slot's own button (from 2026-10-20, brief 17): until then "you can restore that instead".
     if (unbalanced.length > 0) {
       console.error('The ledger audit, bringing a save forward:', unbalanced);
-      problems.push('This save’s accounts don’t add up, so SLATE can’t update it safely and hasn’t changed anything in it. If the slot has a backup, you can restore that instead.');
+      problems.push('This save’s accounts don’t add up, so SLATE can’t update it safely and hasn’t changed anything in it. If the slot has a backup, press Restore Backup to open that instead.');
     }
   }
 

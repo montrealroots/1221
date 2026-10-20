@@ -1,0 +1,1984 @@
+
+# a New Haven student, a week into the fall
+
+## day 2026-09-01: Tuesday, September 1 [The Day]
+summary: It’s 6:00 PM in New Haven on Tuesday, September 1, with two things on the calendar.
+body: Daylight from 6:17 AM to 7:27 PM: 13h 10m. Autumn here has only just started. There are two things on it: Classes and Answer Priya. Sunrise 6:17 AM Local time Sunset 7:27 PM Local time Daylight 13h 10m Autumn here On The Calendar 2 Plans and commitments Commitments 0 None of it needs you Where New Haven EDT
+way: Classes — 9:00 AM · 6 hours · New Haven — you need to be there
+way: Answer Priya — 5:00 PM — it happens without you
+way: Autumn — What autumn is like in New Haven, and how long it lasts
+way: Daylight — 6:17 AM to 7:27 PM, 13h 10m of daylight
+way: The Sky — Partly Cloudy, 72°F to 90°F
+way: Monday, August 31 — One day back, and one thing on it, starting with Classes
+way: Wednesday, September 2 — One day on, and three things on it, starting with Classes
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-09-02: Wednesday, September 2 [Tomorrow]
+summary: Tomorrow’s Wednesday, September 2, with three things on the calendar.
+body: Daylight from 6:18 AM to 7:25 PM: 13h 7m. That’s autumn in New Haven, and the season has only just started then. There are three things on it: Classes, Dinner With Sam and Gym. You need to be at three of them. Two of them clash. Sunrise 6:18 AM Local time Sunset 7:25 PM Local time Daylight 13h 7m Autumn here On The Calendar 3 Plans and commitments Commitments 3 You need to be at these Where New Haven EDT
+way: Classes — 9:00 AM · 6 hours · New Haven — you need to be there
+way: Dinner With Sam — 8:00 PM · 2 hours · New Haven — it clashes with something else you need to be at
+way: Gym — 8:00 PM · 1 hour · New Haven — it clashes with something else you need to be at
+way: Autumn — What autumn is like in New Haven, and how long it lasts
+way: Daylight — 6:18 AM to 7:25 PM, 13h 7m of daylight
+way: The Sky — Rain, 67°F to 78°F
+way: Tuesday, September 1 — One day back, and two things on it, starting with Classes
+way: Thursday, September 3 — One day on, and one thing on it, starting with Classes
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-08-31: Monday, August 31 [Yesterday]
+summary: Yesterday was Monday, August 31, with one thing on the calendar.
+body: Daylight from 6:16 AM to 7:28 PM: 13h 13m. That was summer in New Haven, and the season was nearly over then. There’s one thing on it: Classes. Sunrise 6:16 AM Local time Sunset 7:28 PM Local time Daylight 13h 13m Summer here On The Calendar 1 Plans and commitments Commitments 0 None of it needs you Where New Haven EDT
+way: Classes — 9:00 AM · 6 hours · New Haven — you need to be there
+way: Summer — What summer is like in New Haven, and how long it lasts
+way: Daylight — 6:16 AM to 7:28 PM, 13h 13m of daylight
+way: Sunday, August 30 — One day back, and nothing was booked on it
+way: Tuesday, September 1 — One day on, and two things on it, starting with Classes
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## entry sched_000018: Classes [A Commitment]
+summary: You need to be at it at 9:00 AM tomorrow, in New Haven.
+body: You need to be there, awake and in New Haven, when the clock reaches it. If you aren’t, it’s missed: an unexcused absence, which the faculty weigh at the term review, unless you’re sick or in hospital. It runs 6 hours, 9:00 AM to 3:00 PM. It’s in New Haven, where you already are. It doesn’t clash with anything else. When 9:00 AM September 2, 2026 Length 6 hours Ends 3:00 PM Kind School New Haven Status Pending Wednesday, tomorrow Booked August 30, 2026 6:00 PM
+way: 9:00 AM To 3:00 PM — Its hours, and the weather across them
+way: New Haven — Where it is, and you’re already there
+way: Dinner With Sam — Next thing that day: 8:00 PM · 2 hours · New Haven — it clashes with something else you need to be at
+way: Wednesday, September 2 — The day it’s on: three things on it, starting with Classes
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_00001k: Dinner With Sam [A Commitment]
+summary: You need to be at it at 8:00 PM tomorrow, and at Gym too.
+body: You need to be there, awake and in New Haven, when the clock reaches it. If you aren’t, it’s missed. It runs 2 hours, 8:00 PM to 10:00 PM. It’s in New Haven, where you already are. Gym is at the same time, and you need to be at both. When 8:00 PM September 2, 2026 Length 2 hours Ends 10:00 PM Kind Personal New Haven Status Pending Wednesday, tomorrow Booked September 1, 2026 6:00 PM
+way: Gym — It clashes with this one, at 8:00 PM, and you need to be at both
+way: 8:00 PM To 10:00 PM — Its hours, and the weather across them
+way: Your Own Plans — Everything else you’ve put on the calendar yourself
+way: New Haven — Where it is, and you’re already there
+way: Wednesday, September 2 — The day it’s on: three things on it, starting with Classes
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_00001l: Gym [A Commitment]
+summary: You need to be at it at 8:00 PM tomorrow, and at Dinner With Sam too.
+body: You need to be there, awake and in New Haven, when the clock reaches it. If you aren’t, it’s missed. It runs 1 hour, 8:00 PM to 9:00 PM. It’s in New Haven, where you already are. Dinner With Sam is at the same time, and you need to be at both. When 8:00 PM September 2, 2026 Length 1 hour Ends 9:00 PM Kind Personal New Haven Status Pending Wednesday, tomorrow Booked September 1, 2026 6:00 PM
+way: Dinner With Sam — It clashes with this one, at 8:00 PM, and you need to be at both
+way: 8:00 PM To 9:00 PM — Its hours, and the weather across them
+way: Your Own Plans — Everything else you’ve put on the calendar yourself
+way: New Haven — Where it is, and you’re already there
+way: Wednesday, September 2 — The day it’s on: three things on it, starting with Classes
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_000019: Classes [A Commitment]
+summary: You need to be at it at 9:00 AM on Thursday, in two days, in New Haven.
+body: You need to be there, awake and in New Haven, when the clock reaches it. If you aren’t, it’s missed: an unexcused absence, which the faculty weigh at the term review, unless you’re sick or in hospital. It runs 6 hours, 9:00 AM to 3:00 PM. It’s in New Haven, where you already are. It doesn’t clash with anything else. When 9:00 AM September 3, 2026 Length 6 hours Ends 3:00 PM Kind School New Haven Status Pending Thursday, in two days Booked August 30, 2026 6:00 PM
+way: 9:00 AM To 3:00 PM — Its hours, and the weather across them
+way: New Haven — Where it is, and you’re already there
+way: Thursday, September 3 — The day it’s on: one thing on it, starting with Classes
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## season us-ct-newhaven/Spring: Spring [Season]
+summary: Spring in New Haven runs through March, April and May. It’s six months away.
+body: New Haven is at 41° north, so spring is March, April and May, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 66°F and falls to 48°F, with 13h 17m of daylight. About 32 days in a hundred are wet. Runs March To May 3 months of the year Typical High 66°F At the middle of it Typical Low 48°F Overnight, at the middle of it Light Then 13h 17m On the middle day of it Wet Days 32% Of the days in it Where New Haven Not the season you’re in
+way: Summer — What comes after it here: June, July and August
+way: Daylight — Today’s daylight in New Haven, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season us-ct-newhaven/Summer: Summer [Season]
+summary: Summer in New Haven runs through June, July and August. It’s nine months away.
+body: New Haven is at 41° north, so summer is June, July and August, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 86°F and falls to 68°F, with 14h 54m of daylight. About 36 days in a hundred are wet. Runs June To August 3 months of the year Typical High 86°F At the middle of it Typical Low 68°F Overnight, at the middle of it Light Then 14h 54m On the middle day of it Wet Days 36% Of the days in it Where New Haven Not the season you’re in
+way: Autumn — What comes after it here: September, October and November
+way: Daylight — Today’s daylight in New Haven, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season us-ct-newhaven/Autumn: Autumn [Season]
+summary: It’s autumn in New Haven. Here it runs through September, October and November.
+body: New Haven is at 41° north, so autumn is September, October and November, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 66°F and falls to 48°F, with 11h 11m of daylight. About 30 days in a hundred are wet. Runs September To November 3 months of the year Typical High 66°F At the middle of it Typical Low 48°F Overnight, at the middle of it Light Then 11h 11m On the middle day of it Wet Days 30% Of the days in it Where New Haven The season you’re in now
+way: Winter — What comes after it here: December, January and February
+way: Daylight — Today’s daylight in New Haven, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season us-ct-newhaven/Winter: Winter [Season]
+summary: Winter in New Haven runs through December, January and February. It’s three months away.
+body: New Haven is at 41° north, so winter is December, January and February, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 46°F and falls to 28°F, with 9h 30m of daylight. About 30 days in a hundred are wet. Runs December To February 3 months of the year Typical High 46°F At the middle of it Typical Low 28°F Overnight, at the middle of it Light Then 9h 30m On the middle day of it Wet Days 30% Of the days in it Where New Haven Not the season you’re in
+way: Spring — What comes after it here: March, April and May
+way: Daylight — Today’s daylight in New Haven, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## daylight us-ct-newhaven: Daylight [The Light Today]
+summary: Daylight runs from 6:17 AM to 7:27 PM today, 13 hours and 10 minutes, and the days are getting about three minutes shorter each day.
+body: New Haven is at 41° north, in the middle latitudes, where the length of the day changes by a few hours over the year. On the longest day of the year there’s 15h 10m of daylight, and on the shortest, there’s 9h 11m. Sunrise 6:17 AM Local time Sunset 7:27 PM Local time Length 13h 10m Losing 3 minutes a day Longest Day 15h 10m At the June solstice Shortest Day 9h 11m At the December solstice Time Zone EDT The local time zone
+source: Calculated from the Earth’s tilt, the day of the year and this latitude, as an almanac does, and good to a minute or two.
+
+## place us-ct-newhaven: New Haven [Where You Live]
+summary: This is where you live. It’s 6:00 PM, and 130K people live here.
+body: 130K people live here, in Connecticut, and the climate is continental. Rent on a one-bedroom runs about $1.6K a month, and the cost of living sits at 127, where a hundred is the United States’ price level. The rent is published: HUD’s Fair Market Rent for the New Haven–Meriden area, the 40th percentile rent, utilities included, fiscal year 2026; source: https://www.huduser.gov/portal/datasets/fmr/fmr2026/FY26_FMRs.xlsx. Income tax comes in one layer here: United States Federal Income Tax. Local Time 6:00 PM EDT Daylight 6:17 AM – 7:27 PM 13h 10m of daylight Currency $ USD The currency every exchange rate is quoted against Cost Of Living 127 A hundred is the United States’ price level Tax On A Wage 16% Income tax and payroll both, on a US$60,000 wage Sales Tax 5.0% Property 1.10% Languages English Spanish, Hawaiian and French
+way: Connecticut — The part of the United States it’s in, with two towns on the map
+way: United States — Its languages, its money and which side of the road they drive on
+way: Dollar — USD, written $, and what a hundred US dollars comes to here
+way: Daylight — 6:17 AM to 7:27 PM, 13 hours and 10 minutes of daylight
+source: Its location, time zone and country are public record. Its rent is published, and its cost of living and tax rates are estimated.
+
+## region us-ct: Connecticut [The State]
+summary: You’re in it, in New Haven, one of its two places on the map.
+body: It’s one of the 51 parts the map divides the United States into. Its towns on your map are New Haven and Litchfield. The state adds no income tax of its own.
+way: United States — The country it’s in, which the map divides into 51 parts, and you’re in this one
+way: New Haven — 130K people
+way: Litchfield — 1K people
+source: The state and its towns come from a public gazetteer. A country’s towns show up once your life has a place in it.
+
+## country us: United States [The Country]
+summary: You’re in the United States, a country of 327M people, and its money is the dollar.
+body: The capital is Washington. The country is in North America, with 327M people across 9,629,091 square kilometers. They drive on the right, measure distance in miles and read the temperature in Fahrenheit. English, Spanish, Hawaiian and French are spoken, in the order the country lists them. Capital Washington North America People 327M 9,629,091 sq km Money $ USD Dollar Languages English Spanish, Hawaiian and French Calling Code +1 Dialed from outside Drives On Right Miles on the signs
+way: Dollar — What everything in the United States is priced in
+way: Connecticut — The state you’re in, one of its 51 parts
+way: Washington — The capital, 690K people
+source: These facts come from a public gazetteer.
+
+## currency USD: Dollar [The Money]
+summary: The dollar is the money here, written $. Every exchange rate is quoted against it.
+body: Every exchange rate in the game is quoted against the US dollar, so every conversion goes through it. Prices in it are written to two decimal places. Its symbol goes before the number. It’s used in American Samoa, Antarctica, Bonaire, Saint Eustatius and Saba, British Indian Ocean Territory and 14 more. A one-bedroom in New Haven is about $1.6K a month.
+way: United States — 327M people, with its capital at Washington
+way: Ecuador — 17M people, with its capital at Quito
+way: El Salvador — 6.4M people, with its capital at San Salvador
+source: Exchange rates are estimated, not live market rates.
+
+## weather us-ct-newhaven: Weather In New Haven [Weather Now]
+summary: It’s 87°F and partly cloudy where you are, with a high of 90°F and a low of 72°F today.
+body: The wind is 10 mph and the humidity is 55%. Today is 10° warmer than normal for the date. Wednesday, Saturday and Sunday are wet, and the rest of the week is dry. Right Now 87°F Partly Cloudy High 90°F The warmest it gets today Low 72°F Overnight Wind 10 mph Not a windy day Humidity 55% How much water is in the air Against Usual +10° Compared with this date’s normal
+way: The Rest Of Today — Six hours left, hour by hour to midnight
+way: Tomorrow — Rain, 67°F to 78°F
+way: The Week Ahead — Six days, each of which you can open
+facet What It’s Usually Like: New Haven has a continental climate: warm summers and cold winters, with short springs and autumns between them. On September 1 it usually reaches about 80°F here, and today is 10° warmer than normal for the date. About 25 days of thunder a year here, estimated for a continental climate.
+source: Estimated from a climate model for New Haven: the season, the latitude and the kind of climate it has. It isn’t a real forecast.
+
+## forecastday us-ct-newhaven/2026-09-01: Tuesday [Today]
+summary: Broken cloud in New Haven today, 72°F to 90°F.
+body: September 1: wind 10 mph, humidity 55%, and the day is 10° warmer than normal for the date. High 90°F Around 3 PM Low 72°F Around 3 AM Wind 10 mph Partly Cloudy
+way: The Rest Of Today — The hours left today, one at a time
+way: Monday — The day before it: Partly Cloudy, 66°F to 84°F
+way: Wednesday — The day after it: Rain, 67°F to 78°F
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday us-ct-newhaven/2026-09-02: Wednesday [Tomorrow]
+summary: Rain in New Haven tomorrow, 67°F to 78°F.
+body: September 2: wind 20 mph, humidity 73%, and the day is 4° warmer than normal for the date. High 78°F Around 3 PM Low 67°F Around 3 AM Wind 20 mph Rain
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Tuesday — The day before it: Partly Cloudy, 72°F to 90°F
+way: Thursday — The day after it: Overcast, 67°F to 85°F
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday us-ct-newhaven/2026-09-03: Thursday [Two Days Out]
+summary: An overcast day in New Haven on Thursday, 67°F to 85°F.
+body: September 3: wind 17 mph, humidity 62%, and the day is 5° warmer than normal for the date. High 85°F Around 3 PM Low 67°F Around 3 AM Wind 17 mph Overcast
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Wednesday — The day before it: Rain, 67°F to 78°F
+way: Friday — The day after it: Partly Cloudy, 65°F to 83°F
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday us-ct-newhaven/2026-09-04: Friday [Three Days Out]
+summary: Broken cloud in New Haven on Friday, 65°F to 83°F.
+body: September 4: wind 12 mph, humidity 55%, and the day is 3° warmer than normal for the date. High 83°F Around 3 PM Low 65°F Around 3 AM Wind 12 mph Partly Cloudy
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Thursday — The day before it: Overcast, 67°F to 85°F
+way: Saturday — The day after it: Rain, 62°F to 73°F
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## hours us-ct-newhaven/2026-09-01: The Rest Of Today [Hour By Hour]
+summary: There are six hours of September 1 left, between 76°F and 87°F.
+body: The warmest hour is 6 PM, at 87°F, and the coldest is 11 PM, at 76°F. Four of them are after dark. They’re all dry.
+way: 6 PM — 87°F, partly cloudy
+way: 7 PM — 85°F, partly cloudy
+way: 8 PM — 83°F, partly cloudy, after dark
+way: 9 PM — 81°F, partly cloudy, after dark
+way: 10 PM — 78°F, partly cloudy, after dark
+way: 11 PM — 76°F, partly cloudy, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours us-ct-newhaven/2026-09-02: Wednesday’s Hours [Hour By Hour]
+summary: September 2 goes from 66°F at 4 AM up to 77°F at 3 PM.
+body: The warmest hour is 3 PM, at 77°F, and the coldest is 4 AM, at 66°F. 10 of them are after dark. It’s wet from around midnight until about 8 AM: 8 hours.
+way: Midnight — 68°F, rain, after dark
+way: 1 AM — 67°F, rain, after dark
+way: 2 AM — 66°F, rain, after dark
+way: 3 AM — 66°F, rain, after dark
+way: 4 AM — 66°F, rain, after dark
+way: 5 AM — 67°F, rain, after dark
+way: 6 AM — 68°F, rain
+way: 7 AM — 69°F, rain
+way: 8 AM — 70°F, overcast
+way: 9 AM — 72°F, overcast
+way: 10 AM — 73°F, overcast
+way: 11 AM — 74°F, overcast
+way: Noon — 75°F, overcast
+way: 1 PM — 76°F, overcast
+way: 2 PM — 77°F, overcast
+way: 3 PM — 77°F, overcast
+way: 4 PM — 77°F, overcast
+way: 5 PM — 76°F, overcast
+way: 6 PM — 75°F, overcast
+way: 7 PM — 74°F, overcast
+way: 8 PM — 73°F, overcast, after dark
+way: 9 PM — 72°F, overcast, after dark
+way: 10 PM — 70°F, overcast, after dark
+way: 11 PM — 69°F, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours us-ct-newhaven/2026-09-03: Thursday’s Hours [Hour By Hour]
+summary: September 3 goes from 68°F at 4 AM up to 86°F at 3 PM.
+body: The warmest hour is 3 PM, at 86°F, and the coldest is 4 AM, at 68°F. 10 of them are after dark. They’re all dry.
+way: Midnight — 71°F, overcast, after dark
+way: 1 AM — 69°F, overcast, after dark
+way: 2 AM — 68°F, overcast, after dark
+way: 3 AM — 68°F, overcast, after dark
+way: 4 AM — 68°F, overcast, after dark
+way: 5 AM — 69°F, overcast, after dark
+way: 6 AM — 71°F, overcast
+way: 7 AM — 73°F, overcast
+way: 8 AM — 75°F, overcast
+way: 9 AM — 77°F, overcast
+way: 10 AM — 79°F, overcast
+way: 11 AM — 82°F, overcast
+way: Noon — 83°F, overcast
+way: 1 PM — 85°F, overcast
+way: 2 PM — 86°F, overcast
+way: 3 PM — 86°F, overcast
+way: 4 PM — 86°F, overcast
+way: 5 PM — 85°F, overcast
+way: 6 PM — 83°F, overcast
+way: 7 PM — 82°F, overcast
+way: 8 PM — 79°F, overcast, after dark
+way: 9 PM — 77°F, overcast, after dark
+way: 10 PM — 75°F, overcast, after dark
+way: 11 PM — 73°F, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours us-ct-newhaven/2026-09-04: Friday’s Hours [Hour By Hour]
+summary: September 4 goes from 64°F at 3 AM up to 82°F at 3 PM.
+body: The warmest hour is 3 PM, at 82°F, and the coldest is 3 AM, at 64°F. 10 of them are after dark. They’re all dry.
+way: Midnight — 67°F, partly cloudy, after dark
+way: 1 AM — 66°F, partly cloudy, after dark
+way: 2 AM — 65°F, partly cloudy, after dark
+way: 3 AM — 64°F, partly cloudy, after dark
+way: 4 AM — 65°F, partly cloudy, after dark
+way: 5 AM — 66°F, partly cloudy, after dark
+way: 6 AM — 67°F, partly cloudy
+way: 7 AM — 69°F, partly cloudy
+way: 8 AM — 71°F, partly cloudy
+way: 9 AM — 73°F, partly cloudy
+way: 10 AM — 76°F, partly cloudy
+way: 11 AM — 78°F, partly cloudy
+way: Noon — 80°F, partly cloudy
+way: 1 PM — 81°F, partly cloudy
+way: 2 PM — 82°F, partly cloudy
+way: 3 PM — 82°F, partly cloudy
+way: 4 PM — 82°F, partly cloudy
+way: 5 PM — 81°F, partly cloudy
+way: 6 PM — 80°F, partly cloudy
+way: 7 PM — 78°F, partly cloudy
+way: 8 PM — 76°F, partly cloudy, after dark
+way: 9 PM — 73°F, partly cloudy, after dark
+way: 10 PM — 71°F, partly cloudy, after dark
+way: 11 PM — 69°F, partly cloudy, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## skyhour us-ct-newhaven/2026-09-01/18: 6 PM [One Hour]
+summary: At 6 PM it’s 87°F and partly cloudy in New Haven, in the evening.
+body: The sun is up, the wind is 10 mph, and it’s dry. The next hour is two degrees colder.
+way: 7 PM — The hour after it: 85°F, partly cloudy
+source: Estimated from September 1’s forecast, and the same every time you look.
+
+## skyhour us-ct-newhaven/2026-09-01/19: 7 PM [One Hour]
+summary: At 7 PM it’s 85°F and partly cloudy in New Haven, in the evening.
+body: The sun is up, the wind is 10 mph, and it’s dry. The next hour is two degrees colder.
+way: 6 PM — The hour before it: 87°F, partly cloudy
+way: 8 PM — The hour after it: 83°F, partly cloudy
+source: Estimated from September 1’s forecast, and the same every time you look.
+
+## skyhour us-ct-newhaven/2026-09-01/20: 8 PM [One Hour]
+summary: At 8 PM it’s 83°F and partly cloudy in New Haven, in the evening.
+body: It’s dark, the wind is 10 mph, and it’s dry. The next hour is two degrees colder.
+way: 7 PM — The hour before it: 85°F, partly cloudy
+way: 9 PM — The hour after it: 81°F, partly cloudy
+source: Estimated from September 1’s forecast, and the same every time you look.
+
+## skyhour us-ct-newhaven/2026-09-01/21: 9 PM [One Hour]
+summary: At 9 PM it’s 81°F and partly cloudy in New Haven, in the night.
+body: It’s dark, the wind is 10 mph, and it’s dry. The next hour is three degrees colder.
+way: 8 PM — The hour before it: 83°F, partly cloudy
+way: 10 PM — The hour after it: 78°F, partly cloudy
+source: Estimated from September 1’s forecast, and the same every time you look.
+
+## skyweek us-ct-newhaven: The Week Ahead [Six Days Of Weather]
+summary: Six days in New Haven, from 55°F to 90°F, with three of them wet.
+body: The warmest is today at 90°F. Tomorrow, Saturday and Sunday are the wet ones. Each day’s weather is blended with the two days before it, so the days follow on from each other: a cold snap lasts, and a wet spell lingers.
+way: Today — Partly Cloudy, 72°F to 90°F
+way: Tomorrow — Rain, 67°F to 78°F
+way: Thu — Overcast, 67°F to 85°F
+way: Fri — Partly Cloudy, 65°F to 83°F
+way: Sat — Rain, 62°F to 73°F
+way: Sun — Rain, 55°F to 65°F
+source: Six days estimated from a climate model. It isn’t a real forecast.
+
+## stretch sched_000018: 9:00 AM To 3:00 PM [Its Hours]
+summary: It runs from 9:00 AM to 3:00 PM, six hours on September 2, 2026, at 72°F to 77°F.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM September 2, 2026 Ends 3:00 PM six hours Coldest Hour 72°F 9 AM
+way: 9 AM — 72°F, overcast
+way: 10 AM — 73°F, overcast
+way: 11 AM — 74°F, overcast
+way: Noon — 75°F, overcast
+way: 1 PM — 76°F, overcast
+way: 2 PM — 77°F, overcast
+source: Each hour is estimated from the day’s forecast.
+
+## stretch sched_00001k: 8:00 PM To 10:00 PM [Its Hours]
+summary: It runs from 8:00 PM to 10:00 PM, two hours on September 2, 2026, at 72°F to 73°F.
+body: All of it is after dark. It stays dry the whole way through. Starts 8:00 PM September 2, 2026 Ends 10:00 PM two hours Coldest Hour 72°F 9 PM
+way: 8 PM — 73°F, overcast, after dark
+way: 9 PM — 72°F, overcast, after dark
+source: Each hour is estimated from the day’s forecast.
+
+## stretch sched_00001l: 8:00 PM To 9:00 PM [Its Hours]
+summary: It runs from 8:00 PM to 9:00 PM, one hour on September 2, 2026, at 73°F throughout.
+body: All of it is after dark. It stays dry the whole way through. Starts 8:00 PM September 2, 2026 Ends 9:00 PM one hour Coldest Hour 73°F 8 PM
+way: 8 PM — 73°F, overcast, after dark
+source: The hour is estimated from the day’s forecast.
+
+## stretch sched_000019: 9:00 AM To 3:00 PM [Its Hours]
+summary: It runs from 9:00 AM to 3:00 PM, six hours on September 3, 2026, at 77°F to 86°F.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM September 3, 2026 Ends 3:00 PM six hours Coldest Hour 77°F 9 AM
+way: 9 AM — 77°F, overcast
+way: 10 AM — 79°F, overcast
+way: 11 AM — 82°F, overcast
+way: Noon — 83°F, overcast
+way: 1 PM — 85°F, overcast
+way: 2 PM — 86°F, overcast
+source: Each hour is estimated from the day’s forecast.
+
+## plans : Your Own Plans [What You Put On The Calendar]
+summary: You’ve put two things on the calendar yourself. The next is in 1 day and 2 hours.
+body: Dinner With Sam is the next one, September 2, 2026 at 8:00 PM. Waiting 2 Still ahead of you Called Off 0 You called them off Gone By 0 You weren’t there
+way: Dinner With Sam — in 1 day and 2 hours, September 2, 2026 at 8:00 PM
+way: Gym — in 1 day and 2 hours, September 2, 2026 at 8:00 PM
+source: Your plans are ordinary calendar items: the clock stops at them, and a clash is marked.
+
+## notification notice_000001: Welcome To The Class Of 2029 [Notice]
+summary: It came in 8 days and 11 hours ago. It’s first of your 17 unread notices.
+body: You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m. It’s about your school, and its importance is 80/100. Unread notices are listed most important first, and the newer first when two are equal. Opening it here doesn’t mark it read. On Home, Mark 17 Read marks all 17 unread notices read at once. On Home, Go There opens the screen it’s about. Importance 80 Out of 100. It sets the order Arrived August 24, 2026 8d 11h ago About School Status Unread 1 of 17 unread What It’s About Not named This notice doesn’t name one Kept Latest 500 Older ones are dropped
+
+## notification notice_00000g: Priya Asks To Rehearse [Notice]
+summary: It came in 1 day and 9 hours ago. It’s second of your 17 unread notices.
+body: Priya asks to rehearse Suppressed Desires on September 1, 2026 at 7:00 PM. Answer by 5:00 PM that day, under Rehearsing With Priya on the Coursework tab. Saying no costs nothing. It’s about your school, and its importance is 60/100. Unread notices are listed most important first, and the newer first when two are equal. Opening it here doesn’t mark it read. On Home, Mark 17 Read marks all 17 unread notices read at once. On Home, Go There opens the screen it’s about. Importance 60 Out of 100. It sets the order Arrived August 31, 2026 1d 9h ago About School Status Unread 2 of 17 unread What It’s About Not named This notice doesn’t name one Kept Latest 500 Older ones are dropped
+
+## notification notice_000007: Acting I: Scene Study [Notice]
+summary: It came in 4 days and 8 hours ago. It’s third of your 17 unread notices.
+body: Your scene is from Suppressed Desires, Scene Two, the studio at dusk. You play Henrietta, and Priya Tanaka plays Stephen. It’s due in class on September 8, 2026. Start with Knows The Scene: this piece puts it first, so it counts for more when you show it. It’s about your school, and its importance is 55/100. Unread notices are listed most important first, and the newer first when two are equal. Opening it here doesn’t mark it read. On Home, Mark 17 Read marks all 17 unread notices read at once. On Home, Go There opens the screen it’s about. Importance 55 Out of 100. It sets the order Arrived August 28, 2026 4d 8h ago About School Status Unread 3 of 17 unread What It’s About Not named This notice doesn’t name one Kept Latest 500 Older ones are dropped
+
+## notification notice_000008: Voice I: A Voice Sequence [Notice]
+summary: It came in 4 days and 8 hours ago. It’s fourth of your 17 unread notices.
+body: The breath and resonance sequence shown, then a short text spoken on it. It’s due in class on September 11, 2026. Start with The Sequence Learned: this piece puts it first, so it counts for more when you show it. It’s about your school, and its importance is 55/100. Unread notices are listed most important first, and the newer first when two are equal. Opening it here doesn’t mark it read. On Home, Mark 17 Read marks all 17 unread notices read at once. On Home, Go There opens the screen it’s about. Importance 55 Out of 100. It sets the order Arrived August 28, 2026 4d 8h ago About School Status Unread 4 of 17 unread What It’s About Not named This notice doesn’t name one Kept Latest 500 Older ones are dropped
+
+# the same student, on a February evening
+
+## day 2027-02-11: Thursday, February 11 [The Day]
+summary: It’s 8:00 PM in New Haven on Thursday, February 11, with one thing on the calendar.
+body: Daylight from 6:52 AM to 5:18 PM: 10h 26m. Winter here is nearly over. There’s one thing on it: Classes. Sunrise 6:52 AM Local time Sunset 5:18 PM Local time Daylight 10h 26m Winter here On The Calendar 1 Plans and commitments Commitments 0 None of it needs you Where New Haven EST
+way: Classes — 9:00 AM · 6 hours · New Haven — you need to be there
+way: Winter — What winter is like in New Haven, and how long it lasts
+way: Daylight — 6:52 AM to 5:18 PM, 10h 26m of daylight
+way: The Sky — Overcast, 32°F to 50°F
+way: Wednesday, February 10 — One day back, and one thing on it, starting with Classes
+way: Friday, February 12 — One day on, and three things on it, starting with Answer Marcus
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2027-02-12: Friday, February 12 [Tomorrow]
+summary: Tomorrow’s Friday, February 12, with three things on the calendar.
+body: Daylight from 6:51 AM to 5:20 PM: 10h 28m. That’s winter in New Haven, and the season is nearly over then. There are three things on it: Answer Marcus, Classes and Work-Study Payday. You need to be at one of them. Sunrise 6:51 AM Local time Sunset 5:20 PM Local time Daylight 10h 28m Winter here On The Calendar 3 Plans and commitments Commitments 1 You need to be at these Where New Haven EST
+way: Answer Marcus — 7:00 AM — it happens without you
+way: Classes — 9:00 AM · 6 hours · New Haven — you need to be there
+way: Work-Study Payday — 5:00 PM · New Haven — it happens without you
+way: Winter — What winter is like in New Haven, and how long it lasts
+way: Daylight — 6:51 AM to 5:20 PM, 10h 28m of daylight
+way: The Sky — Partly Cloudy, 38°F to 56°F
+way: Thursday, February 11 — One day back, and one thing on it, starting with Classes
+way: Saturday, February 13 — One day on, and two things on it, starting with Work-Study Shift
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2027-02-10: Wednesday, February 10 [Yesterday]
+summary: Yesterday was Wednesday, February 10, with one thing on the calendar.
+body: Daylight from 6:54 AM to 5:17 PM: 10h 23m. That was winter in New Haven, and the season was nearly over then. There’s one thing on it: Classes. Sunrise 6:54 AM Local time Sunset 5:17 PM Local time Daylight 10h 23m Winter here On The Calendar 1 Plans and commitments Commitments 0 None of it needs you Where New Haven EST
+way: Classes — 9:00 AM · 6 hours · New Haven — you need to be there
+way: Winter — What winter is like in New Haven, and how long it lasts
+way: Daylight — 6:54 AM to 5:17 PM, 10h 23m of daylight
+way: Tuesday, February 9 — One day back, and one thing on it, starting with Classes
+way: Thursday, February 11 — One day on, and one thing on it, starting with Classes
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## entry sched_0000f1: Answer Marcus [Happens Without You]
+summary: It happens at 7:00 AM tomorrow, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It isn’t tied to a city, so wherever you are is fine. When 7:00 AM February 12, 2027 Length As Long As It Takes No end time on it Kind School Status Pending Friday, tomorrow Booked February 11, 2027 9:00 AM
+way: Classes — Next thing that day: 9:00 AM · 6 hours · New Haven — you need to be there
+way: Friday, February 12 — The day it’s on: three things on it, starting with Answer Marcus
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_0000eq: Classes [A Commitment]
+summary: You need to be at it at 9:00 AM tomorrow, in New Haven.
+body: You need to be there, awake and in New Haven, when the clock reaches it. If you aren’t, it’s missed: an unexcused absence, which the faculty weigh at the term review, unless you’re sick or in hospital. It runs 6 hours, 9:00 AM to 3:00 PM. It’s in New Haven, where you already are. It doesn’t clash with anything else. When 9:00 AM February 12, 2027 Length 6 hours Ends 3:00 PM Kind School New Haven Status Pending Friday, tomorrow Booked February 7, 2027 6:00 PM
+way: 9:00 AM To 3:00 PM — Its hours, and the weather across them
+way: New Haven — Where it is, and you’re already there
+way: Work-Study Payday — Next thing that day: 5:00 PM · New Haven — it happens without you
+way: Friday, February 12 — The day it’s on: three things on it, starting with Answer Marcus
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_0000ek: Work-Study Payday [Happens Without You]
+summary: It happens at 5:00 PM tomorrow, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It’s in New Haven, where you already are. When 5:00 PM February 12, 2027 Length As Long As It Takes No end time on it Kind School New Haven Status Pending Friday, tomorrow Booked February 6, 2027 10:00 AM
+way: New Haven — Where it is, and you’re already there
+way: Friday, February 12 — The day it’s on: three things on it, starting with Answer Marcus
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_0000er: Work-Study Shift [A Commitment]
+summary: You need to be at it at 10:00 AM on Saturday, in two days, in New Haven.
+body: You need to be there, awake and in New Haven, when the clock reaches it. If you aren’t, it’s missed: the hours aren’t paid, and an assigned shift counts against your attendance. It runs 6 hours, 10:00 AM to 4:00 PM. It’s in New Haven, where you already are. It doesn’t clash with anything else. When 10:00 AM February 13, 2027 Length 6 hours Ends 4:00 PM Kind School New Haven Status Pending Saturday, in two days Booked February 7, 2027 6:00 PM
+way: 10:00 AM To 4:00 PM — Its hours, and the weather across them
+way: New Haven — Where it is, and you’re already there
+way: Answer Theo — Next thing that day: 5:00 PM — it happens without you
+way: Saturday, February 13 — The day it’s on: two things on it, starting with Work-Study Shift
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## season us-ct-newhaven/Spring: Spring [Season]
+summary: Spring in New Haven runs through March, April and May. It’s one month away.
+body: New Haven is at 41° north, so spring is March, April and May, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 66°F and falls to 48°F, with 13h 17m of daylight. About 32 days in a hundred are wet. Runs March To May 3 months of the year Typical High 66°F At the middle of it Typical Low 48°F Overnight, at the middle of it Light Then 13h 17m On the middle day of it Wet Days 32% Of the days in it Where New Haven Not the season you’re in
+way: Summer — What comes after it here: June, July and August
+way: Daylight — Today’s daylight in New Haven, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season us-ct-newhaven/Summer: Summer [Season]
+summary: Summer in New Haven runs through June, July and August. It’s four months away.
+body: New Haven is at 41° north, so summer is June, July and August, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 86°F and falls to 68°F, with 14h 54m of daylight. About 36 days in a hundred are wet. Runs June To August 3 months of the year Typical High 86°F At the middle of it Typical Low 68°F Overnight, at the middle of it Light Then 14h 54m On the middle day of it Wet Days 36% Of the days in it Where New Haven Not the season you’re in
+way: Autumn — What comes after it here: September, October and November
+way: Daylight — Today’s daylight in New Haven, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season us-ct-newhaven/Autumn: Autumn [Season]
+summary: Autumn in New Haven runs through September, October and November. It’s seven months away.
+body: New Haven is at 41° north, so autumn is September, October and November, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 66°F and falls to 48°F, with 11h 11m of daylight. About 30 days in a hundred are wet. Runs September To November 3 months of the year Typical High 66°F At the middle of it Typical Low 48°F Overnight, at the middle of it Light Then 11h 11m On the middle day of it Wet Days 30% Of the days in it Where New Haven Not the season you’re in
+way: Winter — What comes after it here: December, January and February
+way: Daylight — Today’s daylight in New Haven, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season us-ct-newhaven/Winter: Winter [Season]
+summary: It’s winter in New Haven. Here it runs through December, January and February.
+body: New Haven is at 41° north, so winter is December, January and February, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 46°F and falls to 28°F, with 9h 30m of daylight. About 30 days in a hundred are wet. Runs December To February 3 months of the year Typical High 46°F At the middle of it Typical Low 28°F Overnight, at the middle of it Light Then 9h 30m On the middle day of it Wet Days 30% Of the days in it Where New Haven The season you’re in now
+way: Spring — What comes after it here: March, April and May
+way: Daylight — Today’s daylight in New Haven, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## daylight us-ct-newhaven: Daylight [The Light Today]
+summary: Daylight runs from 6:52 AM to 5:18 PM today, 10 hours and 26 minutes, and the days are getting about two minutes longer each day.
+body: New Haven is at 41° north, in the middle latitudes, where the length of the day changes by a few hours over the year. On the longest day of the year there’s 15h 10m of daylight, and on the shortest, there’s 9h 11m. Sunrise 6:52 AM Local time Sunset 5:18 PM Local time Length 10h 26m Gaining 2 minutes a day Longest Day 15h 10m At the June solstice Shortest Day 9h 11m At the December solstice Time Zone EST The local time zone
+source: Calculated from the Earth’s tilt, the day of the year and this latitude, as an almanac does, and good to a minute or two.
+
+## place us-ct-newhaven: New Haven [Where You Live]
+summary: This is where you live. It’s 8:00 PM, and 130K people live here.
+body: 130K people live here, in Connecticut, and the climate is continental. Rent on a one-bedroom runs about $1.6K a month, and the cost of living sits at 127, where a hundred is the United States’ price level. The rent is published: HUD’s Fair Market Rent for the New Haven–Meriden area, the 40th percentile rent, utilities included, fiscal year 2026; source: https://www.huduser.gov/portal/datasets/fmr/fmr2026/FY26_FMRs.xlsx. Income tax comes in one layer here: United States Federal Income Tax. Local Time 8:00 PM EST Daylight 6:52 AM – 5:18 PM 10h 26m of daylight Currency $ USD The currency every exchange rate is quoted against Cost Of Living 127 A hundred is the United States’ price level Tax On A Wage 16% Income tax and payroll both, on a US$60,000 wage Sales Tax 5.0% Property 1.10% Languages English Spanish, Hawaiian and French
+way: Connecticut — The part of the United States it’s in, with two towns on the map
+way: United States — Its languages, its money and which side of the road they drive on
+way: Dollar — USD, written $, and what a hundred US dollars comes to here
+way: Daylight — 6:52 AM to 5:18 PM, 10 hours and 26 minutes of daylight
+source: Its location, time zone and country are public record. Its rent is published, and its cost of living and tax rates are estimated.
+
+## region us-ct: Connecticut [The State]
+summary: You’re in it, in New Haven, one of its two places on the map.
+body: It’s one of the 51 parts the map divides the United States into. Its towns on your map are New Haven and Litchfield. The state adds no income tax of its own.
+way: United States — The country it’s in, which the map divides into 51 parts, and you’re in this one
+way: New Haven — 130K people
+way: Litchfield — 1K people
+source: The state and its towns come from a public gazetteer. A country’s towns show up once your life has a place in it.
+
+## country us: United States [The Country]
+summary: You’re in the United States, a country of 327M people, and its money is the dollar.
+body: The capital is Washington. The country is in North America, with 327M people across 9,629,091 square kilometers. They drive on the right, measure distance in miles and read the temperature in Fahrenheit. English, Spanish, Hawaiian and French are spoken, in the order the country lists them. Capital Washington North America People 327M 9,629,091 sq km Money $ USD Dollar Languages English Spanish, Hawaiian and French Calling Code +1 Dialed from outside Drives On Right Miles on the signs
+way: Dollar — What everything in the United States is priced in
+way: Connecticut — The state you’re in, one of its 51 parts
+way: Washington — The capital, 690K people
+source: These facts come from a public gazetteer.
+
+## currency USD: Dollar [The Money]
+summary: The dollar is the money here, written $. Every exchange rate is quoted against it.
+body: Every exchange rate in the game is quoted against the US dollar, so every conversion goes through it. Prices in it are written to two decimal places. Its symbol goes before the number. It’s used in American Samoa, Antarctica, Bonaire, Saint Eustatius and Saba, British Indian Ocean Territory and 14 more. A one-bedroom in New Haven is about $1.6K a month.
+way: United States — 327M people, with its capital at Washington
+way: Ecuador — 17M people, with its capital at Quito
+way: El Salvador — 6.4M people, with its capital at San Salvador
+source: Exchange rates are estimated, not live market rates.
+
+## weather us-ct-newhaven: Weather In New Haven [Weather Now]
+summary: It’s 43°F and overcast where you are, with a high of 50°F and a low of 32°F today.
+body: The wind is 5 mph and the humidity is 62%. Today is 2° warmer than normal for the date. Saturday and Monday are wet, and the rest of the week is dry. Right Now 43°F Overcast High 50°F The warmest it gets today Low 32°F Overnight Wind 5 mph Not a windy day Humidity 62% How much water is in the air Against Usual +2° Compared with this date’s normal
+way: The Rest Of Today — Four hours left, hour by hour to midnight
+way: Tomorrow — Partly Cloudy, 38°F to 56°F
+way: The Week Ahead — Six days, each of which you can open
+facet What It’s Usually Like: New Haven has a continental climate: warm summers and cold winters, with short springs and autumns between them. On February 11 it usually reaches about 48°F here, and today is 2° warmer than normal for the date. About 25 days of thunder a year here, estimated for a continental climate.
+source: Estimated from a climate model for New Haven: the season, the latitude and the kind of climate it has. It isn’t a real forecast.
+
+## forecastday us-ct-newhaven/2027-02-11: Thursday [Today]
+summary: An overcast day in New Haven today, 32°F to 50°F.
+body: February 11: wind 5 mph, humidity 62%, and the day is 2° warmer than normal for the date. High 50°F Around 3 PM Low 32°F Around 3 AM Wind 5 mph Overcast
+way: The Rest Of Today — The hours left today, one at a time
+way: Wednesday — The day before it: Partly Cloudy, 27°F to 45°F
+way: Friday — The day after it: Partly Cloudy, 38°F to 56°F
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday us-ct-newhaven/2027-02-12: Friday [Tomorrow]
+summary: Broken cloud in New Haven tomorrow, 38°F to 56°F.
+body: February 12: wind 16 mph, humidity 54%, and the day is 7° warmer than normal for the date. High 56°F Around 3 PM Low 38°F Around 3 AM Wind 16 mph Partly Cloudy
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Thursday — The day before it: Overcast, 32°F to 50°F
+way: Saturday — The day after it: Rain, 38°F to 49°F
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday us-ct-newhaven/2027-02-13: Saturday [Two Days Out]
+summary: Rain in New Haven on Saturday, 38°F to 49°F.
+body: February 13: wind 17 mph, humidity 73%, and the day is 7° warmer than normal for the date. High 49°F Around 3 PM Low 38°F Around 3 AM Wind 17 mph Rain
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Friday — The day before it: Partly Cloudy, 38°F to 56°F
+way: Sunday — The day after it: Overcast, 33°F to 51°F
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday us-ct-newhaven/2027-02-14: Sunday [Three Days Out]
+summary: An overcast day in New Haven on Sunday, 33°F to 51°F.
+body: February 14: wind 15 mph, humidity 59%, and the day is 2° warmer than normal for the date. High 51°F Around 3 PM Low 33°F Around 3 AM Wind 15 mph Overcast
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Saturday — The day before it: Rain, 38°F to 49°F
+way: Monday — The day after it: Rain, 37°F to 48°F
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## hours us-ct-newhaven/2027-02-11: The Rest Of Today [Hour By Hour]
+summary: There are four hours of February 11 left, between 37°F and 43°F.
+body: The warmest hour is 8 PM, at 43°F, and the coldest is 11 PM, at 37°F. They’re all after dark. They’re all dry.
+way: 8 PM — 43°F, overcast, after dark
+way: 9 PM — 41°F, overcast, after dark
+way: 10 PM — 39°F, overcast, after dark
+way: 11 PM — 37°F, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours us-ct-newhaven/2027-02-12: Friday’s Hours [Hour By Hour]
+summary: February 12 goes from 37°F at 3 AM up to 55°F at 3 PM.
+body: The warmest hour is 3 PM, at 55°F, and the coldest is 3 AM, at 37°F. 12 of them are after dark. They’re all dry.
+way: Midnight — 40°F, partly cloudy, after dark
+way: 1 AM — 39°F, partly cloudy, after dark
+way: 2 AM — 38°F, partly cloudy, after dark
+way: 3 AM — 37°F, partly cloudy, after dark
+way: 4 AM — 38°F, partly cloudy, after dark
+way: 5 AM — 39°F, partly cloudy, after dark
+way: 6 AM — 40°F, partly cloudy
+way: 7 AM — 42°F, partly cloudy
+way: 8 AM — 44°F, partly cloudy
+way: 9 AM — 46°F, partly cloudy
+way: 10 AM — 49°F, partly cloudy
+way: 11 AM — 51°F, partly cloudy
+way: Noon — 53°F, partly cloudy
+way: 1 PM — 54°F, partly cloudy
+way: 2 PM — 55°F, partly cloudy
+way: 3 PM — 55°F, partly cloudy
+way: 4 PM — 55°F, partly cloudy
+way: 5 PM — 54°F, partly cloudy
+way: 6 PM — 53°F, partly cloudy, after dark
+way: 7 PM — 51°F, partly cloudy, after dark
+way: 8 PM — 49°F, partly cloudy, after dark
+way: 9 PM — 46°F, partly cloudy, after dark
+way: 10 PM — 44°F, partly cloudy, after dark
+way: 11 PM — 42°F, partly cloudy, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours us-ct-newhaven/2027-02-13: Saturday’s Hours [Hour By Hour]
+summary: February 13 goes from 39°F at 4 AM up to 50°F at 3 PM.
+body: The warmest hour is 3 PM, at 50°F, and the coldest is 4 AM, at 39°F. 12 of them are after dark. It’s wet from around 2 AM until about 10 AM: 8 hours.
+way: Midnight — 41°F, overcast, after dark
+way: 1 AM — 40°F, overcast, after dark
+way: 2 AM — 39°F, rain, after dark
+way: 3 AM — 39°F, rain, after dark
+way: 4 AM — 39°F, rain, after dark
+way: 5 AM — 40°F, rain, after dark
+way: 6 AM — 41°F, rain
+way: 7 AM — 42°F, rain
+way: 8 AM — 43°F, rain
+way: 9 AM — 45°F, rain
+way: 10 AM — 46°F, overcast
+way: 11 AM — 47°F, overcast
+way: Noon — 48°F, overcast
+way: 1 PM — 49°F, overcast
+way: 2 PM — 50°F, overcast
+way: 3 PM — 50°F, overcast
+way: 4 PM — 50°F, overcast
+way: 5 PM — 49°F, overcast
+way: 6 PM — 48°F, overcast, after dark
+way: 7 PM — 47°F, overcast, after dark
+way: 8 PM — 46°F, overcast, after dark
+way: 9 PM — 45°F, overcast, after dark
+way: 10 PM — 43°F, overcast, after dark
+way: 11 PM — 42°F, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours us-ct-newhaven/2027-02-14: Sunday’s Hours [Hour By Hour]
+summary: February 14 goes from 34°F at 4 AM up to 52°F at 3 PM.
+body: The warmest hour is 3 PM, at 52°F, and the coldest is 4 AM, at 34°F. 12 of them are after dark. They’re all dry.
+way: Midnight — 36°F, overcast, after dark
+way: 1 AM — 35°F, overcast, after dark
+way: 2 AM — 34°F, overcast, after dark
+way: 3 AM — 34°F, overcast, after dark
+way: 4 AM — 34°F, overcast, after dark
+way: 5 AM — 35°F, overcast, after dark
+way: 6 AM — 36°F, overcast
+way: 7 AM — 38°F, overcast
+way: 8 AM — 40°F, overcast
+way: 9 AM — 43°F, overcast
+way: 10 AM — 45°F, overcast
+way: 11 AM — 47°F, overcast
+way: Noon — 49°F, overcast
+way: 1 PM — 51°F, overcast
+way: 2 PM — 51°F, overcast
+way: 3 PM — 52°F, overcast
+way: 4 PM — 51°F, overcast
+way: 5 PM — 51°F, overcast
+way: 6 PM — 49°F, overcast, after dark
+way: 7 PM — 47°F, overcast, after dark
+way: 8 PM — 45°F, overcast, after dark
+way: 9 PM — 43°F, overcast, after dark
+way: 10 PM — 40°F, overcast, after dark
+way: 11 PM — 38°F, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## skyhour us-ct-newhaven/2027-02-11/20: 8 PM [One Hour]
+summary: At 8 PM it’s 43°F and overcast in New Haven, in the evening.
+body: It’s dark, the wind is 5 mph, and it’s dry. The next hour is two degrees colder.
+way: 9 PM — The hour after it: 41°F, overcast
+source: Estimated from February 11’s forecast, and the same every time you look.
+
+## skyhour us-ct-newhaven/2027-02-11/21: 9 PM [One Hour]
+summary: At 9 PM it’s 41°F and overcast in New Haven, in the night.
+body: It’s dark, the wind is 5 mph, and it’s dry. The next hour is two degrees colder.
+way: 8 PM — The hour before it: 43°F, overcast
+way: 10 PM — The hour after it: 39°F, overcast
+source: Estimated from February 11’s forecast, and the same every time you look.
+
+## skyhour us-ct-newhaven/2027-02-11/22: 10 PM [One Hour]
+summary: At 10 PM it’s 39°F and overcast in New Haven, in the night.
+body: It’s dark, the wind is 5 mph, and it’s dry. The next hour is two degrees colder.
+way: 9 PM — The hour before it: 41°F, overcast
+way: 11 PM — The hour after it: 37°F, overcast
+source: Estimated from February 11’s forecast, and the same every time you look.
+
+## skyhour us-ct-newhaven/2027-02-11/23: 11 PM [One Hour]
+summary: At 11 PM it’s 37°F and overcast in New Haven, in the night.
+body: It’s dark, the wind is 5 mph, and it’s dry. The next hour is the same temperature.
+way: 10 PM — The hour before it: 39°F, overcast
+source: Estimated from February 11’s forecast, and the same every time you look.
+
+## skyweek us-ct-newhaven: The Week Ahead [Six Days Of Weather]
+summary: Six days in New Haven, from 32°F to 58°F, with two of them wet.
+body: The warmest is Tuesday at 58°F. Saturday and Monday are the wet ones. Each day’s weather is blended with the two days before it, so the days follow on from each other: a cold snap lasts, and a wet spell lingers.
+way: Today — Overcast, 32°F to 50°F
+way: Tomorrow — Partly Cloudy, 38°F to 56°F
+way: Sat — Rain, 38°F to 49°F
+way: Sun — Overcast, 33°F to 51°F
+way: Mon — Rain, 37°F to 48°F
+way: Tue — Overcast, 40°F to 58°F
+source: Six days estimated from a climate model. It isn’t a real forecast.
+
+## stretch sched_0000f1: 7:00 AM To 8:00 AM [Its Hours]
+summary: It runs from 7:00 AM to 8:00 AM, one hour on February 12, 2027, at 42°F throughout.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 7:00 AM February 12, 2027 Ends 8:00 AM one hour Coldest Hour 42°F 7 AM
+way: 7 AM — 42°F, partly cloudy
+source: The hour is estimated from the day’s forecast.
+
+## stretch sched_0000eq: 9:00 AM To 3:00 PM [Its Hours]
+summary: It runs from 9:00 AM to 3:00 PM, six hours on February 12, 2027, at 46°F to 55°F.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM February 12, 2027 Ends 3:00 PM six hours Coldest Hour 46°F 9 AM
+way: 9 AM — 46°F, partly cloudy
+way: 10 AM — 49°F, partly cloudy
+way: 11 AM — 51°F, partly cloudy
+way: Noon — 53°F, partly cloudy
+way: 1 PM — 54°F, partly cloudy
+way: 2 PM — 55°F, partly cloudy
+source: Each hour is estimated from the day’s forecast.
+
+## stretch sched_0000ek: gone — Those hours are free again.
+
+## stretch sched_0000er: 10:00 AM To 4:00 PM [Its Hours]
+summary: It runs from 10:00 AM to 4:00 PM, six hours on February 13, 2027, at 46°F to 50°F.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 10:00 AM February 13, 2027 Ends 4:00 PM six hours Coldest Hour 46°F 10 AM
+way: 10 AM — 46°F, overcast
+way: 11 AM — 47°F, overcast
+way: Noon — 48°F, overcast
+way: 1 PM — 49°F, overcast
+way: 2 PM — 50°F, overcast
+way: 3 PM — 50°F, overcast
+source: Each hour is estimated from the day’s forecast.
+
+## plans : Your Own Plans [What You Put On The Calendar]
+summary: You haven’t put anything on the calendar yourself, so everything on it was put there for you.
+body: A plan of your own needs a name, a start time and a length, and it’s in the city you’re in when you make it. Waiting 0 Still ahead of you Called Off 0 You called them off Gone By 0 You weren’t there
+source: Your plans are ordinary calendar items: the clock stops at them, and a clash is marked.
+
+## notification notice_00003n: A Notice Of Academic Concern [Notice]
+summary: It came in 2 months ago. It’s first of your 172 unread notices.
+body: The chair of Acting has raised a concern about your work. You came to 100% of the classes, calls and shifts asked of you. Your craft grew 1.3 points this term, and the middle student in your class grew 1.2. Allowing for how much room each of you had to grow, that’s ahead of the class. 47 of the 47 pieces due in class were Unready or not shown. That’s short of what the program asks. None of them had a single part finished. If your next term review finds you short again, the faculty would put you on academic warning. A term that meets what’s asked puts you back in good standing. It’s about your school, and its importance is 85/100. Unread notices are listed most important first, and the newer first when two are equal. Opening it here doesn’t mark it read. On Home, Mark 172 Read marks all 172 unread notices read at once. On Home, Go There opens the screen it’s about. Importance 85 Out of 100. It sets the order Arrived December 11, 2026 2 months ago About School Status Unread 1 of 172 unread What It’s About Not named This notice doesn’t name one Kept Latest 500 Older ones are dropped
+
+## notification notice_000036: A Deep Cut [Notice]
+summary: It came in 3 months ago. It’s second of your 172 unread notices.
+body: It takes 5 days to mend. It happened at work, so workers’ compensation pays for the care. It’s about your health, and its importance is 80/100. Unread notices are listed most important first, and the newer first when two are equal. Opening it here doesn’t mark it read. On Home, Mark 172 Read marks all 172 unread notices read at once. On Home, Go There opens the screen it’s about. Importance 80 Out of 100. It sets the order Arrived November 21, 2026 3 months ago About Health Status Unread 2 of 172 unread What It’s About Not named This notice doesn’t name one Kept Latest 500 Older ones are dropped
+
+## notification notice_000001: Welcome To The Class Of 2029 [Notice]
+summary: It came in 6 months ago. It’s third of your 172 unread notices.
+body: You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m. It’s about your school, and its importance is 80/100. Unread notices are listed most important first, and the newer first when two are equal. Opening it here doesn’t mark it read. On Home, Mark 172 Read marks all 172 unread notices read at once. On Home, Go There opens the screen it’s about. Importance 80 Out of 100. It sets the order Arrived August 24, 2026 6 months ago About School Status Unread 3 of 172 unread What It’s About Not named This notice doesn’t name one Kept Latest 500 Older ones are dropped
+
+## notification notice_00004d: A Word On Your Coursework [Notice]
+summary: It came in 13 days and 11 hours ago. It’s fourth of your 172 unread notices.
+body: So far this term, 6 of the 6 pieces you’ve shown were Unready. This is your second coursework warning, after one last term. The term review is on April 23, 2027. If half or more of the term’s pieces are Unready or not shown by then, the review would put you on academic warning. None of them had a single part finished, so it’s the preparation as a whole, not one part. Work through each piece’s steps before it’s due. Seven pieces are set and still to be shown. On the Coursework tab, each open piece’s Shown Today line says what’s holding it back. It’s about your school, and its importance is 75/100. Unread notices are listed most important first, and the newer first when two are equal. Opening it here doesn’t mark it read. On Home, Mark 172 Read marks all 172 unread notices read at once. On Home, Go There opens the screen it’s about. Importance 75 Out of 100. It sets the order Arrived January 29, 2027 13d 11h ago About School Status Unread 4 of 172 unread What It’s About Not named This notice doesn’t name one Kept Latest 500 Older ones are dropped
+
+# a quick life in Longyearbyen, in midwinter
+
+## day 2026-12-21: Monday, December 21 [The Day]
+summary: It’s 7:30 AM in Longyearbyen on Monday, December 21, and the day is entirely yours.
+body: The sun stays below the horizon all day. Winter here has only just started. You have nothing booked on it yet. Sunrise None It stays below the horizon Sunset None The sun doesn’t cross the horizon Daylight None Of It Winter here On The Calendar 0 No plans Commitments 0 None of it needs you Where Longyearbyen GMT+1
+way: Winter — What winter is like in Longyearbyen, and how long it lasts
+way: Daylight — The sun doesn’t rise on it here
+way: The Sky — Partly Cloudy, -36°C to -31°C
+way: Sunday, December 20 — One day back, and nothing was booked on it
+way: Tuesday, December 22 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-12-22: Tuesday, December 22 [Tomorrow]
+summary: Tomorrow’s Tuesday, December 22, and nothing is on it yet.
+body: The sun stays below the horizon all day. That’s winter in Longyearbyen, and the season has only just started then. You have nothing booked on it yet. Sunrise None It stays below the horizon Sunset None The sun doesn’t cross the horizon Daylight None Of It Winter here On The Calendar 0 No plans Commitments 0 None of it needs you Where Longyearbyen GMT+1
+way: Winter — What winter is like in Longyearbyen, and how long it lasts
+way: Daylight — The sun doesn’t rise on it here
+way: The Sky — Windy, -38°C to -33°C
+way: Monday, December 21 — One day back, and nothing was booked on it
+way: Wednesday, December 23 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-12-20: Sunday, December 20 [Yesterday]
+summary: Yesterday was Sunday, December 20, and nothing was on it.
+body: The sun stays below the horizon all day. That was winter in Longyearbyen, and the season had only just started then. You had nothing booked on it. Sunrise None It stays below the horizon Sunset None The sun doesn’t cross the horizon Daylight None Of It Winter here On The Calendar 0 No plans Commitments 0 None of it needs you Where Longyearbyen GMT+1
+way: Winter — What winter is like in Longyearbyen, and how long it lasts
+way: Daylight — The sun doesn’t rise on it here
+way: Saturday, December 19 — One day back, and nothing was booked on it
+way: Monday, December 21 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## entry sched_000003: Card Statement [Happens Without You]
+summary: It happens at 9:00 AM on Wednesday, in four weeks, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It isn’t tied to a city, so wherever you are is fine. When 9:00 AM January 20, 2027 Length As Long As It Takes No end time on it Kind Money Status Pending Wednesday, in four weeks Booked December 21, 2026 7:30 AM
+way: Wednesday, January 20 — The day it’s on: one thing on it, starting with Card Statement
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_000007: Your Birthday [Happens Without You]
+summary: It happens at 9:00 AM on Monday, in six months, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It isn’t tied to a city, so wherever you are is fine. When 9:00 AM June 14, 2027 Length As Long As It Takes No end time on it Kind Personal Status Pending Monday, in six months Booked December 21, 2026 7:30 AM
+way: Monday, June 14 — The day it’s on: one thing on it, starting with Your Birthday
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## season sj-21-longyearbyen/Spring: Spring [Season]
+summary: Spring in Longyearbyen runs through March, April and May. It’s three months away.
+body: Longyearbyen is at 78° north, so spring is March, April and May, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches -17°C and falls to -22°C, with 20h 7m of daylight. About 20 days in a hundred are wet. Runs March To May 3 months of the year Typical High -17°C At the middle of it Typical Low -22°C Overnight, at the middle of it Light Then 20h 7m On the middle day of it Wet Days 20% Of the days in it Where Longyearbyen Not the season you’re in
+way: Summer — What comes after it here: June, July and August
+way: Daylight — Today’s daylight in Longyearbyen, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season sj-21-longyearbyen/Summer: Summer [Season]
+summary: Summer in Longyearbyen runs through June, July and August. It’s six months away.
+body: Longyearbyen is at 78° north, so summer is June, July and August, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 6°C and falls to 1°C, with the sun never setting. About 20 days in a hundred are wet. Runs June To August 3 months of the year Typical High 6°C At the middle of it Typical Low 1°C Overnight, at the middle of it Light Then All Of It On the middle day of it Wet Days 20% Of the days in it Where Longyearbyen Not the season you’re in
+way: Autumn — What comes after it here: September, October and November
+way: Daylight — Today’s daylight in Longyearbyen, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season sj-21-longyearbyen/Autumn: Autumn [Season]
+summary: Autumn in Longyearbyen runs through September, October and November. It’s nine months away.
+body: Longyearbyen is at 78° north, so autumn is September, October and November, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches -13°C and falls to -18°C, with 6h 53m of daylight. About 20 days in a hundred are wet. Runs September To November 3 months of the year Typical High -13°C At the middle of it Typical Low -18°C Overnight, at the middle of it Light Then 6h 53m On the middle day of it Wet Days 20% Of the days in it Where Longyearbyen Not the season you’re in
+way: Winter — What comes after it here: December, January and February
+way: Daylight — Today’s daylight in Longyearbyen, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season sj-21-longyearbyen/Winter: Winter [Season]
+summary: It’s winter in Longyearbyen. Here it runs through December, January and February.
+body: Longyearbyen is at 78° north, so winter is December, January and February, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches -35°C and falls to -40°C, with the sun never rising. About 20 days in a hundred are wet. Runs December To February 3 months of the year Typical High -35°C At the middle of it Typical Low -40°C Overnight, at the middle of it Light Then None Of It On the middle day of it Wet Days 20% Of the days in it Where Longyearbyen The season you’re in now
+way: Spring — What comes after it here: March, April and May
+way: Daylight — Today’s daylight in Longyearbyen, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## daylight sj-21-longyearbyen: Daylight [The Light Today]
+summary: The sun doesn’t rise here today.
+body: Longyearbyen is at 78° north, inside the Arctic Circle, where for part of the year the sun doesn’t set, and for part of it, it doesn’t rise. On the longest day of the year the sun doesn’t set at all, and on the shortest, it doesn’t rise at all. Sunrise None Today It stays below the horizon Sunset None Today The sun doesn’t cross the horizon Length None Of It Barely changing Longest Day All Of It At the June solstice Shortest Day None Of It At the December solstice Time Zone GMT+1 The local time zone
+source: Calculated from the Earth’s tilt, the day of the year and this latitude, as an almanac does, and good to a minute or two.
+
+## place sj-21-longyearbyen: Longyearbyen [Where You Live]
+summary: This is where you live. It’s 7:30 AM, and 2K people live here.
+body: It’s the capital of Svalbard and Jan Mayen, 2K people live here, and the climate is polar. Rent on a one-bedroom runs about 19K kr a month, and the cost of living sits at 96, where a hundred is the United States’ price level. The game has no income tax table for Svalbard and Jan Mayen, so Tax On A Wage says Not On File rather than zero. Local Time 7:30 AM GMT+1 Daylight Polar Night 0h of daylight Currency kr NOK About 10.8 to the US dollar, estimated Cost Of Living 96 A hundred is the United States’ price level Tax On A Wage Not On File No tax table for this country Sales Tax Not On File Property tax not on file either Languages Norwegian Russian
+way: Svalbard — The part of Svalbard and Jan Mayen it’s in, with one town on the map
+way: Svalbard and Jan Mayen — Its languages, its money and which side of the road they drive on
+way: Krone — NOK, written kr, and what a hundred US dollars comes to here
+way: Daylight — The sun doesn’t rise here today
+source: Its location, time zone and country are public record. Its rent, cost of living and tax rates are estimated.
+
+## region sj-21: Svalbard [The Region]
+summary: You’re in it, in Longyearbyen, its only place on the map.
+body: It’s one of the two parts the map divides Svalbard and Jan Mayen into. Its one town on your map is Longyearbyen. The region adds no income tax of its own.
+way: Svalbard and Jan Mayen — The country it’s in, which the map divides into two parts, and you’re in this one
+way: Longyearbyen — 2K people, and the capital
+source: The region and its towns come from a public gazetteer. A country’s towns show up once your life has a place in it.
+
+## country sj: Svalbard and Jan Mayen [The Country]
+summary: You’re in Svalbard and Jan Mayen, a country of 3K people, and its money is the krone.
+body: The capital is Longyearbyen. The country is in Europe, with 3K people across 62,049 square kilometers. They drive on the right, measure distance in kilometers and read the temperature in Celsius. Norwegian and Russian are spoken, in the order the country lists them. Capital Longyearbyen Europe People 3K 62,049 sq km Money kr NOK Krone Languages Norwegian Russian Calling Code +47 Dialed from outside Drives On Right Kilometers on the signs
+way: Krone — What everything in Svalbard and Jan Mayen is priced in
+way: Svalbard — The region you’re in, one of its two parts
+source: These facts come from a public gazetteer.
+
+## currency NOK: Krone [The Money]
+summary: The krone is the money here, written kr. It’s about 10.8 to the US dollar, estimated.
+body: A hundred US dollars is 1,080.00 kr here. Prices in it are written to two decimal places. Its symbol goes after the number. It’s used in Bouvet Island, Norway and Svalbard and Jan Mayen. A one-bedroom in Longyearbyen is about 19K kr a month.
+way: Svalbard and Jan Mayen — 3K people, with its capital at Longyearbyen
+way: Norway — 5.3M people, with its capital at Oslo
+way: Bouvet Island — Nobody lives there
+source: Exchange rates are estimated, not live market rates.
+
+## weather sj-21-longyearbyen: Weather In Longyearbyen [Weather Now]
+summary: It’s -34°C and partly cloudy where you are, with a high of -31°C and a low of -36°C today.
+body: The wind is 13 km/h and the humidity is 59%. Today is 2° warmer than normal for the date. Thursday is wet, and the rest of the week is dry. Right Now -34°C Partly Cloudy High -31°C The warmest it gets today Low -36°C Overnight Wind 13 km/h Not a windy day Humidity 59% How much water is in the air Against Usual +2° Compared with this date’s normal
+way: The Rest Of Today — 17 hours left, hour by hour to midnight
+way: Tomorrow — Windy, -38°C to -33°C
+way: The Week Ahead — Six days, each of which you can open
+facet What It’s Usually Like: Longyearbyen has a polar climate: cold all year, with daylight that changes hugely between the seasons. On December 21 it usually reaches about -33°C here, and today is 2° warmer than normal for the date. About 0 days of thunder a year here, estimated for a polar climate.
+source: Estimated from a climate model for Longyearbyen: the season, the latitude and the kind of climate it has. It isn’t a real forecast.
+
+## forecastday sj-21-longyearbyen/2026-12-21: Monday [Today]
+summary: Broken cloud in Longyearbyen today, -36°C to -31°C.
+body: December 21: wind 13 km/h, humidity 59%, and the day is 2° warmer than normal for the date. High -31°C Around 3 PM Low -36°C Around 3 AM Wind 13 km/h Partly Cloudy
+way: The Rest Of Today — The hours left today, one at a time
+way: Sunday — The day before it: Partly Cloudy, -33°C to -28°C
+way: Tuesday — The day after it: Windy, -38°C to -33°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday sj-21-longyearbyen/2026-12-22: Tuesday [Tomorrow]
+summary: A windy day in Longyearbyen tomorrow, -38°C to -33°C.
+body: December 22: wind 33 km/h, humidity 60%, and the day is about normal for the date. High -33°C Around 3 PM Low -38°C Around 3 AM Wind 33 km/h Windy
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Monday — The day before it: Partly Cloudy, -36°C to -31°C
+way: Wednesday — The day after it: Partly Cloudy, -42°C to -37°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday sj-21-longyearbyen/2026-12-23: Wednesday [Two Days Out]
+summary: Broken cloud in Longyearbyen on Wednesday, -42°C to -37°C.
+body: December 23: wind 30 km/h, humidity 54%, and the day is 4° colder than normal for the date. High -37°C Around 3 PM Low -42°C Around 3 AM Wind 30 km/h Partly Cloudy
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Tuesday — The day before it: Windy, -38°C to -33°C
+way: Thursday — The day after it: Snow, -40°C to -37°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday sj-21-longyearbyen/2026-12-24: Thursday [Three Days Out]
+summary: Snow in Longyearbyen on Thursday, -40°C to -37°C.
+body: December 24: wind 31 km/h, humidity 72%, and the day is about normal for the date. High -37°C Around 3 PM Low -40°C Around 3 AM Wind 31 km/h Snow
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Wednesday — The day before it: Partly Cloudy, -42°C to -37°C
+way: Friday — The day after it: Overcast, -41°C to -36°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## hours sj-21-longyearbyen/2026-12-21: The Rest Of Today [Hour By Hour]
+summary: There are 17 hours of December 21 left, between -35°C and -31°C.
+body: The warmest hour is 3 PM, at -31°C, and the coldest is 7 AM, at -35°C. They’re all after dark. They’re all dry.
+way: 7 AM — -35°C, partly cloudy, after dark
+way: 8 AM — -34°C, partly cloudy, after dark
+way: 9 AM — -33°C, partly cloudy, after dark
+way: 10 AM — -33°C, partly cloudy, after dark
+way: 11 AM — -32°C, partly cloudy, after dark
+way: Noon — -32°C, partly cloudy, after dark
+way: 1 PM — -31°C, partly cloudy, after dark
+way: 2 PM — -31°C, partly cloudy, after dark
+way: 3 PM — -31°C, partly cloudy, after dark
+way: 4 PM — -31°C, partly cloudy, after dark
+way: 5 PM — -31°C, partly cloudy, after dark
+way: 6 PM — -32°C, partly cloudy, after dark
+way: 7 PM — -32°C, partly cloudy, after dark
+way: 8 PM — -33°C, partly cloudy, after dark
+way: 9 PM — -33°C, partly cloudy, after dark
+way: 10 PM — -34°C, partly cloudy, after dark
+way: 11 PM — -35°C, partly cloudy, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours sj-21-longyearbyen/2026-12-22: Tuesday’s Hours [Hour By Hour]
+summary: December 22 goes from -38°C at 4 AM up to -33°C at 3 PM.
+body: The warmest hour is 3 PM, at -33°C, and the coldest is 4 AM, at -38°C. They’re all after dark. They’re all dry.
+way: Midnight — -37°C, windy, after dark
+way: 1 AM — -38°C, windy, after dark
+way: 2 AM — -38°C, windy, after dark
+way: 3 AM — -38°C, windy, after dark
+way: 4 AM — -38°C, windy, after dark
+way: 5 AM — -38°C, windy, after dark
+way: 6 AM — -37°C, windy, after dark
+way: 7 AM — -37°C, windy, after dark
+way: 8 AM — -36°C, windy, after dark
+way: 9 AM — -35°C, windy, after dark
+way: 10 AM — -35°C, windy, after dark
+way: 11 AM — -34°C, windy, after dark
+way: Noon — -34°C, windy, after dark
+way: 1 PM — -33°C, windy, after dark
+way: 2 PM — -33°C, windy, after dark
+way: 3 PM — -33°C, windy, after dark
+way: 4 PM — -33°C, windy, after dark
+way: 5 PM — -33°C, windy, after dark
+way: 6 PM — -34°C, windy, after dark
+way: 7 PM — -34°C, windy, after dark
+way: 8 PM — -35°C, windy, after dark
+way: 9 PM — -35°C, windy, after dark
+way: 10 PM — -36°C, windy, after dark
+way: 11 PM — -37°C, windy, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours sj-21-longyearbyen/2026-12-23: Wednesday’s Hours [Hour By Hour]
+summary: December 23 goes from -42°C at 4 AM up to -37°C at 3 PM.
+body: The warmest hour is 3 PM, at -37°C, and the coldest is 4 AM, at -42°C. They’re all after dark. They’re all dry.
+way: Midnight — -41°C, partly cloudy, after dark
+way: 1 AM — -42°C, partly cloudy, after dark
+way: 2 AM — -42°C, partly cloudy, after dark
+way: 3 AM — -42°C, partly cloudy, after dark
+way: 4 AM — -42°C, partly cloudy, after dark
+way: 5 AM — -42°C, partly cloudy, after dark
+way: 6 AM — -41°C, partly cloudy, after dark
+way: 7 AM — -41°C, partly cloudy, after dark
+way: 8 AM — -40°C, partly cloudy, after dark
+way: 9 AM — -39°C, partly cloudy, after dark
+way: 10 AM — -39°C, partly cloudy, after dark
+way: 11 AM — -38°C, partly cloudy, after dark
+way: Noon — -38°C, partly cloudy, after dark
+way: 1 PM — -37°C, partly cloudy, after dark
+way: 2 PM — -37°C, partly cloudy, after dark
+way: 3 PM — -37°C, partly cloudy, after dark
+way: 4 PM — -37°C, partly cloudy, after dark
+way: 5 PM — -37°C, partly cloudy, after dark
+way: 6 PM — -38°C, partly cloudy, after dark
+way: 7 PM — -38°C, partly cloudy, after dark
+way: 8 PM — -39°C, partly cloudy, after dark
+way: 9 PM — -39°C, partly cloudy, after dark
+way: 10 PM — -40°C, partly cloudy, after dark
+way: 11 PM — -41°C, partly cloudy, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours sj-21-longyearbyen/2026-12-24: Thursday’s Hours [Hour By Hour]
+summary: December 24 goes from -40°C at 4 AM up to -37°C at 3 PM.
+body: The warmest hour is 3 PM, at -37°C, and the coldest is 4 AM, at -40°C. They’re all after dark. It’s wet from around 2 PM until about 9 PM: 7 hours.
+way: Midnight — -40°C, overcast, after dark
+way: 1 AM — -40°C, overcast, after dark
+way: 2 AM — -40°C, overcast, after dark
+way: 3 AM — -40°C, overcast, after dark
+way: 4 AM — -40°C, overcast, after dark
+way: 5 AM — -40°C, overcast, after dark
+way: 6 AM — -40°C, overcast, after dark
+way: 7 AM — -39°C, overcast, after dark
+way: 8 AM — -39°C, overcast, after dark
+way: 9 AM — -38°C, overcast, after dark
+way: 10 AM — -38°C, overcast, after dark
+way: 11 AM — -38°C, overcast, after dark
+way: Noon — -37°C, overcast, after dark
+way: 1 PM — -37°C, overcast, after dark
+way: 2 PM — -37°C, snow, after dark
+way: 3 PM — -37°C, snow, after dark
+way: 4 PM — -37°C, snow, after dark
+way: 5 PM — -37°C, snow, after dark
+way: 6 PM — -37°C, snow, after dark
+way: 7 PM — -38°C, snow, after dark
+way: 8 PM — -38°C, snow, after dark
+way: 9 PM — -38°C, overcast, after dark
+way: 10 PM — -39°C, overcast, after dark
+way: 11 PM — -39°C, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## skyhour sj-21-longyearbyen/2026-12-21/7: 7 AM [One Hour]
+summary: At 7 AM it’s -35°C and partly cloudy in Longyearbyen, in the morning.
+body: It’s dark, the wind is 13 km/h, and it’s dry. The next hour is one degrees warmer.
+way: 8 AM — The hour after it: -34°C, partly cloudy
+source: Estimated from December 21’s forecast, and the same every time you look.
+
+## skyhour sj-21-longyearbyen/2026-12-21/8: 8 AM [One Hour]
+summary: At 8 AM it’s -34°C and partly cloudy in Longyearbyen, in the morning.
+body: It’s dark, the wind is 13 km/h, and it’s dry. The next hour is one degrees warmer.
+way: 7 AM — The hour before it: -35°C, partly cloudy
+way: 9 AM — The hour after it: -33°C, partly cloudy
+source: Estimated from December 21’s forecast, and the same every time you look.
+
+## skyhour sj-21-longyearbyen/2026-12-21/9: 9 AM [One Hour]
+summary: At 9 AM it’s -33°C and partly cloudy in Longyearbyen, in the morning.
+body: It’s dark, the wind is 13 km/h, and it’s dry. The next hour is the same temperature.
+way: 8 AM — The hour before it: -34°C, partly cloudy
+way: 10 AM — The hour after it: -33°C, partly cloudy
+source: Estimated from December 21’s forecast, and the same every time you look.
+
+## skyhour sj-21-longyearbyen/2026-12-21/10: 10 AM [One Hour]
+summary: At 10 AM it’s -33°C and partly cloudy in Longyearbyen, in the morning.
+body: It’s dark, the wind is 13 km/h, and it’s dry. The next hour is one degrees warmer.
+way: 9 AM — The hour before it: -33°C, partly cloudy
+way: 11 AM — The hour after it: -32°C, partly cloudy
+source: Estimated from December 21’s forecast, and the same every time you look.
+
+## skyweek sj-21-longyearbyen: The Week Ahead [Six Days Of Weather]
+summary: Six days in Longyearbyen, from -42°C to -31°C, with one of them wet.
+body: The warmest is today at -31°C. Thursday is the wet one. Each day’s weather is blended with the two days before it, so the days follow on from each other: a cold snap lasts, and a wet spell lingers.
+way: Today — Partly Cloudy, -36°C to -31°C
+way: Tomorrow — Windy, -38°C to -33°C
+way: Wed — Partly Cloudy, -42°C to -37°C
+way: Thu — Snow, -40°C to -37°C
+way: Fri — Overcast, -41°C to -36°C
+way: Sat — Overcast, -40°C to -35°C
+source: Six days estimated from a climate model. It isn’t a real forecast.
+
+## stretch sched_000003: 9:00 AM To 10:00 AM [Its Hours]
+summary: It runs from 9:00 AM to 10:00 AM, one hour on January 20, 2027, at -42°C throughout.
+body: All of it is after dark. It stays dry the whole way through. Starts 9:00 AM January 20, 2027 Ends 10:00 AM one hour Coldest Hour -42°C 9 AM
+way: 9 AM — -42°C, overcast, after dark
+source: The hour is estimated from the day’s forecast.
+
+## stretch sched_000007: 9:00 AM To 10:00 AM [Its Hours]
+summary: It runs from 9:00 AM to 10:00 AM, one hour on June 14, 2027, at -4°C throughout.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM June 14, 2027 Ends 10:00 AM one hour Coldest Hour -4°C 9 AM
+way: 9 AM — -4°C, partly cloudy
+source: The hour is estimated from the day’s forecast.
+
+## plans : Your Own Plans [What You Put On The Calendar]
+summary: You haven’t put anything on the calendar yourself, so everything on it was put there for you.
+body: A plan of your own needs a name, a start time and a length, and it’s in the city you’re in when you make it. Waiting 0 Still ahead of you Called Off 0 You called them off Gone By 0 You weren’t there
+source: Your plans are ordinary calendar items: the clock stops at them, and a clash is marked.
+
+# a quick life in Longyearbyen, in midsummer
+
+## day 2026-06-21: Sunday, June 21 [The Day]
+summary: It’s 7:30 AM in Longyearbyen on Sunday, June 21, and the day is entirely yours.
+body: The sun stays up all day and all night. Summer here has only just started. You have nothing booked on it yet. Sunrise None It never gets dark Sunset None The sun doesn’t cross the horizon Daylight All Of It Summer here On The Calendar 0 No plans Commitments 0 None of it needs you Where Longyearbyen GMT+2
+way: Summer — What summer is like in Longyearbyen, and how long it lasts
+way: Daylight — The sun never sets on it here
+way: The Sky — Snow, -1°C to 2°C
+way: Saturday, June 20 — One day back, and nothing was booked on it
+way: Monday, June 22 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-06-22: Monday, June 22 [Tomorrow]
+summary: Tomorrow’s Monday, June 22, and nothing is on it yet.
+body: The sun stays up all day and all night. That’s summer in Longyearbyen, and the season has only just started then. You have nothing booked on it yet. Sunrise None It never gets dark Sunset None The sun doesn’t cross the horizon Daylight All Of It Summer here On The Calendar 0 No plans Commitments 0 None of it needs you Where Longyearbyen GMT+2
+way: Summer — What summer is like in Longyearbyen, and how long it lasts
+way: Daylight — The sun never sets on it here
+way: The Sky — Overcast, 2°C to 7°C
+way: Sunday, June 21 — One day back, and nothing was booked on it
+way: Tuesday, June 23 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-06-20: Saturday, June 20 [Yesterday]
+summary: Yesterday was Saturday, June 20, and nothing was on it.
+body: The sun stays up all day and all night. That was summer in Longyearbyen, and the season had only just started then. You had nothing booked on it. Sunrise None It never gets dark Sunset None The sun doesn’t cross the horizon Daylight All Of It Summer here On The Calendar 0 No plans Commitments 0 None of it needs you Where Longyearbyen GMT+2
+way: Summer — What summer is like in Longyearbyen, and how long it lasts
+way: Daylight — The sun never sets on it here
+way: Friday, June 19 — One day back, and nothing was booked on it
+way: Sunday, June 21 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## entry sched_000003: Card Statement [Happens Without You]
+summary: It happens at 9:00 AM on Monday, in four weeks, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It isn’t tied to a city, so wherever you are is fine. When 9:00 AM July 20, 2026 Length As Long As It Takes No end time on it Kind Money Status Pending Monday, in four weeks Booked June 21, 2026 7:30 AM
+way: Monday, July 20 — The day it’s on: one thing on it, starting with Card Statement
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_000007: Your Birthday [Happens Without You]
+summary: It happens at 9:00 AM on Monday, in 12 months, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It isn’t tied to a city, so wherever you are is fine. When 9:00 AM June 14, 2027 Length As Long As It Takes No end time on it Kind Personal Status Pending Monday, in 12 months Booked June 21, 2026 7:30 AM
+way: Monday, June 14 — The day it’s on: one thing on it, starting with Your Birthday
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## season sj-21-longyearbyen/Spring: Spring [Season]
+summary: Spring in Longyearbyen runs through March, April and May. It’s nine months away.
+body: Longyearbyen is at 78° north, so spring is March, April and May, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches -17°C and falls to -22°C, with 20h 7m of daylight. About 20 days in a hundred are wet. Runs March To May 3 months of the year Typical High -17°C At the middle of it Typical Low -22°C Overnight, at the middle of it Light Then 20h 7m On the middle day of it Wet Days 20% Of the days in it Where Longyearbyen Not the season you’re in
+way: Summer — What comes after it here: June, July and August
+way: Daylight — Today’s daylight in Longyearbyen, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season sj-21-longyearbyen/Summer: Summer [Season]
+summary: It’s summer in Longyearbyen. Here it runs through June, July and August.
+body: Longyearbyen is at 78° north, so summer is June, July and August, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 6°C and falls to 1°C, with the sun never setting. About 20 days in a hundred are wet. Runs June To August 3 months of the year Typical High 6°C At the middle of it Typical Low 1°C Overnight, at the middle of it Light Then All Of It On the middle day of it Wet Days 20% Of the days in it Where Longyearbyen The season you’re in now
+way: Autumn — What comes after it here: September, October and November
+way: Daylight — Today’s daylight in Longyearbyen, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season sj-21-longyearbyen/Autumn: Autumn [Season]
+summary: Autumn in Longyearbyen runs through September, October and November. It’s three months away.
+body: Longyearbyen is at 78° north, so autumn is September, October and November, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches -13°C and falls to -18°C, with 6h 53m of daylight. About 20 days in a hundred are wet. Runs September To November 3 months of the year Typical High -13°C At the middle of it Typical Low -18°C Overnight, at the middle of it Light Then 6h 53m On the middle day of it Wet Days 20% Of the days in it Where Longyearbyen Not the season you’re in
+way: Winter — What comes after it here: December, January and February
+way: Daylight — Today’s daylight in Longyearbyen, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season sj-21-longyearbyen/Winter: Winter [Season]
+summary: Winter in Longyearbyen runs through December, January and February. It’s six months away.
+body: Longyearbyen is at 78° north, so winter is December, January and February, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches -35°C and falls to -40°C, with the sun never rising. About 20 days in a hundred are wet. Runs December To February 3 months of the year Typical High -35°C At the middle of it Typical Low -40°C Overnight, at the middle of it Light Then None Of It On the middle day of it Wet Days 20% Of the days in it Where Longyearbyen Not the season you’re in
+way: Spring — What comes after it here: March, April and May
+way: Daylight — Today’s daylight in Longyearbyen, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## daylight sj-21-longyearbyen: Daylight [The Light Today]
+summary: The sun doesn’t set here today, so it’s light all day and all night.
+body: Longyearbyen is at 78° north, inside the Arctic Circle, where for part of the year the sun doesn’t set, and for part of it, it doesn’t rise. On the longest day of the year the sun doesn’t set at all, and on the shortest, it doesn’t rise at all. Sunrise None Today It doesn’t get dark Sunset None Today The sun doesn’t cross the horizon Length All Of It Barely changing Longest Day All Of It At the June solstice Shortest Day None Of It At the December solstice Time Zone GMT+2 The local time zone
+source: Calculated from the Earth’s tilt, the day of the year and this latitude, as an almanac does, and good to a minute or two.
+
+## place sj-21-longyearbyen: Longyearbyen [Where You Live]
+summary: This is where you live. It’s 7:30 AM, and 2K people live here.
+body: It’s the capital of Svalbard and Jan Mayen, 2K people live here, and the climate is polar. Rent on a one-bedroom runs about 19K kr a month, and the cost of living sits at 96, where a hundred is the United States’ price level. The game has no income tax table for Svalbard and Jan Mayen, so Tax On A Wage says Not On File rather than zero. Local Time 7:30 AM GMT+2 Daylight Midnight Sun 24h of daylight Currency kr NOK About 10.8 to the US dollar, estimated Cost Of Living 96 A hundred is the United States’ price level Tax On A Wage Not On File No tax table for this country Sales Tax Not On File Property tax not on file either Languages Norwegian Russian
+way: Svalbard — The part of Svalbard and Jan Mayen it’s in, with one town on the map
+way: Svalbard and Jan Mayen — Its languages, its money and which side of the road they drive on
+way: Krone — NOK, written kr, and what a hundred US dollars comes to here
+way: Daylight — The sun never sets today
+source: Its location, time zone and country are public record. Its rent, cost of living and tax rates are estimated.
+
+## region sj-21: Svalbard [The Region]
+summary: You’re in it, in Longyearbyen, its only place on the map.
+body: It’s one of the two parts the map divides Svalbard and Jan Mayen into. Its one town on your map is Longyearbyen. The region adds no income tax of its own.
+way: Svalbard and Jan Mayen — The country it’s in, which the map divides into two parts, and you’re in this one
+way: Longyearbyen — 2K people, and the capital
+source: The region and its towns come from a public gazetteer. A country’s towns show up once your life has a place in it.
+
+## country sj: Svalbard and Jan Mayen [The Country]
+summary: You’re in Svalbard and Jan Mayen, a country of 3K people, and its money is the krone.
+body: The capital is Longyearbyen. The country is in Europe, with 3K people across 62,049 square kilometers. They drive on the right, measure distance in kilometers and read the temperature in Celsius. Norwegian and Russian are spoken, in the order the country lists them. Capital Longyearbyen Europe People 3K 62,049 sq km Money kr NOK Krone Languages Norwegian Russian Calling Code +47 Dialed from outside Drives On Right Kilometers on the signs
+way: Krone — What everything in Svalbard and Jan Mayen is priced in
+way: Svalbard — The region you’re in, one of its two parts
+source: These facts come from a public gazetteer.
+
+## currency NOK: Krone [The Money]
+summary: The krone is the money here, written kr. It’s about 10.8 to the US dollar, estimated.
+body: A hundred US dollars is 1,080.00 kr here. Prices in it are written to two decimal places. Its symbol goes after the number. It’s used in Bouvet Island, Norway and Svalbard and Jan Mayen. A one-bedroom in Longyearbyen is about 19K kr a month.
+way: Svalbard and Jan Mayen — 3K people, with its capital at Longyearbyen
+way: Norway — 5.3M people, with its capital at Oslo
+way: Bouvet Island — Nobody lives there
+source: Exchange rates are estimated, not live market rates.
+
+## weather sj-21-longyearbyen: Weather In Longyearbyen [Weather Now]
+summary: It’s 0°C and overcast where you are, with a high of 2°C and a low of -1°C today.
+body: The wind is 40 km/h and the humidity is 72%. Today is about normal for the date. The five days after today are all dry. Right Now 0°C Overcast High 2°C The warmest it gets today Low -1°C Overnight Wind 40 km/h Not a windy day Humidity 72% How much water is in the air Against Usual +1° Compared with this date’s normal
+way: The Rest Of Today — 17 hours left, hour by hour to midnight
+way: Tomorrow — Overcast, 2°C to 7°C
+way: The Week Ahead — Six days, each of which you can open
+facet What It’s Usually Like: Longyearbyen has a polar climate: cold all year, with daylight that changes hugely between the seasons. On June 21 it usually reaches about 3°C here, and today is about normal for the date. About 0 days of thunder a year here, estimated for a polar climate.
+source: Estimated from a climate model for Longyearbyen: the season, the latitude and the kind of climate it has. It isn’t a real forecast.
+
+## forecastday sj-21-longyearbyen/2026-06-21: Sunday [Today]
+summary: Snow in Longyearbyen today, -1°C to 2°C.
+body: June 21: wind 40 km/h, humidity 72%, and the day is about normal for the date. High 2°C Around 3 PM Low -1°C Around 3 AM Wind 40 km/h Snow
+way: The Rest Of Today — The hours left today, one at a time
+way: Saturday — The day before it: Partly Cloudy, -2°C to 3°C
+way: Monday — The day after it: Overcast, 2°C to 7°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday sj-21-longyearbyen/2026-06-22: Monday [Tomorrow]
+summary: An overcast day in Longyearbyen tomorrow, 2°C to 7°C.
+body: June 22: wind 28 km/h, humidity 60%, and the day is 4° warmer than normal for the date. High 7°C Around 3 PM Low 2°C Around 3 AM Wind 28 km/h Overcast
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Sunday — The day before it: Snow, -1°C to 2°C
+way: Tuesday — The day after it: Partly Cloudy, -1°C to 4°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday sj-21-longyearbyen/2026-06-23: Tuesday [Two Days Out]
+summary: Broken cloud in Longyearbyen on Tuesday, -1°C to 4°C.
+body: June 23: wind 27 km/h, humidity 56%, and the day is about normal for the date. High 4°C Around 3 PM Low -1°C Around 3 AM Wind 27 km/h Partly Cloudy
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Monday — The day before it: Overcast, 2°C to 7°C
+way: Wednesday — The day after it: Partly Cloudy, 0°C to 5°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday sj-21-longyearbyen/2026-06-24: Wednesday [Three Days Out]
+summary: Broken cloud in Longyearbyen on Wednesday, 0°C to 5°C.
+body: June 24: wind 30 km/h, humidity 59%, and the day is 2° warmer than normal for the date. High 5°C Around 3 PM Low 0°C Around 3 AM Wind 30 km/h Partly Cloudy
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Tuesday — The day before it: Partly Cloudy, -1°C to 4°C
+way: Thursday — The day after it: Partly Cloudy, 0°C to 5°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## hours sj-21-longyearbyen/2026-06-21: The Rest Of Today [Hour By Hour]
+summary: There are 17 hours of June 21 left, between 0°C and 2°C.
+body: The warmest hour is 3 PM, at 2°C, and the coldest is 7 AM, at 0°C. The sun is up for all of them. It’s wet from around 5 PM until about 9 PM: four hours.
+way: 7 AM — 0°C, overcast
+way: 8 AM — 0°C, overcast
+way: 9 AM — 1°C, overcast
+way: 10 AM — 1°C, overcast
+way: 11 AM — 1°C, overcast
+way: Noon — 2°C, overcast
+way: 1 PM — 2°C, overcast
+way: 2 PM — 2°C, overcast
+way: 3 PM — 2°C, overcast
+way: 4 PM — 2°C, overcast
+way: 5 PM — 2°C, snow
+way: 6 PM — 2°C, snow
+way: 7 PM — 1°C, snow
+way: 8 PM — 1°C, snow
+way: 9 PM — 1°C, overcast
+way: 10 PM — 0°C, overcast
+way: 11 PM — 0°C, overcast
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours sj-21-longyearbyen/2026-06-22: Monday’s Hours [Hour By Hour]
+summary: June 22 goes from 2°C at 4 AM up to 7°C at 3 PM.
+body: The warmest hour is 3 PM, at 7°C, and the coldest is 4 AM, at 2°C. The sun is up for all of them. They’re all dry.
+way: Midnight — 3°C, overcast
+way: 1 AM — 2°C, overcast
+way: 2 AM — 2°C, overcast
+way: 3 AM — 2°C, overcast
+way: 4 AM — 2°C, overcast
+way: 5 AM — 2°C, overcast
+way: 6 AM — 3°C, overcast
+way: 7 AM — 3°C, overcast
+way: 8 AM — 4°C, overcast
+way: 9 AM — 5°C, overcast
+way: 10 AM — 5°C, overcast
+way: 11 AM — 6°C, overcast
+way: Noon — 6°C, overcast
+way: 1 PM — 7°C, overcast
+way: 2 PM — 7°C, overcast
+way: 3 PM — 7°C, overcast
+way: 4 PM — 7°C, overcast
+way: 5 PM — 7°C, overcast
+way: 6 PM — 6°C, overcast
+way: 7 PM — 6°C, overcast
+way: 8 PM — 5°C, overcast
+way: 9 PM — 5°C, overcast
+way: 10 PM — 4°C, overcast
+way: 11 PM — 3°C, overcast
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours sj-21-longyearbyen/2026-06-23: Tuesday’s Hours [Hour By Hour]
+summary: June 23 goes from -1°C at 4 AM up to 4°C at 3 PM.
+body: The warmest hour is 3 PM, at 4°C, and the coldest is 4 AM, at -1°C. The sun is up for all of them. They’re all dry.
+way: Midnight — 0°C, partly cloudy
+way: 1 AM — -1°C, partly cloudy
+way: 2 AM — -1°C, partly cloudy
+way: 3 AM — -1°C, partly cloudy
+way: 4 AM — -1°C, partly cloudy
+way: 5 AM — -1°C, partly cloudy
+way: 6 AM — 0°C, partly cloudy
+way: 7 AM — 0°C, partly cloudy
+way: 8 AM — 1°C, partly cloudy
+way: 9 AM — 2°C, partly cloudy
+way: 10 AM — 2°C, partly cloudy
+way: 11 AM — 3°C, partly cloudy
+way: Noon — 3°C, partly cloudy
+way: 1 PM — 4°C, partly cloudy
+way: 2 PM — 4°C, partly cloudy
+way: 3 PM — 4°C, partly cloudy
+way: 4 PM — 4°C, partly cloudy
+way: 5 PM — 4°C, partly cloudy
+way: 6 PM — 3°C, partly cloudy
+way: 7 PM — 3°C, partly cloudy
+way: 8 PM — 2°C, partly cloudy
+way: 9 PM — 2°C, partly cloudy
+way: 10 PM — 1°C, partly cloudy
+way: 11 PM — 0°C, partly cloudy
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours sj-21-longyearbyen/2026-06-24: Wednesday’s Hours [Hour By Hour]
+summary: June 24 goes from 0°C at 4 AM up to 5°C at 3 PM.
+body: The warmest hour is 3 PM, at 5°C, and the coldest is 4 AM, at 0°C. The sun is up for all of them. They’re all dry.
+way: Midnight — 1°C, partly cloudy
+way: 1 AM — 0°C, partly cloudy
+way: 2 AM — 0°C, partly cloudy
+way: 3 AM — 0°C, partly cloudy
+way: 4 AM — 0°C, partly cloudy
+way: 5 AM — 0°C, partly cloudy
+way: 6 AM — 1°C, partly cloudy
+way: 7 AM — 1°C, partly cloudy
+way: 8 AM — 2°C, partly cloudy
+way: 9 AM — 3°C, partly cloudy
+way: 10 AM — 3°C, partly cloudy
+way: 11 AM — 4°C, partly cloudy
+way: Noon — 4°C, partly cloudy
+way: 1 PM — 5°C, partly cloudy
+way: 2 PM — 5°C, partly cloudy
+way: 3 PM — 5°C, partly cloudy
+way: 4 PM — 5°C, partly cloudy
+way: 5 PM — 5°C, partly cloudy
+way: 6 PM — 4°C, partly cloudy
+way: 7 PM — 4°C, partly cloudy
+way: 8 PM — 3°C, partly cloudy
+way: 9 PM — 3°C, partly cloudy
+way: 10 PM — 2°C, partly cloudy
+way: 11 PM — 1°C, partly cloudy
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## skyhour sj-21-longyearbyen/2026-06-21/7: 7 AM [One Hour]
+summary: At 7 AM it’s 0°C and overcast in Longyearbyen, in the morning.
+body: The sun is up, the wind is 40 km/h, and it’s dry. The next hour is the same temperature.
+way: 8 AM — The hour after it: 0°C, overcast
+source: Estimated from June 21’s forecast, and the same every time you look.
+
+## skyhour sj-21-longyearbyen/2026-06-21/8: 8 AM [One Hour]
+summary: At 8 AM it’s 0°C and overcast in Longyearbyen, in the morning.
+body: The sun is up, the wind is 40 km/h, and it’s dry. The next hour is one degrees warmer.
+way: 7 AM — The hour before it: 0°C, overcast
+way: 9 AM — The hour after it: 1°C, overcast
+source: Estimated from June 21’s forecast, and the same every time you look.
+
+## skyhour sj-21-longyearbyen/2026-06-21/9: 9 AM [One Hour]
+summary: At 9 AM it’s 1°C and overcast in Longyearbyen, in the morning.
+body: The sun is up, the wind is 40 km/h, and it’s dry. The next hour is the same temperature.
+way: 8 AM — The hour before it: 0°C, overcast
+way: 10 AM — The hour after it: 1°C, overcast
+source: Estimated from June 21’s forecast, and the same every time you look.
+
+## skyhour sj-21-longyearbyen/2026-06-21/10: 10 AM [One Hour]
+summary: At 10 AM it’s 1°C and overcast in Longyearbyen, in the morning.
+body: The sun is up, the wind is 40 km/h, and it’s dry. The next hour is the same temperature.
+way: 9 AM — The hour before it: 1°C, overcast
+way: 11 AM — The hour after it: 1°C, overcast
+source: Estimated from June 21’s forecast, and the same every time you look.
+
+## skyweek sj-21-longyearbyen: The Week Ahead [Six Days Of Weather]
+summary: Six days in Longyearbyen, from -1°C to 7°C, with one of them wet.
+body: The warmest is tomorrow at 7°C. Today is the wet one. Each day’s weather is blended with the two days before it, so the days follow on from each other: a cold snap lasts, and a wet spell lingers.
+way: Today — Snow, -1°C to 2°C
+way: Tomorrow — Overcast, 2°C to 7°C
+way: Tue — Partly Cloudy, -1°C to 4°C
+way: Wed — Partly Cloudy, 0°C to 5°C
+way: Thu — Partly Cloudy, 0°C to 5°C
+way: Fri — Windy, 1°C to 6°C
+source: Six days estimated from a climate model. It isn’t a real forecast.
+
+## stretch sched_000003: 9:00 AM To 10:00 AM [Its Hours]
+summary: It runs from 9:00 AM to 10:00 AM, one hour on July 20, 2026, at 5°C throughout.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM July 20, 2026 Ends 10:00 AM one hour Coldest Hour 5°C 9 AM
+way: 9 AM — 5°C, partly cloudy
+source: The hour is estimated from the day’s forecast.
+
+## stretch sched_000007: 9:00 AM To 10:00 AM [Its Hours]
+summary: It runs from 9:00 AM to 10:00 AM, one hour on June 14, 2027, at -2°C throughout.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM June 14, 2027 Ends 10:00 AM one hour Coldest Hour -2°C 9 AM
+way: 9 AM — -2°C, overcast
+source: The hour is estimated from the day’s forecast.
+
+## plans : Your Own Plans [What You Put On The Calendar]
+summary: You haven’t put anything on the calendar yourself, so everything on it was put there for you.
+body: A plan of your own needs a name, a start time and a length, and it’s in the city you’re in when you make it. Waiting 0 Still ahead of you Called Off 0 You called them off Gone By 0 You weren’t there
+source: Your plans are ordinary calendar items: the clock stops at them, and a clash is marked.
+
+# a quick life in Sydney
+
+## day 2026-01-05: Monday, January 5 [The Day]
+summary: It’s 7:30 AM in Sydney on Monday, January 5, and the day is entirely yours.
+body: Daylight from 5:50 AM to 8:09 PM: 14h 20m. Summer here is at its middle. You have nothing booked on it yet. Sunrise 5:50 AM Local time Sunset 8:09 PM Local time Daylight 14h 20m Summer here On The Calendar 0 No plans Commitments 0 None of it needs you Where Sydney GMT+11
+way: Summer — What summer is like in Sydney, and how long it lasts
+way: Daylight — 5:50 AM to 8:09 PM, 14h 20m of daylight
+way: The Sky — Thunderstorm, 19°C to 24°C
+way: Sunday, January 4 — One day back, and nothing was booked on it
+way: Tuesday, January 6 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-01-06: Tuesday, January 6 [Tomorrow]
+summary: Tomorrow’s Tuesday, January 6, and nothing is on it yet.
+body: Daylight from 5:50 AM to 8:09 PM: 14h 19m. That’s summer in Sydney, and the season is at its middle then. You have nothing booked on it yet. Sunrise 5:50 AM Local time Sunset 8:09 PM Local time Daylight 14h 19m Summer here On The Calendar 0 No plans Commitments 0 None of it needs you Where Sydney GMT+11
+way: Summer — What summer is like in Sydney, and how long it lasts
+way: Daylight — 5:50 AM to 8:09 PM, 14h 19m of daylight
+way: The Sky — Overcast, 19°C to 28°C
+way: Monday, January 5 — One day back, and nothing was booked on it
+way: Wednesday, January 7 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-01-04: Sunday, January 4 [Yesterday]
+summary: Yesterday was Sunday, January 4, and nothing was on it.
+body: Daylight from 5:49 AM to 8:09 PM: 14h 20m. That was summer in Sydney, and the season was at its middle then. You had nothing booked on it. Sunrise 5:49 AM Local time Sunset 8:09 PM Local time Daylight 14h 20m Summer here On The Calendar 0 No plans Commitments 0 None of it needs you Where Sydney GMT+11
+way: Summer — What summer is like in Sydney, and how long it lasts
+way: Daylight — 5:49 AM to 8:09 PM, 14h 20m of daylight
+way: Saturday, January 3 — One day back, and nothing was booked on it
+way: Monday, January 5 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## entry sched_000003: Card Statement [Happens Without You]
+summary: It happens at 9:00 AM on Tuesday, in two weeks, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It isn’t tied to a city, so wherever you are is fine. When 9:00 AM January 20, 2026 Length As Long As It Takes No end time on it Kind Money Status Pending Tuesday, in two weeks Booked January 5, 2026 7:30 AM
+way: Tuesday, January 20 — The day it’s on: one thing on it, starting with Card Statement
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_000007: Your Birthday [Happens Without You]
+summary: It happens at 9:00 AM on Sunday, in five months, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It isn’t tied to a city, so wherever you are is fine. When 9:00 AM June 14, 2026 Length As Long As It Takes No end time on it Kind Personal Status Pending Sunday, in five months Booked January 5, 2026 7:30 AM
+way: Sunday, June 14 — The day it’s on: one thing on it, starting with Your Birthday
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## season au-nsw-sydney/Spring: Spring [Season]
+summary: Spring in Sydney runs through September, October and November. It’s eight months away.
+body: Sydney is at 34° south, so its seasons run the other way round from the northern half of the world’s: spring is September, October and November here. In the middle of it, a day here usually reaches 24°C and falls to 15°C, with 12h 53m of daylight. About 28 days in a hundred are wet. Runs September To November 3 months of the year Typical High 24°C At the middle of it Typical Low 15°C Overnight, at the middle of it Light Then 12h 53m On the middle day of it Wet Days 28% Of the days in it Where Sydney Not the season you’re in
+way: Summer — What comes after it here: December, January and February
+way: Daylight — Today’s daylight in Sydney, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season au-nsw-sydney/Summer: Summer [Season]
+summary: It’s summer in Sydney. Here it runs through December, January and February.
+body: Sydney is at 34° south, so its seasons run the other way round from the northern half of the world’s: summer is December, January and February here. In the middle of it, a day here usually reaches 31°C and falls to 22°C, with 14h 10m of daylight. About 42 days in a hundred are wet. Runs December To February 3 months of the year Typical High 31°C At the middle of it Typical Low 22°C Overnight, at the middle of it Light Then 14h 10m On the middle day of it Wet Days 42% Of the days in it Where Sydney The season you’re in now
+way: Autumn — What comes after it here: March, April and May
+way: Daylight — Today’s daylight in Sydney, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season au-nsw-sydney/Autumn: Autumn [Season]
+summary: Autumn in Sydney runs through March, April and May. It’s two months away.
+body: Sydney is at 34° south, so its seasons run the other way round from the northern half of the world’s: autumn is March, April and May here. In the middle of it, a day here usually reaches 25°C and falls to 16°C, with 11h 17m of daylight. About 25 days in a hundred are wet. Runs March To May 3 months of the year Typical High 25°C At the middle of it Typical Low 16°C Overnight, at the middle of it Light Then 11h 17m On the middle day of it Wet Days 25% Of the days in it Where Sydney Not the season you’re in
+way: Winter — What comes after it here: June, July and August
+way: Daylight — Today’s daylight in Sydney, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season au-nsw-sydney/Winter: Winter [Season]
+summary: Winter in Sydney runs through June, July and August. It’s five months away.
+body: Sydney is at 34° south, so its seasons run the other way round from the northern half of the world’s: winter is June, July and August here. In the middle of it, a day here usually reaches 17°C and falls to 8°C, with 10h 5m of daylight. About 28 days in a hundred are wet. Runs June To August 3 months of the year Typical High 17°C At the middle of it Typical Low 8°C Overnight, at the middle of it Light Then 10h 5m On the middle day of it Wet Days 28% Of the days in it Where Sydney Not the season you’re in
+way: Spring — What comes after it here: September, October and November
+way: Daylight — Today’s daylight in Sydney, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## daylight au-nsw-sydney: Daylight [The Light Today]
+summary: Daylight runs from 5:50 AM to 8:09 PM today, 14 hours and 20 minutes, and the days are getting about one minute shorter each day.
+body: Sydney is at 34° south, in the middle latitudes, where the length of the day changes by a few hours over the year. On the longest day of the year there’s 14h 24m of daylight, and on the shortest, there’s 9h 54m. Sunrise 5:50 AM Local time Sunset 8:09 PM Local time Length 14h 20m Losing 1 minute a day Longest Day 14h 24m At the December solstice Shortest Day 9h 54m At the June solstice Time Zone GMT+11 The local time zone
+source: Calculated from the Earth’s tilt, the day of the year and this latitude, as an almanac does, and good to a minute or two.
+
+## place au-nsw-sydney: Sydney [Where You Live]
+summary: This is where you live. It’s 7:30 AM, and 5.3M people live here.
+body: 5.3M people live here, in New South Wales, and the climate is humid subtropical. In short: southern hemisphere, harbor and production hub. Rent on a one-bedroom runs about A$3.0K a month, and the cost of living sits at 141, where a hundred is the United States’ price level. The rent is published: the NSW median rent on new bonds for a one-bedroom unit, A$700 a week, April to June 2026; source: https://dcj.nsw.gov.au/about-us/families-and-communities-statistics/housing-rent-and-sales/rent-and-sales-report.html. Income tax comes in one layer here: Australia Income Tax. Local Time 7:30 AM GMT+11 Daylight 5:50 AM – 8:09 PM 14h 20m of daylight Currency A$ AUD About 1.53 to the US dollar, estimated Cost Of Living 141 A hundred is the United States’ price level Tax On A Wage 22% Income tax and payroll both, on a US$60,000 wage Sales Tax 10.0% Property 0.35% Languages English The only one listed
+way: New South Wales — The part of Australia it’s in, with one town on the map
+way: Australia — Its languages, its money and which side of the road they drive on
+way: Dollar — AUD, written A$, and what a hundred US dollars comes to here
+way: Daylight — 5:50 AM to 8:09 PM, 14 hours and 20 minutes of daylight
+source: Its location, time zone and country are public record. Its rent is published, and its cost of living and tax rates are estimated.
+
+## region au-02: New South Wales [The State]
+summary: You’re in it, in Sydney, its only place on the map.
+body: It’s one of the eight parts the map divides Australia into. Its one town on your map is Sydney. The state adds no income tax of its own.
+way: Australia — The country it’s in, which the map divides into eight parts, and you’re in this one
+way: Sydney — 5.3M people
+source: The state and its towns come from a public gazetteer. A country’s towns show up once your life has a place in it.
+
+## country au: Australia [The Country]
+summary: You’re in Australia, a country of 25M people, and its money is the dollar.
+body: The capital is Canberra. The country is in Oceania, with 25M people across 7,686,850 square kilometers. They drive on the left, measure distance in kilometers and read the temperature in Celsius. English is spoken. Capital Canberra Oceania People 25M 7,686,850 sq km Money A$ AUD Dollar Languages English The only one listed Calling Code +61 Dialed from outside Drives On Left Kilometers on the signs
+way: Dollar — What everything in Australia is priced in
+way: New South Wales — The state you’re in, one of its eight parts
+source: These facts come from a public gazetteer.
+
+## currency AUD: Dollar [The Money]
+summary: The dollar is the money here, written A$. It’s about 1.53 to the US dollar, estimated.
+body: A hundred US dollars is A$153.00 here. Prices in it are written to two decimal places. Its symbol goes before the number. It’s used in Australia, Christmas Island, Cocos Islands, Heard Island and McDonald Islands and 4 more. A one-bedroom in Sydney is about A$3.0K a month.
+way: Australia — 25M people, with its capital at Canberra
+way: Kiribati — 116K people, with its capital at Tarawa
+way: Nauru — 13K people, with its capital at Yaren
+source: Exchange rates are estimated, not live market rates.
+
+## weather au-nsw-sydney: Weather In Sydney [Weather Now]
+summary: It’s 21°C and overcast where you are, with a high of 24°C and a low of 19°C today.
+body: The wind is 21 km/h and the humidity is 73%. Today is 4° colder than normal for the date. Friday is wet, and the rest of the week is dry. Right Now 21°C Overcast High 24°C The warmest it gets today Low 19°C Overnight Wind 21 km/h Not a windy day Humidity 73% How much water is in the air Against Usual -4° Compared with this date’s normal
+way: The Rest Of Today — 17 hours left, hour by hour to midnight
+way: Tomorrow — Overcast, 19°C to 28°C
+way: The Week Ahead — Six days, each of which you can open
+facet What It’s Usually Like: Sydney has a humid subtropical climate: hot, humid summers and short, mild winters. On January 5 it usually reaches about 31°C here, and today is 4° colder than normal for the date. About 22 days of thunder a year here, as published: Climate of Sydney, 20 to 25.
+source: Estimated from a climate model for Sydney: the season, the latitude and the kind of climate it has. It isn’t a real forecast.
+
+## forecastday au-nsw-sydney/2026-01-05: Monday [Today]
+summary: A thunderstorm in Sydney today, 19°C to 24°C.
+body: January 5: wind 21 km/h, humidity 73%, and the day is 4° colder than normal for the date. High 24°C Around 3 PM Low 19°C Around 3 AM Wind 21 km/h Thunderstorm
+way: The Rest Of Today — The hours left today, one at a time
+way: Sunday — The day before it: Rain, 22°C to 27°C
+way: Tuesday — The day after it: Overcast, 19°C to 28°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday au-nsw-sydney/2026-01-06: Tuesday [Tomorrow]
+summary: An overcast day in Sydney tomorrow, 19°C to 28°C.
+body: January 6: wind 26 km/h, humidity 62%, and the day is 3° colder than normal for the date. High 28°C Around 3 PM Low 19°C Around 3 AM Wind 26 km/h Overcast
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Monday — The day before it: Thunderstorm, 19°C to 24°C
+way: Wednesday — The day after it: Partly Cloudy, 22°C to 31°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday au-nsw-sydney/2026-01-07: Wednesday [Two Days Out]
+summary: Broken cloud in Sydney on Wednesday, 22°C to 31°C.
+body: January 7: wind 20 km/h, humidity 58%, and the day is about normal for the date. High 31°C Around 3 PM Low 22°C Around 3 AM Wind 20 km/h Partly Cloudy
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Tuesday — The day before it: Overcast, 19°C to 28°C
+way: Thursday — The day after it: Partly Cloudy, 20°C to 29°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday au-nsw-sydney/2026-01-08: Thursday [Three Days Out]
+summary: Broken cloud in Sydney on Thursday, 20°C to 29°C.
+body: January 8: wind 22 km/h, humidity 58%, and the day is 2° colder than normal for the date. High 29°C Around 3 PM Low 20°C Around 3 AM Wind 22 km/h Partly Cloudy
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Wednesday — The day before it: Partly Cloudy, 22°C to 31°C
+way: Friday — The day after it: Rain, 20°C to 26°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## hours au-nsw-sydney/2026-01-05: The Rest Of Today [Hour By Hour]
+summary: There are 17 hours of January 5 left, between 20°C and 24°C.
+body: The warmest hour is 3 PM, at 24°C, and the coldest is 7 AM, at 20°C. Three of them are after dark. It’s wet from around 8 AM until about noon: four hours.
+way: 7 AM — 20°C, overcast
+way: 8 AM — 21°C, thunderstorm
+way: 9 AM — 22°C, thunderstorm
+way: 10 AM — 22°C, thunderstorm
+way: 11 AM — 23°C, thunderstorm
+way: Noon — 23°C, overcast
+way: 1 PM — 24°C, overcast
+way: 2 PM — 24°C, overcast
+way: 3 PM — 24°C, overcast
+way: 4 PM — 24°C, overcast
+way: 5 PM — 24°C, overcast
+way: 6 PM — 23°C, overcast
+way: 7 PM — 23°C, overcast
+way: 8 PM — 22°C, overcast
+way: 9 PM — 22°C, overcast, after dark
+way: 10 PM — 21°C, overcast, after dark
+way: 11 PM — 20°C, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours au-nsw-sydney/2026-01-06: Tuesday’s Hours [Hour By Hour]
+summary: January 6 goes from 19°C at 4 AM up to 28°C at 3 PM.
+body: The warmest hour is 3 PM, at 28°C, and the coldest is 4 AM, at 19°C. 8 of them are after dark. They’re all dry.
+way: Midnight — 20°C, overcast, after dark
+way: 1 AM — 20°C, overcast, after dark
+way: 2 AM — 19°C, overcast, after dark
+way: 3 AM — 19°C, overcast, after dark
+way: 4 AM — 19°C, overcast, after dark
+way: 5 AM — 20°C, overcast
+way: 6 AM — 20°C, overcast
+way: 7 AM — 21°C, overcast
+way: 8 AM — 22°C, overcast
+way: 9 AM — 24°C, overcast
+way: 10 AM — 25°C, overcast
+way: 11 AM — 26°C, overcast
+way: Noon — 27°C, overcast
+way: 1 PM — 27°C, overcast
+way: 2 PM — 28°C, overcast
+way: 3 PM — 28°C, overcast
+way: 4 PM — 28°C, overcast
+way: 5 PM — 27°C, overcast
+way: 6 PM — 27°C, overcast
+way: 7 PM — 26°C, overcast
+way: 8 PM — 25°C, overcast
+way: 9 PM — 24°C, overcast, after dark
+way: 10 PM — 22°C, overcast, after dark
+way: 11 PM — 21°C, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours au-nsw-sydney/2026-01-07: Wednesday’s Hours [Hour By Hour]
+summary: January 7 goes from 22°C at 4 AM up to 31°C at 3 PM.
+body: The warmest hour is 3 PM, at 31°C, and the coldest is 4 AM, at 22°C. 8 of them are after dark. They’re all dry.
+way: Midnight — 23°C, partly cloudy, after dark
+way: 1 AM — 23°C, partly cloudy, after dark
+way: 2 AM — 22°C, partly cloudy, after dark
+way: 3 AM — 22°C, partly cloudy, after dark
+way: 4 AM — 22°C, partly cloudy, after dark
+way: 5 AM — 23°C, partly cloudy
+way: 6 AM — 23°C, partly cloudy
+way: 7 AM — 24°C, partly cloudy
+way: 8 AM — 25°C, partly cloudy
+way: 9 AM — 27°C, partly cloudy
+way: 10 AM — 28°C, partly cloudy
+way: 11 AM — 29°C, partly cloudy
+way: Noon — 30°C, partly cloudy
+way: 1 PM — 30°C, partly cloudy
+way: 2 PM — 31°C, partly cloudy
+way: 3 PM — 31°C, partly cloudy
+way: 4 PM — 31°C, partly cloudy
+way: 5 PM — 30°C, partly cloudy
+way: 6 PM — 30°C, partly cloudy
+way: 7 PM — 29°C, partly cloudy
+way: 8 PM — 28°C, partly cloudy
+way: 9 PM — 27°C, partly cloudy, after dark
+way: 10 PM — 25°C, partly cloudy, after dark
+way: 11 PM — 24°C, partly cloudy, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours au-nsw-sydney/2026-01-08: Thursday’s Hours [Hour By Hour]
+summary: January 8 goes from 20°C at 4 AM up to 29°C at 3 PM.
+body: The warmest hour is 3 PM, at 29°C, and the coldest is 4 AM, at 20°C. 8 of them are after dark. They’re all dry.
+way: Midnight — 21°C, partly cloudy, after dark
+way: 1 AM — 21°C, partly cloudy, after dark
+way: 2 AM — 20°C, partly cloudy, after dark
+way: 3 AM — 20°C, partly cloudy, after dark
+way: 4 AM — 20°C, partly cloudy, after dark
+way: 5 AM — 21°C, partly cloudy
+way: 6 AM — 21°C, partly cloudy
+way: 7 AM — 22°C, partly cloudy
+way: 8 AM — 23°C, partly cloudy
+way: 9 AM — 25°C, partly cloudy
+way: 10 AM — 26°C, partly cloudy
+way: 11 AM — 27°C, partly cloudy
+way: Noon — 28°C, partly cloudy
+way: 1 PM — 28°C, partly cloudy
+way: 2 PM — 29°C, partly cloudy
+way: 3 PM — 29°C, partly cloudy
+way: 4 PM — 29°C, partly cloudy
+way: 5 PM — 28°C, partly cloudy
+way: 6 PM — 28°C, partly cloudy
+way: 7 PM — 27°C, partly cloudy
+way: 8 PM — 26°C, partly cloudy
+way: 9 PM — 25°C, partly cloudy, after dark
+way: 10 PM — 23°C, partly cloudy, after dark
+way: 11 PM — 22°C, partly cloudy, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## skyhour au-nsw-sydney/2026-01-05/7: 7 AM [One Hour]
+summary: At 7 AM it’s 20°C and overcast in Sydney, in the morning.
+body: The sun is up, the wind is 21 km/h, and it’s dry. The next hour is one degrees warmer.
+way: 8 AM — The hour after it: 21°C, thunderstorm
+source: Estimated from January 5’s forecast, and the same every time you look.
+
+## skyhour au-nsw-sydney/2026-01-05/8: 8 AM [One Hour]
+summary: At 8 AM it’s 21°C and storming in Sydney, in the morning.
+body: The sun is up, the wind is 21 km/h, and there’s a thunderstorm. The next hour is one degrees warmer.
+way: 7 AM — The hour before it: 20°C, overcast
+way: 9 AM — The hour after it: 22°C, thunderstorm
+source: Estimated from January 5’s forecast, and the same every time you look.
+
+## skyhour au-nsw-sydney/2026-01-05/9: 9 AM [One Hour]
+summary: At 9 AM it’s 22°C and storming in Sydney, in the morning.
+body: The sun is up, the wind is 21 km/h, and there’s a thunderstorm. The next hour is the same temperature.
+way: 8 AM — The hour before it: 21°C, thunderstorm
+way: 10 AM — The hour after it: 22°C, thunderstorm
+source: Estimated from January 5’s forecast, and the same every time you look.
+
+## skyhour au-nsw-sydney/2026-01-05/10: 10 AM [One Hour]
+summary: At 10 AM it’s 22°C and storming in Sydney, in the morning.
+body: The sun is up, the wind is 21 km/h, and there’s a thunderstorm. The next hour is one degrees warmer.
+way: 9 AM — The hour before it: 22°C, thunderstorm
+way: 11 AM — The hour after it: 23°C, thunderstorm
+source: Estimated from January 5’s forecast, and the same every time you look.
+
+## skyweek au-nsw-sydney: The Week Ahead [Six Days Of Weather]
+summary: Six days in Sydney, from 19°C to 32°C, with two of them wet.
+body: The warmest is Saturday at 32°C. Today and Friday are the wet ones. Each day’s weather is blended with the two days before it, so the days follow on from each other: a cold snap lasts, and a wet spell lingers.
+way: Today — Thunderstorm, 19°C to 24°C
+way: Tomorrow — Overcast, 19°C to 28°C
+way: Wed — Partly Cloudy, 22°C to 31°C
+way: Thu — Partly Cloudy, 20°C to 29°C
+way: Fri — Rain, 20°C to 26°C
+way: Sat — Overcast, 23°C to 32°C
+source: Six days estimated from a climate model. It isn’t a real forecast.
+
+## stretch sched_000003: 9:00 AM To 10:00 AM [Its Hours]
+summary: It runs from 9:00 AM to 10:00 AM, one hour on January 20, 2026, at 27°C throughout.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM January 20, 2026 Ends 10:00 AM one hour Coldest Hour 27°C 9 AM
+way: 9 AM — 27°C, overcast
+source: The hour is estimated from the day’s forecast.
+
+## stretch sched_000007: 9:00 AM To 10:00 AM [Its Hours]
+summary: It runs from 9:00 AM to 10:00 AM, one hour on June 14, 2026, at 12°C throughout.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM June 14, 2026 Ends 10:00 AM one hour Coldest Hour 12°C 9 AM
+way: 9 AM — 12°C, partly cloudy
+source: The hour is estimated from the day’s forecast.
+
+## plans : Your Own Plans [What You Put On The Calendar]
+summary: You haven’t put anything on the calendar yourself, so everything on it was put there for you.
+body: A plan of your own needs a name, a start time and a length, and it’s in the city you’re in when you make it. Waiting 0 Still ahead of you Called Off 0 You called them off Gone By 0 You weren’t there
+source: Your plans are ordinary calendar items: the clock stops at them, and a clash is marked.
+
+# a quick life in London
+
+## day 2026-01-05: Monday, January 5 [The Day]
+summary: It’s 7:30 AM in London on Monday, January 5, and the day is entirely yours.
+body: Daylight from 8:05 AM to 4:05 PM: 8h. Winter here is at its middle. You have nothing booked on it yet. Sunrise 8:05 AM Local time Sunset 4:05 PM Local time Daylight 8h Winter here On The Calendar 0 No plans Commitments 0 None of it needs you Where London GMT
+way: Winter — What winter is like in London, and how long it lasts
+way: Daylight — 8:05 AM to 4:05 PM, 8h of daylight
+way: The Sky — Drizzle, 4°C to 8°C
+way: Sunday, January 4 — One day back, and nothing was booked on it
+way: Tuesday, January 6 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-01-06: Tuesday, January 6 [Tomorrow]
+summary: Tomorrow’s Tuesday, January 6, and nothing is on it yet.
+body: Daylight from 8:05 AM to 4:06 PM: 8h 1m. That’s winter in London, and the season is at its middle then. You have nothing booked on it yet. Sunrise 8:05 AM Local time Sunset 4:06 PM Local time Daylight 8h 1m Winter here On The Calendar 0 No plans Commitments 0 None of it needs you Where London GMT
+way: Winter — What winter is like in London, and how long it lasts
+way: Daylight — 8:05 AM to 4:06 PM, 8h 1m of daylight
+way: The Sky — Drizzle, 3°C to 7°C
+way: Monday, January 5 — One day back, and nothing was booked on it
+way: Wednesday, January 7 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## day 2026-01-04: Sunday, January 4 [Yesterday]
+summary: Yesterday was Sunday, January 4, and nothing was on it.
+body: Daylight from 8:05 AM to 4:03 PM: 7h 58m. That was winter in London, and the season was at its middle then. You had nothing booked on it. Sunrise 8:05 AM Local time Sunset 4:03 PM Local time Daylight 7h 58m Winter here On The Calendar 0 No plans Commitments 0 None of it needs you Where London GMT
+way: Winter — What winter is like in London, and how long it lasts
+way: Daylight — 8:05 AM to 4:03 PM, 7h 58m of daylight
+way: Saturday, January 3 — One day back, and nothing was booked on it
+way: Monday, January 5 — One day on, and nothing on it yet
+source: Sunrise and sunset are calculated from the date and this latitude, not looked up. The holidays and observances are the ones kept where you are.
+
+## entry sched_000003: Card Statement [Happens Without You]
+summary: It happens at 9:00 AM on Tuesday, in two weeks, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It isn’t tied to a city, so wherever you are is fine. When 9:00 AM January 20, 2026 Length As Long As It Takes No end time on it Kind Money Status Pending Tuesday, in two weeks Booked January 5, 2026 7:30 AM
+way: Tuesday, January 20 — The day it’s on: one thing on it, starting with Card Statement
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## entry sched_000007: Your Birthday [Happens Without You]
+summary: It happens at 9:00 AM on Sunday, in five months, without you needing to be there.
+body: It happens on its own when the clock reaches it, without you needing to be there. It isn’t tied to a city, so wherever you are is fine. When 9:00 AM June 14, 2026 Length As Long As It Takes No end time on it Kind Personal Status Pending Sunday, in five months Booked January 5, 2026 7:30 AM
+way: Sunday, June 14 — The day it’s on: one thing on it, starting with Your Birthday
+source: The calendar flags anything you need to be at that overlaps something else, before you get to it.
+
+## season uk-eng-london/Spring: Spring [Season]
+summary: Spring in London runs through March, April and May. It’s two months away.
+body: London is at 52° north, so spring is March, April and May, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 13°C and falls to 6°C, with 13h 48m of daylight. About 35 days in a hundred are wet. Runs March To May 3 months of the year Typical High 13°C At the middle of it Typical Low 6°C Overnight, at the middle of it Light Then 13h 48m On the middle day of it Wet Days 35% Of the days in it Where London Not the season you’re in
+way: Summer — What comes after it here: June, July and August
+way: Daylight — Today’s daylight in London, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season uk-eng-london/Summer: Summer [Season]
+summary: Summer in London runs through June, July and August. It’s five months away.
+body: London is at 52° north, so summer is June, July and August, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 21°C and falls to 14°C, with 16h 13m of daylight. About 30 days in a hundred are wet. Runs June To August 3 months of the year Typical High 21°C At the middle of it Typical Low 14°C Overnight, at the middle of it Light Then 16h 13m On the middle day of it Wet Days 30% Of the days in it Where London Not the season you’re in
+way: Autumn — What comes after it here: September, October and November
+way: Daylight — Today’s daylight in London, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season uk-eng-london/Autumn: Autumn [Season]
+summary: Autumn in London runs through September, October and November. It’s eight months away.
+body: London is at 52° north, so autumn is September, October and November, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 17°C and falls to 10°C, with 10h 47m of daylight. About 42 days in a hundred are wet. Runs September To November 3 months of the year Typical High 17°C At the middle of it Typical Low 10°C Overnight, at the middle of it Light Then 10h 47m On the middle day of it Wet Days 42% Of the days in it Where London Not the season you’re in
+way: Winter — What comes after it here: December, January and February
+way: Daylight — Today’s daylight in London, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## season uk-eng-london/Winter: Winter [Season]
+summary: It’s winter in London. Here it runs through December, January and February.
+body: London is at 52° north, so winter is December, January and February, as in the rest of the northern half of the world. In the middle of it, a day here usually reaches 9°C and falls to 2°C, with 8h 19m of daylight. About 45 days in a hundred are wet. Runs December To February 3 months of the year Typical High 9°C At the middle of it Typical Low 2°C Overnight, at the middle of it Light Then 8h 19m On the middle day of it Wet Days 45% Of the days in it Where London The season you’re in now
+way: Spring — What comes after it here: March, April and May
+way: Daylight — Today’s daylight in London, and whether the days are getting longer
+source: Estimated from a climate model for this latitude and this kind of place: what the date usually brings here, not a forecast.
+
+## daylight uk-eng-london: Daylight [The Light Today]
+summary: Daylight runs from 8:05 AM to 4:05 PM today, 8 hours, and the days are getting about one minute longer each day.
+body: London is at 52° north, far enough from the equator that winter afternoons end early and summer evenings run late. On the longest day of the year there’s 16h 39m of daylight, and on the shortest, there’s 7h 50m. Sunrise 8:05 AM Local time Sunset 4:05 PM Local time Length 8h Gaining 1 minute a day Longest Day 16h 39m At the June solstice Shortest Day 7h 50m At the December solstice Time Zone GMT The local time zone
+source: Calculated from the Earth’s tilt, the day of the year and this latitude, as an almanac does, and good to a minute or two.
+
+## place uk-eng-london: London [Where You Live]
+summary: This is where you live. It’s 7:30 AM, and 8.9M people live here.
+body: 8.9M people live here, in England, and the climate is oceanic. In short: theater, production hub and international. Rent on a one-bedroom runs about £1.8K a month, and the cost of living sits at 158, where a hundred is the United States’ price level. The rent is published: the ONS’s mean rent across private tenancies, August 2026; the room’s rent is SpareRoom’s, for the first quarter of 2026; source: https://www.ons.gov.uk/economy/inflationandpriceindices/bulletins/priceindexofprivaterentsukmonthlypricestatistics. Income tax comes in one layer here: United Kingdom Income Tax. Local Time 7:30 AM GMT Daylight 8:05 AM – 4:05 PM 8h of daylight Currency £ GBP About 0.79 to the US dollar, estimated Cost Of Living 158 A hundred is the United States’ price level Tax On A Wage 21% Income tax and payroll both, on a US$60,000 wage Sales Tax 20.0% Property 0.45% Languages English Welsh and Scottish Gaelic
+way: England — The part of the United Kingdom it’s in, with three towns on the map
+way: United Kingdom — Its languages, its money and which side of the road they drive on
+way: Pound — GBP, written £, and what a hundred US dollars comes to here
+way: Daylight — 8:05 AM to 4:05 PM, 8 hours of daylight
+source: Its location, time zone and country are public record. Its rent is published, and its cost of living and tax rates are estimated.
+
+## region uk-eng: England [The Nation]
+summary: You’re in it, in London, one of its three places on the map.
+body: It’s one of the four parts the map divides the United Kingdom into. Its towns on your map are London, Manchester and Birmingham. The nation adds no income tax of its own.
+way: United Kingdom — The country it’s in, which the map divides into four parts, and you’re in this one
+way: London — 8.9M people
+way: Birmingham — 1.2M people
+way: Manchester — 553K people
+source: The nation and its towns come from a public gazetteer. A country’s towns show up once your life has a place in it.
+
+## country uk: United Kingdom [The Country]
+summary: You’re in the United Kingdom, a country of 66M people, and its money is the pound.
+body: The capital is London. The country is in Europe, with 66M people across 244,820 square kilometers. They drive on the left, measure distance in miles and read the temperature in Celsius. English, Welsh and Scottish Gaelic are spoken, in the order the country lists them. Capital London Europe People 66M 244,820 sq km Money £ GBP Pound Languages English Welsh and Scottish Gaelic Calling Code +44 Dialed from outside Drives On Left Miles on the signs
+way: Pound — What everything in the United Kingdom is priced in
+way: England — The nation you’re in, one of its four parts
+source: These facts come from a public gazetteer.
+
+## currency GBP: Pound [The Money]
+summary: The pound is the money here, written £. It’s about 0.79 to the US dollar, estimated.
+body: A hundred US dollars is £79.00 here. Prices in it are written to two decimal places. Its symbol goes before the number. It’s used in Guernsey, Isle of Man, Jersey, South Georgia and the South Sandwich Islands and 1 more. A one-bedroom in London is about £1.8K a month.
+way: United Kingdom — 66M people, with its capital at London
+way: Jersey — 91K people, with its capital at Saint Helier
+way: Isle of Man — 84K people, with its capital at Douglas
+source: Exchange rates are estimated, not live market rates.
+
+## weather uk-eng-london: Weather In London [Weather Now]
+summary: It’s 5°C and overcast where you are, with a high of 8°C and a low of 4°C today.
+body: The wind is 21 km/h and the humidity is 74%. Today is 2° warmer than normal for the date. Tuesday and Saturday are wet, and the rest of the week is dry. Right Now 5°C Overcast High 8°C The warmest it gets today Low 4°C Overnight Wind 21 km/h Not a windy day Humidity 74% How much water is in the air Against Usual +2° Compared with this date’s normal
+way: The Rest Of Today — 17 hours left, hour by hour to midnight
+way: Tomorrow — Drizzle, 3°C to 7°C
+way: The Week Ahead — Six days, each of which you can open
+facet What It’s Usually Like: London has a oceanic climate: mild and often wet and gray, without extremes of heat or cold. On January 5 it usually reaches about 9°C here, and today is 2° warmer than normal for the date. About 16 days of thunder a year here, as published: Met Office factsheet, southeast England 15 to 19.
+source: Estimated from a climate model for London: the season, the latitude and the kind of climate it has. It isn’t a real forecast.
+
+## forecastday uk-eng-london/2026-01-05: Monday [Today]
+summary: Drizzle in London today, 4°C to 8°C.
+body: January 5: wind 21 km/h, humidity 74%, and the day is 2° warmer than normal for the date. High 8°C Around 3 PM Low 4°C Around 3 AM Wind 21 km/h Drizzle
+way: The Rest Of Today — The hours left today, one at a time
+way: Sunday — The day before it: Drizzle, 2°C to 7°C
+way: Tuesday — The day after it: Drizzle, 3°C to 7°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday uk-eng-london/2026-01-06: Tuesday [Tomorrow]
+summary: Drizzle in London tomorrow, 3°C to 7°C.
+body: January 6: wind 26 km/h, humidity 71%, and the day is about normal for the date. High 7°C Around 3 PM Low 3°C Around 3 AM Wind 26 km/h Drizzle
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Monday — The day before it: Drizzle, 4°C to 8°C
+way: Wednesday — The day after it: Overcast, 1°C to 8°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday uk-eng-london/2026-01-07: Wednesday [Two Days Out]
+summary: An overcast day in London on Wednesday, 1°C to 8°C.
+body: January 7: wind 24 km/h, humidity 63%, and the day is about normal for the date. High 8°C Around 3 PM Low 1°C Around 3 AM Wind 24 km/h Overcast
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Tuesday — The day before it: Drizzle, 3°C to 7°C
+way: Thursday — The day after it: Overcast, 0°C to 7°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## forecastday uk-eng-london/2026-01-08: Thursday [Three Days Out]
+summary: An overcast day in London on Thursday, 0°C to 7°C.
+body: January 8: wind 23 km/h, humidity 63%, and the day is 2° colder than normal for the date. High 7°C Around 3 PM Low 0°C Around 3 AM Wind 23 km/h Overcast
+way: Hour By Hour — Its weather through the day, midnight to 11 PM
+way: Wednesday — The day before it: Overcast, 1°C to 8°C
+way: Friday — The day after it: Partly Cloudy, 2°C to 9°C
+source: Each day’s weather is simulated and blended with the two days before it, so a cold snap lasts and a wet spell lingers.
+
+## hours uk-eng-london/2026-01-05: The Rest Of Today [Hour By Hour]
+summary: There are 17 hours of January 5 left, between 5°C and 8°C.
+body: The warmest hour is 3 PM, at 8°C, and the coldest is 7 AM, at 5°C. 8 of them are after dark. It’s wet from around 11 AM until about 7 PM: 8 hours.
+way: 7 AM — 5°C, overcast, after dark
+way: 8 AM — 5°C, overcast
+way: 9 AM — 6°C, overcast
+way: 10 AM — 7°C, overcast
+way: 11 AM — 7°C, drizzle
+way: Noon — 7°C, drizzle
+way: 1 PM — 8°C, drizzle
+way: 2 PM — 8°C, drizzle
+way: 3 PM — 8°C, drizzle
+way: 4 PM — 8°C, drizzle
+way: 5 PM — 8°C, drizzle, after dark
+way: 6 PM — 7°C, drizzle, after dark
+way: 7 PM — 7°C, overcast, after dark
+way: 8 PM — 7°C, overcast, after dark
+way: 9 PM — 6°C, overcast, after dark
+way: 10 PM — 5°C, overcast, after dark
+way: 11 PM — 5°C, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours uk-eng-london/2026-01-06: Tuesday’s Hours [Hour By Hour]
+summary: January 6 goes from 3°C at 4 AM up to 7°C at 3 PM.
+body: The warmest hour is 3 PM, at 7°C, and the coldest is 4 AM, at 3°C. 15 of them are after dark. It’s wet from around 10 AM until about 5 PM: 7 hours.
+way: Midnight — 4°C, overcast, after dark
+way: 1 AM — 3°C, overcast, after dark
+way: 2 AM — 3°C, overcast, after dark
+way: 3 AM — 3°C, overcast, after dark
+way: 4 AM — 3°C, overcast, after dark
+way: 5 AM — 3°C, overcast, after dark
+way: 6 AM — 4°C, overcast, after dark
+way: 7 AM — 4°C, overcast, after dark
+way: 8 AM — 4°C, overcast
+way: 9 AM — 5°C, overcast
+way: 10 AM — 6°C, drizzle
+way: 11 AM — 6°C, drizzle
+way: Noon — 6°C, drizzle
+way: 1 PM — 7°C, drizzle
+way: 2 PM — 7°C, drizzle
+way: 3 PM — 7°C, drizzle
+way: 4 PM — 7°C, drizzle
+way: 5 PM — 7°C, overcast, after dark
+way: 6 PM — 6°C, overcast, after dark
+way: 7 PM — 6°C, overcast, after dark
+way: 8 PM — 6°C, overcast, after dark
+way: 9 PM — 5°C, overcast, after dark
+way: 10 PM — 4°C, overcast, after dark
+way: 11 PM — 4°C, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours uk-eng-london/2026-01-07: Wednesday’s Hours [Hour By Hour]
+summary: January 7 goes from 1°C at 4 AM up to 8°C at 3 PM.
+body: The warmest hour is 3 PM, at 8°C, and the coldest is 4 AM, at 1°C. 15 of them are after dark. They’re all dry.
+way: Midnight — 2°C, overcast, after dark
+way: 1 AM — 1°C, overcast, after dark
+way: 2 AM — 1°C, overcast, after dark
+way: 3 AM — 1°C, overcast, after dark
+way: 4 AM — 1°C, overcast, after dark
+way: 5 AM — 1°C, overcast, after dark
+way: 6 AM — 2°C, overcast, after dark
+way: 7 AM — 3°C, overcast, after dark
+way: 8 AM — 4°C, overcast
+way: 9 AM — 5°C, overcast
+way: 10 AM — 5°C, overcast
+way: 11 AM — 6°C, overcast
+way: Noon — 7°C, overcast
+way: 1 PM — 8°C, overcast
+way: 2 PM — 8°C, overcast
+way: 3 PM — 8°C, overcast
+way: 4 PM — 8°C, overcast
+way: 5 PM — 8°C, overcast, after dark
+way: 6 PM — 7°C, overcast, after dark
+way: 7 PM — 6°C, overcast, after dark
+way: 8 PM — 5°C, overcast, after dark
+way: 9 PM — 5°C, overcast, after dark
+way: 10 PM — 4°C, overcast, after dark
+way: 11 PM — 3°C, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## hours uk-eng-london/2026-01-08: Thursday’s Hours [Hour By Hour]
+summary: January 8 goes from 0°C at 4 AM up to 7°C at 3 PM.
+body: The warmest hour is 3 PM, at 7°C, and the coldest is 4 AM, at 0°C. 15 of them are after dark. They’re all dry.
+way: Midnight — 1°C, overcast, after dark
+way: 1 AM — 0°C, overcast, after dark
+way: 2 AM — 0°C, overcast, after dark
+way: 3 AM — 0°C, overcast, after dark
+way: 4 AM — 0°C, overcast, after dark
+way: 5 AM — 0°C, overcast, after dark
+way: 6 AM — 1°C, overcast, after dark
+way: 7 AM — 2°C, overcast, after dark
+way: 8 AM — 3°C, overcast
+way: 9 AM — 4°C, overcast
+way: 10 AM — 4°C, overcast
+way: 11 AM — 5°C, overcast
+way: Noon — 6°C, overcast
+way: 1 PM — 7°C, overcast
+way: 2 PM — 7°C, overcast
+way: 3 PM — 7°C, overcast
+way: 4 PM — 7°C, overcast
+way: 5 PM — 7°C, overcast, after dark
+way: 6 PM — 6°C, overcast, after dark
+way: 7 PM — 5°C, overcast, after dark
+way: 8 PM — 4°C, overcast, after dark
+way: 9 PM — 4°C, overcast, after dark
+way: 10 PM — 3°C, overcast, after dark
+way: 11 PM — 2°C, overcast, after dark
+source: Each hour is estimated from one curve between the day’s high and low, coldest around 3 AM and warmest around 3 PM, with any wet spell at the time of day the forecast gives it.
+
+## skyhour uk-eng-london/2026-01-05/7: 7 AM [One Hour]
+summary: At 7 AM it’s 5°C and overcast in London, in the morning.
+body: It’s dark, the wind is 21 km/h, and it’s dry. The next hour is the same temperature.
+way: 8 AM — The hour after it: 5°C, overcast
+source: Estimated from January 5’s forecast, and the same every time you look.
+
+## skyhour uk-eng-london/2026-01-05/8: 8 AM [One Hour]
+summary: At 8 AM it’s 5°C and overcast in London, in the morning.
+body: The sun is up, the wind is 21 km/h, and it’s dry. The next hour is one degrees warmer.
+way: 7 AM — The hour before it: 5°C, overcast
+way: 9 AM — The hour after it: 6°C, overcast
+source: Estimated from January 5’s forecast, and the same every time you look.
+
+## skyhour uk-eng-london/2026-01-05/9: 9 AM [One Hour]
+summary: At 9 AM it’s 6°C and overcast in London, in the morning.
+body: The sun is up, the wind is 21 km/h, and it’s dry. The next hour is one degrees warmer.
+way: 8 AM — The hour before it: 5°C, overcast
+way: 10 AM — The hour after it: 7°C, overcast
+source: Estimated from January 5’s forecast, and the same every time you look.
+
+## skyhour uk-eng-london/2026-01-05/10: 10 AM [One Hour]
+summary: At 10 AM it’s 7°C and overcast in London, in the morning.
+body: The sun is up, the wind is 21 km/h, and it’s dry. The next hour is the same temperature.
+way: 9 AM — The hour before it: 6°C, overcast
+way: 11 AM — The hour after it: 7°C, drizzle
+source: Estimated from January 5’s forecast, and the same every time you look.
+
+## skyweek uk-eng-london: The Week Ahead [Six Days Of Weather]
+summary: Six days in London, from 0°C to 9°C, with three of them wet.
+body: The warmest is Friday at 9°C. Today, tomorrow and Saturday are the wet ones. Each day’s weather is blended with the two days before it, so the days follow on from each other: a cold snap lasts, and a wet spell lingers.
+way: Today — Drizzle, 4°C to 8°C
+way: Tomorrow — Drizzle, 3°C to 7°C
+way: Wed — Overcast, 1°C to 8°C
+way: Thu — Overcast, 0°C to 7°C
+way: Fri — Partly Cloudy, 2°C to 9°C
+way: Sat — Rain, 1°C to 6°C
+source: Six days estimated from a climate model. It isn’t a real forecast.
+
+## stretch sched_000003: 9:00 AM To 10:00 AM [Its Hours]
+summary: It runs from 9:00 AM to 10:00 AM, one hour on January 20, 2026, at 5°C throughout.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM January 20, 2026 Ends 10:00 AM one hour Coldest Hour 5°C 9 AM
+way: 9 AM — 5°C, overcast
+source: The hour is estimated from the day’s forecast.
+
+## stretch sched_000007: 9:00 AM To 10:00 AM [Its Hours]
+summary: It runs from 9:00 AM to 10:00 AM, one hour on June 14, 2026, at 19°C throughout.
+body: The sun is up for all of it. It stays dry the whole way through. Starts 9:00 AM June 14, 2026 Ends 10:00 AM one hour Coldest Hour 19°C 9 AM
+way: 9 AM — 19°C, partly cloudy
+source: The hour is estimated from the day’s forecast.
+
+## plans : Your Own Plans [What You Put On The Calendar]
+summary: You haven’t put anything on the calendar yourself, so everything on it was put there for you.
+body: A plan of your own needs a name, a start time and a length, and it’s in the city you’re in when you make it. Waiting 0 Still ahead of you Called Off 0 You called them off Gone By 0 You weren’t there
+source: Your plans are ordinary calendar items: the clock stops at them, and a clash is marked.

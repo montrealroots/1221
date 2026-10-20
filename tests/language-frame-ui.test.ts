@@ -158,7 +158,7 @@ describe('the top bar’s dialogs', () => {
     press(button(/^One Week/));
     let said = dialog(drawn(sim, TimeControls).html, 'On The Way');
     const week = sim.now + 7 * MS_DAY;
-    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment. The clock stops at it so you can choose: press Go, or Stand Here to wait. You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust.`);
+    expect(said).toContain(`Moving the clock to One Week (${formatDateTime(week, sim.zone)}) passes one commitment. The clock stops at it so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust.`);
     expect(said).toMatch(/Dinner — /);
     sim.must({ kind: 'calendar.schedule', payload: { title: 'Gym', at: sim.now + 40 * MS_HOUR, durationMinutes: 60 } });
     h.given = new Map();
@@ -167,8 +167,33 @@ describe('the top bar’s dialogs', () => {
     drawn(sim, TimeControls);
     press(button(/^One Week/));
     said = dialog(drawn(sim, TimeControls).html, 'On The Way');
-    expect(said).toContain('passes two commitments. The clock stops at each one so you can choose: press Go, or Stand Here to wait.');
+    expect(said).toContain('passes two commitments. The clock stops at each one so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there.');
     expect(h.buttons.map((b) => b.text)).toEqual(expect.arrayContaining(['Cancel', 'Advance']));
+  });
+
+  // From 2026-10-20 (brief 17): On The Way says what each answer does to the move, so what each does is held here.
+  it('PLAYER JOURNEY: at a stop on the way, Go is there and carries the move on to where it was headed, and Stand Here stops the clock at the stop, paused', () => {
+    for (const answer of ['Go', 'Stand Here'] as const) {
+      const { sim, at } = withPlan(`frame-on-the-way-${answer === 'Go' ? 'go' : 'stand'}`, 'Dinner', 30);
+      const week = sim.now + 7 * MS_DAY;
+      h.given = new Map();
+      drawn(sim, TimeControls);
+      press(button('Advance ▾'));
+      drawn(sim, TimeControls);
+      press(button(/^One Week/));
+      drawn(sim, TimeControls);
+      press(button('Advance'));
+      expect(sim.now, 'the move stops at the commitment').toBe(at);
+      dialog(drawn(sim, TimeControls).html, 'Dinner');
+      press(button(answer));
+      drawn(sim, TimeControls);
+      if (answer === 'Go') {
+        expect(sim.now, 'Go carries the move on to One Week').toBe(week);
+      } else {
+        expect(sim.now, 'Stand Here leaves the clock at the stop').toBe(at);
+        expect(sim.universe.preferences.timeSpeed).toBe('paused');
+      }
+    }
   });
 
   it('the stop says it needs you now, what going takes, and what a plan of your own and the world’s own each offer', () => {
@@ -200,7 +225,7 @@ describe('the top bar’s dialogs', () => {
     expect(said).toContain('Going takes 30 minutes');
     // What starts and who's there (from 2026-10-20, brief 16): until then "It happens …, and you’re there if you’re awake
     // and in the right city", without the hospital and an injury, which `present` reads.
-    expect(said).toContain('You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. A Visit To The Passport Office starts the next time the clock moves, and you’re there if you’re awake, in its town, and not in hospital or laid up with an injury.');
+    expect(said).toContain('Press Go, or Stand Here to wait with the clock paused. A Visit To The Passport Office starts the next time the clock moves, and you’re there if you’re awake, in its town, and not in hospital or laid up with an injury. Only a plan of your own can be skipped, so there’s no Skip It button here.');
     expect(h.buttons.map((b) => b.text)).not.toContain('Skip It');
     expect(said).not.toContain('The school’s');
 
@@ -217,7 +242,7 @@ describe('the top bar’s dialogs', () => {
     game.advanceTo(seen + MS_HOUR);
     for (const one of h.sets) h.given.set(one.at, one.value);
     said = dialog(drawn(care, TimeControls).html, 'A Visit To Your Doctor');
-    expect(said).toContain('Press Go, or Stand Here to wait. A Visit To Your Doctor starts the next time the clock moves, and you’re there if you’re awake and out of hospital.');
+    expect(said).toContain('Press Go, or Stand Here to wait with the clock paused. A Visit To Your Doctor starts the next time the clock moves, and you’re there if you’re awake and out of hospital.');
   });
 
   it('Skip To Event says what the clock stops at on the way and what else happens, for none, one and several', () => {
@@ -464,14 +489,14 @@ describe('creation, step by step', () => {
 
     text = step(3, ada());
     expect(text).toContain('You’re a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, one of 16 actors admitted this year: among the strongest of them, but not ahead of everyone.');
-    expect(text).toContain('Your money is kept in the dollar (USD), the currency where you start, and stays in it wherever you go.');
+    expect(text).toContain('Your money is kept in the currency where you start, the dollar (USD), and stays in it wherever you go.');
     expect(text).toContain('Leave them blank and SLATE picks them at random, around the averages where you were born.');
 
     text = step(4, ada());
     expect(text).toContain('Ready To Begin');
     expect(text).toMatch(/Food Each Month \$[\d,]+/);
     expect(text).toContain('You haven’t picked any traits. That’s fine: the dispositions above still shape your stress, your sleep, your morale and your card.');
-    expect(text).toContain('Your life starts with the clock paused. Once you press Play, a minute passes in the game for every real minute, and what’s on your calendar happens whether you’re watching or not.');
+    expect(text).toContain('Your life starts with the clock paused. Once you press Play, a minute passes in the game for every real minute, and the clock pauses itself at each commitment to ask what you want to do.');
   });
 });
 
@@ -530,7 +555,7 @@ describe('opening and starting, said in words', () => {
     const context = { warnings: [] as string[], slots: slots as never };
     for (const stage of STAGES.filter((s) => s.id === 'validate' || s.id === 'migrations')) await stage.run(context);
     expect(context.warnings).toEqual([
-      'Slot 1: That save file is damaged and can’t be read. You can restore its backup from the save slots.',
+      'Slot 1: That save file is damaged and can’t be read. Press Restore Backup on the slot to open its backup.',
       'Slot 2 was saved by a newer version of SLATE, so this version won’t open it. That keeps the save safe.',
       'Slot 3 was saved by an older version of SLATE. When you open it, SLATE keeps a backup and then updates it.',
     ]);
@@ -556,7 +581,7 @@ describe('opening and starting, said in words', () => {
     const off = quickSave({}, 'frame-open-unbalanced');
     const account = Object.values(off.universe.accounts).find((a) => a.ownerId === off.universe.playerId)!;
     account.balance += 1;
-    expect(migrate(JSON.parse(serialise(off.universe))).problems).toEqual(['This save’s accounts don’t add up, so SLATE can’t update it safely and hasn’t changed anything in it. If the slot has a backup, you can restore that instead.']);
+    expect(migrate(JSON.parse(serialise(off.universe))).problems).toEqual(['This save’s accounts don’t add up, so SLATE can’t update it safely and hasn’t changed anything in it. If the slot has a backup, press Restore Backup to open that instead.']);
     logged.mockRestore();
   });
 
@@ -627,7 +652,7 @@ describe('creation’s pickers and Before Yale, said in words', () => {
     // A search in a state that finds nothing names the select's own way wider.
     const state = REGIONS.all().find((r) => r.parentId === 'us')!;
     text = picker([[0, 'us'], [1, state.id], [2, 'Zzyzxq']]);
-    expect(text).toContain('No town or city matches “Zzyzxq” there. Try a different spelling, or choose Anywhere in United States.');
+    expect(text).toContain('No town or city matches “Zzyzxq” there. Try a different spelling, or choose Anywhere In The United States.');
     text = picker([[0, 'us'], [2, 'Zzyzxq']]);
     expect(text).toContain('No town or city matches “Zzyzxq” there. Try a different spelling.');
   });
@@ -672,7 +697,7 @@ describe('creation’s pickers and Before Yale, said in words', () => {
     expect(text).toMatch(/, and a card with a \$[\d,]+ limit and nothing owed on it\./);
     text = at(4, ada());
     expect(text).toContain('Guide Me Through It. The game opens a part at a time, each with a short chapter of the guide that explains it. Recommended if you’re new.');
-    expect(text).toContain('I Know SLATE. Everything is open from the start, and the clock starts paused. The guide’s chapters and How This Works are there whenever you want them.');
+    expect(text).toContain('I Know SLATE. Everything is open from the start. The guide’s chapters and How This Works are there whenever you want them.');
     // Before Yale's three refusals of a time, as validate words them.
     const STARTING_POINT = 3;
     const before = (fromYear: number, fromMonth: number) => validate(ada({ priorResidence: { cityId: 'uk-eng-london', fromYear, fromMonth } }), STARTING_POINT);

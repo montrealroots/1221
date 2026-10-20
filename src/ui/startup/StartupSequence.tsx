@@ -63,8 +63,10 @@ export const STAGES: Stage[] = [
     id: 'validate', label: 'Checking Each Save', weight: 25,
     run: async (context) => {
       for (const slot of context.slots ?? []) {
+        // The way on by the slot's own button (from 2026-10-20, brief 17): until then "You can restore its backup from the
+        // save slots", where the slot's card offers Restore Backup.
         if (slot.error) {
-          context.warnings.push(`Slot ${slot.slot}: ${slot.error}${slot.hasBackup ? ' You can restore its backup from the save slots.' : ''}`);
+          context.warnings.push(`Slot ${slot.slot}: ${slot.error}${slot.hasBackup ? ' Press Restore Backup on the slot to open its backup.' : ''}`);
         }
       }
     },

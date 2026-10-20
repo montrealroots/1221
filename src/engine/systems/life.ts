@@ -17,16 +17,16 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { formatDurationWords, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import { formatDate, formatDurationWords, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant, type TimeZone } from '../core/time';
 import { spokenList } from '../core/text';
 import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 import { bodyDay, bodyOf, eatsOut, eatsShort, exerts } from './body';
 import { starvedPastTheLimit } from './mortality';
-import { chanceOver, mayHurt, trainingRefusal } from './injury';
+import { chanceOver, injuryOf, mayHurt, trainingRefusal } from './injury';
 import { inHospital } from './health';
-import { INJURY } from '../content/injury';
+import { INJURY, INJURY_KIND } from '../content/injury';
 import { BODY, TRAINING_CLASSES } from '../content/body';
 import { buyTheDaysFood, fedOn, mealOf, spend, spendRefusal } from './spending';
 import { heatIndexC, weatherAt } from './weather';
@@ -313,12 +313,22 @@ export function readinessParts(person: Person): { key: ReadinessDial; factor: nu
 }
 
 // `own` is false on another person's look, which until 2026-10-15 told the player “You need sleep” of them.
-export function wellbeingSummary(person: Person, own = true): string {
+// `when` is the moment and the zone its dates are said in. Read at it (from 2026-10-20, brief 17, the health editor's
+// finding): a hospital stay first, then, after the measures that say the first thing to do, the flu and an injury, each
+// with the day it ends (`fluUntil`, as the flu's notice says it; the injury's `until`, by its own name). Until then How
+// You Are said "Rested, steady and ready for a real day." on a sprained ankle, and "Holding up, with nothing out of the
+// ordinary to worry about." with the flu.
+export function wellbeingSummary(person: Person, own = true, when?: { at: Instant; zone: TimeZone }): string {
   const w = person.wellbeing;
+  const day = (t: Instant) => formatDate(t, when!.zone);
+  if (when && inHospital(person, when.at)) return `In hospital until ${day(person.health!.inHospitalUntil!)}.`;
   if (w.energy < 15) return own ? 'Running on empty. You need sleep before anything else.' : 'Running on empty. Sleep comes before anything else.';
   if (w.sleepDebt > 20) return 'Badly short on sleep. Everything is harder than it should be.';
   if (w.stress > 78) return 'Stretched very thin. Something is going to give.';
   if (w.nourishment < 25) return 'Hungry, and it’s starting to show.';
+  if (when && (person.health?.fluUntil ?? 0) > when.at) return `Down with the flu until ${day(person.health!.fluUntil!)}.`;
+  const hurt = when ? injuryOf(person, when.at) : undefined;
+  if (hurt) return `Mending ${INJURY_KIND[hurt.kind].label.toLowerCase()} until ${day(hurt.until)}.`;
   if (w.energy > 75 && w.stress < 30) return 'Rested, steady and ready for a real day.';
   if (w.morale < 30) return 'Feeling low, though the day itself is going fine.';
   return 'Holding up, with nothing out of the ordinary to worry about.';
@@ -632,8 +642,10 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'exercise' && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   if (action === 'exercise') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
   // Down with the flu, rest (from 2026-10-10): its fever and aches are the systemic symptoms the usual guidance says
-  // to rest through, SLATE's reading of it; until then a workout went ahead with the flu as with nothing.
-  if (action === 'exercise' && (person.health?.fluUntil ?? 0) > sim.now) return 'Not with the flu: rest until it passes.';
+  // to rest through, SLATE's reading of it; until then a workout went ahead with the flu as with nothing. The day it
+  // passes is said, as the injury's refusal counts its days and the flu's notice dates it (from 2026-10-20, brief 17:
+  // until then "rest until it passes", with no day).
+  if (action === 'exercise' && (person.health?.fluUntil ?? 0) > sim.now) return `Not with the flu: rest until it passes on ${formatDate(person.health!.fluUntil!, sim.zone)}.`;
   const end = sim.now + minutesFor(sim, action) * 60_000;
   const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
   if (clash) return `${clash.label} is at ${formatTime(clash.at, sim.zone)}, and there isn’t time.`;
@@ -799,7 +811,9 @@ function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean
   const r = (x: number) => Math.round(x);
   if (action === 'eat' || action === 'order') {
     if (urgent) return `Hungry at ${r(w.nourishment)}: every hour under ${HUNGRY} costs condition and morale.`;
-    return gain >= 0.5 ? `Nourishment at ${r(w.nourishment)} is costing readiness.` : `Nourishment at ${r(w.nourishment)}: there’s little to gain from a meal yet.`;
+    // Said as the menu's other rows say it (from 2026-10-20, brief 17): until then "there’s little to gain from a meal
+    // yet" beside Shower's and Unwind's "little to gain yet", on the row named Eat A Meal.
+    return gain >= 0.5 ? `Nourishment at ${r(w.nourishment)} is costing readiness.` : `Nourishment at ${r(w.nourishment)}: little to gain yet.`;
   }
   if (action === 'wash') {
     if (urgent) return `Hygiene at ${r(w.hygiene ?? 80)}: every hour under ${GRIMY} wears on your morale.`;

@@ -1,0 +1,31 @@
+npx eslint <the 29 changed .ts/.tsx files> --max-warnings=0
+src/engine/index.ts
+src/engine/systems/life.ts
+src/ui/creation/CharacterCreation.tsx
+src/ui/creation/LocationPicker.tsx
+src/ui/looks/attention.tsx
+src/ui/looks/day.tsx
+src/ui/looks/place.tsx
+src/ui/looks/plans.tsx
+src/ui/looks/weather.tsx
+src/ui/looks/wellbeing.tsx
+src/ui/screens/Home.tsx
+src/ui/shell/TimeControls.tsx
+src/ui/startup/StartupSequence.tsx
+src/ui/workspaces/CalendarWorkspace.tsx
+tests/attributes-phase-2b.test.ts
+tests/evidence-g01-life.test.ts
+tests/evidence-g06-life.test.ts
+tests/evidence-g07-life.test.ts
+tests/evidence-g29-ui.test.ts
+tests/evidence-g30-ui.test.ts
+tests/evidence-g32-ui.test.ts
+tests/evidence2-b10.test.ts
+tests/evidence3-person.test.ts
+tests/home-account-creation.test.ts
+tests/language-dynamic.test.ts
+tests/language-frame-ui.test.ts
+tests/language-frame.test.ts
+tests/life-fixes.test.ts
+tests/need-paths.test.ts
+exit=0 (no output)

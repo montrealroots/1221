@@ -335,7 +335,9 @@ export function Home() {
           )}
           {unread.length > 6 && (
             <div className="row-between xs dim" style={{ padding: 'var(--s3) var(--s4)' }}>
-              <span>{allNotices ? `All ${unread.length} unread, the most important first.` : `${unread.length - 6} more unread.`}</span>
+              {/* Why these six (from 2026-10-20, brief 17): until then "304 more unread." under a list whose order said
+                  nothing, a welcome eight months old above yesterday's note. The order is `unreadNotifications`'. */}
+              <span>{allNotices ? `All ${unread.length} unread, the most important first.` : `These six are the most important. ${unread.length - 6} more are unread.`}</span>
               <button type="button" className="btn btn-ghost btn-sm" onClick={() => setAllNotices(!allNotices)}>
                 {allNotices ? 'Show The Six Most Important' : `Show All ${unread.length}`}
               </button>
@@ -355,7 +357,7 @@ export function Home() {
             */}
             <LookRegion>
               <p className="small muted" style={{ marginBottom: 'var(--s3)' }}>
-                <Open subject={at('person', player.id)}>{wellbeingSummary(player)}</Open>
+                <Open subject={at('person', player.id)}>{wellbeingSummary(player, true, { at: sim.now, zone: sim.zone })}</Open>
               </p>
               <div className="col gap-3">
                 <Meter label="Energy" value={player.wellbeing.energy} line={EMPTY} look={at('dial', `${player.id}/energy`)} />

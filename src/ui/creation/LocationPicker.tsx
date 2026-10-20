@@ -25,6 +25,20 @@ import { WorldMap } from './WorldMap';
 /** How many matches to render at once. Enough to choose from, cheap to draw. */
 const VISIBLE_MATCHES = 60;
 
+/**
+ * The region select's first option, a country's name with the article a sentence gives it (from 2026-10-20, brief 17):
+ * "Anywhere In The United States", "Anywhere In The Cayman Islands", "Anywhere In France". Until then it was "Anywhere in
+ * United States", and the search that found nothing told the player to choose it by that name. A name the gazetteer
+ * already writes with its article ("The Netherlands") keeps it; the name itself is never re-cased.
+ */
+export function anywhereIn(country: string | undefined): string {
+  if (!country) return 'Anywhere In The Country';
+  const the = !/^The\s/.test(country)
+    && (/^(United |Netherlands|Philippines|Bahamas|Gambia|Maldives|Czech Republic|Dominican Republic|Central African Republic|Democratic Republic|Republic of)/.test(country)
+      || /(Islands|Territory|Emirates|Antilles)$/.test(country));
+  return `Anywhere In ${the ? 'The ' : ''}${country}`;
+}
+
 export function LocationPicker({
   cityId, onPick, idPrefix, map = true,
 }: {
@@ -168,7 +182,7 @@ export function LocationPicker({
             disabled={regions.length === 0}
           >
             <option value="">
-              {regions.length === 0 ? 'None' : `Anywhere in ${COUNTRIES.get(countryId)?.name ?? 'the country'}`}
+              {regions.length === 0 ? 'None' : anywhereIn(COUNTRIES.get(countryId)?.name)}
             </option>
             {regions.map((r) => (
               <option key={r.id} value={r.id}>{r.name}</option>
@@ -202,7 +216,7 @@ export function LocationPicker({
                 with no towns read “No town or city matches “” there.”, and “widen the region” named no control. */}
             {query.trim() === ''
               ? 'There’s no town or city on record there.'
-              : `No town or city matches “${query.trim()}” there. Try a different spelling${regionId ? `, or choose Anywhere in ${COUNTRIES.get(countryId)?.name ?? 'the country'}` : ''}.`}
+              : `No town or city matches “${query.trim()}” there. Try a different spelling${regionId ? `, or choose ${anywhereIn(COUNTRIES.get(countryId)?.name)}` : ''}.`}
           </p>
         )}
         {matches.slice(0, VISIBLE_MATCHES).map((c) => (

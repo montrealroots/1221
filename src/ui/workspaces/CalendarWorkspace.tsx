@@ -319,9 +319,11 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
           </select>
         </div>
       </div>
+      {/* The clash by the chip's own word (from 2026-10-20, brief 17), as the screen's heading has it: until then "the calendar
+          marks the clash". */}
       <p className="xs dim" style={{ margin: 0 }}>
         You’ll need to be in {CITIES.get(sim.player.currentLocationId)?.name ?? 'the place you are now'} for it, and the clock
-        stops when it’s time. You can have two things at the same time, and the calendar marks the clash.
+        stops when it’s time. You can have two things at the same time, and the calendar marks them Clash.
       </p>
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Modal>

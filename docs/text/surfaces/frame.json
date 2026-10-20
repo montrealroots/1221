@@ -1,0 +1,1221 @@
+[
+ {
+  "surface": "The startup sequence",
+  "where": "The first screen of every visit: four stages, then Before You Continue where a slot needs saying, or Startup Stopped",
+  "sources": [
+   "src/ui/startup/StartupSequence.tsx#*"
+  ],
+  "states": [
+   "first use",
+   "returning",
+   "warning",
+   "error"
+  ],
+  "outcome": "Revised",
+  "why": "Read in the walk as it plays, over three slots set up in the browser (this version, a newer and an older): the stages name what each does, and a newer save \"won’t open\" and \"That keeps the save safe\" says why nothing is lost. A damaged slot’s warning said \"You can restore its backup from the save slots\", which named no button.",
+  "changes": "A damaged slot with a backup: \"You can restore its backup from the save slots.\" became \"Press Restore Backup on the slot to open its backup.\", the button the slot shows.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'the startup sequence says what it found in each slot: damaged, with a backup or without, newer and older'"
+   }
+  ]
+ },
+ {
+  "surface": "The save slots and Delete Slot N?",
+  "where": "After startup, and Save & Exit: three slots, New Save, Continue or See How It Ended, Restore Backup, Delete and its dialog",
+  "sources": [
+   "src/ui/saves/SaveSlots.tsx#*"
+  ],
+  "states": [
+   "ordinary",
+   "empty",
+   "returning",
+   "confirmation",
+   "warning",
+   "error",
+   "details"
+  ],
+  "outcome": "Kept",
+  "why": "Read on the slots with three saves and with none: an empty slot says to press New Save; a newer save opened says \"SLATE hasn’t changed anything in it\"; Delete Slot 1? names whose life goes (\"Ada Cole’s life\") and whether a backup brings it back, before Keep It and Delete Slot 1; a damaged save puts what’s wrong behind What’s Wrong With It.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-390.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'says what each slot holds: one empty, one a life saved by an older version, and the delete that keeps a backup or doesn’t'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'says a damaged save can’t be opened, its backup the way on, and what’s wrong behind a disclosure'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'an empty slot with a backup says so, and a backup with no date says the date isn’t known'"
+   }
+  ]
+ },
+ {
+  "surface": "A save refused or damaged, and a new life that couldn’t start",
+  "where": "The slots’ callout and the full-screen Something went wrong.",
+  "sources": [
+   "src/app/SlateApp.tsx#*",
+   "src/engine/index.ts#openSlot",
+   "src/engine/index.ts#migrate",
+   "src/engine/index.ts#validateUniverse",
+   "src/engine/persistence/adapter.ts#deserialise"
+  ],
+  "states": [
+   "error",
+   "warning",
+   "details",
+   "returning"
+  ],
+  "outcome": "Revised",
+  "why": "Each refusal says what failed, whether the slot changed, and the way on: Restart SLATE is under the fault, and \"SLATE hasn’t changed anything in it\" on a newer save. The accounts that don’t add up said \"you can restore that instead\", where the slot’s button is Restore Backup. `validateUniverse`’s lines are a developer’s, shown only under the slots’ What’s Wrong With It, behind the sentence that says what to press; the migration’s steps go to no screen (`openSlot` returns them, `SaveSlots` reads only the problems).",
+  "changes": "The accounts refusal: \"If the slot has a backup, you can restore that instead.\" became \"If the slot has a backup, press Restore Backup to open that instead.\"",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'says a life that couldn’t start what the slot holds, and a save that couldn’t open what to do'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/ui/saves/SaveSlots.tsx"
+   }
+  ]
+ },
+ {
+  "surface": "Saving: the top bar’s save state and the storage’s refusals",
+  "where": "The top bar beside Save & Exit, and a toast when a save fails",
+  "sources": [
+   "src/engine/persistence/local.ts#*",
+   "src/engine/persistence/base44.ts#*",
+   "src/ui/shell/GameShell.tsx#SaveIndicator"
+  ],
+  "states": [
+   "ordinary",
+   "error",
+   "unavailable"
+  ],
+  "outcome": "Kept",
+  "why": "Saved, Saving…, Not Saved Yet and Save Failed: Try Again are the four states of one control, read in the walk’s top bar; each storage failure says whether the slot changed (\"so nothing in the slot changed\") and the one thing to try, and a server not reached says a copy is kept on the device.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'says a save the device couldn’t write left the slot as it was, full or broken, and the toast and the button say it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'says a server that couldn’t be reached left the saves where they were, and that the next save tries again'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'says what a browser that can’t keep or open saves lacks, and what to do'"
+   }
+  ]
+ },
+ {
+  "surface": "The page’s title and description",
+  "where": "The browser tab and a link’s preview",
+  "sources": [
+   "index.html#head",
+   "src/main.tsx#top"
+  ],
+  "states": [
+   "first use"
+  ],
+  "outcome": "Kept",
+  "why": "SLATE as the tab’s name, and \"SLATE: an actor’s life, simulated hour by hour.\" as its description, says in one line what the game is; the mount point’s message is a developer’s, thrown before any screen exists.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "index.html"
+   },
+   {
+    "kind": "source",
+    "ref": "src/main.tsx"
+   }
+  ]
+ },
+ {
+  "surface": "Creation’s frame: the header, the steps, Back, Continue and why Continue waits",
+  "where": "Every step of a new life, from New Save to Begin",
+  "sources": [
+   "src/ui/creation/CharacterCreation.tsx#STEPS",
+   "src/ui/creation/CharacterCreation.tsx#DRAFT_KEY",
+   "src/ui/creation/CharacterCreation.tsx#CharacterCreation",
+   "src/ui/creation/CharacterCreation.tsx#validate",
+   "src/ui/creation/CharacterCreation.tsx#billedAs",
+   "src/ui/creation/CharacterCreation.tsx#MONTHS",
+   "src/engine/world/bootstrap.ts#defaultConfig",
+   "src/engine/world/bootstrap.ts#createUniverse"
+  ],
+  "states": [
+   "first use",
+   "unavailable",
+   "returning",
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "Read step by step in the walk: \"SLATE is a life simulator. Here you create the actor or actress you’ll play.\" follows the pronouns (\"the actress you’ll play\" once She/Her is set); each reason under Continue is one instruction (\"Choose the town or city you were born in.\"); a draft put back says so with Start Over beside it. The default names and the gazetteer’s refusal are never shown on a screen a player reaches.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-390.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'says each step’s guidance in the player’s words, with what each choice does, and why Continue waits'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'creation says what it’s for, a draft put back, each disposition and trait’s reach, the family’s card, and the guide’s choice'"
+   }
+  ]
+ },
+ {
+  "surface": "Identity: names, pronouns, Billed As, race or ethnicity, birth, citizenship",
+  "where": "Creation’s first step",
+  "sources": [
+   "src/ui/creation/CharacterCreation.tsx#IdentityStep",
+   "src/engine/content/ethnicity.ts#*",
+   "src/engine/content/identity.ts#ID_CARDS"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "assembled"
+  ],
+  "outcome": "Kept",
+  "why": "Read untouched, with They/Them and filled: Billed As says once that the pronouns decide it (\"so there’s nothing to pick\") or, with They/Them, that the two words are one craft and neither counts for more; the ethnicity note says it changes nothing and is never guessed; Citizenship says it follows the place of birth. The ID cards’ names are the issuers’ own, shown on Papers.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'says each step’s guidance in the player’s words, with what each choice does, and why Continue waits'"
+   }
+  ]
+ },
+ {
+  "surface": "The headshot picker",
+  "where": "Identity, beside the names",
+  "sources": [
+   "src/ui/creation/PortraitPicker.tsx#*",
+   "src/ui/creation/portrait.ts#*"
+  ],
+  "states": [
+   "first use",
+   "error",
+   "unavailable"
+  ],
+  "outcome": "Kept",
+  "why": "Upload Custom Photo with \"Tap here, or drop one in.\" and Choose File, then one note: any size works, a small copy is kept, and \"the game never looks at what’s in it\", which a player choosing a face wants to know. Each refusal names the file’s fault and the next step (\"Choose a JPEG, PNG or WebP photo.\").",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'the map says a country with nothing on record can’t be picked, and the photo picker each refusal and what to do'"
+   }
+  ]
+ },
+ {
+  "surface": "The place picker and the world map",
+  "where": "Identity’s Place Of Birth, Starting Point’s Where You Live (outside the school) and Before Yale’s Where You Lived",
+  "sources": [
+   "src/ui/creation/LocationPicker.tsx#*",
+   "src/ui/creation/WorldMap.tsx#*",
+   "src/ui/creation/world-map.ts#*"
+  ],
+  "states": [
+   "first use",
+   "empty",
+   "unavailable",
+   "error",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read with a search that finds nothing (\"Qqqzx\") and with Manchester: the counts (\"17,342 towns and cities on record.\", \"51 to choose from.\") say what each list holds, and the map marks the town picked. The region select’s first option said \"Anywhere in United States\", a country without its article, and the no-match line told the player to choose it by that name.",
+  "changes": "\"Anywhere in United States\" became \"Anywhere In The United States\" (Title Case, as an option is a label, the article from the name: The Cayman Islands, France), in the select and in \"or choose Anywhere In The United States\" (`anywhereIn`).",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'the place picker says what a country has, and a search that finds nothing what to try'"
+   }
+  ]
+ },
+ {
+  "surface": "Dispositions & Traits",
+  "where": "Creation’s second step: seven sliders and up to four traits",
+  "sources": [
+   "src/ui/creation/CharacterCreation.tsx#PERSONALITY_AXES*",
+   "src/ui/creation/CharacterCreation.tsx#PersonalityStep",
+   "src/ui/creation/CharacterCreation.tsx#blockedTraitReason",
+   "src/engine/content/personality-traits.ts#*"
+  ],
+  "states": [
+   "first use",
+   "unavailable",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Read whole in the walk: each disposition’s line says the one part of life it moves, the closing line says only starting Composure and Discipline touch the acting; the traits’ list says what they change and that a trait’s description and cost describe the whole person while the game uses only the listed effects, so the characterful costs (\"It shows on you sooner.\", \"None. This one is simply luck.\") read as a person, not a rule. A blocked trait says why on the trait.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'creation says what it’s for, a draft put back, each disposition and trait’s reach, the family’s card, and the guide’s choice'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'a trait’s look names what a session of preparation gets done, and how soon you need a shower, for each trait that moves one'"
+   }
+  ]
+ },
+ {
+  "surface": "Genres & Background, and Your Family",
+  "where": "Creation’s third step: the films you love, a sentence in your own words, and, at the school, the family you come from",
+  "sources": [
+   "src/ui/creation/CharacterCreation.tsx#PersonalStep",
+   "src/ui/creation/CharacterCreation.tsx#FamilyChoice",
+   "src/ui/creation/CharacterCreation.tsx#WEALTH_LABEL",
+   "src/engine/world/bootstrap.ts#WEALTH_PROFILE"
+  ],
+  "states": [
+   "first use",
+   "assembled",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "Read with the Wealthy family: the callout gives the family’s line, then the money (\"You start with $92,391 in checking…\"), then what Yale finds and what comes out of the bank each fall and spring. The card’s heading said \"whether Yale’s needs assessment finds you need aid\", need twice in one clause, where the callout says \"Yale finds that you need aid\".",
+  "changes": "Your Family: \"and whether Yale’s needs assessment finds you need aid\" became \"and whether Yale finds that you need aid\", the callout’s words.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/need-paths.test.ts: 'Genres & Background offers the six families, Wealthy chosen as creation chose before; each, chosen on the select, is what Review says and what the save opens'"
+   }
+  ]
+ },
+ {
+  "surface": "Starting Point: Your Body, Where It Begins, Your Money, Before Yale",
+  "where": "Creation’s fourth step",
+  "sources": [
+   "src/ui/creation/CharacterCreation.tsx#BodyFields",
+   "src/ui/creation/CharacterCreation.tsx#StartingPointStep",
+   "src/ui/creation/CharacterCreation.tsx#BankChoice",
+   "src/ui/creation/CharacterCreation.tsx#BeforeYale"
+  ],
+  "states": [
+   "first use",
+   "assembled",
+   "warning",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "Read top to bottom: Where It Begins says \"Tuition is covered, as it is for every student.\", and the callout under Your Money said \"Tuition is covered\" again a screen below, that the plan’s fee \"goes each term\" without saying from where, and \"Yale’s aid for living costs goes by need\" after the step before had said Yale found none. \"Your money is kept in the dollar (USD), the currency where you start\" put a currency’s name where its money is meant. Before Yale’s choices each say what follows (\"Your savings stay at MUFG Bank.\").",
+  "changes": "Without aid: \"Tuition is covered, and $1,882.00 goes each term to your Yale Health plan. Yale’s aid for living costs goes by need.\" became \"Each fall and spring, $1,882.00 comes out of your bank for that term’s Yale Health plan, and there’s no aid for living costs.\" Your Money: \"kept in the dollar (USD), the currency where you start\" became \"kept in the currency where you start, the dollar (USD)\".",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence2-b10.test.ts: 'PLAYER JOURNEY: comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it: Identity asks for one, Begin opens $92,391 and $413,043 at Chase, and the term’s Yale Health plan, $1,882, comes out of that checking at 9 AM'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'Before Yale says where the savings go and what the account kept there opens with, for each choice'"
+   }
+  ]
+ },
+ {
+  "surface": "Review and the guide’s choice",
+  "where": "Creation’s last step, before Begin",
+  "sources": [
+   "src/ui/creation/CharacterCreation.tsx#ReviewStep"
+  ],
+  "states": [
+   "first use",
+   "confirmation",
+   "assembled",
+   "empty"
+  ],
+  "outcome": "Revised",
+  "why": "Read as the last screen before a life starts: the summary repeats each step’s choices in its labels, and no traits picked says the dispositions still count. I Know SLATE said \"the clock starts paused\" as if Guide Me’s didn’t, the callout under it saying it of both; the callout said what’s on the calendar \"happens whether you’re watching or not\", where Play stops at each commitment and pauses (`halt`, `game-context.tsx`). Before Yale read \"Manchester, United States, Since 2002\", the year alone and a capital mid-line, and the card \"$0 owed of $65,217\".",
+  "changes": "I Know SLATE lost \", and the clock starts paused\"; the callout’s end became \"and the clock pauses itself at each commitment to ask what you want to do.\"; Before Yale became \"Manchester, United States, since June 2002\"; Card became \"$65,217 limit, nothing owed\" (\"$1,630 limit, $913 owed\" with a balance).",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-390.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'creation says what it’s for, a draft put back, each disposition and trait’s reach, the family’s card, and the guide’s choice'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'PLAYER JOURNEY: at a stop on the way, Go is there and carries the move on to where it was headed, and Stand Here stops the clock at the stop, paused'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/home-account-creation.test.ts: 'writes Before Yale and the home bank on Review, and its figures'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g29-ui.test.ts: 'Card $65,217 limit, nothing owed'"
+   }
+  ]
+ },
+ {
+  "surface": "A new life’s accounts and the world’s own calendar entries",
+  "where": "Money’s accounts on the first morning, the slot’s line, and the clock’s own entries (never on the calendar)",
+  "sources": [
+   "src/engine/index.ts#armWorldClock*",
+   "src/engine/index.ts#populateWorld*",
+   "src/engine/index.ts#refreshMeta",
+   "src/engine/index.ts#loadSave*",
+   "src/engine/index.ts#returnTheHomesMoney"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "history"
+  ],
+  "outcome": "Kept",
+  "why": "Checking Account, Savings Account and a card named for its bank are the accounts a life opens with, as Money lists them; the slot’s line reads \"Actor\" or \", Yale Drama Year 2\"; New Day and World Simulation are the clock’s own entries, kept off the calendar (its legend filters the World kind), and a home’s money given back says what it was.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'a life where the game has no bank keeps a checking account by that name, and a home’s money given back says what it was'"
+   }
+  ]
+ },
+ {
+  "surface": "A birthday",
+  "where": "The calendar’s Your Birthday, and the notice on the day",
+  "sources": [
+   "src/engine/systems/birthdays.ts#*"
+  ],
+  "states": [
+   "notification",
+   "ordinary"
+  ],
+  "outcome": "Kept",
+  "why": "Read in order in the coordinator’s runs (before/*.json, \"Happy Birthday: 25\" ten times in eight lives): the title says the age, the body \"You’re 25 today.\" says no more than the day is, and it comes once a year.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g04-life.test.ts: 'PLAYER JOURNEY: born 30 August 2002, the student’s birthday is on the calendar at 9 AM, comes once across a reload, says she’s 24, puts the next on for a year on, and draws the year’s band afresh'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/birthdays.ts"
+   }
+  ]
+ },
+ {
+  "surface": "Home",
+  "where": "The first screen of a life: the greeting and its line, Calendar, What Needs You, How You Are, Where You Are, Weather, Your Affairs",
+  "sources": [
+   "src/ui/screens/Home.tsx#*",
+   "src/engine/systems/life.ts#wellbeingSummary"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "empty",
+   "locked",
+   "notification",
+   "warning",
+   "returning"
+  ],
+  "outcome": "Revised",
+  "why": "Read on the first, guided Home (each panel Locked, naming its chapter) and a year in: the greeting follows the clock, What Needs You lists a question with its buttons and the unread notices most important first. Under six of 310, it said \"304 more unread.\" and nothing else, so a welcome eight months old above yesterday’s feedback had no reason given. How You Are said \"Rested, steady and ready for a real day.\" to a player with a back strain 11 days from mended (the health editor found it with a sprained ankle, and \"Holding up, with nothing out of the ordinary to worry about.\" with the flu): it read the measures only, never the body’s record.",
+  "changes": "\"304 more unread.\" became \"These six are the most important. 304 more are unread.\" How You Are (`wellbeingSummary`, on Home and your own look) says a hospital stay first, and the flu and an injury before the lines that say all’s well, each with its day: \"Mending a back strain until May 4, 2027.\", \"Down with the flu until …\", \"In hospital until …\".",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-390.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g32-ui.test.ts: 'PLAYER JOURNEY: more unread than the panel’s six: it says how many more wait and offers Show All; pressed, every one is drawn with its Go There, the seventh heaviest among them; Show The Heaviest Six puts it back; Mark N Read still marks every one'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-dynamic.test.ts: 'notices unread, one, several and more than Home shows, and commitments slept through, one or several'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-dynamic.test.ts: 'says a hospital stay, the flu and an injury with the day each ends, before the lines that say all’s well, on Home and your own look'"
+   }
+  ]
+ },
+ {
+  "surface": "The top bar, the rail and the breadcrumbs",
+  "where": "Every screen of a life: the clapper, Guide, the save state, Save & Exit, the rail’s groups and destinations, Menu at 390",
+  "sources": [
+   "src/ui/shell/GameShell.tsx#GameShell",
+   "src/ui/shell/destinations.ts#*",
+   "src/ui/shell/sections.ts#*",
+   "src/app/game-context.tsx#ROUTE_LABELS",
+   "src/app/game-context.tsx#useGame",
+   "src/app/game-context.tsx#GameProvider"
+  ],
+  "states": [
+   "ordinary",
+   "locked",
+   "first use"
+  ],
+  "outcome": "Kept",
+  "why": "Read at 1440 and 390: the rail’s groups (You, Your Training, Your Affairs) and destinations are plain names, each with one line of what’s there (\"Your accounts, cards, payments, borrowing and statements\"), a locked one says \"Locked until you read its chapter in the guide\", and the breadcrumbs name a screen as the rail does.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-390.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'name a screen reached without a label, by a notice’s Go There or an address, as the rail names it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/interface.test.ts: 'names every destination in plain words'"
+   }
+  ]
+ },
+ {
+  "surface": "A screen not open yet, and an address that isn’t one",
+  "where": "In place of a screen whose chapter isn’t read, or an old bookmark",
+  "sources": [
+   "src/ui/workspaces/WorkspaceRouter.tsx#*"
+  ],
+  "states": [
+   "locked",
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "\"School, Locked\" with \"Read “Drama School” in the guide to open it.\" and the chapter’s own lead, then Read About It, which opens that chapter: the reason and the remedy in the guide’s names. An unknown address says so and offers Go Home.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/ui/workspaces/WorkspaceRouter.tsx"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/content/tutorial.ts"
+   }
+  ]
+ },
+ {
+  "surface": "A life ended",
+  "where": "In place of the game, once a life is over, and from the slot’s See How It Ended",
+  "sources": [
+   "src/ui/shell/LifeEnded.tsx#*"
+  ],
+  "states": [
+   "history",
+   "returning"
+  ],
+  "outcome": "Kept",
+  "why": "Read in the source with its states (no walk reaches a death): the dates, the age where it’s known, three figures each with what it counts (\"Wages, before tax\", \"Their net worth at the end\"), one Month or a figure in years, and the line that the clock won’t run again and the slot keeps the life until it’s deleted, then Back To The Slots.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/ui/shell/LifeEnded.tsx"
+   }
+  ]
+ },
+ {
+  "surface": "Errors the game itself hit",
+  "where": "A toast after a press or as the clock runs, and a notice when something in the background failed",
+  "sources": [
+   "src/app/game-context.tsx#CLOCK_FAULT",
+   "src/app/game-context.tsx#LIVE_CLOCK_FAULT",
+   "src/engine/core/simulation.ts#*",
+   "src/engine/core/events.ts#EventBus"
+  ],
+  "states": [
+   "error",
+   "notification"
+  ],
+  "outcome": "Kept",
+  "why": "Each says what failed, what still stands and the way on: a press rolled back \"changed nothing and charged you nothing\", a clock that threw is paused and says \"You can press Play to try again\", a background step shows as missed on the calendar. The cascade and handler messages are a developer’s, in the console.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'says a command’s fault in words, its detail in the console, and a refusal in the world’s own; and a clock that threw in words'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/core/simulation.ts"
+   }
+  ]
+ },
+ {
+  "surface": "The interface’s shared parts",
+  "where": "Why a control is grayed, a folded detail, an empty panel, a dialog’s close, a look’s frame",
+  "sources": [
+   "src/ui/components/primitives.tsx#*",
+   "src/ui/looks/Look.tsx#*",
+   "src/ui/looks/registry.ts#*"
+  ],
+  "states": [
+   "unavailable",
+   "empty",
+   "details"
+  ],
+  "outcome": "Kept",
+  "why": "The words these carry are a callers’; their own are Close, the Why Not list’s frame and \", where you are\" on a way: one word each, read in every dialog of the walk (On The Way’s Cancel, Sleep’s Not Yet, the stop’s ✕).",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "source",
+    "ref": "src/ui/components/primitives.tsx"
+   }
+  ]
+ },
+ {
+  "surface": "Play, Pause and the Advance menu",
+  "where": "The top bar: Play or Pause, Advance and its eight lines with their times",
+  "sources": [
+   "src/ui/shell/TimeControls.tsx#TimeControls",
+   "src/ui/shell/TimeControls.tsx#AdvanceMenu",
+   "src/ui/shell/TimeControls.tsx#MENU_FOOT",
+   "src/engine/world/world.ts#registerWorld <world.set_preferences>"
+  ],
+  "states": [
+   "ordinary",
+   "locked",
+   "first use"
+  ],
+  "outcome": "Kept",
+  "why": "Checked against the clock: Play runs a game minute a real one (`SPEED_MULTIPLIER`) and Pause stops it; each Advance line shows the time it moves to (\"This Evening 6:00 PM · April 24, 2027\"), Next Event names the event, and Choose An Event says what it opens. On a new guided life each says Locked and pressing it opens its chapter.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "source",
+    "ref": "src/app/game-context.tsx"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'On The Way says how many commitments the clock stops at and what each stop offers, for one and for two'"
+   }
+  ]
+ },
+ {
+  "surface": "On The Way",
+  "where": "The dialog before Advance passes a commitment",
+  "sources": [
+   "src/ui/shell/TimeControls.tsx#TimeControls"
+  ],
+  "states": [
+   "confirmation",
+   "warning"
+  ],
+  "outcome": "Revised",
+  "why": "Checked against what the clock does: Advance stops at each commitment and pauses (`halt`); Go there carries the move on to where it was headed (`onGo`), and Stand Here only closes the stop (`onClose`), so the move ends there with the clock paused. \"press Go, or Stand Here to wait\" didn’t say the move stops, which a player choosing to Advance a week needs before pressing it.",
+  "changes": "\"press Go, or Stand Here to wait\" became \"press Go to be there and carry on, or Stand Here to stop the clock there\".",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-390.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'On The Way says how many commitments the clock stops at and what each stop offers, for one and for two'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'PLAYER JOURNEY: at a stop on the way, Go is there and carries the move on to where it was headed, and Stand Here stops the clock at the stop, paused'"
+   }
+  ]
+ },
+ {
+  "surface": "The stop: a commitment at its hour",
+  "where": "The dialog when any way of moving the clock reaches a commitment: Go, Stand Here, and Skip It or Call It Off where they apply",
+  "sources": [
+   "src/ui/shell/TimeControls.tsx#DueNow",
+   "src/engine/world/plans.ts#registerPlans <calendar.skip>"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "unavailable",
+   "teacher"
+  ],
+  "outcome": "Revised",
+  "why": "Read at a rehearsal call reached by Next Event: the first paragraph says when, what going takes and where the clock moves on to, true of `onGo`. The second opened on the button that isn’t there (\"You can only skip a plan of your own, so there’s no Skip It button here.\") before what to press, and \"Stand Here to wait\" didn’t say the stop has paused the clock. A plan of your own and a partner’s rehearsal each say their own.",
+  "changes": "For the world’s own: \"You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. … \" became \"Press Go, or Stand Here to wait with the clock paused. … Only a plan of your own can be skipped, so there’s no Skip It button here.\"",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-390.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'the stop says it needs you now, what going takes, and what a plan of your own and the world’s own each offer'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'PLAYER JOURNEY: the stop says the partner is expecting you and what calling off costs; Call It Off pressed says it cost their trust, and it did'"
+   }
+  ]
+ },
+ {
+  "surface": "Skip To Event",
+  "where": "Advance, then Choose An Event…",
+  "sources": [
+   "src/ui/shell/TimeControls.tsx#SkipDialog",
+   "src/engine/world/calendar.ts#skipTargets"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "empty",
+   "unavailable"
+  ],
+  "outcome": "Kept",
+  "why": "Read with fourteen events: each row says its date and how far off, \"N on the way\" counts the stops before it, and the picked one says what the clock stops at on the way or \"You have no commitments before it.\" Skip names its event (\"Skip To Carlotta Festival Of New Plays: Rehearsal\"), and with none picked the line under the list says to pick one.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'Skip To Event says what the clock stops at on the way and what else happens, for none, one and several'"
+   }
+  ]
+ },
+ {
+  "surface": "Sleep",
+  "where": "The top bar’s Sleep: the dialog, its suggestion and warnings, and why Sleep is grayed",
+  "sources": [
+   "src/ui/shell/TimeControls.tsx#SleepDialog",
+   "src/engine/systems/life.ts#suggestedSleep",
+   "src/engine/systems/life.ts#sleepReason",
+   "src/engine/systems/life.ts#registerLife <life.sleep>",
+   "src/engine/systems/life.ts#startRefusal",
+   "src/engine/systems/life.ts#commitmentWithin",
+   "src/engine/systems/life.ts#registerLife [life.day_rollover]"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "unavailable",
+   "notification"
+  ],
+  "outcome": "Revised",
+  "why": "Checked against `life.sleep`: the suggestion says why its hours (\"A normal night.\", or the call that cuts it short), You’d Wake At says when, and a commitment in the hours is listed as slept through. The foot said \"anything on your calendar in those hours happens without you\", where a commitment slept through is missed (its You Slept Through notice says so).",
+  "changes": "\"The world keeps running while you sleep. The clock moves on, and anything on your calendar in those hours happens without you.\" became \"The clock moves on while you sleep. What happens without you still happens, and you miss any commitment in those hours.\"",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'Sleep names the hours on its button, one and many, and when you’d wake'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g01-life.test.ts: 'PLAYER JOURNEY: the Sleep dialog over a plan shows it will be slept through; Sleep 8 Hours misses it quietly and says so once, across a reload'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'says when not even the longest night would make up a day, late and not, from LONGEST_NIGHT'"
+   }
+  ]
+ },
+ {
+  "surface": "Look After Yourself",
+  "where": "The top bar’s menu: Eat A Meal, Order In, Shower, Work Out, Unwind, each with its time, cost, reason and what it moves",
+  "sources": [
+   "src/ui/shell/TimeControls.tsx#LookAfterMenu",
+   "src/ui/shell/TimeControls.tsx#DIAL_LABEL",
+   "src/engine/systems/life.ts#LOOKING_AFTER",
+   "src/engine/systems/life.ts#WORKOUTS_TODAY",
+   "src/engine/systems/life.ts#lookAfterRefusal",
+   "src/engine/systems/life.ts#whyNow",
+   "src/engine/systems/life.ts#registerLife <life.look_after>",
+   "src/engine/systems/life.ts#WET"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "recommendation",
+   "forecast"
+  ],
+  "outcome": "Revised",
+  "why": "Read as one menu: each row is the time, the cost and why it stands where it does, then the measures it moves. Eat A Meal said \"there’s little to gain from a meal yet\" beside Shower’s and Unwind’s \"little to gain yet\"; Work Out with the flu said \"rest until it passes\" with no day, where an injury’s refusal counts its days; and the gain line put \"readiness +0.4\" in lower case after \"Morale 84 → 86\". A refused row says why in a few words (\"Not with a back strain; it has 11 days yet to mend.\").",
+  "changes": "Eat A Meal’s and Order In’s \"Nourishment at 63: there’s little to gain from a meal yet.\" became \"Nourishment at 63: little to gain yet.\"; \"· readiness +0.4\" became \"· Readiness +0.4\"; Work Out with the flu, \"Not with the flu: rest until it passes.\" became \"… rest until it passes on\" the day its notice gives, as the injury’s refusal counts its days.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/life-fixes.test.ts: 'is refused from a hospital bed, and a workout with the flu'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g30-ui.test.ts: 'PLAYER JOURNEY: six hours on, the Look After menu offers each a Shower from where its hygiene stands, readiness by the dials; pressed, it takes a tenth of what it washed off the stress, more for the chaotic'"
+   }
+  ]
+ },
+ {
+  "surface": "The Calendar screen",
+  "where": "The rail’s Calendar: the month, the legend, a day opened, Next Thirty Days",
+  "sources": [
+   "src/ui/workspaces/CalendarWorkspace.tsx#CalendarWorkspace",
+   "src/ui/workspaces/CalendarWorkspace.tsx#WEEKDAYS",
+   "src/ui/workspaces/CalendarWorkspace.tsx#MONTHS",
+   "src/ui/workspaces/CalendarWorkspace.tsx#statusWords",
+   "src/ui/workspaces/cell.ts#dayLabel",
+   "src/engine/world/calendar.ts#CALENDAR_LEGEND",
+   "public/holidays#names",
+   "src/engine/content/holiday-data.ts#*",
+   "src/engine/content/holidays.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "empty",
+   "warning"
+  ],
+  "outcome": "Kept",
+  "why": "Read a year in: the heading says what the month holds and that overlapping commitments are marked Clash; a day opened says \"You have nothing on that day. Press Put Something On It to add a plan.\" where it can take one; Next Thirty Days says holidays are on the month, not the list. The chip You beside a commitment is explained by the guide’s Calendar entry (\"You, beside an entry in Next Thirty Days, means you need to be there.\"). Holiday names are the calendars’ own.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-390.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame-ui.test.ts: 'says what the calendar holds, a clash in the next month, the legend’s kinds, and a day with nothing on it, still to come or gone'"
+   }
+  ]
+ },
+ {
+  "surface": "A plan of your own: Put Something On It, its entry, Call It Off, and missing it",
+  "where": "A day on the Calendar, its plan form, an entry opened, and the notices after",
+  "sources": [
+   "src/ui/workspaces/CalendarWorkspace.tsx#PlanForm",
+   "src/ui/workspaces/CalendarWorkspace.tsx#EntryDetail",
+   "src/engine/world/plans.ts#NOT_ON_CALENDAR",
+   "src/engine/world/plans.ts#ALREADY_OVER",
+   "src/engine/world/plans.ts#checkPlan",
+   "src/engine/world/plans.ts#registerPlans",
+   "src/engine/world/plans.ts#registerPlans <calendar.cancel>",
+   "src/engine/world/plans.ts#PLAN_LENGTHS"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "unavailable",
+   "notification",
+   "error"
+  ],
+  "outcome": "Revised",
+  "why": "Read in the walk’s plan form and an entry: the form says before Put It On that you’ll need to be in New Haven, that the clock stops when it’s time and that a clash is allowed; an entry says whether you need to be there and, for your own, that you can take it off; each refusal says the one thing to change (\"Pick a time that’s still to come.\"), and a plan missed \"costs nothing else\". The form said \"the calendar marks the clash\", where the screen above it says overlapping things are \"marked Clash\", the chip’s word.",
+  "changes": "\"and the calendar marks the clash\" became \"and the calendar marks them Clash\".",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-before-1440.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g02-life.test.ts: 'refuses a second call-off, an unknown id, the world’s own item and a plan begun, each in its words, and offers the world’s item no Call It Off'"
+   }
+  ]
+ },
+ {
+  "surface": "A day’s look, its season and its daylight",
+  "where": "A date or the season pressed on Home, the Calendar or a look",
+  "sources": [
+   "src/ui/looks/day.tsx#SEASONS",
+   "src/ui/looks/day.tsx#STATUS_WORD",
+   "src/ui/looks/day.tsx#dayKindOf",
+   "src/ui/looks/day.tsx#spokenWhen",
+   "src/ui/looks/day.tsx#top",
+   "src/ui/looks/day.tsx#top [observed]",
+   "src/ui/looks/day.tsx#loadOf",
+   "src/ui/looks/day.tsx#daySentence",
+   "src/ui/looks/day.tsx#lightSentence",
+   "src/ui/looks/day.tsx#lightDetail",
+   "src/ui/looks/day.tsx#quarterSentence",
+   "src/engine/core/sun.ts#formatDaylight",
+   "src/engine/core/time.ts#*",
+   "src/engine/content/climate.ts#CLIMATE_NAMES",
+   "src/engine/systems/seasons.ts#FLU_TIMING"
+  ],
+  "states": [
+   "ordinary",
+   "empty",
+   "details",
+   "assembled",
+   "forecast",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "Read for six lives (New Haven in fall and winter, Longyearbyen at both solstices, Sydney, London): the day says its light, where it sits in its season, what’s on it and what needs you; a polar day says the sun never sets. A day whose every thing needs you said \"You need to be at three of them.\" of three, and of one \"one of them\".",
+  "changes": "Every one of them that needs you: \"You need to be at it.\" of one, \"both\" of two, \"all of them\" of more; a count stays where some don’t.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-before.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'says a day’s commitments as it, both or all of them where every one needs you, and a count where some don’t'"
+   }
+  ]
+ },
+ {
+  "surface": "A commitment’s look",
+  "where": "An entry pressed on Home’s Calendar, the Calendar screen or a day’s look",
+  "sources": [
+   "src/ui/looks/day.tsx#missCost",
+   "src/ui/looks/day.tsx#entryDetail",
+   "src/ui/looks/day.tsx#entrySentence",
+   "src/ui/looks/day.tsx#top"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "explanation",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "Checked against each kind’s handler (`systems/school.ts`): a call, a lab, a shift and the Cabaret each say what missing it costs. Classes said a miss was unexcused \"unless you’re sick or in hospital\": being ill excuses nothing that isn’t called in (a sick day), and an injury that lays you up does (`offSick`).",
+  "changes": "Classes: \"unless you’re sick or in hospital\" became \"unless you called in sick, or you’re in hospital or laid up with an injury\".",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'says a missed class is excused by a sick day called in, a hospital bed or an injury, as its handler excuses it'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/school.ts"
+   }
+  ]
+ },
+ {
+  "surface": "The weather",
+  "where": "Home’s Weather and line, and its looks: now, a day, the hours, one hour, the week, a commitment’s hours",
+  "sources": [
+   "src/ui/looks/weather.tsx#*",
+   "src/engine/systems/weather.ts#*",
+   "src/engine/content/thunder.ts#THUNDER_DAYS"
+  ],
+  "states": [
+   "ordinary",
+   "forecast",
+   "details",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read for the six lives: each forecast is called estimated in its source line, the week says which days are wet, a commitment’s hours say the light and the rain across them. A day’s summary called partly cloudy \"broken cloud\" (\"Broken cloud in New Haven today\") with Partly Cloudy in the stat beside it and on Home: two names for one sky.",
+  "changes": "\"Broken cloud in New Haven today, 72°F to 90°F.\" became \"Partly cloudy skies in New Haven today, 72°F to 90°F.\"",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-before.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/interface.test.ts: 'keeps the weather picture beside the word and out of the accessible name'"
+   }
+  ]
+ },
+ {
+  "surface": "A place, its region, its country and its money",
+  "where": "The town’s name pressed on Home or a look, and what it opens: region, country, currency",
+  "sources": [
+   "src/ui/looks/place.tsx#*",
+   "src/engine/world/place.ts#*",
+   "src/engine/content/languages.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "details",
+   "assembled",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "Read for the six lives: the place says its size, climate, rent and tax with published and estimated parts said apart; languages are the English names by ISO code. London’s place said \"In short: theater, production hub and international.\", a list of nouns and adjectives made a sentence, and the pound’s list ended \"and 1 more\".",
+  "changes": "The tags are a line of their own as Home shows them (\"Theater · Production Hub · International\"); a list’s tail under ten is a word (\"and one more\", \"and four more\").",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-before.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'shows a place’s tags as Home has them, never as a sentence, and a short list’s tail in words'"
+   }
+  ]
+ },
+ {
+  "surface": "Your Own Plans",
+  "where": "The plans look, from a plan of your own or the Calendar’s plans",
+  "sources": [
+   "src/ui/looks/plans.tsx#top"
+  ],
+  "states": [
+   "ordinary",
+   "empty"
+  ],
+  "outcome": "Revised",
+  "why": "Read with none and with two: none says everything on the calendar was put there for you and what a plan needs; two says how many and when the next is, with Waiting, Called Off and Gone By counted. The source line said \"a clash is marked\", where the calendar marks it with the chip Clash.",
+  "changes": "\"the clock stops at them, and a clash is marked.\" became \"the clock stops at them, and two at once are marked Clash.\"",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-before.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-after.txt"
+   }
+  ]
+ },
+ {
+  "surface": "A question opened, and a notice opened",
+  "where": "A question’s or a notice’s title pressed in What Needs You",
+  "sources": [
+   "src/ui/looks/attention.tsx#*"
+  ],
+  "states": [
+   "notification",
+   "details",
+   "overdue",
+   "history",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read in the coordinator’s walk (a tax return’s question and four notices opened on Home) and the six lives: each says when it came and where it ranks. The question put its buttons last, under its urgency and its closing rules; the notice put its importance and the order before what to press, and a notice already read was told \"On Home, Go There opens the screen it’s about\", where Home lists only the unread.",
+  "changes": "The question: what it asks, its buttons, when it closes, then its urgency. The notice: what it says, then \"Opening it here doesn’t mark it read. On Home, Go There opens the screen it’s about, and Mark 17 Read marks all 17 unread notices read at once.\", then its importance; a read notice no longer names Go There.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-before.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/frame/looks-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'says when to answer it, where it sits among the rest, its buttons on Home, and what closes it, for one and for several'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'says when it came, where it sits among the unread, what Mark Read does, and how long it’s kept, for one, for many and read'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'says an overdue question comes first and closes itself within the world tick’s two days, and each way one closes'"
+   }
+  ]
+ },
+ {
+  "surface": "What Needs You’s answers and refusals",
+  "where": "An answer, Dismiss and Mark N Read on Home, and their refusals",
+  "sources": [
+   "src/engine/world/world.ts#NOT_THERE",
+   "src/engine/world/world.ts#registerWorld [world.tick]",
+   "src/engine/world/world.ts#registerWorld <world.dismiss_decision>",
+   "src/engine/world/world.ts#registerWorld <world.take_decision_action>"
+  ],
+  "states": [
+   "unavailable",
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "Each refusal says why the press did nothing in the question’s own terms: \"That question is already settled: it was answered, or its date passed.\" and \"You dismissed that question, so it can’t be answered from What Needs You.\", the panel’s name as it’s titled.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g02-life.test.ts: 'PLAYER JOURNEY: Dismiss on Home’s card takes the return’s question off; refused again and for no id; across a reload File It is refused; the return still comes due'"
+   }
+  ]
+ },
+ {
+  "surface": "The entry rules’ notes",
+  "where": "Papers’ Passport And ID, a country’s fine print",
+  "sources": [
+   "src/engine/content/entry.ts#*"
+  ],
+  "states": [
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Each note is a sentence or two in the player’s words, with the law it rests on named and the agency spelled out (\"Under the Visa Waiver Program: up to 90 days each visit…\"), no pointer to a list the screen doesn’t show, and a country’s own citizen told \"You’re one of its citizens.\"",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'keeps a note’s first word whole, and says a country’s own citizen is one'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-frame.test.ts: 'says each rule in sentences, with no pointer to a list the player can’t see and no agency by its initials alone'"
+   }
+  ]
+ },
+ {
+  "surface": "What each random draw decides (not shown)",
+  "where": "Read by the deciders’ test and tool only: no file the game ships imports it",
+  "sources": [
+   "src/engine/decided.ts#*"
+  ],
+  "states": [
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Developer notes on each draw (\"Whether a US bank turns away somebody with a standing ChexSystems report.\"), one plain sentence each; `tools/deciders.mjs --check` reads them and no screen does.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/deciders.test.ts: 'says what each one decides, in words'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/decided.ts"
+   }
+  ]
+ }
+]

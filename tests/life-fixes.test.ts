@@ -8,7 +8,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, formatDate } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { DENIALS, billCare, careFor, coverOn, healthOf, medicalDebtOf, monthCareCost } from '@/engine/systems/health';
 import { COMP_KIND, mayHurt } from '@/engine/systems/injury';
@@ -104,8 +104,10 @@ describe('Look After Yourself', () => {
     expect(lookAfterRefusal(sim, 'exercise')).toBe('Not from a hospital bed.');
     h.inHospitalUntil = undefined;
     h.fluUntil = sim.now + 3 * MS_DAY;
-    expect(lookAfterRefusal(sim, 'exercise')).toBe('Not with the flu: rest until it passes.');
-    expect(lookAfterRefusal(sim, 'wash')).not.toBe('Not with the flu: rest until it passes.');
+    // The day it passes said (from 2026-10-20, brief 17).
+    const flu = `Not with the flu: rest until it passes on ${formatDate(sim.now + 3 * MS_DAY, sim.zone)}.`;
+    expect(lookAfterRefusal(sim, 'exercise')).toBe(flu);
+    expect(lookAfterRefusal(sim, 'wash')).not.toBe(flu);
   });
 });
 

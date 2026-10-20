@@ -656,7 +656,7 @@ describe('life.look_after:exercise', () => {
     sim.advanceTo(NH(9));
     healthOf(sim.player).fluUntil = NH(9) + 5 * MS_DAY; // TEST SETUP: down with the flu
     const sick = was();
-    expect(lookAfter(sim, 'exercise').error).toBe('Not with the flu: rest until it passes.');
+    expect(lookAfter(sim, 'exercise').error).toBe(`Not with the flu: rest until it passes on ${formatDate(NH(9) + 5 * MS_DAY, sim.zone)}.`);
     expect(was()).toEqual(sick);
     // The flu keeps a body from training, not from resting.
     expect(lookAfter(sim, 'unwind').ok).toBe(true);

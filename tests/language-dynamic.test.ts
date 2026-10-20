@@ -327,10 +327,10 @@ describe('singular and plural: zero, one and many of each thing the game counts'
     for (let n = 2; n <= 8; n += 1) sim.notify({ category: 'school', title: `Notice Number ${n}`, body: 'Another thing happened.', importance: 50 });
     home = drawn(sim, Home);
     expect(home).toContain('Mark 8 Read');
-    expect(home).toContain('2 more unread.');
+    expect(home).toContain('These six are the most important. 2 more are unread.');
     expect(opened(sim, 'notification', first.id).look.summary).toBe('It came in just now. It’s first of your eight unread notices.');
     sim.notify({ category: 'school', title: 'Notice Number 9', body: 'Another thing happened.', importance: 10 });
-    expect(drawn(sim, Home)).toContain('3 more unread.');
+    expect(drawn(sim, Home)).toContain('These six are the most important. 3 more are unread.');
     sound(home); agrees(home, ['notice']);
     sim.must({ kind: 'world.mark_read', payload: {} });
     expect(opened(sim, 'notification', first.id).look.summary).toBe('You’ve read this notice. It came in just now.');
@@ -1265,5 +1265,41 @@ describe('repetition: a note said before says so, a warning repeated says what c
     expect(leave()).toBe(l1);
     expect(sim.player.school!.leave).toBeUndefined();
     for (const s of [once.error!, l1!]) { sound(s); whole(s); }
+  });
+});
+
+// From 2026-10-20 (brief 17, the health editor's finding): How You Are said "Rested, steady and ready for a real day." on
+// a sprained ankle and "Holding up, with nothing out of the ordinary to worry about." with the flu. It says a hospital
+// stay, the flu and an injury before the lines that say all's well, each with the day it ends, on Home and on your own
+// look, and a workout refused for the flu says the day it passes.
+describe('How You Are, at the moment it’s read', () => {
+  it('says a hospital stay, the flu and an injury with the day each ends, before the lines that say all’s well, on Home and your own look', () => {
+    const sim = student('dyn-how-you-are');
+    // TEST SETUP: rested and fed, so only what the body has decides the line.
+    Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 });
+    const own = () => opened(sim, 'person', sim.player.id).look.summary;
+    const day = (t: Instant) => formatDate(t, sim.zone);
+    expect(own()).toBe('Rested, steady and ready for a real day.');
+    expect(drawn(sim, Home)).toContain('Rested, steady and ready for a real day.');
+    const h = healthOf(sim.player);
+    // TEST SETUP: each held as the health system holds it (`fluUntil`, `injury`, `inHospitalUntil`).
+    h.fluUntil = sim.now + 5 * MS_DAY;
+    expect(own()).toBe(`Down with the flu until ${day(h.fluUntil)}.`);
+    expect(drawn(sim, Home)).toContain(`Down with the flu until ${day(h.fluUntil)}.`);
+    expect(drawn(sim, Home)).not.toContain('Rested, steady');
+    h.fluUntil = undefined;
+    h.injury = { kind: 'sprain', at: sim.now, until: sim.now + 7 * MS_DAY };
+    expect(own()).toBe(`Mending a sprained ankle until ${day(h.injury.until)}.`);
+    expect(drawn(sim, Home)).toContain(`Mending a sprained ankle until ${day(h.injury.until)}.`);
+    h.inHospitalUntil = sim.now + 2 * MS_DAY;
+    expect(own()).toBe(`In hospital until ${day(h.inHospitalUntil)}.`);
+    // Mended and home: all's well said again.
+    h.inHospitalUntil = undefined;
+    h.injury = { kind: 'sprain', at: sim.now - 8 * MS_DAY, until: sim.now - MS_DAY };
+    expect(own()).toBe('Rested, steady and ready for a real day.');
+    // The warnings that say the first thing to do still come first.
+    h.fluUntil = sim.now + 5 * MS_DAY;
+    sim.player.wellbeing.energy = 10;
+    expect(own()).toBe('Running on empty. You need sleep before anything else.');
   });
 });

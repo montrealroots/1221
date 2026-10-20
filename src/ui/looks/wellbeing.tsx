@@ -270,7 +270,7 @@ defineLook<Person>('person', {
     return {
       name: isYou ? (person.displayName || person.firstName) : person.displayName,
       kind: isYou ? 'Yourself' : 'Somebody',
-      summary: wellbeingSummary(person, isYou),
+      summary: wellbeingSummary(person, isYou, { at: sim.now, zone: sim.zone }),
       body: said.length > 0 ? <>{said}</> : undefined,
       ways,
       provenance: isYou

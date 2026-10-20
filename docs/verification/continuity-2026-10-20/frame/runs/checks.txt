@@ -1,0 +1,23 @@
+== node tools/title-case.mjs --check: exit=0
+0 strings in 0 files would change
+== node tools/voice-check.mjs --check: exit=0
+      1  src/ui/workspaces/CalendarWorkspace.tsx
+== node tools/tics.mjs --check: exit=0
+29 in all, across 9 habits.
+== node tools/spelling.mjs: exit=0
+0 British spellings in 0 files.
+== node tools/typos.mjs: exit=0
+0 misspellings or doubled words.
+== node tools/plural-check.mjs --check: exit=0
+0 counts printed in front of a plural noun without agreeing with it.
+== node tools/guide-quotes.mjs --check: exit=0
+580 quoted sentences in the guide; 580 the game says (5 of them held by the test that plays the example), 0 it no longer says.
+== node tools/doc-refs.mjs --check: exit=0
+Every one of them is there.
+== node tools/label-sweep.mjs: exit=0
+0 labels with a lowercase word
+== node tools/text-inventory.mjs --check: exit=0
+The text inventory holds.
+== node tools/surfaces.mjs --check: exit=1
+  … and 3670 more
+(surfaces.mjs --check exits 1 on the 3,730 sources that other areas' rows, and the tutorial's for its 21 guide sources in the frame's files, don't claim yet: no problem names frame.json, and every other frame source is claimed.)

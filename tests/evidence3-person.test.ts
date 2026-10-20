@@ -411,7 +411,7 @@ describe('c-wealth: Starting Point’s tiles are what Begin opens, for every fam
       } else expect(step.text).not.toContain('Credit Card');
       expect(step.text).toContain(m.need
         ? 'The school pays $13,318.50 into your bank at the start of each term, fall and spring, after your Yale Health plan.'
-        : 'Tuition is covered, and $1,882.00 goes each term to your Yale Health plan. Yale’s aid for living costs goes by need.');
+        : 'Each fall and spring, $1,882.00 comes out of your bank for that term’s Yale Health plan, and there’s no aid for living costs.');
       const sim = begun(`e3-family-${family}`, config);
       expect(primary(sim).balance).toBe(m.checking * 100);
       expect(mine(sim, 'savings').reduce((n, a) => n + a.balance, 0)).toBe(m.savings * 100);
