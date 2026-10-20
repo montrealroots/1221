@@ -3110,9 +3110,9 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 10 (d9b631ba): npm run gate on d9b631ba: 375 of 375 files, 4479 of 4479 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 11 (12f58cec): npm run gate on 12f58cec: 376 of 376 files, 4537 of 4537 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 12 (ac79bf4a): npm run gate on ac79bf4a: 376 of 376 files, 4566 of 4566 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 13 (0cf3a9bc): npm run gate on 0cf3a9bc: 376 of 376 files, 4587 of 4587 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 14 (a51b0e15): npm run gate on a51b0e15: 391 of 391 files, 4713 of 4713 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
+   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 10 (d9b631ba): npm run gate on d9b631ba: 375 of 375 files, 4479 of 4479 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 11 (12f58cec): npm run gate on 12f58cec: 376 of 376 files, 4537 of 4537 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 12 (ac79bf4a): npm run gate on ac79bf4a: 376 of 376 files, 4566 of 4566 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 13 (0cf3a9bc): npm run gate on 0cf3a9bc: 376 of 376 files, 4587 of 4587 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 14 (a51b0e15): npm run gate on a51b0e15: 391 of 391 files, 4713 of 4713 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 15 (aabfc1b2): npm run gate on aabfc1b2: 395 of 395 files, 4771 of 4771 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
    "implementation": "src/engine, src/ui",
-   "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -3153,11 +3153,17 @@
     },
     {
      "file": "docs/verification/language-2026-10-17/runs/gate.txt"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/runs/figures.json"
+    },
+    {
+     "file": "docs/verification/editorial-2026-10-19/runs/gate.txt"
     }
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "a51b0e15",
+    "commit": "aabfc1b2",
     "watch": "app"
    }
   },

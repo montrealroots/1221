@@ -18,17 +18,20 @@ merged: merging is the owner's. **Nothing is deployed.**
     `docs/verification/editorial-2026-10-19/runs/exits-*.txt`.
   - **They ran first on `c3478f9e`** (`runs/first/`). The interface's lanes found three more things there, and the two
     commits after it fixed them (section 3).
-  - **The gate** runs last, on the commit that holds this section, in a clean clone, with the build after it. Its result
-    is folded in after it, as brief 14's was (`docs/verification/editorial-2026-10-19/runs/gate.txt`). Between
-    `d6f6527a` and it, only documents changed: the records, the scripts that write them, the matrix and this handoff.
+  - **The gate** ran last, on `aabfc1b2`, in a clean clone: exit 0, 395 of 395 test files and 4,771 of 4,771 tests
+    passed, none skipped, every one of the twenty checks holding; the build exit 0, in the same clone
+    (`docs/verification/editorial-2026-10-19/runs/gate.txt`, `final-checks/`). Between `d6f6527a` and `aabfc1b2`, only
+    documents changed: the records, the scripts that write them, the matrix and this handoff. After it, only the gate's
+    figures were folded in, with the receipt and this section's account of them.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
 
 ## 2. Where It Stands
 
-**Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
-- **Against brief 14's close:** brief 14's 612 rows Implemented And Verified, each measured again on brief 15's tested commit where what it reads changed: 84 on `d6f6527a`, 78 by the engine and the judge and 6 on its build. The one row short is the gate's (INT-gate), which waits on the gate run on this commit.
+- **Against brief 14's close:** the same 612 rows Implemented And Verified, each measured again where what it reads
+  changed: 84 on `d6f6527a` (78 by the engine and the judge, 6 on its build), and the gate's on `aabfc1b2`.
 - **Every source of player text was read again, and none is Pending** (`docs/text/INVENTORY.md`):
   - **The second pass:** 4,177 sources, 916 Rewritten and 3,261 Retained, none Pending or Blocked. Each Retained has a
     reason the tool checks. Brief 14's statuses are kept as the first pass's history.

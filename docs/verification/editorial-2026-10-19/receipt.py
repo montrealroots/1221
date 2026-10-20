@@ -100,7 +100,6 @@ for f in sorted(glob.glob(f'{B}/runs/exits-*.txt')):
     lines = [l for l in read(f).splitlines() if ' exit=' in l]
     bad = [l.split(' cmd:')[0] for l in lines if not re.search(r' exit=0 ', l)]
     lane_exits[f.replace(B + '/', '')] = (len(lines), bad)
-    if bad: problems.append(f"{f.replace(B + '/', '')}: {len(bad)} steps not exit 0")
 if not lane_exits: problems.append('the final runs: not run')
 numbers = load(f'{B}/numbers-same.json')
 if numbers is None: problems.append('the comparison with brief 14: not run')
@@ -154,6 +153,12 @@ for name, ex, _ in journeys:
         d = d14.get(left[0]) if left else None
         if d and d.get('status') == 'left' and [s['n'] for s in failed] == [left[1]] and left[2] in (failed[0].get('why') or ''):
             accounted[k] = (failed[0], d)
+# A step not exit 0 in a lane is a problem, unless it's a journey's run that a defect left accounts for (above). Until
+# the receipt's first run on aabfc1b2 this was counted in the lanes' loop, and banking's two runs counted against the
+# pass there though the journeys accounted for them.
+for k, (n, bad) in lane_exits.items():
+    rest = [b for b in bad if b.split(' exit=')[0] not in accounted]
+    if rest: problems.append(f"{k}: {len(rest)} steps not exit 0" + (f" (and {len(bad) - len(rest)} accounted for below)" if len(rest) < len(bad) else ''))
 for name, ex, _ in journeys:
     bad = {k: v for k, v in ex.items() if v != 0 and k not in accounted}
     if bad: problems.append(f'the journey “{name}”: ' + ', '.join(f'{k} {"not run" if v is None else f"exit {v}"}' for k, v in bad.items()))
@@ -225,6 +230,9 @@ w('')
 w('Every source brief 14 kept or rewrote was read again; how the two passes meet:')
 w('')
 w(table(['First pass (brief 14)', 'Second pass (brief 15)', 'Sources'], sorted([[a, b, n] for (a, b), n in moved.items()], key=lambda r: (str(r[0]), str(r[1])))))
+w('')
+w(f"A first-pass Pending here isn't a source brief 14 left unread: brief 14 closed with none. It is one whose words changed after brief 14 "
+  f"read them, which brief 15's rewrites did and so did merges, or one new since ({a1.get('sources', 0) - a0.get('sources', 0)} more sources than at the start).")
 w('')
 w('By the area whose status names each source:')
 w('')
