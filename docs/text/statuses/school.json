@@ -2081,18 +2081,6 @@
   "on": "2026-10-17",
   "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
  },
- "src/engine/systems/classmates.ts#classMoment [apology]": {
-  "status": "Reviewed And Retained",
-  "hash": "1702dc71ef9f",
-  "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
- },
- "src/engine/systems/classmates.ts#classMoment [boundary]": {
-  "status": "Reviewed And Retained",
-  "hash": "1498f7b944ff",
-  "on": "2026-10-17",
-  "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
- },
  "src/engine/systems/classmates.ts#classMoment [encouragement]": {
   "status": "Reviewed And Retained",
   "hash": "0de2881cb80e",
@@ -2939,12 +2927,6 @@
   "on": "2026-10-17",
   "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
  },
- "src/engine/systems/school.ts#directorsNote": {
-  "status": "Rewritten And Verified",
-  "hash": "83f6045dde3d",
-  "on": "2026-10-17",
-  "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
- },
  "src/engine/systems/school.ts#drawCohort": {
   "status": "Reviewed And Retained",
   "hash": "f041ef618571",
@@ -3158,12 +3140,6 @@
  "src/engine/systems/school.ts#summerRefusal": {
   "status": "Rewritten And Verified",
   "hash": "ebeeed12431c",
-  "on": "2026-10-17",
-  "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
- },
- "src/engine/systems/school.ts#teachersNotes": {
-  "status": "Rewritten And Verified",
-  "hash": "709cd32f9807",
   "on": "2026-10-17",
   "evidence": "tests/school.test.ts, tests/evidence-g21-school.test.ts (the concern notice), tests/evidence-g22/g25/g26-school.test.ts, tests/remaining-school.test.ts, tests/school-journey-gaps.test.ts, tests/remaining-09-journeys.test.ts, tests/school-everyday.test.ts; rendered.txt"
  },

@@ -675,7 +675,7 @@ function heldLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
   }
   if (prep) return [`It stayed at ${b}: ${low(h.words)}.`, `${h.words}. That’s what held it back most.`];
   switch (v) {
-    case 'direct': return [`You were prepared. ${h.words}.`, `${b}, and not for lack of preparation: ${low(h.words)}.`];
+    case 'direct': return [`You were prepared. ${h.words}.`, `${b}, and not for lack of preparation: ${low(h.words)}.`, `${h.words}, though the preparation was all there.`];
     case 'warm': return [`You came in prepared, so this isn’t about the work you put in: ${low(h.words)}.`, `The preparation was there. ${h.words}.`];
     case 'exacting': return [`Prepared, but ${low(h.words)}.`, `The preparation was complete. ${h.words}.`];
     case 'patient': return [`Nothing was missing from the preparation. What held it back was elsewhere: ${low(h.words)}.`, `${cap(WORK[d])} was prepared, but ${low(h.words)}.`];

@@ -2267,20 +2267,6 @@
   "reason": "The line a classmate keeps in their memory of you after encouraging you, plain past tense, read on Your Partners as the latest thing between you.",
   "first": "Reviewed And Retained"
  },
- "src/engine/systems/classmates.ts#classMoment [apology]": {
-  "status": "Rewritten",
-  "hash": "618affa2e465",
-  "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
-  "first": "Pending"
- },
- "src/engine/systems/classmates.ts#classMoment [boundary]": {
-  "status": "Rewritten",
-  "hash": "b252535022b6",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g23-school.test.ts boundary moment; tests/evidence-g18-school.test.ts and tests/evidence-g24-school.test.ts (Hannah's boundary)",
-  "first": "Pending"
- },
  "src/engine/systems/classmates.ts#classMoment [encouragement]": {
   "status": "Rewritten",
   "hash": "3c6ed2d71e8a",
@@ -2771,13 +2757,6 @@
   "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
- "src/engine/systems/feedback.ts#HELD_INTROS": {
-  "status": "Rewritten",
-  "hash": "b4ae6003b375",
-  "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
-  "first": "Pending"
- },
  "src/engine/systems/feedback.ts#heldAction": {
   "status": "Rewritten",
   "hash": "85cf078249a3",
@@ -2827,20 +2806,6 @@
   "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
- "src/engine/systems/feedback.ts#recurringLeads": {
-  "status": "Rewritten",
-  "hash": "745e1ceb8c10",
-  "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
-  "first": "Pending"
- },
- "src/engine/systems/feedback.ts#showingCandidates": {
-  "status": "Rewritten",
-  "hash": "b00af1a143e3",
-  "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
-  "first": "Pending"
- },
  "src/engine/systems/feedback.ts#slippedLeads": {
   "status": "Rewritten",
   "hash": "f1509edd2778",
@@ -2865,13 +2830,6 @@
  "src/engine/systems/feedback.ts#STEP_INTROS": {
   "status": "Rewritten",
   "hash": "890f5dcc7101",
-  "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
-  "first": "Pending"
- },
- "src/engine/systems/feedback.ts#stillOpen": {
-  "status": "Rewritten",
-  "hash": "4a8ab7bc7bdd",
   "on": "2026-10-20",
   "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
@@ -3422,13 +3380,6 @@
   "evidence": "Newly read by the inventory from brief 15's coordinator on: the registrar's degree conferral page and Yale's 2026 to 2027 academic calendar. It ended with the research's file name, research-yale-leave-2.json, now gone, and the year's span takes the house's dash; read in node tools/text-inventory.mjs after the change; tests/work-limits.test.ts passes on it",
   "first": "Pending"
  },
- "src/engine/systems/school.ts#directorsNote": {
-  "status": "Retained",
-  "hash": "83f6045dde3d",
-  "on": "2026-10-19",
-  "reason": "A director's closing note on a run, in their own voice, praise or what to work on next, with the house as a director would say it.",
-  "first": "Rewritten And Verified"
- },
  "src/engine/systems/school.ts#drawCohort": {
   "status": "Retained",
   "hash": "f041ef618571",
@@ -3701,13 +3652,6 @@
   "on": "2026-10-19",
   "reason": "Refusals for the Summer Cabaret, each naming the rule that stops it: good standing, not on leave, a year still to go, already in it, or the company already formed.",
   "first": "Rewritten And Verified"
- },
- "src/engine/systems/school.ts#teachersNotes": {
-  "status": "Rewritten",
-  "hash": "d8aa553319a2",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/school/rendered.txt teacher's notes (render.mts), ahead, in step and behind, with Speech And Accents I's two skills; tests/casting.test.ts",
-  "first": "Pending"
  },
  "src/engine/systems/school.ts#termBegins": {
   "status": "Retained",
