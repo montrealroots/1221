@@ -12,30 +12,30 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 47 | 450 | 12403 | 0 | 26 | 21 | 0 | 0 |
 | Home And Its Retained Actions | 17 | 168 | 800 | 0 | 4 | 13 | 0 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 3756 | 55917 | 176 | 179 | 442 | 0 | 0 |
-| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 660 | 6668 | 69889 | 7 | 182 | 478 | 0 | 0 |
+| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 662 | 6682 | 69977 | 7 | 184 | 478 | 0 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 6634 | 151913 | 13 | 265 | 499 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 473 | 4587 | 56840 | 3 | 100 | 373 | 0 | 0 |
-| Health, Treatment, Coverage, Stamina, Energy And Recovery | 105 | 801 | 8164 | 0 | 33 | 72 | 0 | 0 |
+| Health, Treatment, Coverage, Stamina, Energy And Recovery | 105 | 804 | 8174 | 0 | 33 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2544 | 14584 | 0 | 16 | 67 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 28 | 187 | 1041 | 0 | 1 | 27 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 40 | 178 | 686 | 0 | 6 | 34 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 189 | 30497 | 1 | 4 | 68 | 0 | 0 |
-| **All** | 4226 | 36652 | 572133 | 316 | 1087 | 3139 | 0 | 0 |
+| **All** | 4228 | 36669 | 572231 | 316 | 1089 | 3139 | 0 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
 | frame | 491 | 32810 | 82 | 409 | 0 | 0 |
-| health | 177 | 38661 | 37 | 140 | 0 | 0 |
+| health | 177 | 38671 | 37 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
 | money | 264 | 54943 | 107 | 157 | 0 | 0 |
 | money-data | 522 | 99446 | 162 | 360 | 0 | 0 |
 | papers | 473 | 56840 | 100 | 373 | 0 | 0 |
 | profile | 621 | 55917 | 179 | 442 | 0 | 0 |
-| school | 632 | 66871 | 178 | 454 | 0 | 0 |
+| school | 634 | 66959 | 180 | 454 | 0 | 0 |
 | tutorial | 47 | 12403 | 26 | 21 | 0 | 0 |
 
 ## The First Pass, By Subsystem
@@ -46,7 +46,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Tutorials, Guides, Help Panels And Connected-System Explanations | 47 | 13 | 8 | 26 | 0 |
 | Home And Its Retained Actions | 17 | 4 | 9 | 4 | 0 |
 | Player Profile, Attributes, Genres, Mastery And Progression | 621 | 144 | 238 | 239 | 0 |
-| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 660 | 120 | 353 | 187 | 0 |
+| School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 662 | 120 | 353 | 189 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 764 | 118 | 377 | 269 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 473 | 146 | 225 | 102 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 105 | 30 | 40 | 35 | 0 |
@@ -55,7 +55,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 40 | 7 | 28 | 5 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 30 | 747 | 216 | 0 |
 | The World: Places, Countries, Weather And Reference Data | 72 | 0 | 66 | 6 | 0 |
-| **All** | 4226 | 672 | 2392 | 1162 | 0 |
+| **All** | 4228 | 672 | 2392 | 1164 | 0 |
 
 ## Startup, Save Selection, Character Creation And Onboarding
 
@@ -1430,7 +1430,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/briefs.ts#suggestions` | 9 | 0 | Retained | school | The brief's steps, its readers' styles, what each take is for, its refusals and its suggestions, each saying what happened or what to do first. | Rewritten And Verified |
 | `src/engine/systems/classmates.ts#PRIORITY_WORDS` | 4 | 0 | Retained | school | What a classmate cares about most, four Title Case phrases after Cares Most About on Your Partners, each a plain thing a person might care about. | Reviewed And Retained |
 | `src/engine/systems/classmates.ts#templateTitle` | 1 | 0 | Rewritten | school | tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments | Pending |
-| `src/engine/systems/classmates.ts#apologyWords` | 10 | 0 | Rewritten | school | tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments | Pending |
+| `src/engine/systems/classmates.ts#apologyWords` | 13 | 0 | Rewritten | school | tests/continuity-incidents.test.ts ('says how long it’s been, where the miss was weeks or months ago, and nothing of it where it was days', and the apology covering its misses); read in order in the second after-runs' class moments | Pending |
 | `src/engine/systems/classmates.ts#boundaryWords` | 6 | 0 | Rewritten | school | tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments | Pending |
 | `src/engine/systems/classmates.ts#boundaryRefusal` | 1 | 0 | Retained | school | A classmate's own condition after being let down, with the fix in the same breath: ask for an evening at least a day ahead. | Rewritten And Verified |
 | `src/engine/systems/classmates.ts#classMoment [help]` | 10 | 0 | Rewritten | school | tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments | Pending |
@@ -1533,9 +1533,11 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/feedback.ts#steadyLeads` | 20 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students) | Pending |
 | `src/engine/systems/feedback.ts#firstLeads` | 9 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students) | Pending |
 | `src/engine/systems/feedback.ts#bestLeads` | 7 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students) | Pending |
-| `src/engine/systems/feedback.ts#maintainedLeads` | 23 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students) | Pending |
-| `src/engine/systems/feedback.ts#despiteLeads` | 6 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students) | Pending |
-| `src/engine/systems/feedback.ts#heldLeads` | 26 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students) | Pending |
+| `src/engine/systems/feedback.ts#countedRun` | 23 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice, the voices apart and a day said once; read in order in the after-runs (tools/voices.ts) on the current head | Pending |
+| `src/engine/systems/feedback.ts#despiteLeads` | 11 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice, the voices apart and a day said once; read in order in the after-runs (tools/voices.ts) on the current head | Pending |
+| `src/engine/systems/feedback.ts#heldLeads` | 6 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice, the voices apart and a day said once; read in order in the after-runs (tools/voices.ts) on the current head | Pending |
+| `src/engine/systems/feedback.ts#heldAgainLeads` | 13 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice, the voices apart and a day said once; read in order in the after-runs (tools/voices.ts) on the current head | Pending |
+| `src/engine/systems/feedback.ts#heldFreshLeads` | 13 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice, the voices apart and a day said once; read in order in the after-runs (tools/voices.ts) on the current head | Pending |
 | `src/engine/systems/feedback.ts#heldAction` | 11 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students) | Pending |
 | `src/engine/systems/feedback.ts#STEP_INTROS` | 8 | 0 | Rewritten | school | tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students) | Pending |
 | `src/engine/systems/feedback.ts#partnerSentence` | 4 | 0 | Rewritten | school | Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th | Pending |
@@ -3025,7 +3027,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/systems/appointments.ts#mayRefer` | 1 | 0 | Retained | health | Says where a referral came from, Referred after a doctor's visit, so the specialist's appointment is tied to the visit that led to it. | Reviewed And Retained |
 | `src/engine/systems/appointments.ts#appointmentWords` | 4 | 0 | Rewritten | health | Brief 17: each kind of appointment held by tests/language-care17.test.ts, and read in the missed notice in docs/verification/continuity-2026-10-20/health/sequences-after.txt (render-sequences.ts) | Pending |
 | `src/engine/systems/appointments.ts#seenWords` | 4 | 0 | Rewritten | health | Brief 17: each kind of visit held by tests/language-care17.test.ts and tests/evidence-g03-life.test.ts (a renewal), read in docs/verification/continuity-2026-10-20/health/sequences-after.txt (render-sequences.ts) | Pending |
-| `src/engine/systems/appointments.ts#bookIn` | 6 | 0 | Rewritten | health | tests/guide-examples-papers.test.ts, papers.doctor: the played Monday's notice equals the guide's quote, new next step included; fails with the old notice | Pending |
+| `src/engine/systems/appointments.ts#bookIn` | 9 | 0 | Rewritten | health | tests/scope-health.test.ts ('PLAYER JOURNEY: the student who picks Yale Health on Your Doctor is booked the next weekday there…'): Yale Health's own wait said as its own, a town's and a referral's as before | Pending |
 | `src/engine/systems/appointments.ts#registerAppointments` | 5 | 0 | Rewritten | health | Brief 17: Missed The Doctor and Not Seen At Your Practice read in docs/verification/continuity-2026-10-20/health/sequences-after.txt (render-sequences.ts) and held word for word by tests/evidence-g05-life.test.ts and tests/scope-health.test.ts | Pending |
 | `src/engine/systems/appointments.ts#registerAppointments <health.book>` | 3 | 0 | Retained | health | Book An Appointment's refusals name the one obstacle: nothing to see a doctor about, an appointment already booked, or no published wait where you live, so care comes when needed. | Rewritten And Verified |
 | `src/engine/systems/appointments.ts#registerAppointments <health.cancel_appointment>` | 1 | 0 | Rewritten | health | care-after-2.txt, rendered by render-care.ts: Call It Off pressed on an appointment that isn't booked | Pending |

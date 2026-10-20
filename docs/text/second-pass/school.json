@@ -2855,13 +2855,6 @@
   "evidence": "tests/feedback-voices.test.ts holds every situation in every voice, the voices apart and a day said once; read in order in the after-runs (tools/voices.ts) on the current head",
   "first": "Pending"
  },
- "src/engine/systems/feedback.ts#maintainedLeads": {
-  "status": "Rewritten",
-  "hash": "eab0ee005c12",
-  "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
-  "first": "Pending"
- },
  "src/engine/systems/feedback.ts#MONTH": {
   "status": "Retained",
   "hash": "335d22f91501",
