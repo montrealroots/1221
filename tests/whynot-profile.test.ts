@@ -4,7 +4,7 @@
  * docs/verification/CONNECTED-JOURNEY-MAP-2026-10-12.md). Until then a practice focus refused (Live With A Partner, with
  * no class to ask) was grayed out in its list with its reason nowhere, not even in a title; it's said under the focus
  * then, by the house’s WhyNot, until 2026-10-13, when that refusal went, reached by no play. Practice An Hour and Study It already said theirs under the button, and are held here
- * too.
+ * too. From 2026-10-20 (brief 17) Study It's, the same for every genre, is said once above the genres' table.
  *
  * The screen is rendered to markup (react-dom/server) over real saves, as tests/defects-r8-1.test.ts renders it:
  * `useGame` stands in for the provider and `run` is the save's own `execute`. An exercise's practice opens on a press
@@ -125,8 +125,12 @@ describe('Study It refused, on the Player Profile', () => {
     expect(why).toMatch(/starts at .*: there isn’t the time before it\.$/);
     const { html, text } = drawn(sim, false);
     expect(html).toContain(`title="${why}" disabled="">Study It</button>`);
-    // One under each genre shown.
-    expect(count(text, why)).toBe(count(html, '>Study It</button>'));
+    // Every genre's button refused, for the same reason: said once above the table, named for Study It (from 2026-10-20,
+    // brief 17). Until then it was said under each genre shown, sixteen times a page.
+    expect(count(html, `title="${why}" disabled="">Study It</button>`)).toBe(count(html, '>Study It</button>'));
+    expect(count(html, '>Study It</button>')).toBeGreaterThan(1);
+    expect(count(text, `Study It: ${why}`)).toBe(1);
+    expect(count(text, why)).toBe(1);
     // The falsifiability test: with time before it, nothing refuses it and nothing is said. TEST SETUP: the same save
     // with what waits on the player taken away by hand.
     const free = createSave(1, 'whynot-profile-study', config());

@@ -6,6 +6,9 @@
  * The details are a native disclosure: a button to the keyboard and to a screen reader, opened with Enter or Space, and
  * shut by default. What a reader of the screen looks for keeps its mark inside it (`data-standing`, `data-assumes`,
  * `data-attention`); the action keeps `data-next`.
+ *
+ * From 2026-10-20 (brief 17) what the record shows of it now has a line of its own under why it matters (`continuing`,
+ * `data-continuing`): how long it has led, the recent pieces it held back, how long since any work was judged.
  */
 
 import type { AdviceSummary } from '@/engine/systems/next-steps';
@@ -17,6 +20,7 @@ export function AdviceCard({ advice, heading }: { advice: AdviceSummary; heading
     <div className="col gap-1" data-advice="">
       {heading && <div className="eyebrow">{heading}</div>}
       <p className="small" style={P}><strong>{advice.what}</strong>. {advice.why}</p>
+      {advice.continuing && <p className="small" style={P} data-continuing="">{advice.continuing}</p>}
       {advice.action && <p className="small" style={P} data-next="">{advice.action}</p>}
       {advice.estimate && <p className="small" style={P} data-estimate="">{advice.estimate}</p>}
       {advice.unavailable && <p className="xs why-not" style={P}>{advice.unavailable}</p>}

@@ -14,7 +14,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Stat, Fine, Empty } from '@/ui/components/primitives';
+import { Panel, Stat, Fine, Empty, WhyNot } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { targetLabel, targetSubject, sourceWords, masteredOf, readersOf } from '@/ui/looks/actor';
@@ -98,6 +98,11 @@ const PAGE = 16;
  * area's read of the before walk, and “Sleep owed 0 hours” with none.
  */
 export const sleepOwed = (debt: number): string => { const n = Math.round(debt); return n ? `${plural(n, 'hour')} of sleep owed` : 'No sleep owed'; };
+/**
+ * A run's nights by band, as the milestone keeps them (`school.ts`: "3 solid, 1 off"), in words (from 2026-10-20, brief
+ * 17): until then shown as kept, "the run averaged 42.0 (4 off)", which could be read as four points off.
+ */
+export const nightsWords = (detail: string): string => detail.replace(/\b(\d+) (off|solid|remarkable)\b/g, (_, n: string, b: string) => `${n} ${b} ${Number(n) === 1 ? 'night' : 'nights'}`);
 /** A day kept as its key at home (`YYYY-MM-DD`), as a date (from 2026-10-17, brief 14: until then printed as the key). */
 const dayWords = (sim: Simulation, day: string): string => { const [year, month, d] = day.split('-').map(Number); return year && month && d ? formatDate(instantFromZoned({ year, month, day: d, hour: 12 }, sim.homeZone), sim.homeZone) : day; };
 
@@ -437,6 +442,11 @@ function GenresPanel() {
     if (show === 'With Requirements') return genreTags(g.id).length > 0;
     return true;
   });
+  // Why Study It can't be pressed now, said once above the table where it's the same for every row shown (from
+  // 2026-10-20, brief 17): it's the hour's own refusal (`hourRefusal`), the same for every genre, and until then each row
+  // said it under its button, sixteen times a page: "You’re at Classes until 3:00 PM."
+  const refusals = list.slice(0, limit).map((g) => studyRefusal(sim, person, g.id));
+  const oneRefusal = refusals.length > 0 && refusals.every((r) => r === refusals[0]) ? refusals[0] : undefined;
   return (
     <Panel title="Genres" subtitle={`${(person.genres ?? []).length} loved; ${Object.keys(person.engagement?.byGenre ?? {}).length} of ${FILM_GENRES.length} studied or worked in`} help="genre.study">
       <div className="col gap-3">
@@ -454,6 +464,7 @@ function GenresPanel() {
           </div>
         )}
         <ListControls id="genres" text={text} setText={(s) => { setText(s); setLimit(PAGE); }} show={show} setShow={(s) => { setShow(s); setLimit(PAGE); }} options={['All', 'Loved', 'Studied Or Worked In', 'With Requirements']} count={Math.min(limit, list.length)} />
+        <WhyNot reasons={[['Study It', oneRefusal], ['Open Its Brief', undefined]]} />
         <LookRegion className="table-scroll">
           <table>
             <thead><tr><th scope="col">Genre</th><th scope="col">It Asks For</th><th scope="col" className="num">Familiarity</th><th scope="col" className="num">Work In It</th><th scope="col">Study, Or Its Brief</th></tr></thead>
@@ -475,7 +486,7 @@ function GenresPanel() {
                     <td className="nowrap">
                       <Gated feature="genre.study" className="btn btn-sm" disabled={Boolean(study)} title={study ?? 'An hour and a half reading a play or watching a film of its kind'} onClick={() => { const r = run<{ familiarity: number; with: string }>('genre.study', { genre: g.id }); if (r.ok) toast(studiedWords(g.id, r.value!), 'positive'); }}>Study It</Gated>{' '}
                       <button type="button" className="btn btn-sm" title={`${briefsOf(g.id)[0]?.title ?? 'Its brief'}: read it, prepare it, choose how to play it, tape it`} onClick={() => { setOpen(g.id); setOpenBrief(undefined); }}>Open Its Brief</button>
-                      {study && <div className="xs dim">{study}</div>}
+                      {study && !oneRefusal && <div className="xs dim">{study}</div>}
                     </td>
                   </tr>
                 );
@@ -550,7 +561,7 @@ function JourneyPanel() {
         )}
         {j.milestones.length > 0 && (
           <ul className="small" style={{ margin: 0 }}>
-            {[...j.milestones].reverse().slice(0, 12).map((m, i) => <li key={i}>{formatDate(m.at, sim.zone)}: {m.kind === 'run' ? `${m.what}, the run averaged ${one(m.overall)}${m.detail ? ` (${m.detail})` : ''}` : m.kind === 'first-strong' ? `First strong work: ${m.what}, ${one(m.overall)}` : m.kind === 'first-exceptional' ? `First distinction-level work: ${m.what}, ${one(m.overall)}` : `First work at full mastery: ${m.what}, ${one(m.overall)}`}</li>)}
+            {[...j.milestones].reverse().slice(0, 12).map((m, i) => <li key={i}>{formatDate(m.at, sim.zone)}: {m.kind === 'run' ? `${m.what}, the run averaged ${one(m.overall)}${m.detail ? ` (${nightsWords(m.detail)})` : ''}` : m.kind === 'first-strong' ? `First strong work: ${m.what}, ${one(m.overall)}` : m.kind === 'first-exceptional' ? `First distinction-level work: ${m.what}, ${one(m.overall)}` : `First work at full mastery: ${m.what}, ${one(m.overall)}`}</li>)}
           </ul>
         )}
         {work.length ? (

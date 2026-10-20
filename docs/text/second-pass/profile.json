@@ -371,11 +371,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/genre-demands.json#absurdist": {
-  "status": "Retained",
-  "hash": "635969aa2628",
-  "on": "2026-10-19",
-  "reason": "Absurdist's small print says what the research found (“Absurdist drama, Beckett above all, asks actors…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "b120c547d7d9",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#action": {
   "status": "Retained",
@@ -399,11 +399,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#alternate_history": {
-  "status": "Retained",
-  "hash": "3f6f9a2dae0d",
-  "on": "2026-10-19",
-  "reason": "Alternate History's small print says what the research found (“No source was found that describes a…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "def0ffdbbf86",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#animated": {
   "status": "Retained",
@@ -504,11 +504,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#caper": {
-  "status": "Retained",
-  "hash": "e29ab312278a",
-  "on": "2026-10-19",
-  "reason": "Caper's small print says what the research found (“No credible source on performing in caper…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "40a818c8a372",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#chanbara": {
   "status": "Retained",
@@ -518,11 +518,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#chase": {
-  "status": "Retained",
-  "hash": "d565fc6a8496",
-  "on": "2026-10-19",
-  "reason": "Chase's small print says what the research found (“Reference works define the chase film as…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "f30579864560",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#childrens": {
   "status": "Retained",
@@ -581,11 +581,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#courtroom_drama": {
-  "status": "Retained",
-  "hash": "78edee1ba6a6",
-  "on": "2026-10-19",
-  "reason": "Courtroom Drama's small print says what the research found (“Only weak sources were found: actor-training blogs…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "3641bd0130f2",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#creature_feature": {
   "status": "Rewritten",
@@ -630,11 +630,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#disaster": {
-  "status": "Retained",
-  "hash": "b943e91614f8",
-  "on": "2026-10-19",
-  "reason": "Disaster's small print says what the research found (“Disaster films can put actors through weeks…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "0a5cafd1974f",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#docudrama": {
   "status": "Retained",
@@ -665,18 +665,18 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#drama": {
-  "status": "Retained",
-  "hash": "e64d0f7eb1fa",
-  "on": "2026-10-19",
-  "reason": "Drama's small print says what the research found (“Serious drama in the modern tradition asks…”), what its source says in its own words, how sure it is (medium) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "4d451a99ba6c",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#dystopian": {
-  "status": "Retained",
-  "hash": "eaf51e699502",
-  "on": "2026-10-19",
-  "reason": "Dystopian's small print says what the research found (“No source was found for what dystopian…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "a3a53a0d2dfb",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#eco_horror": {
   "status": "Retained",
@@ -693,11 +693,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#erotic_thriller": {
-  "status": "Retained",
-  "hash": "6071841ffbe5",
-  "on": "2026-10-19",
-  "reason": "Erotic Thriller's small print says what the research found (“Erotic thrillers put choreographed intimate scenes at…”), what its source says in its own words, how sure it is (medium), why each requirement is applied and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "3443d5910cff",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#espionage": {
   "status": "Retained",
@@ -714,11 +714,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#exploitation": {
-  "status": "Retained",
-  "hash": "a7936773517a",
-  "on": "2026-10-19",
-  "reason": "Exploitation's small print says what the research found (“Exploitation films were shot in days on…”), what its source says in its own words, how sure it is (medium), why each requirement is applied and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "39f21127c3f7",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#fairy_tale": {
   "status": "Retained",
@@ -819,11 +819,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#historical_fiction": {
-  "status": "Retained",
-  "hash": "26ac3a083ae3",
-  "on": "2026-10-19",
-  "reason": "Historical Fiction's small print says what the research found (“A leading drama school teaches period movement…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "089eba253cae",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#holiday": {
   "status": "Retained",
@@ -833,11 +833,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#hood_film": {
-  "status": "Retained",
-  "hash": "a8d99ab342c6",
-  "on": "2026-10-19",
-  "reason": "Hood Film's small print says what the research found (“The 'hood film is tied to hip-hop…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "63cb6bb5465f",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#horror": {
   "status": "Rewritten",
@@ -889,11 +889,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#legal_drama": {
-  "status": "Retained",
-  "hash": "2205bc17d9db",
-  "on": "2026-10-19",
-  "reason": "Legal Drama's small print says what the research found (“Legal drama is reputed to ask actors…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "ac60f370e1cb",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#magical_realism": {
   "status": "Retained",
@@ -960,9 +960,9 @@
  },
  "src/engine/content/genre-demands.json#mystery": {
   "status": "Rewritten",
-  "hash": "4d4030416154",
-  "on": "2026-10-19",
-  "evidence": "Mystery's research small print rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, printed after the one rebuild for batches 6 and 7 by tools/build-attribute-content.mjs from the brief 15 lines of genre-demands-words.txt",
+  "hash": "19b5fa557189",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
   "first": "Pending"
  },
  "src/engine/content/genre-demands.json#nature_documentary": {
@@ -1064,11 +1064,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#psychological_horror": {
-  "status": "Retained",
-  "hash": "e9be3bc993eb",
-  "on": "2026-10-19",
-  "reason": "Psychological Horror's small print says what the research found (“A central psychological-horror performance was played as…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "d68cced2a4ee",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#psychological_thriller": {
   "status": "Retained",
@@ -1141,18 +1141,18 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#science_fantasy": {
-  "status": "Retained",
-  "hash": "55b57192e92e",
-  "on": "2026-10-19",
-  "reason": "Science Fantasy's small print says what the research found (“No source was found on what science…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "a0a784946cf9",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#science_fiction": {
-  "status": "Retained",
-  "hash": "969d6ffed1c1",
-  "on": "2026-10-19",
-  "reason": "Science Fiction's small print says what the research found (“Effects-heavy science fiction asks the actor to…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "c698fd84135f",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#screwball_comedy": {
   "status": "Retained",
@@ -1191,9 +1191,9 @@
  },
  "src/engine/content/genre-demands.json#slice_of_life": {
   "status": "Rewritten",
-  "hash": "18440650a1ab",
-  "on": "2026-10-19",
-  "evidence": "Slice Of Life's research small print rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, printed after the one rebuild for batches 6 and 7 by tools/build-attribute-content.mjs from the brief 15 lines of genre-demands-words.txt",
+  "hash": "a332b5e4e850",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
   "first": "Pending"
  },
  "src/engine/content/genre-demands.json#social_realism": {
@@ -1309,11 +1309,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/content/genre-demands.json#teen": {
-  "status": "Retained",
-  "hash": "798098e37f44",
-  "on": "2026-10-19",
-  "reason": "Teen's small print says what the research found (“Teen films and series often cast actors…”), what its source says in its own words, how sure it is (low) and what it couldn’t settle, as careful as the research itself",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "3ba2e7f38c36",
+  "on": "2026-10-20",
+  "evidence": "Read on the genre look's small print (What the research says, Still uncertain) in src/ui/looks/actor.tsx: no sentence opens on Nothing; tools/tics.mjs --check and tools/voice-check.mjs --check pass",
+  "first": "Pending"
  },
  "src/engine/content/genre-demands.json#thriller": {
   "status": "Retained",
@@ -2464,31 +2464,31 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .action": {
-  "status": "Retained",
-  "hash": "939a0bcd21b9",
-  "on": "2026-10-19",
-  "reason": "Defines Action in one plain sentence paraphrasing its source (“A film genre that predominantly features chase…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "e6dd6429def2",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .action_comedy": {
-  "status": "Retained",
-  "hash": "d530e34715be",
-  "on": "2026-10-19",
-  "reason": "Defines Action Comedy in one plain sentence paraphrasing its source (“A genre combining action and comedy, with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "838d9078c5a1",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .adventure": {
-  "status": "Retained",
-  "hash": "26c768508ef9",
-  "on": "2026-10-19",
-  "reason": "Defines Adventure in one plain sentence paraphrasing its source (“A film genre whose plots feature travel…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "87f7c65819c6",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .alternate_history": {
-  "status": "Retained",
-  "hash": "40534d50ab03",
-  "on": "2026-10-19",
-  "reason": "Defines Alternate History in one plain sentence paraphrasing its source (“A genre of fiction that imagines a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "453f5de944b0",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .animated": {
@@ -2513,10 +2513,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .apocalyptic": {
-  "status": "Retained",
-  "hash": "b93810d32a3f",
-  "on": "2026-10-19",
-  "reason": "Defines Apocalyptic in one plain sentence paraphrasing its source (“A subgenre of science fiction concerned with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "5de526826e1a",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .art_house": {
@@ -2541,10 +2541,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .biker": {
-  "status": "Retained",
-  "hash": "8061cfec0d18",
-  "on": "2026-10-19",
-  "reason": "Defines Biker in one plain sentence paraphrasing its source (“A film genre, regarded as a branch…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "a3e1aca657db",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .biographical": {
@@ -2569,31 +2569,31 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .body_horror": {
-  "status": "Retained",
-  "hash": "138a30893ac7",
-  "on": "2026-10-19",
-  "reason": "Defines Body Horror in one plain sentence paraphrasing its source (“A subgenre of horror that showcases grotesque…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "bc3dc3ad31e4",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .buddy_comedy": {
-  "status": "Retained",
-  "hash": "72e8e017c5cc",
-  "on": "2026-10-19",
-  "reason": "Defines Buddy Comedy in one plain sentence paraphrasing its source (“A subgenre in which two people, usually…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "b41ae358a106",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .buddy_cop": {
-  "status": "Retained",
-  "hash": "8ba4ad5e4172",
-  "on": "2026-10-19",
-  "reason": "Defines Buddy Cop in one plain sentence paraphrasing its source (“A film and television genre in which…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "c3d89933e87d",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .caper": {
   "status": "Rewritten",
-  "hash": "07a040e158fa",
-  "on": "2026-10-19",
-  "evidence": "Defines Caper in one plain sentence paraphrasing its source (“A lighter-toned subgenre of crime fiction in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "f098d1b5a12d",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .chanbara": {
@@ -2639,10 +2639,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .concert_film": {
-  "status": "Retained",
-  "hash": "7b42ef309fe9",
-  "on": "2026-10-19",
-  "reason": "Defines Concert Film in one plain sentence paraphrasing its source (“A film whose content consists primarily of…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "1306330265f4",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .conspiracy_thriller": {
@@ -2654,9 +2654,9 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .cosmic_horror": {
   "status": "Rewritten",
-  "hash": "ee5f4fad8bf0",
-  "on": "2026-10-19",
-  "evidence": "Cosmic Horror's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "hash": "f1ab7f019fca",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .costume_drama": {
@@ -2667,31 +2667,31 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .courtroom_drama": {
-  "status": "Retained",
-  "hash": "567c8215952f",
-  "on": "2026-10-19",
-  "reason": "Defines Courtroom Drama in one plain sentence paraphrasing its source (“A genre of film and television, also…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia; also cites the AFI definition) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "c2ab25dccf6e",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .creature_feature": {
   "status": "Rewritten",
-  "hash": "da7db79ab686",
-  "on": "2026-10-19",
-  "evidence": "Defines Creature Feature in one plain sentence paraphrasing its source (“A subgenre of horror and science fiction…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "f5a4928dc194",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .crime": {
   "status": "Rewritten",
-  "hash": "93fb246cd010",
-  "on": "2026-10-19",
-  "evidence": "Defines Crime in one plain sentence paraphrasing its source (“A film genre in which crime, its…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "f18ab681e1f3",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .cyberpunk": {
-  "status": "Retained",
-  "hash": "6346f21755f5",
-  "on": "2026-10-19",
-  "reason": "Defines Cyberpunk in one plain sentence paraphrasing its source (“A subgenre of science fiction set in…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (University of Texas at Austin library glossary of science-fiction genres) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "cfa9a859e11e",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .dance": {
@@ -2702,10 +2702,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .dark_fantasy": {
-  "status": "Retained",
-  "hash": "8946ae47ff63",
-  "on": "2026-10-19",
-  "reason": "Defines Dark Fantasy in one plain sentence paraphrasing its source (“A subgenre of fantasy that combines magical…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "10da4e9d0b15",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .detective": {
@@ -2716,10 +2716,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .disaster": {
-  "status": "Retained",
-  "hash": "e664a3ef4eeb",
-  "on": "2026-10-19",
-  "reason": "Defines Disaster in one plain sentence paraphrasing its source (“A film genre that has an impending…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "d37521bb5450",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .docudrama": {
@@ -2766,30 +2766,30 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .eco_horror": {
   "status": "Rewritten",
-  "hash": "30a9e1e274d0",
-  "on": "2026-10-19",
-  "evidence": "Defines Eco-Horror in one plain sentence paraphrasing its source (“A subgenre of horror, also called eco-terror…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "bf2e2d97653d",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .epic": {
   "status": "Rewritten",
-  "hash": "f8405344f86f",
-  "on": "2026-10-19",
-  "evidence": "Defines Epic in one plain sentence paraphrasing its source (“A film genre of grand scale and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "9e39a7ecd231",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .erotic_thriller": {
-  "status": "Retained",
-  "hash": "b2a09d6a06ed",
-  "on": "2026-10-19",
-  "reason": "Defines Erotic Thriller in one plain sentence paraphrasing its source (“A film subgenre of the thriller with…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "018dacf1d444",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .espionage": {
-  "status": "Retained",
-  "hash": "f4a2313a0534",
-  "on": "2026-10-19",
-  "reason": "Defines Espionage in one plain sentence paraphrasing its source (“A genre, also called the spy film…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "9d1fba461584",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .experimental": {
@@ -2815,9 +2815,9 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .family": {
   "status": "Rewritten",
-  "hash": "d8ca2990b845",
-  "on": "2026-10-19",
-  "evidence": "Defines Family in one plain sentence paraphrasing its source (“A film genre with content appropriate for…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "958b2f241d2d",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .fantasy": {
@@ -2829,23 +2829,23 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .farce": {
   "status": "Rewritten",
-  "hash": "aea335fde1a5",
-  "on": "2026-10-19",
-  "evidence": "Defines Farce in one plain sentence paraphrasing its source (“A form of comedy that relies on…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "3416ecf5726c",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .film_noir": {
   "status": "Rewritten",
-  "hash": "bcc5ff1cc47d",
-  "on": "2026-10-19",
-  "evidence": "Defines Film Noir in one plain sentence paraphrasing its source (“A film genre offering dark or fatalistic…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "be996bed2a67",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .folk_horror": {
   "status": "Rewritten",
-  "hash": "32b0159e6ed6",
-  "on": "2026-10-19",
-  "evidence": "Defines Folk Horror in one plain sentence paraphrasing its source (“A subgenre of horror that uses elements…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "9af73e539844",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .found_footage": {
@@ -2885,9 +2885,9 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .hangout": {
   "status": "Rewritten",
-  "hash": "e6913acabf8a",
-  "on": "2026-10-19",
-  "evidence": "Defines Hangout in one plain sentence paraphrasing its source (“A hangout film prioritizes unhurried interaction among…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "752f352001b5",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .heist": {
@@ -2913,9 +2913,9 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .holiday": {
   "status": "Rewritten",
-  "hash": "2084ab6a2423",
-  "on": "2026-10-19",
-  "evidence": "Holiday's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "987287ed90c5",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .hood_film": {
@@ -2954,10 +2954,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .jukebox_musical": {
-  "status": "Retained",
-  "hash": "0fd0c0962374",
-  "on": "2026-10-19",
-  "reason": "Defines Jukebox Musical in one plain sentence paraphrasing its source (“A jukebox musical is a stage musical…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "61add0573293",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .kaiju": {
@@ -2997,9 +2997,9 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .medical_drama": {
   "status": "Rewritten",
-  "hash": "a93eae33dba2",
-  "on": "2026-10-19",
-  "evidence": "Medical Drama's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "hash": "7f2774d7271a",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .melodrama": {
@@ -3011,23 +3011,23 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .military": {
   "status": "Rewritten",
-  "hash": "d8c2dbfdb38a",
-  "on": "2026-10-19",
-  "evidence": "Defines Military in one plain sentence paraphrasing its source (“A military film centers on armed forces…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "263e258c3af2",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .mockumentary": {
-  "status": "Retained",
-  "hash": "171c2c86f2cc",
-  "on": "2026-10-19",
-  "reason": "Defines Mockumentary in one plain sentence paraphrasing its source (“A mockumentary is a film or television…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "ec68167c5d31",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .monster_movie": {
-  "status": "Retained",
-  "hash": "4eb3a6d703d4",
-  "on": "2026-10-19",
-  "reason": "Defines Monster Movie in one plain sentence paraphrasing its source (“A monster movie is a film that…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "78f427aa5bfd",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .mumblecore": {
@@ -3038,17 +3038,17 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .musical": {
-  "status": "Retained",
-  "hash": "b350bc8f730e",
-  "on": "2026-10-19",
-  "reason": "Defines Musical in one plain sentence paraphrasing its source (“A musical film is a motion picture…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "a318aed6bd2f",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .mystery": {
-  "status": "Retained",
-  "hash": "f90b2662df87",
-  "on": "2026-10-19",
-  "reason": "Defines Mystery in one plain sentence paraphrasing its source (“A mystery is a narrative genre centered…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Encyclopaedia Britannica) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "d1604a995fc2",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .nature_documentary": {
@@ -3088,9 +3088,9 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .occult": {
   "status": "Rewritten",
-  "hash": "7aca5bf16cd8",
-  "on": "2026-10-19",
-  "evidence": "Defines Occult in one plain sentence paraphrasing its source (“A subgenre of horror, and at times…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "1166c2a53184",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .parody": {
@@ -3115,10 +3115,10 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .police_procedural": {
-  "status": "Retained",
-  "hash": "bc90fbcd2f4d",
-  "on": "2026-10-19",
-  "reason": "Defines Police Procedural in one plain sentence paraphrasing its source (“A subgenre of detective fiction that emphasizes…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "968b65fbd4de",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .political_drama": {
@@ -3143,24 +3143,24 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .prison_film": {
-  "status": "Retained",
-  "hash": "0ca4b1ed1f3c",
-  "on": "2026-10-19",
-  "reason": "Defines Prison Film in one plain sentence paraphrasing its source (“A film genre concerned with prison life…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "bbcaba697b7f",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .psychological_horror": {
-  "status": "Retained",
-  "hash": "897bc2c884ac",
-  "on": "2026-10-19",
-  "reason": "Defines Psychological Horror in one plain sentence paraphrasing its source (“A subgenre of horror and psychological fiction…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "be80b037a143",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .psychological_thriller": {
   "status": "Rewritten",
-  "hash": "74c1264fcce0",
-  "on": "2026-10-19",
-  "evidence": "Psychological Thriller's look rendered by render-genres.ts.txt in docs/verification/editorial-2026-10-19/profile/b4-genres.txt, its conventions with the house's apostrophe and quotation marks. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "hash": "37561e71a507",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .queer_cinema": {
@@ -3172,30 +3172,30 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .revenge": {
   "status": "Rewritten",
-  "hash": "3f35c31922ff",
-  "on": "2026-10-19",
-  "evidence": "Defines Revenge in one plain sentence paraphrasing its source (“A film centered on vengeance, usually following…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "02fc0905bc0c",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .road_movie": {
   "status": "Rewritten",
-  "hash": "16bd8a6f7dc7",
-  "on": "2026-10-19",
-  "evidence": "Defines Road Movie in one plain sentence paraphrasing its source (“A film genre in which the main…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "ad59c908486f",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .rockumentary": {
-  "status": "Retained",
-  "hash": "f97ab8a4783d",
-  "on": "2026-10-19",
-  "reason": "Defines Rockumentary in one plain sentence paraphrasing its source (“A documentary about rock music or rock…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "1f1b551ce5a8",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .romance": {
-  "status": "Retained",
-  "hash": "1226ca6f1a9c",
-  "on": "2026-10-19",
-  "reason": "Defines Romance in one plain sentence paraphrasing its source (“A film genre whose main plot focus…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "19f310afdb80",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .romantic_comedy": {
@@ -3269,17 +3269,17 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .slasher": {
-  "status": "Retained",
-  "hash": "3be19901141e",
-  "on": "2026-10-19",
-  "reason": "Defines Slasher in one plain sentence paraphrasing its source (“A subgenre of horror in which a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "051252997c1c",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .slice_of_life": {
   "status": "Rewritten",
-  "hash": "b3fed8e83424",
-  "on": "2026-10-19",
-  "evidence": "Defines Slice Of Life in one plain sentence paraphrasing its source (“A genre depicting ordinary people and the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "87390d324553",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .social_realism": {
@@ -3290,31 +3290,31 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .space_opera": {
-  "status": "Retained",
-  "hash": "9ec93dfc2f4e",
-  "on": "2026-10-19",
-  "reason": "Defines Space Opera in one plain sentence paraphrasing its source (“A subgenre of science fiction of futuristic…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "1984d97d0b81",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
+  "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .spaghetti_western": {
   "status": "Rewritten",
-  "hash": "ce8916ebea0b",
-  "on": "2026-10-19",
-  "evidence": "Defines Spaghetti Western in one plain sentence paraphrasing its source (“A subgenre of Westerns set in the…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "2ec6290300f2",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .splatter": {
-  "status": "Retained",
-  "hash": "8fcdf495bee9",
-  "on": "2026-10-19",
-  "reason": "Defines Splatter in one plain sentence paraphrasing its source (“A subgenre of horror film that deliberately…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "42f3cae73acd",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .sports": {
-  "status": "Retained",
-  "hash": "5e4abdd090c4",
-  "on": "2026-10-19",
-  "reason": "Defines Sports in one plain sentence paraphrasing its source (“A film genre in which a sport…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "534d22851126",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .spy": {
@@ -3332,24 +3332,24 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .stoner_comedy": {
-  "status": "Retained",
-  "hash": "abd75539fbd2",
-  "on": "2026-10-19",
-  "reason": "Defines Stoner Comedy in one plain sentence paraphrasing its source (“A subgenre of comedy film based on…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "44977f6cd185",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .superhero": {
-  "status": "Retained",
-  "hash": "cffe567b93b9",
-  "on": "2026-10-19",
-  "reason": "Defines Superhero in one plain sentence paraphrasing its source (“A film genre centered on superhero characters…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "02fb8180c6a1",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .supernatural": {
-  "status": "Retained",
-  "hash": "31bd595ad205",
-  "on": "2026-10-19",
-  "reason": "Defines Supernatural in one plain sentence paraphrasing its source (“A film genre built on supernatural themes…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "5e20c412e098",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .surrealist": {
@@ -3360,17 +3360,17 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .survival": {
-  "status": "Retained",
-  "hash": "63b4c1029256",
-  "on": "2026-10-19",
-  "reason": "Defines Survival in one plain sentence paraphrasing its source (“A film genre, often treated as a…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "785223f96830",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .swashbuckler": {
-  "status": "Retained",
-  "hash": "5348696ca49e",
-  "on": "2026-10-19",
-  "reason": "Defines Swashbuckler in one plain sentence paraphrasing its source (“A film genre characterized by swordfighting and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia; Merriam-Webster: 'a novel or drama dealing with a swashbuckler') with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "156cdd662fa3",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .sword_and_sandal": {
@@ -3381,10 +3381,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .sword_and_sorcery": {
-  "status": "Retained",
-  "hash": "26717eeda646",
-  "on": "2026-10-19",
-  "reason": "Defines Sword And Sorcery in one plain sentence paraphrasing its source (“A subgenre of fantasy featuring sword-wielding heroes…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "8eea16500d95",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .techno_thriller": {
@@ -3396,9 +3396,9 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .teen": {
   "status": "Rewritten",
-  "hash": "e0816f0a198e",
-  "on": "2026-10-19",
-  "evidence": "Defines Teen in one plain sentence paraphrasing its source (“A film genre aimed at teenagers and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "67dd168b8101",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .thriller": {
@@ -3410,9 +3410,9 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .time_travel": {
   "status": "Rewritten",
-  "hash": "b46d9c076e43",
-  "on": "2026-10-19",
-  "evidence": "Defines Time Travel in one plain sentence paraphrasing its source (“A subgenre of science fiction or fantasy…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "7ff8ae7d4b33",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .tokusatsu": {
@@ -3431,9 +3431,9 @@
  },
  "src/engine/content/genres.ts#GENRE_DEFS .tragicomedy": {
   "status": "Rewritten",
-  "hash": "7f8fd5f4cd2d",
-  "on": "2026-10-19",
-  "evidence": "Defines Tragicomedy in one plain sentence paraphrasing its source (“A dramatic work incorporating both tragic and…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source; and its Source for its definition line, a citation from brief 15's coordinator where the research said how it reached the page, rendered on the merged code by the profile area’s render-genres.ts into docs/verification/editorial-2026-10-19/coordinator-genres.txt (changes in coordinator-access.md)",
+  "hash": "a929bf7bb3ca",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .true_crime": {
@@ -3451,10 +3451,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .war": {
-  "status": "Retained",
-  "hash": "f744b856acc5",
-  "on": "2026-10-19",
-  "reason": "Defines War in one plain sentence paraphrasing its source (“A film genre concerned with warfare, typically…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "88dc50098c9c",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .werewolf": {
@@ -3479,10 +3479,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .wuxia": {
-  "status": "Retained",
-  "hash": "78d4d35fe382",
-  "on": "2026-10-19",
-  "reason": "Defines Wuxia in one plain sentence paraphrasing its source (“A genre of Chinese fiction and low…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "9a142866b8b7",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .yakuza": {
@@ -3493,10 +3493,10 @@
   "first": "Pending"
  },
  "src/engine/content/genres.ts#GENRE_DEFS .zombie": {
-  "status": "Retained",
-  "hash": "e19f4fab66c2",
-  "on": "2026-10-19",
-  "reason": "Defines Zombie in one plain sentence paraphrasing its source (“A film genre featuring creatures usually portrayed…”), the definition the genre look shows under Its conventions; a rewrite would drift from the source. Its Source line, which the inventory read from brief 15's coordinator on, names where the definition came from (Wikipedia) with the page’s address, a citation a reader can follow",
+  "status": "Rewritten",
+  "hash": "80297921787f",
+  "on": "2026-10-20",
+  "evidence": "Read as a list of all 149 under Its conventions on the genre look (src/ui/looks/actor.tsx); openings counted by scratchpad profile-openers.mjs: A opens 40 of 149, was 102; tools/tics.mjs --check passes",
   "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.brief-choose]": {
@@ -3907,9 +3907,9 @@
  },
  "src/engine/systems/artistry.ts#identityOf": {
   "status": "Rewritten",
-  "hash": "72bbf6d96fb6",
-  "on": "2026-10-19",
-  "evidence": "the area's walk fix: Range's evidence names the kinds of work, Taking Direction's says notes given, worked on and answered; read on docs/verification/editorial-2026-10-19/profile/after-1440 (nonfiler's Player Profile); tests/evidence2-b11.test.ts, defects-g8-15, evidence-g23-school and guide-examples-craft pass (13 files, 245 tests)",
+  "hash": "4768c47b9a25",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app's Your Work So Far over the walk's fifteen saves (docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt) and held by tests/evidence2-b11.test.ts, tests/defects-g8-11.test.ts and tests/evidence-g23-school.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/attributes.ts#alreadyApplied": {
@@ -3949,9 +3949,9 @@
  },
  "src/engine/systems/experience.ts#recommendations": {
   "status": "Rewritten",
-  "hash": "1519dcd8151a",
+  "hash": "d05ca5012390",
   "on": "2026-10-20",
-  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "evidence": "Read on the built app's Player Profile over the walk's fifteen saves (docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt) and held by tests/language-dynamic.test.ts, tests/attributes-phase-2b.test.ts and tests/advice-card.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/experience.ts#SPACED_NOW": {
@@ -4026,9 +4026,9 @@
  },
  "src/engine/systems/next-steps.ts#adviceSummary": {
   "status": "Rewritten",
-  "hash": "647245181187",
+  "hash": "77c5932c1fa2",
   "on": "2026-10-20",
-  "evidence": "Read on the built app's Player Profile at 1440 and 390 (workload save, the card shut and open) and held by tests/advice-card.test.ts and tests/decisions-advice.test.ts",
+  "evidence": "Read on the built app's Player Profile at 1440 and 390 over the walk's fifteen saves (docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt, profile-after-390.txt), in four played students' Sundays in order (advice-after.txt), and held by tests/advice-card.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#agoOf": {
@@ -4047,16 +4047,23 @@
  },
  "src/engine/systems/next-steps.ts#assumesOf": {
   "status": "Rewritten",
-  "hash": "0fcf42149649",
+  "hash": "dd5032586ff4",
   "on": "2026-10-20",
-  "evidence": "Read on the built app's Player Profile at 1440 and 390 (workload save, the card shut and open) and held by tests/advice-card.test.ts and tests/decisions-advice.test.ts",
+  "evidence": "Read opened, in the played practicing student's Sundays in order (docs/verification/continuity-2026-10-20/profile/advice-after.txt), and held by tests/decisions-advice.test.ts, tests/defects-r8-1.test.ts and tests/advice-card.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#attentionSaid": {
   "status": "Rewritten",
-  "hash": "af7375d56ebf",
-  "on": "2026-10-19",
-  "evidence": "tests/decisions-advice.test.ts and tests/advice.test.ts on played cases, tools/advice-harness.ts S3 and H checks over the tuning set (docs/verification/editorial-2026-10-19/profile/advice/tuning.json), and docs/verification/editorial-2026-10-19/profile/b2-advice.txt",
+  "hash": "ae5f19c5dd0a",
+  "on": "2026-10-20",
+  "evidence": "Read opened, in the played practicing student's Sundays in order (docs/verification/continuity-2026-10-20/profile/advice-after.txt), and held by tests/decisions-advice.test.ts, tests/defects-r8-1.test.ts and tests/advice-card.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/next-steps.ts#continuityOf": {
+  "status": "Rewritten",
+  "hash": "72805124a2bb",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app's Player Profile at 1440 and 390 over the walk's fifteen saves (docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt, profile-after-390.txt), in four played students' Sundays in order (advice-after.txt), and held by tests/advice-card.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#disciplinePart": {
@@ -4101,6 +4108,13 @@
   "reason": "The five parts a change of forecast is said in, each a plain name for what moved it (the work it's forecast on, how well you know its genres, your other abilities and techniques, its own level, discipline), read word for word by the harness's H checks",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/next-steps.ts#practicedSaid": {
+  "status": "Rewritten",
+  "hash": "e4f0a33ad7e4",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app's Player Profile at 1440 and 390 over the walk's fifteen saves (docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt, profile-after-390.txt), in four played students' Sundays in order (advice-after.txt), and held by tests/advice-card.test.ts",
+  "first": "Pending"
+ },
  "src/engine/systems/next-steps.ts#readOf": {
   "status": "Rewritten",
   "hash": "d6fad97655ff",
@@ -4110,9 +4124,9 @@
  },
  "src/engine/systems/next-steps.ts#standingOf": {
   "status": "Rewritten",
-  "hash": "fdcd440f670f",
-  "on": "2026-10-19",
-  "evidence": "tests/decisions-advice.test.ts and tests/advice.test.ts on played cases, tools/advice-harness.ts S3 and H checks over the tuning set (docs/verification/editorial-2026-10-19/profile/advice/tuning.json), and docs/verification/editorial-2026-10-19/profile/b2-advice.txt",
+  "hash": "2343fe6ed989",
+  "on": "2026-10-20",
+  "evidence": "Read opened, in the played practicing student's Sundays in order (docs/verification/continuity-2026-10-20/profile/advice-after.txt), and held by tests/decisions-advice.test.ts, tests/defects-r8-1.test.ts and tests/advice-card.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/practice.ts#focusRefusal": {
@@ -4235,10 +4249,10 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#GenresPanel": {
-  "status": "Retained",
-  "hash": "c999bea2b3fc",
-  "on": "2026-10-19",
-  "reason": "The genres table names its filters and columns plainly, its two study suggestions say why that genre is next, and its paragraph says what a brief asks, how Study It and Open Its Brief build it, and when a genre is marked Mastered",
+  "status": "Rewritten",
+  "hash": "8ed02b1c9e34",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app's Genres at 1440 and 390 (workload, health and missed-plan saves, docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt) and held by tests/whynot-profile.test.ts",
   "first": "Pending"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#HistoryPanel": {

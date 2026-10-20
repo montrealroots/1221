@@ -1,0 +1,294 @@
+[
+  {
+    "surface": "What To Work On Next: the recommendation as first shown",
+    "where": "Player Profile, Attributes And Craft, above the abilities table; the same card heads What To Work On in a genre's brief (Genres, Open Its Brief)",
+    "sources": [
+      "src/engine/systems/next-steps.ts#adviceSummary",
+      "src/engine/systems/next-steps.ts#continuityOf",
+      "src/engine/systems/next-steps.ts#practicedSaid",
+      "src/engine/systems/next-steps.ts#nextParts",
+      "src/engine/systems/next-steps.ts#nextOf",
+      "src/engine/systems/next-steps.ts#readOf",
+      "src/engine/systems/next-steps.ts#allFull",
+      "src/engine/systems/next-steps.ts#agoOf",
+      "src/engine/systems/experience.ts#recommendations",
+      "src/ui/components/AdviceCard.tsx#AdviceCard",
+      "src/ui/workspaces/ProfileWorkspace.tsx#NextWork"
+    ],
+    "states": ["empty", "first use", "recommendation", "forecast", "repeated", "unavailable", "history", "assembled"],
+    "outcome": "Revised",
+    "why": "Read as a weekly sequence (brief 17's baseline runs, each Sunday's card in order) and on the walk's fifteen saves. Of 1,620 Sundays in 24 runs, the card was one said before in the same run on 778, and the Sunday before's word for word on 735, 698 of them with no showing, director's note or night in between: the breaks, where nothing said the advice still stood or why. A preparation card named its step twice (\"Work with your partner. Coming to your work short on work with your partner cost each piece about 6.9 points\") and told the player to \"prepare that part further\"; its \"each piece\" figure is a mean over the last twelve, and read as every piece. A day's condition named itself twice in Title Case (\"An Injury Still Mending. An Injury Still Mending cost each piece\") and told an injured player to \"find places to breathe in it\", which is a night's workbook adjustment and does nothing for tiredness, the flu or an injury. A training card was right to stay the same week to week, and said nothing of how long it had led or what the player had put in. A list of names with \"and\" in them ran together (\"listening and responsiveness and composure\").",
+    "changes": "A line of its own under why it matters, from the record and only where the record has it (`continuityOf`, the card's `data-continuing`): \"It has led the advice on what to train since December 2, 2026, and you've practiced Circles Of Attention for 11 hours in that time.\"; \"It's taken over from imagination, which led the advice on what to train on November 25, 2026.\" (only within a week of the note); \"It held back 5 of your last 12 pieces and 39 in all, most recently A Game Played Through, on September 22, 2027.\" (the count in all from the journey's record, where it's more); \"None of your work has been judged since May 12, 2027, 5 weeks ago.\", said as one with the last piece held back where it's the same day (\"…, on May 12, 2027, 4 weeks ago, and none of your work has been judged since.\"). A preparation: \"Going in short on it cost your recent work about 3.8 points a piece off the whole.\" and \"That's preparation, not training: give it more time before you show or tape your next piece.\" A day's condition: \"It cost your recent work about 0.9 points a piece off the whole. That's how you were on the day, not your ability: come to the next piece rested and well.\"; a slip's shake: \"composure and adaptability help you recover from one\", as the judge recovers it. A fit and stamina's cost said as a mean too. A comma before the last name where one has \"and\" in it.",
+    "evidence": [
+      { "kind": "test", "ref": "tests/advice-card.test.ts: 'says how many recent pieces a preparation held back and the latest, and, with no work judged for a week, since when, once'" },
+      { "kind": "test", "ref": "tests/advice-card.test.ts: 'says how long a training recommendation has led and the hours put in since, or what it took over from, from the advice’s note'" },
+      { "kind": "test", "ref": "tests/language-dynamic.test.ts: 'the advice’s counts: a cost of one point and several, and the pieces that call on an ability, one and several'" },
+      { "kind": "transcript", "ref": "docs/verification/continuity-2026-10-20/profile/advice-before.txt" },
+      { "kind": "transcript", "ref": "docs/verification/continuity-2026-10-20/profile/advice-after.txt" },
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt" },
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-before-1440.txt" }
+    ]
+  },
+  {
+    "surface": "Why This Recommendation: the working behind the card",
+    "where": "Player Profile, What To Work On Next and a brief's What To Work On, behind the Why This Recommendation disclosure",
+    "sources": [
+      "src/engine/systems/next-steps.ts#standingOf",
+      "src/engine/systems/next-steps.ts#movedSaid",
+      "src/engine/systems/next-steps.ts#assumesOf",
+      "src/engine/systems/next-steps.ts#attentionSaid",
+      "src/engine/systems/next-steps.ts#disciplinePart",
+      "src/engine/systems/next-steps.ts#heldVersusNext",
+      "src/engine/systems/next-steps.ts#PART_SAID",
+      "src/engine/systems/experience.ts#SPACED_NOW",
+      "src/engine/systems/experience.ts#STEADY_FIRST"
+    ],
+    "states": ["details", "explanation", "forecast", "history", "repeated", "assembled"],
+    "outcome": "Revised",
+    "why": "Read opened, in the same sequences. Where a preparation led the card, How Long It's Been First began \"It took over from imagination on September 26, 2026\", and \"it\" was a training recommendation the section never named; the day it took over was said twice in three sentences, and after a sentence on the one before it, \"Since then it's gone from 54.8 to 55.3\" could be either. What It Assumes Of Your Work began by saying its heading again (\"What the forecast assumes of your last 5 pieces:\"). The method said the estimate \"reads only the work on your record\", the engine's verb, and had a sentence with two colons. Preparation Or Training gave preparation's figure without its unit (\"about 25.88 a piece\"), its two parts where one was 0.00, and two lines on a second preparation figure for other pieces (21.89, then 9.83). From Your Record said the recurring weakness's points twice in a line (\"28.4 points off the whole across them … An ability, 28.4 points in all.\").",
+    "changes": "How Long It's Been First names what it's about and says the day once: \"Vocal expression has led the advice on what to train since September 12, 2026, 1 day ago, when it took over from imagination.\", then \"Since taking the lead, vocal expression has gone from …\". What It Assumes Of Your Work: \"Of your last 5 pieces, 3 were fully prepared, …\" or \"Your last piece was …\", and what preparing the pieces counted as prepared would bring is said there, with them. The method in two sentences, \"It's an estimate, made only from the work on your record\". Preparation's figure and training's in points a piece, \"(all of it from each piece's own preparation)\" where the genre's part is 0.00. From Your Record says the points once.",
+    "evidence": [
+      { "kind": "test", "ref": "tests/decisions-advice.test.ts: 'PLAYER JOURNEY: ignored for five weeks of taping, it keeps the input that still brings most'" },
+      { "kind": "test", "ref": "tests/defects-r8-1.test.ts: 'PLAYER JOURNEY: on the Player Profile, a fall term of school in, names it with the pieces it has held back for life'" },
+      { "kind": "transcript", "ref": "docs/verification/continuity-2026-10-20/profile/advice-after.txt" },
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt" }
+    ]
+  },
+  {
+    "surface": "Practice An Hour: an exercise's control, what an hour would bring, its refusals and what the hour found",
+    "where": "Player Profile, the Practice column of Attributes And Craft and of Techniques: press an exercise's name to open it, choose Tier and Focus, press Practice An Hour",
+    "sources": [
+      "src/ui/workspaces/ProfileWorkspace.tsx#PracticeButton",
+      "src/ui/workspaces/ProfileWorkspace.tsx#PracticeControl",
+      "src/engine/content/practice.ts#*",
+      "src/engine/systems/practice.ts#*",
+      "src/engine/systems/attributes.ts#alreadyApplied"
+    ],
+    "states": ["ordinary", "repeated", "unavailable", "forecast", "success", "partial", "assembled"],
+    "outcome": "Kept",
+    "why": "Read from the source in each branch, since no walk opens an exercise: the preview before the press says the gain and why it's that size in the hour's own terms (\"hour 2 on it today gives 50% of the first\", \"your discipline makes it ×1.012\"), the refusal under the button says the obstacle and the next step (\"You've practiced 4 hours today, and more stops helping after that. Practice again tomorrow.\"), and the hour's feedback says the tier against your level, what the focus made of it and how far the next tier is, each from the numbers that moved it. Focus and Tier keep their control names everywhere the advice names them. Stamina's cell sends the player to Work Out, under Look After Yourself, and says whether fitness is held or falling.",
+    "evidence": [
+      { "kind": "test", "ref": "tests/whynot-profile.test.ts: 'PLAYER JOURNEY: four hours practiced today, says so under the button, outside its title'" },
+      { "kind": "source", "ref": "src/engine/systems/practice.ts" },
+      { "kind": "source", "ref": "src/engine/content/practice.ts" }
+    ]
+  },
+  {
+    "surface": "Attributes And Craft: the twelve abilities, stamina and how they grow",
+    "where": "Player Profile, Attributes And Craft",
+    "sources": [
+      "src/ui/workspaces/ProfileWorkspace.tsx#AbilitiesPanel",
+      "src/ui/workspaces/ProfileWorkspace.tsx#todayFor"
+    ],
+    "states": ["ordinary", "explanation", "details", "unavailable"],
+    "outcome": "Kept",
+    "why": "Read on the walk's fifteen saves at 1440 and 390: the subtitle says the scale and today's practice hours against the day's limit; each row's Today names what holds it back today and what your teacher looks for that it reaches (\"An injury mending: consistency, execution\"), or \"Not held back today\"; stamina's two paragraphs say first where you stand and what builds it, then that it's the one ability that fades and by how much. The rules behind it (classes reach, the half for a repeat, four hours a day) and their sources are under Sources And Estimates, and the practice control says the same limits where they bite.",
+    "evidence": [
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt" },
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-390.txt" }
+    ]
+  },
+  {
+    "surface": "Techniques: the seventeen and how far each is from mastered",
+    "where": "Player Profile, Techniques",
+    "sources": ["src/ui/workspaces/ProfileWorkspace.tsx#TechniquesPanel"],
+    "states": ["ordinary", "success"],
+    "outcome": "Kept",
+    "why": "Read on the walk's saves: the subtitle says the one rule the table depends on (each mastered at 90), and the Mastered column says Yes or how far to go (\"30.8 To Go\"), so a player reads distance, not a bare figure, beside the exercise that closes it.",
+    "evidence": [{ "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt" }]
+  },
+  {
+    "surface": "An ability's look",
+    "where": "Player Profile, Attributes And Craft: press an ability's name",
+    "sources": [
+      "src/ui/looks/actor.tsx#top",
+      "src/engine/content/abilities.ts#*"
+    ],
+    "states": ["ordinary", "explanation", "history", "success"],
+    "outcome": "Kept",
+    "why": "Read in the source for all twelve, a life with a craft and one without: the summary says where you are against full and what the ability is, then How It Grows names the classes and the exercise by their names on screen, Where It Started says where your level came from, What It Does says where it counts in the work in your teacher's words, and the latest changes are dated with what made each. Each definition opens its own way, so read as a list the twelve don't share a shape.",
+    "evidence": [
+      { "kind": "source", "ref": "src/engine/content/abilities.ts" },
+      { "kind": "test", "ref": "tests/ability-mastered.test.ts" }
+    ]
+  },
+  {
+    "surface": "Genres: the list, Study It and Open Its Brief",
+    "where": "Player Profile, Genres",
+    "sources": [
+      "src/ui/workspaces/ProfileWorkspace.tsx#GenresPanel",
+      "src/ui/workspaces/ProfileWorkspace.tsx#ListControls",
+      "src/engine/content/film-genres.ts#FILM_GENRES",
+      "src/engine/content/demands.ts#DEMAND_LABEL",
+      "src/engine/systems/engagement.ts#*"
+    ],
+    "states": ["ordinary", "unavailable", "empty", "success", "repeated"],
+    "outcome": "Revised",
+    "why": "Read on the walk's saves at 1440 and 390: with any commitment near, every row said the same refusal under its Study It (\"You're at Classes until 3:00 PM.\"), sixteen times a page, because it's the hour's refusal and the same for every genre. The rest reads as it should: what each genre asks for with your technique against 90, the genre suggested next and why, and a Show filter whose names are the table's.",
+    "changes": "The refusal said once, above the table, named for the control it refuses: \"Study It: You're at Classes until 3:00 PM.\" Where rows differ, each still says its own under its button.",
+    "evidence": [
+      { "kind": "test", "ref": "tests/whynot-profile.test.ts: 'PLAYER JOURNEY: half an hour before a class, says so under the button, outside its title'" },
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-before-1440.txt" },
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt" }
+    ]
+  },
+  {
+    "surface": "A genre's look: its conventions, what it asks of an actor, how its scenes are played",
+    "where": "Player Profile, Genres: press a genre's name, or a genre named in a brief",
+    "sources": [
+      "src/engine/content/genres.ts#*",
+      "src/engine/content/genre-register.ts#*",
+      "src/engine/content/genre-demands.json#*",
+      "src/engine/systems/register.ts#*"
+    ],
+    "states": ["ordinary", "explanation", "details", "first use"],
+    "outcome": "Revised",
+    "why": "Read the 149 conventions as a list, and the research's small print in its order on the look. Under \"Its conventions.\", 102 of 149 opened on \"A\" (\"A film genre that …\" 18, \"A subgenre of …\" 18): each was right alone, and one genre after another read as generated. tools/tics.mjs counts a list's openings by word but passes over a one-letter word, so it couldn't see it; the style guide's rule (a third) could. Nineteen of the research's sentences opened on \"Nothing\" (\"Nothing credible makes …\", \"Nothing usable.\"), the shape the style guide counts as a tic. The registers' reasons and the research's claims already open many ways.",
+    "changes": "62 conventions reshaped, each saying the same thing as its source: the family first (\"Horror that showcases …\", \"Science fiction set in …\"), the convention itself (\"Two people, usually with contrasting personalities, go on …\", \"Travel drives the plot, …\", \"Combat scenes are central to the drama: …\"), or a plain noun phrase. \"A\" now opens 40 of 149. The nineteen research sentences say who found nothing (\"No credible source makes …\", \"The search found nothing usable.\").",
+    "evidence": [
+      { "kind": "source", "ref": "src/engine/content/genres.ts" },
+      { "kind": "source", "ref": "src/engine/content/genre-demands.json" },
+      { "kind": "test", "ref": "tests/language-genre-look.test.ts" },
+      { "kind": "test", "ref": "tests/defects-g8-12.test.ts" }
+    ]
+  },
+  {
+    "surface": "A piece of work's look",
+    "where": "Player Profile, School Journey: press a piece's name; and every piece named in a look's ways",
+    "sources": [
+      "src/ui/looks/actor.tsx#top",
+      "src/ui/looks/actor.tsx#BAND_WORD"
+    ],
+    "states": ["history", "success", "partial", "failure", "details"],
+    "outcome": "Kept",
+    "why": "Read in the source across its states (a result with limits, one at full mastery, one judged under rules since changed): the summary says the result, the band and what held it back most in one sentence, the limits list what each cost the whole, and the small print says the day's readiness and each part of preparation against complete, in the screen's own words. Where it can't be judged again it says why, and that its result stands.",
+    "evidence": [
+      { "kind": "source", "ref": "src/ui/looks/actor.tsx" },
+      { "kind": "test", "ref": "tests/evidence-g28-ui.test.ts" }
+    ]
+  },
+  {
+    "surface": "How you play it, and whether it suits the scene",
+    "where": "School, Coursework, a piece's card (How You'll Play It) and a genre's brief, What The Brief Asks and The Last Take",
+    "sources": [
+      "src/engine/content/approaches.ts#*",
+      "src/engine/content/interpretation.ts#*",
+      "src/engine/systems/interpretation.ts#*",
+      "src/engine/systems/interpretation-read.ts#*"
+    ],
+    "states": ["ordinary", "explanation", "forecast", "success", "setback"],
+    "outcome": "Kept",
+    "why": "Read on the walk's Coursework and Casting tabs: each way of playing says in a phrase what it is (\"Measured Taking the time each thought needs\"), the scene's verdict is one of three labels, Suits The Scene, Either Way and Works Against The Scene, and each reason is the scene's own feature, \"for it\" or \"against it\". A take's result says whether the way played suited the scene and by how many points, apart from what the abilities cost, so the two are never added together in the player's head.",
+    "evidence": [
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/coursework-before-1440.txt" },
+      { "kind": "test", "ref": "tests/interpretation-journey.test.ts" }
+    ]
+  },
+  {
+    "surface": "Identity And Background",
+    "where": "Player Profile, the first panel",
+    "sources": [
+      "src/ui/workspaces/ProfileWorkspace.tsx#ProfileWorkspace",
+      "src/ui/workspaces/ProfileWorkspace.tsx#IdentityPanel",
+      "src/ui/workspaces/ProfileWorkspace.tsx#riskWords",
+      "src/ui/workspaces/ProfileWorkspace.tsx#DISPOSITIONS"
+    ],
+    "states": ["ordinary", "explanation", "locked"],
+    "outcome": "Kept",
+    "why": "Read on the walk's saves: each disposition says what it does in play in creation's own words, and Risk Tolerance says what it did in this life (\"65 or under, so your card's autopay began on the whole statement\", or that you don't have a card); the two buttons say where they go and what you'll find; a life that never trained is told why there's nothing to show.",
+    "evidence": [{ "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt" }]
+  },
+  {
+    "surface": "Readiness Today",
+    "where": "Player Profile, Readiness Today",
+    "sources": [
+      "src/ui/workspaces/ProfileWorkspace.tsx#ConditionPanel",
+      "src/ui/workspaces/ProfileWorkspace.tsx#sleepOwed"
+    ],
+    "states": ["ordinary", "warning", "explanation"],
+    "outcome": "Kept",
+    "why": "Read on the walk's saves, rested and tired: For Work says Sufficient or Held Back and names the cause in the note (\"An injury holds back your physical work\"), and the small print says what tiredness and each injury reach and that none of it lowers an ability, in the glossary's words.",
+    "evidence": [{ "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt" }]
+  },
+  {
+    "surface": "School Journey: the record of work and its milestones",
+    "where": "Player Profile, School Journey",
+    "sources": ["src/ui/workspaces/ProfileWorkspace.tsx#JourneyPanel"],
+    "states": ["history", "success", "empty", "returning"],
+    "outcome": "Revised",
+    "why": "Read on the walk's saves with a production run: a run's milestone said its nights by band as the milestone keeps them, \"the run averaged 42.0 (4 off)\", which reads as four points off. The rest says what it is: the credits, the half-years' counts, the latest pieces with their bands, and that a save with no detail before a date counts from there and makes nothing up.",
+    "changes": "\"the run averaged 41.6 (4 off nights)\", \"(2 solid nights, 2 off nights)\", from the same kept count (`nightsWords`).",
+    "evidence": [
+      { "kind": "test", "ref": "tests/evidence-g32-ui.test.ts" },
+      { "kind": "test", "ref": "tests/evidence-g23-school.test.ts: 'PLAYER JOURNEY: a Cabaret run played through keeps its nights'" },
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-before-1440.txt" }
+    ]
+  },
+  {
+    "surface": "Your Work So Far: the actor your record shows",
+    "where": "Player Profile, Your Work So Far",
+    "sources": [
+      "src/ui/workspaces/ProfileWorkspace.tsx#WorkSoFarPanel",
+      "src/engine/systems/artistry.ts#identityOf",
+      "src/engine/systems/experience.ts#FEATURE_LABEL"
+    ],
+    "states": ["history", "explanation", "repeated", "first use"],
+    "outcome": "Revised",
+    "why": "Read on the walk's year-in saves: three lines said again in their From what the line had just said (\"… still open: Work With Your Partner. From: The class's notes: Work With Your Partner.\"; \"… you answered none. From: 4 notes given, 0 worked on and 0 answered.\"; \"42 pieces … From: 42 scenes, takes and nights with others.\"), and Playing With Others was one sentence with no clear subject (\"42 pieces played with a partner, a reader or a company came to 47.9 together on average; of 5 slips …\"). The strengths, the weaknesses and the material lines read well, each with its count and what it rests on.",
+    "changes": "\"From: The class's notes.\"; \"Of 4 notes and requests on your craft, you worked on none and answered none. From: Directors' notes on your craft and callbacks on your briefs.\"; \"Your 40 pieces with a partner, a reader or a company averaged 30.2 out of 100. Of 5 slips by the others, you covered 2. From: Scenes, takes and nights played with others.\"",
+    "evidence": [
+      { "kind": "test", "ref": "tests/evidence2-b11.test.ts" },
+      { "kind": "test", "ref": "tests/defects-g8-11.test.ts" },
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt" }
+    ]
+  },
+  {
+    "surface": "Development History",
+    "where": "Player Profile, Development History",
+    "sources": [
+      "src/ui/workspaces/ProfileWorkspace.tsx#HistoryPanel",
+      "src/ui/looks/actor.tsx#sourceWords"
+    ],
+    "states": ["history", "empty"],
+    "outcome": "Kept",
+    "why": "Read on the walk's saves: each line is a date, what changed, by how much and what made it, said as the player knows it (\"Class: Play With Text (DRAM 353a)\", \"A rehearsal call: Directors' Thesis Production I\", \"Coursework: the revision\"), never a key; empty, it says when it will begin.",
+    "evidence": [
+      { "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/profile-after-1440.txt" },
+      { "kind": "test", "ref": "tests/evidence-g23-school.test.ts: 'PLAYER JOURNEY: the Profile’s Development History says where each played change came from'" }
+    ]
+  },
+  {
+    "surface": "Your Composure",
+    "where": "School, Standing",
+    "sources": ["src/ui/components/AttributesPanel.tsx#AttributesPanel"],
+    "states": ["ordinary", "explanation"],
+    "outcome": "Kept",
+    "why": "Read on the walk's Standing tab: the stat's note says what nerves will add to your stress before a performance now, the paragraph says where composure counts and how it grows, and it sends the player to Graded Exposure under Attributes And Craft, the exercise's name on the Profile.",
+    "evidence": [{ "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/school-standing-before-1440.txt" }]
+  },
+  {
+    "surface": "Plays To Read: the plays' facts",
+    "where": "School, Coursework, Plays To Read",
+    "sources": ["src/engine/content/contemporary.ts#*"],
+    "states": ["ordinary", "details"],
+    "outcome": "Kept",
+    "why": "Read on the walk's Coursework tab: each play is its title, its writer, and where and when it was first staged, with its cast as the publisher lists it (\"3f 1m\", \"two characters\") or \"Not on record\"; they're facts from the theater's or the publisher's own page, so they stay as those pages give them.",
+    "evidence": [{ "kind": "walk", "ref": "docs/verification/continuity-2026-10-20/profile/plays-before-1440.txt" }]
+  },
+  {
+    "surface": "The attributes matrix and the genre coverage, the project's documents",
+    "where": "Not in the game: written into docs/ATTRIBUTES-MATRIX.md and docs/GENRE-COVERAGE.md for the project, and a registry's load error",
+    "sources": [
+      "src/engine/content/attributes-matrix.ts#*",
+      "src/engine/content/genre-coverage.ts#*",
+      "src/engine/content/reference.ts#Registry"
+    ],
+    "states": ["explanation", "error"],
+    "outcome": "Kept",
+    "why": "Read in the source: these are tables the project reads to check that every ability, technique and genre is wired, written from the tables themselves so they can't drift, and an error a broken data file throws at load. No screen draws them, so they keep the project's register, not the player's.",
+    "evidence": [
+      { "kind": "test", "ref": "tests/attributes-matrix.test.ts" },
+      { "kind": "test", "ref": "tests/genre-coverage.test.ts" }
+    ]
+  }
+]

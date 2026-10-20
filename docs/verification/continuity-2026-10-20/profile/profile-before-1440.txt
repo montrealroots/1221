@@ -1,0 +1,3245 @@
+#### brief.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $503,341
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Vocal Expression. Of what you can train, it would add most to your recent work: 3 of your last 5 pieces call on it. Focus would be about as useful.
+
+Voice Work at the Developing tier, with Focus on Steady. It’s in the Practice column under Attributes And Craft on your Player Profile: open it and press Practice An Hour. An hour costs 3 energy, and it would add about +0.18 to vocal expression now, plus +0.18 to discipline for a day of practice kept.
+
+Estimate: 20 hours, an hour a day, would take it from 55 to about 59, worth about 0.8 points a piece on your recent work.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	57.6	100.0	83.0	Not held back today	Believability, Connection	+0.09, Class: Play (DRAM 153a)	Sense Memory…
+Presence	69.4	100.0	—	Not held back today	Connection	None yet	A Showing For Classmates…
+Listening And Responsiveness	48.5	100.0	74.0	Not held back today	Connection, Responsiveness	+0.05, Class: Play (DRAM 153a)	The Repetition Exercise…
+Imagination	57.6	100.0	83.0	Not held back today	Believability, Interpretation	+0.01, Coursework: making your choices	The Given Circumstances…
+Focus	54.0	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.02, Coursework: knowing the material	Circles Of Attention…
+Memory	52.4	100.0	77.9	Not held back today	Execution	+0.08, A lab	A Recall Drill…
+Adaptability	46.3	100.0	72.2	Not held back today	Responsiveness	+0.05, Class: Play (DRAM 153a)	Adjustments…
+Composure	44.3	100.0	—	Not held back today	Consistency	None yet	Graded Exposure…
+Vocal Expression	55.2	100.0	80.8	Not held back today	Execution, Consistency	+0.10, Class: Voice I (DRAM 113a/b)	Voice Work…
+Physical Expression	48.0	100.0	73.1	Not held back today	Execution	+0.10, Class: Alexander Technique I (DRAM 143a/b)	Movement Work…
+Discipline	57.5	100.0	—	Not held back today	Consistency, Execution	None yet	Grows with practice kept up, day after day
+Stamina	46.6	99.4	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	None yet	
+Work Out, under Look After Yourself
+Falling 0.18 a day
+
+Stamina is your fitness. Yours is 46.6, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	54.7	80.4	35.3 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	59.1	84.4	30.9 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.4	77.4	38.6 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	46.4	72.2	43.6 To Go	An Improv Session…
+Intimacy	58.9	84.7	31.1 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	50.6	75.8	39.4 To Go	Scene Work…
+Script Analysis	56.3	81.6	33.7 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	52.8	78.5	37.2 To Go	Speech Drill…
+Stage Combat	48.0	73.8	42.0 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 48.0 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 48.0 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 48.0 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 59.1 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+76
+76 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+69, 0
+3 hours of sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK
+2026 Fall	2 at 54.9	1 at 69.2	1 at 66.1	1 at 65.5
+All Of It	2 at 54.9, best 55.1	1 at 69.2, best 69.2	1 at 66.1, best 66.1	1 at 65.5, best 65.5
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+A Voice Sequence	Voice Work	65.5	Strong	September 11, 2026
+A Movement Score	Movement Work	66.1	Strong	September 10, 2026
+Scene Study, revised	A Scene Shown	55.1	Working	September 9, 2026
+A Play In Its Context	A Written Analysis	69.2	Strong	September 8, 2026
+Scene Study	A Scene Shown	54.7	Working	September 8, 2026
+Sources And Estimates
+Your Work So Far
+
+Early days: 5 pieces judged. Patterns are named once 6 are.
+
+How This Works
+
+Not met yet: Exact Timing, Vocal Demand, Improvised Freedom, Heightened Prose, Verse, The Camera, Many Transitions, Mixed Tone, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+4 kinds of work judged, 0 genres worked in, 2 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work and Voice Work.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+September 11, 2026: Imagination +0.007, Coursework: making your choices
+September 11, 2026: Script Analysis +0.007, Coursework: Research It At The Library
+September 11, 2026: Imagination +0.014, Coursework: making your choices
+September 11, 2026: Script Analysis +0.015, Coursework: Research It At The Library
+September 11, 2026: Memory +0.079, A lab
+September 11, 2026: Script Analysis +0.072, A lab
+September 11, 2026: Character Work +0.069, A lab
+September 11, 2026: Scene Study +0.080, A lab
+September 11, 2026: Stage Combat +0.106, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+September 11, 2026: Intimacy +0.087, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+September 11, 2026: Physical Expression +0.104, Class: Alexander Technique I (DRAM 143a/b)
+September 11, 2026: Vocal Expression +0.101, Class: Voice I (DRAM 113a/b)
+September 10, 2026: Imagination +0.014, Coursework: making your choices
+September 10, 2026: Script Analysis +0.014, Coursework: Research It At The Library
+September 10, 2026: Focus +0.015, Coursework: knowing the material
+Show Earlier Changes
+
+#### decision.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $494,374
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Focus. Of what you can train, it would add most to your recent work: your last 12 pieces all call on it.
+
+Circles Of Attention at the Developing tier, with Focus on Steady. It’s in the Practice column under Attributes And Craft on your Player Profile: open it and press Practice An Hour. An hour costs 3 energy, and it would add about +0.14 to focus now, plus +0.18 to discipline for a day of practice kept.
+
+Estimate: 20 hours, an hour a day, would take it from 57 to about 61, worth about 0.9 points a piece on your recent work.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	62.0	100.0	83.0	Not held back today	Believability, Connection	+0.07, Class: Acting I (DRAM 103a/b)	Sense Memory…
+Presence	69.4	100.0	—	Not held back today	Connection	None yet	A Showing For Classmates…
+Listening And Responsiveness	55.4	100.0	74.0	Not held back today	Connection, Responsiveness	+0.01, Coursework: running it with a reader	The Repetition Exercise…
+Imagination	61.9	100.0	83.0	Not held back today	Believability, Interpretation	+0.03, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	The Given Circumstances…
+Focus	57.0	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.04, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	Circles Of Attention…
+Memory	54.8	100.0	77.9	Not held back today	Execution	+0.00, Coursework: learning the lines	A Recall Drill…
+Adaptability	47.8	100.0	72.2	Not held back today	Responsiveness	+0.01, Coursework: the revision	Adjustments…
+Composure	44.3	100.0	—	Not held back today	Consistency	None yet	Graded Exposure…
+Vocal Expression	58.1	100.0	80.8	Not held back today	Execution, Consistency	+0.08, Class: Voice I (DRAM 113a/b)	Voice Work…
+Physical Expression	53.7	100.0	73.1	Not held back today	Execution	+0.07, Class: The Body As Source I (DRAM 133a/b)	Movement Work…
+Discipline	57.7	100.0	—	Not held back today	Consistency, Execution	+0.03, A call answered	Grows with practice kept up, day after day
+Stamina	35.2	99.4	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	+0.70, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)	
+Work Out, under Look After Yourself
+Falling 0.18 a day
+
+Stamina is your fitness. Yours is 35.2, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	57.3	80.4	32.7 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	63.7	84.4	26.3 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.4	77.4	38.6 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	47.8	72.2	42.2 To Go	An Improv Session…
+Intimacy	60.2	84.7	29.8 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	55.9	75.8	34.1 To Go	Scene Work…
+Script Analysis	60.6	81.6	29.4 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	55.8	78.5	34.2 To Go	Speech Drill…
+Stage Combat	49.6	73.8	40.4 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 49.6 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 49.6 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 49.6 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 63.7 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+63
+63 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+55, 0
+4 hours of sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK
+2026 Fall	14 at 60.6	8 at 68.9	12 at 58.3	12 at 61.1	4 at 65.3	3 at 63.5
+2027 Spring	6 at 56.8	4 at 70.2	3 at 63.4	4 at 62.8	—	—
+All Of It	20 at 59.5, best 62.8	12 at 69.3, best 72.1	15 at 59.3, best 66.1	16 at 61.5, best 67.0	4 at 65.3, best 66.8	3 at 63.5, best 64.3
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+A Voice Sequence	Voice Work	56.8	Working	February 11, 2027
+A Play In Its Context	A Written Analysis	68.7	Strong	February 10, 2027
+A Movement Score	Movement Work	65.1	Strong	February 10, 2027
+Sound Changes And A Text	Voice Work	64.0	Working	February 9, 2027
+A Simulated Rehearsal	A Scene Shown	56.8	Working	February 9, 2027
+Table Work	A Written Analysis	71.1	Strong	February 4, 2027
+A Simulated Rehearsal	A Scene Shown	56.7	Working	February 3, 2027
+A Play In Its Context	A Written Analysis	71.7	Strong	February 2, 2027
+A Simulated Rehearsal	A Scene Shown	58.4	Working	February 1, 2027
+Directions In Daily Life	Movement Work	63.4	Working	January 29, 2027
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 70 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your interpretation runs ahead of the rest: 70.6 on average across 39 pieces, against 63.5 overall. From: Table Work: 74.3; A Play In Its Context: 74.1; A Movement Score: 73.7.
+WHAT KEEPS HOLDING IT BACK
+Stamina has held back 28 pieces, about 6.6 points off the whole each. From: An ability, 185 points in all.
+Physical Expression has held back 24 pieces, about 7.6 points off the whole each. From: An ability, 182.4 points in all.
+Vocal Expression has held back 21 pieces, about 8.4 points off the whole each. From: An ability, 177.2 points in all.
+The same note has been given 14 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 21 times, best 71.1. From: Your experience record.
+Exact Timing: met or practiced 15 times, best 71.1. From: Your experience record.
+Mixed Tone: met or practiced 11 times, best 62.8. From: Your experience record.
+Heightened Prose: met or practiced 7 times, best 61.4. From: Your experience record.
+
+Not met yet: Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+6 kinds of work judged, 0 genres worked in, 7 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation and Partnered Physical Work.
+RELIABILITY
+21 of 21 calls answered; 72 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+20 pieces played with a partner, a reader or a company came to 61.1 together on average; of 2 slips by the others, you covered 1. From: 20 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+February 11, 2027: Memory +0.004, Coursework: learning the lines
+February 11, 2027: Memory +0.007, Coursework: learning the lines
+February 11, 2027: Memory +0.016, Coursework: learning the lines
+February 11, 2027: Listening And Responsiveness +0.013, Coursework: running it with a reader
+February 11, 2027: Focus +0.038, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)
+February 11, 2027: Imagination +0.033, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)
+February 11, 2027: Script Analysis +0.067, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)
+February 11, 2027: Physical Expression +0.070, Class: The Body As Source I (DRAM 133a/b)
+February 11, 2027: Vocal Expression +0.076, Class: Voice I (DRAM 113a/b)
+February 10, 2027: Memory +0.006, Coursework: learning the lines
+February 10, 2027: Memory +0.013, Coursework: learning the lines
+February 10, 2027: Memory +0.013, Coursework: Learn Lines
+February 10, 2027: Listening And Responsiveness +0.010, Coursework: running it with a reader
+February 10, 2027: Memory +0.066, A rehearsal call: The Seagull
+February 10, 2027: Script Analysis +0.053, A rehearsal call: The Seagull
+Show Earlier Changes
+
+#### dir1.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $503,644
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Rehearsal. Coming to your work short on rehearsal cost each piece about 1.2 points off the whole.
+
+That’s preparation, not training: prepare that part further before you show or tape the next piece.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	50.3	100.0	73.8	Not held back today	Believability, Connection	+0.09, Class: Play (DRAM 153a)	Sense Memory…
+Presence	64.0	100.0	—	Not held back today	Connection	None yet	A Showing For Classmates…
+Listening And Responsiveness	52.7	100.0	75.0	Not held back today	Connection, Responsiveness	+0.06, Rehearsing with a partner	The Repetition Exercise…
+Imagination	52.3	100.0	76.0	Not held back today	Believability, Interpretation	+0.02, Coursework: making your choices	The Given Circumstances…
+Focus	50.8	100.0	75.3	Not held back today	Interpretation, Execution, Consistency	+0.00, Coursework: knowing the material	Circles Of Attention…
+Memory	54.5	100.0	78.9	Not held back today	Execution	+0.00, Coursework: learning the lines	A Recall Drill…
+Adaptability	52.3	100.0	77.7	Not held back today	Responsiveness	+0.02, Coursework: the revision	Adjustments…
+Composure	44.3	100.0	—	Not held back today	Consistency	None yet	Graded Exposure…
+Vocal Expression	50.7	100.0	75.2	Not held back today	Execution, Consistency	+0.10, Class: Voice I (DRAM 113a/b)	Voice Work…
+Physical Expression	57.1	100.0	80.7	Not held back today	Execution	+0.08, Class: Alexander Technique I (DRAM 143a/b)	Movement Work…
+Discipline	57.5	100.0	—	Not held back today	Consistency, Execution	None yet	Grows with practice kept up, day after day
+Stamina	40.1	99.4	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	None yet	
+Work Out, under Look After Yourself
+Falling 0.18 a day
+
+Stamina is your fitness. Yours is 40.1, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	52.7	77.6	37.3 To Go	Dialect Drill…
+Audition Technique	51.7	77.7	38.3 To Go	Audition Pieces…
+Character Work	53.3	76.5	36.7 To Go	Character Work…
+Classical Text	52.8	78.8	37.2 To Go	Verse Speaking…
+Clown And Mask	45.9	71.9	44.1 To Go	Clown Practice…
+Cold Reading	49.0	75.0	41.0 To Go	Cold Reading…
+Comedy	54.1	80.1	35.9 To Go	Comic Timing…
+Dance	52.8	78.8	37.2 To Go	A Dance Class…
+Improvisation	52.4	77.7	37.6 To Go	An Improv Session…
+Intimacy	55.2	80.5	34.8 To Go	Intimacy Practice…
+On Camera	49.9	75.9	40.1 To Go	Self-Tape Practice…
+Scene Study	49.3	72.3	40.7 To Go	Scene Work…
+Script Analysis	52.2	75.6	37.8 To Go	Script Analysis…
+Singing	56.1	82.1	33.9 To Go	Singing Practice…
+Speech	53.2	78.0	36.8 To Go	Speech Drill…
+Stage Combat	55.3	80.7	34.7 To Go	Combat Drill…
+Voice-Over	51.2	77.2	38.8 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 55.3 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 55.3 of 90); Comic Timing (Comedy 54.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 55.3 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 51.2 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 51.2 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 56.1 of 90); Dancing (Dance 52.8 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 53.3 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+100
+100 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+100, 0
+No sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK
+2026 Fall	6 at 58.9	4 at 58.6	6 at 53.4	6 at 52.9	2 at 64.3	1 at 63.5
+All Of It	6 at 58.9, best 60.2	4 at 58.6, best 68.0	6 at 53.4, best 64.4	6 at 52.9, best 62.6	2 at 64.3, best 64.6	1 at 63.5, best 63.5
+October 13, 2026: First strong work: A Play In Its Context, 68.0
+WORK	WHAT	WHOLE	BAND	WHEN
+Directions In Daily Life	Movement Work	60.0	Working	October 16, 2026
+A Movement Score	Movement Work	63.6	Working	October 14, 2026
+A Play In Its Context	A Written Analysis	68.0	Strong	October 13, 2026
+Sound Changes And A Text	Voice Work	62.2	Working	October 13, 2026
+A Voice Sequence	Voice Work	60.5	Working	October 9, 2026
+A Game Played Through	An Improvisation	64.0	Working	October 8, 2026
+Scene Study, revised	A Scene Shown	59.9	Working	October 6, 2026
+Scene Study	A Scene Shown	59.6	Working	October 5, 2026
+A Play In Its Context	A Written Analysis	39.5	Unready	September 29, 2026
+Directions In Daily Life	Movement Work	36.2	Unready	September 28, 2026
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 25 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your connection runs ahead of the rest: 63.9 on average across 9 pieces, against 56.7 overall. From: A Game Played Through: 70; A Game Played Through: 67.1; Scene Study, revised: 64.7.
+Your interpretation runs ahead of the rest: 63.6 on average across 24 pieces, against 56.7 overall. From: A Play In Its Context: 67.9; Sound Changes And A Text: 67.6; A Play In Its Context: 66.9.
+WHAT KEEPS HOLDING IT BACK
+Rehearsal has held back 4 pieces, about 20.1 points off the whole each. From: Preparation, 80.3 points in all.
+Vocal Expression has held back 8 pieces, about 8.8 points off the whole each. From: An ability, 70.2 points in all.
+Imagination has held back 11 pieces, about 6.2 points off the whole each. From: An ability, 68.6 points in all.
+The same note has been given 4 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 6 times, best 60.2. From: Your experience record.
+
+Not met yet: Exact Timing, Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+6 kinds of work judged, 0 genres worked in, 6 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation and Partnered Physical Work.
+RELIABILITY
+14 of 14 calls answered; 38 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+6 pieces played with a partner, a reader or a company came to 61.8 together on average; of the 1 slip by the others, you covered it. From: 6 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+October 17, 2026: Focus +0.004, Coursework: knowing the material
+October 17, 2026: Focus +0.008, Coursework: knowing the material
+October 17, 2026: Focus +0.016, Coursework: knowing the material
+October 17, 2026: Listening And Responsiveness +0.061, Rehearsing with a partner
+October 17, 2026: Intimacy +0.017, Coursework: Write Out The Score
+October 17, 2026: Adaptability +0.019, Coursework: the revision
+October 16, 2026: Adaptability +0.002, Coursework: the revision
+October 16, 2026: Adaptability +0.004, Coursework: the revision
+October 16, 2026: Listening And Responsiveness +0.059, Rehearsing with a partner
+October 16, 2026: Adaptability +0.009, Coursework: the revision
+October 16, 2026: Adaptability +0.018, Coursework: the revision
+October 16, 2026: Imagination +0.018, Coursework: making your choices
+October 16, 2026: Stage Combat +0.091, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+October 16, 2026: Intimacy +0.091, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+October 16, 2026: Physical Expression +0.082, Class: Alexander Technique I (DRAM 143a/b)
+Show Earlier Changes
+
+#### dir2.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $503,749
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Focus. Of what you can train, it would add most to your recent work: 11 of your last 12 pieces call on it. Imagination would be about as useful.
+
+Circles Of Attention at the Developing tier, with Focus on Steady. It’s in the Practice column under Attributes And Craft on your Player Profile: open it and press Practice An Hour. An hour costs 3 energy, and it would add about +0.25 to focus now, plus +0.18 to discipline for a day of practice kept.
+
+Estimate: 20 hours, an hour a day, would take it from 52 to about 56, worth about 0.7 points a piece on your recent work.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	52.6	100.0	73.8	Not held back today	Believability, Connection	+0.08, Class: Play (DRAM 153a)	Sense Memory…
+Presence	64.0	100.0	—	Not held back today	Connection	None yet	A Showing For Classmates…
+Listening And Responsiveness	55.7	100.0	75.0	Not held back today	Connection, Responsiveness	+0.03, Class: Play (DRAM 153a)	The Repetition Exercise…
+Imagination	54.2	100.0	76.0	Not held back today	Believability, Interpretation	+0.04, Class: Text And Context Across The Repertory (DRAM 873a/b)	The Given Circumstances…
+Focus	51.9	100.0	75.3	Not held back today	Interpretation, Execution, Consistency	+0.04, Class: Text And Context Across The Repertory (DRAM 873a/b)	Circles Of Attention…
+Memory	55.0	100.0	78.9	Not held back today	Execution	+0.02, Coursework: learning the lines	A Recall Drill…
+Adaptability	52.9	100.0	77.7	Not held back today	Responsiveness	+0.05, Class: Play (DRAM 153a)	Adjustments…
+Composure	44.3	100.0	—	Not held back today	Consistency	None yet	Graded Exposure…
+Vocal Expression	52.0	100.0	75.2	Not held back today	Execution, Consistency	+0.09, Class: Voice I (DRAM 113a/b)	Voice Work…
+Physical Expression	59.3	100.0	80.7	Not held back today	Execution	+0.07, Class: Alexander Technique I (DRAM 143a/b)	Movement Work…
+Discipline	57.5	100.0	—	Not held back today	Consistency, Execution	None yet	Grows with practice kept up, day after day
+Stamina	35.0	99.4	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	None yet	
+Work Out, under Look After Yourself
+At an everyday life’s level
+
+Stamina is your fitness. Yours is 35.0, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	54.0	77.6	36.0 To Go	Dialect Drill…
+Audition Technique	51.7	77.7	38.3 To Go	Audition Pieces…
+Character Work	55.0	76.5	35.0 To Go	Character Work…
+Classical Text	52.8	78.8	37.2 To Go	Verse Speaking…
+Clown And Mask	45.9	71.9	44.1 To Go	Clown Practice…
+Cold Reading	49.0	75.0	41.0 To Go	Cold Reading…
+Comedy	54.1	80.1	35.9 To Go	Comic Timing…
+Dance	52.8	78.8	37.2 To Go	A Dance Class…
+Improvisation	53.1	77.7	36.9 To Go	An Improv Session…
+Intimacy	55.8	80.5	34.2 To Go	Intimacy Practice…
+On Camera	49.9	75.9	40.1 To Go	Self-Tape Practice…
+Scene Study	51.1	72.3	38.9 To Go	Scene Work…
+Script Analysis	53.4	75.6	36.6 To Go	Script Analysis…
+Singing	56.1	82.1	33.9 To Go	Singing Practice…
+Speech	54.6	78.0	35.4 To Go	Speech Drill…
+Stage Combat	55.9	80.7	34.1 To Go	Combat Drill…
+Voice-Over	51.2	77.2	38.8 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 55.9 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 55.9 of 90); Comic Timing (Comedy 54.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 55.9 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 51.2 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 51.2 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 56.1 of 90); Dancing (Dance 52.8 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 55.0 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+100
+100 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+100, 0
+No sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK
+2026 Fall	15 at 60.1	8 at 61.8	12 at 57.9	12 at 57.6	4 at 64.5	3 at 64.6
+All Of It	15 at 60.1, best 62.3	8 at 61.8, best 68.1	12 at 57.9, best 64.9	12 at 57.6, best 64.9	4 at 64.5, best 65.5	3 at 64.6, best 65.8
+October 13, 2026: First strong work: A Play In Its Context, 68.0
+WORK	WHAT	WHOLE	BAND	WHEN
+Scene Study	A Scene Shown	60.3	Working	December 9, 2026
+Consent And Intimacy Practice	Partnered Physical Work	65.8	Strong	December 4, 2026
+Directions In Daily Life	Movement Work	60.0	Working	December 4, 2026
+A Voice Sequence	Voice Work	62.5	Working	December 4, 2026
+A Game Played Through	An Improvisation	63.9	Working	December 3, 2026
+A Movement Score	Movement Work	64.9	Working	December 3, 2026
+A Play In Its Context	A Written Analysis	62.9	Working	December 2, 2026
+Sound Changes And A Text	Voice Work	64.9	Working	December 1, 2026
+Scene Study, revised	A Scene Shown	62.3	Working	December 1, 2026
+Scene Study	A Scene Shown	61.7	Working	November 30, 2026
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 54 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your connection runs ahead of the rest: 65.5 on average across 16 pieces, against 60.8 overall. From: A Game Played Through: 72; Scene Study, revised: 68.1; Consent And Intimacy Practice: 67.3.
+WHAT KEEPS HOLDING IT BACK
+Vocal Expression has held back 14 pieces, about 10.1 points off the whole each. From: An ability, 142 points in all.
+Stamina has held back 22 pieces, about 6.2 points off the whole each. From: An ability, 136.3 points in all.
+Imagination has held back 22 pieces, about 6 points off the whole each. From: An ability, 132.5 points in all.
+The same note has been given 10 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 15 times, best 62.3. From: Your experience record.
+Mixed Tone: met or practiced 9 times, best 62.3. From: Your experience record.
+Exact Timing: met or practiced 8 times, best 62.3. From: Your experience record.
+
+Not met yet: Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+6 kinds of work judged, 0 genres worked in, 7 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation and Partnered Physical Work.
+RELIABILITY
+14 of 14 calls answered; 73 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+15 pieces played with a partner, a reader or a company came to 62.9 together on average; of the 1 slip by the others, you covered it. From: 15 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+December 11, 2026: Stage Combat +0.088, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+December 11, 2026: Intimacy +0.087, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+December 11, 2026: Physical Expression +0.070, Class: Alexander Technique I (DRAM 143a/b)
+December 11, 2026: Vocal Expression +0.088, Class: Voice I (DRAM 113a/b)
+December 10, 2026: Adaptability +0.046, Class: Play (DRAM 153a)
+December 10, 2026: Listening And Responsiveness +0.034, Class: Play (DRAM 153a)
+December 10, 2026: Emotional Depth +0.079, Class: Play (DRAM 153a)
+December 10, 2026: Improvisation +0.092, Class: Play (DRAM 153a)
+December 10, 2026: Physical Expression +0.070, Class: The Body As Source I (DRAM 133a/b)
+December 10, 2026: Vocal Expression +0.089, Class: Voice I (DRAM 113a/b)
+December 9, 2026: Focus +0.044, Class: Text And Context Across The Repertory (DRAM 873a/b)
+December 9, 2026: Imagination +0.040, Class: Text And Context Across The Repertory (DRAM 873a/b)
+December 9, 2026: Script Analysis +0.082, Class: Text And Context Across The Repertory (DRAM 873a/b)
+December 9, 2026: Physical Expression +0.071, Class: The Body As Source I (DRAM 133a/b)
+December 9, 2026: Imagination +0.040, Class: Acting I (DRAM 103a/b)
+Show Earlier Changes
+
+#### direction.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $502,387
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Rehearsal. Coming to your work short on rehearsal cost each piece about 1.8 points off the whole.
+
+That’s preparation, not training: prepare that part further before you show or tape the next piece.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	55.4	100.0	73.8	Not held back today	Believability, Connection	+0.06, Class: Acting I (DRAM 103a/b)	Sense Memory…
+Presence	64.1	100.0	—	Not held back today	Connection	None yet	A Showing For Classmates…
+Listening And Responsiveness	58.4	100.0	75.0	Not held back today	Connection, Responsiveness	+0.03, Class: Acting I (DRAM 103a/b)	The Repetition Exercise…
+Imagination	57.7	100.0	76.0	Not held back today	Believability, Interpretation	+0.03, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	The Given Circumstances…
+Focus	54.5	100.0	75.3	Not held back today	Interpretation, Execution, Consistency	+0.04, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	Circles Of Attention…
+Memory	57.6	100.0	78.9	Not held back today	Execution	+0.06, A rehearsal call: Carlotta Festival Of New Plays	A Recall Drill…
+Adaptability	53.5	100.0	77.7	Not held back today	Responsiveness	+0.01, A director’s note worked	Adjustments…
+Composure	44.6	100.0	—	Not held back today	Consistency	None yet	Graded Exposure…
+Vocal Expression	54.4	100.0	75.2	Not held back today	Execution, Consistency	+0.07, Class: Voice I (DRAM 113a/b)	Voice Work…
+Physical Expression	62.9	100.0	80.7	Not held back today	Execution	+0.05, Class: Alexander Technique I (DRAM 143a/b)	Movement Work…
+Discipline	58.0	100.0	—	Not held back today	Consistency, Execution	+0.03, A call answered	Grows with practice kept up, day after day
+Stamina	35.7	99.4	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	+0.70, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)	
+Work Out, under Look After Yourself
+Held until April 26, 2027
+
+Stamina is your fitness. Yours is 35.7, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	56.1	77.6	33.9 To Go	Dialect Drill…
+Audition Technique	51.7	77.7	38.3 To Go	Audition Pieces…
+Character Work	59.5	76.5	30.5 To Go	Character Work…
+Classical Text	52.8	78.8	37.2 To Go	Verse Speaking…
+Clown And Mask	45.9	71.9	44.1 To Go	Clown Practice…
+Cold Reading	49.0	75.0	41.0 To Go	Cold Reading…
+Comedy	54.1	80.1	35.9 To Go	Comic Timing…
+Dance	52.8	78.8	37.2 To Go	A Dance Class…
+Improvisation	53.1	77.7	36.9 To Go	An Improv Session…
+Intimacy	56.9	80.5	33.1 To Go	Intimacy Practice…
+On Camera	49.9	75.9	40.1 To Go	Self-Tape Practice…
+Scene Study	55.9	72.3	34.1 To Go	Scene Work…
+Script Analysis	58.1	75.6	31.9 To Go	Script Analysis…
+Singing	56.1	82.1	33.9 To Go	Singing Practice…
+Speech	56.8	78.0	33.2 To Go	Speech Drill…
+Stage Combat	57.1	80.7	32.9 To Go	Combat Drill…
+Voice-Over	51.2	77.2	38.8 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 57.1 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 57.1 of 90); Comic Timing (Comedy 54.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 57.1 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 51.2 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 51.2 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 56.1 of 90); Dancing (Dance 52.8 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 59.5 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+96
+96 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+94, 0
+1 hour of sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK	A NIGHT ON STAGE
+2026 Fall	15 at 60.1	8 at 61.8	12 at 57.9	12 at 57.6	4 at 64.5	3 at 64.6	—
+2027 Spring	18 at 59.7	12 at 67.3	12 at 62.5	12 at 60.9	—	3 at 65.7	1 at 45.2
+All Of It	33 at 59.9, best 62.9	20 at 65.1, best 69.7	24 at 60.2, best 64.9	24 at 59.3, best 65.5	4 at 64.5, best 65.5	6 at 65.2, best 66.3	1 at 45.2, best 45.2
+October 13, 2026: First strong work: A Play In Its Context, 68.0
+WORK	WHAT	WHOLE	BAND	WHEN
+A Choreographed Sequence	Partnered Physical Work	66.3	Strong	April 23, 2027
+Table Work	A Written Analysis	66.7	Strong	April 22, 2027
+A Voice Sequence	Voice Work	43.2	Unready	April 22, 2027
+A Movement Score	Movement Work	64.3	Working	April 21, 2027
+A Play In Its Context	A Written Analysis	68.5	Strong	April 20, 2027
+Directions In Daily Life	Movement Work	62.6	Working	April 19, 2027
+Sound Changes And A Text	Voice Work	64.0	Working	April 19, 2027
+A Simulated Rehearsal	A Scene Shown	61.8	Working	April 19, 2027
+A Simulated Rehearsal	A Scene Shown	58.4	Working	April 13, 2027
+A Voice Sequence	Voice Work	65.5	Strong	April 8, 2027
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 112 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your interpretation runs ahead of the rest: 67.4 on average across 37 pieces, against 62.5 overall. From: Sound Changes And A Text: 72.1; A Play In Its Context: 71.2; Sound Changes And A Text: 70.7.
+WHAT KEEPS HOLDING IT BACK
+Stamina has held back 47 pieces, about 7 points off the whole each. From: An ability, 327.8 points in all.
+Vocal Expression has held back 32 pieces, about 9.6 points off the whole each. From: An ability, 307.8 points in all.
+Focus has held back 54 pieces, about 4.7 points off the whole each. From: An ability, 254.4 points in all.
+The same note has been given 22 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 37 times, best 69.2. From: Your experience record.
+Exact Timing: met or practiced 24 times, best 69.2. From: Your experience record.
+Mixed Tone: met or practiced 18 times, best 69.2. From: Your experience record.
+Heightened Prose: met or practiced 15 times, best 66.7. From: Your experience record.
+
+Not met yet: Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+7 kinds of work judged, 0 genres worked in, 7 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work and A Night On Stage.
+RELIABILITY
+44 of 44 calls answered; 102 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+36 pieces played with a partner, a reader or a company came to 61.4 together on average; of 2 slips by the others, you covered all of them. From: 36 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+April 23, 2027: Memory +0.057, A rehearsal call: Carlotta Festival Of New Plays
+April 23, 2027: Script Analysis +0.045, A rehearsal call: Carlotta Festival Of New Plays
+April 23, 2027: Character Work +0.064, A rehearsal call: Carlotta Festival Of New Plays
+April 23, 2027: Scene Study +0.066, A rehearsal call: Carlotta Festival Of New Plays
+April 23, 2027: Discipline +0.029, A call answered
+April 23, 2027: Stamina +0.700, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+April 23, 2027: Stage Combat +0.089, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+April 23, 2027: Intimacy +0.090, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+April 23, 2027: Physical Expression +0.053, Class: Alexander Technique I (DRAM 143a/b)
+April 23, 2027: Vocal Expression +0.075, Class: Voice I (DRAM 113a/b)
+April 22, 2027: Memory +0.063, A rehearsal call: Carlotta Festival Of New Plays
+April 22, 2027: Script Analysis +0.050, A rehearsal call: Carlotta Festival Of New Plays
+April 22, 2027: Character Work +0.071, A rehearsal call: Carlotta Festival Of New Plays
+April 22, 2027: Scene Study +0.073, A rehearsal call: Carlotta Festival Of New Plays
+April 22, 2027: Discipline +0.029, A call answered
+Show Earlier Changes
+
+#### health.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $503,341
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Vocal Expression. Of what you can train, it would add most to your recent work: 3 of your last 5 pieces call on it. Focus would be about as useful.
+
+Voice Work at the Developing tier, with Focus on Steady. It’s in the Practice column under Attributes And Craft on your Player Profile: open it and press Practice An Hour. An hour costs 3 energy.
+
+Estimate: 20 hours, an hour a day, would take it from 55 to about 59, worth about 0.8 points a piece on your recent work.
+
+Not now: Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	57.6	100.0	83.0	Not held back today	Believability, Connection	+0.09, Class: Play (DRAM 153a)	Sense Memory…
+Presence	69.4	100.0	—	Not held back today	Connection	None yet	A Showing For Classmates…
+Listening And Responsiveness	48.5	100.0	74.0	Not held back today	Connection, Responsiveness	+0.05, Class: Play (DRAM 153a)	The Repetition Exercise…
+Imagination	57.6	100.0	83.0	Not held back today	Believability, Interpretation	+0.01, Coursework: making your choices	The Given Circumstances…
+Focus	54.0	100.0	79.5	An injury mending: consistency, execution	Interpretation, Execution, Consistency	+0.02, Coursework: knowing the material	Circles Of Attention…
+Memory	52.4	100.0	77.9	An injury mending: execution	Execution	+0.08, A lab	A Recall Drill…
+Adaptability	46.3	100.0	72.2	Not held back today	Responsiveness	+0.05, Class: Play (DRAM 153a)	Adjustments…
+Composure	44.3	100.0	—	An injury mending: consistency	Consistency	None yet	Graded Exposure…
+Vocal Expression	55.2	100.0	80.8	An injury mending: execution	Execution, Consistency	+0.10, Class: Voice I (DRAM 113a/b)	Voice Work…
+Physical Expression	48.0	100.0	73.1	An injury mending: execution	Execution	+0.10, Class: Alexander Technique I (DRAM 143a/b)	Movement Work…
+Discipline	57.5	100.0	—	An injury mending: consistency	Consistency, Execution	None yet	Grows with practice kept up, day after day
+Stamina	46.6	99.4	—	An injury mending: consistency, execution	Believability, Connection, Execution, Consistency, Responsiveness	None yet	
+Work Out, under Look After Yourself
+Not with a sprained ankle; it has 7 days yet to mend.
+Falling 0.18 a day
+
+Stamina is your fitness. Yours is 46.6, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	54.7	80.4	35.3 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	59.1	84.4	30.9 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.4	77.4	38.6 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	46.4	72.2	43.6 To Go	An Improv Session…
+Intimacy	58.9	84.7	31.1 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	50.6	75.8	39.4 To Go	Scene Work…
+Script Analysis	56.3	81.6	33.7 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	52.8	78.5	37.2 To Go	Speech Drill…
+Stage Combat	48.0	73.8	42.0 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Action	Fights And Stunts (Stage Combat 48.0 of 90)	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Action Comedy	Fights And Stunts (Stage Combat 48.0 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Adventure	Fights And Stunts (Stage Combat 48.0 of 90)	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Biographical	Physical Transformation (Character Work 59.1 of 90)	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Work-Study Shift starts at 10:00 AM: there isn’t the time before it.
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+95
+95 at this hour
+FOR WORK
+Held Back
+An injury holds back your physical work
+ENERGY, STRESS
+94, 6
+1 hour of sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK
+2026 Fall	2 at 54.9	1 at 69.2	1 at 66.1	1 at 65.5
+All Of It	2 at 54.9, best 55.1	1 at 69.2, best 69.2	1 at 66.1, best 66.1	1 at 65.5, best 65.5
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+A Voice Sequence	Voice Work	65.5	Strong	September 11, 2026
+A Movement Score	Movement Work	66.1	Strong	September 10, 2026
+Scene Study, revised	A Scene Shown	55.1	Working	September 9, 2026
+A Play In Its Context	A Written Analysis	69.2	Strong	September 8, 2026
+Scene Study	A Scene Shown	54.7	Working	September 8, 2026
+Sources And Estimates
+Your Work So Far
+
+Early days: 5 pieces judged. Patterns are named once 6 are.
+
+How This Works
+
+Not met yet: Exact Timing, Vocal Demand, Improvised Freedom, Heightened Prose, Verse, The Camera, Many Transitions, Mixed Tone, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+4 kinds of work judged, 0 genres worked in, 2 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work and Voice Work.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+September 11, 2026: Imagination +0.007, Coursework: making your choices
+September 11, 2026: Script Analysis +0.007, Coursework: Research It At The Library
+September 11, 2026: Imagination +0.014, Coursework: making your choices
+September 11, 2026: Script Analysis +0.015, Coursework: Research It At The Library
+September 11, 2026: Memory +0.079, A lab
+September 11, 2026: Script Analysis +0.072, A lab
+September 11, 2026: Character Work +0.069, A lab
+September 11, 2026: Scene Study +0.080, A lab
+September 11, 2026: Stage Combat +0.106, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+September 11, 2026: Intimacy +0.087, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+September 11, 2026: Physical Expression +0.104, Class: Alexander Technique I (DRAM 143a/b)
+September 11, 2026: Vocal Expression +0.101, Class: Voice I (DRAM 113a/b)
+September 10, 2026: Imagination +0.014, Coursework: making your choices
+September 10, 2026: Script Analysis +0.014, Coursework: Research It At The Library
+September 10, 2026: Focus +0.015, Coursework: knowing the material
+Show Earlier Changes
+
+#### leave.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+25
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2030, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $496,204
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Focus. Of what you can train, it would add most to your recent work: your last 12 pieces all call on it.
+
+Circles Of Attention at the Developing tier, with Focus on Steady. It’s in the Practice column under Attributes And Craft on your Player Profile: open it and press Practice An Hour. An hour costs 3 energy, and it would add about +0.15 to focus now, plus +0.18 to discipline for a day of practice kept.
+
+Estimate: 20 hours, an hour a day, would take it from 58 to about 61, worth about 0.7 points a piece on your recent work.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	62.8	100.0	83.0	Not held back today	Believability, Connection	+0.06, Class: Acting I (DRAM 103a/b)	Sense Memory…
+Presence	69.4	100.0	—	Not held back today	Connection	None yet	A Showing For Classmates…
+Listening And Responsiveness	56.2	100.0	74.0	Not held back today	Connection, Responsiveness	+0.03, Class: Acting I (DRAM 103a/b)	The Repetition Exercise…
+Imagination	62.9	100.0	83.0	Not held back today	Believability, Interpretation	+0.03, Class: Text And Context Across The Repertory (DRAM 873a/b)	The Given Circumstances…
+Focus	57.7	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.00, Coursework: knowing the material	Circles Of Attention…
+Memory	55.3	100.0	77.9	Not held back today	Execution	+0.01, Coursework: learning the lines	A Recall Drill…
+Adaptability	48.0	100.0	72.2	Not held back today	Responsiveness	+0.01, Coursework: the revision	Adjustments…
+Composure	44.3	100.0	—	Not held back today	Consistency	None yet	Graded Exposure…
+Vocal Expression	58.8	100.0	80.8	Not held back today	Execution, Consistency	+0.01, Coursework: Practice The Sequence	Voice Work…
+Physical Expression	54.9	100.0	73.1	Not held back today	Execution	+0.01, Coursework: Practice The Directions	Movement Work…
+Discipline	57.8	100.0	—	Not held back today	Consistency, Execution	+0.03, A call answered	Grows with practice kept up, day after day
+Stamina	35.5	99.3	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	+0.70, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)	
+Work Out, under Look After Yourself
+Falling 0.18 a day
+
+Stamina is your fitness. Yours is 35.5, and full is the fittest a body your age can be, 99.3 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	58.0	80.4	32.0 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	64.8	84.4	25.2 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.4	77.4	38.6 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	47.8	72.2	42.2 To Go	An Improv Session…
+Intimacy	60.5	84.7	29.5 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	57.1	75.8	32.9 To Go	Scene Work…
+Script Analysis	61.8	81.6	28.2 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	56.5	78.5	33.5 To Go	Speech Drill…
+Stage Combat	50.0	73.8	40.0 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 50.0 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 50.0 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 50.0 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 64.8 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+65
+65 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+58, 0
+4 hours of sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK
+2026 Fall	14 at 60.6	8 at 68.9	12 at 58.3	12 at 61.1	4 at 65.3	3 at 63.5
+2027 Spring	3 at 56.2	1 at 69.1	1 at 61.6	1 at 67.0	—	—
+2028 Spring	9 at 61.4	5 at 70.6	4 at 61.5	5 at 64.1	—	1 at 61.9
+All Of It	26 at 60.4, best 62.8	14 at 69.5, best 72.1	17 at 59.2, best 66.1	18 at 62.3, best 68.1	4 at 65.3, best 66.8	4 at 63.1, best 64.3
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+A Play In Its Context	A Written Analysis	70.1	Strong	February 22, 2028
+Sound Changes And A Text	Voice Work	68.1	Strong	February 22, 2028
+A Simulated Rehearsal	A Scene Shown	62.7	Working	February 22, 2028
+A Simulated Rehearsal	A Scene Shown	62.0	Working	February 16, 2028
+A Simulated Rehearsal	A Scene Shown	62.7	Working	February 14, 2028
+A Choreographed Sequence	Partnered Physical Work	61.9	Working	February 11, 2028
+Directions In Daily Life	Movement Work	55.6	Working	February 11, 2028
+A Voice Sequence	Voice Work	58.0	Working	February 10, 2028
+A Play In Its Context	A Written Analysis	71.5	Strong	February 9, 2028
+A Movement Score	Movement Work	63.9	Working	February 9, 2028
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 83 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your interpretation runs ahead of the rest: 71.1 on average across 38 pieces, against 63.8 overall. From: A Play In Its Context: 75; Sound Changes And A Text: 74.6; A Movement Score: 73.6.
+WHAT KEEPS HOLDING IT BACK
+Stamina has held back 33 pieces, about 6.8 points off the whole each. From: An ability, 225.9 points in all.
+Physical Expression has held back 26 pieces, about 7.7 points off the whole each. From: An ability, 200.4 points in all.
+Vocal Expression has held back 23 pieces, about 8.2 points off the whole each. From: An ability, 188.6 points in all.
+The same note has been given 16 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 27 times, best 69.8. From: Your experience record.
+Exact Timing: met or practiced 18 times, best 69.8. From: Your experience record.
+Mixed Tone: met or practiced 17 times, best 62.8. From: Your experience record.
+Heightened Prose: met or practiced 8 times, best 69.8. From: Your experience record.
+
+Not met yet: Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+6 kinds of work judged, 0 genres worked in, 7 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation and Partnered Physical Work.
+RELIABILITY
+26 of 26 calls answered; 12 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+27 pieces played with a partner, a reader or a company came to 61.4 together on average; of 3 slips by the others, you covered 2. From: 27 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+February 22, 2028: Memory +0.014, Coursework: learning the lines
+February 22, 2028: Memory +0.014, Coursework: Learn Lines
+February 22, 2028: Focus +0.003, Coursework: knowing the material
+February 22, 2028: Focus +0.007, Coursework: knowing the material
+February 22, 2028: Focus +0.014, Coursework: knowing the material
+February 22, 2028: Physical Expression +0.012, Coursework: Practice The Directions
+February 22, 2028: Vocal Expression +0.014, Coursework: Practice The Sequence
+February 22, 2028: Focus +0.041, Class: Text And Context Across The Repertory (DRAM 873a/b)
+February 22, 2028: Imagination +0.034, Class: Text And Context Across The Repertory (DRAM 873a/b)
+February 22, 2028: Script Analysis +0.068, Class: Text And Context Across The Repertory (DRAM 873a/b)
+February 22, 2028: Accents And Dialects +0.083, Class: Speech And Accents I (DRAM 123a/b)
+February 22, 2028: Speech +0.084, Class: Speech And Accents I (DRAM 123a/b)
+February 22, 2028: Imagination +0.031, Class: Acting I (DRAM 103a/b)
+February 22, 2028: Listening And Responsiveness +0.030, Class: Acting I (DRAM 103a/b)
+February 22, 2028: Emotional Depth +0.062, Class: Acting I (DRAM 103a/b)
+Show Earlier Changes
+
+#### lien.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+25
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $5,000.00
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Taking the director’s notes. Coming to your work short on taking the director’s notes cost each piece about 3.8 points off the whole.
+
+That’s preparation, not training: prepare that part further before you show or tape the next piece.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	63.7	100.0	83.0	Not held back today	Believability, Connection	+0.04, A night on stage	Sense Memory…
+Presence	69.6	100.0	—	Not held back today	Connection	+0.05, Nerves before a performance	A Showing For Classmates…
+Listening And Responsiveness	57.0	100.0	74.0	Not held back today	Connection, Responsiveness	+0.02, A night on stage	The Repetition Exercise…
+Imagination	63.8	100.0	83.0	Not held back today	Believability, Interpretation	+0.03, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	The Given Circumstances…
+Focus	58.3	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.04, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	Circles Of Attention…
+Memory	56.8	100.0	77.9	Not held back today	Execution	+0.06, A rehearsal call: Carlotta Festival Of New Plays	A Recall Drill…
+Adaptability	48.2	100.0	72.2	Not held back today	Responsiveness	+0.01, A director’s note worked	Adjustments…
+Composure	45.7	100.0	—	Not held back today	Consistency	+0.28, Nerves before a performance	Graded Exposure…
+Vocal Expression	59.8	100.0	80.8	Not held back today	Execution, Consistency	+0.05, A night on stage	Voice Work…
+Physical Expression	56.1	100.0	73.1	Not held back today	Execution	+0.06, Class: Alexander Technique I (DRAM 143a/b)	Movement Work…
+Discipline	58.2	100.0	—	Not held back today	Consistency, Execution	+0.03, A call answered	Grows with practice kept up, day after day
+Stamina	35.0	99.3	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	+0.69, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)	
+Work Out, under Look After Yourself
+At an everyday life’s level
+
+Stamina is your fitness. Yours is 35.0, and full is the fittest a body your age can be, 99.3 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	58.6	80.4	31.4 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	66.7	84.4	23.3 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.6	77.4	38.4 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	47.8	72.2	42.2 To Go	An Improv Session…
+Intimacy	60.9	84.7	29.1 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	59.6	75.8	30.4 To Go	Scene Work…
+Script Analysis	63.7	81.6	26.3 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	57.3	78.5	32.7 To Go	Speech Drill…
+Stage Combat	50.4	73.8	39.6 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 50.4 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 50.4 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 50.4 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 66.7 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+94
+94 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+94, 0
+1 hour of sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK	A NIGHT ON STAGE
+2026 Fall	14 at 60.6	8 at 68.9	12 at 58.3	12 at 61.1	4 at 65.3	3 at 63.5	—
+2027 Spring	18 at 57.6	12 at 71.0	12 at 52.9	12 at 65.3	—	3 at 47.9	5 at 43.4
+All Of It	32 at 58.9, best 63.4	20 at 70.1, best 72.6	24 at 55.6, best 66.1	24 at 63.2, best 69.4	4 at 65.3, best 66.8	6 at 55.7, best 64.3	5 at 43.4, best 47.7
+May 12, 2027: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged 42.4 (4 off)
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+Carlotta Festival Of New Plays	A Night On Stage	41.9	An Off Night	May 12, 2027
+Carlotta Festival Of New Plays	A Night On Stage	42.1	An Off Night	May 9, 2027
+Carlotta Festival Of New Plays	A Night On Stage	43.3	An Off Night	May 6, 2027
+Carlotta Festival Of New Plays	A Night On Stage	42.1	An Off Night	May 4, 2027
+A Choreographed Sequence	Partnered Physical Work	16.9	Unready	April 23, 2027
+Table Work	A Written Analysis	72.3	Strong	April 22, 2027
+A Voice Sequence	Voice Work	66.4	Strong	April 22, 2027
+A Movement Score	Movement Work	15.4	Unready	April 21, 2027
+A Play In Its Context	A Written Analysis	70.8	Strong	April 20, 2027
+Directions In Daily Life	Movement Work	41.3	Unready	April 19, 2027
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 115 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your interpretation runs ahead of the rest: 67.9 on average across 38 pieces, against 57.6 overall. From: A Voice Sequence: 75.4; A Voice Sequence: 75; Sound Changes And A Text: 75.
+WHAT KEEPS HOLDING IT BACK
+Stamina has held back 43 pieces, about 6.6 points off the whole each. From: An ability, 284.1 points in all.
+Physical Expression has held back 35 pieces, about 7.5 points off the whole each. From: An ability, 264.2 points in all.
+Focus has held back 53 pieces, about 4.5 points off the whole each. From: An ability, 237.4 points in all.
+The same note has been given 23 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 36 times, best 72.3. From: Your experience record.
+Exact Timing: met or practiced 29 times, best 71.6. From: Your experience record.
+Mixed Tone: met or practiced 19 times, best 71.6. From: Your experience record.
+Heightened Prose: met or practiced 17 times, best 71.6. From: Your experience record.
+
+Not met yet: Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+7 kinds of work judged, 0 genres worked in, 7 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work and A Night On Stage.
+TAKING DIRECTION
+Of 4 notes and requests on your craft, you answered none. From: 4 notes given, 0 worked on and 0 answered.
+RELIABILITY
+52 of 52 calls answered; 86 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+39 pieces played with a partner, a reader or a company came to 57.8 together on average; of 5 slips by the others, you covered 4. From: 39 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+May 12, 2027: Cold Reading +0.046, A night on stage
+May 12, 2027: Character Work +0.023, A night on stage
+May 12, 2027: Script Analysis +0.049, A night on stage
+May 12, 2027: Vocal Expression +0.047, A night on stage
+May 12, 2027: Emotional Depth +0.040, A night on stage
+May 12, 2027: Scene Study +0.118, A night on stage
+May 12, 2027: Listening And Responsiveness +0.019, A night on stage
+May 12, 2027: Presence +0.046, Nerves before a performance
+May 12, 2027: Composure +0.277, Nerves before a performance
+May 9, 2027: Cold Reading +0.046, A night on stage
+May 9, 2027: Character Work +0.023, A night on stage
+May 9, 2027: Script Analysis +0.049, A night on stage
+May 9, 2027: Vocal Expression +0.047, A night on stage
+May 9, 2027: Emotional Depth +0.040, A night on stage
+May 9, 2027: Scene Study +0.119, A night on stage
+Show Earlier Changes
+
+#### missed-plan.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $3,025.00
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Focus. Of what you can train, it would add most to your recent work: 11 of your last 12 pieces call on it.
+
+Circles Of Attention at the Developing tier, with Focus on Steady. It’s in the Practice column under Attributes And Craft on your Player Profile: open it and press Practice An Hour. An hour costs 3 energy.
+
+Estimate: 20 hours, an hour a day, would take it from 58 to about 61, worth about 0.8 points a piece on your recent work.
+
+Not now: You’re at Classes until 3:00 PM.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	62.9	100.0	83.0	Not held back today	Believability, Connection	+0.06, Class: Acting I (DRAM 103a/b)	Sense Memory…
+Presence	69.4	100.0	—	Not held back today	Connection	+0.05, Nerves before a performance	A Showing For Classmates…
+Listening And Responsiveness	56.5	100.0	74.0	Not held back today	Connection, Responsiveness	+0.03, Class: Acting I (DRAM 103a/b)	The Repetition Exercise…
+Imagination	63.0	100.0	83.0	Not held back today	Believability, Interpretation	+0.03, Class: Text And Context Across The Repertory (DRAM 873a/b)	The Given Circumstances…
+Focus	57.7	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.04, Class: Text And Context Across The Repertory (DRAM 873a/b)	Circles Of Attention…
+Memory	55.6	100.0	77.9	Not held back today	Execution	+0.02, Coursework: learning the lines	A Recall Drill…
+Adaptability	48.0	100.0	72.2	Not held back today	Responsiveness	+0.00, Coursework: the revision	Adjustments…
+Composure	44.6	100.0	—	Not held back today	Consistency	+0.28, Nerves before a performance	Graded Exposure…
+Vocal Expression	58.8	100.0	80.8	Not held back today	Execution, Consistency	+0.07, Class: Voice I (DRAM 113a/b)	Voice Work…
+Physical Expression	54.9	100.0	73.1	Not held back today	Execution	+0.01, Coursework: Practice The Directions	Movement Work…
+Discipline	57.8	100.0	—	Not held back today	Consistency, Execution	+0.03, A call answered	Grows with practice kept up, day after day
+Stamina	35.5	99.4	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	+0.70, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)	
+Work Out, under Look After Yourself
+You’re at Classes until 3:00 PM.
+Falling 0.18 a day
+
+Stamina is your fitness. Yours is 35.5, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	58.1	80.4	31.9 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	65.0	84.4	25.0 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.4	77.4	38.6 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	47.8	72.2	42.2 To Go	An Improv Session…
+Intimacy	60.5	84.7	29.5 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	57.4	75.8	32.6 To Go	Scene Work…
+Script Analysis	62.0	81.6	28.0 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	56.7	78.5	33.3 To Go	Speech Drill…
+Stage Combat	50.0	73.8	40.0 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Action	Fights And Stunts (Stage Combat 50.0 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Action Comedy	Fights And Stunts (Stage Combat 50.0 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Adventure	Fights And Stunts (Stage Combat 50.0 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Biographical	Physical Transformation (Character Work 65.0 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+91
+91 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+88, 0
+1 hour of sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK	A NIGHT ON STAGE
+2026 Fall	14 at 60.6	8 at 68.9	12 at 58.3	12 at 61.1	4 at 65.3	3 at 63.5	—
+2027 Spring	13 at 59.2	8 at 70.7	8 at 62.5	7 at 63.5	—	1 at 62.9	1 at 47.7
+All Of It	27 at 59.9, best 63.4	16 at 69.8, best 72.6	20 at 60.0, best 66.1	19 at 62.0, best 67.4	4 at 65.3, best 66.8	4 at 63.4, best 64.3	1 at 47.7, best 47.7
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+A Play In Its Context	A Written Analysis	70.6	Strong	March 23, 2027
+Directions In Daily Life	Movement Work	62.8	Working	March 22, 2027
+A Simulated Rehearsal	A Scene Shown	59.7	Working	March 22, 2027
+A Movement Score	Movement Work	64.9	Working	March 18, 2027
+Sound Changes And A Text	Voice Work	65.7	Strong	March 16, 2027
+A Simulated Rehearsal	A Scene Shown	63.4	Working	March 16, 2027
+The Seagull	A Night On Stage	47.7	An Off Night	March 15, 2027
+Table Work	A Written Analysis	70.6	Strong	March 4, 2027
+A Voice Sequence	Voice Work	60.0	Working	March 4, 2027
+A Play In Its Context	A Written Analysis	72.6	Strong	March 3, 2027
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 91 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your interpretation runs ahead of the rest: 71 on average across 38 pieces, against 62.9 overall. From: Table Work: 74.3; A Movement Score: 74.3; A Play In Its Context: 74.1.
+WHAT KEEPS HOLDING IT BACK
+Stamina has held back 36 pieces, about 6.7 points off the whole each. From: An ability, 242.4 points in all.
+Physical Expression has held back 31 pieces, about 7.8 points off the whole each. From: An ability, 241.9 points in all.
+Focus has held back 46 pieces, about 4.4 points off the whole each. From: An ability, 203.4 points in all.
+The same note has been given 18 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 29 times, best 71.1. From: Your experience record.
+Exact Timing: met or practiced 23 times, best 71.1. From: Your experience record.
+Mixed Tone: met or practiced 15 times, best 70.6. From: Your experience record.
+Heightened Prose: met or practiced 14 times, best 63.4. From: Your experience record.
+
+Not met yet: Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+7 kinds of work judged, 0 genres worked in, 7 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work and A Night On Stage.
+RELIABILITY
+30 of 30 calls answered; 83 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+28 pieces played with a partner, a reader or a company came to 61.1 together on average; of 5 slips by the others, you covered 4. From: 28 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+March 23, 2027: Focus +0.040, Class: Text And Context Across The Repertory (DRAM 873a/b)
+March 23, 2027: Imagination +0.033, Class: Text And Context Across The Repertory (DRAM 873a/b)
+March 23, 2027: Script Analysis +0.066, Class: Text And Context Across The Repertory (DRAM 873a/b)
+March 23, 2027: Accents And Dialects +0.074, Class: Speech And Accents I (DRAM 123a/b)
+March 23, 2027: Speech +0.074, Class: Speech And Accents I (DRAM 123a/b)
+March 23, 2027: Imagination +0.030, Class: Acting I (DRAM 103a/b)
+March 23, 2027: Listening And Responsiveness +0.029, Class: Acting I (DRAM 103a/b)
+March 23, 2027: Emotional Depth +0.060, Class: Acting I (DRAM 103a/b)
+March 23, 2027: Character Work +0.056, Class: Acting I (DRAM 103a/b)
+March 23, 2027: Scene Study +0.061, Class: Acting I (DRAM 103a/b)
+March 22, 2027: Imagination +0.005, Coursework: making your choices
+March 22, 2027: Listening And Responsiveness +0.009, Coursework: running it with a reader
+March 22, 2027: Listening And Responsiveness +0.040, Rehearsing with a partner
+March 22, 2027: Imagination +0.011, Coursework: making your choices
+March 22, 2027: Physical Expression +0.011, Coursework: Practice The Directions
+Show Earlier Changes
+
+#### nonfiler.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+25
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 2
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $499,128
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Adaptability. Of what you can train, it would add most to your recent work: 10 of your last 12 pieces call on it. Listening and responsiveness would be about as useful.
+
+Adjustments at the Developing tier, with Focus on Steady. It’s in the Practice column under Attributes And Craft on your Player Profile: open it and press Practice An Hour. An hour costs 3 energy, and it would add about +0.26 to adaptability now, plus +0.17 to discipline for a day of practice kept.
+
+Estimate: 20 hours, an hour a day, would take it from 49 to about 53, worth about 0.7 points a piece on your recent work.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	66.1	100.0	83.0	Not held back today	Believability, Connection	+0.09, A night on stage	Sense Memory…
+Presence	70.0	100.0	—	Not held back today	Connection	+0.05, Nerves before a performance	A Showing For Classmates…
+Listening And Responsiveness	58.4	100.0	74.0	Not held back today	Connection, Responsiveness	+0.04, Rehearsing with a partner	The Repetition Exercise…
+Imagination	65.0	100.0	83.0	Not held back today	Believability, Interpretation	+0.00, Coursework: making your choices	The Given Circumstances…
+Focus	59.1	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.01, Coursework: knowing the material	Circles Of Attention…
+Memory	58.6	100.0	77.9	Not held back today	Execution	+0.01, Coursework: learning the lines	A Recall Drill…
+Adaptability	48.7	100.0	72.2	Not held back today	Responsiveness	+0.01, Coursework: the revision	Adjustments…
+Composure	48.1	100.0	—	Not held back today	Consistency	+0.27, Nerves before a performance	Graded Exposure…
+Vocal Expression	61.5	100.0	80.8	Not held back today	Execution, Consistency	+0.08, A night on stage	Voice Work…
+Physical Expression	57.5	100.0	73.1	Not held back today	Execution	+0.03, A night on stage	Movement Work…
+Discipline	58.8	100.0	—	Not held back today	Consistency, Execution	+0.03, A call answered	Grows with practice kept up, day after day
+Stamina	42.4	99.3	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	+0.71, Class: Advanced Principles Of Acting Stage Combat (DRAM 405a/b)	
+Work Out, under Look After Yourself
+Falling 0.18 a day
+
+Stamina is your fitness. Yours is 42.4, and full is the fittest a body your age can be, 99.3 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	59.5	80.4	30.5 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	68.9	84.4	21.1 To Go	Character Work…
+Classical Text	49.1	73.2	40.9 To Go	Verse Speaking…
+Clown And Mask	52.8	78.2	37.2 To Go	Clown Practice…
+Cold Reading	51.6	77.4	38.4 To Go	Cold Reading…
+Comedy	55.6	81.1	34.4 To Go	Comic Timing…
+Dance	56.2	81.6	33.8 To Go	A Dance Class…
+Improvisation	48.4	72.2	41.6 To Go	An Improv Session…
+Intimacy	60.9	84.7	29.1 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	62.5	75.8	27.5 To Go	Scene Work…
+Script Analysis	65.5	81.6	24.5 To Go	Script Analysis…
+Singing	56.0	81.2	34.0 To Go	Singing Practice…
+Speech	58.3	78.5	31.7 To Go	Speech Drill…
+Stage Combat	51.1	73.8	38.9 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 4 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen. Tragedy is worth studying next: your next part is in a play of that kind, and it’s the one of the play’s kinds you know least.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 51.1 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 51.1 of 90); Comic Timing (Comedy 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 51.1 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 56.0 of 90); Dancing (Dance 56.2 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 68.9 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+100
+100 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+100, 0
+No sleep owed
+Sources And Estimates
+School Journey
+
+Year 2 of 3, good standing
+
+How This Works
+
+On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027; Leonardo in Directors’ Thesis Production I, 2027. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK	A NIGHT ON STAGE	A CLOWN TURN	A SONG
+2026 Fall	14 at 60.6	8 at 68.9	12 at 58.3	12 at 61.1	4 at 65.3	3 at 63.5	—	—	—
+2027 Spring	18 at 57.6	12 at 71.0	12 at 52.9	12 at 65.3	—	3 at 47.9	5 at 43.4	—	—
+2027 Fall	6 at 54.6	2 at 72.7	3 at 55.6	5 at 56.7	2 at 67.0	1 at 51.6	9 at 53.2	1 at 61.7	1 at 23.1
+All Of It	38 at 58.2, best 63.5	22 at 70.4, best 73.6	27 at 55.6, best 67.2	29 at 62.1, best 69.4	6 at 65.9, best 67.5	7 at 55.1, best 64.3	14 at 49.7, best 55.2	1 at 61.7, best 61.7	1 at 23.1, best 23.1
+October 16, 2027: Leonardo, Blood Wedding, the run averaged 54.0 (8 solid)
+May 12, 2027: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged 42.4 (4 off)
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+Blood Wedding	A Night On Stage	55.2	Solid	October 16, 2027
+Blood Wedding	A Night On Stage	54.5	Solid	October 15, 2027
+Blood Wedding	A Night On Stage	54.3	Solid	October 14, 2027
+A Voice Sequence	Voice Work	66.7	Strong	October 14, 2027
+Blood Wedding	A Night On Stage	54.1	Solid	October 13, 2027
+A Game Played Through	An Improvisation	66.5	Strong	October 13, 2027
+Table Work	A Written Analysis	73.6	Strong	October 13, 2027
+Blood Wedding	A Night On Stage	53.3	Solid	October 12, 2027
+Blood Wedding	A Night On Stage	53.8	Solid	October 11, 2027
+Mrs Warren’s Profession	A Night On Stage	46.3	An Off Night	October 11, 2027
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 145 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your connection runs ahead of the rest: 58.4 on average across 24 pieces, against 53.1 overall. From: A Game Played Through: 74.1; A Game Played Through: 72.3; A Clown Turn: 68.6.
+Your interpretation runs ahead of the rest: 64.3 on average across 37 pieces, against 53.1 overall. From: Table Work: 77.4; A Voice Sequence: 75.5; A Voice Sequence: 75.4.
+WHAT KEEPS HOLDING IT BACK
+Stamina has held back 49 pieces, about 6.6 points off the whole each. From: An ability, 321.3 points in all.
+Physical Expression has held back 48 pieces, about 6.6 points off the whole each. From: An ability, 317.6 points in all.
+Vocal Expression has held back 34 pieces, about 7.9 points off the whole each. From: An ability, 266.9 points in all.
+The same note has been given 26 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 53 times, best 73.6. From: Your experience record.
+Mixed Tone: met or practiced 34 times, best 71.7. From: Your experience record.
+Exact Timing: met or practiced 33 times, best 71.7. From: Your experience record.
+Heightened Prose: met or practiced 26 times, best 71.7. From: Your experience record.
+
+Not met yet: Improvised Freedom, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+9 kinds of work judged, 4 genres worked in, 8 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work, A Night On Stage, A Clown Turn and A Song.
+TAKING DIRECTION
+Of 9 notes and requests on your craft, you answered 4. The way you reach for most: work it slowly (2). From: 9 notes given, 5 worked on and 4 answered.
+RELIABILITY
+85 of 85 calls answered; 99 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+53 pieces played with a partner, a reader or a company came to 57.7 together on average; of 5 slips by the others, you covered 4. From: 53 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+October 17, 2027: Listening And Responsiveness +0.037, Rehearsing with a partner
+October 17, 2027: Focus +0.013, Coursework: knowing the material
+October 17, 2027: Imagination +0.001, Coursework: making your choices
+October 17, 2027: Imagination +0.003, Coursework: making your choices
+October 17, 2027: Imagination +0.006, Coursework: making your choices
+October 17, 2027: Imagination +0.012, Coursework: making your choices
+October 17, 2027: Memory +0.007, Coursework: learning the lines
+October 17, 2027: Memory +0.015, Coursework: learning the lines
+October 16, 2027: Singing +0.024, A night on stage
+October 16, 2027: Physical Expression +0.028, A night on stage
+October 16, 2027: Vocal Expression +0.078, A night on stage
+October 16, 2027: Emotional Depth +0.087, A night on stage
+October 16, 2027: Scene Study +0.078, A night on stage
+October 16, 2027: Listening And Responsiveness +0.017, A night on stage
+October 16, 2027: Presence +0.046, Nerves before a performance
+Show Earlier Changes
+
+#### rehearsal.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $502,114
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Rehearsal. Coming to your work short on rehearsal cost each piece about 3.4 points off the whole.
+
+That’s preparation, not training: prepare that part further before you show or tape the next piece.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	63.6	100.0	83.0	Not held back today	Believability, Connection	+0.06, Class: Acting I (DRAM 103a/b)	Sense Memory…
+Presence	69.4	100.0	—	Not held back today	Connection	None yet	A Showing For Classmates…
+Listening And Responsiveness	57.0	100.0	74.0	Not held back today	Connection, Responsiveness	+0.03, Class: Acting I (DRAM 103a/b)	The Repetition Exercise…
+Imagination	63.8	100.0	83.0	Not held back today	Believability, Interpretation	+0.03, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	The Given Circumstances…
+Focus	58.3	100.0	79.5	An injury mending: consistency, execution	Interpretation, Execution, Consistency	+0.04, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	Circles Of Attention…
+Memory	56.5	100.0	77.9	An injury mending: execution	Execution	+0.06, A rehearsal call: Carlotta Festival Of New Plays	A Recall Drill…
+Adaptability	48.1	100.0	72.2	Not held back today	Responsiveness	+0.00, Coursework: the revision	Adjustments…
+Composure	44.6	100.0	—	An injury mending: consistency	Consistency	None yet	Graded Exposure…
+Vocal Expression	59.6	100.0	80.8	An injury mending: execution	Execution, Consistency	+0.07, Class: Voice I (DRAM 113a/b)	Voice Work…
+Physical Expression	56.1	100.0	73.1	An injury mending: execution	Execution	+0.06, Class: Alexander Technique I (DRAM 143a/b)	Movement Work…
+Discipline	58.0	100.0	—	An injury mending: consistency	Consistency, Execution	+0.03, A call answered	Grows with practice kept up, day after day
+Stamina	35.7	99.4	—	An injury mending: consistency, execution	Believability, Connection, Execution, Consistency, Responsiveness	+0.70, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)	
+Work Out, under Look After Yourself
+Not with a back strain; it has 11 days yet to mend.
+Held until April 26, 2027
+
+Stamina is your fitness. Yours is 35.7, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	58.7	80.4	31.3 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	66.4	84.4	23.6 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.4	77.4	38.6 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	47.8	72.2	42.2 To Go	An Improv Session…
+Intimacy	60.9	84.7	29.1 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	58.9	75.8	31.1 To Go	Scene Work…
+Script Analysis	63.4	81.6	26.6 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	57.3	78.5	32.7 To Go	Speech Drill…
+Stage Combat	50.4	73.8	39.6 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 50.4 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 50.4 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 50.4 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 66.4 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+100
+100 at this hour
+FOR WORK
+Held Back
+An injury holds back your physical work
+ENERGY, STRESS
+100, 0
+No sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK	A NIGHT ON STAGE
+2026 Fall	14 at 60.6	8 at 68.9	12 at 58.3	12 at 61.1	4 at 65.3	3 at 63.5	—
+2027 Spring	18 at 57.6	12 at 71.0	12 at 52.9	12 at 65.4	—	3 at 47.9	1 at 47.7
+All Of It	32 at 58.9, best 63.5	20 at 70.2, best 72.6	24 at 55.6, best 66.1	24 at 63.2, best 69.4	4 at 65.3, best 66.8	6 at 55.7, best 64.3	1 at 47.7, best 47.7
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+A Choreographed Sequence	Partnered Physical Work	16.9	Unready	April 23, 2027
+Table Work	A Written Analysis	72.3	Strong	April 22, 2027
+A Voice Sequence	Voice Work	67.2	Strong	April 22, 2027
+A Movement Score	Movement Work	15.4	Unready	April 21, 2027
+A Play In Its Context	A Written Analysis	70.8	Strong	April 20, 2027
+Directions In Daily Life	Movement Work	41.3	Unready	April 19, 2027
+Sound Changes And A Text	Voice Work	68.1	Strong	April 19, 2027
+A Simulated Rehearsal	A Scene Shown	42.1	Unready	April 19, 2027
+A Simulated Rehearsal	A Scene Shown	41.6	Unready	April 13, 2027
+A Voice Sequence	Voice Work	67.9	Strong	April 8, 2027
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 111 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your believability runs ahead of the rest: 63.9 on average across 13 pieces, against 59.6 overall. From: A Simulated Rehearsal: 67.6; A Simulated Rehearsal: 67; A Simulated Rehearsal: 65.9.
+Your interpretation runs ahead of the rest: 70.8 on average across 37 pieces, against 59.6 overall. From: A Voice Sequence: 75.4; A Voice Sequence: 75; Sound Changes And A Text: 75.
+WHAT KEEPS HOLDING IT BACK
+Stamina has held back 43 pieces, about 6.6 points off the whole each. From: An ability, 284.2 points in all.
+Physical Expression has held back 35 pieces, about 7.5 points off the whole each. From: An ability, 264.2 points in all.
+Focus has held back 53 pieces, about 4.5 points off the whole each. From: An ability, 237.4 points in all.
+The same note has been given 23 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 36 times, best 72.3. From: Your experience record.
+Exact Timing: met or practiced 29 times, best 71.7. From: Your experience record.
+Mixed Tone: met or practiced 19 times, best 71.7. From: Your experience record.
+Heightened Prose: met or practiced 17 times, best 71.7. From: Your experience record.
+
+Not met yet: Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+7 kinds of work judged, 0 genres worked in, 7 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work and A Night On Stage.
+RELIABILITY
+44 of 44 calls answered; 86 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+35 pieces played with a partner, a reader or a company came to 59 together on average; of 5 slips by the others, you covered 4. From: 35 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+April 23, 2027: Memory +0.058, A rehearsal call: Carlotta Festival Of New Plays
+April 23, 2027: Script Analysis +0.043, A rehearsal call: Carlotta Festival Of New Plays
+April 23, 2027: Character Work +0.060, A rehearsal call: Carlotta Festival Of New Plays
+April 23, 2027: Scene Study +0.064, A rehearsal call: Carlotta Festival Of New Plays
+April 23, 2027: Discipline +0.029, A call answered
+April 23, 2027: Stamina +0.698, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+April 23, 2027: Stage Combat +0.077, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+April 23, 2027: Intimacy +0.065, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)
+April 23, 2027: Physical Expression +0.057, Class: Alexander Technique I (DRAM 143a/b)
+April 23, 2027: Vocal Expression +0.069, Class: Voice I (DRAM 113a/b)
+April 22, 2027: Memory +0.059, A rehearsal call: Carlotta Festival Of New Plays
+April 22, 2027: Script Analysis +0.043, A rehearsal call: Carlotta Festival Of New Plays
+April 22, 2027: Character Work +0.060, A rehearsal call: Carlotta Festival Of New Plays
+April 22, 2027: Scene Study +0.065, A rehearsal call: Carlotta Festival Of New Plays
+April 22, 2027: Discipline +0.029, A call answered
+Show Earlier Changes
+
+#### roundups.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New Haven
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $503,512
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+
+None of your work has been judged yet. After your first showing, night on stage or self-tape, this will say what to work on next, from what held that work back.
+
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	57.0	100.0	83.0	Not held back today	Believability, Connection	None yet	Sense Memory…
+Presence	69.4	100.0	—	Not held back today	Connection	None yet	A Showing For Classmates…
+Listening And Responsiveness	48.0	100.0	74.0	Not held back today	Connection, Responsiveness	None yet	The Repetition Exercise…
+Imagination	57.0	100.0	83.0	Not held back today	Believability, Interpretation	None yet	The Given Circumstances…
+Focus	53.5	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.01, Coursework: knowing the material	Circles Of Attention…
+Memory	51.9	100.0	77.9	Not held back today	Execution	None yet	A Recall Drill…
+Adaptability	46.2	100.0	72.2	Not held back today	Responsiveness	None yet	Adjustments…
+Composure	44.3	100.0	—	Not held back today	Consistency	None yet	Graded Exposure…
+Vocal Expression	54.8	100.0	80.8	Not held back today	Execution, Consistency	None yet	Voice Work…
+Physical Expression	47.1	100.0	73.1	Not held back today	Execution	None yet	Movement Work…
+Discipline	57.5	100.0	—	Not held back today	Consistency, Execution	None yet	Grows with practice kept up, day after day
+Stamina	49.3	99.4	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	None yet	
+Work Out, under Look After Yourself
+Falling 0.18 a day
+
+Stamina is your fitness. Yours is 49.3, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	54.4	80.4	35.6 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	58.4	84.4	31.6 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.4	77.4	38.6 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	46.2	72.2	43.8 To Go	An Improv Session…
+Intimacy	58.7	84.7	31.3 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	49.8	75.8	40.2 To Go	Scene Work…
+Script Analysis	55.6	81.6	34.4 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	52.5	78.5	37.5 To Go	Speech Drill…
+Stage Combat	47.8	73.8	42.2 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 47.8 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 47.8 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 47.8 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 58.4 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+75
+75 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+72, 0
+3 hours of sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+No production yet. School
+
+No finished work has been judged yet. A showing, a night on stage or a self-tape will be.
+
+Sources And Estimates
+Your Work So Far
+
+Early days: 0 pieces judged. Patterns are named once 6 are.
+
+How This Works
+
+Not met yet: Exact Timing, Physical Work, Playing Off A Partner, Vocal Demand, Improvised Freedom, Heightened Prose, Verse, The Camera, Many Transitions, Mixed Tone, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+0 kinds of work judged, 0 genres worked in, 0 of 12 kinds of material met. From: Your work record.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+August 28, 2026: Focus +0.010, Coursework: knowing the material
+August 28, 2026: Focus +0.019, Coursework: knowing the material
+
+#### tax.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+24
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 1
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $2,816.66
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Taking the director’s notes. Coming to your work short on taking the director’s notes cost each piece about 3.8 points off the whole.
+
+That’s preparation, not training: prepare that part further before you show or tape the next piece.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	63.7	100.0	83.0	Not held back today	Believability, Connection	+0.04, A night on stage	Sense Memory…
+Presence	69.6	100.0	—	Not held back today	Connection	+0.05, Nerves before a performance	A Showing For Classmates…
+Listening And Responsiveness	57.0	100.0	74.0	Not held back today	Connection, Responsiveness	+0.02, A night on stage	The Repetition Exercise…
+Imagination	63.8	100.0	83.0	Not held back today	Believability, Interpretation	+0.03, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	The Given Circumstances…
+Focus	58.3	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.04, Class: Text Analysis I: The Actor’s Table Work (DRAM 163b)	Circles Of Attention…
+Memory	56.8	100.0	77.9	Not held back today	Execution	+0.06, A rehearsal call: Carlotta Festival Of New Plays	A Recall Drill…
+Adaptability	48.2	100.0	72.2	Not held back today	Responsiveness	+0.01, A director’s note worked	Adjustments…
+Composure	45.7	100.0	—	Not held back today	Consistency	+0.28, Nerves before a performance	Graded Exposure…
+Vocal Expression	59.8	100.0	80.8	Not held back today	Execution, Consistency	+0.05, A night on stage	Voice Work…
+Physical Expression	56.1	100.0	73.1	Not held back today	Execution	+0.06, Class: Alexander Technique I (DRAM 143a/b)	Movement Work…
+Discipline	58.2	100.0	—	Not held back today	Consistency, Execution	+0.03, A call answered	Grows with practice kept up, day after day
+Stamina	35.0	99.4	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	+0.69, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)	
+Work Out, under Look After Yourself
+At an everyday life’s level
+
+Stamina is your fitness. Yours is 35.0, and full is the fittest a body your age can be, 99.4 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	58.6	80.4	31.4 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	66.7	84.4	23.3 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.6	77.4	38.4 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	47.8	72.2	42.2 To Go	An Improv Session…
+Intimacy	60.9	84.7	29.1 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	59.6	75.8	30.4 To Go	Scene Work…
+Script Analysis	63.7	81.6	26.3 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	57.3	78.5	32.7 To Go	Speech Drill…
+Stage Combat	50.4	73.8	39.6 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 50.4 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 50.4 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 50.4 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 66.7 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+100
+100 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+100, 0
+No sleep owed
+Sources And Estimates
+School Journey
+
+Year 1 of 3, good standing
+
+How This Works
+
+On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK	A NIGHT ON STAGE
+2026 Fall	14 at 60.6	8 at 68.9	12 at 58.3	12 at 61.1	4 at 65.3	3 at 63.5	—
+2027 Spring	18 at 57.6	12 at 71.0	12 at 52.9	12 at 65.3	—	3 at 47.9	5 at 43.4
+All Of It	32 at 58.9, best 63.4	20 at 70.1, best 72.6	24 at 55.6, best 66.1	24 at 63.2, best 69.4	4 at 65.3, best 66.8	6 at 55.7, best 64.3	5 at 43.4, best 47.7
+May 12, 2027: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged 42.4 (4 off)
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+Carlotta Festival Of New Plays	A Night On Stage	41.9	An Off Night	May 12, 2027
+Carlotta Festival Of New Plays	A Night On Stage	42.1	An Off Night	May 9, 2027
+Carlotta Festival Of New Plays	A Night On Stage	43.3	An Off Night	May 6, 2027
+Carlotta Festival Of New Plays	A Night On Stage	42.1	An Off Night	May 4, 2027
+A Choreographed Sequence	Partnered Physical Work	16.9	Unready	April 23, 2027
+Table Work	A Written Analysis	72.3	Strong	April 22, 2027
+A Voice Sequence	Voice Work	66.4	Strong	April 22, 2027
+A Movement Score	Movement Work	15.4	Unready	April 21, 2027
+A Play In Its Context	A Written Analysis	70.8	Strong	April 20, 2027
+Directions In Daily Life	Movement Work	41.3	Unready	April 19, 2027
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 115 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your interpretation runs ahead of the rest: 67.9 on average across 38 pieces, against 57.6 overall. From: A Voice Sequence: 75.4; A Voice Sequence: 75; Sound Changes And A Text: 75.
+WHAT KEEPS HOLDING IT BACK
+Stamina has held back 43 pieces, about 6.6 points off the whole each. From: An ability, 284.1 points in all.
+Physical Expression has held back 35 pieces, about 7.5 points off the whole each. From: An ability, 264.2 points in all.
+Focus has held back 53 pieces, about 4.5 points off the whole each. From: An ability, 237.4 points in all.
+The same note has been given 23 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 36 times, best 72.3. From: Your experience record.
+Exact Timing: met or practiced 29 times, best 71.6. From: Your experience record.
+Mixed Tone: met or practiced 19 times, best 71.6. From: Your experience record.
+Heightened Prose: met or practiced 17 times, best 71.6. From: Your experience record.
+
+Not met yet: Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+7 kinds of work judged, 0 genres worked in, 7 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work and A Night On Stage.
+TAKING DIRECTION
+Of 4 notes and requests on your craft, you answered none. From: 4 notes given, 0 worked on and 0 answered.
+RELIABILITY
+52 of 52 calls answered; 86 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+39 pieces played with a partner, a reader or a company came to 57.8 together on average; of 5 slips by the others, you covered 4. From: 39 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+May 12, 2027: Cold Reading +0.046, A night on stage
+May 12, 2027: Character Work +0.023, A night on stage
+May 12, 2027: Script Analysis +0.049, A night on stage
+May 12, 2027: Vocal Expression +0.047, A night on stage
+May 12, 2027: Emotional Depth +0.040, A night on stage
+May 12, 2027: Scene Study +0.118, A night on stage
+May 12, 2027: Listening And Responsiveness +0.019, A night on stage
+May 12, 2027: Presence +0.046, Nerves before a performance
+May 12, 2027: Composure +0.277, Nerves before a performance
+May 9, 2027: Cold Reading +0.046, A night on stage
+May 9, 2027: Character Work +0.023, A night on stage
+May 9, 2027: Script Analysis +0.049, A night on stage
+May 9, 2027: Vocal Expression +0.047, A night on stage
+May 9, 2027: Emotional Depth +0.040, A night on stage
+May 9, 2027: Scene Study +0.119, A night on stage
+Show Earlier Changes
+
+#### withdraw.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+25
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Left
+Class of 2029, withdrawn
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $500,632
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+An Injury Still Mending. An Injury Still Mending cost each piece about 4.4 points off the whole.
+
+Come to the work rested and well, or find places to breathe in it.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	63.2	100.0	83.0	Not held back today	Believability, Connection	+0.06, Class: Acting I (DRAM 103a/b)	Sense Memory…
+Presence	69.4	100.0	—	Not held back today	Connection	+0.05, Nerves before a performance	A Showing For Classmates…
+Listening And Responsiveness	56.6	100.0	74.0	Not held back today	Connection, Responsiveness	+0.03, Class: Acting I (DRAM 103a/b)	The Repetition Exercise…
+Imagination	63.4	100.0	83.0	Not held back today	Believability, Interpretation	+0.03, Class: Text And Context Across The Repertory (DRAM 873a/b)	The Given Circumstances…
+Focus	58.0	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.04, Class: Text And Context Across The Repertory (DRAM 873a/b)	Circles Of Attention…
+Memory	56.0	100.0	77.9	Not held back today	Execution	+0.01, Coursework: learning the lines	A Recall Drill…
+Adaptability	48.1	100.0	72.2	Not held back today	Responsiveness	+0.02, Coursework: the revision	Adjustments…
+Composure	44.6	100.0	—	Not held back today	Consistency	+0.28, Nerves before a performance	Graded Exposure…
+Vocal Expression	59.2	100.0	80.8	Not held back today	Execution, Consistency	+0.07, Class: Voice I (DRAM 113a/b)	Voice Work…
+Physical Expression	55.5	100.0	73.1	Not held back today	Execution	+0.05, Class: The Body As Source I (DRAM 133a/b)	Movement Work…
+Discipline	57.8	100.0	—	Not held back today	Consistency, Execution	None yet	Grows with practice kept up, day after day
+Stamina	35.0	99.3	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	+0.70, Class: Acting Intimacy And Combat For The Stage (DRAM 403a/b)	
+Work Out, under Look After Yourself
+At an everyday life’s level
+
+Stamina is your fitness. Yours is 35.0, and full is the fittest a body your age can be, 99.3 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	58.4	80.4	31.6 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	65.6	84.4	24.4 To Go	Character Work…
+Classical Text	47.2	73.2	42.8 To Go	Verse Speaking…
+Clown And Mask	52.2	78.2	37.8 To Go	Clown Practice…
+Cold Reading	51.4	77.4	38.6 To Go	Cold Reading…
+Comedy	55.1	81.1	34.9 To Go	Comic Timing…
+Dance	55.6	81.6	34.4 To Go	A Dance Class…
+Improvisation	47.8	72.2	42.2 To Go	An Improv Session…
+Intimacy	60.7	84.7	29.3 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	58.0	75.8	32.0 To Go	Scene Work…
+Script Analysis	62.6	81.6	27.4 To Go	Script Analysis…
+Singing	55.2	81.2	34.8 To Go	Singing Practice…
+Speech	57.0	78.5	33.0 To Go	Speech Drill…
+Stage Combat	50.2	73.8	39.8 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Action	Fights And Stunts (Stage Combat 50.2 of 90)	0.0	0.0	Study It Open Its Brief
+Action Comedy	Fights And Stunts (Stage Combat 50.2 of 90); Comic Timing (Comedy 55.1 of 90)	0.0	0.0	Study It Open Its Brief
+Adventure	Fights And Stunts (Stage Combat 50.2 of 90)	0.0	0.0	Study It Open Its Brief
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+Backstage Musical	Singing (Singing 55.2 of 90); Dancing (Dance 55.6 of 90)	0.0	0.0	Study It Open Its Brief
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Biographical	Physical Transformation (Character Work 65.6 of 90)	0.0	0.0	Study It Open Its Brief
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+98
+98 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+97, 0
+No sleep owed
+Sources And Estimates
+School Journey
+
+Left the School, withdrawn
+
+How This Works
+
+No production yet. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK	A NIGHT ON STAGE
+2026 Fall	14 at 60.6	8 at 68.9	12 at 58.3	12 at 61.1	4 at 65.3	3 at 63.5	—
+2027 Spring	16 at 59.5	10 at 70.8	10 at 57.8	9 at 64.6	—	2 at 63.5	1 at 47.7
+All Of It	30 at 60.0, best 63.5	18 at 70.0, best 72.6	22 at 58.1, best 66.1	21 at 62.6, best 69.4	4 at 65.3, best 66.8	5 at 63.5, best 64.3	1 at 47.7, best 47.7
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+A Play In Its Context	A Written Analysis	71.3	Strong	April 7, 2027
+A Movement Score	Movement Work	37.1	Unready	April 7, 2027
+A Simulated Rehearsal	A Scene Shown	63.3	Working	April 7, 2027
+Directions In Daily Life	Movement Work	40.5	Unready	April 5, 2027
+Sound Changes And A Text	Voice Work	69.4	Strong	April 5, 2027
+A Simulated Rehearsal	A Scene Shown	59.9	Working	April 5, 2027
+Table Work	A Written Analysis	71.7	Strong	April 1, 2027
+A Choreographed Sequence	Partnered Physical Work	64.0	Working	March 26, 2027
+A Voice Sequence	Voice Work	67.6	Strong	March 25, 2027
+A Simulated Rehearsal	A Scene Shown	60.2	Working	March 24, 2027
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 101 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your interpretation runs ahead of the rest: 71.4 on average across 38 pieces, against 62.6 overall. From: Sound Changes And A Text: 74.5; Table Work: 74.3; A Movement Score: 74.3.
+WHAT KEEPS HOLDING IT BACK
+Stamina has held back 40 pieces, about 6.7 points off the whole each. From: An ability, 266.1 points in all.
+Physical Expression has held back 34 pieces, about 7.6 points off the whole each. From: An ability, 257.5 points in all.
+Focus has held back 51 pieces, about 4.5 points off the whole each. From: An ability, 227.5 points in all.
+The same note has been given 21 times and is still open: The Next Step. From: The class’s notes: The Next Step.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 33 times, best 71.7. From: Your experience record.
+Exact Timing: met or practiced 27 times, best 71.7. From: Your experience record.
+Mixed Tone: met or practiced 17 times, best 71.7. From: Your experience record.
+Heightened Prose: met or practiced 17 times, best 71.7. From: Your experience record.
+
+Not met yet: Improvised Freedom, Verse, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+7 kinds of work judged, 0 genres worked in, 7 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work and A Night On Stage.
+RELIABILITY
+36 of 36 calls answered; 83 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+32 pieces played with a partner, a reader or a company came to 61 together on average; of 5 slips by the others, you covered 4. From: 32 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+April 7, 2027: Focus +0.039, Class: Text And Context Across The Repertory (DRAM 873a/b)
+April 7, 2027: Imagination +0.032, Class: Text And Context Across The Repertory (DRAM 873a/b)
+April 7, 2027: Script Analysis +0.063, Class: Text And Context Across The Repertory (DRAM 873a/b)
+April 7, 2027: Physical Expression +0.051, Class: The Body As Source I (DRAM 133a/b)
+April 7, 2027: Imagination +0.029, Class: Acting I (DRAM 103a/b)
+April 7, 2027: Listening And Responsiveness +0.029, Class: Acting I (DRAM 103a/b)
+April 7, 2027: Emotional Depth +0.059, Class: Acting I (DRAM 103a/b)
+April 7, 2027: Character Work +0.054, Class: Acting I (DRAM 103a/b)
+April 7, 2027: Scene Study +0.058, Class: Acting I (DRAM 103a/b)
+April 6, 2027: Imagination +0.005, Coursework: making your choices
+April 6, 2027: Speech +0.006, Coursework: Transcribe The Text
+April 6, 2027: Imagination +0.010, Coursework: making your choices
+April 6, 2027: Speech +0.013, Coursework: Transcribe The Text
+April 6, 2027: Listening And Responsiveness +0.010, Coursework: running it with a reader
+April 6, 2027: Memory +0.007, Coursework: learning the lines
+Show Earlier Changes
+
+#### workload.json, Player Profile
+
+Home
+›
+Player Profile
+PLAYER PROFILE
+Ada Cole
+Identity And Background
+
+As you made your character
+
+How This Works
+No portrait chosen
+FULL NAME
+Ada Cole
+Goes by the full name
+PRONOUNS
+they/them
+Billed as an actor
+AGE
+25
+Born June 14, 2002
+FROM
+New York
+A citizen of the United States
+SCHOOL
+Year 2
+Class of 2029, good standing
+LIVING IN
+New Haven
+
+Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.
+
+Money, $498,833
+Papers, Health Cover Held
+Sources And Estimates
+Attributes And Craft
+
+Twelve abilities, 0 to 100. Practice today: 0 of 4 hours
+
+How This Works
+WHAT TO WORK ON NEXT
+
+Work with your partner. Coming to your work short on work with your partner cost each piece about 6.9 points off the whole.
+
+That’s preparation, not training: prepare that part further before you show or tape the next piece.
+
+Why This Recommendation
+ABILITY	NOW	FULL	CLASSES REACH	TODAY	IT SHAPES	LAST CHANGE	PRACTICE
+Emotional Depth	64.5	100.0	83.0	Not held back today	Believability, Connection	+0.05, Class: Play With Text (DRAM 353a)	Sense Memory…
+Presence	69.6	100.0	—	Not held back today	Connection	+0.05, Nerves before a performance	A Showing For Classmates…
+Listening And Responsiveness	53.4	100.0	74.0	Not held back today	Connection, Responsiveness	+0.04, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)	The Repetition Exercise…
+Imagination	64.4	100.0	83.0	Not held back today	Believability, Interpretation	+0.02, Class: Play With Text (DRAM 353a)	The Given Circumstances…
+Focus	58.5	100.0	79.5	Not held back today	Interpretation, Execution, Consistency	+0.03, Class: Play With Text (DRAM 353a)	Circles Of Attention…
+Memory	57.7	100.0	77.9	Not held back today	Execution	+0.05, A rehearsal call: Directors’ Thesis Production I	A Recall Drill…
+Adaptability	48.3	100.0	72.2	Not held back today	Responsiveness	+0.01, Coursework: the revision	Adjustments…
+Composure	45.7	100.0	—	Not held back today	Consistency	+0.28, Nerves before a performance	Graded Exposure…
+Vocal Expression	60.3	100.0	80.8	Not held back today	Execution, Consistency	+0.07, Class: Voice II (DRAM 213a/b)	Voice Work…
+Physical Expression	56.7	100.0	73.1	Not held back today	Execution	+0.05, Class: Movement Invention II (DRAM 273a)	Movement Work…
+Discipline	58.5	100.0	—	Not held back today	Consistency, Execution	+0.03, A call answered	Grows with practice kept up, day after day
+Stamina	38.8	99.3	—	Not held back today	Believability, Connection, Execution, Consistency, Responsiveness	+0.71, Class: Movement Invention II (DRAM 273a)	
+Work Out, under Look After Yourself
+You’re at Classes until 3:00 PM.
+Held until September 24, 2027
+
+Stamina is your fitness. Yours is 38.8, and full is the fittest a body your age can be, 99.3 now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
+
+It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for 3 days, and after that it falls 0.18 a day toward 35, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+
+Sources And Estimates
+Techniques
+
+Seventeen techniques, each mastered at 90
+
+How This Works
+TECHNIQUE	NOW	CLASSES REACH	MASTERED	PRACTICE
+Accents And Dialects	59.2	80.4	30.8 To Go	Dialect Drill…
+Audition Technique	55.5	81.5	34.5 To Go	Audition Pieces…
+Character Work	67.8	84.4	22.2 To Go	Character Work…
+Classical Text	48.3	73.2	41.7 To Go	Verse Speaking…
+Clown And Mask	52.5	78.2	37.5 To Go	Clown Practice…
+Cold Reading	51.6	77.4	38.4 To Go	Cold Reading…
+Comedy	55.4	81.1	34.6 To Go	Comic Timing…
+Dance	56.0	81.6	34.0 To Go	A Dance Class…
+Improvisation	47.9	72.2	42.1 To Go	An Improv Session…
+Intimacy	60.8	84.7	29.2 To Go	Intimacy Practice…
+On Camera	51.4	77.4	38.6 To Go	Self-Tape Practice…
+Scene Study	60.8	75.8	29.2 To Go	Scene Work…
+Script Analysis	64.7	81.6	25.3 To Go	Script Analysis…
+Singing	55.5	81.2	34.5 To Go	Singing Practice…
+Speech	57.8	78.5	32.2 To Go	Speech Drill…
+Stage Combat	50.6	73.8	39.4 To Go	Combat Drill…
+Voice-Over	52.5	78.5	37.5 To Go	Copy Reading…
+Genres
+
+0 loved; 0 of 149 studied or worked in
+
+How This Works
+
+You love: none chosen. Tragedy is worth studying next: your next part is in a play of that kind, and it’s the one of the play’s kinds you know least.
+
+Find
+Show
+All
+Loved
+Studied Or Worked In
+With Requirements
+16 shown
+GENRE	IT ASKS FOR	FAMILIARITY	WORK IN IT	STUDY, OR ITS BRIEF
+Absurdist	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Action	Fights And Stunts (Stage Combat 50.6 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Action Comedy	Fights And Stunts (Stage Combat 50.6 of 90); Comic Timing (Comedy 55.4 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Adventure	Fights And Stunts (Stage Combat 50.6 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Alternate History	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Animated	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Anime	Voice-Led Performance (Voice-Over 52.5 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Anthology	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Apocalyptic	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Art House	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Avant-Garde	No more than any self-tape asks	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Backstage Musical	Singing (Singing 55.5 of 90); Dancing (Dance 56.0 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Biker	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Biographical	Physical Transformation (Character Work 67.8 of 90)	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Black Comedy	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+
+Blaxploitation	Not established: the research holds it with low confidence	0.0	0.0	Study It Open Its Brief
+You’re at Classes until 3:00 PM.
+Show 16 More
+Sources And Estimates
+Readiness Today
+
+Whether anything holds your work back today
+
+READINESS
+93
+93 at this hour
+FOR WORK
+Sufficient
+Today, nothing holds your work back
+ENERGY, STRESS
+88, 0
+1 hour of sleep owed
+Sources And Estimates
+School Journey
+
+Year 2 of 3, good standing
+
+How This Works
+
+On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027. School
+
+HALF-YEAR	A SCENE SHOWN	A WRITTEN ANALYSIS	MOVEMENT WORK	VOICE WORK	AN IMPROVISATION	PARTNERED PHYSICAL WORK	A NIGHT ON STAGE
+2026 Fall	14 at 46.4	8 at 69.8	12 at 62.2	12 at 64.6	4 at 31.3	3 at 42.5	—
+2027 Spring	18 at 48.5	12 at 70.9	12 at 53.7	12 at 66.1	—	3 at 35.0	5 at 43.0
+2027 Fall	4 at 42.0	1 at 71.6	—	2 at 66.5	1 at 26.3	—	—
+All Of It	36 at 47.0, best 62.1	21 at 70.5, best 72.5	24 at 57.9, best 66.1	26 at 65.5, best 69.4	5 at 30.3, best 47.6	6 at 38.8, best 55.0	5 at 43.0, best 47.1
+May 12, 2027: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged 42.0 (4 off)
+September 8, 2026: First strong work: A Play In Its Context, 69.2
+WORK	WHAT	WHOLE	BAND	WHEN
+A Game Played Through	An Improvisation	26.3	Unready	September 22, 2027
+Table Work	A Written Analysis	71.6	Strong	September 22, 2027
+Heightened Text Scene, revised	A Scene Shown	43.3	Unready	September 22, 2027
+Heightened Text Scene	A Scene Shown	43.2	Unready	September 21, 2027
+A Voice Sequence	Voice Work	67.7	Strong	September 16, 2027
+Sound Changes And A Text	Voice Work	65.3	Strong	September 14, 2027
+Heightened Text Scene, revised	A Scene Shown	41.0	Unready	September 13, 2027
+Heightened Text Scene	A Scene Shown	40.6	Unready	September 8, 2027
+Carlotta Festival Of New Plays	A Night On Stage	41.5	An Off Night	May 12, 2027
+Carlotta Festival Of New Plays	A Night On Stage	41.7	An Off Night	May 9, 2027
+Show Older Work
+Sources And Estimates
+Your Work So Far
+
+From 123 pieces judged, the material you’ve met and the choices you’ve made
+
+How This Works
+WHAT YOUR WORK SHOWS MOST
+Your believability runs ahead of the rest: 57.5 on average across 17 pieces, against 52.6 overall. From: A Game Played Through: 68.9; A Simulated Rehearsal: 67.5; A Simulated Rehearsal: 66.9.
+Your execution runs ahead of the rest: 57.7 on average across 39 pieces, against 52.6 overall. From: Sound Changes And A Text: 73.1; Sound Changes And A Text: 72.9; Table Work: 71.1.
+Your interpretation runs ahead of the rest: 66.2 on average across 38 pieces, against 52.6 overall. From: A Voice Sequence: 75.3; Sound Changes And A Text: 75; A Voice Sequence: 74.9.
+WHAT KEEPS HOLDING IT BACK
+Work with your partner has held back 39 pieces, about 9.9 points off the whole each. From: Preparation, 387.4 points in all.
+Stamina has held back 47 pieces, about 6.6 points off the whole each. From: An ability, 309.8 points in all.
+Vocal Expression has held back 27 pieces, about 9.3 points off the whole each. From: An ability, 252 points in all.
+The same note has been given 32 times and is still open: Work With Your Partner. From: The class’s notes: Work With Your Partner.
+MATERIAL YOU KNOW
+Playing Off A Partner: met or practiced 41 times, best 72.3. From: Your experience record.
+Exact Timing: met or practiced 33 times, best 71.6. From: Your experience record.
+Mixed Tone: met or practiced 24 times, best 71.6. From: Your experience record.
+Heightened Prose: met or practiced 17 times, best 71.6. From: Your experience record.
+
+Not met yet: Improvised Freedom, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.
+
+RANGE
+7 kinds of work judged, 0 genres worked in, 8 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work and A Night On Stage.
+TAKING DIRECTION
+Of 4 notes and requests on your craft, you answered none. From: 4 notes given, 0 worked on and 0 answered.
+RELIABILITY
+65 of 65 calls answered; 12 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.
+PLAYING WITH OTHERS
+42 pieces played with a partner, a reader or a company came to 47.9 together on average; of 5 slips by the others, you covered 1. From: 42 scenes, takes and nights with others.
+Sources And Estimates
+Development History
+
+Your last 400 changes, newest first
+
+September 22, 2027: Focus +0.030, Class: Play With Text (DRAM 353a)
+September 22, 2027: Imagination +0.023, Class: Play With Text (DRAM 353a)
+September 22, 2027: Script Analysis +0.041, Class: Play With Text (DRAM 353a)
+September 22, 2027: Emotional Depth +0.046, Class: Play With Text (DRAM 353a)
+September 22, 2027: Focus +0.038, Class: Text Analysis II (DRAM 163a)
+September 22, 2027: Imagination +0.030, Class: Text Analysis II (DRAM 163a)
+September 22, 2027: Script Analysis +0.054, Class: Text Analysis II (DRAM 163a)
+September 22, 2027: Imagination +0.026, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+September 22, 2027: Listening And Responsiveness +0.036, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+September 22, 2027: Emotional Depth +0.052, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+September 22, 2027: Character Work +0.042, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+September 22, 2027: Scene Study +0.043, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+September 22, 2027: Classical Text +0.097, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)
+September 21, 2027: Adaptability +0.015, Coursework: the revision
+September 21, 2027: Memory +0.055, A rehearsal call: Directors’ Thesis Production I
+Show Earlier Changes
+

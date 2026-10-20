@@ -435,7 +435,8 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     // was a whole evening's load, at 50.9, 49.1, 49.4 and 50.0.
     const solid = nights.filter((w) => w.overall >= 50).length;
     expect(solid).toBe(2);
-    expect(journey).toContain(`${written(casting.closed!)}: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged ${mean} (${solid} solid, ${4 - solid} off)`);
+    // Its nights by band in words (from 2026-10-20, brief 17): until then as the milestone keeps them, "(2 solid, 2 off)".
+    expect(journey).toContain(`${written(casting.closed!)}: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged ${mean} (${solid} solid nights, ${4 - solid} off nights)`);
     // DEFECT: the run closed on 12 May, and until the next term's casting files its credit (September) the panel said it
     // was running, under its own milestone.
     expect(journey).not.toContain('is running');
