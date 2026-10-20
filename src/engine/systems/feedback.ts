@@ -227,7 +227,7 @@ export interface ShowingFacts {
    * What held a prepared piece back, by the evaluation's limits (`chiefLimit`), its kind and what, and for an ability or a
    * technique the practice exercise that trains it, where one does (`exerciseFor`; none trains discipline or stamina).
    */
-  held?: { words: string; kind: string; what: string; exercise?: string; again?: string };
+  held?: { words: string; kind: string; what: string; exercise?: string; again?: string; remedy?: string };
   /** The day's condition where the evaluation counted one, and what it cost the whole. */
   condition?: { what: string; whole: number; words: string };
   /** The partner's share, where there was one: they lifted it, came less prepared, or slipped (covered or not). */
@@ -314,6 +314,8 @@ export function shapeOf(sentence: string): string {
     .trim();
 }
 const sentencesOf = (text: string) => text.split(/(?<=[.!?])\s+(?=[A-Z“"(])/).filter((s) => /[a-z]/i.test(s));
+/** A sentence's frame, as the memory compares it: the first four words of its shape. */
+const frameOf = (shape: string) => shape.split(/\s+/).slice(0, 4).join(' ');
 /** A text's opening, as the memory compares it: its first sentence's shape. */
 export function openingOf(text: string): string {
   return shapeOf(sentencesOf(text)[0] ?? '');
@@ -335,15 +337,20 @@ export function pick(options: readonly string[], key: string, recent: readonly s
   // How lately each shape was said: the newest recent text is the last, so a later index is more recent.
   const lately = new Map<string, number>();
   const opens = new Map<string, number>();
+  // An opening's frame, its first four words: "Working, and not for lack of preparation: your composure…" and "…: your
+  // focus…" are one frame said twice (brief 17's first after-runs: Acting I opened on it four times in seven showings,
+  // each sentence's shape new for the limit it named).
+  const frames = new Map<string, number>();
   recent.forEach((r, i) => {
     sentencesOf(r).forEach((s) => lately.set(shapeOf(s), i + 1));
     opens.set(openingOf(r), i + 1);
+    frames.set(frameOf(openingOf(r)), i + 1);
   });
   const said = new Set(recent);
   const cost = (o: string) => {
     if (said.has(o)) return Number.MAX_SAFE_INTEGER;
     const shapes = sentencesOf(o).map(shapeOf);
-    return shapes.reduce((n, s) => n + (lately.get(s) ?? 0), 0) + 2 * (opens.get(openingOf(o)) ?? 0);
+    return shapes.reduce((n, s) => n + (lately.get(s) ?? 0), 0) + 2 * (opens.get(openingOf(o)) ?? 0) + (frames.get(frameOf(openingOf(o))) ?? 0);
   };
   let best = order[0]!;
   let least = cost(best);
@@ -388,10 +395,10 @@ function movedLeads(v: Voice, f: ShowingFacts): string[] {
   const by = Math.abs(RANK[f.band] - RANK[p.band]);
   const b = f.bandLabel;
   switch (v) {
-    case 'direct': return up ? [`Up from ${p.label}.`, `Up from ${p.label} on ${p.on}.`] : [`Down from ${p.label}.`, `Down from ${p.label} on ${p.on}.`];
-    case 'warm': return up ? [`A step up from ${p.label} last time.`, `Better than the ${p.label} piece on ${p.on}.`] : [`Not as strong as the ${p.label} piece on ${p.on}.`, `A step down from ${p.label} last time.`];
-    case 'exacting': return [`${up ? 'Up' : 'Down'} ${bands(by)}, from ${p.label} on ${p.on}.`, `${b}, ${up ? 'up' : 'down'} from ${p.label} on ${p.on}.`];
-    case 'patient': return up ? [`It came out ${b}, up from ${p.label} on ${p.on}.`, `Up from ${p.label} last time.`] : [`It came out ${b}, down from ${p.label} on ${p.on}.`, `Down from ${p.label} last time.`];
+    case 'direct': return up ? [`${b} this time, up from ${p.label}.`, `Up from ${p.label} on ${p.on}, to ${b}.`] : [`${b} this time, down from ${p.label}.`, `Down from ${p.label} on ${p.on}, to ${b}.`];
+    case 'warm': return up ? [`A step up to ${b}, from ${p.label} last time.`, `${b}, better than the ${p.label} piece on ${p.on}.`] : [`${b}, not as strong as the ${p.label} piece on ${p.on}.`, `A step down to ${b}, from ${p.label} last time.`];
+    case 'exacting': return [`${up ? 'Up' : 'Down'} ${bands(by)} to ${b}, from ${p.label} on ${p.on}.`, `${b}, ${up ? 'up' : 'down'} from ${p.label} on ${p.on}.`];
+    case 'patient': return up ? [`It came out ${b}, up from ${p.label} on ${p.on}.`, `${b}, up from ${p.label} last time.`] : [`It came out ${b}, down from ${p.label} on ${p.on}.`, `${b}, down from ${p.label} last time.`];
     case 'brisk': return up ? [`Up from ${p.label} to ${b}.`, `${b}, up from ${p.label}.`] : [`Down from ${p.label} to ${b}.`, `${b}, down from ${p.label}.`];
   }
 }
@@ -569,8 +576,17 @@ function otherWays(v: Voice, f: ShowingFacts): string[] {
 }
 
 /** A prepared piece Strong or better with nothing holding it back: what's said first. */
-function steadyLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
+function steadyLeads(v: Voice, d: Discipline, f: ShowingFacts, moved = false): string[] {
   const b = f.bandLabel;
+  // After a move, which names the band (brief 17: "Up a band, from Working on October 13, 2026. Strong. No part of the
+  // preparation fell short." read the band as a sentence of its own), the preparation alone.
+  if (moved) switch (v) {
+    case 'direct': return ['Everything you prepared held.', 'The preparation was all there.'];
+    case 'warm': return ['Every part of it was prepared.', 'Everything you prepared came through.'];
+    case 'exacting': return ['Nothing in the preparation was short.', 'No part of the preparation fell short.'];
+    case 'patient': return [`What you prepared was all there in ${WORK[d]}.`, 'It rested on preparation that was all there.'];
+    case 'brisk': return ['All of it prepared. Good.', 'Nothing short in the preparation.'];
+  }
   switch (v) {
     case 'direct': return [`${b}. Everything you prepared held.`, `${b}, and the preparation was all there.`];
     case 'warm': return [`${b}, and every part of it was prepared.`, `Everything you prepared came through: ${b}.`];
@@ -682,6 +698,7 @@ function heldAction(f: ShowingFacts): string | undefined {
     if (h.what === 'injury') return 'That eases as the injury mends.';
     return undefined;
   }
+  if (h.kind === 'preparation') return h.remedy ? `What finishes it: ${h.remedy}.` : undefined;
   if (h.kind === 'difficulty') return 'The piece asks more than your craft has yet, and that comes with classes and practice.';
   if (h.kind === 'fit' || h.kind === 'suitability') return 'Next time, choose a way of playing it that the material allows.';
   return undefined;
@@ -739,11 +756,13 @@ function composed(f: ShowingFacts): string[] {
     return front.flatMap((m) => heldLeads(v, d, f).flatMap((lead) => step.map((x) => joined(m, lead, action, x))));
   }
   if (s === 'plain') {
-    const leads = { direct: [`${f.bandLabel}, and nothing in particular held it back.`], warm: [`${f.bandLabel}, with nothing in particular holding it back.`], exacting: [`${f.bandLabel}, with no single part short enough to name.`], patient: [`It came out ${f.bandLabel}, and nothing in particular stood out as holding it back.`], brisk: [`${f.bandLabel}. Nothing big held it back.`] }[v];
+    const leads = movedLeads(v, f).length
+      ? { direct: ['Nothing in particular held it back.'], warm: ['There was nothing in particular holding it back.'], exacting: ['No single part fell short enough to name.'], patient: ['Nothing in particular stood out as holding it back.'], brisk: ['Nothing big held it back.'] }[v]
+      : { direct: [`${f.bandLabel}, and nothing in particular held it back.`], warm: [`${f.bandLabel}, with nothing in particular holding it back.`], exacting: [`${f.bandLabel}, with no single part short enough to name.`], patient: [`It came out ${f.bandLabel}, and nothing in particular stood out as holding it back.`], brisk: [`${f.bandLabel}. Nothing big held it back.`] }[v];
     return front.flatMap((m) => leads.flatMap((lead) => step.map((x) => joined(m, lead, x))));
   }
   if (s === 'first' || s === 'best' || s === 'maintained' || s === 'despite' || s === 'steady') {
-    const leads = s === 'first' ? firstLeads(v, f) : s === 'best' ? bestLeads(v, f) : s === 'maintained' ? maintainedLeads(v, d, f) : s === 'despite' ? despiteLeads(v, d, f) : steadyLeads(v, d, f);
+    const leads = s === 'first' ? firstLeads(v, f) : s === 'best' ? bestLeads(v, f) : s === 'maintained' ? maintainedLeads(v, d, f) : s === 'despite' ? despiteLeads(v, d, f) : steadyLeads(v, d, f, movedLeads(v, f).length > 0);
     const with_ = s === 'steady' || s === 'best' || s === 'first' ? partnerSentence(f) : undefined;
     // Only a steady piece says how it moved: the others say it in their own words.
     const lead0 = s === 'steady' ? front : [''];

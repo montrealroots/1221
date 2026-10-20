@@ -1192,7 +1192,9 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
     // The partner part's remedy is said with a note given before, whose own words (which name the reader) aren't said again.
     ...(focus.kind === 'dim' && (focus.dim !== 'partner' || kind !== 'new') ? { remedy: remedyWords(a, focus.dim) } : {}),
     ...(tried ? { tried } : {}),
-    ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}), ...(heldAgain ? { again: heldAgain } : {}) } } : {}),
+    // A part left unfinished is answered by the steps that finish it, not a step beyond (brief 17: found reading the first
+    // after-runs, Speech's “Drills wasn’t complete… Work on this next: Use less voice…”).
+    ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}), ...(heldAgain ? { again: heldAgain } : {}), ...(heldLimit.kind === 'preparation' && (PREP_DIMS as readonly string[]).includes(heldLimit.what) && t.dims[heldLimit.what as PrepDim] ? { remedy: remedyWords(a, heldLimit.what as PrepDim) } : {}) } } : {}),
     ...(day ? { condition: { what: day.what, whole: day.whole ?? 0, words: day.label } } : {}),
     ...(share && mate ? { partner: { first: mate, lifted: share.overall - judged.overall >= 1, behind: (together?.parts.prep ?? 1) < 0.6, ...(share.slip ? { slip: { at: share.slip.at, covered: share.slip.covered >= 0.5 } } : {}) } } : {}),
     ...(prior ? { before: { on: dayWords(prior.on), course: prior.course, given: prior.given, ...(prior.taken ? { taken: dayWords(prior.taken) } : {}) } } : {}),

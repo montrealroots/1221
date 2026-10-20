@@ -915,6 +915,9 @@ describe('school.make_amends', () => {
     let { text } = drawn(sim);
     expect(text).toContain('Your Partners');
     expect(text).toContain('Hannah Castillo Trust 34');
+    // Two rehearsals called off and none held: said as none yet (from 2026-10-20, brief 17: until then "Came 0 of 0").
+    expect(text).toContain('Hannah Castillo Trust 34 · No Rehearsals Yet · Reliability');
+    expect(text).not.toContain('Came 0 of 0');
     expect(text).toContain('You’ve let them down 2 times without making it right.');
     expect(only('school.make_amends', 'Make Amends')).toMatchObject({ disabled: true, title: 'You’re at Classes until 3:00 PM.' });
     sim.advanceTo(at(8, 31, 15, 30));

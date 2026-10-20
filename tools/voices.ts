@@ -60,7 +60,7 @@ import { loadSave } from '../src/engine';
 import type { Simulation } from '../src/engine/core/simulation';
 import { deserialise, serialise } from '../src/engine/persistence/adapter';
 import { MS_DAY, zonedParts, formatDate } from '../src/engine/core/time';
-import { courseworkOf } from '../src/engine/systems/coursework';
+import { courseworkOf, notesOf } from '../src/engine/systems/coursework';
 import { templateById } from '../src/engine/content/coursework';
 import { COURSES } from '../src/engine/content/school';
 import { noteKey } from '../src/engine/systems/learning';
@@ -124,6 +124,9 @@ function play(name: string, seed: string, months: number): { said: Said[]; reloa
   };
   watch();
   const seenShowing = new Set<string>(); const seenNote = new Set<string>(); const seenMoment = new Map<string, Said>();
+  // A production's notes still open at its close, as they enter the notes ledger (`reflect`): a course's later count of a
+  // note counts them, so the measure does (brief 17: until then 59 of 460 counts read one or two over the course's own).
+  const ledger: { at: string; focus: string }[] = []; const seenLedger = new Set<string>();
   const read = () => {
     const cw = courseworkOf(sim, sim.player);
     for (const a of cw?.assignments ?? []) {
@@ -132,6 +135,13 @@ function play(name: string, seed: string, months: number): { said: Said[]; reloa
       if (seenShowing.has(key)) continue;
       seenShowing.add(key);
       said.push({ at: dayOf(a.shown.at), kind: 'showing', speaker: a.feedback.course, course: courseOf(a.course)?.name ?? a.course, piece: templateById(a.template)?.title, band: a.shown.band, note: `${a.feedback.kind}:${a.feedback.focus.kind}`, focus: noteKey(a.feedback.focus as never), t: a.shown.at, text: a.feedback.text });
+    }
+    for (const rec of cw ? notesOf(cw) : []) for (const h of rec.history) {
+      if (!h.assignmentId.startsWith('production:') || h.kind === 'applied') continue;
+      const key = `${rec.key}:${h.on}:${h.assignmentId}`;
+      if (seenLedger.has(key)) continue;
+      seenLedger.add(key);
+      ledger.push({ at: h.on, focus: rec.key });
     }
     for (const m of cw ? momentsOf(cw) : []) {
       // The answer, once given, kept with the moment it answers (brief 17: what a later moment says of the last answer
@@ -218,7 +228,7 @@ function play(name: string, seed: string, months: number): { said: Said[]; reloa
           // As the card draws it (from 2026-10-20, brief 16's `adviceSummary`): what's shown, and what's behind Why This
           // Recommendation. Until then the block was every recommendation's whole reasoning, all of it shown.
           const card = recs.length ? adviceSummary(sim, sim.player, recs) : undefined;
-          if (card) said.push({ at: day, kind: 'advice', speaker: 'profile', text: [`${card.what}. ${card.why}`, card.action, card.estimate, card.unavailable].filter(Boolean).join('\n'), details: card.details.map((d) => `${d.heading}: ${d.lines.join(' ')}`).join('\n'), note: String(recs.length), focus: `advice:${card.what}` });
+          if (card) said.push({ at: day, kind: 'advice', speaker: 'profile', text: [`${card.what}. ${card.why}`, (card as { continuing?: string }).continuing, card.action, card.estimate, card.unavailable].filter(Boolean).join('\n'), details: card.details.map((d) => `${d.heading}: ${d.lines.join(' ')}`).join('\n'), note: String(recs.length), focus: `advice:${card.what}` });
         }
         if (sim.now - lastReload >= 30 * MS_DAY) {
           // What was delivered, before and after the reload (brief 17, section 7): a message whose words differ was
@@ -240,7 +250,7 @@ function play(name: string, seed: string, months: number): { said: Said[]; reloa
     error = String((e as Error).message ?? e);
   }
   POLICY.partnerPart = true;
-  return { said, reloads, endedOn: formatDate(sim.now, sim.homeZone), rerolled, checkedAtReload: checked, ...(error ? { error } : {}) };
+  return { said, ledger, reloads, endedOn: formatDate(sim.now, sim.homeZone), rerolled, checkedAtReload: checked, ...(error ? { error } : {}) };
 }
 
 // --- The measure ---------------------------------------------------------------------------------------------------
@@ -341,7 +351,7 @@ const WINDOW = 5;
 const CONTINUING = /\b(?:again|still|same|as on|as at|last time|before|back|since|keeps|kept|another|continu|running|in a row)\b/i;
 const BAND_WORD: Record<string, number> = { unready: 0, working: 1, strong: 2, exceptional: 3 };
 
-export function brief17(runs: { scenario: string; seed: string; said: Said[]; rerolled?: number; checkedAtReload?: number }[]) {
+export function brief17(runs: { scenario: string; seed: string; said: Said[]; ledger?: { at: string; focus: string }[]; rerolled?: number; checkedAtReload?: number }[]) {
   const KINDS = ['showing', 'director', 'moment', 'notice', 'advice'] as const;
   const speakerOf = (x: Said) => (x.kind === 'showing' ? `course:${x.course}` : x.kind === 'notice' ? `notice:${x.speaker}` : `${x.kind}:${x.speaker}`);
   const per: Record<string, { messages: number; exact: number; openings: number; withBody: number; bodies: number; bodiesSameFinding: number; bodiesSameFindingSaidContinuing: number; sentences: number; structures: number; allStale: number }> = {};
@@ -387,8 +397,10 @@ export function brief17(runs: { scenario: string; seed: string; said: Said[]; re
       const prev = byCourse.get(x.course ?? '') ?? [];
       const p = prev.at(-1);
       const t = x.text;
-      const up = /\b(?:Up from|up from|Better than the|That’s up from)\s+(Unready|Working|Strong|Exceptional)/.exec(t);
-      const down = /\b(?:Down from|down from|Lower than the|That’s down from)\s+(Unready|Working|Strong|Exceptional)/.exec(t);
+      // A band's move, in brief 16's words and brief 17's ("A step up to Strong, from Working", "Up a band to Strong, from
+      // Working", "Strong, not as strong as the Working piece").
+      const up = /\b(?:[Uu]p from|[Bb]etter than the|That’s up from|[Uu]p (?:a band|\w+ bands) to \w+, from|step up to \w+, from)\s+(Unready|Working|Strong|Exceptional)/.exec(t);
+      const down = /\b(?:[Dd]own from|Lower than the|That’s down from|[Dd]own (?:a band|\w+ bands) to \w+, from|step down to \w+, from|[Nn]ot as strong as the)\s+(Unready|Working|Strong|Exceptional)/.exec(t);
       const m = up ?? down;
       if (m && p) {
         claims.moveClaims += 1;
@@ -411,14 +423,33 @@ export function brief17(runs: { scenario: string; seed: string; said: Said[]; re
       }
       // The showings before on the same note: those of earlier days, and of the same day, whose order a run's record doesn't
       // keep (a showing's time is its day's), so a count is right if some order of the day's makes it so.
-      const earlier = x.focus ? sorted.filter((y) => y.focus === x.focus && y.at < x.at).length : 0;
-      const sameDay = x.focus ? sorted.filter((y) => y !== x && y.focus === x.focus && y.at === x.at).length : 0;
+      const fromRuns = (r.ledger ?? []).filter((y) => y.focus === x.focus);
+      const earlier = x.focus ? sorted.filter((y) => y.focus === x.focus && y.at < x.at).length + fromRuns.filter((y) => y.at < x.at).length : 0;
+      const sameDay = x.focus ? sorted.filter((y) => y !== x && y.focus === x.focus && y.at === x.at).length + fromRuns.filter((y) => y.at === x.at).length : 0;
       const n = earlier + 1;
-      const cm = /\b(?:the|a|an) (second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|\d+(?:st|nd|rd|th)) time (?:you’ve had|for the note)|after (one|two|three|four|five|six|seven|eight|nine|ten|\d+) notes/i.exec(t);
-      if (cm && x.focus && !x.focus.startsWith('advanced')) {
+      // A count of the note, in brief 16's words ("the fourth time you’ve had…", "after three notes") and brief 17's (each
+      // voice's: "for the fourth time", "a fourth note on", "Note 4 on", "four notes now", "come up four times", "that’s four
+      // notes", "a fourth time"). A run of bands ("the second time running", "in a row") isn't a note's count.
+      const ORD = '(second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|\\d+(?:st|nd|rd|th))';
+      const NUM = '(two|three|four|five|six|seven|eight|nine|ten|\\d+)';
+      const COUNT = [
+        new RegExp(`\\b(?:the|a|an) ${ORD} (?:time you’ve had|time for the note|note on|note\\b)`, 'i'),
+        new RegExp(`\\bfor the ${ORD} time\\b(?! (?:running|in a row))`, 'i'),
+        new RegExp(`\\b${ORD} note on\\b`, 'i'),
+        new RegExp(`\\b(?:again, )?a ${ORD} time\\b(?! (?:running|in a row))`, 'i'),
+        new RegExp(`\\bthe ${ORD} time\\b(?! (?:running|in a row))`, 'i'),
+        new RegExp(`\\bNote (\\d+) on\\b`),
+        new RegExp(`\\b${NUM} (?:notes|times) now\\b`, 'i'),
+        new RegExp(`\\b(?:that’s|That’s) ${NUM} notes\\b`),
+        new RegExp(`\\bcome up ${NUM} times\\b`, 'i'),
+      ];
+      const AFTER = /after (one|two|three|four|five|six|seven|eight|nine|ten|\d+) notes/i.exec(t);
+      const cm = COUNT.map((re) => re.exec(t)).find(Boolean) ?? null;
+      if ((cm || AFTER) && x.focus && !x.focus.startsWith('advanced')) {
         const ords = ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'];
         const words = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-        const said = cm[1] ? (ords.indexOf(cm[1].toLowerCase()) > 0 ? ords.indexOf(cm[1].toLowerCase()) : parseInt(cm[1], 10)) : (words.indexOf(cm[2]!.toLowerCase()) >= 0 ? words.indexOf(cm[2]!.toLowerCase()) : parseInt(cm[2]!, 10)) + 1;
+        const num = (w: string) => (ords.indexOf(w.toLowerCase()) > 0 ? ords.indexOf(w.toLowerCase()) : words.indexOf(w.toLowerCase()) >= 0 ? words.indexOf(w.toLowerCase()) : parseInt(w, 10));
+        const said = cm ? num(cm[1]!) : num(AFTER![1]!) + 1;
         claims.countClaims += 1;
         if (said < n || said > n + sameDay) { claims.countWrong += 1; if (claims.examples.length < 12) claims.examples.push(`${r.scenario} ${x.at} ${x.course}: said ${said}, the transcript's ${n}${sameDay ? ` to ${n + sameDay}` : ''} (${x.focus})`); }
       }

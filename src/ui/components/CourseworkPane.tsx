@@ -52,9 +52,13 @@ export function CourseworkPane() {
   const open = urgent.map((u) => u.a);
   const short = urgent.filter((u) => u.short.length > 0).slice(0, 3);
   const past = cw.assignments.filter((a) => a.status !== 'open' && a.status !== 'revising').slice(-12).reverse();
+  // The first week leads while a session is still to come or to catch up, and goes below the work once all five are done
+  // (from 2026-10-20, brief 17, section 8): until then a second-year student's Coursework tab opened on five sessions
+  // done two years before, ahead of Due Soonest.
+  const weekDone = ORIENTATION.every((o) => cw.orientation.done[o.task] !== undefined);
   return (
     <div className="col gap-5">
-      {!cw.orientation.behind && <FirstWeek />}
+      {!cw.orientation.behind && !weekDone && <FirstWeek />}
       {short.length > 0 && (
         <Panel title="Due Soonest" help="school.prepare">
           <ul className="small" data-due-soonest="" style={{ margin: 0, paddingLeft: '1.1rem' }}>
@@ -74,6 +78,7 @@ export function CourseworkPane() {
       <NotesLedger />
       <ClassMoments />
       <Partners />
+      {!cw.orientation.behind && weekDone && <FirstWeek />}
     </div>
   );
 }
@@ -376,7 +381,7 @@ function Partners() {
           const owed = (p.incidents ?? []).filter((x) => !x.repaired).length;
           return (
             <div key={m.name} className="small">
-              <strong><Open subject={at('classmate', String(i))}>{m.name}</Open></strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? (() => { const n = boundaryLiftsAfter(p.boundary) - p.boundary.keptSince; return ` · Wants A Day’s Notice (Until ${n} More ${n === 1 ? 'Rehearsal Is' : 'Rehearsals Are'} Kept)`; })() : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
+              <strong><Open subject={at('classmate', String(i))}>{m.name}</Open></strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · {(r.kept ?? 0) + (r.stoodUp ?? 0) ? `Came ${r.kept ?? 0} of ${(r.kept ?? 0) + (r.stoodUp ?? 0)}` : 'No Rehearsals Yet'}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? (() => { const n = boundaryLiftsAfter(p.boundary) - p.boundary.keptSince; return ` · Wants A Day’s Notice (Until ${n} More ${n === 1 ? 'Rehearsal Is' : 'Rehearsals Are'} Kept)`; })() : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
               {r.log?.[0] && <div className="xs dim">{formatDate(r.log[0].at, zone())}: {r.log[0].what}</div>}
               {owed > 0 && (
                 <div className="row gap-2" style={{ alignItems: 'center' }}>
