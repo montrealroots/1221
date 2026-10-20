@@ -73,20 +73,25 @@ export function BankMoves() {
   };
 
   // What the chosen bank asks and how long each step takes, and, for the line at the panel's foot, which of those figures
-  // are estimated (from 2026-10-17: until then each estimate was said inside its sentence, "SLATE’s estimate").
-  const whatItTakes = (): { said: string; estimated: string[] } => {
-    if (!chosen) return { said: '', estimated: [] };
-    const parts: string[] = [];
+  // are estimated (from 2026-10-17: until then each estimate was said inside its sentence, "SLATE’s estimate"). In four
+  // short paragraphs (from 2026-10-20, brief 16, section 7): what happens when you apply, what the account needs, what
+  // it costs, and how long money it sends takes. Until then one paragraph, five sentences to eight, in no such order.
+  const whatItTakes = (): { said: string[]; estimated: string[] } => {
+    if (!chosen) return { said: [], estimated: [] };
+    const applying: string[] = [];
+    const needs: string[] = [];
     const estimated: string[] = [];
     if (channelFor(person, chosen) === 'branch') {
-      parts.push(`Without a Social Security number, you apply in person at a branch, with your passport and I-20. It takes ${BRANCH_MINUTES === 60 ? 'an hour' : `${BRANCH_MINUTES} minutes`}.`);
+      applying.push(`Without a Social Security number, you apply in person at a branch with your passport and I-20, which takes ${BRANCH_MINUTES === 60 ? 'an hour' : `${BRANCH_MINUTES} minutes`}.`);
       estimated.push('The time at the branch is estimated.');
     }
-    parts.push(rules?.reviewDays ? `It decides an application within ${rules.reviewDays} business days, the longest it says it takes.` : 'It opens the account as soon as you apply.');
-    parts.push(minimum > 0 ? `It asks for an opening deposit of ${money(minimum)}, sent from another of your accounts.` : rules ? 'It doesn’t ask for an opening deposit.' : 'No opening deposit was found for it, so none is asked for.');
-    if (rules?.openedWhenFunded) parts.push('The account only counts as open once money is paid in.');
-    if (rules?.fundWithinDays) parts.push(`If nothing is paid in within ${rules.fundWithinDays} days of opening, the bank closes it.`);
-    if (rules?.closesAtZeroAfterDays) parts.push(`If it sits at a zero balance for ${rules.closesAtZeroAfterDays} days, the bank may close it.`);
+    applying.push(rules?.reviewDays ? `It decides an application within ${rules.reviewDays} business days, the longest it says it takes.` : 'It opens the account as soon as you apply.');
+    // The deposit leaves as you apply, and comes back if the bank turns you down (`bank.open_current`): from 2026-10-20 the
+    // panel says when it leaves.
+    needs.push(minimum > 0 ? `It asks for an opening deposit of ${money(minimum)}, sent from another of your accounts as you apply.` : rules ? 'It doesn’t ask for an opening deposit.' : 'No opening deposit was found for it, so none is asked for.');
+    if (rules?.openedWhenFunded) needs.push('The account only counts as open once money is paid in.');
+    if (rules?.fundWithinDays) needs.push(`If nothing is paid in within ${rules.fundWithinDays} days of opening, the bank closes it.`);
+    if (rules?.closesAtZeroAfterDays) needs.push(`If it sits at a zero balance for ${rules.closesAtZeroAfterDays} days, the bank may close it.`);
     // The card's line says what `cardArrival` and `openApproved` (`systems/bankmoves.ts`) do. Until 2026-10-12 it gave
     // Bank of America's 6 business days "with a digital card in the app meanwhile", and nothing read the 6: a digital
     // card works from the day the account opens, and nothing arrives after it (docs/UNBITTEN.md). And where a bank
@@ -94,7 +99,7 @@ export function BankMoves() {
     // (`SECURITY`): Citi's 5 and SMBC's 10, at 29 of the thirteen countries' 60 banks (tests/bank-moves-card-line.test.ts).
     const card = rules?.card;
     const replacement = chosen ? SECURITY[chosen.id]?.standardDays : undefined;
-    parts.push(card?.digital ? 'The debit card works from the day the account opens, as a digital card in the app.'
+    applying.push(card?.digital ? 'The debit card works from the day the account opens, as a digital card in the app.'
       : card ? `The debit card arrives in ${card.days} ${card.business ? 'business ' : ''}days.`
         : `The debit card arrives in ${replacement ?? ESTIMATE_CARD_DAYS} business days.`);
     if (!card && replacement !== undefined) estimated.push('The new card’s days are estimated from the bank’s time for a replacement card, as no figure for a new account’s card was found.');
@@ -107,12 +112,12 @@ export function BankMoves() {
     // time the player reads: 15.5 is 3:30 PM, the clock that many hours into a day at UTC. For part of 2026-10-12 a
     // second formatter here wrote both cut-offs on a 24-hour clock, "before 15:30" for Zengin.
     const cutOff = (h: number) => formatTime(h * MS_HOUR, 'UTC');
-    parts.push(rules?.sameDayBefore !== undefined ? `Money it sends to another bank arrives the same business day if it’s sent before ${cutOff(rules.sameDayBefore)}, or the next business day if later.`
+    const sends = rules?.sameDayBefore !== undefined ? `Money it sends to another bank arrives the same business day if it’s sent before ${cutOff(rules.sameDayBefore)}, or the next business day if later.`
       : rules?.sendDays ? `Money it sends to another bank takes ${rules.sendDays} business days.`
         : scheme?.instant ? `Money between banks here arrives instantly, by ${scheme.scheme}.`
           : scheme?.sameDayBefore !== undefined ? `Money between banks here goes by ${scheme.scheme}, and arrives the same business day if it’s sent before ${cutOff(scheme.sameDayBefore)}, or the next business day if later.`
             : scheme?.days ? `Money between banks here takes ${scheme.days} business day${scheme.days === 1 ? '' : 's'}, by ${scheme.scheme}.`
-              : `Money it sends to another bank takes ${ESTIMATE_SEND_DAYS} business days.`);
+              : `Money it sends to another bank takes ${ESTIMATE_SEND_DAYS} business days.`;
     if (rules?.sameDayBefore === undefined && !rules?.sendDays && !scheme?.instant && scheme?.sameDayBefore === undefined && !scheme?.days) estimated.push('How long money takes to another bank is estimated: the bank doesn’t say.');
     // Its monthly fee and how the bank waives it, from the product `feeFor` (`systems/banking.ts`) charges by, as Your
     // Accounts says it of an account held (from 2026-10-16). Until then the panel said nothing of it before Apply, and a
@@ -120,8 +125,8 @@ export function BankMoves() {
     // collections sixty days on (docs/verification/remaining/banking-checklist.json, banking.s7.opening).
     const fee = chosen.current.monthlyFee;
     const inBank = (c: number) => formatMoney(inSaveMoney(sim, c, chosen.currency), cur);
-    parts.push(fee ? `Its ${chosen.current.name} costs ${inBank(fee)} a month${waiverWords(chosen.current, inBank)}.` : `Its ${chosen.current.name} has no monthly fee.`);
-    return { said: parts.join(' '), estimated };
+    const costs = fee ? `Its ${chosen.current.name} costs ${inBank(fee)} a month${waiverWords(chosen.current, inBank)}.` : `Its ${chosen.current.name} has no monthly fee.`;
+    return { said: [applying.join(' '), needs.join(' '), costs, sends], estimated };
   };
   const takes = whatItTakes();
 
@@ -269,7 +274,7 @@ export function BankMoves() {
               </Gated>
             </div>
             {refusal && <p className="small muted" style={{ margin: 0 }}>{refusal}</p>}
-            <p className="small" style={{ margin: 0 }}>{takes.said}</p>
+            {takes.said.map((said) => <p key={said} className="small" style={{ margin: 0 }}>{said}</p>)}
             <Fine>Source: {rules?.source ?? 'nothing published was found for this bank, so its figures here are estimated'}{scheme && !rules?.sendDays && rules?.sameDayBefore === undefined ? `; ${scheme.source}` : ''}.{takes.estimated.map((e) => ` ${e}`).join('')}</Fine>
           </div>
         )}

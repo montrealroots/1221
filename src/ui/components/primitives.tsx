@@ -20,16 +20,22 @@ import { HowItWorks } from '@/ui/guide/HowItWorks';
  * Why a row's controls can't be used now, said under them (acceptance pass, 2026-10-11): until then the engine's reason
  * was only a button's tooltip, which a phone never shows and a desktop player had to hover to find, so a row of grayed
  * buttons said nothing. One line where every reason is the same; each labeled where they differ.
+ *
+ * Two or more labeled reasons are a list, one to a line (from 2026-10-20, brief 16, section 8). Until then they ran on in
+ * one paragraph, and a piece's six steps under Coursework read as six sentences in a row: "Read The Scene: You’re at
+ * Classes until 3:00 PM. Learn Lines: Read the scene first: …". The words of each are unchanged.
  */
 export function WhyNot({ reasons }: { reasons: readonly (readonly [label: string, why: string | undefined])[] }) {
   const shut = reasons.filter((r): r is readonly [string, string] => Boolean(r[1]));
   if (!shut.length) return null;
   const distinct = [...new Set(shut.map(([, why]) => why))];
   const all = shut.length === reasons.length;
+  if (distinct.length === 1 && all) return <p className="xs dim why-not" style={{ margin: 0 }}>{`Not now: ${distinct[0]}`}</p>;
+  if (shut.length === 1) return <p className="xs dim why-not" style={{ margin: 0 }}>{`${shut[0]![0]}: ${shut[0]![1]}`}</p>;
   return (
-    <p className="xs dim why-not" style={{ margin: 0 }}>
-      {distinct.length === 1 && all ? `Not now: ${distinct[0]}` : shut.map(([label, why]) => `${label}: ${why}`).join(' ')}
-    </p>
+    <ul className="xs dim why-not" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+      {shut.map(([label, why], i) => <li key={`${i}:${label}`}>{`${label}: ${why}`}</li>)}
+    </ul>
   );
 }
 

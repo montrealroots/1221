@@ -155,7 +155,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.request_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Choose a reason for the leave. | — | — | school.welfare_decide; medical | 29 | — |
 | `school.request_repeat` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | — | — | — | — | 9 | — |
 | `school.reregister` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not at school.; You’re on leave: you register for the term you come back to, when it begins.; You’re already registered.; A financial hold stops registration: … is owed on your Yale account. Pay it on the Terms A | — | — | — | 12 | — |
-| `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | That isn’t a scene you share with …. (also respondRefusal) | — | — | school.study_session | 17 | journey-school-year.test.ts; journey-three-students.test.ts |
+| `school.respond` | Verified (journey) | Drama School | ClassMoments.tsx | `systems/classmates.ts` | That isn’t a scene you share with …. (also respondRefusal) | — | — | school.study_session | 18 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.return_notice` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | You’re not on leave.; You already gave notice on ….; Its deadline has passed. | — | — | — | 16 | — |
 | `school.review_blocking` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 10 | journey-school-production.test.ts |
 | `school.summer_cabaret` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/school.ts` | — (also summerRefusal) | status | Yes | school.summer; school.stipend; summer | 19 | — |
@@ -164,7 +164,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.work_note` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | Keep or put back the change you tried first. (also ownWorkRefusal, wayRefusal) | — | — | — | 11 | journey-school-production.test.ts |
 | `tax.amend` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | Your return as filed matches what’s on record, so there’s nothing to amend. (also amendRefusal) | — | Yes | tax.amended | 7 | — |
 | `tax.apply_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | The lowest monthly payment is …: what you owe, spread over … months.; Your bank can’t cover the … setup fee, so you haven’t applied and nothing was charged. (also planRefusal) | taxPlan; nextDue; status; defaultBy | Yes | short; tax.plan_decide; tax.plan_payment; tax.plan_default | 9 | — |
-| `tax.apply_state_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | Your bank can’t cover the … down payment, so nothing was paid. (also statePlanRefusal) | — | Yes | tax.state_plan_payment | 5 | — |
+| `tax.apply_state_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | Your bank can’t cover the … down payment, so nothing was paid. (also statePlanRefusal) | — | Yes | tax.state_plan_payment | 6 | — |
 | `tax.catch_up_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/taxreturn.ts` | Your plan isn’t behind, so there’s nothing to catch up.; Your bank can’t cover …, so nothing was paid. | status; nextDue | Yes | tax.plan_payment | 2 | — |
 | `tax.catch_up_state_plan` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/statetax.ts` | That plan isn’t behind, so there’s nothing to catch up.; Your bank can’t cover …, so nothing was paid. | — | Yes | tax.state_plan_payment | 3 | — |
 | `tax.federal_lien_withdraw` | Implemented But Unverified | Cover, Benefits And Returns | LienPanels.tsx | `systems/taxreturn.ts` | — (also federalLienWithdrawRefusal, planRefusal) | status; startedAt; nextDue; payBy; why; and 3 more | Yes | tax.federal_lien; tax.notice; short; tax.plan_payment; and 5 more | 4 | — |
@@ -221,7 +221,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `documents.ssn_arrives` | `systems/taxid.ts` | systems/taxid.ts | ssn | — | — | 2 |
 | `documents.us_status` | `systems/permission.ts` | systems/permission.ts | usOutOfStatus | — | — | 11 |
 | `documents.visit` | `systems/papervisits.ts` | systems/papervisits.ts | keptAt; missed; at | — | — | 8 |
-| `health.appointment` | `systems/appointments.ts` | systems/appointments.ts | status | — | — | 13 |
+| `health.appointment` | `systems/appointments.ts` | systems/appointments.ts | status | — | — | 15 |
 | `health.bill` | `systems/health.ts` | systems/health.ts | — | Yes | loan; school.leave_appeal | 3 |
 | `health.month` | `systems/health.ts` | systems/health.ts | — | — | health.month | 6 |
 | `health.therapy_session` | `systems/therapy.ts` | systems/therapy.ts | status | Yes | — | 5 |

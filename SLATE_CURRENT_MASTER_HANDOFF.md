@@ -1,16 +1,136 @@
-# Read First: Brief 15, The Natural-Language Editorial Pass, 2026-10-20
+# Read First: Brief 16, Contextual Writing, Distinct Voices And Clear Information, 2026-10-20
 
 **This section is the current status, and where a new session starts.** It was written at the end of the owner's
+"Contextual Writing, Distinct Voices, And Clear Information"
+(`docs/verification/briefs-2026-10-16/16-contextual-writing-distinct-voices-and-clear-information.txt`, kept verbatim).
+The work was done on `claude/peaceful-hamilton-59zdbb`, at `d1ae7a79`: `main` at `74259312` (#44's merge) with the
+handoff's account of that merge. Brief 15's section below was the status until brief 16 began. It is pushed, and it's in
+pull request #45 (https://github.com/yvcbcjhsy7-prog/1221/pull/45), which was opened for that account alone and now
+carries brief 16 too. **Nothing of brief 16 is merged, and nothing is deployed.**
+
+## 1. The Repository
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `74259312`, #44's merge.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 16's commits on `d1ae7a79`
+  (`git log --oneline d1ae7a79..origin/claude/peaceful-hamilton-59zdbb`). It was pushed and never force-pushed. The
+  five editors worked in clones, and each area came in as its own commit on the branch, with no merge commit:
+  `65d54282`, `cb9b323d`, `77380be9`, `f9403bb2` and `28f30fde`.
+- **The tested code is `4ef5e961`'s.**
+  - **Every measurement after** (`docs/verification/voices-2026-10-20/after/`) and **every final run** ran on it, in the
+    lanes of `runs16.sh`. Each step's commit, command and exit is in `docs/verification/voices-2026-10-20/runs/exits-*.txt`.
+  - **The gate** ran last, on `eabb9ef5`, in a clean clone (`final-checks/gate16.sh`): exit 0, 398 of 398 test files
+    and 4,781 of 4,781 tests passed, none skipped, every one of the twenty checks holding; the build exit 0, in the same
+    clone (`docs/verification/voices-2026-10-20/runs/gate.txt`, `final-checks/`). Between `4ef5e961` and `eabb9ef5`,
+    only documents changed: the records, the scripts that write them, the matrix and this handoff. After it, only
+    documents changed again: the examples' count of courses, read from the runs, and the gate's figures folded in.
+    Until then this said the gate hadn't run, and the line below was 611.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
+  worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
+
+## 2. Where It Stands
+
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+- **Against brief 15's close:** the same 612 rows Implemented And Verified, each measured again where what it reads
+  changed: on `4ef5e961` by the engine, the judge and its build, and the gate's on `eabb9ef5`.
+- **The game is the same game.** Every number, id, key and list length in the final runs was compared with brief 15's
+  (`numbers-same.py`, `numbers-same.json`). The judge's 36 figures are brief 15's exactly, so RULESET stays
+  evaluation-11.
+  - **The judge's outputs** (`final/`): every file brief 15's byte for byte.
+  - **The runs** (`runs/`): the lives, the plans, variety and freshness byte for byte. Two workloads differ in a
+    coursework warning's words ("This is your second coursework warning, after one last term.").
+  - **The advice** (`advice/`): only each run's own record differs.
+  - **The journeys** (`journeys-final/`): brief 13's 25 played to the end, all ten checks passed on each, and each
+    ending as brief 15's ended. A classmate's notice that comes again now says so, so 880 more stay apart instead of
+    merging. Every notice brief 15's runs had on a day is there on that day, none fewer.
+  - **The seven students** of `tools/voices.ts`, before and after on one seed: no difference in play, event by event
+    (`same-play.py`).
+- **On the built app** (the tested commit's build, from saves made on it):
+  - **The acceptance walk:** 77 of 77 steps at 1440 and at 390 (`runs/acceptance/`).
+  - **Brief 13's playthroughs at both widths:** normal 14 of 14, setback 9 of 9, specialist 11 of 11
+    (`interface-final/`).
+  - **Brief 14's journeys at both widths** (`journeys14-final/`): document 8 of 8, health 10 of 10, banking 9 of 10.
+    Banking's step 8 is brief 14's `journeys-3`, unchanged.
+  - No errors and no overflows in any of them.
+  - **The advice card,** shut and open, at 1440 and 390 (`after/shots/`).
+- **The text:** 104 sources read again and marked Rewritten, 24 of them new (`docs/text/second-pass/`). None is
+  Pending, and engine-speak stays at 321.
+- **Not claimed.** No automated run judges whether the voices read as distinct or the help reads easily to a person,
+  and nothing here is human usability approval. The game is not complete, and no score is claimed for it.
+
+## 3. What Brief 16 Did
+
+The record is `docs/verification/voices-2026-10-20/`. `README.md` there has the measures before and after and how each
+was counted; `examples.md` has the words before and after, read from the runs.
+- **The school's feedback** is built from what happened (`src/engine/systems/feedback.ts`): the band against the
+  course's last showing and its best, the note and how it stands, and what held a prepared piece back. It says what to
+  try next.
+- **Situations and voices:** each situation the record supports has its own shapes, and each course speaks in its
+  discipline's terms, with its own steps beyond. A first sentence said in one of the course's last five showings fell
+  from 529 to 72, and feedback said again word for word from 358 to 1.
+- **The memory is the save's own feedback:** the words are chosen by a hash of the piece and the day, never the game's
+  randomness, skipping what was said lately. A reload says the same words. The save is unchanged.
+- **Directors, classmates and term warnings** say what came of the last time.
+- **The Profile's recommendation** is one short card (`AdviceCard.tsx`): 61 words shown on average, from 674, with the
+  reasoning and the calculations behind Why This Recommendation.
+- **The help and the tutorial,** by five editors in clones: each long explanation says first what it means for you and
+  what to do, then the cost, then the rules. Tutorial and How This Works strings of five sentences or more fell from 50 to
+  0, and the built app's paragraphs of five or more from 21 to 0.
+- **Where the words and the game disagreed,** the words were fixed (the record's README lists them). No mechanics
+  changed.
+
+## 4. What Remains, And What It Waits On
+
+- **Found by brief 16, for the owner** (the record's README, What Was Found And Not Changed). Each is a mechanic, and the
+  brief keeps those apart:
+  - **A classmate apologizes again, a year on, for the same missed rehearsals:** the apologies are counted from the
+    last 20 moments, so the first falls off.
+  - **Card liability:** in Japan, Korea, the US and Canada the game's charge and the law the text gives differ. The
+    visible sentence says what the game does.
+  - **The IRS short-term plan** takes the installment-agreement penalty rate too.
+  - **The missed state-plan notice's figures** and two refusal periods are copied into prose rather than read from the
+    rule.
+- **From brief 15, unchanged:** the dead content (`licensepaths.ts`, most of `licenses.ts`, `residenceRefusal`), and
+  five of money-data's data and rule items.
+- **From brief 14, unchanged:**
+  - On The Way before Sunday evening (`journeys-3`), which banking's step 8 still finds.
+  - ST6-R2.e is still the owner's question.
+  - Decision 4's rows stay deferred.
+- **What only a person can judge:** whether the voices read as distinct and the help as easy to follow. Brief 15's
+  `PLAYTEST.md` is still a route: every phrase it quotes is still in the code.
+- **Merging and deploying are the owner's.** Base44 deployment waits for the owner and the gate (rule 14). Read section
+  10 further down first.
+
+## 5. The Rules, The Schema And The Model
+
+- **The checks:** CLAUDE.md counts twenty, unchanged.
+- **The save schema is unchanged:** **94** in both places.
+- **RULESET is evaluation-11:** nothing the judge reads changed.
+- **New player-facing text follows `docs/STYLE.md` and `docs/GLOSSARY.md`,** which now say how feedback and advice are
+  written. A new or changed source is read and given a second-pass status in the same commit, with
+  `node tools/text-inventory.mjs --mark2 <source> <status> --by <area> --reason|--evidence …`.
+- **The matrix:** `criteria.py` reads brief 16's results after brief 15's, the same three ways:
+  - the judge's figures (`final/figures.json`);
+  - the runs' figures (`runs/figures.json`);
+  - `verify.py` and `advice/close.py`.
+
+# Earlier: Brief 15, The Natural-Language Editorial Pass, 2026-10-20
+
+**This section was the current status until brief 16** (**Superseded 2026-10-20:** the current status is the first
+section above, brief 16's, and so is the completion line; the line below is brief 15's as it was). It was written at the
+end of the owner's
 "Complete Natural-Language Editorial Pass, Including All Retained Text"
 (`docs/verification/briefs-2026-10-16/15-complete-natural-language-editorial-pass.txt`, kept verbatim). The work was done
 on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `bdb23949` (#43's merge, the handoff after #42's). Brief
 14's section below was the status until brief 15 began. It is pushed and in pull request #44
-(https://github.com/yvcbcjhsy7-prog/1221/pull/44), opened after the gate. It isn't merged: merging is the owner's.
-**Nothing is deployed.**
+(https://github.com/yvcbcjhsy7-prog/1221/pull/44), opened after the gate and merged to `main` with a merge commit at
+the owner's word ("Merge it.", 2026-10-20, `74259312`); until then this said it wasn't merged. **Merged isn't deployed:
+nothing is.**
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `bdb23949`, #43's merge.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `74259312`, #44's merge;
+  until then this said `bdb23949`, #43's.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 15's commits on `bdb23949`
   (`git log --oneline bdb23949..origin/claude/peaceful-hamilton-59zdbb`). It was pushed and never force-pushed. The ten
   areas were each merged in from their clones with merge commits (`git log --merges bdb23949..HEAD`).
@@ -107,8 +227,9 @@ section 12's receipt, written by `receipt.py`. `crossarea.md` is the reading of 
   - Decision 4's rows are unchanged.
 - **What only a person can judge:** whether the voice is natural. `PLAYTEST.md` is the route, about twenty-five
   minutes. `playtest-check.py` finds each phrase it quotes on the built app or in the code.
-- **Merging and deploying are the owner's.** Base44 deployment waits for the owner and the gate (rule 14). Read section
-  10 further down first.
+- **Deploying is the owner's.** The pull request was merged at the owner's "Merge it." (`74259312`); until then this
+  said merging was the owner's too. Base44 deployment waits for the owner and the gate (rule 14). Read section 10
+  further down first.
 
 ## 5. The Rules, The Schema And The Model
 

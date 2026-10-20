@@ -728,7 +728,7 @@ describe('success, partial progress, failure and recovery', () => {
   };
   const RANK = { Unready: 0, Working: 1, Strong: 2, Exceptional: 3 } as const;
 
-  it('a piece shown Unready, Working and better: the notice says the band, what was ready, and the teacher’s note', async () => {
+  it('a piece shown Unready, Working and better: the notice says the band and the teacher’s note, and the card what was ready', async () => {
     const { meetingWeight } = await import('@/engine/systems/coursework');
     const bands: number[] = [];
     for (const [seed, level] of [['dyn-shown-0', 0], ['dyn-shown-5', 0.5], ['dyn-shown-1', 1]] as const) {
@@ -740,12 +740,13 @@ describe('success, partial progress, failure and recovery', () => {
       expect(m, notice.title).not.toBeNull();
       expect(m[1]).toBe({ unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' }[a.shown!.band]);
       bands.push(RANK[m[1] as keyof typeof RANK]);
-      expect(notice.body).toContain(`Simulated note from Acting I: ${a.feedback!.text}`);
-      // What was well prepared, listed as a list is said, where any part was; nothing of it where none was.
-      if (level === 1) expect(notice.body).toMatch(/^Well prepared: (?:[A-Z][\w’ ]+, )*[A-Z][\w’ ]+ and [A-Z][\w’ ]+\./);
-      if (level === 0) expect(notice.body).not.toContain('Well prepared');
-      // The Coursework tab's card for it, to be shown again, with the same band and words.
+      // The notice is the note (from 2026-10-20, brief 16): until then it listed what was well prepared, then the note.
+      expect(notice.body).toBe(`Simulated note from Acting I: ${a.feedback!.text}`);
+      // The Coursework tab's card for it, to be shown again, with the same band and words, and what was well prepared,
+      // listed as a list is said, where any part was; nothing of it where none was.
       const pane = drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' });
+      if (level === 1) expect(pane).toMatch(/Well prepared: (?:[A-Z][\w’ ]+, )*[A-Z][\w’ ]+ and [A-Z][\w’ ]+\./);
+      if (level === 0) expect(a.shown!.strengths.some((x) => x.startsWith('Well prepared'))).toBe(false);
       expect(pane).toContain(`Feedback: ${m[1]}, ${Math.round(a.shown!.score * 100)} Of 100`);
       expect(pane).toContain(a.feedback!.text);
       sound(notice.body); whole(notice.body); sound(pane);
@@ -1111,7 +1112,8 @@ describe('a new player, an advanced one and a finished school journey: the Profi
 
 describe('repetition: a note said before says so, a warning repeated says what changed and what’s open, a refusal met twice still says why', () => {
   it('a teacher’s note on an unchanged weakness says it was said before, how often, and when; never as a new discovery', async () => {
-    const { courseworkOf, feedbackWords, persistentFor } = await import('@/engine/systems/coursework');
+    const { courseworkOf, persistentFor } = await import('@/engine/systems/coursework');
+    const { showingCandidates } = await import('@/engine/systems/feedback');
     const { noteSubject } = await import('@/engine/systems/learning');
     // A first fall left unprepared (TEST SETUP: rested, so only the preparation is short), the notes as the showings give them.
     const sim = student('dyn-repeat');
@@ -1122,18 +1124,37 @@ describe('repetition: a note said before says so, a warning repeated says what c
     expect(recurring.length).toBeGreaterThan(3);
     for (const a of given) {
       const t = a.feedback!.text;
-      const said = /^(?:You had this note in .+ on (\w+ \d{1,2}, \d{4}) too, and it’s still there\.|This is the (third|fourth|fifth|sixth|seventh|eighth|ninth|(\d+)(st|nd|rd|th)) time you’ve had this note, the last in .+ on (\w+ \d{1,2}, \d{4}), and it’s still there\.|You fixed this on .+, but it has slipped back\.)/.exec(t);
+      // Each way the composer says a note given before (`systems/feedback.ts`, from 2026-10-20, brief 16), its day caught.
+      // Until then one fixed sentence each, the same in every course: "You had this note in … too, and it’s still there."
+      const ORD = '(?:second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|\\d+(?:st|nd|rd|th))';
+      const SAID = [
+        'You had this note in .+? on (\\w+ \\d{1,2}, \\d{4}) too, and it’s still there\\.',
+        'The same note as on (\\w+ \\d{1,2}, \\d{4}) in .+?: it hasn’t moved yet\\.',
+        'Still there from (\\w+ \\d{1,2}, \\d{4}), in .+?\\.',
+        `This is the ${ORD} time you’ve had this note, the last in .+? on (\\w+ \\d{1,2}, \\d{4}), and it’s still there\\.`,
+        `The same note an? ${ORD} time: it was last given in .+?, on (\\w+ \\d{1,2}, \\d{4})\\.`,
+        'Still open after \\w+ notes, the last in .+? on (\\w+ \\d{1,2}, \\d{4})\\.',
+        'You fixed this on (\\w+ \\d{1,2}, \\d{4}), but it has slipped back\\.',
+        'This had come right on (\\w+ \\d{1,2}, \\d{4}), and it has slipped since\\.',
+        'Back again: you’d put this right on (\\w+ \\d{1,2}, \\d{4})\\.',
+        // Given often, said short and named by what it's on (from 2026-10-20, later that day).
+        'The note on .+? is still open after \\w+ notes, the last in .+? on (\\w+ \\d{1,2}, \\d{4})\\.',
+        `This is the ${ORD} time you’ve had the note on .+?, the last in .+? on (\\w+ \\d{1,2}, \\d{4})\\.`,
+        `An? ${ORD} time for the note on .+?: it was last given in .+?, on (\\w+ \\d{1,2}, \\d{4})\\.`,
+      ].map((x) => new RegExp(x));
+      const said = SAID.map((r) => r.exec(t)).find(Boolean);
       if (a.feedback!.kind === 'recurring') {
-        expect(said, t).not.toBeNull();
+        expect(said, t).toBeDefined();
         // Said before: on this piece's day or one before it.
-        expect(Date.parse(`${said![1] ?? said![5]} 00:00 EDT`)).toBeLessThanOrEqual(a.shown!.at);
-        // From the third time in words to the ninth (from 2026-10-19, brief 15), then as a figure with its suffix.
-        if (said![3]) {
-          const n = Number(said![3]);
-          expect(n).toBeGreaterThanOrEqual(10);
-          expect(said![4]).toBe(n % 100 >= 11 && n % 100 <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'));
+        expect(Date.parse(`${said![1]} 00:00 EDT`)).toBeLessThanOrEqual(a.shown!.at);
+        // From the third time in words to the tenth, then as a figure with its suffix.
+        const fig = /(\d+)(st|nd|rd|th) time/.exec(t);
+        if (fig) {
+          const n = Number(fig[1]);
+          expect(n).toBeGreaterThanOrEqual(11);
+          expect(fig[2]).toBe(n % 100 >= 11 && n % 100 <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'));
         }
-      } else expect(said, t).toBeNull();
+      } else expect(said, t).toBeUndefined();
       sound(t); whole(t); dated(t);
     }
     // A weakness that keeps coming back: a notice a week at most, its count, and the open piece's way at it.
@@ -1152,10 +1173,41 @@ describe('repetition: a note said before says so, a warning repeated says what c
     expect(open).toBeDefined();
     const weak = persistentFor(cw, open)[0]!;
     expect(drawn(sim, SchoolWorkspace, { 'tab:/workspace/school': 'coursework' })).toContain(`A Note That Keeps Coming Back: ${noteSubject(weak.key)}, given ${['no times', 'once', 'twice', 'three times', 'four times', 'five times', 'six times', 'seven times', 'eight times', 'nine times'][weak.given] ?? `${weak.given} times`}.`);
-    // Better but not there, and back after it was taken: each says so, with the day and the figures.
-    expect(feedbackWords('partial', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', level: 0.2 }, 0.5)).toBe('This has improved since September 8, 2026 (20% then, 50% now), but it isn’t there yet. Lines weren’t secure.');
-    expect(feedbackWords('recurring', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', given: 1, taken: '2026-09-15' })).toBe('You fixed this on September 15, 2026, but it has slipped back. Lines weren’t secure.');
-    expect(feedbackWords('recurring', 'Lines weren’t secure.', { on: '2026-09-08', course: 'Acting I', given: 10 })).toBe('This is the 11th time you’ve had this note, the last in Acting I on September 8, 2026, and it’s still there. Lines weren’t secure.');
+    // Better but not there, back after it was taken, and an eleventh time: every way the composer has of saying each says
+    // so, with the day and the figures (from 2026-10-20, brief 16: until then `feedbackWords`, one sentence each).
+    const facts = { key: 'test', discipline: 'acting' as const, course: 'Acting I', piece: 'Scene Study', band: 'working' as const, bandLabel: 'Working', run: 0, best: false, note: 'Lines weren’t secure.', about: 'part' as const, part: { label: 'Lines', then: 0.2, now: 0.5 }, persistent: false, enough: 0.75, recent: [] };
+    const partial = showingCandidates({ ...facts, kind: 'partial', before: { on: 'September 8, 2026', course: 'Acting I', given: 1 } });
+    for (const c of partial) { expect(c).toContain('September 8, 2026'); expect(c).toMatch(/20%.+50%/); expect(c).toMatch(/isn’t there yet|not there yet|not all the way/); expect(c).toContain('Lines weren’t secure.'); }
+    const slipped = showingCandidates({ ...facts, kind: 'recurring', before: { on: 'September 8, 2026', course: 'Acting I', given: 1, taken: 'September 15, 2026' } });
+    for (const c of slipped) { expect(c).toContain('September 15, 2026'); expect(c).toMatch(/slipped|Back again/); }
+    // Named by what it's on, since its own words aren't said (from 2026-10-20, later that day); with nothing to name it by,
+    // the part's label goes with its figure.
+    const eleventh = showingCandidates({ ...facts, subject: 'Lines', kind: 'recurring', before: { on: 'September 8, 2026', course: 'Acting I', given: 10 }, persistent: true });
+    for (const c of eleventh) { expect(c).toContain('September 8, 2026'); expect(c).toMatch(/[Tt]he note on Lines/); expect(c).toContain('It’s at 50% now, and the note is taken at 75%.'); expect(c).not.toContain('Lines weren’t secure.'); }
+    // "An eighth", "an 11th", "an 18th"; "a 14th" (from 2026-10-20: the final runs read "A eighth time").
+    for (const [given, said] of [[7, 'An eighth time'], [10, 'An 11th time'], [17, 'An 18th time'], [13, 'A 14th time'], [2, 'A third time']] as const) {
+      const c = showingCandidates({ ...facts, subject: 'Lines', kind: 'recurring', before: { on: 'September 8, 2026', course: 'Acting I', given }, persistent: given >= 3 });
+      expect(c.some((x) => x.includes(said) || x.includes(said.replace(/^A/, 'a'))), `${given}: ${c.join(' | ')}`).toBe(true);
+      for (const x of c) expect(x, x).not.toMatch(/\b[Aa] (?:eighth|11th|18th)\b/);
+    }
+    const unnamed = showingCandidates({ ...facts, kind: 'recurring', before: { on: 'September 8, 2026', course: 'Acting I', given: 10 }, persistent: true });
+    for (const c of unnamed) expect(c).toContain('Lines: 50% now, and the note is taken at 75%.');
+    // The same limit holding the course's last piece back is said as that, with when; a band's move on the same day as
+    // the note before says the day once (from 2026-10-20, later that day: in the first transcripts Voice I said "your vocal
+    // expression held back …" fresh six times running, and a partial note said "February 9, 2027" twice in a row).
+    const words = 'Your vocal expression held back your execution by 25 points out of 100';
+    const heldAgain = showingCandidates({ ...facts, kind: 'advanced', about: undefined, part: undefined, note: 'Choose one phrase.', held: { words, kind: 'ability', what: 'vocalExpression', again: 'October 9, 2026' } });
+    expect(heldAgain.length).toBeGreaterThan(0);
+    for (const c of heldAgain) { expect(c).toContain('October 9, 2026'); expect(c).toMatch(/As on October 9, 2026, your vocal|, as it did on October 9, 2026\.|Working, as on October 9, 2026: your vocal/); }
+    const sameDay = showingCandidates({ ...facts, kind: 'partial', band: 'working', bandLabel: 'Working', prev: { band: 'unready', label: 'Unready', on: 'February 9, 2027' }, before: { on: 'February 9, 2027', course: 'Acting I', given: 1 } });
+    for (const c of sameDay) expect(c.split('February 9, 2027').length - 1, c).toBeLessThanOrEqual(1);
+    // Strong though the day cost it, by what the day was and what it cost (a played run seldom shows a piece on such a day).
+    for (const [what, clause] of [['fatigue', 'you came to it tired'], ['illness', 'you had the flu'], ['injury', 'you were working injured']] as const) {
+      const despite = showingCandidates({ ...facts, kind: 'advanced', about: undefined, part: undefined, band: 'strong', bandLabel: 'Strong', note: 'Choose one phrase.', condition: { what, whole: 2.4, words: 'x' } });
+      expect(despite.length, what).toBeGreaterThan(0);
+      for (const c of despite) { expect(c.toLowerCase(), what).toContain(clause); expect(c, what).toContain('about 2 points'); expect(c, what).toContain('Strong'); expect(c, what).not.toMatch(/the (?:about|less)/); }
+    }
+    expect(eleventh.some((c) => c.includes('11th time'))).toBe(true);
   });
 
   it('a warning repeated says what changed and what’s still open: an Incomplete, then a week before its deadline, after a session made up', async () => {

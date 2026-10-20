@@ -71,7 +71,10 @@ function CardOffers({ card }: { card: Account }) {
   const part = (what: string, b: { rate: number; cap?: number; after?: number } | undefined, cur2: string) => b === undefined ? undefined
     : `${pct(b.rate)} on ${what}${b.cap !== undefined ? ` to the first ${money(inSaveMoney(sim, b.cap, cur2))} ${per[bonus!.per]}, ${pct(b.after ?? 0)} after` : ''}`;
   const bonusWords = bonus && card?.bankId ? [part('groceries', bonus.food, bankById(card.bankId)?.currency ?? 'USD'), bonus.other ? part('everything else', bonus.other, bankById(card.bankId)?.currency ?? 'USD') : `${pct(terms.rewardsRate ?? 0)} on everything else`].filter(Boolean).join('; ') : undefined;
-  if (terms.rewardsRate || bonus) lines.push(`Rewards: ${bonusWords ?? `${pct(terms.rewardsRate ?? 0)} back on every purchase`}, added up at each statement. You have ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` Its published rewards: ${terms.rewardsWords}. ${bonus ? 'In the game, groceries are the only thing a card buys: no bill is paid by card.' : 'Those categories are things a card doesn’t buy in the game, so you earn the base rate.'}` : ''}`);
+  // What you earn and have, then the bank's published list and why the game pays what it does of it, apart (from
+  // 2026-10-20, brief 16: until then one paragraph of four sentences).
+  if (terms.rewardsRate || bonus) lines.push(`Rewards: ${bonusWords ?? `${pct(terms.rewardsRate ?? 0)} back on every purchase`}, added up at each statement. You have ${money(credit.rewards ?? 0)} to redeem.`);
+  if ((terms.rewardsRate || bonus) && terms.rewardsWords) lines.push(`Its published rewards: ${terms.rewardsWords}. ${bonus ? 'In the game, groceries are the only thing a card buys: no bill is paid by card.' : 'Those categories are things a card doesn’t buy in the game, so you earn the base rate.'}`);
 
   return (
     <Panel title="The Card’s Offers" subtitle={<Open subject={at('account', card.id)}>{terms.name}</Open>} look={at('account', card.id)} help="bank.card-offers">

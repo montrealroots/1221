@@ -605,7 +605,8 @@ describe('school.work_note', () => {
       ways,
     });
     // A craft note given again on the same thing, after a way was tried at the last: what was tried, its figure before
-    // and after, after "Better since the last note." where it was taken and "Still:" where it wasn't.
+    // and after, after "Better since the last note." where it was taken and "Still:" where it wasn't; from 2026-10-20 (brief
+    // 16) each said one of three true ways, so the part's last notes aren't passed in one frame.
     const again = notes.flatMap((n, i) => {
       if (n.focus.kind !== 'craft') return [];
       const f = n.focus;
@@ -619,8 +620,8 @@ describe('school.work_note', () => {
     expect(again.some(({ prior }) => prior.taken === false)).toBe(true);
     for (const { n, prior } of again) {
       // What was tried, its figure then and at the next call, and, where it moved nothing, that it didn't.
-      expect(n.text).toContain(`You tried ${prior.answer!.label!.toLowerCase()}: ${prior.answer!.before} then, ${prior.answer!.now ?? prior.answer!.after} now`);
-      expect(n.text).toMatch(prior.taken ? /^Better since the last note\. You tried / : /^Still: /);
+      expect(n.text).toContain(`You tried ${prior.answer!.label!}: ${prior.answer!.before} then, ${prior.answer!.now ?? prior.answer!.after} now`);
+      expect(n.text).toMatch(prior.taken ? /^(?:Better since the last note|That’s moved since the last note|The last note took)\. You tried / : /^(?:Still: |Same note as at the last call\. |Not there yet\. )/);
       // Worse by the evidence at the call, it says it made it worse; otherwise that it didn't move it.
       const worse = Math.min(prior.answer!.after, prior.answer!.now ?? prior.answer!.after) - prior.answer!.before <= -WORKBOOK.evidence;
       if (prior.outcome === 'learned') expect(n.text).toContain(`which ${worse ? 'made it worse' : 'didn’t move it'}: worth knowing, and not the answer.`);

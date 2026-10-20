@@ -41,6 +41,7 @@ import {
 import { VISAS } from '@/engine/content/visas';
 import { idCardHere, idCardOnItsWay, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal, noncitizenTermNote } from '@/engine/systems/identity';
 import { f1Of, optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
+import { leftWithout } from '@/engine/systems/school';
 import { SSN, hasSsn, ssnRefusal } from '@/engine/systems/taxid';
 import { WORK_RULES } from '@/engine/content/workrules';
 import { MEXICO_RENEWAL, residenceIn, routeRefusal, settleRefusal } from '@/engine/systems/residence';
@@ -230,6 +231,13 @@ export function WorkPane() {
   const statusEnds = usStatusEnds(person);
   const status = statusEnds !== undefined && idleEnds !== undefined ? Math.min(statusEnds, idleEnds) : statusEnds;
   const optNo = optRefusal(sim, person);
+  // The window to apply by their own program's end, as `optRefusal` reads it, said first (from 2026-10-20, brief 16): for
+  // a student on an F-1, not one who left without the degree, whom OPT refuses whatever the day.
+  const opens = end !== undefined ? end - opt.windowBeforeDays * MS_DAY : undefined;
+  const closes = end !== undefined ? end + opt.windowAfterDays * MS_DAY : undefined;
+  const applyBy = opens !== undefined && closes !== undefined && !(person.school && leftWithout(person.school.standing))
+    ? `Your window to apply ${sim.now > closes ? 'was' : 'is'} ${formatDate(opens, sim.zone)} to ${formatDate(closes, sim.zone)}, ${opt.windowBeforeDays} days before your program ends to ${opt.windowAfterDays} days after. `
+    : '';
   const apply = (kind: string, payload: Record<string, unknown>, what: string) => {
     const a = run<{ readyAt: number; fee: number }>(kind, payload);
     if (a.ok) toast(`${what} and paid ${money(a.value!.fee)}. It’s decided by ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive');
@@ -250,14 +258,19 @@ export function WorkPane() {
 
       <Panel title="OPT" subtitle={`${opt.form}, after your degree`} help="documents.apply_opt">
         <div className="col gap-3">
-          <p className="small" style={{ margin: 0 }}>OPT is permission to work in your field after your degree: up to {opt.months} months from the later of your program’s end and the approval, with no more than {opt.unemploymentDays} days without work in total. The game has no work after the degree, so an approved OPT ends after those {opt.unemploymentDays} days, and your US status ends with it. In practice it keeps you in the US about {opt.unemploymentDays} days from its start. It costs {usd(opt.fee)}. Premium processing costs {usd(opt.premiumFee)} more and gets you a decision within {opt.premiumBusinessDays} business days.</p>
+          {/* When this student can apply, then what OPT does for them here, then what it costs and what loses the fee; its
+              twelve months, which no played OPT reaches, under Sources And Estimates (from 2026-10-20, brief 16, section
+              7). Until then one paragraph of five sentences opened on the twelve months, the window was only in Your
+              Program Ends' note, in days, and a degree not finished, which denies OPT and keeps its fee, went unsaid. */}
+          <p className="small" style={{ margin: 0 }}>{applyBy}OPT is permission to work in your field after your degree, and it keeps your US status going. The game has no work after the degree, so an approved OPT ends after {opt.unemploymentDays} days without work, about {opt.unemploymentDays} days from its start, and your US status ends with it.</p>
+          <p className="small" style={{ margin: 0 }}>It costs {usd(opt.fee)}. Premium processing costs {usd(opt.premiumFee)} more and gets you a decision within {opt.premiumBusinessDays} business days. OPT follows a completed degree: if school ends without yours, it’s denied when it’s decided, and the fee isn’t refunded.</p>
           <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_opt" className="btn btn-sm" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', {}, 'Applied for OPT')}>Apply For OPT</Gated>
             <Gated feature="documents.apply_opt" className="btn btn-sm btn-ghost" disabled={Boolean(optNo)} title={optNo} onClick={() => apply('documents.apply_opt', { premium: true }, 'Applied for OPT with premium processing')}>Apply With Premium Processing</Gated>
             {/* Why both are grayed, in words beside them (from 2026-10-17, as Your ID's): until then only their tooltips said it. */}
             {optNo && <span className="xs dim">{optNo}</span>}
           </div>
-          <Fine>USCIS publishes no standard processing time, so it’s estimated at {opt.standardDays} days. Source: {opt.source}.</Fine>
+          <Fine>OPT itself runs up to {opt.months} months from the later of your program’s end and the approval, with no more than {opt.unemploymentDays} days without work in total. USCIS publishes no standard processing time, so it’s estimated at {opt.standardDays} days. Source: {opt.source}.</Fine>
         </div>
       </Panel>
 

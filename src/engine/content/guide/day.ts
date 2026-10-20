@@ -80,7 +80,7 @@ export const DAY: readonly GuideEntry[] = [
     questions: ['Why did the clock stop?', 'What happens if I don’t go?', 'What does Stand Here do?', 'Can I walk away from a class?', 'What’s coming up next?'],
     where: { route: '/home', label: 'Home, The Calendar Panel, Open Calendar' },
     available: `From ${chapter('calendar')}: the panel, Go, Skip It and the entries. Play, which moves the clock to a commitment, opens with ${chapter('clock')}.`,
-    short: 'The Calendar panel at the top of Home shows what’s coming: the next thing you need to be at, how long until it, and up to five more after it. When the clock reaches a commitment, it stops and asks what you want to do. Press Go to be there. You can also skip a plan of your own, call off a rehearsal with a classmate, or press Stand Here to wait.',
+    short: 'The Calendar panel at the top of Home shows what’s coming: the next thing you need to be at, how long until it, and up to five more after it.\n\nWhen the clock reaches a commitment, it stops and asks what to do: press Go to be there, or Stand Here to wait. A plan of your own also offers Skip It, and a rehearsal with a classmate Call It Off.',
     steps: [
       'Read the Calendar panel on Home: the next thing you need to be at, how long until it, its date and time, and under it up to five more things coming, such as a card statement or a birthday.',
       'Press an entry’s name or its time to open it under the panel: what it is, when, how long it runs, and what missing it costs.',
@@ -105,7 +105,7 @@ export const DAY: readonly GuideEntry[] = [
       'Go: the commitment runs at once, with you there unless a hospital bed or an injury keeps you from it, and the clock moves through its hours, on to where it was headed if that’s later.',
       'Skip It: your plan is marked missed, a notice says you didn’t go, and the clock carries on to where it was headed.',
       'Call It Off, on a rehearsal with a classmate: it’s called off at short notice, which costs their trust and stays with them, and the clock stays paused where it stopped.',
-      'Stand Here: the dialog closes and the clock stays paused at the commitment, which stays at the top of the Calendar panel, marked now. It happens the next time the clock moves, and you’re there if you’re awake, in its town, and not kept away by a hospital bed or an injury.',
+      'Stand Here: the dialog closes and the clock stays paused at the commitment, which stays at the top of the Calendar panel, marked now. The commitment starts the next time the clock moves, and you’re there if you’re awake, in its town, and not kept away by a hospital bed or an injury.',
       'Any stop pauses the clock, so press Play again afterwards.',
     ],
     later: [
@@ -302,7 +302,7 @@ export const DAY: readonly GuideEntry[] = [
     short: 'What Needs You, on Home, holds the questions you need to answer and the notices that tell you what happened. A question has its answers as buttons, such as File It or Keep The Account, and Dismiss. A notice says what happened: groceries you couldn’t pay for, a commitment you slept through, a welcome to the school. The number beside Home on the menu counts both.',
     steps: [
       'Open Home and read What Needs You: questions first, then notices.',
-      'Press one of a question’s answers to act on it there. It does what the same button on its own screen does.',
+      'Press one of a question’s answers to act on it from What Needs You, without opening its screen. An answer does what the same action does on the question’s own screen: File It, on your tax return’s question, files the return just as File It on Papers does.',
       'Press Go There to open the screen a question or a notice is about.',
       'Press Dismiss to take a question off the list without answering it.',
       'Press Mark N Read, at the top of the panel, to mark every unread notice read at once.',
@@ -311,11 +311,11 @@ export const DAY: readonly GuideEntry[] = [
     ],
     needs: [
       `The panel, Mark Read, the answers and Dismiss open with ${chapter('needs')}.`,
-      'An answer does what the same button does on its own screen, so that screen’s chapter has to have been read too.',
+      'An answer does what the same action does on its own screen, so that screen’s chapter has to have been read too.',
     ],
     costs: [
       { label: 'Time', value: 'None: reading, dismissing and marking read move no clock' },
-      { label: 'Money', value: 'None for the panel. An answer costs what the same button costs on its own screen, a fee or a payment.' },
+      { label: 'Money', value: 'None for the panel. An answer costs what the same action costs on its own screen, a fee or a payment.' },
     ],
     reads: [
       { label: 'A Question’s Urgency', value: 'Out of a hundred. Overdue ones come first, then the most urgent, then the soonest due.' },

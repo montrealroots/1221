@@ -2249,12 +2249,6 @@
   "on": "2026-10-17",
   "reason": "Read whole in this area’s batches 2 and 3 and kept: plain, in the player’s words, and true to the code behind it."
  },
- "src/engine/systems/coursework.ts#feedbackWords": {
-  "status": "Rewritten And Verified",
-  "hash": "693a8e908f67",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g18-school.test.ts, tests/evidence-g24-school.test.ts, tests/remaining-school-term.test.ts, tests/workload.test.ts, tests/evidence2-b11.test.ts (159 unread, as distinct as before); rendered.txt; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
- },
  "src/engine/systems/coursework.ts#hourWords": {
   "status": "Rewritten And Verified",
   "hash": "a6132f5370c8",
@@ -2434,12 +2428,6 @@
   "hash": "b97ff8d2014a",
   "on": "2026-10-18",
   "evidence": "Editorial review, batch 2: tests/feedback.test.ts (\"You took the earlier note on Lines\"), tests/evidence-g18-school.test.ts and tests/evidence-g24-school.test.ts (a choice note, by questionWords); \"Your speech and your accents and dialects carried it.\", \"Drills wasn’t complete, which cost Execution 20.2 points.\", \"You took the earlier note on Built On.\" in docs/verification/language-2026-10-17/editorial/b2-rendered.txt (journey J01 played through its four parts on this code, its notices set beside the same journey before)"
- },
- "src/engine/systems/coursework.ts#sinceLast": {
-  "status": "Rewritten And Verified",
-  "hash": "6f817de537c5",
-  "on": "2026-10-17",
-  "evidence": "tests/evidence-g18-school.test.ts, tests/evidence-g24-school.test.ts, tests/remaining-school-term.test.ts, tests/workload.test.ts, tests/evidence2-b11.test.ts (159 unread, as distinct as before); rendered.txt; the text walk of the built app at 1440 and 390 (docs/verification/language-2026-10-17/school/after-1440, after-390, and after-new-1440/390 on saves written with this code)"
  },
  "src/engine/systems/coursework.ts#tableWorkRefusal": {
   "status": "Rewritten And Verified",

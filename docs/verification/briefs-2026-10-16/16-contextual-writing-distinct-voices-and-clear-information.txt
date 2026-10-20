@@ -1,0 +1,327 @@
+SLATE — Contextual Writing, Distinct Voices, And Clear Information
+
+Implement this work in the existing game. This is an implementation request, not a request for another proposal or audit alone.
+
+GOAL
+
+Make SLATE’s player-facing writing natural, understandable, specific to what actually happened, and varied during extended play.
+
+The current writing is improved, but recurring school feedback repeats fixed openings, teachers sound interchangeable, and practice recommendations overwhelm the player with calculations.
+
+Fix those underlying problems while preserving the existing simulation, mechanics, saves, and approved scope.
+
+1. START FROM THE ACTUAL CURRENT BUILD
+
+Read the repository instructions, current handoff, latest main, and relevant open changes before editing. Preserve existing work.
+
+Verify the issues against current code and rendered screens. Do not assume an old review still describes every file.
+
+Keep the previously deferred decision #4 items deferred. Do not restore removed personal-life, travel, shopping, housing, or industry systems.
+
+2. BUILD FEEDBACK FROM WHAT ACTUALLY HAPPENED
+
+Create or improve the shared feedback system so its messages can use relevant existing facts:
+
+- The assignment, scene, role, course, and genre.
+
+- What the player prepared and left unfinished.
+
+- The approach or interpretation chosen.
+
+- The strongest contribution and most important limitation.
+
+- The partner’s actual contribution.
+
+- Relevant fatigue, stress, injury, or other conditions.
+
+- Previous feedback on the same issue.
+
+- Whether the player improved, resolved it, maintained progress, or slipped back.
+
+- One practical next action available in the current game.
+
+Choose the facts that matter for this particular message. Do not include every fact in every response.
+
+A feedback message should usually communicate:
+
+1. What happened.
+
+2. Why it happened.
+
+3. What to try next, when a next step is useful.
+
+Every claim must be grounded in actual game state or evaluation data. Do not invent observed acting choices, dialogue, feelings, events, or causes that the simulation does not record.
+
+If the engine only knows a numerical result, explain that result honestly instead of pretending it observed a specific performance moment.
+
+3. REMOVE REPETITIVE FEEDBACK STRUCTURES
+
+Inspect feedbackWords, ADVANCED, teacher term reports, director notes, partner responses, practice advice, and equivalent systems in the current code.
+
+Fix patterns such as every successful assignment beginning:
+
+“It came together. Here’s what to try next.”
+
+Changing a few synonyms is not sufficient.
+
+Vary the structure according to the situation:
+
+- A newly achieved improvement.
+
+- A strength maintained over several pieces.
+
+- A recurring weakness.
+
+- Partial progress.
+
+- A setback after earlier improvement.
+
+- A strong result despite a recorded difficulty.
+
+- Preparation that improved but was held back by another factor.
+
+- An unchanged result where no new advice is justified.
+
+Use only supported situations.
+
+Sometimes a short acknowledgment is enough. Do not generate a new lecture after every routine action.
+
+Repeated advice can remain necessary when the same problem persists. Acknowledge that continuity and explain what remains unresolved instead of presenting the same finding as new.
+
+4. ADD MEMORY FOR PRESENTATION
+
+Track recent narrative wording at appropriate levels, such as the speaker, event type, and player save.
+
+Avoid repeating the same opening or complete message within a recent-history window when another equally accurate option exists.
+
+Keep this memory bounded and compatible with saves and reloads.
+
+Save/reload should not reroll feedback already delivered. Text selection must not consume gameplay randomness or alter simulation outcomes.
+
+When all suitable variants have been used, prefer an accurate repetition over an inaccurate new claim. Never sacrifice truth for novelty.
+
+Keep button names, numerical labels, warnings, and recurring instructions stable where consistency helps the player.
+
+5. GIVE SPEAKERS DISTINCT, APPROPRIATE VOICES
+
+Differentiate feedback by teaching role and context:
+
+- Acting feedback emphasizes objectives, relationships, listening, and choices.
+
+- Voice feedback emphasizes breath, vocal expression, clarity, and sustained delivery where the engine supports those observations.
+
+- Movement feedback emphasizes physical expression, coordination, and stamina where supported.
+
+- Text-analysis feedback emphasizes interpretation and textual understanding.
+
+- Directors address the production and the player’s recorded work.
+
+- Classmates respond according to established relationships and events.
+
+Use fictionalized game voices. Do not claim to reproduce a real teacher’s actual personality or speech.
+
+Keep a clear, unobtrusive indication that simulated feedback is written by SLATE rather than quoted from real people.
+
+Voices should differ in focus and phrasing without becoming caricatures, exaggerated accents, or catchphrases.
+
+6. MAKE THE PROFILE EASY TO READ
+
+Replace the wall of practice forecasts with a concise primary recommendation.
+
+Show first:
+
+- What to work on.
+
+- Why it matters now.
+
+- The action to take.
+
+- The main expected benefit, clearly identified as an estimate.
+
+- Any immediate reason the action is unavailable.
+
+Put supporting calculations behind a clearly labeled expandable section, such as “Why This Recommendation” or “View Forecast Details.”
+
+Keep available:
+
+- The forecast’s assumptions.
+
+- Relevant recent work.
+
+- Preparation versus training comparisons.
+
+- Discipline’s contribution.
+
+- Alternative recommendations.
+
+- Expected attribute and performance changes.
+
+- Uncertainty and limitations.
+
+Do not repeat the same assumptions in every recommendation. Present shared explanations once.
+
+Use the actual current values. Do not hard-code sample numbers.
+
+7. APPLY THE SAME CLARITY TO BANKING, PAPERS, AND SCHOOL
+
+For lengthy explanations, use this order:
+
+- What this means for the player now.
+
+- What they can do.
+
+- What it costs, changes, or requires.
+
+- Optional full rules and sources.
+
+Keep consequential fees, deadlines, eligibility requirements, irreversible outcomes, and warnings visible before the player confirms an action.
+
+Do not hide essential information behind an optional explanation.
+
+Preserve precise amounts and conditions. Where wording and gameplay disagree, trace the implementation before rewriting. Do not conceal a behavioral defect by making the text vague.
+
+Keep any unrelated banking or legal-rule changes separately identified rather than silently changing mechanics during this writing work.
+
+8. FINISH THE TUTORIAL’S CLARITY
+
+Review the tutorial and contextual help in the actual interface.
+
+Every instruction must:
+
+- Use the exact visible control name.
+
+- Explain the immediate result.
+
+- Explain relevant automatic behavior.
+
+- State prerequisites clearly.
+
+- Provide a usable next step when blocked.
+
+- Link to connected help where useful.
+
+Replace vague references such as “it happens” when the event is unclear.
+
+Break up paragraphs that contain several different rules.
+
+Preserve established Title Case rules for headings and controls, with ordinary sentence case in prose.
+
+If a control’s wording itself is misleading, rename it consistently across the interface, tutorials, accessibility labels, and tests. Preserve internal identifiers and save compatibility where possible.
+
+9. PRESERVE THE STRONG CREATIVE WRITING
+
+Keep the specificity and distinct situations in the original acting briefs.
+
+Do not flatten vivid, clear scene writing into generic instructions.
+
+Apply concise language to controls and explanations, while allowing dramatic material to have atmosphere and character.
+
+Do not replace meaningful genre differences with cosmetic wording changes.
+
+10. VERIFY BOTH WRITING AND FUNCTION
+
+Before editing, record a reproducible baseline of:
+
+- Repeated feedback openings.
+
+- Exact duplicate narrative messages.
+
+- Teacher feedback shared across courses.
+
+- Dense recommendation blocks.
+
+- Tutorial instructions that are difficult to follow.
+
+After implementation, compare equivalent scenarios on the same underlying gameplay state.
+
+Run multiple meaningful playthroughs covering:
+
+- A new player learning the controls.
+
+- An attentive student who prepares consistently.
+
+- An underprepared student with recurring notes.
+
+- A student who improves after feedback.
+
+- A student who resolves an issue and later regresses.
+
+- A highly skilled student maintaining strong work.
+
+- A student affected by fatigue or injury.
+
+- Repeated work with a partner.
+
+- Different genres and performance approaches.
+
+- Banking and papers tasks involving deadlines or blocked actions.
+
+- Save/reload during these journeys.
+
+Reuse suitable existing fixtures and automation. Avoid rerunning identical scenarios simply to inflate the test count.
+
+Read the resulting player-facing transcripts in sequence. Automated string checks alone cannot establish naturalness.
+
+Check desktop and mobile for:
+
+- Readable summaries.
+
+- Working expandable details.
+
+- Clear warnings.
+
+- Correct links and controls.
+
+- Keyboard and screen-reader access.
+
+- No overflow or broken layouts.
+
+Verify that:
+
+- Text agrees with the actual outcome.
+
+- Feedback history survives reloads.
+
+- Narrative variation does not change gameplay results.
+
+- Necessary warnings remain visible.
+
+- Shared labels remain consistent.
+
+- Repeated feedback acknowledges previous events accurately.
+
+Fix defects introduced or exposed within this work’s scope, and rerun the affected checks. Run the required full regression gate once the changes are ready.
+
+11. PROVIDE REVIEWABLE PROOF
+
+Deliver:
+
+- The exact tested commit.
+
+- A concise list of implemented changes.
+
+- Before/after examples from actual rendered gameplay.
+
+- Consecutive feedback transcripts showing improvement, repetition, and recovery over time.
+
+- Examples demonstrating distinct teaching voices.
+
+- Profile recommendations before and after.
+
+- Measured repetition results, with the measurement method and exclusions.
+
+- Test commands, results, failures, and fixes.
+
+- Any remaining limitations or unverified behavior.
+
+Distinguish source-text review, automated tests, browser checks, and human editorial judgment.
+
+Do not claim “10/10,” “zero bugs,” or “never repetitive” merely because automated tests pass.
+
+COMPLETION
+
+Continue through implementation, editorial review, relevant playthroughs, debugging, and the repository’s required verification gates. Do not stop after creating a framework, adding a few examples, or writing a completion document.
+
+Finish the agreed scope with evidence. If an external blocker prevents completion, identify the exact blocker and preserve a concrete handoff.
+
+The desired result is clear instructions, concise summaries, truthful contextual feedback, recognizable speaker differences, and sustained variety grounded in the player’s actual journey.

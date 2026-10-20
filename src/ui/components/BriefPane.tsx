@@ -32,7 +32,8 @@ import { studyRefusal } from '@/engine/systems/engagement';
 
 import { identityOf } from '@/engine/systems/artistry';
 import { levelOf } from '@/engine/systems/attributes';
-import { adviceFor, heldVersusNext } from '@/engine/systems/next-steps';
+import { adviceFor, adviceSummary } from '@/engine/systems/next-steps';
+import { AdviceCard } from './AdviceCard';
 
 const TONE: Record<string, string> = { comic: 'Comic', grave: 'Grave', lyric: 'Lyric', grotesque: 'Grotesque' };
 
@@ -270,13 +271,8 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
 
       {top && (
         <div className="col gap-1">
-          <div className="eyebrow">What To Work On</div>
-          <p className="small" style={{ margin: 0 }}><strong>{top.label}</strong>. {top.why}{top.recurring && <> <span className="xs dim">From your work for life: {top.recurring.evidence.join('; ')}; it last held a piece back on {formatDate(top.recurring.last, sim.zone)}.</span></>}</p>
-          {top.standing && <p className="xs" style={{ margin: 0 }} data-standing="">{top.standing}</p>}
-          {top.next && <p className="xs" style={{ margin: 0 }} data-next="">{top.next}</p>}
-          {top.assumes && <p className="xs" style={{ margin: 0 }} data-assumes="">{top.assumes}</p>}
-          {top.attention && <p className="xs" style={{ margin: 0 }} data-attention="">{top.attention}</p>}
-          {heldVersusNext(person, recs) && <p className="xs" style={{ margin: 0 }}>{heldVersusNext(person, recs)}</p>}
+          {/* Short, with the reasoning behind Why This Recommendation, as the Player Profile draws it (from 2026-10-20, brief 16). */}
+          <AdviceCard advice={adviceSummary(sim, person, recs, top)!} heading="What To Work On" />
           {unread && <p className="xs dim" style={{ margin: 0 }}>No practice brief calls on {top.label.toLowerCase()}, so a tape won’t show it and none is suggested for it.</p>}
           <div>{practice(top.target)}</div>
         </div>

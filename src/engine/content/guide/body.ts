@@ -89,7 +89,7 @@ export const BODY: readonly GuideEntry[] = [
     questions: ['What is readiness?', 'Why is my energy so low?', 'What’s the difference between energy, condition and stamina?', 'What do the colors on the bars mean?', 'What does stress do?', 'Where are the rest of my measures?', 'What does a trait change?'],
     where: { route: '/home', label: 'Home, The How You Are Panel' },
     available: `It opens with ${chapter('body')}. Your traits also open on the Player Profile, from ${chapter('profile')}. Your own page, with all eight measures, opens from your name once you’ve read ${chapter('life')}.`,
-    short: 'How You Are, on Home, shows how you’re doing today: a line that sums it up, then Energy, Stress and Readiness. Readiness is how sharp you’ll be at today’s work. Behind them are eight measures of your wellbeing, and four things are easy to mix up. Energy is what you have left for today, and only sleep brings it back. Condition is how sound your body is: illness, hunger, stress and short nights wear it down. Fitness is how trained your body is, and it’s the Stamina on your Player Profile. Your health is on Papers, under Health Cover: illness, injury, long-term conditions, your care and your health cover.',
+    short: 'How You Are, on Home, shows how you’re doing today: a line that sums it up, then Energy, Stress and Readiness. Readiness is how sharp you’ll be at today’s work.\n\nEnergy is what you have left for today, and only sleep brings it back. Condition is how sound your body is, and fitness is how trained it is: the Stamina on your Player Profile.',
     steps: [
       'On Home, read How You Are: the line at the top, then Energy, Stress and Readiness, each out of 100.',
       'Press Energy, Stress or Readiness to open it under the panel. It says where it stands and what that means, and Readiness names what’s holding you back most.',
@@ -110,7 +110,7 @@ export const BODY: readonly GuideEntry[] = [
       { label: 'Stress', value: `Eases while you have energy left and climbs once you run out. Money you owe adds to it every day, and each hour over ${OVERWROUGHT} wears down your condition.` },
       { label: 'Readiness', value: 'Made of seven of the eight measures, all but fitness, from 5 to 100: how sharp you’d be at something right now' },
       { label: 'What Readiness Sets', value: `How much a class, a lab, a rehearsal, an hour of practice or a workout builds, along with how the hour suits an early riser or a night owl. Under ${EVALUATION.sufficientReadiness}, it also costs you in work that’s judged.` },
-      { label: 'Condition', value: `How sound your body is. It sets how much energy a night puts back and how likely a year is to be your last. Under ${ESTIMATE.sickBelow}, staying home sick from classes is excused.` },
+      { label: 'Condition', value: `How sound your body is. Illness, hunger, stress and short nights wear it down. It sets how much energy a night puts back and how likely a year is to be your last. Under ${ESTIMATE.sickBelow}, staying home sick from classes is excused.` },
       { label: 'Fitness', value: `How trained your body is: the same figure as Stamina on the Player Profile. It sets how far rest can mend your condition and what a workout costs. Untrained, it falls toward ${EVERYDAY_FITNESS}, what everyday life keeps.` },
       { label: 'Health', value: 'Illness, injury, long-term conditions, your care and your health cover, all on Papers, under Health Cover. Illness and an emergency take from your condition and energy, and an injury adds to your stress and lowers your morale each day.' },
       { label: 'Traits', value: 'Each changes what it names: how good a night is, how fast stress clears, how far your morale moves, what food costs' },
@@ -169,7 +169,7 @@ export const BODY: readonly GuideEntry[] = [
     questions: ['How long should I sleep?', 'What happens if I sleep through a class?', 'Why is the Sleep button gray?', 'Does a short night hurt?', 'What does sleep debt do?'],
     where: { route: '/home', label: 'The Top Bar’s Sleep Button' },
     available: `It opens with ${chapter('sleep')}.`,
-    short: `Sleep asks how many hours, from ${SHORTEST_SLEEP} to ${LONGEST_NIGHT}. It suggests a number from when you’re next needed and how much sleep you owe, and says when you’d wake. Then the clock runs through the night at once. A night brings back energy, though less when you owe sleep. It clears stress and sleep debt, and it mends condition only with more than about five hours of real rest. Anything on the calendar in those hours happens without you.`,
+    short: `Sleep, in the top bar, asks how many hours, from ${SHORTEST_SLEEP} to ${LONGEST_NIGHT}, and suggests a number from when you’re next needed and how much sleep you owe. Then the clock runs straight through to when you wake.\n\nAnything on the calendar in those hours happens without you. A night eases stress, pays back sleep debt and brings back your energy, less of it when you owe sleep.`,
     steps: [
       'Press Sleep in the top bar.',
       'Read the suggestion at the top: how many hours it suggests, and why.',
@@ -249,7 +249,7 @@ export const BODY: readonly GuideEntry[] = [
     questions: ['How do I eat?', 'Why is Work Out gray?', 'What does a shower do?', 'Does working out make me fitter?', 'Why did my weight go up?', 'What does Needed Now mean?'],
     where: { route: '/home', label: 'The Top Bar’s Look After Yourself Menu' },
     available: `It opens with ${chapter('looking-after')}.`,
-    short: `Look After Yourself holds what a day needs besides sleep: ${listed(LABELS)}. Each line says how long it takes, what it costs, why it’s where it is in the list and what it would do to your wellbeing. Whatever is costing you every hour comes first, marked Needed Now. Then come the rest, by how much readiness each gives back, and last what you can’t do right now. A line waits until you press it. Then the clock moves on by the time it takes.`,
+    short: `Look After Yourself, in the top bar, holds what a day needs besides sleep: ${listed(LABELS)}. Whatever is costing you every hour comes first, marked Needed Now, then the rest by how much readiness each gives back, and last what you can’t do right now.\n\nEach line says how long it takes, what it costs and what it would do to your wellbeing. Press one to do it, and the clock moves on by the time it takes.`,
     steps: [
       'Press Look After Yourself in the top bar.',
       'Read each line: how long it takes, its price if it has one, and why it’s there. Under that are the measures it would change and the readiness it gives back.',

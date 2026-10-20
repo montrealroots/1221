@@ -87,3 +87,21 @@ behind it, or the file outside the inventory that holds it, or the template that
 - **The defects** found apart from the writing are indexed in `DEFECTS.md`.
 - **The owner's route by hand** is `PLAYTEST.md`.
 - **The receipt** is `RECEIPT.md`, written by `receipt.py` from these records.
+
+## Where It Ended
+
+- **The second pass:** 4,177 sources, 916 Rewritten and 3,261 Retained, none Pending or Blocked. The pass is closed, and
+  the gate fails a source neither pass has read (`docs/text/second-pass-closed.json`).
+- **The same game:** `numbers-same.py` compared every number, id and key in the final runs on `d6f6527a` with brief 14's
+  (`numbers-same.json`). The judge's 36 figures are brief 14's (`final/README.md`), and RULESET stays evaluation-11.
+- **The built app,** on `d6f6527a`'s build, at both widths:
+  - the acceptance walk, 77 of 77;
+  - brief 13's playthroughs, every step;
+  - brief 14's journeys, but for banking's step 8, which is brief 14's `journeys-3`;
+  - the guide followed, every check (`final-follow/`);
+  - the final walk, every line held by the inventory or assembled from values (`final-walk/`).
+- **The gate:** on `aabfc1b2`, exit 0, 395 of 395 test files and 4,771 of 4,771 tests passed, none skipped, every one of
+  the twenty checks holding; the build exit 0 (`runs/gate.txt`, `final-checks/`).
+- **The matrix:** 612 of 636 rows in scope Implemented And Verified, the same rows as at brief 14's close.
+- **Not claimed:** human usability approval. `PLAYTEST.md` is the owner's route, and only the owner can give it.
+- **Merged** to `main` in #44 at the owner's word (`74259312`). Deploying is the owner's.

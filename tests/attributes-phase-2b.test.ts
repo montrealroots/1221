@@ -80,6 +80,7 @@ import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at as subject } from '@/ui/looks/subject';
 import { readersOf, sourceWords } from '@/ui/looks/actor';
 import { adviceFor } from '@/engine/systems/next-steps';
+import type { Recommendation } from '@/engine/systems/experience';
 import { suggestions } from '@/engine/systems/briefs';
 import { AXES } from '@/engine/content/approaches';
 import { genreState } from '@/engine/systems/engagement';
@@ -1304,6 +1305,15 @@ function taped(seed: string, briefs: readonly Brief[], setup: (sim: Simulation, 
 }
 /** The Player Profile's What To Work On Next as drawn, each line its label and its words (a tag's space before a stop taken out). */
 const nextWork = (sim: Simulation): string => { const page = profile(sim).text.replace(/\s+([.,;:])/g, '$1'); return page.slice(page.indexOf('What To Work On Next'), page.indexOf('Ability Now Full')); };
+/**
+ * A recommendation as What To Work On Next draws it (from 2026-10-20, brief 16's `AdviceCard`): the first, its label, why
+ * now and what to do, and the rest under Why This Recommendation; any other, under Other Things Worth Your Time, its
+ * label and the whole of `why`. Until then each was drawn `${label}. ${why}`.
+ */
+const drawnAs = (next: string, r: Recommendation): boolean => next.includes(`${r.label}: ${r.why}`)
+  // Among the others, why now, with what to do said once where two share it (from 2026-10-20, later that day).
+  || (r.now !== undefined && next.includes(`${r.label}: ${r.now}`) && (!r.more || next.includes(r.more)))
+  || (next.includes(`${r.label}. ${[r.now, r.act].filter(Boolean).join(' ')}`) && (!r.more || next.includes(r.more)));
 /** TEST SETUP: a brief's parts complete and its genre known, as a player who prepared it leaves them. */
 const preparedFully = (sim: Simulation, b: Brief) => { Object.assign(recordOf(sim.player, b.id).prep, { interpretation: 1, memorization: 1, rehearsal: 1 }); for (const g of b.kinds) Object.assign(genreState(sim.player, g), { familiarity: 100, practice: 100 }); };
 const LONG = BRIEFS.filter((b) => b.size === 'long').slice(0, 4);
@@ -1317,7 +1327,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
       expect(r.focus).toBe('preparation');
       expect(r.exercise).toBeUndefined();
       expect(r.why).toMatch(/^Coming to your work short on .+ cost each piece about (?:1 point|(?!1 )[\d.]+ points) off the whole\. That’s preparation, not training: prepare that part further before you show or tape the next piece\.$/);
-      expect(cold.next).toContain(`${r.label}. ${r.why}`);
+      expect(drawnAs(cold.next, r), r.label).toBe(true);
     }
     const ready = taped('p2b-f3-cold', LONG, preparedFully);
     expect(ready.recs.some((r) => r.target.startsWith('prep:'))).toBe(false);
@@ -1330,7 +1340,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     expect(flu!.focus).toBe('condition');
     expect(flu!.exercise).toBeUndefined();
     expect(flu!.why).toMatch(/^Down With The Flu cost each piece about (?:1 point|(?!1 )[\d.]+ points) off the whole\. Come to the work rested and well, or find places to breathe in it\.$/);
-    expect(ill.next).toContain(`${flu!.label}. ${flu!.why}`);
+    expect(drawnAs(ill.next, flu!)).toBe(true);
     const well = taped('p2b-f3-flu', LONG, preparedFully);
     expect(well.recs.some((r) => r.target === 'condition:illness')).toBe(false);
   }, 120_000);
@@ -1353,7 +1363,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     expect(fit!.focus).toBe('choice');
     expect(fit!.exercise).toBeUndefined();
     expect(fit!.why).toMatch(/^Playing it a way that didn’t fit cost each piece about (?:1 point|(?!1 )[\d.]+ points) off the whole\. Choose a way the material or the direction allows\.$/);
-    expect(nextWork(sim)).toContain(`${fit!.label}. ${fit!.why}`);
+    expect(drawnAs(nextWork(sim), fit!)).toBe(true);
   }, 120_000);
 
   it('PLAYER JOURNEY: stamina draining through long takes is advised as stamina, built by a Work Out, never as rest; a fitter twin isn’t advised it', () => {
@@ -1366,7 +1376,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     expect(s!.why).toContain('Work Out');
     expect(s!.why).toContain('Rest restores energy, not fitness.');
     expect(s!.why).not.toContain('Come to the work rested');
-    expect(unfit.next).toContain(`${s!.label}. ${s!.why}`);
+    expect(drawnAs(unfit.next, s!)).toBe(true);
     const fit = taped('p2b-f3-stamina', LONG, (sim, b) => { preparedFully(sim, b); sim.player.wellbeing.fitness = abilityFull(sim, sim.player, 'stamina'); });
     expect(fit.recs.some((r) => r.target === 'condition:stamina')).toBe(false);
   }, 120_000);
@@ -1390,7 +1400,8 @@ describe('F1: every note names what the evaluation found (brief 11)', () => {
       const top = recs.find((r) => r.forecast)!;
       expect(top.target, a).toBe(a);
       expect(w.limits.some((l) => l.what === top.target), a).toBe(true);
-      expect(next, a).toContain(`${top.label}, ${EXERCISE_BY_ID[top.exercise!]!.label}`);
+      expect(next, a).toContain(`${top.label}. Of what you can train`);
+      expect(next, a).toContain(`${EXERCISE_BY_ID[top.exercise!]!.label} at the`);
       // And the brief suggested beside a brief, as its pane asks (`suggestions` with the advice's first): leaning on it most.
       const idea = suggestions(sim.player, { target: top.target, label: top.label, level: levelOf(sim, sim.player, a), full: 100 }).find((s) => s.why.startsWith('It leans on'))!;
       expect(idea.why, a).toContain(`It leans on ${top.label.toLowerCase()} more than`);

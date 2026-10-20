@@ -111,7 +111,7 @@ export const START: readonly GuideEntry[] = [
     questions: ['How do I get back?', 'What are the keyboard shortcuts?', 'Can I link to a screen?', 'Where is the menu on a phone?'],
     where: { route: '/home', label: 'The Menu And The Breadcrumb' },
     available: 'Always. A place joins the menu once you’ve read its chapter.',
-    short: 'The menu down the left lists every place the guide has opened. Home is at the top, with the number of things waiting for you. On a screen narrower than a laptop’s, the menu folds away behind Menu. The breadcrumbs above a screen take you back along where you’ve been, and the browser’s Back and Forward buttons work too. Every screen has its own address, so a reload or a link opens it.',
+    short: 'The menu down the left lists every place the guide has opened, with Home at the top and the number of things waiting for you beside it. On a screen narrower than a laptop’s, the menu folds away behind Menu.\n\nThe breadcrumbs above a screen take you back along where you’ve been, and the browser’s Back and Forward buttons work too. Every screen has its own address, so a reload or a link opens it.',
     steps: [
       'Press a place on the menu to go there, or a breadcrumb to go back to it.',
       'Keys, anywhere but a text box: H for Home, C for the calendar, P for the Player Profile, ? for the guide’s contents, / to search it. None of them act while a dialog is open.',

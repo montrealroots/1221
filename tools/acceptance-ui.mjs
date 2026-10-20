@@ -1422,6 +1422,17 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
   });
   // The advice's two lines brief 12 added (F2-A10 (f) as the owner resolved it), read where the walkthrough sends a player.
   await step('[save: brief scenario] advice: What To Work On says what its forecast assumes of the work and whether preparation, training or both deserve attention', async () => {
+    // Behind Why This Recommendation from brief 16 (2026-10-20), opened from the keyboard: the control takes focus, Enter
+    // opens it, and a screen reader is told it's expanded (the playthroughs open it with the mouse).
+    const why = briefPane().locator('details[data-why]').first();
+    must(await why.count(), 'no Why This Recommendation');
+    const summary = why.locator('summary');
+    must(/^Why This Recommendation$/.test((await summary.innerText()).trim()), `its control reads: ${await summary.innerText()}`);
+    await summary.focus();
+    must(await summary.evaluate((el) => el === document.activeElement), 'Why This Recommendation doesn’t take focus');
+    await page.keyboard.press('Enter'); await wait(300);
+    must((await why.getAttribute('open')) !== null, 'Enter didn’t open Why This Recommendation');
+    must((await summary.evaluate((el) => el.closest('details').open)) === true, 'not open to the accessibility tree');
     const assumes = (await briefPane().locator('[data-assumes]').first().innerText().catch(() => '')).trim();
     const attention = (await briefPane().locator('[data-attention]').first().innerText().catch(() => '')).trim();
     must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
@@ -1560,7 +1571,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     const text = (await briefPane().innerText()).replace(/\s+/g, ' ');
     const grain = text.match(/Played that way, it suited the scene \([^)]*\) and added [\d.]+ points\. Your abilities and techniques cost it [\d.]+ points\./)?.[0];
     must(grain, `the take doesn’t say what the way gave: ${text.slice(text.indexOf('The Last Take'), text.indexOf('The Last Take') + 400)}`);
-    const advice = text.match(/(\d+) hours of its exercise(?:, an hour a day,)? would take it from \d+ to about \d+\. On your recent work, judged again as you are now, that’s forecast to be worth about [\d.]+ points? a piece/)?.[0];
+    const advice = text.match(/Estimate: (\d+) hours(?:, an hour a day,)? would take it from \d+ to about \d+, worth about [\d.]+ points? a piece on your recent work\./)?.[0];
     must(advice, 'What To Work On isn’t forecast');
     await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);

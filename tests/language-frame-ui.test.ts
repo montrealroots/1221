@@ -15,6 +15,7 @@ import { createElement, type FunctionComponent, type ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, quickSave, refreshMeta } from '@/engine';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
+import { APPOINTMENT_KIND } from '@/engine/systems/appointments';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
 import { courseworkOf, trustOf } from '@/engine/systems/coursework';
 import type { Simulation } from '@/engine/core/simulation';
@@ -197,9 +198,26 @@ describe('the top bar’s dialogs', () => {
     shown = drawn(other, TimeControls);
     said = dialog(shown.html, 'A Visit To The Passport Office');
     expect(said).toContain('Going takes 30 minutes');
-    expect(said).toContain('You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. It happens the next time the clock moves, and you’re there if you’re awake and in the right city.');
+    // What starts and who's there (from 2026-10-20, brief 16): until then "It happens …, and you’re there if you’re awake
+    // and in the right city", without the hospital and an injury, which `present` reads.
+    expect(said).toContain('You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. A Visit To The Passport Office starts the next time the clock moves, and you’re there if you’re awake, in its town, and not in hospital or laid up with an injury.');
     expect(h.buttons.map((b) => b.text)).not.toContain('Skip It');
     expect(said).not.toContain('The school’s');
+
+    // A doctor's appointment asks only that you're awake and out of hospital (`presentForCare`): an injury that keeps you
+    // from class doesn't keep you from your own care. TEST SETUP: the appointment's kind with no appointment behind it,
+    // which its handler passes by.
+    const care = quickSave({}, 'frame-due-now-care');
+    for (const i of care.universe.scheduled) if (i.status === 'pending' && i.requiresPlayer) care.timeline.cancel(i.id, care.now);
+    const seen = care.now + 2 * MS_HOUR;
+    care.schedule({ at: seen, kind: APPOINTMENT_KIND, label: 'A Visit To Your Doctor', category: 'health', priority: 30, requiresPlayer: true, durationMinutes: 30, payload: {} });
+    h.given = new Map();
+    ({ game } = drawn(care, TimeControls));
+    h.sets = [];
+    game.advanceTo(seen + MS_HOUR);
+    for (const one of h.sets) h.given.set(one.at, one.value);
+    said = dialog(drawn(care, TimeControls).html, 'A Visit To Your Doctor');
+    expect(said).toContain('Press Go, or Stand Here to wait. A Visit To Your Doctor starts the next time the clock moves, and you’re there if you’re awake and out of hospital.');
   });
 
   it('Skip To Event says what the clock stops at on the way and what else happens, for none, one and several', () => {

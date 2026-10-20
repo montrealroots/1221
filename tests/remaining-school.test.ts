@@ -1108,9 +1108,12 @@ describe('school.s6.policy: SLATE’s design not presented as Yale’s policy, n
     expect(standing.interpret!.join(' ')).toContain('One review a term at the end of its classes, what it asks, and a standing that moves one step at a time are the game’s reading');
     expect(standing.interpret!.join(' ')).toContain('The notices that tell you your standing are the game’s words for the faculty’s decision, not the School’s or its staff’s.');
     const repeat = GUIDE_BY_ID['school.repeat']!;
-    expect(repeat.short).toContain('Some of this is the game’s own rule, not the Bulletin’s: an Incomplete coming from classes you missed while excused (the Bulletin has the student ask the instructor for one)');
-    expect(repeat.short).toContain('the limit of one extension');
-    expect(repeat.short).toContain('and the repeat and the additional term, for which the Bulletin has no rule.');
+    // Under Interpret from 2026-10-20 (brief 16, section 7: the rules and their sources after what to do); until then the
+    // summary's last sentence.
+    const whose = repeat.interpret!.join(' ');
+    expect(whose).toContain('Some of this is the game’s own rule, not the Bulletin’s: an Incomplete coming from classes you missed while excused (the Bulletin has the student ask the instructor for one)');
+    expect(whose).toContain('the limit of one extension');
+    expect(whose).toContain('and the repeat and the additional term, for which the Bulletin has no rule.');
     expect(repeat.reads!.find((f) => f.label === 'An Incomplete')).toMatchObject({ estimate: true });
     expect(repeat.later!.join(' ')).toContain('the review and its outcomes are the game’s model of the faculty');
     const { CHAPTER_BY_ID } = await import('@/engine/content/tutorial');

@@ -1,0 +1,4883 @@
+{
+ "base": "http://localhost:4271",
+ "problems": [],
+ "pages": [
+  {
+   "label": "Creation, Step 1",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "SLATE is a life simulator. Here you create the actress you’ll play.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Your legal name is the one on your documents. What people call you can be different.",
+     "sentences": 2,
+     "words": 16
+    },
+    {
+     "tag": "p",
+     "text": "Any size or shape works. SLATE crops it to a headshot and keeps a small copy in the save. It’s only for show: the game never looks at what’s in it.",
+     "sentences": 3,
+     "words": 31
+    },
+    {
+     "tag": "p",
+     "text": "What people actually call you day to day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "With They/Them, you choose. Actor and Actress are two words for the same craft, and neither counts for more. The game calls you by the one you pick, and at school you’re cast in parts written for it, or for anyone.",
+     "sentences": 3,
+     "words": 41
+    },
+    {
+     "tag": "p",
+     "text": "Choose as many as are true. It’s part of who your character is and nothing more: it changes no ability, nothing in the game uses it, and the game never guesses it from a name or a country. Leave it blank if you’d rather not say.",
+     "sentences": 3,
+     "words": 46
+    },
+    {
+     "tag": "p",
+     "text": "Where you’re from, which isn’t always where you live now. It’s what you tell people when they ask, and it decides your citizenship.",
+     "sentences": 2,
+     "words": 23
+    },
+    {
+     "tag": "p",
+     "text": "Pick a country on the map, or find it in the list below.",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "p",
+     "text": "New York is marked. Outlines from Natural Earth 110m via world-atlas. Public domain. Countries too small to draw at this scale are still in the list below.",
+     "sentences": 4,
+     "words": 27
+    },
+    {
+     "tag": "p",
+     "text": "17,342 towns and cities on record.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "51 to choose from.",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "You’re a citizen of the country you were born in, so there’s nothing to pick. Change your place of birth and this changes with it.",
+     "sentences": 2,
+     "words": 25
+    },
+    {
+     "tag": "div",
+     "text": "You’ll be 24 when you start.",
+     "sentences": 1,
+     "words": 6
+    }
+   ]
+  },
+  {
+   "label": "Creation, Step 2",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "SLATE is a life simulator. Here you create the actress you’ll play.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Your temperament, not your talent. Each one changes a part of your life:",
+     "sentences": 2,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Emotional Stability: how fast stress builds and clears, and how much Composure you start with.",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "li",
+     "text": "Conscientiousness: how well you sleep, and how much Discipline you start with.",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Ambition: how fast stress builds, from work and from money alike.",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Risk Tolerance: above 65, your card’s autopay starts out paying only the minimum, so you carry a balance.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "li",
+     "text": "Extraversion: whether performing in front of people, an audience or your class, raises your stress or eases it.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "li",
+     "text": "Openness: whether rehearsing new work, a festival’s new play or a Cabaret piece, lifts your morale or lowers it.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "li",
+     "text": "Agreeableness: whether a day of rehearsal lifts your morale or lowers it.",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Apart from your starting Composure and Discipline, none of these makes you a better or worse actor. Composure is one of the abilities your performances are judged on.",
+     "sentences": 2,
+     "words": 28
+    },
+    {
+     "tag": "p",
+     "text": "Pick up to four. Traits come in opposing pairs, and you can’t have both of a pair. Between them, they change:",
+     "sentences": 3,
+     "words": 21
+    },
+    {
+     "tag": "li",
+     "text": "how fast stress builds and clears;",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "how well you sleep, and how much a night restores;",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "li",
+     "text": "how soon you need a shower;",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "how far your morale swings;",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "how hard an illness hits;",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "how sharp you are in the morning or the evening;",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "li",
+     "text": "which part of preparing a scene goes furthest;",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "how you warm to classmates, and how much a slight from one hurts;",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "and, for Frugal, Spender and Generous, what your food costs and how much a meal lifts you.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "A trait’s description and cost describe the whole person, but the game uses only the effects above. Once you’re playing, open a trait on your Player Profile to see exactly what it changes.",
+     "sentences": 2,
+     "words": 33
+    }
+   ]
+  },
+  {
+   "label": "Creation, Step 3",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "SLATE is a life simulator. Here you create the actress you’ll play.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "The films you love. Pick as many as are true: there’s no limit. Rehearsing or performing a play in a genre you love, a comedy or a tragedy, lifts your morale and eases your stress, though it doesn’t make you any better at it. A genre marked · has no plays here, so it’s only shown on your Player Profile.",
+     "sentences": 4,
+     "words": 60
+    },
+    {
+     "tag": "p",
+     "text": "Who you were before you arrived.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "The family you come from decides the money in your name on the first morning, and whether Yale’s needs assessment finds you need aid.",
+     "sentences": 1,
+     "words": 24
+    },
+    {
+     "tag": "div",
+     "text": "Money isn’t the constraint. Time and access are. $92,391 in checking and $413,043 in savings, and a card with a $65,217 limit and nothing owed on it. Yale finds that you don’t need aid, given your family’s means, so there’s no aid for living costs. The term’s Yale Health plan, $1,882.00, comes out of your bank each fall and spring.",
+     "sentences": 4,
+     "words": 60
+    }
+   ]
+  },
+  {
+   "label": "Creation, Step 4",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "SLATE is a life simulator. Here you create the actress you’ll play.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Your height and weight on the first morning. In feet, inches and pounds, the units of the United States, where you live.",
+     "sentences": 2,
+     "words": 22
+    },
+    {
+     "tag": "p",
+     "text": "Leave them blank and SLATE picks them at random, around the averages where you were born. Once you’re playing, your weight changes with what you eat and how active you are. A heavier body is more likely to develop diabetes, high blood pressure and arthritis over the years, at published rates, and a weight far from the middle either way makes a long life less likely.",
+     "sentences": 3,
+     "words": 66
+    },
+    {
+     "tag": "p",
+     "text": "You’re a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, one of 16 actors admitted this year: among the strongest of them, but not ahead of everyone.",
+     "sentences": 1,
+     "words": 35
+    },
+    {
+     "tag": "p",
+     "text": "You arrive in New Haven on August 24, 2026, the first day of the fall term. Tuition is covered, as it is for every student.",
+     "sentences": 2,
+     "words": 25
+    },
+    {
+     "tag": "p",
+     "text": "The money in your own name on the first morning.",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "p",
+     "text": "Your money is kept in the dollar (USD), the currency where you start, and stays in it wherever you go. Exchange rates are estimated, not live market rates.",
+     "sentences": 2,
+     "words": 28
+    },
+    {
+     "tag": "p",
+     "text": "Chase Total Checking, $15 a month unless waived. Chase Savings, 0.01% a year.",
+     "sentences": 2,
+     "words": 13
+    },
+    {
+     "tag": "div",
+     "text": "Tuition is covered, and $1,882.00 goes each term to your Yale Health plan. Yale’s aid for living costs goes by need.",
+     "sentences": 2,
+     "words": 21
+    },
+    {
+     "tag": "p",
+     "text": "If you lived outside America just before Yale, say where, and whether you kept a bank account there. A bank keeps an account open only for a customer who lived and banked in its country. Being born there doesn’t count.",
+     "sentences": 3,
+     "words": 40
+    },
+    {
+     "tag": "p",
+     "text": "17,342 towns and cities on record.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "51 to choose from.",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "17,282 more match. Keep typing to narrow it down.",
+     "sentences": 2,
+     "words": 9
+    }
+   ]
+  },
+  {
+   "label": "Creation, Step 5",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "SLATE is a life simulator. Here you create the actress you’ll play.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "24 · Actress · New Haven",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "You haven’t picked any traits. That’s fine: the dispositions above still shape your stress, your sleep, your morale and your card.",
+     "sentences": 2,
+     "words": 21
+    },
+    {
+     "tag": "div",
+     "text": "Your life starts with the clock paused. Once you press Play, a minute passes in the game for every real minute, and what’s on your calendar happens whether you’re watching or not.",
+     "sentences": 2,
+     "words": 32
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 1 Of 17, Your Life, Hour By Hour",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “What’s Coming” in the guide: what’s coming up, and what to do when the clock stops for it.",
+     "sentences": 1,
+     "words": 23
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “What Needs You” in the guide: what happened while you weren’t looking, and what’s waiting on you.",
+     "sentences": 1,
+     "words": 22
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “How You Are” in the guide: energy, stress, readiness, and the rest of your wellbeing.",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Your Life, Hour By Hour” in the guide: how SLATE works, and how to read Home.",
+     "sentences": 1,
+     "words": 21
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "How SLATE works, and how to read Home.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "In SLATE you live one life, hour by hour, in a real town with its own time, seasons, weather, prices, money and laws. This guide shows you how, one part at a time, and each chapter you read opens the part of the game it explains.",
+     "sentences": 2,
+     "words": 46
+    },
+    {
+     "tag": "p",
+     "text": "You start on Home. The line under the greeting shows the time, the town, its time zone, the season and the weather. Where You Are, further down, tells you more about the town.",
+     "sentences": 3,
+     "words": 33
+    },
+    {
+     "tag": "p",
+     "text": "Underlined words are links: press one to see more. Press the town’s name and its details open just below, with more links inside for its region, its country and its money. The date, the season and the daylight work the same way.",
+     "sentences": 3,
+     "words": 42
+    },
+    {
+     "tag": "p",
+     "text": "Some words only become links once you’ve read the guide chapter that covers them. A panel you can’t use yet says Locked and names the chapter to read. Press its Read About It button to go straight there.",
+     "sentences": 3,
+     "words": 38
+    },
+    {
+     "tag": "p",
+     "text": "Once you’ve read its chapter, you can open each part of your life from Home and from the menu down the left. On a small screen, press Menu to see the menu.",
+     "sentences": 2,
+     "words": 32
+    },
+    {
+     "tag": "p",
+     "text": "Each panel has a How This Works button that explains what the panel does and how it connects to the rest of the game. Press the ? key anywhere for the help’s contents, or the / key to search it. The clock waits while you read the help or this guide.",
+     "sentences": 3,
+     "words": 51
+    },
+    {
+     "tag": "p",
+     "text": "Save & Exit, in the top bar, saves your life and takes you back to the save slots. Press Continue there to pick up at the same moment.",
+     "sentences": 2,
+     "words": 28
+    },
+    {
+     "tag": "p",
+     "text": "A new life starts with the clock paused, so nothing happens until you’re ready. Read “What’s Coming” next to open the Calendar panel.",
+     "sentences": 2,
+     "words": 23
+    },
+    {
+     "tag": "li",
+     "text": "Where You Are",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "The date, the town, its region and country, its money, the season and the daylight, when you press them",
+     "sentences": 1,
+     "words": 19
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 2 Of 17, What’s Coming",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “What’s Coming” in the guide: what’s coming up, and what to do when the clock stops for it.",
+     "sentences": 1,
+     "words": 23
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “What Needs You” in the guide: what happened while you weren’t looking, and what’s waiting on you.",
+     "sentences": 1,
+     "words": 22
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “How You Are” in the guide: energy, stress, readiness, and the rest of your wellbeing.",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and what to do when the clock stops for it.",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "p",
+     "text": "The Calendar panel at the top of Home shows what’s coming up: the next thing you need to be at, how soon it is, and up to five more after it.",
+     "sentences": 1,
+     "words": 31
+    },
+    {
+     "tag": "p",
+     "text": "Press an entry’s name or its time to see when it starts, how long it lasts, where it is and what missing it would cost.",
+     "sentences": 1,
+     "words": 25
+    },
+    {
+     "tag": "p",
+     "text": "Anything you need to be at is a commitment: a class, a rehearsal call, a work-study shift, an appointment, a plan of your own. When the clock reaches one, it stops, and a dialog with the commitment’s name asks what you want to do.",
+     "sentences": 2,
+     "words": 44
+    },
+    {
+     "tag": "p",
+     "text": "Press Go to be there. Going takes as long as the commitment lasts, and the clock runs on through it. Stand Here closes the dialog and keeps the clock paused at the commitment.",
+     "sentences": 3,
+     "words": 33
+    },
+    {
+     "tag": "p",
+     "text": "You can only skip a plan of your own, so there’s no Skip It button for a class or an appointment. Press Go, or Stand Here to wait. It happens the next time the clock moves: you’re there if you’re awake, out of hospital and in its town, and if not, you miss it.",
+     "sentences": 3,
+     "words": 54
+    },
+    {
+     "tag": "p",
+     "text": "The clock hasn’t moved yet, so nothing has come due. Read “The Clock” next to start it.",
+     "sentences": 2,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "Calendar",
+     "sentences": 1,
+     "words": 1
+    },
+    {
+     "tag": "li",
+     "text": "Go",
+     "sentences": 1,
+     "words": 1
+    },
+    {
+     "tag": "li",
+     "text": "Skip It",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "The entries on it, when you press them",
+     "sentences": 1,
+     "words": 8
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 3 Of 17, The Clock",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “What Needs You” in the guide: what happened while you weren’t looking, and what’s waiting on you.",
+     "sentences": 1,
+     "words": 22
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “How You Are” in the guide: energy, stress, readiness, and the rest of your wellbeing.",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Starting and stopping time.",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Press Play, in the top bar, to start the clock, and Pause to stop it. The button always shows what pressing it will do. A new life starts with the clock paused.",
+     "sentences": 3,
+     "words": 32
+    },
+    {
+     "tag": "p",
+     "text": "The clock runs in real time: a minute in the game is a minute for you. While it runs, life goes on around you. Hours pass, you get tired and hungry, and anything that’s due happens.",
+     "sentences": 3,
+     "words": 36
+    },
+    {
+     "tag": "p",
+     "text": "The clock stops by itself at every commitment and waits for your answer, as “What’s Coming” explained. Sleep is the exception: it runs straight through everything in those hours, so the Sleep dialog lists what you’d sleep through before you start.",
+     "sentences": 2,
+     "words": 41
+    },
+    {
+     "tag": "p",
+     "text": "If you don’t want to wait, read “Moving Time On” next to jump ahead.",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "li",
+     "text": "Play and Pause",
+     "sentences": 1,
+     "words": 3
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 4 Of 17, Moving Time On",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “What Needs You” in the guide: what happened while you weren’t looking, and what’s waiting on you.",
+     "sentences": 1,
+     "words": 22
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “How You Are” in the guide: energy, stress, readiness, and the rest of your wellbeing.",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Jumping ahead, and what happens on the way.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "To jump ahead instead of waiting, press Advance in the top bar and choose how far: One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.) or One Week. Choose An Event lets you pick from the next fourteen things on your calendar.",
+     "sentences": 2,
+     "words": 52
+    },
+    {
+     "tag": "p",
+     "text": "Everything on the way happens, in order. If the jump would pass any commitments, a dialog called On The Way first says how many, and the clock still stops at each one to ask what you want to do.",
+     "sentences": 2,
+     "words": 39
+    },
+    {
+     "tag": "p",
+     "text": "Time only moves forward, so you can’t undo a jump.",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "p",
+     "text": "Read “What Needs You” next: it’s where you find out what happened.",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Advance",
+     "sentences": 1,
+     "words": 1
+    },
+    {
+     "tag": "li",
+     "text": "Choose An Event",
+     "sentences": 1,
+     "words": 3
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 5 Of 17, What Needs You",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “What Needs You” in the guide: what happened while you weren’t looking, and what’s waiting on you.",
+     "sentences": 1,
+     "words": 22
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “How You Are” in the guide: energy, stress, readiness, and the rest of your wellbeing.",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "What happened while you weren’t looking, and what’s waiting on you.",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "p",
+     "text": "What Needs You, on Home, is where you find out what’s happened and what’s waiting for you: groceries you couldn’t pay for, a late card payment, a teacher’s note on your work, a birthday. The number beside Home in the menu counts the notices and questions waiting.",
+     "sentences": 2,
+     "words": 47
+    },
+    {
+     "tag": "p",
+     "text": "Press a notice’s title to read it in full. If it has a Go There button, that takes you to the screen it’s about. Once you’ve seen them, press Mark Read, which shows how many are unread, to clear them from the panel.",
+     "sentences": 3,
+     "words": 43
+    },
+    {
+     "tag": "p",
+     "text": "Some notices are questions, with their answers on buttons. Dismiss takes a question off the list without answering it, but what it was about still stands: a tax return is still due, and you can still deal with it on its own screen.",
+     "sentences": 2,
+     "words": 43
+    },
+    {
+     "tag": "p",
+     "text": "When nothing is waiting, the panel tells you about anything that still needs your attention, such as money you owe or two commitments at the same time.",
+     "sentences": 1,
+     "words": 27
+    },
+    {
+     "tag": "p",
+     "text": "Read “How You Are” next, about your energy, stress and readiness.",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "What Needs You",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "Mark Read, which counts the notices it clears",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "A question’s answers, and Dismiss",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "A notice or a question, when you press it",
+     "sentences": 1,
+     "words": 9
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 6 Of 17, How You Are",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “How You Are” in the guide: energy, stress, readiness, and the rest of your wellbeing.",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Energy, stress, readiness, and the rest of your wellbeing.",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "p",
+     "text": "How You Are, on Home, shows three numbers. Energy is what you have left for today. It runs down every hour you’re awake, faster when you owe sleep, and only sleep brings it back. Stress eases while you still have energy and climbs once it runs out, and money you owe adds to it every day. Readiness is how sharp you’d be for work right now, and it comes from all the rest.",
+     "sentences": 5,
+     "words": 73
+    },
+    {
+     "tag": "p",
+     "text": "Behind those three is the rest of your wellbeing: morale, condition, fitness, nourishment, hygiene and the sleep you owe. Press Readiness to see the ones costing it most, up to three, and press any of those to see where it stands and what it does to you.",
+     "sentences": 2,
+     "words": 47
+    },
+    {
+     "tag": "p",
+     "text": "Condition is how sound your body is. Illness, going hungry, heavy stress and short nights wear it down, and a night of real rest mends it. Fitness is the same as your Stamina, the ability that keeps you going through a long scene or a night on stage. Neither is your energy, and neither is your health: illness, injury, care and health cover are on Papers.",
+     "sentences": 4,
+     "words": 66
+    },
+    {
+     "tag": "p",
+     "text": "Read “Sleep” next, about how your energy comes back.",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "li",
+     "text": "How You Are",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "Energy, stress, readiness and the rest of your wellbeing, when you press them",
+     "sentences": 1,
+     "words": 13
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 7 Of 17, Sleep",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Going to sleep, and getting your energy back.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Sleep is how you get your energy back. Press Sleep in the top bar, and the Sleep dialog asks how many hours, from half an hour to 14 hours. It suggests a number, from when you next need to be somewhere and how much sleep you owe, and shows when you’d wake.",
+     "sentences": 3,
+     "words": 52
+    },
+    {
+     "tag": "p",
+     "text": "Press the button with the hours on it, such as Sleep 8 Hours, to go to sleep, or Not Yet to close the dialog.",
+     "sentences": 1,
+     "words": 24
+    },
+    {
+     "tag": "p",
+     "text": "A night’s sleep gives you energy back, though less the more sleep you owe. More than about five hours of real rest also mends your condition, as far as your fitness and age allow, and less than that wears it down. A night under six hours adds to the sleep you owe.",
+     "sentences": 3,
+     "words": 52
+    },
+    {
+     "tag": "p",
+     "text": "Life goes on while you sleep. Anything on your calendar in those hours happens without you, and the dialog lists it before you press.",
+     "sentences": 2,
+     "words": 24
+    },
+    {
+     "tag": "p",
+     "text": "While you’re at a commitment, Sleep is grayed out, and the top bar says when you’ll be free.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "Read “Looking After Yourself” next, about eating, washing, working out and unwinding.",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Sleep",
+     "sentences": 1,
+     "words": 1
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 8 Of 17, Looking After Yourself",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Eating, washing, working out and unwinding.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Press Look After Yourself, in the top bar, for everything a day needs besides sleep: Eat A Meal, Order In, Shower, Work Out and Unwind. Each line shows, before you press it, how long it takes, what it costs and what it would change.",
+     "sentences": 2,
+     "words": 44
+    },
+    {
+     "tag": "p",
+     "text": "What matters most right now is at the top. Anything that costs you more every hour you leave it comes first (hunger, going unwashed, stress past its limit), then whatever would do most for your readiness. The top line is marked Needed Now or Most Worth It.",
+     "sentences": 3,
+     "words": 47
+    },
+    {
+     "tag": "p",
+     "text": "Your groceries are bought each day at your town’s prices, and you eat through them during the day. Eat A Meal feeds you and lifts your morale, more the hungrier you were. Order In does the same without the cooking, at the price of a delivery. Shower gets you clean and eases stress. Unwind eases stress and lifts your morale.",
+     "sentences": 5,
+     "words": 60
+    },
+    {
+     "tag": "p",
+     "text": "Work Out builds fitness (your Stamina) and eases stress. It costs energy, uses up some of what you’ve eaten and leaves you needing a shower. On a dry, mild day it’s a run, which builds a little more than a workout indoors.",
+     "sentences": 3,
+     "words": 42
+    },
+    {
+     "tag": "p",
+     "text": "If you can’t do something right now, it’s grayed out with the reason.",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "p",
+     "text": "Read “Your Own Plans” next, to put something of your own on the calendar.",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "li",
+     "text": "Look After Yourself",
+     "sentences": 1,
+     "words": 3
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 9 Of 17, Your Own Plans",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Putting something of your own on the calendar.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Press Open Calendar, on Home’s Calendar panel, to see the whole month. Press a day, then Put Something On It. Say what it is, when it starts and how long it lasts, from half an hour to all day, then press Put It On.",
+     "sentences": 3,
+     "words": 44
+    },
+    {
+     "tag": "p",
+     "text": "A plan of your own works like any other commitment: the clock stops at it, and you choose Go or Skip It. You can have two commitments at the same time, and the calendar marks them as a clash.",
+     "sentences": 2,
+     "words": 39
+    },
+    {
+     "tag": "p",
+     "text": "To take a plan off before it starts, press it on the Calendar screen, then Call It Off. If you sleep through a plan, or it comes while you’re in hospital, you miss it.",
+     "sentences": 2,
+     "words": 34
+    },
+    {
+     "tag": "p",
+     "text": "A plan happens in the town where you make it, and nothing in the game takes you away from that town.",
+     "sentences": 1,
+     "words": 21
+    },
+    {
+     "tag": "p",
+     "text": "Read “Weather” next to see the weather in your town.",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "li",
+     "text": "Open Calendar",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Put Something On It and Call It Off",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "Your plans and the stretches between them, when you press them",
+     "sentences": 1,
+     "words": 11
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 10 Of 17, Weather",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "The weather in your town, today and the days ahead.",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "p",
+     "text": "The Weather panel on Home shows the weather now and for the next few days. Press today’s weather, or any day, to see more: the week, each day and each hour.",
+     "sentences": 2,
+     "words": 31
+    },
+    {
+     "tag": "p",
+     "text": "The weather comes from your town’s climate and the season, with some day-to-day luck, and it stays the same however often you look.",
+     "sentences": 1,
+     "words": 23
+    },
+    {
+     "tag": "p",
+     "text": "It affects two things: whether a workout is a run outdoors, and the weeks when the flu goes around.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Read “Drama School” next: it’s where your life as an actor begins.",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Weather",
+     "sentences": 1,
+     "words": 1
+    },
+    {
+     "tag": "li",
+     "text": "The sky, the week, each day and each hour, when you press them",
+     "sentences": 1,
+     "words": 13
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 11 Of 17, Drama School",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Classes, coursework, casting and your degree at Yale.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "You start as a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, in New Haven: one of the sixteen actors admitted this year, among the strongest of them but not ahead of everyone. You arrive on the first day of the fall term for registration and orientation, and classes start a week later.",
+     "sentences": 2,
+     "words": 61
+    },
+    {
+     "tag": "p",
+     "text": "The school is where you train, get cast and earn your degree. To open it, press the Yale button on the School line in Your Affairs on Home, or choose School in the menu. The School line shows your year, your standing, your place in the class and what’s next. The School screen’s tabs are Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, and Terms And Award.",
+     "sentences": 4,
+     "words": 68
+    },
+    {
+     "tag": "p",
+     "text": "Classes run from nine to three on class days. Go to them, awake and in New Haven, and your craft grows, more if you arrive rested. Your fifteen classmates improve too, each at their own pace, and you’re cast alongside them and against them.",
+     "sentences": 3,
+     "words": 44
+    },
+    {
+     "tag": "p",
+     "text": "If you’re unwell, press Call In Sick on Classes before the day’s first commitment starts (on a class day, at the latest when the clock stops at nine for your classes). You count as unwell with the flu, an injury that limits your work, or condition under 55. That excuses the day’s classes, labs, rehearsal calls and work-study shift, and a partner rehearsal you miss while you’re ill isn’t held against you. A day in hospital is excused without asking. Staying away when you’re well counts as an absence.",
+     "sentences": 5,
+     "words": 89
+    },
+    {
+     "tag": "p",
+     "text": "Your craft, on Standing And Craft, is the 17 techniques the school trains and four of your abilities: Emotional Depth, Memory, Physical Expression and Vocal Expression. A technique is a skill a class trains. An ability is something about you; your Player Profile shows all twelve, these four included. Composure, shown beside your craft, eases the nerves that add stress before every performance, and every performance builds it.",
+     "sentences": 4,
+     "words": 68
+    },
+    {
+     "tag": "p",
+     "text": "Each course sets pieces in class: a scene, a song, a movement score. On Coursework, prepare each piece one step at a time, answer its Table Work questions, and choose how you’ll play it. Where the text supports more than one answer to a question, any of them is right. Choosing how to play a scene isn’t the same as rehearsing it: the choice only pays off once you’ve rehearsed it on your feet.",
+     "sentences": 4,
+     "words": 74
+    },
+    {
+     "tag": "p",
+     "text": "A scene pairs you with a classmate. To rehearse together, choose a day and a time under Rehearsing With, at least two hours ahead, and press Ask with their name, such as Ask Zoe. A rehearsal that goes ahead builds your scene together and their trust in you. If they say no or don’t turn up, Run It With A Reader works your side of the scene with someone reading their lines. It’s slower, and your partner’s side stays where it was.",
+     "sentences": 5,
+     "words": 82
+    },
+    {
+     "tag": "p",
+     "text": "Shown Today, on each piece, tells you where it stands now: what it would come to if you showed it today, which parts are still short, and the steps that would fix them. It’s a forecast, not a result. When the piece is shown in class, your own work is judged, and so is the scene as a whole, with what your partner brought, which also changes the bond between you. Your teacher’s note says what held it back most. The note is the game’s, written as your course’s teachers would say it.",
+     "sentences": 5,
+     "words": 93
+    },
+    {
+     "tag": "p",
+     "text": "If too many of a term’s pieces are coming out Unready, you’ll get a notice during the term, A Word On Your Coursework, with the date the faculty review it. That’s a warning, not the review itself: the review comes at the end of the term’s classes.",
+     "sentences": 2,
+     "words": 47
+    },
+    {
+     "tag": "p",
+     "text": "At the term review, the faculty look at your attendance at classes, calls and assigned shifts, how you’ve grown compared with the class, your work on stage and your coursework. Coursework This Term, on Standing And Craft, counts the term the way the review will. Fall short on any of them and you drop a step: from good standing to academic concern, from concern to academic warning, and from warning to dismissal. Meet them all and you’re back in good standing.",
+     "sentences": 4,
+     "words": 81
+    },
+    {
+     "tag": "p",
+     "text": "Every student works: six hours on the Saturdays of class weeks, and at least 50 more hours of evening shifts front of house at Yale Rep during the term, which you sign up for with Take An Elective Shift on Shifts And Pay. You’re paid for your hours on Fridays.",
+     "sentences": 2,
+     "words": 50
+    },
+    {
+     "tag": "p",
+     "text": "From your first spring, the chair casts you in one of the School’s productions each term, and once a year, if you’re in good standing, you’re at Yale Rep too, usually as an understudy. Casting shows your part and Why This Cast. Between rehearsal calls, Learn The Part, Catch Up The Blocking and Work On The Note prepare your part.",
+     "sentences": 3,
+     "words": 60
+    },
+    {
+     "tag": "p",
+     "text": "Missing two calls in a term, labs and rehearsals together, takes you out of the casting pool until a term review finds you in good standing. Missing a performance, or not being in New Haven when you’re called to go on, is a serious breach: it puts you on academic warning straight away, and if you’re already on warning, you’re dismissed.",
+     "sentences": 2,
+     "words": 61
+    },
+    {
+     "tag": "p",
+     "text": "Work It Through, on a scene or a part, lists the problems its forecast shows. Pick one, try a way of working on it, and compare the figure before and after. Then keep the change or put it back.",
+     "sentences": 3,
+     "words": 39
+    },
+    {
+     "tag": "p",
+     "text": "The Yale Cabaret is the students’ own theater: Join A Cabaret Show, on Casting, puts you in one of its shows, one a term. In the spring of your first and second years, Join The Summer Company puts you in the Yale Summer Cabaret for the summer, with a weekly stipend.",
+     "sentences": 2,
+     "words": 51
+    },
+    {
+     "tag": "p",
+     "text": "Plays To Read, on Coursework, lists plays first staged since 2000. Press Read It to read the Haas Arts Library’s copy, and once you’ve read it, Research It.",
+     "sentences": 2,
+     "words": 28
+    },
+    {
+     "tag": "p",
+     "text": "Read “You As An Actor” next. It opens your Player Profile: your abilities, your practice and the genres you work in.",
+     "sentences": 2,
+     "words": 21
+    },
+    {
+     "tag": "li",
+     "text": "School",
+     "sentences": 1,
+     "words": 1
+    },
+    {
+     "tag": "li",
+     "text": "Your school, from its line on Home",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "li",
+     "text": "Call In Sick",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "Take An Elective Shift",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Join A Cabaret Show",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Join The Summer Company",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Coursework: preparing, the table, how you’ll play it, asking your partner, and Run It With A Reader",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "Work It Through: name a problem, try a way, keep it or put it back",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "li",
+     "text": "Learn The Part, Catch Up The Blocking and Work On The Note",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Plays To Read: Read It and Research It",
+     "sentences": 1,
+     "words": 8
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 12 Of 17, You As An Actor",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Your abilities, your practice, and the genres you work in.",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "p",
+     "text": "The Player Profile shows you as an actor. Open it with Player Profile in the menu, or press your name at the bottom of the menu. It lists your twelve abilities: the acting abilities Emotional Depth, Presence, Listening And Responsiveness, Imagination, Focus, Memory, Adaptability, Composure, Vocal Expression and Physical Expression, and beside them Discipline and Stamina. Each runs from 0 to 100. Press one to see what it is, how it grows and where it counts.",
+     "sentences": 5,
+     "words": 76
+    },
+    {
+     "tag": "p",
+     "text": "Next to them are your 17 techniques, the skills the school trains. A technique is Mastered at 90. The traits you chose at the start are there too: press one to see what it changes.",
+     "sentences": 3,
+     "words": 35
+    },
+    {
+     "tag": "p",
+     "text": "Four different things make you better. Your abilities are part of you: how you listen, how you hold your nerve. Your techniques are skills a class trains. Your genre knowledge is how well you know a kind of play or film. Practice is work you set yourself, outside class.",
+     "sentences": 5,
+     "words": 49
+    },
+    {
+     "tag": "p",
+     "text": "Classes, coursework, rehearsals and nights on stage build what they train, up to the level classes reach. Practice takes you further, all the way to the top. To practice, press the exercise in the Practice column beside an ability or a technique, such as Comic Timing, choose a Tier and a Focus, and press Practice An Hour. Before you start, it tells you about how much the hour will add, and why.",
+     "sentences": 4,
+     "words": 72
+    },
+    {
+     "tag": "p",
+     "text": "Doing the same work again on the same day builds only half as much, whether it’s a class, a night or an exercise, and practice past 4 hours a day stops counting. A technique past 90 improves no result, because no piece asks more of it.",
+     "sentences": 2,
+     "words": 46
+    },
+    {
+     "tag": "p",
+     "text": "A finished piece, whether a showing, a night on stage or a self-tape, is judged on the qualities your teacher looks for: believability, interpretation, connection, execution, consistency and responsiveness, as each piece calls for them. Each piece says what held it back and by how much. Your Work So Far looks across all your pieces: what they show most, and what keeps holding them back.",
+     "sentences": 3,
+     "words": 65
+    },
+    {
+     "tag": "p",
+     "text": "Under Genres, Study It reads a play or watches a film of that genre, which builds your Familiarity with it. Every genre also has a practice brief, an original scene written for SLATE. Press Open Its Brief to read where and when it’s set, who the two of you are, what you want, what’s in the way and where it turns.",
+     "sentences": 3,
+     "words": 61
+    },
+    {
+     "tag": "p",
+     "text": "On the brief, prepare it with Break It Down, Learn The Lines and Rehearse It On Your Feet. Read It This Way chooses a reading, what you take the scene to be about, and then you choose how to play it; once you have, Work It Through works on it as it does on a class scene. Read With chooses who reads the other part: a recording, or a classmate who learns it as you rehearse together. When you’re ready, press Tape It.",
+     "sentences": 4,
+     "words": 83
+    },
+    {
+     "tag": "p",
+     "text": "A self-tape also asks you to know its genre. Your genre knowledge is the better of your Familiarity and your Work In It (your nights on stage and self-tapes in that genre), and it counts as complete at 90. A genre you’ve never met costs you at most 25% of a tape’s interpretation.",
+     "sentences": 3,
+     "words": 53
+    },
+    {
+     "tag": "p",
+     "text": "What To Work On forecasts what 20 sessions of practice, a day apart, would be worth for each of the things your recent pieces depend on. It’s a forecast, not a result, and it says what it assumes. What finishing a piece’s own preparation would bring is shown separately, so you can tell how ready a piece is now from how ready it could be.",
+     "sentences": 3,
+     "words": 65
+    },
+    {
+     "tag": "p",
+     "text": "A way of playing a scene can suit it or work against it, depending on the scene: its genre, its reader, its tones, its turns and the reading you’ve chosen. One that suits the scene is easier to make work and quicker to rehearse, and one that works against it is harder. Either can make the better tape if it plays to your strengths, and the tape tells you which did.",
+     "sentences": 3,
+     "words": 71
+    },
+    {
+     "tag": "p",
+     "text": "Your tape with your reader is what a casting office would see. A Strong tape earns a callback: a harder version of the scene with a note on how to play it, which only a tape played that way answers.",
+     "sentences": 2,
+     "words": 40
+    },
+    {
+     "tag": "p",
+     "text": "Loving a genre makes a rehearsal or a night in a play of that kind a better day for you, but it never makes the performance better.",
+     "sentences": 1,
+     "words": 27
+    },
+    {
+     "tag": "p",
+     "text": "Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.",
+     "sentences": 2,
+     "words": 16
+    },
+    {
+     "tag": "li",
+     "text": "Player Profile",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Practice",
+     "sentences": 1,
+     "words": 1
+    },
+    {
+     "tag": "li",
+     "text": "Study It",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Open Its Brief",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "Break It Down, Learn The Lines, Rehearse It On Your Feet",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Read It This Way",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Read With",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Tape It",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Your Work So Far",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "An ability, a genre and a piece of work, when you press them",
+     "sentences": 1,
+     "words": 13
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 13 Of 17, Cover, Benefits And Returns",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Health cover, benefits, pensions and tax returns.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Papers holds your health cover, your benefits and pension, your tax returns and your documents. To open it, press the Papers button on the Papers line in Your Affairs on Home, or choose Papers in the menu. The Papers line shows what covers you, any unemployment pay, and anything that needs doing, such as a tax return that’s due. The tabs are Tax Returns, Health Cover, Unemployment, Passport And ID, and Permission To Work.",
+     "sentences": 4,
+     "words": 74
+    },
+    {
+     "tag": "p",
+     "text": "While you’re at school, the Yale Health plan covers you. It’s billed each term, and it pays for a doctor’s visit only at Yale Health Center. Your Cover, on Health Cover, shows what covers you and what it costs.",
+     "sentences": 3,
+     "words": 39
+    },
+    {
+     "tag": "p",
+     "text": "You don’t book a doctor whenever you like. When you’re ill enough to need one, or a long-term condition is due for its review, you get an appointment at your practice after its usual wait, and it goes on your calendar. Your Doctor, on Health Cover, is where you choose the practice. In New Haven, Yale Health Center sees a student it covers the next weekday, at no charge. Go, and you’re seen and billed; miss it, and you aren’t, and Book An Appointment books it again.",
+     "sentences": 5,
+     "words": 87
+    },
+    {
+     "tag": "p",
+     "text": "Each piece of care brings a bill for your share, the part your plan doesn’t pay, under Care And Its Bills. On its due date it’s taken from your checking account, and if there isn’t enough, it becomes medical debt, which Pay It Off settles. If you have insurance, Apply For Assistance puts a Connecticut hospital bill in for the hospital’s financial assistance before it’s due.",
+     "sentences": 3,
+     "words": 66
+    },
+    {
+     "tag": "p",
+     "text": "After school, Yale’s plan covers you to the end of July. From 60 days before it ends, press Enroll, under The Marketplace on Health Cover, to join the cover you qualify for: Medicaid or a state program if your income is low enough, or a marketplace plan. Enrolling isn’t the same as being covered: you’re covered only from the plan’s start date, usually the first of the next month. Drop The Plan ends a plan of your own.",
+     "sentences": 4,
+     "words": 78
+    },
+    {
+     "tag": "p",
+     "text": "A long-term condition such as asthma needs care each month, which you pay for under Your Long-Term Conditions, on Health Cover. Let It Go stops the care, and Keep It Up starts it again. Depression can be lifted by a course of therapy: choose a Therapist where you live and press Begin A Course Of 8 Sessions.",
+     "sentences": 3,
+     "words": 57
+    },
+    {
+     "tag": "p",
+     "text": "If you’re out of paid work, press File A Claim, on Unemployment, to claim unemployment insurance where you live, if your past wages qualify; in Connecticut a claim pays only once you’ve left school. SNAP, on the same tab, puts food assistance on an EBT card for groceries; press its Apply button to ask for it. You claim a state pension on Unemployment too, once your work record and your age allow.",
+     "sentences": 3,
+     "words": 72
+    },
+    {
+     "tag": "p",
+     "text": "Each February, the year’s tax return is ready on Tax Returns if you owe tax, are owed a refund or earned at least the standard deduction, and every year on an F-1. Press File It by mid-April. Any balance is paid from your bank, savings included, and filing late with a balance costs penalties. Whatever your bank couldn’t pay grows until you settle it with Pay.",
+     "sentences": 4,
+     "words": 66
+    },
+    {
+     "tag": "p",
+     "text": "After you report a document lost or stolen, File A Police Report, beside it on Passport And ID, files a report online where the police take reports that way. Report Lost itself opens with the next chapter.",
+     "sentences": 2,
+     "words": 37
+    },
+    {
+     "tag": "p",
+     "text": "Read “Passports And ID” next, about your passport, your ID, and your permission to study and work.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "Papers",
+     "sentences": 1,
+     "words": 1
+    },
+    {
+     "tag": "li",
+     "text": "Your Doctor, Book An Appointment and Your Pharmacy",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "Pay It Off and Apply For Assistance",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "li",
+     "text": "Enroll, Apply For HUSKY D, Request A Hardship Exception and Drop The Plan",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Appeal It",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Keep It Up, Let It Go and Fill A Longer Supply",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "A Therapist, and Begin A Course Of 8 Sessions",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "li",
+     "text": "Prepay Three Months and Prepay A Year",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "li",
+     "text": "Buy Dental and Drop Dental",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "File A Claim, and Apply under SNAP",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "li",
+     "text": "Claim Social Security and Claim It",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "File It and Pay, on Tax Returns",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "li",
+     "text": "File A Police Report and Report Stolen",
+     "sentences": 1,
+     "words": 7
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 14 Of 17, Passports And ID",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "Your passport and ID, what other countries ask of you, and your student status.",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "Your passport and ID are on Papers, under Passport And ID, and your student status and what follows it are under Permission To Work. Press any document you hold to see who issued it, the last digits of its number, when it was issued and when it runs out, and what it lets you do today.",
+     "sentences": 2,
+     "words": 56
+    },
+    {
+     "tag": "p",
+     "text": "A passport comes from the country you’re a citizen of, at its passport office’s fee and in its office’s time. Under Your Passport, press Apply For One, or Renew It if you have one, and, where the office sells a faster service, Apply Faster or Renew It Faster. Applying only starts it: you hold the new passport once it’s issued, and it cancels the old one, along with any travel authorization issued on it.",
+     "sentences": 3,
+     "words": 74
+    },
+    {
+     "tag": "p",
+     "text": "Your ID is the ID card of the state you live in. Under Your ID, press Get with the card’s name to apply for one at its fee. Connecticut mails it, and you can use it as photo ID once it arrives. A new bank asks to see valid photo ID (a passport, a license or an ID card) before it takes you on. A license that runs out can’t be renewed in the game, so use an ID card or a passport instead.",
+     "sentences": 5,
+     "words": 84
+    },
+    {
+     "tag": "p",
+     "text": "Report Lost cancels a passport, a license, an international driving permit or an ID card, and Report Stolen does the same for one that was stolen. A lost passport cancels whatever was issued on it too, except an F-1.",
+     "sentences": 2,
+     "words": 39
+    },
+    {
+     "tag": "p",
+     "text": "A lost license is replaced by the state that issued it if you’re living there, or by mail from out of state where the issuer sends one, as New York does. In New York a replacement is free if the license was stolen and the police have your report: use File A Police Report, online where the police take reports that way, as New Haven’s do. A lost ID card is replaced with Replace It by the state that issued it, if you live there, at its fee, and it arrives after the issuer’s published wait.",
+     "sentences": 3,
+     "words": 96
+    },
+    {
+     "tag": "p",
+     "text": "Going Abroad shows what each country asks of someone with your citizenship: whether you can just go, need a travel authorization first, or need a visa. Pick a country to see what it asks for and what you’re missing. You can’t travel in the game, so this is information, not a form to fill in. A visa or a travel authorization covers a visit only: staying, or working, needs a different permission.",
+     "sentences": 4,
+     "words": 72
+    },
+    {
+     "tag": "p",
+     "text": "On an F-1, you’re in US status while you study and for sixty days after your program ends. After the degree, Apply For OPT, on Permission To Work, asks for twelve months’ permission to work in your field, which you lose after 90 days in all without work. Residence Abroad says what another country asks before you can make a home there.",
+     "sentences": 3,
+     "words": 62
+    },
+    {
+     "tag": "p",
+     "text": "Read “Money” next, about everything you have and owe.",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "li",
+     "text": "Passport And ID",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "Apply For One, Renew It and Apply Faster",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "Get, for the state’s ID card",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "Report Lost and Replace It",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "File A Police Report",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Permission To Work and Apply For OPT",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "li",
+     "text": "Residence Abroad",
+     "sentences": 1,
+     "words": 2
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 15 Of 17, Money",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "This opens when you read “Money” in the guide: everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "Everything you have and owe, at a glance.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "The Money line in Your Affairs on Home shows your primary checking account and your net worth (what you have, less what you owe), and, if you owe anything, how much. Your money is kept in the currency of the country you started in.",
+     "sentences": 2,
+     "words": 44
+    },
+    {
+     "tag": "p",
+     "text": "Press Your Affairs, the panel’s title, to see what you’re worth, and from there each account and each debt.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "p",
+     "text": "Your credit score decides whether a bank gives you a card, an overdraft or a loan, at what rate where the bank prices by it, and how high a card’s limit is and whether it’s raised. It rises with each card payment made on time, and slowly with no card at all while nothing is late or in collections. It falls when you use a card past 30% of its limit, pay late, miss a loan payment, apply for a card, leave a medical debt unpaid for a year, or have a debt charged off to collections.",
+     "sentences": 3,
+     "words": 97
+    },
+    {
+     "tag": "p",
+     "text": "You see the score only when a life is made, as a number in the United States and Canada and as a word elsewhere. After that, you can tell it from what banks will do for you.",
+     "sentences": 2,
+     "words": 37
+    },
+    {
+     "tag": "p",
+     "text": "Your accounts and your card are at your bank. Read “Your Bank” next to open them.",
+     "sentences": 2,
+     "words": 16
+    },
+    {
+     "tag": "li",
+     "text": "Money",
+     "sentences": 1,
+     "words": 1
+    },
+    {
+     "tag": "li",
+     "text": "Your accounts, net worth and debts, when you press them",
+     "sentences": 1,
+     "words": 10
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 16 Of 17, Your Bank",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Your accounts, cards, payments and borrowing, at a real bank where you live.",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "p",
+     "text": "Your money is at a real bank in the country you live in, in accounts with that bank’s own names and with numbers written the way that country writes them. To open the bank, press the button with its name on the Money line in Your Affairs on Home, or choose Money in the menu. Its tabs are Accounts, Cards, Payments And Cash, Borrowing, and Statements.",
+     "sentences": 3,
+     "words": 66
+    },
+    {
+     "tag": "p",
+     "text": "Move Money, on Accounts, moves money between your own accounts: choose where from, where to and how much, and press Move It. Between two accounts at the same bank it moves at once. To another bank it takes the sending bank’s time, or its country’s where the bank doesn’t set one, and it shows as Money In Transit until it arrives; where the country’s banks pay instantly, it arrives straight away. Money in transit is pending: it has left one account and isn’t in the other yet, so you can’t spend it.",
+     "sentences": 4,
+     "words": 92
+    },
+    {
+     "tag": "p",
+     "text": "An account that earns interest builds it each day, and the bank pays it at the end of the month, or in the months it pays interest. A checking account with a monthly fee takes the fee at the month’s end, unless that month met one of the bank’s conditions for waiving it, such as enough paid in, enough kept in the account, enough card purchases, or your age. The bank screen shows how this month stands.",
+     "sentences": 3,
+     "words": 77
+    },
+    {
+     "tag": "p",
+     "text": "Your credit card, on Cards, is the bank’s own, with its own name and terms. A statement comes on the 20th. Autopay pays the whole statement, or only the minimum if you choose, from the checking account it’s set on. Pay Card In Full pays the card off now, or as much of it as you have. Pay each statement in full and you’re charged no interest on it, unless the one before wasn’t paid in full.",
+     "sentences": 5,
+     "words": 77
+    },
+    {
+     "tag": "p",
+     "text": "If there isn’t enough to cover autopay, the payment comes back unpaid, and unless you’ve paid the minimum yourself, it counts as missed. Paying less than the minimum is late and costs a late fee. Miss two payments in a row and the card is suspended; miss six and it’s charged off to collections.",
+     "sentences": 3,
+     "words": 54
+    },
+    {
+     "tag": "p",
+     "text": "If your checking accounts and savings together can’t clear the card, you can ask for help with payments: the bank freezes the interest, sets a payment that clears the balance in four years, and suspends the card until the first statement or due date after it’s paid off.",
+     "sentences": 1,
+     "words": 48
+    },
+    {
+     "tag": "p",
+     "text": "You can apply for a card at any bank in the country that issues one, yours or another. The bank looks at your credit score and what you have to repay it from, and if it says yes, the card comes in about a week. You can hold one card from each bank. The day’s spending goes on your everyday card; Make It The Everyday Card moves it to another.",
+     "sentences": 4,
+     "words": 70
+    },
+    {
+     "tag": "p",
+     "text": "Statements, on their own tab, show every entry on each account you’ve held, month by month, with the balance after each. The Year adds up the interest, the tax taken off it and every fee. Alerts tell you, in What Needs You, when a checking account ends a day below an amount you set, when a payment is over an amount you set, when a statement is ready, and, unless you turn it off, when an account can’t cover a payment due in the next few days.",
+     "sentences": 3,
+     "words": 87
+    },
+    {
+     "tag": "p",
+     "text": "How You Pay, on Payments And Cash, sets how the day’s spending is paid: by debit card, by credit card or in cash. If that way can’t cover a purchase, it isn’t made, and you owe nothing for it. Cash takes money out at a machine or the counter, for the bank’s fee, and pays cash back in.",
+     "sentences": 3,
+     "words": 58
+    },
+    {
+     "tag": "p",
+     "text": "You can lock a card, so nothing new goes on it, and unlock it again. Report one lost, stolen or damaged and it stops working at once, and a new card with a new number follows. If a charge isn’t yours, report it in time: the law decides how much of it you pay and how soon the rest comes back.",
+     "sentences": 3,
+     "words": 61
+    },
+    {
+     "tag": "p",
+     "text": "If your bank offers one, an overdraft lets your account go below zero, with interest and any fee. A personal loan, on Borrowing, is repaid in equal monthly payments. You can open accounts at another bank where you live, and switch to it.",
+     "sentences": 3,
+     "words": 43
+    },
+    {
+     "tag": "p",
+     "text": "Read “A Whole Life” next: your own page, birthdays and the end.",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Your bank, from the Money line on Home",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "Your credit card, Pay Card In Full and Autopay",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "li",
+     "text": "Apply, several cards and the everyday one, close, the statement day, the limit, going over it, and help with payments",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "li",
+     "text": "Statements, The Year and Alerts",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Cash: taking it out and paying it in",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "The card’s offers: its introductory rate, a balance or money transfer, a plan, and rewards",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "li",
+     "text": "Your cards: locking one, reporting it lost or stolen, and payments that weren’t yours",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "li",
+     "text": "Term deposits, round-ups, dormant and unclaimed accounts, and canceling something new",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "How You Pay, standing orders and payments set for a date",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Move Money",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Open and close a savings account",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "Arrange an overdraft",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "Put money in a term deposit",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "Borrow, and pay a loan off",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "Opt in or out of debit card overdrafts",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "Pay a debt in collections",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Switch bank",
+     "sentences": 1,
+     "words": 2
+    }
+   ]
+  },
+  {
+   "label": "Guide, Chapter 17 Of 17, A Whole Life",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Your own page, birthdays, age, and the end.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Press your name on Home, or the line at the top of How You Are, to open your own page. It shows your whole wellbeing and your readiness, your traits, any long-term condition and any injury, and you can press each of them for more.",
+     "sentences": 2,
+     "words": 45
+    },
+    {
+     "tag": "p",
+     "text": "Your birthday comes every year, at nine in the morning. The age you turn changes how far your body can go and how much a night’s sleep gives back.",
+     "sentences": 2,
+     "words": 29
+    },
+    {
+     "tag": "p",
+     "text": "Every life ends. Each year carries the same chance of death as a real year at your age, from the US life table, adjusted for life expectancy where you live (known for fourteen countries), higher for a worn-down body and lower for one kept well. The game never tells you when.",
+     "sentences": 3,
+     "words": 51
+    },
+    {
+     "tag": "p",
+     "text": "When it ends, the clock stops for good, and the save shows who you were, what you earned and what you left behind. It stays in its slot until you delete it.",
+     "sentences": 2,
+     "words": 32
+    },
+    {
+     "tag": "p",
+     "text": "That’s every part of the game. To read any chapter again, press Guide at the top of the screen.",
+     "sentences": 2,
+     "words": 19
+    },
+    {
+     "tag": "li",
+     "text": "You, when you press your name",
+     "sentences": 1,
+     "words": 6
+    }
+   ]
+  },
+  {
+   "label": "Home, The First Day",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    }
+   ]
+  },
+  {
+   "label": "How This Works, From A Panel",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "7:30 AM in New Haven · EDT · Summer · ⛅ 63°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "The Calendar panel at the top of Home shows what’s coming: the next thing you need to be at, how long until it, and up to five more after it. When the clock reaches a commitment, it stops and asks what you want to do. Press Go to be there. You can also skip a plan of your own, call off a rehearsal with a classmate, or press Stand Here to wait.",
+     "sentences": 4,
+     "words": 72
+    },
+    {
+     "tag": "dd",
+     "text": "Home, The Calendar Panel, Open Calendar.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "dd",
+     "text": "From “What’s Coming”: the panel, Go, Skip It and the entries. Play, which moves the clock to a commitment, opens with “The Clock”.",
+     "sentences": 2,
+     "words": 23
+    },
+    {
+     "tag": "li",
+     "text": "Read the Calendar panel on Home: the next thing you need to be at, how long until it, its date and time, and under it up to five more things coming, such as a card statement or a birthday.",
+     "sentences": 1,
+     "words": 39
+    },
+    {
+     "tag": "li",
+     "text": "Press an entry’s name or its time to open it under the panel: what it is, when, how long it runs, and what missing it costs.",
+     "sentences": 1,
+     "words": 26
+    },
+    {
+     "tag": "li",
+     "text": "When the clock stops at something, a dialog named for it says the time and how long going takes. Press Go to be there.",
+     "sentences": 2,
+     "words": 24
+    },
+    {
+     "tag": "li",
+     "text": "For a plan of your own, you can press Skip It instead, and for a rehearsal with a classmate, Call It Off. Stand Here closes the dialog and leaves the clock paused at the commitment.",
+     "sentences": 2,
+     "words": 35
+    },
+    {
+     "tag": "li",
+     "text": "The Clock: Play And Pause",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Moving Time On",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "Your Own Plans",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "What Needs You",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "Your Standing And Classes",
+     "sentences": 1,
+     "words": 4
+    }
+   ]
+  },
+  {
+   "label": "Calendar, The First Day",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.",
+     "sentences": 2,
+     "words": 23
+    }
+   ]
+  },
+  {
+   "label": "Home, A Year In",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "9:30 AM in New Haven · EDT · Autumn · ⛅ 69°F Partly Cloudy",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "What’s coming up, and when.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "No questions are waiting on you.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Rested, steady and ready for a real day.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Its money, costs, taxes and languages",
+     "sentences": 1,
+     "words": 6
+    }
+   ]
+  },
+  {
+   "label": "Player Profile",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "As you made your character",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "Dispositions. Emotional Stability 55, how quickly stress builds and how quickly it clears, and where your Composure starts; Conscientiousness 55, how well you sleep, and where your Discipline starts; Ambition 60, how quickly stress builds, from work and from money alike; Risk Tolerance 50, 65 or under, so your card’s autopay began on the whole statement; Extraversion 55, how being watched as you perform, by an audience or a class, affects your stress; Openness 55, how rehearsing new work, a festival’s new play or a Cabaret piece, affects your morale; Agreeableness 55, how a day of rehearsal affects your morale.",
+     "sentences": 2,
+     "words": 100
+    },
+    {
+     "tag": "p",
+     "text": "Twelve abilities, 0 to 100. Practice today: 0 of 4 hours",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Work with your partner. Coming to your work short on work with your partner cost each piece about 6.9 points off the whole. That’s preparation, not training: prepare that part further before you show or tape the next piece.",
+     "sentences": 3,
+     "words": 39
+    },
+    {
+     "tag": "li",
+     "text": "Rehearsal. Coming to your work short on rehearsal cost each piece about 1 point off the whole. That’s preparation, not training: prepare that part further before you show or tape the next piece.",
+     "sentences": 3,
+     "words": 33
+    },
+    {
+     "tag": "li",
+     "text": "Taking the director’s notes. Coming to your work short on taking the director’s notes cost each piece about 0.9 points off the whole. That’s preparation, not training: prepare that part further before you show or tape the next piece.",
+     "sentences": 3,
+     "words": 39
+    },
+    {
+     "tag": "li",
+     "text": "Listening And Responsiveness, The Repetition Exercise at the Developing tier. 20 hours of its exercise, an hour a day, would take it from 53 to about 57. On your recent work, judged again as you are now, that’s forecast to be worth about 0.8 points a piece (9 of your last 12 pieces call on it; A Game Played Through would gain most, about +1.3). The forecast counts the 6 pieces held back most by their own preparation as if fully prepared. About 0.2 of that comes from the discipline 20 days of practice build, which any exercise kept up daily would bring too. Set Focus to Steady to start. Spaced pays more once your last session is a day to a week old. About as useful: Adaptability. Either is a sound next step. Apart from training, fully preparing the 6 pieces held back most by their own preparation would bring them about 12.98 points a piece as you are now. That’s preparation, not training, and it isn’t part of the 0.8 above. Next: The Repetition Exercise at the Developing tier, with Focus on Steady. It’s in the Practice column under Attributes And Craft on your Player Profile: open it and press Practice An Hour. An hour costs 3 energy. Not now: You’re at Classes until 3:00 PM. What the forecast assumes of your last 12 pieces: 3 were fully prepared, 3 were underprepared and are counted as they were, and 6 were underprepared but are counted as fully prepared. In Carlotta Festival Of New Plays, taking the director’s notes stood at 50% of the way to complete. In Heightened Text Scene, work with your partner stood at 0% of the way to complete. In Heightened Text Scene, revised, work with your partner stood at 0% of the way to complete. In Heightened Text Scene, work with your partner stood at 0% of the way to complete. In Heightened Text Scene, revised, work with your partner stood at 0% of the way to complete. In A Game Played Through, work with your partner stood at 0% and rehearsal at 0% of the way to complete. The forecast counts those pieces as fully prepared, since their own preparation held each back most. Counted as they were, 20 hours of listening and responsiveness would be worth about 0.45 a piece, not 0.77. None of them depends on knowing a genre. Both preparation and training are worth your time now, preparation more: coming to your recent work fully prepared would have added about 14.15 a piece as you are now (14.15 from each piece’s own preparation, 0.00 from knowing its genre in full), and 20 hours of listening and responsiveness would add about 0.77.",
+     "sentences": 25,
+     "words": 451
+    },
+    {
+     "tag": "li",
+     "text": "Adaptability, Adjustments at the Developing tier. 20 hours of its exercise, an hour a day, would take it from 48 to about 53. On your recent work, judged again as you are now, that’s forecast to be worth about 0.7 points a piece (9 of your last 12 pieces call on it; Carlotta Festival Of New Plays would gain most, about +0.9). The forecast counts the 6 pieces held back most by their own preparation as if fully prepared. About 0.2 of that comes from the discipline 20 days of practice build, which any exercise kept up daily would bring too. Set Focus to Steady to start. Spaced pays more once your last session is a day to a week old.",
+     "sentences": 6,
+     "words": 121
+    },
+    {
+     "tag": "p",
+     "text": "Stamina is your fitness. Full is the fittest a body your age can be, 99.3 now, and no work asks more of it. A workout builds it and holds it for 3 days, and so does a class that works the body as hard (Movement Invention, stage combat). After that it falls 0.18 a day toward 35, where an everyday life keeps it (Mujika & Padilla, 2000, on detraining); that rate is estimated. Two workouts a week keep it up (Hickson & Rosenkoetter, 1981). A second workout on the same day builds half as much. It’s the one ability that fades without use: the others keep what they’ve earned.",
+     "sentences": 7,
+     "words": 109
+    },
+    {
+     "tag": "p",
+     "text": "Seventeen techniques, each mastered at 90",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "0 loved; 0 of 149 studied or worked in",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "p",
+     "text": "You love: none chosen. Tragedy is worth studying next: your next part is in a play of that kind, and it’s the one of the play’s kinds you know least.",
+     "sentences": 2,
+     "words": 30
+    },
+    {
+     "tag": "p",
+     "text": "Whether anything holds your work back today",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Year 2 of 3, good standing",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "On stage: A Leading Part In A New Play in Carlotta Festival Of New Plays, 2027. School",
+     "sentences": 2,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "May 12, 2027: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged 42.0 (4 off)",
+     "sentences": 1,
+     "words": 21
+    },
+    {
+     "tag": "li",
+     "text": "September 8, 2026: First strong work: A Play In Its Context, 69.2",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "From 123 pieces judged, the material you’ve met and the choices you’ve made",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Your believability runs ahead of the rest: 57.5 on average across 17 pieces, against 52.6 overall. From: A Game Played Through: 68.9; A Simulated Rehearsal: 67.5; A Simulated Rehearsal: 66.9.",
+     "sentences": 2,
+     "words": 30
+    },
+    {
+     "tag": "li",
+     "text": "Your execution runs ahead of the rest: 57.7 on average across 39 pieces, against 52.6 overall. From: Sound Changes And A Text: 73.1; Sound Changes And A Text: 72.9; Table Work: 71.1.",
+     "sentences": 2,
+     "words": 32
+    },
+    {
+     "tag": "li",
+     "text": "Your interpretation runs ahead of the rest: 66.2 on average across 38 pieces, against 52.6 overall. From: A Voice Sequence: 75.3; Sound Changes And A Text: 75; A Voice Sequence: 74.9.",
+     "sentences": 2,
+     "words": 31
+    },
+    {
+     "tag": "li",
+     "text": "Work with your partner has held back 39 pieces, about 9.9 points off the whole each. From: Preparation, 387.4 points in all.",
+     "sentences": 2,
+     "words": 22
+    },
+    {
+     "tag": "li",
+     "text": "Stamina has held back 47 pieces, about 6.6 points off the whole each. From: An ability, 309.8 points in all.",
+     "sentences": 2,
+     "words": 20
+    },
+    {
+     "tag": "li",
+     "text": "Vocal Expression has held back 27 pieces, about 9.3 points off the whole each. From: An ability, 252 points in all.",
+     "sentences": 2,
+     "words": 21
+    },
+    {
+     "tag": "li",
+     "text": "The same note has been given 32 times and is still open: Work With Your Partner. From: The class’s notes: Work With Your Partner.",
+     "sentences": 2,
+     "words": 24
+    },
+    {
+     "tag": "li",
+     "text": "Playing Off A Partner: met or practiced 41 times, best 72.3. From: Your experience record.",
+     "sentences": 2,
+     "words": 15
+    },
+    {
+     "tag": "li",
+     "text": "Exact Timing: met or practiced 33 times, best 71.6. From: Your experience record.",
+     "sentences": 2,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Mixed Tone: met or practiced 24 times, best 71.6. From: Your experience record.",
+     "sentences": 2,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Heightened Prose: met or practiced 17 times, best 71.6. From: Your experience record.",
+     "sentences": 2,
+     "words": 13
+    },
+    {
+     "tag": "p",
+     "text": "Not met yet: Improvised Freedom, The Camera, The Microphone, Two Tones At Once. When you open a brief, one built on these is suggested beside it.",
+     "sentences": 2,
+     "words": 26
+    },
+    {
+     "tag": "li",
+     "text": "7 kinds of work judged, 0 genres worked in, 8 of 12 kinds of material met. From: A Scene Shown, A Written Analysis, Movement Work, Voice Work, An Improvisation, Partnered Physical Work and A Night On Stage.",
+     "sentences": 2,
+     "words": 37
+    },
+    {
+     "tag": "li",
+     "text": "Of 4 notes and requests on your craft, you answered none. From: 4 notes given, 0 worked on and 0 answered.",
+     "sentences": 2,
+     "words": 21
+    },
+    {
+     "tag": "li",
+     "text": "65 of 65 calls answered; 12 rehearsals with a partner kept. From: The school’s record of calls; your partners’ records.",
+     "sentences": 2,
+     "words": 20
+    },
+    {
+     "tag": "li",
+     "text": "42 pieces played with a partner, a reader or a company came to 47.9 together on average; of 5 slips by the others, you covered 1. From: 42 scenes, takes and nights with others.",
+     "sentences": 2,
+     "words": 34
+    },
+    {
+     "tag": "p",
+     "text": "Your last 400 changes, newest first",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Focus +0.030, Class: Play With Text (DRAM 353a)",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Imagination +0.023, Class: Play With Text (DRAM 353a)",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Script Analysis +0.041, Class: Play With Text (DRAM 353a)",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Emotional Depth +0.046, Class: Play With Text (DRAM 353a)",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Focus +0.038, Class: Text Analysis II (DRAM 163a)",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Imagination +0.030, Class: Text Analysis II (DRAM 163a)",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Script Analysis +0.054, Class: Text Analysis II (DRAM 163a)",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Imagination +0.026, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)",
+     "sentences": 1,
+     "words": 16
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Listening And Responsiveness +0.036, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)",
+     "sentences": 1,
+     "words": 18
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Emotional Depth +0.052, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Character Work +0.042, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Scene Study +0.043, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "September 22, 2027: Classical Text +0.097, Class: Acting II: Plays Of Extended And Heightened Language (DRAM 203a/b)",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "September 21, 2027: Adaptability +0.015, Coursework: the revision",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "September 21, 2027: Memory +0.055, A rehearsal call: Directors’ Thesis Production I",
+     "sentences": 1,
+     "words": 12
+    }
+   ]
+  },
+  {
+   "label": "School, Standing And Craft",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "MFA in Acting, class of 2029. Year 2 of 3, good standing.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Term Review On December 10, 2027",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Attendance counts 17 of 17 class days, 13 of 13 calls and 3 of 3 assigned shifts. At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once 3 or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing. Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning. After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.",
+     "sentences": 6,
+     "words": 160
+    },
+    {
+     "tag": "p",
+     "text": "You’re in the casting pool.",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "One term: You’d come back in the spring to the second halves of year-long courses (DRAM 203a/b, DRAM 213a/b and others) whose first halves you haven’t taken.",
+     "sentences": 1,
+     "words": 27
+    },
+    {
+     "tag": "p",
+     "text": "Three terms: You’d come back in the spring to the second halves of year-long courses (DRAM 203a/b, DRAM 213a/b and others) whose first halves you haven’t taken.",
+     "sentences": 1,
+     "words": 27
+    },
+    {
+     "tag": "p",
+     "text": "A medical leave needs a Yale Health physician’s written recommendation, and nothing in the last 30 days would lead to one: no illness, injury or stay in hospital.",
+     "sentences": 1,
+     "words": 28
+    },
+    {
+     "tag": "p",
+     "text": "18 of 29 courses passed so far. Only the terms to come stand between you and the degree.",
+     "sentences": 2,
+     "words": 18
+    },
+    {
+     "tag": "li",
+     "text": "Acting II: Plays Of Extended And Heightened Language: 11 of 11 classes attended.",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Speech And Accents II: 7 of 7 classes attended.",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "li",
+     "text": "Clown: 3 of 3 classes attended.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "Movement Invention II: 4 of 4 classes attended.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "Text Analysis II: 4 of 4 classes attended.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "Play With Text: 4 of 4 classes attended.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "Voice II: 6 of 6 classes attended.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "li",
+     "text": "The Body As Source II: 3 of 3 classes attended.",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "li",
+     "text": "Advanced Principles Of Acting Stage Combat: 3 of 3 classes attended.",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Alexander Technique II Tutorials: 3 of 3 classes attended.",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "li",
+     "text": "Singing II And Tutorials: 3 of 3 classes attended.",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "p",
+     "text": "What nerves do to a performance",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Composure keeps your work consistent under pressure, in a scene, a song, a self-tape, an audition and a night on stage, and steadies you after a slip. It grows a little with every night in front of an audience and every solo showing. To train it, practice Graded Exposure under Attributes And Craft on your Player Profile.",
+     "sentences": 3,
+     "words": 57
+    },
+    {
+     "tag": "p",
+     "text": "On Spring Term 2027",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "You and 15 classmates, 0 to 100",
+     "sentences": 1,
+     "words": 7
+    }
+   ]
+  },
+  {
+   "label": "School, Classes",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "MFA in Acting, class of 2029. Year 2 of 3, good standing.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Year 2: nine to three on class days",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Not now: You’re well enough to go. Staying away would count as an unexcused absence.",
+     "sentences": 2,
+     "words": 15
+    },
+    {
+     "tag": "p",
+     "text": "Next classes: September 23, 2027 at 9:00 AM. This term’s classes run from August 30, 2027 to December 10, 2027, with 3 breaks for holidays, Community Days, work periods and recesses. If you’re asleep or away from New Haven at nine, it counts as an absence. Calling in sick excuses it only when you’re unwell (condition under 55) or down with the flu. A day in hospital is excused automatically.",
+     "sentences": 5,
+     "words": 70
+    },
+    {
+     "tag": "p",
+     "text": "Required, every term they run",
+     "sentences": 1,
+     "words": 5
+    }
+   ]
+  },
+  {
+   "label": "School, Coursework",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "MFA in Acting, class of 2029. Year 2 of 3, good standing.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Your first week, August 24 to 28. Each session runs once, and you can catch up on one you missed",
+     "sentences": 2,
+     "words": 20
+    },
+    {
+     "tag": "li",
+     "text": "Speech And Accents II: Sound Changes And A Text, due September 28, 2027. Shown today, it would come to about 49.3 of 100 (Unready). Still to finish: Drills (Drill The Sounds).",
+     "sentences": 3,
+     "words": 31
+    },
+    {
+     "tag": "li",
+     "text": "Advanced Principles Of Acting Stage Combat: A Choreographed Sequence, due September 30, 2027. Shown today, it would come to about 22.8 of 100 (Unready). Still to finish: The Choreography Learned (Learn The Choreography); Drilled With Your Partner (ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader); Alone (Run It Alone, At Half Speed).",
+     "sentences": 3,
+     "words": 64
+    },
+    {
+     "tag": "li",
+     "text": "Voice II: A Voice Sequence, due September 30, 2027. Shown today, it would come to about 28.5 of 100 (Unready). Still to finish: The Sequence Learned (Learn The Sequence); Daily Practice (Practice The Sequence).",
+     "sentences": 3,
+     "words": 34
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 263a/b · Due September 27, 2027 · Skills: Clown And Mask, Comedy",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "p",
+     "text": "Not now: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 223a/b · Due September 28, 2027 · Skills: Speech, Accents And Dialects",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "p",
+     "text": "Not now: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 273a · Due September 28, 2027 · Skills: Physical Expression, Dance",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Not now: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 405a/b · Due September 30, 2027 · Skills: Stage Combat, Intimacy",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Not now: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Work On It With Your Partner: That note is already about working with your partner, so this wouldn’t add anything.",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 213a/b · Due September 30, 2027 · Skills: Vocal Expression",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "p",
+     "text": "Learn The Sequence: You’re at Classes until 3:00 PM. Practice The Sequence: Learn the sequence first.",
+     "sentences": 2,
+     "words": 16
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 233a/b · Due September 30, 2027 · Skills: Physical Expression, Dance",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Not now: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 413a/b · Due October 1, 2027 · Skills: Singing, Emotional Depth",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Learn The Song: You’re at Classes until 3:00 PM. Work The Lyric As Text: You’re at Classes until 3:00 PM. Practice Singing It: Learn the song first.",
+     "sentences": 3,
+     "words": 27
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 243a/b · Due October 1, 2027 · Skills: Physical Expression",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "p",
+     "text": "Review The Lesson: You’re at Classes until 3:00 PM. Practice The Directions: Review the lesson first.",
+     "sentences": 2,
+     "words": 16
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 203a/b · Due October 4, 2027 · Skills: Classical Text, Scene Study, Vocal Expression",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "p",
+     "text": "Read The Scene: You’re at Classes until 3:00 PM. Learn Lines: Read the scene first: you learn lines from a scene you know. Scan The Verse: Read the scene first. Rehearse Alone: Learn some of the lines first. Work On The Note: You can revise once it’s been shown and you have a note to work on. Run It With A Reader: You’re at Classes until 3:00 PM.",
+     "sentences": 6,
+     "words": 68
+    },
+    {
+     "tag": "li",
+     "text": "Verse",
+     "sentences": 1,
+     "words": 1
+    },
+    {
+     "tag": "li",
+     "text": "Timing: Some",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Physical Work: Some",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "Playing Off The Partner: Built On It. He comes to know her line by line.",
+     "sentences": 2,
+     "words": 15
+    },
+    {
+     "tag": "li",
+     "text": "A Private Exchange: Built On It. Quiet: an old man woken to music and his daughter’s kiss.",
+     "sentences": 2,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "Tone: lyric to grave, 2 changes of tone to play. Grief and tenderness at once.",
+     "sentences": 2,
+     "words": 15
+    },
+    {
+     "tag": "li",
+     "text": "Techniques It Asks: Classical Text",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Its Verse: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Its 2 Turns: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Its Grave Beats: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s States At The Limit: states pushed to their limit: for it",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Its Timing: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "A Private Exchange: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s Played Large: feeling sized past life, shaped in the body: against it",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s States At The Limit: states pushed to their limit: against it",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "A Private Exchange: against it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s Played Large: feeling sized past life, shaped in the body: for it",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s States At The Limit: states pushed to their limit: for it",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Its Verse: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s Played Large: feeling sized past life, shaped in the body: for it",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Its Timing: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Its Partner: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Fully prepared and on a good day, playing it this way would come to 58.9, the same as with nothing chosen. Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.",
+     "sentences": 2,
+     "words": 39
+    },
+    {
+     "tag": "p",
+     "text": "Work On It With Your Partner: That note is already about working with your partner, so this wouldn’t add anything.",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "Not now: Read the text first. You can answer the Table Work questions once you know it.",
+     "sentences": 2,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "What the forecast shows, worst first. Pick one to work on:",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "The Turn Into The Middle The change into the middle needs more rehearsal than the rest: it’s at 0% of the 95% it needs. It comes to 20.8, against 20.6 for the whole piece.",
+     "sentences": 2,
+     "words": 34
+    },
+    {
+     "tag": "li",
+     "text": "The Turn Into The Close The change into the close needs more rehearsal than the rest: it’s at 0% of the 95% it needs. It comes to 20, against 20.6 for the whole piece.",
+     "sentences": 2,
+     "words": 34
+    },
+    {
+     "tag": "li",
+     "text": "The Opening Isn’t Secure The Opening hasn’t been rehearsed enough: it’s at 0% of the 90% it needs. It comes to 21.5, against 20.6 for the whole piece.",
+     "sentences": 2,
+     "words": 28
+    },
+    {
+     "tag": "li",
+     "text": "With Your Partner: Not There Yet It costs your connection 40.9 points, and the whole piece 7.6. Its own preparation step works on it.",
+     "sentences": 2,
+     "words": 24
+    },
+    {
+     "tag": "li",
+     "text": "Listening And Responsiveness Holds It Back Your listening and responsiveness costs your connection 7.6 points, and the whole piece 1.4. The piece is weakest in the close, at 20. Working on it trains it a little, and playing one part of the scene another way can lean on a different ability.",
+     "sentences": 3,
+     "words": 51
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 163a · Due October 13, 2027 · Skills: Script Analysis",
+     "sentences": 1,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "The son has a 58 in chemistry, and anything under 60 costs him his place on the basketball team.",
+     "sentences": 1,
+     "words": 19
+    },
+    {
+     "tag": "li",
+     "text": "He turned in none of the last five lab reports.",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "li",
+     "text": "The father works nights and missed the two emails the teacher sent.",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Final grades go in on Friday, and one makeup lab would bring the grade above 60.",
+     "sentences": 1,
+     "words": 16
+    },
+    {
+     "tag": "li",
+     "text": "The teacher taught the boy’s older sister, who is at college on a scholarship.",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "Read The Play: You’re at Classes until 3:00 PM. Write It Up: Answer the questions first: there’s nothing to write up yet.",
+     "sentences": 2,
+     "words": 22
+    },
+    {
+     "tag": "li",
+     "text": "Everyday Speech",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Timing: Some",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Playing Off The Partner: Built On It. A negotiation between two people who want the same thing for the boy.",
+     "sentences": 2,
+     "words": 20
+    },
+    {
+     "tag": "li",
+     "text": "A Private Exchange: Some. An empty classroom after the other parents have gone.",
+     "sentences": 2,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "What’s Kept Hidden: Some. What the night shifts cost him, unspoken.",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Tone: grave, 1 change of tone to play",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Not now: Read the text first. You can answer the Table Work questions once you know it.",
+     "sentences": 2,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "What the forecast shows, worst first. Pick one to work on:",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Imagination Holds It Back Your imagination costs your interpretation 4.8 points, and the whole piece 2.5. Working on it trains it a little, and playing one part of the scene another way can lean on a different ability.",
+     "sentences": 2,
+     "words": 38
+    },
+    {
+     "tag": "p",
+     "text": "DRAM 353a · Due October 13, 2027 · Skills: Improvisation, Emotional Depth",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Not now: Priya has asked to rehearse. Answer them first, under Rehearsing With Priya.",
+     "sentences": 2,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "Work On It With Your Partner: That note is already about working with your partner, so this wouldn’t add anything.",
+     "sentences": 1,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "Your last twelve pieces",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Every note your pieces have been given, across all your courses, and where each one stands",
+     "sentences": 1,
+     "words": 16
+    },
+    {
+     "tag": "p",
+     "text": "What classmates bring you, and how you answered",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Who you’ve worked with, and how it’s gone",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "A Copy From The Haas Arts Library",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Not now: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 8
+    }
+   ]
+  },
+  {
+   "label": "School, Casting",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "MFA in Acting, class of 2029. Year 2 of 3, good standing.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "Blood Wedding, Fall Term 2027",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "The play asks for Emotional Depth, Physical Expression, Vocal Expression, Scene Study and Singing, as its kinds of play do (Tragedy, Romantic Drama). The chair reads every student for it the same way: their fit for the play, with a fifth of it scaled by how much of themselves they delivered in their runs since the last casting, and then a balance for who had the big parts in the School’s last productions. The best read gets the biggest part written for them.",
+     "sentences": 3,
+     "words": 83
+    },
+    {
+     "tag": "p",
+     "text": "Your 87% delivered comes from The Seagull, Yale Rep, 1 night (100%, counted as 1 night); Carlotta Festival Of New Plays, a School production, 4 nights (84%, counted as 4 nights). A Cabaret or Summer run counts half as much as a School production, each run up to eight nights, and a night missed when you weren’t in hospital counts as nothing delivered. How the nights were judged doesn’t count here: that’s in your work.",
+     "sentences": 3,
+     "words": 75
+    },
+    {
+     "tag": "p",
+     "text": "Directors’ Thesis Production I, by Federico García Lorca",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Learn The Part: You already know the part. Catch Up The Blocking: You haven’t missed any blocking. Work On The Note: There’s no note to work on.",
+     "sentences": 3,
+     "words": 27
+    },
+    {
+     "tag": "p",
+     "text": "Continuity, how evenly the character held from part to part: 97.8. The whole is the average of the parts; continuity comes from them, and isn’t added to it.",
+     "sentences": 2,
+     "words": 28
+    },
+    {
+     "tag": "p",
+     "text": "What the forecast shows, worst first. Pick one to work on:",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Part 1 Isn’t Secure Part 1 hasn’t been rehearsed enough: it’s at 68% of the 76% it needs. It comes to 53.1, against 51.2 for the whole piece.",
+     "sentences": 2,
+     "words": 28
+    },
+    {
+     "tag": "li",
+     "text": "The Turn Into Part 2 The change into part 2 needs more rehearsal than the rest: it’s at 68% of the 76% it needs. It comes to 51.7, against 51.2 for the whole piece.",
+     "sentences": 2,
+     "words": 34
+    },
+    {
+     "tag": "li",
+     "text": "The Turn Into Part 3 The change into part 3 needs more rehearsal than the rest: it’s at 68% of the 76% it needs. It comes to 50.7, against 51.2 for the whole piece.",
+     "sentences": 2,
+     "words": 34
+    },
+    {
+     "tag": "li",
+     "text": "The Turn Into Part 4 The change into part 4 needs more rehearsal than the rest: it’s at 68% of the 76% it needs. It comes to 49.3, against 51.2 for the whole piece.",
+     "sentences": 2,
+     "words": 34
+    },
+    {
+     "tag": "li",
+     "text": "Composure Holds It Back Your composure costs your consistency 24.8 points, and the whole piece 3.2. The piece is weakest in part 4, at 49.3. Working on it trains it a little, and playing one part of the scene another way can lean on a different ability.",
+     "sentences": 3,
+     "words": 47
+    },
+    {
+     "tag": "li",
+     "text": "Tiring Late In The Piece Your stamina costs the piece 0.7 points, most of it in part 4, which comes to 49.3.",
+     "sentences": 1,
+     "words": 22
+    },
+    {
+     "tag": "li",
+     "text": "Heightened Prose",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Timing: Some",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Physical Work: Much. A flight and a fight in the forest.",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Playing Off The Partner: Much",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Vocal Demand: Much. Lorca’s songs and verse passages.",
+     "sentences": 2,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "A Conflict Out Loud: Much. A flight and a fight in the forest.",
+     "sentences": 2,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Spoken To Many: Some. The wedding’s guests and songs.",
+     "sentences": 2,
+     "words": 9
+    },
+    {
+     "tag": "li",
+     "text": "Tone: lyric to grave, 3 changes of tone to play",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "li",
+     "text": "Its 3 Turns: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Its Grave Beats: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Its Lyric Beats: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s States At The Limit: states pushed to their limit: for it",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Its Timing: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s Played Large: feeling sized past life, shaped in the body: against it",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "A Conflict Out Loud: against it",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s States At The Limit: states pushed to their limit: against it",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s Played Large: feeling sized past life, shaped in the body: for it",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "A Conflict Out Loud: for it",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "Its Heightened Language: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Its Physical Score: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Tragedy’s Played Large: feeling sized past life, shaped in the body: for it",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "Its Timing: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Fully prepared and on a good day, playing it this way would come to 52.5, the same as with nothing chosen. Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.",
+     "sentences": 2,
+     "words": 39
+    },
+    {
+     "tag": "p",
+     "text": "From the class with you: Chloe Tanaka as The Bride; Aaliyah Bennett as The Mother; Mateo Sullivan as Leonardo; Hannah Rivera as Leonardo’s Wife; Ethan Haddad as The Moon; Imani Kowalski as The Beggar Woman; Julian Okafor as The Bride’s Father. The rest of the cast are from the other two classes.",
+     "sentences": 2,
+     "words": 52
+    },
+    {
+     "tag": "p",
+     "text": "Yale Rep’s October Production, by Bernard Shaw",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Learn The Part: You already know the part. Catch Up The Blocking: You haven’t missed any blocking. Work On The Note: There’s no note to work on.",
+     "sentences": 3,
+     "words": 27
+    },
+    {
+     "tag": "p",
+     "text": "Continuity, how evenly the character held from part to part: 98.0. The whole is the average of the parts; continuity comes from them, and isn’t added to it.",
+     "sentences": 2,
+     "words": 28
+    },
+    {
+     "tag": "p",
+     "text": "What the forecast shows, worst first. Pick one to work on:",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "The Opening Isn’t Secure The Opening hasn’t been rehearsed enough: it’s at 90% of the 96% it needs. It comes to 47.3, against 45.7 for the whole piece.",
+     "sentences": 2,
+     "words": 28
+    },
+    {
+     "tag": "li",
+     "text": "The Turn Into The Middle The change into the middle needs more rehearsal than the rest: it’s at 90% of the 96% it needs. It comes to 45.7, against 45.7 for the whole piece.",
+     "sentences": 2,
+     "words": 34
+    },
+    {
+     "tag": "li",
+     "text": "The Turn Into The Close The change into the close needs more rehearsal than the rest: it’s at 90% of the 96% it needs. It comes to 44.1, against 45.7 for the whole piece.",
+     "sentences": 2,
+     "words": 34
+    },
+    {
+     "tag": "li",
+     "text": "Emotional Depth Holds It Back Your emotional depth costs your believability 20.1 points, and the whole piece 4.1. The piece is weakest in the close, at 44.1. Working on it trains it a little, and playing one part of the scene another way can lean on a different ability.",
+     "sentences": 3,
+     "words": 49
+    },
+    {
+     "tag": "li",
+     "text": "Tiring Late In The Piece Your stamina costs the piece 0.6 points, most of it in the close, which comes to 44.1.",
+     "sentences": 1,
+     "words": 22
+    },
+    {
+     "tag": "li",
+     "text": "Heightened Prose",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Timing: Some",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "li",
+     "text": "Playing Off The Partner: Built On It. Mother and daughter argue the economics of virtue.",
+     "sentences": 2,
+     "words": 15
+    },
+    {
+     "tag": "li",
+     "text": "Vocal Demand: Some",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "li",
+     "text": "What’s Kept Hidden: Much. The mother’s trade, kept from the daughter.",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "A Private Exchange: Much. Mother and daughter.",
+     "sentences": 2,
+     "words": 7
+    },
+    {
+     "tag": "li",
+     "text": "A Conflict Out Loud: Much. They argue the economics of virtue.",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "li",
+     "text": "Tone: grave, 2 changes of tone to play",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "li",
+     "text": "Its Grave Beats: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Its 2 Turns: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "Drama’s Played Straight: played with complete earnestness, never winked at: for it",
+     "sentences": 1,
+     "words": 12
+    },
+    {
+     "tag": "li",
+     "text": "Its Timing: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "What’s Kept Hidden: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "A Private Exchange: for it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "A Conflict Out Loud: against it",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "What’s Kept Hidden: against it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "A Private Exchange: against it",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "li",
+     "text": "A Conflict Out Loud: for it",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "li",
+     "text": "Its Timing: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "li",
+     "text": "Its Partner: for it",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Fully prepared and on a good day, playing it this way would come to 54.1, the same as with nothing chosen. Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.",
+     "sentences": 2,
+     "words": 39
+    },
+    {
+     "tag": "p",
+     "text": "Who’s playing what this term",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "Yale Cabaret, Season 60",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Three shows a summer in New Haven",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "The company forms in the spring, from students with at least a year still to go.",
+     "sentences": 1,
+     "words": 16
+    }
+   ]
+  },
+  {
+   "label": "School, Shifts And Pay",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "MFA in Acting, class of 2029. Year 2 of 3, good standing.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "150 assigned hours and at least 50 elective a year",
+     "sentences": 1,
+     "words": 10
+    },
+    {
+     "tag": "p",
+     "text": "Every student works: six hours on class-week Saturdays, assigned, up to 150 hours a year, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.",
+     "sentences": 3,
+     "words": 67
+    }
+   ]
+  },
+  {
+   "label": "School, Terms And Award",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "MFA in Acting, class of 2029. Year 2 of 3, good standing.",
+     "sentences": 2,
+     "words": 12
+    },
+    {
+     "tag": "p",
+     "text": "3 enrolled, 6 with tuition support",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Fall Term 2027",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "p",
+     "text": "Tuition is covered in full for every student’s six terms, by the David Geffen gift. Aid for living costs, $29,745.06 a year with the health plan and up to $2,511.10 of books this year, goes by need, judged from your family’s means. Yours rule it out, so the health plan and living costs come from your bank.",
+     "sentences": 3,
+     "words": 57
+    }
+   ]
+  },
+  {
+   "label": "Money, Accounts",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "$498,833 held here, in 2 accounts.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Chase Routing 021000021 · Account 6657620146",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Pays no interest.",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "p",
+     "text": "$15.00 a month, waived in any month you have $500 of electronic deposits (wages, benefits or a tax refund) paid in, or keep $1,500 in it all month, or keep an average of $5,000 across your accounts at the bank. It’s waived this month so far.",
+     "sentences": 2,
+     "words": 46
+    },
+    {
+     "tag": "p",
+     "text": "Chase Routing 021000021 · Account 8258183136",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Pays 0.01% a year (0.01% APY). Interest builds up daily and is paid on the last day of the month.",
+     "sentences": 2,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "$5.00 a month, waived in any month you keep $300 in it all month. It’s waived this month so far.",
+     "sentences": 2,
+     "words": 20
+    },
+    {
+     "tag": "p",
+     "text": "Between your own accounts. Within one bank it’s instant. To another bank it takes as long as the sending bank takes, and abroad it also costs the exchange and the fees.",
+     "sentences": 3,
+     "words": 31
+    },
+    {
+     "tag": "p",
+     "text": "One checking account",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "p",
+     "text": "Chase Total Checking at Chase, $85,748. This is your primary account.",
+     "sentences": 2,
+     "words": 11
+    },
+    {
+     "tag": "p",
+     "text": "Your wages and other payments are paid into it. Your everyday card’s autopay pays from it.",
+     "sentences": 2,
+     "words": 16
+    },
+    {
+     "tag": "p",
+     "text": "Your primary account is the one money comes from unless you choose otherwise: your debit card’s everyday purchases, cash from a machine, bills you pay by hand and any new standing order or autopay. Making another account primary doesn’t move anything already set up.",
+     "sentences": 2,
+     "words": 44
+    },
+    {
+     "tag": "p",
+     "text": "Your wages and other payments go to Chase Total Checking. If you move them, Yale’s payroll starts paying the new account after 7 days, about one of its weekly pay cycles, as Yale says. Other payers take 14 days, which is estimated: employers say one to two pay cycles.",
+     "sentences": 3,
+     "words": 49
+    },
+    {
+     "tag": "p",
+     "text": "There’s no switching service here. To move banks, open the new account, have your wages paid into it, move each standing order and autopay, move the money across, and then close the old account. The new account starts empty, with its own history.",
+     "sentences": 3,
+     "words": 43
+    },
+    {
+     "tag": "p",
+     "text": "Bank of America needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.",
+     "sentences": 2,
+     "words": 37
+    },
+    {
+     "tag": "p",
+     "text": "It decides an application within 2 business days, the longest it says it takes. It asks for an opening deposit of $100, sent from another of your accounts. The debit card works from the day the account opens, as a digital card in the app. Money it sends to another bank takes 3 business days. Its Advantage Plus Banking costs $12.00 a month, waived in any month you have $250.00 of electronic deposits (wages, benefits or a tax refund) paid in, or keep $1,500.00 in it all month.",
+     "sentences": 5,
+     "words": 88
+    },
+    {
+     "tag": "p",
+     "text": "7 months at 3.5%",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Locked for 7 months at a fixed 3.5%. At its end it renews for the same term at the bank’s rate on the day, unless you choose another way the bank allows. Breaking one early, where the bank lets you, is under Your Accounts Over Time.",
+     "sentences": 3,
+     "words": 46
+    }
+   ]
+  },
+  {
+   "label": "Money, Cards",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "$498,833 held here, in 2 accounts.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "···9931",
+     "sentences": 0,
+     "words": 1
+    },
+    {
+     "tag": "p",
+     "text": "18.46% a year on any balance you carry. Chase sets a new card’s rate between 18.24% and 27.74% from your credit record when it opens. Yours was set at 18.46% when it opened, and the bank doesn’t reprice it. With your record today, a new card would get 18.24%.",
+     "sentences": 4,
+     "words": 49
+    },
+    {
+     "tag": "p",
+     "text": "Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.",
+     "sentences": 2,
+     "words": 38
+    },
+    {
+     "tag": "p",
+     "text": "If a payment is sixty days late, the rate goes up to 29.99% after 45 days’ notice.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "No yearly fee.",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "p",
+     "text": "Statements come on the 20th, and payment is due 21 days after each one.",
+     "sentences": 1,
+     "words": 14
+    },
+    {
+     "tag": "p",
+     "text": "The minimum payment is 1% of the statement plus the month’s interest, or $40 if that’s more.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself. If an autopay bounces and leaves the payment short, that fee is all you’re charged, with no returned payment fee on top. If it’s still short at the next due date, thirty days late, it goes on your credit record and the limit is cut.",
+     "sentences": 3,
+     "words": 76
+    },
+    {
+     "tag": "p",
+     "text": "1 held",
+     "sentences": 1,
+     "words": 2
+    },
+    {
+     "tag": "p",
+     "text": "You can apply to any bank here, not only yours. The bank checks your credit record and whether you have income or money to repay from. If it approves you, the card arrives a week later. Applying takes a few points off your credit score, whether or not you’re approved. Credit bureaus look at how much of all your cards’ limits you use, taken together.",
+     "sentences": 5,
+     "words": 65
+    },
+    {
+     "tag": "p",
+     "text": "Chase Freedom Unlimited",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "p",
+     "text": "Rewards: 1.5% back on every purchase, added up at each statement. You have $0 to redeem. Its published rewards: 1.5% cash back on everything; 3% on dining and drugstores; 5% on travel booked through Chase Travel. Those categories are things a card doesn’t buy in the game, so you earn the base rate.",
+     "sentences": 4,
+     "words": 53
+    },
+    {
+     "tag": "p",
+     "text": "A payment plan pays off part of what you owe for purchases in equal monthly amounts, for a fee of 1.72% of the plan a month instead of interest. That’s the most the bank says it charges. There’s nothing on the card to put into one right now.",
+     "sentences": 3,
+     "words": 48
+    },
+    {
+     "tag": "p",
+     "text": "The bank’s published plans: Chase Pay Over Time (formerly My Chase Plan): a fixed monthly fee instead of interest; 0% during the 15-month intro period, then up to 1.72% of the plan amount per month.",
+     "sentences": 1,
+     "words": 35
+    },
+    {
+     "tag": "p",
+     "text": "Lock a card, report it lost or stolen, or report a payment that wasn’t yours",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "p",
+     "text": "Once you report a card lost or stolen, Chase declines anything new on it and sends a replacement with a new number. For a credit card, the account itself stays open and keeps its age on your credit record.",
+     "sentences": 2,
+     "words": 39
+    },
+    {
+     "tag": "p",
+     "text": "Chase watches cards around the clock and may text, send an app notification, email or call to check that unusual activity was you. Fraud alerts are automatic: you don’t need to sign up. Chase can decline a payment it believes may be fraud, but it doesn’t say it holds a payment while it waits for your reply.",
+     "sentences": 3,
+     "words": 57
+    },
+    {
+     "tag": "p",
+     "text": "The law on the debit card: If you report a lost or stolen debit card within two business days of finding out, you pay at most $50 of what was taken before you told the bank. After two business days, the most you pay rises to $500. And if a payment you didn’t make is on a statement and you don’t report it within 60 days of the statement being sent, you can be made to pay all of what’s taken after those 60 days. The two days start when you find out; the 60 days start when the statement is sent. This is Regulation E, 12 CFR 1005.6(b), under the Electronic Fund Transfer Act.",
+     "sentences": 5,
+     "words": 115
+    },
+    {
+     "tag": "p",
+     "text": "The law on the credit card: If someone uses your credit card without your permission, you pay at most $50, or less if less was spent before you told the card’s issuer. This is the Truth in Lending Act’s Regulation Z, 12 CFR 1026.12(b)(1)(ii).",
+     "sentences": 2,
+     "words": 44
+    },
+    {
+     "tag": "p",
+     "text": "The law on a payment you report as not yours: The bank has 10 business days to decide, or 20 for a payment in a new account’s first 30 days. If it needs longer, it must put the money back in your account for now within those 10 business days, and it can then take up to 45 days, or 90 for a debit card purchase, a payment made from outside the US or one on a new account. It tells you the result within 3 business days of deciding. This is Regulation E, 12 CFR 1005.11.",
+     "sentences": 4,
+     "words": 97
+    }
+   ]
+  },
+  {
+   "label": "Money, Payments And Cash",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "$498,833 held here, in 2 accounts.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "How the day’s spending is paid, and which account each payment comes from.",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "p",
+     "text": "When this is on, a payment your checking account can’t cover is taken from easy-access savings at the same bank, as far as the savings allows. Chase Savings covers Chase Total Checking, which pays the day’s spending and the Chase Freedom Unlimited’s autopay.",
+     "sentences": 2,
+     "words": 43
+    },
+    {
+     "tag": "p",
+     "text": "You have $0.00 in cash.",
+     "sentences": 1,
+     "words": 5
+    }
+   ]
+  },
+  {
+   "label": "Money, Borrowing",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "$498,833 held here, in 2 accounts.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Chase pays what the account can’t without an arrangement, and charges $34.00 for each item that overdraws it, at most 3 a day, unless the account is back by the end of the next business day, and nothing while it’s overdrawn by $50 or less, and none on an item of $5.00 or less. Payments at the same moment post largest first. It covers up to about $500.",
+     "sentences": 3,
+     "words": 68
+    },
+    {
+     "tag": "p",
+     "text": "You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Other payments, like autopay and standing orders, go into the overdraft either way. The law requires a US bank to ask you first.",
+     "sentences": 3,
+     "words": 48
+    },
+    {
+     "tag": "p",
+     "text": "None on record",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "p",
+     "text": "No personal loan rate was found for Chase.",
+     "sentences": 1,
+     "words": 8
+    }
+   ]
+  },
+  {
+   "label": "Money, Statements",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "$498,833 held here, in 2 accounts.",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "Every payment in and out of each account, with the balance after it.",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "p",
+     "text": "Interest, the tax taken off it, and every fee, as the bank reports them for the year.",
+     "sentences": 1,
+     "words": 17
+    },
+    {
+     "tag": "p",
+     "text": "What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days. That alert is the game’s own, not a feature of a real bank.",
+     "sentences": 3,
+     "words": 57
+    }
+   ]
+  },
+  {
+   "label": "Papers, Tax Returns",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "p",
+     "text": "Each February, last year’s return is ready here if you owe tax, are due a refund, or had income over the standard deduction. A student on an F-1 has one every year. The return for 2027 is due April 18, 2028.",
+     "sentences": 3,
+     "words": 41
+    }
+   ]
+  },
+  {
+   "label": "Papers, Health Cover",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "p",
+     "text": "Where you’re seen for a doctor’s visit, urgent care or an emergency where you live",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "p",
+     "text": "$786.00 a month for the benchmark silver plan",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Yale Health covers you while you’re at the School.",
+     "sentences": 1,
+     "words": 9
+    },
+    {
+     "tag": "p",
+     "text": "Public cover depends on your income in a month, and costs no premium. On a marketplace plan you pay a premium each month, and your tax return can give some of it back.",
+     "sentences": 2,
+     "words": 33
+    },
+    {
+     "tag": "p",
+     "text": "You wear prescription lenses",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Yale Delta Dental Basic: $312.72 a year",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Yale Health: $50.00 of $9,100.00 paid this year",
+     "sentences": 1,
+     "words": 8
+    }
+   ]
+  },
+  {
+   "label": "Papers, Unemployment",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "p",
+     "text": "Food assistance, onto an EBT card for groceries",
+     "sentences": 1,
+     "words": 8
+    },
+    {
+     "tag": "p",
+     "text": "Connecticut treats a full-time student as not available for work (CGS 31-235(b)), so a claim pays only once you’ve left school.",
+     "sentences": 1,
+     "words": 21
+    },
+    {
+     "tag": "p",
+     "text": "The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. A week abroad pays nothing, and neither does a week while you’re a full-time student in Connecticut. A week with work pays the benefit less two-thirds of the pay, counting the wages paid that week. Work-study wages come from your school and don’t count toward the claim’s base period. What’s paid is taxable income on your return.",
+     "sentences": 5,
+     "words": 76
+    }
+   ]
+  },
+  {
+   "label": "Papers, Passport And ID",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "p",
+     "text": "U.S. Department of State, Bureau of Consular Affairs (Passport Services)",
+     "sentences": 2,
+     "words": 10
+    },
+    {
+     "tag": "p",
+     "text": "When a new passport arrives, it cancels the one before it, and any travel authorization issued on the old one ends with it.",
+     "sentences": 1,
+     "words": 23
+    },
+    {
+     "tag": "p",
+     "text": "You don’t hold any.",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Non-Driver Identification Card",
+     "sentences": 1,
+     "words": 3
+    },
+    {
+     "tag": "p",
+     "text": "You don’t hold any.",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "What each country asks of a short-stay visitor with your citizenship, for reference",
+     "sentences": 1,
+     "words": 13
+    },
+    {
+     "tag": "li",
+     "text": "You need a passport in force, and you don’t have one. Apply for one under Your Passport.",
+     "sentences": 2,
+     "words": 17
+    },
+    {
+     "tag": "li",
+     "text": "Australia asks citizens of the United States for ETA (Electronic Travel Authority, subclass 601): A$20.00, applied for online, and good for 1 year or until the passport runs out.",
+     "sentences": 1,
+     "words": 29
+    }
+   ]
+  },
+  {
+   "label": "Papers, Permission To Work",
+   "blocks": [
+    {
+     "tag": "p",
+     "text": "Sleep: You’re at Classes until 3:00 PM.",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "Your tax returns, health cover, benefits and pensions, passport and ID, and permission to work.",
+     "sentences": 1,
+     "words": 15
+    },
+    {
+     "tag": "p",
+     "text": "Separate from permission to enter the country",
+     "sentences": 1,
+     "words": 7
+    },
+    {
+     "tag": "p",
+     "text": "You don’t hold any.",
+     "sentences": 1,
+     "words": 4
+    },
+    {
+     "tag": "p",
+     "text": "Held, as a US citizen",
+     "sentences": 1,
+     "words": 5
+    },
+    {
+     "tag": "p",
+     "text": "Form I-765, (c)(3)(B), after your degree",
+     "sentences": 1,
+     "words": 6
+    },
+    {
+     "tag": "p",
+     "text": "OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval, with no more than 90 days without work in total. The game has no work after the degree, so an approved OPT ends after those 90 days, and your US status ends with it. In practice it keeps you in the US about 90 days from its start. It costs $470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.",
+     "sentences": 5,
+     "words": 90
+    },
+    {
+     "tag": "p",
+     "text": "The right to make a home in another country",
+     "sentences": 1,
+     "words": 9
+    }
+   ]
+  }
+ ]
+}

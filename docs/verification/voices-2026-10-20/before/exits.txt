@@ -1,0 +1,7 @@
+improving exit=0
+underprepared exit=0
+attentive exit=0
+regressing exit=0
+skilled exit=0
+pressure exit=0
+practicing exit=0

@@ -119,11 +119,11 @@ describe('a note on the craft', () => {
     // The falsifiability test: working the notes changes what comes of them.
     expect(share(worked)).toBeGreaterThan(share(left));
     expect(left.some((n) => n.taken === false)).toBe(true);
-    // A note given again after one left untaken says it's still there.
+    // A note given again after one left untaken says it's still there, one of three ways from 2026-10-20 (brief 16).
     left.forEach((n, i) => {
       const f = n.focus as { note: string; segment?: number };
       const prior = left.slice(0, i).reverse().find((m) => (m.focus as { note: string }).note === f.note && (m.focus as { segment?: number }).segment === f.segment);
-      if (prior && prior.taken === false) expect(n.text).toMatch(/^Still:/);
+      if (prior && prior.taken === false) expect(n.text).toMatch(/^(?:Still: |Same note as at the last call\. |Not there yet\. )/);
     });
   }, 180_000);
 });

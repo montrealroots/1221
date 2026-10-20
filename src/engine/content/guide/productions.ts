@@ -241,7 +241,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     questions: ['How does the chair decide who plays what?', 'Why didn’t I get the lead?', 'What’s my fit for a play?', 'Why wasn’t I cast this term?', 'When do I go to Yale Rep?', 'What does an understudy do?'],
     where: { route: ROUTE, tab: TAB.casting, label: 'School, Casting, Why This Cast' },
     available: `${OPENED}. The chair casts as each term begins, from the first spring.`,
-    short: `Casting decides which part you play in each term’s production. The chair of Acting, ${YALE_DRAMA.actingChair.name}, casts every student in the casting pool as each term begins, from the first spring. Everyone is read the same way for the play: their fit for it (what a night of it would come to from their abilities and the techniques it asks, fully prepared on a good day), with ${pct(C.delivery)} of that fit depending on how much of themselves they delivered in their runs since the last casting, and a balance for the size of their last part. The best read takes the biggest part still open that’s written for them. Why This Cast, on the Casting tab, shows every read in your production.`,
+    short: `Casting decides which part you play in each term’s production. The chair of Acting, ${YALE_DRAMA.actingChair.name}, casts every student in the casting pool as each term begins, from the first spring, and Why This Cast, on the Casting tab, shows every read in your production.\n\nEveryone is read the same way: their fit for the play, with ${pct(C.delivery)} of it depending on how much of themselves they delivered in their runs since the last casting, and a balance for the size of their last part. The best read takes the biggest part still open that’s written for them.`,
     steps: [
       'As each term begins, read the notice “Cast: …”: your part, the play, and who plays the lead if it isn’t you.',
       'Open School, then the Casting tab. Each production you’re in has a panel with Role, Performed (Went On for an understudy) and Calls Ahead, then its rehearsal process.',
@@ -332,7 +332,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     questions: ['How do I learn my lines?', 'When do I have to be off book?', 'I missed a blocking call: what now?', 'What happens at each rehearsal call?', 'What does Growth From A Night mean?', 'Why is Learn The Part grayed?'],
     where: { route: ROUTE, tab: TAB.casting, label: 'School, Casting, The Rehearsal Process' },
     available: `${OPENED}, while a part you’re cast in has calls to come: a School production, Yale Rep, a Cabaret show or a Summer Cabaret show.`,
-    short: `Learning a part is how you get your lines and blocking ready for a production’s nights. You learn it at the rehearsal calls and between them. Each call you come to learns ${pct(PROCESS.call.lines)} of the lines you still have to learn, and a blocking call sets ${pct(PROCESS.call.blocking)} of the blocking still to set. Between calls, Learn The Part is an hour on the lines, and Catch Up The Blocking is an hour with the blocking book for a blocking call you missed. A night counts both against what coming to every call would give you, and never asks less than ${pct(NIGHT_LEAST.lines)} of either.`,
+    short: `You learn a part’s lines and blocking for a production’s nights at its rehearsal calls and between them. Each call you come to learns ${pct(PROCESS.call.lines)} of the lines you still have to learn, and a blocking or technical call sets ${pct(PROCESS.call.blocking)} of the blocking still to set. Between calls, press Learn The Part for an hour on the lines, or Catch Up The Blocking for an hour with the blocking book after a blocking or technical call you missed.\n\nA night counts both against what coming to every call would give you, and never asks less than ${pct(NIGHT_LEAST.lines)} of either.`,
     steps: [
       'Open School, then the Casting tab. Under your production, The Rehearsal Process shows Lines, Blocking (with any blocking calls Missed To Catch Up), Growth From A Night and A Night Now.',
       `Come to the calls on your calendar: the read-through first, blocking for the first ${pct(PROCESS.blockingShare)} of the calls, then rehearsals, and the technical and dress rehearsals last.`,
@@ -419,7 +419,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     questions: ['What does the director’s note mean?', 'How do I take a note?', 'Why does the note say “Still”?', 'Was my note taken?', 'Which way should I work a note?'],
     where: { route: ROUTE, tab: TAB.casting, label: 'School, Casting, The Rehearsal Process, The Director’s Last Note' },
     available: `${OPENED}, from a production’s first work-through rehearsal. An understudy’s rehearsals bring no notes.`,
-    short: `The director’s notes tell you what to fix in your part before the nights. At each work-through rehearsal the director gives one note, on what most needs it now: a blocking call missed, the lines after the off-book call, the blocking short, or else something the part’s own forecast shows, put as a director would put it (what you want, listening, pacing, the physical life, a change, a relationship) and placed in the play. If it’s the weakness your work keeps coming back to, the note says so, and how many of your pieces it has held back. Work On The Note before the next call, one of the ways to work on it, and the next call shows whether you answered it. A note taken makes that call grow you ${pct(PROCESS.noteTaken - 1)} more, and the share of notes taken is part of a night’s preparation.`,
+    short: `At each work-through rehearsal, the director gives you one note on what most needs fixing in your part before the nights. Press Work On The Note before the next call, and that call shows whether you answered it.\n\nA note taken makes that call grow you ${pct(PROCESS.noteTaken - 1)} more, and the share of notes taken is part of a night’s preparation.`,
     steps: [
       'Open School, then the Casting tab. Under The Rehearsal Process, read the director’s last note, its date, and whether it’s Not Worked On Yet, Worked On, Taken or Not Taken.',
       'For a note on the craft, choose one of the ways to work on it from the list beside “Ways to work on it:”, and read what the chosen way does.',
@@ -457,6 +457,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'Looking Back, at the closing, counts the notes you took and those you worked on that didn’t move.',
     ],
     interpret: [
+      'A note is on what most needs it now: a blocking call missed, the lines after the off-book call, the blocking short, or else something the part’s own forecast shows, put as a director would put it (what you want, listening, pacing, the physical life, a change, a relationship) and placed in the play.',
       'The note names its place, “in the second half”, “by the close”; a note on the whole part says “the whole play”.',
       'The words come from what holds the place back most, by the quality it costs: believability or interpretation is “I don’t know what you want…”, connection “Who are they to you…?”, responsiveness “You’re not taking what they give you…”, execution “The physical life … isn’t clean yet”, consistency “It sags in…”. Tiring named as a problem of its own is “You’re spent by…”, and a turn into a movement “The change into … lurches”. A movement held back most by tiring is given “It sags in…”, a note on its pacing.',
       '“Still:” is the same note again, not answered. “Better since the last note.” means it was answered, and more is asked.',
@@ -596,7 +597,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     questions: ['How is a night judged?', 'What makes a night off, solid, strong or remarkable?', 'Why did I tire in the second half?', 'What does the company do to my night?', 'What happens if I miss a performance?', 'What’s Looking Back?'],
     where: { route: ROUTE, tab: TAB.casting, label: 'School, Casting, Your Nights' },
     available: `${OPENED}, from the first performance of a part you’re cast in.`,
-    short: `Each performance is judged on the part as you play it that night, and it grows your craft, moves your standing and counts at the next casting. A night is judged in the play’s movements: two at least, by its tones in order and each turn within them, and a new play’s two halves; more than three ask discipline to hold the score through them. Each movement counts its own blocking and any work on it, its tones shift what counts, tiring tells more the later it falls, and a slip carries into the next until composure and adaptability recover it. The night is the average of the movements, in a band at LAMDA’s pass, merit and distinction: Off, Solid, Strong or Remarkable. With classmates in the cast, the night together, with their part in it, is what the night leaves you feeling; your own night is your result.`,
+    short: `Each performance is judged on the part as you play it that night, and comes out Off, Solid, Strong or Remarkable. The night grows your craft, moves your standing and counts at the next casting. With classmates in the cast, your own night is your result, and the night together, with their part in it, is what the night leaves you feeling.\n\nA night is the average of the play’s movements: each counts its own blocking and any work on it, tiring tells more the later it falls, and a slip carries into the next until composure and adaptability recover it.`,
     steps: [
       'Be in New Haven, awake and well at the curtain: the performance is on your calendar, and the clock stops at it.',
       'Afterward, the Casting tab shows Your nights by band under the production, and The Nights Together under its rehearsal process where classmates are in the cast.',
@@ -639,6 +640,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'The next casting reads what you delivered across the runs since the last one.',
     ],
     interpret: [
+      'A night is judged in the play’s movements: two at least, by its tones in order and each turn within them, and a new play’s two halves. Each movement’s tones shift what counts, and more than three ask discipline to hold the score through them.',
       'Your own night is the judgment of your work, and a partner’s slip can’t lower it. The night together can come out above or below it.',
       'The Nights Together gives their average, the slips in the company, and how many you covered.',
       `For the director’s note and the term’s review, an Off night counts ${NIGHT_VALUE.off}, Solid ${NIGHT_VALUE.solid}, Strong ${NIGHT_VALUE.strong} and Remarkable ${NIGHT_VALUE.remarkable}.`,
@@ -782,7 +784,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     questions: ['Where can I read a play?', 'What does reading a play do?', 'Why can’t I read a play?', 'What does research find?', 'Why did reading again teach me nothing?'],
     where: { route: ROUTE, tab: TAB.coursework, label: 'School, Coursework, Plays To Read' },
     available: `${OPENED}. A copy is lent once orientation’s tour has shown you the library.`,
-    short: `Plays To Read is a reading list for building your craft between classes: ${CONTEMPORARY_PLAYS.length} plays first staged since 2000, with their facts as their theaters and publishers give them. Read It borrows the Haas Arts Library’s copy for a close first read, ${hoursOf(PLAYREADING.minutes.full)}, or ${hoursOf(PLAYREADING.minutes.short)} for a short play or a monologue, and leaves a note on its form, its published cast and whether there’s a part in it for you, and its setting. Research It, once you’ve read it, finds its first production, its first edition and who licenses it. Each trains your script analysis, and a read your imagination too. None of them is performed in the game, because their texts are under copyright.`,
+    short: `Plays To Read, below your coursework, lists ${CONTEMPORARY_PLAYS.length} plays first staged since 2000 to read between classes, with their facts as their theaters and publishers give them. Read It borrows the Haas Arts Library’s copy for a close first read, ${hoursOf(PLAYREADING.minutes.full)}, or ${hoursOf(PLAYREADING.minutes.short)} for a short play or a monologue, and trains your script analysis and imagination. Once you’ve read a play, Research It finds its first production, its first edition and who licenses it, and trains your script analysis again.\n\nNone of them is performed in the game, because their texts are under copyright.`,
     steps: [
       'Open School, then the Coursework tab, and find Plays To Read below the coursework.',
       'Each row has the play, its playwright, where it was first staged, its cast as published, and whether there’s a part for you.',
@@ -805,7 +807,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       { label: 'A Part For You', value: 'By the published cast: a part for an actress where it has women, for an actor where it has men, and none where you’re more than ten years younger than its youngest part' },
     ],
     now: [
-      `The clock moves on by the read’s time, and the note is kept with the play, its last ${PLAYREADING.notesKept}.`,
+      `The clock moves on by the read’s time. A read leaves a note on the play’s form, its published cast and whether there’s a part in it for you, and its setting, and the play keeps its last ${PLAYREADING.notesKept}.`,
       'Read It becomes Read It Again, the Read column counts the reads, and Research It appears.',
       'Research It: the play shows Researched, and the note gives its first production, first edition and who licenses it.',
     ],

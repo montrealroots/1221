@@ -1,0 +1,275 @@
+{
+ "openings": {
+  "showings": 868,
+  "distinct": 73,
+  "repeatedWithinFiveFromSameCourse": 529,
+  "top": [
+   {
+    "opening": "It came together.",
+    "n": 381
+   },
+   {
+    "opening": "It didn’t come together today.",
+    "n": 220
+   },
+   {
+    "opening": "You fixed this on DATE, but it has slipped back.",
+    "n": 82
+   },
+   {
+    "opening": "This has improved since DATE (# then, # now), but it isn’t there yet.",
+    "n": 36
+   },
+   {
+    "opening": "This is the #th time you’ve had this note, the last in Acting I on DATE, and it’s still there.",
+    "n": 12
+   },
+   {
+    "opening": "This is the #th time you’ve had this note, the last in Speech And Accents I on DATE, and it’s still there.",
+    "n": 11
+   },
+   {
+    "opening": "This is the #th time you’ve had this note, the last in The Body As Source I on DATE, and it’s still there.",
+    "n": 10
+   },
+   {
+    "opening": "This is the #th time you’ve had this note, the last in Voice I on DATE, and it’s still there.",
+    "n": 7
+   },
+   {
+    "opening": "The two of you weren’t playing the same scene yet: it needed time together.",
+    "n": 6
+   },
+   {
+    "opening": "This is the #th time you’ve had this note, the last in Alexander Technique I on DATE, and it’s still there.",
+    "n": 5
+   },
+   {
+    "opening": "It wasn’t practiced in daily life between lessons.",
+    "n": 3
+   },
+   {
+    "opening": "It wasn’t prepared as a presentation, so it wandered. (The Presentation Prepared: # prepared.)",
+    "n": 3
+   }
+  ]
+ },
+ "duplicates": {
+  "notices": 2698,
+  "exactRepeats": 55,
+  "byTitle": [
+   {
+    "title": "Grace Didn’t Come",
+    "n": 9
+   },
+   {
+    "title": "Grace: A Request For Help",
+    "n": 7
+   },
+   {
+    "title": "Samuel: A Request For Help",
+    "n": 7
+   },
+   {
+    "title": "Marcus Didn’t Come",
+    "n": 5
+   },
+   {
+    "title": "Nadia Didn’t Come",
+    "n": 4
+   },
+   {
+    "title": "Imani Didn’t Come",
+    "n": 2
+   },
+   {
+    "title": "Chloe Didn’t Come",
+    "n": 2
+   },
+   {
+    "title": "Lucia: An Apology",
+    "n": 2
+   },
+   {
+    "title": "Marcus: A Request For Help",
+    "n": 2
+   },
+   {
+    "title": "Priya: A Request For Help",
+    "n": 2
+   },
+   {
+    "title": "Caleb: A Request For Help",
+    "n": 2
+   },
+   {
+    "title": "Zoe: A Request For Help",
+    "n": 2
+   },
+   {
+    "title": "Priya Didn’t Come",
+    "n": 2
+   },
+   {
+    "title": "Lucia: A Word After Class",
+    "n": 1
+   },
+   {
+    "title": "Ethan: An Apology",
+    "n": 1
+   }
+  ],
+  "showingFeedbackExactRepeats": 358
+ },
+ "shared": {
+  "sentencesFromTwoOrMoreCourses": 49,
+  "showingsWithOne": 837,
+  "top": [
+   {
+    "sentence": "It came together.",
+    "courses": 18,
+    "times": 381
+   },
+   {
+    "sentence": "Here’s what to try next.",
+    "courses": 18,
+    "times": 381
+   },
+   {
+    "sentence": "Make one moment exact.",
+    "courses": 16,
+    "times": 142
+   },
+   {
+    "sentence": "Choose where it starts and ends, and repeat it the same way twice.",
+    "courses": 16,
+    "times": 142
+   },
+   {
+    "sentence": "Take it slower than feels safe, and let go of what you’re holding on to just to get through it.",
+    "courses": 13,
+    "times": 135
+   },
+   {
+    "sentence": "The effort shouldn’t show.",
+    "courses": 13,
+    "times": 135
+   },
+   {
+    "sentence": "Do less.",
+    "courses": 13,
+    "times": 128
+   },
+   {
+    "sentence": "Find the moments that need nothing added, and trust the text in them.",
+    "courses": 13,
+    "times": 128
+   },
+   {
+    "sentence": "You fixed this on DATE, but it has slipped back.",
+    "courses": 13,
+    "times": 82
+   },
+   {
+    "sentence": "It didn’t come together today.",
+    "courses": 11,
+    "times": 220
+   },
+   {
+    "sentence": "When it does come together, here’s what to try next.",
+    "courses": 11,
+    "times": 220
+   },
+   {
+    "sentence": "This has improved since DATE (# then, # now), but it isn’t there yet.",
+    "courses": 9,
+    "times": 36
+   }
+  ]
+ },
+ "advice": {
+  "blocks": 437,
+  "meanWords": 674.5,
+  "maxWords": 898,
+  "meanFigures": 55.9,
+  "meanItems": 5,
+  "meanSentencesSaidAgainInTheBlock": 9.6
+ },
+ "directors": {
+  "notes": 85,
+  "distinctOpenings": 19,
+  "repeatedWithinFive": 29,
+  "top": [
+   {
+    "opening": "Better since the last note.",
+    "n": 17
+   },
+   {
+    "opening": "The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.",
+    "n": 12
+   },
+   {
+    "opening": "Still: it sags in part #: hold it the whole way through.",
+    "n": 12
+   },
+   {
+    "opening": "It sags in part #: hold it the whole way through.",
+    "n": 8
+   },
+   {
+    "opening": "Who are they to you in the second half?",
+    "n": 6
+   },
+   {
+    "opening": "Still: who are they to you in the second half?",
+    "n": 6
+   },
+   {
+    "opening": "Still: you’re spent by the second half: find where the play lets you breathe.",
+    "n": 5
+   },
+   {
+    "opening": "You’re spent by the second half: find where the play lets you breathe.",
+    "n": 3
+   }
+  ]
+ },
+ "moments": {
+  "said": 301,
+  "distinctOpenings": 76,
+  "top": [
+   {
+    "opening": "Lucia asks if you’d run lines together for an hour on DATE at #:# PM.",
+    "n": 14
+   },
+   {
+    "opening": "Grace is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 14
+   },
+   {
+    "opening": "Samuel is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 14
+   },
+   {
+    "opening": "Owen asks if you’d run lines together for an hour on DATE at #:# PM.",
+    "n": 9
+   },
+   {
+    "opening": "Zoe is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 9
+   },
+   {
+    "opening": "Priya is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 9
+   },
+   {
+    "opening": "Caleb is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 9
+   },
+   {
+    "opening": "Marcus is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 9
+   }
+  ]
+ }
+}

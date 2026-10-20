@@ -18,8 +18,9 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig, withFamily } from '@/engine/world/bootstrap';
 import { instantFromZoned } from '@/engine/core/time';
 import { STATE_TAX, STATE_UNRESEARCHED } from '@/engine/content/statetax';
-import { statePlanRefusal, waiverRefusal } from '@/engine/systems/statetax';
-import { earningsOf } from '@/engine/systems/earnings';
+import { owedToState, statePlanRefusal, waiverRefusal } from '@/engine/systems/statetax';
+import { earningsOf, recordWages } from '@/engine/systems/earnings';
+import { formatMoney } from '@/engine/core/money';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, formatDate } from '@/engine/core/time';
 import { documentsOf, licensingOf, mayDrive, mayEnter, passportOf, passportRefusal, type PersonDocument } from '@/engine/systems/documents';
@@ -250,8 +251,13 @@ describe('batch 2: the Tax Returns tab, played', () => {
     sim.must({ kind: 'bank.open_term', payload: { amount: checking.balance } });
     sim.must({ kind: 'tax.file', payload: { year: 2027 } });
     const screen = drawn(sim, PapersWorkspace as FunctionComponent);
-    expect(screen).toContain('A monthly plan for up to $50,000.00 has a setup fee. With a Social Security number you apply online, and the IRS answers within a minute. Without one, your application goes by mail and the answer takes 30 days.');
-    expect(screen).toContain('This is Connecticut DRS’s own payment plan, separate from any plan with the IRS. It covers up to $50,000.00, paid over 2 to 12 months.');
+    // From 2026-10-20 (brief 16, section 7) each plan says what it does for you, then what it costs, then what a missed
+    // payment does. Until then the IRS's said a monthly plan "has a setup fee." above "Setup fee: $0.00." for her, a low
+    // income by direct debit, and Connecticut's said nothing of a missed payment but that DRS publishes no rule for one.
+    expect(screen).toContain('With a Social Security number you apply online and the IRS answers within a minute; without one, your application goes by mail and the answer takes 30 days. A short-term plan gives you 180 days to pay, with no fee. A monthly plan for up to $50,000.00 has a setup fee that depends on your income and on paying by direct debit.');
+    expect(screen).toContain('Setup fee: $0.00.');
+    expect(screen).toContain('Connecticut DRS’s own payment plan spreads what you owe it over 2 to 12 months, and collection stops while it’s in force. It covers up to $50,000.00, and it’s separate from any plan with the IRS. There’s no fee. Interest keeps adding up while the plan runs. If you miss a payment, the plan ends and collection starts again.');
+    expect(screen).toContain('Connecticut DRS doesn’t publish what happens after a missed payment, so in the game the plan ends.');
     // Applied for off direct debit, the CD broken to pay its fee: the note beside Each Month says so, where it said "Paid by you".
     const cd = sim.ledger.accountsOf(sim.player.id).find((a) => a.category === 'term' && !a.closedAt)!;
     sim.must({ kind: 'bank.break_term', payload: { accountId: cd.id } });
@@ -272,6 +278,32 @@ describe('batch 2: the Tax Returns tab, played', () => {
     record.ukYears = { '2026': 4_000_00 };
     record.ukWithheld = { '2026': 500_00 };
     expect(drawn(sim, PapersWorkspace as FunctionComponent)).toMatch(/2026–27: \$4,000\.00 earned and \$500\.00 withheld by payers\. It settles on January 31, 2028\. As things stand, you’d get a refund of \$500\.00\./);
+  }, 120_000);
+
+  /**
+   * A state's plan before Apply For The Plan, on California's, whose rules carry a fee and a notice before a plan ends
+   * (from 2026-10-20, brief 16, section 7): what it costs and what a missed payment does are said there, and the monthly
+   * estimate under Pay Over counts the $34 the plan adds to what's owed, as the plan's own monthly payment does. Until
+   * then the estimate left the fee out and read less than the plan then took. TEST SETUP: a 2026 return filed on
+   * 1 February 2027 with the bank emptied first, as tests/state-tax.test.ts owes one.
+   */
+  it('California’s plan says its fee and what a missed payment does, and its estimate is the monthly payment the plan then makes', async () => {
+    const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
+    const NY = 'America/New_York';
+    const sim = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', livesWhereBorn: true, wealth: 'wealthy' }, 'ed16-ca-plan');
+    recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9, minute: 0 }, NY), NY, { gross: 40_000_00 });
+    sim.advanceTo(instantFromZoned({ year: 2027, month: 2, day: 1, hour: 12, minute: 0 }, NY));
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] });
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    const owed = owedToState(sim.player, 'us-ca', sim.now);
+    expect(owed).toBeGreaterThan(0);
+    const screen = drawn(sim, PapersWorkspace as FunctionComponent);
+    expect(screen).toContain('California FTB’s own payment plan spreads what you owe it over 1 to 60 months, and collection stops while it’s in force. It covers up to $25,000.00, and it’s separate from any plan with the IRS. A $34.00 fee is added to what you owe. Interest and the late-payment penalty keep adding up while the plan runs. If you miss a payment, California FTB sends an Intent to Terminate, and you have 30 days to press Catch Up before the plan ends and collection starts again. A new balance owed while the plan is in force counts as a missed payment.');
+    // California publishes what a missed payment does, so the fine print doesn't say it isn't published.
+    expect(screen).not.toContain('doesn’t publish what happens after a missed payment');
+    const estimate = Math.ceil((owed + 34_00) / 60);
+    expect(screen).toContain(`That’s about ${formatMoney(estimate, 'USD')} a month over 60 months.`);
+    expect(sim.must<{ monthly: number }>({ kind: 'tax.apply_state_plan', payload: { state: 'us-ca', months: 60 } }).monthly).toBe(estimate);
   }, 120_000);
 });
 

@@ -167,7 +167,7 @@ export const TAXES: readonly GuideEntry[] = [
     questions: ['When is my tax return due?', 'What happens if I file late?', 'When does my refund come?', 'Why does the IRS say it filed my return?', 'How do I amend a return?'],
     where: on('returns', 'Papers, Tax Returns, Each Year’s Return Panel'),
     available: `From the guide’s chapter “${CHAPTER}”. Each year’s return is ready on February 1 of the next year, if there’s one to file.`,
-    short: `Your tax return settles a year’s income tax with the IRS and your state. The game prepares it for you each February 1 from what you earned, what was withheld and where you lived, and you send it with File It. Filed by the deadline, April 15 or the next business day (June 15 for a 1040-NR with no wages on it), it costs only the tax. Filed late with tax owed, the IRS adds penalties and interest. A refund comes ${REFUND_WORDS}.`,
+    short: `Your tax return settles a year’s income tax with the IRS and your state. The game prepares it for you each February 1 from what you earned, what was withheld and where you lived, and you send it with File It.\n\nFiled by the deadline, April 15 or the next business day (June 15 for a 1040-NR with no wages on it), it costs only the tax; filed late with tax owed, the IRS adds penalties and interest. A refund comes ${REFUND_WORDS}.`,
     steps: [
       'Open Papers, then the Tax Returns tab. Each year has a panel headed with the year, showing Due and its date, or Filed once it’s in.',
       'Read its lines: your wages, interest and any scholarship for living costs, the tax on them and what was withheld. The last line says You Owe or Your Refund.',
@@ -205,7 +205,8 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     later: [
       `An IRS refund is paid into your checking account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} days on a 1040-NR filed without a Social Security number. The IRS first takes from it anything you owe for another year, then any past-due tax you owe a state.`,
-      `If you leave a balance owing, the IRS’s bill, Notice CP14, comes when you file, and its reminders start ${said(COLLECTION.noticeWeeks)} weeks after the deadline, or after filing if that’s later. Connecticut’s bill comes ${CT.notices[0]!.days} days after the deadline, or after filing if that’s later. See Paying Tax Owed. With an IRS plan in force, a new IRS balance goes into the plan instead. Connecticut’s deadline is mid-April, even on a 1040-NR the IRS takes in June.`,
+      `If you leave a balance owing, the IRS’s bill, Notice CP14, comes when you file, and its reminders start ${said(COLLECTION.noticeWeeks)} weeks after the deadline, or after filing if that’s later. With an IRS plan in force, a new IRS balance goes into the plan instead. See Paying Tax Owed.`,
+      `If you still owe Connecticut once you’ve filed, its bill comes ${CT.notices[0]!.days} days after its deadline, or after filing if that’s later. Connecticut’s deadline is mid-April, even on a 1040-NR the IRS takes in June.`,
       'If it’s still unfiled on the deadline, a notice tells you the return is late.',
       `If it’s unfiled and you owe the IRS, Notice CP2566 comes ${SUBSTITUTE.afterDays} days after the deadline (when is estimated) with the IRS’s own figures, which leave out the foreign tax credit and the premium tax credit that only your return can claim. ${SUBSTITUTE.answerDays} days later it’s assessed, with its penalty and interest, and collected.`,
       'Past its deadline and unfiled with a balance, it weighs on you each day, the way tax owed does. See Paying Tax Owed.',
@@ -347,7 +348,7 @@ export const TAXES: readonly GuideEntry[] = [
     questions: ['Can I pay my taxes monthly?', 'What does a payment plan cost?', 'What happens if I miss a plan payment?', 'Does a plan stop the levy?', 'Can a state’s penalty be waived?'],
     where: on('returns', 'Papers, Tax Returns, IRS Payment Plan And Connecticut DRS Installment Agreement'),
     available: `From the guide’s chapter “${CHAPTER}”. The plan panels show while you owe anything, or once a plan has a history.`,
-    short: `A payment plan spreads what you owe over time and stops collection for as long as you keep it up. The IRS Payment Plan covers every year you owe the IRS: monthly payments on up to ${usd(PLAN.longMax)}, or everything paid within ${PLAN.shortDays} days with no fee. Each state has its own plan, separate from the IRS’s. Connecticut’s ${CT.plan.name} runs ${CT.plan.minMonths} to ${CT.plan.maxMonths} months on up to ${usd(CT.plan.max!)}. Interest keeps adding up under every plan.`,
+    short: `A payment plan spreads what you owe over time and stops collection for as long as you keep it up. The IRS Payment Plan covers every year you owe the IRS: monthly payments on up to ${usd(PLAN.longMax)}, for a setup fee of up to ${usd(Math.max(...Object.values(PLAN.fee)))}, or everything paid within ${PLAN.shortDays} days with no fee.\n\nEach state has its own plan, separate from the IRS’s: Connecticut’s ${CT.plan.name} runs ${CT.plan.minMonths} to ${CT.plan.maxMonths} months on up to ${usd(CT.plan.max!)}. Interest keeps adding up under every plan.`,
     steps: [
       `On Tax Returns, find the IRS Payment Plan panel. Under Plan Type, choose Monthly Payments or Paid Within ${PLAN.shortDays} Days.`,
       'For monthly payments, type an amount in Each Month (USD) or leave the lowest one shown, leave By Direct Debit ticked or clear it, read the setup fee below, and press Apply.',
@@ -446,7 +447,7 @@ export const TAXES: readonly GuideEntry[] = [
     questions: ['Why was a lien filed?', 'How do I get a tax lien released?', 'Does a tax lien hurt my credit?', 'What if a lien was filed in error?'],
     where: on('returns', 'Papers, Tax Returns, The Year’s Return, The IRS’s Lien Or Connecticut DRS’s Lien'),
     available: `From the guide’s chapter “${CHAPTER}”. A lien shows under the year it was filed for once one is on record.`,
-    short: `A lien is a public claim an authority files when a balance stays unpaid deep into collection. Connecticut DRS files one with its notice of intent to levy. The IRS files one at its final notice if you owe ${usd(FEDERAL_LIEN.threshold)} or more on the year. Paying in full is what gets it released. The buttons under it ask for a release where the authority needs asking, or a withdrawal: the IRS’s once it has released its lien, or any lien filed in error. In the game a lien changes only its own record: no credit record or bank reads it.`,
+    short: `A lien is a public claim an authority files when a balance stays unpaid deep into collection: Connecticut DRS with its notice of intent to levy, and the IRS at its final notice if you owe ${usd(FEDERAL_LIEN.threshold)} or more on the year. In the game a lien changes only its own record: no credit record or bank reads it.\n\nPaying in full is what gets it released. The buttons under it ask for a release where the authority needs asking, or a withdrawal: the IRS’s once it has released its lien, or any lien filed in error.`,
     steps: [
       'Open the year’s panel on Tax Returns. A lien shows as The IRS’s Lien or Connecticut DRS’s Lien, with its status and The Lien’s History.',
       'Pay the year in full with Pay. The lien reads Paid: Release To Come.',

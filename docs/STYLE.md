@@ -98,7 +98,22 @@ Every string is written for a player who knows the game only by playing it.
   they saw and what to do next. Never invent an observation, a line of
   dialogue or knowledge the game doesn't have. Feedback is the school's
   simulated assessment and is labelled as the teacher's note, not as a fact
-  about the player.
+  about the player. From brief 16 (2026-10-20, `systems/feedback.ts`) a
+  showing says what happened (against the course's last piece where the band
+  moved), why (the note, or what held a prepared piece back by the judged
+  limits), and what to try, in the shape its situation has: a new note, a note
+  better but not there, one still there, one back after it was taken, a run of
+  strong work, a strong piece despite a bad day. A note given often is said
+  short, with what's still open. Each course speaks in its discipline's terms:
+  acting of what's wanted, the other person and the choice; voice of breath,
+  sound and clarity; movement of weight, coordination and stamina; text of the
+  reading and its evidence. A note says it held the piece back most, never that
+  it decided the band: the record doesn't say that.
+- **Advice:** the recommendation first, short: what, why now, the action in
+  the screen's own words, the expected benefit called an estimate, and why
+  it can't be done now where it can't. The working behind it (the method, what
+  it assumes, preparation against training, how long it's been first, the
+  alternatives) goes behind Why This Recommendation, each part said once.
 - **Banking and official notices:** clear and professional. Keep every
   amount, date, deadline, condition and uncertainty exactly. Say which parts
   are published rules and which are the game's estimates (Truth in the text,
@@ -159,7 +174,12 @@ rule's number into prose, where it goes stale.
 Variety is never drawn from the game's random numbers: a different wording
 chosen by a draw changes the draws the game makes after it, and so the game.
 Pick a variant from the situation (what changed, what's still open), not at
-random.
+random. Where a situation has several equally true ways to say it, the choice
+is a hash of the event (the piece and the day), skipping any wording the same
+speaker said lately, read from the record the save already keeps (`pick`, from
+brief 16): a reload says the same words, and nothing is added to the save. When
+every way has been said lately, the one said longest ago comes back: a true
+repeat, never a new claim.
 
 ### Repetition says what changed
 
@@ -167,7 +187,10 @@ A message that comes back says why it's back. What has changed since last
 time, what's still unresolved, what the player already did, and why the
 advice or the restriction still holds. A teacher doesn't describe the same
 weakness as a new discovery each time. Don't paraphrase an unchanged message
-at random to hide that it repeats.
+to hide that it repeats: a varied wording (Text built from parts, above) still
+says it's the same note, how many times, and what's still open. Buttons,
+labels, figures, warnings and standing instructions keep one wording, since
+they're found by it.
 
 ### Comments aren't player text
 

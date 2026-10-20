@@ -26,7 +26,7 @@ import { DEVELOPMENT, MASTERED, TECHNIQUE_LABEL, type AbilityId } from '../conte
 import { EXERCISE_BY_ID, FOCUS, PRACTICE, TIER, exerciseFor } from '../content/practice';
 import { abilityFull, abilityOf, isAbility, levelOf, targetId } from './attributes';
 import { identityOf } from './artistry';
-import { ADVICE_FLOOR, experienceOf, practicedDaysAgo, recommendations, type Advised, type AdvisedAt, type Recommendation } from './experience';
+import { ADVICE_FLOOR, SPACED_NOW, STEADY_FIRST, experienceOf, practicedDaysAgo, recommendations, type Advised, type AdvisedAt, type Recommendation } from './experience';
 import { matchedTier, practicePreview, practiceRefusal } from './practice';
 import { CHANGE_ORDER, assumedOf, atFullRead, forecastAtDiscipline, forecastChange, forecastWork, preparationWorth, stateOf, trainingForecast, type ChangePart, type Forecast, type ForecastChange } from './advice';
 import { ABILITY_DEFS } from '../content/abilities';
@@ -222,7 +222,12 @@ function assumesOf(sim: Simulation, person: Person, first: Recommendation): stri
   const out = [`What the forecast assumes of your last ${a.pieces === 1 ? 'piece' : `${a.pieces} pieces`}: ${a.pieces === 1 ? own[0]!.replace(/^1 /, 'it ') : listed(own)}.`];
   if (a.prepared.length) {
     const label = (task: string, part: string) => (TASK_PROFILES[task]?.prepLabel?.[part] ?? (part === 'approach' ? 'Rehearsing how you play it' : part)).toLowerCase();
-    for (const p of a.prepared) out.push(`In ${p.what}, ${list(p.parts.map((x, i) => `${label(p.task, x.part)} ${p.parts.length > 1 && i > 0 ? '' : 'stood '}at ${Math.round(x.share * 100)}%`))} of the way to complete.`);
+    // Two pieces of one name prepared alike are said once, with how many (from 2026-10-20, brief 16: on the workload save
+    // "In Heightened Text Scene, work with your partner stood at 0% …" came twice, and its revision twice more).
+    const said = new Map<string, number>();
+    for (const p of a.prepared) { const k = `${p.what}\u0000${list(p.parts.map((x, i) => `${label(p.task, x.part)} ${p.parts.length > 1 && i > 0 ? '' : 'stood '}at ${Math.round(x.share * 100)}%`))}`; said.set(k, (said.get(k) ?? 0) + 1); }
+    const PIECES = ['', '', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+    for (const [k, n] of said) { const [what, parts] = k.split('\u0000'); out.push(`In ${what}${n > 1 ? ` (${PIECES[n] ?? n} pieces)` : ''}, ${parts} of the way to complete.`); }
     const taped = exactOf(trainingForecast(sim, person, person.work ?? [], [first.target], true).get(first.target));
     out.push(`The forecast counts ${a.prepared.length === 1 ? 'that piece' : 'those pieces'} as fully prepared, since ${a.prepared.length === 1 ? 'its' : 'their'} own preparation held ${a.prepared.length === 1 ? 'it' : 'each'} back most.${taped !== undefined ? ` Counted as ${a.prepared.length === 1 ? 'it was' : 'they were'}, ${first.forecast!.hours} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exactOf(first.forecast)!.toFixed(2)}.` : ''}`);
   }
@@ -288,6 +293,12 @@ function dateOfDay(sim: Simulation, day: string): string {
  * can't be done now (`practiceRefusal`, the command's own refusal).
  */
 function nextOf(sim: Simulation, person: Person, first: Recommendation): string | undefined {
+  const n = nextParts(sim, person, first);
+  return n && `Next: ${n.action}${n.no ? ` Not now: ${n.no}` : ''}`;
+}
+
+/** `nextOf` in its parts (from 2026-10-20, brief 16): the action, and why it can't be done now, which the card says apart. */
+function nextParts(sim: Simulation, person: Person, first: Recommendation): { action: string; no?: string } | undefined {
   const e = first.exercise ? EXERCISE_BY_ID[first.exercise] : undefined;
   if (!e) return undefined;
   const tier = first.tier ?? matchedTier(levelOf(sim, person, e.trains as never));
@@ -296,10 +307,10 @@ function nextOf(sim: Simulation, person: Person, first: Recommendation): string 
   // The panel it's in, the ability's or the technique's (from 2026-10-19, brief 15): until then Attributes And Craft for both,
   // where a technique's exercise is in the Techniques table.
   const panel = isAbility(targetId(e.trains as never)) ? 'Attributes And Craft' : 'Techniques';
-  const hour = `Next: ${e.label} at the ${TIER.label[tier]} tier, with Focus on ${FOCUS[first.focus === 'spaced' ? 'spaced' : 'steady'].label}. It’s in the Practice column under ${panel} on your Player Profile: open it and press Practice An Hour. An hour costs ${energy} energy${e.feet ? ', on your feet' : ''}`;
-  if (no) return `${hour}. Not now: ${no}`;
+  const hour = `${e.label} at the ${TIER.label[tier]} tier, with Focus on ${FOCUS[first.focus === 'spaced' ? 'spaced' : 'steady'].label}. It’s in the Practice column under ${panel} on your Player Profile: open it and press Practice An Hour. An hour costs ${energy} energy${e.feet ? ', on your feet' : ''}`;
+  if (no) return { action: `${hour}.`, no };
   const p = practicePreview(sim, person, e, tier, first.focus === 'spaced' ? 'spaced' : 'steady');
-  return `${hour}, and it would add about +${p.gain.toFixed(2)} to ${labelOf(targetId(e.trains as never)).toLowerCase()} now${p.discipline > 0 ? `, plus +${p.discipline.toFixed(2)} to discipline for a day of practice kept` : ''}.`;
+  return { action: `${hour}, and it would add about +${p.gain.toFixed(2)} to ${labelOf(targetId(e.trains as never)).toLowerCase()} now${p.discipline > 0 ? `, plus +${p.discipline.toFixed(2)} to discipline for a day of practice kept` : ''}.` };
 }
 
 /** Where training reaches nothing more in the recent work (from brief 10): said, with what's short and what builds it. Its target has a colon, so a reader of training targets passes it by. */
@@ -323,4 +334,121 @@ export function heldVersusNext(person: Person, recs: readonly Recommendation[]):
   const mine = theirs?.forecast ? exactOf(theirs.forecast)! : undefined;
   const said = theirs?.forecast ? `${theirs.forecast.hours} hours of it are forecast at about ${mine!.toFixed(2)} a piece, against ${exactOf(top.forecast)!.toFixed(2)} for ${top.label.toLowerCase()}` : `it would pay less to train than ${top.label.toLowerCase()}`;
   return `What held your last piece back most was ${held.label.toLowerCase()}, but it isn’t what pays most to train now: ${said}. ${capFirst(top.label.toLowerCase())} is called on by more of your recent work, or has more room to grow.`;
+}
+
+/**
+ * The advice as the Profile and a brief's pane put it first (from 2026-10-20, the owner's brief 16, section 6): what to
+ * work on, why it matters now, the action, what it's expected to bring said as an estimate, and why it can't be done now
+ * where it can't; and behind Why This Recommendation, the reasoning, each part said once. Until then each recommendation
+ * was its whole reasoning inline, the first with four more paragraphs beside it, and the shared ones said again in each:
+ * 437 blocks over brief 16's seven baseline students averaged 674 words and 56 figures, at most 898 words, with 9.6
+ * sentences said twice in the same block (docs/verification/voices-2026-10-20/before/). Nothing here is worked out
+ * afresh: every figure is the recommendation's own, read from the forecast that ranked it.
+ */
+export interface AdviceSection {
+  heading: string;
+  lines: string[];
+  /** What the section's first line is, where a reader of the screen looks for it (`data-standing`, `data-assumes`, `data-attention`). */
+  mark?: 'standing' | 'assumes' | 'attention';
+  /** Drawn as a list, a line an item: the alternatives; `after`, what's said once of several of them, below it. */
+  list?: boolean;
+  after?: string[];
+}
+export interface AdviceSummary {
+  target: string;
+  /** What to work on, as the heading says it. */
+  what: string;
+  /** Why it matters now: a sentence or two. */
+  why: string;
+  /** What to do: where, at what tier and focus, what an hour costs and brings now. */
+  action?: string;
+  /** What it's expected to bring, said as an estimate. */
+  estimate?: string;
+  /** Why the action can't be done now (`practiceRefusal`, the command's own refusal). */
+  unavailable?: string;
+  details: AdviceSection[];
+}
+
+/** How a forecast says the work it read (`recommendations`'s words): the pieces that call on it, of how many. */
+function readOf(f: Forecast): string {
+  const calls = `${f.pieces === 1 ? 'calls' : 'call'} on it`;
+  if (f.of === undefined) return `${f.pieces} of the pieces ${calls}`;
+  return f.of === 1 && f.pieces === 1 ? `your last piece ${calls}` : f.pieces === f.of ? `your last ${f.of} pieces all call on it` : `${f.pieces} of your last ${f.of} ${f.of === 1 ? 'piece' : 'pieces'} ${calls}`;
+}
+const pointsOf = (n: number) => `${n} ${n === 1 ? 'point' : 'points'}`;
+const listOf = (xs: readonly string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}` : xs[0] ?? '');
+
+/** The first recommendation said short, and its reasoning in sections (brief 16). `primary` is the one the screen puts first. */
+export function adviceSummary(sim: Simulation, person: Person, recs: readonly Recommendation[], primary: Recommendation | undefined = recs[0]): AdviceSummary | undefined {
+  if (!primary) return undefined;
+  const first = recs.find((r) => r.forecast);
+  const f = primary.forecast;
+  let why = primary.now ?? primary.why;
+  let action: string | undefined = primary.act;
+  let estimate: string | undefined;
+  let unavailable: string | undefined;
+  if (f) {
+    // Why now: what it would add against everything else that can be trained, the work that says so, and anything near it.
+    why = `Of what you can train, it would add most to your recent work: ${readOf(f)}.`;
+    if (primary.recurring) why += ` It keeps holding your work back, most recently on ${formatDate(primary.recurring.last, sim.zone)}.`;
+    if (primary.tiedWith?.length) why += ` ${capFirst(listOf(primary.tiedWith).toLowerCase())} would be about as useful.`;
+    estimate = `Estimate: ${f.hours} hours${f.of !== undefined ? ', an hour a day,' : ''} would take it from ${Math.round(f.from)} to about ${Math.round(f.to)}, worth about ${pointsOf(primary.points)} a piece on your recent work.`;
+  }
+  // The action is the first's `next` without its "Next:", in the same words, and why not now said apart.
+  const n = nextParts(sim, person, primary);
+  if (n) { action = n.action; if (n.no) unavailable = `Not now: ${n.no}`; }
+  const details: AdviceSection[] = [];
+  // How the estimates are worked out: the method, the first training's work and its parts, the focus and what's assumed,
+  // each once. Until then the focus and the method were said again in every recommendation.
+  const lead = recs.find((r) => r.assumes) ?? first;
+  if (first?.forecast) {
+    const ff = first.forecast;
+    const lines = ['Each estimate is your recent work judged again as you are now, with the hours of practice added: what that would be worth a piece, in points of the whole, the latest piece counting most.'];
+    lines.push(`For ${first.label.toLowerCase()}, ${readOf(ff)}${ff.most ? `; ${ff.most.what} would gain most, about ${ff.most.points >= 0 ? '+' : ''}${Math.round(ff.most.points * 10) / 10}` : ''}.`);
+    if ((ff.days ?? 0) >= 0.05) lines.push(`About ${Math.round(ff.days! * 10) / 10} of its estimate comes from the discipline ${ff.hours} days of practice build, which any exercise kept up daily would bring too.`);
+    if (ff.prepared && !lead?.assumes) lines.push(`It counts ${ff.prepared === 1 ? 'the piece' : `the ${ff.prepared} pieces`} held back most by ${ff.prepared === 1 ? 'its' : 'their'} own preparation as if fully prepared.`);
+    lines.push(first.focus === 'spaced' ? SPACED_NOW : STEADY_FIRST);
+    lines.push('It’s an estimate: it reads only the work on your record, and the work you do next may call on different things.');
+    details.push({ heading: primary === first ? 'How The Estimate Is Worked Out' : 'How The Training Estimates Are Worked Out', lines });
+  }
+  // Its sentences apart, each piece on its own line, not one paragraph.
+  if (lead?.assumes) details.push({ heading: 'What It Assumes Of Your Work', lines: lead.assumes.split(/(?<=\.)\s+(?=[A-Z])/), mark: 'assumes' });
+  const attention = recs.find((r) => r.attention)?.attention;
+  const prepApart = first?.forecast && first.forecast.preparation !== undefined && (first.forecast.prepared ?? 0) > 0
+    ? `Apart from training, fully preparing ${first.forecast.prepared === 1 ? 'the piece' : `the ${first.forecast.prepared} pieces`} held back most by ${first.forecast.prepared === 1 ? 'its' : 'their'} own preparation would bring ${first.forecast.prepared === 1 ? 'it' : 'them'} about ${Math.round(first.forecast.preparation * 100) / 100} ${Math.round(first.forecast.preparation * 100) === 100 ? 'point' : 'points'} a piece as you are now. That’s preparation, not training, and it isn’t part of ${first.label.toLowerCase()}’s estimate.`
+    : undefined;
+  if (attention || prepApart) details.push({ heading: 'Preparation Or Training', lines: [attention, prepApart].filter((x): x is string => !!x), ...(attention ? { mark: 'attention' as const } : {}) });
+  const standing = recs.find((r) => r.standing)?.standing;
+  if (standing) details.push({ heading: 'How Long It’s Been First', lines: [standing], mark: 'standing' });
+  // From the record: the weakness that keeps coming back, what it rests on, and what held the last piece against what pays.
+  const record: string[] = [];
+  for (const r of recs) {
+    if (!r.recurring) continue;
+    record.push(`${r.label} keeps coming back in your work${r.recurring.pieces !== undefined ? `: it has held back ${r.recurring.pieces} of your pieces in all, ${pointsOf(r.recurring.whole ?? 0)} off the whole across them` : ''}, the last on ${formatDate(r.recurring.last, sim.zone)}. ${capFirst(r.recurring.evidence.join('; '))}.`);
+  }
+  const versus = heldVersusNext(person, recs);
+  if (versus) record.push(versus);
+  if (record.length) details.push({ heading: 'From Your Record', lines: record });
+  // The others, a line each: what, the exercise, and its estimate or its cost. What to do is said once where two or more
+  // share it, and not at all where the first said it (from 2026-10-20, later that day: on the workload save two
+  // preparations each said "That’s preparation, not training: …" again, after the first had).
+  const rest = recs.filter((r) => r !== primary);
+  const acts = rest.map((r) => r.act).filter((x): x is string => !!x);
+  const shared = (act: string) => act === primary.act || acts.filter((x) => x === act).length > 1;
+  const others = rest.map((r) => {
+    const ex = r.exercise ? EXERCISE_BY_ID[r.exercise] : undefined;
+    const doing = ex ? `, ${ex.label} at the ${TIER.label[r.tier ?? 0]} tier` : '';
+    if (r.forecast) return `${r.label}${doing}: an estimated ${pointsOf(r.points)} a piece for ${r.forecast.hours} hours, from ${Math.round(r.forecast.from)} to about ${Math.round(r.forecast.to)}.${primary.tiedWith?.includes(r.label) ? ' About as useful as the first.' : ''}`;
+    if (!r.now) return `${r.label}${doing}: ${r.why}`;
+    return `${r.label}${doing}: ${[r.now, r.act && !shared(r.act) ? r.act : undefined, r.more].filter(Boolean).join(' ')}`;
+  });
+  // A step two of them share, said once after the list, naming whose it is.
+  const once = [...new Set(acts)].filter((act) => act !== primary.act && acts.filter((x) => x === act).length > 1).map((act) => {
+    const whose = rest.filter((r) => r.act === act);
+    const names = listOf(whose.map((r) => r.label.toLowerCase()));
+    return whose.every((r) => r.focus === 'preparation') ? `${capFirst(names)} are preparation, not training: prepare each part further before you show or tape the next piece.` : `${capFirst(names)}: ${act}`;
+  });
+  if (others.length) details.push({ heading: 'Other Things Worth Your Time', lines: others, list: true, ...(once.length ? { after: once } : {}) });
+  if (primary.more) details.push({ heading: `More On ${primary.label}`, lines: [primary.more] });
+  return { target: primary.target, what: primary.label, why, ...(action ? { action } : {}), ...(estimate ? { estimate } : {}), ...(unavailable ? { unavailable } : {}), details };
 }

@@ -27,7 +27,8 @@ import { CHAPTERS } from '@/engine/content/tutorial';
 import { abilityFull, levelOf } from '@/engine/systems/attributes';
 import { ABILITY_DEFS, MASTERED, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { practicedDaysAgo, recommendations, type Recommendation } from '@/engine/systems/experience';
-import { exerciseFor } from '@/engine/content/practice';
+import { adviceSummary } from '@/engine/systems/next-steps';
+import { EXERCISE_BY_ID, exerciseFor } from '@/engine/content/practice';
 import { matchedTier } from '@/engine/systems/practice';
 import { BRIEFS, BRIEF_BY_ID } from '@/engine/content/briefs';
 import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
@@ -191,7 +192,8 @@ describe('What To Work On, with the work so far', () => {
     const near = run(w, life('imagination'));
     expect(near.map((r) => r.target)).toEqual(['imagination', 'presence', 'focus']);
     expect(near[0]!.why).toContain('It keeps coming back in your work: it has held back 9 of your pieces in all, 31.5 points off the whole across them.');
-    expect(near[0]!.recurring).toEqual({ last: 0, evidence: ['An ability, 31.5 points in all'] });
+    // With its pieces and points for Why This Recommendation (from 2026-10-20, brief 16's `adviceSummary`).
+    expect(near[0]!.recurring).toEqual({ last: 0, evidence: ['An ability, 31.5 points in all'], pieces: 9, whole: 31.5 });
     // The falsifiability test: the words and the order change, the numbers don't.
     expect(numbers(near)).toEqual(numbers(without));
     expect(near.filter((r) => r.target !== 'imagination').map((r) => r.why)).toEqual(without.filter((r) => r.target !== 'imagination').map((r) => r.why));
@@ -228,13 +230,16 @@ describe('What To Work On, with the work so far', () => {
     expect(numbers(withIt)).toEqual(numbers(without));
     const html = profile(sim);
     expect(html).toContain(`it has held back ${r.pieces} of your pieces in all`);
-    expect(html).toContain(`From your record: ${r.evidence.join('; ')}`);
+    // Under From Your Record, behind Why This Recommendation (from 2026-10-20, brief 16): until then "From your record:"
+    // inline.
+    expect(html).toContain('From Your Record');
+    expect(html).toContain(`${r.evidence.join('; ').replace(/^./, (c) => c.toUpperCase())}.`);
     // A brief's pane names the first ability or technique and says it as the Profile does. Until 2026-10-16 that was
     // the recurring weakness here, put first within half a point; from then what's first is what training pays most for
     // (`trainingForecast`), and the recurring weakness goes first only where it's about as useful.
     const first = withIt.find((x) => !x.target.includes(':'))!;
     const brief = pane(sim, 'drama', 'brief-drama');
-    expect(brief).toContain(`<strong>${first.label}</strong>. ${first.why}`);
+    expect(brief).toContain(`<strong>${first.label}</strong>. ${adviceSummary(sim, sim.player, withIt, first)!.why}`);
     // Until brief 10 (later on 2026-10-16) this said: about as useful as the top, it goes first; otherwise it's said where
     // its forecast puts it. From then a forecast's order is the forecast's alone (`recommendations`): put first when about
     // as useful, the recurring weakness stayed first after twenty sessions of it while another's forecast had come to lead
@@ -320,9 +325,13 @@ describe('What To Work On in a brief’s pane', () => {
     const now = recsOf(sim).find((r) => r.target === top.target)!;
     expect(now.focus).toBe('spaced');
     expect(recsOf(sim).find((r) => !r.target.includes(':'))!.target).toBe(top.target);
-    const html = pane(sim, 'drama', 'brief-drama');
-    expect(html).toContain(`<strong>${top.label}</strong>. ${now.why}`);
-    expect(html).toContain('Set Focus to Spaced: your last session was a day to a week ago, the gap where spacing pays.');
-    expect(profile(sim)).toContain(now.why);
+    // Each says it short, the focus in the action and why under Why This Recommendation (from 2026-10-20, brief 16):
+    // until then each said the whole of `why` inline.
+    for (const html of [pane(sim, 'drama', 'brief-drama'), profile(sim)]) {
+      expect(html).toContain(`<strong>${top.label}</strong>. Of what you can train`);
+      expect(html).toContain(`${EXERCISE_BY_ID[top.exercise!]!.label} at the`);
+      expect(html).toContain('with Focus on Spaced.');
+      expect(html).toContain('Set Focus to Spaced: your last session was a day to a week ago, the gap where spacing pays.');
+    }
   });
 });

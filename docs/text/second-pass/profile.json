@@ -3508,16 +3508,16 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.brief-prepare]": {
   "status": "Rewritten",
-  "hash": "91fb1c6c9d64",
-  "on": "2026-10-19",
-  "evidence": "The Preparing A Brief entry rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: it says to press Open Its Brief beside a genre to read the brief",
+  "hash": "da2e4f07102b",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 5 sentences to 4 in two paragraphs, the brief and how to open it, then the three steps and a step a day; the beats a turn leads into moved to Reading The Result; tests/guide-examples-craft.test.ts passes.",
   "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.brief-reader]": {
   "status": "Rewritten",
-  "hash": "64f59304f5cd",
-  "on": "2026-10-19",
-  "evidence": "The Who Reads With You entry rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: its short says your own result counts nothing the reader brings, where it said your own take uses none of it",
+  "hash": "3a9b1385de85",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 5 sentences to 4 in two paragraphs, who reads and what earns a callback, then a recording against a classmate; how the take with the reader blends what they bring moved to Later On; tests/guide-examples-craft.test.ts passes.",
   "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.brief-tape]": {
@@ -3536,16 +3536,16 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.identity]": {
   "status": "Rewritten",
-  "hash": "1ed293b281f3",
-  "on": "2026-10-19",
-  "evidence": "The Your Work So Far entry rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: its quote of a habit is the game's new line, You tend to play it measured",
+  "hash": "7b239eb19929",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 5 sentences to 4 in two paragraphs, what Your Work So Far shows and that it changes no result, then when a pattern is named; tests/guide-examples-craft.test.ts and tests/guide.test.ts pass.",
   "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.practice]": {
   "status": "Rewritten",
-  "hash": "89d06dc9b645",
-  "on": "2026-10-19",
-  "evidence": "The Practice entry rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: its short gives the first thing to press, and its steps say how the preview compares with an ordinary hour",
+  "hash": "e546682d89a9",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 6 sentences to 4, what an hour grows and what to press, then the repeat and the daily limit; the five Focus names moved into What To Press, the exercise origins into Reading The Result; tests/guide-examples-craft.test.ts passes.",
   "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.profile]": {
@@ -3949,9 +3949,9 @@
  },
  "src/engine/systems/experience.ts#recommendations": {
   "status": "Rewritten",
-  "hash": "9718383673f0",
-  "on": "2026-10-19",
-  "evidence": "the coordinator's cross-area review on the 1440 walk of the integrated build (the direction save's What To Work On Next): 'cost about 1.8 points off the whole a piece' read garbled; each sentence now says what each piece lost, off the whole, the glossary's term; tests/language-dynamic.test.ts and attributes-phase-2b hold all five forms and fail with the old words (mutation)",
+  "hash": "1519dcd8151a",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/experience.ts#SPACED_NOW": {
@@ -4024,6 +4024,13 @@
   "reason": "A choice's note subject is A Choice with its question's name, and the step beyond is The Next Step: short Title Case names the notes list shows",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/next-steps.ts#adviceSummary": {
+  "status": "Rewritten",
+  "hash": "647245181187",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app's Player Profile at 1440 and 390 (workload save, the card shut and open) and held by tests/advice-card.test.ts and tests/decisions-advice.test.ts",
+  "first": "Pending"
+ },
  "src/engine/systems/next-steps.ts#agoOf": {
   "status": "Rewritten",
   "hash": "3841612f58de",
@@ -4040,9 +4047,9 @@
  },
  "src/engine/systems/next-steps.ts#assumesOf": {
   "status": "Rewritten",
-  "hash": "cb4bc052d0f0",
-  "on": "2026-10-19",
-  "evidence": "the area's walk fix: the forecast's assumptions say prepared or underprepared, not taped, of a showing and a night as well as a tape; tests/decisions-advice.test.ts asserts the words and fails when they're mutated back (b8-assume-mut, exit 1), and passes restored; tests/advice.test.ts passes",
+  "hash": "0fcf42149649",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app's Player Profile at 1440 and 390 (workload save, the card shut and open) and held by tests/advice-card.test.ts and tests/decisions-advice.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#attentionSaid": {
@@ -4075,9 +4082,16 @@
  },
  "src/engine/systems/next-steps.ts#nextOf": {
   "status": "Rewritten",
-  "hash": "6f3a3580ddd0",
-  "on": "2026-10-19",
-  "evidence": "tests/decisions-advice.test.ts and tests/advice.test.ts on played cases, tools/advice-harness.ts S3 and H checks over the tuning set (docs/verification/editorial-2026-10-19/profile/advice/tuning.json), and docs/verification/editorial-2026-10-19/profile/b2-advice.txt",
+  "hash": "c62d6915284a",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/next-steps.ts#nextParts": {
+  "status": "Rewritten",
+  "hash": "4485b04fc766",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#PART_SAID": {
@@ -4086,6 +4100,13 @@
   "on": "2026-10-19",
   "reason": "The five parts a change of forecast is said in, each a plain name for what moved it (the work it's forecast on, how well you know its genres, your other abilities and techniques, its own level, discipline), read word for word by the harness's H checks",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/next-steps.ts#readOf": {
+  "status": "Rewritten",
+  "hash": "d6fad97655ff",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#standingOf": {
   "status": "Rewritten",
@@ -4157,6 +4178,13 @@
   "reason": "One sentence after a genre's register that says where it comes from, the genre's research at its confidence or an estimate from its conventions, so the player knows how far to trust it",
   "first": "Rewritten And Verified"
  },
+ "src/ui/components/AdviceCard.tsx#AdviceCard": {
+  "status": "Rewritten",
+  "hash": "9977ff48c835",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "first": "Pending"
+ },
  "src/ui/components/AttributesPanel.tsx#AttributesPanel": {
   "status": "Rewritten",
   "hash": "c9022309c0e2",
@@ -4186,10 +4214,10 @@
   "first": "Pending"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#AbilitiesPanel": {
-  "status": "Retained",
-  "hash": "7dece6bb71b0",
-  "on": "2026-10-19",
-  "reason": "The abilities table's columns name what each holds (Now, Full, Classes Reach, Today, It Shapes), and its two paragraphs say once how an ability grows to its reach and past it to full, why Stamina alone fades, and the sources for both",
+  "status": "Rewritten",
+  "hash": "7c1fda59ed42",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app by tools/screen-text.mjs on the workload save (brief 16): the Stamina paragraph of 7 sentences became two of 3, yours and full first, then the rules, the sources in the Fine; tests/evidence2-b11.test.ts holds Yours to the row, mutation-tested.",
   "first": "Pending"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#ConditionPanel": {
@@ -4243,9 +4271,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#NextWork": {
   "status": "Rewritten",
-  "hash": "a4feef4b8f2d",
-  "on": "2026-10-19",
-  "evidence": "tests/language-dynamic.test.ts asserts the empty line exactly on a new life's Profile, and the advice beside it is held by tests/decisions-advice.test.ts",
+  "hash": "7af223be269f",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
   "first": "Pending"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#PracticeButton": {

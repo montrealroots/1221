@@ -279,7 +279,7 @@ const figureOf = (s) => Number((s.match(/would come to about (\d+\.\d) of 100 /)
 const bandOf = (s) => (s.match(/would come to about \d+\.\d of 100 \((\w+)\)/) ?? [])[1] ?? '';
 /** A card's step buttons: the row under its Shown Today. */
 const stepsOf = (card) => card.locator('[data-shown-today] + div').getByRole('button');
-const whyOf = async (card) => clean(await card.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''));
+const whyOf = async (card) => clean(await card.locator('[data-shown-today] ~ .why-not').first().innerText({ timeout: 1000 }).catch(() => ''));
 const partsOf = async (card) => Object.fromEntries((await card.locator('.stat').evaluateAll((els) => els.map((e) => [e.querySelector('.stat-label')?.textContent ?? '', e.querySelector('.stat-value')?.textContent ?? '']))).map(([k, v]) => [clean(k), clean(v)]));
 /** A card's title, by its heading. */
 const titleOf = async (card) => clean(await card.locator('h2').first().innerText().catch(() => ''));
@@ -587,12 +587,12 @@ async function normal() {
     if (await again.count()) {
       feedback = clean(await again.locator('.eyebrow', { hasText: /^Feedback: / }).first().innerText());
       const gray = again.locator('[data-shown-today] + div').getByRole('button').first();
-      const why = await refused(gray, async () => clean(await again.locator('[data-shown-today] ~ p.why-not').first().innerText()));
+      const why = await refused(gray, async () => clean(await again.locator('[data-shown-today] ~ .why-not').first().innerText()));
       must(/There’s new feedback on this piece\. Read it, then press Mark As Read\./.test(why), `refused for another reason: ${why}`);
       await press(again.getByRole('button', { name: /^Mark As Read$/ }), 'Mark As Read'); await wait(800);
-      must(!/new feedback/.test(clean(await again.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''))), 'the steps still wait on the feedback after Mark As Read');
+      must(!/new feedback/.test(clean(await again.locator('[data-shown-today] ~ .why-not').first().innerText({ timeout: 1000 }).catch(() => ''))), 'the steps still wait on the feedback after Mark As Read');
       const note = again.getByRole('button', { name: /^Work On The Note$/ }).first();
-      must(await note.count() && !(await note.isDisabled()), `Work On The Note not open after Mark As Read: ${clean(await again.locator('[data-shown-today] ~ p.why-not').first().innerText({ timeout: 1000 }).catch(() => ''))}`);
+      must(await note.count() && !(await note.isDisabled()), `Work On The Note not open after Mark As Read: ${clean(await again.locator('[data-shown-today] ~ .why-not').first().innerText({ timeout: 1000 }).catch(() => ''))}`);
       await press(note, 'Work On The Note'); await wait(1300); await settle();
       said(`To Show Again: refused “${why}”, then Mark As Read, and Work On The Note: ${await newestToast()}`);
     } else {
@@ -883,13 +883,18 @@ async function specialist() {
     return said1;
   });
   await step('the advice: What To Work On names what to train, its forecast, what it assumes, and what deserves attention; none of the four strengths', [], async () => {
-    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=..');
+    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=../..');
     must(await work.count(), 'no What To Work On on the brief');
     named = clean(await work.locator('p strong').first().innerText());
     const first = clean(await work.locator('p').first().innerText());
+    // From brief 16 (2026-10-20) the reasoning is behind Why This Recommendation, opened here as a player opens it.
+    const why = work.locator('details[data-why]').first();
+    must(await why.count(), 'no Why This Recommendation');
+    await press(why.locator('summary'), 'Why This Recommendation'); await wait(300);
+    must((await why.getAttribute('open')) !== null, 'Why This Recommendation didn’t open');
     const assumes = clean(await work.locator('[data-assumes]').innerText().catch(() => ''));
     const attention = clean(await work.locator('[data-attention]').innerText().catch(() => ''));
-    must(/\d+ hours of its exercise(?:, an hour a day,)? would take it from \d+ to about \d+\. On your recent work, judged again as you are now, that’s forecast to be worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
+    must(/Estimate: \d+ hours(?:, an hour a day,)? would take it from \d+ to about \d+, worth about [\d.]+ points? a piece on your recent work\.|an estimated [\d.]+ points? a piece for \d+ hours, from \d+ to about \d+\./.test(clean(await work.innerText())), `no estimate in hours and points: ${first.slice(0, 300)}`);
     must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes: ${assumes || 'nothing'}`);
     must(/(is|are) worth your time now|^Neither preparation nor training/.test(attention), `what deserves attention: ${attention || 'nothing'}`);
     const ex = work.locator('button', { hasText: /…$/ }).first();
@@ -907,7 +912,7 @@ async function specialist() {
     level0 = await abilityNow(named);
     said(`${named} before the hours: ${level0}`);
     await openBrief('Nordic Noir');
-    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=..');
+    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=../..');
     await press(work.locator('button', { hasText: /…$/ }).first(), `${trains}…`); await wait(400);
     const go = () => work.getByRole('button', { name: /^Practice An Hour$/ }).first();
     const gains = [];
@@ -933,7 +938,7 @@ async function specialist() {
     await advance('Tomorrow Morning');
     must((await dateText()) !== day, `still ${day}`);
     await openBrief('Nordic Noir');
-    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=..');
+    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=../..');
     const ex = work.locator('button', { hasText: new RegExp(`^${trains.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}…$`) }).first();
     const go = () => work.getByRole('button', { name: /^Practice An Hour$/ }).first();
     let gains = 0;
@@ -961,7 +966,7 @@ async function specialist() {
     must(await rows.count() === 2, `${await rows.count()} takes in the table`);
     const top = clean(await rows.first().innerText());
     must(/Better prepared or better able/.test(top), `the newest take’s purpose: ${top}`);
-    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=..');
+    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=../..');
     said(`What To Work On now: ${clean(await work.innerText().catch(() => '')).slice(0, 400)}`);
     await shot('second-take');
     must(second > firstTake, `the second take ${second} isn’t above the first ${firstTake}`);

@@ -388,11 +388,11 @@ export const CRAFT: readonly GuideEntry[] = [
     questions: ['How do I improve an ability?', 'How do I get past where classes level off?', 'Which tier should I choose?', 'What does the focus do?', 'Why did an hour give less than the last?', 'How many hours can I practice a day?', 'Why is Practice An Hour refused?'],
     where: { route: PROFILE, label: 'Player Profile, The Practice Column' },
     available: `${OPENED}.`,
-    short: `An hour on one exercise grows the ability or technique it trains, past where classes level off, all the way to full. Press the exercise in the Practice column on your Player Profile, choose a Tier and a Focus, and press Practice An Hour. Each exercise has three tiers (${andList(TIER.label)}) and ${FOCUS_LABELS.length} ways to spend the hour: ${orList(FOCUS_LABELS)}. The same exercise again on the same day gives ${pct(DEVELOPMENT.repeat)} of what the hour before gave, and only ${plural(PRACTICE.dailyHours, 'hour')} of practice a day count. Each day you practice grows your discipline once. Some exercises are named in real acting teaching, some are put together from real practice, and a few were made for the game.`,
+    short: `An hour on one exercise grows the ability or technique it trains, past where classes level off, all the way to full. Press the exercise in the Practice column on your Player Profile, choose a Tier and a Focus, and press Practice An Hour.\n\nThe same exercise again on the same day gives ${pct(DEVELOPMENT.repeat)} of what the hour before gave. Only ${plural(PRACTICE.dailyHours, 'hour')} of practice a day count.`,
     steps: [
       'On the Player Profile, in Attributes And Craft or Techniques, press the exercise named in a row’s Practice column.',
       `Choose a Tier. The one for your level is marked Your Level: ${TIER.label[0]} under ${TIER.bands[0]}, ${TIER.label[1]} under ${TIER.bands[1]}, ${TIER.label[2]} from there.`,
-      'Choose a Focus; the line under it says what it does.',
+      `Choose a Focus, one of ${FOCUS_LABELS.length} ways to spend the hour: ${orList(FOCUS_LABELS)}. The line under it says what it does.`,
       'Read the line above the button: about how much the hour will add, to what, and how it compares with an ordinary hour (the tier, the focus, a tired day, a repeat, discipline), figured the way the hour itself will be.',
       'Press Practice An Hour. What the hour found shows under the button, and the toast gives the gain.',
       'Press an ability’s name for its look: what it is, how it grows, where it started, what it does, how to practice it and its latest changes.',
@@ -436,7 +436,7 @@ export const CRAFT: readonly GuideEntry[] = [
       `Attributes And Craft’s subtitle counts today’s practice against ${plural(PRACTICE.dailyHours, 'hour')}.`,
       // From 2026-10-17 (brief 11, A4) the look says what the ability does in its own sentence beside which work reads it, where
       // until then What It Does listed the work that reads it alone.
-      'An ability’s look gives Now, Classes Reach and Last Change, how it grows, where it started, what it does, where it counts, and its exercise, said to be a named exercise, put together from real practice, or made for the game.',
+      'An ability’s look gives Now, Classes Reach and Last Change, how it grows, where it started, what it does, where it counts, and its exercise: one named in real acting teaching, one put together from real practice, or one made for the game.',
     ],
     unavailable: [
       '“You haven’t started training, so there’s nothing to practice yet.”',
@@ -567,7 +567,7 @@ export const CRAFT: readonly GuideEntry[] = [
     questions: ['How do I prepare a brief?', 'How far does each step go?', 'Why does one beat need more rehearsal?', 'Why can’t I rehearse it yet?', 'What’s a practice brief?'],
     where: { route: PROFILE, label: 'Player Profile, Genres, Open Its Brief' },
     available: `${OPENED}.`,
-    short: `Every genre has a practice brief, an original scene written for the game, ${BRIEFS.length} in all. Press Open Its Brief beside a genre to read it: where and when it is, who the two of you are, what you want, what’s in the way, and its beats, where it turns. Three steps prepare it: ${BRIEF.steps.read.label} is the ground your reading stands on, ${BRIEF.steps.lines.label} the lines, and ${BRIEF.steps.rehearse.label} plays it through aloud with the beats placed. Each moves its part a share of what’s left, and a repeat the same day goes half as far. A beat a change of tone leads into, or one held two ways at once, asks more rehearsal than the rest.`,
+    short: `Every genre has a practice brief, an original scene written for the game, ${BRIEFS.length} in all. Press Open Its Brief beside a genre to read it: where and when it is, who the two of you are, what you want, what’s in the way, and its beats, where it turns.\n\nThree steps prepare it: ${BRIEF.steps.read.label} is the ground your reading stands on, ${BRIEF.steps.lines.label} the lines, and ${BRIEF.steps.rehearse.label} plays it through aloud with the beats placed. Do each once a day: a repeat the same day goes half as far.`,
     steps: [
       `On the Player Profile, in Genres, press Open Its Brief beside a genre.${SEVERAL ? ' Where a genre has more than one, the list beside the brief’s title picks which.' : ''}`,
       'Read The Scene and Where It Turns: each beat with its tone, “held at once” where it’s two.',
@@ -605,6 +605,7 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     interpret: [
       `Preparation shows The Breakdown, The Lines, Rehearsal and Knowing The Genre, each as so much of what completes it; Rehearsal’s against the ${pct(BRIEF.complete.rehearsal)} a beat asks with no turn into it and one tone.`,
+      'A beat a change of tone leads into, or one held two ways at once, asks more rehearsal than the rest.',
       'Its Rehearsal, Beat By Beat, is each beat’s own: the brief’s rehearsal, and any work on that beat alone from Work It Through.',
       'Past what every beat asks, more rehearsal adds nothing to a take.',
     ],
@@ -724,7 +725,7 @@ export const CRAFT: readonly GuideEntry[] = [
     questions: ['Who should read opposite me?', 'Does a classmate reading with me change my result?', 'Why did the take with the reader come out lower?', 'What earns a callback?', 'Why won’t a classmate read with me?'],
     where: { route: PROFILE, label: 'Player Profile, Its Brief, Read With' },
     available: `${OPENED}.`,
-    short: `A take on camera is played to someone reading the other lines off camera: A Recording Of The Other Lines, or a classmate. Your own result counts nothing the reader brings. The take with the reader, what a casting office would see, blends in what the reader brought, most of all in connection and responsiveness, as far as the scene is played off them, and it’s what earns a callback. A recording answers on cue and never slips, but can’t listen. A classmate starts with nothing prepared and learns it as you rehearse together; prepared, they bring more than a recording, and on a bad day they can slip.`,
+    short: `A take on camera is played to someone reading the other lines off camera: A Recording Of The Other Lines, or a classmate. Your own result counts nothing the reader brings, but the take with the reader, what a casting office would see, is what earns a callback.\n\nA recording answers on cue and never slips, but can’t listen. A classmate starts with nothing prepared and learns it as you rehearse together: prepared, they bring more than a recording, but on a bad day they can slip.`,
     steps: [
       'In an open brief, The Scene says who the reader plays and How They Play It: what playing against them asks.',
       'Under Read With, choose A Recording Of The Other Lines or a classmate, and press Read With Them.',
@@ -754,7 +755,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'Choosing the recording, or another classmate, sets the first aside, and what they had prepared goes with them.',
     ],
     later: [
-      `Each take works out the take with the reader beside your own. ${BAND_LABEL.strong}, ${STRONG} or more, earns a callback where the take wasn’t one itself.`,
+      `Each take works out the take with the reader beside your own, blending in what the reader brought, most of all in connection and responsiveness, as far as the scene is played off them. ${BAND_LABEL.strong}, ${STRONG} or more, earns a callback where the take wasn’t one itself.`,
       `With a classmate, a take together at ${BAND_LABEL.strong} or better adds ${TOGETHER_BOND} to your bond, more or less by how warmly you take to people, and a slip of theirs you cover at least half of adds ${TOGETHER_COVERED} to their trust, and stays in what they remember of you.`,
       'Every take with a reader counts toward Playing With Others in Your Work So Far.',
     ],
@@ -967,7 +968,7 @@ export const CRAFT: readonly GuideEntry[] = [
     questions: ['What’s my work best at?', 'What keeps holding my work back?', 'Do I have habits as an actor?', 'Why does it say early days?', 'Does it change my results?'],
     where: { route: PROFILE, label: 'Player Profile, Your Work So Far' },
     available: `${OPENED}; its patterns from ${plural(ARTISTRY.least, 'piece')} judged.`,
-    short: `Your Work So Far, on the Player Profile, is the actor your work shows, read from what the game already keeps and never stored: what your work shows most, what keeps holding it back, the material you know and haven’t met, how you tend to play it, your range, how you take direction, your reliability and how you play with others. Each line says what it rests on. A pattern is named only from ${plural(ARTISTRY.least, 'piece')} judged, and a habit from ${ARTISTRY.habitAt} choices, so early work isn’t taken for who you are. The weakness it finds you keep coming back to is named again in What To Work On Next and in a director’s note on it. It adds nothing to any result.`,
+    short: `Your Work So Far, on the Player Profile, is the actor your work shows: what your work shows most, what keeps holding it back, the material you know and haven’t met, how you tend to play it, your range, how you take direction, your reliability and how you play with others. It adds nothing to any result.\n\nA pattern is named only from ${plural(ARTISTRY.least, 'piece')} judged, and a habit from ${ARTISTRY.habitAt} choices, so early work isn’t taken for who you are. The weakness it finds you keep coming back to is named again in What To Work On Next, and in a director’s note on it.`,
     steps: [
       'Open the Player Profile and find Your Work So Far, after School Journey.',
       'Read each section, and the small “From:” after each line: what it rests on.',

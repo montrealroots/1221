@@ -864,6 +864,17 @@ describe('school.partner_rehearsal', () => {
     expect(sim.must<{ done: string }>({ kind: 'school.respond', payload: { momentId: m.id, choice: 'accept' } }).done).toBe(`You told ${first} it’s fine.`);
     expect(mate.bond).toBe(2);
     expect(trustOf(mate)).toBe(50);
+    // A second evening they don't come to says it's the second, and so does their apology (from 2026-10-20, brief 16,
+    // `stoodUp`): until then each read as the first.
+    const next = sim.now + MS_DAY - (sim.now % MS_DAY) + 23 * MS_HOUR;
+    const r2 = booked(sim, a, next);
+    play(sim, r2.at + 60_000);
+    expect(r2.status).toBe('missedByThem');
+    expect(titled(sim, `${first} Didn’t Come`)).toHaveLength(2);
+    expect(titled(sim, `${first} Didn’t Come`).sort((x, y) => x.at - y.at)[1]!.body).toContain(`, and they didn’t come, the second time they haven’t come. It isn’t held against you`);
+    const second = () => momentsOf(courseworkOf(sim, sim.player)!).find((x) => x.kind === 'apology' && x.mate === i && x.id !== m.id);
+    while (!second() && sim.now < r2.at + 21 * MS_DAY) play(sim, sim.now + 6 * MS_HOUR);
+    expect(second()?.text).toMatch(new RegExp(`^${first} apologizes for not coming to rehearse: (something at home took the evening|they lost track of the day)\\. It’s the second rehearsal they’ve missed with you\\.$`));
   }, 60_000);
 
   it('PLAYER JOURNEY: missed by you, away in New York: trust 50 to 38, bond 0 to −5, an incident kept, their notice and the screen saying so', () => {

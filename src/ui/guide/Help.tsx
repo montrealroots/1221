@@ -309,7 +309,7 @@ function Results({ q, onOpen }: { q: string; onOpen: (id: string) => void }) {
       {found.map((e) => (
         <li key={e.id}>
           <EntryLink e={e} onOpen={onOpen} strong />
-          <p className="xs dim" style={{ margin: 0 }}>{e.short.length > 180 ? `${e.short.slice(0, 177)}…` : e.short}</p>
+          <p className="xs dim" style={{ margin: 0 }}>{e.short.length > 180 ? `${e.short.replace(/\s+/g, ' ').slice(0, 177)}…` : e.short.replace(/\s+/g, ' ')}</p>
         </li>
       ))}
     </ul>
@@ -431,7 +431,9 @@ function Entry({ e, onOpen, onWhere }: { e: GuideEntry; onOpen: (id: string) => 
           <button type="button" className="btn btn-sm" onClick={() => guide.show(chapter.id)}>Read About It</button>
         </div>
       )}
-      <p className="help-short" style={{ marginTop: 'var(--s2)' }}>{e.short}</p>
+      {/* A summary in short paragraphs, a blank line between (from 2026-10-20, brief 16, section 7): what it means for you
+          now and what to do first, then what it costs or needs. Until then one paragraph, up to seven sentences. */}
+      {e.short.split(/\n\n+/).map((para, i) => <p key={i} className="help-short" style={{ marginTop: 'var(--s2)' }}>{para}</p>)}
       <dl className="help-where xs">
         <div><dt>Where To Find It</dt><dd>{e.where.label}.</dd></div>
         <div><dt>When You Can Use It</dt><dd>{e.available}</dd></div>

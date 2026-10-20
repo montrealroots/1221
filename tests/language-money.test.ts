@@ -89,6 +89,12 @@ function drawn(sim: Simulation, component: FunctionComponent<{ bankId: string }>
   h.clicks = [];
   return onScreen(renderToStaticMarkup(createElement(component, { bankId: 'us-chase' })));
 }
+/** The same screen's paragraphs, each as the player reads it: where one ends is part of what's said (from 2026-10-20, brief 16). */
+function paragraphsOf(sim: Simulation, component: FunctionComponent<{ bankId: string }>): string[] {
+  h.sim = sim;
+  h.clicks = [];
+  return [...renderToStaticMarkup(createElement(component, { bankId: 'us-chase' })).matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/g)].map((m) => onScreen(m[1]!).trim());
+}
 /** The one Gated button of a feature with a label, pressed, and the toasts it gave. */
 function press(feature: string, label: string): string[] {
   const b = h.clicks.filter((c) => c.feature === feature && c.label === label);
@@ -257,18 +263,28 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
     const sim = nyStudent('lang14-card');
     const card = cardsOf(sim, sim.player)[0]!;
     const words = drawn(sim, BankCard as FunctionComponent<{ bankId: string }>);
-    // Until 2026-10-17 it said the card "opened at this", the 0% of its introductory months.
-    expect(words).toMatch(new RegExp(`0% a year on any balance you carry during the introductory months, then 18\\.46%\\. Chase sets a new card’s rate between 18\\.24% and 27\\.74% from your credit record when it opens\\. Yours was set at ${(card.apr! * 100).toFixed(2).replace(/\\.?0+$/, '').replace('.', '\\.')}% when it opened, and the bank doesn’t reprice it\\.`));
+    // Until 2026-10-17 it said the card "opened at this", the 0% of its introductory months. Your rate, then how the bank
+    // prices a new card, a paragraph each from 2026-10-20 (brief 16): until then one paragraph, the bank's range between.
+    const paragraphs = paragraphsOf(sim, BankCard as FunctionComponent<{ bankId: string }>);
+    expect(paragraphs).toContain(`0% a year on any balance you carry during the introductory months, then 18.46%. Yours was set at ${Number((card.apr! * 100).toFixed(2))}% when it opened, and the bank doesn’t reprice it.`);
+    expect(paragraphs.filter((p) => /^Chase sets a new card’s rate between 18\.24% and 27\.74% from your credit record when it opens\. With your record today, a new card would get \d+(\.\d+)?%\.$/.test(p))).toHaveLength(1);
     expect(words).toContain('Once a statement isn’t paid in full, interest builds up daily on what you owe, including the interest already added. Pay a statement in full, and new spending is charged no interest until the next one is due.');
     expect(words).toContain('If a payment is sixty days late, the rate goes up to 29.99% after 45 days’ notice. No yearly fee. Statements come on the 20th, and payment is due 21 days after each one.');
     expect(words).toContain('The minimum payment is 1% of the statement plus the month’s interest, or $40 if that’s more. Paying less than the minimum by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the minimum itself.');
     expect(words).toContain('Owed $0 Left To Spend');
-    expect(words).toContain('You can apply to any bank here, not only yours. The bank checks your credit record and whether you have income or money to repay from. If it approves you, the card arrives a week later. Applying takes a few points off your credit score, whether or not you’re approved.');
+    // What applying does, then what it asks and costs, then what a second card changes (from 2026-10-20, brief 16: until
+    // then one paragraph, the check before what approval brings).
+    expect(paragraphs).toContain('You can apply to any bank here, not only yours. If it approves you, the card arrives a week later.');
+    expect(paragraphs).toContain('The bank checks your credit record and whether you have income or money to repay from. Applying takes a few points off your credit score, whether or not you’re approved.');
+    expect(paragraphs).toContain('Credit bureaus look at how much of all your cards’ limits you use, taken together.');
   });
 
   it('says the card’s offers, and that there’s nothing to put in a plan when there isn’t', () => {
     const words = drawn(nyStudent('lang14-offers'), BankCardOffers as FunctionComponent<{ bankId: string }>);
-    expect(words).toMatch(/Rewards: 1\.5% back on every purchase, added up at each statement\. You have \$0 to redeem\. Its published rewards: .*?\. Those categories are things a card doesn’t buy in the game, so you earn the base rate\./);
+    // What you earn and have, then the bank's list and what the game pays of it, a paragraph each (from 2026-10-20, brief 16).
+    const paragraphs = paragraphsOf(nyStudent('lang14-offers'), BankCardOffers as FunctionComponent<{ bankId: string }>);
+    expect(paragraphs).toContain('Rewards: 1.5% back on every purchase, added up at each statement. You have $0 to redeem.');
+    expect(paragraphs.filter((p) => /^Its published rewards: .*?\. Those categories are things a card doesn’t buy in the game, so you earn the base rate\.$/.test(p))).toHaveLength(1);
     expect(words).toMatch(/A plan made while the introductory rate lasts, until [A-Z][a-z]+ \d{1,2}, \d{4}, is free for its whole life\. One made after that costs 1\.72% of the plan a month, the most the bank says it charges\. There’s nothing on the card to put into one right now\./);
   });
 
@@ -277,7 +293,10 @@ describe('PLAYER JOURNEY: a New York student at Chase reads Cards and Payments A
     expect(words).toContain('Your Cards Lock a card, report it lost or stolen, or report a payment that wasn’t yours');
     expect(words).toContain('A new card is free. A rushed one costs $15.00 more. Cards last 4 years here. That’s estimated: the bank doesn’t say.');
     expect(words).toContain('The bank lists no fee for a new card, so the game charges nothing for one.');
-    expect(words).toContain('The law on the debit card: If you report a lost or stolen debit card within two business days');
+    // What to do and by when, from the rules the game charges by, and the law's own words folded away under What The Law
+    // Says (from 2026-10-20, brief 16: until then the law's three paragraphs were all there was, five sentences for the debit card).
+    expect(paragraphsOf(nyStudent('lang14-security'), BankSecurity as FunctionComponent<{ bankId: string }>)).toContain('If a debit card payment wasn’t you, press Report It As Not Mine within 2 business days of finding out, and you pay at most $50 of it. Within 60 days of the statement that showed it, you pay at most $500, and after that, you pay all of it. On a credit card, you pay at most $50 of one you report within 60 days of the statement that showed it.');
+    expect(words).toContain('What The Law Says The law on the debit card: If you report a lost or stolen debit card within two business days');
   });
 
   it('says a rush the bank doesn’t charge for costs nothing more, where it said “$0.00 more” (from 2026-10-19, brief 15)', () => {

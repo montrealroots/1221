@@ -88,7 +88,8 @@ import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine/core/simulation';
 import { BriefPane, studiedWords } from '@/ui/components/BriefPane';
 import { briefsOf } from '@/engine/content/briefs';
-import { adviceFor } from '@/engine/systems/next-steps';
+import { adviceFor, adviceSummary } from '@/engine/systems/next-steps';
+import { AdviceCard } from '@/ui/components/AdviceCard';
 
 const one = (x: number) => x.toFixed(1);
 const PAGE = 16;
@@ -97,8 +98,6 @@ const PAGE = 16;
  * area's read of the before walk, and “Sleep owed 0 hours” with none.
  */
 export const sleepOwed = (debt: number): string => { const n = Math.round(debt); return n ? `${plural(n, 'hour')} of sleep owed` : 'No sleep owed'; };
-/** Each part of the first recommendation on a line of its own (from 2026-10-17, brief 14): until then one paragraph. */
-const LINE = { display: 'block', marginTop: 4 } as const;
 /** A day kept as its key at home (`YYYY-MM-DD`), as a date (from 2026-10-17, brief 14: until then printed as the key). */
 const dayWords = (sim: Simulation, day: string): string => { const [year, month, d] = day.split('-').map(Number); return year && month && d ? formatDate(instantFromZoned({ year, month, day: d, hour: 12 }, sim.homeZone), sim.homeZone) : day; };
 
@@ -280,6 +279,9 @@ function PracticeControl({ exercise }: { exercise: string }) {
  * says how long it has been first and what has moved since (`standing`), and what to do about it now (`next`); from brief
  * 12 (later that day) what the forecast assumes of the work (`assumes`), and the first line, training or not, whether
  * preparation, training or both deserve attention (`attention`).
+ *
+ * From 2026-10-20 (brief 16) the first is said short, with the rest behind Why This Recommendation (`AdviceCard`,
+ * `adviceSummary`): until then every line was its whole reasoning, and the block averaged 674 words in brief 16's baseline.
  */
 function NextWork() {
   const { sim } = useGame();
@@ -291,14 +293,7 @@ function NextWork() {
   // wasn’t held back by anything).
   if (!(person.work ?? []).length) return <p className="small" style={{ margin: 0 }}>None of your work has been judged yet. After your first showing, night on stage or self-tape, this will say what to work on next, from what held that work back.</p>;
   if (!recs.length) return <p className="small" style={{ margin: 0 }}>Your recent work wasn’t held back by any ability or technique with room to grow. What’s left is new material and new ways of playing it.</p>;
-  return (
-    <div className="col gap-1">
-      <div className="eyebrow">What To Work On Next</div>
-      <ul className="small" style={{ margin: 0 }}>
-        {recs.map((r) => <li key={r.target}><strong>{r.label}</strong>{r.exercise ? `, ${EXERCISE_BY_ID[r.exercise]?.label ?? r.exercise} at the ${TIER.label[r.tier ?? 0]} tier` : ''}. {r.why}{r.recurring && <> <span className="xs dim">From your record: {r.recurring.evidence.join('; ')}. It last held a piece back on {formatDate(r.recurring.last, sim.zone)}.</span></>}{r.standing && <> <span className="xs" data-standing="" style={LINE}>{r.standing}</span></>}{r.next && <> <span className="xs" data-next="" style={LINE}>{r.next}</span></>}{r.assumes && <> <span className="xs" data-assumes="" style={LINE}>{r.assumes}</span></>}{r.attention && <> <span className="xs" data-attention="" style={LINE}>{r.attention}</span></>}</li>)}
-      </ul>
-    </div>
-  );
+  return <AdviceCard advice={adviceSummary(sim, person, recs)!} heading="What To Work On Next" />;
 }
 
 /**
@@ -372,10 +367,15 @@ function AbilitiesPanel() {
             </tbody>
           </table>
         </LookRegion>
+        {/* Where you stand, what builds it, then the rules (from 2026-10-20, brief 16, section 7), with the sources in the
+            Fine below. Until then one paragraph of seven sentences, the rules first and the sources inside them. */}
         <p className="small" style={{ margin: 0 }}>
-          <strong>Stamina is your fitness.</strong> Full is the fittest a body your age can be, {one(staminaFull)} now, and no work asks more of it. A workout builds it and holds it for {FITNESS.heldDays} days, and so does a class that works the body as hard (Movement Invention, stage combat). After that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, where an everyday life keeps it (Mujika &amp; Padilla, 2000, on detraining); that rate is estimated. Two workouts a week keep it up (Hickson &amp; Rosenkoetter, 1981). A second workout on the same day builds half as much. It’s the one ability that fades without use: the others keep what they’ve earned.
+          <strong>Stamina is your fitness.</strong> Yours is {one(abilityOf(sim, person, 'stamina'))}, and full is the fittest a body your age can be, {one(staminaFull)} now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
         </p>
-        <Fine>Classes and coursework grow an ability up to its reach. Practice takes it past that, all the way to full, where it stops. The same exercise again on the same day gives half as much, and after {PRACTICE.dailyHours} hours in a day, practice stops counting (Ericsson et al., 1993). An ability at its full is marked Mastered. Stamina loses the mark when its fitness falls; the others keep what they’ve earned.</Fine>
+        <p className="small" style={{ margin: 0 }}>
+          It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for {FITNESS.heldDays} days, and after that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+        </p>
+        <Fine>Classes and coursework grow an ability up to its reach. Practice takes it past that, all the way to full, where it stops. The same exercise again on the same day gives half as much, and after {PRACTICE.dailyHours} hours in a day, practice stops counting (Ericsson et al., 1993). An ability at its full is marked Mastered. Stamina loses the mark when its fitness falls; the others keep what they’ve earned. Stamina’s fall of {FITNESS.perDay} a day is estimated from Mujika &amp; Padilla (2000), on detraining, and two workouts a week keeping it up is from Hickson &amp; Rosenkoetter (1981).</Fine>
       </div>
     </Panel>
   );

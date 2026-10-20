@@ -538,8 +538,11 @@ describe('documents.apply_opt', () => {
     const first = papers(sim, 'work');
     expect(first.text).toContain('Your Program Ends July 15, 2026');
     expect(first.text).toContain('Your US Status Ends September 13, 2026 Including the grace period after your permission ends');
-    expect(first.text).toContain('OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval');
-    expect(first.text).toContain('$470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days.');
+    // From 2026-10-20 (brief 16, section 7) the panel opens on the window to apply, by this student's own program, and says
+    // what a degree not finished costs; OPT's twelve months, which it opened on until then, are under Sources And Estimates.
+    expect(first.text).toContain('Your window to apply is April 16, 2026 to September 13, 2026, 90 days before your program ends to 60 days after. OPT is permission to work in your field after your degree, and it keeps your US status going.');
+    expect(first.text).toContain('$470.00. Premium processing costs $1,780.00 more and gets you a decision within 30 business days. OPT follows a completed degree: if school ends without yours, it’s denied when it’s decided, and the fee isn’t refunded.');
+    expect(first.text).toContain('OPT itself runs up to 12 months from the later of your program’s end and the approval, with no more than 90 days without work in total.');
     expect(button(first, 'Apply With Premium Processing')).toMatchObject({ feature: 'documents.apply_opt', disabled: false });
     expect(press(button(first, 'Apply For OPT'))).toEqual(['Applied for OPT and paid $470.00. It’s decided by November 22, 2026.']);
     const after = papers(sim, 'work');
@@ -924,6 +927,9 @@ describe('benefits.claim', () => {
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toBe('You already have a claim open.');
     const filed = papers(sim, 'benefits');
     expect(filed.text).toContain('A Connecticut Claim Filed January 3, 2028 How This Works A Week $93.00 Connecticut has no waiting week Paid $0.00 Of $2,418.00 at most At Most $2,418.00 Until January 2, 2029');
+    // What a week pays, by the open claim's rules (from 2026-10-20, brief 16): until then the panel said a week counted
+    // "the wages paid that week", where `workDoneIn` counts the work done in it, and left out a week in hospital or laid up.
+    expect(filed.text).toContain('Once a claim is open, the game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. What it pays is taxable income on your return. A week with work pays the benefit less two-thirds of the pay, counting the work you did that week, even if it’s paid later. A week pays nothing if you’re abroad, a full-time student in Connecticut or without permission to work in the US, or in hospital or laid up by an injury for most of the week. Work-study wages come from your school and don’t count toward a claim’s base period.');
     tended(sim, SUNDAY[0]! + MS_HOUR);
     expect(benefitPaid(sim)).toEqual([[SUNDAY[0], 93_00]]);
     expect(titled(sim, 'Your Waiting Week')).toEqual([]);

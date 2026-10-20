@@ -553,7 +553,16 @@ function missStatePlan(sim: Simulation, person: Person, p: StatePlan, due: Money
   const rules = rulesOf(p.state)!;
   const cur = saveCurrency(sim.universe);
   const cure = rules.plan.cure;
-  if (cure.kind === 'none') { endStatePlan(sim, person, p, 'ended', `Ended: a payment missed (${rules.short}’s rule on a missed payment isn’t published, so the game ends the plan)`); notifyPlayer(sim, person, `${rules.short} Ended Your Plan`, `Your bank couldn’t pay the plan’s ${formatMoney(due, cur)}. ${rules.short} doesn’t publish what happens after a missed payment, so in the game the plan ends. Collection resumes on what you owe it.`); return; }
+  // Where the state publishes that a missed payment ends the plan (`cureAssumed: false`: Arizona, Louisiana, New Mexico,
+  // the District), it says so; until 2026-10-20 (brief 16's papers editor) every state with no cure was said not to
+  // publish its rule.
+  if (cure.kind === 'none') {
+    const why = rules.plan.cureAssumed ? `${rules.short}’s rule on a missed payment isn’t published, so the game ends the plan` : `${rules.short} ends a plan when a payment is missed`;
+    const said = rules.plan.cureAssumed ? `${rules.short} doesn’t publish what happens after a missed payment, so in the game the plan ends.` : `${rules.short} ends a plan when a payment is missed.`;
+    endStatePlan(sim, person, p, 'ended', `Ended: a payment missed (${why})`);
+    notifyPlayer(sim, person, `${rules.short} Ended Your Plan`, `Your bank couldn’t pay the plan’s ${formatMoney(due, cur)}. ${said} Collection resumes on what you owe it.`);
+    return;
+  }
   p.status = 'missed';
   p.endsBy = cure.kind === 'next-due' ? sim.now + 30 * MS_DAY : sim.now + cure.days * MS_DAY;
   note(p, sim.now, cure.kind === 'next-due' ? 'A payment missed: made up by the next due date, or it’s a default' : 'A payment missed: Intent To Terminate', due);

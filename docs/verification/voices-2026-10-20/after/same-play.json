@@ -1,0 +1,271 @@
+{
+ "differences": 0,
+ "scenarios": {
+  "attentive": {
+   "showing": {
+    "before": 124,
+    "after": 124,
+    "same": true
+   },
+   "director": {
+    "before": 11,
+    "after": 11,
+    "same": true
+   },
+   "moment": {
+    "before": 43,
+    "after": 43,
+    "same": true
+   },
+   "advice": {
+    "before": 66,
+    "after": 66,
+    "same": true
+   },
+   "notice": {
+    "before": 402,
+    "after": 402,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "underprepared": {
+   "showing": {
+    "before": 124,
+    "after": 124,
+    "same": true
+   },
+   "director": {
+    "before": 15,
+    "after": 15,
+    "same": true
+   },
+   "moment": {
+    "before": 40,
+    "after": 40,
+    "same": true
+   },
+   "advice": {
+    "before": 59,
+    "after": 59,
+    "same": true
+   },
+   "notice": {
+    "before": 336,
+    "after": 336,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "improving": {
+   "showing": {
+    "before": 124,
+    "after": 124,
+    "same": true
+   },
+   "director": {
+    "before": 11,
+    "after": 11,
+    "same": true
+   },
+   "moment": {
+    "before": 46,
+    "after": 46,
+    "same": true
+   },
+   "advice": {
+    "before": 63,
+    "after": 63,
+    "same": true
+   },
+   "notice": {
+    "before": 387,
+    "after": 387,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "regressing": {
+   "showing": {
+    "before": 124,
+    "after": 124,
+    "same": true
+   },
+   "director": {
+    "before": 15,
+    "after": 15,
+    "same": true
+   },
+   "moment": {
+    "before": 44,
+    "after": 44,
+    "same": true
+   },
+   "advice": {
+    "before": 60,
+    "after": 60,
+    "same": true
+   },
+   "notice": {
+    "before": 365,
+    "after": 365,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "skilled": {
+   "showing": {
+    "before": 124,
+    "after": 124,
+    "same": true
+   },
+   "director": {
+    "before": 11,
+    "after": 11,
+    "same": true
+   },
+   "moment": {
+    "before": 43,
+    "after": 43,
+    "same": true
+   },
+   "advice": {
+    "before": 63,
+    "after": 63,
+    "same": true
+   },
+   "notice": {
+    "before": 399,
+    "after": 399,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": []
+   },
+   "run": {
+    "reloads": [
+     13,
+     13
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "pressure": {
+   "showing": {
+    "before": 124,
+    "after": 124,
+    "same": true
+   },
+   "director": {
+    "before": 11,
+    "after": 11,
+    "same": true
+   },
+   "moment": {
+    "before": 42,
+    "after": 42,
+    "same": true
+   },
+   "advice": {
+    "before": 61,
+    "after": 61,
+    "same": true
+   },
+   "notice": {
+    "before": 410,
+    "after": 410,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  },
+  "practicing": {
+   "showing": {
+    "before": 124,
+    "after": 124,
+    "same": true
+   },
+   "director": {
+    "before": 11,
+    "after": 11,
+    "same": true
+   },
+   "moment": {
+    "before": 43,
+    "after": 43,
+    "same": true
+   },
+   "advice": {
+    "before": 65,
+    "after": 65,
+    "same": true
+   },
+   "notice": {
+    "before": 399,
+    "after": 399,
+    "sameDaysAndTitles": true,
+    "mergedDifferently": []
+   },
+   "run": {
+    "reloads": [
+     14,
+     14
+    ],
+    "endedOn": [
+     "October 23, 2027",
+     "October 23, 2027"
+    ]
+   }
+  }
+ }
+}

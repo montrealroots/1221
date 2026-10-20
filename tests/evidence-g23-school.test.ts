@@ -596,7 +596,11 @@ describe('work records + journey', () => {
     const exercise = EXERCISES.find((e) => e.trains === what)!;
     const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const each = r1(top.points);
-    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise(?:, an hour a day,)? would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}\\. On your recent work, judged again as you are now, that’s forecast to be worth about ${esc(String(each))} points? a piece`));
+    // Short, with its estimate said as one (from 2026-10-20, brief 16's `adviceSummary`): until then the whole forecast
+    // inline, "N hours of its exercise … would take it from … that’s forecast to be worth about …".
+    // First, or under Other Things Worth Your Time where preparation comes first, as here.
+    const drawn = shown(sim, ProfileWorkspace);
+    expect(drawn).toMatch(new RegExp(`What To Work On Next .*(?:${esc(exercise.label)} at the \\w+ tier, with Focus on \\w+\\. .*Estimate: ${top.hours} hours(?:, an hour a day,)? would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}, worth about ${esc(String(each))} points? a piece on your recent work\\.|, ${esc(exercise.label)} at the \\w+ tier: an estimated ${esc(String(each))} points? a piece for ${top.hours} hours, from ${Math.round(top.from)} to about ${Math.round(top.to)}\\.)`));
   });
 
   it('PLAYER JOURNEY: Taking Direction reads, for life, the notes on the craft a run gave and those the work answered', () => {

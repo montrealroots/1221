@@ -264,7 +264,11 @@ describe('p-abilities', () => {
       const { html, text } = drawn(sim, ProfileWorkspace);
       const rows = abilityRows(html);
       expect(rows.size).toBe(12);
-      return { rows, sentence: text.match(/Full is the fittest a body your age can be, ([\d.]+) now/)?.[1], text };
+      // From 2026-10-20 (brief 16) the sentence under the table says where you stand first, "Yours is …", the row's Now:
+      // until then it opened on "Full is the fittest …".
+      const said = text.match(/Stamina is your fitness\. Yours is ([\d.]+), and full is the fittest a body your age can be, ([\d.]+) now: no work asks more of it\./);
+      expect(said?.[1]).toBe(rows.get('Stamina')![1]);
+      return { rows, sentence: said?.[2], text };
     };
     let { rows, sentence, text } = read();
     expect(rows.get('Stamina')![2]).toBe('99.4');
@@ -634,7 +638,11 @@ describe('h-needs', () => {
     const top = order.filter((n) => { const k = `${n.title}|${n.body}`; if (seenTitles.has(k)) return false; seenTitles.add(k); return true; }).slice(0, 6);
     expect(items).toHaveLength(6);
     expect(top.slice(0, 3).map((n) => n.title)).toEqual(['A Notice Of Academic Concern', 'A Deep Cut', 'Welcome To The Class Of 2029']);
-    expect(top.filter((n) => n.title === 'A Word On Your Coursework')).toHaveLength(2);
+    const warnings = top.filter((n) => n.title === 'A Word On Your Coursework').sort((x, y) => x.at - y.at);
+    expect(warnings).toHaveLength(2);
+    // The spring's says it's the second, after the fall's (from 2026-10-20, brief 16): until then each read as the first.
+    expect(warnings[0]!.body).toContain('. This is a warning. ');
+    expect(warnings[1]!.body).toContain('. This is your second coursework warning, after one last term. ');
     expect(items).toEqual(top.map((n) => words(`${n.title} ${n.body} ${ago(n.at, sim.now)}`)));
     // Each has somewhere to go: the return's Go There and six more.
     expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(7);

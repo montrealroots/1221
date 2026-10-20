@@ -491,23 +491,23 @@
  },
  "src/engine/content/guide/body.ts#BODY [body.how]": {
   "status": "Rewritten",
-  "hash": "2af175939757",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section; tests/guide-examples-start-day-body.test.ts plays the example",
+  "hash": "8a7c4f20a1f4",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 7 sentences to 4 in two paragraphs, what How You Are shows, then energy, condition and fitness kept apart; what wears condition down moved to What Decides It; tests/guide.test.ts and tests/guide-examples-start-day-body.test.ts pass.",
   "first": "Pending"
  },
  "src/engine/content/guide/body.ts#BODY [body.look-after]": {
   "status": "Rewritten",
-  "hash": "17ed32d7b44b",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section; tests/guide-examples-start-day-body.test.ts plays the example",
+  "hash": "5037ee8ffcea",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 6 sentences to 4 in two paragraphs, the menu and its order, then what each line says and that pressing one moves the clock; tests/guide.test.ts and tests/guide-examples-start-day-body.test.ts pass.",
   "first": "Pending"
  },
  "src/engine/content/guide/body.ts#BODY [body.sleep]": {
   "status": "Rewritten",
-  "hash": "86bff835ed93",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section; tests/guide-examples-start-day-body.test.ts plays the example",
+  "hash": "f55bd64284ec",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 6 sentences to 4, the dialog and the clock first, then the warning and what a night does; a night eases stress and pays back debt, as applySleep in systems/life.ts does, where it said it cleared them; tests/guide-examples-start-day-body.test.ts passes.",
   "first": "Pending"
  },
  "src/engine/content/guide/body.ts#BODY [evaluation]": {
