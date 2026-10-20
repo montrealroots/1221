@@ -402,6 +402,21 @@ function nextNotice(sim: Simulation, person: Person, r: TaxReturn): void {
 }
 
 /**
+ * What the IRS's collection does next on a year's balance, and when, as `nextNotice` put it on the schedule (from
+ * 2026-10-20, brief 17, section 8: until then Papers said nothing of the IRS's letters at all): the next of its notices,
+ * or a levy on the bank accounts once they're spent. Nothing while a payment plan holds collection, as
+ * `TAX_NOTICE_KIND`'s handler holds it, or with nothing on the schedule.
+ */
+export function nextIrsStep(sim: Simulation, person: Person, r: TaxReturn): { at: Instant; notice?: { code: string; title: string } } | undefined {
+  if (!r.owed) return undefined;
+  if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) return undefined;
+  const item = sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === TAX_NOTICE_KIND && i.payload.personId === person.id && i.payload.year === r.year);
+  if (!item) return undefined;
+  const n = COLLECTION.notices[r.collection ?? 0];
+  return { at: item.at, ...(n ? { notice: { code: n.code, title: n.title } } : {}) };
+}
+
+/**
  * The IRS's bill on a balance a return leaves unpaid at filing, Notice CP14 (from 2026-10-16): the first letter of its
  * collection (“If you owe taxes, we will send you a bill. This is your first bill for tax due”, IRS Publication 594,
  * Rev. 1-2026, read 2026-10-16). Filed before the due date it names that date, and says nothing is added until then
@@ -1330,9 +1345,11 @@ export function registerTaxReturn(sim: Simulation): void {
     returnsOf(person)[year] = { year, due, figures };
     s.schedule({ at: due, kind: TAX_DUE_KIND, label: `Tax Return Due: ${year}`, category: 'personal', priority: 25, payload: { personId: person.id, year } });
     if (person.id !== s.universe.playerId) return;
+    // What its File It takes, said before it's pressed, as `tax.file` takes it (from 2026-10-20, brief 17, section 8: until
+    // then the question said what was owed and by when, and the payment came as a surprise).
     s.requireDecision({
       urgency: 70, category: 'taxes', title: `Your ${year} Tax Return`,
-      detail: `${nra ? (figures.income > 0 ? 'Form 1040-NR, with Form 8843. ' : 'Form 8843, which every F-1 student files. There’s no income to report. ') : ''}${figures.balance > 0 ? `You owe ${formatMoney(figures.balance, cur)}` : figures.balance < 0 ? `You’re due a refund of ${formatMoney(-figures.balance, cur)}` : 'You owe nothing and are due nothing back'}, on ${formatMoney(figures.income, cur)} of income. File it by ${formatDate(due, HOME)}.`,
+      detail: `${nra ? (figures.income > 0 ? 'Form 1040-NR, with Form 8843. ' : 'Form 8843, which every F-1 student files. There’s no income to report. ') : ''}${figures.balance > 0 ? `You owe ${formatMoney(figures.balance, cur)}` : figures.balance < 0 ? `You’re due a refund of ${formatMoney(-figures.balance, cur)}` : 'You owe nothing and are due nothing back'}, on ${formatMoney(figures.income, cur)} of income.${figures.balance > 0 ? ' File It pays it from your bank at once, and if your bank can’t cover it, you’re sent a bill instead.' : ''} File it by ${formatDate(due, HOME)}.`,
       route: '/workspace/papers', dueAt: due, refType: 'return', refId: String(year),
       actions: [{ label: 'File It', commandKind: 'tax.file', payload: { year } }],
     });

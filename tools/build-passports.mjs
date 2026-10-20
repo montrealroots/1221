@@ -38,6 +38,16 @@ const CURATED = {
 const FEE_BASIS_WORDS = {
   US: 'First-time adult (16+) passport book on Form DS-11: a $130 application fee paid to the Department of State, and a $35 acceptance fee paid separately to the acceptance facility.',
 };
+/**
+ * A document's name in English given in Title Case, as the Document column, its notices' titles ("… Issued") and its
+ * look show a name (from 2026-10-20, brief 17's papers editor): until then the research's own words, so an Auckland-born
+ * life's passport arrived as "New Zealand passport Issued". A name in the issuer's language stays as the world spells it.
+ */
+const NAME_WORDS = {
+  IE: 'Irish Passport (Standard 10-Year Passport Book)',
+  AU: 'Australian Passport',
+  NZ: 'New Zealand Passport',
+};
 const out = {};
 for (const x of j) {
   const c = CURATED[x.iso2];
@@ -45,7 +55,7 @@ for (const x of j) {
   out[x.iso2] = {
     // The fee's basis and the note on applying from abroad are shown under Your Passport, so their dates are the game's
     // (from 2026-10-17, brief 14: until then "Fees effective 8 April 2026."); the research keeps its own.
-    issuer: x.issuer, name: x.docName, fee: x.fee.amount, currency: x.fee.currency, feeBasis: gameDates(FEE_BASIS_WORDS[x.iso2] ?? x.fee.feeBasis),
+    issuer: x.issuer, name: NAME_WORDS[x.iso2] ?? x.docName, fee: x.fee.amount, currency: x.fee.currency, feeBasis: gameDates(FEE_BASIS_WORDS[x.iso2] ?? x.fee.feeBasis),
     days: c.days, daysEstimated: Boolean(c.estimated), expedite: c.expedite, validityYears: x.validityYears,
     ...(c.young ? { young: c.young } : {}),
     lost: typeof x.lostReplacement === 'string' ? x.lostReplacement : JSON.stringify(x.lostReplacement ?? null),

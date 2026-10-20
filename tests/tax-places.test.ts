@@ -147,7 +147,7 @@ describe('collection by the new authorities', () => {
     const notes = sim.universe.notifications.filter((n) => n.title === 'Indiana Issued A Tax Warrant');
     expect(notes).toHaveLength(1);
     // 10% of the tax, to the cent.
-    expect(notes[0]!.body).toContain(`The Tax Warrant’s Collection Fee, 10% Of The Tax, $${(Math.round(sd().balance * 0.1) / 100).toFixed(2)}, is added`);
+    expect(notes[0]!.body).toContain(`The tax warrant’s collection fee, 10% of the tax, $${(Math.round(sd().balance * 0.1) / 100).toFixed(2)}, is added`);
     // Paid in full from a family gift: released 30 days on (SLATE's days, said).
     sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: sim.player.primaryAccountId!, amount: 5_000_00 }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -5_000_00 }] });
     sim.must({ kind: 'tax.pay_state', payload: { state: 'us-in', year: 2026 } });

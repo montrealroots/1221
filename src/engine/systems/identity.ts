@@ -258,6 +258,14 @@ export function idReplaceRefusal(person: Person, documentId: string, at: Instant
   return undefined;
 }
 
+/**
+ * A new card's fee, in the save's money, as `documents.apply_idcard` charges it (from 2026-10-20, brief 17: Your ID says
+ * it before Get is pressed, where until then only the toast after it did).
+ */
+export function idCardFee(sim: Simulation, card: (typeof ID_CARDS)[string]): Money {
+  return card.currency ? inMoney(sim, card.fee, card.currency) : usd(sim, card.fee);
+}
+
 /** A replacement's fee for them, in the save's money: the reduced one from its age where there is one. */
 export function idReplaceFee(sim: Simulation, person: Person, issuer: string): Money {
   const rule = ID_CARD_REPLACEMENT[issuer]!;
@@ -309,7 +317,7 @@ export function registerIdentity(sim: Simulation): void {
     const no = idCardRefusal(person, s.now);
     if (no) throw new CommandError(no);
     const { jurisdiction, card } = idCardHere(person)!;
-    const fee = card.currency ? inMoney(s, card.fee, card.currency) : usd(s, card.fee);
+    const fee = idCardFee(s, card);
     if (fee > 0 && !payFromBank(s, person, fee, card.name, 'documents')) throw new CommandError(`Your bank can’t cover ${formatMoney(fee, saveCurrency(s.universe))}, so nothing was charged.`);
     const id = s.nextId('document');
     // Ireland's passport card runs five years or to the book's expiry; the Ontario, BC and INE cards' terms weren't read.

@@ -71,9 +71,9 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
-import { MS_DAY, MS_HOUR, instantFromZoned, type Instant } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate, instantFromZoned, type Instant } from '@/engine/core/time';
 import { newLifeConfig, withFamily } from '@/engine/world/bootstrap';
-import { TAX_NOTICE_KIND, TAX_PLAN_KIND } from '@/engine/systems/taxreturn';
+import { TAX_NOTICE_KIND, TAX_PLAN_KIND, newLiability } from '@/engine/systems/taxreturn';
 import { STATE_NOTICE_KIND, statePartsOn } from '@/engine/systems/statetax';
 import { STATE_TAX } from '@/engine/content/statetax';
 import { earningsOf } from '@/engine/systems/earnings';
@@ -661,5 +661,74 @@ describe('documents.apply_ssn on a London-born student', () => {
     expect(without.toast).toEqual(['Applied. The IRS answers by March 3, 2027.']);
     expect(without.sim.player.taxPlan!.history.map((x) => x.what)).toEqual(['Form 9465 mailed: no Social Security number for the online application']);
     expect(without.sim.player.taxPlan!.decideAt).toBe(at(2027, 2, 1, 12) + 30 * MS_DAY);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Brief 17 (2026-10-20, section 8): what Papers says before a button is pressed, and what comes next
+// ---------------------------------------------------------------------------
+
+describe('brief 17: Papers says what File It takes, what a missed plan payment needs, and what the letters do next', () => {
+  it('PLAYER JOURNEY: her 2027 return unfiled on 1 February 2028, Papers says before File It that it pays the IRS and Connecticut DRS from her bank at once, each whole or not at all; on 20 April, unfiled, the panel says it’s late and that the late penalties and interest come with it', () => {
+    const sim = thaw(base());
+    const before = papers(sim);
+    expect(before).toContain('2027 Return Due April 18, 2028 File It');
+    // Unfiled, where it's filed from, not that it was (the town is a link, so the comma follows its tag).
+    expect(before).toContain('It’s filed from New Haven');
+    expect(before).toContain('where you last lived that year. File It sends the return in and pays the IRS and Connecticut DRS from your bank at once. Each is paid in full or not at all, and one your bank can’t cover is billed instead.');
+    sim.advanceTo(at(2028, 4, 20, 12));
+    const late = papers(sim);
+    expect(late).toContain('2027 Return Late: due April 18, 2028 File It');
+    expect(late).toContain('File It sends the return in and pays the IRS and Connecticut DRS from your bank at once, with the late penalties and interest since it was due. Each is paid in full or not at all');
+    // Filed, the words go: they're about a button that's gone.
+    intoTheCd(sim);
+    papers(sim);
+    press('tax.file');
+    expect(papers(sim)).not.toContain('File It sends the return in');
+    expect(papers(sim)).toContain('Filed from New Haven');
+    expect(papers(sim)).not.toContain('It’s filed from');
+  });
+
+  it('PLAYER JOURNEY: filed unpaid on 1 February 2028, Papers says what each authority sends next and by when, from the schedule: the IRS’s first reminder about May 23 and Connecticut’s bill about May 18; a payment plan with the IRS in force, the IRS’s line goes, as its letters stop', () => {
+    const sim = thaw(unpaid());
+    expect(pending(sim, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([ret(sim).due + 35 * MS_DAY]);
+    expect(pending(sim, STATE_NOTICE_KIND).map((i) => i.at)).toEqual([ret(sim).due + 30 * MS_DAY]);
+    const filed = papers(sim);
+    expect(filed).toContain('Next, about May 23, 2028: A Reminder From The IRS, unless you pay it all or set up a payment plan first.');
+    expect(filed).toContain('Next, about May 18, 2028: A Bill From Connecticut DRS, unless you pay it all or set up a payment plan first. The time between its notices is estimated.');
+    expect(press('tax.apply_plan')).toEqual(['Applied. The IRS answers by February 1, 2028.']);
+    sim.advanceTo(sim.now + 2 * 60_000);
+    expect(sim.player.taxPlan!.status).toBe('active');
+    const planned = papers(sim);
+    expect(planned).not.toContain('A Reminder From The IRS, unless');
+    expect(planned).toContain('Next, about May 18, 2028: A Bill From Connecticut DRS');
+    // Connecticut's bill come, the line says it's the latest and what follows it.
+    sim.advanceTo(ret(sim).due + 30 * MS_DAY + MS_HOUR);
+    expect(papers(sim)).toContain('The latest notice: A Bill From Connecticut DRS. Next, about June 17, 2028: Connecticut DRS Intends To Levy, unless you pay it all or set up a payment plan first.');
+    // Its lien filed with the notice of intent, the notice ends on where to pay, as Connecticut's other notices do.
+    sim.advanceTo(ret(sim).due + 60 * MS_DAY + MS_HOUR);
+    expect(titled(sim, 'A Connecticut Tax Lien Is Filed').map((n) => n.body)).toEqual(['Connecticut DRS filed a Connecticut Tax Lien for $655.56 on your 2027 Connecticut return with the town clerk’s land records and the Secretary of the State’s UCC filings. It’s a public record. It takes priority over liens recorded after it. It’s released once it’s paid and you ask: DRS issues a release certificate on request, for you to record. You can pay it on Papers, under Tax Returns.']);
+  });
+
+  it('PLAYER JOURNEY: her plan’s first payment missed on 2 March 2028, Papers says what happened, what Catch Up does and the day the plan ends without it, from the plan’s record; and what Revise The Plan costs before it’s pressed', () => {
+    const sim = thaw(unpaid());
+    papers(sim);
+    press('tax.apply_plan');
+    sim.advanceTo(at(2028, 3, 10, 12));
+    expect(sim.player.taxPlan!.status).toBe('default');
+    const shown = papers(sim);
+    expect(shown).toContain('Your bank couldn’t pay the plan’s $23.62 on March 2, 2028. Press Catch Up to pay it from your bank. If it isn’t paid by April 1, 2028, the plan ends and collection starts again.');
+    expect(shown).toContain('Revise The Plan puts everything you owe the IRS now into the plan at the new monthly payment, for a $6.00 fee. Left blank, the payment is the lowest the IRS takes, $23.62.');
+    expect(drew('tax.catch_up_plan')).toHaveLength(1);
+    // Caught up, the words about the missed payment go.
+    breakCd(sim);
+    papers(sim);
+    press('tax.catch_up_plan');
+    expect(papers(sim)).not.toContain('Your bank couldn’t pay the plan’s');
+    // TEST SETUP: new tax of $1,000.00 owed while the plan stands, as an amended return's would be: more than two of its
+    // $23.62 payments, so the plan is behind on it, and Papers says what CP523 asks, with the control's own name.
+    newLiability(sim, sim.player, 1_000_00);
+    expect(sim.player.taxPlan!.status).toBe('default');
+    expect(papers(sim)).toContain(`New tax of $1,000.00 is more than two of the plan’s monthly payments, so it can’t simply join the plan. Press Revise The Plan by ${formatDate(sim.player.taxPlan!.defaultBy!, sim.zone)}, or the plan ends and collection starts again.`);
   });
 });

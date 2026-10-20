@@ -147,7 +147,9 @@ describe('FIXTURE: a travel authorization held from before 2026-10-09', () => {
   it('GUARD: Going Abroad says a visa or an authorization isn’t applied for here, and the rule it shows decides nothing: `mayEnter` is read by Papers and a document’s page alone, by no system of the engine (brief 11, tax.s8.visas_authorizations, 2026-10-17)', () => {
     const sim = life('g25-abroad-rule');
     rest(sim);
-    expect(papers(sim)).toContain('Travel isn’t part of the game, so you can’t apply for a visa or travel authorization here. Each country’s rules are shown as they stand, for reference.');
+    // In sight under the answer from 2026-10-20 (brief 17), not behind a Sources And Estimates of its own; its second
+    // sentence, "Each country’s rules are shown as they stand, for reference.", went: the panel's subtitle says it.
+    expect(papers(sim)).toContain('Travel isn’t part of the game, so you can’t apply for a visa or travel authorization here. Sources And Estimates');
     const files = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? files(`${dir}/${e.name}`) : /\.tsx?$/.test(e.name) ? [`${dir}/${e.name}`] : []));
     const readers = files('src').filter((f) => readFileSync(f, 'utf8').split('\n').some((line) => /\bmayEnter\(/.test(line) && !/function mayEnter\(/.test(line)));
     expect(readers.sort()).toEqual(['src/ui/looks/papers.tsx', 'src/ui/papers/Documents.tsx']);
