@@ -1,0 +1,325 @@
+{
+ "before": {
+  "pages": 43,
+  "blocks": 777,
+  "fourOrMore": 41,
+  "fiveOrMore": 21,
+  "longest": 451
+ },
+ "after": {
+  "pages": 43,
+  "blocks": 835,
+  "fourOrMore": 2,
+  "fiveOrMore": 0,
+  "longest": 50
+ },
+ "byPage": {
+  "Creation, Step 1": {
+   "before": [
+    {
+     "sentences": 4,
+     "words": 27,
+     "text": "New York is marked. Outlines from Natural Earth 110m via world-atlas. Public domain. Countries too small to draw at this scale are still in the list below."
+    }
+   ],
+   "after": [
+    {
+     "sentences": 4,
+     "words": 27,
+     "text": "New York is marked. Outlines from Natural Earth 110m via world-atlas. Public domain. Countries too small to draw at this scale are still in the list below."
+    }
+   ]
+  },
+  "Creation, Step 3": {
+   "before": [
+    {
+     "sentences": 4,
+     "words": 60,
+     "text": "The films you love. Pick as many as are true: there’s no limit. Rehearsing or performing a play in a genre you love, a comedy or a tragedy, lifts your morale an"
+    },
+    {
+     "sentences": 4,
+     "words": 60,
+     "text": "Money isn’t the constraint. Time and access are. $92,391 in checking and $413,043 in savings, and a card with a $65,217 limit and nothing owed on it. Yale finds"
+    }
+   ],
+   "after": []
+  },
+  "Guide, Chapter 6 Of 17, How You Are": {
+   "before": [
+    {
+     "sentences": 5,
+     "words": 73,
+     "text": "How You Are, on Home, shows three numbers. Energy is what you have left for today. It runs down every hour you’re awake, faster when you owe sleep, and only sle"
+    },
+    {
+     "sentences": 4,
+     "words": 66,
+     "text": "Condition is how sound your body is. Illness, going hungry, heavy stress and short nights wear it down, and a night of real rest mends it. Fitness is the same a"
+    }
+   ],
+   "after": []
+  },
+  "Guide, Chapter 8 Of 17, Looking After Yourself": {
+   "before": [
+    {
+     "sentences": 5,
+     "words": 60,
+     "text": "Your groceries are bought each day at your town’s prices, and you eat through them during the day. Eat A Meal feeds you and lifts your morale, more the hungrier"
+    }
+   ],
+   "after": []
+  },
+  "Guide, Chapter 11 Of 17, Drama School": {
+   "before": [
+    {
+     "sentences": 4,
+     "words": 68,
+     "text": "The school is where you train, get cast and earn your degree. To open it, press the Yale button on the School line in Your Affairs on Home, or choose School in "
+    },
+    {
+     "sentences": 5,
+     "words": 89,
+     "text": "If you’re unwell, press Call In Sick on Classes before the day’s first commitment starts (on a class day, at the latest when the clock stops at nine for your cl"
+    },
+    {
+     "sentences": 4,
+     "words": 68,
+     "text": "Your craft, on Standing And Craft, is the 17 techniques the school trains and four of your abilities: Emotional Depth, Memory, Physical Expression and Vocal Exp"
+    },
+    {
+     "sentences": 4,
+     "words": 74,
+     "text": "Each course sets pieces in class: a scene, a song, a movement score. On Coursework, prepare each piece one step at a time, answer its Table Work questions, and "
+    },
+    {
+     "sentences": 5,
+     "words": 82,
+     "text": "A scene pairs you with a classmate. To rehearse together, choose a day and a time under Rehearsing With, at least two hours ahead, and press Ask with their name"
+    },
+    {
+     "sentences": 5,
+     "words": 93,
+     "text": "Shown Today, on each piece, tells you where it stands now: what it would come to if you showed it today, which parts are still short, and the steps that would f"
+    },
+    {
+     "sentences": 4,
+     "words": 81,
+     "text": "At the term review, the faculty look at your attendance at classes, calls and assigned shifts, how you’ve grown compared with the class, your work on stage and "
+    }
+   ],
+   "after": []
+  },
+  "Guide, Chapter 12 Of 17, You As An Actor": {
+   "before": [
+    {
+     "sentences": 5,
+     "words": 76,
+     "text": "The Player Profile shows you as an actor. Open it with Player Profile in the menu, or press your name at the bottom of the menu. It lists your twelve abilities:"
+    },
+    {
+     "sentences": 5,
+     "words": 49,
+     "text": "Four different things make you better. Your abilities are part of you: how you listen, how you hold your nerve. Your techniques are skills a class trains. Your "
+    },
+    {
+     "sentences": 4,
+     "words": 72,
+     "text": "Classes, coursework, rehearsals and nights on stage build what they train, up to the level classes reach. Practice takes you further, all the way to the top. To"
+    },
+    {
+     "sentences": 4,
+     "words": 83,
+     "text": "On the brief, prepare it with Break It Down, Learn The Lines and Rehearse It On Your Feet. Read It This Way chooses a reading, what you take the scene to be abo"
+    }
+   ],
+   "after": [
+    {
+     "sentences": 4,
+     "words": 50,
+     "text": "Four different things make you better: your abilities, your techniques, your genre knowledge and practice. Your abilities are part of you: how you listen, how y"
+    }
+   ]
+  },
+  "Guide, Chapter 13 Of 17, Cover, Benefits And Returns": {
+   "before": [
+    {
+     "sentences": 4,
+     "words": 74,
+     "text": "Papers holds your health cover, your benefits and pension, your tax returns and your documents. To open it, press the Papers button on the Papers line in Your A"
+    },
+    {
+     "sentences": 5,
+     "words": 87,
+     "text": "You don’t book a doctor whenever you like. When you’re ill enough to need one, or a long-term condition is due for its review, you get an appointment at your pr"
+    },
+    {
+     "sentences": 4,
+     "words": 78,
+     "text": "After school, Yale’s plan covers you to the end of July. From 60 days before it ends, press Enroll, under The Marketplace on Health Cover, to join the cover you"
+    },
+    {
+     "sentences": 4,
+     "words": 66,
+     "text": "Each February, the year’s tax return is ready on Tax Returns if you owe tax, are owed a refund or earned at least the standard deduction, and every year on an F"
+    }
+   ],
+   "after": []
+  },
+  "Guide, Chapter 14 Of 17, Passports And ID": {
+   "before": [
+    {
+     "sentences": 5,
+     "words": 84,
+     "text": "Your ID is the ID card of the state you live in. Under Your ID, press Get with the card’s name to apply for one at its fee. Connecticut mails it, and you can us"
+    },
+    {
+     "sentences": 4,
+     "words": 72,
+     "text": "Going Abroad shows what each country asks of someone with your citizenship: whether you can just go, need a travel authorization first, or need a visa. Pick a c"
+    }
+   ],
+   "after": []
+  },
+  "Guide, Chapter 16 Of 17, Your Bank": {
+   "before": [
+    {
+     "sentences": 4,
+     "words": 92,
+     "text": "Move Money, on Accounts, moves money between your own accounts: choose where from, where to and how much, and press Move It. Between two accounts at the same ba"
+    },
+    {
+     "sentences": 5,
+     "words": 77,
+     "text": "Your credit card, on Cards, is the bank’s own, with its own name and terms. A statement comes on the 20th. Autopay pays the whole statement, or only the minimum"
+    },
+    {
+     "sentences": 4,
+     "words": 70,
+     "text": "You can apply for a card at any bank in the country that issues one, yours or another. The bank looks at your credit score and what you have to repay it from, a"
+    }
+   ],
+   "after": []
+  },
+  "How This Works, From A Panel": {
+   "before": [
+    {
+     "sentences": 4,
+     "words": 72,
+     "text": "The Calendar panel at the top of Home shows what’s coming: the next thing you need to be at, how long until it, and up to five more after it. When the clock rea"
+    }
+   ],
+   "after": []
+  },
+  "Player Profile": {
+   "before": [
+    {
+     "sentences": 25,
+     "words": 451,
+     "text": "Listening And Responsiveness, The Repetition Exercise at the Developing tier. 20 hours of its exercise, an hour a day, would take it from 53 to about 57. On you"
+    },
+    {
+     "sentences": 6,
+     "words": 121,
+     "text": "Adaptability, Adjustments at the Developing tier. 20 hours of its exercise, an hour a day, would take it from 48 to about 53. On your recent work, judged again "
+    },
+    {
+     "sentences": 7,
+     "words": 109,
+     "text": "Stamina is your fitness. Full is the fittest a body your age can be, 99.3 now, and no work asks more of it. A workout builds it and holds it for 3 days, and so "
+    }
+   ],
+   "after": []
+  },
+  "School, Standing And Craft": {
+   "before": [
+    {
+     "sentences": 6,
+     "words": 160,
+     "text": "Attendance counts 17 of 17 class days, 13 of 13 calls and 3 of 3 assigned shifts. At the term review, a term falls short if your attendance or your growth is un"
+    }
+   ],
+   "after": []
+  },
+  "School, Classes": {
+   "before": [
+    {
+     "sentences": 5,
+     "words": 70,
+     "text": "Next classes: September 23, 2027 at 9:00 AM. This term’s classes run from August 30, 2027 to December 10, 2027, with 3 breaks for holidays, Community Days, work"
+    }
+   ],
+   "after": []
+  },
+  "School, Coursework": {
+   "before": [
+    {
+     "sentences": 6,
+     "words": 68,
+     "text": "Read The Scene: You’re at Classes until 3:00 PM. Learn Lines: Read the scene first: you learn lines from a scene you know. Scan The Verse: Read the scene first."
+    }
+   ],
+   "after": []
+  },
+  "Money, Accounts": {
+   "before": [
+    {
+     "sentences": 5,
+     "words": 88,
+     "text": "It decides an application within 2 business days, the longest it says it takes. It asks for an opening deposit of $100, sent from another of your accounts. The "
+    }
+   ],
+   "after": []
+  },
+  "Money, Cards": {
+   "before": [
+    {
+     "sentences": 4,
+     "words": 49,
+     "text": "18.46% a year on any balance you carry. Chase sets a new card’s rate between 18.24% and 27.74% from your credit record when it opens. Yours was set at 18.46% wh"
+    },
+    {
+     "sentences": 5,
+     "words": 65,
+     "text": "You can apply to any bank here, not only yours. The bank checks your credit record and whether you have income or money to repay from. If it approves you, the c"
+    },
+    {
+     "sentences": 4,
+     "words": 53,
+     "text": "Rewards: 1.5% back on every purchase, added up at each statement. You have $0 to redeem. Its published rewards: 1.5% cash back on everything; 3% on dining and d"
+    },
+    {
+     "sentences": 5,
+     "words": 115,
+     "text": "The law on the debit card: If you report a lost or stolen debit card within two business days of finding out, you pay at most $50 of what was taken before you t"
+    },
+    {
+     "sentences": 4,
+     "words": 97,
+     "text": "The law on a payment you report as not yours: The bank has 10 business days to decide, or 20 for a payment in a new account’s first 30 days. If it needs longer,"
+    }
+   ],
+   "after": []
+  },
+  "Papers, Unemployment": {
+   "before": [
+    {
+     "sentences": 5,
+     "words": 76,
+     "text": "The game certifies each week for you on Sunday, from anywhere in the country, as an interstate claim allows. A week abroad pays nothing, and neither does a week"
+    }
+   ],
+   "after": []
+  },
+  "Papers, Permission To Work": {
+   "before": [
+    {
+     "sentences": 5,
+     "words": 90,
+     "text": "OPT is permission to work in your field after your degree: up to 12 months from the later of your program’s end and the approval, with no more than 90 days with"
+    }
+   ],
+   "after": []
+  }
+ }
+}

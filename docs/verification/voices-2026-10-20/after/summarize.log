@@ -1,0 +1,197 @@
+{
+ "openings": {
+  "showings": 868,
+  "distinct": 269,
+  "repeatedWithinFiveFromSameCourse": 72,
+  "top": [
+   {
+    "opening": "Lower than the Strong piece on DATE.",
+    "n": 24
+   },
+   {
+    "opening": "Better than the Working piece on DATE.",
+    "n": 22
+   },
+   {
+    "opening": "Back again: you’d put this right on DATE.",
+    "n": 20
+   },
+   {
+    "opening": "Strong again, as on DATE.",
+    "n": 19
+   },
+   {
+    "opening": "This had come right on DATE, and it has slipped since.",
+    "n": 18
+   },
+   {
+    "opening": "Down from Strong on DATE.",
+    "n": 17
+   },
+   {
+    "opening": "You fixed this on DATE, but it has slipped back.",
+    "n": 17
+   },
+   {
+    "opening": "Strong for the second time running.",
+    "n": 15
+   },
+   {
+    "opening": "It stayed at Working, as on DATE: your composure held back your consistency by # points out of #.",
+    "n": 15
+   },
+   {
+    "opening": "Up from Unready last time.",
+    "n": 13
+   },
+   {
+    "opening": "That’s down from Strong last time.",
+    "n": 13
+   },
+   {
+    "opening": "That’s down from Working last time.",
+    "n": 11
+   }
+  ]
+ },
+ "duplicates": {
+  "notices": 2698,
+  "exactRepeats": 3,
+  "byTitle": [
+   {
+    "title": "Lucia: A Word After Class",
+    "n": 1
+   },
+   {
+    "title": "Nadia: An Apology",
+    "n": 1
+   },
+   {
+    "title": "Grace: An Apology",
+    "n": 1
+   }
+  ],
+  "showingFeedbackExactRepeats": 1
+ },
+ "shared": {
+  "sentencesFromTwoOrMoreCourses": 146,
+  "showingsWithOne": 803,
+  "top": [
+   {
+    "sentence": "It’s at # now, and the note is taken at #.",
+    "courses": 16,
+    "times": 111
+   },
+   {
+    "sentence": "A Note That Keeps Coming Back, on the piece’s card, offers other ways at it.",
+    "courses": 16,
+    "times": 111
+   },
+   {
+    "sentence": "Down from Strong on DATE.",
+    "courses": 9,
+    "times": 17
+   },
+   {
+    "sentence": "You fixed this on DATE, but it has slipped back.",
+    "courses": 8,
+    "times": 24
+   },
+   {
+    "sentence": "Strong again, as on DATE.",
+    "courses": 8,
+    "times": 19
+   },
+   {
+    "sentence": "This had come right on DATE, and it has slipped since.",
+    "courses": 7,
+    "times": 34
+   },
+   {
+    "sentence": "Lower than the Strong piece on DATE.",
+    "courses": 7,
+    "times": 24
+   },
+   {
+    "sentence": "Back again: you’d put this right on DATE.",
+    "courses": 7,
+    "times": 24
+   },
+   {
+    "sentence": "Strong for the second time running.",
+    "courses": 7,
+    "times": 15
+   },
+   {
+    "sentence": "That’s down from Strong last time.",
+    "courses": 7,
+    "times": 13
+   },
+   {
+    "sentence": "Classes build it, and so does Voice Work, in the Practice column on your Player Profile.",
+    "courses": 6,
+    "times": 25
+   },
+   {
+    "sentence": "Work Out, under Look After Yourself, builds stamina.",
+    "courses": 6,
+    "times": 25
+   }
+  ]
+ },
+ "voices": {
+  "acting": {
+   "showings": 245,
+   "distinctOpenings": 90,
+   "withAStep": 169,
+   "stepInAnotherDisciplinesWords": 0
+  },
+  "text": {
+   "showings": 168,
+   "distinctOpenings": 61,
+   "withAStep": 122,
+   "stepInAnotherDisciplinesWords": 0
+  },
+  "movement": {
+   "showings": 238,
+   "distinctOpenings": 92,
+   "withAStep": 165,
+   "stepInAnotherDisciplinesWords": 0
+  },
+  "voice": {
+   "showings": 217,
+   "distinctOpenings": 71,
+   "withAStep": 145,
+   "stepInAnotherDisciplinesWords": 0
+  }
+ },
+ "advice": {
+  "blocks": 437,
+  "meanWords": 60.8,
+  "maxWords": 128,
+  "meanFigures": 3.8,
+  "meanWordsWithDetails": 512.1,
+  "maxWordsWithDetails": 730,
+  "meanFiguresWithDetails": 41.8,
+  "meanItems": 5,
+  "meanSentencesSaidAgainInTheBlock": 0.4
+ },
+ "directors": {
+  "notes": 85,
+  "distinctOpenings": 23,
+  "repeatedWithinFive": 14,
+  "top": [
+   {
+    "opening": "The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.",
+    "n": 12
+   },
+   {
+    "opening": "That’s moved since the last note.",
+    "n": 9
+   },
+   {
+    "opening": "Not there yet.",
+    "n": 8
+   },
+   {
+    "opening

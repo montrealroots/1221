@@ -1,0 +1,100 @@
+{
+ "strings": 2358,
+ "moreThanThreeSentences": 74,
+ "fiveOrMore": 0,
+ "vague": 0,
+ "fiveOrMoreAll": [],
+ "examplesMany": [
+  {
+   "where": "tutorial profile body 4",
+   "sentences": 4,
+   "words": 50,
+   "text": "Four different things make you better: your abilities, your techniques, your genre knowledge and practice. Your abilities are part of you: how you listen, how you hold your nerve. Your techniques are skills a class train"
+  },
+  {
+   "where": "guide start.home short",
+   "sentences": 4,
+   "words": 52,
+   "text": "Home is your day at a glance. The line under the greeting shows the time, your town, its time zone, the season and the weather. Where You Are names your town, its region and its country, with the local time and the dayli"
+  },
+  {
+   "where": "guide start.guide short",
+   "sentences": 4,
+   "words": 75,
+   "text": "SLATE has two kinds of help. The guide’s 17 chapters teach the game in order, and each one opens a part of it: a part you haven’t opened yet shows as Locked. How This Works has an entry for every feature, saying what it "
+  },
+  {
+   "where": "guide start.find short",
+   "sentences": 4,
+   "words": 75,
+   "text": "The menu down the left lists every place the guide has opened, with Home at the top and the number of things waiting for you beside it. On a screen narrower than a laptop’s, the menu folds away behind Menu.\n\nThe breadcru"
+  },
+  {
+   "where": "guide day.calendar needs 3",
+   "sentences": 4,
+   "words": 74,
+   "text": "To count as there, you need to be awake, out of hospital and in the commitment’s town when it runs. Yale Health’s assessment is the only commitment you can be at from a hospital bed. An injury that lays you up keeps you "
+  },
+  {
+   "where": "guide day.needs short",
+   "sentences": 4,
+   "words": 66,
+   "text": "What Needs You, on Home, holds the questions you need to answer and the notices that tell you what happened. A question has its answers as buttons, such as File It or Keep The Account, and Dismiss. A notice says what hap"
+  },
+  {
+   "where": "guide day.plans short",
+   "sentences": 4,
+   "words": 80,
+   "text": "To put a plan of your own on the calendar, press Open Calendar on Home, pick a day and press Put Something On It. Give it a name, a start time on the half hour and a length from half an hour to all day. The clock stops a"
+  },
+  {
+   "where": "guide day.weather short",
+   "sentences": 4,
+   "words": 76,
+   "text": "The Weather panel on Home shows the weather in your town: now, today’s high and low, humidity and wind, and the next five days. Press any figure for more: a day opens into its hours, and the sky into the week ahead. The "
+  },
+  {
+   "where": "guide body.how short",
+   "sentences": 4,
+   "words": 64,
+   "text": "How You Are, on Home, shows how you’re doing today: a line that sums it up, then Energy, Stress and Readiness. Readiness is how sharp you’ll be at today’s work.\n\nEnergy is what you have left for today, and only sleep bri"
+  },
+  {
+   "where": "guide body.sleep short",
+   "sentences": 4,
+   "words": 68,
+   "text": "Sleep, in the top bar, asks how many hours, from 0.5 to 14, and suggests a number from when you’re next needed and how much sleep you owe. Then the clock runs straight through to when you wake.\n\nAnything on the calendar "
+  },
+  {
+   "where": "guide body.look-after short",
+   "sentences": 4,
+   "words": 86,
+   "text": "Look After Yourself, in the top bar, holds what a day needs besides sleep: Eat A Meal, Order In, Shower, Work Out and Unwind. Whatever is costing you every hour comes first, marked Needed Now, then the rest by how much r"
+  },
+  {
+   "where": "guide body.look-after later 4",
+   "sentences": 4,
+   "words": 58,
+   "text": "Your weight follows what you eat against what you burn, moving half the way to its new level in 365 days. Eat A Meal is part of the day’s eating and adds nothing extra. Order In adds its 134 calories. A run burns 9.3 MET"
+  },
+  {
+   "where": "guide school.standing short",
+   "sentences": 4,
+   "words": 98,
+   "text": "Your standing is how the faculty judge each term, and it decides whether you stay, whether you’re cast and whether you get your degree. Standing And Craft shows where you stand, how this term is going, your 21 skills aga"
+  },
+  {
+   "where": "guide school.standing mistakes 6",
+   "sentences": 4,
+   "words": 84,
+   "text": "A term that begins under a financial hold counts you absent from classes until you register, and the hold stops you registering. Pay your Yale account on the Terms And Award tab first, then press Register on the Standing"
+  },
+  {
+   "where": "guide school.sick short",
+   "sentences": 4,
+   "words": 85,
+   "text": "When you’re unwell, Call In Sick excuses today at school, so the day doesn’t count against your attendance. It covers everything at school that day: classes, rehearsal and performance calls, a night on call, labs, a work"
+  }
+ ],
+ "vagueAll": []
+}
