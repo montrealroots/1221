@@ -227,7 +227,7 @@ export interface ShowingFacts {
    * What held a prepared piece back, by the evaluation's limits (`chiefLimit`), its kind and what, and for an ability or a
    * technique the practice exercise that trains it, where one does (`exerciseFor`; none trains discipline or stamina).
    */
-  held?: { words: string; kind: string; what: string; exercise?: string; again?: string; remedy?: string };
+  held?: { words: string; kind: string; what: string; exercise?: string; again?: string; remedy?: string; running?: number };
   /** The day's condition where the evaluation counted one, and what it cost the whole. */
   condition?: { what: string; whole: number; words: string };
   /** The partner's share, where there was one: they lifted it, came less prepared, or slipped (covered or not). */
@@ -622,9 +622,17 @@ function bestLeads(v: Voice, f: ShowingFacts): string[] {
 }
 
 function maintainedLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
+  const { run } = f;
+  // Times, not pieces: a piece shown in rounds is one piece shown several times (`roundsShown`). A long run between its
+  // milestones (four on, but five, ten and every fifth) may be told without its count, as a steady piece is, the same
+  // facts making those words true (brief 17's after-runs: a reading course Strong twenty times said its count each time).
+  if (run >= 4 && run % 5 !== 0) return [...countedRun(v, d, f), ...steadyLeads(v, d, f)];
+  return countedRun(v, d, f);
+}
+
+function countedRun(v: Voice, d: Discipline, f: ShowingFacts): string[] {
   const { bandLabel: b, run, prev } = f;
   const same = prev?.band === f.band;
-  // Times, not pieces: a piece shown in rounds is one piece shown several times (`roundsShown`).
   if (run >= 3) switch (v) {
     case 'direct': return [`${b}${same ? ' again' : ''}: ${count(run)} times running at Strong or better.`, `That’s ${count(run)} times in a row at Strong or better.`, `Still Strong or better, ${count(run)} times in a row now, ${b} this time.`];
     case 'warm': return [`Another ${b}. That’s ${count(run)} times running at Strong or better.`, `${b}${same ? ' again' : ''}, ${count(run)} times in a row at Strong or better now.`, `You’ve kept it up: ${count(run)} times running at Strong or better, ${b} this time.`];
@@ -664,15 +672,33 @@ function despiteLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
  */
 function heldLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
   const h = f.held!;
-  const b = f.bandLabel;
-  const prep = h.kind === 'preparation';
-  if (h.again) switch (v) {
+  // The same limit three pieces running or more: how many, with the ways that say when (brief 17).
+  const n = h.running;
+  const running = !n ? [] : {
+    direct: [`${h.words}, the ${ordinal(n)} piece running.`],
+    warm: [`${h.words} again, ${count(n)} pieces in a row now.`],
+    exacting: [`${cap(ordinal(n))} piece running with the same limit: ${low(h.words)}.`],
+    patient: [`${h.words}, as it has the last ${count(n - 1)} times.${h.kind === 'ability' || h.kind === 'technique' ? ' That builds slowly.' : ''}`],
+    brisk: [`${h.words}. ${cap(count(n))} in a row.`],
+  }[v];
+  if (h.again) return [...running, ...heldAgainLeads(v, h)];
+  return heldFreshLeads(v, d, f);
+}
+
+function heldAgainLeads(v: Voice, h: NonNullable<ShowingFacts['held']>): string[] {
+  switch (v) {
     case 'direct': return [`${h.words} again, as on ${h.again}.`, `Same as on ${h.again}: ${low(h.words)}.`, `It’s what held the last piece back, on ${h.again}: ${low(h.words)}.`];
     case 'warm': return [`As on ${h.again}, ${low(h.words)}.`, `${h.words}, as it did on ${h.again}.`, `The same thing held it back as on ${h.again}: ${low(h.words)}.`];
     case 'exacting': return [`The same limit as on ${h.again}: ${low(h.words)}.`, `Unchanged since ${h.again}: ${low(h.words)}.`];
     case 'patient': return [`It was the same on ${h.again}: ${low(h.words)}.${h.kind === 'ability' || h.kind === 'technique' ? ' That builds slowly.' : ''}`, `Again, as it was on ${h.again}, ${low(h.words)}.`];
     case 'brisk': return [`${h.words}. Same as last time, on ${h.again}.`, `Still the same as on ${h.again}: ${low(h.words)}.`];
   }
+}
+
+function heldFreshLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
+  const h = f.held!;
+  const b = f.bandLabel;
+  const prep = h.kind === 'preparation';
   if (prep) return [`It stayed at ${b}: ${low(h.words)}.`, `${h.words}. That’s what held it back most.`];
   switch (v) {
     case 'direct': return [`You were prepared. ${h.words}.`, `${b}, and not for lack of preparation: ${low(h.words)}.`, `${h.words}, though the preparation was all there.`];

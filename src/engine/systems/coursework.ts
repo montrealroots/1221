@@ -1177,6 +1177,16 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const prevRecord = prev ? (person.work ?? []).find((w) => (prev.x.roundsShown?.length ? dayKeyAt(w.at) === dayKeyAt(prev.at) && w.what === prevTitle : w.at === prev.at)) : undefined;
   const prevChief = prev && prev.x.feedback?.kind === 'advanced' && !strongBand(prev.band) ? prevRecord?.limits[0] : undefined;
   const heldAgain = heldLimit && prevChief && prevChief.kind === heldLimit.kind && prevChief.what === heldLimit.what ? formatDate(prev!.at, zone()) : undefined;
+  // How many of the course's pieces just before this one the same limit held back, in a row, each found as the last is
+  // (brief 17's after-runs: Acting I's composure, said fresh with its date at each of eight showings running).
+  let heldRun = 0;
+  if (heldAgain) for (const e of [...earlier].reverse()) {
+    const title = templateById(e.x.template)?.title;
+    const rec = (person.work ?? []).find((w) => (e.x.roundsShown?.length ? dayKeyAt(w.at) === dayKeyAt(e.at) && w.what === title : w.at === e.at));
+    const chief = e.x.feedback?.kind === 'advanced' && !strongBand(e.band) ? rec?.limits[0] : undefined;
+    if (!chief || chief.kind !== heldLimit!.kind || chief.what !== heldLimit!.what) break;
+    heldRun += 1;
+  }
   const day = judged.limits.find((l) => l.kind === 'condition');
   const share = showing.together && a.partner !== undefined ? showing.together : undefined;
   const mate = share ? (/^(?:a|an|the) (.+)$/i.exec(share.partner)?.[1] ? `The ${(/^(?:a|an|the) (.+)$/i.exec(share.partner)![1]!).toLowerCase()}` : share.partner.split(' ')[0]!) : undefined;
@@ -1194,7 +1204,7 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
     ...(tried ? { tried } : {}),
     // A part left unfinished is answered by the steps that finish it, not a step beyond (brief 17: found reading the first
     // after-runs, Speech's “Drills wasn’t complete… Work on this next: Use less voice…”).
-    ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}), ...(heldAgain ? { again: heldAgain } : {}), ...(heldLimit.kind === 'preparation' && (PREP_DIMS as readonly string[]).includes(heldLimit.what) && t.dims[heldLimit.what as PrepDim] ? { remedy: remedyWords(a, heldLimit.what as PrepDim) } : {}) } } : {}),
+    ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}), ...(heldAgain ? { again: heldAgain, ...(heldRun >= 2 ? { running: heldRun + 1 } : {}) } : {}), ...(heldLimit.kind === 'preparation' && (PREP_DIMS as readonly string[]).includes(heldLimit.what) && t.dims[heldLimit.what as PrepDim] ? { remedy: remedyWords(a, heldLimit.what as PrepDim) } : {}) } } : {}),
     ...(day ? { condition: { what: day.what, whole: day.whole ?? 0, words: day.label } } : {}),
     ...(share && mate ? { partner: { first: mate, lifted: share.overall - judged.overall >= 1, behind: (together?.parts.prep ?? 1) < 0.6, ...(share.slip ? { slip: { at: share.slip.at, covered: share.slip.covered >= 0.5 } } : {}) } } : {}),
     ...(prior ? { before: { on: dayWords(prior.on), course: prior.course, given: prior.given, ...(prior.taken ? { taken: dayWords(prior.taken) } : {}) } } : {}),
