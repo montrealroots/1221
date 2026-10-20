@@ -1,0 +1,6163 @@
+{
+ "measured": "tools/ag-baseline.ts",
+ "pieces": {
+  "brief": 298,
+  "scene": 67,
+  "night": 30,
+  "casting": 30,
+  "coursework": 13
+ },
+ "courseworkTemplates": [
+  "voice-sequence (voice)",
+  "speech-drill (voice)",
+  "movement-score (movement)",
+  "alexander-practice (movement)",
+  "play-game (improvisation)",
+  "table-work (written)",
+  "fight-sequence (partnered)",
+  "intimacy-practice (partnered)",
+  "context-presentation (written)",
+  "song (song)",
+  "self-tape (camera)",
+  "clown-turn (clown)",
+  "audition-pair (audition)"
+ ],
+ "abilityEffects": {
+  "emotionalDepth": {
+   "all": {
+    "n": 438,
+    "moved": 432,
+    "movedShare": 0.99,
+    "mean": 0.75,
+    "cvMoved": 0.49
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.83,
+     "max": 1.9,
+     "cvMoved": 0.45
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.6,
+     "max": 1.1,
+     "cvMoved": 0.42
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.53,
+     "max": 1.2,
+     "cvMoved": 0.54
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.56,
+     "max": 1.1,
+     "cvMoved": 0.49
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 7,
+     "mean": 0.5,
+     "max": 2,
+     "cvMoved": 0.72
+    }
+   }
+  },
+  "presence": {
+   "all": {
+    "n": 438,
+    "moved": 428,
+    "movedShare": 0.98,
+    "mean": 0.36,
+    "cvMoved": 0.55
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.27,
+     "max": 0.7,
+     "cvMoved": 0.47
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.49,
+     "max": 1,
+     "cvMoved": 0.28
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.63,
+     "max": 0.9,
+     "cvMoved": 0.16
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.68,
+     "max": 0.9,
+     "cvMoved": 0.13
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 3,
+     "mean": 0.25,
+     "max": 1.6,
+     "cvMoved": 0.4
+    }
+   }
+  },
+  "listening": {
+   "all": {
+    "n": 438,
+    "moved": 429,
+    "movedShare": 0.98,
+    "mean": 0.6,
+    "cvMoved": 0.41
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.53,
+     "max": 1.2,
+     "cvMoved": 0.41
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.75,
+     "max": 1.1,
+     "cvMoved": 0.23
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.66,
+     "max": 0.9,
+     "cvMoved": 0.16
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.93,
+     "max": 1.2,
+     "cvMoved": 0.16
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 4,
+     "mean": 0.48,
+     "max": 2.2,
+     "cvMoved": 0.27
+    }
+   }
+  },
+  "imagination": {
+   "all": {
+    "n": 438,
+    "moved": 435,
+    "movedShare": 0.99,
+    "mean": 0.61,
+    "cvMoved": 0.39
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.61,
+     "max": 1.55,
+     "cvMoved": 0.41
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.59,
+     "max": 1,
+     "cvMoved": 0.25
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.62,
+     "max": 0.9,
+     "cvMoved": 0.26
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.63,
+     "max": 1,
+     "cvMoved": 0.24
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 10,
+     "mean": 0.88,
+     "max": 1.9,
+     "cvMoved": 0.39
+    }
+   }
+  },
+  "focus": {
+   "all": {
+    "n": 438,
+    "moved": 434,
+    "movedShare": 0.99,
+    "mean": 0.6,
+    "cvMoved": 0.5
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.65,
+     "max": 1.5,
+     "cvMoved": 0.42
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.51,
+     "max": 1.2,
+     "cvMoved": 0.57
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.46,
+     "max": 1.1,
+     "cvMoved": 0.62
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.5,
+     "max": 1.2,
+     "cvMoved": 0.59
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 9,
+     "mean": 0.69,
+     "max": 2.4,
+     "cvMoved": 0.81
+    }
+   }
+  },
+  "memory": {
+   "all": {
+    "n": 438,
+    "moved": 410,
+    "movedShare": 0.94,
+    "mean": 0.49,
+    "cvMoved": 0.74
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 281,
+     "mean": 0.54,
+     "max": 1.7,
+     "cvMoved": 0.75
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.25,
+     "max": 0.5,
+     "cvMoved": 0.6
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.58,
+     "max": 0.9,
+     "cvMoved": 0.28
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.62,
+     "max": 1,
+     "cvMoved": 0.27
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 2,
+     "mean": 0.08,
+     "max": 0.7,
+     "cvMoved": 0.57
+    }
+   }
+  },
+  "adaptability": {
+   "all": {
+    "n": 438,
+    "moved": 429,
+    "movedShare": 0.98,
+    "mean": 0.58,
+    "cvMoved": 0.39
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.57,
+     "max": 1.7,
+     "cvMoved": 0.45
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.61,
+     "max": 1,
+     "cvMoved": 0.25
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.64,
+     "max": 0.9,
+     "cvMoved": 0.19
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.68,
+     "max": 0.9,
+     "cvMoved": 0.18
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 4,
+     "mean": 0.19,
+     "max": 0.8,
+     "cvMoved": 0.24
+    }
+   }
+  },
+  "composure": {
+   "all": {
+    "n": 438,
+    "moved": 428,
+    "movedShare": 0.98,
+    "mean": 0.65,
+    "cvMoved": 0.41
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.69,
+     "max": 1.9,
+     "cvMoved": 0.45
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.53,
+     "max": 0.7,
+     "cvMoved": 0.16
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.68,
+     "max": 0.9,
+     "cvMoved": 0.19
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.72,
+     "max": 1,
+     "cvMoved": 0.2
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 3,
+     "mean": 0.15,
+     "max": 0.8,
+     "cvMoved": 0.46
+    }
+   }
+  },
+  "vocal": {
+   "all": {
+    "n": 438,
+    "moved": 328,
+    "movedShare": 0.75,
+    "mean": 0.41,
+    "cvMoved": 0.67
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 200,
+     "mean": 0.38,
+     "max": 1.7,
+     "cvMoved": 0.6
+    },
+    "scene": {
+     "n": 67,
+     "moved": 64,
+     "mean": 0.44,
+     "max": 0.9,
+     "cvMoved": 0.6
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.5,
+     "max": 1,
+     "cvMoved": 0.52
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.53,
+     "max": 1.1,
+     "cvMoved": 0.54
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 4,
+     "mean": 0.58,
+     "max": 3,
+     "cvMoved": 0.7
+    }
+   }
+  },
+  "physical": {
+   "all": {
+    "n": 438,
+    "moved": 357,
+    "movedShare": 0.82,
+    "mean": 0.4,
+    "cvMoved": 0.73
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 230,
+     "mean": 0.39,
+     "max": 1.5,
+     "cvMoved": 0.68
+    },
+    "scene": {
+     "n": 67,
+     "moved": 61,
+     "mean": 0.28,
+     "max": 0.9,
+     "cvMoved": 0.69
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.53,
+     "max": 1.1,
+     "cvMoved": 0.49
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.55,
+     "max": 1.2,
+     "cvMoved": 0.5
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 6,
+     "mean": 0.61,
+     "max": 3.1,
+     "cvMoved": 0.77
+    }
+   }
+  },
+  "discipline": {
+   "all": {
+    "n": 438,
+    "moved": 405,
+    "movedShare": 0.92,
+    "mean": 0.38,
+    "cvMoved": 0.69
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.39,
+     "max": 1.26,
+     "cvMoved": 0.66
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.36,
+     "max": 1.3,
+     "cvMoved": 0.72
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.69,
+     "max": 1.6,
+     "cvMoved": 0.57
+    },
+    "casting": {
+     "n": 30,
+     "moved": 0,
+     "mean": 0,
+     "max": 0,
+     "cvMoved": null
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 10,
+     "mean": 0.54,
+     "max": 1.2,
+     "cvMoved": 0.37
+    }
+   }
+  },
+  "stamina": {
+   "all": {
+    "n": 438,
+    "moved": 402,
+    "movedShare": 0.92,
+    "mean": 0.48,
+    "cvMoved": 0.54
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.53,
+     "max": 1.2,
+     "cvMoved": 0.54
+    },
+    "scene": {
+     "n": 67,
+     "moved": 67,
+     "mean": 0.54,
+     "max": 1.2,
+     "cvMoved": 0.47
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.33,
+     "max": 0.5,
+     "cvMoved": 0.33
+    },
+    "casting": {
+     "n": 30,
+     "moved": 0,
+     "mean": 0,
+     "max": 0,
+     "cvMoved": null
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 7,
+     "mean": 0.43,
+     "max": 1.4,
+     "cvMoved": 0.51
+    }
+   }
+  }
+ },
+ "abilityCorrelation": {
+  "top": [
+   {
+    "a": "presence",
+    "b": "listening",
+    "r": 0.444
+   },
+   {
+    "a": "physical",
+    "b": "stamina",
+    "r": 0.435
+   },
+   {
+    "a": "vocal",
+    "b": "stamina",
+    "r": 0.434
+   },
+   {
+    "a": "discipline",
+    "b": "stamina",
+    "r": 0.433
+   },
+   {
+    "a": "listening",
+    "b": "adaptability",
+    "r": 0.418
+   },
+   {
+    "a": "memory",
+    "b": "stamina",
+    "r": 0.312
+   },
+   {
+    "a": "memory",
+    "b": "discipline",
+    "r": 0.311
+   },
+   {
+    "a": "emotionalDepth",
+    "b": "composure",
+    "r": 0.28
+   },
+   {
+    "a": "presence",
+    "b": "adaptability",
+    "r": 0.18
+   },
+   {
+    "a": "memory",
+    "b": "vocal",
+    "r": 0.174
+   }
+  ],
+  "over095": 0,
+  "over090": 0
+ },
+ "techniqueEffects": {
+  "accents": {
+   "moved": 9,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 2,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 6,
+     "mean": 0.03
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.05
+    }
+   }
+  },
+  "audition": {
+   "moved": 1,
+   "mean": 0,
+   "byKind": {
+    "brief": {
+     "moved": 0,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.08
+    }
+   }
+  },
+  "character": {
+   "moved": 9,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 9,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 0,
+     "mean": 0
+    }
+   }
+  },
+  "classical": {
+   "moved": 29,
+   "mean": 0.03,
+   "byKind": {
+    "brief": {
+     "moved": 3,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 26,
+     "mean": 0.16
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 0,
+     "mean": 0
+    }
+   }
+  },
+  "clown": {
+   "moved": 8,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 7,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.15
+    }
+   }
+  },
+  "coldReading": {
+   "moved": 1,
+   "mean": 0,
+   "byKind": {
+    "brief": {
+     "moved": 0,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.04
+    }
+   }
+  },
+  "comedy": {
+   "moved": 40,
+   "mean": 0.03,
+   "byKind": {
+    "brief": {
+     "moved": 30,
+     "mean": 0.03
+    },
+    "scene": {
+     "moved": 9,
+     "mean": 0.05
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.08
+    }
+   }
+  },
+  "dance": {
+   "moved": 9,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 8,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.14
+    }
+   }
+  },
+  "improv": {
+   "moved": 19,
+   "mean": 0.02,
+   "byKind": {
+    "brief": {
+     "moved": 18,
+     "mean": 0.02
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.08
+    }
+   }
+  },
+  "intimacy": {
+   "moved": 7,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 4,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 1,
+     "mean": 0.01
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 2,
+     "mean": 0.15
+    }
+   }
+  },
+  "screen": {
+   "moved": 263,
+   "mean": 0.29,
+   "byKind": {
+    "brief": {
+     "moved": 262,
+     "mean": 0.42
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.11
+    }
+   }
+  },
+  "scene": {
+   "moved": 418,
+   "mean": 0.37,
+   "byKind": {
+    "brief": {
+     "moved": 289,
+     "mean": 0.23
+    },
+    "scene": {
+     "moved": 67,
+     "mean": 0.63
+    },
+    "night": {
+     "moved": 30,
+     "mean": 0.84
+    },
+    "casting": {
+     "moved": 30,
+     "mean": 0.87
+    },
+    "coursework": {
+     "moved": 2,
+     "mean": 0.09
+    }
+   }
+  },
+  "script": {
+   "moved": 2,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 0,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 2,
+     "mean": 0.42
+    }
+   }
+  },
+  "singing": {
+   "moved": 12,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 9,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 2,
+     "mean": 0.01
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.16
+    }
+   }
+  },
+  "speech": {
+   "moved": 2,
+   "mean": 0,
+   "byKind": {
+    "brief": {
+     "moved": 1,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.09
+    }
+   }
+  },
+  "combat": {
+   "moved": 32,
+   "mean": 0.03,
+   "byKind": {
+    "brief": {
+     "moved": 30,
+     "mean": 0.03
+    },
+    "scene": {
+     "moved": 1,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.08
+    }
+   }
+  },
+  "voiceover": {
+   "moved": 41,
+   "mean": 0.04,
+   "byKind": {
+    "brief": {
+     "moved": 41,
+     "mean": 0.07
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 0,
+     "mean": 0
+    }
+   }
+  }
+ },
+ "techniquePast90": {
+  "pieces": 438,
+  "moved": 0
+ },
+ "specialists": {
+  "emotionalDepth": {
+   "suitable": 233,
+   "aheadOnSuitable": 196,
+   "meanOnSuitable": 1.18,
+   "rest": 205,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.16,
+   "byKind": {
+    "brief": {
+     "ahead": 158,
+     "n": 298,
+     "mean": 0.38
+    },
+    "scene": {
+     "ahead": 22,
+     "n": 67,
+     "mean": -0.36
+    },
+    "night": {
+     "ahead": 6,
+     "n": 30,
+     "mean": -0.93
+    },
+    "casting": {
+     "ahead": 7,
+     "n": 30,
+     "mean": -0.61
+    },
+    "coursework": {
+     "ahead": 3,
+     "n": 13,
+     "mean": -0.43
+    }
+   }
+  },
+  "presence": {
+   "suitable": 256,
+   "aheadOnSuitable": 19,
+   "meanOnSuitable": -0.89,
+   "rest": 182,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.08,
+   "byKind": {
+    "brief": {
+     "ahead": 0,
+     "n": 298,
+     "mean": -1.73
+    },
+    "scene": {
+     "ahead": 4,
+     "n": 67,
+     "mean": -0.78
+    },
+    "night": {
+     "ahead": 2,
+     "n": 30,
+     "mean": -0.51
+    },
+    "casting": {
+     "ahead": 10,
+     "n": 30,
+     "mean": -0.17
+    },
+    "coursework": {
+     "ahead": 3,
+     "n": 13,
+     "mean": -1.37
+    }
+   }
+  },
+  "listening": {
+   "suitable": 241,
+   "aheadOnSuitable": 120,
+   "meanOnSuitable": 0.19,
+   "rest": 197,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.37,
+   "byKind": {
+    "brief": {
+     "ahead": 47,
+     "n": 298,
+     "mean": -0.76
+    },
+    "scene": {
+     "ahead": 44,
+     "n": 67,
+     "mean": 0.24
+    },
+    "night": {
+     "ahead": 4,
+     "n": 30,
+     "mean": -0.46
+    },
+    "casting": {
+     "ahead": 21,
+     "n": 30,
+     "mean": 0.25
+    },
+    "coursework": {
+     "ahead": 4,
+     "n": 13,
+     "mean": -0.55
+    }
+   }
+  },
+  "imagination": {
+   "suitable": 230,
+   "aheadOnSuitable": 91,
+   "meanOnSuitable": 0.21,
+   "rest": 208,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.1,
+   "byKind": {
+    "brief": {
+     "ahead": 59,
+     "n": 298,
+     "mean": -0.46
+    },
+    "scene": {
+     "ahead": 12,
+     "n": 67,
+     "mean": -0.39
+    },
+    "night": {
+     "ahead": 5,
+     "n": 30,
+     "mean": -0.59
+    },
+    "casting": {
+     "ahead": 6,
+     "n": 30,
+     "mean": -0.33
+    },
+    "coursework": {
+     "ahead": 9,
+     "n": 13,
+     "mean": 0.94
+    }
+   }
+  },
+  "focus": {
+   "suitable": 237,
+   "aheadOnSuitable": 114,
+   "meanOnSuitable": 0.34,
+   "rest": 201,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.36,
+   "byKind": {
+    "brief": {
+     "ahead": 83,
+     "n": 298,
+     "mean": -0.31
+    },
+    "scene": {
+     "ahead": 18,
+     "n": 67,
+     "mean": -0.66
+    },
+    "night": {
+     "ahead": 4,
+     "n": 30,
+     "mean": -1.17
+    },
+    "casting": {
+     "ahead": 5,
+     "n": 30,
+     "mean": -0.84
+    },
+    "coursework": {
+     "ahead": 4,
+     "n": 13,
+     "mean": 0.16
+    }
+   }
+  },
+  "memory": {
+   "suitable": 233,
+   "aheadOnSuitable": 119,
+   "meanOnSuitable": 0.24,
+   "rest": 205,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.13,
+   "byKind": {
+    "brief": {
+     "ahead": 104,
+     "n": 298,
+     "mean": -0.71
+    },
+    "scene": {
+     "ahead": 0,
+     "n": 67,
+     "mean": -1.61
+    },
+    "night": {
+     "ahead": 5,
+     "n": 30,
+     "mean": -0.75
+    },
+    "casting": {
+     "ahead": 9,
+     "n": 30,
+     "mean": -0.4
+    },
+    "coursework": {
+     "ahead": 1,
+     "n": 13,
+     "mean": -2.02
+    }
+   }
+  },
+  "adaptability": {
+   "suitable": 237,
+   "aheadOnSuitable": 101,
+   "meanOnSuitable": 0.1,
+   "rest": 201,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.26,
+   "byKind": {
+    "brief": {
+     "ahead": 67,
+     "n": 298,
+     "mean": -0.59
+    },
+    "scene": {
+     "ahead": 17,
+     "n": 67,
+     "mean": -0.25
+    },
+    "night": {
+     "ahead": 4,
+     "n": 30,
+     "mean": -0.48
+    },
+    "casting": {
+     "ahead": 11,
+     "n": 30,
+     "mean": -0.15
+    },
+    "coursework": {
+     "ahead": 2,
+     "n": 13,
+     "mean": -1.53
+    }
+   }
+  },
+  "composure": {
+   "suitable": 265,
+   "aheadOnSuitable": 137,
+   "meanOnSuitable": 0.31,
+   "rest": 173,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.14,
+   "byKind": {
+    "brief": {
+     "ahead": 113,
+     "n": 298,
+     "mean": -0.14
+    },
+    "scene": {
+     "ahead": 1,
+     "n": 67,
+     "mean": -0.59
+    },
+    "night": {
+     "ahead": 7,
+     "n": 30,
+     "mean": -0.36
+    },
+    "casting": {
+     "ahead": 15,
+     "n": 30,
+     "mean": -0.03
+    },
+    "coursework": {
+     "ahead": 1,
+     "n": 13,
+     "mean": -1.82
+    }
+   }
+  },
+  "vocal": {
+   "suitable": 178,
+   "aheadOnSuitable": 88,
+   "meanOnSuitable": 0.17,
+   "rest": 260,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.07,
+   "byKind": {
+    "brief": {
+     "ahead": 53,
+     "n": 298,
+     "mean": -1.31
+    },
+    "scene": {
+     "ahead": 18,
+     "n": 67,
+     "mean": -0.92
+    },
+    "night": {
+     "ahead": 5,
+     "n": 30,
+     "mean": -1.05
+    },
+    "casting": {
+     "ahead": 9,
+     "n": 30,
+     "mean": -0.72
+    },
+    "coursework": {
+     "ahead": 3,
+     "n": 13,
+     "mean": -0.23
+    }
+   }
+  },
+  "physical": {
+   "suitable": 214,
+   "aheadOnSuitable": 71,
+   "meanOnSuitable": -0.17,
+   "rest": 224,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.22,
+   "byKind": {
+    "brief": {
+     "ahead": 52,
+     "n": 298,
+     "mean": -1.29
+    },
+    "scene": {
+     "ahead": 4,
+     "n": 67,
+     "mean": -1.5
+    },
+    "night": {
+     "ahead": 4,
+     "n": 30,
+     "mean": -0.96
+    },
+    "casting": {
+     "ahead": 6,
+     "n": 30,
+     "mean": -0.64
+    },
+    "coursework": {
+     "ahead": 5,
+     "n": 13,
+     "mean": -0.02
+    }
+   }
+  },
+  "discipline": {
+   "suitable": 209,
+   "aheadOnSuitable": 48,
+   "meanOnSuitable": -0.42,
+   "rest": 229,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.07,
+   "byKind": {
+    "brief": {
+     "ahead": 25,
+     "n": 298,
+     "mean": -1.28
+    },
+    "scene": {
+     "ahead": 6,
+     "n": 67,
+     "mean": -1.23
+    },
+    "night": {
+     "ahead": 13,
+     "n": 30,
+     "mean": -0.3
+    },
+    "casting": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -2.69
+    },
+    "coursework": {
+     "ahead": 4,
+     "n": 13,
+     "mean": -0.53
+    }
+   }
+  },
+  "stamina": {
+   "suitable": 210,
+   "aheadOnSuitable": 81,
+   "meanOnSuitable": -0.08,
+   "rest": 228,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.81,
+   "byKind": {
+    "brief": {
+     "ahead": 61,
+     "n": 298,
+     "mean": -0.82
+    },
+    "scene": {
+     "ahead": 17,
+     "n": 67,
+     "mean": -0.59
+    },
+    "night": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -1.78
+    },
+    "casting": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -2.69
+    },
+    "coursework": {
+     "ahead": 3,
+     "n": 13,
+     "mean": -0.78
+    }
+   }
+  }
+ },
+ "bestAllocation": {
+  "brief": {
+   "physical specialist": 21,
+   "focus specialist": 23,
+   "emotionalDepth specialist": 93,
+   "imagination specialist": 25,
+   "vocal specialist": 19,
+   "composure specialist": 42,
+   "stamina specialist": 4,
+   "memory specialist": 41,
+   "adaptability specialist": 19,
+   "listening specialist": 6,
+   "discipline specialist": 3,
+   "even": 2
+  },
+  "all": {
+   "physical specialist": 28,
+   "focus specialist": 41,
+   "emotionalDepth specialist": 122,
+   "imagination specialist": 33,
+   "vocal specialist": 27,
+   "composure specialist": 46,
+   "stamina specialist": 14,
+   "memory specialist": 47,
+   "adaptability specialist": 24,
+   "listening specialist": 34,
+   "discipline specialist": 14,
+   "even": 4,
+   "presence specialist": 4
+  },
+  "scene": {
+   "discipline specialist": 4,
+   "emotionalDepth specialist": 15,
+   "focus specialist": 10,
+   "listening specialist": 17,
+   "stamina specialist": 10,
+   "imagination specialist": 4,
+   "adaptability specialist": 3,
+   "vocal specialist": 1,
+   "presence specialist": 3
+  },
+  "night": {
+   "emotionalDepth specialist": 6,
+   "focus specialist": 3,
+   "physical specialist": 2,
+   "discipline specialist": 7,
+   "imagination specialist": 3,
+   "composure specialist": 1,
+   "even": 2,
+   "listening specialist": 2,
+   "vocal specialist": 2,
+   "memory specialist": 2
+  },
+  "casting": {
+   "emotionalDepth specialist": 6,
+   "focus specialist": 3,
+   "physical specialist": 3,
+   "composure specialist": 3,
+   "imagination specialist": 1,
+   "listening specialist": 6,
+   "memory specialist": 4,
+   "adaptability specialist": 2,
+   "vocal specialist": 2
+  },
+  "coursework": {
+   "vocal specialist": 3,
+   "physical specialist": 2,
+   "listening specialist": 3,
+   "focus specialist": 2,
+   "emotionalDepth specialist": 2,
+   "presence specialist": 1
+  }
+ },
+ "generalist": {
+  "brief": {
+   "n": 298,
+   "behindBest": {
+    "n": 298,
+    "mean": 1.79,
+    "sd": 0.82,
+    "min": 0,
+    "max": 4.45
+   },
+   "withinOnePoint": 45,
+   "aheadOfHalfTheSpecialists": 298
+  },
+  "scene": {
+   "n": 67,
+   "behindBest": {
+    "n": 67,
+    "mean": 0.87,
+    "sd": 0.47,
+    "min": 0.1,
+    "max": 2
+   },
+   "withinOnePoint": 47,
+   "aheadOfHalfTheSpecialists": 67
+  },
+  "night": {
+   "n": 30,
+   "behindBest": {
+    "n": 30,
+    "mean": 0.91,
+    "sd": 0.78,
+    "min": 0,
+    "max": 3.1
+   },
+   "withinOnePoint": 20,
+   "aheadOfHalfTheSpecialists": 30
+  },
+  "casting": {
+   "n": 30,
+   "behindBest": {
+    "n": 30,
+    "mean": 0.88,
+    "sd": 0.42,
+    "min": 0.2,
+    "max": 1.8
+   },
+   "withinOnePoint": 19,
+   "aheadOfHalfTheSpecialists": 30
+  },
+  "coursework": {
+   "n": 13,
+   "behindBest": {
+    "n": 13,
+    "mean": 5.34,
+    "sd": 2.06,
+    "min": 2.8,
+    "max": 8.6
+   },
+   "withinOnePoint": 0,
+   "aheadOfHalfTheSpecialists": 13
+  },
+  "all": {
+   "n": 438,
+   "behindBest": {
+    "n": 438,
+    "mean": 1.63,
+    "sd": 1.12,
+    "min": 0,
+    "max": 8.6
+   },
+   "withinOnePoint": 131,
+   "aheadOfHalfTheSpecialists": 438
+  }
+ },
+ "genres": {
+  "genres": 149,
+  "briefsPerGenre": {
+   "n": 149,
+   "mean": 2,
+   "sd": 0,
+   "min": 2,
+   "max": 2
+  },
+  "briefsListingGenre": {
+   "n": 149,
+   "mean": 2,
+   "sd": 0,
+   "min": 2,
+   "max": 2
+  },
+  "readingsPerGenre": {
+   "n": 149,
+   "mean": 4.41,
+   "sd": 0.53,
+   "min": 4,
+   "max": 6
+  },
+  "readingsPerBrief": {
+   "n": 298,
+   "mean": 2.2,
+   "sd": 0.4,
+   "min": 2,
+   "max": 3
+  },
+  "beatsPerBrief": {
+   "n": 298,
+   "mean": 3.66,
+   "sd": 0.86,
+   "min": 2,
+   "max": 6
+  },
+  "readerPlays": {
+   "steady": 157,
+   "voice (none)": 36,
+   "pressing": 41,
+   "unpredictable": 33,
+   "withholding": 31
+  },
+  "stakes": {
+   "0": 16,
+   "1": 165,
+   "2": 61,
+   "3": 56
+  },
+  "sizes": {
+   "short": 127,
+   "medium": 124,
+   "long": 47
+  },
+  "mediums": {
+   "camera": 262,
+   "voice": 36
+  },
+  "withTechniques": 116,
+  "distance": {
+   "note": "L1 over 6 dimension shares ×10 and 12 ability effects (+10, even actor), a genre the mean of the briefs written for it",
+   "allPairs": {
+    "n": 11026,
+    "p05": 3.24,
+    "median": 6.046,
+    "p95": 11.341
+   },
+   "withinGenre": {
+    "n": 149,
+    "mean": 6.8,
+    "sd": 2.42,
+    "min": 1.05,
+    "max": 14.19
+   },
+   "nearestClosest": [
+    {
+     "genre": "creature_feature",
+     "nearest": "monster_movie",
+     "distance": 1.134
+    },
+    {
+     "genre": "monster_movie",
+     "nearest": "creature_feature",
+     "distance": 1.134
+    },
+    {
+     "genre": "action_comedy",
+     "nearest": "slapstick",
+     "distance": 1.276
+    },
+    {
+     "genre": "slapstick",
+     "nearest": "action_comedy",
+     "distance": 1.276
+    },
+    {
+     "genre": "chase",
+     "nearest": "exploitation",
+     "distance": 1.359
+    },
+    {
+     "genre": "exploitation",
+     "nearest": "chase",
+     "distance": 1.359
+    },
+    {
+     "genre": "gothic_horror",
+     "nearest": "space_opera",
+     "distance": 1.487
+    },
+    {
+     "genre": "space_opera",
+     "nearest": "gothic_horror",
+     "distance": 1.487
+    },
+    {
+     "genre": "chanbara",
+     "nearest": "jidaigeki",
+     "distance": 1.497
+    },
+    {
+     "genre": "jidaigeki",
+     "nearest": "chanbara",
+     "distance": 1.497
+    },
+    {
+     "genre": "black_comedy",
+     "nearest": "teen",
+     "distance": 1.656
+    },
+    {
+     "genre": "teen",
+     "nearest": "black_comedy",
+     "distance": 1.656
+    },
+    {
+     "genre": "blaxploitation",
+     "nearest": "courtroom_drama",
+     "distance": 1.708
+    },
+    {
+     "genre": "courtroom_drama",
+     "nearest": "blaxploitation",
+     "distance": 1.708
+    },
+    {
+     "genre": "action",
+     "nearest": "martial_arts",
+     "distance": 1.721
+    }
+   ],
+   "nearestAll": [
+    {
+     "genre": "creature_feature",
+     "nearest": "monster_movie",
+     "distance": 1.134,
+     "withinOwnBriefs": 8.528
+    },
+    {
+     "genre": "monster_movie",
+     "nearest": "creature_feature",
+     "distance": 1.134,
+     "withinOwnBriefs": 5.465
+    },
+    {
+     "genre": "action_comedy",
+     "nearest": "slapstick",
+     "distance": 1.276,
+     "withinOwnBriefs": 2.745
+    },
+    {
+     "genre": "slapstick",
+     "nearest": "action_comedy",
+     "distance": 1.276,
+     "withinOwnBriefs": 4.884
+    },
+    {
+     "genre": "chase",
+     "nearest": "exploitation",
+     "distance": 1.359,
+     "withinOwnBriefs": 6.096
+    },
+    {
+     "genre": "exploitation",
+     "nearest": "chase",
+     "distance": 1.359,
+     "withinOwnBriefs": 4.084
+    },
+    {
+     "genre": "gothic_horror",
+     "nearest": "space_opera",
+     "distance": 1.487,
+     "withinOwnBriefs": 9.145
+    },
+    {
+     "genre": "space_opera",
+     "nearest": "gothic_horror",
+     "distance": 1.487,
+     "withinOwnBriefs": 10.323
+    },
+    {
+     "genre": "chanbara",
+     "nearest": "jidaigeki",
+     "distance": 1.497,
+     "withinOwnBriefs": 4.617
+    },
+    {
+     "genre": "jidaigeki",
+     "nearest": "chanbara",
+     "distance": 1.497,
+     "withinOwnBriefs": 4.683
+    },
+    {
+     "genre": "black_comedy",
+     "nearest": "teen",
+     "distance": 1.656,
+     "withinOwnBriefs": 4.165
+    },
+    {
+     "genre": "teen",
+     "nearest": "black_comedy",
+     "distance": 1.656,
+     "withinOwnBriefs": 8.243
+    },
+    {
+     "genre": "blaxploitation",
+     "nearest": "courtroom_drama",
+     "distance": 1.708,
+     "withinOwnBriefs": 5.367
+    },
+    {
+     "genre": "courtroom_drama",
+     "nearest": "blaxploitation",
+     "distance": 1.708,
+     "withinOwnBriefs": 7.836
+    },
+    {
+     "genre": "action",
+     "nearest": "martial_arts",
+     "distance": 1.721,
+     "withinOwnBriefs": 8.996
+    },
+    {
+     "genre": "martial_arts",
+     "nearest": "action",
+     "distance": 1.721,
+     "withinOwnBriefs": 8.831
+    },
+    {
+     "genre": "biographical",
+     "nearest": "jidaigeki",
+     "distance": 1.779,
+     "withinOwnBriefs": 6.243
+    },
+    {
+     "genre": "coming_of_age",
+     "nearest": "social_realism",
+     "distance": 1.783,
+     "withinOwnBriefs": 4.399
+    },
+    {
+     "genre": "social_realism",
+     "nearest": "coming_of_age",
+     "distance": 1.783,
+     "withinOwnBriefs": 5.99
+    },
+    {
+     "genre": "mystery",
+     "nearest": "techno_thriller",
+     "distance": 1.814,
+     "withinOwnBriefs": 11.928
+    },
+    {
+     "genre": "techno_thriller",
+     "nearest": "mystery",
+     "distance": 1.814,
+     "withinOwnBriefs": 5.898
+    },
+    {
+     "genre": "buddy_comedy",
+     "nearest": "family",
+     "distance": 1.824,
+     "withinOwnBriefs": 11.815
+    },
+    {
+     "genre": "family",
+     "nearest": "buddy_comedy",
+     "distance": 1.824,
+     "withinOwnBriefs": 8.693
+    },
+    {
+     "genre": "survival",
+     "nearest": "monster_movie",
+     "distance": 1.833,
+     "withinOwnBriefs": 5.665
+    },
+    {
+     "genre": "film_noir",
+     "nearest": "political_drama",
+     "distance": 1.835,
+     "withinOwnBriefs": 6.409
+    },
+    {
+     "genre": "political_drama",
+     "nearest": "film_noir",
+     "distance": 1.835,
+     "withinOwnBriefs": 8.963
+    },
+    {
+     "genre": "splatter",
+     "nearest": "zombie",
+     "distance": 1.835,
+     "withinOwnBriefs": 4.471
+    },
+    {
+     "genre": "zombie",
+     "nearest": "splatter",
+     "distance": 1.835,
+     "withinOwnBriefs": 4.823
+    },
+    {
+     "genre": "docudrama",
+     "nearest": "film_noir",
+     "distance": 1.846,
+     "withinOwnBriefs": 7.186
+    },
+    {
+     "genre": "avant_garde",
+     "nearest": "surrealist",
+     "distance": 1.857,
+     "withinOwnBriefs": 10.014
+    },
+    {
+     "genre": "surrealist",
+     "nearest": "avant_garde",
+     "distance": 1.857,
+     "withinOwnBriefs": 12.155
+    },
+    {
+     "genre": "epic",
+     "nearest": "jidaigeki",
+     "distance": 1.916,
+     "withinOwnBriefs": 7.044
+    },
+    {
+     "genre": "disaster",
+     "nearest": "military",
+     "distance": 1.918,
+     "withinOwnBriefs": 11.859
+    },
+    {
+     "genre": "military",
+     "nearest": "disaster",
+     "distance": 1.918,
+     "withinOwnBriefs": 9.595
+    },
+    {
+     "genre": "cyberpunk",
+     "nearest": "supernatural",
+     "distance": 1.951,
+     "withinOwnBriefs": 4.539
+    },
+    {
+     "genre": "supernatural",
+     "nearest": "cyberpunk",
+     "distance": 1.951,
+     "withinOwnBriefs": 5.07
+    },
+    {
+     "genre": "samurai",
+     "nearest": "silent_film",
+     "distance": 1.976,
+     "withinOwnBriefs": 6.979
+    },
+    {
+     "genre": "silent_film",
+     "nearest": "samurai",
+     "distance": 1.976,
+     "withinOwnBriefs": 4.559
+    },
+    {
+     "genre": "horror",
+     "nearest": "slasher",
+     "distance": 1.989,
+     "withinOwnBriefs": 6.438
+    },
+    {
+     "genre": "slasher",
+     "nearest": "horror",
+     "distance": 1.989,
+     "withinOwnBriefs": 6.396
+    },
+    {
+     "genre": "dance",
+     "nearest": "epic",
+     "distance": 1.992,
+     "withinOwnBriefs": 3.252
+    },
+    {
+     "genre": "sea_adventure",
+     "nearest": "docudrama",
+     "distance": 1.997,
+     "withinOwnBriefs": 7.744
+    },
+    {
+     "genre": "historical_fiction",
+     "nearest": "kaiju",
+     "distance": 2.021,
+     "withinOwnBriefs": 5.367
+    },
+    {
+     "genre": "kaiju",
+     "nearest": "historical_fiction",
+     "distance": 2.021,
+     "withinOwnBriefs": 6.076
+    },
+    {
+     "genre": "romance",
+     "nearest": "vampire",
+     "distance": 2.022,
+     "withinOwnBriefs": 6.378
+    },
+    {
+     "genre": "vampire",
+     "nearest": "romance",
+     "distance": 2.022,
+     "withinOwnBriefs": 5.378
+    },
+    {
+     "genre": "concert_film",
+     "nearest": "medical_drama",
+     "distance": 2.031,
+     "withinOwnBriefs": 8.178
+    },
+    {
+     "genre": "medical_drama",
+     "nearest": "concert_film",
+     "distance": 2.031,
+     "withinOwnBriefs": 4.433
+    },
+    {
+     "genre": "wuxia",
+     "nearest": "silent_film",
+     "distance": 2.038,
+     "withinOwnBriefs": 4.777
+    },
+    {
+     "genre": "conspiracy_thriller",
+     "nearest": "true_crime",
+     "distance": 2.047,
+     "withinOwnBriefs": 10.716
+    },
+    {
+     "genre": "true_crime",
+     "nearest": "conspiracy_thriller",
+     "distance": 2.047,
+     "withinOwnBriefs": 5.911
+    },
+    {
+     "genre": "historical_drama",
+     "nearest": "police_procedural",
+     "distance": 2.052,
+     "withinOwnBriefs": 6.487
+    },
+    {
+     "genre": "police_procedural",
+     "nearest": "historical_drama",
+     "distance": 2.052,
+     "withinOwnBriefs": 5.664
+    },
+    {
+     "genre": "christmas",
+     "nearest": "military",
+     "distance": 2.064,
+     "withinOwnBriefs": 8.197
+    },
+    {
+     "genre": "neo_noir",
+     "nearest": "political_thriller",
+     "distance": 2.067,
+     "withinOwnBriefs": 8.402
+    },
+    {
+     "genre": "political_thriller",
+     "nearest": "neo_noir",
+     "distance": 2.067,
+     "withinOwnBriefs": 10.101
+    },
+    {
+     "genre": "time_travel",
+     "nearest": "cyberpunk",
+     "distance": 2.094,
+     "withinOwnBriefs": 8.444
+    },
+    {
+     "genre": "period_drama",
+     "nearest": "disaster",
+     "distance": 2.098,
+     "withinOwnBriefs": 6.983
+    },
+    {
+     "genre": "heist",
+     "nearest": "mystery",
+     "distance": 2.136,
+     "withinOwnBriefs": 8.641
+    },
+    {
+     "genre": "caper",
+     "nearest": "comedy",
+     "distance": 2.142,
+     "withinOwnBriefs": 4.126
+    },
+    {
+     "genre": "comedy",
+     "nearest": "caper",
+     "distance": 2.142,
+     "withinOwnBriefs": 9.309
+    },
+    {
+     "genre": "crime",
+     "nearest": "romantic_drama",
+     "distance": 2.144,
+     "withinOwnBriefs": 7.038
+    },
+    {
+     "genre": "romantic_drama",
+     "nearest": "crime",
+     "distance": 2.144,
+     "withinOwnBriefs": 6.165
+    },
+    {
+     "genre": "fantasy",
+     "nearest": "crime",
+     "distance": 2.187,
+     "withinOwnBriefs": 8.509
+    },
+    {
+     "genre": "war",
+     "nearest": "horror",
+     "distance": 2.194,
+     "withinOwnBriefs": 5.773
+    },
+    {
+     "genre": "eco_horror",
+     "nearest": "historical_fiction",
+     "distance": 2.197,
+     "withinOwnBriefs": 5.795
+    },
+    {
+     "genre": "melodrama",
+     "nearest": "sea_adventure",
+     "distance": 2.208,
+     "withinOwnBriefs": 6.879
+    },
+    {
+     "genre": "isekai",
+     "nearest": "nature_documentary",
+     "distance": 2.219,
+     "withinOwnBriefs": 7.569
+    },
+    {
+     "genre": "nature_documentary",
+     "nearest": "isekai",
+     "distance": 2.219,
+     "withinOwnBriefs": 8.324
+    },
+    {
+     "genre": "dystopian",
+     "nearest": "true_crime",
+     "distance": 2.222,
+     "withinOwnBriefs": 5.722
+    },
+    {
+     "genre": "giallo",
+     "nearest": "techno_thriller",
+     "distance": 2.231,
+     "withinOwnBriefs": 9.815
+    },
+    {
+     "genre": "legal_drama",
+     "nearest": "medical_drama",
+     "distance": 2.263,
+     "withinOwnBriefs": 5.606
+    },
+    {
+     "genre": "apocalyptic",
+     "nearest": "gangster",
+     "distance": 2.265,
+     "withinOwnBriefs": 5.246
+    },
+    {
+     "genre": "gangster",
+     "nearest": "apocalyptic",
+     "distance": 2.265,
+     "withinOwnBriefs": 5.58
+    },
+    {
+     "genre": "costume_drama",
+     "nearest": "sword_and_sorcery",
+     "distance": 2.274,
+     "withinOwnBriefs": 5.701
+    },
+    {
+     "genre": "sword_and_sorcery",
+     "nearest": "costume_drama",
+     "distance": 2.274,
+     "withinOwnBriefs": 8.154
+    },
+    {
+     "genre": "prison_film",
+     "nearest": "christmas",
+     "distance": 2.29,
+     "withinOwnBriefs": 9.036
+    },
+    {
+     "genre": "neorealism",
+     "nearest": "christmas",
+     "distance": 2.295,
+     "withinOwnBriefs": 7.056
+    },
+    {
+     "genre": "queer_cinema",
+     "nearest": "prison_film",
+     "distance": 2.331,
+     "withinOwnBriefs": 4.892
+    },
+    {
+     "genre": "sports",
+     "nearest": "police_procedural",
+     "distance": 2.331,
+     "withinOwnBriefs": 5.624
+    },
+    {
+     "genre": "backstage_musical",
+     "nearest": "jukebox_musical",
+     "distance": 2.335,
+     "withinOwnBriefs": 5.151
+    },
+    {
+     "genre": "folk_horror",
+     "nearest": "time_travel",
+     "distance": 2.335,
+     "withinOwnBriefs": 5.75
+    },
+    {
+     "genre": "jukebox_musical",
+     "nearest": "backstage_musical",
+     "distance": 2.335,
+     "withinOwnBriefs": 4.576
+    },
+    {
+     "genre": "road_movie",
+     "nearest": "prison_film",
+     "distance": 2.347,
+     "withinOwnBriefs": 4.589
+    },
+    {
+     "genre": "kitchen_sink",
+     "nearest": "disaster",
+     "distance": 2.362,
+     "withinOwnBriefs": 5.28
+    },
+    {
+     "genre": "erotic_thriller",
+     "nearest": "crime",
+     "distance": 2.368,
+     "withinOwnBriefs": 5.758
+    },
+    {
+     "genre": "psychological_thriller",
+     "nearest": "thriller",
+     "distance": 2.373,
+     "withinOwnBriefs": 11.789
+    },
+    {
+     "genre": "thriller",
+     "nearest": "psychological_thriller",
+     "distance": 2.373,
+     "withinOwnBriefs": 9.041
+    },
+    {
+     "genre": "domestic_drama",
+     "nearest": "sports",
+     "distance": 2.377,
+     "withinOwnBriefs": 7.188
+    },
+    {
+     "genre": "western",
+     "nearest": "action",
+     "distance": 2.39,
+     "withinOwnBriefs": 3.958
+    },
+    {
+     "genre": "hangout",
+     "nearest": "road_movie",
+     "distance": 2.391,
+     "withinOwnBriefs": 4.086
+    },
+    {
+     "genre": "science_fiction",
+     "nearest": "historical_drama",
+     "distance": 2.404,
+     "withinOwnBriefs": 7.943
+    },
+    {
+     "genre": "dark_fantasy",
+     "nearest": "gothic_horror",
+     "distance": 2.405,
+     "withinOwnBriefs": 5.77
+    },
+    {
+     "genre": "detective",
+     "nearest": "legal_drama",
+     "distance": 2.408,
+     "withinOwnBriefs": 4.248
+    },
+    {
+     "genre": "drama",
+     "nearest": "apocalyptic",
+     "distance": 2.415,
+     "withinOwnBriefs": 4.16
+    },
+    {
+     "genre": "animated",
+     "nearest": "swashbuckler",
+     "distance": 2.418,
+     "withinOwnBriefs": 8.302
+    },
+    {
+     "genre": "swashbuckler",
+     "nearest": "animated",
+     "distance": 2.418,
+     "withinOwnBriefs": 3.768
+    },
+    {
+     "genre": "yakuza",
+     "nearest": "erotic_thriller",
+     "distance": 2.43,
+     "withinOwnBriefs": 14.194
+    },
+    {
+     "genre": "revenge",
+     "nearest": "tragedy",
+     "distance": 2.432,
+     "withinOwnBriefs": 9.656
+    },
+    {
+     "genre": "tragedy",
+     "nearest": "revenge",
+     "distance": 2.432,
+     "withinOwnBriefs": 8.274
+    },
+    {
+     "genre": "documentary",
+     "nearest": "concert_film",
+     "distance": 2.438,
+     "withinOwnBriefs": 5.045
+    },
+    {
+     "genre": "tragicomedy",
+     "nearest": "political_drama",
+     "distance": 2.446,
+     "withinOwnBriefs": 8.338
+    },
+    {
+     "genre": "post_apocalyptic",
+     "nearest": "eco_horror",
+     "distance": 2.449,
+     "withinOwnBriefs": 5.031
+    },
+    {
+     "genre": "mockumentary",
+     "nearest": "stoner_comedy",
+     "distance": 2.455,
+     "withinOwnBriefs": 8.077
+    },
+    {
+     "genre": "stoner_comedy",
+     "nearest": "mockumentary",
+     "distance": 2.455,
+     "withinOwnBriefs": 5.941
+    },
+    {
+     "genre": "occult",
+     "nearest": "exploitation",
+     "distance": 2.458,
+     "withinOwnBriefs": 7.332
+    },
+    {
+     "genre": "science_fantasy",
+     "nearest": "period_drama",
+     "distance": 2.465,
+     "withinOwnBriefs": 5.027
+    },
+    {
+     "genre": "adventure",
+     "nearest": "costume_drama",
+     "distance": 2.476,
+     "withinOwnBriefs": 3.666
+    },
+    {
+     "genre": "cosmic_horror",
+     "nearest": "revenge",
+     "distance": 2.481,
+     "withinOwnBriefs": 10.307
+    },
+    {
+     "genre": "psychological_horror",
+     "nearest": "monster_movie",
+     "distance": 2.49,
+     "withinOwnBriefs": 5.847
+    },
+    {
+     "genre": "sword_and_sandal",
+     "nearest": "blaxploitation",
+     "distance": 2.497,
+     "withinOwnBriefs": 5.185
+    },
+    {
+     "genre": "body_horror",
+     "nearest": "revenge",
+     "distance": 2.504,
+     "withinOwnBriefs": 10.832
+    },
+    {
+     "genre": "experimental",
+     "nearest": "isekai",
+     "distance": 2.534,
+     "withinOwnBriefs": 11.567
+    },
+    {
+     "genre": "hood_film",
+     "nearest": "prison_film",
+     "distance": 2.547,
+     "withinOwnBriefs": 4.144
+    },
+    {
+     "genre": "horror_comedy",
+     "nearest": "tragicomedy",
+     "distance": 2.576,
+     "withinOwnBriefs": 11.041
+    },
+    {
+     "genre": "rockumentary",
+     "nearest": "slice_of_life",
+     "distance": 2.596,
+     "withinOwnBriefs": 9.321
+    },
+    {
+     "genre": "slice_of_life",
+     "nearest": "rockumentary",
+     "distance": 2.596,
+     "withinOwnBriefs": 7.502
+    },
+    {
+     "genre": "tokusatsu",
+     "nearest": "concert_film",
+     "distance": 2.598,
+     "withinOwnBriefs": 8.038
+    },
+    {
+     "genre": "werewolf",
+     "nearest": "creature_feature",
+     "distance": 2.602,
+     "withinOwnBriefs": 4.172
+    },
+    {
+     "genre": "alternate_history",
+     "nearest": "fairy_tale",
+     "distance": 2.609,
+     "withinOwnBriefs": 12.147
+    },
+    {
+     "genre": "fairy_tale",
+     "nearest": "alternate_history",
+     "distance": 2.609,
+     "withinOwnBriefs": 12.279
+    },
+    {
+     "genre": "screwball_comedy",
+     "nearest": "action_comedy",
+     "distance": 2.609,
+     "withinOwnBriefs": 6.291
+    },
+    {
+     "genre": "childrens",
+     "nearest": "holiday",
+     "distance": 2.621,
+     "withinOwnBriefs": 1.758
+    },
+    {
+     "genre": "holiday",
+     "nearest": "childrens",
+     "distance": 2.621,
+     "withinOwnBriefs": 7.242
+    },
+    {
+     "genre": "new_wave",
+     "nearest": "sword_and_sandal",
+     "distance": 2.645,
+     "withinOwnBriefs": 10.321
+    },
+    {
+     "genre": "spaghetti_western",
+     "nearest": "romantic_drama",
+     "distance": 2.651,
+     "withinOwnBriefs": 6.718
+    },
+    {
+     "genre": "nordic_noir",
+     "nearest": "romantic_drama",
+     "distance": 2.673,
+     "withinOwnBriefs": 2.756
+    },
+    {
+     "genre": "steampunk",
+     "nearest": "science_fantasy",
+     "distance": 2.706,
+     "withinOwnBriefs": 4.013
+    },
+    {
+     "genre": "mumblecore",
+     "nearest": "road_movie",
+     "distance": 2.711,
+     "withinOwnBriefs": 3.704
+    },
+    {
+     "genre": "art_house",
+     "nearest": "espionage",
+     "distance": 2.713,
+     "withinOwnBriefs": 5.168
+    },
+    {
+     "genre": "espionage",
+     "nearest": "art_house",
+     "distance": 2.713,
+     "withinOwnBriefs": 5.604
+    },
+    {
+     "genre": "superhero",
+     "nearest": "chase",
+     "distance": 2.763,
+     "withinOwnBriefs": 4.507
+    },
+    {
+     "genre": "buddy_cop",
+     "nearest": "comedy",
+     "distance": 2.766,
+     "withinOwnBriefs": 8.195
+    },
+    {
+     "genre": "grindhouse",
+     "nearest": "horror_comedy",
+     "distance": 2.772,
+     "withinOwnBriefs": 10.408
+    },
+    {
+     "genre": "anthology",
+     "nearest": "historical_fiction",
+     "distance": 2.788,
+     "withinOwnBriefs": 6.882
+    },
+    {
+     "genre": "picaresque",
+     "nearest": "political_drama",
+     "distance": 2.793,
+     "withinOwnBriefs": 9.836
+    },
+    {
+     "genre": "biker",
+     "nearest": "queer_cinema",
+     "distance": 2.822,
+     "withinOwnBriefs": 1.049
+    },
+    {
+     "genre": "musical",
+     "nearest": "backstage_musical",
+     "distance": 2.859,
+     "withinOwnBriefs": 4.554
+    },
+    {
+     "genre": "spy",
+     "nearest": "neo_noir",
+     "distance": 2.893,
+     "withinOwnBriefs": 6.332
+    },
+    {
+     "genre": "satire",
+     "nearest": "science_fantasy",
+     "distance": 2.907,
+     "withinOwnBriefs": 7.087
+    },
+    {
+     "genre": "magical_realism",
+     "nearest": "eco_horror",
+     "distance": 2.948,
+     "withinOwnBriefs": 6.127
+    },
+    {
+     "genre": "docufiction",
+     "nearest": "mumblecore",
+     "distance": 2.97,
+     "withinOwnBriefs": 5.69
+    },
+    {
+     "genre": "found_footage",
+     "nearest": "eco_horror",
+     "distance": 2.972,
+     "withinOwnBriefs": 4.788
+    },
+    {
+     "genre": "anime",
+     "nearest": "whodunit",
+     "distance": 2.986,
+     "withinOwnBriefs": 6.741
+    },
+    {
+     "genre": "whodunit",
+     "nearest": "anime",
+     "distance": 2.986,
+     "withinOwnBriefs": 8.404
+    },
+    {
+     "genre": "farce",
+     "nearest": "action_comedy",
+     "distance": 2.989,
+     "withinOwnBriefs": 5.97
+    },
+    {
+     "genre": "absurdist",
+     "nearest": "new_wave",
+     "distance": 3.263,
+     "withinOwnBriefs": 4.953
+    },
+    {
+     "genre": "romantic_comedy",
+     "nearest": "family",
+     "distance": 3.525,
+     "withinOwnBriefs": 5.66
+    },
+    {
+     "genre": "parody",
+     "nearest": "nature_documentary",
+     "distance": 3.845,
+     "withinOwnBriefs": 3.641
+    }
+   ],
+   "nearestStats": {
+    "n": 149,
+    "mean": 2.25,
+    "sd": 0.45,
+    "min": 1.13,
+    "max": 3.85
+   },
+   "genresNearerThanOwnBriefs": 146
+  },
+  "identicalSignature": [],
+  "identicalMaterialIgnoringReadings": {
+   "groups": 0,
+   "briefsInThem": 0,
+   "crossGenreGroups": 0,
+   "largest": [
+    [
+     "brief-action"
+    ],
+    [
+     "brief-absurdist"
+    ],
+    [
+     "brief-action_comedy"
+    ],
+    [
+     "brief-adventure"
+    ],
+    [
+     "brief-alternate_history"
+    ]
+   ]
+  },
+  "winners": {
+   "focus specialist": 15,
+   "physical specialist": 12,
+   "emotionalDepth specialist": 49,
+   "memory specialist": 18,
+   "vocal specialist": 11,
+   "composure specialist": 16,
+   "imagination specialist": 15,
+   "adaptability specialist": 10,
+   "listening specialist": 2,
+   "stamina specialist": 1
+  },
+  "genreWinner": {
+   "absurdist": {
+    "winner": "focus specialist",
+    "margin": 0.2,
+    "even": 55.6
+   },
+   "action": {
+    "winner": "physical specialist",
+    "margin": 0.03,
+    "even": 51.14
+   },
+   "action_comedy": {
+    "winner": "physical specialist",
+    "margin": 0.28,
+    "even": 53.22
+   },
+   "adventure": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.1,
+    "even": 52.78
+   },
+   "alternate_history": {
+    "winner": "memory specialist",
+    "margin": 0.17,
+    "even": 53.23
+   },
+   "animated": {
+    "winner": "vocal specialist",
+    "margin": 1.7,
+    "even": 52.73
+   },
+   "anime": {
+    "winner": "vocal specialist",
+    "margin": 0.85,
+    "even": 52.6
+   },
+   "anthology": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.67,
+    "even": 56.38
+   },
+   "apocalyptic": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.35,
+    "even": 54.25
+   },
+   "art_house": {
+    "winner": "composure specialist",
+    "margin": 0.62,
+    "even": 56
+   },
+   "avant_garde": {
+    "winner": "imagination specialist",
+    "margin": 0.75,
+    "even": 55.28
+   },
+   "backstage_musical": {
+    "winner": "vocal specialist",
+    "margin": 0.02,
+    "even": 51.06
+   },
+   "biker": {
+    "winner": "composure specialist",
+    "margin": 0.47,
+    "even": 55.5
+   },
+   "biographical": {
+    "winner": "memory specialist",
+    "margin": 0.4,
+    "even": 51.34
+   },
+   "black_comedy": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.2,
+    "even": 56.63
+   },
+   "blaxploitation": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.57,
+    "even": 54.3
+   },
+   "body_horror": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.65,
+    "even": 52.34
+   },
+   "buddy_comedy": {
+    "winner": "focus specialist",
+    "margin": 0.7,
+    "even": 55.7
+   },
+   "buddy_cop": {
+    "winner": "focus specialist",
+    "margin": 0.83,
+    "even": 54.33
+   },
+   "caper": {
+    "winner": "memory specialist",
+    "margin": 0.13,
+    "even": 55.5
+   },
+   "chanbara": {
+    "winner": "physical specialist",
+    "margin": 0.46,
+    "even": 50.94
+   },
+   "chase": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.07,
+    "even": 53.89
+   },
+   "childrens": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.57,
+    "even": 55.75
+   },
+   "christmas": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1,
+    "even": 54.46
+   },
+   "comedy": {
+    "winner": "focus specialist",
+    "margin": 1.34,
+    "even": 54.34
+   },
+   "coming_of_age": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.97,
+    "even": 57.1
+   },
+   "concert_film": {
+    "winner": "vocal specialist",
+    "margin": 0.33,
+    "even": 53.59
+   },
+   "conspiracy_thriller": {
+    "winner": "composure specialist",
+    "margin": 0.58,
+    "even": 53.64
+   },
+   "cosmic_horror": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.58,
+    "even": 53.77
+   },
+   "costume_drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.3,
+    "even": 54.2
+   },
+   "courtroom_drama": {
+    "winner": "composure specialist",
+    "margin": 0.03,
+    "even": 54.18
+   },
+   "creature_feature": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.45,
+    "even": 52.95
+   },
+   "crime": {
+    "winner": "memory specialist",
+    "margin": 0.55,
+    "even": 55.15
+   },
+   "cyberpunk": {
+    "winner": "imagination specialist",
+    "margin": 1.67,
+    "even": 55.48
+   },
+   "dance": {
+    "winner": "physical specialist",
+    "margin": 0.65,
+    "even": 54.18
+   },
+   "dark_fantasy": {
+    "winner": "vocal specialist",
+    "margin": 0.5,
+    "even": 53.33
+   },
+   "detective": {
+    "winner": "focus specialist",
+    "margin": 0.67,
+    "even": 56.49
+   },
+   "disaster": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.77,
+    "even": 53.4
+   },
+   "docudrama": {
+    "winner": "memory specialist",
+    "margin": 0.13,
+    "even": 51.35
+   },
+   "docufiction": {
+    "winner": "adaptability specialist",
+    "margin": 3.07,
+    "even": 57.78
+   },
+   "documentary": {
+    "winner": "vocal specialist",
+    "margin": 0.45,
+    "even": 54.9
+   },
+   "domestic_drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.8,
+    "even": 55.83
+   },
+   "drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 2.1,
+    "even": 55.25
+   },
+   "dystopian": {
+    "winner": "composure specialist",
+    "margin": 1.75,
+    "even": 51.4
+   },
+   "eco_horror": {
+    "winner": "emotionalDepth specialist",
+    "margin": 2.05,
+    "even": 55
+   },
+   "epic": {
+    "winner": "memory specialist",
+    "margin": 0.73,
+    "even": 52.38
+   },
+   "erotic_thriller": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.1,
+    "even": 53
+   },
+   "espionage": {
+    "winner": "composure specialist",
+    "margin": 2.07,
+    "even": 53.78
+   },
+   "experimental": {
+    "winner": "imagination specialist",
+    "margin": 0.1,
+    "even": 55.9
+   },
+   "exploitation": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.58,
+    "even": 53.9
+   },
+   "fairy_tale": {
+    "winner": "imagination specialist",
+    "margin": 1.46,
+    "even": 54.86
+   },
+   "family": {
+    "winner": "adaptability specialist",
+    "margin": 0.03,
+    "even": 56.19
+   },
+   "fantasy": {
+    "winner": "imagination specialist",
+    "margin": 0.23,
+    "even": 53.64
+   },
+   "farce": {
+    "winner": "physical specialist",
+    "margin": 0.13,
+    "even": 51.03
+   },
+   "film_noir": {
+    "winner": "memory specialist",
+    "margin": 0.18,
+    "even": 52.6
+   },
+   "folk_horror": {
+    "winner": "imagination specialist",
+    "margin": 0.19,
+    "even": 55.04
+   },
+   "found_footage": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.47,
+    "even": 56.25
+   },
+   "gangster": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.42,
+    "even": 54.8
+   },
+   "giallo": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.35,
+    "even": 54.13
+   },
+   "gothic_horror": {
+    "winner": "memory specialist",
+    "margin": 0.21,
+    "even": 54.72
+   },
+   "grindhouse": {
+    "winner": "focus specialist",
+    "margin": 0.02,
+    "even": 53.3
+   },
+   "hangout": {
+    "winner": "adaptability specialist",
+    "margin": 0.88,
+    "even": 57.65
+   },
+   "heist": {
+    "winner": "memory specialist",
+    "margin": 0.3,
+    "even": 53.25
+   },
+   "historical_drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.95,
+    "even": 54.6
+   },
+   "historical_fiction": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.4,
+    "even": 56.33
+   },
+   "holiday": {
+    "winner": "focus specialist",
+    "margin": 0.17,
+    "even": 57
+   },
+   "hood_film": {
+    "winner": "adaptability specialist",
+    "margin": 0.43,
+    "even": 55.3
+   },
+   "horror": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.83,
+    "even": 53.3
+   },
+   "horror_comedy": {
+    "winner": "focus specialist",
+    "margin": 0.79,
+    "even": 52.12
+   },
+   "isekai": {
+    "winner": "vocal specialist",
+    "margin": 1.22,
+    "even": 53.28
+   },
+   "jidaigeki": {
+    "winner": "memory specialist",
+    "margin": 0.74,
+    "even": 52.68
+   },
+   "jukebox_musical": {
+    "winner": "vocal specialist",
+    "margin": 0.48,
+    "even": 51.46
+   },
+   "kaiju": {
+    "winner": "imagination specialist",
+    "margin": 1.08,
+    "even": 55.93
+   },
+   "kitchen_sink": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.25,
+    "even": 52.98
+   },
+   "legal_drama": {
+    "winner": "memory specialist",
+    "margin": 1.66,
+    "even": 55.9
+   },
+   "magical_realism": {
+    "winner": "imagination specialist",
+    "margin": 0.27,
+    "even": 55.28
+   },
+   "martial_arts": {
+    "winner": "physical specialist",
+    "margin": 0.19,
+    "even": 50.99
+   },
+   "medical_drama": {
+    "winner": "memory specialist",
+    "margin": 0.63,
+    "even": 53.48
+   },
+   "melodrama": {
+    "winner": "vocal specialist",
+    "margin": 0.1,
+    "even": 51.61
+   },
+   "military": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.47,
+    "even": 55.38
+   },
+   "mockumentary": {
+    "winner": "adaptability specialist",
+    "margin": 1.64,
+    "even": 53.75
+   },
+   "monster_movie": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.7,
+    "even": 52.4
+   },
+   "mumblecore": {
+    "winner": "adaptability specialist",
+    "margin": 0.67,
+    "even": 57.98
+   },
+   "musical": {
+    "winner": "memory specialist",
+    "margin": 0.4,
+    "even": 52.28
+   },
+   "mystery": {
+    "winner": "focus specialist",
+    "margin": 0.77,
+    "even": 53.94
+   },
+   "nature_documentary": {
+    "winner": "vocal specialist",
+    "margin": 1,
+    "even": 55.38
+   },
+   "neo_noir": {
+    "winner": "composure specialist",
+    "margin": 0.35,
+    "even": 54.88
+   },
+   "neorealism": {
+    "winner": "composure specialist",
+    "margin": 0.55,
+    "even": 52.4
+   },
+   "new_wave": {
+    "winner": "adaptability specialist",
+    "margin": 0.95,
+    "even": 54.23
+   },
+   "nordic_noir": {
+    "winner": "composure specialist",
+    "margin": 1.55,
+    "even": 54.95
+   },
+   "occult": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.05,
+    "even": 53.73
+   },
+   "parody": {
+    "winner": "focus specialist",
+    "margin": 0.93,
+    "even": 55.45
+   },
+   "period_drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.25,
+    "even": 54.18
+   },
+   "picaresque": {
+    "winner": "focus specialist",
+    "margin": 0.71,
+    "even": 53.77
+   },
+   "police_procedural": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.58,
+    "even": 55.3
+   },
+   "political_drama": {
+    "winner": "memory specialist",
+    "margin": 0.27,
+    "even": 52.47
+   },
+   "political_thriller": {
+    "winner": "composure specialist",
+    "margin": 0.3,
+    "even": 54.45
+   },
+   "post_apocalyptic": {
+    "winner": "emotionalDepth specialist",
+    "margin": 2.03,
+    "even": 56.1
+   },
+   "prison_film": {
+    "winner": "listening specialist",
+    "margin": 0.1,
+    "even": 55.13
+   },
+   "psychological_horror": {
+    "winner": "emotionalDepth specialist",
+    "margin": 2.47,
+    "even": 54.47
+   },
+   "psychological_thriller": {
+    "winner": "composure specialist",
+    "margin": 0.83,
+    "even": 54.34
+   },
+   "queer_cinema": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.42,
+    "even": 56.22
+   },
+   "revenge": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.7,
+    "even": 53.63
+   },
+   "road_movie": {
+    "winner": "listening specialist",
+    "margin": 0.18,
+    "even": 56.68
+   },
+   "rockumentary": {
+    "winner": "adaptability specialist",
+    "margin": 0.35,
+    "even": 55
+   },
+   "romance": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.27,
+    "even": 55.88
+   },
+   "romantic_comedy": {
+    "winner": "focus specialist",
+    "margin": 1.17,
+    "even": 57.48
+   },
+   "romantic_drama": {
+    "winner": "composure specialist",
+    "margin": 0.55,
+    "even": 55.47
+   },
+   "samurai": {
+    "winner": "physical specialist",
+    "margin": 0.63,
+    "even": 52.77
+   },
+   "satire": {
+    "winner": "focus specialist",
+    "margin": 0.15,
+    "even": 55.75
+   },
+   "science_fantasy": {
+    "winner": "imagination specialist",
+    "margin": 0.73,
+    "even": 53.4
+   },
+   "science_fiction": {
+    "winner": "imagination specialist",
+    "margin": 0.28,
+    "even": 54.64
+   },
+   "screwball_comedy": {
+    "winner": "focus specialist",
+    "margin": 1.25,
+    "even": 53.53
+   },
+   "sea_adventure": {
+    "winner": "memory specialist",
+    "margin": 0.07,
+    "even": 51.38
+   },
+   "silent_film": {
+    "winner": "physical specialist",
+    "margin": 1.75,
+    "even": 53.58
+   },
+   "slapstick": {
+    "winner": "physical specialist",
+    "margin": 0.5,
+    "even": 54.55
+   },
+   "slasher": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.05,
+    "even": 52.1
+   },
+   "slice_of_life": {
+    "winner": "adaptability specialist",
+    "margin": 0.7,
+    "even": 57.2
+   },
+   "social_realism": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.72,
+    "even": 56.22
+   },
+   "space_opera": {
+    "winner": "memory specialist",
+    "margin": 0.81,
+    "even": 52.72
+   },
+   "spaghetti_western": {
+    "winner": "composure specialist",
+    "margin": 1.45,
+    "even": 54.25
+   },
+   "splatter": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.58,
+    "even": 54.55
+   },
+   "sports": {
+    "winner": "emotionalDepth specialist",
+    "margin": 2.48,
+    "even": 54.48
+   },
+   "spy": {
+    "winner": "focus specialist",
+    "margin": 0,
+    "even": 54.7
+   },
+   "steampunk": {
+    "winner": "imagination specialist",
+    "margin": 1.35,
+    "even": 53.3
+   },
+   "stoner_comedy": {
+    "winner": "adaptability specialist",
+    "margin": 0.14,
+    "even": 54.78
+   },
+   "superhero": {
+    "winner": "physical specialist",
+    "margin": 0.05,
+    "even": 55.05
+   },
+   "supernatural": {
+    "winner": "imagination specialist",
+    "margin": 1.3,
+    "even": 53.39
+   },
+   "surrealist": {
+    "winner": "imagination specialist",
+    "margin": 0.85,
+    "even": 54.87
+   },
+   "survival": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.79,
+    "even": 52.5
+   },
+   "swashbuckler": {
+    "winner": "physical specialist",
+    "margin": 1.15,
+    "even": 52.32
+   },
+   "sword_and_sandal": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.24,
+    "even": 54.03
+   },
+   "sword_and_sorcery": {
+    "winner": "stamina specialist",
+    "margin": 0.11,
+    "even": 51.39
+   },
+   "techno_thriller": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.38,
+    "even": 53.5
+   },
+   "teen": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.18,
+    "even": 56.28
+   },
+   "thriller": {
+    "winner": "composure specialist",
+    "margin": 0.35,
+    "even": 53.89
+   },
+   "time_travel": {
+    "winner": "imagination specialist",
+    "margin": 0.07,
+    "even": 55.6
+   },
+   "tokusatsu": {
+    "winner": "vocal specialist",
+    "margin": 0.63,
+    "even": 53.66
+   },
+   "tragedy": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.47,
+    "even": 52.78
+   },
+   "tragicomedy": {
+    "winner": "memory specialist",
+    "margin": 0.22,
+    "even": 52.78
+   },
+   "true_crime": {
+    "winner": "composure specialist",
+    "margin": 0.25,
+    "even": 53.55
+   },
+   "vampire": {
+    "winner": "imagination specialist",
+    "margin": 0.97,
+    "even": 56
+   },
+   "war": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.18,
+    "even": 51.13
+   },
+   "werewolf": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.38,
+    "even": 55.28
+   },
+   "western": {
+    "winner": "composure specialist",
+    "margin": 0.35,
+    "even": 53.2
+   },
+   "whodunit": {
+    "winner": "memory specialist",
+    "margin": 2.13,
+    "even": 54.93
+   },
+   "wuxia": {
+    "winner": "physical specialist",
+    "margin": 1.33,
+    "even": 54.03
+   },
+   "yakuza": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.25,
+    "even": 53.57
+   },
+   "zombie": {
+    "winner": "emotionalDepth specialist",
+    "margin": 2.05,
+    "even": 54.3
+   }
+  },
+  "readingSpread": {
+   "even": {
+    "n": 298,
+    "mean": 0.24,
+    "sd": 0.27,
+    "min": 0,
+    "max": 1.6,
+    "overOnePoint": 11
+   },
+   "emotionalDepth specialist": {
+    "n": 298,
+    "mean": 1.25,
+    "sd": 0.73,
+    "min": 0,
+    "max": 3.3,
+    "overOnePoint": 186
+   },
+   "listening specialist": {
+    "n": 298,
+    "mean": 0.54,
+    "sd": 0.41,
+    "min": 0,
+    "max": 2,
+    "overOnePoint": 47
+   },
+   "physical specialist": {
+    "n": 298,
+    "mean": 0.5,
+    "sd": 0.51,
+    "min": 0,
+    "max": 2.3,
+    "overOnePoint": 50
+   }
+  },
+  "bestReadingDiffersFeelingVsListening": 112
+ },
+ "mastery": {
+  "classSceneMasteredPartnerNeverCameReaderRoute": {
+   "evenings": 7,
+   "readerPart": 0.918,
+   "n": 67,
+   "own": {
+    "n": 67,
+    "mean": 100,
+    "sd": 0,
+    "min": 100,
+    "max": 100
+   },
+   "togetherPartnerAbsent": {
+    "n": 67,
+    "mean": 84.27,
+    "sd": 3.89,
+    "min": 80.4,
+    "max": 94.5
+   },
+   "togetherPartnerPresent": {
+    "n": 67,
+    "mean": 94.38,
+    "sd": 1.39,
+    "min": 93,
+    "max": 98
+   }
+  },
+  "briefs": {
+   "cases": 4560,
+   "at100": 4560,
+   "mastery": 4560,
+   "misses": []
+  },
+  "scene": {
+   "n": 67,
+   "at100": 67
+  },
+  "night": {
+   "n": 30,
+   "at100": 30
+  },
+  "casting": {
+   "n": 30,
+   "at100": 30
+  },
+  "coursework": {
+   "n": 13,
+   "at100": 13
+  },
+  "drawnAtMasteryNot100": 0,
+  "readerAgainstOwn": [
+   {
+    "reader": "A Recording",
+    "own": {
+     "n": 262,
+     "mean": 100,
+     "sd": 0,
+     "min": 100,
+     "max": 100
+    },
+    "together": {
+     "n": 262,
+     "mean": 93.05,
+     "sd": 2.05,
+     "min": 88,
+     "max": 97.6
+    }
+   },
+   {
+    "reader": "Unprepared, Distracted",
+    "own": {
+     "n": 262,
+     "mean": 100,
+     "sd": 0,
+     "min": 100,
+     "max": 100
+    },
+    "together": {
+     "n": 262,
+     "mean": 86.1,
+     "sd": 4.11,
+     "min": 75.9,
+     "max": 95.3
+    }
+   },
+   {
+    "reader": "Prepared, Attentive",
+    "own": {
+     "n": 262,
+     "mean": 100,
+     "sd": 0,
+     "min": 100,
+     "max": 100
+    },
+    "together": {
+     "n": 262,
+     "mean": 100,
+     "sd": 0,
+     "min": 100,
+     "max": 100
+    }
+   }
+  ],
+  "classSceneMasteredPartnerNeverCame": {
+   "n": 67,
+   "ownWithPartnerPart0": {
+    "n": 67,
+    "mean": 71.46,
+    "sd": 1.71,
+    "min": 68.1,
+    "max": 76.8
+   },
+   "ownWithPartnerPartHalf": {
+    "n": 67,
+    "mean": 85.72,
+    "sd": 0.86,
+    "min": 84,
+    "max": 88.4
+   }
+  }
+ },
+ "preparation": {
+  "developingBriefsByPrep": {
+   "0": {
+    "n": 298,
+    "mean": 18.59,
+    "sd": 0.79,
+    "min": 16.6,
+    "max": 20.3
+   },
+   "1": {
+    "n": 298,
+    "mean": 53.1,
+    "sd": 2.28,
+    "min": 47.5,
+    "max": 58.1
+   },
+   "0.25": {
+    "n": 298,
+    "mean": 30.17,
+    "sd": 1.34,
+    "min": 27,
+    "max": 33.1
+   },
+   "0.5": {
+    "n": 298,
+    "mean": 41.75,
+    "sd": 1.9,
+    "min": 37.2,
+    "max": 46
+   },
+   "0.75": {
+    "n": 298,
+    "mean": 51.43,
+    "sd": 2.22,
+    "min": 46,
+    "max": 56.4
+   }
+  },
+  "developingBriefsByGenreKnown": {
+   "0": {
+    "n": 298,
+    "mean": 49.18,
+    "sd": 1.77,
+    "min": 44.9,
+    "max": 53.3
+   },
+   "1": {
+    "n": 298,
+    "mean": 53.1,
+    "sd": 2.28,
+    "min": 47.5,
+    "max": 58.1
+   },
+   "0.1": {
+    "n": 298,
+    "mean": 49.67,
+    "sd": 1.8,
+    "min": 45.3,
+    "max": 53.8
+   },
+   "0.2": {
+    "n": 298,
+    "mean": 50.17,
+    "sd": 1.83,
+    "min": 45.8,
+    "max": 54.3
+   },
+   "0.3": {
+    "n": 298,
+    "mean": 50.66,
+    "sd": 1.87,
+    "min": 46.1,
+    "max": 54.9
+   },
+   "0.6": {
+    "n": 298,
+    "mean": 52.05,
+    "sd": 2.03,
+    "min": 47,
+    "max": 56.5
+   }
+  },
+  "masteredBriefsByGenreKnown": {
+   "0": {
+    "n": 298,
+    "mean": 91.87,
+    "sd": 0.63,
+    "min": 89.3,
+    "max": 93.2
+   },
+   "0.15": {
+    "n": 298,
+    "mean": 93.22,
+    "sd": 0.53,
+    "min": 91.1,
+    "max": 94.3
+   },
+   "0.3": {
+    "n": 298,
+    "mean": 94.58,
+    "sd": 0.43,
+    "min": 92.9,
+    "max": 95.5
+   }
+  },
+  "developingOtherByPrep": {
+   "scene": {
+    "0": {
+     "n": 67,
+     "mean": 20.35,
+     "sd": 0.41,
+     "min": 19.3,
+     "max": 20.9
+    },
+    "1": {
+     "n": 67,
+     "mean": 58.14,
+     "sd": 1.17,
+     "min": 55.1,
+     "max": 59.8
+    },
+    "0.5": {
+     "n": 67,
+     "mean": 40.91,
+     "sd": 0.85,
+     "min": 38.6,
+     "max": 42.1
+    }
+   },
+   "night": {
+    "0": {
+     "n": 30,
+     "mean": 16.07,
+     "sd": 0.16,
+     "min": 15.8,
+     "max": 16.5
+    },
+    "1": {
+     "n": 30,
+     "mean": 45.9,
+     "sd": 0.46,
+     "min": 45,
+     "max": 47.1
+    },
+    "0.5": {
+     "n": 30,
+     "mean": 32.65,
+     "sd": 0.33,
+     "min": 32,
+     "max": 33.5
+    }
+   },
+   "coursework": {
+    "0": {
+     "n": 13,
+     "mean": 21.04,
+     "sd": 1.39,
+     "min": 19.1,
+     "max": 24.9
+    },
+    "1": {
+     "n": 13,
+     "mean": 58.72,
+     "sd": 3.41,
+     "min": 50.1,
+     "max": 61.6
+    },
+    "0.5": {
+     "n": 13,
+     "mean": 41.99,
+     "sd": 2.29,
+     "min": 36.9,
+     "max": 44.8
+    }
+   }
+  },
+  "genreComplete": 0.9
+ },
+ "growth": {
+  "constants": {
+   "sessionGain": 0.42,
+   "exponent": 1.5,
+   "deliberate": 1,
+   "floor": 0.25,
+   "repeat": 0.5,
+   "disciplineLift": 0.1,
+   "historyKept": 400
+  },
+  "perHourDeliberate": {
+   "10": 0.378,
+   "30": 0.294,
+   "50": 0.21,
+   "70": 0.126,
+   "80": 0.105,
+   "90": 0.105,
+   "95": 0.105,
+   "99": 0.105
+  },
+  "perHourOrdinaryReach76": {
+   "30": 0.198,
+   "50": 0.084,
+   "60": 0.041,
+   "70": 0.009,
+   "75": 0.001
+  },
+  "hoursDeliberateByBand": {
+   "20-30": 32,
+   "30-40": 37,
+   "40-50": 44,
+   "50-60": 54,
+   "60-70": 69,
+   "70-80": 91,
+   "80-90": 96,
+   "90-95": 48,
+   "95-100": 48
+  },
+  "hoursOrdinaryToReach76": {
+   "30-50": 154,
+   "50-70": 669,
+   "70-75": 1866
+  },
+  "sameExerciseFourHoursAsSessions": 1.875,
+  "fourExercisesAsSessions": 4,
+  "tierBands": [
+   45,
+   75
+  ],
+  "genreStudySessionsTo": {
+   "30": 5,
+   "60": 11,
+   "90": 28
+  },
+  "genreTapesTo30": 4
+ },
+ "draws": {
+  "beginner 30 against 40": {
+   "briefs": 100,
+   "draws": 60,
+   "sdOfTake": {
+    "n": 100,
+    "mean": 0.81,
+    "sd": 0.09,
+    "min": 0.6,
+    "max": 1.11
+   },
+   "rangeOfTake": {
+    "n": 100,
+    "mean": 3.74,
+    "sd": 0.5,
+    "min": 2.6,
+    "max": 5
+   },
+   "expectedGap": {
+    "n": 100,
+    "mean": 9.78,
+    "sd": 0.12,
+    "min": 9.5,
+    "max": 10
+   },
+   "betterLosesShare": 0
+  },
+  "developing 50 against 60": {
+   "briefs": 100,
+   "draws": 60,
+   "sdOfTake": {
+    "n": 100,
+    "mean": 0.56,
+    "sd": 0.06,
+    "min": 0.42,
+    "max": 0.77
+   },
+   "rangeOfTake": {
+    "n": 100,
+    "mean": 2.58,
+    "sd": 0.35,
+    "min": 1.8,
+    "max": 3.4
+   },
+   "expectedGap": {
+    "n": 100,
+    "mean": 9.38,
+    "sd": 0.25,
+    "min": 8.9,
+    "max": 9.9
+   },
+   "betterLosesShare": 0
+  },
+  "advanced 70 against 80": {
+   "briefs": 100,
+   "draws": 60,
+   "sdOfTake": {
+    "n": 100,
+    "mean": 0.33,
+    "sd": 0.04,
+    "min": 0.25,
+    "max": 0.45
+   },
+   "rangeOfTake": {
+    "n": 100,
+    "mean": 1.49,
+    "sd": 0.21,
+    "min": 1.1,
+    "max": 2
+   },
+   "expectedGap": {
+    "n": 100,
+    "mean": 9.22,
+    "sd": 0.5,
+    "min": 8.2,
+    "max": 10.4
+   },
+   "betterLosesShare": 0
+  }
+ },
+ "feedback": {
+  "cases": 447,
+  "firstLimitKind": {
+   "ability": 443,
+   "preparation": 4
+  },
+  "namedTrainedPlus20": {
+   "n": 447,
+   "mean": 2.43,
+   "sd": 0.86,
+   "min": 1.1,
+   "max": 6.4
+  },
+  "meanReadAbilityPlus20": {
+   "n": 447,
+   "mean": 1.14,
+   "sd": 0.13,
+   "min": 0.88,
+   "max": 1.56
+  },
+  "unreadPlus20": {
+   "n": 195,
+   "mean": 0,
+   "sd": 0,
+   "min": 0,
+   "max": 0
+  },
+  "namedWasTheLargestGain": 308
+ },
+ "condition": {
+  "masteredBriefs": {
+   "sufficient": {
+    "n": 298,
+    "mean": 100,
+    "sd": 0,
+    "min": 100,
+    "max": 100
+   },
+   "tired30": {
+    "n": 298,
+    "mean": 81.51,
+    "sd": 0.51,
+    "min": 80.5,
+    "max": 83.6
+   },
+   "ill": {
+    "n": 298,
+    "mean": 92.14,
+    "sd": 1.61,
+    "min": 87.5,
+    "max": 94.9
+   },
+   "injured": {
+    "n": 298,
+    "mean": 91.89,
+    "sd": 12.99,
+    "min": 64.9,
+    "max": 100
+   }
+  }
+ },
+ "staminaPlus10": {
+  "brief": {
+   "n": 298,
+   "mean": 0.53,
+   "sd": 0.29,
+   "min": 0.05,
+   "max": 1.2
+  },
+  "scene": {
+   "n": 67,
+   "mean": 0.54,
+   "sd": 0.26,
+   "min": 0.1,
+   "max": 1.2
+  },
+  "night": {
+   "n": 30,
+   "mean": 0.33,
+   "sd": 0.11,
+   "min": 0.1,
+   "max": 0.5
+  },
+  "casting": {
+   "n": 30,
+   "mean": 0,
+   "sd": 0,
+   "min": 0,
+   "max": 0
+  },
+  "coursework": {
+   "n": 13,
+   "mean": 0.43,
+   "sd": 0.51,
+   "min": 0,
+   "max": 1.4
+  }
+ },
+ "h4Account": {
+  "note": "At full precision. A specialist is ahead where its result is more than 0.05 over the even actor’s. Own work: the pieces where the ability’s +10 effect is the largest of the twelve.",
+  "aheadByShare": [
+   {
+    "from": 0,
+    "to": 0.1,
+    "pairs": 3462,
+    "ahead": 0,
+    "share": 0
+   },
+   {
+    "from": 0.1,
+    "to": 0.125,
+    "pairs": 836,
+    "ahead": 232,
+    "share": 0.278
+   },
+   {
+    "from": 0.125,
+    "to": 0.15,
+    "pairs": 417,
+    "ahead": 412,
+    "share": 0.988
+   },
+   {
+    "from": 0.15,
+    "to": 0.2,
+    "pairs": 399,
+    "ahead": 399,
+    "share": 1
+   },
+   {
+    "from": 0.2,
+    "to": 0.3,
+    "pairs": 128,
+    "ahead": 128,
+    "share": 1
+   },
+   {
+    "from": 0.3,
+    "to": 1.01,
+    "pairs": 14,
+    "ahead": 14,
+    "share": 1
+   }
+  ],
+  "abilities": {
+   "emotionalDepth": {
+    "h4Set": {
+     "n": 233,
+     "shareMedian": 0.159,
+     "shareP90": 0.244,
+     "underATenth": 3,
+     "kinds": {
+      "brief": 185,
+      "scene": 29,
+      "night": 8,
+      "casting": 8,
+      "coursework": 3
+     }
+    },
+    "ownWork": {
+     "n": 119,
+     "ahead": 119,
+     "kinds": {
+      "brief": 93,
+      "scene": 14,
+      "night": 6,
+      "casting": 4,
+      "coursework": 2
+     },
+     "pieces": [
+      "brief:brief-adventure share 0.151 specialist 0.87",
+      "brief:brief-anthology share 0.237 specialist 2.53",
+      "brief:brief-apocalyptic share 0.272 specialist 3.52",
+      "brief:brief-art_house share 0.172 specialist 1.23",
+      "brief:brief-black_comedy share 0.196 specialist 1.76",
+      "brief:brief-blaxploitation share 0.165 specialist 1.16",
+      "brief:brief-body_horror share 0.247 specialist 2.98",
+      "brief:brief-chase share 0.196 specialist 1.86",
+      "brief:brief-childrens share 0.161 specialist 1.03",
+      "brief:brief-christmas share 0.222 specialist 2.36",
+      "brief:brief-coming_of_age share 0.241 specialist 2.67",
+      "brief:brief-concert_film share 0.176 specialist 1.3",
+      "brief:brief-conspiracy_thriller share 0.194 specialist 1.69",
+      "brief:brief-cosmic_horror share 0.253 specialist 3.14",
+      "brief:brief-costume_drama share 0.143 specialist 0.68",
+      "brief:brief-creature_feature share 0.27 specialist 3.54",
+      "brief:brief-crime share 0.178 specialist 1.28",
+      "brief:brief-dark_fantasy share 0.169 specialist 1.33",
+      "brief:brief-disaster share 0.272 specialist 3.46",
+      "brief:brief-domestic_drama share 0.319 specialist 4.42",
+      "brief:brief-drama share 0.293 specialist 3.88",
+      "brief:brief-eco_horror share 0.281 specialist 3.64",
+      "brief:brief-erotic_thriller share 0.166 specialist 1.19",
+      "brief:brief-exploitation share 0.186 specialist 1.67",
+      "brief:brief-folk_horror share 0.179 specialist 1.34",
+      "brief:brief-found_footage share 0.244 specialist 2.9",
+      "brief:brief-gangster share 0.186 specialist 1.6",
+      "brief:brief-giallo share 0.255 specialist 2.94",
+      "brief:brief-gothic_horror share 0.196 specialist 1.74",
+      "brief:brief-grindhouse share 0.236 specialist 2.75",
+      "brief:brief-heist share 0.206 specialist 1.99",
+      "brief:brief-historical_drama share 0.256 specialist 2.98",
+      "brief:brief-historical_fiction share 0.191 specialist 1.65",
+      "brief:brief-holiday share 0.197 specialist 1.79",
+      "brief:brief-horror share 0.184 specialist 1.6",
+      "brief:brief-horror_comedy share 0.19 specialist 1.71",
+      "brief:brief-kitchen_sink share 0.159 specialist 1.05",
+      "brief:brief-legal_drama share 0.189 specialist 1.62",
+      "brief:brief-melodrama share 0.179 specialist 1.55",
+      "brief:brief-military share 0.282 specialist 3.56",
+      "brief:brief-monster_movie share 0.207 specialist 2.23",
+      "brief:brief-neo_noir share 0.207 specialist 2.02",
+      "brief:brief-neorealism share 0.226 specialist 2.56",
+      "brief:brief-occult share 0.221 specialist 2.35",
+      "brief:brief-period_drama share 0.138 specialist 0.54",
+      "brief:brief-police_procedural share 0.234 specialist 2.59",
+      "brief:brief-political_drama share 0.153 specialist 0.88",
+      "brief:brief-political_thriller share 0.25 specialist 2.76",
+      "brief:brief-post_apocalyptic share 0.264 specialist 3.31",
+      "brief:brief-psychological_horror share 0.261 specialist 3.41",
+      "brief:brief-psychological_thriller share 0.239 specialist 2.62",
+      "brief:brief-queer_cinema share 0.175 specialist 1.27",
+      "brief:brief-revenge share 0.268 specialist 3.39",
+      "brief:brief-romance share 0.195 specialist 1.76",
+      "brief:brief-romantic_drama share 0.162 specialist 1.04",
+      "brief:brief-sea_adventure share 0.168 specialist 1.32",
+      "brief:brief-slasher share 0.233 specialist 2.69",
+      "brief:brief-social_realism share 0.217 specialist 2.2",
+      "brief:brief-space_opera share 0.162 specialist 1.06",
+      "brief:brief-spaghetti_western share 0.171 specialist 1.22",
+      "brief:brief-splatter share 0.235 specialist 2.63",
+      "brief:brief-sports share 0.245 specialist 2.93",
+      "brief:brief-spy share 0.17 specialist 1.11",
+      "brief:brief-survival share 0.231 specialist 2.71",
+      "brief:brief-sword_and_sandal share 0.147 specialist 0.71",
+      "brief:brief-techno_thriller share 0.22 specialist 2.29",
+      "brief:brief-teen share 0.277 specialist 3.45",
+      "brief:brief-thriller share 0.203 specialist 1.89",
+      "brief:brief-time_travel share 0.209 specialist 2.03",
+      "brief:brief-tokusatsu share 0.144 specialist 0.64",
+      "brief:brief-tragedy share 0.261 specialist 3.28",
+      "brief:brief-tragicomedy share 0.163 specialist 1.11",
+      "brief:brief-true_crime share 0.184 specialist 1.58",
+      "brief:brief-war share 0.177 specialist 1.55",
+      "brief:brief-werewolf share 0.206 specialist 2.14",
+      "brief:brief-western share 0.142 specialist 0.65",
+      "brief:brief-yakuza share 0.249 specialist 2.81",
+      "brief:brief-zombie share 0.228 specialist 2.64",
+      "brief:brief-childrens-2 share 0.148 specialist 0.71",
+      "brief:brief-coming_of_age-2 share 0.177 specialist 1.39",
+      "brief:brief-drama-2 share 0.253 specialist 3.26",
+      "brief:brief-eco_horror-2 share 0.147 specialist 0.81",
+      "brief:brief-found_footage-2 share 0.191 specialist 1.72",
+      "brief:brief-historical_fiction-2 share 0.211 specialist 2.13",
+      "brief:brief-monster_movie-2 share 0.163 specialist 1.3",
+      "brief:brief-police_procedural-2 share 0.146 specialist 0.77",
+      "brief:brief-post_apocalyptic-2 share 0.145 specialist 0.71",
+      "brief:brief-psychological_horror-2 share 0.176 specialist 1.5",
+      "brief:brief-road_movie-2 share 0.184 specialist 1.41",
+      "brief:brief-splatter-2 share 0.146 specialist 0.77",
+      "brief:brief-sports-2 share 0.194 specialist 2.01",
+      "brief:brief-survival-2 share 0.164 specialist 1.33",
+      "brief:brief-zombie-2 share 0.182 specialist 1.62",
+      "scene:dollhouse-3 share 0.15 specialist 0.69",
+      "scene:trifles share 0.169 specialist 1.06",
+      "scene:hamlet-3-1 share 0.12 specialist 0.09",
+      "scene:antigone-441 share 0.164 specialist 0.98",
+      "scene:electra-328 share 0.164 specialist 0.98",
+      "scene:medea-446 share 0.15 specialist 0.7",
+      "scene:faustus-3 share 0.133 specialist 0.36",
+      "scene:ghosts-1 share 0.168 specialist 1",
+      "scene:riders-sea share 0.162 specialist 0.93",
+      "scene:orig-bed-fourteen share 0.186 specialist 1.3",
+      "scene:orig-office-hours share 0.2 specialist 1.55",
+      "scene:enemy-2 share 0.152 specialist 0.74",
+      "scene:strife-1 share 0.131 specialist 0.34",
+      "scene:justice-2 share 0.17 specialist 1.06",
+      "night:Hedda Gabler share 0.138 specialist 0.66",
+      "night:Ghosts share 0.128 specialist 0.4",
+      "night:An Enemy Of The People share 0.143 specialist 0.8",
+      "night:Mrs Warren’s Profession share 0.156 specialist 1.12",
+      "night:Miss Julie share 0.121 specialist 0.22",
+      "night:Trifles share 0.173 specialist 1.49",
+      "casting:Ghosts share 0.148 specialist 0.75",
+      "casting:An Enemy Of The People share 0.156 specialist 1.04",
+      "casting:Mrs Warren’s Profession share 0.167 specialist 1.31",
+      "casting:Trifles share 0.183 specialist 1.64",
+      "coursework:self-tape share 0.344 specialist 4.86",
+      "coursework:audition-pair share 0.306 specialist 3.7"
+     ]
+    },
+    "shareAQuarterOrMore": 19
+   },
+   "presence": {
+    "h4Set": {
+     "n": 256,
+     "shareMedian": 0.075,
+     "shareP90": 0.11,
+     "underATenth": 212,
+     "kinds": {
+      "brief": 126,
+      "scene": 67,
+      "night": 30,
+      "casting": 30,
+      "coursework": 3
+     }
+    },
+    "ownWork": {
+     "n": 5,
+     "ahead": 4,
+     "kinds": {
+      "scene": 3,
+      "night": 1,
+      "coursework": 1
+     },
+     "pieces": [
+      "scene:oedipus-1 share 0.162 specialist 0.91",
+      "scene:enemy-4 share 0.154 specialist 0.76",
+      "scene:strife-2-2 share 0.164 specialist 0.94",
+      "night:Major Barbara share 0.107 specialist -0.13",
+      "coursework:clown-turn share 0.316 specialist 3.83"
+     ]
+    },
+    "shareAQuarterOrMore": 1
+   },
+   "listening": {
+    "h4Set": {
+     "n": 241,
+     "shareMedian": 0.12,
+     "shareP90": 0.167,
+     "underATenth": 39,
+     "kinds": {
+      "brief": 121,
+      "scene": 59,
+      "night": 27,
+      "casting": 30,
+      "coursework": 4
+     }
+    },
+    "ownWork": {
+     "n": 45,
+     "ahead": 44,
+     "kinds": {
+      "brief": 7,
+      "scene": 17,
+      "night": 2,
+      "casting": 16,
+      "coursework": 3
+     },
+     "pieces": [
+      "brief:brief-hangout share 0.184 specialist 1.51",
+      "brief:brief-hood_film share 0.15 specialist 0.74",
+      "brief:brief-prison_film share 0.209 specialist 1.97",
+      "brief:brief-road_movie share 0.165 specialist 1.13",
+      "brief:brief-rockumentary share 0.16 specialist 0.89",
+      "brief:brief-slice_of_life share 0.163 specialist 0.99",
+      "brief:brief-romance-2 share 0.116 specialist 0.02",
+      "scene:vanya-2 share 0.157 specialist 0.78",
+      "scene:cherry-orchard-4 share 0.136 specialist 0.39",
+      "scene:pygmalion-4 share 0.129 specialist 0.29",
+      "scene:playboy-3 share 0.143 specialist 0.6",
+      "scene:machinal-2 share 0.142 specialist 0.52",
+      "scene:macbeth-1-7 share 0.148 specialist 0.65",
+      "scene:twelfth-1-5 share 0.143 specialist 0.55",
+      "scene:measure-2-4 share 0.121 specialist 0.11",
+      "scene:oedipus-300 share 0.143 specialist 0.56",
+      "scene:hedda-2 share 0.179 specialist 1.2",
+      "scene:suppressed-2 share 0.194 specialist 1.47",
+      "scene:creditors share 0.145 specialist 0.58",
+      "scene:anna-christie-1 share 0.143 specialist 0.46",
+      "scene:malfi-1 share 0.126 specialist 0.23",
+      "scene:masterbuilder-1 share 0.166 specialist 0.95",
+      "scene:orig-what-we-keep share 0.139 specialist 0.45",
+      "scene:orig-two-time-zones share 0.166 specialist 0.95",
+      "night:The Wild Duck share 0.121 specialist 0.21",
+      "night:Uncle Vanya share 0.119 specialist 0.18",
+      "casting:Hedda Gabler share 0.16 specialist 0.7",
+      "casting:Three Sisters share 0.172 specialist 0.65",
+      "casting:The Cherry Orchard share 0.154 specialist 0.38",
+      "casting:Major Barbara share 0.14 specialist 0.28",
+      "casting:The Wild Duck share 0.175 specialist 0.9",
+      "casting:Twelfth Night share 0.138 specialist 0.05",
+      "casting:Measure For Measure share 0.145 specialist 0.3",
+      "casting:A Midsummer Night’s Dream share 0.146 specialist 0.19",
+      "casting:As You Like It share 0.169 specialist 0.77",
+      "casting:Much Ado About Nothing share 0.157 specialist 0.56",
+      "casting:A Doll’s House share 0.152 specialist 0.3",
+      "casting:Uncle Vanya share 0.174 specialist 0.87",
+      "casting:Tartuffe share 0.167 specialist 0.64",
+      "casting:The Playboy Of The Western World share 0.146 specialist 0.22",
+      "casting:Miss Julie share 0.141 specialist 0.18",
+      "casting:A Marriage Proposal share 0.17 specialist 0.7",
+      "coursework:play-game share 0.395 specialist 5.48",
+      "coursework:fight-sequence share 0.295 specialist 3.11",
+      "coursework:intimacy-practice share 0.295 specialist 3.11"
+     ]
+    },
+    "shareAQuarterOrMore": 4
+   },
+   "imagination": {
+    "h4Set": {
+     "n": 230,
+     "shareMedian": 0.112,
+     "shareP90": 0.178,
+     "underATenth": 64,
+     "kinds": {
+      "brief": 143,
+      "scene": 37,
+      "night": 20,
+      "casting": 20,
+      "coursework": 10
+     }
+    },
+    "ownWork": {
+     "n": 32,
+     "ahead": 32,
+     "kinds": {
+      "brief": 24,
+      "scene": 4,
+      "night": 3,
+      "casting": 1
+     },
+     "pieces": [
+      "brief:brief-alternate_history share 0.204 specialist 1.96",
+      "brief:brief-avant_garde share 0.191 specialist 1.71",
+      "brief:brief-cyberpunk share 0.246 specialist 2.86",
+      "brief:brief-fairy_tale share 0.255 specialist 2.96",
+      "brief:brief-fantasy share 0.202 specialist 1.98",
+      "brief:brief-kaiju share 0.157 specialist 1",
+      "brief:brief-magical_realism share 0.205 specialist 2.09",
+      "brief:brief-satire share 0.167 specialist 1.05",
+      "brief:brief-science_fantasy share 0.205 specialist 2.08",
+      "brief:brief-science_fiction share 0.197 specialist 1.79",
+      "brief:brief-steampunk share 0.251 specialist 3.1",
+      "brief:brief-supernatural share 0.203 specialist 2.06",
+      "brief:brief-surrealist share 0.233 specialist 2.66",
+      "brief:brief-sword_and_sorcery share 0.158 specialist 1.09",
+      "brief:brief-vampire share 0.185 specialist 1.57",
+      "brief:brief-anthology-2 share 0.178 specialist 1.45",
+      "brief:brief-cyberpunk-2 share 0.182 specialist 1.63",
+      "brief:brief-folk_horror-2 share 0.13 specialist 0.39",
+      "brief:brief-kaiju-2 share 0.243 specialist 2.84",
+      "brief:brief-science_fantasy-2 share 0.16 specialist 1.16",
+      "brief:brief-superhero-2 share 0.162 specialist 1.03",
+      "brief:brief-supernatural-2 share 0.19 specialist 1.94",
+      "brief:brief-vampire-2 share 0.164 specialist 1.15",
+      "brief:brief-werewolf-2 share 0.151 specialist 0.88",
+      "scene:romeo-2-2 share 0.172 specialist 1.23",
+      "scene:caesar-2-1 share 0.144 specialist 0.6",
+      "scene:lear-4-7 share 0.159 specialist 0.87",
+      "scene:twelfth-2-4 share 0.159 specialist 0.87",
+      "night:Blood Wedding share 0.115 specialist 0.11",
+      "night:As You Like It share 0.136 specialist 0.66",
+      "night:Salomé share 0.136 specialist 0.67",
+      "casting:Blood Wedding share 0.128 specialist 0.34"
+     ]
+    },
+    "shareAQuarterOrMore": 4
+   },
+   "focus": {
+    "h4Set": {
+     "n": 237,
+     "shareMedian": 0.115,
+     "shareP90": 0.191,
+     "underATenth": 71,
+     "kinds": {
+      "brief": 188,
+      "scene": 23,
+      "night": 11,
+      "casting": 10,
+      "coursework": 5
+     }
+    },
+    "ownWork": {
+     "n": 37,
+     "ahead": 37,
+     "kinds": {
+      "brief": 22,
+      "scene": 9,
+      "night": 3,
+      "casting": 1,
+      "coursework": 2
+     },
+     "pieces": [
+      "brief:brief-absurdist share 0.2 specialist 1.89",
+      "brief:brief-action_comedy share 0.219 specialist 2.55",
+      "brief:brief-anime share 0.248 specialist 3.13",
+      "brief:brief-buddy_comedy share 0.164 specialist 1.05",
+      "brief:brief-buddy_cop share 0.172 specialist 1.21",
+      "brief:brief-caper share 0.202 specialist 2",
+      "brief:brief-comedy share 0.245 specialist 2.83",
+      "brief:brief-detective share 0.191 specialist 1.68",
+      "brief:brief-family share 0.161 specialist 0.98",
+      "brief:brief-mystery share 0.22 specialist 2.18",
+      "brief:brief-parody share 0.197 specialist 1.99",
+      "brief:brief-picaresque share 0.17 specialist 1.26",
+      "brief:brief-romantic_comedy share 0.22 specialist 2.41",
+      "brief:brief-screwball_comedy share 0.186 specialist 1.74",
+      "brief:brief-stoner_comedy share 0.193 specialist 1.67",
+      "brief:brief-buddy_cop-2 share 0.161 specialist 1.25",
+      "brief:brief-detective-2 share 0.196 specialist 1.92",
+      "brief:brief-giallo-2 share 0.156 specialist 1.13",
+      "brief:brief-holiday-2 share 0.168 specialist 1.18",
+      "brief:brief-parody-2 share 0.22 specialist 2.45",
+      "brief:brief-screwball_comedy-2 share 0.172 specialist 1.53",
+      "brief:brief-time_travel-2 share 0.17 specialist 1.37",
+      "scene:earnest-2 share 0.213 specialist 1.98",
+      "scene:shrew-2-1 share 0.157 specialist 0.98",
+      "scene:scandal-2-1 share 0.206 specialist 1.83",
+      "scene:arms-1 share 0.156 specialist 0.86",
+      "scene:proposal share 0.16 specialist 1.07",
+      "scene:windermere-1 share 0.175 specialist 1.12",
+      "scene:asyoulike-3-2 share 0.194 specialist 1.69",
+      "scene:wayoftheworld-4 share 0.206 specialist 1.83",
+      "scene:stoops-2 share 0.203 specialist 1.77",
+      "night:The Importance Of Being Earnest share 0.17 specialist 1.49",
+      "night:Tartuffe share 0.142 specialist 0.81",
+      "night:A Marriage Proposal share 0.155 specialist 1.08",
+      "casting:The Importance Of Being Earnest share 0.179 specialist 1.76",
+      "coursework:table-work share 0.472 specialist 6.7",
+      "coursework:context-presentation share 0.472 specialist 6.7"
+     ]
+    },
+    "shareAQuarterOrMore": 2
+   },
+   "memory": {
+    "h4Set": {
+     "n": 233,
+     "shareMedian": 0.115,
+     "shareP90": 0.173,
+     "underATenth": 65,
+     "kinds": {
+      "brief": 171,
+      "scene": 10,
+      "night": 24,
+      "casting": 27,
+      "coursework": 1
+     }
+    },
+    "ownWork": {
+     "n": 44,
+     "ahead": 43,
+     "kinds": {
+      "brief": 40,
+      "night": 3,
+      "casting": 1
+     },
+     "pieces": [
+      "brief:brief-courtroom_drama share 0.179 specialist 1.47",
+      "brief:brief-medical_drama share 0.181 specialist 1.59",
+      "brief:brief-whodunit share 0.246 specialist 2.89",
+      "brief:brief-alternate_history-2 share 0.169 specialist 1.55",
+      "brief:brief-backstage_musical-2 share 0.171 specialist 1.67",
+      "brief:brief-biographical-2 share 0.172 specialist 1.62",
+      "brief:brief-body_horror-2 share 0.145 specialist 0.93",
+      "brief:brief-caper-2 share 0.196 specialist 1.98",
+      "brief:brief-chanbara-2 share 0.164 specialist 1.45",
+      "brief:brief-comedy-2 share 0.185 specialist 1.87",
+      "brief:brief-cosmic_horror-2 share 0.171 specialist 1.54",
+      "brief:brief-crime-2 share 0.176 specialist 1.53",
+      "brief:brief-dance-2 share 0.204 specialist 2.23",
+      "brief:brief-docudrama-2 share 0.152 specialist 1.09",
+      "brief:brief-domestic_drama-2 share 0.159 specialist 1.07",
+      "brief:brief-epic-2 share 0.188 specialist 2.02",
+      "brief:brief-experimental-2 share 0.204 specialist 2.24",
+      "brief:brief-fantasy-2 share 0.16 specialist 1.23",
+      "brief:brief-farce-3 share 0.178 specialist 1.85",
+      "brief:brief-horror_comedy-2 share 0.166 specialist 1.52",
+      "brief:brief-isekai-2 share 0.206 specialist 2.41",
+      "brief:brief-jidaigeki-2 share 0.193 specialist 2.12",
+      "brief:brief-jukebox_musical-3 share 0.173 specialist 1.68",
+      "brief:brief-legal_drama-2 share 0.23 specialist 2.78",
+      "brief:brief-martial_arts-2 share 0.154 specialist 1.18",
+      "brief:brief-melodrama-2 share 0.154 specialist 1.17",
+      "brief:brief-musical-2 share 0.222 specialist 2.91",
+      "brief:brief-mystery-2 share 0.18 specialist 1.78",
+      "brief:brief-nature_documentary-2 share 0.227 specialist 2.69",
+      "brief:brief-new_wave-3 share 0.156 specialist 1.15",
+      "brief:brief-occult-2 share 0.156 specialist 1.13",
+      "brief:brief-picaresque-2 share 0.207 specialist 2.43",
+      "brief:brief-political_drama-2 share 0.18 specialist 1.85",
+      "brief:brief-revenge-2 share 0.169 specialist 1.49",
+      "brief:brief-space_opera-2 share 0.187 specialist 2.02",
+      "brief:brief-surrealist-2 share 0.185 specialist 1.85",
+      "brief:brief-sword_and_sorcery-3 share 0.152 specialist 1.13",
+      "brief:brief-tragedy-2 share 0.17 specialist 1.57",
+      "brief:brief-tragicomedy-3 share 0.183 specialist 1.91",
+      "brief:brief-whodunit-2 share 0.257 specialist 3.69",
+      "night:A Midsummer Night’s Dream share 0.131 specialist 0.52",
+      "night:Macbeth share 0.115 specialist 0.09",
+      "night:Much Ado About Nothing share 0.111 specialist -0.03",
+      "casting:Macbeth share 0.127 specialist 0.37"
+     ]
+    },
+    "shareAQuarterOrMore": 1
+   },
+   "adaptability": {
+    "h4Set": {
+     "n": 237,
+     "shareMedian": 0.111,
+     "shareP90": 0.165,
+     "underATenth": 76,
+     "kinds": {
+      "brief": 147,
+      "scene": 42,
+      "night": 23,
+      "casting": 23,
+      "coursework": 2
+     }
+    },
+    "ownWork": {
+     "n": 22,
+     "ahead": 22,
+     "kinds": {
+      "brief": 19,
+      "scene": 3
+     },
+     "pieces": [
+      "brief:brief-docufiction share 0.282 specialist 3.53",
+      "brief:brief-experimental share 0.179 specialist 1.4",
+      "brief:brief-mockumentary share 0.279 specialist 3.62",
+      "brief:brief-mumblecore share 0.211 specialist 2",
+      "brief:brief-new_wave share 0.211 specialist 2.09",
+      "brief:brief-absurdist-2 share 0.225 specialist 2.6",
+      "brief:brief-black_comedy-2 share 0.172 specialist 1.28",
+      "brief:brief-christmas-3 share 0.134 specialist 0.53",
+      "brief:brief-docufiction-2 share 0.253 specialist 2.96",
+      "brief:brief-documentary-2 share 0.141 specialist 0.64",
+      "brief:brief-family-2 share 0.148 specialist 0.79",
+      "brief:brief-hangout-2 share 0.246 specialist 2.82",
+      "brief:brief-hood_film-2 share 0.16 specialist 1.1",
+      "brief:brief-mockumentary-2 share 0.161 specialist 1.21",
+      "brief:brief-mumblecore-2 share 0.189 specialist 1.49",
+      "brief:brief-romantic_comedy-2 share 0.241 specialist 2.62",
+      "brief:brief-slice_of_life-2 share 0.158 specialist 0.89",
+      "brief:brief-stoner_comedy-2 share 0.177 specialist 1.58",
+      "brief:brief-teen-2 share 0.137 specialist 0.53",
+      "scene:orig-night-desk share 0.172 specialist 1.05",
+      "scene:orig-runway share 0.172 specialist 1.05",
+      "scene:orig-hundred-questions share 0.172 specialist 1.05"
+     ]
+    },
+    "shareAQuarterOrMore": 3
+   },
+   "composure": {
+    "h4Set": {
+     "n": 265,
+     "shareMedian": 0.118,
+     "shareP90": 0.179,
+     "underATenth": 54,
+     "kinds": {
+      "brief": 186,
+      "scene": 27,
+      "night": 25,
+      "casting": 25,
+      "coursework": 2
+     }
+    },
+    "ownWork": {
+     "n": 46,
+     "ahead": 45,
+     "kinds": {
+      "brief": 43,
+      "night": 1,
+      "casting": 2
+     },
+     "pieces": [
+      "brief:brief-biker share 0.201 specialist 1.88",
+      "brief:brief-dystopian share 0.231 specialist 2.89",
+      "brief:brief-espionage share 0.293 specialist 4.28",
+      "brief:brief-film_noir share 0.114 specialist 0",
+      "brief:brief-nordic_noir share 0.214 specialist 2.25",
+      "brief:brief-adventure-2 share 0.122 specialist 0.24",
+      "brief:brief-apocalyptic-2 share 0.234 specialist 2.85",
+      "brief:brief-art_house-2 share 0.211 specialist 2.21",
+      "brief:brief-biker-2 share 0.199 specialist 1.85",
+      "brief:brief-blaxploitation-2 share 0.168 specialist 1.22",
+      "brief:brief-conspiracy_thriller-3 share 0.196 specialist 2.21",
+      "brief:brief-costume_drama-2 share 0.145 specialist 0.72",
+      "brief:brief-courtroom_drama-2 share 0.223 specialist 2.62",
+      "brief:brief-creature_feature-2 share 0.146 specialist 0.89",
+      "brief:brief-dystopian-2 share 0.165 specialist 1.39",
+      "brief:brief-erotic_thriller-2 share 0.196 specialist 2.14",
+      "brief:brief-espionage-2 share 0.208 specialist 2.24",
+      "brief:brief-gangster-2 share 0.265 specialist 3.44",
+      "brief:brief-heist-2 share 0.169 specialist 1.49",
+      "brief:brief-historical_drama-2 share 0.183 specialist 1.69",
+      "brief:brief-kitchen_sink-2 share 0.215 specialist 2.58",
+      "brief:brief-magical_realism-2 share 0.181 specialist 1.6",
+      "brief:brief-medical_drama-2 share 0.139 specialist 0.64",
+      "brief:brief-military-2 share 0.125 specialist 0.28",
+      "brief:brief-neo_noir-2 share 0.176 specialist 1.55",
+      "brief:brief-neorealism-2 share 0.174 specialist 1.61",
+      "brief:brief-nordic_noir-2 share 0.2 specialist 2.02",
+      "brief:brief-period_drama-2 share 0.225 specialist 2.56",
+      "brief:brief-political_thriller-2 share 0.2 specialist 2.23",
+      "brief:brief-prison_film-2 share 0.137 specialist 0.59",
+      "brief:brief-psychological_thriller-3 share 0.184 specialist 1.88",
+      "brief:brief-queer_cinema-2 share 0.172 specialist 1.33",
+      "brief:brief-romantic_drama-2 share 0.166 specialist 1.29",
+      "brief:brief-science_fiction-2 share 0.192 specialist 1.94",
+      "brief:brief-slasher-2 share 0.155 specialist 1.14",
+      "brief:brief-social_realism-2 share 0.205 specialist 1.93",
+      "brief:brief-spaghetti_western-2 share 0.222 specialist 2.74",
+      "brief:brief-spy-2 share 0.175 specialist 1.48",
+      "brief:brief-steampunk-2 share 0.166 specialist 1.27",
+      "brief:brief-techno_thriller-2 share 0.162 specialist 1.27",
+      "brief:brief-thriller-2 share 0.178 specialist 1.73",
+      "brief:brief-true_crime-2 share 0.2 specialist 2.22",
+      "brief:brief-western-2 share 0.139 specialist 0.64",
+      "night:The Cherry Orchard share 0.119 specialist 0.17",
+      "casting:Spring Awakening share 0.154 specialist 0.77",
+      "casting:The Winter’s Tale share 0.136 specialist 0.42"
+     ]
+    },
+    "shareAQuarterOrMore": 2
+   },
+   "vocal": {
+    "h4Set": {
+     "n": 178,
+     "shareMedian": 0.115,
+     "shareP90": 0.184,
+     "underATenth": 72,
+     "kinds": {
+      "brief": 110,
+      "scene": 30,
+      "night": 16,
+      "casting": 19,
+      "coursework": 3
+     }
+    },
+    "ownWork": {
+     "n": 28,
+     "ahead": 27,
+     "kinds": {
+      "brief": 20,
+      "scene": 1,
+      "night": 2,
+      "casting": 2,
+      "coursework": 3
+     },
+     "pieces": [
+      "brief:brief-animated share 0.27 specialist 3.61",
+      "brief:brief-backstage_musical share 0.151 specialist 0.97",
+      "brief:brief-documentary share 0.205 specialist 2.1",
+      "brief:brief-epic share 0.137 specialist 0.59",
+      "brief:brief-isekai share 0.208 specialist 2.2",
+      "brief:brief-jukebox_musical share 0.193 specialist 2.03",
+      "brief:brief-musical share 0.171 specialist 1.55",
+      "brief:brief-nature_documentary share 0.185 specialist 1.66",
+      "brief:brief-anime-2 share 0.22 specialist 2.89",
+      "brief:brief-avant_garde-2 share 0.19 specialist 1.88",
+      "brief:brief-concert_film-2 share 0.184 specialist 1.87",
+      "brief:brief-dark_fantasy-2 share 0.188 specialist 1.92",
+      "brief:brief-disaster-2 share 0.173 specialist 1.57",
+      "brief:brief-fairy_tale-2 share 0.188 specialist 1.93",
+      "brief:brief-gothic_horror-3 share 0.22 specialist 2.71",
+      "brief:brief-horror-2 share 0.176 specialist 1.61",
+      "brief:brief-rockumentary-2 share 0.137 specialist 0.62",
+      "brief:brief-satire-2 share 0.173 specialist 1.37",
+      "brief:brief-sword_and_sandal-2 share 0.112 specialist -0.01",
+      "brief:brief-tokusatsu-2 share 0.196 specialist 2.13",
+      "scene:henry5-4-3 share 0.142 specialist 0.6",
+      "night:Julius Caesar share 0.15 specialist 1.05",
+      "night:Riders To The Sea share 0.159 specialist 1.2",
+      "casting:Julius Caesar share 0.167 specialist 1.4",
+      "casting:Riders To The Sea share 0.164 specialist 1.32",
+      "coursework:voice-sequence share 0.485 specialist 8.67",
+      "coursework:speech-drill share 0.468 specialist 7.28",
+      "coursework:song share 0.309 specialist 2.89"
+     ]
+    },
+    "shareAQuarterOrMore": 4
+   },
+   "physical": {
+    "h4Set": {
+     "n": 214,
+     "shareMedian": 0.097,
+     "shareP90": 0.168,
+     "underATenth": 112,
+     "kinds": {
+      "brief": 134,
+      "scene": 25,
+      "night": 25,
+      "casting": 25,
+      "coursework": 5
+     }
+    },
+    "ownWork": {
+     "n": 29,
+     "ahead": 29,
+     "kinds": {
+      "brief": 22,
+      "night": 2,
+      "casting": 3,
+      "coursework": 2
+     },
+     "pieces": [
+      "brief:brief-action share 0.167 specialist 1.26",
+      "brief:brief-chanbara share 0.178 specialist 1.64",
+      "brief:brief-dance share 0.198 specialist 2.14",
+      "brief:brief-farce share 0.232 specialist 2.88",
+      "brief:brief-jidaigeki share 0.127 specialist 0.37",
+      "brief:brief-martial_arts share 0.172 specialist 1.4",
+      "brief:brief-samurai share 0.175 specialist 1.57",
+      "brief:brief-silent_film share 0.215 specialist 2.38",
+      "brief:brief-slapstick share 0.238 specialist 2.96",
+      "brief:brief-swashbuckler share 0.182 specialist 1.7",
+      "brief:brief-wuxia share 0.167 specialist 1.31",
+      "brief:brief-action_comedy-2 share 0.173 specialist 1.56",
+      "brief:brief-animated-3 share 0.165 specialist 1.43",
+      "brief:brief-buddy_comedy-2 share 0.174 specialist 1.52",
+      "brief:brief-chase-2 share 0.155 specialist 1.08",
+      "brief:brief-exploitation-2 share 0.127 specialist 0.37",
+      "brief:brief-grindhouse-2 share 0.201 specialist 2.34",
+      "brief:brief-samurai-3 share 0.12 specialist 0.18",
+      "brief:brief-silent_film-3 share 0.157 specialist 1.13",
+      "brief:brief-slapstick-2 share 0.18 specialist 1.73",
+      "brief:brief-swashbuckler-2 share 0.168 specialist 1.47",
+      "brief:brief-wuxia-2 share 0.18 specialist 1.62",
+      "night:Woyzeck share 0.138 specialist 0.7",
+      "night:The Bear share 0.164 specialist 1.37",
+      "casting:Woyzeck share 0.161 specialist 1.09",
+      "casting:The Bear share 0.173 specialist 1.59",
+      "casting:Salomé share 0.151 specialist 0.93",
+      "coursework:movement-score share 0.319 specialist 4.74",
+      "coursework:alexander-practice share 0.497 specialist 8.65"
+     ]
+    },
+    "shareAQuarterOrMore": 2
+   },
+   "discipline": {
+    "h4Set": {
+     "n": 209,
+     "shareMedian": 0.091,
+     "shareP90": 0.14,
+     "underATenth": 130,
+     "kinds": {
+      "brief": 156,
+      "scene": 23,
+      "night": 21,
+      "coursework": 9
+     }
+    },
+    "ownWork": {
+     "n": 12,
+     "ahead": 12,
+     "kinds": {
+      "brief": 2,
+      "scene": 3,
+      "night": 7
+     },
+     "pieces": [
+      "brief:brief-sea_adventure-2 share 0.151 specialist 1.07",
+      "brief:brief-yakuza-3 share 0.165 specialist 1.44",
+      "scene:seagull-4 share 0.205 specialist 1.95",
+      "scene:muchado-4-1 share 0.141 specialist 0.5",
+      "scene:orig-the-reception share 0.175 specialist 1.14",
+      "night:Three Sisters share 0.226 specialist 3.08",
+      "night:Spring Awakening share 0.218 specialist 2.92",
+      "night:Twelfth Night share 0.134 specialist 0.63",
+      "night:Measure For Measure share 0.151 specialist 1.06",
+      "night:The Winter’s Tale share 0.188 specialist 2.13",
+      "night:A Doll’s House share 0.177 specialist 1.72",
+      "night:The Playboy Of The Western World share 0.151 specialist 1.1"
+     ]
+    },
+    "shareAQuarterOrMore": 0
+   },
+   "stamina": {
+    "h4Set": {
+     "n": 210,
+     "shareMedian": 0.108,
+     "shareP90": 0.151,
+     "underATenth": 74,
+     "kinds": {
+      "brief": 157,
+      "scene": 43,
+      "night": 4,
+      "coursework": 6
+     }
+    },
+    "ownWork": {
+     "n": 19,
+     "ahead": 19,
+     "kinds": {
+      "brief": 6,
+      "scene": 13
+     },
+     "pieces": [
+      "brief:brief-biographical share 0.143 specialist 0.62",
+      "brief:brief-docudrama share 0.143 specialist 0.64",
+      "brief:brief-superhero share 0.161 specialist 1.1",
+      "brief:brief-action-2 share 0.154 specialist 1.01",
+      "brief:brief-film_noir-3 share 0.152 specialist 0.95",
+      "brief:brief-war-2 share 0.147 specialist 0.8",
+      "scene:julie share 0.124 specialist 0.15",
+      "scene:richard3-1-2 share 0.124 specialist 0.17",
+      "scene:othello-4-3 share 0.18 specialist 1.5",
+      "scene:bacchae-451 share 0.145 specialist 0.66",
+      "scene:agamemnon-855 share 0.121 specialist 0.09",
+      "scene:rising-moon share 0.138 specialist 0.5",
+      "scene:hamlet-3-4 share 0.149 specialist 0.77",
+      "scene:caesar-4-3 share 0.121 specialist 0.08",
+      "scene:dream-3-2 share 0.151 specialist 0.8",
+      "scene:weavers-1 share 0.154 specialist 0.84",
+      "scene:caesar-3-2 share 0.149 specialist 0.77",
+      "scene:dream-5-1 share 0.151 specialist 0.83",
+      "scene:scapin-3-2 share 0.183 specialist 1.62"
+     ]
+    },
+    "shareAQuarterOrMore": 0
+   }
+  },
+  "staminaLastSegment": {
+   "nights": 30,
+   "aheadOnTheLast": 2,
+   "aheadOnTheWhole": 0,
+   "rows": [
+    {
+     "id": "Hedda Gabler",
+     "lastSegment": -0.8,
+     "whole": -1.6
+    },
+    {
+     "id": "The Importance Of Being Earnest",
+     "lastSegment": -1,
+     "whole": -1.56
+    },
+    {
+     "id": "Woyzeck",
+     "lastSegment": -0.8,
+     "whole": -1.72
+    },
+    {
+     "id": "Three Sisters",
+     "lastSegment": -1.2,
+     "whole": -2.02
+    },
+    {
+     "id": "Blood Wedding",
+     "lastSegment": -0.7,
+     "whole": -1.67
+    },
+    {
+     "id": "The Cherry Orchard",
+     "lastSegment": -1.1,
+     "whole": -1.83
+    },
+    {
+     "id": "Major Barbara",
+     "lastSegment": -1,
+     "whole": -1.54
+    },
+    {
+     "id": "Ghosts",
+     "lastSegment": -0.9,
+     "whole": -1.81
+    },
+    {
+     "id": "The Wild Duck",
+     "lastSegment": -1.3,
+     "whole": -1.98
+    },
+    {
+     "id": "Spring Awakening",
+     "lastSegment": -1.1,
+     "whole": -1.94
+    },
+    {
+     "id": "Twelfth Night",
+     "lastSegment": -0.3,
+     "whole": -1.35
+    },
+    {
+     "id": "Measure For Measure",
+     "lastSegment": -1,
+     "whole": -1.84
+    },
+    {
+     "id": "The Winter’s Tale",
+     "lastSegment": 0.2,
+     "whole": -1.26
+    },
+    {
+     "id": "Julius Caesar",
+     "lastSegment": 0.2,
+     "whole": -1.05
+    },
+    {
+     "id": "A Midsummer Night’s Dream",
+     "lastSegment": -0.7,
+     "whole": -1.38
+    },
+    {
+     "id": "Macbeth",
+     "lastSegment": -0.3,
+     "whole": -1.34
+    },
+    {
+     "id": "As You Like It",
+     "lastSegment": -1.3,
+     "whole": -1.78
+    },
+    {
+     "id": "Much Ado About Nothing",
+     "lastSegment": -0.9,
+     "whole": -1.76
+    },
+    {
+     "id": "A Doll’s House",
+     "lastSegment": -0.9,
+     "whole": -1.73
+    },
+    {
+     "id": "Uncle Vanya",
+     "lastSegment": -1.2,
+     "whole": -1.9
+    },
+    {
+     "id": "Tartuffe",
+     "lastSegment": -0.8,
+     "whole": -1.44
+    },
+    {
+     "id": "An Enemy Of The People",
+     "lastSegment": -0.9,
+     "whole": -1.67
+    },
+    {
+     "id": "The Playboy Of The Western World",
+     "lastSegment": -0.5,
+     "whole": -1.49
+    },
+    {
+     "id": "Mrs Warren’s Profession",
+     "lastSegment": -1.3,
+     "whole": -1.98
+    },
+    {
+     "id": "Miss Julie",
+     "lastSegment": -1,
+     "whole": -1.83
+    },
+    {
+     "id": "Trifles",
+     "lastSegment": -2.4,
+     "whole": -2.53
+    },
+    {
+     "id": "The Bear",
+     "lastSegment": -1.5,
+     "whole": -2.09
+    },
+    {
+     "id": "A Marriage Proposal",
+     "lastSegment": -2.4,
+     "whole": -2.6
+    },
+    {
+     "id": "Riders To The Sea",
+     "lastSegment": -2.4,
+     "whole": -2.63
+    },
+    {
+     "id": "Salomé",
+     "lastSegment": -1,
+     "whole": -1.86
+    }
+   ]
+  }
+ },
+ "h4r": {
+  "note": "H4-R (criteria.md): every brief in each reading, every class scene, night, casting read and coursework template not a scene; full precision; ahead is more than 0.05 over the even actor.",
+  "pieces": 797,
+  "byKind": {
+   "brief": 657,
+   "scene": 67,
+   "night": 30,
+   "casting": 30,
+   "coursework": 13
+  },
+  "budgets": {
+   "even": 600,
+   "specialists": {
+    "emotionalDepth": 600,
+    "presence": 600,
+    "listening": 600,
+    "imagination": 600.0000000000001,
+    "focus": 600,
+    "memory": 600.0000000000001,
+    "adaptability": 600.0000000000001,
+    "composure": 600.0000000000001,
+    "vocal": 600.0000000000001,
+    "physical": 600.0000000000001,
+    "discipline": 600.0000000000001,
+    "stamina": 600
+   }
+  },
+  "abilities": {
+   "emotionalDepth": {
+    "budget": 600,
+    "own": {
+     "n": 206,
+     "kinds": {
+      "brief": 180,
+      "scene": 14,
+      "night": 6,
+      "casting": 4,
+      "coursework": 2
+     },
+     "ahead": 206,
+     "median": 1.962,
+     "pieces": [
+      "brief:brief-action/reason share 0.181 effect 1.149 specialist 1.572",
+      "brief:brief-absurdist/dread share 0.162 effect 0.995 specialist 1.043",
+      "brief:brief-adventure/betrayed share 0.176 effect 1.132 specialist 1.478",
+      "brief:brief-anthology/secret share 0.27 effect 1.55 specialist 3.233",
+      "brief:brief-anthology/tale share 0.204 effect 1.174 specialist 1.832",
+      "brief:brief-apocalyptic/keeper share 0.256 effect 1.553 specialist 3.151",
+      "brief:brief-apocalyptic/debt share 0.289 effect 1.752 specialist 3.895",
+      "brief:brief-art_house/listening share 0.202 effect 1.212 specialist 1.901",
+      "brief:brief-biker/mother share 0.226 effect 1.377 specialist 2.499",
+      "brief:brief-biographical/person share 0.148 effect 0.963 specialist 0.841",
+      "brief:brief-black_comedy/grief share 0.245 effect 1.486 specialist 2.897",
+      "brief:brief-blaxploitation/known share 0.187 effect 1.167 specialist 1.685",
+      "brief:brief-body_horror/control share 0.193 effect 1.184 specialist 1.76",
+      "brief:brief-body_horror/loss share 0.3 effect 1.845 specialist 4.205",
+      "brief:brief-buddy_comedy/scared share 0.187 effect 1.129 specialist 1.582",
+      "brief:brief-chase/breath share 0.191 effect 1.184 specialist 1.754",
+      "brief:brief-chase/persuade share 0.2 effect 1.242 specialist 1.959",
+      "brief:brief-childrens/brave share 0.206 effect 1.269 specialist 2.067",
+      "brief:brief-christmas/sincere share 0.266 effect 1.597 specialist 3.344",
+      "brief:brief-christmas/brisk share 0.178 effect 1.063 specialist 1.368",
+      "brief:brief-coming_of_age/growing share 0.273 effect 1.603 specialist 3.383",
+      "brief:brief-concert_film/grieving share 0.219 effect 1.31 specialist 2.271",
+      "brief:brief-conspiracy_thriller/hunted share 0.224 effect 1.335 specialist 2.36",
+      "brief:brief-cosmic_horror/detached share 0.205 effect 1.268 specialist 2.053",
+      "brief:brief-cosmic_horror/holding share 0.301 effect 1.853 specialist 4.234",
+      "brief:brief-costume_drama/pride share 0.183 effect 1.164 specialist 1.616",
+      "brief:brief-creature_feature/expert share 0.224 effect 1.375 specialist 2.467",
+      "brief:brief-creature_feature/afraid share 0.316 effect 1.955 specialist 4.615",
+      "brief:brief-crime/protector share 0.208 effect 1.204 specialist 1.936",
+      "brief:brief-dark_fantasy/mother share 0.217 effect 1.386 specialist 2.445",
+      "brief:brief-detective/sympathy share 0.19 effect 1.13 specialist 1.611",
+      "brief:brief-disaster/professional share 0.246 effect 1.465 specialist 2.847",
+      "brief:brief-disaster/strangers share 0.298 effect 1.805 specialist 4.08",
+      "brief:brief-docudrama/memory share 0.143 effect 0.937 specialist 0.737",
+      "brief:brief-documentary/letters share 0.223 effect 1.406 specialist 2.532",
+      "brief:brief-domestic_drama/tired share 0.373 effect 2.197 specialist 5.582",
+      "brief:brief-domestic_drama/partners share 0.266 effect 1.57 specialist 3.25",
+      "brief:brief-drama/guarded share 0.343 effect 2.042 specialist 4.989",
+      "brief:brief-drama/listening share 0.243 effect 1.44 specialist 2.765",
+      "brief:brief-eco_horror/scientist share 0.247 effect 1.475 specialist 2.884",
+      "brief:brief-eco_horror/witness share 0.314 effect 1.889 specialist 4.402",
+      "brief:brief-epic/son share 0.141 effect 0.907 specialist 0.646",
+      "brief:brief-erotic_thriller/danger share 0.21 effect 1.31 specialist 2.19",
+      "brief:brief-exploitation/revenge share 0.232 effect 1.477 specialist 2.775",
+      "brief:brief-family/scared share 0.199 effect 1.198 specialist 1.845",
+      "brief:brief-fantasy/brother share 0.204 effect 1.256 specialist 2.032",
+      "brief:brief-film_noir/liked share 0.155 effect 0.992 specialist 0.969",
+      "brief:brief-folk_horror/polite share 0.218 effect 1.294 specialist 2.23",
+      "brief:brief-found_footage/mom share 0.288 effect 1.767 specialist 3.91",
+      "brief:brief-gangster/king share 0.146 effect 0.901 specialist 0.69",
+      "brief:brief-gangster/lesson share 0.226 effect 1.392 specialist 2.516",
+      "brief:brief-giallo/sleuth share 0.202 effect 1.179 specialist 1.801",
+      "brief:brief-giallo/dread share 0.308 effect 1.791 specialist 4.072",
+      "brief:brief-gothic_horror/longing share 0.238 effect 1.41 specialist 2.647",
+      "brief:brief-grindhouse/terror share 0.295 effect 1.833 specialist 4.127",
+      "brief:brief-heist/reason share 0.252 effect 1.515 specialist 3.019",
+      "brief:brief-historical_drama/duty share 0.209 effect 1.217 specialist 1.963",
+      "brief:brief-historical_drama/sister share 0.301 effect 1.773 specialist 4.002",
+      "brief:brief-historical_fiction/true share 0.235 effect 1.411 specialist 2.631",
+      "brief:brief-holiday/sincere share 0.239 effect 1.434 specialist 2.728",
+      "brief:brief-holiday/light share 0.155 effect 0.931 specialist 0.858",
+      "brief:brief-horror/trust share 0.198 effect 1.227 specialist 1.899",
+      "brief:brief-horror/training share 0.171 effect 1.07 specialist 1.296",
+      "brief:brief-horror_comedy/straight share 0.236 effect 1.468 specialist 2.781",
+      "brief:brief-jidaigeki/grief share 0.142 effect 0.92 specialist 0.674",
+      "brief:brief-kitchen_sink/son share 0.198 effect 1.253 specialist 1.962",
+      "brief:brief-legal_drama/promise share 0.235 effect 1.427 specialist 2.66",
+      "brief:brief-martial_arts/temper share 0.216 effect 1.367 specialist 2.384",
+      "brief:brief-medical_drama/hunch share 0.201 effect 1.277 specialist 2.044",
+      "brief:brief-melodrama/held share 0.228 effect 1.461 specialist 2.703",
+      "brief:brief-military/rank share 0.262 effect 1.524 specialist 3.108",
+      "brief:brief-military/human share 0.303 effect 1.767 specialist 4.021",
+      "brief:brief-monster_movie/dread share 0.18 effect 1.15 specialist 1.566",
+      "brief:brief-monster_movie/sister share 0.235 effect 1.511 specialist 2.898",
+      "brief:brief-mystery/fear share 0.226 effect 1.3 specialist 2.301",
+      "brief:brief-neo_noir/tempted share 0.252 effect 1.516 specialist 3.027",
+      "brief:brief-neorealism/pride share 0.237 effect 1.471 specialist 2.83",
+      "brief:brief-new_wave/hope share 0.193 effect 1.161 specialist 1.701",
+      "brief:brief-occult/skeptic share 0.174 effect 1.054 specialist 1.29",
+      "brief:brief-occult/family share 0.267 effect 1.626 specialist 3.403",
+      "brief:brief-period_drama/appeal share 0.156 effect 0.98 specialist 0.978",
+      "brief:brief-police_procedural/procedure share 0.188 effect 1.119 specialist 1.573",
+      "brief:brief-police_procedural/loyalty share 0.279 effect 1.672 specialist 3.616",
+      "brief:brief-political_drama/friend share 0.178 effect 1.112 specialist 1.486",
+      "brief:brief-political_thriller/betrayal share 0.277 effect 1.554 specialist 3.294",
+      "brief:brief-post_apocalyptic/steward share 0.241 effect 1.447 specialist 2.764",
+      "brief:brief-post_apocalyptic/voice share 0.288 effect 1.745 specialist 3.859",
+      "brief:brief-prison_film/dignity share 0.236 effect 1.377 specialist 2.57",
+      "brief:brief-psychological_horror/grief share 0.334 effect 2.101 specialist 5.107",
+      "brief:brief-psychological_horror/real share 0.229 effect 1.434 specialist 2.649",
+      "brief:brief-psychological_horror/unsure share 0.22 effect 1.39 specialist 2.463",
+      "brief:brief-psychological_thriller/slipping share 0.29 effect 1.688 specialist 3.726",
+      "brief:brief-queer_cinema/decision share 0.198 effect 1.167 specialist 1.79",
+      "brief:brief-revenge/plan share 0.219 effect 1.319 specialist 2.28",
+      "brief:brief-revenge/chance share 0.317 effect 1.918 specialist 4.495",
+      "brief:brief-road_movie/driver share 0.169 effect 1.038 specialist 1.226",
+      "brief:brief-romance/hoping share 0.241 effect 1.448 specialist 2.786",
+      "brief:brief-romantic_drama/sacrifice share 0.187 effect 1.14 specialist 1.633",
+      "brief:brief-satire/trapped share 0.203 effect 1.182 specialist 1.836",
+      "brief:brief-science_fiction/loss share 0.241 effect 1.453 specialist 2.804",
+      "brief:brief-sea_adventure/fear share 0.21 effect 1.368 specialist 2.33",
+      "brief:brief-slasher/clear share 0.179 effect 1.106 specialist 1.457",
+      "brief:brief-slasher/dread share 0.287 effect 1.771 specialist 3.917",
+      "brief:brief-slice_of_life/drawn share 0.157 effect 0.933 specialist 0.891",
+      "brief:brief-social_realism/tired share 0.273 effect 1.627 specialist 3.448",
+      "brief:brief-space_opera/sisters share 0.203 effect 1.252 specialist 2.01",
+      "brief:brief-spaghetti_western/trade share 0.171 effect 1.039 specialist 1.229",
+      "brief:brief-splatter/politeness share 0.178 effect 1.066 specialist 1.364",
+      "brief:brief-splatter/shock share 0.291 effect 1.75 specialist 3.9",
+      "brief:brief-sports/coach share 0.193 effect 1.178 specialist 1.755",
+      "brief:brief-sports/goodbye share 0.297 effect 1.811 specialist 4.104",
+      "brief:brief-spy/marriage share 0.197 effect 1.147 specialist 1.698",
+      "brief:brief-survival/procedure share 0.198 effect 1.241 specialist 1.927",
+      "brief:brief-survival/body share 0.25 effect 1.566 specialist 3.15",
+      "brief:brief-survival/daughter share 0.244 effect 1.535 specialist 3.044",
+      "brief:brief-sword_and_sandal/father share 0.163 effect 0.992 specialist 1.083",
+      "brief:brief-techno_thriller/town share 0.27 effect 1.622 specialist 3.398",
+      "brief:brief-teen/righteous share 0.229 effect 1.329 specialist 2.389",
+      "brief:brief-teen/caught share 0.324 effect 1.905 specialist 4.507",
+      "brief:brief-thriller/fraying share 0.246 effect 1.458 specialist 2.832",
+      "brief:brief-time_travel/weary share 0.257 effect 1.535 specialist 3.116",
+      "brief:brief-tokusatsu/scale share 0.146 effect 0.902 specialist 0.688",
+      "brief:brief-tokusatsu/recruit share 0.142 effect 0.874 specialist 0.6",
+      "brief:brief-tragedy/duty share 0.203 effect 1.244 specialist 1.967",
+      "brief:brief-tragedy/sister share 0.318 effect 1.953 specialist 4.588",
+      "brief:brief-tragicomedy/dam share 0.212 effect 1.333 specialist 2.268",
+      "brief:brief-true_crime/guilt share 0.226 effect 1.401 specialist 2.537",
+      "brief:brief-vampire/brother share 0.204 effect 1.25 specialist 2.04",
+      "brief:brief-war/mother share 0.198 effect 1.295 specialist 2.086",
+      "brief:brief-werewolf/planner share 0.163 effect 1.024 specialist 1.128",
+      "brief:brief-werewolf/fear share 0.249 effect 1.567 specialist 3.149",
+      "brief:brief-western/neighbor share 0.166 effect 1.059 specialist 1.229",
+      "brief:brief-wuxia/grief share 0.157 effect 1.011 specialist 1.03",
+      "brief:brief-yakuza/elder share 0.206 effect 1.184 specialist 1.864",
+      "brief:brief-yakuza/regret share 0.292 effect 1.699 specialist 3.763",
+      "brief:brief-zombie/route share 0.203 effect 1.263 specialist 2.028",
+      "brief:brief-zombie/friend share 0.251 effect 1.593 specialist 3.257",
+      "brief:brief-adventure-2/mother share 0.131 effect 0.865 specialist 0.433",
+      "brief:brief-apocalyptic-2/promise share 0.23 effect 1.475 specialist 2.777",
+      "brief:brief-biker-2/family share 0.191 effect 1.17 specialist 1.709",
+      "brief:brief-blaxploitation-2/garland share 0.183 effect 1.161 specialist 1.621",
+      "brief:brief-childrens-2/jealous share 0.177 effect 1.069 specialist 1.347",
+      "brief:brief-christmas-3/promise share 0.152 effect 1.02 specialist 1.001",
+      "brief:brief-coming_of_age-2/free share 0.148 effect 0.907 specialist 0.711",
+      "brief:brief-coming_of_age-2/losing share 0.206 effect 1.273 specialist 2.067",
+      "brief:brief-costume_drama-2/robe share 0.141 effect 0.898 specialist 0.625",
+      "brief:brief-courtroom_drama-2/parents share 0.217 effect 1.399 specialist 2.477",
+      "brief:brief-drama-2/boy share 0.302 effect 1.909 specialist 4.434",
+      "brief:brief-eco_horror-2/pulled share 0.162 effect 1.067 specialist 1.194",
+      "brief:brief-espionage-2/trust share 0.175 effect 1.122 specialist 1.437",
+      "brief:brief-exploitation-2/afraid share 0.161 effect 1.067 specialist 1.179",
+      "brief:brief-folk_horror-2/grief share 0.144 effect 0.942 specialist 0.732",
+      "brief:brief-found_footage-2/letter share 0.229 effect 1.421 specialist 2.608",
+      "brief:brief-gangster-2/fear share 0.265 effect 1.636 specialist 3.45",
+      "brief:brief-historical_fiction-2/guilt share 0.262 effect 1.576 specialist 3.239",
+      "brief:brief-horror-2/eli share 0.156 effect 1.038 specialist 1.07",
+      "brief:brief-military-2/reach share 0.129 effect 0.851 specialist 0.386",
+      "brief:brief-monster_movie-2/terror share 0.203 effect 1.376 specialist 2.315",
+      "brief:brief-period_drama-2/widow share 0.232 effect 1.457 specialist 2.748",
+      "brief:brief-police_procedural-2/strain share 0.175 effect 1.129 specialist 1.458",
+      "brief:brief-post_apocalyptic-2/future share 0.171 effect 1.073 specialist 1.328",
+      "brief:brief-prison_film-2/kid share 0.132 effect 0.869 specialist 0.473",
+      "brief:brief-psychological_horror-2/loop share 0.156 effect 1.011 specialist 1.015",
+      "brief:brief-psychological_horror-2/awake share 0.224 effect 1.452 specialist 2.665",
+      "brief:brief-queer_cinema-2/teammate share 0.154 effect 0.977 specialist 0.928",
+      "brief:brief-road_movie-2/gift share 0.227 effect 1.314 specialist 2.343",
+      "brief:brief-romance-2/nerve share 0.132 effect 0.837 specialist 0.423",
+      "brief:brief-slasher-2/terror share 0.156 effect 1.078 specialist 1.16",
+      "brief:brief-splatter-2/alone share 0.179 effect 1.162 specialist 1.583",
+      "brief:brief-sports-2/honest share 0.174 effect 1.157 specialist 1.519",
+      "brief:brief-sports-2/pride share 0.214 effect 1.416 specialist 2.493",
+      "brief:brief-spy-2/breath share 0.179 effect 1.171 specialist 1.596",
+      "brief:brief-superhero-2/bakery share 0.182 effect 1.097 specialist 1.482",
+      "brief:brief-survival-2/afraid share 0.207 effect 1.402 specialist 2.406",
+      "brief:brief-sword_and_sandal-2/boy share 0.124 effect 0.828 specialist 0.298",
+      "brief:brief-teen-2/poet share 0.143 effect 0.906 specialist 0.667",
+      "brief:brief-war-2/home share 0.167 effect 1.166 specialist 1.47",
+      "brief:brief-werewolf-2/feather share 0.187 effect 1.196 specialist 1.737",
+      "brief:brief-zombie-2/nurse share 0.161 effect 1.033 specialist 1.101",
+      "brief:brief-zombie-2/father share 0.203 effect 1.309 specialist 2.144",
+      "scene:dollhouse-3 share 0.15 effect 0.864 specialist 0.693",
+      "scene:trifles share 0.169 effect 0.963 specialist 1.061",
+      "scene:hamlet-3-1 share 0.12 effect 0.717 specialist 0.09",
+      "scene:antigone-441 share 0.164 effect 0.946 specialist 0.982",
+      "scene:electra-328 share 0.164 effect 0.946 specialist 0.982",
+      "scene:medea-446 share 0.15 effect 0.877 specialist 0.695",
+      "scene:faustus-3 share 0.133 effect 0.796 specialist 0.362",
+      "scene:ghosts-1 share 0.168 effect 0.935 specialist 1.002",
+      "scene:riders-sea share 0.162 effect 0.933 specialist 0.932",
+      "scene:orig-bed-fourteen share 0.186 effect 1 specialist 1.299",
+      "scene:orig-office-hours share 0.2 effect 1.068 specialist 1.55",
+      "scene:enemy-2 share 0.152 effect 0.876 specialist 0.739",
+      "scene:strife-1 share 0.131 effect 0.781 specialist 0.337",
+      "scene:justice-2 share 0.17 effect 0.955 specialist 1.055",
+      "night:Hedda Gabler share 0.138 effect 0.938 specialist 0.657",
+      "night:Ghosts share 0.128 effect 0.875 specialist 0.398",
+      "night:An Enemy Of The People share 0.143 effect 0.972 specialist 0.796",
+      "night:Mrs Warren’s Profession share 0.156 effect 1.056 specialist 1.116",
+      "night:Miss Julie share 0.121 effect 0.831 specialist 0.22",
+      "night:Trifles share 0.173 effect 1.146 specialist 1.492",
+      "casting:Ghosts share 0.148 effect 0.891 specialist 0.75",
+      "casting:An Enemy Of The People share 0.156 effect 0.994 specialist 1.036",
+      "casting:Mrs Warren’s Profession share 0.167 effect 1.069 specialist 1.311",
+      "casting:Trifles share 0.183 effect 1.139 specialist 1.641",
+      "coursework:self-tape share 0.344 effect 1.932 specialist 4.86",
+      "coursework:audition-pair share 0.306 effect 1.631 specialist 3.705"
+     ]
+    },
+    "underATenth": {
+     "pairs": 368,
+     "ahead": 0
+    }
+   },
+   "presence": {
+    "budget": 600,
+    "own": {
+     "n": 5,
+     "kinds": {
+      "scene": 3,
+      "night": 1,
+      "coursework": 1
+     },
+     "ahead": 4,
+     "median": 0.912,
+     "pieces": [
+      "scene:oedipus-1 share 0.162 effect 0.948 specialist 0.912",
+      "scene:enemy-4 share 0.154 effect 0.905 specialist 0.757",
+      "scene:strife-2-2 share 0.164 effect 0.949 specialist 0.936",
+      "night:Major Barbara share 0.107 effect 0.731 specialist -0.126",
+      "coursework:clown-turn share 0.316 effect 1.615 specialist 3.831"
+     ]
+    },
+    "underATenth": {
+     "pairs": 746,
+     "ahead": 0
+    }
+   },
+   "listening": {
+    "budget": 600,
+    "own": {
+     "n": 50,
+     "kinds": {
+      "brief": 12,
+      "scene": 17,
+      "night": 2,
+      "casting": 16,
+      "coursework": 3
+     },
+     "ahead": 50,
+     "median": 0.653,
+     "pieces": [
+      "brief:brief-buddy_cop/partners share 0.178 effect 1.069 specialist 1.375",
+      "brief:brief-hangout/easy share 0.219 effect 1.327 specialist 2.307",
+      "brief:brief-hood_film/brothers share 0.178 effect 1.082 specialist 1.381",
+      "brief:brief-prison_film/reaching share 0.249 effect 1.454 specialist 2.838",
+      "brief:brief-road_movie/friends share 0.193 effect 1.195 specialist 1.78",
+      "brief:brief-rockumentary/relief share 0.188 effect 1.097 specialist 1.503",
+      "brief:brief-romance/surprised share 0.201 effect 1.202 specialist 1.839",
+      "brief:brief-romantic_drama/listening share 0.182 effect 1.104 specialist 1.439",
+      "brief:brief-slice_of_life/glad share 0.194 effect 1.157 specialist 1.689",
+      "brief:brief-mumblecore-2/hoping share 0.198 effect 1.125 specialist 1.688",
+      "brief:brief-romance-2/knew share 0.138 effect 0.868 specialist 0.516",
+      "brief:brief-social_realism-2/angry share 0.215 effect 1.286 specialist 2.157",
+      "scene:vanya-2 share 0.157 effect 0.874 specialist 0.782",
+      "scene:cherry-orchard-4 share 0.136 effect 0.77 specialist 0.387",
+      "scene:pygmalion-4 share 0.129 effect 0.767 specialist 0.286",
+      "scene:playboy-3 share 0.143 effect 0.852 specialist 0.6",
+      "scene:machinal-2 share 0.142 effect 0.819 specialist 0.525",
+      "scene:macbeth-1-7 share 0.148 effect 0.856 specialist 0.654",
+      "scene:twelfth-1-5 share 0.143 effect 0.836 specialist 0.547",
+      "scene:measure-2-4 share 0.121 effect 0.724 specialist 0.106",
+      "scene:oedipus-300 share 0.143 effect 0.836 specialist 0.562",
+      "scene:hedda-2 share 0.179 effect 0.977 specialist 1.196",
+      "scene:suppressed-2 share 0.194 effect 1.043 specialist 1.468",
+      "scene:creditors share 0.145 effect 0.833 specialist 0.578",
+      "scene:anna-christie-1 share 0.143 effect 0.768 specialist 0.465",
+      "scene:malfi-1 share 0.126 effect 0.76 specialist 0.229",
+      "scene:masterbuilder-1 share 0.166 effect 0.92 specialist 0.953",
+      "scene:orig-what-we-keep share 0.139 effect 0.792 specialist 0.45",
+      "scene:orig-two-time-zones share 0.166 effect 0.92 specialist 0.953",
+      "night:The Wild Duck share 0.121 effect 0.824 specialist 0.208",
+      "night:Uncle Vanya share 0.119 effect 0.816 specialist 0.177",
+      "casting:Hedda Gabler share 0.16 effect 1.029 specialist 0.698",
+      "casting:Three Sisters share 0.172 effect 0.932 specialist 0.652",
+      "casting:The Cherry Orchard share 0.154 effect 0.924 specialist 0.384",
+      "casting:Major Barbara share 0.14 effect 0.895 specialist 0.277",
+      "casting:The Wild Duck share 0.175 effect 1.061 specialist 0.896",
+      "casting:Twelfth Night share 0.138 effect 0.843 specialist 0.053",
+      "casting:Measure For Measure share 0.145 effect 0.849 specialist 0.304",
+      "casting:A Midsummer Night’s Dream share 0.146 effect 0.982 specialist 0.187",
+      "casting:As You Like It share 0.169 effect 1.134 specialist 0.765",
+      "casting:Much Ado About Nothing share 0.157 effect 0.997 specialist 0.556",
+      "casting:A Doll’s House share 0.152 effect 0.863 specialist 0.296",
+      "casting:Uncle Vanya share 0.174 effect 1.055 specialist 0.871",
+      "casting:Tartuffe share 0.167 effect 1.128 specialist 0.641",
+      "casting:The Playboy Of The Western World share 0.146 effect 0.873 specialist 0.217",
+      "casting:Miss Julie share 0.141 effect 0.853 specialist 0.177",
+      "casting:A Marriage Proposal share 0.17 effect 1.139 specialist 0.703",
+      "coursework:play-game share 0.395 effect 2.283 specialist 5.485",
+      "coursework:fight-sequence share 0.295 effect 1.455 specialist 3.112",
+      "coursework:intimacy-practice share 0.295 effect 1.455 specialist 3.112"
+     ]
+    },
+    "underATenth": {
+     "pairs": 505,
+     "ahead": 0
+    }
+   },
+   "imagination": {
+    "budget": 600.0000000000001,
+    "own": {
+     "n": 55,
+     "kinds": {
+      "brief": 47,
+      "scene": 4,
+      "night": 3,
+      "casting": 1
+     },
+     "ahead": 55,
+     "median": 1.586,
+     "pieces": [
+      "brief:brief-alternate_history/ordinary share 0.202 effect 1.209 specialist 1.908",
+      "brief:brief-alternate_history/memory share 0.206 effect 1.229 specialist 2.006",
+      "brief:brief-avant_garde/task share 0.155 effect 0.953 specialist 0.878",
+      "brief:brief-avant_garde/found share 0.227 effect 1.408 specialist 2.551",
+      "brief:brief-cyberpunk/system share 0.283 effect 1.682 specialist 3.665",
+      "brief:brief-cyberpunk/person share 0.21 effect 1.244 specialist 2.054",
+      "brief:brief-dark_fantasy/bargainer share 0.146 effect 0.944 specialist 0.784",
+      "brief:brief-fairy_tale/riddle share 0.291 effect 1.694 specialist 3.735",
+      "brief:brief-fairy_tale/forgive share 0.218 effect 1.273 specialist 2.187",
+      "brief:brief-fantasy/craft share 0.179 effect 1.107 specialist 1.487",
+      "brief:brief-fantasy/wonder share 0.246 effect 1.504 specialist 2.953",
+      "brief:brief-folk_horror/slow share 0.178 effect 1.045 specialist 1.301",
+      "brief:brief-kaiju/line share 0.133 effect 0.849 specialist 0.452",
+      "brief:brief-kaiju/awe share 0.18 effect 1.146 specialist 1.555",
+      "brief:brief-magical_realism/plain share 0.19 effect 1.177 specialist 1.731",
+      "brief:brief-magical_realism/keeping share 0.221 effect 1.362 specialist 2.448",
+      "brief:brief-satire/believer share 0.168 effect 0.982 specialist 1.069",
+      "brief:brief-science_fantasy/con share 0.172 effect 1.067 specialist 1.301",
+      "brief:brief-science_fantasy/wonder share 0.238 effect 1.487 specialist 2.855",
+      "brief:brief-science_fiction/catchup share 0.199 effect 1.189 specialist 1.823",
+      "brief:brief-steampunk/bluff share 0.21 effect 1.294 specialist 2.166",
+      "brief:brief-steampunk/pride share 0.29 effect 1.799 specialist 4.042",
+      "brief:brief-supernatural/skeptic share 0.181 effect 1.122 specialist 1.54",
+      "brief:brief-supernatural/welcome share 0.226 effect 1.407 specialist 2.579",
+      "brief:brief-surrealist/straight share 0.186 effect 1.143 specialist 1.586",
+      "brief:brief-surrealist/dream share 0.279 effect 1.729 specialist 3.742",
+      "brief:brief-sword_and_sorcery/mirror share 0.184 effect 1.197 specialist 1.723",
+      "brief:brief-vampire/hunger share 0.185 effect 1.126 specialist 1.554",
+      "brief:brief-anthology-2/frame share 0.157 effect 0.983 specialist 0.957",
+      "brief:brief-anthology-2/glove share 0.2 effect 1.25 specialist 1.947",
+      "brief:brief-cyberpunk-2/buyback share 0.162 effect 1.041 specialist 1.135",
+      "brief:brief-cyberpunk-2/keeper share 0.203 effect 1.306 specialist 2.121",
+      "brief:brief-folk_horror-2/outsider share 0.159 effect 1.043 specialist 1.099",
+      "brief:brief-historical_fiction-2/gift share 0.192 effect 1.176 specialist 1.724",
+      "brief:brief-kaiju-2/waiting share 0.278 effect 1.675 specialist 3.613",
+      "brief:brief-kaiju-2/customer share 0.209 effect 1.255 specialist 2.062",
+      "brief:brief-magical_realism-2/messenger share 0.191 effect 1.22 specialist 1.822",
+      "brief:brief-satire-2/sees share 0.173 effect 1.091 specialist 1.354",
+      "brief:brief-science_fantasy-2/surety share 0.19 effect 1.256 specialist 1.896",
+      "brief:brief-steampunk-2/forgive share 0.174 effect 1.134 specialist 1.481",
+      "brief:brief-supernatural-2/lonely share 0.18 effect 1.206 specialist 1.695",
+      "brief:brief-supernatural-2/dread share 0.215 effect 1.436 specialist 2.567",
+      "brief:brief-time_travel-2/sister share 0.18 effect 1.171 specialist 1.609",
+      "brief:brief-vampire-2/gentleman share 0.17 effect 1.059 specialist 1.275",
+      "brief:brief-vampire-2/hunger share 0.158 effect 0.989 specialist 0.996",
+      "brief:brief-vampire-2/decent share 0.166 effect 1.036 specialist 1.188",
+      "brief:brief-werewolf-2/charm share 0.133 effect 0.846 specialist 0.444",
+      "scene:romeo-2-2 share 0.172 effect 1.037 specialist 1.231",
+      "scene:caesar-2-1 share 0.144 effect 0.862 specialist 0.602",
+      "scene:lear-4-7 share 0.159 effect 0.924 specialist 0.866",
+      "scene:twelfth-2-4 share 0.159 effect 0.924 specialist 0.867",
+      "night:Blood Wedding share 0.115 effect 0.81 specialist 0.114",
+      "night:As You Like It share 0.136 effect 0.945 specialist 0.657",
+      "night:Salomé share 0.136 effect 0.957 specialist 0.668",
+      "casting:Blood Wedding share 0.128 effect 0.8 specialist 0.344"
+     ]
+    },
+    "underATenth": {
+     "pairs": 508,
+     "ahead": 0
+    }
+   },
+   "focus": {
+    "budget": 600,
+    "own": {
+     "n": 66,
+     "kinds": {
+      "brief": 51,
+      "scene": 9,
+      "night": 3,
+      "casting": 1,
+      "coursework": 2
+     },
+     "ahead": 66,
+     "median": 1.725,
+     "pieces": [
+      "brief:brief-absurdist/reasonable share 0.239 effect 1.462 specialist 2.787",
+      "brief:brief-action_comedy/whisper share 0.223 effect 1.413 specialist 2.621",
+      "brief:brief-anime/sync share 0.293 effect 1.821 specialist 4.153",
+      "brief:brief-anime/laugh share 0.204 effect 1.275 specialist 2.107",
+      "brief:brief-black_comedy/calm share 0.225 effect 1.347 specialist 2.397",
+      "brief:brief-buddy_comedy/friction share 0.186 effect 1.119 specialist 1.532",
+      "brief:brief-buddy_cop/banter share 0.203 effect 1.209 specialist 1.894",
+      "brief:brief-caper/pro share 0.217 effect 1.338 specialist 2.371",
+      "brief:brief-caper/student share 0.187 effect 1.138 specialist 1.633",
+      "brief:brief-childrens/speech share 0.176 effect 1.084 specialist 1.408",
+      "brief:brief-comedy/timing share 0.287 effect 1.714 specialist 3.76",
+      "brief:brief-comedy/truth share 0.203 effect 1.21 specialist 1.89",
+      "brief:brief-concert_film/decided share 0.158 effect 0.942 specialist 0.916",
+      "brief:brief-conspiracy_thriller/hunter share 0.183 effect 1.093 specialist 1.508",
+      "brief:brief-detective/chess share 0.209 effect 1.251 specialist 2.095",
+      "brief:brief-family/deal share 0.192 effect 1.148 specialist 1.662",
+      "brief:brief-grindhouse/nerve share 0.194 effect 1.196 specialist 1.819",
+      "brief:brief-horror_comedy/hustle share 0.211 effect 1.313 specialist 2.226",
+      "brief:brief-mystery/sleuth share 0.271 effect 1.569 specialist 3.315",
+      "brief:brief-parody/deadpan share 0.175 effect 1.115 specialist 1.463",
+      "brief:brief-parody/size share 0.22 effect 1.39 specialist 2.51",
+      "brief:brief-picaresque/charm share 0.184 effect 1.12 specialist 1.561",
+      "brief:brief-picaresque/survival share 0.157 effect 0.961 specialist 0.952",
+      "brief:brief-political_drama/operator share 0.139 effect 0.861 specialist 0.58",
+      "brief:brief-political_thriller/still share 0.226 effect 1.29 specialist 2.315",
+      "brief:brief-queer_cinema/comedy share 0.186 effect 1.083 specialist 1.43",
+      "brief:brief-romantic_comedy/sparring share 0.257 effect 1.584 specialist 3.249",
+      "brief:brief-romantic_comedy/flustered share 0.184 effect 1.134 specialist 1.57",
+      "brief:brief-screwball_comedy/speed share 0.204 effect 1.295 specialist 2.154",
+      "brief:brief-screwball_comedy/pair share 0.169 effect 1.077 specialist 1.32",
+      "brief:brief-spy/tradecraft share 0.191 effect 1.104 specialist 1.55",
+      "brief:brief-stoner_comedy/host share 0.228 effect 1.352 specialist 2.435",
+      "brief:brief-techno_thriller/expert share 0.194 effect 1.164 specialist 1.778",
+      "brief:brief-time_travel/puzzle share 0.223 effect 1.328 specialist 2.358",
+      "brief:brief-tragicomedy/performer share 0.184 effect 1.149 specialist 1.622",
+      "brief:brief-black_comedy-2/deadpan share 0.176 effect 1.079 specialist 1.358",
+      "brief:brief-buddy_cop-2/cover share 0.166 effect 1.118 specialist 1.383",
+      "brief:brief-buddy_cop-2/team share 0.156 effect 1.046 specialist 1.111",
+      "brief:brief-detective-2/minute share 0.234 effect 1.46 specialist 2.805",
+      "brief:brief-detective-2/heard share 0.178 effect 1.117 specialist 1.512",
+      "brief:brief-detective-2/guilt share 0.176 effect 1.094 specialist 1.438",
+      "brief:brief-family-2/pro share 0.141 effect 0.898 specialist 0.7",
+      "brief:brief-giallo-2/story share 0.182 effect 1.23 specialist 1.804",
+      "brief:brief-holiday-2/boy share 0.156 effect 0.938 specialist 0.895",
+      "brief:brief-mockumentary-2/sell share 0.162 effect 1.099 specialist 1.287",
+      "brief:brief-parody-2/straight share 0.197 effect 1.22 specialist 1.904",
+      "brief:brief-romantic_comedy-2/bet share 0.276 effect 1.578 specialist 3.264",
+      "brief:brief-samurai-3/haggle share 0.135 effect 0.886 specialist 0.562",
+      "brief:brief-screwball_comedy-2/liar share 0.183 effect 1.223 specialist 1.82",
+      "brief:brief-stoner_comedy-2/impression share 0.174 effect 1.16 specialist 1.547",
+      "brief:brief-time_travel-2/clock share 0.204 effect 1.314 specialist 2.175",
+      "scene:earnest-2 share 0.213 effect 1.205 specialist 1.978",
+      "scene:shrew-2-1 share 0.157 effect 0.95 specialist 0.98",
+      "scene:scandal-2-1 share 0.206 effect 1.168 specialist 1.833",
+      "scene:arms-1 share 0.156 effect 0.908 specialist 0.859",
+      "scene:proposal share 0.16 effect 0.978 specialist 1.075",
+      "scene:windermere-1 share 0.175 effect 0.975 specialist 1.121",
+      "scene:asyoulike-3-2 share 0.194 effect 1.135 specialist 1.693",
+      "scene:wayoftheworld-4 share 0.206 effect 1.168 specialist 1.833",
+      "scene:stoops-2 share 0.203 effect 1.15 specialist 1.766",
+      "night:The Importance Of Being Earnest share 0.17 effect 1.158 specialist 1.489",
+      "night:Tartuffe share 0.142 effect 0.993 specialist 0.809",
+      "night:A Marriage Proposal share 0.155 effect 1.058 specialist 1.081",
+      "casting:The Importance Of Being Earnest share 0.179 effect 1.19 specialist 1.758",
+      "coursework:table-work share 0.472 effect 2.353 specialist 6.7",
+      "coursework:context-presentation share 0.472 effect 2.353 specialist 6.7"
+     ]
+    },
+    "underATenth": {
+     "pairs": 485,
+     "ahead": 0
+    }
+   },
+   "memory": {
+    "budget": 600.0000000000001,
+    "own": {
+     "n": 115,
+     "kinds": {
+      "brief": 111,
+      "night": 3,
+      "casting": 1
+     },
+     "ahead": 114,
+     "median": 1.68,
+     "pieces": [
+      "brief:brief-courtroom_drama/craft share 0.196 effect 1.203 specialist 1.855",
+      "brief:brief-courtroom_drama/care share 0.163 effect 1.003 specialist 1.092",
+      "brief:brief-erotic_thriller/control share 0.125 effect 0.791 specialist 0.274",
+      "brief:brief-gothic_horror/inquiry share 0.16 effect 0.955 specialist 0.952",
+      "brief:brief-heist/recall share 0.187 effect 1.122 specialist 1.588",
+      "brief:brief-historical_fiction/learned share 0.198 effect 1.179 specialist 1.778",
+      "brief:brief-hood_film/own share 0.122 effect 0.744 specialist 0.115",
+      "brief:brief-legal_drama/counsel share 0.192 effect 1.163 specialist 1.7",
+      "brief:brief-medical_drama/numbers share 0.218 effect 1.389 specialist 2.477",
+      "brief:brief-period_drama/form share 0.137 effect 0.848 specialist 0.519",
+      "brief:brief-space_opera/grand share 0.144 effect 0.886 specialist 0.66",
+      "brief:brief-true_crime/rote share 0.174 effect 1.08 specialist 1.365",
+      "brief:brief-whodunit/sleuth share 0.285 effect 1.702 specialist 3.762",
+      "brief:brief-whodunit/danger share 0.207 effect 1.233 specialist 2.011",
+      "brief:brief-action-2/champion share 0.158 effect 1.13 specialist 1.314",
+      "brief:brief-alternate_history-2/calm share 0.17 effect 1.194 specialist 1.582",
+      "brief:brief-alternate_history-2/world share 0.167 effect 1.159 specialist 1.463",
+      "brief:brief-alternate_history-2/names share 0.171 effect 1.195 specialist 1.597",
+      "brief:brief-backstage_musical-2/sell share 0.169 effect 1.208 specialist 1.608",
+      "brief:brief-backstage_musical-2/hers share 0.156 effect 1.112 specialist 1.251",
+      "brief:brief-backstage_musical-2/company share 0.189 effect 1.349 specialist 2.139",
+      "brief:brief-biographical-2/mind share 0.185 effect 1.29 specialist 1.953",
+      "brief:brief-biographical-2/record share 0.172 effect 1.199 specialist 1.607",
+      "brief:brief-biographical-2/room share 0.161 effect 1.119 specialist 1.313",
+      "brief:brief-body_horror-2/becoming share 0.141 effect 0.995 specialist 0.818",
+      "brief:brief-caper-2/bait share 0.218 effect 1.417 specialist 2.544",
+      "brief:brief-caper-2/hero share 0.173 effect 1.112 specialist 1.413",
+      "brief:brief-chanbara-2/line share 0.19 effect 1.343 specialist 2.136",
+      "brief:brief-comedy-2/list share 0.175 effect 1.189 specialist 1.622",
+      "brief:brief-comedy-2/horn share 0.204 effect 1.387 specialist 2.369",
+      "brief:brief-comedy-2/tess share 0.175 effect 1.188 specialist 1.62",
+      "brief:brief-conspiracy_thriller-3/ledger share 0.197 effect 1.368 specialist 2.236",
+      "brief:brief-cosmic_horror-2/record share 0.188 effect 1.292 specialist 1.981",
+      "brief:brief-cosmic_horror-2/tomas share 0.157 effect 1.073 specialist 1.163",
+      "brief:brief-cosmic_horror-2/peace share 0.168 effect 1.155 specialist 1.471",
+      "brief:brief-crime-2/boy share 0.149 effect 0.979 specialist 0.856",
+      "brief:brief-crime-2/game share 0.204 effect 1.337 specialist 2.212",
+      "brief:brief-dance-2/promise share 0.22 effect 1.424 specialist 2.62",
+      "brief:brief-dance-2/two share 0.188 effect 1.219 specialist 1.842",
+      "brief:brief-docudrama-2/door share 0.152 effect 1.056 specialist 1.065",
+      "brief:brief-domestic_drama-2/sewing share 0.158 effect 1.02 specialist 1.049",
+      "brief:brief-domestic_drama-2/son share 0.16 effect 1.032 specialist 1.096",
+      "brief:brief-dystopian-2/spelling share 0.176 effect 1.218 specialist 1.68",
+      "brief:brief-epic-2/soldier share 0.205 effect 1.42 specialist 2.47",
+      "brief:brief-epic-2/orchard share 0.17 effect 1.182 specialist 1.571",
+      "brief:brief-experimental-2/list share 0.223 effect 1.462 specialist 2.732",
+      "brief:brief-experimental-2/her share 0.185 effect 1.199 specialist 1.756",
+      "brief:brief-fantasy-2/race share 0.193 effect 1.328 specialist 2.106",
+      "brief:brief-farce-3/ledger share 0.185 effect 1.323 specialist 2.045",
+      "brief:brief-farce-3/doors share 0.179 effect 1.273 specialist 1.863",
+      "brief:brief-farce-3/believer share 0.17 effect 1.213 specialist 1.64",
+      "brief:brief-film_noir-3/hands share 0.17 effect 1.189 specialist 1.581",
+      "brief:brief-horror_comedy-2/show share 0.186 effect 1.321 specialist 2.046",
+      "brief:brief-horror_comedy-2/made share 0.157 effect 1.117 specialist 1.277",
+      "brief:brief-horror_comedy-2/kids share 0.156 effect 1.112 specialist 1.252",
+      "brief:brief-isekai-2/fan share 0.219 effect 1.48 specialist 2.719",
+      "brief:brief-isekai-2/author share 0.197 effect 1.333 specialist 2.161",
+      "brief:brief-isekai-2/word share 0.203 effect 1.385 specialist 2.345",
+      "brief:brief-jidaigeki-2/rule share 0.187 effect 1.288 specialist 1.984",
+      "brief:brief-jidaigeki-2/face share 0.181 effect 1.243 specialist 1.813",
+      "brief:brief-jidaigeki-2/spear share 0.211 effect 1.442 specialist 2.572",
+      "brief:brief-jukebox_musical-3/floor share 0.188 effect 1.32 specialist 2.077",
+      "brief:brief-jukebox_musical-3/chair share 0.162 effect 1.133 specialist 1.373",
+      "brief:brief-jukebox_musical-3/uncle share 0.17 effect 1.188 specialist 1.582",
+      "brief:brief-legal_drama-2/advocate share 0.26 effect 1.676 specialist 3.509",
+      "brief:brief-legal_drama-2/fond share 0.214 effect 1.383 specialist 2.402",
+      "brief:brief-legal_drama-2/two share 0.216 effect 1.394 specialist 2.444",
+      "brief:brief-martial_arts-2/restraint share 0.168 effect 1.193 specialist 1.561",
+      "brief:brief-medical_drama-2/witness share 0.129 effect 0.852 specialist 0.401",
+      "brief:brief-melodrama-2/storm share 0.175 effect 1.241 specialist 1.746",
+      "brief:brief-melodrama-2/pride share 0.145 effect 1.03 specialist 0.94",
+      "brief:brief-musical-2/number share 0.23 effect 1.59 specialist 3.124",
+      "brief:brief-musical-2/love share 0.214 effect 1.473 specialist 2.693",
+      "brief:brief-mystery-2/reasoner share 0.196 effect 1.359 specialist 2.215",
+      "brief:brief-mystery-2/student share 0.164 effect 1.129 specialist 1.359",
+      "brief:brief-mystery-2/cornered share 0.18 effect 1.232 specialist 1.757",
+      "brief:brief-nature_documentary-2/storyteller share 0.213 effect 1.349 specialist 2.357",
+      "brief:brief-nature_documentary-2/clock share 0.24 effect 1.53 specialist 3.027",
+      "brief:brief-new_wave-3/narration share 0.151 effect 1.03 specialist 1.012",
+      "brief:brief-new_wave-3/waiting share 0.162 effect 1.103 specialist 1.284",
+      "brief:brief-occult-2/business share 0.14 effect 0.952 specialist 0.737",
+      "brief:brief-occult-2/pulled share 0.172 effect 1.16 specialist 1.532",
+      "brief:brief-picaresque-2/raconteur share 0.23 effect 1.56 specialist 3.014",
+      "brief:brief-picaresque-2/tired share 0.212 effect 1.433 specialist 2.542",
+      "brief:brief-picaresque-2/breath share 0.179 effect 1.22 specialist 1.722",
+      "brief:brief-police_procedural-2/procedure share 0.148 effect 0.961 specialist 0.825",
+      "brief:brief-political_drama-2/orator share 0.198 effect 1.395 specialist 2.327",
+      "brief:brief-political_drama-2/conscience share 0.165 effect 1.158 specialist 1.437",
+      "brief:brief-political_drama-2/walt share 0.179 effect 1.252 specialist 1.791",
+      "brief:brief-psychological_thriller-3/exact share 0.2 effect 1.385 specialist 2.282",
+      "brief:brief-revenge-2/stacked share 0.185 effect 1.283 specialist 1.931",
+      "brief:brief-revenge-2/straight share 0.152 effect 1.047 specialist 1.044",
+      "brief:brief-sea_adventure-2/shipmate share 0.14 effect 0.985 specialist 0.774",
+      "brief:brief-slice_of_life-2/properly share 0.158 effect 0.947 specialist 0.953",
+      "brief:brief-space_opera-2/order share 0.211 effect 1.481 specialist 2.663",
+      "brief:brief-space_opera-2/goodnight share 0.171 effect 1.198 specialist 1.6",
+      "brief:brief-space_opera-2/enemy share 0.178 effect 1.252 specialist 1.798",
+      "brief:brief-surrealist-2/home share 0.204 effect 1.352 specialist 2.317",
+      "brief:brief-surrealist-2/wish share 0.171 effect 1.132 specialist 1.495",
+      "brief:brief-surrealist-2/name share 0.181 effect 1.198 specialist 1.738",
+      "brief:brief-sword_and_sorcery-3/word share 0.178 effect 1.266 specialist 1.831",
+      "brief:brief-sword_and_sorcery-3/silence share 0.143 effect 1.014 specialist 0.888",
+      "brief:brief-tragedy-2/certain share 0.195 effect 1.367 specialist 2.229",
+      "brief:brief-tragedy-2/knows share 0.152 effect 1.058 specialist 1.07",
+      "brief:brief-tragedy-2/teacher share 0.164 effect 1.15 specialist 1.409",
+      "brief:brief-tragicomedy-3/half share 0.202 effect 1.418 specialist 2.427",
+      "brief:brief-tragicomedy-3/listeners share 0.172 effect 1.207 specialist 1.626",
+      "brief:brief-tragicomedy-3/line share 0.175 effect 1.219 specialist 1.684",
+      "brief:brief-whodunit-2/ear share 0.284 effect 1.912 specialist 4.348",
+      "brief:brief-whodunit-2/help share 0.23 effect 1.56 specialist 3.022",
+      "brief:brief-yakuza-3/room share 0.159 effect 1.123 specialist 1.298",
+      "night:A Midsummer Night’s Dream share 0.131 effect 0.922 specialist 0.524",
+      "night:Macbeth share 0.115 effect 0.805 specialist 0.089",
+      "night:Much Ado About Nothing share 0.111 effect 0.776 specialist -0.03",
+      "casting:Macbeth share 0.127 effect 0.835 specialist 0.365"
+     ]
+    },
+    "underATenth": {
+     "pairs": 447,
+     "ahead": 0
+    }
+   },
+   "adaptability": {
+    "budget": 600.0000000000001,
+    "own": {
+     "n": 43,
+     "kinds": {
+      "brief": 40,
+      "scene": 3
+     },
+     "ahead": 43,
+     "median": 1.564,
+     "pieces": [
+      "brief:brief-coming_of_age/loyal share 0.216 effect 1.257 specialist 2.105",
+      "brief:brief-docufiction/ordinary share 0.236 effect 1.373 specialist 2.537",
+      "brief:brief-docufiction/open share 0.328 effect 1.919 specialist 4.529",
+      "brief:brief-experimental/precision share 0.145 effect 0.88 specialist 0.64",
+      "brief:brief-experimental/reaction share 0.213 effect 1.294 specialist 2.17",
+      "brief:brief-found_footage/live share 0.244 effect 1.49 specialist 2.869",
+      "brief:brief-hangout/unsaid share 0.165 effect 0.994 specialist 1.089",
+      "brief:brief-mockumentary/believes share 0.227 effect 1.366 specialist 2.437",
+      "brief:brief-mockumentary/lens share 0.33 effect 2.019 specialist 4.811",
+      "brief:brief-mumblecore/small share 0.195 effect 1.122 specialist 1.65",
+      "brief:brief-mumblecore/friends share 0.226 effect 1.304 specialist 2.347",
+      "brief:brief-new_wave/whim share 0.241 effect 1.44 specialist 2.728",
+      "brief:brief-social_realism/organizer share 0.184 effect 1.097 specialist 1.489",
+      "brief:brief-stoner_comedy/dawning share 0.186 effect 1.117 specialist 1.558",
+      "brief:brief-absurdist-2/escape share 0.259 effect 1.642 specialist 3.383",
+      "brief:brief-absurdist-2/relief share 0.192 effect 1.219 specialist 1.814",
+      "brief:brief-black_comedy-2/goodbye share 0.181 effect 1.112 specialist 1.483",
+      "brief:brief-childrens-2/friend share 0.121 effect 0.742 specialist 0.12",
+      "brief:brief-christmas-3/live share 0.166 effect 1.108 specialist 1.322",
+      "brief:brief-docufiction-2/rules share 0.213 effect 1.269 specialist 2.105",
+      "brief:brief-docufiction-2/offers share 0.292 effect 1.738 specialist 3.807",
+      "brief:brief-documentary-2/him share 0.16 effect 1.024 specialist 1.095",
+      "brief:brief-eco_horror-2/out share 0.141 effect 0.923 specialist 0.659",
+      "brief:brief-family-2/spotter share 0.185 effect 1.175 specialist 1.647",
+      "brief:brief-found_footage-2/party share 0.203 effect 1.259 specialist 1.996",
+      "brief:brief-hangout-2/company share 0.25 effect 1.484 specialist 2.891",
+      "brief:brief-hangout-2/alone share 0.242 effect 1.438 specialist 2.741",
+      "brief:brief-hood_film-2/place share 0.147 effect 0.952 specialist 0.78",
+      "brief:brief-hood_film-2/nod share 0.167 effect 1.086 specialist 1.274",
+      "brief:brief-hood_film-2/party share 0.167 effect 1.072 specialist 1.238",
+      "brief:brief-mockumentary-2/invent share 0.2 effect 1.36 specialist 2.224",
+      "brief:brief-mockumentary-2/dream share 0.151 effect 1.023 specialist 0.974",
+      "brief:brief-mumblecore-2/cool share 0.184 effect 1.046 specialist 1.363",
+      "brief:brief-post_apocalyptic-2/teacher share 0.131 effect 0.818 specialist 0.374",
+      "brief:brief-road_movie-2/pitch share 0.193 effect 1.104 specialist 1.564",
+      "brief:brief-romantic_comedy-2/questions share 0.27 effect 1.572 specialist 3.279",
+      "brief:brief-slice_of_life-2/tour share 0.158 effect 0.95 specialist 0.904",
+      "brief:brief-stoner_comedy-2/honest share 0.17 effect 1.128 specialist 1.395",
+      "brief:brief-stoner_comedy-2/adrift share 0.218 effect 1.458 specialist 2.603",
+      "brief:brief-teen-2/hustle share 0.154 effect 0.979 specialist 0.934",
+      "scene:orig-night-desk share 0.172 effect 0.942 specialist 1.051",
+      "scene:orig-runway share 0.172 effect 0.942 specialist 1.051",
+      "scene:orig-hundred-questions share 0.172 effect 0.942 specialist 1.051"
+     ]
+    },
+    "underATenth": {
+     "pairs": 531,
+     "ahead": 0
+    }
+   },
+   "composure": {
+    "budget": 600.0000000000001,
+    "own": {
+     "n": 95,
+     "kinds": {
+      "brief": 92,
+      "night": 1,
+      "casting": 2
+     },
+     "ahead": 95,
+     "median": 1.632,
+     "pieces": [
+      "brief:brief-art_house/still share 0.157 effect 0.943 specialist 0.887",
+      "brief:brief-biker/hard share 0.236 effect 1.432 specialist 2.671",
+      "brief:brief-crime/business share 0.158 effect 0.926 specialist 0.863",
+      "brief:brief-dystopian/liar share 0.261 effect 1.718 specialist 3.616",
+      "brief:brief-dystopian/pleader share 0.202 effect 1.327 specialist 2.157",
+      "brief:brief-espionage/still share 0.343 effect 2.208 specialist 5.499",
+      "brief:brief-espionage/father share 0.242 effect 1.552 specialist 3.052",
+      "brief:brief-film_noir/cool share 0.15 effect 0.964 specialist 0.848",
+      "brief:brief-neo_noir/cool share 0.186 effect 1.127 specialist 1.542",
+      "brief:brief-neorealism/plain share 0.229 effect 1.411 specialist 2.62",
+      "brief:brief-nordic_noir/closed share 0.229 effect 1.419 specialist 2.625",
+      "brief:brief-nordic_noir/reach share 0.199 effect 1.216 specialist 1.868",
+      "brief:brief-psychological_thriller/right share 0.214 effect 1.249 specialist 2.036",
+      "brief:brief-rockumentary/pro share 0.149 effect 0.861 specialist 0.619",
+      "brief:brief-spaghetti_western/stone share 0.194 effect 1.163 specialist 1.669",
+      "brief:brief-sword_and_sandal/servant share 0.132 effect 0.796 specialist 0.361",
+      "brief:brief-thriller/steady share 0.17 effect 1.012 specialist 1.177",
+      "brief:brief-western/iron share 0.136 effect 0.865 specialist 0.511",
+      "brief:brief-adventure-2/silence share 0.135 effect 0.896 specialist 0.558",
+      "brief:brief-apocalyptic-2/ordinary share 0.27 effect 1.728 specialist 3.71",
+      "brief:brief-art_house-2/close share 0.218 effect 1.355 specialist 2.378",
+      "brief:brief-art_house-2/voice share 0.204 effect 1.273 specialist 2.052",
+      "brief:brief-art_house-2/found share 0.211 effect 1.313 specialist 2.213",
+      "brief:brief-biker-2/business share 0.236 effect 1.432 specialist 2.666",
+      "brief:brief-blaxploitation-2/cool share 0.192 effect 1.206 specialist 1.772",
+      "brief:brief-body_horror-2/lesson share 0.169 effect 1.196 specialist 1.558",
+      "brief:brief-christmas-3/suit share 0.126 effect 0.844 specialist 0.338",
+      "brief:brief-conspiracy_thriller-3/nerve share 0.237 effect 1.656 specialist 3.312",
+      "brief:brief-conspiracy_thriller-3/name share 0.178 effect 1.229 specialist 1.724",
+      "brief:brief-costume_drama-2/caution share 0.16 effect 1.015 specialist 1.066",
+      "brief:brief-courtroom_drama-2/right share 0.252 effect 1.626 specialist 3.312",
+      "brief:brief-creature_feature-2/measure share 0.153 effect 1.055 specialist 1.069",
+      "brief:brief-creature_feature-2/stubborn share 0.14 effect 0.956 specialist 0.712",
+      "brief:brief-drama-2/own share 0.282 effect 1.779 specialist 3.926",
+      "brief:brief-dystopian-2/sent share 0.172 effect 1.191 specialist 1.576",
+      "brief:brief-erotic_thriller-2/vote share 0.221 effect 1.5 specialist 2.77",
+      "brief:brief-erotic_thriller-2/want share 0.172 effect 1.16 specialist 1.508",
+      "brief:brief-espionage-2/never share 0.249 effect 1.606 specialist 3.23",
+      "brief:brief-fantasy-2/price share 0.157 effect 1.069 specialist 1.134",
+      "brief:brief-fantasy-2/meet share 0.156 effect 1.068 specialist 1.122",
+      "brief:brief-folk_horror-2/win share 0.119 effect 0.777 specialist 0.127",
+      "brief:brief-gangster-2/business share 0.304 effect 1.878 specialist 4.335",
+      "brief:brief-giallo-2/next share 0.179 effect 1.204 specialist 1.677",
+      "brief:brief-heist-2/pro share 0.198 effect 1.377 specialist 2.269",
+      "brief:brief-heist-2/pass share 0.153 effect 1.06 specialist 1.089",
+      "brief:brief-heist-2/pride share 0.154 effect 1.065 specialist 1.116",
+      "brief:brief-historical_drama-2/facts share 0.187 effect 1.223 specialist 1.806",
+      "brief:brief-historical_drama-2/neighbor share 0.179 effect 1.159 specialist 1.576",
+      "brief:brief-kitchen_sink-2/pride share 0.246 effect 1.66 specialist 3.386",
+      "brief:brief-kitchen_sink-2/sister share 0.183 effect 1.226 specialist 1.775",
+      "brief:brief-magical_realism-2/routine share 0.215 effect 1.375 specialist 2.428",
+      "brief:brief-martial_arts-2/endure share 0.157 effect 1.112 specialist 1.243",
+      "brief:brief-medical_drama-2/steady share 0.165 effect 1.088 specialist 1.269",
+      "brief:brief-military-2/light share 0.137 effect 0.903 specialist 0.569",
+      "brief:brief-neo_noir-2/cool share 0.204 effect 1.353 specialist 2.249",
+      "brief:brief-neo_noir-2/confession share 0.148 effect 0.974 specialist 0.848",
+      "brief:brief-neorealism-2/plain share 0.193 effect 1.319 specialist 2.093",
+      "brief:brief-neorealism-2/house share 0.156 effect 1.067 specialist 1.129",
+      "brief:brief-nordic_noir-2/method share 0.213 effect 1.356 specialist 2.347",
+      "brief:brief-nordic_noir-2/town share 0.186 effect 1.183 specialist 1.694",
+      "brief:brief-period_drama-2/ledger share 0.254 effect 1.594 specialist 3.25",
+      "brief:brief-political_thriller-2/neutral share 0.215 effect 1.461 specialist 2.624",
+      "brief:brief-political_thriller-2/defiance share 0.185 effect 1.249 specialist 1.841",
+      "brief:brief-prison_film-2/rules share 0.159 effect 1.051 specialist 1.132",
+      "brief:brief-psychological_horror-2/together share 0.175 effect 1.136 specialist 1.477",
+      "brief:brief-psychological_thriller-3/detail share 0.198 effect 1.364 specialist 2.235",
+      "brief:brief-queer_cinema-2/title share 0.195 effect 1.231 specialist 1.875",
+      "brief:brief-romantic_drama-2/listen share 0.159 effect 1.048 specialist 1.114",
+      "brief:brief-romantic_drama-2/plan share 0.172 effect 1.14 specialist 1.46",
+      "brief:brief-samurai-3/hunger share 0.127 effect 0.821 specialist 0.321",
+      "brief:brief-science_fantasy-2/letter share 0.166 effect 1.098 specialist 1.287",
+      "brief:brief-science_fiction-2/record share 0.215 effect 1.424 specialist 2.519",
+      "brief:brief-science_fiction-2/sister share 0.177 effect 1.172 specialist 1.574",
+      "brief:brief-science_fiction-2/afraid share 0.183 effect 1.208 specialist 1.718",
+      "brief:brief-slasher-2/medic share 0.174 effect 1.208 specialist 1.632",
+      "brief:brief-social_realism-2/braced share 0.228 effect 1.37 specialist 2.458",
+      "brief:brief-spaghetti_western-2/books share 0.232 effect 1.561 specialist 3.012",
+      "brief:brief-spaghetti_western-2/dare share 0.211 effect 1.412 specialist 2.458",
+      "brief:brief-spy-2/exact share 0.18 effect 1.175 specialist 1.617",
+      "brief:brief-supernatural-2/father share 0.193 effect 1.284 specialist 1.982",
+      "brief:brief-survival-2/mechanic share 0.143 effect 0.973 specialist 0.799",
+      "brief:brief-sword_and_sandal-2/devout share 0.131 effect 0.874 specialist 0.46",
+      "brief:brief-techno_thriller-2/script share 0.173 effect 1.171 specialist 1.538",
+      "brief:brief-techno_thriller-2/friend share 0.157 effect 1.061 specialist 1.132",
+      "brief:brief-techno_thriller-2/doubt share 0.157 effect 1.065 specialist 1.139",
+      "brief:brief-thriller-2/knows share 0.199 effect 1.378 specialist 2.288",
+      "brief:brief-thriller-2/believe share 0.167 effect 1.146 specialist 1.428",
+      "brief:brief-thriller-2/either share 0.168 effect 1.164 specialist 1.486",
+      "brief:brief-true_crime-2/record share 0.211 effect 1.431 specialist 2.511",
+      "brief:brief-true_crime-2/reckoning share 0.189 effect 1.274 specialist 1.932",
+      "brief:brief-western-2/street share 0.139 effect 0.921 specialist 0.645",
+      "brief:brief-western-2/decision share 0.138 effect 0.924 specialist 0.648",
+      "night:The Cherry Orchard share 0.119 effect 0.813 specialist 0.17",
+      "casting:Spring Awakening share 0.154 effect 0.853 specialist 0.766",
+      "casting:The Winter’s Tale share 0.136 effect 0.779 specialist 0.423"
+     ]
+    },
+    "underATenth": {
+     "pairs": 398,
+     "ahead": 0
+    }
+   },
+   "vocal": {
+    "budget": 600.0000000000001,
+    "own": {
+     "n": 52,
+     "kinds": {
+      "brief": 44,
+      "scene": 1,
+      "night": 2,
+      "casting": 2,
+      "coursework": 3
+     },
+     "ahead": 51,
+     "median": 1.829,
+     "pieces": [
+      "brief:brief-animated/brag share 0.319 effect 1.984 specialist 4.707",
+      "brief:brief-animated/brave share 0.222 effect 1.398 specialist 2.514",
+      "brief:brief-backstage_musical/nerve share 0.128 effect 0.836 specialist 0.406",
+      "brief:brief-backstage_musical/number share 0.172 effect 1.146 specialist 1.544",
+      "brief:brief-documentary/narration share 0.256 effect 1.6 specialist 3.271",
+      "brief:brief-epic/courtier share 0.152 effect 0.98 specialist 0.959",
+      "brief:brief-film_noir/two share 0.127 effect 0.818 specialist 0.336",
+      "brief:brief-isekai/audit share 0.2 effect 1.269 specialist 2.017",
+      "brief:brief-isekai/nobody share 0.216 effect 1.366 specialist 2.379",
+      "brief:brief-jukebox_musical/dare share 0.181 effect 1.192 specialist 1.717",
+      "brief:brief-jukebox_musical/apology share 0.204 effect 1.364 specialist 2.335",
+      "brief:brief-kitchen_sink/angry share 0.138 effect 0.87 specialist 0.556",
+      "brief:brief-melodrama/full share 0.166 effect 1.075 specialist 1.304",
+      "brief:brief-musical/farewell share 0.184 effect 1.247 specialist 1.876",
+      "brief:brief-nature_documentary/observer share 0.207 effect 1.32 specialist 2.192",
+      "brief:brief-nature_documentary/story share 0.162 effect 1.032 specialist 1.126",
+      "brief:brief-anime-2/strain share 0.251 effect 1.756 specialist 3.709",
+      "brief:brief-anime-2/sister share 0.189 effect 1.321 specialist 2.075",
+      "brief:brief-avant_garde-2/score share 0.21 effect 1.369 specialist 2.4",
+      "brief:brief-avant_garde-2/freed share 0.169 effect 1.082 specialist 1.356",
+      "brief:brief-concert_film-2/pro share 0.198 effect 1.351 specialist 2.222",
+      "brief:brief-concert_film-2/song share 0.182 effect 1.248 specialist 1.825",
+      "brief:brief-concert_film-2/wings share 0.172 effect 1.174 specialist 1.55",
+      "brief:brief-dark_fantasy-2/mercy share 0.151 effect 1.014 specialist 0.985",
+      "brief:brief-dark_fantasy-2/voices share 0.225 effect 1.512 specialist 2.855",
+      "brief:brief-disaster-2/anchor share 0.189 effect 1.291 specialist 1.987",
+      "brief:brief-disaster-2/listener share 0.157 effect 1.068 specialist 1.156",
+      "brief:brief-documentary-2/film share 0.15 effect 0.949 specialist 0.85",
+      "brief:brief-fairy_tale-2/vain share 0.225 effect 1.514 specialist 2.864",
+      "brief:brief-fairy_tale-2/keeper share 0.168 effect 1.137 specialist 1.438",
+      "brief:brief-fairy_tale-2/bell share 0.17 effect 1.151 specialist 1.488",
+      "brief:brief-gothic_horror-3/record share 0.221 effect 1.481 specialist 2.738",
+      "brief:brief-gothic_horror-3/door share 0.19 effect 1.269 specialist 1.954",
+      "brief:brief-gothic_horror-3/hand share 0.248 effect 1.666 specialist 3.435",
+      "brief:brief-holiday-2/policy share 0.191 effect 1.142 specialist 1.673",
+      "brief:brief-horror-2/steady share 0.199 effect 1.335 specialist 2.19",
+      "brief:brief-parody-2/epic share 0.249 effect 1.549 specialist 3.125",
+      "brief:brief-rockumentary-2/show share 0.148 effect 0.977 specialist 0.889",
+      "brief:brief-rockumentary-2/song share 0.126 effect 0.837 specialist 0.347",
+      "brief:brief-satire-2/company share 0.207 effect 1.295 specialist 2.163",
+      "brief:brief-sword_and_sandal-2/shrewd share 0.107 effect 0.707 specialist -0.138",
+      "brief:brief-tokusatsu-2/hero share 0.234 effect 1.581 specialist 3.098",
+      "brief:brief-tokusatsu-2/cadets share 0.171 effect 1.145 specialist 1.473",
+      "brief:brief-tokusatsu-2/suit share 0.184 effect 1.241 specialist 1.833",
+      "scene:henry5-4-3 share 0.142 effect 0.868 specialist 0.603",
+      "night:Julius Caesar share 0.15 effect 1.06 specialist 1.051",
+      "night:Riders To The Sea share 0.159 effect 1.089 specialist 1.196",
+      "casting:Julius Caesar share 0.167 effect 1.11 specialist 1.397",
+      "casting:Riders To The Sea share 0.164 effect 1.083 specialist 1.319",
+      "coursework:voice-sequence share 0.485 effect 3.084 specialist 8.67",
+      "coursework:speech-drill share 0.468 effect 2.881 specialist 7.278",
+      "coursework:song share 0.309 effect 1.344 specialist 2.886"
+     ]
+    },
+    "underATenth": {
+     "pairs": 613,
+     "ahead": 0
+    }
+   },
+   "physical": {
+    "budget": 600.0000000000001,
+    "own": {
+     "n": 55,
+     "kinds": {
+      "brief": 48,
+      "night": 2,
+      "casting": 3,
+      "coursework": 2
+     },
+     "ahead": 55,
+     "median": 1.488,
+     "pieces": [
+      "brief:brief-action/clock share 0.197 effect 1.251 specialist 1.98",
+      "brief:brief-action_comedy/cake share 0.227 effect 1.46 specialist 2.764",
+      "brief:brief-biographical/likeness share 0.156 effect 1.016 specialist 1.091",
+      "brief:brief-chanbara/form share 0.201 effect 1.327 specialist 2.22",
+      "brief:brief-chanbara/teacher share 0.155 effect 1.016 specialist 1.065",
+      "brief:brief-costume_drama/form share 0.148 effect 0.944 specialist 0.859",
+      "brief:brief-dance/legacy share 0.211 effect 1.412 specialist 2.516",
+      "brief:brief-dance/farewell share 0.184 effect 1.201 specialist 1.771",
+      "brief:brief-exploitation/player share 0.157 effect 0.989 specialist 1.018",
+      "brief:brief-farce/calm share 0.22 effect 1.405 specialist 2.571",
+      "brief:brief-farce/panic share 0.244 effect 1.573 specialist 3.19",
+      "brief:brief-jidaigeki/forms share 0.139 effect 0.906 specialist 0.66",
+      "brief:brief-martial_arts/form share 0.204 effect 1.311 specialist 2.189",
+      "brief:brief-samurai/duty share 0.199 effect 1.308 specialist 2.156",
+      "brief:brief-silent_film/clown share 0.261 effect 1.653 specialist 3.468",
+      "brief:brief-silent_film/heart share 0.169 effect 1.068 specialist 1.285",
+      "brief:brief-slapstick/dignity share 0.223 effect 1.414 specialist 2.593",
+      "brief:brief-slapstick/panic share 0.253 effect 1.611 specialist 3.326",
+      "brief:brief-superhero/cost share 0.17 effect 1.117 specialist 1.421",
+      "brief:brief-swashbuckler/play share 0.197 effect 1.291 specialist 2.086",
+      "brief:brief-swashbuckler/stall share 0.166 effect 1.085 specialist 1.324",
+      "brief:brief-sword_and_sorcery/blade share 0.177 effect 1.145 specialist 1.53",
+      "brief:brief-war/medic share 0.173 effect 1.119 specialist 1.439",
+      "brief:brief-wuxia/code share 0.201 effect 1.296 specialist 2.111",
+      "brief:brief-action_comedy-2/book share 0.16 effect 1.073 specialist 1.248",
+      "brief:brief-action_comedy-2/stunt share 0.209 effect 1.399 specialist 2.462",
+      "brief:brief-animated-3/weight share 0.205 effect 1.407 specialist 2.441",
+      "brief:brief-buddy_comedy-2/poles share 0.202 effect 1.312 specialist 2.216",
+      "brief:brief-chase-2/race share 0.199 effect 1.309 specialist 2.153",
+      "brief:brief-exploitation-2/cool share 0.144 effect 0.953 specialist 0.786",
+      "brief:brief-grindhouse-2/calm share 0.187 effect 1.28 specialist 1.968",
+      "brief:brief-grindhouse-2/stunt share 0.216 effect 1.476 specialist 2.707",
+      "brief:brief-monster_movie-2/leader share 0.135 effect 0.917 specialist 0.605",
+      "brief:brief-samurai-3/pride share 0.128 effect 0.834 specialist 0.37",
+      "brief:brief-silent_film-3/calls share 0.171 effect 1.151 specialist 1.488",
+      "brief:brief-silent_film-3/own share 0.148 effect 1.002 specialist 0.929",
+      "brief:brief-silent_film-3/eyes share 0.151 effect 1.007 specialist 0.961",
+      "brief:brief-slapstick-2/sport share 0.205 effect 1.349 specialist 2.33",
+      "brief:brief-splatter-2/farmer share 0.158 effect 1.024 specialist 1.089",
+      "brief:brief-steampunk-2/hands share 0.163 effect 1.055 specialist 1.185",
+      "brief:brief-superhero-2/public share 0.167 effect 1.002 specialist 1.147",
+      "brief:brief-swashbuckler-2/blade share 0.197 effect 1.345 specialist 2.213",
+      "brief:brief-swashbuckler-2/rogue share 0.151 effect 1.044 specialist 1.065",
+      "brief:brief-swashbuckler-2/respect share 0.156 effect 1.055 specialist 1.131",
+      "brief:brief-war-2/hunted share 0.156 effect 1.092 specialist 1.214",
+      "brief:brief-western-2/craft share 0.14 effect 0.927 specialist 0.688",
+      "brief:brief-wuxia-2/eager share 0.193 effect 1.261 specialist 1.966",
+      "brief:brief-wuxia-2/student share 0.166 effect 1.067 specialist 1.265",
+      "night:Woyzeck share 0.138 effect 0.964 specialist 0.698",
+      "night:The Bear share 0.164 effect 1.141 specialist 1.372",
+      "casting:Woyzeck share 0.161 effect 0.987 specialist 1.091",
+      "casting:The Bear share 0.173 effect 1.154 specialist 1.594",
+      "casting:Salomé share 0.151 effect 0.955 specialist 0.925",
+      "coursework:movement-score share 0.319 effect 1.882 specialist 4.74",
+      "coursework:alexander-practice share 0.497 effect 3.142 specialist 8.653"
+     ]
+    },
+    "underATenth": {
+     "pairs": 621,
+     "ahead": 0
+    }
+   },
+   "discipline": {
+    "budget": 600.0000000000001,
+    "own": {
+     "n": 17,
+     "kinds": {
+      "brief": 7,
+      "scene": 3,
+      "night": 7
+     },
+     "ahead": 17,
+     "median": 1.452,
+     "pieces": [
+      "brief:brief-action-2/corner share 0.157 effect 1.118 specialist 1.259",
+      "brief:brief-action-2/roof share 0.155 effect 1.105 specialist 1.211",
+      "brief:brief-docudrama-2/delegate share 0.166 effect 1.162 specialist 1.452",
+      "brief:brief-psychological_thriller-3/studying share 0.181 effect 1.251 specialist 1.789",
+      "brief:brief-sea_adventure-2/command share 0.168 effect 1.187 specialist 1.518",
+      "brief:brief-yakuza-3/form share 0.195 effect 1.382 specialist 2.246",
+      "brief:brief-yakuza-3/between share 0.154 effect 1.083 specialist 1.138",
+      "scene:seagull-4 share 0.205 effect 1.234 specialist 1.945",
+      "scene:muchado-4-1 share 0.141 effect 0.834 specialist 0.499",
+      "scene:orig-the-reception share 0.175 effect 0.981 specialist 1.137",
+      "night:Three Sisters share 0.226 effect 1.589 specialist 3.083",
+      "night:Spring Awakening share 0.218 effect 1.554 specialist 2.92",
+      "night:Twelfth Night share 0.134 effect 0.955 specialist 0.628",
+      "night:Measure For Measure share 0.151 effect 1.06 specialist 1.062",
+      "night:The Winter’s Tale share 0.188 effect 1.35 specialist 2.133",
+      "night:A Doll’s House share 0.177 effect 1.227 specialist 1.723",
+      "night:The Playboy Of The Western World share 0.151 effect 1.075 specialist 1.098"
+     ]
+    },
+    "underATenth": {
+     "pairs": 640,
+     "ahead": 0
+    }
+   },
+   "stamina": {
+    "budget": 600,
+    "own": {
+     "n": 37,
+     "kinds": {
+      "brief": 24,
+      "scene": 13
+     },
+     "ahead": 37,
+     "median": 0.807,
+     "pieces": [
+      "brief:brief-adventure/quest share 0.133 effect 0.85 specialist 0.366",
+      "brief:brief-docudrama/witness share 0.144 effect 0.941 specialist 0.668",
+      "brief:brief-musical/persuade share 0.16 effect 1.081 specialist 1.103",
+      "brief:brief-samurai/debt share 0.157 effect 1.039 specialist 1.007",
+      "brief:brief-sea_adventure/craft share 0.145 effect 0.948 specialist 0.687",
+      "brief:brief-superhero/sister share 0.17 effect 1.126 specialist 1.316",
+      "brief:brief-action_comedy-2/kid share 0.16 effect 1.076 specialist 1.105",
+      "brief:brief-animated-3/teacher share 0.16 effect 1.103 specialist 1.121",
+      "brief:brief-animated-3/proud share 0.147 effect 1.014 specialist 0.796",
+      "brief:brief-body_horror-2/marriage share 0.158 effect 1.123 specialist 1.113",
+      "brief:brief-buddy_comedy-2/laugh share 0.159 effect 1.027 specialist 1.026",
+      "brief:brief-chanbara-2/teacher share 0.149 effect 1.059 specialist 0.879",
+      "brief:brief-chanbara-2/painter share 0.158 effect 1.122 specialist 1.105",
+      "brief:brief-chase-2/pace share 0.148 effect 0.971 specialist 0.758",
+      "brief:brief-chase-2/husband share 0.145 effect 0.958 specialist 0.709",
+      "brief:brief-family-2/son share 0.139 effect 0.887 specialist 0.53",
+      "brief:brief-film_noir-3/working share 0.151 effect 1.052 specialist 0.907",
+      "brief:brief-film_noir-3/tired share 0.153 effect 1.067 specialist 0.961",
+      "brief:brief-martial_arts-2/brother share 0.161 effect 1.142 specialist 1.182",
+      "brief:brief-melodrama-2/child share 0.143 effect 1.011 specialist 0.708",
+      "brief:brief-screwball_comedy-2/caught share 0.161 effect 1.08 specialist 1.123",
+      "brief:brief-slapstick-2/father share 0.169 effect 1.12 specialist 1.321",
+      "brief:brief-sword_and_sorcery-3/faith share 0.142 effect 1.002 specialist 0.675",
+      "brief:brief-war-2/book share 0.147 effect 1.032 specialist 0.807",
+      "scene:julie share 0.124 effect 0.746 specialist 0.149",
+      "scene:richard3-1-2 share 0.124 effect 0.77 specialist 0.166",
+      "scene:othello-4-3 share 0.18 effect 1.132 specialist 1.495",
+      "scene:bacchae-451 share 0.145 effect 0.899 specialist 0.661",
+      "scene:agamemnon-855 share 0.121 effect 0.735 specialist 0.088",
+      "scene:rising-moon share 0.138 effect 0.857 specialist 0.499",
+      "scene:hamlet-3-4 share 0.149 effect 0.934 specialist 0.769",
+      "scene:caesar-4-3 share 0.121 effect 0.739 specialist 0.085",
+      "scene:dream-3-2 share 0.151 effect 0.942 specialist 0.804",
+      "scene:weavers-1 share 0.154 effect 0.94 specialist 0.844",
+      "scene:caesar-3-2 share 0.149 effect 0.934 specialist 0.767",
+      "scene:dream-5-1 share 0.151 effect 0.959 specialist 0.826",
+      "scene:scapin-3-2 share 0.183 effect 1.183 specialist 1.623"
+     ]
+    },
+    "underATenth": {
+     "pairs": 516,
+     "ahead": 0
+    }
+   }
+  },
+  "bestAllocation": {
+   "brief": {
+    "physical": 51,
+    "emotionalDepth": 181,
+    "focus": 52,
+    "imagination": 47,
+    "vocal": 45,
+    "composure": 91,
+    "memory": 116,
+    "adaptability": 41,
+    "listening": 12,
+    "stamina": 13,
+    "discipline": 7,
+    "even": 1
+   },
+   "scene": {
+    "discipline": 4,
+    "emotionalDepth": 14,
+    "focus": 10,
+    "listening": 17,
+    "stamina": 11,
+    "imagination": 4,
+    "adaptability": 3,
+    "vocal": 1,
+    "presence": 3
+   },
+   "night": {
+    "emotionalDepth": 6,
+    "focus": 3,
+    "physical": 2,
+    "discipline": 7,
+    "imagination": 3,
+    "composure": 1,
+    "even": 2,
+    "listening": 2,
+    "vocal": 2,
+    "memory": 2
+   },
+   "casting": {
+    "emotionalDepth": 6,
+    "focus": 3,
+    "physical": 3,
+    "composure": 7,
+    "imagination": 1,
+    "listening": 5,
+    "memory": 3,
+    "vocal": 2
+   },
+   "coursework": {
+    "vocal": 3,
+    "physical": 2,
+    "listening": 3,
+    "focus": 2,
+    "emotionalDepth": 2,
+    "presence": 1
+   }
+  },
+  "generalist": {
+   "n": 797,
+   "aheadOfHalf": 797,
+   "withinAPoint": 183
+  },
+  "mastery": {
+   "cases": 3188,
+   "off100": 0,
+   "first": []
+  }
+ }
+}

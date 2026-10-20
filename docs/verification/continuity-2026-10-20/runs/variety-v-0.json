@@ -1,0 +1,54 @@
+{
+ "seed": "v-0",
+ "years": 3,
+ "ended": "2029-08-23",
+ "standing": "graduated",
+ "pool": {
+  "scenes": 67,
+  "plays": 30,
+  "exercises": 27
+ },
+ "coursework": {
+  "set": 275,
+  "withScene": 81,
+  "distinctScenes": 64,
+  "longestSameSceneInARow": 1,
+  "longestSameSceneInACourse": 1,
+  "metAgain": 17,
+  "metAgainAskingSomethingNew": 17,
+  "longestSamePartnerInACourse": 1,
+  "partnersUsed": 15,
+  "classSize": 15,
+  "objectives": 5
+ },
+ "recommendations": {
+  "weeks": 157,
+  "weeksWithOne": 154,
+  "distinctTops": 8,
+  "longestIgnored": 2,
+  "longestStuck": 0,
+  "longestUnresolved": 2,
+  "recommendedAtFull": 0
+ },
+ "practice": {
+  "hours": 2116,
+  "distinctSituations": 48,
+  "longestSameSituationInARow": 3,
+  "longestSameFeedbackInARow": 1,
+  "distinctFeedback": 2116
+ },
+ "productions": {
+  "met": 8,
+  "directed": 3,
+  "notes": 33,
+  "notesAgainAfterTakenUnsaid": 0,
+  "sameNoteTextInARow": 1
+ },
+ "choices": {
+  "weeksWithNoWorkDecision": 72,
+  "weeks": 157,
+  "note": "Practice’s exercise, tier and focus are a choice every day; this counts weeks with no moment to answer and no scene to choose a way of playing."
+ },
+ "breaches": 0,
+ "unbalanced": 0
+}

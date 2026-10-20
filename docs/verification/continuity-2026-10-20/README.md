@@ -383,7 +383,44 @@ session, the before walk's), so both walks read the same lives.
 
 ## The Final Runs
 
-⟦runs⟧
+`runs/README.md` has each output, its command and its result, and `final/README.md` the judge's. Every one ran on
+`ecd961cc`, in clones, each step's exit written to `runs/exits-<lane>.txt`, every one 0 but banking's two (below).
+
+- **The judge** (`final/`): all 37 JSON and Markdown outputs are brief 16's byte for byte, so the 36 figures are, and
+  RULESET stays evaluation-11.
+- **The built app,** on the saves the tested commit wrote:
+  - the acceptance walk 77 of 77 at each width, with no errors and no overflows;
+  - brief 13's playthroughs at each width: normal 14 of 14, setback 9 of 9, specialist 11 of 11 (`interface-final/`);
+  - brief 14's journeys (`journeys14-final/`): document 8 of 8 and health 10 of 10. Banking is 9 of 10 at each width:
+    its step 8 is brief 14's `journeys-3`, the engine's week planning, left for the owner, and it fails as brief 16's did.
+- **The long runs:** 24 lives, 20 graduated and the autopilot control's 4 dismissed, as in brief 16. With the fix, 9
+  lives differ, and none ended otherwise or on another day. Three workloads each have one fewer piece Unready in their
+  fourth term. One plan masters slapstick on December 29, 2030, a day after brief 16's December 28, and with the fix
+  taken out it's the 28th again.
+- **The advice:** brief 16's in every number, with the fix and without it; F2-A 40 of 40.
+- **The journeys** (`journeys-final/`): brief 13's 25, played to the end, all ten checks passed on each. Each ends as
+  brief 16's but F2: its fourth term review, on December 8, 2028, is good, where brief 16's was concern, with 22 of its
+  45 pieces Unready where brief 16 had 24. With the fix taken out it's concern again, at 24.
+
+**The words and the fix, held apart** (`numbers-same.py`, `numbers-same.json`):
+- **Brief 16's runs against the fix taken out:** every number the same, the judge's 35 files and the runs' 17 identical, the
+  advice's and the journeys' differing only in each run's own record, the notices' counts and the counts of words. Every
+  day and title brief 16's journeys had is kept; what's had more is notices that now differ from the one before, and
+  what's had fewer is Incompletes, now one notice a review. Every word brief 17 changed changed no play.
+- **The fix taken out against the tested commit:** 10 of the runs' 17 files differ (the lives, five plans, variety and three
+  workloads), none of the advice's, and 20 of the 25 journeys. Each journey first differs on a classmate's day, with
+  everything before it the same. The fix is the whole of the difference.
+
+**What the runs found in the tools, not the game** (`runs/README.md`, Found In The Runs). Each tool was put right and
+its lanes played again on the tested commit's game:
+- **The journeys' check 8** failed F1 in its fourth term: "the warning counted 13, the review 12". A piece shown Unready
+  before the warning was revised to Working after it, and the review reads a revision's band. Both were true when said.
+  The check now allows the warning to exceed the review by such pieces, and only by them.
+- **The advice harness's S3** read 1,836 Profile cards as stale for their words alone, because the profile editor
+  names an aim that took over ("Adaptability is still at 34"). It reads that too now.
+- **The journeys' recheck,** run for the corrected check 8, wrote each journey's first three parts again without what
+  they'd counted at their end. It leaves them now, and the journeys were played again from the start, so every part's
+  output is the one its play wrote.
 
 ## The Gate
 
@@ -403,6 +440,10 @@ New:
   classmate, each classmate's way, the migration, and the moments list untouched.
 - `editorial17-coordinator.test.ts` (1), `editorial17-money.test.ts` (18), `editorial17-papers.test.ts` (5),
   `editorial17-school.test.ts` (13), `language-care17.test.ts` (4): the editors' claims.
+
+Changed after the final runs were read: `decisions-advice.test.ts` gained a guard for the advice harness's S3, which
+reads a standing that names its input at the level it says and still finds one that says another. Run with S3's new
+reading taken out, it fails.
 
 **Mutations.**
 - The coordinator's claims, run with each taken out: 13 of 13 fail a test (`coordinator/mutations.txt`, by

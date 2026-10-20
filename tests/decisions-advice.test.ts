@@ -849,6 +849,20 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(changesOf(f, adviceFor(f, f.player)).filter((x) => x.unexplained).map((x) => x.since)).toEqual(['last']);
   }, 240_000);
 
+  it('GUARD: S3 reads a standing that names its input, as one that took the lead from another says it (“Adaptability is still at 34”), at the level it says, and still finds one that says another', () => {
+    // From 2026-10-20: until then S3 read only “It’s still at 34”, and brief 17's final advice runs read 1,836 standings
+    // named this way as stale, every figure in them right. The standing is the engine's wording (`next-steps.ts`).
+    const { sim } = tuning('adv-t-19');
+    const recs = adviceFor(sim, sim.player);
+    expect(staleOf(sim, recs)).toEqual([]);
+    const first = recs.find((r) => r.forecast)!;
+    const name = `${first.label.charAt(0)}${first.label.slice(1).toLowerCase()}`;
+    const level = Math.round(levelOf(sim, sim.player, first.target as never) * 10) / 10;
+    const said = (at: number) => recs.map((r) => (r === first ? { ...r, standing: `${name} is still at ${at}, and its forecast is still ${exact(first.forecast).toFixed(2)} a piece.` } : r));
+    expect(staleOf(sim, said(level))).toEqual([]);
+    expect(staleOf(sim, said(level + 1))).toEqual([`S3: ${first.target}’s level now, ${level}, isn’t what the standing says`]);
+  }, 240_000);
+
   it('PLAYER JOURNEY: the forecast’s growth is the progression model’s: on the first-named’s ladder it never rises with the level and falls below three quarters of full; the forecast is within (e)’s tolerance of what twenty sessions brought, read under its own assumptions', () => {
     // adv-t-1, developing, its first-named below three quarters; adv-t-19, near mastery, past it; adv-t-6, advanced, where
     // (e) as written missed in brief 10 and brief 11.

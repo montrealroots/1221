@@ -450,7 +450,11 @@ export function staleOf(sim: Simulation, recs: readonly Recommendation[]): strin
     if (now === undefined) out.push(`S3: ${first.target} has no forecast now`);
     else if (first.standing.includes(' when you last saw it, on ')) { if (!first.standing.includes('on your recent work, so it’s dropped out') && !at(now).some((s) => first.standing!.includes(`${first.label.charAt(0)}${first.label.slice(1).toLowerCase()}’s forecast is now the higher, at ${s}`))) out.push(`S3: ${first.target}’s forecast now, ${now}, isn’t what the standing says`); }
     else {
-      if (!first.standing.includes(`It’s still at ${level}`) && !first.standing.includes(` to ${level}, and its forecast from`) && !first.standing.includes(` to ${level}, and its forecast is still`)) out.push(`S3: ${first.target}’s level now, ${level}, isn’t what the standing says`);
+      // Named where it took over from another (from 2026-10-20, brief 17's profile editor: "Adaptability is still at 34",
+      // so "it" can't be read as the one before); until then only "It’s still at 34" was read, and brief 17's final
+      // advice runs had 1,836 reads stale for the words alone, every figure in them right.
+      const named = `${first.label.charAt(0)}${first.label.slice(1).toLowerCase()} is still at ${level}`;
+      if (!first.standing.includes(`It’s still at ${level}`) && !first.standing.includes(named) && !first.standing.includes(` to ${level}, and its forecast from`) && !first.standing.includes(` to ${level}, and its forecast is still`)) out.push(`S3: ${first.target}’s level now, ${level}, isn’t what the standing says`);
       if (!at(now).some((s) => first.standing!.includes(` to ${s} a piece`) || first.standing!.includes(`its forecast is still ${s} a piece`))) out.push(`S3: ${first.target}’s forecast now, ${now}, isn’t what the standing says`);
     }
   }

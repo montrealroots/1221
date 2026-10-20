@@ -16,7 +16,9 @@ file of the other side:
 
 A string is words when it holds a space or a capital letter; otherwise it's an id, a kind, a date or a key, and it's
 compared. What's explained, read from where the tools write it, never one difference waved through by its value:
-- **the run's own record:** the commit a run was made on, the files it read, the seconds it took;
+- **the run's own record:** the commit a run was made on, whether its tracked tree was clean (the advice's runs were
+  made with `tools/advice-harness.ts` changed, and the fix-off's with its patch too: their exits count them), the files
+  it read, the seconds it took;
 - **figures.json:** written after the runs, from them, and compared by criteria.py figure by figure;
 - **a count of notices:** a notice merges into an unread one with the same title and body (`Simulation.notify`), so a
   rewrite that makes two bodies differ, or alike, changes how many merge. The events they tell of are compared apart;
@@ -31,7 +33,7 @@ B16 = 'docs/verification/voices-2026-10-20'      # brief 16's final runs
 B17 = 'docs/verification/continuity-2026-10-20'  # brief 17's, on the tested commit
 OFF = f'{B17}/fixoff'                             # brief 17's with the fix taken out
 EXPLAINED = [
-    (r'^\.commits?(\[\d+\])?$|^\.files\[\d+\]$|^(\[\d+\])?\.secs$|^\.parts\[\d+\]\.secs$', 'the run’s own record: its commit, the files it read, its seconds'),
+    (r'^\.commits?(\[\d+\])?$|^\.clean$|^\.files\[\d+\]$|^(\[\d+\])?\.secs$|^\.parts\[\d+\]\.secs$', 'the run’s own record: its commit, whether its tree was clean, the files it read, its seconds'),
     (r'^\.notices$|^\.notices\[\d+\]|^\.shownNotices$', 'a count of notices: a rewrite changes which merge; the events are compared apart'),
     (r'^\.continuity\.(saidAgain|sameWordsTwice|advice\.wordsOnlyChanges|advice\.longRuns\[\d+\]\.stripped)', 'a measure of words: the journeys’ continuity counts text'),
     (r'^\.results\[\d+\]\.suggestionsFromRecord$', 'a measure of words: freshness finds a suggestion by its phrases'),
