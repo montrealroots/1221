@@ -274,9 +274,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.needs]": {
   "status": "Rewritten",
-  "hash": "108af5a307be",
+  "hash": "55908603ee1d",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts --guide (brief 16): the answer step said It does what the same button does; it now names What Needs You and the question’s own screen, with File It on Papers as the example (world.ts runs the same command); tests/guide-examples-start-day-body.test.ts passes.",
+  "evidence": "the life editor traced world.take_decision_action: an answer runs the same command, its label not always the same (Reactivate on Money); tests/guide-examples-start-day-body.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.plans]": {
@@ -3284,9 +3284,9 @@
  },
  "src/ui/shell/TimeControls.tsx#DueNow": {
   "status": "Rewritten",
-  "hash": "8163eef59f71",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'the stop says it needs you now, what going takes, and what a plan of your own and the world’s own each offer', both variants",
+  "hash": "60f93e26f6d3",
+  "on": "2026-10-20",
+  "evidence": "tests/language-frame-ui.test.ts draws the stop for a paper visit and a doctor's appointment, each checked against present and presentForCare",
   "first": "Pending"
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {

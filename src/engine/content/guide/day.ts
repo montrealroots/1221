@@ -311,11 +311,11 @@ export const DAY: readonly GuideEntry[] = [
     ],
     needs: [
       `The panel, Mark Read, the answers and Dismiss open with ${chapter('needs')}.`,
-      'An answer does what the same button does on its own screen, so that screen’s chapter has to have been read too.',
+      'An answer does what the same action does on its own screen, so that screen’s chapter has to have been read too.',
     ],
     costs: [
       { label: 'Time', value: 'None: reading, dismissing and marking read move no clock' },
-      { label: 'Money', value: 'None for the panel. An answer costs what the same button costs on its own screen, a fee or a payment.' },
+      { label: 'Money', value: 'None for the panel. An answer costs what the same action costs on its own screen, a fee or a payment.' },
     ],
     reads: [
       { label: 'A Question’s Urgency', value: 'Out of a hundred. Overdue ones come first, then the most urgent, then the soonest due.' },

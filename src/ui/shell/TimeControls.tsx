@@ -21,6 +21,8 @@ import {
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
 import { PARTNER_KIND } from '@/engine/systems/coursework';
+import { APPOINTMENT_KIND } from '@/engine/systems/appointments';
+import { THERAPY_SESSION_KIND } from '@/engine/systems/therapy';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { Gated, useFeature } from '@/ui/guide/Guide';
@@ -283,6 +285,9 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
   const { run, toast } = useGame();
   const mine = item.kind === PLAN_KIND;
   const partner = item.kind === PARTNER_KIND;
+  // Your own care asks only that you're awake and out of hospital (`presentForCare`); anything else, that you're in its
+  // town and not laid up by an injury too (`present`).
+  const care = item.kind === APPOINTMENT_KIND || item.kind === THERAPY_SESSION_KIND;
   const runs = item.durationMinutes ?? 0;
   // A rehearsal with a partner can be called off even now, late (from 2026-10-12): until then this said it wasn’t
   // the player’s to walk away from, while Call It Off on the Coursework tab worked at this very moment.
@@ -316,8 +321,11 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
       </p>
       {!mine && !partner && (
         <p className="small muted">
-          You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait. It
-          happens the next time the clock moves, and you’re there if you’re awake and in the right city.
+          {/* What starts and who's there, said (from 2026-10-20, brief 16, section 8): until then "It happens the next time
+              the clock moves, and you’re there if you’re awake and in the right city", which left out the hospital and an
+              injury, and didn't say what "it" was. */}
+          You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait.
+          {` ${titleCaseLabel(item.label)} starts the next time the clock moves, and you’re there if you’re awake${care ? ' and out of hospital' : ', in its town, and not in hospital or laid up with an injury'}.`}
         </p>
       )}
       {partner && (
