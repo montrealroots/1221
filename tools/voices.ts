@@ -262,7 +262,7 @@ const words = (s: string) => (s.match(/\S+/g) ?? []).length;
 
 export function summarize(runs: { scenario: string; seed: string; said: Said[] }[]) {
   const out: Record<string, unknown> = {};
-  const showings = runs.flatMap((r) => r.said.filter((x) => x.kind === 'showing').map((x) => ({ ...x, scenario: r.scenario })));
+  const showings = runs.flatMap((r) => r.said.filter((x) => x.kind === 'showing').map((x) => ({ ...x, scenario: r.scenario, seed: r.seed })));
   // Openings: per run, in order; a repeat is an opening said in one of the last five showings from the same course.
   const openCount = new Map<string, number>();
   let repeats = 0;
@@ -290,8 +290,10 @@ export function summarize(runs: { scenario: string; seed: string; said: Said[] }
       seen.add(k);
     }
   }
+  // A run is its scenario and its seed (from 2026-10-20, brief 17's final runs): keyed by the scenario alone, two seeds of
+  // one scenario counted each other's feedback as repeats, which gave brief 16's baseline 298 against its 7 within a run.
   const fbSeen = new Set<string>(); let fbDups = 0;
-  for (const x of showings) { const k = `${x.scenario}\n${x.text}`; if (fbSeen.has(k)) fbDups += 1; fbSeen.add(k); }
+  for (const x of showings) { const k = `${x.scenario}\n${x.seed}\n${x.text}`; if (fbSeen.has(k)) fbDups += 1; fbSeen.add(k); }
   out.duplicates = { notices, exactRepeats: dups, byTitle: [...dupByTitle.entries()].sort((a, b) => b[1] - a[1]).slice(0, 15).map(([title, n]) => ({ title, n })), showingFeedbackExactRepeats: fbDups };
   // Shared across courses: a sentence of feedback, names and figures out, said from two or more courses.
   const courseOfSentence = new Map<string, Set<string>>(); const countOfSentence = new Map<string, number>();

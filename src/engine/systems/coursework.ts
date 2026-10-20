@@ -1169,6 +1169,9 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   for (const e of [...earlier].reverse()) { if (!run || !strongBand(e.band)) break; run += 1; }
   const discipline = disciplineOf(c.skills);
   const recent = cw.assignments.filter((x) => x.shown && x.shown.at < when && x.feedback && disciplineOf(courseOf(x.course)?.skills ?? []) === discipline).sort((x, y) => x.shown!.at - y.shown!.at).slice(-8).map((x) => x.feedback!.text);
+  // Everything the student was told at a showing before, from the same record, and this course's own last five (`heard`).
+  const told = cw.assignments.filter((x) => x.shown && x.shown.at < when && x.feedback).sort((x, y) => x.shown!.at - y.shown!.at);
+  const heard = { all: told.map((x) => x.feedback!.text), own: told.filter((x) => x.course === a.course).slice(-5).map((x) => x.feedback!.text) };
   const heldLimit = held ? limits.limits[0] : undefined;
   const heldExercise = heldLimit && (heldLimit.kind === 'ability' || heldLimit.kind === 'technique') ? exerciseFor(heldLimit.what as never)?.label : undefined;
   // The same limit held the course's last piece back, and was said then: said as continuity, with when. A round's record
@@ -1193,7 +1196,7 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   // The way at a note that keeps coming back this piece was worked with, where it's the note given (brief 17).
   const tried = a.approach && focus.kind !== 'advanced' && a.approach.key === noteKey(focus) ? APPROACHES[a.approach.kind].label : undefined;
   const facts: ShowingFacts = {
-    key: `${a.id}:${onDay}:${a.round ?? 0}`, discipline, course: c.name, piece: t.title, band, bandLabel: BAND_LABEL[band],
+    key: `${a.id}:${onDay}:${a.round ?? 0}`, today: dayWords(onDay), discipline, course: c.name, piece: t.title, band, bandLabel: BAND_LABEL[band],
     ...(prev ? { prev: { band: prev.band, label: BAND_LABEL[prev.band], on: formatDate(prev.at, zone()) } } : {}),
     run, best: earlier.length > 0 && earlier.every((e) => BAND_RANK[e.band] < BAND_RANK[band]),
     // A first breakthrough (brief 17): Strong or better, where nothing the course showed before was.
@@ -1213,7 +1216,7 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
     // since the ledger counts it across them (`DIM_WORDS`), and what this piece calls it (`here`).
     ...(focus.kind === 'dim' ? { here: partWords(t.dims[focus.dim]?.label ?? noteSubject(noteKey(focus))).words } : {}),
     subject: focus.kind === 'dim' ? (DIM_WORDS[focus.dim]?.[0] ?? partWords(t.dims[focus.dim]?.label ?? noteSubject(noteKey(focus))).words) : focus.kind === 'choice' ? `your answer to “${questionsFor(a).find(({ q }) => q.id === focus.question)?.q.label ?? noteSubject(noteKey(focus))}”` : focus.kind === 'skill' ? (SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()) : undefined,
-    persistent: kind === 'recurring' && (prior?.given ?? 0) >= LEARNING.persistent, enough: LEARNING.enough, recent,
+    persistent: kind === 'recurring' && (prior?.given ?? 0) >= LEARNING.persistent, enough: LEARNING.enough, recent, heard,
   };
   const text = showingWords(facts);
   a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}), situation: situationOf(facts), step: saysStep(facts) };

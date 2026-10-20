@@ -41,8 +41,9 @@
  * whose sentences' structures the course, or another of its discipline, said least lately (`recent`, read from the
  * feedback already in the save, newest last): dates and figures don't make a sentence new (brief 17, section 7). So the
  * memory is the record itself: it's as long as the saved feedback, a save and its reload choose the same words, and
- * nothing is added to the save. Where every way has been used lately, the one said longest ago comes back: a repeat
- * that's true, never a new claim that isn't.
+ * nothing is added to the save. A whole message the student has been told, by any course at any time, and an opening of
+ * the course's own last five pieces come after every way that wasn't (`heard`, from brief 17's final after-runs). Where every way has been used, the
+ * one said longest ago comes back: a repeat that's true, never a new claim that isn't.
  */
 
 import type { Band } from './coursework';
@@ -205,6 +206,8 @@ export interface ShowingFacts {
   bandLabel: string;
   /** The course's last piece shown before this one: its band, as said, and the day, as said. */
   prev?: { band: Band; label: string; on: string };
+  /** The day of this showing, as a day is said (`before.taken` is compared with it). */
+  today?: string;
   /** This piece and the course's pieces shown just before it, Strong or better, in a row. */
   run: number;
   /** Better than every piece the course has shown before. */
@@ -251,6 +254,15 @@ export interface ShowingFacts {
   enough: number;
   /** What this course said lately, and other courses of its discipline, newest last: the memory (`pick`). */
   recent: readonly string[];
+  /**
+   * Everything the student was told at a showing before this one, by any course, oldest first; and this course's own
+   * last five (from 2026-10-20, brief 17's final after-runs, on `35b47aab`: nine students heard sixteen whole messages
+   * again, word for word, against brief 16's one, each further back than `recent` reaches, most of them from a course's
+   * second year in its first year's voice; and a course opened as one of its own last five pieces had 136 times, against
+   * 107, where its last five went further back than its discipline's last eight). A whole message said before, and an
+   * opening of the course's own last five, are said again only where every other true way has been too (`pick`).
+   */
+  heard?: { all: readonly string[]; own: readonly string[] };
 }
 
 export type Situation = 'first' | 'best' | 'maintained' | 'despite' | 'steady' | 'held' | 'plain' | 'new' | 'partial' | 'slipped' | 'recurring' | 'persistent';
@@ -328,8 +340,15 @@ export function openingOf(text: string): string {
  * figures (brief 17, section 7: until then the memory compared whole texts and openings, figures out, and a sentence
  * the course said last week with another date read as new). Where every way has been said lately, the one whose shapes
  * were said longest ago comes first.
+ *
+ * `heard` is everything said before (`all`) and the speaker's own last five (`own`), oldest first: a way said word for
+ * word, at any time and by anyone, comes after every way that wasn't, and a way that opens as one of the speaker's own
+ * last five did comes after every way that doesn't (from 2026-10-20, brief 17's final after-runs). Until then a whole
+ * message said once was known only while it was in `recent`, so it was said again further on; and the speaker's own
+ * last five openings counted only where the discipline's last eight reached them. Among ways all said, the least lately
+ * said still comes first.
  */
-export function pick(options: readonly string[], key: string, recent: readonly string[]): string {
+export function pick(options: readonly string[], key: string, recent: readonly string[], heard: { all: readonly string[]; own: readonly string[] } = { all: [], own: [] }): string {
   const unique = [...new Set(options)];
   if (unique.length <= 1) return unique[0] ?? '';
   const start = hash(key) % unique.length;
@@ -346,11 +365,12 @@ export function pick(options: readonly string[], key: string, recent: readonly s
     opens.set(openingOf(r), i + 1);
     frames.set(frameOf(openingOf(r)), i + 1);
   });
-  const said = new Set(recent);
+  const said = new Set([...recent, ...heard.all]);
+  const ownOpenings = new Set(heard.own.slice(-5).map(openingOf));
   const cost = (o: string) => {
-    if (said.has(o)) return Number.MAX_SAFE_INTEGER;
     const shapes = sentencesOf(o).map(shapeOf);
-    return shapes.reduce((n, s) => n + (lately.get(s) ?? 0), 0) + 2 * (opens.get(openingOf(o)) ?? 0) + (frames.get(frameOf(openingOf(o))) ?? 0);
+    return (said.has(o) ? 1e12 : 0) + (ownOpenings.has(openingOf(o)) ? 1e9 : 0)
+      + shapes.reduce((n, s) => n + (lately.get(s) ?? 0), 0) + 2 * (opens.get(openingOf(o)) ?? 0) + (frames.get(frameOf(openingOf(o))) ?? 0);
   };
   let best = order[0]!;
   let least = cost(best);
@@ -483,6 +503,15 @@ function slippedLeads(v: Voice, f: ShowingFacts, dated = false): string[] {
   // `dated`: the move just before named the day it was put right, the course's last piece, so it's "then".
   const at = dated ? 'then' : `on ${f.before!.taken!}`;
   const { t, has, was, it } = topicOf(f);
+  // Put right earlier the same day, by another piece (from 2026-10-20, brief 17's final after-runs: "Rehearsal was put
+  // right on February 23, 2027, and has dropped back since.", said on February 23).
+  if (!dated && f.today && f.before!.taken === f.today) switch (v) {
+    case 'direct': return [`${cap(t)} came right earlier today, but not on this piece.`];
+    case 'warm': return [`${cap(t)} came right in a piece earlier today, and it didn’t carry into this one.`];
+    case 'exacting': return [`Put right earlier today, ${t} ${has} dropped back on this piece.`];
+    case 'patient': return [`${cap(t)} came right earlier today, and slipped on this one. It can come back.`];
+    case 'brisk': return [`${cap(t)}: right earlier today, not here.`];
+  }
   switch (v) {
     case 'direct': return [`You fixed ${t} ${at}, and ${it} ${has} slipped since.`, `${cap(t)} again: ${it} ${was} right ${at}.`, `${cap(t)} ${has} slipped since you fixed ${it} ${at}.`];
     case 'warm': return [`You’d got ${t} right ${at}, and ${it} ${has} slipped since.`, `${cap(t)} came right ${at}, and ${it} ${has} slipped back since.`, `${cap(t)} ${has} slipped back since you got ${it} right ${at}.`];
@@ -500,17 +529,17 @@ function againLeads(v: Voice, f: ShowingFacts): string[] {
   const { t, is } = topicOf(f);
   if (n >= 3) switch (v) {
     case 'direct': return [`${cap(t)} again, the third note on it. The last was${w} on ${b.on}.`, `Third note on ${t}. The last was${w} on ${b.on}.`];
-    case 'warm': return [`This is the third note on ${t}, the last${w} on ${b.on}. It’s worth staying with.`];
-    case 'exacting': return [`A third note on ${t}. The last was${w} on ${b.on}.`];
-    case 'patient': return [`${cap(t)} again, a third time, the last${w} on ${b.on}. It’s still the place to start.`];
+    case 'warm': return [`This is the third note on ${t}, the last${w} on ${b.on}. It’s worth staying with.`, `We’re back on ${t} for a third time. The last${w} was on ${b.on}, and it’s worth staying with.`];
+    case 'exacting': return [`A third note on ${t}. The last was${w} on ${b.on}.`, `${cap(t)}, noted three times now. The last was${w} on ${b.on}.`];
+    case 'patient': return [`${cap(t)} again, a third time, the last${w} on ${b.on}. It’s still the place to start.`, `Three notes now on ${t}, the last${w} on ${b.on}. That’s fine: some things take longer.`];
     case 'brisk': return [`${cap(t)} again. That’s the third time, the last${w} on ${b.on}.`, `Third note on ${t}, the last${w} on ${b.on}.`];
   }
   switch (v) {
     case 'direct': return [`Same note as on ${b.on}${w}: ${t}.`, `${cap(t)} again, as on ${b.on}${w}.`];
     case 'warm': return [`${cap(t)} came up on ${b.on}${w} too, and ${is === 'are' ? 'they’re' : 'it’s'} still the thing to work on.`, `The note is still on ${t}, as on ${b.on}${w}.`];
-    case 'exacting': return [`The same note as on ${b.on}${w}: ${t}.`];
-    case 'patient': return [`Back to ${t}, as on ${b.on}${w}. It’s still the place to start.`];
-    case 'brisk': return [`${cap(t)} again, same as on ${b.on}${w}.`];
+    case 'exacting': return [`The same note as on ${b.on}${w}: ${t}.`, `A second note on ${t}. The first was${w} on ${b.on}.`];
+    case 'patient': return [`Back to ${t}, as on ${b.on}${w}. It’s still the place to start.`, `${cap(t)} came up${w} on ${b.on} as well, and it’s worth going back to.`];
+    case 'brisk': return [`${cap(t)} again, same as on ${b.on}${w}.`, `Same note: ${t}. Last time${w} on ${b.on}.`];
   }
 }
 
@@ -525,7 +554,7 @@ function oftenLeads(v: Voice, f: ShowingFacts): string[] {
     case 'warm': return [`${cap(t)} ${has} come up ${count(n)} times now, the last${w} on ${b.on}.`, `${cap(t)} again: that’s ${count(n)} notes, the last${w} on ${b.on}.`];
     case 'exacting': return [`Note ${n} on ${t}. The last was${w} on ${b.on}.`, `${cap(t)}: ${count(n)} notes now, the last${w} on ${b.on}.`];
     case 'patient': return [`This is the ${ordinal(n)} note on ${t}, the last${w} on ${b.on}. Some notes take longer than others.`, `${cap(aOrdinal(n))} note on ${t}, the last${w} on ${b.on}. It’s still the place to start.`];
-    case 'brisk': return [`${cap(t)} again. That’s ${count(n)} notes, the last${w} on ${b.on}.`];
+    case 'brisk': return [`${cap(t)} again. That’s ${count(n)} notes, the last${w} on ${b.on}.`, `${cap(t)}, still: ${count(n)} notes, the last${w} on ${b.on}.`];
   }
 }
 
@@ -584,16 +613,16 @@ function steadyLeads(v: Voice, d: Discipline, f: ShowingFacts, moved = false): s
   if (moved) switch (v) {
     case 'direct': return ['Everything you prepared held.', 'The preparation was all there.'];
     case 'warm': return ['Every part of it was prepared.', 'Everything you prepared came through.'];
-    case 'exacting': return ['Nothing in the preparation was short.', 'No part of the preparation fell short.'];
+    case 'exacting': return ['The preparation was complete, part by part.', 'No part of the preparation fell short.'];
     case 'patient': return [`What you prepared was all there in ${WORK[d]}.`, 'It rested on preparation that was all there.'];
-    case 'brisk': return ['All of it prepared. Good.', 'Nothing short in the preparation.'];
+    case 'brisk': return ['All of it prepared. Good.', 'Prepared in full.'];
   }
   switch (v) {
     case 'direct': return [`${b}. Everything you prepared held.`, `${b}, and the preparation was all there.`];
     case 'warm': return [`${b}, and every part of it was prepared.`, `Everything you prepared came through: ${b}.`];
     case 'exacting': return [`${b}, with nothing in the preparation short.`, `${b}. No part of the preparation fell short.`];
     case 'patient': return [`${b}. What you prepared was all there in ${WORK[d]}.`, `${b}, and it rested on preparation that was all there.`];
-    case 'brisk': return [`${b}, and all of it prepared. Good.`, `${b}. Nothing short in the preparation.`];
+    case 'brisk': return [`${b}, and all of it prepared. Good.`, `${b}. Prepared in full.`];
   }
 }
 
@@ -641,11 +670,11 @@ function countedRun(v: Voice, d: Discipline, f: ShowingFacts): string[] {
     case 'brisk': return [`${b}${same ? ' again' : ''}, ${count(run)} straight at Strong or better.`, `${cap(count(run))} in a row at Strong or better. Keep going.`];
   }
   if (same) switch (v) {
-    case 'direct': return [`${b} again, as on ${prev!.on}.`];
-    case 'warm': return [`${b} again, and it was ${b} on ${prev!.on} too. Good to see it hold.`];
-    case 'exacting': return [`${b} for the second time running.`];
-    case 'patient': return [`${cap(WORK[d])} is holding: ${b} again.`];
-    case 'brisk': return [`${b} again.`];
+    case 'direct': return [`${b} again, as on ${prev!.on}.`, `A second ${b} in a row, after ${prev!.on}.`];
+    case 'warm': return [`${b} again, and it was ${b} on ${prev!.on} too. Good to see it hold.`, `Two ${b} pieces running now. It’s holding, and that’s good to see.`];
+    case 'exacting': return [`${b} for the second time running.`, `${b}, matching the piece on ${prev!.on}.`];
+    case 'patient': return [`${cap(WORK[d])} is holding: ${b} again.`, `${b} twice in a row now. It’s starting to settle.`];
+    case 'brisk': return [`${b} again.`, `${b}. Two running.`];
   }
   return [`${b}, after ${prev?.label ?? 'Strong'} on ${prev?.on ?? 'the last piece'}: two in a row at Strong or better.`, `Strong or better twice running now, ${b} this time.`];
 }
@@ -657,11 +686,11 @@ function despiteLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
   const cost = pts >= 1 ? `about ${pts} ${pts === 1 ? 'point' : 'points'}` : 'less than a point';
   const b = f.bandLabel;
   switch (v) {
-    case 'direct': return [`${b}, though ${clause}. That cost ${cost}, and ${WORK[d]} carried it.`, `${b} even so: ${clause}, and that cost ${cost}.`];
-    case 'warm': return [`${cap(clause)}, and it still came out ${b}. That cost ${cost}, and you carried it.`, `${b}, on a day when ${clause}. That cost ${cost}, and you carried it well.`];
-    case 'exacting': return [`${b}. ${cap(clause)}, which cost ${cost}, and the preparation made up for it.`, `${cap(clause)}, at a cost of ${cost}. It held at ${b} regardless.`];
-    case 'patient': return [`${cap(clause)}, and it cost ${cost}, but it still came out ${b}.`, `It came out ${b} even though ${clause}. It cost ${cost}, and you still got there.`];
-    case 'brisk': return [`${b}, though ${clause}: that cost ${cost}. Well handled.`, `${b} anyway. ${cap(clause)}, and that cost ${cost}.`];
+    case 'direct': return [`${b}, though ${clause}. That cost ${cost}, and ${WORK[d]} carried it.`, `${b} even so: ${clause}, and that cost ${cost}.`, `${cap(clause)}, which cost ${cost}. ${cap(WORK[d])} held up, and it came out ${b}.`];
+    case 'warm': return [`${cap(clause)}, and it still came out ${b}. That cost ${cost}, and you carried it.`, `${b}, on a day when ${clause}. That cost ${cost}, and you carried it well.`, `You got it to ${b} even though ${clause}, which cost ${cost}. That takes something.`];
+    case 'exacting': return [`${b}. ${cap(clause)}, which cost ${cost}, and the preparation made up for it.`, `${cap(clause)}, at a cost of ${cost}. It held at ${b} regardless.`, `${b} with ${cost} lost to the day: ${clause}.`];
+    case 'patient': return [`${cap(clause)}, and it cost ${cost}, but it still came out ${b}.`, `It came out ${b} even though ${clause}. It cost ${cost}, and you still got there.`, `Not an easy day: ${clause}, and that cost ${cost}. It was ${b} all the same.`];
+    case 'brisk': return [`${b}, though ${clause}: that cost ${cost}. Well handled.`, `${b} anyway. ${cap(clause)}, and that cost ${cost}.`, `${cap(clause)}. Cost ${cost}. Still ${b}.`];
   }
 }
 
@@ -704,7 +733,7 @@ function heldFreshLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
     case 'direct': return [`You were prepared. ${h.words}.`, `${b}, and not for lack of preparation: ${low(h.words)}.`, `${h.words}, though the preparation was all there.`];
     case 'warm': return [`You came in prepared, so this isn’t about the work you put in: ${low(h.words)}.`, `The preparation was there. ${h.words}.`];
     case 'exacting': return [`Prepared, but ${low(h.words)}.`, `The preparation was complete. ${h.words}.`];
-    case 'patient': return [`Nothing was missing from the preparation. What held it back was elsewhere: ${low(h.words)}.`, `${cap(WORK[d])} was prepared, but ${low(h.words)}.`];
+    case 'patient': return [`Your preparation was all there. What held it back was elsewhere: ${low(h.words)}.`, `${cap(WORK[d])} was prepared, but ${low(h.words)}.`];
     case 'brisk': return [`The preparation was fine. ${h.words}.`, `${h.words}, more than anything in the preparation.`];
   }
 }
@@ -752,7 +781,7 @@ function partnerSentence(f: ShowingFacts): string | undefined {
 
 /** A showing's words (briefs 16 and 17): what happened, why, and what to try, in the course's voice. `pick` chooses among them. */
 export function showingWords(f: ShowingFacts): string {
-  return pick(showingCandidates(f), f.key, f.recent);
+  return pick(showingCandidates(f), f.key, f.recent, f.heard);
 }
 
 /** Every whole message true of a showing: what `showingWords` chooses from, and what a test can hold each one of to the facts. */
@@ -788,8 +817,8 @@ function composed(f: ShowingFacts): string[] {
   }
   if (s === 'plain') {
     const leads = movedLeads(v, f).length
-      ? { direct: ['Nothing in particular held it back.'], warm: ['There was nothing in particular holding it back.'], exacting: ['No single part fell short enough to name.'], patient: ['Nothing in particular stood out as holding it back.'], brisk: ['Nothing big held it back.'] }[v]
-      : { direct: [`${f.bandLabel}, and nothing in particular held it back.`], warm: [`${f.bandLabel}, with nothing in particular holding it back.`], exacting: [`${f.bandLabel}, with no single part short enough to name.`], patient: [`It came out ${f.bandLabel}, and nothing in particular stood out as holding it back.`], brisk: [`${f.bandLabel}. Nothing big held it back.`] }[v];
+      ? { direct: ['No one part held it back.'], warm: ['There was nothing in particular holding it back.'], exacting: ['No single part fell short enough to name.'], patient: ['No one thing stood out as holding it back.'], brisk: ['No big problem in it.'] }[v]
+      : { direct: [`${f.bandLabel}, and nothing in particular held it back.`], warm: [`${f.bandLabel}, with nothing in particular holding it back.`], exacting: [`${f.bandLabel}, with no single part short enough to name.`], patient: [`It came out ${f.bandLabel}, and nothing in particular stood out as holding it back.`], brisk: [`${f.bandLabel}. No big problem in it.`] }[v];
     return front.flatMap((m) => leads.flatMap((lead) => step.map((x) => joined(m, lead, x))));
   }
   if (s === 'first' || s === 'best' || s === 'maintained' || s === 'despite' || s === 'steady') {

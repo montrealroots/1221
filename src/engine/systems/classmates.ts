@@ -475,7 +475,7 @@ function studyEvening(person: Person, i: number, day: SchoolDate, returning = fa
     const again = before.length ? (last === 'yes' ? ' You ran lines together the last time they asked.' : last === 'no' ? ' Last time, you couldn’t.' : ' They’ve asked before.') : '';
     const f = first(mate); const on = `${formatDate(when, zone())} at ${formatTime(when, zone())}`;
     // In their voice (brief 17): one who cares for the work asks for the scene's sake, one for the room for the company,
-    // and one returning a favour says so.
+    // and one returning a favor says so.
     const text = returning
       ? (pr === 'career' ? `${f} has an hour free on ${on} and offers it to run lines together: you ran theirs when they were behind.` : pr === 'home' ? `${f} asks if you’d run lines together for an hour on ${on}. They haven’t forgotten you ran theirs when they were behind.` : `${f} asks if you’d run lines together for an hour on ${on}. You ran theirs when they were behind.`)
       : `${(pr === 'people'

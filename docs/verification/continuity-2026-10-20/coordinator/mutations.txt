@@ -1,0 +1,31 @@
+unmutated: exit=0, 0 failed
+an apology owed again for misses it covered: held, 3 failed
+    × a classmate’s apology, kept on the misses it’s for > covers every rehearsal missed since the last, comes once for them however much of the classmate’s history is let go
+    × an apology long after the miss > says how long it’s been, where the miss was weeks or months ago, and nothing of it where it was days 200ms
+    × a save from before brief 17, opened > marks each miss an apology it keeps covered, takes one from before all it remembers as covered, leaves one after the last owed, an
+an apology that marks nothing it covers: held, 2 failed
+    × a classmate’s apology, kept on the misses it’s for > covers every rehearsal missed since the last, comes once for them however much of the classmate’s history is let go
+    × an apology long after the miss > says how long it’s been, where the miss was weeks or months ago, and nothing of it where it was days 202ms
+a late apology said as if it were last week: held, 1 failed
+    × an apology long after the miss > says how long it’s been, where the miss was weeks or months ago, and nothing of it where it was days 274ms
+what a classmate asked, not counted on them: held, 1 failed
+    × what a classmate has asked, counted on them > counts past the last 20, says how the newest request was answered, and says “before” where a save’s count is a floor 179ms
+a save’s count read as exact: held, 1 failed
+    × what a classmate has asked, counted on them > counts past the last 20, says how the newest request was answered, and says “before” where a save’s count is a floor 341ms
+every classmate asking the same way: held, 1 failed
+    × a classmate’s way of asking > is their own, the same each time they ask, and the class doesn’t share one 436ms
+a save from before: a miss older than all it remembers left owed: held, 1 failed
+    × a save from before brief 17, opened > marks each miss an apology it keeps covered, takes one from before all it remembers as covered, leaves one after the last owed, an
+a save from before: a miss before a kept apology left owed: held, 1 failed
+    × a save from before brief 17, opened > marks each miss an apology it keeps covered, takes one from before all it remembers as covered, leaves one after the last owed, an
+a whole message said before, by another course, not remembered: held, 1 failed
+    × the choice of words, from what was said lately > passes over a whole message said before by any course, and an opening of the course’s own last five, while another true
+a course’s own last five openings not remembered: held, 1 failed
+    × the choice of words, from what was said lately > passes over a whole message said before by any course, and an opening of the course’s own last five, while another true
+a course’s own openings remembered for ever: held, 1 failed
+    × the choice of words, from what was said lately > passes over a whole message said before by any course, and an opening of the course’s own last five, while another true
+a note put right today said by its date: held, 1 failed
+    × every situation, in every course’s voice > says a note put right earlier the same day, by another piece, as earlier today, not by its date 10ms
+the first week kept first once it’s done: held, 1 failed
+    × the Coursework tab’s first view > opens on the first week while a session is to come, and keeps it, below the work, once all five are done 141ms
+13 of 13 mutations held by a failing test; the sources put back

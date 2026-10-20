@@ -29,7 +29,7 @@
   ],
   "outcome": "Revised",
   "why": "Read in order in the baseline’s 24 runs, five courses spoke one frame: “It’s at 50% now, and the note is taken at 75%” 451 times from 21 courses; a new note named its part twice (“Your lines held it back most. The lines weren’t secure…”); card labels stood as prose subjects (“the note on Built On”); a single point of tiredness made a Strong piece “strong despite the day”; and a part left unfinished was answered with a step beyond it.",
-  "changes": "Composed by situation in five course voices (direct, warm, exacting, patient, brisk; `VOICE_OF`), two first-year courses of one discipline never sharing one. A new note runs into its own words; a note given before says where its part stands and the rule that puts it right (“It’s at 50%. A piece shown with it at 75% or more puts the note right.”), never “taken”; a first Strong, a best and a piece strong despite a day that cost two points or more stop at the acknowledgment; a part left unfinished is answered by the steps that finish it; every move names the new band; a day and the band are said once; the words are chosen by the shapes and frames the course said lately, with no draw from the game’s randomness.",
+  "changes": "Composed by situation in five course voices (direct, warm, exacting, patient, brisk; `VOICE_OF`), two first-year courses of one discipline never sharing one. A new note runs into its own words; a note given before says where its part stands and the rule that puts it right (“It’s at 50%. A piece shown with it at 75% or more puts the note right.”), never “taken”; a first Strong, a best and a piece strong despite a day that cost two points or more stop at the acknowledgment; a part left unfinished is answered by the steps that finish it; every move names the new band; a day and the band are said once; the words are chosen by the shapes and frames the course said lately, with no draw from the game’s randomness; and, from the final after-runs, a whole message the student was told before by any course, and an opening of the course’s own last five, comes after every true way that wasn’t (measured in the record’s README, The Measures). No sentence opens on “Nothing”.",
   "evidence": [
    {
     "kind": "test",
@@ -50,6 +50,10 @@
    {
     "kind": "test",
     "ref": "tests/language-dynamic.test.ts: 'a teacher’s note on an unchanged weakness says it was said before, how often, and when; never as a new discovery'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/feedback-voices.test.ts: 'passes over a whole message said before by any course, and an opening of the course’s own last five, while another true way is left'"
    }
   ]
  },

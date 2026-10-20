@@ -1,8 +1,9 @@
-"""Brief 16's runs, read from their outputs into figures.json (never typed), for criteria.py.
+"""Brief 17's runs, read from their outputs into figures.json (never typed), for criteria.py.
 
-Brief 15's (`../../editorial-2026-10-19/runs/figures.py`, itself brief 14's), read from brief 16's folders: the runs
-here, and F2-A's 40 cases in `../advice/`. The figures are worked the same way, so brief 15's and brief 16's can be set
-side by side: a pass that changed the player's words and no rule should give the same figures.
+Brief 16's (`../../voices-2026-10-20/runs/figures.py`, itself brief 15's and brief 14's), read from brief 17's folders:
+the runs here, and F2-A's 40 cases in `../advice/`. The figures are worked the same way, so brief 16's and brief 17's
+can be set side by side: a pass that changed the player's words and, by the owner's leave, one rule (an apology kept on
+the misses it's for) should give the same figures, or differ where that rule reaches and say so.
 
 Usage, from the repository's root: python3 docs/verification/continuity-2026-10-20/runs/figures.py
 """

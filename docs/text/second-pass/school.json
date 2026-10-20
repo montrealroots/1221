@@ -2766,9 +2766,9 @@
  },
  "src/engine/systems/feedback.ts#againLeads": {
   "status": "Rewritten",
-  "hash": "b615000eb22c",
+  "hash": "694f62036a5b",
   "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "evidence": "brief 17's final after-runs (tools/voices.ts, 2026-10-20): a second way where a voice had one opening for a second note, a third, a note given often and the same band twice running; a third way for strong despite the day; no sentence opening on Nothing (tools/tics.mjs). Read against docs/STYLE.md; tests/feedback-voices.test.ts holds every situation in every voice and the voices apart",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#bands": {
@@ -2787,9 +2787,9 @@
  },
  "src/engine/systems/feedback.ts#composed": {
   "status": "Rewritten",
-  "hash": "7befe2270ab6",
+  "hash": "56429db7dbc1",
   "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "evidence": "brief 17's final after-runs (tools/voices.ts, 2026-10-20): a second way where a voice had one opening for a second note, a third, a note given often and the same band twice running; a third way for strong despite the day; no sentence opening on Nothing (tools/tics.mjs). Read against docs/STYLE.md; tests/feedback-voices.test.ts holds every situation in every voice and the voices apart",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#CONDITION": {
@@ -2801,9 +2801,9 @@
  },
  "src/engine/systems/feedback.ts#countedRun": {
   "status": "Rewritten",
-  "hash": "eab0ee005c12",
+  "hash": "24aec4f5088f",
   "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice, the voices apart and a day said once; read in order in the after-runs (tools/voices.ts) on the current head",
+  "evidence": "brief 17's final after-runs (tools/voices.ts, 2026-10-20): a second way where a voice had one opening for a second note, a third, a note given often and the same band twice running; a third way for strong despite the day; no sentence opening on Nothing (tools/tics.mjs). Read against docs/STYLE.md; tests/feedback-voices.test.ts holds every situation in every voice and the voices apart",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#CRAFT": {
@@ -2815,9 +2815,9 @@
  },
  "src/engine/systems/feedback.ts#despiteLeads": {
   "status": "Rewritten",
-  "hash": "1288277e0193",
+  "hash": "d9a7c52bdc9d",
   "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice, the voices apart and a day said once; read in order in the after-runs (tools/voices.ts) on the current head",
+  "evidence": "brief 17's final after-runs (tools/voices.ts, 2026-10-20): a second way where a voice had one opening for a second note, a third, a note given often and the same band twice running; a third way for strong despite the day; no sentence opening on Nothing (tools/tics.mjs). Read against docs/STYLE.md; tests/feedback-voices.test.ts holds every situation in every voice and the voices apart",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#DIM_WORDS": {
@@ -2850,9 +2850,9 @@
  },
  "src/engine/systems/feedback.ts#heldFreshLeads": {
   "status": "Rewritten",
-  "hash": "944e1dffca27",
+  "hash": "b2a4a31e1da0",
   "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice, the voices apart and a day said once; read in order in the after-runs (tools/voices.ts) on the current head",
+  "evidence": "brief 17's final after-runs (tools/voices.ts, 2026-10-20): a second way where a voice had one opening for a second note, a third, a note given often and the same band twice running; a third way for strong despite the day; no sentence opening on Nothing (tools/tics.mjs). Read against docs/STYLE.md; tests/feedback-voices.test.ts holds every situation in every voice and the voices apart",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#heldLeads": {
@@ -2892,9 +2892,9 @@
  },
  "src/engine/systems/feedback.ts#oftenLeads": {
   "status": "Rewritten",
-  "hash": "e394a4fc6848",
+  "hash": "dee4cc60692a",
   "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "evidence": "brief 17's final after-runs (tools/voices.ts, 2026-10-20): a second way where a voice had one opening for a second note, a third, a note given often and the same band twice running; a third way for strong despite the day; no sentence opening on Nothing (tools/tics.mjs). Read against docs/STYLE.md; tests/feedback-voices.test.ts holds every situation in every voice and the voices apart",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#otherWays": {
@@ -2934,9 +2934,9 @@
  },
  "src/engine/systems/feedback.ts#slippedLeads": {
   "status": "Rewritten",
-  "hash": "ce45e1e017ec",
+  "hash": "dbb036624cb7",
   "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "evidence": "brief 17's final after-runs (tools/voices.ts, 2026-10-20): a note put right earlier the same day by another piece is said as earlier today in each voice, not by its date; read against docs/STYLE.md; tests/feedback-voices.test.ts ('says a note put right earlier the same day')",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#standing": {
@@ -2948,9 +2948,9 @@
  },
  "src/engine/systems/feedback.ts#steadyLeads": {
   "status": "Rewritten",
-  "hash": "b1718b4e6674",
+  "hash": "485c702a3880",
   "on": "2026-10-20",
-  "evidence": "tests/feedback-voices.test.ts holds every situation in every voice (no shared opening, a day and the band said once, a step only where the situation gives one); read in order in the after-runs on c341062e (tools/voices.ts, 24 students)",
+  "evidence": "brief 17's final after-runs (tools/voices.ts, 2026-10-20): a second way where a voice had one opening for a second note, a third, a note given often and the same band twice running; a third way for strong despite the day; no sentence opening on Nothing (tools/tics.mjs). Read against docs/STYLE.md; tests/feedback-voices.test.ts holds every situation in every voice and the voices apart",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#STEP": {

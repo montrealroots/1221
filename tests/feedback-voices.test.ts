@@ -93,6 +93,19 @@ describe('every situation, in every course’s voice', () => {
     }
   });
 
+  it('says a note put right earlier the same day, by another piece, as earlier today, not by its date', () => {
+    for (const v of VOICES) {
+      const f = SITUATIONS(v).slipped!;
+      const today = showingCandidates({ ...f, today: 'September 15, 2026' });
+      expect(today.length, v).toBeGreaterThan(0);
+      for (const x of today) {
+        expect(x, v).toContain('earlier today');
+        expect(x, v).not.toContain('September 15, 2026');
+      }
+      for (const x of showingCandidates({ ...f, today: 'October 2, 2026' })) expect(x, v).toContain('September 15, 2026');
+    }
+  });
+
   it('stops at a first Strong, a best and a strong piece despite the day, holds back the step where what held a piece has a remedy, and gives it at a plateau', () => {
     for (const v of VOICES) {
       const s = SITUATIONS(v);
@@ -165,6 +178,25 @@ describe('the choice of words, from what was said lately', () => {
     // Every way said lately: the one said longest ago.
     const all = options.map((o) => o.replace('October 1, 2026', 'August 2, 2026'));
     expect(pick(options, 'k', [all[2]!, all[0]!, all[1]!])).toBe(options[2]);
+  });
+
+  it('passes over a whole message said before by any course, and an opening of the course’s own last five, while another true way is left', () => {
+    const options = ['Strong again. For the next one, try this: Take it slower.', 'Strong, and every part of it was prepared. For the next one, try this: Take it slower.', 'Strong once more. Work on this next: Take it slower.'];
+    const first = pick(options, 'h', []);
+    const other = Array.from({ length: 12 }, (_, i) => `Something else, the ${i}th time.`);
+    // Said word for word long before, by another course, further back than the discipline's last eight reach: passed over.
+    expect(pick(options, 'h', other.slice(-8), { all: [first, ...other], own: other.slice(-5) })).not.toBe(first);
+    // Opened the same way in one of the course's own last five pieces, whatever followed: passed over.
+    const opening = first.split('. ')[0];
+    const own = [...other.slice(0, 2), `${opening}. Nothing else alike.`, ...other.slice(0, 2)];
+    expect(pick(options, 'h', [], { all: own, own }).split('. ')[0]).not.toBe(opening);
+    // Six pieces back, it's free again; and another course's opening is that course's.
+    const six = [`${opening}. Nothing else alike.`, ...other.slice(0, 5)];
+    expect(pick(options, 'h', [], { all: six, own: six })).toBe(first);
+    expect(pick(options, 'h', [], { all: own, own: other.slice(0, 5) })).toBe(first);
+    // Every way said: the least lately said, as before.
+    const all = [options[2]!, options[0]!, options[1]!];
+    expect(pick(options, 'h', all, { all, own: all })).toBe(options[2]);
   });
 });
 
