@@ -1199,7 +1199,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
     for (const [what, clause] of [['fatigue', 'you came to it tired'], ['illness', 'you had the flu'], ['injury', 'you were working injured']] as const) {
       const despite = showingCandidates({ ...facts, kind: 'advanced', about: undefined, part: undefined, band: 'strong', bandLabel: 'Strong', note: 'Choose one phrase.', condition: { what, whole: 2.4, words: 'x' } });
       expect(despite.length, what).toBeGreaterThan(0);
-      for (const c of despite) { expect(c.toLowerCase(), what).toContain(clause); expect(c, what).toContain('about 2 points'); expect(c, what).toContain('Strong'); }
+      for (const c of despite) { expect(c.toLowerCase(), what).toContain(clause); expect(c, what).toContain('about 2 points'); expect(c, what).toContain('Strong'); expect(c, what).not.toMatch(/the (?:about|less)/); }
     }
     expect(eleventh.some((c) => c.includes('11th time'))).toBe(true);
   });

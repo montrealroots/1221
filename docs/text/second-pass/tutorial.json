@@ -92,9 +92,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [calendar]": {
   "status": "Rewritten",
-  "hash": "63c97030c4dd",
+  "hash": "6fe9e6485bfb",
   "on": "2026-10-20",
-  "evidence": "Stand Here, Go and Skip It traced to DueNow in src/ui/shell/TimeControls.tsx; what starts and who is there traced to present() in src/engine/systems/school.ts, presentForCare in systems/health.ts and registerPlans in world/plans.ts; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "evidence": "the coordinator traced present (systems/health.ts, systems/school.ts) and presentForCare (appointments.ts, therapy.ts); tests/guide-chapter-facts.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
@@ -155,9 +155,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [profile]": {
   "status": "Rewritten",
-  "hash": "ca5293533877",
+  "hash": "f64311ebf293",
   "on": "2026-10-20",
-  "evidence": "Attributes And Craft, Techniques, Identity And Background's traits, Practice An Hour, the brief's Read It This Way, Read With Them, Tape It (60 Min), What To Work On Next and Why This Recommendation traced to src/ui/workspaces/ProfileWorkspace.tsx, src/ui/components/BriefPane.tsx and AdviceCard.tsx; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "evidence": "matched to the AdviceCard on the built app's Player Profile (Why This Recommendation, Estimate:) and the glossary's worth your time; tests/tutorial*.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {

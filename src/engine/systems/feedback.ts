@@ -279,7 +279,7 @@ function despiteLeads(d: Discipline, f: ShowingFacts): string[] {
   return [
     `${f.bandLabel}, even though ${clause}: it cost ${cost}, and ${WORK[d]} carried it anyway.`,
     `${cap(clause)}, which cost ${cost}, and it still came out ${f.bandLabel}.`,
-    `It came out ${f.bandLabel} though ${clause}. The preparation made up for the ${cost} that cost.`,
+    `It came out ${f.bandLabel} though ${clause}. The preparation made up for what that cost, ${cost}.`,
   ];
 }
 
