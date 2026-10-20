@@ -1,0 +1,115 @@
+{
+ "strings": 2305,
+ "moreThanThreeSentences": 105,
+ "vague": 4,
+ "examplesMany": [
+  {
+   "where": "guide bank.other-banks unavailable 8",
+   "sentences": 8,
+   "words": 126,
+   "text": "Closing: “It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.”, “It’s your primary account. Make another account primary first.”, “It’s overdrawn by …, and the"
+  },
+  {
+   "where": "guide body.how short",
+   "sentences": 7,
+   "words": 109,
+   "text": "How You Are, on Home, shows how you’re doing today: a line that sums it up, then Energy, Stress and Readiness. Readiness is how sharp you’ll be at today’s work. Behind them are eight measures of your wellbeing, and four "
+  },
+  {
+   "where": "guide papers.health-cover short",
+   "sentences": 7,
+   "words": 122,
+   "text": "Health cover pays for your care. Yale Health covers you while you’re at the School, and the School bills it each term. When it’s about to end, from 60 days before, press Enroll on The Marketplace. If last month’s income "
+  },
+  {
+   "where": "guide body.sleep short",
+   "sentences": 6,
+   "words": 79,
+   "text": "Sleep asks how many hours, from 0.5 to 14. It suggests a number from when you’re next needed and how much sleep you owe, and says when you’d wake. Then the clock runs through the night at once. A night brings back energy"
+  },
+  {
+   "where": "guide body.look-after short",
+   "sentences": 6,
+   "words": 93,
+   "text": "Look After Yourself holds what a day needs besides sleep: Eat A Meal, Order In, Shower, Work Out and Unwind. Each line says how long it takes, what it costs, why it’s where it is in the list and what it would do to your "
+  },
+  {
+   "where": "guide school.orientation short",
+   "sentences": 6,
+   "words": 100,
+   "text": "Orientation is your first week in New Haven: 5 sessions, one each morning from August 24 to August 28, that get you started. Registration lets classes count you and work-study pay you. Meeting your class lets you ask cla"
+  },
+  {
+   "where": "guide school.leave short",
+   "sentences": 6,
+   "words": 105,
+   "text": "A leave of absence takes you out of the program for a time and brings you back with the class a year below yours. Ask for a medical or a personal leave, and the chair and the dean decide within 5 working days. On leave y"
+  },
+  {
+   "where": "guide school.repeat short",
+   "sentences": 6,
+   "words": 158,
+   "text": "The degree needs every course passed, and each term’s review settles every course as passed, Incomplete or failed. To put an Incomplete right, make it up in sessions of two hours with its teachers within 30 days, the Bul"
+  },
+  {
+   "where": "guide coursework.feedback short",
+   "sentences": 6,
+   "words": 128,
+   "text": "Feedback is the teacher’s note on a piece you’ve shown, telling you what held it back most and what to do next. In the class it’s due, the piece is shown and given a band (Unready under 50, Working, Strong from 65, Excep"
+  },
+  {
+   "where": "guide craft.practice short",
+   "sentences": 6,
+   "words": 125,
+   "text": "An hour on one exercise grows the ability or technique it trains, past where classes level off, all the way to full. Press the exercise in the Practice column on your Player Profile, choose a Tier and a Focus, and press "
+  },
+  {
+   "where": "guide bank.upkeep unavailable 4",
+   "sentences": 6,
+   "words": 116,
+   "text": "A checking account can be refused for the same reasons as Close It, shown under it with Cancel It grayed out: “It’s overdrawn by …, and the bank only closes it once that’s paid off. Move money into it first.”, “Money is "
+  },
+  {
+   "where": "guide papers.doctor short",
+   "sentences": 6,
+   "words": 138,
+   "text": "About twice a year a week brings a doctor’s visit, and the game books it for you at your doctor’s practice, at 10:00 AM on a weekday that isn’t a public holiday. In New Haven, while Yale Health covers you, that’s Yale He"
+  },
+  {
+   "where": "guide taxes.lien short",
+   "sentences": 6,
+   "words": 100,
+   "text": "A lien is a public claim an authority files when a balance stays unpaid deep into collection. Connecticut DRS files one with its notice of intent to levy. The IRS files one at its final notice if you owe $10,000 or more "
+  },
+  {
+   "where": "tutorial body body 1",
+   "sentences": 5,
+   "words": 73,
+   "text": "How You Are, on Home, shows three numbers. Energy is what you have left for today. It runs down every hour you’re awake, faster when you owe sleep, and only sleep brings it back. Stress eases while you still have energy "
+  },
+  {
+   "where": "tutorial looking-after body 3",
+   "sentences": 5,
+   "words": 60,
+   "text": "Your groceries are bought each day at your town’s prices, and you eat through them during the day. Eat A Meal feeds you and lifts your morale, more the hungrier you were. Order In does the same without the cooking, at th"
+  }
+ ],
+ "vagueAll": [
+  {
+   "where": "tutorial calendar body 5",
+   "text": "You can only skip a plan of your own, so there’s no Skip It button for a class or an appointment. Press Go, or Stand Here to wait. It happens the next time the clock moves: you’re there if you’re awake, out of hospital and in its town, and if not, you miss it."
+  },
+  {
+   "where": "guide day.calendar now 4",
+   "text": "Stand Here: the dialog closes and the clock stays paused at the commitment, which stays at the top of the Calendar panel, marked now. It happens the next time the clock moves, and you’re there if you’re awake, in its town, and not kept away by a hospital bed or an injury."
+  },
+  {
+   "where": "guide day.needs steps 2",
+   "text": "Press one of a question’s answers to act on it there. It does what the same button on its own screen does."
+  },
+  {
+   "where": "guide bank.payments later 1",
+   "text": "On a standing order’s day, the whole amount moves if the account it pays from has it. If none of it can go, What Needs You says “A Standing Order Didn’t Go” and why, and it tries again next month. That happens when the account is short, either account is dormant or closing, the account it pays from is blocked after a switch because it owes money, or (in a save from before this was ruled out) it pays into a term deposit."
+  }
+ ]
+}
