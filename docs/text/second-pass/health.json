@@ -643,6 +643,13 @@
   "reason": "Two programming errors for a random pick from an empty list, thrown to a developer's console and never shown to a player.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/appointments.ts#appointmentWords": {
+  "status": "Rewritten",
+  "hash": "ec02d6c349ac",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: each kind of appointment held by tests/language-care17.test.ts, and read in the missed notice in docs/verification/continuity-2026-10-20/health/sequences-after.txt (render-sequences.ts)",
+  "first": "Pending"
+ },
  "src/engine/systems/appointments.ts#bookIn": {
   "status": "Rewritten",
   "hash": "72ae2f0f8ea2",
@@ -659,9 +666,9 @@
  },
  "src/engine/systems/appointments.ts#registerAppointments": {
   "status": "Rewritten",
-  "hash": "cd2576317388",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g05-life.test.ts asserts Missed The Doctor and tests/scope-health.test.ts Not Seen At Your Practice, played",
+  "hash": "9eabc98afb81",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: Missed The Doctor and Not Seen At Your Practice read in docs/verification/continuity-2026-10-20/health/sequences-after.txt (render-sequences.ts) and held word for word by tests/evidence-g05-life.test.ts and tests/scope-health.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/appointments.ts#registerAppointments <health.book>": {
@@ -676,6 +683,13 @@
   "hash": "807ad7ff33b5",
   "on": "2026-10-19",
   "evidence": "care-after-2.txt, rendered by render-care.ts: Call It Off pressed on an appointment that isn't booked",
+  "first": "Pending"
+ },
+ "src/engine/systems/appointments.ts#seenWords": {
+  "status": "Rewritten",
+  "hash": "a7a501481d57",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: each kind of visit held by tests/language-care17.test.ts and tests/evidence-g03-life.test.ts (a renewal), read in docs/verification/continuity-2026-10-20/health/sequences-after.txt (render-sequences.ts)",
   "first": "Pending"
  },
  "src/engine/systems/appointments.ts#SPECIALIST": {
@@ -764,9 +778,9 @@
  },
  "src/engine/systems/health.ts#careFor": {
   "status": "Rewritten",
-  "hash": "c6e0d115dd2d",
-  "on": "2026-10-19",
-  "evidence": "tests/scope-health.test.ts and tests/evidence-g05-life.test.ts assert A Doctor's Visit, In Hospital, The Emergency Room and A Claim Denied whole, played",
+  "hash": "5c73829c7e32",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: each kind of care read on a student and a New Yorker in docs/verification/continuity-2026-10-20/health/sequences-after.txt (render-sequences.ts); the denied claim's figure held by tests/language-care17.test.ts, mutation-tested, and the visits by tests/scope-health.test.ts and tests/evidence-g05-life.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/health.ts#CONDITION_LABEL": {
@@ -812,11 +826,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/health.ts#fluMeans": {
-  "status": "Retained",
-  "hash": "46ee57ee6e35",
-  "on": "2026-10-19",
-  "reason": "The flu's notice says when it ends, what it cost, that Work Out waits, and that Call In Sick on School excuses a day of classes, all a player needs that week.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "51c0663ccb7c",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: the flu read seen and unseen in docs/verification/continuity-2026-10-20/health/sequences-after.txt (render-sequences.ts) against the pressure student's three in voices-2026-10-20/after/pressure.json; held by tests/language-care17.test.ts, mutation-tested (docs/verification/continuity-2026-10-20/health/mutations.txt)",
+  "first": "Pending"
  },
  "src/engine/systems/health.ts#grantPending": {
   "status": "Rewritten",
@@ -903,11 +917,11 @@
   "first": "Pending"
  },
  "src/engine/systems/health.ts#onsetMonth": {
-  "status": "Retained",
-  "hash": "c4ea2c979dad",
-  "on": "2026-10-19",
-  "reason": "A diagnosis notice that says what happened, what it costs each month and where to see or stop the care, with the button's own name, Let It Go.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "c5b525ded9d7",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: the diagnosis notice held word for word by tests/evidence-g05-life.test.ts, tests/evidence-g07-life.test.ts and tests/evidence2-b01.test.ts, read with the condition's look in docs/verification/continuity-2026-10-20/health/looks-after.txt (render-looks.ts)",
+  "first": "Pending"
  },
  "src/engine/systems/health.ts#prepayRefusal": {
   "status": "Retained",
@@ -1056,11 +1070,18 @@
   "reason": "The ledger line and income account for a week of workers' compensation, named as the payment the state calls it.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/injury.ts#injuryKeeps": {
+  "status": "Rewritten",
+  "hash": "87b75e4daeff",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: the notice's and the look's shared middle, read in docs/verification/continuity-2026-10-20/health/sequences-after.txt and docs/verification/continuity-2026-10-20/health/looks-after.txt (render scripts) and on the built app's health journey; each kind held by tests/language-injury.test.ts, mutation-tested (docs/verification/continuity-2026-10-20/health/mutations.txt)",
+  "first": "Pending"
+ },
  "src/engine/systems/injury.ts#mayHurt": {
   "status": "Rewritten",
-  "hash": "8fc432ac1a1b",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g07-life.test.ts, tests/evidence2-b03.test.ts and tests/evidence2-b02.test.ts assert A Sprained Ankle whole and its bill's name, played",
+  "hash": "d465a26b2dce",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: read in order in docs/verification/continuity-2026-10-20/health/sequences-after.txt (render-sequences.ts, every kind on a student and an uninsured New Yorker, against sequences-before.txt) and on the built app's health journey (docs/verification/continuity-2026-10-20/health/journey); held by tests/language-injury.test.ts and the evidence tests that quote it",
   "first": "Pending"
  },
  "src/engine/systems/injury.ts#registerInjury": {
@@ -1106,11 +1127,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/therapy.ts#registerTherapy": {
-  "status": "Retained",
-  "hash": "c88df0e68211",
-  "on": "2026-10-19",
-  "reason": "A course's three endings in a notice each: stopped when Yale Health ended, with what to do next; the depression lifted and what that changes; or done, with how to start another.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "0bf50fa4fee3",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: Your Counseling At Yale Ended held word for word by tests/evidence-g04-life.test.ts and tests/evidence-g05-life.test.ts, played through a withdrawal",
+  "first": "Pending"
  },
  "src/engine/systems/therapy.ts#THERAPISTS": {
   "status": "Retained",
@@ -1205,9 +1226,9 @@
  },
  "src/ui/looks/wellbeing.tsx#top": {
   "status": "Rewritten",
-  "hash": "6a0ea1d6a950",
-  "on": "2026-10-19",
-  "evidence": "looks-final.txt (render-looks.ts) and the built app's looks-walk/ (looks-walk.mjs, port 4288); tests/evidence-g06-life.test.ts asserts Readiness at 100 and under it, and tests/evidence-g33-ui.test.ts the person page",
+  "hash": "6f86862eb49c",
+  "on": "2026-10-20",
+  "evidence": "Brief 17: every look read in docs/verification/continuity-2026-10-20/health/looks-after.txt (render-looks.ts, every band, save and pronoun) against looks-before.txt, the injury look on the built app's health journey (docs/verification/continuity-2026-10-20/health/journey), the Ill line held by tests/language-care17.test.ts",
   "first": "Pending"
  },
  "src/ui/looks/wellbeing.tsx#WHAT": {

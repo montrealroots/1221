@@ -1,0 +1,907 @@
+[
+ {
+  "surface": "An injury’s notice",
+  "where": "Home’s notices, the moment it happens (Go There opens Papers)",
+  "sources": [
+   "src/engine/systems/injury.ts#mayHurt",
+   "src/engine/systems/injury.ts#CARE_WORDS",
+   "src/engine/systems/injury.ts#injuryKeeps",
+   "src/engine/content/injury.ts#INJURY_KIND",
+   "src/engine/content/injury.ts#INJURY"
+  ],
+  "states": [
+   "setback",
+   "notification",
+   "warning",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read as the pressure student met a sprain, and every kind on a student and an uninsured New Yorker in turn. It gave its days but no date, put the bill before what the injury keeps you from, said “2 sessions”, and “Call In Sick, on School, excuses a day of classes while it mends” read as one day in all, where Call In Sick can be pressed on any day it mends, and it didn’t say the button is on School’s Classes tab or that it excuses the whole day at school (classes, calls and a shift), as its tooltip says. A billed injury said “You owe $699.13 for its care.” without saying what the care was. A laid-up injury didn’t say the School excuses what it keeps you from on its own, and a cut or a knock didn’t say it keeps you from nothing. The title names the injury, so the body opens on how long it takes, as before.",
+  "changes": "In order: “It takes 7 days to mend, until September 19, 2026.”, then what it keeps you from and what to do (“Until then you can’t work out, and it holds back the physical side of your work. Each day until then, Call In Sick, on School’s Classes tab, can excuse that day at school.”, or “You’re laid up until then, kept from classes, work and training. What you miss at school is excused.”, or “It won’t stop you working out or going to class.”), then the cost, the care named in both kinds (“You owe $699.13 for its care, a visit to urgent care and two sessions of physical therapy.”). The middle is one function, `injuryKeeps`, which the look says too.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-after.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-before.txt"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/voices-2026-10-20/after/pressure.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-injury.test.ts: 'an injury says the day it mends, and what it keeps you from in each kind'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g07-life.test.ts: 'a work-study crew shift that pulls a muscle is work'"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/continuity-2026-10-20/health/journey/health-1440/trace.json"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/continuity-2026-10-20/health/journey/health-390/trace.json"
+   }
+  ]
+ },
+ {
+  "surface": "An injury’s look, and Mending on your look",
+  "where": "How You Are on Home, or your name: your look, then An Injury",
+  "sources": [
+   "src/ui/looks/wellbeing.tsx#top",
+   "src/engine/systems/injury.ts#injuryKeeps"
+  ],
+  "states": [
+   "details",
+   "explanation",
+   "unavailable"
+  ],
+  "outcome": "Revised",
+  "why": "Its way in promises “What it is, when it mends, and what it keeps you from.” A knock’s and a cut’s look gave only the day, so the promise went unanswered; a broken bone’s didn’t say the classes it keeps you from are excused; and a sprain’s ended on the same one-day-sounding Call In Sick line as the notice. The Condition way under it says plainly that an injury doesn’t lower condition but adds stress and lowers morale each day, the distinction players miss, and stays.",
+  "changes": "The summary after “It mends by …” is the notice’s own middle (`injuryKeeps`), in the person’s pronouns: a laid-up injury adds “What you miss at school is excused.” for the player at the School, a cut or a knock says “It won’t stop you working out or going to class.”, and Call In Sick says where it is and that it can excuse each day at school.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-after.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/looks-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-injury.test.ts: 'says a laid-up student’s classes are excused, and a knock keeps you from nothing'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/scope-people.test.ts: 'her injury'"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/continuity-2026-10-20/health/journey/health-1440/trace.json"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/continuity-2026-10-20/health/journey/health-390/trace.json"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/voices-2026-10-20/journeys14-final/health-1440/02-injury-look.jpg"
+   }
+  ]
+ },
+ {
+  "surface": "Work Out and work on your feet refused while hurt",
+  "where": "Look After Yourself’s Work Out; the Player Profile’s Stamina row; a step on your feet in Coursework; an hour of practice",
+  "sources": [
+   "src/engine/systems/injury.ts#trainingRefusal"
+  ],
+  "states": [
+   "unavailable",
+   "repeated"
+  ],
+  "outcome": "Kept",
+  "why": "“Not with a sprained ankle; it has 7 days yet to mend.” names the obstacle and how long it lasts, and counts down truly each morning to “1 day”; it reads the same on every control it refuses, so the player learns it once. Four guide entries quote it.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g06-life.test.ts: 'a sprain the workout’s own draw brings refuses the next'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence2-b11.test.ts: 'Not with a sprained ankle; it has 7 days yet to mend.'"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/continuity-2026-10-20/health/journey/health-1440/trace.json"
+   }
+  ]
+ },
+ {
+  "surface": "Workers’ compensation",
+  "where": "An injury’s notice at work, the weekly payment on Money, your look’s Mending line",
+  "sources": [
+   "src/engine/systems/injury.ts#shareWords",
+   "src/engine/systems/injury.ts#compWeek",
+   "src/engine/systems/injury.ts#registerInjury"
+  ],
+  "states": [
+   "notification",
+   "assembled"
+  ],
+  "outcome": "Kept",
+  "why": "“It happened at work, so workers’ compensation pays for the care, and 75% of your week’s wage while you’re off.” says who pays, what, and for how long, with the state’s own share (two-thirds or 75%, after tax only where it is); the deposit’s memo and the calendar label are the plain name of the payment.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence2-b02.test.ts: 'off six days, the first three are Connecticut’s waiting days'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'a broken bone at an elective shift is paid a week at a time'"
+   }
+  ]
+ },
+ {
+  "surface": "The flu",
+  "where": "Home’s notices, the week it strikes; your look while it lasts",
+  "sources": [
+   "src/engine/systems/health.ts#fluMeans",
+   "src/engine/systems/health.ts#careFor",
+   "src/ui/looks/wellbeing.tsx#top"
+  ],
+  "states": [
+   "setback",
+   "notification",
+   "unavailable",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read as the pressure student met it three times (October, February, October) and seen and unseen on a student and a New Yorker. The unseen notice said “You have the flu.” under the title You Have The Flu; it said “Work Out waits until it passes”; it never said the flu holds back the work you show while it lasts, which the Player Profile’s Readiness Today says (“The flu holds back your voice and body work”) and the feedback names; and Call In Sick “excuses a day of classes” read as one day of five, without saying where the button is. Seen at urgent care it opened on the bill’s line, “The flu, at urgent care, PhysicianOne …”. While it lasted no look said you had it: your look showed an injury’s Mending line and nothing for the flu.",
+  "changes": "Unseen: “It lasts until August 29, 2026, and it has cost you some condition and energy. Until it passes you can’t work out, and it holds back your voice and body work. Each day until then, Call In Sick, on School’s Classes tab, can excuse that day at school. You didn’t see a doctor, so there’s nothing to pay.” Seen: “You saw a doctor for it at PhysicianOne Urgent Care (…), New Haven.” first. Your look gains “Ill. The flu, until August 29, 2026.” while it lasts.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-after.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-before.txt"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/voices-2026-10-20/after/pressure.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-care17.test.ts: 'the flu, as a student meets it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'the flu, seen at urgent care, is five days'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g30-ui.test.ts: 'takes the flu’s 25 condition and 30 energy'"
+   }
+  ]
+ },
+ {
+  "surface": "Care had: a doctor’s visit, the emergency room, a stay in hospital",
+  "where": "Home’s notices, when the care is had (Go There opens Papers)",
+  "sources": [
+   "src/engine/systems/health.ts#careFor",
+   "src/engine/systems/health.ts#dueWords",
+   "src/engine/systems/appointments.ts#seenWords",
+   "src/engine/systems/health.ts#illnessWeek"
+  ],
+  "states": [
+   "notification",
+   "ordinary",
+   "assembled",
+   "error"
+  ],
+  "outcome": "Revised",
+  "why": "Each began with the bill’s own line as a fragment, “A doctor’s visit, Yale Health Center, Student Health.”, “The emergency room, Yale New Haven Hospital, …”, “A stay in hospital, …, for 3 days.”, a log entry where a sentence about what happened belongs. A marketplace claim denied was told “You owe $45.00.” in the visit’s notice over a bill of the full $183.98, the next notice alone giving the right figure: the words disagreed with the bill. The due sentence (“It’s taken from your checking account on …, and if there isn’t enough then, it becomes medical debt.”) says the date, the account and the consequence, and stays; so do the bills’ names on Papers.",
+  "changes": "“You saw a doctor at Yale Health Center, Student Health.”, “You saw a doctor for a review of your asthma at …”, “You saw a doctor to renew your prescription at …”, “You saw the specialist your doctor referred you to at …” (`seenWords`, an older save’s wording said as before); “You went to the emergency room at …”; “You’re in hospital for 3 days at …”, the practice’s name last since names hold commas. A denied claim’s visit says “You owe the full $183.98, because your plan denied the claim.”, the bill’s figure, drawn on the same keyed draw before the notice instead of after it.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-after.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-before.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-care17.test.ts: 'a marketplace claim denied, told in its visit’s notice at the bill’s figure'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-care17.test.ts: 'a visit, said as who you saw and what for'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'a stay is three days in hospital'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'an emergency keeps them Connecticut’s median 189 minutes'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/scope-health.test.ts: 'Yale Health’s rule that a member’s care is had at its Health Center'"
+   }
+  ]
+ },
+ {
+  "surface": "A doctor’s appointment: booked, missed, not seen, a referral",
+  "where": "Home’s notices; the calendar’s stop; Papers, Health Cover: Book An Appointment, Call It Off",
+  "sources": [
+   "src/engine/systems/appointments.ts#bookIn",
+   "src/engine/systems/appointments.ts#registerAppointments",
+   "src/engine/systems/appointments.ts#appointmentWords",
+   "src/engine/systems/appointments.ts#registerAppointments <health.book>",
+   "src/engine/systems/appointments.ts#registerAppointments <health.cancel_appointment>",
+   "src/engine/systems/appointments.ts#SPECIALIST",
+   "src/engine/systems/appointments.ts#mayRefer",
+   "src/engine/systems/health.ts#reviewWhat",
+   "src/engine/systems/health.ts#RX"
+  ],
+  "states": [
+   "notification",
+   "failure",
+   "unavailable",
+   "error",
+   "repeated"
+  ],
+  "outcome": "Revised",
+  "why": "Missed and not seen opened on the label and a colon, “A doctor’s visit: you weren’t there, so you weren’t seen.”, a telegraphic fragment. The booking notice, “A doctor’s visit: booked at Yale Health Center, Student Health for December 15, 2026, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.”, has the same fragment and a missing comma after the practice’s name, and at Yale Health the wait is its own next weekday, not the town’s usual one; but the papers guide quotes it whole and tests/guide-examples-papers.test.ts holds the two equal, so it is left for the guide’s editor (the report gives the words). The refusals of Book An Appointment and Call It Off name the obstacle plainly.",
+  "changes": "“You weren’t there for your doctor’s appointment, so you weren’t seen.” and “You weren’t seen for your doctor’s appointment at Yale Health Center, Student Health.”, each kind of appointment said as a noun phrase (`appointmentWords`: “the review of your asthma”, “your appointment with the specialist”). The booking notice is unchanged.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-after.txt"
+   },
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/voices-2026-10-20/after/pressure.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'booked again after Call It Off, missed in hospital'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/scope-health.test.ts: 'booked at Yale Health, then withdrawn the same Monday'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-care17.test.ts: 'names each kind of appointment in a sentence'"
+   }
+  ]
+ },
+ {
+  "surface": "Your Doctor, Your Pharmacy and the practices",
+  "where": "Papers, Health Cover: Your Doctor and Your Pharmacy, and each care notice that names a place",
+  "sources": [
+   "src/engine/content/clinics.ts#CLINICS",
+   "src/engine/content/clinics.ts#SELF_PAY",
+   "src/engine/systems/clinics.ts#MEMBERS_ONLY",
+   "src/engine/systems/clinics.ts#clinicRefusal",
+   "src/engine/content/carevisits.ts#*",
+   "src/engine/systems/health.ts#registerHealth <health.choose_pharmacy>"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "The practices, clinics, hospitals and chains are real ones, spelled as they spell themselves with their addresses (“PhysicianOne Urgent Care (Yale New Haven Health Urgent Care), New Haven”), and Papers lists each with what a visit costs you and how soon. “Yale Health sees Yale students it covers, and it doesn’t cover you now.” says why a practice won’t see you in the same breath as the notice that books you elsewhere.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/health/walk-1440/health.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/health.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/clinics.test.ts: 'Your doctor has to be in the town'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/scope-health.test.ts: 'Yale Health’s rule that a member’s care is had at its Health Center'"
+   }
+  ]
+ },
+ {
+  "surface": "Bills, medical debt and Pay It Off",
+  "where": "Papers, Health Cover: Care And Its Bills; the bill’s day on the calendar; Home’s notices",
+  "sources": [
+   "src/engine/systems/health.ts#registerHealth",
+   "src/engine/systems/health.ts#registerHealth [loan]",
+   "src/engine/systems/health.ts#registerHealth <health.pay_bill>",
+   "src/engine/systems/health.ts#billCare",
+   "src/engine/systems/health.ts#healthMonth"
+  ],
+  "states": [
+   "overdue",
+   "failure",
+   "notification",
+   "warning",
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "Read on its due date with nothing in the bank: “Your bank couldn’t cover a $605.46 medical bill when it came due, so it’s now medical debt. The bill was for a sprained ankle’s care. To clear it, press Pay It Off on Papers, under Health Cover.” says what happened, what it was for and the control that clears it, and “A Medical Debt Is On Your Record” says the $500 and the year before it reaches the credit record. Pay It Off’s refusals have the house shape: the account, the amount, nothing paid, and Move Money as the next step.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'A Medical Bill Went Unpaid names the hospital as it’s written'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/coverage-gaps-life.test.ts: 'A Medical Debt Is On Your Record'"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/care-after.txt"
+   }
+  ]
+ },
+ {
+  "surface": "A claim denied, and its appeal",
+  "where": "Home’s notices; Papers, Care And Its Bills: Appeal It",
+  "sources": [
+   "src/engine/systems/health.ts#careFor",
+   "src/engine/systems/health.ts#registerHealth <health.appeal>",
+   "src/engine/systems/health.ts#appealRefusal",
+   "src/engine/systems/health.ts#registerHealth"
+  ],
+  "states": [
+   "failure",
+   "notification",
+   "unavailable",
+   "history"
+  ],
+  "outcome": "Kept",
+  "why": "“Your plan denied the claim for a doctor’s visit, …, so you owe the full $183.98 unless an appeal overturns it. To appeal, press Appeal It on Papers, under Health Cover, within 180 days.” gives the figure, the way out and the deadline; Appeal Won and Appeal Lost say which way it went and what’s owed, Lost no longer read as its opposite. Its visit’s notice now says the same full figure (the row above).",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'the denial’s and the decision’s notices name the clinic as it’s written'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-care17.test.ts: 'a marketplace claim denied, told in its visit’s notice at the bill’s figure'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/claims.test.ts: 'appealed within 180 days'"
+   }
+  ]
+ },
+ {
+  "surface": "A hospital’s financial assistance",
+  "where": "Papers, Care And Its Bills: Apply For Assistance",
+  "sources": [
+   "src/engine/systems/health.ts#aidRefusal",
+   "src/engine/systems/health.ts#registerHealth <health.apply_aid>"
+  ],
+  "states": [
+   "unavailable",
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "Each refusal names the one thing in the way, a hospital outside Connecticut, a bill settled or past due, assistance already taken off or already asked for, in the words the papers guide quotes, so the reason beside the button and the guide agree.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/care-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/defects-g8-6.test.ts: 'financial assistance'"
+   }
+  ]
+ },
+ {
+  "surface": "Care priced again after a change of cover",
+  "where": "Home’s notices: Care Billed Again or Care Credited; Papers, Care And Its Bills",
+  "sources": [
+   "src/engine/systems/health.ts#repriceCare"
+  ],
+  "states": [
+   "notification",
+   "history",
+   "assembled"
+  ],
+  "outcome": "Kept",
+  "why": "It says why (the cover and the day it reaches back to), that the care since was priced again, and what follows, a new bill for more or a credit that comes off anything owed before the rest goes back to the bank, so a player who withdrew or bought cover back in time can follow the money.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/remaining-health-billing.test.ts: 'repriceCare: a bill as issued stands'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/health.ts"
+   }
+  ]
+ },
+ {
+  "surface": "Enroll, and the marketplace’s door",
+  "where": "Papers, Health Cover: The Marketplace, Enroll, Apply For HUSKY D, Drop; Home’s cover line",
+  "sources": [
+   "src/engine/systems/health.ts#mayEnroll",
+   "src/engine/systems/health.ts#marketplaceOpen",
+   "src/engine/systems/health.ts#applyRefusal",
+   "src/engine/systems/health.ts#registerHealth <health.drop>",
+   "src/engine/systems/health.ts#PROGRAM_NAMES",
+   "src/engine/systems/health.ts#COVER_LABEL",
+   "src/engine/systems/health.ts#armHealth",
+   "src/engine/systems/health.ts#HOME",
+   "src/engine/systems/health.ts#MONTH_NAMES"
+  ],
+  "states": [
+   "unavailable",
+   "locked",
+   "error",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Read on Papers in the health save (“Yale Health covers you while you’re at the School.” under The Marketplace) and in each city: each reason says the one rule in the way and, where there is one, the day it opens (“Yale Health covers you until …. You can enroll from …, 60 days before that cover ends.”). The program names are their own (HUSKY D, Medi-Cal, the Essential Plan, Covered Connecticut), and the papers guide quotes these reasons word for word.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/health/walk-1440/health.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/health/walk-390/health.json"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/care-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/defects-g8-5.test.ts: 'Yale Health covers you while you’re at the School.'"
+   }
+  ]
+ },
+ {
+  "surface": "Public cover over the months: ended, renewed, changed, ending",
+  "where": "Home’s notices on a month’s first; Papers, Health Cover",
+  "sources": [
+   "src/engine/systems/health.ts#healthMonth",
+   "src/engine/systems/health.ts#renewProgram",
+   "src/engine/systems/health.ts#applyRenewal",
+   "src/engine/systems/health.ts#endAhead",
+   "src/engine/systems/health.ts#byWords"
+  ],
+  "states": [
+   "notification",
+   "warning",
+   "returning",
+   "assembled"
+  ],
+  "outcome": "Kept",
+  "why": "Read in care-after.txt for a dropped plan, a status lost and a renewal by age and by SNAP. Each says what happened, from when, why, and the next step with its window (“You have 60 days to enroll in the marketplace”, or “Dropping a plan or leaving it unpaid doesn’t open special enrollment.”), and Your Health Cover Ended adds California’s penalty where it applies. The legal conditions stay exact, as the style guide asks of official notices.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/care-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'Your Health Cover Ended'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/remaining-09-journeys.test.ts: 'Your Public Cover Is Renewed'"
+   }
+  ]
+ },
+ {
+  "surface": "Medicaid’s work rules: a notice of noncompliance, approved, denied, a hardship",
+  "where": "Home’s notices; Papers, Health Cover: Request A Hardship Exception",
+  "sources": [
+   "src/engine/systems/health.ts#noticeOfNoncompliance",
+   "src/engine/systems/health.ts#grantPending",
+   "src/engine/systems/health.ts#hardshipRefusal",
+   "src/engine/systems/health.ts#workWords",
+   "src/engine/systems/health.ts#inMonths"
+  ],
+  "states": [
+   "warning",
+   "overdue",
+   "unavailable",
+   "notification",
+   "assembled"
+  ],
+  "outcome": "Kept",
+  "why": "The longest notice in the area, read whole: it goes in the order a player needs, what wasn’t found and in which months, the day you stay covered to, what you needn’t send and the one thing you can (a stay in hospital, with the button’s name), what happens on which day if you don’t answer, and what follows for the tax credit and a new application. Every part is a deadline or a consequence the brief says never to hide, so it stays whole.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/scope-cover.test.ts: 'A Notice Of Noncompliance'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/remaining-health-eligibility.test.ts: 'Public Cover Approved'"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/care-after.txt"
+   }
+  ]
+ },
+ {
+  "surface": "A long-term condition: diagnosed, kept up or left untreated, its medicine",
+  "where": "Home’s notices; Papers, Health Cover: Your Long-Term Conditions (Keep It Up, Let It Go); its look from your look",
+  "sources": [
+   "src/engine/systems/health.ts#onsetMonth",
+   "src/engine/systems/health.ts#CONDITION_LABEL",
+   "src/engine/systems/health.ts#keepUp",
+   "src/engine/systems/health.ts#registerHealth <health.treat>",
+   "src/engine/systems/health.ts#fillMedicine",
+   "src/engine/systems/health.ts#renewalDue",
+   "src/engine/systems/health.ts#extraSupplyRefusal",
+   "src/engine/systems/health.ts#registerHealth <health.extra_supply>",
+   "src/engine/systems/health.ts#prepayRefusal",
+   "src/engine/systems/health.ts#registerHealth <health.prepay>",
+   "src/ui/looks/wellbeing.tsx#leftAlone",
+   "src/ui/looks/wellbeing.tsx#top",
+   "src/engine/content/body.ts#ONSET"
+  ],
+  "states": [
+   "notification",
+   "first use",
+   "details",
+   "unavailable",
+   "error"
+  ],
+  "outcome": "Revised",
+  "why": "The diagnosis said “A doctor found it this month.”, its “it” the title’s. The rest reads well: the look says kept up or left untreated in the buttons’ own words, what leaving it costs by the week, and “To change it, go to Papers, then Health Cover, and press Keep It Up or Let It Go beside it.”; A Prescription Ran Out says why it can’t be filled and that the visit to renew it is booked.",
+  "changes": "“A doctor found this month that you have high blood pressure. Its care starts now, …”, the condition named in the sentence.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'diagnoses high blood pressure on the 1st'"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/looks-after.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/care-after.txt"
+   }
+  ]
+ },
+ {
+  "surface": "Teeth and eyes, and a dental plan",
+  "where": "Papers, Health Cover: A Dental Plan (Buy Dental); Care And Its Bills",
+  "sources": [
+   "src/engine/systems/health.ts#NAMED_TEETH_EYES",
+   "src/engine/systems/health.ts#registerHealth <health.dental>",
+   "src/engine/systems/health.ts#illnessWeek"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "The dentists and opticians are real practices by their own names; the care’s lines (“The dentist, a cleaning”, “New glasses”) are a bill’s names in a table, where a short label is right; and Buy Dental’s refusals say where a plan can be bought and, for money, the amount and that nothing was charged.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/health/walk-1440/health.json"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/care-after.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/sequences-after.txt"
+   }
+  ]
+ },
+ {
+  "surface": "Therapy",
+  "where": "Papers, Health Cover: a therapist; the session on the calendar; Home’s notices",
+  "sources": [
+   "src/engine/systems/therapy.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "success",
+   "partial",
+   "failure",
+   "unavailable",
+   "notification"
+  ],
+  "outcome": "Revised",
+  "why": "Your Counseling At Yale Ended put the rule before what happened: “Yale Mental Health & Counseling sees students Yale Health covers, and your cover has ended, so your course there stopped after …”. The course’s end reads well both ways (“your depression has lifted. It no longer needs care, and it no longer takes from your morale.” and “The depression hasn’t lifted yet, and you can start another course …”), and the refusals name the one obstacle each.",
+  "changes": "“Your course at Yale Mental Health & Counseling stopped after 2 of 8 sessions, because it sees only students Yale Health covers and your cover has ended.”",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g04-life.test.ts: 'a withdrawal ends Yale Health’s cover, and with it the course at Yale'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g05-life.test.ts: 'a Yale course ends at the session after Withdraw ends Yale Health'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/therapy.test.ts: 'Choose a therapist where you live'"
+   }
+  ]
+ },
+ {
+  "surface": "Your wellbeing: your look and the eight measures",
+  "where": "How You Are on Home, or your name: your look, then each measure’s look",
+  "sources": [
+   "src/ui/looks/wellbeing.tsx#DIALS [energy]",
+   "src/ui/looks/wellbeing.tsx#DIALS [stress]",
+   "src/ui/looks/wellbeing.tsx#DIALS [sleepDebt]",
+   "src/ui/looks/wellbeing.tsx#DIALS [morale]",
+   "src/ui/looks/wellbeing.tsx#DIALS [condition]",
+   "src/ui/looks/wellbeing.tsx#DIALS [fitness]",
+   "src/ui/looks/wellbeing.tsx#DIALS [nourishment]",
+   "src/ui/looks/wellbeing.tsx#DIALS [hygiene]",
+   "src/ui/looks/wellbeing.tsx#WHAT",
+   "src/ui/looks/wellbeing.tsx#sentenceFor",
+   "src/ui/looks/wellbeing.tsx#top",
+   "src/ui/looks/wellbeing.tsx#bodyWords",
+   "src/engine/systems/body.ts#*",
+   "src/engine/content/body.ts#BODY",
+   "src/engine/content/lifespan.ts#AGING"
+  ],
+  "states": [
+   "details",
+   "explanation",
+   "ordinary",
+   "warning"
+  ],
+  "outcome": "Revised",
+  "why": "Read in every band and save. The distinction players most confuse is said where it’s needed: Energy’s look says energy is today’s and only sleep brings it back, that stamina is something else (how long you keep going in a long scene) and so is condition; Fitness says it is the Player Profile’s Stamina, built by working out, and that rest brings back energy and condition, not fitness; Condition says illness wears it down and an injury doesn’t, and that health (a long-term condition, cover and care) is on Papers. Each band’s sentence says what that figure does now. Two footnotes were fragments: seven measures’ “From 0 to 100. It changes with every hour the clock runs.”",
+  "changes": "A measure’s footnote is a sentence, “It runs from 0 to 100, and it changes with every hour the clock runs.”",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/looks-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g06-life.test.ts: 'As good as a day gets'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/scope-people.test.ts: 'Plenty for a full day'"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/continuity-2026-10-20/health/journey/health-1440/trace.json"
+   },
+   {
+    "kind": "screen",
+    "ref": "docs/verification/continuity-2026-10-20/health/journey/health-390/trace.json"
+   }
+  ]
+ },
+ {
+  "surface": "Readiness",
+  "where": "How You Are on Home, your look’s Readiness, a trait’s Readiness way",
+  "sources": [
+   "src/ui/looks/wellbeing.tsx#top"
+  ],
+  "states": [
+   "details",
+   "explanation",
+   "ordinary"
+  ],
+  "outcome": "Revised",
+  "why": "The summary names what’s holding you back most, or at 100 that it’s as good as a day gets, with each measure a way in at its figure. Its footnote opened on a fragment, “Seven of the eight measures, all but fitness, from 5 to 100.”",
+  "changes": "The footnote: “It comes from seven of the eight measures, all but fitness, and runs from 5 to 100. It sets how much a class, …”",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/looks-after.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g06-life.test.ts: 'Readiness at 100 says a measure short of its best'"
+   }
+  ]
+ },
+ {
+  "surface": "A trait’s look",
+  "where": "Your look: each trait you chose",
+  "sources": [
+   "src/ui/looks/wellbeing.tsx#top"
+  ],
+  "states": [
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "It shows the trait’s description, what it changes as a table of its own figures beside the figure all your traits make together, and its cost, so a player can see why a trait matters without the engine’s knobs; a trait that changes no figure says so in a sentence.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/looks-after.txt"
+   }
+  ]
+ },
+ {
+  "surface": "The training classes named",
+  "where": "The guide’s Your Body and the Player Profile’s Stamina entry, where the classes that train like a workout are listed",
+  "sources": [
+   "src/engine/content/body.ts#TRAINING_CLASS_NAMES"
+  ],
+  "states": [
+   "explanation",
+   "assembled"
+  ],
+  "outcome": "Kept",
+  "why": "It lists each class by its catalog name and adds “in the spring term” only to the one that trains then, so a player looking for a class that holds their fitness finds it on the School’s timetable by the same name.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/engine/content/body.ts"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/looks-after.txt"
+   }
+  ]
+ },
+ {
+  "surface": "A life ended",
+  "where": "The end of a life: the notice and the screen after it",
+  "sources": [
+   "src/engine/systems/mortality.ts#*"
+  ],
+  "states": [
+   "history",
+   "notification"
+  ],
+  "outcome": "Kept",
+  "why": "“{name} died at {age}.” says it once, plainly, without melodrama, as the style guide asks of narration; the schedule’s World Simulation labels are the engine’s own and aren’t on any screen a player reads.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g04-life.test.ts: 'A Life, Ended'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/mortality.ts"
+   }
+  ]
+ },
+ {
+  "surface": "The places: the gazetteer’s names and notes",
+  "where": "Creation’s birthplace and home; Home’s Where You Are; a place’s look",
+  "sources": [
+   "src/engine/content/geography.ts#*",
+   "src/engine/content/world-data.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "error",
+   "details"
+  ],
+  "outcome": "Kept",
+  "why": "The towns keep their own spellings (“Mosfellsbær”) and the countries are GeoNames’ names as it writes them; the town list that can’t load says what happened and what to do (“Check your connection, then choose another country and come back to this one.”); a city’s note, which no screen shows today, says what is reference data and what is estimated. Two of GeoNames’ names fall short and are reported, not edited, since the table is generated: Cambodia’s “Riels” (brief 15’s finding) and “Aland Islands” for Åland.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/health/walk-1440/health.json"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/health/care-after.txt"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/content/world-data.ts"
+   }
+  ]
+ },
+ {
+  "surface": "Card payment plans’ and revolving courses’ sources",
+  "where": "Money, a card: The Card’s Offers and the minimum payment’s source line",
+  "sources": [
+   "src/engine/content/plans.ts#INTEREST_PLANS",
+   "src/engine/content/revolving.ts#REVOLVING_COURSE"
+  ],
+  "states": [
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "They are citation lines, each a bank’s own page with the figure it gives in the bank’s own terms (“pago aplazado, TIN 20.40%”, “残高スライド 一般 course”), and where the game had to estimate a grade it says so in the game’s words.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/revolving.test.ts: 'REVOLVING_COURSE'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/content/revolving.ts"
+   }
+  ]
+ },
+ {
+  "surface": "Actor or Actress",
+  "where": "The rail under your name, Home’s date line, the save slots, a life ended",
+  "sources": [
+   "src/engine/core/performer.ts#PERFORMER_NOUN"
+  ],
+  "states": [
+   "ordinary"
+  ],
+  "outcome": "Kept",
+  "why": "The two titles a player chose at creation, shown as chosen, the same word on every screen that names what you are.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/health/walk-1440/health.json"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/core/performer.ts"
+   }
+  ]
+ },
+ {
+  "surface": "The engine’s own checks",
+  "where": "Never a player screen: a developer’s error if the engine breaks its own rules",
+  "sources": [
+   "src/engine/core/deciders.ts#*",
+   "src/engine/core/invariants.ts#breaches",
+   "src/engine/core/rng.ts#makeRng"
+  ],
+  "states": [
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "These are internal faults (a decider that reads nothing, a ledger that doesn’t balance, an empty list drawn from) that only a test or a broken build meets; a player who meets a failed command reads the frame’s own “That didn’t go through because of an error in the game.” instead.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/engine/core/invariants.ts"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/core/deciders.ts"
+   }
+  ]
+ }
+]

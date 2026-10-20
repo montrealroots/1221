@@ -438,7 +438,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     // A twin that keeps it: billed at Fair Haven as the uninsured's, the figure Papers gave, and told why.
     const kept = reload(sim);
     tend(kept, at(2027, 3, 4, 18));
-    expect(titled(kept, 'A Doctor’s Visit').at(-1)!.body).toBe(`A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. You owe ${priced}. It’s taken from your checking account on April 3, 2027, and if there isn’t enough then, it becomes medical debt.`);
+    expect(titled(kept, 'A Doctor’s Visit').at(-1)!.body).toBe(`You saw a doctor at Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. You owe ${priced}. It’s taken from your checking account on April 3, 2027, and if there isn’t enough then, it becomes medical debt.`);
     // The player's way: called off under Your Doctor, then booked again: Yale Health's Student Health, the next weekday.
     sim = reload(sim);
     expect(titled(sim, 'Your Appointment Is Outside Yale Health')).toHaveLength(1);
@@ -449,7 +449,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     expect(refused(sim, 'health.book')).toBe('There’s nothing to see a doctor about.');
     expect(drawn(sim, PapersWorkspace, 'health')).not.toContain('call this off, then Book An Appointment');
     tend(sim, at(2027, 2, 11, 18));
-    expect(titled(sim, 'A Doctor’s Visit').at(-1)!.body).toBe('A doctor’s visit, Yale Health Center, Student Health. There’s nothing to pay.');
+    expect(titled(sim, 'A Doctor’s Visit').at(-1)!.body).toBe('You saw a doctor at Yale Health Center, Student Health. There’s nothing to pay.');
     expect(titled(sim, 'Your Appointment Is Outside Yale Health')).toHaveLength(1);
     expect(breaches(sim.universe)).toEqual([]);
   }, 300_000);
@@ -514,7 +514,7 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
       tend(s, at(2026, 12, 10, 12));
       const visit = (healthOf(s.player).careLog ?? []).filter((e) => e.at >= at(2026, 12, 1, 0));
       expect(visit.map((e) => [e.at, e.care, e.share, e.billId])).toEqual([[at(2026, 12, 3, 10), 'visit', 0, undefined]]);
-      expect(titled(s, 'A Doctor’s Visit').filter((n) => n.at >= at(2026, 12, 1, 0)).map((n) => n.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. There’s nothing to pay.']);
+      expect(titled(s, 'A Doctor’s Visit').filter((n) => n.at >= at(2026, 12, 1, 0)).map((n) => n.body)).toEqual(['You saw a doctor at Fair Haven Community Health Care. There’s nothing to pay.']);
     }
   }, 300_000);
 

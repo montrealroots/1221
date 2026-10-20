@@ -430,7 +430,7 @@ describe('the insured paths, from cover to a bill paid once, the same in one jum
       const visit = healthOf(done.player).careLog!.find((e) => e.care === 'visit')!;
       expect([visit.at, visit.share, visit.planPaid, visit.billId]).toEqual([at(2026, 11, 27, 10), 0, 105_13, undefined]);
       expect(healthOf(done.player).bills.filter((b) => /visit/i.test(b.what))).toEqual([]);
-      expect(titled(done, 'A Doctor’s Visit').filter((n) => n.at >= at(2026, 11, 1, 0)).map((n) => n.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. There’s nothing to pay.']);
+      expect(titled(done, 'A Doctor’s Visit').filter((n) => n.at >= at(2026, 11, 1, 0)).map((n) => n.body)).toEqual(['You saw a doctor at Fair Haven Community Health Care. There’s nothing to pay.']);
       expect(memoed(done, /premium/i)).toEqual([]);
       expect(papers(done)).toContain(name);
     }

@@ -21,7 +21,7 @@
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { clamp } from '../core/rng';
-import { MS_DAY, type Instant } from '../core/time';
+import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
@@ -82,6 +82,27 @@ export function trainingRefusal(person: Person, at: Instant): string | undefined
 /** The care an injury needs (`INJURY_KIND[].care`), as a notice names it. */
 const CARE_WORDS: Readonly<Record<'visit' | 'urgent' | 'emergency', string>> = { visit: 'a doctor’s visit', urgent: 'a visit to urgent care', emergency: 'a trip to the emergency room' };
 
+/** A count under ten in words, as prose says one (`docs/STYLE.md`): "two sessions of physical therapy". */
+const countWords = (n: number): string => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
+
+/**
+ * What an injury keeps them from while it mends, and what's done about it, said alike by its notice and its look
+ * (`ui/looks/wellbeing.tsx`), each after a sentence naming when it mends. From 2026-10-20 (brief 17): until then the
+ * notice gave its days and no date, put its cost before what it kept them from, said Call In Sick "excuses a day of
+ * classes", which read as one day in all where `sickRefusal` takes it on any day it mends (on the Classes tab, which it
+ * didn't name, for the whole day at school: its classes, calls and shift), and said nothing of the
+ * physical side of the work it holds back (`conditionAt`), which the look said; an injury that lays them up didn't say
+ * the School excuses the classes it keeps them from (`offSick`), and a cut or a knock didn't say it keeps them from
+ * nothing. `enrolled` is the player at the School, whose absences are excused; another person's look is said in their
+ * pronouns (`p`).
+ */
+export function injuryKeeps(kind: InjuryKind, enrolled: boolean, p: { they: string; them: string; their: string; theyAre: string } = { they: 'you', them: 'you', their: 'your', theyAre: 'you’re' }): string {
+  const spec = INJURY_KIND[kind];
+  if (spec.offWork) return `${p.theyAre.charAt(0).toUpperCase()}${p.theyAre.slice(1)} laid up until then, kept from classes, work and training.${enrolled ? ' What you miss at school is excused.' : ''}`;
+  if (spec.limits !== 'none') return `Until then ${p.they} can’t work out, and it holds back the physical side of ${p.their} work.${enrolled ? ' Each day until then, Call In Sick, on School’s Classes tab, can excuse that day at school.' : ''}`;
+  return `It won’t stop ${p.them} working out${enrolled ? ' or going to class' : ''}.`;
+}
+
 /** The chance of an injury over so many hours of a thing at its rate a thousand hours. */
 export const chanceOver = (perThousand: number, hours: number): number => 1 - Math.exp(-(perThousand * hours) / 1000);
 
@@ -119,6 +140,7 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
     // The state's own share (from 2026-10-12): until then every notice said two-thirds, Connecticut's 75% after tax too.
     const rules = injury.atWork ? WORKERS_COMP.states[injury.atWork.stateId] ?? WORKERS_COMP.states['us-ny']! : undefined;
     const weekly = rules && work ? compWeekly(sim, rules, work.weeklyWage, at, work.noFica) : 0;
+    const careWords = `${CARE_WORDS[spec.care]}${spec.therapy ? ` and ${countWords(spec.therapy)} ${spec.therapy === 1 ? 'session' : 'sessions'} of physical therapy` : ''}`;
     sim.notify({
       category: 'health', title: spec.label,
       // The second sentence only where it has words (from 2026-10-16: until then a care of nothing left the notice ending
@@ -129,7 +151,10 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
       // whether care was had or what it cost, where the flu's notice says there's nothing to pay; and an injury that
       // limits the work didn't say Call In Sick excuses a day of classes for it (`sickRefusal`'s doctor's note), where
       // the flu's does. An injury that lays them up already says it keeps them from classes.
-      body: [`It takes ${plural(days, 'day')} to mend${spec.offWork ? ', and you’re laid up until then, kept from classes, work and training' : spec.limits !== 'none' ? ', and you can’t work out until then' : ''}.`, work ? 'It happened at work, so workers’ compensation pays for the care' + (spec.offWork && rules ? `, and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : bill ? `You owe ${formatMoney(care, cur)} for its care. ${dueWords(sim, bill.dueAt)}` : `Its care, ${CARE_WORDS[spec.care]}${spec.therapy ? ` and ${plural(spec.therapy, 'session')} of physical therapy` : ''}, costs you nothing.`, !spec.offWork && spec.limits !== 'none' && person.school && !schoolEnded(person.school.standing) ? 'Call In Sick, on School, excuses a day of classes while it mends.' : ''].filter(Boolean).join(' '),
+      // From 2026-10-20 (brief 17): the day it mends, what it keeps them from and what's done about it (`injuryKeeps`)
+      // before what its care costs, as the flu's notice has them, and the care named where it's billed too. Until then a
+      // billed injury said "You owe $699.13 for its care." without saying what the care was.
+      body: [`It takes ${plural(days, 'day')} to mend, until ${formatDate(injury.until, sim.zone)}.`, injuryKeeps(kind, Boolean(person.school && !schoolEnded(person.school.standing))), work ? 'It happened at work, so workers’ compensation pays for the care' + (spec.offWork && rules ? `, and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : bill ? `You owe ${formatMoney(care, cur)} for its care, ${careWords}. ${dueWords(sim, bill.dueAt)}` : `Its care, ${careWords}, costs you nothing.`].join(' '),
       importance: 80, route: '/workspace/papers',
     });
   }

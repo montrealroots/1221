@@ -434,7 +434,7 @@ PLAYS['papers.doctor'] = () => {
   expect(kept[0]!.body).toMatch(/There’s nothing to pay\.$/);
   // Had at the practice the result names (from 2026-10-15).
   expect(practice).toBe('Yale Health Center, Student Health');
-  expect(kept[0]!.body.startsWith(`A doctor’s visit, ${practice}.`)).toBe(true);
+  expect(kept[0]!.body.startsWith(`You saw a doctor at ${practice}.`)).toBe(true);
   expect(healthOf(sim.player).bills.filter((b) => b.at === again.at)).toEqual([]);
   expect(ex.result).toContain(`Kept, it costs ${usd(0)} on Yale Health`);
   // A referral: TEST SETUP, the draw forced as the deciders' sweep forces it, and the specialist booked as many days
