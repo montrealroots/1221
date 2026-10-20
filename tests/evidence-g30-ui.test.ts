@@ -79,7 +79,7 @@ import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Wellbeing } from '@/engine/domain/model';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
-import { MS_DAY, MS_HOUR } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { healthOf } from '@/engine/systems/health';
 import { courseworkOf } from '@/engine/systems/coursework';
@@ -284,7 +284,7 @@ describe('trait-hygieneDrift', () => {
       // Readiness reads hygiene: the menu's gain is what hygiene at 100 and stress eased by a tenth of the wash give,
       // worked here from the seven dials.
       const gain = Math.round((readinessFrom({ ...w, hygiene: 100, stress: w.stress - (100 - w.hygiene!) * 0.1 }) - readinessFrom(w)) * 10) / 10;
-      expect(shower.says, who).toContain(`readiness +${gain.toFixed(1)}`);
+      expect(shower.says, who).toContain(`Readiness +${gain.toFixed(1)}`);
       shower.press();
       expect(h.toasts, who).toEqual(['Shower: done at 1:50 PM.']);
       expect(sim.player.wellbeing.hygiene, who).toBe(100);
@@ -710,7 +710,7 @@ describe('trait-illnessToll', () => {
       expect(notices(kept, 'You Have The Flu')).toHaveLength(1);
       // Nothing like the toll a second time: three hours awake move condition by less than a point.
       expect(Math.abs(kept.player.wellbeing.condition - condition)).toBeLessThan(1);
-      expect(lookAfter(kept, 'exercise').error).toBe('Not with the flu: rest until it passes.');
+      expect(lookAfter(kept, 'exercise').error).toBe(`Not with the flu: rest until it passes on ${formatDate(AT + 5 * MS_DAY, kept.zone)}.`);
       kept.advanceTo(AT + 5 * MS_DAY + 3 * MS_HOUR);
       expect(notices(kept, 'You Have The Flu')).toHaveLength(1);
       const worked = lookAfter(kept, 'exercise');

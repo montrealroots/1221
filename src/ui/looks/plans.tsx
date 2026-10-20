@@ -191,7 +191,8 @@ defineLook<Plans>('plans', {
         label: asName(entry.title),
         detail: `${formatRelativeWords(entry.at, sim.now)}, ${formatDate(entry.at, zone)} at ${formatTime(entry.at, zone)}`,
       })),
-      provenance: 'Your plans are ordinary calendar items: the clock stops at them, and a clash is marked.',
+      // The clash by the chip’s own word (from 2026-10-20, brief 17): until then "and a clash is marked".
+      provenance: 'Your plans are ordinary calendar items: the clock stops at them, and two at once are marked Clash.',
     };
   },
 });

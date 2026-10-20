@@ -884,7 +884,9 @@ function FamilyChoice({ config, setConfig }: { config: NewSaveConfig; setConfig:
       <div className="panel-head">
         <div>
           <h2>Your Family</h2>
-          <p className="muted small">The family you come from decides the money in your name on the first morning, and whether Yale’s needs assessment finds you need aid.</p>
+          {/* Until 2026-10-20 (brief 17) "whether Yale’s needs assessment finds you need aid", need said twice; the
+              callout below says what Yale finds in the same words. */}
+          <p className="muted small">The family you come from decides the money in your name on the first morning, and whether Yale finds that you need aid.</p>
         </div>
       </div>
       <div className="field">
@@ -1016,8 +1018,10 @@ export function StartingPointStep({ config, set, setConfig }: {
             <h2>Your Money</h2>
             <p className="muted small">The money in your own name on the first morning.</p>
             <p className="muted small">
+              {/* The currency named after what it is (from 2026-10-20, brief 17): until then "kept in the dollar (USD), the
+                  currency where you start", a currency's name where its money would be said. */}
               {cur === currencyOfCountry
-                ? `Your money is kept in ${countryCurrencyName} (${cur}), the currency where you start, and stays in it wherever you go. ${RATES_NOTE}`
+                ? `Your money is kept in the currency where you start, ${countryCurrencyName} (${cur}), and stays in it wherever you go. ${RATES_NOTE}`
                 : `Your money is kept in euros, because the game has no exchange rate for ${countryCurrencyName} (${currencyOfCountry}).`}
             </p>
           </div>
@@ -1071,12 +1075,14 @@ export function StartingPointStep({ config, set, setConfig }: {
           )}
         </div>
         {/* What Yale pays in and takes each term. It stood in Month By Month beside the food until the owner took the
-            food off this screen on 2026-10-10. */}
+            food off this screen on 2026-10-10. Until 2026-10-20 (brief 17) the one without aid said "Tuition is
+            covered", which Where It Begins says above it, that the plan's fee "goes each term" without saying from
+            where, and that aid "goes by need" after Genres & Background had said Yale found none. */}
         {config.school && (
           <div className="callout" style={{ marginTop: 'var(--s4)' }}>
             {findsNeed(config)
               ? `The school pays ${formatMoney(termAccount(cur).refund, cur)} into your bank at the start of each term, fall and spring, after your Yale Health plan.`
-              : `Tuition is covered, and ${formatMoney(termAccount(cur, false).healthPlan, cur)} goes each term to your Yale Health plan. Yale’s aid for living costs goes by need.`}
+              : `Each fall and spring, ${formatMoney(termAccount(cur, false).healthPlan, cur)} comes out of your bank for that term’s Yale Health plan, and there’s no aid for living costs.`}
           </div>
         )}
       </div>
@@ -1316,15 +1322,19 @@ export function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setCo
           <Line label="Checking" value={money(split.checking)} />
           <Line label="Savings" value={money(split.savings)} />
           {/* What was said on Before Yale, and the bank kept there (from 2026-10-16). */}
+          {/* Since the month and year Before Yale took, in a value's case (from 2026-10-20, brief 17): until then
+              ", Since 2008", the year alone and a capital in the middle of the line. */}
           {config.school && config.priorResidence && (
-            <Line label="Before Yale" value={`${CITIES.get(config.priorResidence.cityId) ? shortPlace(CITIES.get(config.priorResidence.cityId)!) : config.priorResidence.cityId}, Since ${config.priorResidence.fromYear}`} />
+            <Line label="Before Yale" value={`${CITIES.get(config.priorResidence.cityId) ? shortPlace(CITIES.get(config.priorResidence.cityId)!) : config.priorResidence.cityId}, since ${MONTHS[config.priorResidence.fromMonth - 1]} ${config.priorResidence.fromYear}`} />
           )}
           {home && (
             <Line label="Home Bank" value={split.homeSavings > 0 ? `${home.name}, ${formatMoney(split.homeSavingsHeld, home.currency)} In ${home.savings.name}` : `${home.name}, ${home.current.name}`} />
           )}
           <Line label="Credit Record" value={scoreIsANumberIn(config.startLocationId) ? String(wealth.creditScore) : scoreWord(wealth.creditScore)} />
+          {/* The limit, then what's owed, as Starting Point's Credit Card says them (from 2026-10-20, brief 17): until then
+              "$913 owed of $1,630", and "$0 owed of" a card with nothing on it. */}
           {wealth.cardLimit > 0 && (
-            <Line label="Card" value={`${formatMoney(-wealth.cardBalance, cur, { cents: false })} owed of ${formatMoney(wealth.cardLimit, cur, { cents: false })}`} />
+            <Line label="Card" value={`${formatMoney(wealth.cardLimit, cur, { cents: false })} limit, ${wealth.cardBalance < 0 ? `${formatMoney(-wealth.cardBalance, cur, { cents: false })} owed` : 'nothing owed'}`} />
           )}
           <Line label="Food Each Month" value={formatMoney(month.out, cur, { cents: false })} />
         </div>
@@ -1387,15 +1397,18 @@ export function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setCo
         </label>
         <label className="row gap-2 small" style={{ alignItems: 'flex-start', padding: 'var(--s1) 0' }}>
           <input type="radio" name="guide" checked={config.tutorial === false} onChange={() => setConfig((c) => ({ ...c, tutorial: false }))} />
-          <span><strong>I Know SLATE.</strong> Everything is open from the start, and the clock starts paused. The guide’s chapters and How This Works are there whenever you want them.</span>
+          <span><strong>I Know SLATE.</strong> Everything is open from the start. The guide’s chapters and How This Works are there whenever you want them.</span>
         </label>
       </fieldset>
 
       {/* The life opens with the clock paused, guided or not (`SlateApp`'s createSave, `paused: true`): until 2026-10-17
-          this said the world starts running once it begins. */}
+          this said the world starts running once it begins. Until 2026-10-20 (brief 17) I Know SLATE said the clock
+          starts paused too, as if Guide Me's didn't, a line above this saying it of both; and this said what's on the
+          calendar "happens whether you’re watching or not", where Play stops at each commitment and pauses
+          (`halt` in `game-context.tsx`). */}
       <div className="callout callout-accent">
         Your life starts with the clock paused. Once you press Play, a minute passes in the game for every real
-        minute, and what’s on your calendar happens whether you’re watching or not.
+        minute, and the clock pauses itself at each commitment to ask what you want to do.
       </div>
     </div>
   );

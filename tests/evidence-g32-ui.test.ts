@@ -730,7 +730,7 @@ describe('h-needs: What Needs You on Home', () => {
     const seventh = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at)[6]!;
     const rows = (html: string) => html.match(/<div class="list-item list-static">/g)?.length ?? 0;
     expect(rows(drawn(sim, Home).html)).toBe(6);
-    expect(needs(sim)).toContain(`${n - 6} more unread. Show All ${n}`);
+    expect(needs(sim)).toContain(`These six are the most important. ${n - 6} more are unread. Show All ${n}`);
     expect(needs(sim)).not.toContain(seventh.body);
     drawn(sim, Home);
     press(button(`Show All ${n}`));
@@ -743,7 +743,7 @@ describe('h-needs: What Needs You on Home', () => {
     expect(rows(drawn(sim, Home).html)).toBe(6);
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
     expect(rows(drawn(sim, Home).html)).toBe(0);
-    expect(needs(sim)).not.toContain('more unread');
+    expect(needs(sim)).not.toContain('more are unread');
   });
 
   it('PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused in the guide’s words and the row stays; read, it files the return and pays what the row said was owed', () => {

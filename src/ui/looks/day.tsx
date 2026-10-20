@@ -175,7 +175,10 @@ function missCost(sim: Simulation, id: string): string {
   const item = sim.universe.scheduled.find((one) => one.id === id);
   const call = item?.payload.call;
   switch (item?.kind) {
-    case 'school.classes': return ': an unexcused absence, which the faculty weigh at the term review, unless you’re sick or in hospital';
+    // The excuses classes' handler takes (from 2026-10-20, brief 17): a sick day called in, a hospital bed or an injury
+    // that lays you up (`offSick`). Until then "unless you’re sick or in hospital", where being ill excuses nothing that
+    // isn’t called in, and an injury does.
+    case 'school.classes': return ': an unexcused absence, which the faculty weigh at the term review, unless you called in sick, or you’re in hospital or laid up with an injury';
     case 'school.call':
       return call === 'performance' ? ': a grave breach, straight to academic warning, or from warning to dismissal'
         : call === 'oncall' ? ', and if you’re sent on and not there, it’s a grave breach, straight to academic warning'
@@ -361,7 +364,9 @@ defineLook<TheDay>('day', {
                 ? 'You had nothing booked on it.'
                 : 'You have nothing booked on it yet.'
               : `${entries.length === 1 ? 'There’s' : 'There are'} ${count(entries.length, 'thing')} on it: ${spokenList(entries.map((e) => asName(e.title)))}.`}
-            {wants.length > 0 && ` You need to be at ${count(wants.length, 'of them', 'of them')}.`}
+            {/* Every one of them said as that (from 2026-10-20, brief 17): until then "There’s one thing on it: Classes.
+                You need to be at one of them.", and "three of them" of three. */}
+            {wants.length > 0 && ` You need to be at ${wants.length < entries.length ? count(wants.length, 'of them', 'of them') : entries.length === 1 ? 'it' : entries.length === 2 ? 'both' : 'all of them'}.`}
             {clashes.length > 0 && ` ${toStart(count(clashes.length, 'of them', 'of them'))} ${clashes.length === 1 ? 'clashes with something else' : 'clash'}.`}
             {keptHere.length > 0 && ` ${spokenList(keptHere)} ${isAre(keptHere.length)} kept in ${country} that day.`}
           </p>

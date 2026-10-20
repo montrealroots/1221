@@ -156,12 +156,15 @@ export function TimeControls() {
           }
         >
           {/* What each stop offers is DueNow's: Go and Stand Here always, Skip It on a plan of your own, Call It Off on a
-              rehearsal with a partner, which at short notice costs their trust (`school.cancel_rehearsal`). */}
+              rehearsal with a partner, which at short notice costs their trust (`school.cancel_rehearsal`). What each
+              does to this move is said (from 2026-10-20, brief 17): Go carries the move on to where it was headed and
+              Stand Here ends it, the clock paused at the stop (`onGo`, `onClose`). Until then it said "press Go, or
+              Stand Here to wait", which didn't say the move stops there. */}
           <p className="small muted">
             Moving the clock to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) passes{' '}
             {said(confirm.missed.length, 'commitment')}. The clock stops at {confirm.missed.length === 1 ? 'it' : 'each one'} so
-            you can choose: press Go, or Stand Here to wait. You can also skip a plan of your own, or call off a rehearsal
-            with a partner, though at short notice that costs their trust.
+            you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. You can also skip a
+            plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust.
           </p>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {confirm.missed.slice(0, 8).map((entry) => (
@@ -258,9 +261,12 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
         </div>
       )}
 
+      {/* Until 2026-10-20 (brief 17) this said "anything on your calendar in those hours happens without you", where a
+          commitment slept through is missed (`life.sleep`'s You Slept Through notice), and only what happens without
+          you runs on its own. */}
       <p className="xs dim" style={{ marginTop: 'var(--s4)' }}>
-        The world keeps running while you sleep. The clock moves on, and anything on your
-        calendar in those hours happens without you.
+        The clock moves on while you sleep. What happens without you still happens, and you miss any commitment in
+        those hours.
       </p>
     </Modal>
   );
@@ -323,9 +329,12 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
         <p className="small muted">
           {/* What starts and who's there, said (from 2026-10-20, brief 16, section 8): until then "It happens the next time
               the clock moves, and you’re there if you’re awake and in the right city", which left out the hospital and an
-              injury, and didn't say what "it" was. */}
-          You can only skip a plan of your own, so there’s no Skip It button here. Press Go, or Stand Here to wait.
+              injury, and didn't say what "it" was. What to press comes first, and why there's no Skip It last (brief 17,
+              the same day): until then the paragraph opened on the button that isn't there, and "Stand Here to wait"
+              didn't say the clock waits paused, as the stop pauses it (`halt` in `game-context.tsx`). */}
+          Press Go, or Stand Here to wait with the clock paused.
           {` ${titleCaseLabel(item.label)} starts the next time the clock moves, and you’re there if you’re awake${care ? ' and out of hospital' : ', in its town, and not in hospital or laid up with an injury'}.`}
+          {' '}Only a plan of your own can be skipped, so there’s no Skip It button here.
         </p>
       )}
       {partner && (
@@ -622,7 +631,8 @@ function LookAfterMenu() {
                 {!refused && o.changes.length > 0 && (
                   <span className="menu-item-detail">
                     {o.changes.map((c) => `${DIAL_LABEL[c.dial] ?? c.dial} ${dialFigure(c.dial, c.from)} → ${dialFigure(c.dial, c.to)}`).join(' · ')}
-                    {o.gain !== 0 ? ` · readiness ${o.gain > 0 ? '+' : ''}${o.gain.toFixed(1)}` : ''}
+                    {/* Named as the measures beside it are (from 2026-10-20, brief 17): until then "Morale 84 → 86 · readiness +0.4". */}
+                    {o.gain !== 0 ? ` · Readiness ${o.gain > 0 ? '+' : ''}${o.gain.toFixed(1)}` : ''}
                   </span>
                 )}
               </button>

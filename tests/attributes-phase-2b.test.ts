@@ -40,7 +40,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_HOUR } from '@/engine/core/time';
+import { MS_HOUR, formatDate } from '@/engine/core/time';
 import type { Person } from '@/engine/domain/model';
 import { ABILITY_DEFS, MASTERED, STEP_SPEED, TECHNIQUES, type AbilityId } from '@/engine/content/abilities';
 import { BRIEFS, BRIEF_BY_ID, type Brief } from '@/engine/content/briefs';
@@ -1486,7 +1486,7 @@ describe('health, stamina and energy kept apart (brief 11, section 7)', () => {
       else expect(today, d.id).not.toContain('The flu');
     }
     freeAndRested(sim);
-    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'exercise' } }).error).toBe('Not with the flu: rest until it passes.');
+    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'exercise' } }).error).toBe(`Not with the flu: rest until it passes on ${formatDate(sim.player.health!.fluUntil!, sim.zone)}.`);
   }, 120_000);
 
   it('PLAYER JOURNEY: twins at a night’s curtain at the same readiness, one down with the flu: the flu reaches the night once, as Down With The Flu on the dimensions its task lists illness for; stamina, its drain in every part and the energy the night costs are the well twin’s', () => {

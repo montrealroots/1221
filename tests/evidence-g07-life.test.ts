@@ -64,7 +64,7 @@ import { createSave, loadSave, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Personality } from '@/engine/domain/model';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
-import { MS_DAY, MS_HOUR } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate } from '@/engine/core/time';
 import { rngFor } from '@/engine/core/rng';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { healthOf } from '@/engine/systems/health';
@@ -484,10 +484,11 @@ describe('seasons/flu', () => {
     const was = serialise(sim.universe);
     const tried = sim.execute({ kind: 'life.look_after', payload: { action: 'exercise' } });
     expect(tried.ok).toBe(false);
-    expect(tried.error).toBe('Not with the flu: rest until it passes.');
+    const passes = `Not with the flu: rest until it passes on ${formatDate(sim.player.health!.fluUntil!, sim.zone)}.`;
+    expect(tried.error).toBe(passes);
     expect(serialise(sim.universe)).toBe(was);
     expect(workOutLine(sim).grayed).toBe(true);
-    expect(reload(sim).execute({ kind: 'life.look_after', payload: { action: 'exercise' } }).error).toBe('Not with the flu: rest until it passes.');
+    expect(reload(sim).execute({ kind: 'life.look_after', payload: { action: 'exercise' } }).error).toBe(passes);
     // Rested but for the flu's condition (TEST SETUP), the work is still held back, and by the flu alone.
     Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 90, morale: 70, hygiene: 90 });
     expect(forWork(sim)).toContain('Held Back');
