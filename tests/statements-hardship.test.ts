@@ -117,7 +117,7 @@ describe('the Statements tab on a hardship plan', () => {
     }
     planned.advanceTo(edt(2026, 10, 11, 12, 1));
     const late = planned.universe.notifications.filter((n) => n.title === 'A Late Card Payment');
-    expect(late.map((n) => n.body)).toEqual(['The plan’s payment on the Chase Freedom Unlimited was $100.00, and only $48.00 was paid by the due date. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record. Pay the card on Money, under Cards.']);
+    expect(late.map((n) => n.body)).toEqual(['The plan’s payment on the Chase Freedom Unlimited, $100.00, was due October 11, 2026, and only $48.00 was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record. Pay the card on Money, under Cards.']);
     expect(stateOf(planned.player, card).hardship?.payment).toBe(100_00);
   });
 

@@ -15,7 +15,7 @@ import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { Open, at } from '@/ui/looks';
 import { bankById } from '@/engine/content/banks';
-import { cardsOf, cardTerms, stateOf } from '@/engine/systems/credit';
+import { cardsOf, cardTerms, INTRO_ENDS_ON_MISS, stateOf } from '@/engine/systems/credit';
 import type { Account } from '@/engine/core/ledger';
 import { BONUSES, PLAN_MONTHS, planFreeIfMadeNow, planMonthsOf, planRoom, transferRate } from '@/engine/systems/cardoffers';
 import { INTEREST_PLANS } from '@/engine/content/plans';
@@ -53,8 +53,15 @@ function CardOffers({ card }: { card: Account }) {
   if (!terms.introUntil && !terms.moneyTransferFee && !terms.planFeeShare && !(card?.bankId && INTEREST_PLANS[card.bankId]) && !terms.rewardsRate && transfers.length === 0 && plans.length === 0) return null;
 
   const lines: string[] = [];
-  if (terms.standardApr !== undefined && terms.introUntil !== undefined) lines.push(`${pct(terms.apr)} on purchases until ${formatDate(terms.introUntil, sim.zone)}, then ${pct(terms.standardApr)}.${bankById(card.bankId ?? '')?.iso === 'US' ? ' A payment that’s sixty days late ends it early.' : ''}`);
-  else if (terms.introUntil !== undefined && credit.introLost) lines.push('Its introductory rate ended because a payment was sixty days late.');
+  // What ends it early, in the game's count of payments missed, as the due date ends it (`credit.introLost`): two missed in
+  // a row on a US card, one at a bank whose terms end it at one (`INTRO_ENDS_ON_MISS`). From 2026-10-20 (brief 17): until
+  // then “A payment that’s sixty days late ends it early.” on a US card, where the second missed due date is thirty days
+  // late by the late notice's count, nothing at Barclaycard, and “because a payment was sixty days late” of any card, the
+  // Barclaycard ended at one missed minimum among them.
+  const endsAtOne = card.bankId !== undefined && INTRO_ENDS_ON_MISS.has(card.bankId);
+  const endsEarly = endsAtOne ? ' Missing a minimum payment ends it early.' : bankById(card.bankId ?? '')?.iso === 'US' ? ' Missing two payments in a row ends it early.' : '';
+  if (terms.standardApr !== undefined && terms.introUntil !== undefined) lines.push(`${pct(terms.apr)} on purchases until ${formatDate(terms.introUntil, sim.zone)}, then ${pct(terms.standardApr)}.${endsEarly}`);
+  else if (terms.introUntil !== undefined && credit.introLost) lines.push(`Its introductory rate ended because ${endsAtOne ? 'a minimum payment was missed' : 'two payments in a row were missed'}.`);
   for (const one of transfers) {
     lines.push(`${one.kind === 'balance' ? 'A balance transfer' : 'A money transfer'}: ${money(one.owed)} at ${pct(transferRate(sim, credit, one))}${one.introUntil !== undefined && sim.now < one.introUntil && !credit.introLost ? ` until ${formatDate(one.introUntil, sim.zone)}, then ${pct(one.apr)}` : ''}. Interest is charged on it from the day it was made.`);
   }

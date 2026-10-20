@@ -24,7 +24,7 @@ import { bankAccountsOf, banksFor, closingFeesWords, inSaveMoney, isoOf } from '
 import { checkingsOf } from '@/engine/systems/lending';
 import { waiverWords, nth } from '@/ui/bank/feeWords';
 import { spokenList } from '@/engine/core/text';
-import { balanceText } from '@/engine/systems/abroad';
+import { balanceText, heldOf } from '@/engine/systems/abroad';
 import { homeOf } from '@/engine/systems/earnings';
 import { paymentsOf } from '@/engine/systems/payments';
 import { cardsOf, autopaySource } from '@/engine/systems/credit';
@@ -145,7 +145,8 @@ export function BankMoves() {
             return (
               <div key={a.id} className="col gap-2" style={{ borderTop: '1px solid var(--line)', paddingTop: 'var(--s2)' }}>
                 <p className="small" style={{ margin: 0 }}>
-                  <Open subject={at('account', a.id)}><strong>{a.name}</strong></Open> at {a.institution}, {balanceText(sim, a, a.balance, undefined, { cents: false })}
+                  {/* Below zero, said as overdrawn and to the cent (from 2026-10-20, brief 17): until then “-$600”, a hyphen. */}
+                  <Open subject={at('account', a.id)}><strong>{a.name}</strong></Open> at {a.institution}, {a.balance < 0 ? `overdrawn by ${balanceText(sim, a, -a.balance, a.currency ? -heldOf(a) : undefined)}` : balanceText(sim, a, a.balance, undefined, { cents: false })}
                   {a.id === person.primaryAccountId ? '. This is your primary account.' : '.'}
                   {a.awaitingFunds !== undefined ? ` It’s waiting for ${a.awaitingFunds > 1 ? `its opening deposit of ${money(a.awaitingFunds)}` : 'its first deposit'}${a.fundBy ? `, due by ${formatDate(a.fundBy, sim.zone)}` : ''}.` : ''}
                   {a.plastic?.stopped === 'new' && a.plastic.replacementAt ? ` Its debit card arrives ${formatDate(a.plastic.replacementAt, sim.zone)}.` : ''}
@@ -191,8 +192,11 @@ export function BankMoves() {
             <HowItWorks help="bank.set_primary" />
           </div>
           <div className="row-between gap-2" style={{ alignItems: 'start' }}>
+            {/* How moving them works, once: where they're paid now, and any move on its way, is each account's own line
+                above (`linkedTo`). Until 2026-10-20 (brief 17) this opened by saying it again, “Your wages and other
+                payments go to Chase Total Checking.”, under “Your wages and other payments are paid into it.” */}
             <p className="xs dim" style={{ margin: 0 }}>
-              Your wages and other payments go to {name(deposits?.id)}{pay.depositChange ? `, and to ${name(pay.depositChange.to)} from ${formatDate(pay.depositChange.at, sim.zone)}` : ''}. If you move them, Yale’s payroll starts paying the new account after {PAYER_LEAD['yale-payroll']} days, about one of its weekly pay cycles, as Yale says. Other payers take {DEPOSIT_LEAD.days} days, which is estimated: employers say one to two pay cycles.
+              Have Wages Paid Here, on another account, moves your wages and other payments to it. Yale’s payroll starts paying the new account after {PAYER_LEAD['yale-payroll']} days, about one of its weekly pay cycles, as Yale says. Other payers take {DEPOSIT_LEAD.days} days, which is estimated: employers say one to two pay cycles.
             </p>
             <HowItWorks help="bank.redirect_deposits" />
           </div>
@@ -257,6 +261,12 @@ export function BankMoves() {
                   {others.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
                 </select>
               </div>
+            </div>
+            {/* What the bank chosen asks, costs and does, before its deposit and Apply (from 2026-10-20, brief 17, section
+                8): until then these four paragraphs came under the button, after the deposit had been typed. */}
+            {refusal && <p className="small muted" style={{ margin: 0 }}>{refusal}</p>}
+            {takes.said.map((said) => <p key={said} className="small" style={{ margin: 0 }}>{said}</p>)}
+            <div className="field-row">
               {minimum > 0 && (
                 <>
                   <div className="field"><label htmlFor="open-from">Opening Deposit From</label>
@@ -273,8 +283,6 @@ export function BankMoves() {
                 Apply
               </Gated>
             </div>
-            {refusal && <p className="small muted" style={{ margin: 0 }}>{refusal}</p>}
-            {takes.said.map((said) => <p key={said} className="small" style={{ margin: 0 }}>{said}</p>)}
             <Fine>Source: {rules?.source ?? 'nothing published was found for this bank, so its figures here are estimated'}{scheme && !rules?.sendDays && rules?.sameDayBefore === undefined ? `; ${scheme.source}` : ''}.{takes.estimated.map((e) => ` ${e}`).join('')}</Fine>
           </div>
         )}

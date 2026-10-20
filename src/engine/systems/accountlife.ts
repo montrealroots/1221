@@ -97,6 +97,24 @@ function isoOfAccount(account: Account): string | undefined {
   return account.bankId ? bankById(account.bankId)?.iso : undefined;
 }
 
+/**
+ * What breaking one of a bank's term deposits of so many months would cost, by the rule `breakQuote` charges, for the
+ * deposit's panel to say before Put It Away (from 2026-10-20, brief 17, section 8): until then it said only that breaking
+ * one, "where the bank lets you", was under Your Accounts Over Time, and its cost showed once the money was locked.
+ */
+export function breakRuleWords(bankId: string, months: number): string {
+  const rules = ACCOUNT_LIFE[bankId];
+  const name = bankById(bankId)?.name ?? 'The bank';
+  if (rules?.early === false) return `${name} doesn’t let a term deposit be broken before its end.`;
+  if (rules?.penaltyDays) {
+    const band = rules.penaltyDays.find((one) => one.underMonths === undefined || months < one.underMonths) ?? rules.penaltyDays.at(-1)!;
+    return `Breaking it early costs ${band.days} days’ interest on it${rules.penaltyCapped ? ', never more than it has earned' : ''}${rules.penaltyFirstWeekDays ? `, and at least ${rules.penaltyFirstWeekDays} days’ interest in its first week` : ''}.`;
+  }
+  const early = EARLY_RATE[bankId];
+  if (early) return `Broken early, it’s paid ${name}’s ordinary savings rate for the time it was held, or ${Math.round(early.share * 100)}% of its own rate if it has run ${early.underMonths} months and that’s more.`;
+  return `Breaking it early costs the interest it has earned so far. That’s estimated: ${rules?.penaltyWords ? 'the bank words its penalty another way' : 'no penalty was found for the bank'}.`;
+}
+
 /** What breaking a term deposit now would cost, or why it can't be broken. */
 export function breakQuote(sim: Simulation, term: Account): { penalty: Money; estimate: boolean; refused?: string; words?: string } {
   const rules = term.bankId ? ACCOUNT_LIFE[term.bankId] : undefined;

@@ -1,0 +1,65 @@
+# A card's six missed due dates at Chase, every bank and money notice in the order made, on b17-money's words (brief 17, 2026-10-20). Made by the money editor's scratch script, npx vite-node /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-work/seq.ts late: a Yale student born in New York, seed b17-money-late, the day's spending on the card and the checking account emptied four days before each due date, nothing marked read. School notices are left out.
+September 20, 2026 [bank 50] Statement Ready: Chase Freedom Unlimited
+    The statement comes to $270.00, due October 11, 2026. The minimum payment is $40.00. Autopay pays the whole $270.00 from Chase Total Checking that day, if there’s enough in it.
+-- October 7, 2026: checking emptied into savings
+October 9, 2026 [bank 65] Short For A Payment: Chase Total Checking
+    The Chase Freedom Unlimited’s autopay, $270.00, comes from Chase Total Checking at Chase on October 11, 2026, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.
+October 11, 2026 [bank 75] A Card Payment Bounced
+    The Chase Freedom Unlimited’s autopay of $270.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.
+October 11, 2026 [bank 80] A Late Card Payment
+    The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.
+October 20, 2026 [bank 50] Statement Ready: Chase Freedom Unlimited
+    The statement comes to $600.00, due November 10, 2026. The minimum payment is $40.00. Autopay pays the whole $600.00 from Chase Total Checking that day, if there’s enough in it. The last payment was missed. If this one is short too, Chase suspends the card, and it goes on your credit record.
+-- November 6, 2026: checking emptied into savings
+November 8, 2026 [bank 65] Short For A Payment: Chase Total Checking
+    The Chase Freedom Unlimited’s autopay, $600.00, comes from Chase Total Checking at Chase on November 10, 2026, and it has $138.00 available. Move money into it, pay the card by hand, or have autopay pay from another account.
+November 10, 2026 [bank 75] A Card Payment Bounced
+    The Chase Freedom Unlimited’s autopay of $600.00 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.
+November 10, 2026 [bank 80] A Late Card Payment
+    The minimum payment on the Chase Freedom Unlimited, $40.00, was due November 10, 2026, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.
+November 10, 2026 [bank 85] Your Card Is Suspended
+    You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you pay at least the minimum by a due date, or pay the card off.
+November 10, 2026 [bank 85] A Penalty Rate Is Coming
+    You’ve missed two payments in a row. From December 25, 2026, the Chase Freedom Unlimited charges 29.99% on what’s owed. Six payments on time in a row take it off.
+November 20, 2026 [bank 50] Statement Ready: Chase Freedom Unlimited
+    The statement comes to $861.92, due December 11, 2026. The minimum payment is $40.00. Autopay pays the whole $861.92 from Chase Total Checking that day, if there’s enough in it. The card works again if at least $40.00 is paid by then.
+-- December 7, 2026: checking emptied into savings
+December 9, 2026 [bank 65] Short For A Payment: Chase Total Checking
+    The Chase Freedom Unlimited’s autopay, $861.92, comes from Chase Total Checking at Chase on December 11, 2026, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.
+December 11, 2026 [money 70] No Money For Food Today
+    A day’s groceries cost $10.00, and there’s nothing left to pay with. You’re eating what’s left in the cupboard today, and it isn’t enough.
+December 11, 2026 [bank 75] A Card Payment Bounced
+    The Chase Freedom Unlimited’s autopay of $861.92 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.
+December 11, 2026 [bank 80] A Late Card Payment
+    The minimum payment on the Chase Freedom Unlimited, $40.00, was due December 11, 2026, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.
+December 20, 2026 [bank 50] Statement Ready: Chase Freedom Unlimited
+    The statement comes to $915.28, due January 10, 2027. The minimum payment is $40.00. Autopay pays the whole $915.28 from Chase Total Checking that day, if there’s enough in it. The card works again if at least $40.00 is paid by then.
+-- January 6, 2027: checking emptied into savings
+January 8, 2027 [bank 65] Short For A Payment: Chase Total Checking
+    The Chase Freedom Unlimited’s autopay, $915.28, comes from Chase Total Checking at Chase on January 10, 2027, and it’s overdrawn by $12.00. Move money into it, pay the card by hand, or have autopay pay from another account.
+January 10, 2027 [bank 75] A Card Payment Bounced
+    The Chase Freedom Unlimited’s autopay of $915.28 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.
+January 10, 2027 [bank 80] A Late Card Payment
+    The minimum payment on the Chase Freedom Unlimited, $40.00, was due January 10, 2027, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.
+January 20, 2027 [bank 50] Statement Ready: Chase Freedom Unlimited
+    The statement comes to $977.73, due February 10, 2027. The minimum payment is $40.00. Autopay pays the whole $977.73 from Chase Total Checking that day, if there’s enough in it. The card works again if at least $40.00 is paid by then.
+-- February 6, 2027: checking emptied into savings
+February 8, 2027 [bank 65] Short For A Payment: Chase Total Checking
+    The Chase Freedom Unlimited’s autopay, $977.73, comes from Chase Total Checking at Chase on February 10, 2027, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.
+February 10, 2027 [bank 75] A Card Payment Bounced
+    The Chase Freedom Unlimited’s autopay of $977.73 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it. Move money into Chase Total Checking, then pay the card on Money, under Cards.
+February 10, 2027 [bank 80] A Late Card Payment
+    The minimum payment on the Chase Freedom Unlimited, $40.00, was due February 10, 2027, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.
+February 10, 2027 [bank 95] A Default Notice
+    You’ve missed five payments in a row on the Chase Freedom Unlimited. Pay at least $40.00 before the next due date, or the whole balance falls due and goes to collections.
+February 20, 2027 [bank 50] Statement Ready: Chase Freedom Unlimited
+    The statement comes to $1,043.27, due March 13, 2027. The minimum payment is $40.00. Autopay pays the whole $1,043.27 from Chase Total Checking that day, if there’s enough in it. The card works again if at least $40.00 is paid by then.
+-- March 9, 2027: checking emptied into savings
+March 11, 2027 [bank 65] Short For A Payment: Chase Total Checking
+    The Chase Freedom Unlimited’s autopay, $1,043.27, comes from Chase Total Checking at Chase on March 13, 2027, and it has nothing available. Move money into it, pay the card by hand, or have autopay pay from another account.
+March 13, 2027 [bank 75] A Card Payment Bounced
+    The Chase Freedom Unlimited’s autopay of $1,043.27 didn’t go through, because Chase Total Checking couldn’t cover it. The payment is late now, and its late fee is the only fee you’re charged for it.
+March 13, 2027 [bank 80] A Late Card Payment
+    The minimum payment on the Chase Freedom Unlimited, $40.00, was due March 13, 2027, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now.
+March 13, 2027 [bank 95] Your Card Was Charged Off
+    The $1,083.27 you owed on the Chase Freedom Unlimited went to collections, and the card is closed. The charge-off stays on your credit record for seven years, paid or not, and no bank approves a card while the debt is unpaid. You can pay it on Money, under Borrowing.

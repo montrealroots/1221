@@ -31,6 +31,7 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
+import type { Account } from '../core/ledger';
 import { CommandError } from '../core/simulation';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY } from '../core/time';
@@ -65,6 +66,23 @@ export function limitFor(sim: Simulation, score: number): Money {
 
 function usd(sim: Simulation, dollars: number): Money {
   return exchange(dollars * 100, 'USD', saveCurrency(sim.universe)) ?? dollars * 100;
+}
+
+/**
+ * What a bank's card would come with if it approved an application today, worked as `card.apply` and the card's arrival
+ * work it: the score after the application's points, the limit that score opens with, and the bank's terms priced at
+ * that score (from 2026-10-20, brief 17, section 8). Until then Another Card said nothing of the card before Apply For This
+ * Card, though 366 of the 522 cards charge a yearly fee; the panel the card gets once it arrives was the first to say so.
+ * The rate is priced again when the card arrives, a week on, from the record then.
+ */
+export function cardOffer(sim: Simulation, person: Person, bankId: string): { terms: ReturnType<typeof cardTerms>; limit: Money; score: number } | undefined {
+  const bank = bankById(bankId);
+  const product = CARDS[bankId];
+  if (!bank || !product || 'none' in product || !person.credit) return undefined;
+  const score = Math.max(300, person.credit.score - INQUIRY);
+  const limit = limitFor(sim, score);
+  const offered: Account = { id: '', saveId: sim.universe.meta.id, kind: 'credit_card', name: product.name, ownerId: '', institution: bank.name, bankId, balance: 0, creditLimit: limit, openedAt: sim.now, nominal: false };
+  return { terms: cardTerms(sim, offered, score), limit, score };
 }
 
 export function registerCardLife(sim: Simulation): void {

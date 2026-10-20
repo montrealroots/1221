@@ -662,16 +662,20 @@ export function chargeForItem(sim: Simulation, person: Person, item?: Money): vo
  * bank’s fee, or none, taken from the primary (found by that day’s third
  * round of defects).
  */
-export function chargeReturned(sim: Simulation, person: Person, short: Money, from?: Account): void {
+export function chargeReturned(sim: Simulation, person: Person, short: Money, from?: Account): Money {
   const current = from ?? currentOf(sim, person);
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
   const rule = bank?.returned;
-  if (!current || !bank || !rule || short <= 0) return;
-  if (rule.ifShortAtLeast !== undefined && short < inSaveMoney(sim, rule.ifShortAtLeast, bank.currency)) return;
+  if (!current || !bank || !rule || short <= 0) return 0;
+  if (rule.ifShortAtLeast !== undefined && short < inSaveMoney(sim, rule.ifShortAtLeast, bank.currency)) return 0;
   const kept = daysOfAccount(current, person);
-  if (current.returnedAt !== undefined && bankDaysBetween(current.returnedAt, sim.now, kept.countryId, sim.homeZone, kept.regionId) < rule.gapDays) return;
+  if (current.returnedAt !== undefined && bankDaysBetween(current.returnedAt, sim.now, kept.countryId, sim.homeZone, kept.regionId) < rule.gapDays) return 0;
   current.returnedAt = sim.now;
-  charge(sim, current, inSaveMoney(sim, rule.fee, bank.currency), 'Returned payment fee', 'bank_fee', 'Bank Fees');
+  // What it charged, for the notice that says why (from 2026-10-20, brief 17): until then a missed loan payment's notice
+  // left the fee unsaid, and the statement was the first place it showed.
+  const fee = inSaveMoney(sim, rule.fee, bank.currency);
+  charge(sim, current, fee, 'Returned payment fee', 'bank_fee', 'Bank Fees');
+  return fee;
 }
 
 
@@ -1009,10 +1013,19 @@ function leftOverdrawn(sim: Simulation, person: Person, bank: Bank): boolean {
     if (account.kind !== 'checking' && account.kind !== 'savings') continue;
     if (account.balance >= -(account.overdraftLimit ?? 0)) { account.negativeSince = undefined; continue; }
     account.negativeSince ??= sim.now;
-    const notice = isFrench(bank) ? FRANCE.closingNoticeDays : 0;
-    if (sim.now - account.negativeSince >= (ESTIMATE.closeAfterDays + notice) * MS_DAY) over = true;
+    if (sim.now >= overdrawnDeadline(bank, account)!) over = true;
   }
   return over;
+}
+
+/**
+ * The midnight the bank acts on an account below zero past its limit since `negativeSince`, as `leftOverdrawn` reads it:
+ * the bank's days, and in France the notice the law adds. From 2026-10-20 (brief 17) the Overdraft panel names the day
+ * before it, while there's time to act; until then the sum was worked only here.
+ */
+export function overdrawnDeadline(bank: Bank, account: Account): Instant | undefined {
+  if (account.negativeSince === undefined) return undefined;
+  return account.negativeSince + (ESTIMATE.closeAfterDays + (isFrench(bank) ? FRANCE.closingNoticeDays : 0)) * MS_DAY;
 }
 
 /**
@@ -1312,7 +1325,7 @@ export function registerLending(sim: Simulation): void {
     const bank = payFromBank(s, person, due, from);
     const paid = due - bank.short;
     if (paid > 0) post(s, `Payment: ${loan.name}`, 'loan_payment', [{ accountId: loan.id, amount: paid }, ...bank.postings]);
-    if (bank.short > 0) chargeReturned(s, person, bank.short, from);
+    const returnedFee = bank.short > 0 ? chargeReturned(s, person, bank.short, from) : 0;
     if (bank.short > 0 && person.credit) {
       // A missed payment goes on the record, as a late card payment does.
       person.credit.late = [...person.credit.late.filter((when) => s.now - when < 365 * MS_DAY), s.now];
@@ -1322,7 +1335,10 @@ export function registerLending(sim: Simulation): void {
           category: 'bank', title: 'A Missed Loan Payment',
           // The loan and the account named, and nothing paid said as nothing (from brief 15, 2026-10-19): until then “$157.00
           // was due, and there was only $0.00 to pay it with.”
-          body: `Your ${loan.name} payment of ${formatMoney(due, saveCurrency(s.universe))} was due, and ${paid > 0 ? `only ${formatMoney(paid, saveCurrency(s.universe))} of it could be paid` : `${from?.name ?? 'your account'} had nothing available to pay it`}. It’s on your credit record, and what’s left is still owed.`,
+          // The fee the bank charged for it, where it charged one, and the day it was due (from 2026-10-20, brief 17): until
+          // then the fee was unsaid, and with no day a second month's miss said the first's words, so an unread one was
+          // brought up to the day in its place (`Simulation.notify`) and two misses read as one.
+          body: `Your ${loan.name} payment of ${formatMoney(due, saveCurrency(s.universe))} was due ${formatDate(item.at, s.zone)}, and ${paid > 0 ? `only ${formatMoney(paid, saveCurrency(s.universe))} of it could be paid` : `${from?.name ?? 'your account'} had nothing available to pay it`}.${returnedFee > 0 ? ` ${from?.institution ?? 'The bank'} charged a ${formatMoney(returnedFee, saveCurrency(s.universe))} returned payment fee for it.` : ''} It’s on your credit record, and what’s left is still owed.`,
           importance: 80,
         });
       }

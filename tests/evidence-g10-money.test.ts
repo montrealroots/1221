@@ -761,7 +761,7 @@ describe('bank.pay_collections', () => {
     const second = lending(paid, 'us-chase', ['borrowing'], chase, { toCollections: (-toChase.balance / 100).toFixed(2) });
     // The In Collections panel's own words, from its title to its field.
     const words = second.text.slice(second.text.indexOf('In Collections'), second.text.indexOf('Pay Toward It'));
-    expect(words).toBe(`In Collections $${Math.round(-toChase.balance / 100).toLocaleString('en-US')} owed How This Works Chase closed your card after its payments were 180 days behind, and charged off what was owed on it. The charge-off stays on your credit record for seven years, paid or not. While the debt is unpaid, no bank approves a card, and Chase won’t open an account for you. `);
+    expect(words).toBe(`In Collections $${Math.round(-toChase.balance / 100).toLocaleString('en-US')} owed How This Works Chase closed your card after six payments in a row were missed, and charged off what was owed on it. The charge-off stays on your credit record for seven years, paid or not. While the debt is unpaid, no bank approves a card, and Chase won’t open an account for you. `);
     expect(words).not.toContain('overdrawn');
     second.button('Pay It').onClick!();
     expect(toChase.closedAt).toBe(paid.now);
