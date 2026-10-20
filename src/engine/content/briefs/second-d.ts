@@ -523,7 +523,7 @@ export const SECOND_D: readonly Brief[] = [
   {
     id: 'brief-picaresque-2', title: 'Notes From The Overnight Bus', kinds: ['picaresque'], medium: 'voice', size: 'long', stakes: 2,
     logline: 'On an overnight bus with a dying phone, a charming drifter of fifty-one records his older sister a string of voice notes about the year’s escapades, each less likely than the last, working his way around to her spare room.',
-    circumstances: 'The back seat of an overnight bus between two cities, past one in the morning, his phone at nine percent. Since spring he has talked his way into and out of four jobs, and the last one ended this afternoon. His old phone cuts each voice note at two minutes, so he tells the year in installments, keeping his voice low for the sleeping passengers. He records alone at a microphone.',
+    circumstances: 'The back seat of an overnight bus between two cities, past one in the morning, his phone at nine percent. Since spring he has talked his way into and out of four jobs, and the last one ended this afternoon. His old phone cuts each voice note at two minutes, so he tells the year in installments, keeping his voice low for the sleeping passengers. You record it alone at a microphone, as the voice notes he leaves on his phone.',
     relationship: 'Brother and older sister: she half raised him, still lives in the house they grew up in, and has bailed him out twice already.',
     you: 'Clem Harrow, fifty-one, lately by his own account a cruise-ship magician’s assistant, a mattress salesman and a ghost-tour guide.',
     reader: 'His sister, asleep three hundred miles away, who’ll hear the notes over breakfast; he speaks to the phone alone.',

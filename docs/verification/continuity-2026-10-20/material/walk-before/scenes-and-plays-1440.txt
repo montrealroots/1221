@@ -1,0 +1,683 @@
+# The material on screen in the walk of bbb82253 (brief 16 as merged), from the coordinator's walk-before files, written by tools/text-walk.mjs
+
+## leave.json, School, Coursework, at 1440: Bed Fourteen
+
+Bed Fourteen, An original scene written for SLATE (2026), the nurses’ station of a hospital medical floor, four in the morning, 2008: you play Priya, Noah Donovan plays Lorraine. A nurse three weeks out of orientation hung the wrong bag of fluid on bed fourteen, and the charge nurse caught it ten minutes later. At the station in the dead hours, the two of them have to decide what goes in the report, and the charge nurse has a mistake of her own she never reported.
+An Original Scene, Written For SLATE. The facts the readings are based on:
+The new nurse hung the wrong bag of fluid on bed fourteen; the charge nurse caught it within ten minutes, and the patient is unharmed.
+Every error has to be reported before the shift ends at seven.
+The new nurse is three weeks out of orientation and already has one report on file.
+Twenty years ago the charge nurse made an error of her own and never reported it.
+It’s four in the morning, and the two of them are alone at the station.
+Put First: Table Work. Your course hasn’t asked for it lately, so it counts for more when you show this piece.
+KNOWS THE SCENE
+93%
+Note priority 33%; complete at 90%
+LINES
+32%
+Note priority 0%; complete at 90%
+TABLE WORK
+0%
+Note priority 67%; complete at 90%
+ON ITS FEET
+0%
+Note priority 0%; complete at 90%
+WITH YOUR PARTNER
+0%
+Note priority 0%; complete at 90%
+Shown Today: if you showed it today, on a good day, it would come to about 38.0 of 100 (Unready). “Table Work” isn’t complete, and that costs your believability 43 points out of 100. Still to finish: Table Work (answer each Table Work question the way the text supports).
+Read The Scene
+Learn Lines
+Rehearse Alone
+Run It With A Reader
+WHAT BED FOURTEEN ASKS
+Everyday Speech
+Timing: Some
+Playing Off The Partner: Built On It
+What’s Kept Hidden: Built On It. What goes in the report, and the mistake she never reported.
+A Private Exchange: Much. The station in the dead hours.
+Tone: grave, 2 changes of tone to play. The new nurse’s fear, the charge nurse’s judgment, then her own confession.
+HOW YOU’LL PLAY IT
+How This Works
+ASPECT	CHOICE	THE SCENE	ABILITIES IT USES	FULLY PREPARED
+Pace	
+Measured Taking the time each thought needs: the choices specific, the pauses earned.
+	Suits The Scene
+Its Grave Beats: for it
+Its 2 Turns: for it
+Drama’s Played Straight: played with complete earnestness, never winked at: for it
+	Focus	65.1
+	
+Driven Picking up cues and pressing on: the scene played at the speed of what the characters want.
+	Either Way
+Its Timing: for it
+	Adaptability	63.8
+Scale	
+Restrained Less shown than felt: the feeling held under the surface.
+	Suits The Scene
+What’s Kept Hidden: for it
+A Private Exchange: for it
+Drama’s Played Straight: played with complete earnestness, never winked at: for it
+	Emotional Depth, Composure, Focus	66.9
+	
+Expansive Sized to the room: voice, body and feeling played out to the audience.
+	Works Against The Scene
+What’s Kept Hidden: against it
+A Private Exchange: against it
+Drama’s Played Straight: played with complete earnestness, never winked at: against it
+	Presence, Vocal Expression, Physical Expression	62.9
+Structure	
+Set Fixed and repeatable: every beat placed, the same each time.
+	Either Way
+Its Timing: for it
+	Discipline, Memory	64.6
+	
+Open Live each time: taking the next moment from what the partner gives.
+	Suits The Scene
+Its Partner: for it
+	Listening And Responsiveness	64.6
+
+Fully prepared and on a good day, playing it this way would come to 63.7, the same as with nothing chosen. Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.
+
+Play It This Way
+Sources And Estimates
+TABLE WORK
+How This Works
+Given Circumstances
+Not Decided
+The quiet hours before dawn, alone at the station, with the report due by seven
+The middle of a code, with the patient crashing
+A disciplinary hearing in the director’s office
+The Relationship
+Not Decided
+A senior nurse and a beginner she’s responsible for, on the same shift
+Old friends who trained together
+Rivals for the same promotion
+Your Objective
+Not Decided
+Keep the error off her record, since a second report puts her under review
+Find out whether she’s fit to be a nurse at all
+Pin the error on the pharmacy
+The Obstacle
+Not Decided
+Every error has to be reported, and the one person who could leave it out is her boss
+The patient is threatening to sue
+A Choice To Play
+Not Decided
+Own it completely, and hope honesty counts for something
+Plead her case: three weeks in, one mistake, no harm done
+Insist it was the right bag
+Sources And Estimates
+
+## nonfiler.json, School, Coursework, at 1440: The Impostures of Scapin
+
+The Impostures of Scapin, Molière, tr. Charles Heron Wall (1671), Act Three, Scene Two, a street in Naples: the sack: you play Scapin. Géronte has paid Scapin five hundred crowns to ransom his son from a Turkish galley, and he told his son that Scapin had betrayed him, which put Scapin on his knees under Léandre’s sword confessing his own tricks. Now Scapin has his revenge. He tells the old man that the brother of Octave’s bride and his friends, men of the sword, hold every street to his house, and that the one way home is in a sack on Scapin’s shoulders. Géronte gets in. Scapin plays a Gascon bully who beats the sack for its master’s sake, then a foreigner who beats it when Scapin won’t show what’s inside, then half a dozen soldiers at once, crying out each time as if the blows fell on him and pushing the old man’s head back in whenever it comes out to complain. As the soldiers are about to strike, Géronte looks out quietly, sees the trick, and Scapin runs.
+Put First: Knows The Play. Your course hasn’t asked for it lately, so it counts for more when you show this piece.
+KNOWS THE PLAY
+0%
+Note priority 39%; complete at 90%
+THE ANALYSIS
+0%
+Note priority 43%; complete at 90%
+WRITTEN UP
+0%
+Note priority 17%; complete at 90%
+Shown Today: if you showed it today, on a good day, it would come to about 25.4 of 100 (Unready). Your imagination holds back your interpretation by 5 points out of 100. Still to finish: Knows The Play (Read The Play); The Analysis (answer each Table Work question the way the text supports); Written Up (Write It Up).
+Read The Play
+Write It Up
+
+Write It Up: Answer the questions first: there’s nothing to write up yet.
+
+WHAT THE IMPOSTURES OF SCAPIN ASKS
+Everyday Speech: Quick, plain prose: the period is in the situation, and what the voices ask is their accents.
+Timing: Built On It. Scapin’s asides to the sack in his own voice between a bully’s lines, keeping the old man still and hidden, and each blow cried out as it falls.
+Physical Work: Built On It. The sack got into, the stick laid on it again and again, the old man’s head pushed back in twice, and the run at the end.
+Playing Off The Partner: Much. Line by line while Géronte is talked into the sack and each time he looks out of it; between, Scapin plays both sides of each encounter to a listener who can’t see him.
+Vocal Demand: Built On It. Voices of his own besides his natural tone: a Gascon bully, a foreigner, half a dozen soldiers at once, and his cries as if beaten.
+What’s Kept Hidden: Built On It. Géronte hides in a sack, and Scapin plays every enemy who beats it, each in another voice.
+A Conflict Out Loud: Some. The bullies threaten and strike out loud, but they’re Scapin’s voices: he never puts his own quarrel, his revenge for the lie, to Géronte’s face before he runs.
+Tone: comic, 5 changes of tone to play. Farce throughout: a miser beaten in a sack by the servant who tricked him.
+Techniques It Asks: Comedy, Accents And Dialects. The bullies’ accents are written into the lines, “Vat! I shall not hab de pleasure to kill dis Géronte,” and the beating is played for its laughs.
+TABLE WORK
+How This Works
+
+Not now: Read the text first. You can answer the Table Work questions once you know it.
+
+Given Circumstances
+Not Decided
+A street in Naples, where Scapin says the swordsmen hold every way to Géronte’s house
+Inside Géronte’s house, behind a barricaded door
+A real danger from the bride’s brother
+The Relationship
+Not Decided
+Géronte’s son’s servant, who has already tricked him once, and the miser who still trusts him
+Friends who wish each other well
+Strangers
+Your Objective
+Not Decided
+Pay Géronte back for the lie that put him under Léandre’s sword
+Get the old man into the sack and keep him there
+Save Géronte from his enemies
+The Obstacle
+Not Decided
+Géronte keeps looking out of the sack
+The blows land on Géronte, and he can feel them
+Silvestre’s warning stops him
+A Choice To Play
+Not Decided
+Play every enemy himself, each in his own voice
+Take the blows on himself, out loud
+Fight the bullies off
+Sources And Estimates
+WORK IT THROUGH
+How This Works
+
+What the forecast shows, worst first. Pick one to work on:
+
+Imagination Holds It Back Your imagination costs your interpretation 4.7 points, and the whole piece 2.1. Working on it trains it a little, and playing one part of the scene another way can lean on a different ability.
+Sources And Estimates
+Play With Text: A Game Played Through
+
+DRAM 353a · Due November 3, 2027 · Skills: Improvisation, Emotional Depth
+
+How This Works
+An improvised game played in class, with Jordan Castillo.
+Put First: Built On. Your notes have named it 12 times since September 11, 2026, so it counts for more when you show this piece.
+PLAYED TOGETHER
+0%
+Note priority 50%; complete at 90%
+BUILT ON
+0%
+Note priority 50%; complete at 90%
+Shown Today: if you showed it today, on a good day, it would come to about 27.9 of 100 (Unready). “Built On” isn’t complete, and that costs your interpretation 47 points out of 100. Still to finish: Played Together (ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader); Built On (Build On What Came Up).
+Build On What Came Up
+Run It With A Reader
+
+Build On What Came Up: Play it together first: there’s nothing yet to build on.
+
+A Note That Keeps Coming Back: Time On Its Feet, given 12 times. Choose one other way to work on it for this piece.
+How This Works
+A Targeted Drill
+Put It First
+Work On It With Your Partner
+A Smaller Piece Of It
+
+## nonfiler.json, School, Coursework, at 1440: Othello
+
+Othello, William Shakespeare (1604), Act Four, Scene Three, the castle in Cyprus: you play Desdemona, Ethan Haddad plays Emilia. After the supper for Lodovico, Othello orders Desdemona to bed and to dismiss Emilia. While Emilia helps her undress, Desdemona sings the willow song her mother’s maid Barbary died singing, and asks whether there are women who would deceive their husbands.
+Put First: Rehearsal. Your notes have named it 12 times since September 11, 2026, so it counts for more when you show this piece.
+KNOWS THE SCENE
+92%
+Note priority 9%; complete at 90%
+LINES
+90%
+Note priority 23%; complete at 90%
+SCANSION AND TABLE WORK
+96%
+Note priority 23%; complete at 90%
+REHEARSAL
+66%
+Note priority 21%; complete at 90%
+WITH YOUR PARTNER
+37%
+Note priority 23%; complete at 90%
+Shown Today: if you showed it today, on a good day, it would come to about 44.0 of 100 (Unready). “Rehearsal” isn’t complete, and that costs your execution 11 points out of 100. Still to finish: Rehearsal (Rehearse Alone); With Your Partner (ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader).
+Read The Scene
+Learn Lines
+Scan The Verse
+Rehearse Alone
+Work On The Note
+Run It With A Reader
+
+Work On The Note: You can revise once it’s been shown and you have a note to work on.
+
+WHAT OTHELLO ASKS
+Verse
+Timing: Some
+Physical Work: Some
+Playing Off The Partner: Much
+Vocal Demand: Built On It. Desdemona sings the willow song in the scene.
+A Private Exchange: Built On It. Two women alone at bedtime, one helping the other undress.
+What’s Kept Hidden: Some. Desdemona’s dread is in the song and the question, not said outright.
+Tone: lyric to grave, 2 changes of tone to play. A sung lament beside the women’s plain talk about husbands.
+Techniques It Asks: Singing. Sung, and it has to be.
+HOW YOU’LL PLAY IT
+How This Works
+ASPECT	CHOICE	THE SCENE	ABILITIES IT USES	FULLY PREPARED
+Pace	
+Measured Taking the time each thought needs: the choices specific, the pauses earned.
+	Suits The Scene
+Its Verse: for it
+Its 2 Turns: for it
+Its Grave Beats: for it
+	Focus	57.4
+	
+Driven Picking up cues and pressing on: the scene played at the speed of what the characters want.
+	Suits The Scene
+Tragedy’s States At The Limit: states pushed to their limit: for it
+Its Timing: for it
+	Adaptability	56.7
+Scale	
+Restrained Less shown than felt: the feeling held under the surface.
+	Either Way
+A Private Exchange: for it
+Tragedy’s Played Large: feeling sized past life, shaped in the body: against it
+Tragedy’s States At The Limit: states pushed to their limit: against it
+	Emotional Depth, Composure, Focus	56.8
+	
+Expansive Sized to the room: voice, body and feeling played out to the audience.
+	Either Way
+A Private Exchange: against it
+Tragedy’s Played Large: feeling sized past life, shaped in the body: for it
+Tragedy’s States At The Limit: states pushed to their limit: for it
+	Presence, Vocal Expression, Physical Expression	56.3
+Structure	
+Set Fixed and repeatable: every beat placed, the same each time.
+	Suits The Scene
+Its Verse: for it
+Tragedy’s Played Large: feeling sized past life, shaped in the body: for it
+Its Timing: for it
+	Discipline, Memory	57.3
+	
+Open Live each time: taking the next moment from what the partner gives.
+	Either Way
+Nothing in the scene leans either way.
+	Listening And Responsiveness	56.4
+
+Fully prepared and on a good day, playing it this way would come to 56.3, the same as with nothing chosen. Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.
+
+Play It This Way
+Sources And Estimates
+A Note That Keeps Coming Back: Time On Its Feet, given 12 times. Choose one other way to work on it for this piece.
+How This Works
+A Targeted Drill
+Put It First
+Work On It With Your Partner
+A Smaller Piece Of It
+TABLE WORK
+How This Works
+Given Circumstances
+Not Decided
+Night in the castle in Cyprus, hours after Othello called her a whore; she has been ordered to bed, her wedding sheets on it
+Venice, before the voyage
+Morning, the household waking
+The Relationship
+Not Decided
+A lady and her waiting-woman, who is Iago’s wife
+Sisters
+Near strangers
+Your Objective
+Not Decided
+Do as her husband bids, and be ready for him
+Understand what she’s accused of, and whether such women exist
+Plan to leave him
+The Obstacle
+Not Decided
+A dread she can’t name: the song won’t leave her, and she talks of shrouds
+Othello has shown her his proof
+A Choice To Play
+Not Decided
+Sing, to keep the fear at arm’s length
+Make small talk: Lodovico is a proper man
+Blame Othello aloud
+Sources And Estimates
+
+## missed-plan.json, School, Coursework, at 1440: Arms and the Man
+
+Arms and the Man, Bernard Shaw (1894), Act One, Raina’s bedroom: you play Bluntschli, Mateo Sullivan plays Raina. On a November night in 1885, a Swiss officer fleeing with the beaten Serbian army climbs into Raina’s bedroom. Once she has hidden him from the search, she learns he carries chocolate instead of cartridges, hears her betrothed Sergius’s heroic charge described as a fool’s, and puts him under her family’s protection, while he falls asleep.
+Put First: Lines. Your course hasn’t asked for it lately, so it counts for more when you show this piece.
+KNOWS THE SCENE
+93%
+Note priority 0%; complete at 90%
+LINES
+92%
+Note priority 40%; complete at 90%
+TABLE WORK
+100%
+Note priority 0%; complete at 90%
+ON ITS FEET
+93%
+Note priority 27%; complete at 90%
+WITH YOUR PARTNER
+83%
+Note priority 33%; complete at 90%
+Shown Today: if you showed it today, on a good day, it would come to about 59.5 of 100 (Working). Your focus holds back your execution by 13 points out of 100. Still to finish: With Your Partner (ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader).
+Read The Scene
+Learn Lines
+Rehearse Alone
+Run It With A Reader
+
+Not now: You’re at Classes until 3:00 PM.
+
+WHAT ARMS AND THE MAN ASKS
+Heightened Prose: Shaw’s argued comic prose.
+Timing: Much
+Physical Work: Much. A fugitive at a window, a pistol, the search, the chocolate creams.
+Playing Off The Partner: Built On It
+A Private Exchange: Much. Her bedroom, at night.
+What’s Kept Hidden: Much. She hides the fugitive from the search.
+A Conflict Out Loud: Some. He mocks the charge she worships.
+Tone: comic, 2 changes of tone to play
+HOW YOU’LL PLAY IT
+How This Works
+ASPECT	CHOICE	THE SCENE	ABILITIES IT USES	FULLY PREPARED
+Pace	
+Measured Taking the time each thought needs: the choices specific, the pauses earned.
+	Either Way
+Its Comic Beats: against it
+Its 2 Turns: for it
+Comedy’s Comic Rhythm: the cadence and the pace that land a joke: against it
+	Focus	60.0
+	
+Driven Picking up cues and pressing on: the scene played at the speed of what the characters want.
+	Suits The Scene
+Its Comic Beats: for it
+Comedy’s Comic Rhythm: the cadence and the pace that land a joke: for it
+Its Timing: for it
+	Adaptability	62.6
+Scale	
+Restrained Less shown than felt: the feeling held under the surface.
+	Suits The Scene
+A Private Exchange: for it
+What’s Kept Hidden: for it
+A Conflict Out Loud: against it
+	Emotional Depth, Composure, Focus	61.5
+	
+Expansive Sized to the room: voice, body and feeling played out to the audience.
+	Either Way
+A Private Exchange: against it
+What’s Kept Hidden: against it
+Its Heightened Language: for it
+	Presence, Vocal Expression, Physical Expression	60.6
+Structure	
+Set Fixed and repeatable: every beat placed, the same each time.
+	Suits The Scene
+Its Timing: for it
+Its Physical Score: for it
+Comedy’s Comic Rhythm: the cadence and the pace that land a joke: for it
+	Discipline, Memory	62.1
+	
+Open Live each time: taking the next moment from what the partner gives.
+	Suits The Scene
+Its Partner: for it
+	Listening And Responsiveness	61.2
+
+Fully prepared and on a good day, playing it this way would come to 60.4, the same as with nothing chosen. Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.
+
+Play It This Way
+Sources And Estimates
+TABLE WORK
+How This Works
+Given Circumstances
+Not Decided
+A November night in 1885, firing in the streets, the routed army being hunted through the town
+A spring morning after the peace
+A formal call in the Petkoffs’ library
+The Relationship
+Not Decided
+Enemies by the war and strangers until he climbs in: a romantic young woman and a practical soldier
+An engaged couple
+Old friends from before the war
+Your Objective
+Not Decided
+Stay alive, and get some sleep
+Win her protection without making an enemy of her
+Win her heart away from Sergius
+Why the text supports it: He says capture only means death, and death is sleep; he hasn’t closed his eyes for thirty-six hours.
+The Obstacle
+Not Decided
+He’s starving and worn out, and the waterpipe down to the street is more than he can face
+His pistol keeps her too frightened to help
+The door is locked from outside
+A Choice To Play
+Not Decided
+Tell her the plain professional truth, however unheroic
+Frighten her at first: keep her cloak, so she won’t call anyone in
+Fight his way out with his sabre
+Why the text supports it: He admits to the chocolate and tells her nine soldiers out of ten are born fools.
+Sources And Estimates
+
+## workload.json, School, Coursework, at 1440: King Lear
+
+King Lear, William Shakespeare (1606), Act Four, Scene Seven, the French camp near Dover: you play Lear, Zoe Park plays Cordelia. In the French camp near Dover, Lear, asleep in fresh garments after his madness, is woken with music and his daughter Cordelia’s kiss. He takes her for a soul in bliss, kneels to her, and asks her to forgive a foolish, fond old man; she says she has no cause.
+Put First: With Your Partner. Your notes have named it 32 times since September 8, 2026, so it counts for more when you show this piece.
+KNOWS THE SCENE
+0%
+Note priority 9%; complete at 90%
+LINES
+0%
+Note priority 22%; complete at 90%
+SCANSION AND TABLE WORK
+0%
+Note priority 22%; complete at 90%
+REHEARSAL
+0%
+Note priority 13%; complete at 90%
+WITH YOUR PARTNER
+0%
+Note priority 33%; complete at 90%
+Shown Today: if you showed it today, on a good day, it would come to about 20.6 of 100 (Unready). “With Your Partner” isn’t complete, and that costs your connection 41 points out of 100. Still to finish: Knows The Scene (Read The Scene); Lines (Learn Lines); Scansion And Table Work (Scan The Verse or answer each Table Work question the way the text supports); Rehearsal (Rehearse Alone); With Your Partner (ask your partner for an evening under Rehearsing With, at least two hours ahead, or Run It With A Reader).
+Read The Scene
+Learn Lines
+Scan The Verse
+Rehearse Alone
+Work On The Note
+Run It With A Reader
+Read The Scene: You’re at Classes until 3:00 PM.
+Learn Lines: Read the scene first: you learn lines from a scene you know.
+Scan The Verse: Read the scene first.
+Rehearse Alone: Learn some of the lines first.
+Work On The Note: You can revise once it’s been shown and you have a note to work on.
+Run It With A Reader: You’re at Classes until 3:00 PM.
+WHAT KING LEAR ASKS
+Verse
+Timing: Some
+Physical Work: Some
+Playing Off The Partner: Built On It. He comes to know her line by line.
+A Private Exchange: Built On It. Quiet: an old man woken to music and his daughter’s kiss.
+Tone: lyric to grave, 2 changes of tone to play. Grief and tenderness at once.
+Techniques It Asks: Classical Text
+HOW YOU’LL PLAY IT
+How This Works
+ASPECT	CHOICE	THE SCENE	ABILITIES IT USES	FULLY PREPARED
+Pace	
+Measured Taking the time each thought needs: the choices specific, the pauses earned.
+	Suits The Scene
+Its Verse: for it
+Its 2 Turns: for it
+Its Grave Beats: for it
+	Focus	60.3
+	
+Driven Picking up cues and pressing on: the scene played at the speed of what the characters want.
+	Suits The Scene
+Tragedy’s States At The Limit: states pushed to their limit: for it
+Its Timing: for it
+	Adaptability	59.2
+Scale	
+Restrained Less shown than felt: the feeling held under the surface.
+	Either Way
+A Private Exchange: for it
+Tragedy’s Played Large: feeling sized past life, shaped in the body: against it
+Tragedy’s States At The Limit: states pushed to their limit: against it
+	Emotional Depth, Composure, Focus	59.2
+	
+Expansive Sized to the room: voice, body and feeling played out to the audience.
+	Either Way
+A Private Exchange: against it
+Tragedy’s Played Large: feeling sized past life, shaped in the body: for it
+Tragedy’s States At The Limit: states pushed to their limit: for it
+	Presence, Vocal Expression, Physical Expression	59.5
+Structure	
+Set Fixed and repeatable: every beat placed, the same each time.
+	Suits The Scene
+Its Verse: for it
+Tragedy’s Played Large: feeling sized past life, shaped in the body: for it
+Its Timing: for it
+	Discipline, Memory	59.8
+	
+Open Live each time: taking the next moment from what the partner gives.
+	Suits The Scene
+Its Partner: for it
+	Listening And Responsiveness	60.1
+
+Fully prepared and on a good day, playing it this way would come to 58.9, the same as with nothing chosen. Choosing a way to play it isn’t rehearsing it: once you choose, work on your feet rehearses it.
+
+Play It This Way
+Sources And Estimates
+A Note That Keeps Coming Back: Work With Your Partner, given 32 times. Choose one other way to work on it for this piece.
+How This Works
+A Targeted Drill
+Put It First
+Work On It With Your Partner
+A Smaller Piece Of It
+
+Work On It With Your Partner: That note is already about working with your partner, so this wouldn’t add anything.
+
+TABLE WORK
+How This Works
+
+Not now: Read the text first. You can answer the Table Work questions once you know it.
+
+Given Circumstances
+Not Decided
+A tent in the French camp near Dover, Lear asleep in a chair in fresh garments, music playing, the doctor at hand
+The court at the start of the play, the kingdom being divided
+A prison after the battle
+The Relationship
+Not Decided
+Father and daughter, parted since he disowned her for saying nothing
+A king and a subject who wronged him
+A madman and a stranger
+Your Objective
+Not Decided
+Find out where he is and whether he’s alive
+Be forgiven
+Take back his kingdom
+The Obstacle
+Not Decided
+His doubt of his own mind
+His shame for what he did to her
+He is blind
+A Choice To Play
+Not Decided
+Kneel to her
+Test what is real
+Rage at her as he did at the start
+Sources And Estimates
+
+## nonfiler.json, School, Casting, at 1440: Blood Wedding and Mrs Warren’s Profession
+
+Home
+›
+Player Profile
+›
+School
+SCHOOL
+David Geffen School of Drama at Yale University
+
+MFA in Acting, class of 2029. Year 2 of 3, good standing.
+
+Standing And Craft
+Classes
+Coursework
+Casting
+Shifts And Pay
+Terms And Award
+Why This Cast
+
+Blood Wedding, Fall Term 2027
+
+How This Works
+
+The play asks for Emotional Depth, Physical Expression, Vocal Expression, Scene Study and Singing, as its kinds of play do (Tragedy, Romantic Drama). The chair reads every student for it the same way: their fit for the play, with a fifth of it scaled by how much of themselves they delivered in their runs since the last casting, and then a balance for who had the big parts in the School’s last productions. The best read gets the biggest part written for them.
+
+Your 87% delivered comes from The Seagull, Yale Rep, 1 night (100%, counted as 1 night); Carlotta Festival Of New Plays, a School production, 4 nights (84%, counted as 4 nights). A Cabaret or Summer run counts half as much as a School production, each run up to eight nights, and a night missed when you weren’t in hospital counts as nothing delivered. How the nights were judged doesn’t count here: that’s in your work.
+
+STUDENT	FIT	DELIVERED	BALANCE	READ	PART
+Chloe Tanaka	61.6	85%	-2	57.8	The Bride
+Aaliyah Bennett	58.0	91%	0	56.9	The Mother
+You	60.2	87%	-2	56.6	Leonardo
+Mateo Sullivan	55.2	94%	+2	56.5	The Bridegroom
+Hannah Rivera	57.1	82%	0	55.0	Leonardo’s Wife
+Ethan Haddad	55.0	80%	+2	54.7	The Moon
+Imani Kowalski	53.9	85%	+2	54.3	The Beggar Woman
+Julian Okafor	55.8	86%	0	54.2	The Bride’s Father
+Sources And Estimates
+Blood Wedding
+
+Directors’ Thesis Production I, by Federico García Lorca, finished
+
+How This Works
+ROLE
+Leonardo
+A Supporting Part
+PERFORMED
+8
+CALLS AHEAD
+None
+The run is over
+
+Your nights: Solid 8. The director’s note: Solid, sound nights. The next step is to take more risks in them. Work on your composure: it held your nights back most.
+
+THE REHEARSAL PROCESS
+How This Works
+LINES
+99%
+You’re asked to be off book 40% of the way through
+BLOCKING
+88%
+Set at the blocking calls
+GROWTH FROM A NIGHT
+107%
+How much a night would grow your craft, against keeping every call. It doesn’t change the night’s result
+The dress rehearsal: Solid.
+The Nights Together. With the company, your nights have averaged 56 of 100. How the show goes together changes how a night leaves you feeling, but your own night is your result.
+Looking Back. Blood Wedding: you answered all 13 calls. The director gave you six notes, and you took five. You worked on one more, but it didn’t move. The dress rehearsal was solid. With the company, your nights averaged 56 out of 100. What’s still open goes with you into class. A summary of your run, not the director’s own words.
+The director’s last note, October 6, 2027: Still: you’re spent by part 4: find where the play lets you breathe. You tried Play Part 4 Measured: 52.7 then, 52.1 now, which made it worse: worth knowing, and not the answer. · Taken: Better
+How This Works
+Worked find places to breathe: 48 before, 49.5 after; 51.4 at the next call.
+These notes are simulated: the game’s words, not a real director’s.
+Notes taken: 5 of 6. Worked and learned from without moving: 1.
+The Director’s Notes So Far
+Learn The Part
+Catch Up The Blocking
+Work On The Note
+
+Not now: The run is over.
+
+WHAT BLOOD WEDDING ASKS
+Heightened Prose
+Timing: Some
+Physical Work: Much. A flight and a fight in the forest.
+Playing Off The Partner: Much
+Vocal Demand: Much. Lorca’s songs and verse passages.
+A Conflict Out Loud: Much. A flight and a fight in the forest.
+Spoken To Many: Some. The wedding’s guests and songs.
+Tone: lyric to grave, 3 changes of tone to play
+Sources And Estimates
+
+From the class with you: Chloe Tanaka as The Bride; Aaliyah Bennett as The Mother; Mateo Sullivan as The Bridegroom; Hannah Rivera as Leonardo’s Wife; Ethan Haddad as The Moon; Imani Kowalski as The Beggar Woman; Julian Okafor as The Bride’s Father. The rest of the cast are from the other two classes.
+
+Mrs Warren’s Profession
+
+Yale Rep’s October Production, by Bernard Shaw
+
+How This Works
+ROLE
+An Understudy In The Company
+WENT ON
+0
+CALLS AHEAD
+5
+5 of them on call
+
+Your nights: Off 1. How much of yourself you bring to its nights counts when the chair casts you next.
+
+THE REHEARSAL PROCESS
+How This Works
+LINES
+99%
+You’re asked to be off book 40% of the way through
+BLOCKING
+96%
+Set at the blocking

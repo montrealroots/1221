@@ -288,7 +288,7 @@ export const ORIGINAL_SCENES: readonly Scene[] = [
         ],
         tactic: [
           yes('mock', 'Play along with his officer, and mock it to take the fear out', 'He has a stern voice and a clipboard; she can laugh at it.'),
-          yes('bargain', 'Trade questions: one of hers for one of his history', 'His exam is Friday, and civics is history too.'),
+          yes('bargain', 'Trade questions: one of hers for one from his history exam', 'His exam is Friday, and civics is history too.'),
           no('quit', 'Walk away from the table for the night', 'The interview is Thursday, and she needs six right.'),
         ],
       },

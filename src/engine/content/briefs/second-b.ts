@@ -143,7 +143,7 @@ export const SECOND_B: readonly Brief[] = [
     language: 'heightened', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
     why: {
       language: 'The lines keep the manners of 1878 between a tradeswoman and her better, on a subject neither of them would name aloud: she may hint and apologize, and the plain sentence is kept for the end.',
-      physical: 'She unpicks the bodice’s side seams with a small seam ripper, at a worktable on her own side of frame, in a period dress and a fitted bodice of her own. The work in her hands is how she avoids looking up.',
+      physical: 'She unpicks the bodice’s side seams with a small seam ripper, at a worktable on her side of the frame, in a period dress and a fitted bodice of her own. The work in her hands is how she avoids looking up.',
       partner: 'Clara is out of sight behind the screen, so Martha has to read her from her voice alone and choose each hint by how the last one landed.',
       beats: 'Happy chatter, a hint that lands, an excuse so thin it’s funny, then the promise in a sentence.',
     },
@@ -193,7 +193,7 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 1, improvisation: 0,
     why: {
       timing: 'The reader calls the sounds from the corridor at set moments, and she has to freeze on each one and pick the whisper up where she left it.',
-      physical: 'Play the scene crouched by the drug cabinet with your back to the barricaded door, a flat on your side of the frame, drawing a dose into a capped prop syringe from a prop vial. The handle turning is a sound cue: react to it alone.',
+      physical: 'Play the scene crouched by the drug cabinet with your back to the barricaded door (a wall on your side of the frame will do), drawing a dose into a capped prop syringe from a prop vial. The handle turning is a sound cue: react to it alone.',
       partner: 'He’s pushing to run the whole time, and she has to read when he’s about to bolt and stop him with a whisper.',
       beats: 'An argument held in whispers, a sound that ends it, a dose so large it’s funny, then a plan she won’t argue about.',
     },
@@ -220,7 +220,7 @@ export const SECOND_B: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 1, partner: 3, vocal: 0, improvisation: 0,
     why: {
-      physical: 'She puts chairs up on tables on her own side of frame through the first beats, and the scene turns when she stops.',
+      physical: 'She puts chairs up on tables on her side of the frame through the first beats, and the scene turns when she stops.',
       partner: 'He changes from charm to threat without warning, and every decision she makes comes from reading which one he’s playing.',
       beats: 'Old banter, the request, a laugh where there shouldn’t be one, their son used against her, then a price he didn’t expect.',
     },
@@ -330,7 +330,7 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 3, physical: 1, partner: 2, vocal: 0, improvisation: 0,
     why: {
       timing: 'Her case is a timeline told to the minute, and each correction has to land before he can talk over it.',
-      physical: 'She works with clock parts and a loupe at her bench on her own side of frame, and the parts are how she shows him the minutes.',
+      physical: 'She works with clock parts and a loupe at her bench on her side of the frame, and the parts are how she shows him the minutes.',
       partner: 'He’s trying to leave from the first line, and she has to keep him in the room by finding what will hold him.',
       beats: 'A lecture he doesn’t want, the timeline told against his hurry, an embarrassing confession, then the name.',
     },
@@ -475,7 +475,7 @@ export const SECOND_B: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 1, partner: 3, vocal: 0, improvisation: 0,
     why: {
-      physical: 'She keeps her coat on through most of the scene, shifting a box on her own side of frame, and taking the coat off is the turn.',
+      physical: 'She keeps her coat on through most of the scene, shifting a box on her side of the frame, and taking the coat off is the turn.',
       partner: 'He swings between jokes and silence, and she can’t plan a line: each one comes from which son is at the table.',
       beats: 'Jokes at the door, a reason he won’t give, her own life said aloud, his reason, then a compromise they both see through.',
     },
@@ -528,7 +528,7 @@ export const SECOND_B: readonly Brief[] = [
     language: 'everyday', timing: 2, physical: 1, partner: 2, vocal: 1, improvisation: 0,
     why: {
       timing: 'She places the approved cadence and the joke at the board for the microphones, and chooses each pause for what it keeps off the recording.',
-      physical: 'She writes on a small board on her own side of frame, and the exercise is written, never spoken.',
+      physical: 'She writes on a small board on her side of the frame, and the exercise is written, never spoken.',
       partner: 'He gives her a look and little else, so every choice she makes comes from reading whether he’s a student or a test.',
       beats: 'An approved text in an approved voice, the question again, the approved answer, a lesson hidden in a spelling test, then an ordinary dismissal.',
     },
@@ -554,9 +554,9 @@ export const SECOND_B: readonly Brief[] = [
     ],
     language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 1, improvisation: 0,
     why: {
-      physical: 'She works in a prop respirator she can speak through and gloves, on her own side of frame, and taking them off is the scene’s turn.',
+      physical: 'She works in a prop respirator she can speak through and gloves, on her side of the frame, and taking them off is the scene’s turn.',
       partner: 'He’s calm one moment and strange the next, and she has to find, in what he says, whatever is still himself.',
-      beats: 'Procedure and a polite offer, a strange invitation, the moment she feels it too, then her face shown as she asks him to leave with her.',
+      beats: 'Procedure and a polite offer, a strange invitation, the moment she feels it too, then the respirator off as she asks him to leave with her.',
     },
     readings: [
       { id: 'out', label: 'Get Him Out', reading: 'She’s there to save a man who doesn’t want saving, and every choice is aimed at the door.', rests: 'Her objective is to get him out before morning, and she takes off the respirator to ask him plainly.', lean: { responsiveness: 1.2, connection: 1.1 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.5 }, { dim: 'connection', ability: 'listening', weight: 0.5 }] },

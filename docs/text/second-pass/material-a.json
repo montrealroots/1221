@@ -3248,11 +3248,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [richard3-1-2]": {
-  "status": "Retained",
-  "hash": "009b557cb14d",
-  "on": "2026-10-19",
-  "reason": "Richard III 1.2: the wooing over Henry's coffin told plainly, and each reason rests on a line or act of the scene (the sword offered, the ring taken, his gloating alone after).",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "f1c526693147",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new reason under its answer at the Table Work once the scene is shown",
+  "first": "Pending"
  },
  "src/engine/content/scenes-classical.ts#CLASSICAL_SCENES [scandal-2-1]": {
   "status": "Rewritten",
@@ -3346,11 +3346,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/scenes-house.ts#HOUSE_SCENES [dream-5-1]": {
-  "status": "Retained",
-  "hash": "7136a4f4ecca",
-  "on": "2026-10-19",
-  "reason": "Pyramus and Thisbe before the court: Bottom's 'Deceiving me is Thisbe's cue' and the deaths quoted as Shakespeare wrote them, and each reason says what the court or the players do.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "2ce76b5faa1b",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new place in the coursework card's opening sentence for both parts; no scenario save sets this scene, so it was read in the test's render",
+  "first": "Pending"
  },
  "src/engine/content/scenes-house.ts#HOUSE_SCENES [henry5-4-3]": {
   "status": "Retained",
@@ -3472,11 +3472,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-hundred-questions]": {
-  "status": "Retained",
-  "hash": "21aed6e7cf11",
-  "on": "2026-10-19",
-  "reason": "The Hundred Questions: a citizenship rehearsal whose reasons rest on its facts (six of ten, freezing out loud, his exam on Friday) and keep the comedy in the situation.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "55622e534fdb",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new answer at the Table Work, with its reason, for both parts",
+  "first": "Pending"
  },
  "src/engine/content/scenes-original.ts#ORIGINAL_SCENES [orig-night-desk]": {
   "status": "Retained",
@@ -3549,10 +3549,10 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/scenes-scored.ts#SCORED_SCENES [scapin-3-2]": {
-  "status": "Retained",
-  "hash": "55591a47c0e6",
-  "on": "2026-10-19",
-  "reason": "The Impostures of Scapin's sack scene, with each voice Scapin puts on quoted from Wall's translation as written and the footnote about the inverted commas given as the translation's own.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "475716ed8889",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new place on the coursework card and the new reason under its answer and in the teacher's note; the place read on the built app's Coursework tab (nonfiler save, 1440 and 390) in docs/verification/continuity-2026-10-20/material/walk-after/",
+  "first": "Pending"
  }
 }

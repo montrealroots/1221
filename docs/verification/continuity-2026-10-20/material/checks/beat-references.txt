@@ -1,0 +1,134 @@
+brief-absurdist dread.reading [last beat] :: Under the patience she slowly understands she might never be counted anywhere, and the last beat is that fear 
+    -> beat 4/4: The window shuts. She sits on her suitcase and takes a ticket for tomorrow.
+brief-absurdist dread.rests [third beat] :: The laugh catches in the third beat, and she ends sitting on her suitcase with a ticket for a tomorrow that ma
+    -> beat 3/4: She laughs at it, and the laugh catches: no one in this town knows she exists.
+brief-animated brag.rests [second beat] :: Flap is boastful, and even the fright in the second beat is still trying to sound fine.
+    -> beat 2/3: A gust snaps him sideways and the boasting cracks into fright, still trying to sound fine.
+brief-animated brave.reading [last beat] :: Under the noise he’s thinking only of her hands, and the last beat is the whole of him.
+    -> beat 3/3: He tells her to let go, gently, and promises he’ll see the whole sea for her.
+brief-caper why.partner [last beat] :: He breaks her plan with one idea, and the last beat is built on it.
+    -> beat 3/3: She straightens the card, takes the loan slip from the desk instead, and they’re out with eight seconds to spare.
+brief-coming_of_age growing.reading [last beat] :: The scene is the moment he stops being a kid around her: the last beat is the first adult thing he does.
+    -> beat 3/3: He tells her he’d have worked the week for free if she’d asked, and he means it, and he holds his hand out anyway.
+brief-concert_film grieving.rests [last beat] :: She heard him play it once, alone, the night after the funeral, and the last beat is a look at the front row.
+    -> beat 3/3: She turns his eyes to the front row with her own, and the count reaches four.
+brief-costume_drama form.rests [last beat] :: The custom forbids her to sit or to name a sum first, and she keeps to it until the last beat.
+    -> beat 3/3: She names the sum, still standing, and waits.
+brief-cyberpunk system.reading [last beat] :: She’s arguing with the system, and the clerk is only its voice until the last beat.
+    -> beat 3/3: She asks him what he’d do, and for a moment he looks away from the screen.
+brief-cyberpunk person.rests [last beat] :: In the last beat he looks away from the screen when she asks what he’d do.
+    -> beat 3/3: She asks him what he’d do, and for a moment he looks away from the screen.
+brief-dark_fantasy mother.rests [last beat] :: It asks for her daughter by name, and she offers her own only in the last beat.
+    -> beat 3/3: She offers it something else that’s true: her own name, in place of her daughter’s, and waits for its answer.
+brief-detective chess.reading [first beat] :: She knows from the first beat who the third cup belongs to, and the scene is her patience.
+    -> beat 1/3: Routine questions about the evening, while the sergeant watches the cups.
+brief-disaster professional.reading [last beat] :: She holds herself together by doing her job, and the training carries her until the last beat.
+    -> beat 3/3: An aftershock; she holds his hand through it, and tells him something true about herself she hasn’t told anyone at work.
+brief-domestic_drama tired.rests [last beat] :: She’s back from a double shift, still in her coat, and in the last beat she says it plainly.
+    -> beat 3/3: She says she doesn’t want his mother to live with them, and then that she’ll do it anyway.
+brief-drama guarded.rests [last beat] :: She came to leave quickly, and she sits down only in the last beat.
+    -> beat 3/3: She asks what the last weeks were like, and sits down.
+brief-dystopian why.partner [last beat] :: He watches what she writes, and the last beat is her choice, which he has to read.
+    -> beat 3/3: She turns her badge face down on the table, and asks him to say the number again.
+brief-dystopian pleader.rests [last beat] :: They both pretend not to hear it, and she turns the badge face down in the last beat.
+    -> beat 3/3: She turns her badge face down on the table, and asks him to say the number again.
+brief-fantasy why.partner [last beat] :: The bargain moves on what the keeper takes and refuses, and the news in the last beat comes from him.
+    -> beat 3/3: The keeper tells her the brother reached the end of the road weeks ago and chose to stay where it led.
+brief-fantasy brother.rests [last beat] :: She drew the road for him to leave by, and the last beat says he chose to stay.
+    -> beat 3/3: The keeper tells her the brother reached the end of the road weeks ago and chose to stay where it led.
+brief-folk_horror slow.reading [last beat] :: He suspects little until the last beat, and the scene is one long turn from guest to something else.
+    -> beat 3/3: He agrees with a smile, lifts the sheaf from the gatepost at his side, and sees it has been dressed in a shirt like his 
+brief-giallo dread.reading [last beat] :: She’s a long way from home and frightened, and the last beat confirms the fear she couldn’t say aloud.
+    -> beat 3/3: As he stands to go, she sees his umbrella in the stand by the door, closed and dry, and keeps talking.
+brief-historical_fiction true.rests [second beat] :: The fire burned the records of people truly born in the city, and his memory in the second beat is vivid.
+    -> beat 2/4: The clerk asks something off the script, and he answers with a memory that may or may not be his own.
+brief-horror training.reading [last beat] :: She falls back on her training, steady breathing and short questions, until the last beat.
+    -> beat 4/4: At the door he says it’s gone. She turns.
+brief-isekai nobody.reading [third beat] :: The comedy is a woman holding off the fact that no one at home will miss her, and the third beat lets it in.
+    -> beat 3/4: She asks the panel how to get home, and it says there’s no record of a home.
+brief-melodrama held.reading [last beat] :: She makes the same declarations under tight control, so the size is in what she won’t let out until the last b
+    -> beat 3/3: She confesses that she once bought a ticket too, and didn’t use it, and gives the ticket back.
+brief-musical why.physical [second beat] :: The second beat is a dance between the lanes, played to an owner who won’t join in.
+    -> beat 2/4: The pinsetters kick in like a rhythm section, the song lifts, and she dances among the ball returns, beckoning him to jo
+brief-musical why.techniques [second beat] :: She sings the song, written for the character, through all its verses, and dances a simple routine in the seco
+    -> beat 2/4: The pinsetters kick in like a rhythm section, the song lifts, and she dances among the ball returns, beckoning him to jo
+brief-neo_noir cool.rests [last beat] :: She already logged the bag and holds that back until the last beat.
+    -> beat 3/3: She tells him the bag’s logged and signed for, and she watches what that does to his smile.
+brief-picaresque survival.reading [last beat] :: The charm is how she eats, and the truth in the last beat shows how tired of the road she’s grown.
+    -> beat 3/3: Caught, she tells him the truth about the eleven towns, then turns it into her best pitch yet.
+brief-road_movie driver.rests [last beat] :: She has to keep her eyes on the road, and she plays the last beat with the signal and the exit.
+    -> beat 3/3: She signals for the exit that keeps them going, and asks him to read her the next town’s name.
+brief-romantic_drama sacrifice.reading [last beat] :: She chooses, in the last beat, to protect his happiness, and it’s the second time she’s done it.
+    -> beat 3/3: He mentions his daughter, and she tells him the price of the chair and takes his money.
+brief-samurai why.partner [last beat] :: Each exchange answers the reader’s called cue, and the decision in the last beat comes from what Sakon has sai
+    -> beat 3/3: He sheathes, bows to his friend, and turns his back so Sakon can cross.
+brief-slice_of_life drawn.rests [last beat] :: The essay is due at midnight, and he closes the laptop only in the last beat.
+    -> beat 3/3: Kwame closes the laptop and asks him how she drew it.
+brief-spy tradecraft.reading [last beat] :: She handles him like a source, and only the last beat shows her what she’s doing.
+    -> beat 3/3: He drops it, hands her the coffee, and she watches him trust her.
+brief-stoner_comedy why.beats [last beat] :: The comedy of the wrong apartment turns, in the last beat, on her concern, which he has to play funny and asha
+    -> beat 3/3: She asks, plainly, whether he’s all right to get home, and the kindness embarrasses him more than anything else.
+brief-superhero why.vocal [middle beat] :: The middle beat is spoken on the end of a held breath, and the tunnel and the trains make her lift her voice w
+    -> beat 2/4: He runs; she holds him still, mid-step, makes him let the bag drop, and talks to him with what breath she has left.
+brief-supernatural why.timing [last beat] :: The last beat is a silence held under his voice on the speaker, and how long she holds it decides the scene.
+    -> beat 3/3: A stair creaks above her, and she stops talking in the middle of a word.
+brief-tokusatsu why.timing [first beat] :: Radio procedure sets the rhythm of the first beat, and the strike team’s countdown sets the last.
+    -> beat 1/3: Crisp reports by the book: height, heading, distance to the seawall.
+brief-whodunit danger.reading [last beat] :: The last beat is the scene: she’s alone with a killer, and her talk is now a way to stay alive.
+    -> beat 3/3: She notices snow melting on his shoulders, from a door that’s been locked all night, and keeps talking as if she hadn’t.
+brief-action-2 roof.reading [fifth beat] :: Under the danger she sees the size of his trouble clearly, and the laugh in the fifth beat is where she decide
+    -> beat 5/6: He tells her who he owes and how much, and she laughs, because it’s less than the new roof cost.
+brief-absurdist-2 relief.reading [last beat] :: Part of him is glad the folder knows him so well, and the last beat is him accepting the comfort of being writ
+    -> beat 3/3: He asks what it says at the end. The interviewer reads: “He thanks us and leaves.” He sits a long while, and then he tha
+brief-apocalyptic-2 promise.reading [first beat] :: The promise never to lie is what the scene is about, and the brightness in the first beat is a door she hopes 
+    -> beat 1/3: She talks about his chemistry homework and the noodles, brightly, as if it were any Thursday.
+brief-biographical-2 room.reading [fourth beat] :: She plays to the faculty on the benches as much as to him, and the laugh in the fourth beat is the vote turnin
+    -> beat 4/5: He asks if her husband helped her with it, and she answers so slowly that the room laughs at him, not at her.
+brief-coming_of_age-2 free.rests [second beat] :: She decided over the winter, hasn’t told her parents, and says it plainly in the second beat.
+    -> beat 2/4: She says it: she’s stopping after today, and he only asks whether she’s sure.
+brief-fairy_tale-2 why.timing [last beat] :: A rhyme lands on its last word, and the bell in the last beat counts down the lines the lantern has left, so t
+    -> beat 4/4: The bell begins, and with the rhymes it has left it tells her the boat was always her mother’s, and now it’s hers.
+brief-fairy_tale-2 bell.rests [last beat] :: It can speak only between the first star and the midnight bell, and the bell begins in the last beat.
+    -> beat 4/4: The bell begins, and with the rhymes it has left it tells her the boat was always her mother’s, and now it’s hers.
+brief-family-2 spotter.rests [second beat] :: Tilly has a follow-up for everything, and in the second beat she calls out the signals.
+    -> beat 2/4: She puts on the vest and gloves and teaches the class the hand signals for backing the truck down a narrow street, with 
+brief-farce-3 why.beats [fourth beat] :: Three lies at three doors, a fourth beat where the lies meet, one quiet confession, then a way out.
+    -> beat 4/6: All three doors open at once; he answers each in turn without moving his feet, and each hears the wrong story.
+brief-heist-2 why.timing [last beat] :: He turns the dial against her reports and counts the clicks aloud between them, and the last beat waits on one
+    -> beat 5/5: He asks her to listen, holds the walkie against the safe door, and turns the dial slowly until she says now.
+brief-heist-2 why.partner [last beat] :: Each report of hers changes what he does, and in the last beat she becomes his ears.
+    -> beat 5/5: He asks her to listen, holds the walkie against the safe door, and turns the dial slowly until she says now.
+brief-heist-2 pass.rests [last beat] :: He taught her to pick a lock, and in the last beat she hears the number for him.
+    -> beat 5/5: He asks her to listen, holds the walkie against the safe door, and turns the dial slowly until she says now.
+brief-heist-2 pride.reading [fourth beat] :: The confession is the hardest thing he does tonight, and his pride fights it all the way to the fourth beat.
+    -> beat 4/5: The last number won’t come, and he tells her the truth about his ears.
+brief-hood_film-2 party.reading [third beat] :: He’s determined the toast will be happy, and the grief in the third beat is the one place it gets away from hi
+    -> beat 3/4: He gets to the line about his father watching, and can’t go on.
+brief-horror-2 eli.rests [third beat] :: They’ve worked together six years, and he stops answering in the third beat.
+    -> beat 3/4: The book says the engineer gets up and leaves the control room, and Eli stops answering.
+brief-isekai-2 word.rests [last beat] :: In the last beat she teaches him a word she never wrote.
+    -> beat 6/6: She teaches him a new word, one she never wrote, and waits to hear whether he can say it.
+brief-jidaigeki-2 why.partner [last beat] :: The young man is drunk and changes from one line to the next, so each courtesy answers the mood in front of it
+    -> beat 5/5: He opens the side door, and as the young man stoops through it he strikes the clappers once, softly, to tell the next ga
+brief-kaiju-2 why.partner [last beat] :: She plays every beat to the young man, selling to him, telling him and finally asking him, and he decides whet
+    -> beat 3/3: The floor trembles, hours early; he says they have to go now, and she turns the sign on the door to closed and asks him 
+brief-kitchen_sink-2 sister.reading [third beat] :: Every lie keeps her sister’s trouble off the street, and the truth in the third beat is the first time she has
+    -> beat 3/4: He tells her quietly that the landlord means it this time, and she drops her voice and tells him the truth.
+brief-legal_drama-2 why.timing [last beat] :: The cross-examination comes at a lawyer’s pace, quick and pointed, and the last beat needs the room to slow do
+    -> beat 5/5: She does, plainly, and it’s devastating; he tells her to say exactly that tomorrow.
+brief-legal_drama-2 two.rests [second beat] :: He plays the landlord’s lawyer in the second beat and steps out of the role in the third.
+    -> beat 2/5: He plays the landlord’s lawyer and cross-examines her hard, the way it will go tomorrow.
+brief-martial_arts-2 restraint.rests [fourth beat] :: She defends without striking back until the fourth beat, and stops her finishing strike open-handed.
+    -> beat 4/5: She takes the fight to him at last, fast and exact, and stops her finishing strike with her hand open toward his eyeline
+brief-mockumentary-2 sell.reading [last beat] :: She never admits defeat to the crew until the last beat, and the comedy is in how hard she sells a room that d
+    -> beat 4/4: Alone with the lens for a moment, she admits she can’t open her own room, and asks the producer to keep that part.
+brief-parody-2 why.vocal [third beat] :: The voice is pitched low and huge throughout, and the hush in the third beat has to be as big as the booming.
+    -> beat 3/4: A sudden hush for the crushed can, tender as a love theme.
+brief-slasher-2 why.physical [last beat] :: She plays the whole scene crouched and cold, shaking and still by turns, and the last beat brings her to her f
+    -> beat 4/4: She picks up the cleaver she grabbed on the way in, tells him to count to two hundred, and goes to the door alone.
+brief-superhero-2 public.reading [last beat] :: She’s a hero on a press tour in a meeting room, and she keeps the smile up until the last beat takes it.
+    -> beat 4/4: Still writing, he mentions that the baker has been up at four every day since, baking in her own kitchen to keep her ord
+brief-tragedy-2 why.physical [third beat] :: She scrubs through the scene with a dry brush, her hands held up the way a surgeon holds them. Control the tre
+    -> beat 3/5: Her hand shakes on the brush, and she can’t stop it while he watches.
+brief-werewolf-2 charm.reading [last beat] :: He’s a polite young man in an impossible spot, and he tries to charm his way out until the last beat.
+    -> beat 4/4: He tells the farmer the truth, all of it, offers to work off the hens, and the old man puts the phone down to think.
