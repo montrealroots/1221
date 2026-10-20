@@ -1,0 +1,315 @@
+[new life] ok   a new life opens on the guide, at its first chapter
+[new life] ok   after three chapters the guide is at “Moving Time On” — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Late
+[new life] ok   Later closes the guide
+[new life] ok   the strip under the top bar names the next chapter, with Read — GUIDE · 4 OF 17 Moving Time On Read
+[new life] ok   Look After Yourself, before its chapter, says Locked — Look After Yourself ▾ LOCKED
+[new life] ok   pressed, it opens the guide at its chapter, saying which chapter comes first — Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own Plans Later 10 Weather Later 11 Drama School Later 12 You As A
+[new life] ok   a chapter read ahead has no I’ve Read It
+[new life] ok   Next Unread goes to the chapter that comes first, with I’ve Read It
+[new life] ok   search finds the Sleep entry, marked Locked on a life that hasn’t read its chapter
+[new life] ok   the entry says it isn’t open yet, and which chapter opens it — How This Works ✕ Contents › Search: Sleep › Sleep Search How This Works Search Sleep Show Everything This isn’t open yet. Read “Sleep” in the guide to open it. Read About It Sleep, in the top bar, asks how many hours, from 0.5 to 14, and suggests a number from
+[new life] ok   its summary, Where To Find It and Show Me Where are there to read before it opens
+[new life] ok   Read About It opens the guide at that chapter — CHAPTER 7 OF 17 Sleep Going to sleep, and getting your energy back. Sleep is how you get your energy back. Press Sleep in the top bar, and the Sleep dialog asks
+[new life] ok   Play is open after “The Clock”
+[new life] ok   Play runs the clock: the button says Pause
+[new life] ok   ? opens How This Works over the running clock, which says the clock waits
+[new life] ok   with How This Works open for 65 seconds, the clock doesn’t move — 7:30 AM → 7:30 AM
+[new life] ok   closed, the clock runs on: a minute later it has moved — 7:30 AM → 7:31 AM
+[new life] ok   with the guide open for 65 seconds, the clock doesn’t move — 7:31 AM → 7:31 AM
+[new life] ok   the Sleep dialog doesn’t hold the clock, as The Clock’s entry says: a minute later it has moved — 7:31 AM → 7:32 AM
+[show me where] ok   “Home And Where You Are” opens from the search — Home And Where You Are
+[show me where] ok   Show Me Where for “Home And Where You Are” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — Home And Where You Are
+[show me where] ok   “The Guide And This Help” opens from the search — The Guide And This Help
+[show me where] ok   Show Me Where for “The Guide And This Help” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — The Guide And This Help
+[show me where] ok   “Finding Your Way” opens from the search — Finding Your Way
+[show me where] ok   Show Me Where for “Finding Your Way” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — Finding Your Way
+[show me where] ok   “The Calendar” opens from the search — The Calendar
+[show me where] ok   Show Me Where for “The Calendar” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — The Calendar
+[show me where] ok   “The Clock: Play And Pause” opens from the search — The Clock: Play And Pause
+[show me where] ok   Show Me Where for “The Clock: Play And Pause” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — The Clock: Play And Pause
+[show me where] ok   “Moving Time On” opens from the search — Moving Time On
+[show me where] ok   Show Me Where for “Moving Time On” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — Moving Time On
+[show me where] ok   “What Needs You” opens from the search — What Needs You
+[show me where] ok   Show Me Where for “What Needs You” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — What Needs You
+[show me where] ok   “Your Own Plans” opens from the search — Your Own Plans
+[show me where] ok   Show Me Where for “Your Own Plans” lands on /workspace/calendar — #/workspace/calendar
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Your Own Plans
+[show me where] ok   “The Weather” opens from the search — The Weather
+[show me where] ok   Show Me Where for “The Weather” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — The Weather
+[show me where] ok   “How You Are” opens from the search — How You Are
+[show me where] ok   Show Me Where for “How You Are” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — How You Are
+[show me where] ok   “Sleep” opens from the search — Sleep
+[show me where] ok   Show Me Where for “Sleep” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — Sleep
+[show me where] ok   “Looking After Yourself” opens from the search — Looking After Yourself
+[show me where] ok   Show Me Where for “Looking After Yourself” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — Looking After Yourself
+[show me where] ok   “Your Standing And Classes” opens from the search — Your Standing And Classes
+[show me where] ok   Show Me Where for “Your Standing And Classes” lands on /workspace/school, Standing And Craft — #/workspace/school Standing And Craft
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Your Standing And Classes
+[show me where] ok   “Calling In Sick” opens from the search — Calling In Sick
+[show me where] ok   Show Me Where for “Calling In Sick” lands on /workspace/school, Classes — #/workspace/school Classes
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Calling In Sick
+[show me where] ok   “Orientation Week” opens from the search — Orientation Week
+[show me where] ok   Show Me Where for “Orientation Week” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Orientation Week
+[show me where] ok   “Leave, Withdrawal And Coming Back” opens from the search — Leave, Withdrawal And Coming Back
+[show me where] ok   Show Me Where for “Leave, Withdrawal And Coming Back” lands on /workspace/school, Standing And Craft — #/workspace/school Standing And Craft
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Leave, Withdrawal And Coming Back
+[show me where] ok   “Repeating, Extra Terms And Incompletes” opens from the search — Repeating, Extra Terms And Incompletes
+[show me where] ok   Show Me Where for “Repeating, Extra Terms And Incompletes” lands on /workspace/school, Standing And Craft — #/workspace/school Standing And Craft
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Repeating, Extra Terms And Incompletes
+[show me where] ok   “What You Owe The School” opens from the search — What You Owe The School
+[show me where] ok   Show Me Where for “What You Owe The School” lands on /workspace/school, Terms And Award — #/workspace/school Terms And Award
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — What You Owe The School
+[show me where] ok   “Work-Study Shifts” opens from the search — Work-Study Shifts
+[show me where] ok   Show Me Where for “Work-Study Shifts” lands on /workspace/school, Shifts And Pay — #/workspace/school Shifts And Pay
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Work-Study Shifts
+[show me where] ok   “Preparing Coursework” opens from the search — Preparing Coursework
+[show me where] ok   Show Me Where for “Preparing Coursework” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Preparing Coursework
+[show me where] ok   “Table Work” opens from the search — Table Work
+[show me where] ok   Show Me Where for “Table Work” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Table Work
+[show me where] ok   “How You’ll Play A Scene” opens from the search — How You’ll Play A Scene
+[show me where] ok   Show Me Where for “How You’ll Play A Scene” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — How You’ll Play A Scene
+[show me where] ok   “Feedback And Your Notes” opens from the search — Feedback And Your Notes
+[show me where] ok   Show Me Where for “Feedback And Your Notes” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Feedback And Your Notes
+[show me where] ok   “Another Way At A Note” opens from the search — Another Way At A Note
+[show me where] ok   Show Me Where for “Another Way At A Note” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Another Way At A Note
+[show me where] ok   “Rehearsing With A Partner” opens from the search — Rehearsing With A Partner
+[show me where] ok   Show Me Where for “Rehearsing With A Partner” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Rehearsing With A Partner
+[show me where] ok   “Your Class” opens from the search — Your Class
+[show me where] ok   Show Me Where for “Your Class” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Your Class
+[show me where] ok   “Working A Problem Through” opens from the search — Working A Problem Through
+[show me where] ok   Show Me Where for “Working A Problem Through” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Working A Problem Through
+[show me where] ok   “Casting” opens from the search — Casting
+[show me where] ok   Show Me Where for “Casting” lands on /workspace/school, Casting — #/workspace/school Casting
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Casting
+[show me where] ok   “Learning A Part” opens from the search — Learning A Part
+[show me where] ok   Show Me Where for “Learning A Part” lands on /workspace/school, Casting — #/workspace/school Casting
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Learning A Part
+[show me where] ok   “The Director’s Notes” opens from the search — The Director’s Notes
+[show me where] ok   Show Me Where for “The Director’s Notes” lands on /workspace/school, Casting — #/workspace/school Casting
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — The Director’s Notes
+[show me where] ok   “How You’ll Play A Part” opens from the search — How You’ll Play A Part
+[show me where] ok   Show Me Where for “How You’ll Play A Part” lands on /workspace/school, Casting — #/workspace/school Casting
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — How You’ll Play A Part
+[show me where] ok   “The Nights” opens from the search — The Nights
+[show me where] ok   Show Me Where for “The Nights” lands on /workspace/school, Casting — #/workspace/school Casting
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — The Nights
+[show me where] ok   “Cabaret And Summer Cabaret” opens from the search — Cabaret And Summer Cabaret
+[show me where] ok   Show Me Where for “Cabaret And Summer Cabaret” lands on /workspace/school, Casting — #/workspace/school Casting
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Cabaret And Summer Cabaret
+[show me where] ok   “Plays To Read” opens from the search — Plays To Read
+[show me where] ok   Show Me Where for “Plays To Read” lands on /workspace/school, Coursework — #/workspace/school Coursework
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Plays To Read
+[show me where] ok   “The Player Profile” opens from the search — The Player Profile
+[show me where] ok   Show Me Where for “The Player Profile” lands on /workspace/profile — #/workspace/profile
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — The Player Profile
+[show me where] ok   “Practice” opens from the search — Practice
+[show me where] ok   Show Me Where for “Practice” lands on /workspace/profile — #/workspace/profile
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Practice
+[show me where] ok   “Genres” opens from the search — Genres
+[show me where] ok   Show Me Where for “Genres” lands on /workspace/profile — #/workspace/profile
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Genres
+[show me where] ok   “Preparing A Brief” opens from the search — Preparing A Brief
+[show me where] ok   Show Me Where for “Preparing A Brief” lands on /workspace/profile — #/workspace/profile
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Preparing A Brief
+[show me where] ok   “A Reading And A Way To Play It” opens from the search — A Reading And A Way To Play It
+[show me where] ok   Show Me Where for “A Reading And A Way To Play It” lands on /workspace/profile — #/workspace/profile
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — A Reading And A Way To Play It
+[show me where] ok   “Who Reads With You” opens from the search — Who Reads With You
+[show me where] ok   Show Me Where for “Who Reads With You” lands on /workspace/profile — #/workspace/profile
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Who Reads With You
+[show me where] ok   “Taping A Brief” opens from the search — Taping A Brief
+[show me where] ok   Show Me Where for “Taping A Brief” lands on /workspace/profile — #/workspace/profile
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Taping A Brief
+[show me where] ok   “A Piece Of Work, Explained” opens from the search — A Piece Of Work, Explained
+[show me where] ok   Show Me Where for “A Piece Of Work, Explained” lands on /workspace/profile — #/workspace/profile
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — A Piece Of Work, Explained
+[show me where] ok   “Your Work So Far” opens from the search — Your Work So Far
+[show me where] ok   Show Me Where for “Your Work So Far” lands on /workspace/profile — #/workspace/profile
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Your Work So Far
+[show me where] ok   “Your Affairs And What You’re Worth” opens from the search — Your Affairs And What You’re Worth
+[show me where] ok   Show Me Where for “Your Affairs And What You’re Worth” lands on /home — #/home
+[show me where] ok   and offers Back To Help — Back To Help ✕
+[show me where] ok   Back To Help reopens the entry — Your Affairs And What You’re Worth
+[show me where] ok   “Your Accounts” opens from the search — Your Accounts
+[show me where] ok   Show Me Where for “Your Accounts” lands on /workspace/bank, Accounts — #/workspace/bank Accounts
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Your Accounts
+[show me where] ok   “Moving Money” opens from the search — Moving Money
+[show me where] ok   Show Me Where for “Moving Money” lands on /workspace/bank, Accounts — #/workspace/bank Accounts
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Moving Money
+[show me where] ok   “Term Deposits” opens from the search — Term Deposits
+[show me where] ok   Show Me Where for “Term Deposits” lands on /workspace/bank, Accounts — #/workspace/bank Accounts
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Term Deposits
+[show me where] ok   “Keeping An Account” opens from the search — Keeping An Account
+[show me where] ok   Show Me Where for “Keeping An Account” lands on /workspace/bank, Accounts — #/workspace/bank Accounts
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Keeping An Account
+[show me where] ok   “Round-Ups” opens from the search — Round-Ups
+[show me where] ok   Show Me Where for “Round-Ups” lands on /workspace/bank, Accounts — #/workspace/bank Accounts
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Round-Ups
+[show me where] ok   “How You Pay” opens from the search — How You Pay
+[show me where] ok   Show Me Where for “How You Pay” lands on /workspace/bank, Payments And Cash — #/workspace/bank Payments And Cash
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — How You Pay
+[show me where] ok   “Cash” opens from the search — Cash
+[show me where] ok   Show Me Where for “Cash” lands on /workspace/bank, Payments And Cash — #/workspace/bank Payments And Cash
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Cash
+[show me where] ok   “A Credit Card” opens from the search — A Credit Card
+[show me where] ok   Show Me Where for “A Credit Card” lands on /workspace/bank, Cards — #/workspace/bank Cards
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — A Credit Card
+[show me where] ok   “A Card’s Offers” opens from the search — A Card’s Offers
+[show me where] ok   Show Me Where for “A Card’s Offers” lands on /workspace/bank, Cards — #/workspace/bank Cards
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — A Card’s Offers
+[show me where] ok   “Card Security” opens from the search — Card Security
+[show me where] ok   Show Me Where for “Card Security” lands on /workspace/bank, Cards — #/workspace/bank Cards
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Card Security
+[show me where] ok   “Overdrafts And Loans” opens from the search — Overdrafts And Loans
+[show me where] ok   Show Me Where for “Overdrafts And Loans” lands on /workspace/bank, Borrowing — #/workspace/bank Borrowing
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Overdrafts And Loans
+[show me where] ok   “Another Bank” opens from the search — Another Bank
+[show me where] ok   Show Me Where for “Another Bank” lands on /workspace/bank, Accounts — #/workspace/bank Accounts
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Another Bank
+[show me where] ok   “A Bank At Home” opens from the search — A Bank At Home
+[show me where] ok   Show Me Where for “A Bank At Home” lands on /workspace/bank, Accounts — #/workspace/bank Accounts
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — A Bank At Home
+[show me where] ok   “Papers” opens from the search — Papers
+[show me where] ok   Show Me Where for “Papers” lands on /workspace/papers — #/workspace/papers
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Papers
+[show me where] ok   “Health Cover” opens from the search — Health Cover
+[show me where] ok   Show Me Where for “Health Cover” lands on /workspace/papers, Health Cover — #/workspace/papers Health Cover
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Health Cover
+[show me where] ok   “The Doctor And The Pharmacy” opens from the search — The Doctor And The Pharmacy
+[show me where] ok   Show Me Where for “The Doctor And The Pharmacy” lands on /workspace/papers, Health Cover — #/workspace/papers Health Cover
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — The Doctor And The Pharmacy
+[show me where] ok   “Conditions And Therapy” opens from the search — Conditions And Therapy
+[show me where] ok   Show Me Where for “Conditions And Therapy” lands on /workspace/papers, Health Cover — #/workspace/papers Health Cover
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Conditions And Therapy
+[show me where] ok   “Unemployment And Assistance” opens from the search — Unemployment And Assistance
+[show me where] ok   Show Me Where for “Unemployment And Assistance” lands on /workspace/papers, Unemployment — #/workspace/papers Unemployment
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Unemployment And Assistance
+[show me where] ok   “Pensions” opens from the search — Pensions
+[show me where] ok   Show Me Where for “Pensions” lands on /workspace/papers, Unemployment — #/workspace/papers Unemployment
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Pensions
+[show me where] ok   “Your Tax Return” opens from the search — Your Tax Return
+[show me where] ok   Show Me Where for “Your Tax Return” lands on /workspace/papers, Tax Returns — #/workspace/papers Tax Returns
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Your Tax Return
+[show me where] ok   “Paying Tax Owed” opens from the search — Paying Tax Owed
+[show me where] ok   Show Me Where for “Paying Tax Owed” lands on /workspace/papers, Tax Returns — #/workspace/papers Tax Returns
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Paying Tax Owed
+[show me where] ok   “Payment Plans And Waivers” opens from the search — Payment Plans And Waivers
+[show me where] ok   Show Me Where for “Payment Plans And Waivers” lands on /workspace/papers, Tax Returns — #/workspace/papers Tax Returns
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Payment Plans And Waivers
+[show me where] ok   “A Tax Lien” opens from the search — A Tax Lien
+[show me where] ok   Show Me Where for “A Tax Lien” lands on /workspace/papers, Tax Returns — #/workspace/papers Tax Returns
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — A Tax Lien
+[show me where] ok   “Passport And ID” opens from the search — Passport And ID
+[show me where] ok   Show Me Where for “Passport And ID” lands on /workspace/papers, Passport And ID — #/workspace/papers Passport And ID
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Passport And ID
+[show me where] ok   “Permission To Work” opens from the search — Permission To Work
+[show me where] ok   Show Me Where for “Permission To Work” lands on /workspace/papers, Permission To Work — #/workspace/papers Permission To Work
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Permission To Work
+[show me where] ok   “Residence Abroad” opens from the search — Residence Abroad
+[show me where] ok   Show Me Where for “Residence Abroad” lands on /workspace/papers, Permission To Work — #/workspace/papers Permission To Work
+[show me where] ok   and offers Back To Help and Back To Home — Back To Help Back To Home ✕
+[show me where] ok   Back To Help reopens the entry — Residence Abroad
+[show me where] 70 of 70 entries’ Show Me Where landed on their screen and tab
+[show me where] ok   reading 70 entries and following each Show Me Where moved no clock — 4:05 PM → 4:05 PM
+[links and back] ok   an entry opens with What To Press showing and its other sections shut — 1 of 8 open
+[links and back] ok   Show Everything opens every section, and says Show Less
+[links and back] ok   Show Less shuts them again, What To Press still open
+[links and back] ok   a shut section opens on its own when pressed: A Worked Example
+[links and back] ok   a link under How It Connects opens that entry, with the trail behind it — Another Way At A Note; trail: Contents › Search: Feedback And Your Notes › Feedback And Your Notes › Another Way At A Note
+[links and back] ok   Back returns to the entry it came from
+[links and back] ok   the trail’s Contents goes back to the contents
+[keys and breadcrumbs] ok   H goes to Home — #/home
+[keys and breadcrumbs] FAIL on Home, the breadcrumb offers School
+[keys and breadcrumbs] ok   C opens the Calendar screen — #/workspace/calendar
+[keys and breadcrumbs] ok   P opens the Player Profile — #/workspace/profile
+[keys and breadcrumbs] ok   the browser’s Back returns to the screen before — #/workspace/calendar
+[keys and breadcrumbs] ok   the SLATE mark at the top left goes Home — #/home
+313 checks, 1 failed; page errors: 0

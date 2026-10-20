@@ -90,7 +90,8 @@ describe('a Rep understudy’s part', () => {
     expect(rep.kind).toBe('understudy');
     expect(rep.size).toBeUndefined();
     // The casting notice reads in American spelling (the spelling defect, below).
-    expect(sim.universe.notifications.find((n) => n.title.startsWith('Cast: '))?.body).toMatch(/You play the part through the run, and its calls are on your calendar\. A missed call counts against you: two in a term take you out of the casting pool\.$/);
+    // Each casting its own sentence, and the calls of both said together (from 2026-10-20, brief 17).
+    expect(sim.universe.notifications.find((n) => n.title.startsWith('Cast: '))?.body).toMatch(/You play the part through the run\. Both productions’ calls are on your calendar\. A missed call counts against you: two in a term take you out of the casting pool\.$/);
     const run = repCalls(sim, 'runthrough')[0]!;
     expect(run).toBeDefined();
     tended(sim, run.at - MS_HOUR);

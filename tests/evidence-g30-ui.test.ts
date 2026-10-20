@@ -79,7 +79,7 @@ import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Wellbeing } from '@/engine/domain/model';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
-import { MS_DAY, MS_HOUR } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { healthOf } from '@/engine/systems/health';
 import { courseworkOf } from '@/engine/systems/coursework';
@@ -284,7 +284,7 @@ describe('trait-hygieneDrift', () => {
       // Readiness reads hygiene: the menu's gain is what hygiene at 100 and stress eased by a tenth of the wash give,
       // worked here from the seven dials.
       const gain = Math.round((readinessFrom({ ...w, hygiene: 100, stress: w.stress - (100 - w.hygiene!) * 0.1 }) - readinessFrom(w)) * 10) / 10;
-      expect(shower.says, who).toContain(`readiness +${gain.toFixed(1)}`);
+      expect(shower.says, who).toContain(`Readiness +${gain.toFixed(1)}`);
       shower.press();
       expect(h.toasts, who).toEqual(['Shower: done at 1:50 PM.']);
       expect(sim.player.wellbeing.hygiene, who).toBe(100);
@@ -660,8 +660,8 @@ describe('trait-illnessToll', () => {
     // The draw is 7 days for the plain body, so somewhere in [6.5, 7.5); at 0.6474 that is [4.21, 4.86): 4 days.
     expect((injury(plain).until - RAN_AT) / MS_DAY).toBe(7);
     expect((injury(resilient).until - RAN_AT) / MS_DAY).toBe(4);
-    expect(notices(plain, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('It takes 7 days to mend, and you can’t work out until then.');
-    expect(notices(resilient, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('It takes 4 days to mend, and you can’t work out until then.');
+    expect(notices(plain, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('It takes 7 days to mend, until August 31, 2026. Until then you can’t work out, and it holds back the physical side of your work.');
+    expect(notices(resilient, 'A Sprained Ankle').map((n) => n.body)[0]).toContain('It takes 4 days to mend, until August 28, 2026. Until then you can’t work out, and it holds back the physical side of your work.');
     expect(lookAfter(plain, 'exercise').error).toBe('Not with a sprained ankle; it has 7 days yet to mend.');
     expect(lookAfter(resilient, 'exercise').error).toBe('Not with a sprained ankle; it has 4 days yet to mend.');
 
@@ -689,7 +689,7 @@ describe('trait-illnessToll', () => {
       expect(notices(sim, 'You Have The Flu')).toHaveLength(0);
       const before = { ...sim.player.wellbeing };
       sim.advanceTo(AT + 1);
-      expect(notices(sim, 'You Have The Flu').map((n) => n.body)).toEqual(['You have the flu. It lasts until December 19, 2026, and it has cost you some condition and energy. Work Out waits until it passes, and Call In Sick, on School, excuses a day of classes. You didn’t see a doctor, so there’s nothing to pay.']);
+      expect(notices(sim, 'You Have The Flu').map((n) => n.body)).toEqual(['It lasts until December 19, 2026, and it has cost you some condition and energy. Until it passes you can’t work out, and it holds back your voice and body work. Each day until then, Call In Sick, on School’s Classes tab, can excuse that day at school. You didn’t see a doctor, so there’s nothing to pay.']);
       return { sim, condition: before.condition - sim.player.wellbeing.condition, energy: before.energy - sim.player.wellbeing.energy };
     };
     const plain = draw([]);
@@ -710,7 +710,7 @@ describe('trait-illnessToll', () => {
       expect(notices(kept, 'You Have The Flu')).toHaveLength(1);
       // Nothing like the toll a second time: three hours awake move condition by less than a point.
       expect(Math.abs(kept.player.wellbeing.condition - condition)).toBeLessThan(1);
-      expect(lookAfter(kept, 'exercise').error).toBe('Not with the flu: rest until it passes.');
+      expect(lookAfter(kept, 'exercise').error).toBe(`Not with the flu: rest until it passes on ${formatDate(AT + 5 * MS_DAY, kept.zone)}.`);
       kept.advanceTo(AT + 5 * MS_DAY + 3 * MS_HOUR);
       expect(notices(kept, 'You Have The Flu')).toHaveLength(1);
       const worked = lookAfter(kept, 'exercise');

@@ -123,7 +123,8 @@ describe('a note on the craft', () => {
     left.forEach((n, i) => {
       const f = n.focus as { note: string; segment?: number };
       const prior = left.slice(0, i).reverse().find((m) => (m.focus as { note: string }).note === f.note && (m.focus as { segment?: number }).segment === f.segment);
-      if (prior && prior.taken === false) expect(n.text).toMatch(/^(?:Still: |Same note as at the last call\. |Not there yet\. )/);
+      // In each director's voice from 2026-10-20 (brief 17, `directorVoiceOf`).
+      if (prior && prior.taken === false) expect(n.text).toMatch(/^(?:Still: |Same note as at the last call\. |Not there yet\. |The same note as last time: |We’re still on the last note\. |Keep at the last note: |The last note still stands\. |Again, the same note\. |Let’s stay with the last note\. )/);
     });
   }, 180_000);
 });

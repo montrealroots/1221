@@ -84,7 +84,8 @@ const theCountry = (name: string): string => {
 function spokenSome(names: readonly string[], shown: number): string {
   const named = names.slice(0, shown);
   const rest = names.length - named.length;
-  return spokenList(rest > 0 ? [...named, `${rest.toLocaleString('en-US')} more`] : named);
+  // Under ten in words, as prose says them (from 2026-10-20, brief 17): until then "… Jersey and 1 more".
+  return spokenList(rest > 0 ? [...named, said(rest, 'more', 'more')] : named);
 }
 
 const playerIn = (sim: Simulation): Person | undefined => sim.universe.people[sim.universe.playerId];
@@ -227,10 +228,12 @@ defineLook<PlaceProfile>('place', {
               : label
                 ? `It’s the ${label.toLowerCase()} of ${spokenName(region?.name ?? place.countryName)}, ${people} people live here, and the climate is ${climate}.`
                 : `${people} people live here, in ${spokenName(region?.name ?? place.countryName)}, and the climate is ${climate}.`}
-            {/* Its tags in short, as Home’s place line has them (from 2026-10-19, brief 15’s coordinator, at the health and frame
-                areas’ report): "What it’s known for:" read an adjective as a thing ("… desert and affordable."). */}
-            {place.tags.length > 0 && ` In short: ${spokenList(place.tags).toLowerCase()}.`}
           </p>
+          {/* Its tags as Home’s place line has them, a line of their own (from 2026-10-20, brief 17). From 2026-10-19 (brief
+              15’s coordinator, at the health and frame areas’ report) they were "In short: …", and before that "What it’s
+              known for: …", both a sentence a list of nouns and adjectives can’t make: "In short: production hub,
+              incentives and affordable." */}
+          {place.tags.length > 0 && <p className="small muted">{place.tags.map(titleCaseLabel).join(' · ')}</p>}
           <p className="small muted">
             {place.medianRentCents > 0 && `Rent on a one-bedroom runs about ${rent} a month, `}
             {place.medianRentCents > 0

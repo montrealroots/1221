@@ -46,6 +46,10 @@ describe('a question in What Needs You, opened', () => {
     expect(body).toContain('It came up just now, about your taxes. Its urgency is high, at 70/100. If it comes up again while it’s open, its urgency can only go up. It’s the only question waiting on you.');
     expect(body).toContain(`It closes when you answer it on Home or deal with it on its own screen. If you don’t, it closes by itself within two days after its date, ${formatDate(due, sim.zone)}. You can still open it here for 180 days after it closes.`);
     expect(body).toContain('On Home, its buttons are File It, Go There and Dismiss. Reading it here changes nothing.');
+    // What to press comes before when it closes and where it ranks (from 2026-10-20, brief 17: until then last).
+    expect(body.indexOf('On Home, its buttons are')).toBeGreaterThan(body.indexOf('You owe $10.00'));
+    expect(body.indexOf('On Home, its buttons are')).toBeLessThan(body.indexOf('It closes when you answer it'));
+    expect(body.indexOf('It closes when you answer it')).toBeLessThan(body.indexOf('It came up just now'));
     expect(seen.provenance).toBe('Urgency is estimated, from 0 to 100.');
 
     // Several: the more urgent first, and past Home's six rows, a seventh waits for its buttons.
@@ -115,7 +119,7 @@ describe('a notice, opened', () => {
     let note = sim.universe.notifications.at(-1)!;
     let seen = look(sim, 'notification', note.id);
     expect([seen.kind, seen.name, seen.summary]).toEqual(['Notice', 'A Word On Your Coursework', 'It came in just now, and it’s your only unread notice.']);
-    expect(words(seen.body)).toContain('It’s about your school, and its importance is 70/100. Unread notices are listed most important first, and the newer first when two are equal. Opening it here doesn’t mark it read. On Home, Mark 1 Read marks it read. On Home, Go There opens the screen it’s about.');
+    expect(words(seen.body)).toContain('Two pieces are unready. Opening it here doesn’t mark it read. On Home, Go There opens the screen it’s about, and Mark 1 Read marks it read. It’s about your school, and its importance is 70/100. Unread notices are listed most important first, and the newer first when two are equal.');
     expect(seen.provenance).toBeUndefined();
 
     sim.advanceTo(sim.now + 2 * MS_HOUR);
@@ -123,7 +127,7 @@ describe('a notice, opened', () => {
     sim.notify({ category: 'mystery_side', title: 'Quiet', body: 'A quiet one.', importance: 10 });
     seen = look(sim, 'notification', note.id);
     expect(seen.summary).toBe('It came in 2 hours ago. It’s second of your three unread notices.');
-    expect(words(seen.body)).toContain('On Home, Mark 3 Read marks all 3 unread notices read at once.');
+    expect(words(seen.body)).toContain('On Home, Go There opens the screen it’s about, and Mark 3 Read marks all 3 unread notices read at once.');
     expect(words(seen.body)).toContain('Status Unread 2 of 3 unread');
     const quiet = sim.universe.notifications.at(-1)!;
     expect(words(look(sim, 'notification', quiet.id).body)).toContain('It’s about something in your life, and its importance is 10/100.');
@@ -135,6 +139,10 @@ describe('a notice, opened', () => {
     expect(seen.summary).toBe('You’ve read this notice. It came in 2 hours ago.');
     expect(words(seen.body)).toContain('SLATE keeps your latest 500 notices, so this one stays until 500 newer ones have come in.');
     expect(words(seen.body)).toContain('Status Read No longer listed on Home');
+    // Home lists only the unread, so a notice read has no Go There to press (from 2026-10-20, brief 17: until then its
+    // route still said "On Home, Go There opens the screen it’s about").
+    expect(note.route).toBe('/workspace/school');
+    expect(words(seen.body)).not.toContain('Go There');
   });
 });
 
@@ -192,5 +200,86 @@ describe('the breadcrumbs’ names', () => {
     for (const d of rail) expect(labelForRoute(d.route), d.route).toBe(d.label);
     // Until 2026-10-17 School's breadcrumb was "Your School" where its rail entry, its Home line and its own heading say School.
     expect(['/home', '/workspace/calendar', '/workspace/school'].map(labelForRoute)).toEqual(['Home', 'Calendar', 'School']);
+  });
+});
+
+describe('the calendar’s looks, said of what the game does', () => {
+  /**
+   * A New Haven student into the first week of classes, kept rested and fed while the clock runs, as a player's meals and
+   * sleep keep them: the life the frame's looks are rendered on (TEST SETUP's kind, `render-looks.mjs`'s).
+   */
+  const student = async (seed: string) => {
+    const { createSave } = await import('@/engine');
+    const { newLifeConfig } = await import('@/engine/world/bootstrap');
+    await import('@/ui/looks/all');
+    const sim = createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    const until = sim.now + 8 * MS_DAY;
+    while (sim.now < until) {
+      Object.assign(sim.player.wellbeing, { energy: 85, stress: 20, sleepDebt: 0, nourishment: 80, morale: 70 });
+      sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
+      sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR));
+    }
+    return sim;
+  };
+  /** A look's body as the screen draws it, under the provider its links read (FIXTURE: no effect runs in a server render). */
+  const drawnIn = async (sim: Simulation, node: unknown) => {
+    const { createElement } = await import('react');
+    const { GameProvider } = await import('@/app/game-context');
+    return words(createElement(GameProvider, { sim, adapter: { save: async () => undefined } as never, onExit: () => undefined, children: createElement('div', null, node as never) }));
+  };
+
+  // From 2026-10-20 (brief 17): until then a class's look said a miss was unexcused "unless you’re sick or in hospital",
+  // where an illness excuses nothing that isn't called in, and an injury that lays you up does (`offSick`, classes'
+  // handler in `systems/school.ts`).
+  it('says a missed class is excused by a sick day called in, a hospital bed or an injury, as its handler excuses it', async () => {
+    const sim = await student('frame-class-entry');
+    const item = sim.universe.scheduled.find((i) => i.kind === 'school.classes' && i.status === 'pending')!;
+    expect(item).toBeDefined();
+    const seen = look(sim, 'entry', item.id);
+    const said = await drawnIn(sim, seen.body);
+    expect(said).toContain('If you aren’t, it’s missed: an unexcused absence, which the faculty weigh at the term review, unless you called in sick, or you’re in hospital or laid up with an injury.');
+    expect(said).not.toContain('unless you’re sick');
+  });
+
+  // From 2026-10-20 (brief 17): until then a day with one thing on it said "You need to be at one of them.", and three
+  // of three "three of them".
+  it('says a day’s commitments as it, both or all of them where every one needs you, and a count where some don’t', async () => {
+    const sim = await student('frame-day-wants');
+    const { dateKey } = await import('@/engine/core/time');
+    // TEST SETUP: a day of its own, two months on and past Drama 50's three weeks, cleared of what the calendar had on
+    // it, with plans of the player's own put on it.
+    const day = sim.now + 60 * MS_DAY;
+    const key = dateKey(day, sim.homeZone);
+    for (const i of sim.universe.scheduled) if (i.status === 'pending' && dateKey(i.at, sim.homeZone) === key) sim.timeline.cancel(i.id, sim.now);
+    const plan = (title: string, hours: number) => sim.must({ kind: 'calendar.schedule', payload: { title, at: day + hours * MS_HOUR, durationMinutes: 60 } });
+    const body = () => drawnIn(sim, look(sim, 'day', key).body);
+    plan('Lunch', 0);
+    expect(await body()).toContain('There’s one thing on it: Lunch. You need to be at it.');
+    plan('Gym', 2);
+    expect(await body()).toContain('You need to be at both.');
+    plan('Dinner', 4);
+    expect(await body()).toContain('You need to be at all of them.');
+    expect(await body()).not.toMatch(/You need to be at (one|two|three) of them/);
+    // TEST SETUP: one of the three made one that happens without you, as a payday is: a count of those that need you.
+    const item = sim.universe.scheduled.find((i) => i.status === 'pending' && i.label === 'Dinner')!;
+    item.requiresPlayer = false;
+    expect(await body()).toContain('You need to be at two of them.');
+  });
+});
+
+describe('a place’s and its money’s looks, said as sentences', () => {
+  it('shows a place’s tags as Home has them, never as a sentence, and a short list’s tail in words', async () => {
+    const { quickSave: quick } = await import('@/engine');
+    await import('@/ui/looks/all');
+    const sim = quick({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london' }, 'frame-london-tags');
+    const place = words(look(sim, 'place', 'uk-eng-london').body);
+    // From 2026-10-20 (brief 17): until then "In short: theater, production hub and international.", a list of nouns and
+    // adjectives made a sentence.
+    expect(place).toContain('Theater · Production Hub · International');
+    expect(place).not.toContain('In short');
+    // Numbers under ten in words, in prose: until then "… Jersey, South Georgia and the South Sandwich Islands and 1 more."
+    const pound = look(sim, 'currency', 'GBP');
+    expect(words(pound.body)).toMatch(/It’s used in [^.]+ and one more\./);
+    expect(words(pound.body)).not.toMatch(/ and 1 more/);
   });
 });

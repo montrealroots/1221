@@ -468,7 +468,8 @@ describe('card.request_hardship', () => {
     // $48; fixed that day).
     expect(statement).toContain('$100.00');
     expect(statement).not.toContain('at least $48.00');
-    expect(late.body).toContain('was $100.00, and only $48.00 was paid');
+    // From 2026-10-20 (brief 17) the notice names the due date it was judged on, between the figure and what was paid.
+    expect(late.body).toMatch(/^The plan’s payment on the Chase Freedom Unlimited, \$100\.00, was due [A-Z][a-z]+ \d{1,2}, \d{4}, and only \$48\.00 was paid\. /);
   });
 
   it('ends at the due date once the card is paid off before it: the suspension lifts and the card takes the day again', () => {

@@ -54,6 +54,12 @@ export function roundUpMoney(bankId: string, n: number): string {
 }
 
 const EVERY_WORDS: Record<RoundUpEvery, string> = { day: 'daily', week: 'weekly', fortnight: 'every two weeks' };
+
+/**
+ * The choices a refusal names, the last after “or” (from 2026-10-20, brief 17): until then three of the refusals listed
+ * them with commas alone, “Choose how often it moves: daily, weekly, every two weeks.”
+ */
+const orList = (items: readonly string[]): string => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} or ${items.at(-1)}`);
 export const roundUpEveryWords = (e: RoundUpEvery): string => EVERY_WORDS[e];
 
 /** The way the choice counts by, or the only one. */
@@ -69,19 +75,19 @@ export function roundUpChoiceRefusal(bankId: string, rule: RoundUpRule, choice: 
   if (rule.ways.length > 1 && (choice.way === undefined || !rule.ways[choice.way])) return 'Choose how it counts: rounded up, or a set amount.';
   const way = wayOf(rule, choice)!;
   if (way.kind === 'change') {
-    if (way.units.length > 1 && !way.units.includes(choice.unit ?? NaN)) return `Choose what to round up to: ${way.units.map(money).join(', ')}.`;
+    if (way.units.length > 1 && !way.units.includes(choice.unit ?? NaN)) return `Choose what to round up to: ${orList(way.units.map(money))}.`;
     if (way.multipliers && choice.multiplier !== undefined && !way.multipliers.includes(choice.multiplier)) return `Choose a multiplier from ${way.multipliers[0]} to ${way.multipliers.at(-1)}.`;
     if (way.multipliers && choice.multiplier === undefined && rule.defaultMultiplier === undefined) return 'Choose a multiplier.';
   }
   if (way.kind === 'flat') {
-    if (way.amounts && way.amounts.length > 1 && !way.amounts.includes(choice.amount ?? NaN)) return `Choose the amount each purchase: ${way.amounts.map(money).join(', ')}.`;
+    if (way.amounts && way.amounts.length > 1 && !way.amounts.includes(choice.amount ?? NaN)) return `Choose the amount each purchase: ${orList(way.amounts.map(money))}.`;
     if (way.range) {
       const a = choice.amount;
       if (a === undefined || !(a >= way.range.min && a <= way.range.max) || Math.abs(Math.round(a * 100) - a * 100) > 1e-6) return `Choose the amount each purchase, ${money(way.range.min)} to ${money(way.range.max)}.`;
     }
   }
-  if (way.kind === 'changePlus' && !way.amounts.includes(choice.amount ?? NaN)) return `Choose the amount: ${way.amounts.map(money).join(' or ')}.`;
-  if (rule.every && !rule.every.includes(choice.every as RoundUpEvery)) return `Choose how often it moves: ${rule.every.map((e) => EVERY_WORDS[e]).join(', ')}.`;
+  if (way.kind === 'changePlus' && !way.amounts.includes(choice.amount ?? NaN)) return `Choose the amount: ${orList(way.amounts.map(money))}.`;
+  if (rule.every && !rule.every.includes(choice.every as RoundUpEvery)) return `Choose how often it moves: ${orList(rule.every.map((e) => EVERY_WORDS[e]))}.`;
   if (rule.minimumAtLeast !== undefined && !((choice.minimum ?? NaN) >= rule.minimumAtLeast)) return `Set the minimum balance it keeps, at least ${money(rule.minimumAtLeast)}.`;
   return undefined;
 }
@@ -204,8 +210,11 @@ export function moveRoundUps(s: Simulation, person: Person): void {
   const { bankId, rule } = at;
   // A save from before 2026-10-13 at a bank whose choice is the customer's: nothing counts until it's made, and what
   // the old way counted doesn't move.
+  // Said as a reason after “because” (from 2026-10-20, brief 17): until then the refusal itself, a sentence, so the panel's
+  // last line read “…, because Choose the amount each purchase, C$0.50 to C$5.00..”. The choice still to make is the
+  // refusal the panel gives beside it.
   const missing = roundUpChoiceRefusal(bankId, rule, r);
-  if (missing) { dropRoundUps(person, s.now, missing); return; }
+  if (missing) { dropRoundUps(person, s.now, 'a choice the bank needs from you wasn’t made'); return; }
   r.bankId ??= bankId;
   const savings = roundUpSavings(s, person, bankId);
   if (!savings) { r.on = false; dropRoundUps(person, s.now, `there’s no easy-access savings at ${current.institution ?? 'the bank'}`); return; }

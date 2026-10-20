@@ -266,17 +266,17 @@ function look(sim: Simulation, kind: string, id: string): string {
 /** Each family's first morning, worked by hand above: checking, savings, and the card's limit and what's owed on it. */
 const MONEY: Record<StartingWealth, { label: string; checking: string; savings: string; card?: string; need: boolean; cents: [number, number] }> = {
   nothing: { label: 'Next To Nothing', checking: '$43', savings: '$0', need: true, cents: [43_00, 0] },
-  scraping: { label: 'Scraping By', checking: '$1,348', savings: '$326', card: '$913 owed of $1,630', need: true, cents: [1_348_00, 326_00] },
-  modest: { label: 'Modest', checking: '$5,217', savings: '$7,065', card: '$457 owed of $6,522', need: true, cents: [5_217_00, 7_065_00] },
-  comfortable: { label: 'Comfortable', checking: '$19,565', savings: '$45,652', card: '$0 owed of $21,739', need: true, cents: [19_565_00, 45_652_00] },
-  wealthy: { label: 'Wealthy', checking: '$92,391', savings: '$413,043', card: '$0 owed of $65,217', need: false, cents: [92_391_00, 413_043_00] },
-  inherited: { label: 'Inherited Wealth', checking: '$260,870', savings: '$2,608,696', card: '$0 owed of $163,043', need: false, cents: [260_870_00, 2_608_696_00] },
+  scraping: { label: 'Scraping By', checking: '$1,348', savings: '$326', card: '$1,630 limit, $913 owed', need: true, cents: [1_348_00, 326_00] },
+  modest: { label: 'Modest', checking: '$5,217', savings: '$7,065', card: '$6,522 limit, $457 owed', need: true, cents: [5_217_00, 7_065_00] },
+  comfortable: { label: 'Comfortable', checking: '$19,565', savings: '$45,652', card: '$21,739 limit, nothing owed', need: true, cents: [19_565_00, 45_652_00] },
+  wealthy: { label: 'Wealthy', checking: '$92,391', savings: '$413,043', card: '$65,217 limit, nothing owed', need: false, cents: [92_391_00, 413_043_00] },
+  inherited: { label: 'Inherited Wealth', checking: '$260,870', savings: '$2,608,696', card: '$163,043 limit, nothing owed', need: false, cents: [260_870_00, 2_608_696_00] },
 };
 
 describe('the family a new life comes from (c-family, c-wealth)', () => {
   it('Genres & Background offers the six families, Wealthy chosen as creation chose before; each, chosen on the select, is what Review says and what the save opens', () => {
     const step = creation(STEP.Background, answers());
-    expect(step.text).toContain('Your Family The family you come from decides the money in your name on the first morning, and whether Yale’s needs assessment finds you need aid.');
+    expect(step.text).toContain('Your Family The family you come from decides the money in your name on the first morning, and whether Yale finds that you need aid.');
     const select = step.control('family');
     expect(select.props.value).toBe('wealthy');
     expect(step.html).toContain('<option value="nothing">Next To Nothing</option><option value="scraping">Scraping By</option><option value="modest">Modest</option><option value="comfortable">Comfortable</option><option value="wealthy" selected="">Wealthy</option><option value="inherited">Inherited Wealth</option>');
@@ -366,11 +366,11 @@ describe('Yale’s living-expense scholarship, the term’s account (c-family)',
     expect(into(paid[0]!, checking(need).id)).toBe(13_318_50);
     expect(checking(need).balance - fall.need.before).toBe(13_318_50);
     expect(earningsOf(need.player).years[2026]!.scholarship).toBe(14_014_00);
-    expect(titled(need, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Your living-expense scholarship of $15,200.50 paid this term’s Yale Health plan, $1,882.00, and $13,318.50 is in your Chase Total Checking.']);
+    expect(titled(need, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Classes run from August 31 to December 11, 2026, when the faculty review the term. Tuition, $20,375.00 a term, is covered by the tuition scholarship. Your living-expense scholarship of $15,200.50 paid this term’s Yale Health plan, $1,882.00, and $13,318.50 is in your Chase Total Checking.']);
     expect(memos(rich, /^Living-expense scholarship/)).toHaveLength(0);
     expect(checking(rich).balance - fall.rich.before).toBe(-1_882_00);
     expect(earningsOf(rich.player).years[2026]?.scholarship ?? 0).toBe(0);
-    expect(titled(rich, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
+    expect(titled(rich, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Classes run from August 31 to December 11, 2026, when the faculty review the term. Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
     // Terms And Award, as each has it.
     const terms = { 'tab:/workspace/school': 'terms' };
     expect(drawn(need, SchoolWorkspace, terms).text).toContain('Each Term Billed Credited Tuition $20,375.00 Tuition Scholarship $20,375.00 Yale Health Plan $1,882.00 Living-Expense Scholarship $15,200.50 Paid To Your Bank $13,318.50');

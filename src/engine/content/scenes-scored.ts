@@ -37,7 +37,7 @@ export const SCORED_SCENES: readonly Scene[] = [
   {
     // Act Three, Scene Two, from Géronte's "Well! Scapin, and how have we succeeded about my son's mischance?" to his "It
     // is thus that you murder me?", played between Scapin and Géronte.
-    id: 'scapin-3-2', play: 'The Impostures of Scapin', by: 'Molière, tr. Charles Heron Wall', year: 1671, where: 'Act Three, Scene Two, a street in Naples: the sack', language: 'prose', size: 'medium', genre: 'comedy', difficulty: 2,
+    id: 'scapin-3-2', play: 'The Impostures of Scapin', by: 'Molière, tr. Charles Heron Wall', year: 1671, where: 'Act Three, Scene Two, the sack scene, in a street in Naples', language: 'prose', size: 'medium', genre: 'comedy', difficulty: 2,
     summary: 'Géronte has paid Scapin five hundred crowns to ransom his son from a Turkish galley, and he told his son that Scapin had betrayed him, which put Scapin on his knees under Léandre’s sword confessing his own tricks. Now Scapin has his revenge. He tells the old man that the brother of Octave’s bride and his friends, men of the sword, hold every street to his house, and that the one way home is in a sack on Scapin’s shoulders. Géronte gets in. Scapin plays a Gascon bully who beats the sack for its master’s sake, then a foreigner who beats it when Scapin won’t show what’s inside, then half a dozen soldiers at once, crying out each time as if the blows fell on him and pushing the old man’s head back in whenever it comes out to complain. As the soldiers are about to strike, Géronte looks out quietly, sees the trick, and Scapin runs.',
     circumstances: [
       yes('street', 'A street in Naples, where Scapin says the swordsmen hold every way to Géronte’s house', 'His enemies “occupy in companies all the thoroughfares leading to your house,” Scapin says, so he can’t get home by the right or the left.'),
@@ -46,7 +46,7 @@ export const SCORED_SCENES: readonly Scene[] = [
     ],
     relationship: [
       yes('servant', 'Géronte’s son’s servant, who has already tricked him once, and the miser who still trusts him', 'Géronte calls him “my dear Scapin” and asks him to show himself a devoted servant, after the galley.'),
-      no('friends', 'Friends who wish each other well', 'Aside, Scapin tells him “you shall pay me for that lie.”'),
+      no('friends', 'Friends who wish each other well', 'Aside, Scapin says “you shall pay me for that lie.”'),
       no('strangers', 'Strangers', 'Scapin is Léandre’s servant, and took five hundred crowns from Géronte for the galley.'),
     ],
     roles: [

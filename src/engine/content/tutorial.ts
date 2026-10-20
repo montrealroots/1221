@@ -53,6 +53,9 @@ import { COASTING_ENERGY_CEILING, LONGEST_NIGHT, SHORTEST_SLEEP } from '../syste
 import { BRIEF } from '../systems/briefs';
 import { ESTIMATE } from '../systems/school';
 import { ADVICE } from '../systems/advice';
+import { LEARNING } from '../systems/learning';
+import { STATUS_GRACE_DAYS } from '../systems/permission';
+import { WORK_RULES } from './workrules';
 import { PLAN_FREE_IN_INTRO } from '../systems/cardoffers';
 import { COLLECTION, SUBSTITUTE } from '../systems/taxreturn';
 import { SSN } from '../systems/taxid';
@@ -123,7 +126,11 @@ export const CHAPTERS: readonly Chapter[] = [
   // happened; it names the commitment now, and that an injury that lays you up keeps you from anything but your own care
   // (`present` in `systems/school.ts` and `systems/health.ts`: classes, calls, labs, shifts, the Cabaret, the paper
   // offices; your doctor and your therapist ask only `presentForCare`), which it left out. The first rewrite that day said
-  // "for anything at school"; the coordinator traced `present` to the paper offices too.
+  // "for anything at school"; the coordinator traced `present` to the paper offices too. Until 2026-10-20 (brief 17,
+  // section 9) that paragraph said all of it in one sentence, “for anything but your own care, in its town and not laid up
+  // by an injury”, which kept a plan of your own and orientation from someone laid up, though neither asks it
+  // (`world/plans.ts` and the orientation's own check in `systems/coursework.ts` ask only that you're awake and out of
+  // hospital): the injury has a sentence of its own now, with what it keeps you from and what it doesn't.
   {
     id: 'calendar',
     title: 'What’s Coming',
@@ -133,7 +140,8 @@ export const CHAPTERS: readonly Chapter[] = [
       'Press an entry’s name or its time to see when it starts, how long it lasts, where it is and what missing it would cost.',
       'Anything you need to be at is a commitment: a class, a rehearsal call, a work-study shift, an appointment, a plan of your own. When the clock reaches one, it stops, and a dialog with the commitment’s name asks what you want to do.',
       'Press Go to be there. Going takes as long as the commitment lasts, and the clock runs on through it. Stand Here closes the dialog and keeps the clock paused at the commitment.',
-      'You can only skip a plan of your own, so there’s no Skip It button for a class or an appointment. If you press Stand Here, the commitment starts the next time the clock moves, whether you press Play, Advance or Sleep. You’re there if you’re awake and out of hospital, and, for anything but your own care, in its town and not laid up by an injury; if not, you miss it.',
+      'You can only skip a plan of your own, so there’s no Skip It button for a class or an appointment. If you press Stand Here, the commitment starts the next time the clock moves, whether you press Play, Advance or Sleep.',
+      'You miss a commitment if you’re asleep or in hospital when it starts. An injury that lays you up also keeps you from classes, calls, performances, work-study shifts and an office appointment for your papers, though not from your doctor, your therapist, orientation or a plan of your own.',
       'The clock hasn’t moved yet, so nothing has come due. Read “The Clock” next: it opens Play, which starts the clock.',
     ],
     names: ['Calendar', 'Go', 'Skip It', 'The entries on it, when you press them'],
@@ -152,13 +160,16 @@ export const CHAPTERS: readonly Chapter[] = [
     names: ['Play and Pause'],
     opens: ['ui.play', 'world.set_preferences'],
   },
+  // Until 2026-10-20 (brief 17, the frame editor's finding) the chapter said the clock stops at each commitment on the
+  // way and not what the stop's answers do to the jump: Go carries it on, and Stand Here ends it there with the clock
+  // paused (`onGo` and `clearStandingAt` in `ui/shell/TimeControls.tsx`, `halt` in `app/game-context.tsx`).
   {
     id: 'advance',
     title: 'Moving Time On',
     lead: 'Jumping ahead, and what happens on the way.',
     body: [
       'To jump ahead instead of waiting, press Advance in the top bar and choose how far: One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.) or One Week. Choose An Event opens Skip To Event: pick one of the next fourteen things on your calendar and press Skip To with its name.',
-      'Everything on the way happens, in order. If the jump would pass any commitments, a dialog called On The Way first says how many: press Advance there to go on, or Cancel to stay where you are. The clock still stops at each commitment to ask what you want to do.',
+      'Everything on the way happens, in order. If the jump would pass any commitments, a dialog called On The Way first says how many: press Advance there to go on, or Cancel to stay where you are. The clock still stops at each commitment to ask what you want to do: Go takes you to it and carries the jump on afterwards, and Stand Here ends the jump there, with the clock paused.',
       'Time only moves forward, so you can’t undo a jump.',
       'Read “What Needs You” next: it’s where you find out what happened.',
     ],
@@ -299,6 +310,11 @@ export const CHAPTERS: readonly Chapter[] = [
   // From 2026-10-19 (brief 15) work-study comes before casting, as a first term meets them, and the tuition went behind
   // The Details; the casting paragraph names what a play asks, from `content/plays.ts`, where it had said "a voice and
   // speech that carry and the body" of every play.
+  // Until 2026-10-20 (brief 17, section 9) the note was said to be "under Feedback on the piece", which a card shows only
+  // for a piece the course revises (`FeedbackBlock`); the rest are under Work Shown. And nothing said how a note is put
+  // right: a later showing with its part at `LEARNING.enough`, in any course, since the ledger is kept by part
+  // (`resolveNote` in `show`), or a later answer the text supports for a note on the table work; and, for a piece the
+  // course revises, its showing again, which takes the note by `noteTaken`'s own marks.
   {
     id: 'school',
     title: 'Drama School',
@@ -320,12 +336,14 @@ export const CHAPTERS: readonly Chapter[] = [
       'If they say no or don’t turn up, press Run It With A Reader to work your side of the scene with someone reading their lines. It’s slower, and your partner’s side stays where it was.',
       'Shown Today, on each piece, tells you where it stands now: what it would come to if you showed it today, which parts are still short, and the steps that would fix them. It’s a forecast, not a result.',
       'On its due date, the piece is shown at that day’s class if you’re there. If you’re excused, it moves to the course’s next class, or with none left isn’t held against you. Miss the class without an excuse and it can’t be shown later, so it counts as Unready.',
-      'When a piece is shown, your own work is judged, and so is the scene as a whole, with what your partner brought, which also changes the bond between you. Your teacher’s note, under Feedback on the piece, says what held it back most. The note is the game’s, written as your course’s teachers would say it.',
+      'When a piece is shown, your own work is judged, and so is the scene as a whole, with what your partner brought, which also changes the bond between you. Your teacher’s note says what held it back most. The note is the game’s, written as your course’s teachers would say it.',
+      'The note comes as a notice, and stays under Work Shown on Coursework. A piece the course wants to see again keeps it under Feedback on its card: work on the note before its next class, with Work On The Note or the steps for that part, so that showing it again takes the note.',
+      `Otherwise, a note stays open until a later piece, in any course, is shown with the part it named at ${Math.round(LEARNING.enough * 100)}% or more, or, for a note on an answer at the table, answers that question the way the text supports. Your Notes, on Coursework, shows where each note stands.`,
       'If too many of a term’s pieces are coming out Unready, you’ll get a notice during the term, A Word On Your Coursework, with the date the faculty review it. That’s a warning, not the review itself: the review comes at the end of the term’s classes.',
       'At the term review, the faculty look at your attendance at classes, calls and assigned shifts, how you’ve grown compared with the class, your work on stage and your coursework. Coursework This Term, on Standing And Craft, counts the term the way the review will.',
       'Fall short on any of them and you drop a step: from good standing to academic concern, from concern to academic warning, and from warning to dismissal. Meet them all and you’re back in good standing.',
       'Every student works: six hours on the Saturdays of class weeks, and at least 50 more hours of evening shifts front of house at Yale Rep during the term. Each press of Take An Elective Shift, on Shifts And Pay, books the next free evening, seven to eleven, and says which. You’re paid for your hours on Fridays.',
-      'From your first spring, the chair casts you in one of the School’s productions each term, and once a year, if you’re in good standing, you’re at Yale Rep too, usually as an understudy. Casting shows your part and Why This Cast. Between rehearsal calls, Learn The Part, Catch Up The Blocking and Work On The Note prepare your part.',
+      'From your first spring, the chair casts you in one of the School’s productions each term, and once a year, if you’re in good standing, you’re at Yale Rep too, usually as an understudy, ready to go on if an actor can’t. Casting shows your part and Why This Cast. Between rehearsal calls, Learn The Part, Catch Up The Blocking and Work On The Note prepare your part. Blocking is where you move on stage, set at the early calls.',
       'Missing two calls in a term, labs and rehearsals together, takes you out of the casting pool until a term review finds you in good standing. Missing a performance, or not being in New Haven when you’re called to go on, is a serious breach: it puts you on academic warning straight away, and if you’re already on warning, you’re dismissed.',
       'Work It Through, on a scene or a part, lists the problems its forecast shows, worst first. Press one, then a way of working on it: it takes the minutes on its button and shows the figure before and after. Then press Keep It or Put It Back.',
       'The Yale Cabaret is the students’ own theater: Join A Cabaret Show, on Casting, puts you in one of its shows, one a term, and says the week it plays. In the spring of your first and second years, Join The Summer Company, on Casting too, puts you in the Yale Summer Cabaret for the summer, with a weekly stipend. When you can’t join, the panel says why where the button would be.',
@@ -361,6 +379,10 @@ export const CHAPTERS: readonly Chapter[] = [
   // and what moved a forecast in parts.
   // From 2026-10-20 (brief 16) it names the Profile's What To Work On Next and Why This Recommendation, where the advice's
   // reasons went that day (`AdviceCard`), and calls the figure an estimate, as the card does.
+  // Until later that day (brief 17, section 9) it said practice past four hours a day "stops counting", where the fifth
+  // hour is refused and Practice An Hour grayed out with the reason under it (`practiceRefusal`).
+  // Brief 17's material editor found terms a new player meets unexplained: a self-tape and a brief's beats are said in
+  // plain words where this chapter first names them, from that day, and blocking and an understudy in “Drama School”.
   {
     id: 'profile',
     title: 'You As An Actor',
@@ -372,9 +394,9 @@ export const CHAPTERS: readonly Chapter[] = [
       'Four different things make you better: your abilities, your techniques, your genre knowledge and practice. Your abilities are part of you: how you listen, how you hold your nerve. Your techniques are skills a class trains. Your genre knowledge is how well you know a kind of play or film.',
       'Practice is work you set yourself, outside class. Classes, coursework, rehearsals and nights on stage build what they train, up to the level classes reach. Practice takes you further, all the way to the top.',
       'To practice, press the exercise in the Practice column beside an ability or a technique, such as Comic Timing, choose a Tier and a Focus, and press Practice An Hour. Before you press it, the line above the button says about how much the hour will add, and why. The hour moves the clock on, and what it found shows under the button.',
-      `Doing the same work again on the same day builds only half as much, whether it’s a class, a night or an exercise, and practice past ${PRACTICE.dailyHours} hours a day stops counting. A technique past ${MASTERED} improves no result, because no piece asks more of it.`,
-      'A finished piece, whether a showing, a night on stage or a self-tape, is judged on the qualities your teacher looks for: believability, interpretation, connection, execution, consistency and responsiveness, as each piece calls for them. Each piece says what held it back and by how much. Your Work So Far looks across all your pieces: what they show most, and what keeps holding them back.',
-      'Under Genres, Study It reads a play or watches a film of that genre, which builds your Familiarity with it. Every genre also has a practice brief, an original scene written for SLATE. Press Open Its Brief to read where and when it’s set, who the two of you are, what you want, what’s in the way and where it turns.',
+      `Doing the same work again on the same day builds only half as much, whether it’s a class, a night or an exercise. After ${word(PRACTICE.dailyHours)} hours of practice in a day, more stops helping, so Practice An Hour is grayed out until tomorrow, with the reason under it. A technique past ${MASTERED} improves no result, because no piece asks more of it.`,
+      'A finished piece, whether a showing, a night on stage or a self-tape (a scene you record yourself, as an actor does for a casting), is judged on the qualities your teacher looks for: believability, interpretation, connection, execution, consistency and responsiveness, as each piece calls for them. Each piece says what held it back and by how much. Your Work So Far looks across all your pieces: what they show most, and what keeps holding them back.',
+      'Under Genres, Study It reads a play or watches a film of that genre, which builds your Familiarity with it. Every genre also has a practice brief, an original scene written for SLATE. Press Open Its Brief to read where and when it’s set, who the two of you are, what you want, what’s in the way, and its beats, the moments where the scene turns.',
       'On the brief, prepare it with Break It Down, Learn The Lines and Rehearse It On Your Feet, each with its minutes on the button. Under Your Reading, choose what you take the scene to be about and press Read It This Way.',
       'Then choose how to play it under How You’ll Play It and press Play It This Way. Once you have, Work It Through works on it as it does on a class scene.',
       'Under Read With, choose who reads the other part, a recording or a classmate who learns it as you rehearse together, and press Read With Them. When you’re ready, press Tape It: it takes an hour, and a message gives the tape’s result.',
@@ -463,7 +485,8 @@ export const CHAPTERS: readonly Chapter[] = [
   // says what a license run out leaves: until then nothing here or on its row did, and nothing in SLATE renews one. From
   // 2026-10-17 it says Connecticut mails the card (`ID_CARDS`): until then it was in force at the counter, and this said
   // nothing of when it came. Later that day (brief 12) it says where a fee or a term is SLATE's assumption, and that the
-  // screen says so: until then nothing here did.
+  // screen says so: until then nothing here did. Until 2026-10-20 (brief 17) the F-1's sixty days, OPT's twelve months and
+  // its ninety days without work were typed here; they're read from `STATUS_GRACE_DAYS` and `WORK_RULES.opt` now.
   {
     id: 'documents',
     title: 'Passports And ID',
@@ -479,7 +502,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Replace It, beside a lost ID card, gets a new one from the state that issued it, if you live there, at its fee, and it arrives after the issuer’s published wait.',
       'Going Abroad shows what each country asks of someone with your citizenship: whether you can just go, need a travel authorization first, or need a visa. Choose a Country to see what it asks for and what you’re missing.',
       'You can’t travel in the game, so this is information, not a form to fill in. A visa or a travel authorization covers a visit only: staying, or working, needs a different permission.',
-      'On an F-1, you’re in US status while you study and for sixty days after your program ends. After the degree, Apply For OPT, on Permission To Work, asks for twelve months’ permission to work in your field, which you lose after 90 days in all without work. Residence Abroad says what another country asks before you can make a home there.',
+      `On an F-1, you’re in US status while you study and for ${STATUS_GRACE_DAYS.f1} days after your program ends. After the degree, Apply For OPT, on Permission To Work, asks for ${word(WORK_RULES.opt.months)} months’ permission to work in your field, which you lose after ${WORK_RULES.opt.unemploymentDays} days in all without work. Residence Abroad says what another country asks before you can make a home there.`,
       'Read “Money” next, about everything you have and owe.',
     ],
     more: [
@@ -527,6 +550,9 @@ export const CHAPTERS: readonly Chapter[] = [
   // what a cooling-off period cancels, no country that keeps cards or deposits out of one, and said nothing of the
   // sixty days starting again after Take The Loan; found by the current scope’s acceptance of that day. Until 2026-10-16
   // it said nothing of an account kept at home, which creation had opened since that day’s module 3 (`systems/abroad.ts`).
+  // Until 2026-10-20 (brief 17) The Details said a US card's introductory rate ended, and its penalty rate came, with "a
+  // payment sixty days late": both come at the second due date missed in a row (`credit.missed >= 2`), which the late
+  // notice calls thirty days late, and it says that now (the money editor's finding).
   {
     id: 'bank',
     title: 'Your Bank',
@@ -556,7 +582,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Deutsche Bank, Postbank and Berliner Sparkasse take a checking account’s monthly fee at the quarter’s closing, and ING on the 1st of the month after.',
       'A card’s terms are its rate, or the range of rates it sets by credit score; any yearly fee; the minimum payment; the late fee; and the days to the due date, all within the law’s caps. Autopay also takes from easy-access savings at the same bank as its account, if you’ve linked them. If they can’t cover all of it, the card charges a returned-payment fee for the miss, except on a US card, where the late fee covers the same miss. If a statement isn’t paid in full, the interest built up until the day you clear it comes on the next statement. Outside the US, paying less than the minimum also goes on your credit record and lowers your limit; in the US that happens only if the payment is still short at the next due date, thirty days later. Some banks, many in Europe among them, issue a card that takes the whole statement every month and can’t carry a balance. Where a bank’s card terms couldn’t be found, they’re estimated, and the screen says so.',
       'Each card has its own statement, due date and minimum, and your credit record looks at how much of all their limits you’ve used together. Move the statement day and the due date moves with it. You can ask for a higher or lower limit, and say whether the bank may raise it without asking. In the US you can opt in to going over the limit, or not. Close a card and nothing new goes on it while what you owe is paid down.',
-      'Once a statement isn’t paid in full, interest builds each day on what the card owes; paying a statement in full keeps new spending interest-free. Your credit score sets the rate when the card opens, and it stays there. In the US a payment sixty days late ends any introductory rate, and where the card has a penalty rate, it applies after 45 days’ notice until six payments in a row are on time. Pay more than you owe and the card holds the credit; Send The Credit To My Account moves it back to you.',
+      'Once a statement isn’t paid in full, interest builds each day on what the card owes; paying a statement in full keeps new spending interest-free. Your credit score sets the rate when the card opens, and it stays there. In the US two payments missed in a row end any introductory rate, and where the card has a penalty rate, it applies after 45 days’ notice until six payments in a row are on time. Pay more than you owe and the card holds the credit; Send The Credit To My Account moves it back to you.',
       'In Germany, whose banks close an account each quarter, statements run quarter by quarter. A card’s statement says what it asked for and what paying only the minimum would take. Turned on, Savings Covers The Checking Account pays what a checking account can’t from easy-access savings at the same bank, for anything that account pays: the day’s spending from your primary account, a card’s autopay from the account it’s set on, and a loan’s payment from its repayment account. A standing order moves money into savings on a set day each month, and you can set a payment for a date.',
       'You can take cash from your bank’s ATM, another bank’s, the counter, or in Britain the Post Office where your bank allows it, each for the bank’s own fee, and from the machines no more in a day than the bank allows; another machine’s owner may add a fee of its own. A cash advance on the card costs its fee and charges its rate from the day you take it, with no grace period, and a payment to the card goes to the more expensive balance first (in the US, only what you pay above the minimum does). You can pay for the day’s groceries in cash. At a German bank that sets a limit, a savings account lets out €2,000 a month without notice, whether as cash, as a move or as a payment, and no more.',
       'After you report a card, the new one arrives in the bank’s usual time, for its fee, and a card about to expire has its replacement sent ahead. Someone else may use your card, as often as the country’s official figures say it happens: the bank stops some of it and asks you, and the rest shows up in an alert or on your statement. Where the bank offers it, Move My Account To A New Number gives your checking account a new number and a new debit card.',

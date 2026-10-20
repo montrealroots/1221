@@ -1145,7 +1145,7 @@ if (DIR) {
     must(/Round-Ups, Spend & Save\./.test(words) && /at most \$15 a transfer/.test(words), `not Citi’s words: ${words.slice(0, 200)}`);
     must(await often().count() && await minimum().count(), 'no How Often or Minimum Balance');
     must(await toggle().isDisabled(), 'Round-Ups: Off offered before the choices are made');
-    must(/Turn On: Choose how often it moves: daily, weekly\./.test(words) || /Not now: Choose how often it moves: daily, weekly\./.test(words), `no reason said: ${words.slice(0, 400)}`);
+    must(/Turn On: Choose how often it moves: daily or weekly\./.test(words) || /Not now: Choose how often it moves: daily or weekly\./.test(words), `no reason said: ${words.slice(0, 400)}`);
     await often().selectOption({ label: 'Weekly' }); await wait(200);
     must(await toggle().isDisabled(), 'turned on with no minimum balance');
     await minimum().fill('49'); await wait(200);
@@ -1230,7 +1230,7 @@ if (DIR) {
     // warning's earlier words, and the sweep's first run here failed on them.
     // From brief 15's final runs the review is two short sentences; until then "This is a warning, not the term review: the
     // faculty reviews the term on …" and "the term falls short of what the program asks, and the review would".
-    must(/So far this term, \d+ of the \d+ pieces (you’ve shown were Unready|due were Unready or not shown)\. This is a warning\. The term review is on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the review would [^.]+\. What held most of them back was [^,]+, unfinished on (\d+ of the \d+|the one) you showed\. To work on it: .+\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
+    must(/So far this term, \d+ of the \d+ pieces (you’ve shown were Unready|due were Unready or not shown)\. This is a warning\. The term review is on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then, the review would [^.]+\. (?:The part most often left unfinished was [^,]+, on \d+ of the \d+|“[^”]+” was left unfinished on the one) you showed Unready\. To work on it: .+\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
     must(/This is a warning\. The term review is on [A-Z][a-z]+ \d{1,2}, \d{4}\. If half or more of the term’s pieces are Unready or not shown by then/.test(words), `no review day: ${words.slice(0, 300)}`);
     await item.getByRole('button', { name: /^Go There$/ }).click(); await wait(1200);
     must(new URL(page.url()).hash.startsWith('#/workspace/school'), `Go There opened ${new URL(page.url()).hash}`);
@@ -1435,7 +1435,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     must((await summary.evaluate((el) => el.closest('details').open)) === true, 'not open to the accessibility tree');
     const assumes = (await briefPane().locator('[data-assumes]').first().innerText().catch(() => '')).trim();
     const attention = (await briefPane().locator('[data-attention]').first().innerText().catch(() => '')).trim();
-    must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
+    must(/^(?:Your last piece was |Of your last \d+ pieces, )/.test(assumes), `what it assumes said: ${assumes || 'nothing'}`);
     must(/(is|are) worth your time now|^Neither preparation nor training/.test(attention), `the attention said: ${attention || 'nothing'}`);
     return `${assumes.slice(0, 200)} / ${attention.slice(0, 200)}`;
   });

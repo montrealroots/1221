@@ -323,7 +323,9 @@ export function freshnessOf(assignments: readonly (Worked & { feedback?: { text:
   };
 }
 
-const DIM_SUBJECT: Record<PrepDim, string> = { familiarity: 'Knowing The Material', memorization: 'Lines', interpretation: 'The Choices', rehearsal: 'Time On Its Feet', partner: 'Work With Your Partner', revision: 'Working A Note' };
+// Rehearsal by that name from 2026-10-20 (brief 17), as the feedback names it in every course (`DIM_WORDS`): until then
+// "Time On Its Feet", which Voice I's daily practice and Speech's drills aren't.
+const DIM_SUBJECT: Record<PrepDim, string> = { familiarity: 'Knowing The Material', memorization: 'Lines', interpretation: 'The Choices', rehearsal: 'Rehearsal', partner: 'Work With Your Partner', revision: 'Working A Note' };
 /** A ledger entry's subject in words, Title Case. */
 export function noteSubject(key: string): string {
   const [kind, what] = key.split(':') as [string, string];

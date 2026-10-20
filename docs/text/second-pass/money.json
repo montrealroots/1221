@@ -85,9 +85,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-offers]": {
   "status": "Rewritten",
-  "hash": "8c8eab555e7b",
-  "on": "2026-10-19",
-  "evidence": "Checking account for the money transfer and its refusal; tests/defects-g21-1.test.ts and the example's play read the entry",
+  "hash": "ed34c15a105f",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), its two-missed rule played by tests/guide-chapter-facts.test.ts and its example by tests/guide-examples-money.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-security]": {
@@ -99,9 +99,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card]": {
   "status": "Rewritten",
-  "hash": "d86558e4acfd",
+  "hash": "18f37d2fb2fd",
   "on": "2026-10-20",
-  "evidence": "tests/editorial16-money.test.ts (How This Works on money keeps each explanation short) and tools/voices.ts --guide; guide-quotes.mjs --check holds each quoted refusal; brief 16: the summary in two paragraphs, read in tests/language-money.test.ts's guide check",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), its two-missed rule played by tests/guide-chapter-facts.test.ts and its example by tests/guide-examples-money.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
@@ -229,6 +229,13 @@
   "on": "2026-10-19",
   "reason": "A one-line refusal for a bank that won't break a term deposit before its end, the bank named as the one whose rule it is",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/systems/accountlife.ts#breakRuleWords": {
+  "status": "Rewritten",
+  "hash": "75bcb0c44ed2",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'Chase’s CD' and 'RBC: it can’t be broken' render it before Put It Away; every bank's sentence printed and read for the thirteen countries; walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/workload.json",
+  "first": "Pending"
  },
  "src/engine/systems/accountlife.ts#breakTerm": {
   "status": "Retained",
@@ -722,9 +729,9 @@
  },
  "src/engine/systems/credit.ts#afterMissed": {
   "status": "Rewritten",
-  "hash": "315b294867b7",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence2-b11.test.ts, it('PLAYER JOURNEY: her everyday spending put on the card … the autopay bounces …') reads the suspension notice in What Needs You",
+  "hash": "a661570d7f6c",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' holds Your Card Is Suspended and A Default Notice, exact; read in order in docs/verification/continuity-2026-10-20/money/card-missed-six.txt",
   "first": "Pending"
  },
  "src/engine/systems/credit.ts#chargeOff": {
@@ -750,9 +757,9 @@
  },
  "src/engine/systems/credit.ts#registerCredit": {
   "status": "Rewritten",
-  "hash": "04ceda6b82bd",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g28-ui.test.ts it('PLAYER JOURNEY: the same groceries on the card each midnight …'), tests/evidence-g12-money.test.ts bounce case, tests/evidence2-b04.test.ts late case, tests/editorial-money.test.ts works-again case",
+  "hash": "eb8ea9ee549d",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' and 'Britain: Barclays puts the first miss on the record' hold the late notice's due date and the next miss's suspension, exact; read in order in docs/verification/continuity-2026-10-20/money/card-missed-six.txt",
   "first": "Pending"
  },
  "src/engine/systems/credit.ts#registerCredit <card.refund_credit>": {
@@ -813,9 +820,9 @@
  },
  "src/engine/systems/credit.ts#statementWords": {
   "status": "Rewritten",
-  "hash": "4f8831bf0f77",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g28-ui.test.ts it('PLAYER JOURNEY: the same groceries on the card each midnight …') and tests/evidence-g34-ui.test.ts read the statement notice for both autopay settings, exact",
+  "hash": "66d0e425c83d",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' holds the statement after a miss and while suspended, exact, and 'Britain: Barclays …' the British one; read in order in docs/verification/continuity-2026-10-20/money/card-missed-six.txt",
   "first": "Pending"
  },
  "src/engine/systems/earnings.ts#ukTaxYear": {
@@ -1002,9 +1009,9 @@
  },
  "src/engine/systems/lending.ts#registerLending": {
   "status": "Rewritten",
-  "hash": "199b1fbd61c7",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g11-money.test.ts, the Citi loan case, reads A Missed Loan Payment naming the loan and the empty account",
+  "hash": "445340a4986e",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'RBC: the returned payment fee named' and tests/evidence-g11-money.test.ts 'takes a Citi loan’s monthly payment' hold the missed loan payment's day and fee",
   "first": "Pending"
  },
  "src/engine/systems/lending.ts#registerLending [loan]": {
@@ -1128,9 +1135,9 @@
  },
  "src/engine/systems/obligations.ts#accountAlerts": {
   "status": "Rewritten",
-  "hash": "0218116077fc",
-  "on": "2026-10-19",
-  "evidence": "tests/language-dynamic.test.ts reads Short For A Payment saying what the account has available, as the payment takes it",
+  "hash": "81a742c617c3",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' (nothing available, overdrawn by) and 'says how far below zero it is' (Low Balance), and tests/account-alerts.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/obligations.ts#obligationsAhead": {
@@ -1218,11 +1225,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/roundups.ts#moveRoundUps": {
-  "status": "Retained",
-  "hash": "5f91c16423bf",
-  "on": "2026-10-19",
-  "reason": "Each reason a round-up didn't move, said after because, and Citi's Spend & Save notice saying what it turned off, why, and how to turn it on again",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "8b890c725ac2",
+  "on": "2026-10-20",
+  "evidence": "tests/roundups.test.ts 'carries on at a bank with no choice to make' renders the panel's Not moved line with the new reason",
+  "first": "Pending"
  },
  "src/engine/systems/roundups.ts#roundUpChoiceRefusal": {
   "status": "Retained",
@@ -1456,11 +1463,11 @@
   "first": "Reviewed And Retained"
  },
  "src/ui/bank/BankAccountLife.tsx#BankAccountLife": {
-  "status": "Retained",
-  "hash": "8bbd06c1995c",
-  "on": "2026-10-19",
-  "reason": "Each line says one account's state and what to do: a term's end and until when it can change, a savings fee, inactive or dormant and Reactivate, Cancel It until its date",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "4abba2aad7fe",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'Chase’s CD' renders today's break cost beside Break It Early, outside Sources And Estimates; tests/evidence-g11-money.test.ts holds it exact",
+  "first": "Pending"
  },
  "src/ui/bank/BankAccountLife.tsx#END_BUTTON": {
   "status": "Retained",
@@ -1471,16 +1478,16 @@
  },
  "src/ui/bank/BankCard.tsx#CardApplication": {
   "status": "Rewritten",
-  "hash": "eecb522dd89d",
+  "hash": "3806be00e565",
   "on": "2026-10-20",
-  "evidence": "tests/language-money.test.ts renders it paragraph by paragraph; tools/screen-text.mjs on the built app, Money, Cards, a year in (workload save)",
+  "evidence": "tests/editorial17-money.test.ts 'at Bank of America, from Chase' and 'in Dublin, from AIB', tests/language-money.test.ts; read on the built app, walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/workload.json and 390",
   "first": "Pending"
  },
  "src/ui/bank/BankCard.tsx#CardPanel": {
   "status": "Rewritten",
-  "hash": "96163521eba2",
+  "hash": "6070e995c1e6",
   "on": "2026-10-20",
-  "evidence": "tests/language-money.test.ts renders the rate and the bank's pricing as two paragraphs; tools/screen-text.mjs on the built app, Money, Cards",
+  "evidence": "tests/editorial17-money.test.ts 'a statement owed' and 'suspended: what lifts it', tests/language-money.test.ts, tests/hardship-plan-minimum.test.ts; walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/card-owed.json and /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/390/card-owed.json",
   "first": "Pending"
  },
  "src/ui/bank/BankCard.tsx#MONTH_NAMES": {
@@ -1489,6 +1496,13 @@
   "on": "2026-10-19",
   "reason": "The months' names for the yearly fee's statement month, as formatDate writes them, plain English month names",
   "first": "Reviewed And Retained"
+ },
+ "src/ui/bank/BankCard.tsx#offerWords": {
+  "status": "Rewritten",
+  "hash": "fc31f55b2291",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'at Bank of America, from Chase' and 'in Dublin, from AIB' render it before Apply For This Card; walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/workload.json and /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/390/workload.json",
+  "first": "Pending"
  },
  "src/ui/bank/BankCard.tsx#sourceAndDay": {
   "status": "Retained",
@@ -1506,9 +1520,9 @@
  },
  "src/ui/bank/BankCardOffers.tsx#CardOffers": {
   "status": "Rewritten",
-  "hash": "2945779601ef",
+  "hash": "2c981e579c79",
   "on": "2026-10-20",
-  "evidence": "tests/language-money.test.ts renders the rewards and the published list apart; tools/screen-text.mjs on the built app, Money, Cards",
+  "evidence": "tests/editorial17-money.test.ts 'Chase: two payments missed in a row' and 'Barclaycard: one minimum payment missed' render the introductory rate's words",
   "first": "Pending"
  },
  "src/ui/bank/BankCash.tsx#BankCash": {
@@ -1520,9 +1534,9 @@
  },
  "src/ui/bank/BankLending.tsx#BankLending": {
   "status": "Rewritten",
-  "hash": "698ac2b8dc97",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g10-money.test.ts renders In Collections for an account and a card charge-off, and presses Borrow It and Put It Away for their toasts",
+  "hash": "d3f713cd892e",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'Chase: the fee and its cap', 'an account left overdrawn names the day', 'Chase’s CD', 'RBC: it can’t be broken'; tests/evidence-g10-money.test.ts In Collections; walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/overdrawn.json",
   "first": "Pending"
  },
  "src/ui/bank/BankLending.tsx#SWITCH_OUTCOME": {
@@ -1534,9 +1548,9 @@
  },
  "src/ui/bank/BankMoves.tsx#BankMoves": {
   "status": "Rewritten",
-  "hash": "b9b47b1ccab3",
+  "hash": "3e499e68210d",
   "on": "2026-10-20",
-  "evidence": "tests/editorial16-money.test.ts and tests/evidence-g14-money.test.ts render the four paragraphs; tools/screen-text.mjs on the built app, Money, Accounts",
+  "evidence": "tests/editorial17-money.test.ts 'says once where the wages go' and 'has its minus sign and its cents in the head, Your Banks and Statements'; walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/overdrawn.json and /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/card-owed.json",
   "first": "Pending"
  },
  "src/ui/bank/BankPayments.tsx#BankPayments": {
@@ -1779,9 +1793,9 @@
  },
  "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace": {
   "status": "Rewritten",
-  "hash": "28ba00670939",
-  "on": "2026-10-19",
-  "evidence": "tests/editorial-money-screens.test.ts reads Move Money's allowance hint to the cent (m1), tests/remaining-banking.test.ts and tests/home-account-transfers.test.ts read the Moved and Sent messages naming the account",
+  "hash": "2968b4fde346",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial17-money.test.ts 'Chase to Capital One: out now' renders the arrival line before Move It; the subtitle read on the built app, walk /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/card-owed.json and 390",
   "first": "Pending"
  },
  "src/ui/workspaces/BankWorkspace.tsx#BorrowingAt": {

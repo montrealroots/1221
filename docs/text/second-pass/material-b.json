@@ -190,9 +190,9 @@
  },
  "src/engine/content/briefs/second-a.ts#SECOND_A [brief-comedy-2]": {
   "status": "Rewritten",
-  "hash": "11ec3262692e",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-a.txt",
+  "hash": "7bf7d08093d2",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-comedy-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-comedy-2.txt",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-a.ts#SECOND_A [business]": {
@@ -645,9 +645,9 @@
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-costume_drama-2]": {
   "status": "Rewritten",
-  "hash": "6939e3db0e3d",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-b.txt",
+  "hash": "deedcccc1d84",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-costume_drama-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-costume_drama-2.txt",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-courtroom_drama-2]": {
@@ -659,17 +659,17 @@
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-creature_feature-2]": {
   "status": "Rewritten",
-  "hash": "1fe5c20ee19b",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-b.txt",
+  "hash": "ccf0f9e52a2d",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-creature_feature-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-creature_feature-2.txt",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-crime-2]": {
-  "status": "Retained",
-  "hash": "337a473ce663",
-  "on": "2026-10-19",
-  "reason": "Tuesday Night, All Night: chairs going up on tables, an alibi asked for plainly and a son used as leverage, each concrete; the physical reason names the turn (she stops), and the partner reason tells her what to read in him, charm or threat.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "16929d051d92",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-crime-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-crime-2.txt",
+  "first": "Pending"
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-cyberpunk-2]": {
   "status": "Retained",
@@ -693,11 +693,11 @@
   "first": "Pending"
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-detective-2]": {
-  "status": "Retained",
-  "hash": "fcf9cd30aa60",
-  "on": "2026-10-19",
-  "reason": "Seven Minutes Fast: a clock repairer’s evidence told to the minute, the escapement on her bench and her own confession; the timing reason (each correction lands before he can talk over it) is a direction already.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "d6e41c74b634",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-detective-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-detective-2.txt",
+  "first": "Pending"
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-disaster-2]": {
   "status": "Rewritten",
@@ -728,11 +728,11 @@
   "first": "Pending"
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-domestic_drama-2]": {
-  "status": "Retained",
-  "hash": "d66e4e3b1096",
-  "on": "2026-10-19",
-  "reason": "The Boxes In The Hall: clay under her nails, his boxes stacked in the hall and a kettle already unpacked, specific and quietly funny; the coat she keeps on and takes off is named as the turn, a clear physical action.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "9c35e4a39f42",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-domestic_drama-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-domestic_drama-2.txt",
+  "first": "Pending"
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-drama-2]": {
   "status": "Retained",
@@ -743,16 +743,16 @@
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-dystopian-2]": {
   "status": "Rewritten",
-  "hash": "8662f7003bb3",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-b.txt",
+  "hash": "34ed7cbd5e57",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-dystopian-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-dystopian-2.txt",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-eco_horror-2]": {
   "status": "Rewritten",
-  "hash": "6d68083f9843",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-b.txt",
+  "hash": "26715abb2f0a",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-eco_horror-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-eco_horror-2.txt",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-b.ts#SECOND_B [brief-epic-2]": {
@@ -1226,9 +1226,9 @@
  },
  "src/engine/content/briefs/second-c.ts#SECOND_C [brief-found_footage-2]": {
   "status": "Rewritten",
-  "hash": "e4777cff18ba",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-c.txt",
+  "hash": "cbf1ef36e46b",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-found_footage-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-found_footage-2.txt",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-c.ts#SECOND_C [brief-gangster-2]": {
@@ -1261,9 +1261,9 @@
  },
  "src/engine/content/briefs/second-c.ts#SECOND_C [brief-hangout-2]": {
   "status": "Rewritten",
-  "hash": "6fde5b91b97c",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-c.txt",
+  "hash": "bf294fd21c9d",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-hangout-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-hangout-2.txt",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-c.ts#SECOND_C [brief-heist-2]": {
@@ -1345,9 +1345,9 @@
  },
  "src/engine/content/briefs/second-c.ts#SECOND_C [brief-kitchen_sink-2]": {
   "status": "Rewritten",
-  "hash": "b08de359d9cf",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-c.txt",
+  "hash": "b28156ef444e",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-kitchen_sink-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-kitchen_sink-2.txt",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-c.ts#SECOND_C [brief-legal_drama-2]": {
@@ -1884,9 +1884,9 @@
  },
  "src/engine/content/briefs/second-d.ts#SECOND_D [brief-picaresque-2]": {
   "status": "Rewritten",
-  "hash": "f62ed083fa1d",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (a practice brief’s words, on its pane > shows every brief’s scene, its reasons and its readings whole, each sentence sound) renders BriefPane with the new words; the rendered pane is kept in docs/verification/editorial-2026-10-19/material-b/rendered/second-d.txt",
+  "hash": "5e8ab38a3f69",
+  "on": "2026-10-20",
+  "evidence": "tests/material-words.test.ts renders the new words on the brief pane; read on the built app's brief pane at 1440 and 390 in docs/verification/continuity-2026-10-20/material/panes-after/1440/brief-picaresque-2.txt and docs/verification/continuity-2026-10-20/material/panes-after/390/brief-picaresque-2.txt",
   "first": "Pending"
  },
  "src/engine/content/briefs/second-d.ts#SECOND_D [brief-police_procedural-2]": {

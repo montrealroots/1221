@@ -42,7 +42,7 @@
  * arithmetic.
  */
 
-import { pick } from './feedback';
+import { hash, pick } from './feedback';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -348,8 +348,24 @@ export function noteFor(person: Person, p: Process, reads: Partial<Craft>, n: nu
  * 2026-10-12): until then a note knew only this part, never the actor's history. It's words alone: the note's problem,
  * its figure and what answers it are the same either way.
  */
-export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { target: string; label: string; pieces: number }, memory?: { key: string; recent: readonly string[] }): string {
-  const words = noteWords(f);
+/**
+ * A director's voice (from 2026-10-20, the owner's brief 17, section 4): each production's director keeps one, chosen
+ * from the production by a hash, never a draw (`directorVoiceOf`), so the same director sounds the same at every call.
+ * - `plain`: blunt and short, in the first person; the note and what to do about it.
+ * - `exacting`: precise about where and what; the fix as a task.
+ * - `encouraging`: the same note put as what it opens up.
+ * The words are SLATE's, a fictional director's; the screen says so beside them. Until brief 17 every production's
+ * director said each note in the same words.
+ */
+export type DirectorVoice = 'plain' | 'exacting' | 'encouraging';
+const DIRECTOR_VOICES: readonly DirectorVoice[] = ['plain', 'exacting', 'encouraging'];
+export const directorVoiceOf = (key: string): DirectorVoice => DIRECTOR_VOICES[hash(`director:${key}`) % DIRECTOR_VOICES.length]!;
+/** A production's director, by the run and the production's name: the same voice at every call and at the run's close. */
+export const directorVoiceFor = (which: string, holder: object): DirectorVoice => directorVoiceOf(`${which}:${(holder as { production?: string; title?: string }).production ?? (holder as { title?: string }).title ?? ''}`);
+
+export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { target: string; label: string; pieces: number }, memory?: { key: string; recent: readonly string[]; voice?: DirectorVoice }): string {
+  const voice = memory?.voice ?? 'plain';
+  const words = noteWords(f, voice);
   const history = f.kind === 'craft' && recurring && f.problem === `limit:${recurring.target}` ? ` It’s your ${recurring.label.toLowerCase()} again: it’s held back ${recurring.pieces} of your pieces before this.` : '';
   if (!before) return `${words}${history}`;
   // What was tried for it before, said, where it was worked a way of its own (from 2026-10-12), and from 2026-10-16
@@ -362,9 +378,24 @@ export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { targ
   // Said a few true ways, where the part's own last notes are passed (from 2026-10-20, brief 16, `pick`): until then every
   // note after one taken began "Better since the last note." and every one not taken "Still:", 17 and 29 of 85 notes in
   // brief 16's baseline. Without them, the first way, as before.
-  const options = before.taken
-    ? [`Better since the last note.${tried} ${words}${history}`, `That’s moved since the last note.${tried} Now: ${continued(words)}${history}`, `The last note took.${tried} Next: ${continued(words)}${history}`]
-    : [`Still: ${continued(words)}${tried}${history}`, `Same note as at the last call. ${words}${tried}${history}`, `Not there yet. ${words}${tried}${history}`];
+  // In the director's voice (brief 17): what came of the last note, then this one.
+  const TAKEN: Record<DirectorVoice, string[]> = {
+    plain: [`Better since the last note.${tried} ${words}${history}`, `That’s moved since the last note.${tried} Now: ${continued(words)}${history}`, `That’s moved since the last note.${tried} ${words}${history}`],
+    exacting: [`The last note took.${tried} Next: ${continued(words)}${history}`, `That’s fixed.${tried} Now: ${continued(words)}${history}`, `The last note took.${tried} ${words}${history}`, `That’s fixed.${tried} ${words}${history}`],
+    encouraging: [`That last note landed.${tried} Next: ${continued(words)}${history}`, `Good: that’s moved since the last call.${tried} ${words}${history}`, `That last note landed.${tried} ${words}${history}`],
+  };
+  // Each voice has two ways or more whose words can follow a note's own colon (brief 17's after-runs: once the colon rule
+  // took the others, plain's "Same note as at the last call." and "Better since the last note." came 24 times each).
+  const STILL: Record<DirectorVoice, string[]> = {
+    plain: [`Still: ${continued(words)}${tried}${history}`, `Same note as at the last call. ${words}${tried}${history}`, `The last note still stands. ${words}${tried}${history}`],
+    exacting: [`Not there yet. ${words}${tried}${history}`, `The same note as last time: ${continued(words)}${tried}${history}`, `Again, the same note. ${words}${tried}${history}`],
+    encouraging: [`We’re still on the last note. ${words}${tried}${history}`, `Keep at the last note: ${continued(words)}${tried}${history}`, `Let’s stay with the last note. ${words}${tried}${history}`],
+  };
+  // Never two colons in a sentence (brief 17's first after-run: "Keep at the last note: get off book: once the lines are
+  // in you…"): a way that would put a colon before words that have one gives way to one that doesn't, where there is one.
+  const all = before.taken ? TAKEN[voice] : STILL[voice];
+  const single = all.filter((o) => !o.split(/(?<=[.!?])\s+/).some((x) => (x.match(/:/g) ?? []).length > 1));
+  const options = single.length ? single : all;
   return memory ? pick(options, memory.key, memory.recent) : options[0]!;
 }
 
@@ -375,22 +406,32 @@ export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { targ
  */
 const continued = (words: string): string => (/^I[\s’']/.test(words) ? words : `${words.charAt(0).toLowerCase()}${words.slice(1)}`);
 
-function noteWords(f: NoteFocus): string {
-  if (f.kind === 'lines') return 'Be off book: the lines aren’t there yet, and the scene can’t start until they are.';
-  if (f.kind === 'blocking') return 'The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.';
-  if (f.kind === 'direction') return `I want it ${APPROACH_EFFECT[f.side].label.toLowerCase()}: ${APPROACH_EFFECT[f.side].words.charAt(0).toLowerCase()}${APPROACH_EFFECT[f.side].words.slice(1)}`;
+/** A note's words, in the director's voice: the same note, the same place and the same fix, told three ways. */
+function noteWords(f: NoteFocus, v: DirectorVoice = 'plain'): string {
+  const pick3 = (plain: string, exacting: string, encouraging: string) => (v === 'exacting' ? exacting : v === 'encouraging' ? encouraging : plain);
+  if (f.kind === 'lines') return pick3('Be off book: the lines aren’t there yet, and the scene can’t start until they are.', 'The lines aren’t there yet. I need you off book before we can work on anything else.', 'Get off book: once the lines are in you, the scene can start.');
+  if (f.kind === 'blocking') return pick3('The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.', 'The blocking isn’t set yet. Go back through the book until every stage picture lands where it’s meant to.', 'Go back through the blocking in the book, so the stage pictures settle where they’re meant to.');
+  if (f.kind === 'direction') {
+    const way = APPROACH_EFFECT[f.side].label.toLowerCase();
+    const why = `${APPROACH_EFFECT[f.side].words.charAt(0).toLowerCase()}${APPROACH_EFFECT[f.side].words.slice(1)}`;
+    return pick3(`I want it ${way}: ${why}`, `Play it ${way}, please: ${why}`, `Try it ${way}: ${why}`);
+  }
   if (f.kind === 'craft') {
     const at = (f.where ?? 'the whole play').toLowerCase();
+    const At = `${at.charAt(0).toUpperCase()}${at.slice(1)}`;
     switch (f.note) {
-      case 'objective': return `I don’t know what you want in ${at}. Find it, and play it.`;
-      case 'listening': return `You’re not taking what they give you in ${at}: listen, and let it change you.`;
-      case 'pacing': return f.problem === 'stamina' ? `You’re spent by ${at}: find where the play lets you breathe.` : `It sags in ${at}: hold it the whole way through.`;
-      case 'behavior': return `The physical life in ${at} isn’t clean yet: what you do is telling the story too.`;
-      case 'transitions': return `The change into ${at} lurches: find what turns it.`;
-      case 'relationship': return `Who are they to you in ${at}? Decide, and let it show.`;
+      case 'objective': return pick3(`I don’t know what you want in ${at}. Find it, and play it.`, `In ${at}, what you want isn’t clear yet. Name it in one verb, and play that.`, `In ${at}, find what you want and go after it: that’s where the scene opens up.`);
+      case 'listening': return pick3(`You’re not taking what they give you in ${at}: listen, and let it change you.`, `In ${at}, you’re playing your plan, not what they give you. Take each line from the one before.`, `In ${at}, let what they give you land. It’s the best thing you have to play.`);
+      case 'pacing': return f.problem === 'stamina'
+        ? pick3(`You’re spent by ${at}: find where the play lets you breathe.`, `You run out by ${at}. Mark where the play lets you breathe, and use it.`, `By ${at} you’re tiring. Look for the places the play gives you to breathe.`)
+        : pick3(`It sags in ${at}: hold it the whole way through.`, `${At} loses its tension. Hold it through to the end.`, `Keep ${at} alive all the way through: it dips, and it doesn’t need to.`);
+      case 'behavior': return pick3(`The physical life in ${at} isn’t clean yet: what you do is telling the story too.`, `The physical life in ${at} isn’t clean yet. Make each action deliberate.`, `What you do in ${at} tells the story too: let it be as clear as the words.`);
+      case 'transitions': return pick3(`The change into ${at} lurches: find what turns it.`, `The change into ${at} is abrupt. Find the moment that turns it, and play from there.`, `The way into ${at} comes too suddenly. Find what turns it, and let it turn.`);
+      case 'relationship': return pick3(`Who are they to you in ${at}? Decide, and let it show.`, `In ${at}, I can’t tell who they are to you. Decide, and play it.`, `Think about who they are to you in ${at}, and let us see it.`);
     }
   }
-  return `Find more ${labelOf(f.skill).toLowerCase()} in it: that’s where the part is thin.`;
+  const skill = labelOf(f.skill).toLowerCase();
+  return pick3(`Find more ${skill} in it: that’s where the part is thin.`, `The part is thin in ${skill}. Build it there.`, `There’s more ${skill} to find in this part.`);
 }
 
 /** The ways at a note, for its screen: what the workbook offers for its problem (from 2026-10-12). Lines, blocking and a direction have their own. */
@@ -474,7 +515,8 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
     const before = [...p.notes].reverse().find((x) => same(x.focus));
     // A limit on the weakness the actor's work keeps coming back to is said as one (from 2026-10-12, `noteText`).
     const recurring = focus.kind === 'craft' && focus.problem.startsWith('limit:') ? identityOf(person).recurring : undefined;
-    p.notes.push({ at: sim.now, text: noteText(focus, before, recurring, { key: `${which ?? stage}:${p.calls}:${p.notes.length}`, recent: p.notes.slice(-6).map((x) => x.text) }), focus });
+    // The production's director, by its name (brief 17): the same voice at every call of the run, and at its close.
+    p.notes.push({ at: sim.now, text: noteText(focus, before, recurring, { key: `${which ?? stage}:${p.calls}:${p.notes.length}`, recent: p.notes.slice(-6).map((x) => x.text), voice: directorVoiceFor(which ?? stage, holder) }), focus });
     if (focus.kind === 'craft' || focus.kind === 'direction') countDirection(person, { given: true });
     if (p.notes.length > 30) p.notes.splice(0, p.notes.length - 30);
   }

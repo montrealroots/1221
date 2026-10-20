@@ -212,11 +212,15 @@ const SIZE_WORDS: Record<Participation, string> = { lead: 'a lead', supporting: 
 const WORDS = ['no', 'one', 'two', 'three'];
 
 /**
- * The workload in words, from a judged night’s own record (the forecast’s or the night’s): the running time and its
- * basis, the breaks, the part’s share, the intensity, the workload against its bound, and what it does, the drain at the
- * curtain’s fall and the energy it costs. The figures are the engine’s, worked by the functions above.
+ * The workload in words, from a judged night’s own record (the forecast’s or the night’s): what it does first, the drain
+ * at the curtain’s fall and the energy it costs (`cost`), then how it's worked out (`working`): the running time and its
+ * basis, the breaks, the part’s share, and the workload against its bound. The figures are the engine’s, worked by the
+ * functions above. Either part alone from 2026-10-20 (brief 17, section 8), so the rehearsal process can show what it
+ * does and keep the working beneath it; a night's look says both. The share is said “of it” where the evening has no
+ * break (from the same day): until then a play run straight through read its running time twice, “The evening runs 1
+ * hour and 40 minutes, straight through. … about 50% of its 1 hour and 40 minutes of playing”.
  */
-export function workloadWords(e: Parameters<typeof nightOfRecord>[0]): string | undefined {
+export function workloadWords(e: Parameters<typeof nightOfRecord>[0], part: 'both' | 'cost' | 'working' = 'both'): string | undefined {
   const r = nightOfRecord(e);
   if (!r) return undefined;
   const { night: n, stamina, readiness } = r;
@@ -224,7 +228,10 @@ export function workloadWords(e: Parameters<typeof nightOfRecord>[0]): string | 
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const breaks = n.breaks.length ? `with ${WORDS[n.breaks.length] ?? n.breaks.length} ${n.breaks.length === 1 ? 'break' : 'breaks'} of ${n.breaks.map((b) => `${b} minutes`).join(' and ')}` : 'straight through';
   const estimate = n.basis === 'estimate' ? ' (estimated)' : '';
+  const ofPlaying = n.breaks.length ? `of its ${minutesWords(n.playing)} of playing` : 'of it';
   // What it does first, then how it's worked out (from 2026-10-19, brief 15): the intensity, an intermediate figure, is
   // left to the workload it makes.
-  return `With your stamina as it is and readiness at ${Math.round(readiness)}, tiring takes ${pct(cost.drainEnd)} off the parts of your performance it affects by the final curtain, and the evening costs ${Math.round(cost.energy)} energy. The evening runs ${minutesWords(n.running)}, ${breaks}${estimate}. As ${SIZE_WORDS[n.size]}, you’re on stage for about ${pct(n.share)} of its ${minutesWords(n.playing)} of playing. Its physical demand is ${n.physical} of 3 and its vocal demand ${n.vocal} of 3, so its workload is ${n.workload.toFixed(1)} of a possible ${WORKLOAD.cap}.`;
+  const does = `With your stamina as it is and readiness at ${Math.round(readiness)}, tiring takes ${pct(cost.drainEnd)} off the parts of your performance it affects by the final curtain, and the evening costs ${Math.round(cost.energy)} energy.`;
+  const working = `The evening runs ${minutesWords(n.running)}, ${breaks}${estimate}. As ${SIZE_WORDS[n.size]}, you’re on stage for about ${pct(n.share)} ${ofPlaying}. Its physical demand is ${n.physical} of 3 and its vocal demand ${n.vocal} of 3, so its workload is ${n.workload.toFixed(1)} of a possible ${WORKLOAD.cap}.`;
+  return part === 'cost' ? does : part === 'working' ? working : `${does} ${working}`;
 }

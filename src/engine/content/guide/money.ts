@@ -12,6 +12,13 @@
  *
  * The screen's tabs are named through constants: the title-case sweep reads a `tab` property written as a literal as a
  * label, and an id isn't one.
+ *
+ * Until 2026-10-20 (brief 17, section 8) A Card's Offers opened on one sentence of 75 words, the payment plan and the
+ * plan Chase makes free inside its list of offers: the plan has a paragraph of its own now, with the same figures.
+ * The same day, from the money editor's finding: a US card's penalty rate and the end of its introductory rate were
+ * said to come with "a payment sixty days late", where the game's own late notice calls that moment thirty days late;
+ * both come at the second due date missed in a row (`credit.missed >= 2`, `systems/credit.ts`), and the entries say so.
+ * A Credit Card's first step names the panel's figures and then its terms, without saying how the terms are drawn.
  */
 
 import { formatMoney } from '../../core/money';
@@ -887,7 +894,7 @@ export const MONEY: readonly GuideEntry[] = [
     available: `Once you’ve read “${chapter('card.apply')}” in the guide.`,
     short: 'A credit card lets you spend now and pay later. Each month a statement comes, and at least the minimum payment is due by its due date: Autopay pays the whole statement or the minimum, as you choose, from your checking account. Pay the whole statement every month and you’re never charged interest.\n\nYou can hold one card from each bank where you live, each with its own panel and its bank’s terms on the Cards tab.',
     steps: [
-      'On the Cards tab, each card has a panel: Owed, Left To Spend of its limit, and its Rate, then its terms line by line.',
+      'On the Cards tab, each card has a panel: Owed, Left To Spend of its limit and its Rate first, then its terms.',
       'Press Pay Card In Full to pay it now from your primary account and its savings. It reads Pay What You Can when they hold less than you owe.',
       'Press Autopay to switch between The Whole Statement and The Minimum. With two checking accounts, What Pays From Where, on the Accounts tab, sets the account it pays from: choose one and press Pay From This Account.',
       'To move your statement date, choose a Statement Day and press Change The Day. To change your limit, type a New Limit and press Ask For This Limit.',
@@ -936,7 +943,7 @@ export const MONEY: readonly GuideEntry[] = [
       'On the due date at noon, autopay takes its amount from the account it’s set on, and from easy-access savings at that bank if savings is linked. If that isn’t enough for all of it, the payment comes back unpaid, and unless you paid the minimum yourself, the payment is late. A returned payment fee is charged, except on a US card, where the late fee covers the same missed payment.',
       'If you pay less than the minimum (on a hardship plan, the plan’s payment), you’re charged the late fee. Outside the US it goes on your credit record at once, and the limit is cut to 70%, but never below what you owe. In the US it goes on your record if it’s still short at the next due date, thirty days late.',
       'Two due dates missed in a row: the card is suspended until a payment is on time. Five: a default notice. Six: it’s charged off to collections and closed, and 100 points come off your score.',
-      'On a US card with a penalty rate, a payment sixty days late brings 45 days’ notice and then that rate, until six payments in a row are on time. Sixty days late also ends any introductory rate.',
+      'On a US card with a penalty rate, two payments missed in a row bring 45 days’ notice and then that rate, until six payments in a row are on time. Two missed in a row also end any introductory rate.',
       'After you move the statement day, the next statement comes on the new day, as long as that’s far enough after the last one. You can’t change it again before the next statement.',
       'With Going Over The Limit allowed on a US card, spending can go a little past the limit, with no fee.',
       'A credit balance left on a US card for six months is sent back to your account.',
@@ -1000,7 +1007,7 @@ export const MONEY: readonly GuideEntry[] = [
     questions: ['How long does my 0% rate last?', 'How do I move a balance to a new card?', 'What does a plan cost?', 'How do I use my rewards?', 'Is a plan free in the introductory months?'],
     where: { route: BANK, tab: CARDS_TAB, label: 'Your Bank, The Cards Tab, The Card’s Offers' },
     available: `Once you’ve read “${chapter('card.plan')}” in the guide.`,
-    short: `Some cards come with offers, shown under The Card’s Offers: a low introductory rate on purchases for the first months, rewards on what you buy, a money transfer into your checking account for a fee, and a payment plan that pays off part of your purchases in equal monthly amounts for a fixed monthly fee instead of interest${PLAN_FREE_AT.length ? ` (free for its whole life on a plan made at ${andList(PLAN_FREE_AT)} while the card’s introductory rate lasts)` : ''}. You can also move a balance from another bank’s card when you apply for a new one.`,
+    short: `Some cards come with offers, shown under The Card’s Offers: a low introductory rate on purchases for the first months, rewards on what you buy, and a money transfer into your checking account for a fee. You can also move a balance from another bank’s card when you apply for a new one.\n\nA payment plan pays off part of your purchases in equal monthly amounts, for a fixed monthly fee instead of interest${PLAN_FREE_AT.length ? `. A plan made at ${andList(PLAN_FREE_AT)} while the card’s introductory rate lasts is free for its whole life` : ''}.`,
     steps: [
       'On the Cards tab, The Card’s Offers shows each card’s introductory rate and when it ends, each transfer and plan with what’s left, and the rewards waiting.',
       'Press Redeem Onto The Card to take your rewards off what you owe on the card.',
@@ -1021,9 +1028,9 @@ export const MONEY: readonly GuideEntry[] = [
       { label: 'Rewards', value: 'Earned on purchases only. Cash advances, transfers, fees and interest earn none' },
     ],
     reads: [
-      { label: 'The Introductory Rate', value: 'Lasts for the card’s number of months from the day it opened. On a US card a payment sixty days late ends it, and at Barclaycard one missed minimum payment does' },
+      { label: 'The Introductory Rate', value: 'Lasts for the card’s number of months from the day it opened. On a US card two payments missed in a row end it, and at Barclaycard one missed minimum payment does' },
       { label: 'Where A Payment Goes', value: 'To the highest-rate balance first and a plan’s balance last. On a US card, the minimum payment goes to the lowest-rate balance first' },
-      { label: 'A Plan’s Fee', value: `Set when the plan is made, at the most the bank says it charges, and kept to its last month${PLAN_FREE_AT.length ? `. There’s none on a plan made at ${andList(PLAN_FREE_AT)} while the card’s introductory rate lasts, unless a payment sixty days late has ended it` : ''}` },
+      { label: 'A Plan’s Fee', value: `Set when the plan is made, at the most the bank says it charges, and kept to its last month${PLAN_FREE_AT.length ? `. There’s none on a plan made at ${andList(PLAN_FREE_AT)} while the card’s introductory rate lasts, unless two payments missed in a row have ended it` : ''}` },
       { label: 'Bonus Categories', value: 'Groceries earn a grocery bonus, up to its cap where it has one, on the cards of Bank of America, RBC, TD, Scotiabank, BMO, CIBC and Santander Mexico. Everything else earns the card’s base rate, or the bank’s own rate for it where it sets one' },
     ],
     now: [

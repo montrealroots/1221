@@ -81,7 +81,7 @@ import { academicTerm, cabaretEvenings, CABARET_RUN, coursesFor, ESTIMATE, short
 import { choose, materialContext, materialOf, rehearseChoice, sidesOf, type Playing } from './material';
 import { PLAYING } from '../content/approaches';
 import { featureSpeed, noteMaterial } from './experience';
-import { STEP, disciplineOf, showingWords } from './feedback';
+import { DIM_WORDS, STEP, disciplineOf, partWords, saysStep, showingWords, situationOf, type ShowingFacts, type Situation } from './feedback';
 import { exerciseFor } from '../content/practice';
 
 /** What SLATE estimates for the coursework, named where it's read. */
@@ -181,11 +181,18 @@ export interface Showing {
  * notes before it on the same thing (`kind`; `before` is the last time it was
  * given). From 2026-10-08.
  */
-export interface Feedback { course: string; teachers: string; text: string; focus: Focus; seen?: boolean; kind?: NoteKind; before?: { on: string; course: string } }
+/**
+ * A showing's feedback as delivered: its words, kept, so a reload never chooses them again. From 2026-10-20 (brief 17)
+ * it also keeps which situation the words said (`situationOf`) and whether they carried a step beyond (`saysStep`), so
+ * the card's label says what the words do; a save from before has neither, and its card reads as it did.
+ */
+export interface Feedback { course: string; teachers: string; text: string; focus: Focus; seen?: boolean; kind?: NoteKind; before?: { on: string; course: string }; situation?: Situation; step?: boolean }
 
 export interface PartnerRehearsal {
   /** `excused`: missed in hospital or laid up, which isn't standing them up (from 2026-10-10). */
   id: string; at: Instant; status: 'booked' | 'kept' | 'missedByYou' | 'missedByThem' | 'cancelled' | 'excused';
+  /** A rehearsal they didn't come to: when their apology covered it (from 2026-10-20, brief 17, `missesOwed`). */
+  apologized?: Instant;
   /** What the partner said after it, kept (`peerNote`): the game's words, marked simulated. */
   said?: string;
 }
@@ -1162,6 +1169,9 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   for (const e of [...earlier].reverse()) { if (!run || !strongBand(e.band)) break; run += 1; }
   const discipline = disciplineOf(c.skills);
   const recent = cw.assignments.filter((x) => x.shown && x.shown.at < when && x.feedback && disciplineOf(courseOf(x.course)?.skills ?? []) === discipline).sort((x, y) => x.shown!.at - y.shown!.at).slice(-8).map((x) => x.feedback!.text);
+  // Everything the student was told at a showing before, from the same record, and this course's own last five (`heard`).
+  const told = cw.assignments.filter((x) => x.shown && x.shown.at < when && x.feedback).sort((x, y) => x.shown!.at - y.shown!.at);
+  const heard = { all: told.map((x) => x.feedback!.text), own: told.filter((x) => x.course === a.course).slice(-5).map((x) => x.feedback!.text) };
   const heldLimit = held ? limits.limits[0] : undefined;
   const heldExercise = heldLimit && (heldLimit.kind === 'ability' || heldLimit.kind === 'technique') ? exerciseFor(heldLimit.what as never)?.label : undefined;
   // The same limit held the course's last piece back, and was said then: said as continuity, with when. A round's record
@@ -1170,24 +1180,46 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const prevRecord = prev ? (person.work ?? []).find((w) => (prev.x.roundsShown?.length ? dayKeyAt(w.at) === dayKeyAt(prev.at) && w.what === prevTitle : w.at === prev.at)) : undefined;
   const prevChief = prev && prev.x.feedback?.kind === 'advanced' && !strongBand(prev.band) ? prevRecord?.limits[0] : undefined;
   const heldAgain = heldLimit && prevChief && prevChief.kind === heldLimit.kind && prevChief.what === heldLimit.what ? formatDate(prev!.at, zone()) : undefined;
+  // How many of the course's pieces just before this one the same limit held back, in a row, each found as the last is
+  // (brief 17's after-runs: Acting I's composure, said fresh with its date at each of eight showings running).
+  let heldRun = 0;
+  if (heldAgain) for (const e of [...earlier].reverse()) {
+    const title = templateById(e.x.template)?.title;
+    const rec = (person.work ?? []).find((w) => (e.x.roundsShown?.length ? dayKeyAt(w.at) === dayKeyAt(e.at) && w.what === title : w.at === e.at));
+    const chief = e.x.feedback?.kind === 'advanced' && !strongBand(e.band) ? rec?.limits[0] : undefined;
+    if (!chief || chief.kind !== heldLimit!.kind || chief.what !== heldLimit!.what) break;
+    heldRun += 1;
+  }
   const day = judged.limits.find((l) => l.kind === 'condition');
   const share = showing.together && a.partner !== undefined ? showing.together : undefined;
   const mate = share ? (/^(?:a|an|the) (.+)$/i.exec(share.partner)?.[1] ? `The ${(/^(?:a|an|the) (.+)$/i.exec(share.partner)![1]!).toLowerCase()}` : share.partner.split(' ')[0]!) : undefined;
-  const text = showingWords({
-    key: `${a.id}:${onDay}:${a.round ?? 0}`, discipline, course: c.name, piece: t.title, band, bandLabel: BAND_LABEL[band],
+  // The way at a note that keeps coming back this piece was worked with, where it's the note given (brief 17).
+  const tried = a.approach && focus.kind !== 'advanced' && a.approach.key === noteKey(focus) ? APPROACHES[a.approach.kind].label : undefined;
+  const facts: ShowingFacts = {
+    key: `${a.id}:${onDay}:${a.round ?? 0}`, today: dayWords(onDay), discipline, course: c.name, piece: t.title, band, bandLabel: BAND_LABEL[band],
     ...(prev ? { prev: { band: prev.band, label: BAND_LABEL[prev.band], on: formatDate(prev.at, zone()) } } : {}),
     run, best: earlier.length > 0 && earlier.every((e) => BAND_RANK[e.band] < BAND_RANK[band]),
+    // A first breakthrough (brief 17): Strong or better, where nothing the course showed before was.
+    firstStrong: strongBand(band) && earlier.length > 0 && earlier.every((e) => !strongBand(e.band)),
     kind, note: body, ...(focus.kind !== 'advanced' ? { about: focus.kind === 'dim' ? 'part' as const : focus.kind } : {}),
-    ...(focus.kind === 'dim' && focus.dim !== 'partner' ? { remedy: remedyWords(a, focus.dim) } : {}),
-    ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}), ...(heldAgain ? { again: heldAgain } : {}) } } : {}),
+    // The partner part's remedy is said with a note given before, whose own words (which name the reader) aren't said again.
+    ...(focus.kind === 'dim' && (focus.dim !== 'partner' || kind !== 'new') ? { remedy: remedyWords(a, focus.dim) } : {}),
+    ...(tried ? { tried } : {}),
+    // A part left unfinished is answered by the steps that finish it, not a step beyond (brief 17: found reading the first
+    // after-runs, Speech's “Drills wasn’t complete… Work on this next: Use less voice…”).
+    ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}), ...(heldAgain ? { again: heldAgain, ...(heldRun >= 2 ? { running: heldRun + 1 } : {}) } : {}), ...(heldLimit.kind === 'preparation' && (PREP_DIMS as readonly string[]).includes(heldLimit.what) && t.dims[heldLimit.what as PrepDim] ? { remedy: remedyWords(a, heldLimit.what as PrepDim) } : {}) } } : {}),
     ...(day ? { condition: { what: day.what, whole: day.whole ?? 0, words: day.label } } : {}),
     ...(share && mate ? { partner: { first: mate, lifted: share.overall - judged.overall >= 1, behind: (together?.parts.prep ?? 1) < 0.6, ...(share.slip ? { slip: { at: share.slip.at, covered: share.slip.covered >= 0.5 } } : {}) } } : {}),
     ...(prior ? { before: { on: dayWords(prior.on), course: prior.course, given: prior.given, ...(prior.taken ? { taken: dayWords(prior.taken) } : {}) } } : {}),
     ...(focus.kind === 'dim' ? { part: { label: t.dims[focus.dim]?.label ?? focus.dim, ...(prior?.level !== undefined ? { then: prior.level } : {}), ...(pick?.level !== undefined ? { now: pick.level } : {}) } } : {}),
-    subject: focus.kind === 'dim' ? (t.dims[focus.dim]?.label ?? noteSubject(noteKey(focus))) : focus.kind === 'choice' ? `your answer to “${questionsFor(a).find(({ q }) => q.id === focus.question)?.q.label ?? noteSubject(noteKey(focus))}”` : focus.kind === 'skill' ? (SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()) : undefined,
-    persistent: kind === 'recurring' && (prior?.given ?? 0) >= LEARNING.persistent, enough: LEARNING.enough, recent,
-  });
-  a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
+    // A part as prose names it, never by its card's label (brief 17: "the note on Built On"): what it is in every course,
+    // since the ledger counts it across them (`DIM_WORDS`), and what this piece calls it (`here`).
+    ...(focus.kind === 'dim' ? { here: partWords(t.dims[focus.dim]?.label ?? noteSubject(noteKey(focus))).words } : {}),
+    subject: focus.kind === 'dim' ? (DIM_WORDS[focus.dim]?.[0] ?? partWords(t.dims[focus.dim]?.label ?? noteSubject(noteKey(focus))).words) : focus.kind === 'choice' ? `your answer to “${questionsFor(a).find(({ q }) => q.id === focus.question)?.q.label ?? noteSubject(noteKey(focus))}”` : focus.kind === 'skill' ? (SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()) : undefined,
+    persistent: kind === 'recurring' && (prior?.given ?? 0) >= LEARNING.persistent, enough: LEARNING.enough, recent, heard,
+  };
+  const text = showingWords(facts);
+  a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}), situation: situationOf(facts), step: saysStep(facts) };
   a.shown = showing;
   return showing;
 }
@@ -1375,8 +1407,11 @@ export function termWarning(sim: Simulation, person: Person, a: Assignment): voi
   const which = prior.length ? `This is your ${ordinal(prior.length + 1)} coursework warning${prior.includes(a.term - 1) ? ', after one last term' : ''}.` : 'This is a warning.';
   (cw.warned ??= []).push(a.term);
   const top = shortCause(person, tally.unreadyShown);
-  const of = tally.unreadyShown.length === 1 ? 'the one you showed' : `${top?.kind === 'part' ? top.n : 0} of the ${tally.unreadyShown.length} you showed`;
-  const cause = top?.kind === 'part' ? ` What held most of them back was “${top.label}”, unfinished on ${of}. To work on it: ${top.remedy}.`
+  // The part most often unfinished among the pieces shown Unready, with its count of them, as the term review says it
+  // (from 2026-10-20, brief 17): until then "What held most of them back was “…”, unfinished on 2 of the 5 you showed",
+  // which said "most" wherever the count was under half, and "most of them" of a single piece.
+  const named = top?.kind !== 'part' ? '' : tally.unreadyShown.length === 1 ? ` “${top.label}” was left unfinished on the one you showed Unready.` : ` The part most often left unfinished was “${top.label}”, on ${top.n} of the ${tally.unreadyShown.length} you showed Unready.`;
+  const cause = top?.kind === 'part' ? `${named} To work on it: ${top.remedy}.`
     : top?.kind === 'every' ? ' None of them had a single part finished, so it’s the preparation as a whole, not one part. Work through each piece’s steps before it’s due.'
       : top?.kind === 'scattered' ? ' Each fell short on a different part, so there’s no one thing to fix. Each piece’s feedback says what held it back.' : ' Each piece’s feedback says what held it back.';
   const set = tally.work.filter((x) => !x.shown && (x.status === 'open' || x.status === 'revising')).length;
@@ -1726,8 +1761,10 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
     remember(sim, mate, `They didn’t come to rehearse ${what}`);
     // From the second, how many (from 2026-10-20, brief 16, `stoodUp`): until then each read as the first, nine times in a
     // year from one classmate in brief 16's baseline.
-    const times = m.stoodUp >= 2 ? `, the ${ordinal(m.stoodUp)} time they haven’t come` : '';
-    if (mine) sim.notify({ category: 'school', title: `${first} Didn’t Come`, body: `You waited for ${first} to rehearse ${what}, and they didn’t come${times}. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With ${first}, or use ${READER.label} to work on your side of it.`, importance: 50, route: '/workspace/school' });
+    // Said as a sentence of its own (from 2026-10-20, brief 17): until then "…and they didn’t come, the second time they
+    // haven’t come."
+    const times = m.stoodUp >= 2 ? ` It’s the ${ordinal(m.stoodUp)} time they haven’t come.` : '';
+    if (mine) sim.notify({ category: 'school', title: `${first} Didn’t Come`, body: `You waited for ${first} to rehearse ${what}, and they didn’t come.${times} It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With ${first}, or use ${READER.label} to work on your side of it.`, importance: 50, route: '/workspace/school' });
     return;
   }
   r.status = 'kept';

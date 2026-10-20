@@ -499,7 +499,10 @@ describe('W9: bounded, and said', () => {
     expect(before).toContain('The evening runs 1 hour and 40 minutes, straight through (estimated).');
     const size = casting().size!;
     const W = workloadOf(100, size, 0, 0);
-    expect(before).toContain(`you’re on stage for about ${Math.round(SHARE[size] * 100)}% of its 1 hour and 40 minutes of playing`);
+    // Straight through, the share is of it (from 2026-10-20, brief 17: until then “of its 1 hour and 40 minutes of playing”,
+    // the running time said twice), and the working is under How It’s Worked Out.
+    expect(before).toContain(`you’re on stage for about ${Math.round(SHARE[size] * 100)}% of it.`);
+    expect(before).toContain('How It’s Worked Out');
     expect(before).toContain(`so its workload is ${W.toFixed(1)} of a possible 8.`);
     expect(before).toContain('The running time: Estimated');
     // After the curtain, the night's record says it, as its look shows it.

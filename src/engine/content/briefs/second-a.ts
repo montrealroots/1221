@@ -744,8 +744,8 @@ export const SECOND_A: readonly Brief[] = [
       timing: 'He reads the schedule at speed, in a rhythm the horn cuts across, and every “last thing” has to come just after he seemed to be done.',
       physical: 'He puts his jacket on and takes it off again, tests a bottle on his own wrist and starts for the door twice. Play the business on your side of the frame, with the schedule, the bottle and the monitor as props and the door off frame.',
       partner: 'Each new instruction answers how she took the last one, and she never takes two the same way.',
-      improvisation: 'The schedule is written. You find the last things after it on the take, and the reader’s mood changes with each one.',
-      techniques: 'The laughs are in where each new instruction lands against the horn and her calm, so the scene asks for comic timing, and the last things found on the take ask for improvisation.',
+      improvisation: 'The schedule is written. Each “last thing” after it is yours to find as you tape, and the reader’s mood changes with each one.',
+      techniques: 'The laughs are in where each new instruction lands against the horn and her calm, so the scene asks for comic timing, and the last things you find as you tape ask for improvisation.',
       beats: 'A briefing at speed, a demonstration she didn’t need, a confession, a teenager who knows more than he does, and an exit that takes two tries.',
     },
     readings: [

@@ -67,17 +67,23 @@ export function BankStatements() {
   );
 }
 
+/**
+ * A balance as the statement writes it, below zero with a minus sign (from 2026-10-20, brief 17): until then an overdrawn
+ * account's Available Now and the balance after each line read “-$600.00”, a hyphen, beside “−$20,165.00” in In / Out.
+ */
+const signed = (cents: number, currency: string) => (cents < 0 ? `−${formatMoney(-cents, currency)}` : formatMoney(cents, currency));
+
 function AccountStatementView({ account, period }: { account: Account; period: ReturnType<typeof periodsOf>[number] }) {
   const { sim } = useGame();
   const cur = saveCurrency(sim.universe);
-  const money = (c: number) => formatMoney(c, cur);
+  const money = (c: number) => signed(c, cur);
   const st = accountStatement(sim, account, period);
   const owed = account.kind === 'loan';
   const pending = pendingOn(sim, account);
   const look = at('account', account.id);
   // An account kept at home, in its bank's money as the bank's statement has it, the dollars under each (from 2026-10-16).
   const h = st.held;
-  const own = (native: number, dollars: number) => (h && account.currency ? { value: formatMoney(native, account.currency), note: `${money(dollars)} in dollars` } : { value: money(dollars) });
+  const own = (native: number, dollars: number) => (h && account.currency ? { value: signed(native, account.currency), note: `${money(dollars)} in dollars` } : { value: money(dollars) });
   return (
     <LookRegion className="col gap-3">
       {h && account.currency && <p className="xs dim" style={{ margin: 0 }}>Figures are in {account.currency}, as {account.institution ?? 'the bank'} keeps them, with each one’s value in dollars under it, at an estimated exchange rate.</p>}
@@ -260,7 +266,7 @@ function Lines({ lines, sign, empty, card, valueDated, currency }: { lines: Stat
   const { sim } = useGame();
   const cur = saveCurrency(sim.universe);
   // An account kept at home: each line and the balance after it in the bank's money (from 2026-10-16).
-  const shownIn = (dollars: number, native: number | undefined) => (currency && native !== undefined ? formatMoney(native, currency) : formatMoney(dollars, cur));
+  const shownIn = (dollars: number, native: number | undefined) => (currency && native !== undefined ? signed(native, currency) : signed(dollars, cur));
   if (lines.length === 0) return <p className="small muted" style={{ margin: 0 }}>{empty}</p>;
   return (
     <div className="statement-lines">

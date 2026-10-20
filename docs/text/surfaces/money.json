@@ -1,0 +1,1196 @@
+[
+ {
+  "surface": "The Money screen’s head and its tabs",
+  "where": "Money, on the rail: above every tab, Your Bank, the bank’s name, what’s held there and in how many accounts, then Accounts, Cards, Payments And Cash, Borrowing and Statements; No Bank where none of your money is at a bank the game covers",
+  "sources": [
+   "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+   "src/ui/workspaces/BankWorkspace.tsx#BankTabs",
+   "src/ui/workspaces/BankWorkspace.tsx#othersText",
+   "src/ui/workspaces/BankWorkspace.tsx#MONTH_NAMES",
+   "src/ui/workspaces/BankWorkspace.tsx#BorrowingAt"
+  ],
+  "states": [
+   "ordinary",
+   "empty",
+   "overdue"
+  ],
+  "outcome": "Revised",
+  "why": "Read at 1440 and 390 on the workload and round-ups saves, the head gives the one figure a player wants on arriving, what this bank holds and in how many accounts, each part opening its look, and the tabs keep the rail’s names. But on a save with the account overdrawn (none of the coordinator’s fifteen has one) it read “-$600 held here”, a hyphen for the sign and whole dollars, above a tile that read −$600.00.",
+  "changes": "Below zero the sum has its minus sign and its cents, as the tiles write a balance: “−$600.00 held here, in 2 accounts.”",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/390/roundups.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/overdrawn.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/390/overdrawn.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'has its minus sign and its cents in the head, Your Banks and Statements'"
+   }
+  ]
+ },
+ {
+  "surface": "An account’s panel on Accounts",
+  "where": "Money, Accounts: a panel for each checking and savings account, its number as the country writes it, Balance, what it pays, its monthly fee and whether it’s waived so far, the debit card’s year, the sources line, and Close It on savings",
+  "sources": [
+   "src/ui/workspaces/BankWorkspace.tsx#interestWords",
+   "src/ui/workspaces/BankWorkspace.tsx#CONFIDENCE",
+   "src/ui/workspaces/BankWorkspace.tsx#closingWords",
+   "src/ui/bank/feeWords.ts#*",
+   "src/engine/systems/banking.ts#cardYearWords",
+   "src/engine/systems/banknumber.ts#*",
+   "src/engine/core/money.ts#*",
+   "src/engine/content/currency.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "The balance comes first, then what the account pays and what it costs this month, the waiver said as things the player does (“waived in any month you keep $1,500 in it all month”) and whether it’s waived so far, so the fee and its condition are read before anything else. Close It says where the money goes and how much, interest included, before it’s pressed; an overdrawn balance has its minus sign and the word Overdrawn.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/roundups.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-money.test.ts: 'says a fee’s conditions as what the player does in a month'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-money.test.ts: 'says what closing savings does, above zero, at zero and overdrawn'"
+   }
+  ]
+ },
+ {
+  "surface": "Move Money",
+  "where": "Money, Accounts, Move Money: From, To, Amount and Move It, the hint under the fields, the refusals, and the toast",
+  "sources": [
+   "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+   "src/engine/systems/banking.ts#registerBanking <bank.transfer>",
+   "src/engine/systems/bankmoves.ts#limitRefusal",
+   "src/engine/systems/bankmoves.ts#sendBetweenBanks",
+   "src/engine/systems/bankmoves.ts#inTransitOf [escrow]"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "The refusals already said what stopped the move, that nothing moved and the way out, and the toast where the money went. What was missing was the day: the subtitle said a move to another bank “takes as long as the sending bank takes”, and only the toast after Move It gave the date, so money that would be unavailable for days was committed without the player being told how many.",
+  "changes": "Between two banks in one country a line under the fields, before Move It, gives the day from the one `sendBetweenBanks` sets (`arrivalOf`): “Sent now, it leaves Chase Total Checking at once and arrives in 360 Checking on October 8, 2026. It isn’t available to spend in between.”, or “Sent now, it arrives in … at once.” where the country’s banks pay instantly. The subtitle says the time is “said below once you choose the accounts”.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'Chase to Capital One: out now, in on the day'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial-money.test.ts: 'Deutsche Bank savings with €1,999.50 of the month’s €2,000 left says €1,999.50'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/card-owed.json"
+   }
+  ]
+ },
+ {
+  "surface": "Your Banks",
+  "where": "Money, Accounts, Your Banks: each checking account’s line and what pays from it, Make Primary, Have Wages Paid Here, Close It and its refusal, and the two paragraphs on the primary account and on moving wages",
+  "sources": [
+   "src/ui/bank/BankMoves.tsx#BankMoves",
+   "src/engine/systems/routing.ts#*",
+   "src/engine/systems/bankmoves.ts#PRIMARY_DOES",
+   "src/engine/systems/bankmoves.ts#closeRefusal",
+   "src/engine/systems/bankmoves.ts#closeNow",
+   "src/engine/systems/bankmoves.ts#registerBankMoves <bank.set_primary>",
+   "src/engine/systems/bankmoves.ts#registerBankMoves <bank.redirect_deposits>",
+   "src/engine/systems/bankmoves.ts#registerBankMoves <bank.close_current>",
+   "src/engine/systems/banking.ts#closingFeesWords",
+   "src/engine/systems/banking.ts#feesWords"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "Each account’s line says where wages and payments go and what pays from it, and Close It’s refusal says what to move first and from when it can close. But the paragraph under them opened by saying it again, “Your wages and other payments go to Chase Total Checking.”, directly under “Your wages and other payments are paid into it.”",
+  "changes": "The paragraph says only what moving them does and how long it takes: “Have Wages Paid Here, on another account, moves your wages and other payments to it. Yale’s payroll starts paying the new account after 7 days…”. Where they go now, and a move on its way, are each account’s own line, as `linkedTo` already said them. An overdrawn account’s line, which read “Chase Total Checking at Chase, -$600.”, reads “…, overdrawn by $600.00.”",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'says once where the wages go'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'has its minus sign and its cents in the head, Your Banks and Statements'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/remaining-09-banking.test.ts: 'Close It says when the wages stop arriving'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/workload.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/overdrawn.json"
+   }
+  ]
+ },
+ {
+  "surface": "What Pays From Where",
+  "where": "Money, Accounts, with two checking accounts: each standing order and each card’s autopay, the account it pays from, and Pay From This Account",
+  "sources": [
+   "src/ui/bank/BankMoves.tsx#BankMoves",
+   "src/engine/systems/bankmoves.ts#registerBankMoves <bank.set_order_source>",
+   "src/engine/systems/bankmoves.ts#registerBankMoves <card.set_autopay_from>"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "unavailable"
+  ],
+  "outcome": "Kept",
+  "why": "Shown only where it matters, with two checking accounts: each payment is a labelled row with its account and one button, the subtitle says what players get wrong, that a payment stays on the account it was set up on until it’s moved, and each toast says from when it pays from the new one.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/ui/bank/BankMoves.tsx"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/bank-moves.test.ts: 'moves the primary account, then wages, then orders, then closes Chase, with nothing lost'"
+   }
+  ]
+ },
+ {
+  "surface": "Money on its way between banks",
+  "where": "Money, Accounts, On Its Way, while a transfer is between banks; the notice when one comes back",
+  "sources": [
+   "src/ui/bank/BankMoves.tsx#BankMoves",
+   "src/engine/systems/bankmoves.ts#registerBankMoves",
+   "src/engine/systems/bankmoves.ts#closedByBank"
+  ],
+  "states": [
+   "ordinary",
+   "notification",
+   "setback"
+  ],
+  "outcome": "Kept",
+  "why": "On Its Way lists each sum with where it left, where it’s going and the day it arrives, and its subtitle draws the glossary’s line between money on its way and money available: it has left one bank and isn’t in the other yet. A transfer that comes back says where to and why (“because the account it was sent to isn’t open”).",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/bank-moves.test.ts: 'opens Capital One at nothing, sends money from Chase in its days, and the card follows'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/bankmoves.ts"
+   }
+  ]
+ },
+ {
+  "surface": "Open An Account At Another Bank",
+  "where": "Money, Accounts, Open An Account At Another Bank: Bank, the bank’s refusal and terms, the opening deposit’s fields, Apply, the toast, and the bank’s decision notices",
+  "sources": [
+   "src/ui/bank/BankMoves.tsx#BankMoves",
+   "src/engine/systems/bankmoves.ts#openRefusal",
+   "src/engine/systems/bankmoves.ts#openApproved",
+   "src/engine/systems/bankmoves.ts#registerBankMoves <bank.open_current>",
+   "src/engine/systems/bankmoves.ts#registerBankMoves",
+   "src/engine/systems/bankmoves.ts#registerBankMoves <world.day_rollover>",
+   "src/engine/content/bankopening.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "notification",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "Brief 16 put the bank’s terms in four short paragraphs in the right order, what applying does, what it needs, what it costs, how money it sends moves. But they came under Apply, after the deposit was typed, so the photo ID a bank needs, the deposit that leaves as you apply and the monthly fee were read after the button that commits them.",
+  "changes": "The bank is chosen first, then its refusal and the four paragraphs, then the opening deposit’s fields and Apply. The words didn’t change.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'what the bank asks before its deposit and Apply'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial16-money.test.ts: 'reads each bank’s terms in short paragraphs, in that order'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/workload.json"
+   }
+  ]
+ },
+ {
+  "surface": "Savings: opening an account, closing one, and its notice",
+  "where": "Money, Accounts: Open A … where a bank holds no savings of yours, Close It on a savings account, the notice-given line, and the notice period’s end",
+  "sources": [
+   "src/ui/workspaces/BankWorkspace.tsx#BankWorkspace",
+   "src/engine/systems/banking.ts#registerBanking <bank.open_savings>",
+   "src/engine/systems/banking.ts#registerBanking <bank.close_savings>",
+   "src/engine/systems/banking.ts#closeSavings",
+   "src/engine/systems/banking.ts#registerBanking",
+   "src/engine/systems/banking.ts#endedWords"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "notification",
+   "unavailable"
+  ],
+  "outcome": "Kept",
+  "why": "Close It says before it’s pressed what closing does with the money and this month’s interest, or, where the account holds more than a month lets out, that it takes three months’ notice as the law requires and where the money goes then. Once notice is given the panel says the day, and the end says where the money went, or that it’s on its way and when it arrives.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/language-money.test.ts: 'says what closing savings does, above zero, at zero and overdrawn'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
+   }
+  ]
+ },
+ {
+  "surface": "Term deposits: Put It Away, Your Accounts Over Time, and the deposit’s end",
+  "where": "Money, Accounts: a bank’s term deposit panel (CD, Fixed-Term Savings) and Put It Away; each deposit held under Your Accounts Over Time with its end, Break It Early and today’s cost; the notices as it nears its end and when it ends",
+  "sources": [
+   "src/ui/bank/BankLending.tsx#BankLending",
+   "src/engine/systems/lending.ts#registerLending <bank.open_term>",
+   "src/engine/systems/lending.ts#registerLending <world.day_rollover>",
+   "src/engine/systems/accountlife.ts#END_WORDS",
+   "src/engine/systems/accountlife.ts#breakQuote",
+   "src/engine/systems/accountlife.ts#breakRuleWords",
+   "src/engine/systems/accountlife.ts#breakTerm",
+   "src/engine/systems/accountlife.ts#registerAccountLife <bank.set_term_end>",
+   "src/engine/systems/accountlife.ts#registerAccountLife <bank.break_term>",
+   "src/engine/systems/accountlife.ts#registerAccountLife <bank.take_term_interest>",
+   "src/engine/systems/accountlife.ts#registerAccountLife <world.day_rollover>",
+   "src/engine/systems/accountlife.ts#registerAccountLife",
+   "src/engine/systems/accountlife.ts#creditInterest",
+   "src/engine/systems/accountlife.ts#endTerm",
+   "src/ui/bank/BankAccountLife.tsx#END_BUTTON",
+   "src/ui/bank/BankAccountLife.tsx#BankAccountLife",
+   "src/engine/content/banks-lending.ts#FR_TERM",
+   "src/engine/content/banks-lending.ts#DE_TERM",
+   "src/engine/content/banks-lending.ts#ES_TERM",
+   "src/engine/content/accountlife.ts#ACCOUNT_LIFE"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "warning",
+   "notification",
+   "unavailable",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "The deposit’s panel said the lock and its end plainly, but not what breaking it would cost: “Breaking one early, where the bank lets you, is under Your Accounts Over Time.” Once it was held, today’s cost (“Breaking it now costs $1.92.”) was folded under Sources And Estimates, next to Break It Early, which breaks it at once.",
+  "changes": "Before Put It Away, the bank’s rule for the deposit’s term, from the rule `breakQuote` charges by (`breakRuleWords`): “Breaking it early costs 180 days’ interest on it, never more than it has earned, and at least 7 days’ interest in its first week. Once it’s open, Break It Early is under Your Accounts Over Time.”, or “RBC Royal Bank doesn’t let a term deposit be broken before its end.” Under Your Accounts Over Time today’s cost is its own line before the buttons; the estimate’s note and the bank’s terms stay folded.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'Chase’s CD: the bank’s rule for its seven months'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'RBC: it can’t be broken'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/accountlife.test.ts: 'renews at Chase for the same term, with ten days to take it whole'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/workload.json"
+   }
+  ]
+ },
+ {
+  "surface": "Your Accounts Over Time: accounts left unused, canceling something new, and unclaimed money",
+  "where": "Money, Accounts, Your Accounts Over Time: inactive and dormant accounts and Reactivate, Cancel It in a cooling-off period, Claim It Back, and their notices",
+  "sources": [
+   "src/ui/bank/BankAccountLife.tsx#BankAccountLife",
+   "src/engine/systems/accountlife.ts#unclaimedLaw",
+   "src/engine/systems/accountlife.ts#cancelWords",
+   "src/engine/systems/accountlife.ts#cancelRefusal",
+   "src/engine/systems/accountlife.ts#registerAccountLife <bank.reactivate>",
+   "src/engine/systems/accountlife.ts#registerAccountLife <bank.cancel_new>",
+   "src/engine/systems/accountlife.ts#registerAccountLife <bank.claim_unclaimed>",
+   "src/engine/systems/accountlife.ts#yearsWord",
+   "src/engine/systems/accountlife.ts#idleAccounts",
+   "src/engine/content/accountlife.ts#UNCLAIMED"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "notification",
+   "unavailable",
+   "history"
+  ],
+  "outcome": "Kept",
+  "why": "Each state says what it is and gives the one control: inactive (“Using it makes it active again.”), dormant (“blocked until you reactivate it”, Reactivate), new enough to cancel (Cancel It, and what canceling gives back or takes), money gone to the state (Claim It Back). The bank’s letter before it hands an account to the state names the date by which to keep it.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial-money.test.ts: 'refusals no other test reads, in their new words'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/accountlife.test.ts: 'breaking a term deposit early'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/ui/bank/BankAccountLife.tsx"
+   }
+  ]
+ },
+ {
+  "surface": "Round-ups",
+  "where": "Money, Accounts, Your Accounts Over Time, at a bank with round-ups: the bank’s words, its choices, Round-Ups: On or Off, the reason it can’t turn on, what’s counted and moved, what happens when the account is short, and what the bank leaves open",
+  "sources": [
+   "src/ui/bank/RoundUps.tsx#*",
+   "src/engine/systems/roundups.ts#*",
+   "src/engine/content/roundups.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "details",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "The refusals listed the bank’s choices with commas alone, read after the panel’s “Not now:” as “Not now: Choose how often it moves: daily, weekly.” And a tally dropped for a choice not yet made gave the refusal itself as its reason, so the panel’s last line read “…, because Choose the amount each purchase, C$0.50 to C$5.00..”.",
+  "changes": "The choices end with “or” (“daily or weekly”, “€1.00 or €5.00”), the guide’s quote of “Choose what to round up to: …” kept true. The dropped tally’s reason is “a choice the bank needs from you wasn’t made”, with the choice to make beside it.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'names the choices with “or”, not a list of commas'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/roundups.test.ts: 'carries on at a bank with no choice to make'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/roundups.json"
+   }
+  ]
+ },
+ {
+  "surface": "Other Charges",
+  "where": "Money, Accounts, Other Charges: the debit card’s yearly fee, a returned payment’s fee, an unused account’s and a quiet month’s, with their sources",
+  "sources": [
+   "src/ui/workspaces/BankWorkspace.tsx#OtherCharges",
+   "src/engine/content/banks-world-fees.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Each charge the account can bring is a sentence with the amount first, then its condition and its source, and the timing says it’s estimated where the bank doesn’t say (“The timing is estimated: Arion’s price list and terms don’t say when in the year it’s charged.”), so a fee is never met first on a statement.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/language-money.test.ts: 'says a returned payment’s fee by the shortfall the bank reads'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-money.test.ts: 'says the debit card’s yearly fee and age, its timing, and its estimate after the source'"
+   }
+  ]
+ },
+ {
+  "surface": "The month’s account statement notice, and the fees and interest it posts",
+  "where": "What Needs You, Statement Ready: an account, where Statement Ready is on (Statements, Alerts); the month’s fees, interest and tax on Statements",
+  "sources": [
+   "src/engine/systems/banking.ts#registerBanking <world.day_rollover>",
+   "src/engine/systems/banking.ts#settleFees",
+   "src/engine/systems/banking.ts#payInterest",
+   "src/engine/systems/banking.ts#scheduleMonthEnd",
+   "src/engine/systems/banking.ts#rebank",
+   "src/engine/systems/statements.ts#statementReady"
+  ],
+  "states": [
+   "notification",
+   "ordinary",
+   "history"
+  ],
+  "outcome": "Kept",
+  "why": "Off unless asked for, it says how the account ended the month in the glossary’s words (“It ended the month with $3,025.00 in it.”, “overdrawn by $3.30”, “the quarter” for a German account) and where the statement is; the lines for fees and interest on Statements name what was charged and for which month.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial-money.test.ts: 'a Chase Total Checking left overdrawn at the month’s end says it ended the month overdrawn'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial-money.test.ts: 'a Deutsche Bank AktivKonto, closed each quarter'"
+   }
+  ]
+ },
+ {
+  "surface": "A credit card’s panel",
+  "where": "Money, Cards: each card’s panel, Owed, Left To Spend and Rate, the next payment, the card’s state, what it costs, The Card’s Terms, the payment and autopay buttons, Statement Day, New Limit and the switches",
+  "sources": [
+   "src/ui/bank/BankCard.tsx#CardPanel",
+   "src/ui/bank/BankCard.tsx#MONTH_NAMES",
+   "src/ui/bank/BankCard.tsx#TERM_WORDS",
+   "src/ui/bank/BankCard.tsx#sourceAndDay",
+   "src/engine/systems/credit.ts#scoreWord",
+   "src/engine/systems/credit.ts#statementDayRefusal",
+   "src/engine/systems/credit.ts#registerCredit <card.refund_credit>",
+   "src/engine/systems/credit.ts#registerCredit <finance.pay_card>",
+   "src/engine/systems/credit.ts#registerCredit <finance.set_autopay>",
+   "src/engine/systems/credit.ts#registerCredit <card.set_everyday>",
+   "src/engine/systems/cardlife.ts#registerCardLife <card.close>",
+   "src/engine/systems/cardlife.ts#registerCardLife <card.set_statement_day>",
+   "src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>",
+   "src/engine/systems/cardlife.ts#registerCardLife <card.set_auto_raise>",
+   "src/engine/systems/cardlife.ts#registerCardLife <card.set_over_limit>",
+   "src/engine/systems/cardlife.ts#registerCardLife <card.request_hardship>",
+   "src/engine/content/cards.ts#*",
+   "src/engine/content/pending.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "overdue",
+   "unavailable",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "Nine lines ran in the order the terms were written: the rate and how the bank prices a new card first, the next due date sixth, after the penalty rule and the yearly fee, and a suspension or a plan below them all. The penalty rule said “If a payment is sixty days late”, where the rate comes at the second missed due date, which the late fee’s own line calls thirty days late. A suspension said it “works again once you make a payment on time”, which a payment of any size could seem to be, and Commerzbank’s €39.90 yearly fee read €40.",
+  "changes": "The next payment first (“The next payment is due October 11, 2026. The statement is $270, and the minimum payment is $40.”, with what’s been paid toward it); then the card’s state: suspended, a plan, a penalty in force, credit held, closing; then what it costs: the late fee, the penalty rule as “Miss two payments in a row, and the rate goes up to 29.99% after 45 days’ notice.”, the yearly fee to the cent. The rate, how it’s priced, interest, the statement cycle, the minimum’s rule and the law’s caps fold under The Card’s Terms, a native disclosure. Suspended says “It works again once you pay at least the minimum by a due date, or pay the card off.”",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'a statement owed: the due date, the statement and its minimum first'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'suspended: what lifts it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/hardship-plan-minimum.test.ts: 'gives the plan’s payment as what the statement asks'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-money.test.ts: 'says the card’s rate as set when it opened'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/card-owed.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/390/card-owed.json"
+   }
+  ]
+ },
+ {
+  "surface": "Applying for a card",
+  "where": "Money, Cards, Another Card (Credit Card while you have none): who a bank approves, Bank, Move A Balance From, the card applied for, Apply For This Card, and the approval, decline and arrival",
+  "sources": [
+   "src/ui/bank/BankCard.tsx#CardApplication",
+   "src/ui/bank/BankCard.tsx#offerWords",
+   "src/engine/systems/cardlife.ts#registerCardLife <card.apply>",
+   "src/engine/systems/cardlife.ts#registerCardLife",
+   "src/engine/systems/cardlife.ts#armCardLife",
+   "src/engine/systems/cardoffers.ts#transferRefusal",
+   "src/engine/systems/cardoffers.ts#transferOnArrival"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "unavailable",
+   "notification",
+   "success",
+   "failure"
+  ],
+  "outcome": "Revised",
+  "why": "Another Card said a bank “checks your credit record and whether you have income or money to repay from”, and nothing of the card being applied for: its rate, its yearly fee (366 of the game’s 522 cards charge one) and its limit showed only once it had arrived. Income alone approves nobody (`card.apply` reads money in the bank), and the score is judged after the application’s points.",
+  "changes": "Before Apply For This Card, the chosen card as it would open (`cardOffer`, worked as `card.apply` and the card’s arrival work it): its name and rate for your record, its introductory rate, its yearly fee, and “If Bank of America approves you, the card’s limit is $5,000, set by your credit score.” Who’s approved: “In the game a bank approves a credit score of 620 or more, counted after the few points applying takes off it, with money in the bank to repay from and no debt in collections.” Sources And Estimates says the score, the limit and the week are estimated.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'at Bank of America, from Chase'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'in Dublin, from AIB'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-money.test.ts: 'says the card’s rate as set when it opened'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/workload.json"
+   }
+  ]
+ },
+ {
+  "surface": "A card’s statement and due-date notices, in the order they come",
+  "where": "What Needs You: Statement Ready for a card, A Card Payment Bounced, A Late Card Payment, Your Card Is Suspended, A Penalty Rate Is Coming, A Penalty Rate, A Default Notice, Your Card Was Charged Off, The Penalty Rate Is Off, Your Card Works Again, Persistent Debt",
+  "sources": [
+   "src/engine/systems/credit.ts#registerCredit",
+   "src/engine/systems/credit.ts#statementWords",
+   "src/engine/systems/credit.ts#afterMissed",
+   "src/engine/systems/credit.ts#chargeOff",
+   "src/engine/systems/credit.ts#persistentDebt",
+   "src/engine/systems/credit.ts#scheduleStatement",
+   "src/engine/systems/credit.ts#scheduleDue",
+   "src/engine/systems/credit.ts#refundCredit"
+  ],
+  "states": [
+   "notification",
+   "warning",
+   "overdue",
+   "setback",
+   "failure",
+   "repeated",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read in order over six missed due dates: the late notice named no due date, so the third to the sixth said the second’s words, and an unread one was brought up to the day in its place: one notice for four late fees. The suspension the next miss brings was said only once it had come, and the statement between gave the minimum, not what that due date would decide. The penalty notice said “A payment is sixty days late.” on the day the late notice said thirty, the default notice “150 days behind” at 120, and at the sixth miss both notices sent the player to pay a card that was already charged off.",
+  "changes": "“The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card.” The statement after a miss adds “The last payment was missed. If this one is short too, Chase suspends the card, and it goes on your credit record.”, and one while suspended “The card works again if at least $40.00 is paid by then.” The penalty and default notices count the payments missed (“You’ve missed two payments in a row.”, “You’ve missed five payments in a row on the …”), the suspension says what lifts it, and the sixth miss’s notices send nobody to the card.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'six due dates missed at Chase'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'Britain: Barclays puts the first miss on the record'"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/money/card-missed-six.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/money/card-missed-britain.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence2-b11.test.ts: 'her everyday spending put on the card'"
+   }
+  ]
+ },
+ {
+  "surface": "A card’s limit, approval and arrival notices",
+  "where": "What Needs You: Your Card Limit Went Up, Limit Increase Declined, Card Approved, Card Application Declined, Your New Card Arrived, Your Balance Moved, Card Closed",
+  "sources": [
+   "src/engine/systems/credit.ts#registerCredit",
+   "src/engine/systems/cardlife.ts#registerCardLife",
+   "src/engine/systems/cardlife.ts#registerCardLife <card.apply>",
+   "src/engine/systems/cardlife.ts#registerCardLife <card.request_limit>",
+   "src/engine/systems/cardoffers.ts#transferOnArrival"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "failure",
+   "repeated"
+  ],
+  "outcome": "Kept",
+  "why": "Each says what the bank did and why in its own terms: a raise “because your credit score is 700 or more and you haven’t paid late in the past year” (30 times in the before runs, each with the card and its new limit), a decline with the bank’s three conditions, an application turned down with the reason and that applying still took points, an arrival with its limit.",
+  "evidence": [
+   {
+    "kind": "transcript",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/attentive-v16-0.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial-money.test.ts: 'the card’s notices and refusals, in their new words'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g12-money.test.ts: 'The bank kept your limit at $500.00'"
+   }
+  ]
+ },
+ {
+  "surface": "The Card’s Offers",
+  "where": "Money, Cards, The Card’s Offers: the introductory rate, balance and money transfers, payment plans and Make The Plan, rewards and Redeem Onto The Card",
+  "sources": [
+   "src/ui/bank/BankCardOffers.tsx#CardOffers",
+   "src/engine/systems/cardoffers.ts#statementOffers",
+   "src/engine/systems/cardoffers.ts#registerCardOffers <card.money_transfer>",
+   "src/engine/systems/cardoffers.ts#registerCardOffers <card.plan>",
+   "src/engine/systems/cardoffers.ts#registerCardOffers <card.redeem_rewards>"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "The introductory rate said “A payment that’s sixty days late ends it early.” on a US card, where it ends at the second missed due date, thirty days late by the late notice’s count; on a Barclaycard, whose terms end it at one missed minimum, it said nothing, and once ended said “because a payment was sixty days late”. The plans and rewards already said their fee, what the game pays and why, before Make The Plan.",
+  "changes": "“ Missing two payments in a row ends it early.” on a US card and “ Missing a minimum payment ends it early.” on a Barclaycard; once it’s ended, “Its introductory rate ended because two payments in a row were missed.” or “… because a minimum payment was missed.”",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'Chase: two payments missed in a row'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'Barclaycard: one minimum payment missed'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial-money-screens.test.ts: 'names Chase’s plans as published'"
+   }
+  ]
+ },
+ {
+  "surface": "Your Cards: lock, report, a new number, a payment that wasn’t you",
+  "where": "Money, Cards, Your Cards: each card with Lock It, Why and Report It, the deadline to report a payment that wasn’t you and what you’d pay, What The Law Says, Report It As Not Mine; the fraud and new-card notices",
+  "sources": [
+   "src/ui/bank/BankSecurity.tsx#*",
+   "src/engine/systems/security.ts#*",
+   "src/engine/content/security.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "confirmation",
+   "notification",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Brief 16 put what to do and by when first, from the tiers the game charges by, with the law’s words under What The Law Says; read again, each card’s row says its state beside its controls (locked, stopped, a new one arriving on a date), and the fees for a new card stay at the foot. The law text that differs from what the game charges in Japan, Korea, the US and Canada is the owner’s question, already reported.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial16-money.test.ts: 'reads the deadline first, and the law folded under What The Law Says'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/security.test.ts: 'stops new purchases on it, and a locked debit card buys on the credit card'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
+   }
+  ]
+ },
+ {
+  "surface": "How You Pay",
+  "where": "Money, Payments And Cash, How You Pay: The Day’s Spending, the debit card’s limit where there is one, and Savings Covers The Checking Account with what it covers",
+  "sources": [
+   "src/ui/bank/BankPayments.tsx#coverText",
+   "src/ui/bank/BankPayments.tsx#BankPayments",
+   "src/engine/systems/payments.ts#registerPayments <bank.set_payments>",
+   "src/engine/systems/payments.ts#coveredBanks"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "The Day’s Spending names each way as its option does, and the savings link says before it’s pressed what turning it on covers, which savings pay which checking account and its autopay, or that there’s no savings at the bank to cover it.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g11-money.test.ts: 'puts the night’s groceries where The Day’s Spending'"
+   }
+  ]
+ },
+ {
+  "surface": "Standing orders and payments set for a date, and when one doesn’t go through",
+  "where": "Money, Payments And Cash: Standing Orders and Payments Set For A Date, their forms and Cancel; the notices A Standing Order Didn’t Go and A Scheduled Payment Didn’t Go",
+  "sources": [
+   "src/ui/bank/BankPayments.tsx#BankPayments",
+   "src/engine/systems/payments.ts#registerPayments",
+   "src/engine/systems/payments.ts#registerPayments <bank.add_standing_order>",
+   "src/engine/systems/payments.ts#registerPayments <bank.cancel_standing_order>",
+   "src/engine/systems/payments.ts#registerPayments <bank.schedule_payment>",
+   "src/engine/systems/payments.ts#registerPayments <bank.cancel_scheduled>",
+   "src/engine/systems/payments.ts#blockedBy",
+   "src/engine/systems/payments.ts#armPayments"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "notification",
+   "setback"
+  ],
+  "outcome": "Kept",
+  "why": "A notice says which payment didn’t go through, how much, where to, the reason, and the step with its time (“Move money into it before the order’s next date”); a payment set for a date that fails says it’s gone and where to set it again. The titles keep “Didn’t Go”, the words the guide names them by.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/remaining-banking.test.ts: 'a standing o'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/guide-examples-money.test.ts: 'A Standing Order Didn’t Go'"
+   }
+  ]
+ },
+ {
+  "surface": "Cash",
+  "where": "Money, Payments And Cash, Cash: what’s in hand, Amount To Take Out, From, the quote, Take It Out, Pay It In",
+  "sources": [
+   "src/ui/bank/BankCash.tsx#*",
+   "src/engine/systems/cash.ts#*",
+   "src/engine/content/cash.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "details"
+  ],
+  "outcome": "Kept",
+  "why": "The quote under the amount says what taking it out costs before Take It Out: the bank’s fee, the machine owner’s average where one is published, a cash advance’s rate from today with no interest-free period; a refusal says what the account has available, as Move Money’s do.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/cash.test.ts: 'is free at the bank’s own ATM and costs the bank’s fee at another’s'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial-money-refusals.test.ts: 'a withdrawal its fees push over'"
+   }
+  ]
+ },
+ {
+  "surface": "The overdraft, and an account left overdrawn",
+  "where": "Money, Borrowing, Overdraft: the bank’s terms, Opt In To Debit Card Overdrafts, Arrange It, fees on hold, interest built up, the day the bank acts on an account left overdrawn; France’s letters; the notices when the bank takes what it’s owed or closes the account",
+  "sources": [
+   "src/ui/bank/BankLending.tsx#BankLending",
+   "src/engine/systems/lending.ts#overdraftOffer",
+   "src/engine/systems/lending.ts#registerLending <bank.arrange_overdraft>",
+   "src/engine/systems/lending.ts#registerLending <bank.debit_overdraft>",
+   "src/engine/systems/lending.ts#chargeForItem",
+   "src/engine/systems/lending.ts#settlePendingItems",
+   "src/engine/systems/lending.ts#settleOverdraftInterest",
+   "src/engine/systems/lending.ts#registerLending <world.day_rollover>",
+   "src/engine/systems/lending.ts#chargeForPurchase",
+   "src/engine/systems/lending.ts#monthlyCharges",
+   "src/engine/systems/lending.ts#cardYearNight",
+   "src/engine/systems/lending.ts#refundInterestTax",
+   "src/engine/systems/lending.ts#closeForOverdraft",
+   "src/engine/systems/lending.ts#closeForOverdraft [loan]",
+   "src/engine/systems/lending.ts#frenchOverrun",
+   "src/engine/systems/lending.ts#registerLending <bank.take_overrun_loan>",
+   "src/engine/systems/lending.ts#FRANCE",
+   "src/engine/systems/lending.ts#FRENCH_CARDS_SOURCE",
+   "src/engine/content/banks-lending.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "overdue",
+   "failure",
+   "notification",
+   "explanation",
+   "confirmation"
+  ],
+  "outcome": "Revised",
+  "why": "Chase’s paragraph was one sentence of up to eight clauses (“…, unless the account is back by the end of the next business day, and nothing while it’s overdrawn by $50 or less, and none on an item of $5.00 or less.”). And nothing on Money said, while there was time to act, that an account left overdrawn sixty days is closed and its debt sent to collections: in the transcript Chase says nothing of the overdraft from January 7, the first night overdrawn, until March 8, when it says it has done it.",
+  "changes": "Three sentences: what it charges and its cap; “There’s no fee on an item of $5.00 or less, or while the account is overdrawn by $50 or less.”; “A fee waits until the end of the next business day, and if the account is back to −$50.00 or better by then, there’s none.” Once an account is overdrawn past its limit, the panel names the day, from the sum `leftOverdrawn` acts on (`overdrawnDeadline`): “If Chase Total Checking is still overdrawn at the end of March 7, 2026, Chase takes what it’s owed from your other money there. If that isn’t enough, it closes the account, and the rest goes to collections and onto your credit record.”",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'Chase: the fee and its cap in one sentence'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'an account left overdrawn names the day before the bank closes it'"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/money/overdraft-left.txt"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/overdrawn.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/390/overdrawn.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/scope-money.test.ts: 'at each New Haven bank the request is refused'"
+   }
+  ]
+ },
+ {
+  "surface": "A personal loan, and a payment missed",
+  "where": "Money, Borrowing, Personal Loan: the bank’s rates, the quote, Borrow It, the loan’s line and Repaid From, Pay It Off; the notice A Missed Loan Payment",
+  "sources": [
+   "src/ui/bank/BankLending.tsx#BankLending",
+   "src/engine/systems/lending.ts#loanOffer",
+   "src/engine/systems/lending.ts#registerLending <bank.borrow>",
+   "src/engine/systems/lending.ts#registerLending [loan]",
+   "src/engine/systems/lending.ts#registerLending <bank.set_loan_repayment>",
+   "src/engine/systems/lending.ts#registerLending <bank.repay_loan>",
+   "src/engine/systems/lending.ts#scheduleLoan",
+   "src/engine/systems/lending.ts#registerLending",
+   "src/engine/systems/lending.ts#chargeReturned",
+   "src/engine/content/banks-lending.ts#FR_LOAN",
+   "src/engine/content/banks-lending.ts#DE_LOAN",
+   "src/engine/content/banks-lending.ts#ES_LOAN"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "notification",
+   "setback"
+  ],
+  "outcome": "Revised",
+  "why": "The panel quotes the rate and the monthly payment before Borrow It, and each refusal gives the figure that decides it (“…more than the 35% of your wages a loan can take”). But a missed payment’s notice left out the returned payment fee the bank charged for it, which a player met first on the statement, and named no day, so a second month’s miss said the first’s words and an unread one was brought up to the day in its place: two misses, each on the record, read as one.",
+  "changes": "“Your Citi Personal Loan payment of $264.09 was due September 24, 2026, and Chase Total Checking had nothing available to pay it.”, and where the bank charges a fee for it, “RBC Royal Bank charged a C$10.00 returned payment fee for it.”, from the fee `chargeReturned` now returns. No US bank here lists one.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'RBC: the returned payment fee named'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g11-money.test.ts: 'takes a Citi loan’s monthly payment from Chase Savings'"
+   }
+  ]
+ },
+ {
+  "surface": "In Collections",
+  "where": "Money, Borrowing, In Collections: what’s owed, why it’s there, what it does to your record and to a new card or account, Pay It",
+  "sources": [
+   "src/ui/bank/BankLending.tsx#BankLending",
+   "src/engine/systems/lending.ts#registerLending <bank.pay_collections>",
+   "src/engine/systems/lending.ts#collectionsOf",
+   "src/engine/systems/lending.ts#collectionsSource"
+  ],
+  "states": [
+   "ordinary",
+   "failure",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "Brief 15 had made it say the charge-off stays on the record for its years, paid or not. A card’s, though, said Chase closed it “after its payments were 180 days behind”, at the sixth missed due date, 150 days after the first.",
+  "changes": "“Chase closed your card after six payments in a row were missed, and charged off what was owed on it.”, the count the card’s notices give.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g10-money.test.ts: 'describes a card charged off as a card'"
+   }
+  ]
+ },
+ {
+  "surface": "Switching banks",
+  "where": "Money, Accounts and Borrowing, Switch Bank: the service where there is one, Switch To, the date, Call Off The Switch and Stop The Balance Transfer, Past Switches, and the switch’s outcome notices",
+  "sources": [
+   "src/ui/bank/BankLending.tsx#BankLending",
+   "src/ui/bank/BankLending.tsx#SWITCH_OUTCOME",
+   "src/engine/systems/lending.ts#registerLending <bank.switch>",
+   "src/engine/systems/lending.ts#registerLending <bank.cancel_switch>",
+   "src/engine/systems/lending.ts#registerLending <bank.stop_balance_transfer>",
+   "src/engine/systems/lending.ts#completeSwitch",
+   "src/engine/systems/lending.ts#switchApplicationRefusal",
+   "src/engine/systems/lending.ts#CHEX"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "unavailable",
+   "notification",
+   "history"
+  ],
+  "outcome": "Kept",
+  "why": "Deferred decision 4 stays deferred, so these were read and not changed. Each outcome says what moved, what stayed and the one step left; the confirmations say what calling it off or stopping the balance transfer leaves; and a US life, with no switching service, is given the steps instead.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/bank-moves.test.ts: 'runs no switch: there is no US switching service, and the screen gives the steps instead'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/ui/bank/BankLending.tsx"
+   }
+  ]
+ },
+ {
+  "surface": "Statements",
+  "where": "Money, Statements: Account and Period, the period’s figures, each payment with the balance after it and a pending one’s day, a card’s statement and its minimum-only warning, The Year",
+  "sources": [
+   "src/ui/bank/BankStatements.tsx#BankStatements",
+   "src/ui/bank/BankStatements.tsx#AccountStatementView",
+   "src/ui/bank/BankStatements.tsx#PendingTerms",
+   "src/ui/bank/BankStatements.tsx#CardStatementView",
+   "src/ui/bank/BankStatements.tsx#YearView",
+   "src/ui/bank/BankStatements.tsx#Lines",
+   "src/ui/bank/BankStatements.tsx#yearsAndMonths",
+   "src/engine/systems/statements.ts#MONTHS",
+   "src/engine/systems/statements.ts#periodsOf",
+   "src/engine/systems/statements.ts#cardPeriods"
+  ],
+  "states": [
+   "ordinary",
+   "history",
+   "details",
+   "forecast",
+   "overdue"
+  ],
+  "outcome": "Revised",
+  "why": "The period’s figures come first, Available Now and Posted Balance apart with the note that what’s pending hasn’t posted, then each payment with its balance after it and a pending one with the day it posts; a card’s statement gives the minimum, what paying only it would cost, and next month’s interest. But an overdrawn account’s Available Now and the balance after each line read “-$600.00”, a hyphen, beside “−$20,165.00” in In / Out.",
+  "changes": "A balance below zero has the minus sign the In / Out column already used, in the period’s figures and after each line: “Available Now −$600.00”.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/overdrawn.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/390/overdrawn.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'has its minus sign and its cents in the head, Your Banks and Statements'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/statements.test.ts: 'open at the balance before them, and each carries the balance after it'"
+   }
+  ]
+ },
+ {
+  "surface": "Alerts, and the notices they send",
+  "where": "Money, Statements, Alerts: Any Checking Account Under, A Payment Over, Save Alerts, Statement Ready, Short For A Payment; the notices Low Balance, Short For A Payment and A Large Payment",
+  "sources": [
+   "src/ui/bank/BankStatements.tsx#AlertsView",
+   "src/engine/systems/obligations.ts#obligationsAhead",
+   "src/engine/systems/obligations.ts#accountAlerts",
+   "src/engine/systems/statements.ts#registerStatements <world.day_rollover>",
+   "src/engine/systems/statements.ts#registerStatements <bank.set_alerts>"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "notification",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Short For A Payment named the payment, the account, the day and the step, but at nothing and below it printed the balance as it stood: “it has $0.00 available”, “it has -$12.00 available”, a hyphen for the sign; Low Balance said an overdrawn account “is down to -$12.00”.",
+  "changes": "“and it has nothing available.” and “and it’s overdrawn by $12.00.”, and “is overdrawn by $12.00, under the $100.00 you set.”, as the month’s statement notice says an overdrawn balance.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'six due dates missed at Chase'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-money.test.ts: 'says how far below zero it is'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/account-alerts.test.ts: 'warns once that Capital One is short for the card'"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/money/card-missed-six.txt"
+   }
+  ]
+ },
+ {
+  "surface": "The day’s spending and food",
+  "where": "The day’s groceries and meals as they’re paid: a refusal at Look After Yourself, No Money For Food Today, and what’s owed for bills",
+  "sources": [
+   "src/engine/systems/spending.ts#*",
+   "src/engine/systems/earnings.ts#*"
+  ],
+  "states": [
+   "unavailable",
+   "setback",
+   "notification",
+   "ordinary"
+  ],
+  "outcome": "Kept",
+  "why": "A refusal says what can’t pay and why the cash in hand didn’t help, with the setting by its name (“Set it to In Cash, Then The Debit Card, under How You Pay.”); No Money For Food Today says what the day’s groceries cost and what the day is like, met in order in the transcript on the day the bank ran dry.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/defects-r1-1.test.ts: 'say why: the cash a card payer’s day doesn’t spend'"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/continuity-2026-10-20/money/card-missed-six.txt"
+   }
+  ]
+ },
+ {
+  "surface": "The bank’s look and the money looks",
+  "where": "A look opened from Money or Home: a bank, an account, a statement entry, what you’re worth, what you owe, where it went",
+  "sources": [
+   "src/ui/looks/bank.tsx#*",
+   "src/ui/looks/money.tsx#*"
+  ],
+  "states": [
+   "details",
+   "explanation",
+   "ordinary",
+   "empty"
+  ],
+  "outcome": "Kept",
+  "why": "Each look opens on the sentence a player asks for, what you have here and owe, what an account holds and what carrying a debt would cost a year, and says how the figure is made without the bookkeeping (“It’s added up from all your accounts each time you look, so it’s right to the cent.”); each empty one says why there’s nothing.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/language-money.test.ts: 'opens on the bank and on a statement line in words a player reads'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/ui/looks/money.tsx"
+   }
+  ]
+ },
+ {
+  "surface": "An account kept at home",
+  "where": "Creation’s Before Yale, where a life lived abroad can keep its bank; Money, the account held from abroad, its fees for a customer abroad and its line under Accounts",
+  "sources": [
+   "src/engine/systems/homeaccount.ts#*",
+   "src/engine/content/homeaccounts.ts#*",
+   "src/engine/content/home-accounts.json#*"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "unavailable",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Each bank’s line says in one sentence what it does for a customer who moves to America and on what condition (“NatWest keeps it once you’ve registered your American address”), each refusal says why the account can’t be kept, and the research notes behind them stay the research’s, read under Sources And Estimates, as brief 15’s data area left them.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/home-account-creation.test.ts: 'the rule, step by step, in its words'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/home-account-screens.test.ts"
+   }
+  ]
+ },
+ {
+  "surface": "A place’s rent and where it comes from",
+  "where": "A place’s look: what a room and a one-bedroom cost there, and the published figure behind it",
+  "sources": [
+   "src/engine/content/rents.ts#*"
+  ],
+  "states": [
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Each figure names who published it, what it measures and when (“HUD’s Fair Market Rent for the New Haven–Meriden area, the 40th percentile rent, utilities included”, “fiscal year 2026”), so a rent the game uses is never a number without its source.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/engine/content/rents.ts"
+   },
+   {
+    "kind": "source",
+    "ref": "src/ui/looks/place.tsx"
+   }
+  ]
+ },
+ {
+  "surface": "The banks’ own terms, as the screens show them",
+  "where": "Money, Accounts and Cards: each bank’s products by the names it sells them under, and the research notes under Sources And Estimates; each country’s account number",
+  "sources": [
+   "src/engine/content/banks-thirteen.ts#*",
+   "src/engine/content/banks-world-sheets.ts#*",
+   "src/engine/content/banks-world.ts#*",
+   "src/engine/content/banks-world-iban.ts#*"
+  ],
+  "states": [
+   "details",
+   "ordinary"
+  ],
+  "outcome": "Kept",
+  "why": "Product names stay the bank’s own (Chase Total Checking, AktivKonto, Current Individual Account); the fee notes are the research’s summaries, read under Sources And Estimates with their source and day, as brief 15’s data area made them; the IBAN formats are a country’s number structure, which a panel’s subtitle shows as the country writes the number, not words.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/banknumbers.test.ts: 'puts the bank’s code where the registry says'"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/roundups.json"
+   }
+  ]
+ },
+ {
+  "surface": "The ledger’s integrity errors",
+  "where": "Nowhere in play: a transaction that doesn’t balance, or a balance that doesn’t match its postings, is stopped before it’s saved",
+  "sources": [
+   "src/engine/core/ledger.ts#*"
+  ],
+  "states": [
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "They stop a transaction that doesn’t balance before anything is written, and read as a developer’s message about cents and postings, which is where the game’s error shape sends them: the player’s sentence for an error in the game is the frame’s, never these.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/money.test.ts: 'refuses a transaction that does not balance'"
+   }
+  ]
+ }
+]

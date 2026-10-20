@@ -556,11 +556,12 @@ describe('life.look_after:wash', () => {
  * et al. 2012, AAFP 2025, AAOS). A bill is named in sentence case, as every other bill is, from 2026-10-13: until then it
  * took the label’s capitals, “A Sprained Ankle: its care”.
  */
-const HURT: Record<string, { label: string; bill: string; days: [number, number] }> = {
-  strain: { label: 'A Pulled Muscle', bill: 'A pulled muscle’s care', days: [17, 22] },
-  back: { label: 'A Back Strain', bill: 'A back strain’s care', days: [28, 42] },
-  sprain: { label: 'A Sprained Ankle', bill: 'A sprained ankle’s care', days: [5, 10] },
-  fracture: { label: 'A Broken Bone', bill: 'A broken bone’s care', days: [42, 84] },
+// `care` is what the notice names the care as (from 2026-10-20, brief 17: until then a billed injury's notice didn't say).
+const HURT: Record<string, { label: string; bill: string; days: [number, number]; care: string }> = {
+  strain: { label: 'A Pulled Muscle', bill: 'A pulled muscle’s care', days: [17, 22], care: 'a visit to urgent care and two sessions of physical therapy' },
+  back: { label: 'A Back Strain', bill: 'A back strain’s care', days: [28, 42], care: 'a doctor’s visit and four sessions of physical therapy' },
+  sprain: { label: 'A Sprained Ankle', bill: 'A sprained ankle’s care', days: [5, 10], care: 'a visit to urgent care and two sessions of physical therapy' },
+  fracture: { label: 'A Broken Bone', bill: 'A broken bone’s care', days: [42, 84], care: 'a trip to the emergency room and six sessions of physical therapy' },
 };
 /**
  * The first minute from now a workout started would end on a hurting roll. A search of the injury stream ahead, which
@@ -637,7 +638,7 @@ describe('life.look_after:exercise', () => {
     expect(bill.dueAt).toBe(sim.now + 30 * MS_DAY);
     expect(bill.amount).toBeGreaterThan(0);
     const dollars = `$${(bill.amount / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    expect(notices(sim, hurt.label)[0]!.body).toContain(`You owe ${dollars} for its care. It’s taken from your checking account on ${formatDate(bill.dueAt, sim.zone)}, and if there isn’t enough then, it becomes medical debt.`);
+    expect(notices(sim, hurt.label)[0]!.body).toContain(`You owe ${dollars} for its care, ${hurt.care}. It’s taken from your checking account on ${formatDate(bill.dueAt, sim.zone)}, and if there isn’t enough then, it becomes medical debt.`);
     expect(sim.universe.scheduled.filter((i) => i.label === `Medical Bill Due: ${hurt.bill}` && i.at === bill.dueAt)).toHaveLength(1);
     // Refused while it mends; reloaded, still one bill.
     expect(lookAfter(sim, 'exercise').error).toMatch(/^Not with /);
@@ -655,7 +656,7 @@ describe('life.look_after:exercise', () => {
     sim.advanceTo(NH(9));
     healthOf(sim.player).fluUntil = NH(9) + 5 * MS_DAY; // TEST SETUP: down with the flu
     const sick = was();
-    expect(lookAfter(sim, 'exercise').error).toBe('Not with the flu: rest until it passes.');
+    expect(lookAfter(sim, 'exercise').error).toBe(`Not with the flu: rest until it passes on ${formatDate(NH(9) + 5 * MS_DAY, sim.zone)}.`);
     expect(was()).toEqual(sick);
     // The flu keeps a body from training, not from resting.
     expect(lookAfter(sim, 'unwind').ok).toBe(true);

@@ -76,7 +76,8 @@ describe('a classmate you helped with their lines', () => {
     };
     const helped = run('help');
     expect(helped.owes).toBe(true);
-    expect(helped.invitation).toMatch(/You ran theirs when they were behind\./);
+    // In their voice (from 2026-10-20, brief 17): one under pressure to be seen offers an hour, “…: you ran theirs when they were behind.”
+    expect(helped.invitation).toMatch(/[Yy]ou ran theirs when they were behind\./);
     const refused = run('no');
     expect(refused.owes).toBe(false);
     expect(refused.invitation).toBeUndefined();

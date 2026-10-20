@@ -39,7 +39,9 @@ import {
   authorizationFor, isoOfCountry, documentsOf, isoOfCity, mayEnter,
   LOSABLE, citizenOf, passportOf, passportOffice, passportRefusal, passportRuleFor, type PersonDocument, policeReportRefusal, theCountry } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
-import { idCardHere, idCardOnItsWay, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal, noncitizenTermNote } from '@/engine/systems/identity';
+import { NONCITIZEN_ID, idCardFee, idCardHere, idCardOnItsWay, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal, noncitizenTermNote } from '@/engine/systems/identity';
+import type { Simulation } from '@/engine/core/simulation';
+import type { Person } from '@/engine/domain/model';
 import { f1Of, optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
 import { leftWithout } from '@/engine/systems/school';
 import { SSN, hasSsn, ssnRefusal } from '@/engine/systems/taxid';
@@ -53,14 +55,17 @@ const countryName = (iso: string) => COUNTRIES.get(countryOfIso(iso))?.name ?? i
 /** The atlas's id for a country by its ISO code: Britain is "uk" there and "GB" on a document. */
 const countryIdOf = (iso: string) => COUNTRIES.all().find((c) => c.iso2?.toUpperCase() === iso.toUpperCase())?.id ?? iso.toLowerCase();
 
-/** Every document they hold or have held, newest first. */
-function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
+/**
+ * Every document they hold or have held, newest first. With none, it names the papers it lists (from 2026-10-20, brief 17:
+ * until then each list said "You don’t hold any.", under Your Passport, Your ID and Permission To Work alike).
+ */
+function DocumentList({ kinds, none }: { kinds: readonly PersonDocument['kind'][]; none: string }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   // Reporting a document lost cancels it for good, and what was issued on it: asked twice (from 2026-10-10).
   const [confirming, setConfirming] = useState<{ id: string; stolen: boolean } | undefined>(undefined);
   const docs = documentsOf(person).filter((d) => kinds.includes(d.kind)).sort((a, b) => (b.issuedAt ?? b.appliedAt ?? 0) - (a.issuedAt ?? a.appliedAt ?? 0));
-  if (!docs.length) return <p className="small muted" style={{ margin: 0 }}>You don’t hold any.</p>;
+  if (!docs.length) return <p className="small muted" style={{ margin: 0 }}>{none}</p>;
   return (
     <LookRegion className="table-scroll">
       <table>
@@ -143,8 +148,10 @@ export function PassportPane() {
                 until then only their tooltips said it, which a phone never shows. */}
             {[...new Set([passportRefusal(person), office?.expedite ? passportRefusal(person, true) : undefined])].filter(Boolean).map((no) => <span key={no} className="xs dim">{no}</span>)}
           </div>
-          <p className="small" style={{ margin: 0 }}>When a new passport arrives, it cancels the one before it, and any travel authorization issued on the old one ends with it.</p>
-          <DocumentList kinds={['passport', 'visa', 'authorization']} />
+          {/* What a renewal cancels, said where there's a passport to cancel (from 2026-10-20, brief 17: until then to a life
+              with none as well). */}
+          {documentsOf(person).some((d) => d.kind === 'passport' && d.status === 'valid') && <p className="small" style={{ margin: 0 }}>When a new passport arrives, it cancels the one before it, and any travel authorization issued on the old one ends with it.</p>}
+          <DocumentList kinds={['passport', 'visa', 'authorization']} none="You don’t hold a passport, a visa or a travel authorization." />
           {rule && office && <Fine>{office.basis} {office.daysEstimated ? 'The office publishes no processing time for it, so the time is estimated. ' : ''}{office.abroad ? '' : `From abroad: ${rule.abroad} `}Sources: {rule.sources.map((s) => s.url).join('; ')}.{office.assumed.length ? ` Assumed in the game: ${office.assumed.join(' ')}` : ''}{rule.uncertain.length ? ' Some details weren’t published, or couldn’t be confirmed on the office’s own pages.' : ''}</Fine>}
         </div>
       </Panel>
@@ -166,15 +173,40 @@ export function PassportPane() {
               ? <p className="small" style={{ margin: 0 }}>{theCountry(countryName(chosen)).replace(/^./, (c) => c.toUpperCase())} would let you in for a week’s visit. {answer.stay ?? ''}{authorizationFor(person, chosen, sim.now) ? ' Your authorization is in force.' : ''}</p>
               : <ul className="small" style={{ margin: 0 }}>{answer.missing.map((m) => <li key={m}>{m}</li>)}</ul>
           )}
-          {visa && <Fine>{visa.name}: {visa.basis} Source: {visa.source}.</Fine>}
-          <Fine>Travel isn’t part of the game, so you can’t apply for a visa or travel authorization here. Each country’s rules are shown as they stand, for reference.</Fine>
+          {/* That nothing here can be applied for, said in sight, under the answer that names a visa or an authorization;
+              the visa's terms and the rule's source behind one Sources And Estimates (from 2026-10-20, brief 17, section 8:
+              until then the restriction was behind a disclosure of its own, the second of two or three in a row, each called
+              Sources And Estimates, and it ended "Each country’s rules are shown as they stand, for reference.", which the
+              panel's subtitle already says). */}
+          <p className="xs dim" style={{ margin: 0 }}>Travel isn’t part of the game, so you can’t apply for a visa or travel authorization here.</p>
           {/* The day the rules were researched, as the game writes a date (from 2026-10-17, brief 14's dynamic cases: until
               then “Researched 2026-09-29.”, the data's own ISO day). */}
-          {answer?.rule && <Fine>{answer.rule.note} Source: {answer.rule.source}. Researched {(() => { const [year, month, day] = ENTRY_AS_OF.split('-').map(Number); return formatDate(instantFromZoned({ year: year!, month: month!, day: day!, hour: 12 }, sim.zone), sim.zone); })()}. Permission to live or work there is separate.</Fine>}
+          {(visa || answer?.rule) && <Fine>{visa ? `${visa.name}: ${visa.basis} Source: ${visa.source}.` : ''}{visa && answer?.rule ? ' ' : ''}{answer?.rule && <>{answer.rule.note} Source: {answer.rule.source}. Researched {(() => { const [year, month, day] = ENTRY_AS_OF.split('-').map(Number); return formatDate(instantFromZoned({ year: year!, month: month!, day: day!, hour: 12 }, sim.zone), sim.zone); })()}. Permission to live or work there is separate.</>}</Fine>}
         </div>
       </Panel>
     </div>
   );
+}
+
+/** A number under ten in words, as prose writes one. */
+const inWords = (n: number): string => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][n] ?? String(n);
+
+/**
+ * What Get costs, how the card comes and how long it's good for, said before it's pressed, from the rules
+ * `documents.apply_idcard` follows (from 2026-10-20, brief 17, section 8: until then the fee, the wait and the term came
+ * only in the toast after it). Somebody not a citizen at a US state's counter waits on SAVE first, and their card's term
+ * is the fine print's (`noncitizenTermNote`).
+ */
+function idCardWords(sim: Simulation, person: Person, here: NonNullable<ReturnType<typeof idCardHere>>): string {
+  const { card, jurisdiction } = here;
+  const fee = idCardFee(sim, card);
+  const checked = jurisdiction.startsWith('us-') && !citizenOf(person, 'US');
+  const cost = fee > 0 ? `It costs ${formatMoney(fee, saveCurrency(sim.universe))}` : 'It’s free';
+  const comes = checked
+    ? `. The DMV checks your lawful presence first, which takes ${NONCITIZEN_ID.saveBusinessDays} federal workdays, and ${card.mailedBusinessDays ? `the card comes by mail ${card.mailedBusinessDays} business days after that` : 'you have the card then'}.`
+    : card.mailedBusinessDays ? ` and comes by mail ${card.mailedBusinessDays} business days after you apply.` : ', and you have it at once.';
+  const term = checked || !card.years ? '' : ` It’s good ${card.toBirthday ? `until your first birthday after ${inWords(card.years)} years` : `for ${inWords(card.years)} years`}${card.passportBook ? ', or until your passport book runs out, if that’s sooner' : ''}.`;
+  return `${cost}${comes}${term}`;
 }
 
 /** The state's ID card: the Driving tab's until the cars went on 2026-10-09. Making a card REAL ID was here too, until the same day's connected world: nothing in SLATE flies. */
@@ -187,6 +219,7 @@ function IdPanel() {
   return (
     <Panel title="Your ID" subtitle={card ? card.card.name : 'None issued where you live'} help="documents.passport-id">
       <LookRegion className="col gap-3">
+        {card && <p className="small" style={{ margin: 0 }}>{idCardWords(sim, person, card)}</p>}
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <Gated feature="documents.apply_idcard" className="btn btn-sm" disabled={Boolean(idNo)} title={idNo} onClick={() => {
             const a = run<{ expiresAt?: number; fee: number; readyAt?: number }>('documents.apply_idcard', {});
@@ -205,7 +238,7 @@ function IdPanel() {
               said "One is already on its way." or "You already hold one in force.", which a phone never shows. */}
           {idNo && <span className="xs dim">{idNo}</span>}
         </div>
-        <DocumentList kinds={['idcard', 'license', 'idp']} />
+        <DocumentList kinds={['idcard', 'license', 'idp']} none="You don’t hold an ID card or a driving license." />
         {/* Where the card's term is SLATE's assumption, said (from 2026-10-17, brief 12's KS-ct-idcard: until then only the guide said it). */}
         {term && <Fine>{term}</Fine>}
       </LookRegion>
@@ -250,7 +283,7 @@ export function WorkPane() {
             <Stat label="Your Program Ends" value={end ? formatDate(end, sim.zone) : '—'} note={end ? `You can apply for OPT from ${opt.windowBeforeDays} days before it to ${opt.windowAfterDays} days after` : 'For a student on an F-1'} />
             <Stat label="Your US Status" value={person.usOutOfStatus !== undefined ? 'Out Of Status' : status !== undefined ? `Ends ${formatDate(status, sim.zone)}` : end ? 'Held' : '—'} note={person.usOutOfStatus !== undefined ? `Since ${formatDate(person.usOutOfStatus, sim.zone)}. In the game, you can’t work here, your US visa is canceled, and the Visa Waiver Program is closed to you` : status !== undefined ? (idleEnds !== undefined ? `When your OPT’s ${opt.unemploymentDays} days without work run out. There’s no grace period after it, and staying past it puts you out of status` : 'Including the grace period after your permission ends. Staying past it puts you out of status') : end ? 'While you study, or while an application is being decided' : 'For a student on an F-1'} />
           </div>
-          <DocumentList kinds={['permit', 'visa']} />
+          <DocumentList kinds={['permit', 'visa']} none="You don’t hold a work permit or a visa." />
         </div>
       </Panel>
 

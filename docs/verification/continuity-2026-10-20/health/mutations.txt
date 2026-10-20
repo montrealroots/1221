@@ -1,0 +1,39 @@
+Brief 17, the health area: each new claim taken out of the code, one at a time, and the two test files that hold them
+run (npx vitest run tests/language-care17.test.ts tests/language-injury.test.ts), 2026-10-20, on the final words. The
+code was restored from a copy after each and compared byte for byte (cmp). Output as printed (failed tests and the count):
+
+== M0 nothing taken out
+      Tests  9 passed (9)
+== M1 denied figure (the visit's notice says the share, amount, where the claim was denied)
+   × a marketplace claim denied, told in its visit’s notice at the bill’s figure > says the full figure the bill holds where the claim is denied, and the share where it isn’t 507ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 8 passed (9)
+== M2 the flu's holding back taken out
+   × the flu, as a student meets it > says what it keeps you from and that Call In Sick can excuse each day, and your look says you have it until it passes 158ms
+   × the flu, as a student meets it > seen at urgent care, says who you saw and where before how long it lasts 85ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 7 passed (9)
+== M3 your look's Ill line never shown
+   × the flu, as a student meets it > says what it keeps you from and that Call In Sick can excuse each day, and your look says you have it until it passes 675ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 8 passed (9)
+== M4 a laid-up injury's 'What you miss at school is excused.' taken out
+   × an injury’s notice says what its care cost and how a day of classes is excused > says an injury that lays you up keeps you from classes, and no Call In Sick beside it 187ms
+   × an injury says the day it mends, and what it keeps you from in each kind > says a laid-up student’s classes are excused, and a knock keeps you from nothing, in the look as in the notice 128ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 7 passed (9)
+== M5 a cut's or a knock's 'It won’t stop you working out …' taken out
+   × an injury says the day it mends, and what it keeps you from in each kind > says a laid-up student’s classes are excused, and a knock keeps you from nothing, in the look as in the notice 82ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 8 passed (9)
+== M6 the notice's day it mends taken out
+   × an injury says the day it mends, and what it keeps you from in each kind > names the day in the notice, the look’s own day, for a swim’s strain 23ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 8 passed (9)
+== M7 the Classes tab and the whole day at school taken out of Call In Sick (the flu's)
+   × the flu, as a student meets it > says what it keeps you from and that Call In Sick can excuse each day, and your look says you have it until it passes 165ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 8 passed (9)
+health.ts restored
+injury.ts restored
+wellbeing.tsx restored

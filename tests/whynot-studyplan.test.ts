@@ -81,9 +81,15 @@ describe('A Leave Of Absence says why it’s refused on the screen', () => {
     const shut = leaveLengths(sim, sim.player.school!, 'medical').filter((x) => x.why);
     expect(shut.length).toBeGreaterThan(0);
     const named = ['', 'One', 'Two', 'Three'] as const;
-    for (const x of shut) {
-      expect(html).toMatch(new RegExp(`<option value="${x.terms}" disabled="">${named[x.terms]} Terms? \\(Not Possible\\)</option>`));
-      expect(onScreen(html)).toContain(`${named[x.terms]} term${x.terms === 1 ? '' : 's'}: ${x.why}`);
+    for (const x of shut) expect(html).toMatch(new RegExp(`<option value="${x.terms}" disabled="">${named[x.terms]} Terms? \\(Not Possible\\)</option>`));
+    // Lengths refused for one reason are said with it once (from 2026-10-20, brief 17: until then a line each, the same
+    // reason said once for each length it refused).
+    const by = new Map<string, number[]>();
+    for (const x of shut) by.set(x.why!, [...(by.get(x.why!) ?? []), x.terms]);
+    for (const [why, ns] of by) {
+      const said = ns.length > 1 ? `${ns.slice(0, -1).map((n) => named[n]!.toLowerCase()).join(', ')} or ${named[ns.at(-1)!]!.toLowerCase()}` : named[ns[0]!]!.toLowerCase();
+      expect(onScreen(html)).toContain(`${said.replace(/^\w/, (c) => c.toUpperCase())} term${ns.length === 1 && ns[0] === 1 ? '' : 's'}: ${why}`);
+      expect(onScreen(html).split(why)).toHaveLength(2);
     }
     // The falsifiability test: with something a physician would recommend a leave on, the button opens and the refusal
     // goes. TEST SETUP: the flu, as tests/leave.test.ts gives it.

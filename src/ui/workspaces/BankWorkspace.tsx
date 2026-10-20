@@ -44,6 +44,7 @@ import { CHEX, checkingAt, checkingsOf } from '@/engine/systems/lending';
 import type { Account } from '@/engine/core/ledger';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { abroadQuote, heldOf, heldText, homeAccountLines, quoteWords } from '@/engine/systems/abroad';
+import { arrivalOf } from '@/engine/systems/bankmoves';
 import { exchange } from '@/engine/content/currency';
 import { waiverWords } from '@/ui/bank/feeWords';
 
@@ -102,6 +103,12 @@ export function BankWorkspace() {
   // Between banks in two countries, what the payment costs and when it lands, from the rule the command keeps.
   const abroad = moving && target && moving.bankId && target.bankId && bankById(moving.bankId)?.iso !== bankById(target.bankId)?.iso && centsFromTyped(amount) > 0
     ? abroadQuote(sim, sim.player, moving, target, centsFromTyped(amount))
+    : undefined;
+  // Between two banks in one country, when it would arrive, from the day `sendBetweenBanks` sets it (`arrivalOf`), said
+  // before Move It (from 2026-10-20, brief 17, section 8): until then only the toast after it said the day, and the
+  // panel's subtitle that it "takes as long as the sending bank takes".
+  const between = moving && target && moving.bankId && target.bankId && moving.bankId !== target.bankId && !abroad && bankById(moving.bankId)?.iso === bankById(target.bankId)?.iso
+    ? arrivalOf(sim, moving, sim.player)
     : undefined;
 
   const move = () => {
@@ -200,7 +207,7 @@ export function BankWorkspace() {
       </div>
 
       {accounts.length > 1 && (
-        <Panel title="Move Money" subtitle="Between your own accounts. Within one bank it’s instant. To another bank it takes as long as the sending bank takes, and abroad it also costs the exchange and the fees." help="bank.transfer">
+        <Panel title="Move Money" subtitle="Between your own accounts. Within one bank it’s instant. To another bank it takes the sending bank’s time, said below once you choose the accounts, and abroad it also costs the exchange and the fees." help="bank.transfer">
           <div className="field-row">
             <div className="field">
               <label htmlFor="move-from">From</label>
@@ -228,6 +235,13 @@ export function BankWorkspace() {
             </p>
           )}
           {abroad && <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>{'refused' in abroad ? abroad.refused : quoteWords(sim, abroad)}</p>}
+          {between !== undefined && (
+            <p className="xs dim" style={{ margin: '0 0 var(--s2)' }} data-arrives="">
+              {between > sim.now
+                ? `Sent now, it leaves ${moving!.name} at once and arrives in ${target!.name} on ${formatDate(between, sim.zone)}. It isn’t available to spend in between.`
+                : `Sent now, it arrives in ${target!.name} at once.`}
+            </p>
+          )}
           <Gated feature="bank.transfer" className="btn btn-primary btn-sm" onClick={move} disabled={!amount}>
             Move It
           </Gated>
@@ -271,7 +285,7 @@ export function BankWorkspace() {
             reads: no bank fails, and no rate follows it. */}
         {/* The primary account's bank, and the others kept beside it (from 2026-10-10: until then every account was at one bank, and it said so). */}
         <p className="muted">
-          <Open subject={at('bank', bank.id)}>{sumText(here, money)}</Open> held here, in{' '}
+          <Open subject={at('bank', bank.id)}>{sumText(here, balanceOf)}</Open> held here, in{' '}
           {here.length === 1 && here[0]
             ? <Open subject={at('account', here[0].id)}>one account</Open>
             : <Open subject={at('bank', bank.id)}>{here.length} accounts</Open>}
@@ -356,11 +370,17 @@ function BankTabs({ tab, onTab }: { tab: BankTab; onTab: (tab: BankTab) => void 
  * What a set of accounts holds, for the page's head line (from 2026-10-16): accounts all kept in one other currency, in
  * it with the dollars beside; any other set, in the save's money.
  */
+/**
+ * What a bank holds, summed: in the save's money as the tiles write a balance, below zero with its minus sign and to the
+ * cent (from 2026-10-20, brief 17: until then "-$600 held here", a hyphen and whole dollars, where the tile beside it read
+ * −$600.00), and in the bank's own money first where every account there is kept in it.
+ */
 function sumText(list: Account[], money: (cents: number) => string): string {
   const total = money(list.reduce((sum, a) => sum + a.balance, 0));
   const kept = list[0]?.currency;
   if (!kept || list.some((a) => a.currency !== kept)) return total;
-  return `${formatMoney(list.reduce((sum, a) => sum + heldOf(a), 0), kept, { cents: false })} (${total})`;
+  const held = list.reduce((sum, a) => sum + heldOf(a), 0);
+  return `${held < 0 ? `−${formatMoney(-held, kept)}` : formatMoney(held, kept, { cents: false })} (${total})`;
 }
 
 /** The other banks' sum in the save's money, and of it what each bank abroad holds in its own: "$7,065 at your other banks, £5,581 of it at HSBC UK". */

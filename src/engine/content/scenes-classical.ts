@@ -205,7 +205,7 @@ export const CLASSICAL_SCENES: readonly Scene[] = [
       {
         name: 'Richard',
         objective: [
-          yes('win', 'Win her, here, over the body', 'He means to marry Warwick’s youngest daughter, and she goes wearing his ring.'),
+          yes('win', 'Win her, here, over the body', 'He means to marry Warwick’s youngest daughter, Anne herself, and she goes wearing his ring.'),
           yes('prove', 'Prove to himself he can do the impossible', 'Alone after, he gloats that he won her with nothing on his side but the devil and dissembling looks.'),
           no('repent', 'Ask her pardon and mean it', 'He tells us after that he’ll have her, but won’t keep her long.'),
         ],

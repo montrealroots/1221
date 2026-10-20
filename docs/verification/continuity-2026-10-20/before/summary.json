@@ -1,0 +1,541 @@
+{
+ "openings": {
+  "showings": 3090,
+  "distinct": 448,
+  "repeatedWithinFiveFromSameCourse": 229,
+  "top": [
+   {
+    "opening": "Lower than the Strong piece on DATE.",
+    "n": 93
+   },
+   {
+    "opening": "Up from Unready last time.",
+    "n": 73
+   },
+   {
+    "opening": "This had come right on DATE, and it has slipped since.",
+    "n": 72
+   },
+   {
+    "opening": "Back again: you’d put this right on DATE.",
+    "n": 71
+   },
+   {
+    "opening": "Down from Strong on DATE.",
+    "n": 70
+   },
+   {
+    "opening": "You fixed this on DATE, but it has slipped back.",
+    "n": 69
+   },
+   {
+    "opening": "Strong again, as on DATE.",
+    "n": 64
+   },
+   {
+    "opening": "Better than the Working piece on DATE.",
+    "n": 60
+   },
+   {
+    "opening": "That’s down from Strong last time.",
+    "n": 58
+   },
+   {
+    "opening": "That’s up from Unready on DATE.",
+    "n": 55
+   },
+   {
+    "opening": "Strong for the second time running.",
+    "n": 54
+   },
+   {
+    "opening": "It stayed at Working, as on DATE: your composure held back your consistency by # points out of #.",
+    "n": 54
+   }
+  ]
+ },
+ "duplicates": {
+  "notices": 9698,
+  "exactRepeats": 61,
+  "byTitle": [
+   {
+    "title": "A Doctor’s Visit",
+    "n": 26
+   },
+   {
+    "title": "Ran Lines With Chloe",
+    "n": 9
+   },
+   {
+    "title": "Elena: A Word After Class",
+    "n": 4
+   },
+   {
+    "title": "Nadia: An Apology",
+    "n": 3
+   },
+   {
+    "title": "Lucia: A Word After Class",
+    "n": 2
+   },
+   {
+    "title": "Noah: A Word After Class",
+    "n": 2
+   },
+   {
+    "title": "Zoe: An Apology",
+    "n": 2
+   },
+   {
+    "title": "Ran Lines With Aaliyah",
+    "n": 2
+   },
+   {
+    "title": "The Summer Is Yours",
+    "n": 2
+   },
+   {
+    "title": "Ran Lines With Grace",
+    "n": 1
+   },
+   {
+    "title": "Imani: An Apology",
+    "n": 1
+   },
+   {
+    "title": "Ran Lines With Nadia",
+    "n": 1
+   },
+   {
+    "title": "Ran Lines With Ethan",
+    "n": 1
+   },
+   {
+    "title": "Grace: An Apology",
+    "n": 1
+   },
+   {
+    "title": "Ethan: An Apology",
+    "n": 1
+   }
+  ],
+  "showingFeedbackExactRepeats": 7
+ },
+ "shared": {
+  "sentencesFromTwoOrMoreCourses": 236,
+  "showingsWithOne": 2999,
+  "top": [
+   {
+    "sentence": "It’s at # now, and the note is taken at #.",
+    "courses": 21,
+    "times": 451
+   },
+   {
+    "sentence": "A Note That Keeps Coming Back, on the piece’s card, offers other ways at it.",
+    "courses": 21,
+    "times": 451
+   },
+   {
+    "sentence": "This had come right on DATE, and it has slipped since.",
+    "courses": 15,
+    "times": 131
+   },
+   {
+    "sentence": "Back again: you’d put this right on DATE.",
+    "courses": 15,
+    "times": 95
+   },
+   {
+    "sentence": "You fixed this on DATE, but it has slipped back.",
+    "courses": 14,
+    "times": 96
+   },
+   {
+    "sentence": "Lower than the Strong piece on DATE.",
+    "courses": 13,
+    "times": 93
+   },
+   {
+    "sentence": "That’s down from Strong last time.",
+    "courses": 13,
+    "times": 58
+   },
+   {
+    "sentence": "Strong for the second time running.",
+    "courses": 13,
+    "times": 54
+   },
+   {
+    "sentence": "Down from Strong on DATE.",
+    "courses": 12,
+    "times": 70
+   },
+   {
+    "sentence": "Strong again, as on DATE.",
+    "courses": 12,
+    "times": 64
+   },
+   {
+    "sentence": "Better than the Unready piece on DATE.",
+    "courses": 12,
+    "times": 50
+   },
+   {
+    "sentence": "Up from Unready last time.",
+    "courses": 11,
+    "times": 73
+   }
+  ]
+ },
+ "voices": {
+  "acting": {
+   "showings": 887,
+   "distinctOpenings": 152,
+   "withAStep": 590,
+   "stepInAnotherDisciplinesWords": 0
+  },
+  "text": {
+   "showings": 567,
+   "distinctOpenings": 87,
+   "withAStep": 396,
+   "stepInAnotherDisciplinesWords": 0
+  },
+  "movement": {
+   "showings": 846,
+   "distinctOpenings": 146,
+   "withAStep": 550,
+   "stepInAnotherDisciplinesWords": 0
+  },
+  "voice": {
+   "showings": 790,
+   "distinctOpenings": 125,
+   "withAStep": 502,
+   "stepInAnotherDisciplinesWords": 0
+  }
+ },
+ "advice": {
+  "blocks": 1620,
+  "meanWords": 62,
+  "maxWords": 128,
+  "meanFigures": 3.9,
+  "meanWordsWithDetails": 527.5,
+  "maxWordsWithDetails": 730,
+  "meanFiguresWithDetails": 41.7,
+  "meanItems": 5,
+  "meanSentencesSaidAgainInTheBlock": 0.5
+ },
+ "directors": {
+  "notes": 291,
+  "distinctOpenings": 25,
+  "repeatedWithinFive": 45,
+  "top": [
+   {
+    "opening": "The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.",
+    "n": 40
+   },
+   {
+    "opening": "Not there yet.",
+    "n": 32
+   },
+   {
+    "opening": "It sags in part #: hold it the whole way through.",
+    "n": 28
+   },
+   {
+    "opening": "That’s moved since the last note.",
+    "n": 28
+   },
+   {
+    "opening": "Who are they to you in the second half?",
+    "n": 21
+   },
+   {
+    "opening": "The last note took.",
+    "n": 21
+   },
+   {
+    "opening": "Still: it sags in part #: hold it the whole way through.",
+    "n": 21
+   },
+   {
+    "opening": "Same note as at the last call.",
+    "n": 20
+   }
+  ]
+ },
+ "moments": {
+  "said": 1138,
+  "distinctOpenings": 164,
+  "top": [
+   {
+    "opening": "Grace is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 40
+   },
+   {
+    "opening": "Lucia asks if you’d run lines together for an hour on DATE at #:# PM.",
+    "n": 34
+   },
+   {
+    "opening": "Zoe is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 34
+   },
+   {
+    "opening": "Chloe asks if you’d run lines together for an hour on DATE at #:# PM.",
+    "n": 33
+   },
+   {
+    "opening": "Priya is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 29
+   },
+   {
+    "opening": "Nadia asks if you’d run lines together for an hour on DATE at #:# PM.",
+    "n": 25
+   },
+   {
+    "opening": "Ethan is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 22
+   },
+   {
+    "opening": "Daniel is behind on their lines and asks if you’d run them for three quarters of an hour now.",
+    "n": 21
+   }
+  ]
+ },
+ "brief17": {
+  "definitions": {
+   "runs": [
+    "approaches v16-0",
+    "approaches v17-1",
+    "attentive v17-2",
+    "attentive v16-0",
+    "attentive v17-1",
+    "distant v17-2",
+    "distant v16-0",
+    "distant v17-1",
+    "improving v16-0",
+    "improving v17-1",
+    "newplayer v17-3",
+    "practicing v16-0",
+    "practicing v17-1",
+    "pressure v16-0",
+    "pressure v17-1",
+    "regressing v16-0",
+    "regressing v17-1",
+    "skilled v16-0",
+    "skilled v17-1",
+    "tired v16-0",
+    "tired v17-1",
+    "underprepared v17-2",
+    "underprepared v16-0",
+    "underprepared v17-1"
+   ],
+   "window": "the same speaker's last 5 messages, in one run: a course for a showing, a production's director, a classmate, a notice's category, the Profile's card",
+   "exact": "a message whose kind, title and whole text were all said before in the same run",
+   "openings": "a first sentence, with dates, figures, quotes and names taken out, said in the window",
+   "bodies": "everything after the first sentence (the part played aside), as structures, said in the window; denominator: messages of more than one sentence",
+   "sameFinding": "a repeated body whose message is on the same thing as the one it repeats (the note's key, or the director's note and its problem); said continuing: its first sentence says so (again, still, same, as on, last time, before, back, since, keeps, another, running, in a row)",
+   "structures": "a sentence whose structure (dates, figures, quotes, ordinals, counts and runs of capitalised words past the first taken out) was said in the window; allStale: a message every one of whose sentences was",
+   "contradictions": "a showing's claims read from its words against the course's showings before it in the run: a band's move named against the last piece, a best against every piece before, a run against the Strong-or-better run, a note's count against the earlier showings on the same note (any course), either order of a day's two on it allowed, since a showing's recorded time is its day's; the claims a phrasing the parser doesn't know makes aren't counted, so each count of claims is its denominator",
+   "events": "from notices alone: each classmate's apologies against their Didn't Come notices before them; a miss's and a request's stated count against the notices before",
+   "lastAnswer": "a classmate's moment that says how the last of its kind was answered, against the answer the run recorded for the one before it from the same classmate",
+   "excluded": "nothing is left out of a denominator but the sentence naming the part played, which every scene's feedback ends on"
+  },
+  "perKind": {
+   "showing": {
+    "messages": 3090,
+    "exact": 7,
+    "openings": 229,
+    "withBody": 3090,
+    "bodies": 565,
+    "bodiesSameFinding": 514,
+    "bodiesSameFindingSaidContinuing": 319,
+    "sentences": 9691,
+    "structures": 2770,
+    "allStale": 202
+   },
+   "director": {
+    "messages": 291,
+    "exact": 17,
+    "openings": 45,
+    "withBody": 164,
+    "bodies": 11,
+    "bodiesSameFinding": 3,
+    "bodiesSameFindingSaidContinuing": 3,
+    "sentences": 575,
+    "structures": 174,
+    "allStale": 37
+   },
+   "moment": {
+    "messages": 1138,
+    "exact": 19,
+    "openings": 192,
+    "withBody": 525,
+    "bodies": 35,
+    "bodiesSameFinding": 0,
+    "bodiesSameFindingSaidContinuing": 0,
+    "sentences": 1780,
+    "structures": 350,
+    "allStale": 51
+   },
+   "notice": {
+    "messages": 9698,
+    "exact": 61,
+    "openings": 179,
+    "withBody": 8863,
+    "bodies": 2559,
+    "bodiesSameFinding": 384,
+    "bodiesSameFindingSaidContinuing": 186,
+    "sentences": 27893,
+    "structures": 7179,
+    "allStale": 336
+   },
+   "advice": {
+    "messages": 1620,
+    "exact": 778,
+    "openings": 1374,
+    "withBody": 1620,
+    "bodies": 1222,
+    "bodiesSameFinding": 1222,
+    "bodiesSameFindingSaidContinuing": 15,
+    "sentences": 7239,
+    "structures": 6000,
+    "allStale": 1240
+   }
+  },
+  "commonestRepeatedBodies": [
+   {
+    "body": "notice: It’s due in class on NAME. Start with NAME: this piece puts it NTH, so it counts for more when you show it.",
+    "n": 1925
+   },
+   {
+    "body": "advice: Coming to your work short on rehearsal cost each piece about # points off the whole. That’s preparation, not training: prepare that part fur",
+    "n": 864
+   },
+   {
+    "body": "showing: It’s at # now, and the note is taken at #. A NAME, on the piece’s card, offers other ways at it.",
+    "n": 280
+   },
+   {
+    "body": "notice: It stays open under NAME. To try something different, find an open piece on the NAME tab that works on it, and choose a way under NAME.",
+    "n": 174
+   },
+   {
+    "body": "notice: Answer by #:# NAME that day, under NAME on the NAME tab. Saying no costs nothing.",
+    "n": 161
+   },
+   {
+    "body": "notice: It isn’t held against you, but the scene got no further. Ask them for another evening under NAME, or use NAME to work on your side of it.",
+    "n": 115
+   },
+   {
+    "body": "advice: Of what you can train, it would add most to your recent work: your last # pieces all call on it. Circles NAME at the NAME tier, with NAME on",
+    "n": 51
+   },
+   {
+    "body": "notice: Leaving them without an answer cost a little of their trust, where a no would have cost nothing.",
+    "n": 50
+   },
+   {
+    "body": "showing: The context was thin: who wrote it, when, and for whom, needed research. To work on it: NAME.",
+    "n": 49
+   },
+   {
+    "body": "notice: Be there then, or press NAME on NAME, under NAME.",
+    "n": 46
+   },
+   {
+    "body": "notice: There’s nothing to pay.",
+    "n": 46
+   },
+   {
+    "body": "advice: Coming to your work short on work with your partner cost each piece about # points off the whole. That’s preparation, not training: prepare ",
+    "n": 42
+   }
+  ],
+  "contradictions": {
+   "moveClaims": 657,
+   "moveWrong": 0,
+   "bestClaims": 79,
+   "bestWrong": 0,
+   "firstClaims": 0,
+   "firstWrong": 0,
+   "runClaims": 473,
+   "runWrong": 0,
+   "countClaims": 468,
+   "countWrong": 0,
+   "examples": []
+  },
+  "events": {
+   "apologies": 230,
+   "apologiesBeyondMisses": 0,
+   "missCounts": 189,
+   "missCountWrong": 0,
+   "helpCounts": 117,
+   "helpCountWrong": 0,
+   "examples": []
+  },
+  "lastAnswer": {
+   "claims": 139,
+   "wrong": 7,
+   "examples": [
+    "attentive 2027-12-10: \"you helped them last time\", the last answer none recorded",
+    "distant 2027-10-29: \"you helped them last time\", the last answer no",
+    "distant 2027-11-22: \"last time you said you couldn’t\", the last answer help",
+    "distant 2028-01-18: \"you helped them last time\", the last answer no",
+    "distant 2028-02-16: \"last time you said you couldn’t\", the last answer help",
+    "distant 2028-03-02: \"you helped them last time\", the last answer no",
+    "distant 2028-09-14: \"you helped them last time\", the last answer none recorded"
+   ]
+  },
+  "speakers": {
+   "pairs": 70,
+   "meanShared": 0.215,
+   "mostShared": [
+    {
+     "a": "Voice I",
+     "b": "Speech And Accents I",
+     "shared": 0.648
+    },
+    {
+     "a": "Speech And Accents I",
+     "b": "Speech And Accents II",
+     "shared": 0.595
+    },
+    {
+     "a": "The Body As Source I",
+     "b": "Alexander Technique I",
+     "shared": 0.574
+    },
+    {
+     "a": "Voice I",
+     "b": "Voice II",
+     "shared": 0.523
+    },
+    {
+     "a": "Speech And Accents I",
+     "b": "Voice II",
+     "shared": 0.519
+    },
+    {
+     "a": "Voice I",
+     "b": "Speech And Accents II",
+     "shared": 0.518
+    },
+    {
+     "a": "Speech And Accents II",
+     "b": "Voice II",
+     "shared": 0.486
+    },
+    {
+     "a": "Acting I",
+     "b": "Acting II: Plays Of Extended And Heightened Language",
+     "shared": 0.355
+    }
+   ]
+  },
+  "rerolled": {
+   "checked": 40663,
+   "differed": 0
+  }
+ }
+}

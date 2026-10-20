@@ -214,7 +214,7 @@ describe('round-ups', () => {
     sim.must({ kind: 'bank.set_payments', payload: { everyday: 'debit' } });
     expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true } }).error).toBe('Choose the amount each purchase, C$0.50 to C$5.00.');
     expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true, amount: 5.01 } }).error).toBe('Choose the amount each purchase, C$0.50 to C$5.00.');
-    expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true, amount: 1.25 } }).error).toBe('Choose how often it moves: daily, weekly, every two weeks.');
+    expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true, amount: 1.25 } }).error).toBe('Choose how often it moves: daily, weekly or every two weeks.');
     expect(spend(sim, sim.player, 12_34, 'Groceries', 'food')).toBe(true);
     expect(sim.player.roundUps?.pending ?? 0).toBe(0);
     sim.must({ kind: 'bank.set_round_ups', payload: { on: true, amount: 1.25, every: 'week' } });

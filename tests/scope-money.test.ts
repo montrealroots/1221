@@ -378,7 +378,7 @@ describe('bank.arrange_overdraft', () => {
     }
     const sim = ada('scope-od-us-chase', 'scraping', { bankId: 'us-chase' });
     const text = drawn(sim, createElement(BankLending, { bank: bankById('us-chase')!, show: ['borrowing'] }));
-    expect(text).toContain('Chase pays what the account can’t without an arrangement, and charges $34.00 for each item that overdraws it');
+    expect(text).toContain('Chase pays what the account can’t cover without an arrangement, and charges $34.00 for each item that overdraws it');
     expect(buttons('Arrange It')).toEqual([]);
     expect(buttons('Close The Overdraft')).toEqual([]);
     expect(h.fields.filter((f) => f.id === 'od-limit')).toEqual([]);

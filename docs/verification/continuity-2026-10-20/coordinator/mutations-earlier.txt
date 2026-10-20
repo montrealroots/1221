@@ -1,0 +1,28 @@
+first gets a step: exit=0 failed=0
+despite on one point: exit=1 failed=1
+    × every situation, in every course’s voice > stops at a first Strong, a best and a strong piece despite the day, holds back the step where what held a
+two first-year voice courses alike: exit=1 failed=2
+    × the voices, apart > gives each course one voice, and two courses of one discipline in a year different ones 12ms
+    × the voices, apart > says the same facts in words no other voice uses: no whole message, and no first sentence, shared 5ms
+shape keeps dates: exit=1 failed=1
+    × the choice of words, from what was said lately > is the same for the same facts and memory, and passes over a sentence’s shape said lately whatever 
+the mark not said as 75%: exit=1 failed=1
+    × every situation, in every course’s voice > is said whole and true: no card label as a subject, no "taken", no two colons in a sentence, the date and
+count off by one: exit=1 failed=1
+    × every situation, in every course’s voice > says how many notes there have been, and where the last was, in every voice 28ms
+colon before a colon note: exit=1 failed=1
+    × every situation, in every course’s voice > is said whole and true: no card label as a subject, no "taken", no two colons in a sentence, the date and
+patient persistent as warm: exit=1 failed=1
+    × the voices, apart > says the same facts in words no other voice uses: no whole message, and no first sentence, shared 20ms
+pick ignores memory: exit=1 failed=1
+    × the choice of words, from what was said lately > is the same for the same facts and memory, and passes over a sentence’s shape said lately whatever 
+restored
+first, best and despite say a step: exit 1 ['× every situation, in every course’s voice > is said whole and true: no card label as a subject, no "taken", no two colo', '× every situation, in every course’s voice > stops at a first Strong, a best and a strong piece despite the day, holds b']
+   × the teachers’ notes > give one from each course the term ran, by its teacher, on growth in its skills against the room 1226ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 18 skipped (19)
+a day said twice let through exit 0 []
+a late apology unsaid exit 1 ['× an apology long after the miss > says how long it’s been, where the miss was weeks or months ago, and nothin']
+   × every situation, in every course’s voice > says a day once: a move from the piece shown the day a slipped note was put right says the day in one place 13ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 9 passed (10)

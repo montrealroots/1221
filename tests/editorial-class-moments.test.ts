@@ -55,6 +55,7 @@ describe('Your Class: a classmate’s Run Lines Together? where you share no ope
     const text = words(renderToStaticMarkup(createElement(ClassMoments)));
     const first = sim.player.school!.classmates[m!.mate]!.name.split(' ')[0]!;
     expect(text).toContain(`You and ${first} don’t have a scene together right now, so you’d run their lines. That helps them, but not your own preparation.`);
-    expect(text).toMatch(new RegExp(`${first} asks if you’d run lines together for an hour on [A-Z][a-z]+ \\d{1,2}, \\d{4} at 7:00 PM\\.`));
+    // In their voice (from 2026-10-20, brief 17): one who cares for the work asks to keep it moving, in a way of their own.
+    expect(text).toMatch(new RegExp(`${first} (?:asks if you’d run lines together for an hour on [A-Z][a-z]+ \\d{1,2}, \\d{4} at 7:00 PM, to keep the work moving|suggests an hour running lines together on [A-Z][a-z]+ \\d{1,2}, \\d{4} at 7:00 PM, so the work keeps moving)\\.`));
   });
 });

@@ -78,9 +78,11 @@ export interface StateRules {
   timingAssumed: boolean;
   /**
    * What collection adds as it goes: at the notice of index `step` (the first levy at the notices' length), a share of
-   * the tax or of everything owed, or an amount, smaller below a balance (Illinois's $30 under $1,000, else $100).
+   * the tax or of everything owed, or an amount, smaller below a balance (Illinois's $30 under $1,000, else $100). Its
+   * `words` name it inside the notice's sentence. Until 2026-10-20 (brief 17) they were a Title Case `label`, and the
+   * notice read "The Collection Penalty, 15% Of The Tax, $201.17, is added."
    */
-  charges?: readonly { step: number; share?: number; of?: 'tax' | 'owed'; flat?: Money; under?: { below: Money; flat: Money }; atLeast?: Money; atMost?: Money; label: string }[];
+  charges?: readonly { step: number; share?: number; of?: 'tax' | 'owed'; flat?: Money; under?: { below: Money; flat: Money }; atLeast?: Money; atMost?: Money; words: string }[];
   /**
    * A lien for unpaid tax (from the remaining-gaps pass of 2026-10-11; research-state-tax-liens-a.json, -b.json), recorded
    * where it says, at the collection step it says (`atStep`, the notices' index; the first levy at their length), after a
@@ -167,8 +169,12 @@ export interface StateRules {
     firstDays: number; firstAssumed: boolean;
     letters: readonly StateNotice[];
     lettersAssumed: boolean;
-    /** A share of the tax, held between `atLeast` and `atMost`; an amount; or a floor on the whole penalty (Connecticut's $50). */
-    adds?: readonly { share?: number; atLeast?: Money; atMost?: Money; flat?: Money; minPenalty?: Money; label: string }[];
+    /**
+     * A share of the tax, held between `atLeast` and `atMost`; an amount; or a floor on the whole penalty (Connecticut's
+     * $50), each named by its `words` in the assessment's notice. Until 2026-10-20 (brief 17) a Title Case `label` was,
+     * and Connecticut's read "…, and The Penalty For A Return DRS Made, 10% Or $50, The Greater."
+     */
+    adds?: readonly { share?: number; atLeast?: Money; atMost?: Money; flat?: Money; minPenalty?: Money; words: string }[];
   };
   /**
    * Oregon's penalty for three years running unfiled (ORS 305.992, from the remaining-gaps pass of 2026-10-11;
@@ -222,7 +228,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
       firstDays: 92, firstAssumed: true,
       letters: [{ code: 'Failure To File Notice', title: 'Connecticut DRS Made Your Return', words: 'you didn’t file, so DRS worked out what you owe from what was reported. File your own within 60 days, or it’s assessed.', days: 60 }],
       lettersAssumed: false,
-      adds: [{ minPenalty: 50_00, label: 'The Penalty For A Return DRS Made, 10% Or $50, The Greater' }],
+      adds: [{ minPenalty: 50_00, words: 'the penalty for a return DRS made, 10% or $50, whichever is greater' }],
     },
     refundDays: 21,
     lien: { name: 'Connecticut Tax Lien', atStep: 1, recordedAt: 'the town clerk’s land records and the Secretary of the State’s UCC filings', releaseDays: 30, releaseAssumed: true, releaseOnRequest: 'DRS issues a release certificate on request, for you to record', error: { how: 'DRS releases it with a statement that it was filed in error', days: 30, daysAssumed: true }, effect: 'It takes priority over liens recorded after it.' },
@@ -309,7 +315,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
         { code: 'Notice Of Proposed Assessment', title: 'California Proposes What You Owe', words: 'it’s assessed in 60 days unless you file or protest.', days: 60 },
       ],
       lettersAssumed: false,
-      adds: [{ share: 0.25, label: 'The Demand Penalty, 25% Of The Tax (R&TC 19133)' }, { flat: 143_00, label: 'The Filing Enforcement Fee' }],
+      adds: [{ share: 0.25, words: 'the demand penalty, 25% of the tax (R&TC 19133)' }, { flat: 143_00, words: 'the filing enforcement fee' }],
     },
     refundDays: 21,
     lien: { name: 'Notice Of State Tax Lien', atStep: 2, intent: { title: 'California Intends To File A Lien', days: 30 }, recordedAt: 'the county recorder and the Secretary of State', fee: 1000, releaseDays: 40, releaseAssumed: false, error: { how: 'released with a statement of error where the balance was resolved before it was recorded', days: 30, daysAssumed: true }, effect: 'It may affect buying, selling or refinancing property, and getting a loan.' },
@@ -345,7 +351,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
         { code: 'Proposed Assessment', title: 'Arizona Proposes What You Owe', words: 'you didn’t file, so it estimated the tax from what was reported.', days: 45 },
       ],
       lettersAssumed: true,
-      adds: [{ share: 0.25, label: 'The Penalty For Not Filing On Demand, 25% Of The Tax (42-1125(B))' }],
+      adds: [{ share: 0.25, words: 'the penalty for not filing on demand, 25% of the tax (42-1125(B))' }],
     },
     refundDays: 21,
     lien: { name: 'Arizona Tax Lien', atStep: 1, recordedAt: 'the county recorder', releaseDays: 21, releaseAssumed: false, error: { how: 'withdrawn where it was filed prematurely (A.R.S. 42-1153(B))', days: 30, daysAssumed: true }, effect: 'It takes priority against later purchasers and creditors.' },
@@ -370,7 +376,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     levy: { title: 'Colorado Levied Your Accounts', afterDays: 10, againDays: 91 },
     timingAssumed: true,
     // The final demand unpaid, with no plan: 15% of the tax (39-21-118).
-    charges: [{ step: 2, share: 0.15, of: 'tax', label: 'The Collection Penalty, 15% Of The Tax' }],
+    charges: [{ step: 2, share: 0.15, of: 'tax', words: 'the collection penalty, 15% of the tax' }],
     // Up to 36 months, no fee; a default makes the whole due after a written notice, whose days weren't found; a new
     // balance can be added by asking (SLATE asks for them).
     plan: { name: 'Payment Plan', minMonths: 1, maxMonths: 36, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'joins', newBalanceAssumed: true, notInCollection: false },
@@ -406,7 +412,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'Georgia Levied Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, share: 0.2, of: 'owed', label: 'The Collection Fee With The Execution, 20%' }],
+    charges: [{ step: 2, share: 0.2, of: 'owed', words: 'the collection fee with the execution, 20% of what you owe' }],
     // Up to 60 months, at least $25 a month, a $50 fee by bank draft, about 30 days to decide. A late payment or a new
     // balance is a default, and the default letter's days weren't found. How the fee is paid wasn't found: added.
     plan: { name: 'Installment Payment Agreement', minMonths: 1, maxMonths: 60, minMonthly: 25_00, fee: 50_00, feeAdded: true, decideDays: 30, decideAssumed: false, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: false, notInCollection: false },
@@ -442,7 +448,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'Hawaii Levied Your Accounts', afterDays: 10, againDays: 91, feeEach: 15_00 },
     timingAssumed: true,
-    charges: [{ step: 2, flat: 50_00, label: 'The Delinquent Account Fee' }],
+    charges: [{ step: 2, flat: 50_00, words: 'the delinquent account fee' }],
     // Over $100, a $50 fee; a new liability defaults it; notice before collection, whose days weren't found. The longest
     // wasn't found: SLATE's three years. Over twelve months a lien is filed, which SLATE didn't model until 2026-10-11:
     // it's `lien.plan` below.
@@ -477,7 +483,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'Illinois Levied Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, flat: 100_00, under: { below: 1_000_00, flat: 30_00 }, label: 'The Cost Of Collection Fee' }],
+    charges: [{ step: 2, flat: 100_00, under: { below: 1_000_00, flat: 30_00 }, words: 'the cost of collection fee' }],
     // No fee; a new balance joins; over $15,000 a financial statement, which SLATE doesn't model; the longest and what a
     // missed payment does beyond making the whole due weren't found.
     plan: { name: 'Installment Plan', max: 15_000_00, minMonths: 1, maxMonths: 36, monthsAssumed: true, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: false, newBalance: 'joins', newBalanceAssumed: false, notInCollection: false, beyond: 'Over $15,000 it asks for a financial statement, which the game doesn’t offer.' },
@@ -494,7 +500,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
         { code: 'Notice Of Deficiency', title: 'Illinois Proposes What You Owe', words: 'it’s based on what was reported, and assessed in 60 days.', days: 60 },
       ],
       lettersAssumed: false,
-      adds: [{ share: 0.02, atLeast: 250_00, atMost: 5_000_00, label: 'The Penalty For Not Filing After Notice, 2%, At Least $250, At Most $5,000' }],
+      adds: [{ share: 0.02, atLeast: 250_00, atMost: 5_000_00, words: 'the penalty for not filing after notice, 2% of the tax, at least $250 and at most $5,000' }],
     },
     refundDays: 21,
     lien: { name: 'State Tax Lien Registry Notice', atStep: 2, recordedAt: 'the State Tax Lien Registry', releaseDays: 30, releaseAssumed: true, error: { how: 'a release is issued for a lien filed in error', days: 30, daysAssumed: true }, effect: 'In most cases the property can’t be sold or transferred.' },
@@ -563,7 +569,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'Massachusetts Levied Your Accounts', afterDays: 10, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, flat: 30_00, label: 'The Demand Charge' }],
+    charges: [{ step: 2, flat: 30_00, words: 'the demand charge' }],
     // $10,000 or less online, up to 36 months, at least $25 a month; a missed payment brings a notice of intent to
     // cancel, whose days weren't found; a new balance must be paid or it's the same notice. No fee was found.
     plan: { name: 'Payment Agreement', max: 10_000_00, minMonths: 1, maxMonths: 36, minMonthly: 25_00, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: false, notInCollection: false },
@@ -599,7 +605,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'North Carolina Garnished Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, share: 0.2, of: 'owed', label: 'The Collection Assistance Fee, 20%' }],
+    charges: [{ step: 2, share: 0.2, of: 'owed', words: 'the collection assistance fee, 20% of what you owe' }],
     // Up to 18 months, by bank draft; 30 days to cure a default. A fee wasn't stated; a new balance unpaid read as a
     // default, inferred.
     plan: { name: 'Installment Payment Agreement', minMonths: 1, maxMonths: 18, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'notice', days: 30 }, cureAssumed: false, newBalance: 'default', newBalanceAssumed: true, notInCollection: false },
@@ -686,7 +692,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
         { code: 'Notice Of Determination And Assessment', title: 'Oregon Determines What You Owe', words: 'it’s estimated from what was reported.', days: 30 },
       ],
       lettersAssumed: true,
-      adds: [{ share: 0.25, label: 'The Penalty For Not Filing On Demand, 25% Of The Tax' }],
+      adds: [{ share: 0.25, words: 'the penalty for not filing on demand, 25% of the tax' }],
     },
     refundDays: 21,
     threeYear: { share: 1, extensionMonths: 6, waiver: { beforeNotice: 0.7, afterDemand: 0.5, afterAssessment: 0.25 }, windowDays: 365 },
@@ -759,7 +765,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'The Ohio Attorney General Collected From Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 4, share: 0.1, of: 'owed', label: 'The Attorney General’s Collection Cost, 10%' }],
+    charges: [{ step: 4, share: 0.1, of: 'owed', words: 'the Attorney General’s collection cost, 10% of what you owe' }],
     // The department offers none; the Attorney General up to twelve months once the claim is certified, by a signed
     // contract. Its fee and what a missed payment does weren't found.
     plan: { name: 'Payment Plan With The Attorney General', minMonths: 1, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'joins', newBalanceAssumed: true, notInCollection: false, afterStep: { step: 5, who: 'the Ohio Attorney General' } },
@@ -800,7 +806,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'Indiana Levied Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, share: 0.1, of: 'tax', label: 'The Tax Warrant’s Collection Fee, 10% Of The Tax' }],
+    charges: [{ step: 2, share: 0.1, of: 'tax', words: 'the tax warrant’s collection fee, 10% of the tax' }],
     lien: { name: 'Tax Warrant', atStep: 2, recordedAt: 'the circuit court clerk', releaseDays: 30, releaseAssumed: true, error: { how: 'released and expunged within 7 days', days: 7, daysAssumed: false }, effect: 'A title search finds it, and it reaches vehicle titles.' },
     // Over $100, through INTIME: 12 months to $1,000, 24 to $5,000, 36 above; little or nothing down; a missed payment
     // may cancel it; a new liability doesn't join on its own. Fee and decision time weren't found.
@@ -815,7 +821,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
         { code: 'Proposed Assessment', title: 'Indiana Made Your Return', words: 'you didn’t file, so DOR worked it out. You have 60 days to protest.', days: 60 },
       ],
       lettersAssumed: false,
-      adds: [{ share: 0.1, label: 'The Penalty On A Return DOR Made, 20% In Place Of 10%' }],
+      adds: [{ share: 0.1, words: 'the penalty on a return DOR made, 20% in place of 10%' }],
     },
     refundDays: 20,
     source: 'IC 6-3-2-1, 6-8.1-8-1.5, 6-8.1-10-1, 6-8.1-10-2.1, 6-8.1-10-3; in.gov/dor (Departmental Notices 1 and 3, payment plans, collections)',
@@ -838,7 +844,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'The District Levied Your Accounts', afterDays: 45, againDays: 91 },
     timingAssumed: false,
-    charges: [{ step: 2, share: 0.1, of: 'owed', label: 'The Collection Fee, 10%' }],
+    charges: [{ step: 2, share: 0.1, of: 'owed', words: 'the collection fee, 10% of what you owe' }],
     lien: { name: 'District Tax Lien', atStep: 1, recordedAt: 'the Recorder of Deeds', releaseDays: 30, releaseAssumed: true, plan: { monthsOver: 12, over: 25_000_00 }, error: { how: 'a protest of the assessment, then the Office of Administrative Hearings', days: 30, daysAssumed: true }, effect: 'It’s a preferred claim over other creditors, and can block a loan or a sale.' },
     // Under $100,000 and up to 24 months, 10% down, by direct debit, every return filed; a lien where it's over $25,000 or
     // over 12 months. A missed payment cancels it. Fee and decision time weren't found.
@@ -877,7 +883,7 @@ export const STATE_TAX: Readonly<Record<StateCode, StateRules>> = {
     ],
     levy: { title: 'Oklahoma Garnished Your Accounts', afterDays: 30, againDays: 91 },
     timingAssumed: true,
-    charges: [{ step: 2, share: 0.1, of: 'owed', atLeast: 15_00, atMost: 200_00, label: 'The Tax Warrant’s Charge, 10% Between $15 And $200' }],
+    charges: [{ step: 2, share: 0.1, of: 'owed', atLeast: 15_00, atMost: 200_00, words: 'the tax warrant’s charge, 10% of what you owe, between $15 and $200' }],
     lien: { name: 'Tax Warrant', atStep: 2, recordedAt: 'the county clerk', fee: 8_00, releaseFee: 8_00, releaseDays: 30, releaseAssumed: true, error: { how: 'a warrant filed in error is released at no cost', days: 30, daysAssumed: true }, effect: 'It’s on the public warrant register, and must be resolved to sell or refinance.' },
     // Two to twelve months, $100 or more, nothing down (taxcure.com, a secondary source: the rule found is a business's).
     plan: { name: 'Payment Plan', min: 100_00, minMonths: 2, maxMonths: 12, monthsAssumed: true, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }, cureAssumed: true, newBalance: 'default', newBalanceAssumed: true, notInCollection: false },

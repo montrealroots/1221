@@ -796,7 +796,7 @@ describe('c-wealth', () => {
     const point = app(STEP.starting, ada());
     expect(point.text).toContain('Checking $92,391');
     expect(point.text).toContain('Savings $413,043');
-    expect(point.text).toContain('Tuition is covered, and $1,882.00 goes each term to your Yale Health plan.');
+    expect(point.text).toContain('Each fall and spring, $1,882.00 comes out of your bank for that term’s Yale Health plan, and there’s no aid for living costs.');
     const { sim, config } = await appBegin(app(STEP.review, ada()));
     expect(config.family).toBe('wealthy');
     expect(sim.player.family).toBe('wealthy');

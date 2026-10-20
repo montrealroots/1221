@@ -229,7 +229,7 @@ const leaveTaken = (() => {
     let sim = life('jy-1', 'modest');
     tend(sim, at(2027, 1, 20, 12));
     // The spring's scholarship as the rule gives it: ($28,028 − $3,764 + $2,373 + $3,764) / 2, less the $1,882 plan.
-    expect(titled(sim, 'Spring Term 2027 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Your living-expense scholarship of $15,200.50 paid this term’s Yale Health plan, $1,882.00, and $13,318.50 is in your Chase Total Checking.']);
+    expect(titled(sim, 'Spring Term 2027 Begins').map((n) => n.body)).toEqual(['Classes run from January 11 to April 23, 2027, when the faculty review the term. Tuition, $20,375.00 a term, is covered by the tuition scholarship. Your living-expense scholarship of $15,200.50 paid this term’s Yale Health plan, $1,882.00, and $13,318.50 is in your Chase Total Checking.']);
     const asked = ok<{ decideAt: Instant; firstTerm: number; startsNow: boolean }>(sim, 'school.request_leave', { kind: 'personal', reason: 'financial' });
     expect(asked).toEqual({ decideAt: at(2027, 1, 27, 12), firstTerm: 1, startsNow: true });
     expect(refused(sim, 'school.request_leave', { kind: 'personal', reason: 'financial' })).toBe('Your request is with the chair and the dean, decided by January 27, 2027.');
@@ -352,7 +352,7 @@ describe('journeys.x1: a Yale payment drawing on savings, then the hold, then re
     expect(accountOwed(sim, sim.player)).toBe(0);
     expect(school().hold).toBeUndefined();
     expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => [n.at, n.body])).toEqual([[at(2028, 1, 3, 9), 'This term’s living-expense scholarship paid the $7,875.25 it owed. Registration and the diploma are open to you again.']]);
-    expect(titled(sim, 'Spring Term 2028 Begins').map((n) => n.body)).toEqual(['Tuition, $21,031.08 a term, is covered by the tuition scholarship. Your living-expense scholarship of $16,128.08 paid this term’s Yale Health plan, $2,034.44, and the $7,875.25 your Yale account owed; $6,218.39 is in your Chase Total Checking.']);
+    expect(titled(sim, 'Spring Term 2028 Begins').map((n) => n.body)).toEqual(['Classes run from January 10 to April 28, 2028, when the faculty review the term. Tuition, $21,031.08 a term, is covered by the tuition scholarship. Your living-expense scholarship of $16,128.08 paid this term’s Yale Health plan, $2,034.44, and the $7,875.25 your Yale account owed; $6,218.39 is in your Chase Total Checking.']);
     const terms = drawn(sim, SchoolWorkspace, 'terms');
     expect(terms).toContain(' Living-Expense Scholarship $16,128.08 Applied To Your Yale Account $7,875.25 Paid To Your Bank $6,218.39 ');
     expect(terms).toContain(' Owed On Your Yale Account $0.00 ');
@@ -370,7 +370,7 @@ describe('journeys.x1: a Yale payment drawing on savings, then the hold, then re
     expect(titled(sim, 'The Financial Hold Is Lifted')).toHaveLength(1);
     // The twin who paid: nothing owed at the term's start, so the $14,093.64 is paid out whole.
     expect(legs(twin)).toEqual([['Chase Total Checking', 14_093_64]]);
-    expect(titled(twin, 'Spring Term 2028 Begins').map((n) => n.body)).toEqual(['Tuition, $21,031.08 a term, is covered by the tuition scholarship. Your living-expense scholarship of $16,128.08 paid this term’s Yale Health plan, $2,034.44, and $14,093.64 is in your Chase Total Checking.']);
+    expect(titled(twin, 'Spring Term 2028 Begins').map((n) => n.body)).toEqual(['Classes run from January 10 to April 28, 2028, when the faculty review the term. Tuition, $21,031.08 a term, is covered by the tuition scholarship. Your living-expense scholarship of $16,128.08 paid this term’s Yale Health plan, $2,034.44, and $14,093.64 is in your Chase Total Checking.']);
     expect(titled(twin, 'The Financial Hold Is Lifted')).toHaveLength(1);
     for (const s of [sim, twin]) {
       expect(breaches(s.universe)).toEqual([]);
@@ -438,7 +438,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     // A twin that keeps it: billed at Fair Haven as the uninsured's, the figure Papers gave, and told why.
     const kept = reload(sim);
     tend(kept, at(2027, 3, 4, 18));
-    expect(titled(kept, 'A Doctor’s Visit').at(-1)!.body).toBe(`A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. You owe ${priced}. It’s taken from your checking account on April 3, 2027, and if there isn’t enough then, it becomes medical debt.`);
+    expect(titled(kept, 'A Doctor’s Visit').at(-1)!.body).toBe(`You saw a doctor at Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. You owe ${priced}. It’s taken from your checking account on April 3, 2027, and if there isn’t enough then, it becomes medical debt.`);
     // The player's way: called off under Your Doctor, then booked again: Yale Health's Student Health, the next weekday.
     sim = reload(sim);
     expect(titled(sim, 'Your Appointment Is Outside Yale Health')).toHaveLength(1);
@@ -449,7 +449,7 @@ describe('journeys.x2: a leave and its Affiliate cover, then a bill', () => {
     expect(refused(sim, 'health.book')).toBe('There’s nothing to see a doctor about.');
     expect(drawn(sim, PapersWorkspace, 'health')).not.toContain('call this off, then Book An Appointment');
     tend(sim, at(2027, 2, 11, 18));
-    expect(titled(sim, 'A Doctor’s Visit').at(-1)!.body).toBe('A doctor’s visit, Yale Health Center, Student Health. There’s nothing to pay.');
+    expect(titled(sim, 'A Doctor’s Visit').at(-1)!.body).toBe('You saw a doctor at Yale Health Center, Student Health. There’s nothing to pay.');
     expect(titled(sim, 'Your Appointment Is Outside Yale Health')).toHaveLength(1);
     expect(breaches(sim.universe)).toEqual([]);
   }, 300_000);
@@ -514,7 +514,7 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
       tend(s, at(2026, 12, 10, 12));
       const visit = (healthOf(s.player).careLog ?? []).filter((e) => e.at >= at(2026, 12, 1, 0));
       expect(visit.map((e) => [e.at, e.care, e.share, e.billId])).toEqual([[at(2026, 12, 3, 10), 'visit', 0, undefined]]);
-      expect(titled(s, 'A Doctor’s Visit').filter((n) => n.at >= at(2026, 12, 1, 0)).map((n) => n.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. There’s nothing to pay.']);
+      expect(titled(s, 'A Doctor’s Visit').filter((n) => n.at >= at(2026, 12, 1, 0)).map((n) => n.body)).toEqual(['You saw a doctor at Fair Haven Community Health Care. There’s nothing to pay.']);
     }
   }, 300_000);
 
@@ -845,7 +845,7 @@ describe('journeys.d-f1-term-notice: an F-1 student’s term notice and what rea
     // withheld at source for a nonresident (IRC 1441(b)), so $11,356.54 is paid in.
     const t = sim.universe.transactions.filter((x) => x.memo.startsWith('Living-expense scholarship, the fall term of 2026:'));
     expect(t.map((x) => x.postings.filter((p) => sim.universe.accounts[p.accountId]?.ownerId === sim.player.id).map((p) => [sim.universe.accounts[p.accountId]!.name, p.amount]))).toEqual([[['Chase Total Checking', 11_356_54]]]);
-    expect(titled(sim, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Your living-expense scholarship of $15,200.50 paid this term’s Yale Health plan, $1,882.00, and $11,356.54 is in your Chase Total Checking, after $1,961.96 withheld for the IRS.']);
+    expect(titled(sim, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Classes run from August 31 to December 11, 2026, when the faculty review the term. Tuition, $20,375.00 a term, is covered by the tuition scholarship. Your living-expense scholarship of $15,200.50 paid this term’s Yale Health plan, $1,882.00, and $11,356.54 is in your Chase Total Checking, after $1,961.96 withheld for the IRS.']);
   }, 120_000);
 });
 

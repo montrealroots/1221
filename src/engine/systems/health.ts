@@ -59,7 +59,7 @@ import { FAIR_PHARMACARE, ONTARIO_DRUGS } from '../content/cabenefits';
 import { eiWeek } from './eiself';
 import { laidUp } from './injury';
 import { clinicById, clinicFor, clinicRefusal, outsideItsPractice, selfPayAt } from './clinics';
-import { appointmentsOf, book } from './appointments';
+import { appointmentsOf, book, seenWords } from './appointments';
 import { US_PHARMACIES, edMinutes, emergencyScale } from '../content/carevisits';
 import { markRecord } from './credit';
 
@@ -834,7 +834,9 @@ export function onsetMonth(sim: Simulation, person: Person, at: Instant): Condit
     const chance = onsetYearly(condition, age, bmi) / 12;
     if (rng.next() >= chance) continue;
     (h.chronic ??= {})[condition] = { treated: true, since: at };
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: `Diagnosed: ${CONDITION_LABEL[condition]}`, body: `A doctor found it this month. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.`, importance: 75, route: '/workspace/papers' });
+    // The condition named in the sentence (from 2026-10-20, brief 17): until then "A doctor found it this month.", whose
+    // "it" was the title's.
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: `Diagnosed: ${CONDITION_LABEL[condition]}`, body: `A doctor found this month that you have ${CONDITION_LABEL[condition].toLowerCase()}. Its care starts now, and each month you pay what your plan doesn’t cover. You can see the cost, or stop the care with Let It Go, on Papers, under Health Cover.`, importance: 75, route: '/workspace/papers' });
     return condition;
   }
   return undefined;
@@ -1807,10 +1809,16 @@ function planPays(person: Person, care: Care, clinic: ReturnType<typeof clinicBy
  * workout (`lookAfterRefusal`), and, while enrolled, a day of classes excused through Call In Sick (`school.call_in_sick`
  * takes the flu as reason enough, and the School offers it while `schoolEnded` is false). Until then the notice said
  * only "The flu. It costs nothing."
+ *
+ * From 2026-10-20 (brief 17), in the order an injury's notice has them (`injuryKeeps`): what it keeps them from, then
+ * what's done about it. Until then it said "Work Out waits until it passes", left out the voice and body work it holds
+ * back while it lasts (`conditionAt`'s `ill`, in the Player Profile's words for it), and said Call In Sick "excuses a day
+ * of classes", which read as one day in all where `sickRefusal` takes it on any day of the flu, and didn't name the
+ * Classes tab it's on or say it excuses the whole day at school.
  */
 function fluMeans(sim: Simulation, person: Person, until: Instant): string {
   const enrolled = person.school !== undefined && !schoolEnded(person.school.standing);
-  return `It lasts until ${formatDate(until, sim.zone)}, and it has cost you some condition and energy. Work Out waits until it passes${enrolled ? ', and Call In Sick, on School, excuses a day of classes' : ''}.`;
+  return `It lasts until ${formatDate(until, sim.zone)}, and it has cost you some condition and energy. Until it passes you can’t work out, and it holds back your voice and body work.${enrolled ? ' Each day until then, Call In Sick, on School’s Classes tab, can excuse that day at school.' : ''}`;
 }
 
 /**
@@ -1844,8 +1852,10 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   // A flu that isn't seen costs nothing, and is told all the same (from 2026-10-13: until then it returned before its notice,
   // and the player was never told of the flu that cost them condition and energy and stopped their workouts; found by the
   // review of that day).
+  // From 2026-10-20 (brief 17) its words begin with how long it lasts: until then they began "You have the flu.", under
+  // the title You Have The Flu.
   if (event.flu && event.care === 'visit') {
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'You Have The Flu', body: `You have the flu. ${fluMeans(sim, person, h.fluUntil!)} You didn’t see a doctor, so there’s nothing to pay.`, importance: 60, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'You Have The Flu', body: `${fluMeans(sim, person, h.fluUntil!)} You didn’t see a doctor, so there’s nothing to pay.`, importance: 60, route: '/workspace/papers' });
     return undefined;
   }
   // Where it was had: a named practice, clinic or hospital in the town they're in (`systems/clinics.ts`), the practice
@@ -1878,6 +1888,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Bill Due: ${event.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
     return bill;
   }
+  const asked = event.what;
   if (clinic) event = { ...event, what: `${event.what}, ${clinic.name}` };
   // On the care log, whatever it cost (`repriceCare`), with the plan's part (from 2026-10-16: a share of $0 makes no
   // bill, and until then what HUSKY D, Covered Connecticut or Yale Health paid of such care was written nowhere).
@@ -1885,15 +1896,28 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   const planPart = pays ? Math.max(0, planPrice(event.care as 'visit' | 'urgent' | 'emergency' | 'stay', at, cur) - amount) : 0;
   const logged = MEDICAL.includes(event.care) ? { at, care: event.care, what: event.what, share: amount, ...(event.care === 'visit' && clinic ? { clinicId: clinic.id } : {}), planPaid: planPart } as NonNullable<HealthRecord['careLog']>[number] : undefined;
   if (logged) { h.careLog = [...(h.careLog ?? []), logged]; pruneCareLog(h, at); }
+  // A marketplace insurer's denial: billed as if uninsured (`DENIALS`). Drawn before the notice, on the key the bill is
+  // made under (`m` and the next `seq`), so the notice says what the bill is: from 2026-10-20 (brief 17), when a denied
+  // visit's notice was found saying "You owe $45.00." over a bill of $183.98. The draw is keyed (`rngFor`), so drawing it
+  // here draws the same number it drew below until then, and no other.
+  const denied = amount > 0 && coverOn(person, at) === 'marketplace' && sim.rng('health.denial', person.id, `m${(h.seq ?? 0) + 1}`).next() < DENIALS.rate;
+  const full = denied ? Math.max(amount, uninsuredPrice(sim, event.care as 'visit' | 'urgent' | 'emergency' | 'stay', at)) : amount;
   if (person.id === sim.universe.playerId && MEDICAL.includes(event.care)) {
-    sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: [`${event.what}${event.care === 'stay' ? `, for ${CARE.stayDays} days` : ''}.`, outside ? 'Yale Health pays for a visit only at its own Health Center, not here.' : '', event.flu ? fluMeans(sim, person, h.fluUntil!) : (event.care === 'stay' || event.care === 'emergency') && person.school && !schoolEnded(person.school.standing) ? 'Classes you miss while you’re there are excused.' : '', amount > 0 ? `You owe ${formatMoney(amount, cur)}. ${dueWords(sim, at + MEDICAL_DEBT.dueDays * MS_DAY)}` : 'There’s nothing to pay.'].filter(Boolean).join(' '), importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
+    // Who they saw and where, in a sentence (from 2026-10-20, brief 17): until then the bill's own line came first, "A
+    // doctor’s visit, Yale Health Center, Student Health.", and the flu seen read "The flu, at urgent care, …".
+    const where = clinic ? ` at ${clinic.name}` : '';
+    const seen = event.flu ? `You saw a doctor for it${clinic ? where : ' at urgent care'}.`
+      : event.care === 'stay' ? `You’re in hospital for ${CARE.stayDays} days${where}.`
+        : event.care === 'emergency' ? `You went to the emergency room${where}.`
+          : event.care === 'urgent' ? `You went to urgent care${where}.`
+            : seenWords(asked, clinic?.name);
+    const owed = denied ? `You owe the full ${formatMoney(full, cur)}, because your plan denied the claim. ${dueWords(sim, at + MEDICAL_DEBT.dueDays * MS_DAY)}`
+      : amount > 0 ? `You owe ${formatMoney(amount, cur)}. ${dueWords(sim, at + MEDICAL_DEBT.dueDays * MS_DAY)}` : 'There’s nothing to pay.';
+    sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: [seen, outside ? 'Yale Health pays for a visit only at its own Health Center, not here.' : '', event.flu ? fluMeans(sim, person, h.fluUntil!) : (event.care === 'stay' || event.care === 'emergency') && person.school && !schoolEnded(person.school.standing) ? 'Classes you miss while you’re there are excused.' : '', owed].filter(Boolean).join(' '), importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
   }
   if (amount <= 0) return undefined;
   h.seq = (h.seq ?? 0) + 1;
   const hospital = event.care === 'emergency' || event.care === 'stay';
-  // A marketplace insurer's denial: billed as if uninsured (`DENIALS`).
-  const denied = coverOn(person, at) === 'marketplace' && sim.rng('health.denial', person.id, `m${h.seq}`).next() < DENIALS.rate;
-  const full = denied ? Math.max(amount, uninsuredPrice(sim, event.care as 'visit' | 'urgent' | 'emergency' | 'stay', at)) : amount;
   // An uninsured Connecticut patient's was screened for the charity at billing (`shareOf`), and the bill says how it
   // came out: screened where something came off, refused over the limit (from 2026-10-12: until then every one read
   // screened, and Papers said Charity Taken Off on a bill it took nothing off).

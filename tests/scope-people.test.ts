@@ -192,7 +192,7 @@ describe('l-person: another person’s look reads their traits, their condition 
     expect(hers.words).toContain('Mending. A broken bone, until September 5, 2026, and laid up until then.');
     expect(hers.ways!.find((w) => w.label === 'An Injury')!.detail).toBe('What it is, when it mends, and what it keeps her from.');
     const injury = look(sim, 'condition', `${cleo.id}/injury`);
-    expect([injury.name, injury.kind, injury.summary]).toEqual(['A Broken Bone', 'An Injury', 'It mends by September 5, 2026. Until then she’s laid up, kept from classes, work and training.']);
+    expect([injury.name, injury.kind, injury.summary]).toEqual(['A Broken Bone', 'An Injury', 'It mends by September 5, 2026. She’s laid up until then, kept from classes, work and training.']);
     expect(yous(hers)).toEqual([]);
     expect(yous(devs)).toEqual([]);
 

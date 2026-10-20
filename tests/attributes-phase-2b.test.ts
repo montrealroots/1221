@@ -40,7 +40,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_HOUR } from '@/engine/core/time';
+import { MS_HOUR, formatDate } from '@/engine/core/time';
 import type { Person } from '@/engine/domain/model';
 import { ABILITY_DEFS, MASTERED, STEP_SPEED, TECHNIQUES, type AbilityId } from '@/engine/content/abilities';
 import { BRIEFS, BRIEF_BY_ID, type Brief } from '@/engine/content/briefs';
@@ -79,7 +79,7 @@ import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at as subject } from '@/ui/looks/subject';
 import { readersOf, sourceWords } from '@/ui/looks/actor';
-import { adviceFor } from '@/engine/systems/next-steps';
+import { adviceFor, adviceSummary } from '@/engine/systems/next-steps';
 import type { Recommendation } from '@/engine/systems/experience';
 import { suggestions } from '@/engine/systems/briefs';
 import { AXES } from '@/engine/content/approaches';
@@ -1310,10 +1310,12 @@ const nextWork = (sim: Simulation): string => { const page = profile(sim).text.r
  * now and what to do, and the rest under Why This Recommendation; any other, under Other Things Worth Your Time, its
  * label and the whole of `why`. Until then each was drawn `${label}. ${why}`.
  */
-const drawnAs = (next: string, r: Recommendation): boolean => next.includes(`${r.label}: ${r.why}`)
+const drawnAs = (next: string, r: Recommendation, sim?: Simulation): boolean => next.includes(`${r.label}: ${r.why}`)
   // Among the others, why now, with what to do said once where two share it (from 2026-10-20, later that day).
   || (r.now !== undefined && next.includes(`${r.label}: ${r.now}`) && (!r.more || next.includes(r.more)))
-  || (next.includes(`${r.label}. ${[r.now, r.act].filter(Boolean).join(' ')}`) && (!r.more || next.includes(r.more)));
+  // The first, with what the record shows of it now between why it matters and what to do (from 2026-10-20, brief 17,
+  // the card's `continuing`), read from the card as the screen draws it.
+  || (next.includes(`${r.label}. ${[r.now, sim ? adviceSummary(sim, sim.player, adviceFor(sim, sim.player))?.continuing : undefined, r.act].filter(Boolean).join(' ')}`) && (!r.more || next.includes(r.more)));
 /** TEST SETUP: a brief's parts complete and its genre known, as a player who prepared it leaves them. */
 const preparedFully = (sim: Simulation, b: Brief) => { Object.assign(recordOf(sim.player, b.id).prep, { interpretation: 1, memorization: 1, rehearsal: 1 }); for (const g of b.kinds) Object.assign(genreState(sim.player, g), { familiarity: 100, practice: 100 }); };
 const LONG = BRIEFS.filter((b) => b.size === 'long').slice(0, 4);
@@ -1326,8 +1328,8 @@ describe('F3: feedback says the condition and the preparation apart from ability
     for (const r of prep) {
       expect(r.focus).toBe('preparation');
       expect(r.exercise).toBeUndefined();
-      expect(r.why).toMatch(/^Coming to your work short on .+ cost each piece about (?:1 point|(?!1 )[\d.]+ points) off the whole\. That’s preparation, not training: prepare that part further before you show or tape the next piece\.$/);
-      expect(drawnAs(cold.next, r), r.label).toBe(true);
+      expect(r.why).toMatch(/^Going in short on it cost your recent work about (?:1 point|(?!1 )[\d.]+ points) a piece off the whole\. That’s preparation, not training: give it more time before you show or tape your next piece\.$/);
+      expect(drawnAs(cold.next, r, cold.sim), r.label).toBe(true);
     }
     const ready = taped('p2b-f3-cold', LONG, preparedFully);
     expect(ready.recs.some((r) => r.target.startsWith('prep:'))).toBe(false);
@@ -1339,8 +1341,9 @@ describe('F3: feedback says the condition and the preparation apart from ability
     expect(flu, JSON.stringify(ill.recs.map((r) => r.target))).toBeDefined();
     expect(flu!.focus).toBe('condition');
     expect(flu!.exercise).toBeUndefined();
-    expect(flu!.why).toMatch(/^Down With The Flu cost each piece about (?:1 point|(?!1 )[\d.]+ points) off the whole\. Come to the work rested and well, or find places to breathe in it\.$/);
-    expect(drawnAs(ill.next, flu!)).toBe(true);
+    expect(flu!.label).toBe('Down With The Flu');
+    expect(flu!.why).toMatch(/^It cost your recent work about (?:1 point|(?!1 )[\d.]+ points) a piece off the whole\. That’s how you were on the day, not your ability: come to the next piece rested and well\.$/);
+    expect(drawnAs(ill.next, flu!, ill.sim)).toBe(true);
     const well = taped('p2b-f3-flu', LONG, preparedFully);
     expect(well.recs.some((r) => r.target === 'condition:illness')).toBe(false);
   }, 120_000);
@@ -1362,8 +1365,8 @@ describe('F3: feedback says the condition and the preparation apart from ability
     expect(fit, JSON.stringify(adviceFor(sim, sim.player).map((r) => r.target))).toBeDefined();
     expect(fit!.focus).toBe('choice');
     expect(fit!.exercise).toBeUndefined();
-    expect(fit!.why).toMatch(/^Playing it a way that didn’t fit cost each piece about (?:1 point|(?!1 )[\d.]+ points) off the whole\. Choose a way the material or the direction allows\.$/);
-    expect(drawnAs(nextWork(sim), fit!)).toBe(true);
+    expect(fit!.why).toMatch(/^Playing it a way that didn’t fit cost your recent work about (?:1 point|(?!1 )[\d.]+ points) a piece off the whole\. Choose a way the material or the direction allows\.$/);
+    expect(drawnAs(nextWork(sim), fit!, sim)).toBe(true);
   }, 120_000);
 
   it('PLAYER JOURNEY: stamina draining through long takes is advised as stamina, built by a Work Out, never as rest; a fitter twin isn’t advised it', () => {
@@ -1376,7 +1379,7 @@ describe('F3: feedback says the condition and the preparation apart from ability
     expect(s!.why).toContain('Work Out');
     expect(s!.why).toContain('Rest restores energy, not fitness.');
     expect(s!.why).not.toContain('Come to the work rested');
-    expect(drawnAs(unfit.next, s!)).toBe(true);
+    expect(drawnAs(unfit.next, s!, unfit.sim)).toBe(true);
     const fit = taped('p2b-f3-stamina', LONG, (sim, b) => { preparedFully(sim, b); sim.player.wellbeing.fitness = abilityFull(sim, sim.player, 'stamina'); });
     expect(fit.recs.some((r) => r.target === 'condition:stamina')).toBe(false);
   }, 120_000);
@@ -1486,7 +1489,7 @@ describe('health, stamina and energy kept apart (brief 11, section 7)', () => {
       else expect(today, d.id).not.toContain('The flu');
     }
     freeAndRested(sim);
-    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'exercise' } }).error).toBe('Not with the flu: rest until it passes.');
+    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'exercise' } }).error).toBe(`Not with the flu: rest until it passes on ${formatDate(sim.player.health!.fluUntil!, sim.zone)}.`);
   }, 120_000);
 
   it('PLAYER JOURNEY: twins at a night’s curtain at the same readiness, one down with the flu: the flu reaches the night once, as Down With The Flu on the dimensions its task lists illness for; stamina, its drain in every part and the energy the night costs are the well twin’s', () => {

@@ -12,15 +12,17 @@ import { describe, expect, it } from 'vitest';
 import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, formatDate } from '@/engine/core/time';
 import { healthOf } from '@/engine/systems/health';
-import { mayHurt } from '@/engine/systems/injury';
+import { injuryKeeps, mayHurt } from '@/engine/systems/injury';
 import { INJURY_KIND, type InjuryKind } from '@/engine/content/injury';
 import { resolveLook } from '@/ui/looks/registry';
 import { at } from '@/ui/looks/subject';
 import '@/ui/looks/all';
 
-const CALL_IN_SICK = 'Call In Sick, on School, excuses a day of classes while it mends.';
+// From 2026-10-20 (brief 17): until then “Call In Sick, on School, excuses a day of classes while it mends.”, which read
+// as one day in all.
+const CALL_IN_SICK = 'Each day until then, Call In Sick, on School’s Classes tab, can excuse that day at school.';
 /** A new life at the School, as `tests/evidence-g07-life.test.ts` makes one: Yale Health pays a student's care whole. */
 const student = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 const lastNotice = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title).at(-1)?.body;
@@ -34,8 +36,8 @@ describe('an injury’s notice says what its care cost and how a day of classes 
     expect(['strain', 'back']).toContain(hurt.kind);
     const body = lastNotice(sim, spec.label)!;
     expect(healthOf(sim.player).bills ?? []).toHaveLength(0);
-    expect(body).toContain(`Its care, ${spec.care === 'urgent' ? 'a visit to urgent care' : 'a doctor’s visit'} and ${spec.therapy} sessions of physical therapy, costs you nothing.`);
-    expect(body.endsWith(CALL_IN_SICK)).toBe(true);
+    expect(body.endsWith(`Its care, ${spec.care === 'urgent' ? 'a visit to urgent care' : 'a doctor’s visit'} and ${spec.therapy === 2 ? 'two' : 'four'} sessions of physical therapy, costs you nothing.`)).toBe(true);
+    expect(body).toContain(CALL_IN_SICK);
 
     // The same draw on a life that has left the School: the care the same, and no Call In Sick to press.
     const left = student('lang14-injury');
@@ -58,7 +60,7 @@ describe('an injury’s notice says what its care cost and how a day of classes 
     }
     expect(hurt).toBeDefined();
     const body = lastNotice(sim, INJURY_KIND[hurt!.kind].label)!;
-    expect(body).toContain('you’re laid up until then, kept from classes, work and training.');
+    expect(body).toContain('You’re laid up until then, kept from classes, work and training. What you miss at school is excused.');
     expect(body).not.toContain('Call In Sick');
   });
 });
@@ -78,8 +80,43 @@ describe('an injury’s look says what it keeps you from, and Call In Sick where
     expect(sprain.endsWith(CALL_IN_SICK)).toBe(true);
     expect(summaryOf(student('lang14-look-2'), 'bruise')).not.toContain('Call In Sick');
     const broken = summaryOf(student('lang14-look-3'), 'fracture');
-    expect(broken).toContain('laid up, kept from classes, work and training');
+    expect(broken).toContain('laid up until then, kept from classes, work and training');
     expect(broken).not.toContain('Call In Sick');
     expect(summaryOf(student('lang14-look-4'), 'sprain', 'withdrawn')).not.toContain('Call In Sick');
   });
 });
+
+/**
+ * From 2026-10-20 (brief 17), what an injury keeps you from is said alike by its notice and its look (`injuryKeeps`), each
+ * after the day it mends: an injury that lays you up says the classes it keeps you from are excused (`offSick`), and a
+ * cut or a knock, which keeps you from nothing (`INJURY_KIND[].limits`), says so. Until then the notice gave its days and
+ * no date, the laid-up words left the excused classes out, and a knock's look said only when it mends.
+ */
+describe('an injury says the day it mends, and what it keeps you from in each kind', () => {
+  it('names the day in the notice, the look’s own day, for a swim’s strain', () => {
+    const sim = student('lang17-day');
+    const hurt = mayHurt(sim, sim.player, 'swim', 1, sim.now)!;
+    const body = lastNotice(sim, INJURY_KIND[hurt.kind].label)!;
+    const day = formatDate(hurt.until, sim.zone);
+    expect(body.startsWith(`It takes ${Math.round((hurt.until - hurt.at) / MS_DAY)} days to mend, until ${day}. Until then you can’t work out, and it holds back the physical side of your work.`)).toBe(true);
+    const found = resolveLook(sim, at('condition', 'injury')) as { summary: string };
+    expect(found.summary.startsWith(`It mends by ${day}. Until then you can’t work out`)).toBe(true);
+  });
+
+  it('says a laid-up student’s classes are excused, and a knock keeps you from nothing, in the look as in the notice', () => {
+    const look = (kind: InjuryKind, standing?: 'withdrawn') => {
+      const sim = student(`lang17-look-${kind}-${standing ?? 'at'}`);
+      if (standing) sim.player.school!.standing = standing; // TEST SETUP
+      healthOf(sim.player).injury = { kind, at: sim.now, until: sim.now + 5 * MS_DAY, ...(INJURY_KIND[kind].offWork ? { offWorkUntil: sim.now + 5 * MS_DAY } : {}) }; // TEST SETUP
+      return (resolveLook(sim, at('condition', 'injury')) as { summary: string }).summary;
+    };
+    expect(look('fracture').endsWith('You’re laid up until then, kept from classes, work and training. What you miss at school is excused.')).toBe(true);
+    expect(look('fracture', 'withdrawn').endsWith('You’re laid up until then, kept from classes, work and training.')).toBe(true);
+    expect(look('bruise').endsWith('It won’t stop you working out or going to class.')).toBe(true);
+    expect(look('cut', 'withdrawn').endsWith('It won’t stop you working out.')).toBe(true);
+    // The notice says the same of each.
+    expect(injuryKeeps('fracture', true)).toBe('You’re laid up until then, kept from classes, work and training. What you miss at school is excused.');
+    expect(injuryKeeps('bruise', true)).toBe('It won’t stop you working out or going to class.');
+  });
+});
+

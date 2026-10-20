@@ -154,7 +154,10 @@ describe('each course passed, incomplete or failed, and what the degree needs', 
     const incomplete = records.filter(([, r]) => r.result === 'incomplete');
     expect(incomplete.length).toBeGreaterThan(0);
     const [key, r] = incomplete[0]!;
-    expect(sim.universe.notifications.some((n) => n.title === `Incomplete: ${r.name}`)).toBe(true);
+    // Told by name: alone in its own notice, or with the term's others in one (from 2026-10-20, brief 17).
+    const word = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+    const told = incomplete.length === 1 ? `Incomplete: ${r.name}` : `Incompletes In ${word[incomplete.length]!.replace(/^\w/, (c) => c.toUpperCase())} Courses`;
+    expect(sim.universe.notifications.filter((n) => n.title === told).map((n) => incomplete.length === 1 || n.body.includes(`${r.name} (${word[r.owed!]})`))).toEqual([true]);
     sim = reload(sim);
     for (let i = 0; i < (r.owed ?? 0); i += 1) {
       const made = sim.must<{ passed: boolean }>({ kind: 'school.make_up', payload: { key } });

@@ -878,7 +878,7 @@ export interface Template {
 }
 
 const read: Activity = { id: 'read', label: 'Read The Scene', minutes: 40, dim: 'familiarity', gain: 0.55 };
-const learn: Activity = { id: 'learn', label: 'Learn Lines', minutes: 60, dim: 'memorization', gain: 0.32, requires: { dim: 'familiarity', at: 0.3, why: 'Read the scene first: you learn lines from a scene you know.' }, trains: 'memorization' };
+const learn: Activity = { id: 'learn', label: 'Learn Lines', minutes: 60, dim: 'memorization', gain: 0.32, requires: { dim: 'familiarity', at: 0.3, why: 'Read the scene first. You learn lines from a scene you know.' }, trains: 'memorization' };
 // Rehearse Alone is the scene's time on its feet, as its notes say, so it needs your feet (from 2026-10-12): until then it
 // named no need, so it could be done spent, injured or from a hospital bed, and it counted as desk work (`WORK.met`).
 const alone: Activity = { id: 'rehearse', label: 'Rehearse Alone', minutes: 60, dim: 'rehearsal', gain: 0.28, needs: ['feet'], requires: { dim: 'memorization', at: 0.25, why: 'Learn some of the lines first.' } };
@@ -1063,7 +1063,7 @@ export const TEMPLATES: readonly Template[] = [
     dims: { partner: { label: 'Played Together', weight: 0.6 }, rehearsal: { label: 'Built On', weight: 0.4 } },
     activities: [
       { ...withPartner, label: 'Play The Game With Your Partner', minutes: 60, gain: 0.45 },
-      { id: 'build', label: 'Build On What Came Up', minutes: 40, dim: 'rehearsal', gain: 0.35, requires: { dim: 'partner', at: 0.3, why: 'Play it together first: there’s nothing yet to build on.' }, trains: 'improv' },
+      { id: 'build', label: 'Build On What Came Up', minutes: 40, dim: 'rehearsal', gain: 0.35, requires: { dim: 'partner', at: 0.3, why: 'Play it together first. There’s nothing yet to build on.' }, trains: 'improv' },
     ],
     reads: { improv: 2, emotion: 1 }, dueAfter: 3, revised: false, par: 50,
     notes: {
@@ -1077,7 +1077,7 @@ export const TEMPLATES: readonly Template[] = [
     dims: { familiarity: { label: 'Knows The Play', weight: 0.3 }, interpretation: { label: 'The Analysis', weight: 0.5 }, revision: { label: 'Written Up', weight: 0.2 } },
     activities: [
       { ...read, label: 'Read The Play' },
-      { id: 'write', label: 'Write It Up', minutes: 60, dim: 'revision', gain: 0.45, requires: { dim: 'interpretation', at: 0.4, why: 'Answer the questions first: there’s nothing to write up yet.' }, trains: 'script' },
+      { id: 'write', label: 'Write It Up', minutes: 60, dim: 'revision', gain: 0.45, requires: { dim: 'interpretation', at: 0.4, why: 'Answer the questions first. There’s nothing to write up yet.' }, trains: 'script' },
     ],
     reads: { script: 3 }, dueAfter: 3, revised: false, par: 50,
     notes: {
@@ -1093,7 +1093,7 @@ export const TEMPLATES: readonly Template[] = [
     activities: [
       { id: 'learn-fight', label: 'Learn The Choreography', minutes: 40, dim: 'familiarity', gain: 0.45, needs: ['feet'] },
       { id: 'shadow', label: 'Run It Alone, At Half Speed', minutes: 30, dim: 'rehearsal', gain: 0.35, needs: ['feet'], requires: { dim: 'familiarity', at: 0.3, why: 'Learn the choreography first.' }, trains: 'combat' },
-      { ...withPartner, label: 'Drill It With Your Partner', minutes: 60, needs: ['partner', 'studio', 'feet'], requires: { dim: 'familiarity', at: 0.4, why: 'Learn the choreography before drilling it together: a sequence isn’t found with a partner at speed.' } },
+      { ...withPartner, label: 'Drill It With Your Partner', minutes: 60, needs: ['partner', 'studio', 'feet'], requires: { dim: 'familiarity', at: 0.4, why: 'Learn the choreography before drilling it together. A sequence isn’t found with a partner at speed.' } },
     ],
     reads: { combat: 2, intimacy: 1 }, dueAfter: 4, revised: false, par: 50, only: { 'DRAM 403a/b': 'spring' },
     notes: {
@@ -1108,8 +1108,8 @@ export const TEMPLATES: readonly Template[] = [
     dims: { familiarity: { label: 'The Practice Learned', weight: 0.3 }, partner: { label: 'Practiced Together', weight: 0.5 }, rehearsal: { label: 'The Score Recalled', weight: 0.2 } },
     activities: [
       { id: 'protocol', label: 'Review The Consent Practice', minutes: 30, dim: 'familiarity', gain: 0.5 },
-      { ...withPartner, label: 'Practice The Moment With Your Partner', minutes: 60, needs: ['partner', 'studio'], requires: { dim: 'familiarity', at: 0.5, why: 'Agree how you’ll work first: there’s no partner work until the boundaries are set.' } },
-      { id: 'score', label: 'Write Out The Score', minutes: 20, dim: 'rehearsal', gain: 0.45, requires: { dim: 'partner', at: 0.3, why: 'Work it with your partner first: there’s no score yet to write out.' }, trains: 'intimacy' },
+      { ...withPartner, label: 'Practice The Moment With Your Partner', minutes: 60, needs: ['partner', 'studio'], requires: { dim: 'familiarity', at: 0.5, why: 'Agree how you’ll work first. There’s no partner work until the boundaries are set.' } },
+      { id: 'score', label: 'Write Out The Score', minutes: 20, dim: 'rehearsal', gain: 0.45, requires: { dim: 'partner', at: 0.3, why: 'Work it with your partner first. There’s no score yet to write out.' }, trains: 'intimacy' },
     ],
     reads: { intimacy: 2, movement: 1 }, dueAfter: 4, revised: false, par: 50,
     notes: {
@@ -1125,7 +1125,7 @@ export const TEMPLATES: readonly Template[] = [
     activities: [
       { id: 'read-play', label: 'Read The Play', minutes: 90, dim: 'familiarity', gain: 0.55 },
       { id: 'research', label: 'Research It At The Library', minutes: 90, dim: 'interpretation', gain: 0.4, needs: ['library'], requires: { dim: 'familiarity', at: 0.3, why: 'Read the play first. You need questions before you can research it.' }, trains: 'script' },
-      { id: 'prepare-talk', label: 'Prepare The Presentation', minutes: 60, dim: 'revision', gain: 0.45, requires: { dim: 'interpretation', at: 0.3, why: 'Research it first: there’s nothing yet to present.' } },
+      { id: 'prepare-talk', label: 'Prepare The Presentation', minutes: 60, dim: 'revision', gain: 0.45, requires: { dim: 'interpretation', at: 0.3, why: 'Research it first. There’s nothing yet to present.' } },
     ],
     reads: { script: 3 }, dueAfter: 3, revised: false, par: 50,
     notes: {
@@ -1154,7 +1154,7 @@ export const TEMPLATES: readonly Template[] = [
     id: 'self-tape', courses: ['DRAM 463a/b', 'DRAM 473b'], title: 'A Self-Tape', deliverable: 'A scene recorded on your phone and reviewed in class',
     material: 'scene', paired: false,
     dims: { memorization: { label: 'Lines', weight: 0.3 }, interpretation: { label: 'Choices', weight: 0.2 }, rehearsal: { label: 'Takes Recorded', weight: 0.5 } },
-    activities: [read, learn, { id: 'record', label: 'Record A Take', minutes: 45, dim: 'rehearsal', gain: 0.35, requires: { dim: 'memorization', at: 0.4, why: 'Learn the lines before taping: a camera sees eyes on the page.' }, trains: 'screen' }],
+    activities: [read, learn, { id: 'record', label: 'Record A Take', minutes: 45, dim: 'rehearsal', gain: 0.35, requires: { dim: 'memorization', at: 0.4, why: 'Learn the lines before taping. A camera sees eyes on the page.' }, trains: 'screen' }],
     reads: { screen: 2, scene: 1 }, dueAfter: 3, revised: false, par: 55,
     notes: {
       memorization: 'The lines weren’t secure, and the lens saw it.',

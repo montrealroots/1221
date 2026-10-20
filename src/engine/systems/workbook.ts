@@ -124,7 +124,9 @@ export function problemsOf(p: WorkPiece): Problem[] {
   // "Knowing the genre: Not There Yet").
   for (const l of e.limits.filter((x) => x.kind === 'preparation' && !ignored(x) && x.what !== spec.part && x.what !== p.objective?.part && x.what !== 'way' && (x.whole ?? 0) >= 0.5)) {
     if (out.some((x) => x.id === `prep:${l.what}`)) continue;
-    out.push({ id: `prep:${l.what}`, kind: 'prep', label: `${titleCaseLabel(l.label)}: Not There Yet`, why: `It costs your ${DIMENSION_LABEL[l.dimension].toLowerCase()} ${l.by} points, and the whole piece ${l.whole}. Its own preparation step works on it.`, measure: e.overall, gap: l.whole ?? 0 });
+    // Where its step is said (from 2026-10-20, brief 17): above Work It Through, on the piece's card, the brief's
+    // Preparation and the rehearsal process alike. Until then “Its own preparation step works on it.” didn't say where.
+    out.push({ id: `prep:${l.what}`, kind: 'prep', label: `${titleCaseLabel(l.label)}: Not There Yet`, why: `It costs your ${DIMENSION_LABEL[l.dimension].toLowerCase()} ${l.by} points, and the whole piece ${l.whole}. Its own preparation step, above, works on it.`, measure: e.overall, gap: l.whole ?? 0 });
   }
   if (p.objective) {
     const obj = e.limits.find((l) => l.kind === 'preparation' && l.what === p.objective!.part);

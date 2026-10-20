@@ -11,7 +11,7 @@ The simulation, its mechanics, the saves and the scope don't change.
 ## Where It Started
 
 - **The branch:** `claude/peaceful-hamilton-59zdbb` at `d1ae7a79`. That is `main` at `74259312` (#44's merge, brief
-  15) with the handoff's account of that merge, which is open as #45. There was no stash and one worktree.
+  15) with the handoff's account of that merge, which was open as #45. There was no stash and one worktree.
 - **The game's code** is `main`'s, the gate having passed on it (`../editorial-2026-10-19/runs/gate.txt`, on `aabfc1b2`,
   with the same `src/`).
 - **The tested commit** is `4ef5e961`. Every measurement after (`after/`) and every run in `runs/` was made on it.
@@ -263,3 +263,11 @@ The tests that held the old words hold the new ones as exactly as before.
 - **Judgment:** that the voices read as distinct, that a note reads as a teacher's, and that a paragraph is easy to
   follow are the coordinator's judgment from reading, not a measurement. The measures above say what changed. They
   don't say the writing is good, and nothing here claims it can't be repetitive.
+
+## How It Ended
+
+The gate passed on `eabb9ef5` (The Gate, above), and the matrix's completion line is 612 of 636 rows in scope
+Implemented And Verified, the same 612 rows as at brief 15's close. The branch went into #45, which had been opened for
+the handoff's account of #44's merge. The owner was asked whether to merge it or watch it, and said "Both."
+(2026-10-20): #45 was watched, and merged to `main` with a merge commit, `bbb82253`, on its head `9b45b0ee`. It had no
+CI checks, reviews or comments to watch. Nothing is deployed.

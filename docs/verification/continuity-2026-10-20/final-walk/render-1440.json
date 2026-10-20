@@ -1,0 +1,16 @@
+{
+ "read": 68846,
+ "found": {
+  "a doubled word": {
+   "count": 3,
+   "distinct": 1,
+   "examples": [
+    {
+     "file": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/final-walk/walk-1440/lien.json",
+     "where": "School / Coursework",
+     "text": "The note on On Its Feet is still open after six notes, the last in Acting I on April 13, 2027. It’s at 0% now, and the note is taken at 75%. A Note That Keeps Coming Back, on the piece’s card, offers other ways at it."
+    }
+   ]
+  }
+ }
+}

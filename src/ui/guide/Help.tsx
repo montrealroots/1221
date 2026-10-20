@@ -340,8 +340,12 @@ function Part({ title, show = true, children }: { title?: string; show?: boolean
 function Entry({ e, onOpen, onWhere }: { e: GuideEntry; onOpen: (id: string) => void; onWhere: (e: GuideEntry) => void }) {
   const guide = useGuide();
   const [all, setAll] = useState(false);
-  // Locked for this life: the first of its features whose chapter isn't read.
+  // Locked for this life: the first of its features whose chapter isn't read. Until 2026-10-20 (brief 17, section 9)
+  // one shut feature said the whole entry wasn't open: How You Are's entry, whose panel opens with “How You Are” and
+  // whose own page with “A Whole Life”, told a player using the panel for eleven chapters “This isn’t open yet. Read “A
+  // Whole Life” in the guide to open it.”, while the contents marked it open (`shutOn`). Part open, it says so now.
   const locked = useWorld((s) => e.covers.find((f) => !isOpen(s, f)), [e]);
+  const partly = useWorld((s) => e.covers.some((f) => isOpen(s, f)), [e]);
   const chapter = locked ? chapterFor(locked) : undefined;
   const leads = useMemo(() => connectionsTo(e.id), [e]);
   // The brief's eight questions, in its order, then the deeper parts. The first two, what it's for and where to find it,
@@ -427,7 +431,7 @@ function Entry({ e, onOpen, onWhere }: { e: GuideEntry; onOpen: (id: string) => 
       </div>
       {chapter && (
         <div className="callout callout-warning small" style={{ margin: 'var(--s2) 0 var(--s3)' }}>
-          This isn’t open yet. Read “{chapter.title}” in the guide to open it.{' '}
+          {partly ? `Part of this isn’t open yet. Read “${chapter.title}” in the guide to open the rest.` : `This isn’t open yet. Read “${chapter.title}” in the guide to open it.`}{' '}
           <button type="button" className="btn btn-sm" onClick={() => guide.show(chapter.id)}>Read About It</button>
         </div>
       )}

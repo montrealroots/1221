@@ -52,9 +52,13 @@ export function CourseworkPane() {
   const open = urgent.map((u) => u.a);
   const short = urgent.filter((u) => u.short.length > 0).slice(0, 3);
   const past = cw.assignments.filter((a) => a.status !== 'open' && a.status !== 'revising').slice(-12).reverse();
+  // The first week leads while a session is still to come or to catch up, and goes below the work once all five are done
+  // (from 2026-10-20, brief 17, section 8): until then a second-year student's Coursework tab opened on five sessions
+  // done two years before, ahead of Due Soonest.
+  const weekDone = ORIENTATION.every((o) => cw.orientation.done[o.task] !== undefined);
   return (
     <div className="col gap-5">
-      {!cw.orientation.behind && <FirstWeek />}
+      {!cw.orientation.behind && !weekDone && <FirstWeek />}
       {short.length > 0 && (
         <Panel title="Due Soonest" help="school.prepare">
           <ul className="small" data-due-soonest="" style={{ margin: 0, paddingLeft: '1.1rem' }}>
@@ -74,6 +78,7 @@ export function CourseworkPane() {
       <NotesLedger />
       <ClassMoments />
       <Partners />
+      {!cw.orientation.behind && weekDone && <FirstWeek />}
     </div>
   );
 }
@@ -122,13 +127,13 @@ function AssignmentCard({ a }: { a: Assignment }) {
     <Panel look={at('assignment', a.id)} title={`${course.name}: ${t.title}${a.status === 'revising' ? ', To Show Again' : ''}${t.rounds ? `, Round ${(a.round ?? 0) + 1} Of ${t.rounds.length}: ${t.rounds[a.round ?? 0]!.label}` : ''}`} subtitle={`${course.code} · Due ${dayOfKey(due)} · Skills: ${readsLabel(t)}`} help="school.prepare">
       <div className="col gap-3">
         <div className="small">
-          {scene ? <><strong>{scene.play}</strong>, {scene.by} ({scene.year}), {whereWords(scene.where)}: you play <strong>{scene.roles[a.role!].name}</strong>{mate ? <>, {mate.name} plays {scene.roles[a.role === 0 ? 1 : 0].name}</> : null}. {scene.summary}</>
+          {scene ? <><strong>{scene.play}</strong>, {scene.origin === 'original' ? `${scene.by.charAt(0).toLowerCase()}${scene.by.slice(1)}` : scene.by} ({scene.year}), {whereWords(scene.where)}: you play <strong>{scene.roles[a.role!].name}</strong>{mate ? <>, {mate.name} plays {scene.roles[a.role === 0 ? 1 : 0].name}</> : null}. {scene.summary}</>
             : a.repPlay ? <>{t.deliverable}: <strong>{a.repPlay}</strong>.</>
               : <>{t.deliverable}{mate ? `, with ${mate.name}` : ''}.</>}
         </div>
         {scene?.origin === 'original' && scene.facts && (
           <div className="small">
-            <strong>An Original Scene, Written For SLATE.</strong> <span className="xs dim">The facts the readings are based on:</span>
+            <strong>An Original Scene, Written For SLATE.</strong> <span className="xs dim">The facts its Table Work answers rest on:</span>
             <ul className="xs" style={{ margin: '0.2rem 0 0', paddingLeft: '1.1rem' }}>{scene.facts.map((f) => <li key={f}>{f}</li>)}</ul>
           </div>
         )}
@@ -287,7 +292,7 @@ function FeedbackBlock({ a }: { a: Assignment }) {
   const f = a.feedback!;
   return (
     <div className="col gap-1">
-      <div className="row-between"><div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}, ${Math.round(a.shown.score * 100)} Of 100` : ''}{f.kind ? ` · ${KIND_LABEL[f.kind]}` : ''}</div><HowItWorks help="school.read_feedback" /></div>
+      <div className="row-between"><div className="eyebrow">Feedback{a.shown ? `: ${BAND_LABEL[a.shown.band]}, ${Math.round(a.shown.score * 100)} Of 100` : ''}{f.kind ? ` · ${kindLabel(f)}` : ''}</div><HowItWorks help="school.read_feedback" /></div>
       {a.shown && a.shown.strengths.length > 0 && <div className="small">{a.shown.strengths.join('. ')}.</div>}
       <div className="small">{f.text}</div>
       {a.shown?.together && <div className="small"><strong>The Scene Together.</strong> {a.shown.together.words} The band is for your own work.</div>}
@@ -298,6 +303,14 @@ function FeedbackBlock({ a }: { a: Assignment }) {
 }
 
 const KIND_LABEL: Record<NoteKind, string> = { new: 'A New Note', recurring: 'Still There', partial: 'Better, Not There Yet', applied: 'Note Taken', advanced: 'The Next Step' };
+/**
+ * What the feedback is, as its label says it: where nothing held the piece back, The Next Step only where the words gave
+ * one (from 2026-10-20, brief 17: a first Strong, a best and a strong piece despite the day are acknowledged without
+ * one), and What Held It Back where something other than the preparation did. A save's feedback from before has no
+ * situation, and reads as it did.
+ */
+const kindLabel = (f: NonNullable<Assignment['feedback']>): string =>
+  f.kind === 'advanced' && f.situation === 'held' ? 'What Held It Back' : f.kind === 'advanced' && f.step === false ? 'Nothing Held It Back' : KIND_LABEL[f.kind!];
 
 /** Why an assignment asks what it asks first: the note that keeps coming back, or the part this course hasn't asked of you lately. */
 function objectiveWhy(a: Assignment, notes: readonly NoteRecord[]): string {
@@ -368,7 +381,7 @@ function Partners() {
           const owed = (p.incidents ?? []).filter((x) => !x.repaired).length;
           return (
             <div key={m.name} className="small">
-              <strong><Open subject={at('classmate', String(i))}>{m.name}</Open></strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · Came {r.kept ?? 0} of {(r.kept ?? 0) + (r.stoodUp ?? 0)}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? (() => { const n = boundaryLiftsAfter(p.boundary) - p.boundary.keptSince; return ` · Wants A Day’s Notice (Until ${n} More ${n === 1 ? 'Rehearsal Is' : 'Rehearsals Are'} Kept)`; })() : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
+              <strong><Open subject={at('classmate', String(i))}>{m.name}</Open></strong> <span className="xs dim">Trust {Math.round(trustOf(m))} · {(r.kept ?? 0) + (r.stoodUp ?? 0) ? `Came ${r.kept ?? 0} of ${(r.kept ?? 0) + (r.stoodUp ?? 0)}` : 'No Rehearsals Yet'}{r.reliability !== undefined ? ` · Reliability ${pct(r.reliability)}` : ''}{p.priority ? ` · Cares Most About ${PRIORITY_WORDS[p.priority]}` : ''}{p.boundary ? (() => { const n = boundaryLiftsAfter(p.boundary) - p.boundary.keptSince; return ` · Wants A Day’s Notice (Until ${n} More ${n === 1 ? 'Rehearsal Is' : 'Rehearsals Are'} Kept)`; })() : ''}{stoppedAsking(m, sim.now) ? ' · Has Stopped Asking You To Run Lines' : owesYouLines(m, sim.now) ? ' · Owes You Lines' : ''}</span>
               {r.log?.[0] && <div className="xs dim">{formatDate(r.log[0].at, zone())}: {r.log[0].what}</div>}
               {owed > 0 && (
                 <div className="row gap-2" style={{ alignItems: 'center' }}>

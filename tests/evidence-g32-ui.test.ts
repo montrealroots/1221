@@ -435,7 +435,8 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     // was a whole evening's load, at 50.9, 49.1, 49.4 and 50.0.
     const solid = nights.filter((w) => w.overall >= 50).length;
     expect(solid).toBe(2);
-    expect(journey).toContain(`${written(casting.closed!)}: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged ${mean} (${solid} solid, ${4 - solid} off)`);
+    // Its nights by band in words (from 2026-10-20, brief 17): until then as the milestone keeps them, "(2 solid, 2 off)".
+    expect(journey).toContain(`${written(casting.closed!)}: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged ${mean} (${solid} solid nights, ${4 - solid} off nights)`);
     // DEFECT: the run closed on 12 May, and until the next term's casting files its credit (September) the panel said it
     // was running, under its own milestone.
     expect(journey).not.toContain('is running');
@@ -609,7 +610,7 @@ describe('h-calendar: the Calendar section of Home', () => {
     expect(h.went).toEqual(['/workspace/calendar']);
     const guided = ada('g32-calendar-guided', { tutorial: true });
     const read = (id: string) => expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: id } }).ok, id).toBe(true);
-    expect(drawn(guided, Home).text).toContain('Calendar Locked This opens when you read “What’s Coming” in the guide');
+    expect(drawn(guided, Home).text).toContain('Calendar Locked What’s coming up, and when. It opens when you read “What’s Coming” in the guide. Read About It');
     read('welcome');
     read('calendar');
     const { text } = drawn(guided, Home);
@@ -730,7 +731,7 @@ describe('h-needs: What Needs You on Home', () => {
     const seventh = [...sim.universe.notifications].filter((x) => !x.read).sort((a, b) => b.importance - a.importance || b.at - a.at)[6]!;
     const rows = (html: string) => html.match(/<div class="list-item list-static">/g)?.length ?? 0;
     expect(rows(drawn(sim, Home).html)).toBe(6);
-    expect(needs(sim)).toContain(`${n - 6} more unread. Show All ${n}`);
+    expect(needs(sim)).toContain(`These six are the most important. ${n - 6} more are unread. Show All ${n}`);
     expect(needs(sim)).not.toContain(seventh.body);
     drawn(sim, Home);
     press(button(`Show All ${n}`));
@@ -743,7 +744,7 @@ describe('h-needs: What Needs You on Home', () => {
     expect(rows(drawn(sim, Home).html)).toBe(6);
     expect(press(button(`Mark ${n} Read`))).toMatchObject({ ok: true, value: { read: n } });
     expect(rows(drawn(sim, Home).html)).toBe(0);
-    expect(needs(sim)).not.toContain('more unread');
+    expect(needs(sim)).not.toContain('more are unread');
   });
 
   it('PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused in the guide’s words and the row stays; read, it files the return and pays what the row said was owed', () => {
@@ -1022,6 +1023,21 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
   /** Minutes past midnight on a clock 4 hours behind UTC, as New Haven's is in August. */
   const edtMinutes = (utc: number) => { const d = new Date(utc - 4 * MS_HOUR); return d.getUTCHours() * 60 + d.getUTCMinutes() + d.getUTCSeconds() / 60; };
   const clockMinutes = (said: string) => { const [, hh, mm, half] = said.match(/^(\d+):(\d+) ([AP]M)$/)!; return (Number(hh) % 12 + (half === 'PM' ? 12 : 0)) * 60 + Number(mm); };
+
+  it('PLAYER JOURNEY, guided: Where You Are and the Weather, locked, say what each shows and the chapter that opens it, and open, show it', () => {
+    const guided = ada('g32-where-locked', { tutorial: true });
+    const before = drawn(guided, Home).text;
+    // Until 2026-10-20 (brief 17, the frame editor's finding) a locked panel said its chapter's lead, and Where You
+    // Are's was chapter 1's, “how SLATE works, and how to read Home”, which says nothing of the panel.
+    expect(before).toContain('Where You Are Locked The town you live in, its local time and its daylight. It opens when you read “Your Life, Hour By Hour” in the guide. Read About It');
+    expect(before).not.toContain('how SLATE works');
+    expect(before).toContain('Weather Locked The weather in your town, today and the days ahead. It opens when you read “Weather” in the guide. Read About It');
+    expect(guided.execute({ kind: 'tutorial.read', payload: { chapterId: 'welcome' } }).ok).toBe(true);
+    const shown = where(drawn(guided, Home).text);
+    // What the locked line said it would show: the town you live in, its local time and its daylight.
+    expect(shown).toContain('New Haven, Connecticut · United States Your home.');
+    expect(shown).toContain('Local Time 7:30 AM EDT Daylight ');
+  });
 
   it('PLAYER JOURNEY: on the first morning Where You Are names New Haven, Connecticut · United States, says Home. 130K people., Local Time 7:30 AM EDT, and Daylight within two minutes of the sunrise equation’s at each end', () => {
     const sim = ada('g32-where');

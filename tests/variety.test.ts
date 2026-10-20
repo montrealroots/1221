@@ -62,7 +62,7 @@ describe('an hour that gives less, said why', () => {
 
 describe('a director’s notes, from the notes before', () => {
   const process = (notes: Process['notes']): Process => ({ lines: 1, blocking: 1, calls: 6, blockingMissed: 0, notes, trained: 0 });
-  it('moves on from a skill note that was taken to the next thinnest place; one not taken comes again, said as still', () => {
+  it('moves on from a skill note that was taken to the next thinnest place; one not taken comes again, said as the same note', () => {
     const sim = life('var-notes');
     const reads = { classical: 2, speech: 1, scene: 1 } as const;
     sim.player.craft = { ...evenCraft(60), classical: 40, speech: 45, scene: 70 };
@@ -72,7 +72,9 @@ describe('a director’s notes, from the notes before', () => {
     expect(noteFor(sim.player, process([taken]), reads, 9, 10)).toEqual({ kind: 'skill', skill: 'speech' });
     const notTaken = { ...taken, taken: false };
     expect(noteFor(sim.player, process([notTaken]), reads, 9, 10)).toEqual(first);
-    expect(noteText(first, notTaken)).toMatch(/^Still: find more classical/);
+    // The note's words have a colon of their own, so it comes again as the same note, not "Still:" before them (from
+    // 2026-10-20, brief 17: never two colons in a sentence). Until then "Still: find more classical text in it: that’s…".
+    expect(noteText(first, notTaken)).toBe('Same note as at the last call. Find more classical text in it: that’s where the part is thin.');
     expect(noteText(first, taken)).toMatch(/^Better since the last note\./);
   });
 

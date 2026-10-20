@@ -31,7 +31,10 @@
  *   bond of `CLASS.encourage.bondFrom` or more, under a friend's
  *   (`BONDS.friend`). Until 2026-10-12 this said from a friend only.
  * - an apology, after they didn't come to a rehearsal agreed: take it and
- *   you're closer; take it coolly and you're further apart.
+ *   you're closer; take it coolly and you're further apart. One apology
+ *   covers every rehearsal they've missed with you since the last, and each
+ *   is marked on the rehearsal itself (`missesOwed`, from 2026-10-20, brief
+ *   17); a new miss is owed a new one.
  * - a boundary, after you've let them down twice without making it right:
  *   from then they'll rehearse only if asked a day ahead. Accept it and they
  *   trust you a little more; push back and you're further apart.
@@ -47,21 +50,37 @@
  * back on, three for one set before 2026-10-10). Until 2026-10-12 this said
  * making it right lifted a boundary once three rehearsals had been kept since.
  *
+ * **Their voices** (from 2026-10-20, brief 17, section 4). A classmate's
+ * priority is also how they speak when they bring something: one who cares
+ * for the work talks about the scene; one who cares for the room, warmly; one
+ * under pressure to be seen, briefly and to the point; one with a life outside,
+ * stretched and apologetic. The facts are the same either way (the evening,
+ * the reading, the misses, how many times they've asked): only the telling is
+ * theirs. Until then every classmate brought each kind of moment in the same
+ * words but their name.
+ *
+ * **What they remember.** How often a classmate has asked for something
+ * (`asked`) is counted on them, where their moments keep only the last
+ * twenty, so a request a year on isn't counted short. A save from before
+ * brief 17 starts its counts from what its moments still held, and says
+ * "again" rather than a count where they'd already filled (`countedSince`).
+ *
  * Every number here is SLATE's estimate.
  */
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { YALE_DRAMA, type SchoolDate } from '../content/school';
-import { questionWords, sceneById } from '../content/coursework';
+import { questionWords, sceneById, templateById } from '../content/coursework';
 import { bondMove, keyOf, schoolEnded, type Classmate } from './school';
 import {
   WORK, courseworkOf, mateBusy, mateRecord, questionsFor, trustOf, type Assignment, type Coursework, type MateRecord,
 } from './coursework';
 import { startRefusal } from './life';
+import { hash } from './feedback';
 import { inHospital } from './health';
 import { laidUp } from './injury';
 import { exerts } from './body';
@@ -133,6 +152,8 @@ export interface Moment {
   when?: Instant;
   choice?: string;
   text: string;
+  /** For an apology: the rehearsals it's for, each a miss kept on its piece (`PartnerRehearsal.apologized`). */
+  covers?: string[];
 }
 
 /** What the classmate carries beyond partnering: their priority, what's happened that wants making right, a boundary, and the moments had with you. */
@@ -141,6 +162,12 @@ export interface ClassmatePerson {
   incidents?: { at: Instant; kind: 'missed' | 'lateCancel'; repaired?: Instant }[];
   boundary?: { since: Instant; keptSince: number; /** Accepted, or pushed back on (from 2026-10-10). */ accepted?: boolean };
   moments?: { at: Instant; kind: MomentKind; choice?: string }[];
+  /**
+   * How many times they've brought each kind of moment (from 2026-10-20, brief 17): counted here, where `moments` keeps
+   * the last 20. `countedSince`: a save's counts began from the moments it still held, already 20, so they're a floor.
+   */
+  asked?: Partial<Record<MomentKind, number>>;
+  countedSince?: Instant;
 }
 export const personOf = (mate: Classmate): MateRecord & ClassmatePerson => mate as Classmate & MateRecord & ClassmatePerson;
 
@@ -149,6 +176,8 @@ export const STUDY_KIND = 'school.study_session';
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const first = (mate: Classmate) => mate.name.split(' ')[0]!;
+/** A piece of work by its card's title, as a sentence names it. */
+const templateTitle = (a: Assignment) => templateById(a.template)?.title ?? 'your piece';
 /** A place in an order, in words to the tenth, as prose says it (from 2026-10-20, brief 16's classmates). */
 const nth = (n: number): string => ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'][n] ?? `${n}th`;
 const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
@@ -189,6 +218,77 @@ function had(mate: Classmate, kind: MomentKind, at: Instant): void {
   const p = personOf(mate);
   (p.moments ??= []).unshift({ at, kind });
   if (p.moments.length > 20) p.moments.length = 20;
+  (p.asked ??= {})[kind] = (p.asked[kind] ?? 0) + 1;
+}
+
+/**
+ * The rehearsals a classmate didn't come to that no apology of theirs has covered yet, oldest first (from 2026-10-20,
+ * the owner's brief 17, section 6). Each miss is the rehearsal itself, kept on its piece, and an apology marks every one
+ * it's for (`apologized`), so whether a miss was apologized for is kept with the miss, never read from the classmate's
+ * last 20 moments. Until then an apology was due while their misses (`stoodUp`) outnumbered the apologies among those
+ * 20, one a miss: brief 16's regressing student heard Nadia apologize for two missed rehearsals on 2026-10-08, "It’s the
+ * second rehearsal they’ve missed with you", and again for the same two on 2027-09-30. Only misses since you met them
+ * count: a class repeated is a new class, whose places in the list are other people.
+ */
+export function missesOwed(cw: Coursework, mate: Classmate, i: number): { a: Assignment; r: Assignment['rehearsals'][number] }[] {
+  const since = mateRecord(mate).met ?? 0;
+  return cw.assignments
+    .flatMap((a) => (a.partner === i ? a.rehearsals.filter((r) => r.status === 'missedByThem' && r.apologized === undefined && r.at >= since).map((r) => ({ a, r })) : []))
+    .sort((x, y) => x.r.at - y.r.at);
+}
+
+/** A day as an apology names it: the month and day, and the year where it isn't this one. */
+const dayWords = (at: Instant, now: Instant) => { const d = formatDate(at, zone()); const y = String(zonedParts(now, zone()).year); return d.endsWith(`, ${y}`) ? d.slice(0, -(y.length + 2)) : d; };
+const andWords = (xs: readonly string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')}${xs.length > 2 ? ',' : ''} and ${xs.at(-1)}`);
+
+/** What a classmate's apology says: what they missed and when, in their voice, and how many they've missed in all. */
+function apologyWords(mate: Classmate, pr: Priority, owed: ReturnType<typeof missesOwed>, now: Instant): string {
+  const f = first(mate);
+  const plays = [...new Set(owed.map(({ a }) => sceneById(a.sceneId ?? '')?.play ?? templateTitle(a)))];
+  const days = andWords(owed.map(({ r }) => dayWords(r.at, now)));
+  const what = `${andWords(plays)} on ${days}`;
+  const all = mateRecord(mate).stoodUp ?? owed.length;
+  const more = all > owed.length ? ` That’s ${countWords(all)} rehearsals they’ve missed with you.` : '';
+  const rehearsals = owed.length > 1 ? 'the rehearsals' : 'your rehearsal';
+  // An apology weeks or months after the last miss says so (from 2026-10-20, brief 17): until then brief 17's first
+  // after-runs had Owen sorry, a year on, about a rehearsal "on September 17, 2026", as though it were last week.
+  const gap = (now - Math.max(...owed.map(({ r }) => r.at))) / MS_DAY;
+  const since = gap < 63 ? `${countWords(Math.floor(gap / 7))} weeks` : gap < 330 ? `${countWords(Math.round(gap / 30.4))} months` : gap < 395 ? 'a year' : 'more than a year';
+  // Said in their own manner, as the rest is.
+  const late = gap < 28 ? '' : {
+    craft: ` It’s ${since} on, and it still bothers them.`,
+    people: ` It’s ${since} since, and they still wanted to say it.`,
+    career: ` It’s ${since} late, and they know it.`,
+    home: ` It’s been ${since}, and they wanted you to know.`,
+  }[pr];
+  switch (pr) {
+    case 'craft': return `${f} finds you before class, sorry about ${rehearsals} of ${what}: they lost track of the day, and they know the scene lost the evening.${late}${more}`;
+    case 'people': return `${f} apologizes for not coming to rehearse ${what}. They lost track of the day, and they’re sorry to have left you waiting.${late}${more}`;
+    case 'career': return `${f} says sorry, briefly, for missing ${rehearsals} of ${what}: they lost track of the day.${late}${more}`;
+    case 'home': return `${f} apologizes for not coming to rehearse ${what}: something at home took the evening.${late}${more}`;
+  }
+}
+
+/** How a classmate who's let down twice puts their boundary: what happened, counted, in their voice. */
+function boundaryWords(mate: Classmate, pr: Priority): string {
+  const f = first(mate);
+  const open = unrepaired(mate);
+  const missed = open.filter((x) => x.kind === 'missed').length;
+  const late = open.filter((x) => x.kind === 'lateCancel').length;
+  const times = (n: number) => (n === 1 ? 'once' : n === 2 ? 'twice' : `${countWords(n)} times`);
+  const why = [missed ? `didn’t come ${times(missed)}` : '', late ? `called off late ${times(late)}` : ''].filter(Boolean).join(' and ');
+  switch (pr) {
+    case 'craft': return `${f} says the scene can’t keep losing evenings. After you ${why}, they’ll rehearse with you only if you ask a day ahead.`;
+    case 'people': return `${f} tells you, kindly but clearly, that after you ${why}, they’d like a day’s notice before any rehearsal with you.`;
+    case 'career': return `${f} says their time is tight. After you ${why}, they’ll rehearse with you only if you ask a day ahead.`;
+    case 'home': return `${f} says their evenings are hard to move. After you ${why}, they need a day’s notice for any rehearsal with you.`;
+  }
+}
+
+/** How often a classmate has brought a kind of moment before, in words, where the count is known: "the third time". */
+function askedBefore(mate: Classmate, kind: MomentKind): { n: number; known: boolean } {
+  const p = personOf(mate);
+  return { n: p.asked?.[kind] ?? 0, known: p.countedSince === undefined };
 }
 
 /** Whether a boundary asks for a day's notice of a rehearsal at a time, and the words if so (read by `askRefusal`). */
@@ -254,32 +354,54 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
     const pr = priorityOf(sim, person, i);
     // A disagreement: your shared scene, a question you've answered, where they'd read it another way.
     const shared = open.find((a) => a.partner === i && questionsFor(a).some(({ q }) => a.answers[q.id]));
-    if (shared && !recent(mate, 'disagreement')) cands.push({ kind: 'disagreement', mate: i, build: () => disagreement(shared, mate, rng.next()) });
+    if (shared && !recent(mate, 'disagreement')) cands.push({ kind: 'disagreement', mate: i, build: () => disagreement(shared, mate, rng.next(), pr) });
     // An invitation to run lines, on an evening they're free.
     // Those who care for the work or the room ask; anyone you helped with their lines asks in turn; nobody who has
     // stopped asking (`stoppedAsking`) does.
     const returning = owesYouLines(mate, now);
-    if (!recent(mate, 'study') && (pr === 'craft' || pr === 'people' || returning) && trustOf(mate) >= WORK.trust.wary && !stoppedAsking(mate, now)) cands.push({ kind: 'study', mate: i, build: () => studyEvening(person, i, day, returning, (personOf(mate).moments ?? []).filter((m) => m.kind === 'study')) });
+    if (!recent(mate, 'study') && (pr === 'craft' || pr === 'people' || returning) && trustOf(mate) >= WORK.trust.wary && !stoppedAsking(mate, now)) cands.push({ kind: 'study', mate: i, build: () => studyEvening(person, i, day, returning, (personOf(mate).moments ?? []).filter((m) => m.kind === 'study'), pr) });
     // A request for help: those under pressure to be seen, or with a life outside, are behind.
     // From 2026-10-20 (brief 16) a request asked before says so, and how it was answered last time, from the classmate's own
     // record (`moments`): until then each was the first, word for word, seven times a year from the same classmate.
     if (!recent(mate, 'help') && (pr === 'career' || pr === 'home')) cands.push({ kind: 'help', mate: i, build: () => {
-      const asked = (personOf(mate).moments ?? []).filter((m) => m.kind === 'help');
-      const last = asked.at(-1);
-      const again = asked.length ? ` It’s the ${nth(asked.length + 1)} time they’ve asked${last?.choice === 'help' ? ', and you helped them last time' : last?.choice === 'no' ? ', and last time you said you couldn’t' : ''}.` : '';
-      return { text: `${first(mate)} is behind on their lines and asks if you’d run them for three quarters of an hour now. ${pr === 'home' ? 'They’ve had a hard week away from school.' : 'They’re auditioning outside school and short of time.'}${again}` };
+      // The last request is the newest of their moments, which are kept newest first (from 2026-10-20, brief 17: until
+      // then this read the oldest of the 20 as the last, and said "you helped them last time" of a request a year old).
+      const last = (personOf(mate).moments ?? []).find((m) => m.kind === 'help');
+      const { n, known } = askedBefore(mate, 'help');
+      const how = last?.choice === 'help' ? ', and you helped them last time' : last?.choice === 'no' ? ', and last time you said you couldn’t' : '';
+      const again = n ? (known ? ` It’s the ${nth(n + 1)} time they’ve asked${how}.` : ` They’ve asked before${how}.`) : '';
+      // Each classmate in a way of their own, the same each time they ask (`wayOf`, brief 17): until then every classmate
+      // with a life outside school asked in one sentence, and every one with an audition in another.
+      const f = first(mate);
+      const ways = pr === 'home'
+        ? [`${f} is behind on their lines after a hard week away from school, and asks if you’d run them for three quarters of an hour, now.`,
+          `${f} has had a hard week away from school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now.`,
+          `A hard week away from school has left ${f} behind on their lines. They ask for three quarters of an hour of your time, now, to run them.`]
+        : [`${f} is behind on their lines, with an audition outside school, and asks if you’d run them for three quarters of an hour, now.`,
+          `${f} has an audition outside school and is behind on their lines. They ask if you’d run them for three quarters of an hour, now.`,
+          `With an audition outside school coming up, ${f} is behind on their lines and asks for three quarters of an hour of your time, now, to run them.`];
+      return { text: `${ways[wayOf(mate, 'help', ways.length)]}${again}` };
     } });
     // Encouragement, from a classmate at a bond of `CLASS.encourage.bondFrom` or more, after work of yours that went
     // badly in the last days. Until 2026-10-12 this said from a friend only, a bond the gate doesn't ask (`BONDS.friend`).
     const bad = cw.assignments.find((a) => a.shown?.band === 'unready' && now - a.shown.at < 3 * 86_400_000);
-    if (bad && (mate.bond ?? 0) >= CLASS.encourage.bondFrom && !recent(mate, 'encouragement')) cands.push({ kind: 'encouragement', mate: i, build: () => ({ text: `${first(mate)} caught you after class to say everyone has a showing like that, and not to take it to heart.`, assignmentId: bad.id }) });
-    // An apology, after a rehearsal they didn't come to, once a time.
-    const stood = (mateRecord(mate).stoodUp ?? 0) > (personOf(mate).moments ?? []).filter((m) => m.kind === 'apology').length;
-    // How many they've missed with you, from the second on (from 2026-10-20, brief 16, `stoodUp`).
-    const missed = mateRecord(mate).stoodUp ?? 0;
-    if (stood && !recent(mate, 'apology')) cands.push({ kind: 'apology', mate: i, build: () => ({ text: `${first(mate)} apologizes for not coming to rehearse: ${pr === 'home' ? 'something at home took the evening' : 'they lost track of the day'}.${missed >= 2 ? ` It’s the ${nth(missed)} rehearsal they’ve missed with you.` : ''}` }) });
+    if (bad && (mate.bond ?? 0) >= CLASS.encourage.bondFrom && !recent(mate, 'encouragement')) cands.push({ kind: 'encouragement', mate: i, build: () => {
+      // In their voice, naming the piece, and "again" where they've done it before (from 2026-10-20, brief 17: until then
+      // the same sentence, word for word, three months apart, in brief 16's runs).
+      const f = first(mate);
+      const again = askedBefore(mate, 'encouragement').n ? ' again' : '';
+      const piece = templateTitle(bad);
+      const text = pr === 'craft' ? `${f} caught you after class${again} about your ${piece}: an Unready piece tells you what to work on, they say, and that’s all it does.`
+        : pr === 'people' ? `${f} caught you after class${again} to say everyone has a showing like your ${piece}, and not to take it to heart.`
+          : pr === 'career' ? `${f} stopped you after class${again} to say they’ve had showings go the way your ${piece} did.`
+            : `${f} found you after class${again}: they know how a showing like your ${piece} feels, and wanted you to know you’re not the only one.`;
+      return { text, assignmentId: bad.id };
+    } });
+    // An apology for the rehearsals they've missed since their last (`missesOwed`), all of them at once.
+    const owed = missesOwed(cw, mate, i);
+    if (owed.length && !recent(mate, 'apology')) cands.push({ kind: 'apology', mate: i, build: () => ({ text: apologyWords(mate, pr, owed, now), covers: owed.map(({ r }) => r.id) }) });
     // A boundary, after you've let them down twice and not made it right.
-    if (!personOf(mate).boundary && unrepaired(mate).length >= CLASS.boundary.after && !recent(mate, 'boundary')) cands.push({ kind: 'boundary', mate: i, build: () => ({ text: `${first(mate)} says that after the last few times, they’ll only rehearse with you if you ask a day ahead.` }) });
+    if (!personOf(mate).boundary && unrepaired(mate).length >= CLASS.boundary.after && !recent(mate, 'boundary')) cands.push({ kind: 'boundary', mate: i, build: () => ({ text: boundaryWords(mate, pr) }) });
   });
   if (!cands.length) return undefined;
   // The kind least recently had across the class first, then the classmate least recently had it with; among equals,
@@ -302,6 +424,8 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
   const m: Moment = { id: sim.nextId('rehearsal'), mate: pick.mate, kind: pick.kind, at: now, until: now + CLASS.answerHours * 3_600_000, status: said ? 'said' : 'open', ...built };
   moments.push(m);
   if (moments.length > 60) moments.splice(0, moments.length - 60);
+  // The misses an apology is for, marked on each: they're apologized for, whatever is kept of the moment.
+  if (m.covers) for (const a of cw.assignments) for (const r of a.rehearsals) if (m.covers.includes(r.id)) r.apologized = now;
   had(mate, pick.kind, now);
   if (said) {
     person.wellbeing.morale = Math.min(100, person.wellbeing.morale + CLASS.encourage.morale);
@@ -317,7 +441,7 @@ const countWords = (n: number): string => ['no', 'one', 'two', 'three', 'four', 
 export const MOMENT_TITLE: Record<MomentKind, string> = { disagreement: 'A Different Reading', study: 'Run Lines Together?', help: 'A Request For Help', encouragement: 'A Word After Class', apology: 'An Apology', boundary: 'A Boundary' };
 
 /** A disagreement over your shared scene: a question you answered, read their way (another the text supports where there is one). */
-function disagreement(a: Assignment, mate: Classmate, draw: number): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
+function disagreement(a: Assignment, mate: Classmate, draw: number, pr: Priority): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
   const qs = questionsFor(a).filter(({ q, options }) => a.answers[q.id] && options.length > 1);
   if (!qs.length) return undefined;
   const { q, options } = qs[Math.floor(draw * qs.length)]!;
@@ -325,21 +449,39 @@ function disagreement(a: Assignment, mate: Classmate, draw: number): Omit<Moment
   const others = options.filter((o) => o.id !== mine.id);
   const theirs = others.find((o) => o.supported) ?? others[0]!;
   const scene = a.sceneId ? sceneById(a.sceneId)?.play : undefined;
-  return { assignmentId: a.id, question: q.id, theirs: theirs.id, text: `${first(mate)} reads ${questionWords(q)} in ${scene ?? 'your scene'} another way: “${theirs.text}”, where you have “${mine.text}”.` };
+  const f = first(mate); const q2 = questionWords(q); const where = scene ?? 'your scene';
+  // In their voice (from 2026-10-20, brief 17): their reading and yours are the same facts either way.
+  const text = pr === 'craft' ? `${f} reads ${q2} in ${where} another way: “${theirs.text}”, where you have “${mine.text}”. They’d like to try theirs.`
+    : pr === 'people' ? `${f} asks, gently, whether ${q2} in ${where} could be “${theirs.text}”. You have “${mine.text}”.`
+      : pr === 'career' ? `${f} wants to settle ${q2} in ${where} before your next rehearsal: they see it as “${theirs.text}”, where you have “${mine.text}”.`
+        : `${f} reads ${q2} in ${where} as “${theirs.text}”, where you have “${mine.text}”, and asks what you think.`;
+  return { assignmentId: a.id, question: q.id, theirs: theirs.id, text };
 }
 
+/** A classmate's own way of putting a kind of moment, of `n`: by their name, so the same each time (brief 17, section 4). */
+export const wayOf = (mate: Classmate, kind: string, n: number): number => hash(`${mate.name}:${kind}`) % n;
+
 /** An evening in the next three a classmate is free to run lines, at seven. */
-function studyEvening(person: Person, i: number, day: SchoolDate, returning = false, before: readonly { choice?: string }[] = []): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
+function studyEvening(person: Person, i: number, day: SchoolDate, returning = false, before: readonly { choice?: string }[] = [], pr: Priority = 'craft'): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
   for (let n = 1; n <= 3; n += 1) {
     const d = new Date(Date.UTC(day.year, day.month - 1, day.day + n));
     const when = instantFromZoned({ year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate(), hour: CLASS.study.hour, minute: 0 }, zone());
     if (mateBusy(person, i, when, CLASS.study.minutes)) continue;
     const mate = person.school!.classmates[i]!;
     // Asked before, said so, with how the last went (from 2026-10-20, brief 16, the classmate's own `moments`): until then
-    // each read as the first, fourteen times in a year from one classmate in brief 16's baseline.
-    const last = before.at(-1)?.choice;
+    // each read as the first, fourteen times in a year from one classmate in brief 16's baseline. The last is the newest,
+    // first in a list kept newest first (brief 17: until then it was read from the end, the oldest of the 20).
+    const last = before[0]?.choice;
     const again = before.length ? (last === 'yes' ? ' You ran lines together the last time they asked.' : last === 'no' ? ' Last time, you couldn’t.' : ' They’ve asked before.') : '';
-    return { when, text: `${first(mate)} asks if you’d run lines together for an hour on ${formatDate(when, zone())} at ${formatTime(when, zone())}.${returning ? ' You ran theirs when they were behind.' : again}` };
+    const f = first(mate); const on = `${formatDate(when, zone())} at ${formatTime(when, zone())}`;
+    // In their voice (brief 17): one who cares for the work asks for the scene's sake, one for the room for the company,
+    // and one returning a favor says so.
+    const text = returning
+      ? (pr === 'career' ? `${f} has an hour free on ${on} and offers it to run lines together: you ran theirs when they were behind.` : pr === 'home' ? `${f} asks if you’d run lines together for an hour on ${on}. They haven’t forgotten you ran theirs when they were behind.` : `${f} asks if you’d run lines together for an hour on ${on}. You ran theirs when they were behind.`)
+      : `${(pr === 'people'
+        ? [`${f} asks if you’d like to run lines together for an hour on ${on}.`, `${f} wonders if you’d like to run lines together for an hour on ${on}.`, `${f} would be glad of an hour running lines with you on ${on}.`]
+        : [`${f} asks if you’d run lines together for an hour on ${on}, to keep the work moving.`, `${f} suggests an hour running lines together on ${on}, so the work keeps moving.`])[wayOf(mate, 'study', pr === 'people' ? 3 : 2)]}${again}`;
+    return { when, text };
   }
   return undefined;
 }

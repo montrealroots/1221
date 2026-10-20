@@ -404,10 +404,11 @@ describe('school.prepare', () => {
     expect(text).toContain('The Cherry Orchard');
     const read = only('school.prepare', 'Read The Scene');
     expect(read).toMatchObject({ disabled: false, title: '40 minutes' });
-    expect(only('school.prepare', 'Learn Lines')).toMatchObject({ disabled: true, title: 'Read the scene first: you learn lines from a scene you know.' });
+    // Two sentences from 2026-10-20 (brief 17): "Learn Lines: Read the scene first: you learn…" had two colons.
+    expect(only('school.prepare', 'Learn Lines')).toMatchObject({ disabled: true, title: 'Read the scene first. You learn lines from a scene you know.' });
     expect(only('school.prepare', 'Rehearse Alone')).toMatchObject({ disabled: true, title: 'Learn some of the lines first.' });
     expect(only('school.prepare', 'Work On The Note')).toMatchObject({ disabled: true, title: 'You can revise once it’s been shown and you have a note to work on.' });
-    expect(text).toContain('Learn Lines: Read the scene first: you learn lines from a scene you know.');
+    expect(text).toContain('Learn Lines: Read the scene first. You learn lines from a scene you know.');
     const t0 = sim.now;
     const toasts = press(read);
     expect(sim.now - t0).toBe(40 * 60_000);
@@ -705,7 +706,7 @@ describe('school.ask_partner', () => {
     // The intimacy scene with Grace: not before the practice is reviewed past half.
     const close = byTemplate(sim, 'intimacy-practice');
     expect(mateOf(sim, close).name).toBe('Grace Park');
-    expect(no(sim, 'school.ask_partner', { assignmentId: close.id, at: at(8, 31, 19) })).toBe('Agree how you’ll work first: there’s no partner work until the boundaries are set.');
+    expect(no(sim, 'school.ask_partner', { assignmentId: close.id, at: at(8, 31, 19) })).toBe('Agree how you’ll work first. There’s no partner work until the boundaries are set.');
     let reviews = 0;
     while (work(sim, close.id).prep.familiarity < 0.5 && reviews < 4) { step(sim, close.id, 'protocol'); reviews += 1; }
     expect(reviews).toBeGreaterThan(0);
@@ -810,7 +811,8 @@ describe('school.cancel_rehearsal', () => {
     // The first class, Monday 31 August.
     sim.advanceTo(at(8, 31, 15, 30));
     const brought = openMoments(sim).filter((m) => m.mate === work(sim, id).partner);
-    expect(brought.map((m) => [m.kind, m.text])).toEqual([['boundary', 'Hannah says that after the last few times, they’ll only rehearse with you if you ask a day ahead.']]);
+    // In her voice and with what happened, counted (from 2026-10-20, brief 17: until then "after the last few times").
+    expect(brought.map((m) => [m.kind, m.text])).toEqual([['boundary', 'Hannah says their time is tight. After you didn’t come once and called off late once, they’ll rehearse with you only if you ask a day ahead.']]);
   });
 
   it('with the partner’s trust under wary, an ask is declined in their words, and the evening isn’t booked', () => {
@@ -913,6 +915,9 @@ describe('school.make_amends', () => {
     let { text } = drawn(sim);
     expect(text).toContain('Your Partners');
     expect(text).toContain('Hannah Castillo Trust 34');
+    // Two rehearsals called off and none held: said as none yet (from 2026-10-20, brief 17: until then "Came 0 of 0").
+    expect(text).toContain('Hannah Castillo Trust 34 · No Rehearsals Yet · Reliability');
+    expect(text).not.toContain('Came 0 of 0');
     expect(text).toContain('You’ve let them down 2 times without making it right.');
     expect(only('school.make_amends', 'Make Amends')).toMatchObject({ disabled: true, title: 'You’re at Classes until 3:00 PM.' });
     sim.advanceTo(at(8, 31, 15, 30));

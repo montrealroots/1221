@@ -1,0 +1,36 @@
+brief-animated |  You record it alone in a booth before any of it is drawn. /  You record alone at a microphone before the animation exists, so the whole performance, the gusts and the struggle included, has to be in what’s heard.
+brief-anime |  Rin, her rival, already recorded on the track. /  It’s a dub: you record alone at a microphone, in sync with the finished animation and his recorded lines.
+brief-documentary |  The voice carries everything: twelve years of her life, held to a microphone with no face to help it. /  You read the narration alone at a microphone, over picture.
+brief-isekai |  Your voice alone at the microphone carries the whole scene, so her inner life, the panel’s messages read aloud and the turn to grief are all voice-over work.
+brief-nature_documentary |  A narration recorded alone to picture is voice-over work: steady at the microphone, timed to the cut, intimate with one listener.
+brief-alternate_history-2 |  Two hundred people at tiered desks work tomorrow’s weather by hand and by mechanical adding machine, one patch of map each, and the head of the hall speaks to them from a gallery microphone. /  You record alone at a microphone, and the hall is only on screen.
+brief-anime-2 | You record alone at a microphone against finished picture: a mountain town’s old stone dam in a storm, each line cued by bars that run across the frame. /  Kenta, her brother, eleven, already recorded on the track. /  It’s a dub, recorded alone at a microphone to finished animation and her brother’s
+brief-anthology-2 | 
+brief-avant_garde-2 |  The composer sent the score by mail with one instruction on the back: “Voice it once. /  The marks have no key, so you find out at the microphone what each sound is and how long the silence lasts. /  The score fixes the order and leaves the sound open, so the piece asks for improvisation, recorded 
+brief-conspiracy_thriller-3 |  The reporter she wrote to has asked for a recorded statement: names, dates and amounts, in order. /  You record it alone at a microphone, as the statement she makes into her phone. /  Alone at a microphone, her voice has to stay even through two years of figures and change once, on one name.
+brief-cosmic_horror-2 |  The log’s microphone, the relief team who will play it back, and at the end, Tomas. /  You record it alone at a microphone for an audio drama, and play the log, the laugh and the quiet to the microphone and no one else.
+brief-dark_fantasy-2 |  You record it alone at a microphone before the animation exists, so it asks for voice-over.
+brief-disaster-2 |  Petrakis’s recorded answers, and every argument she makes has to come from what he just said. /  You record it alone at a microphone for a radio drama, against the caller’s lines in your headphones, and the performance is only what’s heard.
+brief-experimental-2 |  You record it alone at a microphone for a sound piece: a fixed text read in one take, with the voice carrying all of it.
+brief-fairy_tale-2 |  You record it alone at a microphone for an animated tale, before any of it is drawn. /  You voice it alone at a microphone for an animated tale, so it’s all voice-over: the lantern’s age, its vanity and its love for the girl, played to a partner who isn’t in the booth.
+brief-giallo-2 |  The concierge’s recorded lines are fixed, and each of Marta’s has to coax the next one out of her. /  A dub is voice-over work at a microphone: the performance has to match a face filmed without sound and still sound like a woman thinking in the moment.
+brief-gothic_horror-3 |  You record it alone at a microphone, as the journal it is: each entry written at the time, not knowing how the night will end. /  Alone at a microphone, the voice carries the whole night: the hours, the steps, the whisper through the door and the steadier hand at dawn.
+brief-holiday-2 |  The announcer at the microphone in the office can speak to the whole store, and the old intercom carries the toy floor’s sounds back to her, so she hears only what the boy chooses to answer with: the honk of a toy horn, a bell, a squeaky duck. /  You record it alone at a microphone, with the toy so
+brief-horror-2 |  You record it alone at a microphone, as an audiobook is recorded. /  Audiobook narration is voice-over work at a microphone, and the scene asks for it at its most exact: her reading can’t crack even as the book turns on her.
+brief-isekai-2 |  You record it alone at a microphone for an animated series, with the innkeeper’s lines on the track in your headphones. /  Bram, the innkeeper, whose recorded lines play in your headphones. /  You voice it alone for an animated series against a recorded partner, so it’s all voice-over: the scene’s 
+brief-nature_documentary-2 | 
+brief-neo_noir-2 | A recording booth; the reel plays on a monitor in front of the microphone. /  You record the narration alone at the microphone, to picture. /  The voice stays low and close to the microphone throughout, and the shifts are in color, not volume.
+brief-parody-2 | 
+brief-picaresque-2 |  You record it alone at a microphone, as the voice notes he leaves on his phone.
+brief-political_thriller-2 | 
+brief-psychological_horror-2 |  Alone at the microphone and quiet for a sleeping house, her voice has to carry the slide from brisk to frightened without growing loud.
+brief-satire-2 | The service desk of an invented supermarket chain’s flagship store at eight in the morning, the doors just open, the microphone on its gooseneck.
+brief-science_fiction-2 |  Clinic rules forbid a script, so you find each take at the microphone in her own words, from what the brief says she means to cover.
+brief-slice_of_life-2 | 
+brief-space_opera-2 | 
+brief-spy-2 | A small studio in a government building at three in the morning, one microphone, one lamp, and a sheet of four-figure groups to be read at the station’s fixed cadence.
+brief-time_travel-2 |  Any word that would change the course of events comes through as a tone, and the booth plays the tone back to her as she records. /  You record it alone at a microphone, with the countdown on a screen in front of you. /  The voice alone carries a whole life, close to the microphone, from a laugh to
+brief-tokusatsu-2 |  In tokusatsu the masked hero’s lines are recorded afterward, usually by the actor who plays him unmasked, to the suit performer’s movements, so the voice has to fit a body it doesn’t own. /  It’s post-synced voice-over, recorded alone at a microphone to finished footage and a rival already on the t
+brief-tragicomedy-3 |  You record it alone at a microphone, live to tape, as the episode goes out.
+brief-true_crime-2 |  A small home studio at night, foam on the walls and a microphone on an arm. /  You record it alone at a microphone, from a script she wrote this afternoon. /  The scene is a voice catching itself: the show’s practiced storytelling tone against the plain one she has to find, close to the microphone,
+brief-whodunit-2 |  You record it alone at a microphone, where every suspect has to be told apart by how she speaks to them. /  Six recorded voices break in at set points, and she answers each in its own way without losing the thread. /  It’s an audio drama recorded alone at a microphone against six voices on the trac

@@ -1,32 +1,49 @@
 /**
  * SLATE — what a course says about a piece shown (from 2026-10-20, the owner's brief 16, "Contextual Writing, Distinct
- * Voices, And Clear Information"). Built from what happened, said in the course's voice, and varied over a long run.
+ * Voices, And Clear Information", and brief 17, "Final Comprehensive Writing And Continuity Pass"). Built from what
+ * happened, said in the course's own voice, and varied over a long run.
  *
  * **What happened, why, and what to try.** A showing's words come from its facts (`ShowingFacts`): the band against the
  * course's last piece and its best, a run of strong work, the note and how it stands in the ledger (new, better, still
- * there, back after it was taken), what held a prepared piece back by the evaluation's own limits, the day's condition,
- * the partner's share, and the notes the piece put right. Each situation the brief names that the record supports has its
- * own shape (`situationOf`), and only the facts that matter to it are said. Until then every result went through one
- * formula: 381 of 868 showings in brief 16's baseline began "It came together. Here’s what to try next." and 220 "It
- * didn’t come together today." (docs/verification/voices-2026-10-20/before/).
+ * there, back after it was put right), what held a prepared piece back by the evaluation's own limits, the day's
+ * condition, the partner's share. Each situation the record supports has its own shape (`situationOf`), and only the
+ * facts that matter to it are said. Until brief 16 every result went through one formula: 381 of 868 showings in its
+ * baseline began "It came together. Here’s what to try next." (docs/verification/voices-2026-10-20/before/).
  *
- * **The course's voice.** A course speaks as its discipline does (`disciplineOf`, by the skills it teaches): acting of
- * what's wanted, the other person and the choice; voice and speech of breath, sound and clarity; movement of weight,
- * coordination and stamina; text of the reading and its evidence. The step beyond a piece with nothing holding it back
- * (`STEP`) is said in the discipline's terms; until then Voice I and Alexander Technique heard acting's "Do less. Find
- * the moments that need nothing added, and trust the text in them." The voices are SLATE's: they reproduce no teacher,
- * and the screens say so beside them.
+ * **A course's voice** (brief 17, section 4). Each course speaks in one of five voices (`VOICE_OF`), the same voice in
+ * every situation, so the course a student meets each week is recognizable from what it says and how:
+ * - `direct`: the result first, in short sentences; a repeat called a repeat; the next step an instruction.
+ * - `warm`: what went well first; improvement counted as progress; a repeat met patiently; the next step an invitation.
+ * - `exacting`: figures and specifics; improvement measured; what's still short, exactly; the next step a precise task.
+ * - `patient`: unhurried; improvement as something building; a repeat as part of the work; the next step to explore.
+ * - `brisk`: quick and practical; an achievement acknowledged and left; a repeat met with what to do now.
+ * The voices are SLATE's, a course's and not its teachers': the card says so beside them ("The words are the game’s,
+ * not the teachers’"), and no voice reproduces how a real person speaks. Each discipline's terms stay its own
+ * (`disciplineOf`, `STEP`): acting of what's wanted, the other person and the choice; voice and speech of breath, sound and
+ * clarity; movement of weight, coordination and stamina; text of the reading and its evidence. Until brief 17 a course's
+ * voice was its discipline's alone, so Voice I and Speech And Accents I said the same things the same ways.
+ *
+ * **What's said, and when to stop** (brief 17, section 5). A part of the preparation is named as prose names it
+ * (`partWords`: "your lines", "the work with your partner"), never by its card's label ("the note on Built On", found
+ * in brief 17's baseline). A note given before isn't given again as new: it's said with what's changed and what's still
+ * short, and the note's own words, already given, aren't repeated. A note's mark is said as the rule it is: a showing
+ * with that part at three quarters puts the note right. Until brief 17 it read "the note is taken at 75%". A first
+ * Strong, a best, and a strong piece despite a bad day are acknowledged and left there, with no step beyond: not every
+ * success needs a next thing to fix. A prepared piece held back by an ability or the day hears what builds it, and the
+ * step beyond only where nothing builds it; until brief 17 it heard both, "Meanwhile, try this:" before the step.
  *
  * **Grounded.** Nothing here says what the engine doesn't record. No moment of a performance is described: a limit is
  * named with what it cost, a strength with the preparation behind it, and a condition only where the evaluation counted
  * one. The step beyond is advice, said as a thing to try.
  *
- * **Varied, and remembered from the record.** Each situation has several ways to say it. Which one is said is chosen
- * without the game's randomness, from a hash of the piece and the day (`pick`), and skips any whose opening or whole text
- * the course, or another course of its discipline, said lately (`recent`, read from the feedback already in the save,
- * newest last). So the memory is the record itself: it's as long as the saved feedback, a save and its reload choose
- * the same words, and nothing is added to the save. Where every way has been used lately, the one said longest ago comes
- * back: a repeat that's true, never a new claim that isn't.
+ * **Varied, and remembered from the record.** Each situation has several ways to say it in each voice. Which one is said
+ * is chosen without the game's randomness, from a hash of the piece and the day (`pick`), and the one chosen is the one
+ * whose sentences' structures the course, or another of its discipline, said least lately (`recent`, read from the
+ * feedback already in the save, newest last): dates and figures don't make a sentence new (brief 17, section 7). So the
+ * memory is the record itself: it's as long as the saved feedback, a save and its reload choose the same words, and
+ * nothing is added to the save. A whole message the student has been told, by any course at any time, and an opening of
+ * the course's own last five pieces come after every way that wasn't (`heard`, from brief 17's final after-runs). Where every way has been used, the
+ * one said longest ago comes back: a repeat that's true, never a new claim that isn't.
  */
 
 import type { Band } from './coursework';
@@ -84,6 +101,91 @@ export const STEP: Record<Discipline, Record<Step, string>> = {
   },
 };
 
+/** A course's voice (brief 17, section 4): see the module's comment. */
+export type Voice = 'direct' | 'warm' | 'exacting' | 'patient' | 'brisk';
+
+/**
+ * Each course's voice, chosen so that two courses of one discipline in the same year don't share one: in the first year,
+ * acting's three (Acting I, Play, Intimacy And Combat), voice's two (Voice I, Speech And Accents I), movement's two (The
+ * Body As Source I, Alexander Technique I) and text's two (Text Analysis I, Text And Context) each differ. A course in a
+ * sequence keeps its voice (Voice I to III, The Body As Source I and II). A course not named here speaks directly.
+ */
+export const VOICE_OF: Readonly<Record<string, Voice>> = {
+  'Acting I': 'direct',
+  'Voice I': 'warm',
+  'Speech And Accents I': 'exacting',
+  'The Body As Source I': 'patient',
+  'Alexander Technique I': 'exacting',
+  Play: 'warm',
+  'Text Analysis I: The Actor’s Table Work': 'exacting',
+  'Acting Intimacy And Combat For The Stage': 'brisk',
+  'Text And Context Across The Repertory': 'patient',
+  'Text Analysis II': 'exacting',
+  'Acting II: Plays Of Extended And Heightened Language': 'exacting',
+  'Voice II': 'warm',
+  'Speech And Accents II': 'exacting',
+  'The Body As Source II': 'patient',
+  'Alexander Technique II Tutorials': 'exacting',
+  Clown: 'warm',
+  'Movement Invention II': 'brisk',
+  'The Greeks': 'direct',
+  'Play With Text': 'warm',
+  'Advanced Principles Of Acting Stage Combat': 'brisk',
+  'Singing II And Tutorials': 'warm',
+  'Shakespeare Practicum': 'direct',
+  Commedia: 'brisk',
+  'Acting III': 'direct',
+  'Voice III': 'warm',
+  'Speech And Accents III': 'exacting',
+  'Alexander Technique III Tutorials': 'patient',
+  'You Are The Creator': 'patient',
+  'Movement Invention III': 'brisk',
+  'Acting Through Song': 'warm',
+  'On-Camera Acting Technique': 'brisk',
+  'Character Analysis And Movement': 'exacting',
+  'Taming The Cyclops': 'brisk',
+  'Professional Preparation And Audition Workshop': 'direct',
+  'Actor Showcase': 'direct',
+};
+export const voiceOf = (course: string): Voice => VOICE_OF[course] ?? 'direct';
+
+/**
+ * A part of the preparation as prose names it, from its card's label (brief 17): the label is a heading on the card
+ * ("Built On", "Daily Practice", "Its Context Researched"), and a sentence that names it ("the note on Built On") reads as
+ * the engine's. Plural where a verb must agree. A label not here is said in lower case.
+ */
+const PART_WORDS: Readonly<Record<string, readonly [string, boolean?]>> = {
+  'Knows The Play': ['knowing the play'], 'Knows The Scene': ['knowing the scene'], 'The Choreography Learned': ['learning the choreography'],
+  'The Directions Understood': ['understanding the directions'], 'The Play Read': ['reading the play'], 'The Practice Learned': ['learning the practice'],
+  'The Sequence Learned': ['learning the sequence'],
+  Lines: ['your lines', true], 'Music And Words Learned': ['learning the music and the words'], 'The Text': ['learning the text'],
+  Choices: ['your choices', true], 'Its Context Researched': ['researching its context'], 'Scansion And Table Work': ['the scansion and the table work', true],
+  'Table Work': ['the table work'], 'The Analysis': ['the analysis'], 'The Score Made': ['making the score'], 'The Stakes And The Text': ['the stakes and the text', true],
+  'The Turn Found': ['finding the turn'], Transcription: ['the transcription'], 'What It’s About': ['what it’s about'],
+  Alone: ['rehearsing on your own'], 'Built On': ['building on the first round'], 'Daily Practice': ['the daily practice'], Drills: ['the drills', true],
+  'On Its Feet': ['time on its feet'], 'Played Through': ['playing it through'], Practice: ['practice'], Rehearsal: ['rehearsal'],
+  'Rehearsed In The Body': ['rehearsing it in the body'], 'Takes Recorded': ['recording takes'], 'The Score Recalled': ['recalling the score'],
+  'Drilled With Your Partner': ['drilling it with your partner'], 'Played Together': ['playing it together'], 'Practiced Together': ['practicing it together'],
+  'With Your Partner': ['the work with your partner'],
+  'The Presentation Prepared': ['preparing the presentation'], 'Written Up': ['writing it up'],
+};
+export const partWords = (label: string): { words: string; plural: boolean } => {
+  const w = PART_WORDS[label];
+  return w ? { words: w[0], plural: Boolean(w[1]) } : { words: label.toLowerCase(), plural: false };
+};
+
+/**
+ * A part of the preparation by what it is in every course, for a note the ledger counts across them (`noteKey`): the
+ * ledger's rehearsal note is Voice I's daily practice, Speech's drills and The Body As Source's rehearsing in the body,
+ * and "The daily practice has come up seven times now" (brief 17's first after-run) counted five courses' notes by one
+ * course's name. A note given before is said by this, and the piece's own name for it after: the names the Your Notes
+ * panel gives them (`noteSubject`), in prose. Revision is each piece's own (a presentation, a write-up), and has none.
+ */
+export const DIM_WORDS: Readonly<Record<string, readonly [string, boolean?]>> = {
+  familiarity: ['knowing the material'], memorization: ['your lines', true], interpretation: ['your choices', true],
+  rehearsal: ['rehearsal'], partner: ['the work with your partner'],
+};
+
 /** What a day's condition was, as the evaluation counted it (`Limit.what`), said as a clause. */
 const CONDITION: Record<string, string> = {
   fatigue: 'you came to it tired',
@@ -104,10 +206,14 @@ export interface ShowingFacts {
   bandLabel: string;
   /** The course's last piece shown before this one: its band, as said, and the day, as said. */
   prev?: { band: Band; label: string; on: string };
+  /** The day of this showing, as a day is said (`before.taken` is compared with it). */
+  today?: string;
   /** This piece and the course's pieces shown just before it, Strong or better, in a row. */
   run: number;
   /** Better than every piece the course has shown before. */
   best: boolean;
+  /** Strong or better, and the course's first piece to be (brief 17: a first breakthrough). */
+  firstStrong?: boolean;
   /** How the note stands in the ledger (`recordNote`). */
   kind: NoteKind;
   /**
@@ -124,40 +230,59 @@ export interface ShowingFacts {
    * What held a prepared piece back, by the evaluation's limits (`chiefLimit`), its kind and what, and for an ability or a
    * technique the practice exercise that trains it, where one does (`exerciseFor`; none trains discipline or stamina).
    */
-  held?: { words: string; kind: string; what: string; exercise?: string; again?: string };
+  held?: { words: string; kind: string; what: string; exercise?: string; again?: string; remedy?: string; running?: number };
   /** The day's condition where the evaluation counted one, and what it cost the whole. */
   condition?: { what: string; whole: number; words: string };
   /** The partner's share, where there was one: they lifted it, came less prepared, or slipped (covered or not). */
   partner?: { first: string; lifted: boolean; behind: boolean; slip?: { at: string; covered: boolean } };
-  /** The note before, where there was one: when, in which course, how often, and when it was taken. */
+  /** The note before, where there was one: when, in which course, how often, and when it was put right. */
   before?: { on: string; course: string; given?: number; taken?: string };
   /** A note on a part: the part's label, and how far it was prepared then and now (0 to 1). */
   part?: { label: string; then?: number; now?: number };
   /**
-   * What the note is on, as prose names it: the part's label as its card says it, the question for an answer at the table,
-   * the skill in words. A note given often is said short and named by it.
+   * What the note is on, as prose names it: a part by what it is in every course (`DIM_WORDS`), the question for an answer
+   * at the table, the skill in words. A note given before is said by it.
    */
   subject?: string;
+  /** A part as this piece's card names it, in prose (`partWords`): what a new note is said by, and a repeat's "here". */
+  here?: string;
+  /** The way at a note that keeps coming back this piece was worked with (`APPROACHES`), by its label, where it was. */
+  tried?: string;
   /** Given this often and still open (`LEARNING.persistent`): said short, with what's still open. */
   persistent: boolean;
-  /** The part's mark for the note to be taken (`LEARNING.enough`). */
+  /** The part's mark for the note to be put right (`LEARNING.enough`). */
   enough: number;
   /** What this course said lately, and other courses of its discipline, newest last: the memory (`pick`). */
   recent: readonly string[];
+  /**
+   * Everything the student was told at a showing before this one, by any course, oldest first; and this course's own
+   * last five (from 2026-10-20, brief 17's final after-runs, on `35b47aab`: nine students heard sixteen whole messages
+   * again, word for word, against brief 16's one, each further back than `recent` reaches, most of them from a course's
+   * second year in its first year's voice; and a course opened as one of its own last five pieces had 136 times, against
+   * 107, where its last five went further back than its discipline's last eight). A whole message said before, and an
+   * opening of the course's own last five, are said again only where every other true way has been too (`pick`).
+   */
+  heard?: { all: readonly string[]; own: readonly string[] };
 }
 
-export type Situation = 'best' | 'maintained' | 'despite' | 'steady' | 'held' | 'plain' | 'new' | 'partial' | 'slipped' | 'recurring' | 'persistent';
+export type Situation = 'first' | 'best' | 'maintained' | 'despite' | 'steady' | 'held' | 'plain' | 'new' | 'partial' | 'slipped' | 'recurring' | 'persistent';
 
 const RANK: Record<Band, number> = { unready: 0, working: 1, strong: 2, exceptional: 3 };
+/** What the day must have cost the whole, in points of 100, for a strong piece to be said as strong despite it. */
+const DESPITE_POINTS = 2;
 const strong = (b: Band) => RANK[b] >= RANK.strong;
 
-/** Which of the brief's situations the record supports for this showing (section 3), the most specific first. */
-export function situationOf(f: Pick<ShowingFacts, 'kind' | 'band' | 'prev' | 'run' | 'best' | 'condition' | 'before' | 'persistent' | 'held'>): Situation {
+/** Which of the brief's situations the record supports for this showing (brief 16, section 3; brief 17, section 5), the most specific first. */
+export function situationOf(f: Pick<ShowingFacts, 'kind' | 'band' | 'prev' | 'run' | 'best' | 'condition' | 'before' | 'persistent' | 'held' | 'firstStrong'>): Situation {
   if (f.kind === 'advanced') {
     // Under Strong with no limit on the record: said as that, with nothing named as holding it (found by the guide's
     // smaller-piece example, a Working piece with no limits, where the first draft of this read a limit that wasn't there).
     if (!strong(f.band)) return f.held ? 'held' : 'plain';
-    if (f.condition && f.condition.whole >= 0.5 && CONDITION[f.condition.what]) return 'despite';
+    // Strong despite the day where the day cost two points or more of the whole (from 2026-10-20, brief 17): until then
+    // half a point, so a long scene's stamina, a point of 100, read "Strong, though your stamina ran low", and stopped
+    // a piece that nothing held back from hearing its next step.
+    if (f.condition && f.condition.whole >= DESPITE_POINTS && CONDITION[f.condition.what]) return 'despite';
+    if (f.firstStrong && f.prev) return 'first';
     if (f.best && f.prev && RANK[f.band] > RANK[f.prev.band]) return 'best';
     if (f.run >= 2) return 'maintained';
     return 'steady';
@@ -168,35 +293,89 @@ export function situationOf(f: Pick<ShowingFacts, 'kind' | 'band' | 'prev' | 'ru
   return 'new';
 }
 
+/**
+ * Whether the words carry a step beyond (brief 17): a first Strong, a best, and a strong piece despite the day are left
+ * at the acknowledgment; a run of strong work hears the next step where it held the same band, and not where it rose;
+ * a prepared piece held back hears what builds what held it, and the step only where nothing does.
+ */
+export function saysStep(f: ShowingFacts): boolean {
+  const s = situationOf(f);
+  if (s === 'maintained') return !f.prev || RANK[f.band] <= RANK[f.prev.band];
+  if (s === 'held') return !heldAction(f);
+  return s === 'steady' || s === 'plain';
+}
+
 // --- Choosing the words ---------------------------------------------------------------------------------------------
 
 /** FNV-1a: the same key, the same number, on every machine and every load. */
-function hash(s: string): number {
+export function hash(s: string): number {
   let h = 2166136261;
   for (let i = 0; i < s.length; i += 1) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
   return h >>> 0;
 }
 
-/** A text's opening, as the memory compares it: its first sentence, figures taken out, in lower case. */
+const MONTH = '(?:January|February|March|April|May|June|July|August|September|October|November|December)';
+/** A sentence's shape, as the memory compares it: dates, figures, counts and ordinals taken out, in lower case. */
+export function shapeOf(sentence: string): string {
+  return sentence
+    .replace(new RegExp(`\\b${MONTH} \\d{1,2}, \\d{4}`, 'g'), 'DATE')
+    .replace(/\d+(?:[.,]\d+)?%?/g, '#')
+    .replace(/\b(?:first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|\d+(?:st|nd|rd|th))\b/gi, 'NTH')
+    .replace(/\b(?:one|two|three|four|five|six|seven|eight|nine|ten)\b/gi, 'N')
+    .toLowerCase()
+    .trim();
+}
+const sentencesOf = (text: string) => text.split(/(?<=[.!?])\s+(?=[A-Z“"(])/).filter((s) => /[a-z]/i.test(s));
+/** A sentence's frame, as the memory compares it: the first four words of its shape. */
+const frameOf = (shape: string) => shape.split(/\s+/).slice(0, 4).join(' ');
+/** A text's opening, as the memory compares it: its first sentence's shape. */
 export function openingOf(text: string): string {
-  return (text.split(/(?<=[.!?])\s+/)[0] ?? '').replace(/\d+(?:[.,]\d+)?%?/g, '#').replace(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December) #, #/g, 'DATE').toLowerCase();
+  return shapeOf(sentencesOf(text)[0] ?? '');
 }
 
 /**
- * One of several true ways to say a thing: the first, in an order fixed by the key, whose opening and whole text weren't
- * said lately; else the first whose whole text wasn't; else the one whose opening was said longest ago.
+ * One of several true ways to say a thing: of the options, in an order fixed by the key, the first whose sentences'
+ * shapes (`shapeOf`) were said least lately, its opening counting double; among equals, the key's order. So a way whose
+ * first sentence or whole frame was said in the last few showings comes after one that wasn't, whatever its dates and
+ * figures (brief 17, section 7: until then the memory compared whole texts and openings, figures out, and a sentence
+ * the course said last week with another date read as new). Where every way has been said lately, the one whose shapes
+ * were said longest ago comes first.
+ *
+ * `heard` is everything said before (`all`) and the speaker's own last five (`own`), oldest first: a way said word for
+ * word, at any time and by anyone, comes after every way that wasn't, and a way that opens as one of the speaker's own
+ * last five did comes after every way that doesn't (from 2026-10-20, brief 17's final after-runs). Until then a whole
+ * message said once was known only while it was in `recent`, so it was said again further on; and the speaker's own
+ * last five openings counted only where the discipline's last eight reached them. Among ways all said, the least lately
+ * said still comes first.
  */
-export function pick(options: readonly string[], key: string, recent: readonly string[]): string {
+export function pick(options: readonly string[], key: string, recent: readonly string[], heard: { all: readonly string[]; own: readonly string[] } = { all: [], own: [] }): string {
   const unique = [...new Set(options)];
   if (unique.length <= 1) return unique[0] ?? '';
   const start = hash(key) % unique.length;
   const order = unique.map((_, i) => unique[(start + i) % unique.length]!);
-  const opens = recent.map(openingOf);
-  const said = new Set(recent);
-  const fresh = order.find((o) => !opens.includes(openingOf(o)) && !said.has(o)) ?? order.find((o) => !said.has(o));
-  if (fresh) return fresh;
-  const lastSaid = (o: string) => opens.lastIndexOf(openingOf(o));
-  return [...order].sort((a, b) => lastSaid(a) - lastSaid(b))[0]!;
+  // How lately each shape was said: the newest recent text is the last, so a later index is more recent.
+  const lately = new Map<string, number>();
+  const opens = new Map<string, number>();
+  // An opening's frame, its first four words: "Working, and not for lack of preparation: your composure…" and "…: your
+  // focus…" are one frame said twice (brief 17's first after-runs: Acting I opened on it four times in seven showings,
+  // each sentence's shape new for the limit it named).
+  const frames = new Map<string, number>();
+  recent.forEach((r, i) => {
+    sentencesOf(r).forEach((s) => lately.set(shapeOf(s), i + 1));
+    opens.set(openingOf(r), i + 1);
+    frames.set(frameOf(openingOf(r)), i + 1);
+  });
+  const said = new Set([...recent, ...heard.all]);
+  const ownOpenings = new Set(heard.own.slice(-5).map(openingOf));
+  const cost = (o: string) => {
+    const shapes = sentencesOf(o).map(shapeOf);
+    return (said.has(o) ? 1e12 : 0) + (ownOpenings.has(openingOf(o)) ? 1e9 : 0)
+      + shapes.reduce((n, s) => n + (lately.get(s) ?? 0), 0) + 2 * (opens.get(openingOf(o)) ?? 0) + (frames.get(frameOf(openingOf(o))) ?? 0);
+  };
+  let best = order[0]!;
+  let least = cost(best);
+  for (const o of order.slice(1)) { const c = cost(o); if (c < least) { best = o; least = c; } }
+  return best;
 }
 
 // --- The words ------------------------------------------------------------------------------------------------------
@@ -210,79 +389,309 @@ const ordinal = (n: number) => ORDINAL[n] ?? (() => { const t = n % 100; return 
 const aOrdinal = (n: number) => { const o = ordinal(n); return `${/^(?:eighth|11th|18th|8\d*th)$/.test(o) ? 'an' : 'a'} ${o}`; };
 const COUNT = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 const count = (n: number) => COUNT[n] ?? String(n);
+const bands = (n: number) => (n === 1 ? 'a band' : `${count(n)} bands`);
 
 /** What each discipline calls the work it judges, for the sentences that name it. */
 const WORK: Record<Discipline, string> = { acting: 'the scene work', voice: 'the voice work', movement: 'the movement', text: 'the reading' };
+/** What each discipline calls its craft, where a note is on a skill. */
+const CRAFT: Record<Discipline, string> = { acting: 'your craft', voice: 'your vocal technique', movement: 'your physical technique', text: 'the skill behind your reading' };
 
-/** A prepared piece Strong or better with nothing holding it back: what's said first. */
-function steadyLeads(d: Discipline, f: ShowingFacts): string[] {
+const PLURAL: ReadonlySet<string> = new Set([...Object.values(PART_WORDS), ...Object.values(DIM_WORDS)].filter((w) => w[1]).map((w) => w[0]));
+/** The note's subject and its verbs ("your lines are", "the table work is"): what it is everywhere, or (`local`) on this card. */
+function topicOf(f: ShowingFacts, local = false): { t: string; is: string; was: string; has: string; it: string } {
+  const t = (local ? f.here : undefined) ?? f.subject ?? f.here ?? 'this note';
+  const plural = PLURAL.has(t);
+  return { t, is: plural ? 'are' : 'is', was: plural ? 'were' : 'was', has: plural ? 'have' : 'has', it: plural ? 'they' : 'it' };
+}
+
+/** Where the note before was given: in this course, or another one. */
+const whereOf = (f: ShowingFacts) => (f.before!.course === f.course ? '' : ` in ${f.before!.course}`);
+
+/** The band against the course's last piece, where it moved: what happened, said first before a note. */
+function movedLeads(v: Voice, f: ShowingFacts): string[] {
+  const p = f.prev;
+  if (!p || p.band === f.band) return [];
+  const up = RANK[f.band] > RANK[p.band];
+  const by = Math.abs(RANK[f.band] - RANK[p.band]);
   const b = f.bandLabel;
-  switch (d) {
-    case 'acting': return [
-      'Every part of the preparation held, and it played.',
-      'The work you did on it showed: nothing you prepared fell short.',
-      `${b}, with every part of the preparation in place.`,
-      'You came in with it ready, and nothing pulled it down.',
-    ];
-    case 'voice': return [
-      'The voice work was ready, and nothing in it held the piece back.',
-      'Everything the piece asked of the voice was prepared, and it showed.',
-      `${b}, and the preparation behind the voice held up.`,
-      'What you prepared held up in the voice here.',
-    ];
-    case 'movement': return [
-      'The work was in the body, and nothing in the preparation held it back.',
-      'Everything you prepared showed in the movement.',
-      `${b}: the movement was prepared through to the end.`,
-      'What you prepared held up in the body here.',
-    ];
-    case 'text': return [
-      'The reading was prepared, and nothing in it held the piece back.',
-      'Your table work stood up: nothing you prepared fell short.',
-      `${b}, with the work on the text done all the way through.`,
-      'The preparation behind the reading was complete, and it showed.',
-    ];
+  switch (v) {
+    case 'direct': return up ? [`${b} this time, up from ${p.label}.`, `Up from ${p.label} on ${p.on}, to ${b}.`] : [`${b} this time, down from ${p.label}.`, `Down from ${p.label} on ${p.on}, to ${b}.`];
+    case 'warm': return up ? [`A step up to ${b}, from ${p.label} last time.`, `${b}, better than the ${p.label} piece on ${p.on}.`] : [`${b}, not as strong as the ${p.label} piece on ${p.on}.`, `A step down to ${b}, from ${p.label} last time.`];
+    case 'exacting': return [`${up ? 'Up' : 'Down'} ${bands(by)} to ${b}, from ${p.label} on ${p.on}.`, `${b}, ${up ? 'up' : 'down'} ${bands(by)} from ${p.label}.`];
+    case 'patient': return up ? [`It came out ${b}, up from ${p.label} on ${p.on}.`, `${b}, up from ${p.label} last time.`] : [`It came out ${b}, down from ${p.label} on ${p.on}.`, `${b}, down from ${p.label} last time.`];
+    case 'brisk': return up ? [`Up from ${p.label} to ${b}.`, `${b}, up from ${p.label}.`] : [`Down from ${p.label} to ${b}.`, `${b}, down from ${p.label}.`];
   }
 }
 
-function bestLeads(d: Discipline, f: ShowingFacts): string[] {
+/** A new note on an answer at the table or a skill: that it's what held the piece back most, in the voice, before its own words. */
+function newLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
+  const b = f.bandLabel;
+  const high = strong(f.band);
+  if (f.about === 'choice') {
+    switch (v) {
+      case 'direct': return high ? [`${b}, but one answer at the table doesn’t hold up.`] : ['One answer at the table held it back.', 'A choice the text doesn’t support held it back.'];
+      case 'warm': return high ? [`${b}, with one reading at the table to look at again.`] : ['One reading at the table didn’t hold up, and that held it back.'];
+      case 'exacting': return high ? [`${b}. One answer at the table isn’t supported by the text.`] : [d === 'text' ? 'The reading rests on one answer the text doesn’t support.' : 'The answer that held it back most is one the text doesn’t support.'];
+      case 'patient': return high ? [`${b}, and one answer at the table is worth going back to.`] : ['One answer at the table held it back.'];
+      case 'brisk': return high ? [`${b}. One answer at the table needs another look.`] : ['One answer at the table held it back.'];
+    }
+  }
+  if (f.about === 'skill') {
+    const area = CRAFT[d];
+    switch (v) {
+      case 'direct': return high ? [`${b}. ${cap(area)} can go further.`] : [`${cap(area)} held it back most.`];
+      case 'warm': return high ? [`${b}, and ${area} has more to give.`] : [`What held it back most was ${area}, and that grows with time.`];
+      case 'exacting': return high ? [`${b}. The next gain is in ${area}.`] : [`The limit here was ${area}.`];
+      case 'patient': return high ? [`${b}. There’s more to find in ${area}.`] : [`What held it back most was ${area}.`];
+      case 'brisk': return high ? [`${b}. Build ${area}.`] : [`${cap(area)} held it back.`];
+    }
+  }
+  // A part's new note is run into its own words (`newPartLeads`).
+  return [];
+}
+
+/**
+ * A new note on a part, run into its own words (brief 17): the note's words name the part ("The lines weren’t secure,
+ * so…"), so a lead that names it too ("Your lines held it back most. The lines weren’t secure…", brief 17's first
+ * after-run) says it twice. A colon before words that have a colon of their own becomes a comma.
+ */
+function newPartLeads(v: Voice, f: ShowingFacts): string[] {
+  const body = f.note;
+  const first = body.split(/(?<=[.!?])\s+/)[0] ?? '';
+  const colon = !first.includes(':');
+  const run = (intro: string) => `${intro}${low(body)}`;
+  if (strong(f.band)) {
+    const b = f.bandLabel;
+    switch (v) {
+      case 'direct': return [run(`${b}. Still, `)];
+      case 'warm': return [run(`Good work at ${b}. Even so, `)];
+      case 'exacting': return [run(`${b}. Even so, `)];
+      case 'patient': return [`${b}, and there’s still more to find. ${body}`, run(`${b}. Even so, `)];
+      case 'brisk': return [run(`${b}. Still, `)];
+    }
+  }
+  switch (v) {
+    case 'direct': return [run(colon ? 'What held it back most: ' : 'Most of all, ')];
+    case 'warm': return [run(colon ? 'The main thing this time: ' : 'Mainly, ')];
+    case 'exacting': return [run(colon ? 'Where it fell short: ' : 'Above all, ')];
+    case 'patient': return [run(colon ? 'What held this one back most: ' : 'More than anything, ')];
+    case 'brisk': return [run(colon ? 'Main thing: ' : 'Chiefly, ')];
+  }
+}
+
+/** A note better but not there. `dated`: the day was said just before (the band's move), so it's "then", not the day again. */
+function partialLeads(v: Voice, f: ShowingFacts, dated = false): string[] {
+  const p = f.part;
+  const then = p?.then !== undefined ? pct(p.then) : undefined;
+  const now = p?.now !== undefined ? pct(p.now) : undefined;
+  const on = f.before!.on;
+  // Since when, every way: the day of the note before, or "then" where the band's move has just said it.
+  const since = dated ? 'then' : on;
+  const sinceOn = dated ? 'then' : `on ${on}`;
+  const { t, has } = topicOf(f);
+  const fig = then && now;
+  switch (v) {
+    case 'direct': return fig ? [`Better since ${since}: ${t} went from ${then} to ${now}. Not there yet.`, `${cap(t)} ${has} moved since ${since}, from ${then} to ${now}. Still short.`] : [`Better than ${sinceOn}, but not there yet.`];
+    case 'warm': return fig ? [`Progress on ${t}: ${then} ${sinceOn}, ${now} now. It isn’t there yet.`, `${cap(t)} ${has} come on since ${since}, from ${then} to ${now}, though it isn’t all the way yet.`] : [`Progress since ${since}, though it isn’t all the way yet.`];
+    case 'exacting': return fig ? [`${cap(t)}: ${then} ${sinceOn}, ${now} now. Short of the mark.`, `Up from ${then} to ${now} on ${t} since ${since}, and still short.`] : [`Better than ${sinceOn}, and still short.`];
+    case 'patient': return fig ? [`It’s building: since ${since}, ${t} ${has} gone from ${then} to ${now}. It isn’t there yet.`, `Since ${since}, ${t} ${has} gone from ${then} to ${now}. Not all the way yet.`] : [`It’s been building since ${since}, and it isn’t there yet.`];
+    case 'brisk': return fig ? [`${cap(t)}: up from ${then} to ${now} since ${since}. Keep at it.`, `From ${then} to ${now} on ${t} since ${since}. Not there yet.`] : [`Better than ${sinceOn}. Not there yet.`];
+  }
+}
+
+function slippedLeads(v: Voice, f: ShowingFacts, dated = false): string[] {
+  // `dated`: the move just before named the day it was put right, the course's last piece, so it's "then".
+  const at = dated ? 'then' : `on ${f.before!.taken!}`;
+  const { t, has, was, it } = topicOf(f);
+  // Put right earlier the same day, by another piece (from 2026-10-20, brief 17's final after-runs: "Rehearsal was put
+  // right on February 23, 2027, and has dropped back since.", said on February 23).
+  if (!dated && f.today && f.before!.taken === f.today) switch (v) {
+    case 'direct': return [`${cap(t)} came right earlier today, but not on this piece.`];
+    case 'warm': return [`${cap(t)} came right in a piece earlier today, and it didn’t carry into this one.`];
+    case 'exacting': return [`Put right earlier today, ${t} ${has} dropped back on this piece.`];
+    case 'patient': return [`${cap(t)} came right earlier today, and slipped on this one. It can come back.`];
+    case 'brisk': return [`${cap(t)}: right earlier today, not here.`];
+  }
+  switch (v) {
+    case 'direct': return [`You fixed ${t} ${at}, and ${it} ${has} slipped since.`, `${cap(t)} again: ${it} ${was} right ${at}.`, `${cap(t)} ${has} slipped since you fixed ${it} ${at}.`];
+    case 'warm': return [`You’d got ${t} right ${at}, and ${it} ${has} slipped since.`, `${cap(t)} came right ${at}, and ${it} ${has} slipped back since.`, `${cap(t)} ${has} slipped back since you got ${it} right ${at}.`];
+    case 'exacting': return [`${cap(t)} ${was} put right ${at}, and ${has} dropped back since.`, `Put right ${at}, ${t} ${has} dropped back.`];
+    case 'patient': return [`${cap(t)} came right ${at}, and ${it} ${has} slipped since. It’s worth going back to.`, `${cap(t)} ${was} there ${at}, and ${has} slipped since. It can come back.`];
+    case 'brisk': return [`${cap(t)} slipped. ${cap(it)} ${was} right ${at}.`, `Slipped since ${at === 'then' ? 'then' : at.slice(3)}: ${t}.`];
+  }
+}
+
+/** A note given before, two or three times now: that it's the same note, when, and where. */
+function againLeads(v: Voice, f: ShowingFacts): string[] {
+  const b = f.before!;
+  const n = (b.given ?? 1) + 1;
+  const w = whereOf(f);
+  const { t, is } = topicOf(f);
+  if (n >= 3) switch (v) {
+    case 'direct': return [`${cap(t)} again, the third note on it. The last was${w} on ${b.on}.`, `Third note on ${t}. The last was${w} on ${b.on}.`];
+    case 'warm': return [`This is the third note on ${t}, the last${w} on ${b.on}. It’s worth staying with.`, `We’re back on ${t} for a third time. The last${w} was on ${b.on}, and it’s worth staying with.`];
+    case 'exacting': return [`A third note on ${t}. The last was${w} on ${b.on}.`, `${cap(t)}, noted three times now. The last was${w} on ${b.on}.`];
+    case 'patient': return [`${cap(t)} again, a third time, the last${w} on ${b.on}. It’s still the place to start.`, `Three notes now on ${t}, the last${w} on ${b.on}. That’s fine: some things take longer.`];
+    case 'brisk': return [`${cap(t)} again. That’s the third time, the last${w} on ${b.on}.`, `Third note on ${t}, the last${w} on ${b.on}.`];
+  }
+  switch (v) {
+    case 'direct': return [`Same note as on ${b.on}${w}: ${t}.`, `${cap(t)} again, as on ${b.on}${w}.`];
+    case 'warm': return [`${cap(t)} came up on ${b.on}${w} too, and ${is === 'are' ? 'they’re' : 'it’s'} still the thing to work on.`, `The note is still on ${t}, as on ${b.on}${w}.`];
+    case 'exacting': return [`The same note as on ${b.on}${w}: ${t}.`, `A second note on ${t}. The first was${w} on ${b.on}.`];
+    case 'patient': return [`Back to ${t}, as on ${b.on}${w}. It’s still the place to start.`, `${cap(t)} came up${w} on ${b.on} as well, and it’s worth going back to.`];
+    case 'brisk': return [`${cap(t)} again, same as on ${b.on}${w}.`, `Same note: ${t}. Last time${w} on ${b.on}.`];
+  }
+}
+
+/** A note given often and still open: said short and named, with how many and when. */
+function oftenLeads(v: Voice, f: ShowingFacts): string[] {
+  const b = f.before!;
+  const n = (b.given ?? 1) + 1;
+  const w = whereOf(f);
+  const { t, has } = topicOf(f);
+  switch (v) {
+    case 'direct': return [`${cap(t)}, for the ${ordinal(n)} time. The last note was${w} on ${b.on}.`, `${cap(aOrdinal(n))} note on ${t}. The last was${w} on ${b.on}.`];
+    case 'warm': return [`${cap(t)} ${has} come up ${count(n)} times now, the last${w} on ${b.on}.`, `${cap(t)} again: that’s ${count(n)} notes, the last${w} on ${b.on}.`];
+    case 'exacting': return [`Note ${n} on ${t}. The last was${w} on ${b.on}.`, `${cap(t)}: ${count(n)} notes now, the last${w} on ${b.on}.`];
+    case 'patient': return [`This is the ${ordinal(n)} note on ${t}, the last${w} on ${b.on}. Some notes take longer than others.`, `${cap(aOrdinal(n))} note on ${t}, the last${w} on ${b.on}. It’s still the place to start.`];
+    case 'brisk': return [`${cap(t)} again. That’s ${count(n)} notes, the last${w} on ${b.on}.`, `${cap(t)}, still: ${count(n)} notes, the last${w} on ${b.on}.`];
+  }
+}
+
+/**
+ * Where a part stands against the mark that puts its note right (`LEARNING.enough`), the rule said as a rule: a piece
+ * shown with that part at three quarters or more puts the note right. Where the piece names the part otherwise than the
+ * note does ("rehearsal" is Voice I's daily practice), it says so. `said`: the lead has just given the figure.
+ */
+function standing(v: Voice, f: ShowingFacts, said = false): string[] {
+  const p = f.part;
+  if (!p || p.now === undefined) return [''];
+  const now = pct(p.now); const mark = pct(f.enough);
+  const local = f.here && f.subject && f.here !== f.subject ? f.here : undefined;
+  const it = local ? `Here that’s ${local}, ` : '';
+  const at = said ? '' : local ? `${it}at ${now}.` : '';
+  switch (v) {
+    case 'direct': return said ? [`A piece shown with it at ${mark} or more puts the note right.`, `${mark} on a piece you show puts it right.`]
+      : [`${at || `It’s at ${now}.`} A piece shown with it at ${mark} or more puts the note right.`, `${at || `It’s at ${now}.`} Show a piece with it at ${mark} or more, and the note is put right.`];
+    case 'warm': return said ? [`Bring it to ${mark} before you show a piece, and the note is done.`, `At ${mark} on a piece you show, this note is done.`]
+      : [`${at || `You’re at ${now} on it.`} Bring it to ${mark} before you show a piece, and the note is done.`, `${at || `It’s at ${now} now.`} At ${mark} on a piece you show, this note is done.`];
+    case 'exacting': return said ? [`The note closes when a piece is shown with it at ${mark} or more.`]
+      : [`${local ? `Here that’s ${local}: ${now}.` : `${p.label}: ${now}.`} The note closes when a piece is shown with it at ${mark} or more.`, `${local ? `Here that’s ${local}, at ${now}.` : `${p.label} is at ${now}.`} A showing at ${mark} or more closes the note.`];
+    case 'patient': return said ? [`Once a piece is shown with it at ${mark} or more, the note is cleared.`, `When a piece you show has it at ${mark}, the note is cleared.`]
+      : [`${at || `It’s at ${now} now.`} Once a piece is shown with it at ${mark} or more, the note is cleared.`, `${at || `It’s at ${now}.`} When a piece you show has it at ${mark}, the note is cleared.`];
+    case 'brisk': return said ? [`${mark} on a piece you show and it’s done.`]
+      : [`${at || `It’s at ${now}.`} Show a piece with it at ${mark} or more and the note is done.`, `${at || `It’s at ${now}.`} ${mark} on a showing clears it.`];
+  }
+}
+
+const REMEDY: Record<Voice, (r: string) => string> = {
+  direct: (r) => `Work on it: ${r}.`,
+  warm: (r) => `What will help: ${r}.`,
+  exacting: (r) => `The step for it: ${r}.`,
+  patient: (r) => `One way in: ${r}.`,
+  brisk: (r) => `Do this: ${r}.`,
+};
+
+/** A note that keeps coming back: the card's other ways at it, and the one this piece was worked with. */
+function otherWays(v: Voice, f: ShowingFacts): string[] {
+  const tried = f.tried ? `This piece was worked with ${f.tried}. ` : '';
+  const C = 'A Note That Keeps Coming Back, on the piece’s card';
+  switch (v) {
+    case 'direct': return [`${tried}Try another way at it under ${C}.`, `${tried}${C}, has other ways at it.`];
+    case 'warm': return [`${tried}If the usual way isn’t working, ${C}, has others.`, `${tried}${C}, has other ways in, if you want one.`];
+    case 'exacting': return [`${tried}${C}, lists the other ways at it.`];
+    case 'patient': return [`${tried}${C}, has other ways at it to explore.`, `${tried}There are other ways at it under ${C}.`];
+    case 'brisk': return [`${tried}Pick another way at it under ${C}.`];
+  }
+}
+
+/** A prepared piece Strong or better with nothing holding it back: what's said first. */
+function steadyLeads(v: Voice, d: Discipline, f: ShowingFacts, moved = false): string[] {
+  const b = f.bandLabel;
+  // After a move, which names the band (brief 17: "Up a band, from Working on October 13, 2026. Strong. No part of the
+  // preparation fell short." read the band as a sentence of its own), the preparation alone.
+  if (moved) switch (v) {
+    case 'direct': return ['Everything you prepared held.', 'The preparation was all there.'];
+    case 'warm': return ['Every part of it was prepared.', 'Everything you prepared came through.'];
+    case 'exacting': return ['The preparation was complete, part by part.', 'No part of the preparation fell short.'];
+    case 'patient': return [`What you prepared was all there in ${WORK[d]}.`, 'It rested on preparation that was all there.'];
+    case 'brisk': return ['All of it prepared. Good.', 'Prepared in full.'];
+  }
+  switch (v) {
+    case 'direct': return [`${b}. Everything you prepared held.`, `${b}, and the preparation was all there.`];
+    case 'warm': return [`${b}, and every part of it was prepared.`, `Everything you prepared came through: ${b}.`];
+    case 'exacting': return [`${b}, with nothing in the preparation short.`, `${b}. No part of the preparation fell short.`];
+    case 'patient': return [`${b}. What you prepared was all there in ${WORK[d]}.`, `${b}, and it rested on preparation that was all there.`];
+    case 'brisk': return [`${b}, and all of it prepared. Good.`, `${b}. Prepared in full.`];
+  }
+}
+
+function firstLeads(v: Voice, f: ShowingFacts): string[] {
+  const { bandLabel: b, course, prev } = f;
+  const was = prev!.label;
+  switch (v) {
+    case 'direct': return [`${b}: your first in ${course}.`, `Your first ${b} in ${course}, up from ${was}.`];
+    case 'warm': return [`Your first ${b} in ${course}, after ${was} last time. That’s a real step.`, `${b}, your first in ${course}. Well done.`];
+    case 'exacting': return [`${b}, up from ${was}: the first piece in ${course} at Strong or better.`];
+    case 'patient': return [`This is your first ${b} in ${course}, after ${was} on ${prev!.on}. It’s been building.`, `Your first ${b} in ${course}, after ${was} on ${prev!.on}.`];
+    case 'brisk': return [`First ${b} in ${course}. Good.`, `${b}, a first for ${course}. Good.`];
+  }
+}
+
+function bestLeads(v: Voice, f: ShowingFacts): string[] {
   const { bandLabel: b, prev, course } = f;
   const was = prev!.label;
-  const on = prev!.on;
-  return [
-    `${b}, up from ${was} on ${on}: your best in ${course} so far.`,
-    `Up from ${was} last time, and the best you’ve shown in ${course} yet.`,
-    d === 'voice' ? `The strongest the voice work has been in ${course}: ${b}, where the last piece was ${was}.`
-      : d === 'movement' ? `Your best movement work in ${course} so far: ${b}, where the last piece was ${was}.`
-        : d === 'text' ? `Your best work at the table in ${course} so far: ${b}, where the last piece was ${was}.`
-          : `Your best piece in ${course} so far: ${b}, where the last was ${was}.`,
-  ];
+  switch (v) {
+    case 'direct': return [`${b}: your best in ${course} so far.`, `${b}, up from ${was}. Your best in ${course} yet.`];
+    case 'warm': return [`${b}, the best you’ve shown in ${course}. Well done.`, `Up from ${was} to ${b}, your best in ${course} yet.`];
+    case 'exacting': return [`${b}, up from ${was}: the highest you’ve shown in ${course}.`];
+    case 'patient': return [`${b}, after ${was}: the best you’ve shown in ${course}.`];
+    case 'brisk': return [`Best yet in ${course}: ${b}, up from ${was}.`];
+  }
 }
 
-function maintainedLeads(d: Discipline, f: ShowingFacts): string[] {
-  const { bandLabel: b, run, course, prev } = f;
+function maintainedLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
+  const { run } = f;
+  // Times, not pieces: a piece shown in rounds is one piece shown several times (`roundsShown`). A long run between its
+  // milestones (four on, but five, ten and every fifth) may be told without its count, as a steady piece is, the same
+  // facts making those words true (brief 17's after-runs: a reading course Strong twenty times said its count each time).
+  if (run >= 4 && run % 5 !== 0) return [...countedRun(v, d, f), ...steadyLeads(v, d, f)];
+  return countedRun(v, d, f);
+}
+
+function countedRun(v: Voice, d: Discipline, f: ShowingFacts): string[] {
+  const { bandLabel: b, run, prev } = f;
   const same = prev?.band === f.band;
-  if (run >= 3) return [
-    // Times, not pieces: a piece shown in rounds is one piece shown several times (`roundsShown`).
-    `${b}${same ? ' again' : ''}: ${count(run)} times running in ${course} at Strong or better.`,
-    `That’s the ${ordinal(run)} time in a row at Strong or better in ${course}.`,
-    `${cap(WORK[d])} is holding: ${count(run)} times running at Strong or better.`,
-  ];
-  return same
-    ? [`${b} again, as on ${prev!.on}.`, `${b} for the second time running.`, `${cap(WORK[d])} is holding: ${b} again.`]
-    : [`${b}, after ${prev?.label ?? 'Strong'} on ${prev?.on ?? 'the last piece'}: two in a row at Strong or better.`, `Strong or better twice running now, ${b} this time.`];
+  if (run >= 3) switch (v) {
+    case 'direct': return [`${b}${same ? ' again' : ''}: ${count(run)} times running at Strong or better.`, `That’s ${count(run)} times in a row at Strong or better.`, `Still Strong or better, ${count(run)} times in a row now, ${b} this time.`];
+    case 'warm': return [`Another ${b}. That’s ${count(run)} times running at Strong or better.`, `${b}${same ? ' again' : ''}, ${count(run)} times in a row at Strong or better now.`, `You’ve kept it up: ${count(run)} times running at Strong or better, ${b} this time.`];
+    case 'exacting': return [`${b}: ${count(run)} times running at Strong or better.`, `The ${ordinal(run)} time in a row at Strong or better.`, `${b}. The run at Strong or better is ${count(run)} long now.`];
+    case 'patient': return [`${b}${same ? ' again' : ''}. ${cap(count(run))} times in a row now at Strong or better.`, `${cap(WORK[d])} is holding: ${count(run)} times running at Strong or better.`, `It’s settling in: ${b}, and ${count(run)} times running at Strong or better.`];
+    case 'brisk': return [`${b}${same ? ' again' : ''}, ${count(run)} straight at Strong or better.`, `${cap(count(run))} in a row at Strong or better. Keep going.`];
+  }
+  if (same) switch (v) {
+    case 'direct': return [`${b} again, as on ${prev!.on}.`, `A second ${b} in a row, after ${prev!.on}.`];
+    case 'warm': return [`${b} again, and it was ${b} on ${prev!.on} too. Good to see it hold.`, `Two ${b} pieces running now. It’s holding, and that’s good to see.`];
+    case 'exacting': return [`${b} for the second time running.`, `${b}, matching the piece on ${prev!.on}.`];
+    case 'patient': return [`${cap(WORK[d])} is holding: ${b} again.`, `${b} twice in a row now. It’s starting to settle.`];
+    case 'brisk': return [`${b} again.`, `${b}. Two running.`];
+  }
+  return [`${b}, after ${prev?.label ?? 'Strong'} on ${prev?.on ?? 'the last piece'}: two in a row at Strong or better.`, `Strong or better twice running now, ${b} this time.`];
 }
 
-function despiteLeads(d: Discipline, f: ShowingFacts): string[] {
+function despiteLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
   const c = f.condition!;
   const clause = CONDITION[c.what]!;
   const pts = Math.round(c.whole);
   const cost = pts >= 1 ? `about ${pts} ${pts === 1 ? 'point' : 'points'}` : 'less than a point';
-  return [
-    `${f.bandLabel}, even though ${clause}: it cost ${cost}, and ${WORK[d]} carried it anyway.`,
-    `${cap(clause)}, which cost ${cost}, and it still came out ${f.bandLabel}.`,
-    `It came out ${f.bandLabel} though ${clause}. The preparation made up for what that cost, ${cost}.`,
-  ];
+  const b = f.bandLabel;
+  switch (v) {
+    case 'direct': return [`${b}, though ${clause}. That cost ${cost}, and ${WORK[d]} carried it.`, `${b} even so: ${clause}, and that cost ${cost}.`, `${cap(clause)}, which cost ${cost}. ${cap(WORK[d])} held up, and it came out ${b}.`];
+    case 'warm': return [`${cap(clause)}, and it still came out ${b}. That cost ${cost}, and you carried it.`, `${b}, on a day when ${clause}. That cost ${cost}, and you carried it well.`, `You got it to ${b} even though ${clause}, which cost ${cost}. That takes something.`];
+    case 'exacting': return [`${b}. ${cap(clause)}, which cost ${cost}, and the preparation made up for it.`, `${cap(clause)}, at a cost of ${cost}. It held at ${b} regardless.`, `${b} with ${cost} lost to the day: ${clause}.`];
+    case 'patient': return [`${cap(clause)}, and it cost ${cost}, but it still came out ${b}.`, `It came out ${b} even though ${clause}. It cost ${cost}, and you still got there.`, `Not an easy day: ${clause}, and that cost ${cost}. It was ${b} all the same.`];
+    case 'brisk': return [`${b}, though ${clause}: that cost ${cost}. Well handled.`, `${b} anyway. ${cap(clause)}, and that cost ${cost}.`, `${cap(clause)}. Cost ${cost}. Still ${b}.`];
+  }
 }
 
 /**
@@ -290,26 +699,49 @@ function despiteLeads(d: Discipline, f: ShowingFacts): string[] {
  * the course's last piece back too (`again`), it's said as that, with when: the same finding isn't new (brief 16,
  * section 3), and it was said fresh six times running in Voice I in its first transcripts.
  */
-function heldLeads(d: Discipline, f: ShowingFacts): string[] {
+function heldLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
+  const h = f.held!;
+  // The same limit three pieces running or more: how many, with the ways that say when (brief 17).
+  const n = h.running;
+  const running = !n ? [] : {
+    direct: [`${h.words}, the ${ordinal(n)} piece running.`],
+    warm: [`${h.words} again, ${count(n)} pieces in a row now.`],
+    exacting: [`${cap(ordinal(n))} piece running with the same limit: ${low(h.words)}.`],
+    patient: [`${h.words}, as it has the last ${count(n - 1)} times.${h.kind === 'ability' || h.kind === 'technique' ? ' That builds slowly.' : ''}`],
+    brisk: [`${h.words}. ${cap(count(n))} in a row.`],
+  }[v];
+  if (h.again) return [...running, ...heldAgainLeads(v, h)];
+  return heldFreshLeads(v, d, f);
+}
+
+function heldAgainLeads(v: Voice, h: NonNullable<ShowingFacts['held']>): string[] {
+  switch (v) {
+    case 'direct': return [`${h.words} again, as on ${h.again}.`, `Same as on ${h.again}: ${low(h.words)}.`, `It’s what held the last piece back, on ${h.again}: ${low(h.words)}.`];
+    case 'warm': return [`As on ${h.again}, ${low(h.words)}.`, `${h.words}, as it did on ${h.again}.`, `The same thing held it back as on ${h.again}: ${low(h.words)}.`];
+    case 'exacting': return [`The same limit as on ${h.again}: ${low(h.words)}.`, `Unchanged since ${h.again}: ${low(h.words)}.`];
+    case 'patient': return [`It was the same on ${h.again}: ${low(h.words)}.${h.kind === 'ability' || h.kind === 'technique' ? ' That builds slowly.' : ''}`, `Again, as it was on ${h.again}, ${low(h.words)}.`];
+    case 'brisk': return [`${h.words}. Same as last time, on ${h.again}.`, `Still the same as on ${h.again}: ${low(h.words)}.`];
+  }
+}
+
+function heldFreshLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
   const h = f.held!;
   const b = f.bandLabel;
-  if (h.again) return [`As on ${h.again}, ${low(h.words)}.`, `${h.words}, as it did on ${h.again}.`, `It stayed at ${b}, as on ${h.again}: ${low(h.words)}.`];
   const prep = h.kind === 'preparation';
-  const out = [
-    `It stayed at ${b}: ${low(h.words)}.`,
-    prep ? `${h.words}. That’s what held it back most.` : `${h.words}, more than anything in the preparation.`,
-  ];
-  if (!prep) out.push(`It wasn’t the preparation: ${low(h.words)}.`);
-  if (!prep && d === 'voice') out.push(`The voice work was prepared, but ${low(h.words)}.`);
-  if (!prep && d === 'movement') out.push(`The movement was prepared, but ${low(h.words)}.`);
-  if (!prep && d === 'text') out.push(`The reading was prepared, but ${low(h.words)}.`);
-  if (!prep && d === 'acting') out.push(`You came in prepared, but ${low(h.words)}.`);
-  return out;
+  if (prep) return [`It stayed at ${b}: ${low(h.words)}.`, `${h.words}. That’s what held it back most.`];
+  switch (v) {
+    case 'direct': return [`You were prepared. ${h.words}.`, `${b}, and not for lack of preparation: ${low(h.words)}.`, `${h.words}, though the preparation was all there.`];
+    case 'warm': return [`You came in prepared, so this isn’t about the work you put in: ${low(h.words)}.`, `The preparation was there. ${h.words}.`];
+    case 'exacting': return [`Prepared, but ${low(h.words)}.`, `The preparation was complete. ${h.words}.`];
+    case 'patient': return [`Your preparation was all there. What held it back was elsewhere: ${low(h.words)}.`, `${cap(WORK[d])} was prepared, but ${low(h.words)}.`];
+    case 'brisk': return [`The preparation was fine. ${h.words}.`, `${h.words}, more than anything in the preparation.`];
+  }
 }
 
 /** What to do about what held it back, where the game has a thing to do: one sentence, or none. */
 function heldAction(f: ShowingFacts): string | undefined {
-  const h = f.held!;
+  const h = f.held;
+  if (!h) return undefined;
   if (h.kind === 'ability' || h.kind === 'technique') {
     if (h.what === 'stamina') return 'Work Out, under Look After Yourself, builds stamina.';
     if (h.what === 'discipline') return 'Discipline grows with each day of practice kept up.';
@@ -322,89 +754,20 @@ function heldAction(f: ShowingFacts): string | undefined {
     if (h.what === 'injury') return 'That eases as the injury mends.';
     return undefined;
   }
+  if (h.kind === 'preparation') return h.remedy ? `What finishes it: ${h.remedy}.` : undefined;
   if (h.kind === 'difficulty') return 'The piece asks more than your craft has yet, and that comes with classes and practice.';
   if (h.kind === 'fit' || h.kind === 'suitability') return 'Next time, choose a way of playing it that the material allows.';
   return undefined;
 }
 
-const STEP_INTROS = ['Next, try this: ', 'To take it further: ', 'Something to try on the next one: ', 'One step further: '];
-const HELD_INTROS = ['Meanwhile, try this: ', 'Alongside that: ', 'On the next piece, try this: '];
-
-/** The band against the course's last piece, where it moved: what happened, said first before a note. */
-function movedLeads(f: ShowingFacts): string[] {
-  const p = f.prev;
-  if (!p || p.band === f.band) return [];
-  return RANK[f.band] > RANK[p.band]
-    ? [`Up from ${p.label} last time.`, `That’s up from ${p.label} on ${p.on}.`, `Better than the ${p.label} piece on ${p.on}.`]
-    : [`Down from ${p.label} on ${p.on}.`, `That’s down from ${p.label} last time.`, `Lower than the ${p.label} piece on ${p.on}.`];
-}
-
-/**
- * A new note: that it's what held the piece back most, in the discipline's voice, by what the note is about, before its
- * own words. "Most", never "kept it at" its band: a note is on the part furthest short, and the record doesn't say that
- * part alone decided the band.
- */
-function newLeads(d: Discipline, f: ShowingFacts): string[] {
-  const b = f.bandLabel;
-  const high = strong(f.band);
-  if (f.about === 'choice') return high
-    ? [`${b}, with one answer at the table still to rethink.`, `${b}, though one reading doesn’t hold up in the text.`]
-    : d === 'text' ? [`${b}: the reading rests on one answer the text doesn’t support.`, 'One answer at the table held it back.'] : ['One reading at the table held it back.', `${b}, and one choice the text doesn’t support is part of why.`];
-  if (f.about === 'skill') {
-    // "Most", not "not the preparation": a part a little short can be a note too, ranked under the craft's.
-    const area = d === 'voice' ? 'vocal technique' : d === 'movement' ? 'physical technique' : d === 'text' ? 'the skill behind the reading' : 'the craft';
-    return high ? [`${b}, and one skill can grow further.`, `${b}, though ${area} can go further.`] : [`What held it back most was ${area}.`, `At ${b}, ${area} is what held it back most.`];
-  }
-  switch (d) {
-    case 'acting': return high ? [`${b}, with one thing still to work on.`, `${b}, and one part of the preparation can go further.`] : ['One part of the preparation held it back.', 'This is what held it back most.', `At ${b}, this is the part that fell shortest.`];
-    case 'voice': return high ? [`${b}, with one thing in the voice work still to do.`, `${b}, and one part of the preparation can go further.`] : ['In the voice work, one part fell short.', `${b}: the voice work fell short in one place.`, 'One part of the voice work wasn’t ready.'];
-    case 'movement': return high ? [`${b}, with one thing in the body still to do.`, `${b}, and one part of the movement can go further.`] : ['In the body, one part wasn’t there yet.', `${b}, and one part of the movement work fell shortest.`, 'One part of the movement held it back most.'];
-    case 'text': return high ? [`${b}, with one thing in the reading still to do.`, `${b}, and one part of the table work can go further.`] : [`${b}: the reading fell short in one place.`, 'One part of the table work held it back most.', 'One part of the reading wasn’t ready.'];
-  }
-}
-
-/** A note better but not there. `dated`: the day was said just before (the band's move), so it's "then", not the day again. */
-function partialLeads(f: ShowingFacts, dated = false): string[] {
-  const p = f.part;
-  const then = p?.then !== undefined ? pct(p.then) : undefined;
-  const now = p?.now !== undefined ? pct(p.now) : undefined;
-  const on = f.before!.on;
-  const fig = then && now ? ` (${then} then, ${now} now)` : '';
-  const label = p?.label ?? 'It';
-  return [
-    `This has improved since ${dated ? 'then' : on}${fig}, but it isn’t there yet.`,
-    then && now ? `${label} went from ${then}${dated ? '' : ` on ${on}`} to ${now} now: closer, not there yet.` : `Closer than ${dated ? 'then' : `on ${on}`}, not there yet.`,
-    `Better than ${dated ? 'then' : `on ${on}`}${fig}, though not all the way.`,
-  ];
-}
-
-function slippedLeads(f: ShowingFacts): string[] {
-  const t = f.before!.taken!;
-  return [`You fixed this on ${t}, but it has slipped back.`, `This had come right on ${t}, and it has slipped since.`, `Back again: you’d put this right on ${t}.`];
-}
-
-function recurringLeads(f: ShowingFacts): string[] {
-  const b = f.before!;
-  const n = (b.given ?? 1) + 1;
-  const where = b.course === f.course ? `in ${f.course}` : `in ${b.course}`;
-  // Said short, without the note's own words, it names what the note is on (found reading brief 16's first transcripts:
-  // "Still open after seven notes" said nothing of which).
-  if (f.persistent && f.subject) return [
-    `The note on ${f.subject} is still open after ${count(n - 1)} notes, the last ${where} on ${b.on}.`,
-    `This is the ${ordinal(n)} time you’ve had the note on ${f.subject}, the last ${where} on ${b.on}.`,
-    `${cap(aOrdinal(n))} time for the note on ${f.subject}: it was last given ${where}, on ${b.on}.`,
-  ];
-  return n >= 3
-    ? [`This is the ${ordinal(n)} time you’ve had this note, the last ${where} on ${b.on}, and it’s still there.`, `The same note ${aOrdinal(n)} time: it was last given ${where}, on ${b.on}.`, `Still open after ${count(n - 1)} notes, the last ${where} on ${b.on}.`]
-    : [`You had this note ${where} on ${b.on} too, and it’s still there.`, `The same note as on ${b.on} ${where}: it hasn’t moved yet.`, `Still there from ${b.on}, ${where}.`];
-}
-
-/** What's still open on a part, where the part measures it: how far it's come against the mark that takes the note. */
-function stillOpen(f: ShowingFacts, named = false): string | undefined {
-  const p = f.part;
-  if (!p || p.now === undefined) return undefined;
-  return `${named ? 'It’s at' : `${p.label}:`} ${pct(p.now)} now, and the note is taken at ${pct(f.enough)}.`;
-}
+/** How each voice puts the step beyond. */
+const STEP_INTROS: Record<Voice, readonly string[]> = {
+  direct: ['Next: ', 'Now try this: '],
+  warm: ['When you’re ready, try this: ', 'Something to try next: '],
+  exacting: ['Work on this next: ', 'The next precise thing: '],
+  patient: ['Something to explore next: ', 'For the next one, try this: '],
+  brisk: ['Next time: ', 'Now: '],
+};
 
 /** The partner's share, where it's what the record says mattered: at most one sentence. */
 function partnerSentence(f: ShowingFacts): string | undefined {
@@ -416,45 +779,66 @@ function partnerSentence(f: ShowingFacts): string | undefined {
   return undefined;
 }
 
-/** A showing's words (brief 16): what happened, why, and what to try, in the course's voice. `pick` chooses among them. */
+/** A showing's words (briefs 16 and 17): what happened, why, and what to try, in the course's voice. `pick` chooses among them. */
 export function showingWords(f: ShowingFacts): string {
-  return pick(showingCandidates(f), f.key, f.recent);
+  return pick(showingCandidates(f), f.key, f.recent, f.heard);
 }
 
 /** Every whole message true of a showing: what `showingWords` chooses from, and what a test can hold each one of to the facts. */
 export function showingCandidates(f: ShowingFacts): string[] {
+  // The band said once: a move that names it ("Strong, up from Working") isn't followed by a lead that names it again
+  // (brief 17's first after-run: "Strong, up from Working on October 13, 2026. Strong. No part of the preparation fell
+  // short."). Where every way would, they're kept.
+  const all = composed(f);
+  const twice = (x: string) => (x.match(new RegExp(`\\b${f.bandLabel}\\b`, 'g')) ?? []).length > 1 && !/\b(?:again|running|in a row|twice)\b/.test(x);
+  // Nor a day said twice: a move from the piece shown the day a note was put right, and the note slipped since (brief 17's
+  // first after-runs: "Down from Working on October 19, 2026. Your choices again: they were right on October 19, 2026.").
+  const days = (x: string) => x.match(new RegExp(`\\b${MONTH} \\d{1,2}, \\d{4}`, 'g')) ?? [];
+  const dayTwice = (x: string) => new Set(days(x)).size < days(x).length;
+  const once = all.filter((x) => !twice(x) && !dayTwice(x));
+  return once.length ? once : all;
+}
+
+function composed(f: ShowingFacts): string[] {
   const d = f.discipline;
+  const v = voiceOf(f.course);
   const s = situationOf(f);
   const joined = (...parts: (string | undefined)[]) => parts.filter((x) => x && x.trim()).join(' ').replace(/\s+/g, ' ').trim();
-  let candidates: string[] = [];
+  const step = saysStep(f) ? STEP_INTROS[v].map((i) => `${i}${f.note}`) : [''];
   // The band against the course's last piece, where it moved and nothing else says so: what happened, first.
-  const front = movedLeads(f).length ? movedLeads(f) : [''];
+  const front = movedLeads(v, f).length ? movedLeads(v, f) : [''];
   if (s === 'held') {
-    // What to do about it, said where it's news: not where the course or another of its discipline said it lately. A
-    // limit that holds piece after piece hears it once, then the step beyond alone (brief 16, section 3: "Do not generate
+    // What builds what held it, said where it's news: not where the course or another of its discipline said it lately.
+    // A limit that holds piece after piece hears it once, then the finding alone (brief 16, section 3: "Do not generate
     // a new lecture after every routine action").
     const act = heldAction(f);
     const action = act && !f.recent.slice(-4).some((r) => r.includes(act)) ? act : undefined;
-    candidates = front.flatMap((m) => heldLeads(d, f).flatMap((lead) => HELD_INTROS.map((intro) => joined(m, lead, action, `${intro}${f.note}`))));
-  } else if (s === 'plain') {
-    const leads = [`${f.bandLabel}, and no one thing held it back.`, `${f.bandLabel}: nothing in it fell short enough to name.`];
-    candidates = front.flatMap((m) => leads.flatMap((lead) => STEP_INTROS.map((intro) => joined(m, lead, `${intro}${f.note}`))));
-  } else if (s === 'steady' || s === 'best' || s === 'maintained' || s === 'despite') {
-    const leads = s === 'best' ? bestLeads(d, f) : s === 'maintained' ? maintainedLeads(d, f) : s === 'despite' ? despiteLeads(d, f) : steadyLeads(d, f);
-    const with_ = s === 'steady' || s === 'best' ? partnerSentence(f) : undefined;
-    // A run of strong work hears the step beyond and little else: a short acknowledgment, not a lecture. Only a steady
-    // piece says how it moved: the best and a run say it in their own words.
-    const lead0 = s === 'steady' ? front : [''];
-    candidates = lead0.flatMap((m) => leads.flatMap((lead) => STEP_INTROS.map((intro) => joined(m, lead, with_, `${intro}${f.note}`))));
-  } else if (s === 'persistent') {
-    // Given often and still open: what's still open and where to try another way, not the whole note again.
-    const open = stillOpen(f, Boolean(f.subject));
-    candidates = recurringLeads(f).map((lead) => joined(lead, open, 'A Note That Keeps Coming Back, on the piece’s card, offers other ways at it.'));
-  } else {
-    const leads = (m: string) => (s === 'partial' ? partialLeads(f, Boolean(m) && m.includes(f.before!.on)) : s === 'slipped' ? slippedLeads(f) : s === 'recurring' ? recurringLeads(f) : newLeads(d, f));
-    const fix = f.remedy ? `To work on it: ${f.remedy}.` : undefined;
-    const open = s === 'recurring' ? stillOpen(f) : undefined;
-    candidates = front.flatMap((m) => leads(m).map((lead) => joined(m, lead, f.note, open, fix)));
+    return front.flatMap((m) => heldLeads(v, d, f).flatMap((lead) => step.map((x) => joined(m, lead, action, x))));
   }
-  return candidates;
+  if (s === 'plain') {
+    const leads = movedLeads(v, f).length
+      ? { direct: ['No one part held it back.'], warm: ['There was nothing in particular holding it back.'], exacting: ['No single part fell short enough to name.'], patient: ['No one thing stood out as holding it back.'], brisk: ['No big problem in it.'] }[v]
+      : { direct: [`${f.bandLabel}, and nothing in particular held it back.`], warm: [`${f.bandLabel}, with nothing in particular holding it back.`], exacting: [`${f.bandLabel}, with no single part short enough to name.`], patient: [`It came out ${f.bandLabel}, and nothing in particular stood out as holding it back.`], brisk: [`${f.bandLabel}. No big problem in it.`] }[v];
+    return front.flatMap((m) => leads.flatMap((lead) => step.map((x) => joined(m, lead, x))));
+  }
+  if (s === 'first' || s === 'best' || s === 'maintained' || s === 'despite' || s === 'steady') {
+    const leads = s === 'first' ? firstLeads(v, f) : s === 'best' ? bestLeads(v, f) : s === 'maintained' ? maintainedLeads(v, d, f) : s === 'despite' ? despiteLeads(v, d, f) : steadyLeads(v, d, f, movedLeads(v, f).length > 0);
+    const with_ = s === 'steady' || s === 'best' || s === 'first' ? partnerSentence(f) : undefined;
+    // Only a steady piece says how it moved: the others say it in their own words.
+    const lead0 = s === 'steady' ? front : [''];
+    return lead0.flatMap((m) => leads.flatMap((lead) => step.map((x) => joined(m, lead, with_, x))));
+  }
+  // A note given before isn't said again in full: its own words were given, so a part says where it stands and what
+  // answers it, an answer at the table its reason again (which is the note), and a skill that classes build it.
+  const again = s === 'partial' || s === 'slipped' || s === 'recurring' || s === 'persistent';
+  const body = !again || f.about === 'choice' ? f.note : f.about === 'skill' ? 'Classes build it over the weeks.' : undefined;
+  const fix = f.remedy ? REMEDY[v](f.remedy) : undefined;
+  if (s === 'persistent') {
+    return oftenLeads(v, f).flatMap((lead) => standing(v, f).flatMap((open) => otherWays(v, f).map((ways) => joined(lead, f.about === 'choice' ? f.note : undefined, open, ways))));
+  }
+  // A new note on a part, its lead run into its words; the rest, the lead and then the words.
+  if (s === 'new' && f.about === 'part') return front.flatMap((m) => newPartLeads(v, f).map((lead) => joined(m, lead, fix)));
+  const leads = (m: string) => (s === 'partial' ? partialLeads(v, f, Boolean(m) && m.includes(f.before!.on)) : s === 'slipped' ? slippedLeads(v, f, Boolean(m) && m.includes(f.before!.taken!)) : s === 'recurring' ? againLeads(v, f) : newLeads(v, d, f));
+  const open = again ? standing(v, f, s === 'partial') : [''];
+  return front.flatMap((m) => leads(m).flatMap((lead) => open.map((o) => joined(m, lead, body, o, fix))));
 }

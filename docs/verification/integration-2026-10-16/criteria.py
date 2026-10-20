@@ -522,6 +522,42 @@ if FIG16R and FIG15R:
         r['failure'] = f"{r['failure']}; brief 16 ({r['measured']['commit']}): {'the same' if FIG16R[r['id']] == FIG15R.get(r['id']) else FIG16R[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {B16R}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{B16R}/figures.json'}] + ([{'file': f'{B16R}/gate.txt'}] if gate else [])
+# Brief 17's runs (continuity-2026-10-20/, from 2026-10-20), as brief 16's: a pass that changed the player's words and,
+# at the owner's word, one mechanic (a classmate's apology kept on the misses it's for), and with them files the
+# measurements watch, so each measurement brief 16 held is made again on brief 17's tested commit, the same three ways.
+B17F = 'docs/verification/continuity-2026-10-20/final'
+SAME17 = False
+if os.path.exists(f'{B17F}/figures.json') and os.path.exists(f'{B16F}/figures.json'):
+    FIG17 = json.load(open(f'{B17F}/figures.json', encoding='utf-8'))
+    B17AT = re.search(r'^at (\w+)', open(f'{B17F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
+    # Brief 17's numbers-same.json holds two comparisons (the words, and the fix); the judge's outputs are the words'.
+    NS17 = json.load(open('docs/verification/continuity-2026-10-20/numbers-same.json', encoding='utf-8')).get('words', {}).get('final', {}) if os.path.exists('docs/verification/continuity-2026-10-20/numbers-same.json') else {}
+    SAME17 = bool(NS17) and NS17.get('same') == NS17.get('files') and not NS17.get('unexplained') and not NS17.get('missing') and not NS17.get('explained')
+    for r in rows:
+        if r.get('measured') == {'commit': B16AT, 'watch': 'judge'}:
+            assert r['id'] in FIG17, r['id']
+            r['measured'] = {'commit': B17AT, 'watch': 'judge'}
+            r['failure'] = f"{r['failure']}; on brief 17's tested commit ({B17AT}): {'the same' if FIG17[r['id']] == FIG16.get(r['id']) else FIG17[r['id']]}"
+            r['evidence'] = f"{r['evidence']}; {B17F}/README.md"
+            r['citations'] = r['citations'] + [{'file': f'{B17F}/figures.json'}]
+B17R = 'docs/verification/continuity-2026-10-20/runs'
+FIG17R = json.load(open(f'{B17R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B17R}/figures.json') else {}
+if FIG17R and FIG16R:
+    lane17 = lambda name: re.search(r'^at (\w+)', open(f'{B17R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R17 = {'app': lane17('A'), 'engine': lane17('B')}
+    GATE17 = re.search(r'^at (\w+)', open(f'{B17R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG17R and os.path.exists(f'{B17R}/gate.txt') else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m and r['id'] in FIG16R and (gate or m.get('commit') == R16.get(m.get('watch')))):
+            continue
+        if gate and not GATE17:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG17R, r['id']
+        r['measured'] = {'commit': GATE17, 'watch': 'app'} if gate else {'commit': R17[m['watch']], 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 17 ({r['measured']['commit']}): {'the same' if FIG17R[r['id']] == FIG16R.get(r['id']) else FIG17R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B17R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B17R}/figures.json'}] + ([{'file': f'{B17R}/gate.txt'}] if gate else [])
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their
@@ -544,7 +580,9 @@ B14 = 'docs/verification/language-2026-10-17'
 B15 = 'docs/verification/editorial-2026-10-19'
 # Brief 16's (voices-2026-10-20/, from 2026-10-20) after brief 15's, the same way.
 B16 = 'docs/verification/voices-2026-10-20'
-PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else []) + ([(B14, 'Brief 14')] if os.path.exists(f'{B14}/verification-result.json') else []) + ([(B15, 'Brief 15')] if os.path.exists(f'{B15}/verification-result.json') else []) + ([(B16, 'Brief 16')] if os.path.exists(f'{B16}/verification-result.json') else [])
+# Brief 17's (continuity-2026-10-20/, from 2026-10-20) after brief 16's, the same way.
+B17 = 'docs/verification/continuity-2026-10-20'
+PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else []) + ([(B14, 'Brief 14')] if os.path.exists(f'{B14}/verification-result.json') else []) + ([(B15, 'Brief 15')] if os.path.exists(f'{B15}/verification-result.json') else []) + ([(B16, 'Brief 16')] if os.path.exists(f'{B16}/verification-result.json') else []) + ([(B17, 'Brief 17')] if os.path.exists(f'{B17}/verification-result.json') else [])
 for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x in os.listdir(d) if x.endswith('-result.json'))]:
     area = f[:-len('-result.json')]
     result = json.load(open(f'{d}/{f}', encoding='utf-8'))
@@ -630,5 +668,11 @@ if SAME16:
         if o.get('measured') == {'commit': B15AT, 'watch': 'judge'}:
             o['measured'] = {'commit': B16AT, 'watch': 'judge'}
             o['citations'] = o.get('citations', []) + [{'file': f'{B16F}/README.md'}]
+# And brief 17's (from 2026-10-20), the same way.
+if SAME17:
+    for o in OVERRIDES:
+        if o.get('measured') == {'commit': B16AT, 'watch': 'judge'}:
+            o['measured'] = {'commit': B17AT, 'watch': 'judge'}
+            o['citations'] = o.get('citations', []) + [{'file': f'{B17F}/README.md'}]
 json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))

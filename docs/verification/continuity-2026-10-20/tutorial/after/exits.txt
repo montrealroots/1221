@@ -1,0 +1,12 @@
+preview-4301 exit=0 cmd: the dist/index.html of /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-tutorial served (b84a82cf, with src changed in the working tree)
+follow-1440 exit=0 secs=252 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/editorial-2026-10-19/tutorial/follow.mjs -- <scratchpad>/follow-1440 1440
+follow-390 exit=0 secs=302 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/editorial-2026-10-19/tutorial/follow.mjs -- <scratchpad>/follow-390 390
+walk-1440 exit=0 secs=407 cmd: SLATE_BASE=http://localhost:4301 node tools/text-walk.mjs <scratchpad>/walk-1440 1440 <b17>/saves-before
+walk-390 exit=0 secs=451 cmd: SLATE_BASE=http://localhost:4301 node tools/text-walk.mjs <scratchpad>/walk-390 390 <b17>/saves-before
+help-follow-1440 exit=0 secs=648 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/continuity-2026-10-20/tutorial/help-follow.mjs -- <scratchpad>/help-follow-1440 1440 <b17>/saves-before
+help-follow-390 exit=0 secs=650 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/continuity-2026-10-20/tutorial/help-follow.mjs -- <scratchpad>/help-follow-390 390 <b17>/saves-before
+entries-read-1440 exit=0 secs=135 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/continuity-2026-10-20/tutorial/entries-read.mjs -- <scratchpad>/entries-read-1440 <b17>/saves-before 1440
+entries-read-390 exit=0 secs=136 cmd: SLATE_BASE=http://localhost:4301 npx vite-node docs/verification/continuity-2026-10-20/tutorial/entries-read.mjs -- <scratchpad>/entries-read-390 <b17>/saves-before 390
+capture exit=0 secs=408 cmd: SLATE_BASE=http://localhost:4301 npx vite-node tools/tutorial-routes.mjs -- --capture <scratchpad>/capture <b17>/saves-before
+routes exit=0 secs=30 cmd: npx vite-node tools/tutorial-routes.mjs -- <scratchpad>/walk-1440 <scratchpad>/walk-390 <scratchpad>/capture --out routes.md --json routes.json --check
+FOLLOW17 after DONE 14:35:41

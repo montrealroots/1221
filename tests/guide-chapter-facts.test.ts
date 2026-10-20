@@ -10,11 +10,43 @@
  *   Book An Appointment", though the button books only a visit owed (one missed or called off): with none owed,
  *   `health.book` refuses, and Health Cover doesn't show it. The game books a visit itself when an illness or a
  *   condition's review calls for one (`systems/health.ts`), as How This Works' doctor entry says.
+ *
+ * From 2026-10-20 (brief 17, section 9, the tutorial area):
+ * - What's Coming said you were at a commitment if you were "awake and out of hospital, and, for anything but your own
+ *   care, in its town and not laid up by an injury", which kept someone laid up from a plan of their own and from
+ *   orientation, though neither asks it (`world/plans.ts`; the orientation's check in `systems/coursework.ts`). A class
+ *   asks it (`present`), your own care doesn't (`presentForCare`).
+ * - Drama School said nothing of how a note is put right: a later piece shown with its part at `LEARNING.enough`, in any
+ *   course, since the notes are kept by part and not by course (`noteKey`, `resolveNote`).
+ * - You As An Actor said practice past four hours a day "stops counting", where the fifth hour is refused
+ *   (`practiceRefusal`), and the Practice An Hour button grayed out with the reason under it.
+ * - Your Bank and A Credit Card said a US card's introductory rate ends, and its penalty rate comes, with "a payment
+ *   sixty days late", where the game's own late notice calls that moment thirty days late: both come at the second due
+ *   date missed in a row (`credit.missed >= 2`, `systems/credit.ts`), the money editor's finding.
+ * - The Player Profile's entry put the advice's record "with “From your record:”", its preparation "on the first line",
+ *   and listed as The First Line what brief 16 moved behind Why This Recommendation (`AdviceCard`, `adviceSummary`), the
+ *   profile editor's finding.
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { CHAPTER_BY_ID } from '@/engine/content/tutorial';
-import { injuryOf, mayHurt } from '@/engine/systems/injury';
+import { injuryOf, laidUp, mayHurt } from '@/engine/systems/injury';
+import { createSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { MS_DAY } from '@/engine/core/time';
+import { healthOf, present, presentForCare } from '@/engine/systems/health';
+import { courseworkOf } from '@/engine/systems/coursework';
+import { LEARNING, noteKey, recordNote, resolveNote, type NoteRecord } from '@/engine/systems/learning';
+import { EXERCISES, PRACTICE } from '@/engine/content/practice';
+import { practiceRefusal } from '@/engine/systems/practice';
+import { DUE_KIND, cardOf } from '@/engine/systems/credit';
+import { GUIDE_BY_ID } from '@/engine/content/guide';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { exerciseFor } from '@/engine/content/practice';
+import { adviceSummary } from '@/engine/systems/next-steps';
+import type { Recommendation } from '@/engine/systems/experience';
+import { AdviceCard } from '@/ui/components/AdviceCard';
 
 /** A chapter's sentences, its body and its details, the asides in brackets left out. */
 function sentences(id: string): string[] {
@@ -70,5 +102,163 @@ describe('Cover, Benefits And Returns on Book An Appointment', () => {
     expect(said.length).toBeGreaterThan(0);
     // Only while an unowed booking is refused: change that, and the chapter may offer it freely.
     if (refused) for (const s of said) expect(s).toMatch(/\b(miss(ed)?|again|owed|call(ed)? (it )?off)\b/i);
+  });
+});
+
+/** A new life at Yale on its first morning, as a player begins one (7:30 AM, August 24, 2026). */
+const student = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+
+describe('What’s Coming on what an injury that lays you up keeps you from', () => {
+  /** A first morning laid up with a broken bone, a plan of your own at eight, and the clock run past Registration at ten. */
+  function laidUpMorning() {
+    const sim = student('guide-facts-laid-up');
+    // TEST SETUP: a broken bone this morning, which keeps you off work and out of class for six weeks.
+    healthOf(sim.player).injury = { kind: 'fracture', at: sim.now, until: sim.now + 42 * MS_DAY, offWorkUntil: sim.now + 42 * MS_DAY };
+    expect(laidUp(sim.player, sim.now)).toBe(true);
+    const { id } = sim.must<{ id: string }>({ kind: 'calendar.schedule', payload: { title: 'Coffee', at: sim.now + 30 * 60_000, durationMinutes: 30 } });
+    sim.advanceTo(sim.now + 5 * 60 * 60_000);
+    return {
+      plan: sim.timeline.get(id)!.status,
+      registered: courseworkOf(sim, sim.player)!.orientation.done.register !== undefined,
+      atClass: present(sim.player, sim.now),
+      atCare: presentForCare(sim.player, sim.now),
+    };
+  }
+
+  it('keeps you from a class, and not from a plan of your own, orientation or your own care', () => {
+    const r = laidUpMorning();
+    expect(r.plan).not.toBe('missed');
+    expect(r.registered).toBe(true);
+    expect(r.atClass).toBe(false);
+    expect(r.atCare).toBe(true);
+  });
+
+  it('is said so: the injury keeps you from classes, and not from your doctor, orientation or a plan of your own', () => {
+    const r = laidUpMorning();
+    const said = sentences('calendar').filter((x) => /\binjur/i.test(x));
+    expect(said.length).toBeGreaterThan(0);
+    for (const x of said) expect(x).not.toMatch(/anything but your own care/);
+    // Only while the game keeps it so: change one, and the sentence may say otherwise.
+    if (!r.atClass) expect(said.some((x) => /keeps you from[^.]*\bclasses\b/.test(x))).toBe(true);
+    if (r.plan !== 'missed' && r.registered && r.atCare) for (const x of said) expect(x).toMatch(/not from your doctor, your therapist, orientation or a plan of your own/);
+  });
+});
+
+describe('Drama School on how a note is put right', () => {
+  it('a note on a part, given in one course, is put right in another: the notes are kept by part', () => {
+    const notes: NoteRecord[] = [];
+    const focus = { kind: 'dim', dim: 'memorization' } as const;
+    recordNote(notes, focus, '2026-09-10', 'a1', 'Acting I');
+    expect(noteKey(focus)).not.toContain('Acting');
+    expect(resolveNote(notes, noteKey(focus), '2026-09-24', 'a2', 'Voice I')).toBe(true);
+    expect(notes[0]!.status).toBe('resolved');
+  });
+
+  it('is said with its figure: a later piece, in any course, shown with the part at LEARNING.enough or more', () => {
+    const said = sentences('school').filter((x) => /\bnote\b/.test(x) && /\bopen\b|put (it )?right/.test(x));
+    expect(said.length).toBeGreaterThan(0);
+    expect(said.join(' ')).toContain(`in any course, is shown with the part it named at ${Math.round(LEARNING.enough * 100)}% or more`);
+  });
+});
+
+describe('You As An Actor on the day’s practice', () => {
+  it('refuses the hour past the day’s limit, with the reason, and is said to gray it out, not to let it count for nothing', () => {
+    const sim = student('guide-facts-practice');
+    // TEST SETUP: the first week's commitments taken off, so the hours aren't refused for them.
+    for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.requiresPlayer) sim.timeline.cancel(item.id, sim.now);
+    const e = EXERCISES.find((x) => !x.feet && !x.partnered)!;
+    for (let n = 0; n < PRACTICE.dailyHours; n += 1) expect(sim.execute({ kind: 'practice.exercise', payload: { exercise: e.id } }).ok).toBe(true);
+    const no = practiceRefusal(sim, sim.player, e);
+    expect(no).toBe(`You’ve practiced ${PRACTICE.dailyHours} hours today, and more stops helping after that. Practice again tomorrow.`);
+    const said = sentences('profile').filter((x) => /hours of practice in a day|a day stops counting/.test(x));
+    expect(said.length).toBe(1);
+    if (no) expect(said[0]).toMatch(/Practice An Hour is grayed out until tomorrow/);
+  });
+});
+
+describe('Your Bank on what ends a US card’s introductory rate', () => {
+  /** A Chase card owing $500, nothing to pay it with, run past its next due date and the one after. */
+  function twoMissed() {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, 'guide-facts-two-missed');
+    const card = cardOf(sim, sim.player)!;
+    const credit = sim.player.credit!;
+    // TEST SETUP: $500 owed on the card, and every account of theirs emptied, so each due date's payment fails.
+    const post = (accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
+    post(card.id, -card.balance - 500_00);
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.id !== card.id && a.balance > 0) post(a.id, -a.balance);
+    // A day at a time, the state kept at each due date that passes (`DUE_KIND`), until two have.
+    const seen: { missed: number; introLost: boolean }[] = [];
+    for (let d = 0; d < 120 && seen.length < 2; d += 1) {
+      const due = sim.timeline.pending().find((i) => i.kind === DUE_KIND && i.payload.personId === sim.player.id && i.at <= sim.now + MS_DAY);
+      sim.advanceTo(sim.now + MS_DAY);
+      if (due) seen.push({ missed: credit.missed ?? 0, introLost: Boolean(credit.introLost) });
+    }
+    expect(seen).toHaveLength(2);
+    return seen;
+  }
+
+  it('ends it at the second payment missed in a row, not the first', () => {
+    const [first, second] = twoMissed();
+    expect(first).toEqual({ missed: 1, introLost: false });
+    expect(second).toEqual({ missed: 2, introLost: true });
+  });
+
+  it('is said so: two payments missed in a row, in the chapter and in the card’s entries, and never sixty days late', () => {
+    const [first, second] = twoMissed();
+    const words = [...sentences('bank'), ...GUIDE_BY_ID['bank.card']!.later, ...GUIDE_BY_ID['bank.card-offers']!.reads.map((f) => f.value)].join(' ');
+    expect(words).not.toMatch(/sixty days late/);
+    // Only while the second miss is what ends it: change that, and the words may say otherwise.
+    if (!first!.introLost && second!.introLost) {
+      expect(sentences('bank').join(' ')).toContain('In the US two payments missed in a row end any introductory rate');
+      expect(GUIDE_BY_ID['bank.card']!.later.join(' ')).toContain('Two missed in a row also end any introductory rate.');
+      expect(GUIDE_BY_ID['bank.card-offers']!.reads.find((f) => f.label === 'The Introductory Rate')!.value).toContain('On a US card two payments missed in a row end it');
+    }
+  });
+});
+
+describe('The Player Profile’s entry on What To Work On Next', () => {
+  /**
+   * The card as the Profile draws it (`AdviceCard`), for recommendations made as `recommendations` makes them (TEST
+   * SETUP, as in tests/advice-card.test.ts): a training one first, the weakness the work keeps coming back to, with how
+   * long it has led, and a preparation after it.
+   */
+  function card() {
+    const sim = student('guide-facts-advice');
+    const first: Recommendation = {
+      target: 'imagination', label: 'Imagination', exercise: exerciseFor('imagination')!.id, tier: 0, focus: 'steady', points: 0.6, why: '20 hours …',
+      forecast: { points: 0.6, exact: 0.6, from: 41, to: 52, hours: 20, pieces: 3, of: 5 },
+      recurring: { last: sim.now, evidence: ['An ability, 31.5 points in all'], pieces: 9, whole: 31.5 },
+      standing: 'It has led the advice on what to train since today.',
+    };
+    const act = 'That’s preparation, not training: prepare that part further before you show or tape the next piece.';
+    const now = 'Coming to your work short on rehearsal cost each piece about 1 point off the whole.';
+    const advice = adviceSummary(sim, sim.player, [first, { target: 'prep:Rehearsal', label: 'Rehearsal', focus: 'preparation', points: 1, why: `${now} ${act}`, now, act }])!;
+    const html = renderToStaticMarkup(createElement(AdviceCard, { advice }));
+    const at = html.indexOf('<details');
+    return { advice, face: html.slice(0, at), behind: html.slice(at) };
+  }
+  const read = (label: string) => GUIDE_BY_ID['craft.profile']!.reads.find((f) => f.label === label)?.value ?? '';
+
+  it('shows what to work on, why, the next hour and the estimate, and keeps the record and the rest behind Why This Recommendation', () => {
+    const { advice, face, behind } = card();
+    for (const x of [advice.what, advice.why, advice.estimate!]) expect(face).toContain(x);
+    expect(face).toContain('Practice An Hour');
+    expect(face).toMatch(/An hour costs \d+ energy, and it would add about \+/);
+    expect(behind.startsWith('<details')).toBe(true);
+    expect(behind).toContain('<summary>Why This Recommendation</summary>');
+    expect(advice.details.map((d) => d.heading)).toEqual(['How The Estimate Is Worked Out', 'How Long It’s Been First', 'From Your Record', 'Other Things Worth Your Time']);
+    for (const d of advice.details) { expect(behind).toContain(d.heading); expect(face).not.toContain(d.heading); }
+  });
+
+  it('is said so: the record under From Your Record and the rest behind Why This Recommendation, with no first line', () => {
+    const { face, behind } = card();
+    expect(GUIDE_BY_ID['craft.profile']!.reads.map((f) => f.label)).not.toContain('The First Line');
+    for (const f of GUIDE_BY_ID['craft.profile']!.reads) expect(f.value).not.toMatch(/From your record:|on the first line/);
+    // Only while the card keeps them behind its button: change that, and the words may say otherwise.
+    if (behind.includes('From Your Record') && !face.includes('From Your Record')) {
+      expect(read('What Each Line Says')).toContain('under From Your Record, behind Why This Recommendation');
+      expect(read('Preparation, Said Apart')).toContain('is said apart, behind Why This Recommendation');
+      expect(read('What The Card Shows')).toMatch(/^What to work on, why now, .* and the estimate\. Why This Recommendation holds the rest: /);
+    }
   });
 });

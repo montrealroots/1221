@@ -450,9 +450,9 @@ describe('p-journey-history', () => {
     const weak = Object.entries(j.limits ?? {}).filter(([, t]) => t.n >= 3).sort((a, b) => b[1].whole - a[1].whole).slice(0, 3)
       .map(([k, t]) => ({ line: `${t.label} has held back ${t.n} pieces, about ${r1(t.whole / t.n)} points off the whole each.`, evidence: [`${KIND[k.split(':')[0]!] ?? 'The choice'}, ${r1(t.whole)} points in all`] }));
     const notes = ((p.school as { coursework?: { notes?: { key: string; status: string; given: number }[] } }).coursework?.notes ?? []).filter((n) => n.status === 'open' && n.given >= 3).sort((a, b) => b.given - a.given);
-    // The class's name for a note on rehearsal: Time On Its Feet.
+    // The class's name for a note on rehearsal: Rehearsal (from 2026-10-20, brief 17; until then Time On Its Feet).
     expect(notes[0]!.key).toBe('dim:rehearsal');
-    weak.push({ line: `The same note has been given ${notes[0]!.given} times and is still open: Time On Its Feet.`, evidence: ['The class’s notes: Time On Its Feet'] });
+    weak.push({ line: `The same note has been given ${notes[0]!.given} times and is still open: Rehearsal.`, evidence: ['The class’s notes'] });
     section('What Keeps Holding It Back', weak);
     // Material met.
     const features = p.experience?.features ?? {};
@@ -466,14 +466,14 @@ describe('p-journey-history', () => {
     const genres = Object.values(p.engagement?.byGenre ?? {}).filter((g) => (g.practice ?? 0) > 0).length;
     section('Range', [{ line: `${kinds} kinds of work judged, ${genres} genres worked in, ${12 - unmet.length} of 12 kinds of material met.`, evidence: [`${kindNames.slice(0, -1).join(', ')} and ${kindNames.at(-1)}`] }]);
     const dir = j.direction!;
-    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on your craft, you answered ${dir.answered || 'none'}.`, evidence: [`${dir.given} notes given, ${dir.worked} worked on and ${dir.answered} answered`] }]);
+    section('Taking Direction', [{ line: `Of ${dir.given} notes and requests on your craft, you worked on ${dir.worked || 'none'} and answered ${dir.answered || 'none'}.`, evidence: ['Directors’ notes on your craft and callbacks on your briefs'] }]);
     const school = p.school as unknown as { tally: { calls: number; answered: number }; callsBefore?: { calls: number; answered: number } };
     const calls = (school.callsBefore?.calls ?? 0) + school.tally.calls;
     const answered = (school.callsBefore?.answered ?? 0) + school.tally.answered;
     const kept = (p.school!.classmates as unknown as { kept?: number }[]).reduce((a, m) => a + (m.kept ?? 0), 0);
     section('Reliability', [{ line: `${answered} of ${calls} calls answered; ${kept} rehearsals with a partner kept.`, evidence: ['The school’s record of calls; your partners’ records'] }]);
     const tog = j.together!;
-    section('Playing With Others', [{ line: `${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average; of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}.`, evidence: [`${tog.n} scenes, takes and nights with others`] }]);
+    section('Playing With Others', [{ line: `Your ${tog.n} pieces with a partner, a reader or a company averaged ${r1(tog.sum / tog.n)} out of 100. Of ${tog.slips === 1 ? 'the 1 slip' : `${tog.slips} slips`} by the others, you covered ${tog.covered === 0 ? 'none' : tog.covered === tog.slips ? (tog.slips === 1 ? 'it' : 'all of them') : tog.covered}.`, evidence: ['Scenes, takes and nights played with others'] }]);
     return words(out.join(' '));
   }
 
@@ -488,7 +488,9 @@ describe('p-journey-history', () => {
     // Each of the sections the first round didn't read is there, and the habit nobody chose isn't.
     for (const title of ['What Your Work Shows Most', 'What Keeps Holding It Back', 'Material You Know', 'Not met yet:', 'Range', 'Taking Direction', 'Reliability', 'Playing With Others']) expect(shown, title).toContain(title);
     expect(shown).not.toContain('How You Tend To Play It');
-    expect(shown).toContain('Taking Direction Of 9 notes and requests on your craft, you answered none. From: 9 notes given, 0 worked on and 0 answered.');
+    // All three counts in the line, and where they come from as what it rests on (from 2026-10-20, brief 17): until then
+    // “… you answered none. From: 9 notes given, 0 worked on and 0 answered.”
+    expect(shown).toContain('Taking Direction Of 9 notes and requests on your craft, you worked on none and answered none. From: Directors’ notes on your craft and callbacks on your briefs.');
     expect(shown).toContain('Reliability 68 of 68 calls answered; 0 rehearsals with a partner kept.');
     expect(between(drawn(reload(sim), ProfileWorkspace).text, 'Your Work So Far', 'Sources And Estimates')).toBe(shown);
   });
@@ -671,14 +673,14 @@ describe('h-needs', () => {
     };
     const first = toDue();
     expect(written(first)).toBe('October 11, 2026');
-    expect(needs(sim)).toContain('A Late Card Payment The minimum payment on the Chase Freedom Unlimited was $40.00, and nothing was paid by the due date. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record. Pay the card on Money, under Cards.');
+    expect(needs(sim)).toContain('A Late Card Payment The minimum payment on the Chase Freedom Unlimited, $40.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.');
     markRead(sim);
     // New Haven's $10.00 of groceries on the card each midnight from 25 August to 11 October, 48 of them, and the late
     // fee: Regulation Z's safe harbor, $30 for a first, never over the $40 minimum it was late on.
     expect(needs(sim)).toBe(`What Needs You No questions are waiting on you. How This Works No Questions Waiting Your card is a payment behind, owing $${48 * 10 + 30}.`);
     const second = toDue();
     expect(written(second)).toBe('November 10, 2026');
-    expect(needs(sim)).toContain('Your Card Is Suspended You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you make a payment on time.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(needs(sim)).toContain('Your Card Is Suspended You’ve missed two payments in a row, so Chase has suspended the Chase Freedom Unlimited. It works again once you pay at least the minimum by a due date, or pay the card off.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     markRead(sim);
     // 78 days of groceries to 10 November, the first fee and a repeat within six cycles: the safe harbor's $41, held to
     // the $40 minimum.

@@ -140,6 +140,22 @@ describe('batch 1: documents, as the second pass says them', () => {
     expect(press('documents.apply_idcard')).toEqual(['You have your Credencial Para Votar (INE) now.']);
   });
 
+  it('brief 17: Your ID says what Get costs, how the card comes and how long it’s good for, before it’s pressed, as the command charges and issues it', () => {
+    // New York's, handed over at once to a citizen; Connecticut's, mailed in 20 business days and run to a birthday; Mexico
+    // City's, free; and Connecticut's for a London-born student on an F-1, SAVE's check first. Until 2026-10-20 the panel
+    // drew Get alone, and the fee, the wait and the term came only in the toast after it.
+    const ny = life('ed17-id-ny');
+    expect(drawn(ny, PassportPane)).toContain('It costs $14.00, and you have it at once. It’s good for eight years.');
+    expect(press('documents.apply_idcard')[0]).toMatch(/^You have your Non-Driver ID Card now, for \$14\.00\./);
+    const ct = life('ed17-id-ct', 'us-ct-newhaven');
+    expect(drawn(ct, PassportPane)).toContain('It costs $28.00 and comes by mail 20 business days after you apply. It’s good until your first birthday after seven years.');
+    expect(press('documents.apply_idcard')[0]).toMatch(/^You applied for the Non-Driver Identification Card and paid \$28\.00\./);
+    const mx = life('ed17-id-mx', 'mx-cmx-mexicocity');
+    expect(drawn(mx, PassportPane)).toContain('It’s free, and you have it at once.');
+    const f1 = createSave(1, 'ed17-id-f1', { ...newLifeConfig(), homeRegionId: 'uk-eng-london' });
+    expect(drawn(f1, PassportPane)).toContain('It costs $28.00. The DMV checks your lawful presence first, which takes 10 federal workdays, and the card comes by mail 20 business days after that.');
+  });
+
   it('a document reported stolen says stolen on its page, and one reported lost says lost', () => {
     const sim = life('ed15-stolen');
     const first = sim.must<{ readyAt: number }>({ kind: 'documents.apply_passport', payload: {} });
@@ -206,13 +222,15 @@ describe('batch 1: the refusals and the fine print no older test reads', () => {
 
   it('Going Abroad’s fine print for a visa reads as sentences, every figure and its source kept', () => {
     const fine = (key: string) => `${VISAS[key]!.name}: ${VISAS[key]!.basis}`;
-    expect(fine('US<MX')).toBe('B-1/B-2 Visitor Visa: The application fee is $185. The interview is about five months away at the Mexico City consulate (as of September 29, 2026, from a secondary source), and issuing it takes a week (estimated). It’s good for ten years, for multiple entries, by reciprocity.');
-    expect(fine('US<BR')).toContain('(as of September 29, 2026, from a secondary source), and the game uses the same wait for Brazil’s posts, whose waits weren’t found, and issuing it takes a week (estimated).');
+    // Nothing takes an application since 2026-10-09, so the bases say no time the game took to decide one (brief 17,
+    // 2026-10-20: until then "issuing it takes a week (estimated)", "In the game it takes 30 days to decide").
+    expect(fine('US<MX')).toBe('B-1/B-2 Visitor Visa: The application fee is $185. The interview is about five months away at the Mexico City consulate (as of September 29, 2026, from a secondary source). It’s good for ten years, for multiple entries, by reciprocity.');
+    expect(fine('US<BR')).toContain('(as of September 29, 2026, from a secondary source). The waits at Brazil’s posts weren’t found. It’s good for ten years');
     expect(fine('CA<MX')).toBe('Visitor Visa (Canada): CAD 100, and CAD 85 for biometrics. A decision takes about 18 days after biometrics for a Mexican applicant (from a secondary source). It’s good for up to ten years, or until the passport runs out.');
-    expect(fine('CA<BR')).toContain('for a Mexican applicant (from a secondary source), and the game uses the same for a Brazilian.');
-    expect(fine('AU<MX')).toBe('Visitor Visa (Subclass 600): AUD 250 from July 1, 2026 (from a secondary source, since Home Affairs’ own pages couldn’t be read). In the game it takes 30 days to decide and is granted for a year, the longest of the three, six and twelve months it gives (both estimated).');
+    expect(fine('CA<BR')).toContain('for a Mexican applicant (from a secondary source). The time for a Brazilian applicant wasn’t found.');
+    expect(fine('AU<MX')).toBe('Visitor Visa (Subclass 600): AUD 250 from July 1, 2026 (from a secondary source, since Home Affairs’ own pages couldn’t be read). It’s granted for three, six or twelve months.');
     expect(fine('BR<US')).toBe('Brazil e-Visa: US$80.90 through VFS Global, decided within ten business days. It’s good for ten years, for multiple entries, for a US citizen (from a secondary source), and the game uses the same for Canadians and Australians.');
-    expect(fine('MX<BR')).toBe('Mexico Electronic Visa: US$10 from February 5, 2026, for a stay under 180 days, flying in (from Deloitte and the press, secondary sources). In the game it takes three days to decide (estimated).');
+    expect(fine('MX<BR')).toBe('Mexico Electronic Visa: US$10 from February 5, 2026, for a stay under 180 days, flying in (from Deloitte and the press, secondary sources).');
     // And the visit a passport would let a US citizen make, said as a sentence after "… would let you in for a week's visit."
     const sim = life('ed15-stay');
     sim.must({ kind: 'documents.apply_passport', payload: {} });

@@ -46,7 +46,7 @@ import { CITIES } from '../content/geography';
 import type { Clinic } from '../content/clinics';
 import { holidaysOn } from '../content/holidays';
 import { CANADA_NEXT_DAY, CANADA_OTHERWISE_DAYS, CONSULT_HOUR, CONSULT_MINUTES, ENGLAND_BANDS, IMSS_DAYS, US_DAYS, US_METRO_AVERAGE_DAYS } from '../content/appointments';
-import { careFor, healthOf, renewPrescriptions, reviewed } from './health';
+import { RX, careFor, healthOf, inSentence, renewPrescriptions, reviewed } from './health';
 import { DOCTOR_KINDS, MEMBERS_ONLY, clinicById, clinicFor, clinicsIn, outsideItsPractice, seesThem } from './clinics';
 import { citizenOf } from './documents';
 import { presentForCare } from './health';
@@ -79,6 +79,36 @@ export function mayRefer(sim: Simulation, person: Person, a: Appointment, odds?:
   if (sim.rng('health.referral', person.id, a.id, a.at).next() >= (odds ?? share)) return undefined;
   // Every country with a share publishes a wait.
   return bookIn(sim, person, SPECIALIST, referralDays(person)!, `Referred after ${a.what.toLowerCase()}`);
+}
+
+/**
+ * An appointment in a sentence, by what it's for (`Appointment.what`): "your doctor's appointment", "your appointment
+ * with the specialist", "your appointment to renew your prescription", "the review of your asthma". A `what` no build
+ * writes any more is said as it is. From 2026-10-20 (brief 17): until then the notices began on the label and a colon,
+ * "A doctor’s visit: you weren’t there, so you weren’t seen."
+ */
+export function appointmentWords(what: string): string {
+  if (what === 'A doctor’s visit') return 'your doctor’s appointment';
+  if (what === SPECIALIST) return 'your appointment with the specialist';
+  if (what === RX.renewal) return 'your appointment to renew your prescription';
+  const review = /^A review of your (.+)$/.exec(what);
+  if (review) return `the review of your ${review[1]}`;
+  return inSentence(what);
+}
+
+/**
+ * A visit had, in a sentence: who they saw, where, and what for (`careFor`'s notice). From 2026-10-20 (brief 17): until
+ * then the bill's line was the notice's first sentence, "A doctor’s visit, Yale Health Center, Student Health."
+ */
+export function seenWords(what: string, clinic?: string): string {
+  const where = clinic ? ` at ${clinic}` : '';
+  if (what === 'A doctor’s visit') return `You saw a doctor${where}.`;
+  if (what === SPECIALIST) return `You saw the specialist your doctor referred you to${where}.`;
+  // What it was for before where, since a practice's name can hold a comma (“Yale Health Center, Student Health”).
+  if (what === RX.renewal) return `You saw a doctor to renew your prescription${where}.`;
+  const review = /^A review of your (.+)$/.exec(what);
+  if (review) return `You saw a doctor for a review of your ${review[1]}${where}.`;
+  return `${what}${clinic ? `, ${clinic}` : ''}.`;
 }
 
 export interface Appointment { id: string; at: Instant; what: string; clinicId?: string }
@@ -146,7 +176,7 @@ export function book(sim: Simulation, person: Person, what: string): Appointment
   const own = clinicFor(person, 'visit', sim.now)?.waitDays ?? undefined;
   const days = what === SPECIALIST ? referralDays(person) : own ?? waitDays(sim, person, `${what}-${sim.now}`);
   if (days === undefined) return undefined;
-  return bookIn(sim, person, what, days);
+  return bookIn(sim, person, what, days, undefined, what !== SPECIALIST && own !== undefined);
 }
 
 /**
@@ -155,7 +185,7 @@ export function book(sim: Simulation, person: Person, what: string): Appointment
  * the referral's clause added to it). The practice is looked up for the person as they are: until 2026-10-12 it was
  * for a copy of them put in their own town, which was the town they were in.
  */
-function bookIn(sim: Simulation, person: Person, what: string, days: number, why?: string): Appointment {
+function bookIn(sim: Simulation, person: Person, what: string, days: number, why?: string, ownWait = false): Appointment {
   const clinic = clinicFor(person, 'visit', sim.now);
   const h = healthOf(person);
   h.seq = (h.seq ?? 0) + 1;
@@ -165,8 +195,11 @@ function bookIn(sim: Simulation, person: Person, what: string, days: number, why
   // Its words are the papers guide's quote (`guide/papers.ts`, papers.doctor's example, which tests/guide-examples-papers
   // holds equal), so brief 14's health area left them for that guide's area; the editorial review changed both together,
   // “the wait where you live” becoming “the usual wait where you live”. Brief 15's coordinator added the next step to both
-  // at the health area's merge, where the health area had left the notice Blocked for that reason.
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.`, importance: 50, route: '/workspace/papers' });
+  // at the health area's merge, where the health area had left the notice Blocked for that reason. A practice's own
+  // published wait is said as that (from 2026-10-20, brief 17, the health editor's find): until then Yale Health's next
+  // day read "the usual wait where you live", the town's wait, which it isn't.
+  const wait = !ownWait ? 'the usual wait where you live' : days === 1 ? 'the next day it’s open' : `its own wait of ${days} days`;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, ${wait}. Be there then, or press Call It Off on Papers, under Health Cover.`, importance: 50, route: '/workspace/papers' });
   return a;
 }
 
@@ -214,7 +247,7 @@ export function registerAppointments(sim: Simulation): void {
     if (!presentForCare(person, item.at)) {
       item.status = 'missed';
       healthOf(person).owedVisit = a.what;
-      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Missed The Doctor', body: `${a.what}: you weren’t there, so you weren’t seen. To book again, press Book An Appointment on Papers, under Health Cover.`, importance: 60, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Missed The Doctor', body: `You weren’t there for ${appointmentWords(a.what)}, so you weren’t seen. To book again, press Book An Appointment on Papers, under Health Cover.`, importance: 60, route: '/workspace/papers' });
       return;
     }
     // A practice for its members that doesn't see them now (from 2026-10-15): not seen, and owed, as a visit missed is.
@@ -222,7 +255,7 @@ export function registerAppointments(sim: Simulation): void {
     if (at && at.members !== null && !seesThem(person, at, item.at)) {
       item.status = 'missed';
       healthOf(person).owedVisit = a.what;
-      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Not Seen At Your Practice', body: `${a.what}: you weren’t seen at ${at.name}. ${MEMBERS_ONLY[at.members]} To book again at ${clinicFor(person, 'visit', item.at)?.name ?? 'the town’s first practice'}, press Book An Appointment on Papers, under Health Cover.`, importance: 60, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Not Seen At Your Practice', body: `You weren’t seen for ${appointmentWords(a.what)} at ${at.name}. ${MEMBERS_ONLY[at.members]} To book again at ${clinicFor(person, 'visit', item.at)?.name ?? 'the town’s first practice'}, press Book An Appointment on Papers, under Health Cover.`, importance: 60, route: '/workspace/papers' });
       return;
     }
     careFor(s, person, { care: 'visit', what: a.what, ...(a.clinicId ? { clinicId: a.clinicId } : {}) }, item.at);

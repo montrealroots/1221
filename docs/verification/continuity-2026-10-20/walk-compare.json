@@ -1,0 +1,280 @@
+{
+ "1440": {
+  "saves": 15,
+  "screens": 360,
+  "changed": 259,
+  "linesBefore": 37803,
+  "linesAfter": 37740,
+  "linesOnlyBefore": 629,
+  "linesOnlyAfter": 668,
+  "controlsRenamed": [
+   {
+    "save": "health",
+    "screen": "Home",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "health",
+    "screen": "Home / notice: A Sprained Ankle",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "health",
+    "screen": "Home / notice: How This Works",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "health",
+    "screen": "Home / notice: Welcome To The Class Of 2029",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "health",
+    "screen": "Home / notice: now",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home / notice: 4 weeks ago",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home / notice: A Back Strain",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home / notice: A Deep Cut",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home / notice: How This Works",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "withdraw",
+    "screen": "School / Classes",
+    "gone": [
+     "Accents And Dialects",
+     "Acting II: Plays Of Extended And Heightened Language",
+     "Advanced Principles Of Acting Stage Combat",
+     "Alexander Technique II Tutorials",
+     "Character Work",
+     "Classical Text"
+    ],
+    "new": []
+   },
+   {
+    "save": "withdraw",
+    "screen": "School / Terms And Award",
+    "gone": [
+     "August 23, 2027",
+     "August 28, 2028",
+     "January 3, 2028",
+     "January 8, 2029"
+    ],
+    "new": []
+   }
+  ],
+  "fourOrMoreBefore": 277,
+  "fourOrMoreAfter": 253,
+  "longestBefore": 180,
+  "longestAfter": 182
+ },
+ "390": {
+  "saves": 15,
+  "screens": 360,
+  "changed": 259,
+  "linesBefore": 37803,
+  "linesAfter": 37740,
+  "linesOnlyBefore": 629,
+  "linesOnlyAfter": 668,
+  "controlsRenamed": [
+   {
+    "save": "health",
+    "screen": "Home",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "health",
+    "screen": "Home / notice: A Sprained Ankle",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "health",
+    "screen": "Home / notice: How This Works",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "health",
+    "screen": "Home / notice: Welcome To The Class Of 2029",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "health",
+    "screen": "Home / notice: now",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a sprained ankle until September 19, 2026."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home / notice: 4 weeks ago",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home / notice: A Back Strain",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home / notice: A Deep Cut",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "rehearsal",
+    "screen": "Home / notice: How This Works",
+    "gone": [
+     "Rested, steady and ready for a real day."
+    ],
+    "new": [
+     "Mending a back strain until May 4, 2027."
+    ]
+   },
+   {
+    "save": "withdraw",
+    "screen": "School / Classes",
+    "gone": [
+     "Accents And Dialects",
+     "Acting II: Plays Of Extended And Heightened Language",
+     "Advanced Principles Of Acting Stage Combat",
+     "Alexander Technique II Tutorials",
+     "Character Work",
+     "Classical Text"
+    ],
+    "new": []
+   },
+   {
+    "save": "withdraw",
+    "screen": "School / Terms And Award",
+    "gone": [
+     "August 23, 2027",
+     "August 28, 2028",
+     "January 3, 2028",
+     "January 8, 2029"
+    ],
+    "new": []
+   }
+  ],
+  "fourOrMoreBefore": 277,
+  "fourOrMoreAfter": 253,
+  "longestBefore": 180,
+  "longestAfter": 182
+ }
+}

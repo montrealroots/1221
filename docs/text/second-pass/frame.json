@@ -253,9 +253,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.advance]": {
   "status": "Rewritten",
-  "hash": "d456cd7b6aab",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under Moving Time On",
+  "hash": "9cc3f15c9e6f",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area, the frame editor's finding: the last step says what Go and Stand Here do to a jump, read against onGo and clearStandingAt (ui/shell/TimeControls.tsx) and halt (app/game-context.tsx); tests/help-mechanics.test.ts ('Stand Here ends the jump at the commitment with the clock paused, and Go carries it on') presses each on the real provider; read word for word on the built app (docs/verification/continuity-2026-10-20/tutorial/after/entries-read-1440/log.txt)",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
@@ -379,9 +379,9 @@
  },
  "src/engine/content/guide/start.ts#START [start.find]": {
   "status": "Rewritten",
-  "hash": "c273b73c9ba0",
+  "hash": "83ba1b0a23c4",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 5 sentences to 4 in two paragraphs, the menu and Menu on a narrow screen, then the breadcrumbs, Back and an address; tests/guide.test.ts and tests/navigation.test.ts pass.",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs, which also pressed its old worked example and found no School breadcrumb on Home (docs/verification/continuity-2026-10-20/tutorial/before/help-follow-1440/log.txt); the new example is played by tests/help-mechanics.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/start.ts#START [start.guide]": {
@@ -2059,9 +2059,9 @@
  },
  "src/engine/index.ts#migrate": {
   "status": "Rewritten",
-  "hash": "3ba06f6144de",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'opening refuses a newer version’s save and one whose accounts don’t add up, and says it changed neither'; the other lines are its migration log, which no screen shows",
+  "hash": "f8545e1fd645",
+  "on": "2026-10-20",
+  "evidence": "tests/continuity-incidents.test.ts ('marks each miss an apology it keeps covered…'): the steps a save from before brief 17 is told on opening",
   "first": "Pending"
  },
  "src/engine/index.ts#openSlot": {
@@ -2191,11 +2191,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/life.ts#lookAfterRefusal": {
-  "status": "Retained",
-  "hash": "a329c223d1fa",
-  "on": "2026-10-19",
-  "reason": "Each says why the action is gray in a few words a person would say: not hungry, already clean, too tired, the flu, no time before a commitment.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "d80e2a8e5c36",
+  "on": "2026-10-20",
+  "evidence": "Held by tests/life-fixes.test.ts, tests/evidence-g01-life.test.ts, tests/evidence-g06-life.test.ts, tests/evidence-g07-life.test.ts, tests/evidence-g30-ui.test.ts and tests/attributes-phase-2b.test.ts, each with the flu's own end date: 'Not with the flu: rest until it passes on …'",
+  "first": "Pending"
  },
  "src/engine/systems/life.ts#LOOKING_AFTER": {
   "status": "Retained",
@@ -2248,9 +2248,9 @@
  },
  "src/engine/systems/life.ts#wellbeingSummary": {
   "status": "Rewritten",
-  "hash": "aab6e9e8d18a",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g32-ui.test.ts, 'Energy is red under 15 and amber the fifteen above it; Stress red over 75 and amber the fifteen under; each summary said for the dial that’s out…'",
+  "hash": "9f4f89c4294f",
+  "on": "2026-10-20",
+  "evidence": "Held by tests/language-dynamic.test.ts, 'says a hospital stay, the flu and an injury with the day each ends, before the lines that say all’s well, on Home and your own look'; read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt, Home's How You Are: 'Mending a back strain until May 4, 2027.' where it said 'Rested, steady and ready for a real day.'",
   "first": "Pending"
  },
  "src/engine/systems/life.ts#WET": {
@@ -2262,9 +2262,9 @@
  },
  "src/engine/systems/life.ts#whyNow": {
   "status": "Rewritten",
-  "hash": "597fd87b1a62",
-  "on": "2026-10-19",
-  "evidence": "tests/defects-g4-1.test.ts, 'reads the weather as the hour ends, where the workout does, and says whether it’ll be a run', and tests/evidence-g07-life.test.ts, the dry hour under freezing journey",
+  "hash": "e9184c4c86ec",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Look After Yourself menu: Eat A Meal and Order In say 'Nourishment at 63: little to gain yet.' as Shower and Unwind say theirs)",
   "first": "Pending"
  },
  "src/engine/systems/life.ts#WORKOUTS_TODAY": {
@@ -2542,9 +2542,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#FamilyChoice": {
   "status": "Rewritten",
-  "hash": "60304f9f6893",
+  "hash": "fad76885e59c",
   "on": "2026-10-20",
-  "evidence": "Read on the built app by tools/screen-text.mjs, Creation Step 3 (brief 16): the family callout of 4 sentences, 6 where Yale finds need, became the money you start with, then what Yale finds, then what aid asks later; tests/need-paths.test.ts and tests/language-frame-ui.test.ts pass.",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Creation, Genres & Background) and held by tests/need-paths.test.ts, 'Genres & Background offers the six families…'",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#IdentityStep": {
@@ -2626,16 +2626,16 @@
  },
  "src/ui/creation/CharacterCreation.tsx#ReviewStep": {
   "status": "Rewritten",
-  "hash": "8f15752feafa",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'says each step’s guidance in the player’s words, with what each choice does, and why Continue waits', and 'creation says what it’s for…', the guide's two choices",
+  "hash": "d52b84bdec31",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (Creation, Review); held by tests/language-frame-ui.test.ts (the guide's choice and the clock), tests/home-account-creation.test.ts (Before Yale), tests/evidence-g29-ui.test.ts and tests/need-paths.test.ts (Card)",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#StartingPointStep": {
   "status": "Rewritten",
-  "hash": "b4ec698aade4",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g29-ui.test.ts, 'shows Starting Point’s tiles as the accounts Begin opens, with no picker, and Money shows the same balances', and tests/creation.test.ts, Your Money after Your Body",
+  "hash": "9c021794a522",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (Creation, Starting Point); held by tests/language-frame-ui.test.ts (the currency line), tests/evidence2-b10.test.ts and tests/evidence3-person.test.ts (the Yale Health line)",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#STEPS": {
@@ -2659,11 +2659,18 @@
   "evidence": "tests/need-paths.test.ts, 'Genres & Background offers the six families, Wealthy chosen as creation chose before; each, chosen on the select, is what Review says and what the save opens', the select's six options and Review's Family line",
   "first": "Pending"
  },
+ "src/ui/creation/LocationPicker.tsx#anywhereIn": {
+  "status": "Rewritten",
+  "hash": "04ee2d22cc9b",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt, the region select's first option and the no-match line; held by tests/language-frame-ui.test.ts, 'the place picker says what a country has, and a search that finds nothing what to try'",
+  "first": "Pending"
+ },
  "src/ui/creation/LocationPicker.tsx#LocationPicker": {
   "status": "Rewritten",
-  "hash": "8ced6e416151",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'the place picker says what a country has, and a search that finds nothing what to try'",
+  "hash": "0f716c08ac04",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Anywhere In The United States, a search that finds nothing); held by tests/language-frame-ui.test.ts, 'the place picker says what a country has, and a search that finds nothing what to try'",
   "first": "Pending"
  },
  "src/ui/creation/portrait.ts#CANNOT_DECODE": {
@@ -2773,9 +2780,9 @@
  },
  "src/ui/looks/attention.tsx#top": {
   "status": "Rewritten",
-  "hash": "ae3e4ec7e4c7",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame.test.ts, 'says when to answer it, where it sits among the rest, its buttons on Home, and what closes it, for one and for several', 'says an overdue question comes first and closes itself within the world tick’s two days, and each way one closes', and 'says when it came, where it sits among the unread, what Mark Read does, and how long it’s kept, for one, for many and read'",
+  "hash": "47f1fa1d17d9",
+  "on": "2026-10-20",
+  "evidence": "Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (notification and decision looks, six lives); held by tests/language-frame.test.ts, the question's and the notice's tests, with the order and a read notice's missing Go There",
   "first": "Pending"
  },
  "src/ui/looks/attention.tsx#weightOf": {
@@ -2835,11 +2842,11 @@
   "first": "Reviewed And Retained"
  },
  "src/ui/looks/day.tsx#missCost": {
-  "status": "Retained",
-  "hash": "55b525d12256",
-  "on": "2026-10-19",
-  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "0b6afe5010e8",
+  "on": "2026-10-20",
+  "evidence": "Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (Classes' entry); held by tests/language-frame.test.ts, 'says a missed class is excused by a sick day called in, a hospital bed or an injury, as its handler excuses it'",
+  "first": "Pending"
  },
  "src/ui/looks/day.tsx#quarterSentence": {
   "status": "Retained",
@@ -2870,11 +2877,11 @@
   "first": "Reviewed And Retained"
  },
  "src/ui/looks/day.tsx#top": {
-  "status": "Retained",
-  "hash": "48b44a0462b2",
-  "on": "2026-10-19",
-  "reason": "A day, an entry and a season said in sentences true at the moment: what’s on it, what missing it costs, the light, and where the figures come from.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "3884a8d9afb9",
+  "on": "2026-10-20",
+  "evidence": "Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (tomorrow's day: 'You need to be at all of them.'); held by tests/language-frame.test.ts, 'says a day’s commitments as it, both or all of them…'",
+  "first": "Pending"
  },
  "src/ui/looks/day.tsx#top [observed]": {
   "status": "Retained",
@@ -2969,9 +2976,9 @@
  },
  "src/ui/looks/place.tsx#top": {
   "status": "Rewritten",
-  "hash": "16a00893e115",
-  "on": "2026-10-19",
-  "evidence": "the coordinator's change at the health and frame areas' report: a place's tags say In short, where What it’s known for read an adjective as a thing (Phoenix: no daylight saving, desert and affordable); read on the place look in the final walk of the built app",
+  "hash": "d944784dabf5",
+  "on": "2026-10-20",
+  "evidence": "Read in docs/verification/continuity-2026-10-20/frame/looks-after.txt (London and Sydney's places); held by tests/language-frame.test.ts, 'shows a place’s tags as Home has them, never as a sentence, and a short list’s tail in words'",
   "first": "Pending"
  },
  "src/ui/looks/place.tsx#yearLine": {
@@ -2983,9 +2990,9 @@
  },
  "src/ui/looks/plans.tsx#top": {
   "status": "Rewritten",
-  "hash": "288fff011c41",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/looks-b4.txt, the looks rendered for six lives by render-looks.mjs, under Your Own Plans and its hours",
+  "hash": "099b21e21632",
+  "on": "2026-10-20",
+  "evidence": "Rendered by brief 14's render-looks.mjs into docs/verification/continuity-2026-10-20/frame/looks-after.txt (Your Own Plans, six lives): its source line says 'two at once are marked Clash'",
   "first": "Pending"
  },
  "src/ui/looks/registry.ts#defineLook": {
@@ -3017,11 +3024,11 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/looks/weather.tsx#BRINGS": {
-  "status": "Retained",
-  "hash": "5ddbeec95022",
-  "on": "2026-10-19",
-  "reason": "The weather said plainly, now, by the hour and for the week, each figure with its unit, and labeled as estimated from a climate model, not a forecast.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "6a76996a6c11",
+  "on": "2026-10-20",
+  "evidence": "Rendered by brief 14's render-looks.mjs into docs/verification/continuity-2026-10-20/frame/looks-after.txt: each forecast day's summary says 'Partly cloudy skies in …' beside the stat Partly Cloudy (New Haven, Longyearbyen, Sydney)",
+  "first": "Pending"
  },
  "src/ui/looks/weather.tsx#clockWord": {
   "status": "Retained",
@@ -3109,9 +3116,9 @@
  },
  "src/ui/screens/Home.tsx#Home": {
   "status": "Rewritten",
-  "hash": "9b3f0f91a4c3",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g33-ui.test.ts, 'three days past its day unfiled…', and tests/evidence-g32-ui.test.ts, 'PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight…', Home's No Questions Waiting",
+  "hash": "ec23c03433d6",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (What Needs You, six of 310); held by tests/evidence-g32-ui.test.ts and tests/language-dynamic.test.ts word for word",
   "first": "Pending"
  },
  "src/ui/screens/Home.tsx#PapersLine": {
@@ -3284,16 +3291,16 @@
  },
  "src/ui/shell/TimeControls.tsx#DueNow": {
   "status": "Rewritten",
-  "hash": "60f93e26f6d3",
+  "hash": "0430d7e9f47e",
   "on": "2026-10-20",
-  "evidence": "tests/language-frame-ui.test.ts draws the stop for a paper visit and a doctor's appointment, each checked against present and presentForCare",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (Next Event: the stop); held by tests/language-frame-ui.test.ts, 'the stop says it needs you now, what going takes, and what a plan of your own and the world’s own each offer'",
   "first": "Pending"
  },
  "src/ui/shell/TimeControls.tsx#LookAfterMenu": {
-  "status": "Retained",
+  "status": "Rewritten",
   "hash": "8ac8efdf6a2d",
-  "on": "2026-10-19",
-  "reason": "Each line gives its time, its cost and why it stands where it does, with Needed Now or Most Worth It on the first, and the toast says when it was done.",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Look After Yourself menu); Readiness held by tests/evidence-g30-ui.test.ts, 'PLAYER JOURNEY: six hours on, the Look After menu offers each a Shower…'",
   "first": "Rewritten And Verified"
  },
  "src/ui/shell/TimeControls.tsx#MENU_FOOT": {
@@ -3311,17 +3318,17 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/shell/TimeControls.tsx#SleepDialog": {
-  "status": "Retained",
-  "hash": "7dd33eebc608",
-  "on": "2026-10-19",
-  "reason": "Says when you would wake, what you would sleep through, and when a sleep stands for the night, with Sleep N Hours and Not Yet as the two buttons.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "75c06d4a9467",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Sleep dialog); the claim it makes, a commitment slept through is missed, held by tests/evidence-g01-life.test.ts, 'PLAYER JOURNEY: the Sleep dialog over a plan shows it will be slept through…'",
+  "first": "Pending"
  },
  "src/ui/shell/TimeControls.tsx#TimeControls": {
   "status": "Rewritten",
-  "hash": "f72913b743cb",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'On The Way says how many commitments the clock stops at and what each stop offers, for one and for two'",
+  "hash": "b7a1bc0b5e35",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (On The Way); held by tests/language-frame-ui.test.ts, 'On The Way says how many commitments…', and what Go and Stand Here do by 'PLAYER JOURNEY: at a stop on the way, Go is there and carries the move on…'",
   "first": "Pending"
  },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {
@@ -3354,9 +3361,9 @@
  },
  "src/ui/startup/StartupSequence.tsx#STAGES [validate]": {
   "status": "Rewritten",
-  "hash": "ce910e4a7935",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'the startup sequence says what it found in each slot: damaged, with a backup or without, newer and older', word for word with and without a backup",
+  "hash": "ea4534b21ed7",
+  "on": "2026-10-20",
+  "evidence": "tests/language-frame-ui.test.ts, 'the startup sequence says what it found in each slot: damaged, with a backup or without, newer and older', holds the warning naming Restore Backup word for word",
   "first": "Pending"
  },
  "src/ui/startup/StartupSequence.tsx#StartupSequence": {
@@ -3389,9 +3396,9 @@
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#PlanForm": {
   "status": "Rewritten",
-  "hash": "b79b5ac325d7",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g01-life.test.ts, 'PLAYER JOURNEY: the Calendar’s form puts Gym on the day where the player is; after a reload the clock stops at it and its handler keeps it'",
+  "hash": "2b438e743abf",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt (Calendar, plan form): 'the calendar marks them Clash', as the screen's heading says",
   "first": "Pending"
  },
  "src/ui/workspaces/CalendarWorkspace.tsx#statusWords": {

@@ -77,7 +77,7 @@ import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Personality, Wellbeing } from '@/engine/domain/model';
 import { newLifeConfig } from '@/engine/world/bootstrap';
-import { MS_DAY, MS_HOUR, zonedParts } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate, zonedParts } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { HEALTH_WEEK_KIND, healthOf } from '@/engine/systems/health';
 import { END_KIND } from '@/engine/systems/mortality';
@@ -400,9 +400,10 @@ describe('energy', () => {
     for (const sim of [flu, well]) sim.advanceTo(FLU_WEEK + 22 * MS_HOUR);
     expect(flu.player.wellbeing.energy).toBeGreaterThanOrEqual(25);
     const was = { now: flu.now, w: dials(flu) };
-    expect(lookAfter(flu, 'exercise').error).toBe('Not with the flu: rest until it passes.');
+    const passes = `Not with the flu: rest until it passes on ${formatDate(FLU_WEEK + 5 * MS_DAY, flu.zone)}.`;
+    expect(lookAfter(flu, 'exercise').error).toBe(passes);
     expect({ now: flu.now, w: dials(flu) }).toEqual(was);
-    expect(lookAfter(reload(flu), 'exercise').error).toBe('Not with the flu: rest until it passes.');
+    expect(lookAfter(reload(flu), 'exercise').error).toBe(passes);
     expect(lookAfter(well, 'exercise').ok).toBe(true);
   });
 

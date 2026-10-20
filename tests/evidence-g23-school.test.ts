@@ -49,14 +49,14 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { STUDY_KIND, momentsOf, personOf, sharedWork, type Moment } from '@/engine/systems/classmates';
 import { courseworkOf, trustOf, type Assignment } from '@/engine/systems/coursework';
 import { SCENES, sceneById } from '@/engine/content/coursework';
-import { CABARET_KIND, CALL_KIND, CLASSES_KIND, COMPANY_KIND, EVALUATION_KIND, LAB_KIND, castingReads, classmatesIn, coursesFor, evenCraft, mateAbilities } from '@/engine/systems/school';
+import { CABARET_KIND, CALL_KIND, CLASSES_KIND, COMPANY_KIND, EVALUATION_KIND, LAB_KIND, castingReads, classmatesIn, coursesFor, directorsNote, evenCraft, mateAbilities } from '@/engine/systems/school';
 import { developmentOf, levelOf } from '@/engine/systems/attributes';
 import { EXERCISES } from '@/engine/content/practice';
 import { journeyOf, replay, type WorkRecord } from '@/engine/systems/evaluation';
 import { DIMENSION_LABEL, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { ABILITY_DEFS, ABILITY_KIN, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS, genresOfPlay } from '@/engine/content/plays';
-import { processOf } from '@/engine/systems/production';
+import { directorVoiceFor, processOf, type DirectorVoice } from '@/engine/systems/production';
 import { BRIEFS, BRIEF_BY_ID } from '@/engine/content/briefs';
 import { tapeReadsOf } from '@/engine/systems/briefs';
 import { DEMAND_TECHNIQUE, genreTags } from '@/engine/content/demands';
@@ -85,7 +85,7 @@ vi.mock('@/app/game-context', () => {
   return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
 });
 
-const { ProfileWorkspace } = await import('@/ui/workspaces/ProfileWorkspace');
+const { ProfileWorkspace, nightsWords } = await import('@/ui/workspaces/ProfileWorkspace');
 const { SchoolWorkspace } = await import('@/ui/workspaces/SchoolWorkspace');
 const { ClassMoments } = await import('@/ui/components/ClassMoments');
 await import('@/ui/looks/all');
@@ -229,7 +229,8 @@ describe('school.study_session', () => {
     away(again.when!);
     expect(personOf(mateOf()).incidents!.map((x) => x.kind)).toEqual(['missed', 'missed']);
     const b = untilOpen(sim, (x) => x.kind === 'boundary' && x.mate === i, at(2026, 12, 20));
-    expect(b.text).toBe(`${first} says that after the last few times, they’ll only rehearse with you if you ask a day ahead.`);
+    // In their voice and with what happened, counted (from 2026-10-20, brief 17: until then "after the last few times").
+    expect(b.text).toBe(`${first} says the scene can’t keep losing evenings. After you didn’t come twice, they’ll rehearse with you only if you ask a day ahead.`);
     const before = trustOf(mateOf());
     sim.must({ kind: 'school.respond', payload: { momentId: b.id, choice: 'respect' } });
     expect(personOf(mateOf()).boundary).toMatchObject({ keptSince: 0, accepted: true });
@@ -511,7 +512,8 @@ const CABARET_SHOW = 'Yale Cabaret, Season 59';
 /** A night's band as a number, for a run's mean (`NIGHT_VALUE`: off -1, solid 0, strong 1, remarkable 2). */
 const NIGHT = { off: -1, solid: 0, strong: 1, remarkable: 2 } as const;
 /** The director's note's first sentence for a run's mean, by its edges: 1.25, 0.5 and -0.25. */
-const noteFor = (mean: number) => (mean >= 1.25 ? 'Remarkable work, night after night.' : mean >= 0.5 ? 'Strong, reliable work across the run.' : mean >= -0.25 ? 'Solid, sound nights. The next step is to take more risks in them.' : 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.');
+// In the production's director's voice (from 2026-10-20, brief 17), its words held in `tests/feedback-voices.test.ts`.
+const noteFor = (mean: number, voice: DirectorVoice) => directorsNote(mean >= 1.25 ? 2 : mean >= 0.5 ? 1 : mean >= -0.25 ? 0 : -1, voice);
 
 describe('work records + journey', () => {
   it('PLAYER JOURNEY: a Cabaret run played through keeps its nights, and at the last a run milestone averaged from them and a note naming what cost them most, once through a reload, on the Profile', () => {
@@ -532,11 +534,13 @@ describe('work records + journey', () => {
     const top = [...held.values()].sort((a, b) => b.whole - a.whole)[0];
     const workOn = top && top.whole / nights.length >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held your nights back most.` : '';
     const nightsMean = nights.reduce((s, w) => s + NIGHT[w.band as keyof typeof NIGHT], 0) / nights.length;
-    expect(cab.note).toBe(`${noteFor(nightsMean)}${workOn}`);
+    expect(cab.note).toBe(`${noteFor(nightsMean, directorVoiceFor('cabaret', cab))}${workOn}`);
     expect(workOn, 'something held this run back').not.toBe('');
     expect(notices(sim, `The Director’s Note: ${CABARET_SHOW}`).map((n) => n.body)).toEqual([cab.note]);
     // On the Profile's School Journey.
-    expect(shown(sim, ProfileWorkspace)).toContain(`${cab.role}, ${CABARET_SHOW}, the run averaged ${mean.toFixed(1)} (${runs[0]!.detail})`);
+    // Its nights by band in words (from 2026-10-20, brief 17), from the milestone's own count.
+    expect(shown(sim, ProfileWorkspace)).toContain(`${cab.role}, ${CABARET_SHOW}, the run averaged ${mean.toFixed(1)} (${nightsWords(runs[0]!.detail!)})`);
+    expect(nightsWords(runs[0]!.detail!)).toMatch(/^\d+ (?:off|solid|remarkable) nights?(?:, \d+ (?:off|solid|remarkable) nights?)*$/);
     // Once: a reload and days on, the run is closed and counted once.
     sim = reload(sim);
     tended(sim, sim.now + 2 * MS_DAY);
@@ -628,7 +632,9 @@ describe('work records + journey', () => {
     const answered = onCraft.filter((n) => n.taken === true).length;
     expect(onCraft.length).toBeGreaterThanOrEqual(3);
     expect(journeyOf(sim.player).direction).toMatchObject({ given: onCraft.length, answered });
-    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you answered ${answered || 'none'}`);
+    // The notes worked on said too, from the same record (from 2026-10-20, brief 17: until then only in what it rests on).
+    const worked = journeyOf(sim.player).direction!.worked;
+    expect(shown(sim, ProfileWorkspace)).toContain(`Of ${onCraft.length} notes and requests on your craft, you worked on ${worked || 'none'} and answered ${answered || 'none'}`);
   });
 
   it('names a strength at 4 over the mean and not at 3.9', () => {
@@ -665,7 +671,7 @@ describe('work records + journey', () => {
     expect(text).toContain(`${kinds} kinds of work judged, ${practised} genres worked in,`);
     const tog = journeyOf(sim.player).together!;
     expect(tog.n).toBeGreaterThanOrEqual(3);
-    expect(text).toContain(`${tog.n} pieces played with a partner, a reader or a company came to ${r1(tog.sum / tog.n)} together on average`);
+    expect(text).toContain(`Your ${tog.n} pieces with a partner, a reader or a company averaged ${r1(tog.sum / tog.n)} out of 100.`);
   });
 });
 

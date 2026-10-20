@@ -236,7 +236,7 @@ describe('the creation screen', () => {
 
   it('writes Before Yale and the home bank on Review, and its figures', () => {
     const words = text(createElement(ReviewStep, { config: london('gb-barclays'), setConfig: noop as never }));
-    expect(words).toContain('Before Yale London, United Kingdom, Since 2008');
+    expect(words).toContain('Before Yale London, United Kingdom, since September 2008');
     expect(words).toContain('Home Bank Barclays, £5,581.00 In Everyday Saver');
     expect(words).toContain('Checking $5,217.44');
   });

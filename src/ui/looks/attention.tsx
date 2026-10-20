@@ -253,14 +253,16 @@ defineLook<DecisionItem>('decision', {
       summary: decisionSentence(decision, stage, sim),
       body: (
         <>
+          {/* What it asks, then what to press, then when it closes, then where it ranks (from 2026-10-20, brief 17): until
+              then the buttons came last, under its urgency and its closing rules. */}
           {decision.detail && <p className="small muted">{decision.detail}</p>}
+          <p className="small muted">{offered}</p>
+          <p className="small muted">{ending}</p>
           <p className="small muted">
             {`It came up ${ago(decision.createdAt, sim.now)}, about ${aboutOf(decision.category)}. Its urgency is ${weightOf(urgency)}, at ${outOf(urgency)}. `}
             {'If it comes up again while it’s open, its urgency can only go up. '}
             {standing}
           </p>
-          <p className="small muted">{ending}</p>
-          <p className="small muted">{offered}</p>
           <div className="grid grid-3">
             <Stat label="Urgency" value={urgency} note="Out of 100. Home shows it only as a colored stripe" />
             <Stat label="About" value={categoryLabel(decision.category)} />
@@ -329,10 +331,11 @@ defineLook<Notice>('notification', {
       });
     }
 
-    // Mark Read on Home sends no ids, so it marks every unread notice read (`world.mark_read`).
-    const marking = unread.length === 1
-      ? 'On Home, Mark 1 Read marks it read.'
-      : `On Home, Mark ${unread.length} Read marks all ${unread.length} unread notices read at once.`;
+    // Mark Read on Home sends no ids, so it marks every unread notice read (`world.mark_read`). Go There is on Home’s row
+    // for an unread notice with a route, and Home lists only the unread: until 2026-10-20 (brief 17) a notice already
+    // read was told "On Home, Go There opens the screen it’s about" too, where it’s on no list with one.
+    const marking = unread.length === 1 ? 'Mark 1 Read marks it read' : `Mark ${unread.length} Read marks all ${unread.length} unread notices read at once`;
+    const onHome = note.route ? `On Home, Go There opens the screen it’s about, and ${marking}.` : `On Home, ${marking}.`;
 
     return {
       name: nameOf(note.title, 'A Notice With No Title'),
@@ -345,13 +348,16 @@ defineLook<Notice>('notification', {
           : `It came in ${ago(note.at, sim.now)}. It’s ${ordinal(place)} of your ${countWord(unread.length)} unread notices.`,
       body: (
         <>
+          {/* What it says, then what to press, then where it ranks (from 2026-10-20, brief 17): until then one paragraph
+              of five sentences, its importance and the order first and the buttons last. */}
           {note.body && <p className="small muted">{note.body}</p>}
           <p className="small muted">
-            {`It’s about ${aboutOf(note.category)}, and its importance is ${outOf(importance)}. Unread notices are listed most important first, and the newer first when two are equal. `}
             {note.read
               ? `SLATE keeps your latest ${NOTICES_KEPT} notices, so this one stays until ${NOTICES_KEPT} newer ones have come in.`
-              : `Opening it here doesn’t mark it read. ${marking}`}
-            {note.route ? ' On Home, Go There opens the screen it’s about.' : ''}
+              : `Opening it here doesn’t mark it read. ${onHome}`}
+          </p>
+          <p className="small muted">
+            {`It’s about ${aboutOf(note.category)}, and its importance is ${outOf(importance)}. Unread notices are listed most important first, and the newer first when two are equal.`}
           </p>
           <div className="grid grid-3">
             <Stat label="Importance" value={importance} note="Out of 100. It sets the order" />

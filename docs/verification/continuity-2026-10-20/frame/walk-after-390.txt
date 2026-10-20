@@ -1,0 +1,3500 @@
+
+=========== Startup
+🎬
+SLATE
+A LIFE SIMULATOR
+Ready
+100%
+✓
+Connecting To Storage
+✓
+Reading Save Slots
+✓
+Checking Each Save
+✓
+Checking Save Versions
+Before You Continue
+Slot 2 was saved by a newer version of SLATE, so this version won’t open it. That keeps the save safe.
+Slot 3 was saved by an older version of SLATE. When you open it, SLATE keeps a backup and then updates it.
+Continue
+Version 1.1.0 · Save Format 94
+
+=========== Startup, Before You Continue
+🎬
+SLATE
+A LIFE SIMULATOR
+Ready
+100%
+✓
+Connecting To Storage
+✓
+Reading Save Slots
+✓
+Checking Each Save
+✓
+Checking Save Versions
+Before You Continue
+Slot 2 was saved by a newer version of SLATE, so this version won’t open it. That keeps the save safe.
+Slot 3 was saved by an older version of SLATE. When you open it, SLATE keeps a backup and then updates it.
+Continue
+Version 1.1.0 · Save Format 94
+
+=========== Save Slots
+🎬
+SLATE
+
+Three slots, three separate lives. What happens in one never touches the others.
+
+SLOT 1
+Ada Cole
+Actor
+DATE
+—
+LOCATION
+New Haven
+NET WORTH
+—
+PLAYED
+0s
+Version 1.1.0 · Save Format 94 · 905 KB
+Continue
+Delete
+SLOT 2
+Ada Cole
+Actor
+DATE
+—
+LOCATION
+New Haven
+NET WORTH
+—
+PLAYED
+0s
+Version 1.1.0 · Save Format 95 · 905 KB
+Continue
+Delete
+SLOT 3
+Ada Cole
+Actor
+DATE
+—
+LOCATION
+New Haven
+NET WORTH
+—
+PLAYED
+0s
+Version 1.1.0 · Save Format 93 · Updated When Opened · 905 KB
+Continue
+Delete
+
+SLATE 1.1.0 · Saved To This Device
+
+=========== Save Slots, Delete Slot 1?
+--- dialogs:
+Delete Slot 1?
+
+This deletes Ada Cole’s life from the slot, with everything that happened in it.
+
+SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back.
+
+Keep It
+Delete Slot 1
+
+=========== Save Slots, a newer version’s save opened
+🎬
+SLATE
+
+Three slots, three separate lives. What happens in one never touches the others.
+
+Slot 2 was saved by a newer version of SLATE, so this version won’t open it. SLATE hasn’t changed anything in it.
+SLOT 1
+Ada Cole
+Actor
+DATE
+—
+LOCATION
+New Haven
+NET WORTH
+—
+PLAYED
+0s
+Version 1.1.0 · Save Format 94 · 905 KB
+Continue
+Delete
+SLOT 2
+Ada Cole
+Actor
+DATE
+—
+LOCATION
+New Haven
+NET WORTH
+—
+PLAYED
+0s
+Version 1.1.0 · Save Format 95 · 905 KB
+Continue
+Delete
+SLOT 3
+Ada Cole
+Actor
+DATE
+—
+LOCATION
+New Haven
+NET WORTH
+—
+PLAYED
+0s
+Version 1.1.0 · Save Format 93 · Updated When Opened · 905 KB
+Continue
+Delete
+
+SLATE 1.1.0 · Saved To This Device
+
+=========== Home
+Skip To Content
+Menu
+🎬
+7:15 AM
+·
+April 24, 2027
+Pause
+Sleep
+Look After Yourself
+▾
+Advance
+▾
+Guide
+Not Saved Yet
+Save & Exit
+Saturday, April 24, 2027 · Actor
+Good Morning, Ada.
+
+7:15 AM in New Haven · EDT · Spring · ⛅ 51°F Partly Cloudy
+
+Calendar
+
+What’s coming up, and when.
+
+Open Calendar
+How This Works
+in 3d 8h
+Carlotta Festival Of New Plays: Rehearsal
+April 27, 2027 at 3:00 PM
+Carlotta Festival Of New Plays: Rehearsal
+in 4d 8h
+Carlotta Festival Of New Plays: Technical Rehearsal
+in 5d 8h
+Carlotta Festival Of New Plays: Dress Rehearsal
+in 6d 8h
+Carlotta Festival Of New Plays: Performance
+in 10d 13h
+Carlotta Festival Of New Plays: Performance
+in 12d 13h
+How Your Own Plans Work
+What Needs You
+
+No questions are waiting on you.
+
+Mark 310 Read
+How This Works
+A Back Strain
+It takes 38 days to mend, and you can’t work out until then. It happened at work, so workers’ compensation pays for the care. Call In Sick, on School, excuses a day of classes while it mends.
+4 weeks ago
+Go There
+A Deep Cut
+It takes 5 days to mend. It happened at work, so workers’ compensation pays for the care.
+5 months ago
+Go There
+Welcome To The Class Of 2029
+You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.
+8 months ago
+Go There
+Cast: Carlotta Festival Of New Plays
+The chair of Acting has cast you as A Leading Part In A New Play in the Carlotta Festival Of New Plays, from its first rehearsal call, and to understudy Konstantin in Yale Rep’s The Seagull, directed by Yura Kordonsky, in New Haven and reachable at every performance. You play the part through the run, and its calls are on your calendar. A missed call counts against you: two in a term take you out of the casting pool.
+4 months ago
+Go There
+The Director’s Note: The Seagull
+You covered Konstantin on call through the run and didn’t go on. The work you did in the room isn’t lost.
+4 weeks ago
+Go There
+Shown: A Choreographed Sequence, Unready
+Simulated note from Acting Intimacy And Combat For The Stage: Lower than the Working piece on March 26, 2027. You fixed this on October 19, 2026, but it has slipped back. It hadn’t been drilled together, so the timing between you wasn’t shared. You and Chloe hadn’t rehearsed together. To work on your side of it without them, use Run It With A Reader.
+22h 15m ago
+Go There
+These six are the most important. 304 more are unread.
+Show All 310
+How You Are
+How This Works
+
+Mending a back strain until May 4, 2027.
+
+Energy
+100
+Stress
+0
+Readiness
+100
+Where You Are
+How This Works
+New Haven, Connecticut · United States
+Your home. 130K people.
+LOCAL TIME
+7:15 AM
+EDT
+DAYLIGHT
+5:59 AM – 7:39 PM
+13h 40m of daylight
+
+Its money, costs, taxes and languages
+
+Weather
+How This Works
+⛅51°F
+Partly Cloudy · High 64°F · Low 46°F
+Humidity 54% · Wind 7 mph · Continental
+Sun
+🌧️
+Rain
+63° / 52°
+Mon
+🌧️
+Rain
+56° / 45°
+Tue
+⛅
+Cloudy
+71° / 53°
+Wed
+⛅
+Cloudy
+72° / 54°
+Thu
+⛅
+Cloudy
+80° / 62°
+Your Affairs
+How This Works
+Money
+Chase Total Checking: $89,046.42. Worth $502,114.
+Chase
+How This Works
+School
+Year 1, good standing, 1st of 16 in the class. Next: Carlotta Festival Of New Plays: Rehearsal, April 27, 2027 at 3:00 PM.
+Yale
+How This Works
+Papers
+Cover: Yale Health.
+Papers
+How This Works
+
+=========== Advance menu
+Skip To Content
+Menu
+🎬
+7:15 AM
+·
+April 24, 2027
+Pause
+Sleep
+Look After Yourself
+▾
+Advance
+▾
+One Hour
+8:15 AM
+This Evening
+6:00 PM · April 24, 2027
+Tonight
+10:00 PM · April 24, 2027
+Tomorrow Morning
+7:00 AM · April 25, 2027
+Next Event
+Carlotta Festival Of New Plays: Rehearsal · April 27, 2027 at 3:00 PM
+Next Monday
+9:00 AM · April 26, 2027
+One Week
+May 1, 2027 at 7:15 AM
+Choose An Event…
+Pick from everything on the calendar
+How This Works
+How Play And Pause Work
+Guide
+Not Saved Yet
+Save & Exit
+Saturday, April 24, 2027 · Actor
+Good Morning, Ada.
+
+7:15 AM in New Haven · EDT · Spring · ⛅ 51°F Partly Cloudy
+
+Calendar
+
+What’s coming up, and when.
+
+Open Calendar
+How This Works
+in 3d 8h
+Carlotta Festival Of New Plays: Rehearsal
+April 27, 2027 at 3:00 PM
+Carlotta Festival Of New Plays: Rehearsal
+in 4d 8h
+Carlotta Festival Of New Plays: Technical Rehearsal
+in 5d 8h
+Carlotta Festival Of New Plays: Dress Rehearsal
+in 6d 8h
+Carlotta Festival Of New Plays: Performance
+in 10d 13h
+Carlotta Festival Of New Plays: Performance
+in 12d 13h
+How Your Own Plans Work
+What Needs You
+
+No questions are waiting on you.
+
+Mark 310 Read
+How This Works
+A Back Strain
+It takes 38 days to mend, and you can’t work out until then. It happened at work, so workers’ compensation pays for the care. Call In Sick, on School, excuses a day of classes while it mends.
+4 weeks ago
+Go There
+A Deep Cut
+It takes 5 days to mend. It happened at work, so workers’ compensation pays for the care.
+5 months ago
+Go There
+Welcome To The Class Of 2029
+You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.
+8 months ago
+Go There
+Cast: Carlotta Festival Of New Plays
+The chair of Acting has cast you as A Leading Part In A New Play in the Carlotta Festival Of New Plays, from its first rehearsal call, and to understudy Konstantin in Yale Rep’s The Seagull, directed by Yura Kordonsky, in New Haven and reachable at every performance. You play the part through the run, and its calls are on your calendar. A missed call counts against you: two in a term take you out of the casting pool.
+4 months ago
+Go There
+The Director’s Note: The Seagull
+You covered Konstantin on call through the run and didn’t go on. The work you did in the room isn’t lost.
+4 weeks ago
+Go There
+Shown: A Choreographed Sequence, Unready
+Simulated note from Acting Intimacy And Combat For The Stage: Lower than the Working piece on March 26, 2027. You fixed this on October 19, 2026, but it has slipped back. It hadn’t been drilled together, so the timing between you wasn’t shared. You and Chloe hadn’t rehearsed together. To work on your side of it without them, use Run It With A Reader.
+22h 15m ago
+Go There
+These six are the most important. 304 more are unread.
+Show All 310
+How You Are
+How This Works
+
+Mending a back strain until May 4, 2027.
+
+Energy
+100
+Stress
+0
+Readiness
+100
+Where You Are
+How This Works
+New Haven, Connecticut · United States
+Your home. 130K people.
+LOCAL TIME
+7:15 AM
+EDT
+DAYLIGHT
+5:59 AM – 7:39 PM
+13h 40m of daylight
+
+Its money, costs, taxes and languages
+
+Weather
+How This Works
+⛅51°F
+Partly Cloudy · High 64°F · Low 46°F
+Humidity 54% · Wind 7 mph · Continental
+Sun
+🌧️
+Rain
+63° / 52°
+Mon
+🌧️
+Rain
+56° / 45°
+Tue
+⛅
+Cloudy
+71° / 53°
+Wed
+⛅
+Cloudy
+72° / 54°
+Thu
+⛅
+Cloudy
+80° / 62°
+Your Affairs
+How This Works
+Money
+Chase Total Checking: $89,046.42. Worth $502,114.
+Chase
+How This Works
+School
+Year 1, good standing, 1st of 16 in the class. Next: Carlotta Festival Of New Plays: Rehearsal, April 27, 2027 at 3:00 PM.
+Yale
+How This Works
+Papers
+Cover: Yale Health.
+Papers
+How This Works
+
+=========== On The Way
+--- dialogs:
+On The Way
+✕
+
+Moving the clock to One Week (May 1, 2027 at 7:15 AM) passes four commitments. The clock stops at each one so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. You can also skip a plan of your own, or call off a rehearsal with a partner, though at short notice that costs their trust.
+
+Carlotta Festival Of New Plays: Rehearsal — April 27, 2027 at 3:00 PM
+Carlotta Festival Of New Plays: Rehearsal — April 28, 2027 at 3:00 PM
+Carlotta Festival Of New Plays: Technical Rehearsal — April 29, 2027 at 3:00 PM
+Carlotta Festival Of New Plays: Dress Rehearsal — April 30, 2027 at 3:00 PM
+Cancel
+Advance
+
+=========== Look After Yourself menu
+Skip To Content
+Menu
+🎬
+7:15 AM
+·
+April 24, 2027
+Pause
+Sleep
+Look After Yourself
+▾
+Eat A Meal
+40 minutes · $5.00 · Nourishment at 63: little to gain yet.
+Morale 84 → 86 · Nourishment 63 → 100
+Order In
+50 minutes · $34.65 · Nourishment at 63: little to gain yet.
+Morale 84 → 86 · Nourishment 63 → 100
+Shower
+20 minutes · Hygiene at 82: little to gain yet.
+Hygiene 82 → 100
+Unwind
+1 hour · Stress at 0: little to gain yet.
+Morale 84 → 87
+Work Out
+1 hour · Not with a back strain; it has 11 days yet to mend.
+How This Works
+Advance
+▾
+Guide
+Not Saved Yet
+Save & Exit
+Saturday, April 24, 2027 · Actor
+Good Morning, Ada.
+
+7:15 AM in New Haven · EDT · Spring · ⛅ 51°F Partly Cloudy
+
+Calendar
+
+What’s coming up, and when.
+
+Open Calendar
+How This Works
+in 3d 8h
+Carlotta Festival Of New Plays: Rehearsal
+April 27, 2027 at 3:00 PM
+Carlotta Festival Of New Plays: Rehearsal
+in 4d 8h
+Carlotta Festival Of New Plays: Technical Rehearsal
+in 5d 8h
+Carlotta Festival Of New Plays: Dress Rehearsal
+in 6d 8h
+Carlotta Festival Of New Plays: Performance
+in 10d 13h
+Carlotta Festival Of New Plays: Performance
+in 12d 13h
+How Your Own Plans Work
+What Needs You
+
+No questions are waiting on you.
+
+Mark 310 Read
+How This Works
+A Back Strain
+It takes 38 days to mend, and you can’t work out until then. It happened at work, so workers’ compensation pays for the care. Call In Sick, on School, excuses a day of classes while it mends.
+4 weeks ago
+Go There
+A Deep Cut
+It takes 5 days to mend. It happened at work, so workers’ compensation pays for the care.
+5 months ago
+Go There
+Welcome To The Class Of 2029
+You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.
+8 months ago
+Go There
+Cast: Carlotta Festival Of New Plays
+The chair of Acting has cast you as A Leading Part In A New Play in the Carlotta Festival Of New Plays, from its first rehearsal call, and to understudy Konstantin in Yale Rep’s The Seagull, directed by Yura Kordonsky, in New Haven and reachable at every performance. You play the part through the run, and its calls are on your calendar. A missed call counts against you: two in a term take you out of the casting pool.
+4 months ago
+Go There
+The Director’s Note: The Seagull
+You covered Konstantin on call through the run and didn’t go on. The work you did in the room isn’t lost.
+4 weeks ago
+Go There
+Shown: A Choreographed Sequence, Unready
+Simulated note from Acting Intimacy And Combat For The Stage: Lower than the Working piece on March 26, 2027. You fixed this on October 19, 2026, but it has slipped back. It hadn’t been drilled together, so the timing between you wasn’t shared. You and Chloe hadn’t rehearsed together. To work on your side of it without them, use Run It With A Reader.
+22h 15m ago
+Go There
+These six are the most important. 304 more are unread.
+Show All 310
+How You Are
+How This Works
+
+Mending a back strain until May 4, 2027.
+
+Energy
+100
+Stress
+0
+Readiness
+100
+Where You Are
+How This Works
+New Haven, Connecticut · United States
+Your home. 130K people.
+LOCAL TIME
+7:15 AM
+EDT
+DAYLIGHT
+5:59 AM – 7:39 PM
+13h 40m of daylight
+
+Its money, costs, taxes and languages
+
+Weather
+How This Works
+⛅51°F
+Partly Cloudy · High 64°F · Low 46°F
+Humidity 54% · Wind 7 mph · Continental
+Sun
+🌧️
+Rain
+63° / 52°
+Mon
+🌧️
+Rain
+56° / 45°
+Tue
+⛅
+Cloudy
+71° / 53°
+Wed
+⛅
+Cloudy
+72° / 54°
+Thu
+⛅
+Cloudy
+80° / 62°
+Your Affairs
+How This Works
+Money
+Chase Total Checking: $89,046.42. Worth $502,114.
+Chase
+How This Works
+School
+Year 1, good standing, 1st of 16 in the class. Next: Carlotta Festival Of New Plays: Rehearsal, April 27, 2027 at 3:00 PM.
+Yale
+How This Works
+Papers
+Cover: Yale Health.
+Papers
+How This Works
+
+=========== Sleep dialog
+--- dialogs:
+Sleep
+✕
+
+A normal night.
+
+Hours
+8
+NOW
+7:15 AM
+YOU’D WAKE AT
+3:15 PM, April 24, 2027
+Your next commitment is in 3 days and 8 hours.
+
+The clock moves on while you sleep. What happens without you still happens, and you miss any commitment in those hours.
+
+How This Works
+Not Yet
+Sleep 8 Hours
+
+=========== Skip To Event
+--- dialogs:
+Skip To Event
+✕
+Carlotta Festival Of New Plays: Rehearsal
+April 27, 2027 at 3:00 PM · in 3 days
+Carlotta Festival Of New Plays: Rehearsal
+April 28, 2027 at 3:00 PM · in 4 days
+1 on the way
+Carlotta Festival Of New Plays: Technical Rehearsal
+April 29, 2027 at 3:00 PM · in 5 days
+2 on the way
+Carlotta Festival Of New Plays: Dress Rehearsal
+April 30, 2027 at 3:00 PM · in 6 days
+3 on the way
+Carlotta Festival Of New Plays: Performance
+May 4, 2027 at 8:00 PM · in 11 days
+4 on the way
+Carlotta Festival Of New Plays: Performance
+May 6, 2027 at 8:00 PM · in 13 days
+5 on the way
+Carlotta Festival Of New Plays: Performance
+May 9, 2027 at 8:00 PM · in 16 days
+6 on the way
+Carlotta Festival Of New Plays: Performance
+May 12, 2027 at 8:00 PM · in 19 days
+7 on the way
+Carlotta Festival Of New Plays: The Run Ends
+May 12, 2027 at 10:00 PM · in 19 days
+8 on the way
+Summer Recess
+May 13, 2027 at 9:00 AM · in 19 days
+8 on the way
+Card Statement
+May 20, 2027 at 9:00 AM · in 26 days
+8 on the way
+Your Birthday
+June 14, 2027 at 9:00 AM · in 51 days
+8 on the way
+The Fall Term Begins
+August 23, 2027 at 9:00 AM · in 121 days
+8 on the way
+ON THE WAY
+
+You have no commitments before it.
+
+It’s the next thing on your calendar.
+
+Cancel
+Skip To Carlotta Festival Of New Plays: Rehearsal
+
+=========== Next Event: the stop
+--- dialogs:
+Carlotta Festival Of New Plays: Rehearsal
+✕
+
+It’s 3:00 PM on April 27, 2027, and this needs you now. Going takes 6 hours, and the clock moves on to April 27, 2027 at 9:00 PM.
+
+Press Go, or Stand Here to wait with the clock paused. Carlotta Festival Of New Plays: Rehearsal starts the next time the clock moves, and you’re there if you’re awake, in its town, and not in hospital or laid up with an injury. Only a plan of your own can be skipped, so there’s no Skip It button here.
+
+How This Works
+Stand Here
+Go
+
+=========== After Stand Here
+Skip To Content
+Menu
+🎬
+3:00 PM
+·
+April 27, 2027
+Play
+Sleep
+Look After Yourself
+▾
+Advance
+▾
+Guide
+Not Saved Yet
+Save & Exit
+Tuesday, April 27, 2027 · Actor
+Good Afternoon, Ada.
+
+3:00 PM in New Haven · EDT · Spring · ⛅ 72°F Partly Cloudy
+
+Calendar
+
+What’s coming up, and when.
+
+Open Calendar
+How This Works
+now
+Carlotta Festival Of New Plays: Rehearsal
+April 27, 2027 at 3:00 PM
+Carlotta Festival Of New Plays: Rehearsal
+in 1 day
+Carlotta Festival Of New Plays: Technical Rehearsal
+in 2 days
+Carlotta Festival Of New Plays: Dress Rehearsal
+in 3 days
+Carlotta Festival Of New Plays: Performance
+in 7d 5h
+Carlotta Festival Of New Plays: Performance
+in 9d 5h
+How Your Own Plans Work
+What Needs You
+
+No questions are waiting on you.
+
+Mark 310 Read
+How This Works
+A Back Strain
+It takes 38 days to mend, and you can’t work out until then. It happened at work, so workers’ compensation pays for the care. Call In Sick, on School, excuses a day of classes while it mends.
+4 weeks ago
+Go There
+A Deep Cut
+It takes 5 days to mend. It happened at work, so workers’ compensation pays for the care.
+6 months ago
+Go There
+Welcome To The Class Of 2029
+You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.
+8 months ago
+Go There
+Cast: Carlotta Festival Of New Plays
+The chair of Acting has cast you as A Leading Part In A New Play in the Carlotta Festival Of New Plays, from its first rehearsal call, and to understudy Konstantin in Yale Rep’s The Seagull, directed by Yura Kordonsky, in New Haven and reachable at every performance. You play the part through the run, and its calls are on your calendar. A missed call counts against you: two in a term take you out of the casting pool.
+4 months ago
+Go There
+The Director’s Note: The Seagull
+You covered Konstantin on call through the run and didn’t go on. The work you did in the room isn’t lost.
+4 weeks ago
+Go There
+Shown: A Choreographed Sequence, Unready
+Simulated note from Acting Intimacy And Combat For The Stage: Lower than the Working piece on March 26, 2027. You fixed this on October 19, 2026, but it has slipped back. It hadn’t been drilled together, so the timing between you wasn’t shared. You and Chloe hadn’t rehearsed together. To work on your side of it without them, use Run It With A Reader.
+4d 6h ago
+Go There
+These six are the most important. 304 more are unread.
+Show All 310
+How You Are
+How This Works
+
+Mending a back strain until May 4, 2027.
+
+Energy
+52
+Stress
+12
+Readiness
+64
+Where You Are
+How This Works
+New Haven, Connecticut · United States
+Your home. 130K people.
+LOCAL TIME
+3:00 PM
+EDT
+DAYLIGHT
+5:55 AM – 7:42 PM
+13h 47m of daylight
+
+Its money, costs, taxes and languages
+
+Weather
+How This Works
+⛅72°F
+Partly Cloudy · High 71°F · Low 53°F
+Humidity 61% · Wind 4 mph · Continental
+Wed
+⛅
+Cloudy
+72° / 54°
+Thu
+⛅
+Cloudy
+80° / 62°
+Fri
+⛈️
+Storm
+72° / 54°
+Sat
+⛈️
+Storm
+64° / 46°
+Sun
+⛅
+Cloudy
+75° / 57°
+Your Affairs
+How This Works
+Money
+Chase Total Checking: $89,016.42. Worth $502,084.
+Chase
+How This Works
+School
+Year 1, good standing, 1st of 16 in the class. Next: Carlotta Festival Of New Plays: Rehearsal, April 27, 2027 at 3:00 PM.
+Yale
+How This Works
+Papers
+Cover: Yale Health.
+Papers
+How This Works
+
+=========== Calendar
+Skip To Content
+Menu
+🎬
+3:00 PM
+·
+April 27, 2027
+Play
+Sleep
+Look After Yourself
+▾
+Advance
+▾
+Guide
+Not Saved Yet
+Save & Exit
+Home
+›
+Calendar
+CALENDAR
+Your Plans And Commitments
+
+Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.
+
+April 2027
+‹
+Today
+›
+SUN
+MON
+TUE
+WED
+THU
+FRI
+SAT
+28
+Easter Sunday
+29
+Classes
+30
+31
+1
+Classes
+The New Play Lab
+2
+Classes
+The New Play Lab
+Work-Study Payday
+3
+Work-Study Shift
+Yale Cabaret, Season 59: The Show Ends
+4
+5
+Classes
+6
+Classes
+7
+Classes
+8
+Classes
+9
+Classes
+Work-Study Payday
+10
+Work-Study Shift
+Rehearsal With Hannah
+11
+Rehearsal With Hannah
+12
+Classes
+Rehearsal With Hannah
+13
+Classes
+Carlotta Festival Of New Plays: Read-Through
+14
+Classes
+Carlotta Festival Of New Plays: Blocking Rehearsal
+15
+Tax Day
+Classes
+Carlotta Festival Of New Plays: Blocking Rehearsal
+16
+Classes
+Carlotta Festival Of New Plays: Blocking Rehearsal
+Work-Study Payday
+17
+Answer Zoe
+Work-Study Shift
+Rehearsal With Hannah
+18
+Rehearsal With Hannah
+19
+Classes
+20
+Classes
+Card Statement
+Carlotta Festival Of New Plays: Blocking Rehearsal
+21
+Administrative Professionals Day
+Classes
+Carlotta Festival Of New Plays: Rehearsal
+22
+Classes
+Carlotta Festival Of New Plays: Rehearsal
+23
+Classes
+Carlotta Festival Of New Plays: Rehearsal
+Term Review, Spring Term 2027
+24
+25
+26
+27
+Carlotta Festival Of New Plays: Rehearsal
+28
+Carlotta Festival Of New Plays: Rehearsal
+29
+Carlotta Festival Of New Plays: Technical Rehearsal
+30
+Carlotta Festival Of New Plays: Dress Rehearsal
+1
+Personal
+School
+Money
+Holiday
+Next Thirty Days
+Carlotta Festival Of New Plays: Rehearsal
+April 27, 2027 · 3:00 PM
+You
+Carlotta Festival Of New Plays: Rehearsal
+April 28, 2027 · 3:00 PM
+You
+Carlotta Festival Of New Plays: Technical Rehearsal
+April 29, 2027 · 3:00 PM
+You
+Carlotta Festival Of New Plays: Dress Rehearsal
+April 30, 2027 · 3:00 PM
+You
+Carlotta Festival Of New Plays: Performance
+May 4, 2027 · 8:00 PM
+You
+Carlotta Festival Of New Plays: Performance
+May 6, 2027 · 8:00 PM
+You
+Carlotta Festival Of New Plays: Performance
+May 9, 2027 · 8:00 PM
+You
+Carlotta Festival Of New Plays: Performance
+May 12, 2027 · 8:00 PM
+You
+Carlotta Festival Of New Plays: The Run Ends
+May 12, 2027 · 10:00 PM
+Summer Recess
+May 13, 2027 · 9:00 AM
+Card Statement
+May 20, 2027 · 9:00 AM
+
+=========== Calendar, today opened
+Skip To Content
+Menu
+🎬
+3:00 PM
+·
+April 27, 2027
+Play
+Sleep
+Look After Yourself
+▾
+Advance
+▾
+Guide
+Not Saved Yet
+Save & Exit
+Home
+›
+Calendar
+CALENDAR
+Your Plans And Commitments
+
+Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.
+
+April 2027
+‹
+Today
+›
+SUN
+MON
+TUE
+WED
+THU
+FRI
+SAT
+28
+Easter Sunday
+29
+Classes
+30
+31
+1
+Classes
+The New Play Lab
+2
+Classes
+The New Play Lab
+Work-Study Payday
+3
+Work-Study Shift
+Yale Cabaret, Season 59: The Show Ends
+4
+5
+Classes
+6
+Classes
+7
+Classes
+8
+Classes
+9
+Classes
+Work-Study Payday
+10
+Work-Study Shift
+Rehearsal With Hannah
+11
+Rehearsal With Hannah
+12
+Classes
+Rehearsal With Hannah
+13
+Classes
+Carlotta Festival Of New Plays: Read-Through
+14
+Classes
+Carlotta Festival Of New Plays: Blocking Rehearsal
+15
+Tax Day
+Classes
+Carlotta Festival Of New Plays: Blocking Rehearsal
+16
+Classes
+Carlotta Festival Of New Plays: Blocking Rehearsal
+Work-Study Payday
+17
+Answer Zoe
+Work-Study Shift
+Rehearsal With Hannah
+18
+Rehearsal With Hannah
+19
+Classes
+20
+Classes
+Card Statement
+Carlotta Festival Of New Plays: Blocking Rehearsal
+21
+Administrative Professionals Day
+Classes
+Carlotta Festival Of New Plays: Rehearsal
+22
+Classes
+Carlotta Festival Of New Plays: Rehearsal
+23
+Classes
+Carlotta Festival Of New Plays: Rehearsal
+Term Review, Spring Term 2027
+24
+25
+26
+27
+Carlotta Festival Of New Plays: Rehearsal
+28
+Carlotta Festival Of New Plays: Rehearsal
+29
+Carlotta Festival Of New Plays: Technical Rehearsal
+30
+Carlotta Festival Of New Plays: Dress Rehearsal
+1
+Personal
+School
+Money
+Holiday
+April 27, 2027
+
+Spring
+
+Put Something On It
+Close
+How This Works
+Carlotta Festival Of New Plays: Rehearsal
+3:00 PM · 6 hours · New Haven
+Next Thirty Days
+Carlotta Festival Of New Plays: Rehearsal
+April 27, 2027 · 3:00 PM
+You
+Carlotta Festival Of New Plays: Rehearsal
+April 28, 2027 · 3:00 PM
+You
+Carlotta Festival Of New Plays: Technical Rehearsal
+April 29, 2027 · 3:00 PM
+You
+Carlotta Festival Of New Plays: Dress Rehearsal
+April 30, 2027 · 3:00 PM
+You
+Carlotta Festival Of New Plays: Performance
+May 4, 2027 · 8:00 PM
+You
+Carlotta Festival Of New Plays: Performance
+May 6, 2027 · 8:00 PM
+You
+Carlotta Festival Of New Plays: Performance
+May 9, 2027 · 8:00 PM
+You
+Carlotta Festival Of New Plays: Performance
+May 12, 2027 · 8:00 PM
+You
+Carlotta Festival Of New Plays: The Run Ends
+May 12, 2027 · 10:00 PM
+Summer Recess
+May 13, 2027 · 9:00 AM
+Card Statement
+May 20, 2027 · 9:00 AM
+
+=========== Calendar, plan form
+--- dialogs:
+Put Something On April 27, 2027
+✕
+What Is It
+When It Starts
+3:00 PM
+3:30 PM
+4:00 PM
+4:30 PM
+5:00 PM
+5:30 PM
+6:00 PM
+6:30 PM
+7:00 PM
+7:30 PM
+8:00 PM
+8:30 PM
+9:00 PM
+9:30 PM
+10:00 PM
+10:30 PM
+11:00 PM
+11:30 PM
+How Long It Takes
+Half An Hour
+An Hour
+Two Hours
+Half A Day
+A Working Day
+All Day
+
+You’ll need to be in New Haven for it, and the clock stops when it’s time. You can have two things at the same time, and the calendar marks them Clash.
+
+Never Mind
+Put It On
+
+=========== Calendar, an entry opened
+--- dialogs:
+Carlotta Festival Of New Plays: Rehearsal
+✕
+WHEN
+3:00 PM
+April 27, 2027
+LENGTH
+6 hours
+KIND
+School
+New Haven
+STATUS
+Pending
+
+You need to be there. The clock stops when it’s time, so you can go.
+
+=========== Save Slots, empty
+🎬
+SLATE
+
+Three slots, three separate lives. What happens in one never touches the others.
+
+SLOT 1
+
+An empty slot. Press New Save to start a life here.
+
+New Save
+SLOT 2
+
+An empty slot. Press New Save to start a life here.
+
+New Save
+SLOT 3
+
+An empty slot. Press New Save to start a life here.
+
+New Save
+
+SLATE 1.1.0 · Saved To This Device
+
+=========== Creation, Identity, untouched
+🎬
+SLOT 1
+Who Are You Going To Be?
+
+SLATE is a life simulator. Here you create the actor or actress you’ll play.
+
+Cancel
+Identity
+Dispositions & Traits
+Genres & Background
+Starting Point
+Review
+Identity
+
+Your legal name is the one on your documents. What people call you can be different.
+
+Upload Custom Photo
+Tap here, or drop one in.
+Choose File
+
+Any size or shape works. SLATE crops it to a headshot and keeps a small copy in the save. It’s only for show: the game never looks at what’s in it.
+
+First Name
+Middle Name (Optional)
+Last Name
+Preferred Name
+
+What people actually call you day to day.
+
+Pronouns
+She/Her
+He/Him
+They/Them
+Billed As
+Actor
+Actress
+
+With They/Them, you choose. Actor and Actress are two words for the same craft, and neither counts for more. The game calls you by the one you pick, and at school you’re cast in parts written for it, or for anyone.
+
+Race Or Ethnicity (Optional)
+American Indian Or Alaska Native
+Asian
+Black Or African
+Hispanic Or Latino
+Middle Eastern Or North African
+Native Hawaiian Or Pacific Islander
+White
+Another Race Or Ethnicity
+
+Choose as many as are true. It’s part of who your character is and nothing more: it changes no ability, nothing in the game uses it, and the game never guesses it from a name or a country. Leave it blank if you’d rather not say.
+
+Year Of Birth
+Month
+January
+Day
+Place Of Birth
+
+Where you’re from, which isn’t always where you live now. It’s what you tell people when they ask, and it decides your citizenship.
+
+Pick a country on the map, or find it in the list below.
+
+Hide Map
+United States · 17,342 places
+Zoom In
+
+Outlines from Natural Earth 110m via world-atlas. Public domain. Countries too small to draw at this scale are still in the list below.
+
+Country
+
+17,342 towns and cities on record.
+
+State Or Region
+Anywhere In The United States
+Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+District of Columbia
+Florida
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+
+51 to choose from.
+
+Town Or City
+New York
+New York · 8,300,000 people
+Los Angeles
+California · 3,900,000 people
+Brooklyn
+New York · 2,736,074 people
+Chicago
+Illinois · 2,700,000 people
+Queens
+New York · 2,316,841 people
+Houston
+Texas · 2,314,157 people
+Phoenix
+Arizona · 1,650,000 people
+Philadelphia
+Pennsylvania · 1,573,916 people
+San Antonio
+Texas · 1,526,656 people
+Manhattan
+New York · 1,487,536 people
+The Bronx
+New York · 1,385,108 people
+San Diego
+California · 1,380,000 people
+Dallas
+Texas · 1,300,000 people
+Jacksonville
+Florida · 1,009,833 people
+Fort Worth
+Texas · 1,008,106 people
+San Jose
+California · 997,368 people
+Austin
+Texas · 970,000 people
+Columbus
+Ohio · 913,175 people
+Charlotte
+North Carolina · 911,311 people
+Indianapolis
+Indiana · 887,642 people
+San Francisco
+California · 810,000 people
+Seattle
+Washington · 750,000 people
+Denver
+Colorado · 715,000 people
+Nashville
+Tennessee · 690,000 people
+Washington
+District of Columbia · 689,545 people
+Oklahoma City
+Oklahoma · 681,054 people
+El Paso
+Texas · 678,815 people
+Las Vegas
+Nevada · 660,000 people
+Boston
+Massachusetts · 650,000 people
+Detroit
+Michigan · 645,705 people
+New South Memphis
+Tennessee · 641,608 people
+Portland
+Oregon · 640,000 people
+Memphis
+Tennessee · 633,104 people
+Louisville
+Kentucky · 624,444 people
+Baltimore
+Maryland · 585,708 people
+South Boston
+Massachusetts · 571,281 people
+Albuquerque
+New Mexico · 564,559 people
+Milwaukee
+Wisconsin · 563,531 people
+Tucson
+Arizona · 542,629 people
+Fresno
+California · 542,107 people
+Sacramento
+California · 524,943 people
+Atlanta
+Georgia · 500,000 people
+Omaha
+Nebraska · 486,051 people
+Raleigh
+North Carolina · 482,295 people
+Kansas City
+Missouri · 475,378 people
+Long Beach
+California · 474,140 people
+Mesa
+Arizona · 471,825 people
+Staten Island
+New York · 468,730 people
+Colorado Springs
+Colorado · 456,568 people
+Virginia Beach
+Virginia · 454,808 people
+Miami
+Florida · 450,000 people
+Oakland
+California · 419,267 people
+Tampa
+Florida · 414,547 people
+Tulsa
+Oklahoma · 413,066 people
+Minneapolis
+Minnesota · 410,939 people
+Wichita
+Kansas · 396,119 people
+Arlington
+Texas · 388,125 people
+New Orleans
+Louisiana · 380,000 people
+Bakersfield
+California · 373,640 people
+Cleveland
+Ohio · 365,379 people
+
+17,282 more match. Keep typing to narrow it down.
+
+Citizenship
+—
+
+You’re a citizen of the country you were born in, so there’s nothing to pick. Change your place of birth and this changes with it.
+
+You’ll be 24 when you start.
+Choose whether you’re billed as an actor or an actress.
+Choose the town or city you were born in.
+Back
+Continue
+
+=========== Creation, Identity, They/Them
+🎬
+SLOT 1
+Who Are You Going To Be?
+
+SLATE is a life simulator. Here you create the actor or actress you’ll play.
+
+Cancel
+Identity
+Dispositions & Traits
+Genres & Background
+Starting Point
+Review
+Identity
+
+Your legal name is the one on your documents. What people call you can be different.
+
+Upload Custom Photo
+Tap here, or drop one in.
+Choose File
+
+Any size or shape works. SLATE crops it to a headshot and keeps a small copy in the save. It’s only for show: the game never looks at what’s in it.
+
+First Name
+Middle Name (Optional)
+Last Name
+Preferred Name
+
+What people actually call you day to day.
+
+Pronouns
+She/Her
+He/Him
+They/Them
+Billed As
+Actor
+Actress
+
+With They/Them, you choose. Actor and Actress are two words for the same craft, and neither counts for more. The game calls you by the one you pick, and at school you’re cast in parts written for it, or for anyone.
+
+Race Or Ethnicity (Optional)
+American Indian Or Alaska Native
+Asian
+Black Or African
+Hispanic Or Latino
+Middle Eastern Or North African
+Native Hawaiian Or Pacific Islander
+White
+Another Race Or Ethnicity
+
+Choose as many as are true. It’s part of who your character is and nothing more: it changes no ability, nothing in the game uses it, and the game never guesses it from a name or a country. Leave it blank if you’d rather not say.
+
+Year Of Birth
+Month
+January
+Day
+Place Of Birth
+
+Where you’re from, which isn’t always where you live now. It’s what you tell people when they ask, and it decides your citizenship.
+
+Pick a country on the map, or find it in the list below.
+
+Hide Map
+United States · 17,342 places
+Zoom In
+
+Outlines from Natural Earth 110m via world-atlas. Public domain. Countries too small to draw at this scale are still in the list below.
+
+Country
+
+17,342 towns and cities on record.
+
+State Or Region
+Anywhere In The United States
+Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+District of Columbia
+Florida
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+
+51 to choose from.
+
+Town Or City
+New York
+New York · 8,300,000 people
+Los Angeles
+California · 3,900,000 people
+Brooklyn
+New York · 2,736,074 people
+Chicago
+Illinois · 2,700,000 people
+Queens
+New York · 2,316,841 people
+Houston
+Texas · 2,314,157 people
+Phoenix
+Arizona · 1,650,000 people
+Philadelphia
+Pennsylvania · 1,573,916 people
+San Antonio
+Texas · 1,526,656 people
+Manhattan
+New York · 1,487,536 people
+The Bronx
+New York · 1,385,108 people
+San Diego
+California · 1,380,000 people
+Dallas
+Texas · 1,300,000 people
+Jacksonville
+Florida · 1,009,833 people
+Fort Worth
+Texas · 1,008,106 people
+San Jose
+California · 997,368 people
+Austin
+Texas · 970,000 people
+Columbus
+Ohio · 913,175 people
+Charlotte
+North Carolina · 911,311 people
+Indianapolis
+Indiana · 887,642 people
+San Francisco
+California · 810,000 people
+Seattle
+Washington · 750,000 people
+Denver
+Colorado · 715,000 people
+Nashville
+Tennessee · 690,000 people
+Washington
+District of Columbia · 689,545 people
+Oklahoma City
+Oklahoma · 681,054 people
+El Paso
+Texas · 678,815 people
+Las Vegas
+Nevada · 660,000 people
+Boston
+Massachusetts · 650,000 people
+Detroit
+Michigan · 645,705 people
+New South Memphis
+Tennessee · 641,608 people
+Portland
+Oregon · 640,000 people
+Memphis
+Tennessee · 633,104 people
+Louisville
+Kentucky · 624,444 people
+Baltimore
+Maryland · 585,708 people
+South Boston
+Massachusetts · 571,281 people
+Albuquerque
+New Mexico · 564,559 people
+Milwaukee
+Wisconsin · 563,531 people
+Tucson
+Arizona · 542,629 people
+Fresno
+California · 542,107 people
+Sacramento
+California · 524,943 people
+Atlanta
+Georgia · 500,000 people
+Omaha
+Nebraska · 486,051 people
+Raleigh
+North Carolina · 482,295 people
+Kansas City
+Missouri · 475,378 people
+Long Beach
+California · 474,140 people
+Mesa
+Arizona · 471,825 people
+Staten Island
+New York · 468,730 people
+Colorado Springs
+Colorado · 456,568 people
+Virginia Beach
+Virginia · 454,808 people
+Miami
+Florida · 450,000 people
+Oakland
+California · 419,267 people
+Tampa
+Florida · 414,547 people
+Tulsa
+Oklahoma · 413,066 people
+Minneapolis
+Minnesota · 410,939 people
+Wichita
+Kansas · 396,119 people
+Arlington
+Texas · 388,125 people
+New Orleans
+Louisiana · 380,000 people
+Bakersfield
+California · 373,640 people
+Cleveland
+Ohio · 365,379 people
+
+17,282 more match. Keep typing to narrow it down.
+
+Citizenship
+—
+
+You’re a citizen of the country you were born in, so there’s nothing to pick. Change your place of birth and this changes with it.
+
+You’ll be 24 when you start.
+Choose whether you’re billed as an actor or an actress.
+Choose the town or city you were born in.
+Back
+Continue
+
+=========== Creation, Identity, a search that finds nothing
+🎬
+SLOT 1
+Who Are You Going To Be?
+
+SLATE is a life simulator. Here you create the actress you’ll play.
+
+Cancel
+Identity
+Dispositions & Traits
+Genres & Background
+Starting Point
+Review
+Identity
+
+Your legal name is the one on your documents. What people call you can be different.
+
+Upload Custom Photo
+Tap here, or drop one in.
+Choose File
+
+Any size or shape works. SLATE crops it to a headshot and keeps a small copy in the save. It’s only for show: the game never looks at what’s in it.
+
+First Name
+Middle Name (Optional)
+Last Name
+Preferred Name
+
+What people actually call you day to day.
+
+Pronouns
+She/Her
+He/Him
+They/Them
+Billed As
+Actress
+
+Your pronouns decide this, so there’s nothing to pick. Change your pronouns and it changes too.
+
+Race Or Ethnicity (Optional)
+American Indian Or Alaska Native
+Asian
+Black Or African
+Hispanic Or Latino
+Middle Eastern Or North African
+Native Hawaiian Or Pacific Islander
+White
+Another Race Or Ethnicity
+
+Choose as many as are true. It’s part of who your character is and nothing more: it changes no ability, nothing in the game uses it, and the game never guesses it from a name or a country. Leave it blank if you’d rather not say.
+
+Year Of Birth
+Month
+January
+Day
+Place Of Birth
+
+Where you’re from, which isn’t always where you live now. It’s what you tell people when they ask, and it decides your citizenship.
+
+Pick a country on the map, or find it in the list below.
+
+Hide Map
+United States · 17,342 places
+Zoom In
+
+Outlines from Natural Earth 110m via world-atlas. Public domain. Countries too small to draw at this scale are still in the list below.
+
+Country
+
+17,342 towns and cities on record.
+
+State Or Region
+Anywhere In The United States
+Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+District of Columbia
+Florida
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+
+51 to choose from.
+
+Town Or City
+
+No town or city matches “Qqqzx” there. Try a different spelling.
+
+Citizenship
+—
+
+You’re a citizen of the country you were born in, so there’s nothing to pick. Change your place of birth and this changes with it.
+
+You’ll be 24 when you start.
+Choose the town or city you were born in.
+Back
+Continue
+
+=========== Creation, Identity, filled
+🎬
+SLOT 1
+Who Are You Going To Be?
+
+SLATE is a life simulator. Here you create the actress you’ll play.
+
+Cancel
+Identity
+Dispositions & Traits
+Genres & Background
+Starting Point
+Review
+Identity
+
+Your legal name is the one on your documents. What people call you can be different.
+
+Upload Custom Photo
+Tap here, or drop one in.
+Choose File
+
+Any size or shape works. SLATE crops it to a headshot and keeps a small copy in the save. It’s only for show: the game never looks at what’s in it.
+
+First Name
+Middle Name (Optional)
+Last Name
+Preferred Name
+
+What people actually call you day to day.
+
+Pronouns
+She/Her
+He/Him
+They/Them
+Billed As
+Actress
+
+Your pronouns decide this, so there’s nothing to pick. Change your pronouns and it changes too.
+
+Race Or Ethnicity (Optional)
+American Indian Or Alaska Native
+Asian
+Black Or African
+Hispanic Or Latino
+Middle Eastern Or North African
+Native Hawaiian Or Pacific Islander
+White
+Another Race Or Ethnicity
+
+Choose as many as are true. It’s part of who your character is and nothing more: it changes no ability, nothing in the game uses it, and the game never guesses it from a name or a country. Leave it blank if you’d rather not say.
+
+Year Of Birth
+Month
+January
+Day
+Place Of Birth
+
+Where you’re from, which isn’t always where you live now. It’s what you tell people when they ask, and it decides your citizenship.
+
+Pick a country on the map, or find it in the list below.
+
+Hide Map
+United States · 17,342 places
+Zoom In
+
+Manchester is marked. Outlines from Natural Earth 110m via world-atlas. Public domain. Countries too small to draw at this scale are still in the list below.
+
+Country
+
+17,342 towns and cities on record.
+
+State Or Region
+Anywhere In The United States
+Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+District of Columbia
+Florida
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+
+51 to choose from.
+
+Town Or City
+Manchester
+New Hampshire · 110,229 people
+Manchester
+Connecticut · 30,577 people
+Manchester
+Missouri · 18,229 people
+Manchester
+Tennessee · 10,517 people
+North Manchester
+Indiana · 5,971 people
+Manchester
+Washington · 5,413 people
+Manchester
+Maryland · 5,408 people
+Manchester-by-the-Sea
+Massachusetts · 5,366 people
+Manchester
+Iowa · 5,073 people
+Manchester
+Georgia · 4,095 people
+Manchester
+Pennsylvania · 2,753 people
+Manchester
+Maine · 2,563 people
+Manchester
+Michigan · 2,143 people
+Manchester Center
+Vermont · 2,120 people
+Manchester
+Ohio · 2,048 people
+Manchester
+Ohio · 1,976 people
+Manchester
+New York · 1,661 people
+Manchester
+Kentucky · 1,401 people
+Manchester
+Wisconsin · 1,020 people
+Citizenship
+
+You’re a citizen of the country you were born in, so there’s nothing to pick. Change your place of birth and this changes with it.
+
+You’ll be 24 when you start.
+Back
+Continue
+
+=========== Creation, Dispositions & Traits
+🎬
+SLOT 1
+Who Are You Going To Be?
+
+SLATE is a life simulator. Here you create the actress you’ll play.
+
+Cancel
+Identity
+Dispositions & Traits
+Genres & Background
+Starting Point
+Review
+Dispositions
+
+Your temperament, not your talent. Each one changes a part of your life:
+
+Emotional Stability: how fast stress builds and clears, and how much Composure you start with.
+Conscientiousness: how well you sleep, and how much Discipline you start with.
+Ambition: how fast stress builds, from work and from money alike.
+Risk Tolerance: above 65, your card’s autopay starts out paying only the minimum, so you carry a balance.
+Extraversion: whether performing in front of people, an audience or your class, raises your stress or eases it.
+Openness: whether rehearsing new work, a festival’s new play or a Cabaret piece, lifts your morale or lowers it.
+Agreeableness: whether a day of rehearsal lifts your morale or lowers it.
+
+Apart from your starting Composure and Discipline, none of these makes you a better or worse actor. Composure is one of the abilities your performances are judged on.
+
+Openness
+55
+Conventional
+Experimental
+Conscientiousness
+55
+Loose
+Meticulous
+Extraversion
+55
+Reserved
+Outgoing
+Agreeableness
+55
+Blunt
+Accommodating
+Emotional Stability
+55
+Volatile
+Steady
+Ambition
+60
+Content
+Driven
+Risk Tolerance
+50
+Cautious
+Reckless
+Traits
+
+Pick up to four. Traits come in opposing pairs, and you can’t have both of a pair. Between them, they change:
+
+how fast stress builds and clears;
+how well you sleep, and how much a night restores;
+how soon you need a shower;
+how far your morale swings;
+how hard an illness hits;
+how sharp you are in the morning or the evening;
+which part of preparing a scene goes furthest;
+how you warm to classmates, and how much a slight from one hurts;
+and, for Frugal, Spender and Generous, what your food costs and how much a meal lifts you.
+
+A trait’s description and cost describe the whole person, but the game uses only the effects above. Once you’re playing, open a trait on your Player Profile to see exactly what it changes.
+
+0 / 4
+TEMPERAMENT
+Even Tempered
+Very little gets through. Bad news lands on you the same way good news does.
+People read the calm as not caring, and drift away from it.
+Quick Tempered
+It comes up fast and it’s gone just as fast, which isn’t much comfort to whoever was standing there.
+Stress arrives quicker and relationships wear.
+Highly Strung
+You feel everything at full volume. It’s exhausting, and it’s where the work comes from.
+Stress builds fast and sleep is the first thing to go.
+Unshakeable
+Whatever happens, you’re the one still thinking clearly twenty minutes later.
+You’re slow to notice something is genuinely wrong, including with you.
+Sentimental
+Birthdays, first drafts, the people who were there at the start. You keep all of it.
+Endings go badly, and you hold on well past the point of any use.
+Detached
+You can put a thing down and walk away from it, including people.
+Everything you have drifts unless you tend it: a classmate comes closer more slowly.
+HABITS
+Early Riser
+Up before anybody wants you, and the best hours of your day are over by ten.
+An evening call finds you flat: rehearsals and performances get less of you.
+Night Owl
+The good hours start after midnight, and none of them are before noon.
+Every morning class is a fight with yourself, and you sleep badly.
+Orderly
+Everything has a place and you notice immediately when it isn’t in it.
+Disorder costs you more than it costs other people.
+Chaotic
+The mess is genuinely invisible to you, and it never weighs on you.
+It shows on you sooner.
+Homebody
+Your own bed is where you recover, and it puts more back than most.
+A full room does less for you: friends in a cast lift you less.
+Restless
+Stillness is beyond you, and a room full of people is where you come alive.
+You don’t rest properly, and a cast without a friend in it weighs on you.
+BODY
+Disciplined
+The training, the sleeping, the eating: all of it belongs to a person who means to still be working at sixty.
+The hours it takes are hours you aren’t spending on anybody.
+Indulgent
+Late food, late nights, and the firm belief you’ll deal with it later.
+You’ll deal with it later, and it will cost more then.
+Resilient
+Illness, injury, a bad year: all of it clears faster in you than in the people around you.
+None. This one is simply luck.
+Burns Out
+You can go very hard for a long time and then you can’t go at all.
+The crash is real, and it always arrives at the worst moment.
+Light Sleeper
+A door, a car, a thought. Anything wakes you and then that’s the night gone.
+You’re never quite rested, and it accumulates.
+Sleeps Anywhere
+Floors, chairs, the twenty minutes between two things. You take it where you find it.
+None. Like Resilient, it’s simply luck.
+MONEY
+Frugal
+You know what everything costs, and the day’s food costs you less.
+The cheap version every time: a meal does less for your morale.
+Spender
+Money is for turning into things, and a good meal lifts you more than most.
+It goes out faster than it comes in, and it always has.
+Generous
+You pick up the check, you lend it and you don’t chase it.
+People remember it fondly and you’re poorer for it.
+Keeps Accounts
+What you’re owed and by whom, down to the coffee, stays remembered.
+So does everybody else, about you: a slight cuts deeper both ways.
+PEOPLE
+Loyal
+The people who were there at the start are still there, and always will be.
+You stay long after you should have gone, and it wears on you.
+Independent
+You don’t need the room, the company or the reassurance. You’re fine.
+Nobody is quite sure they matter to you, and eventually they stop trying.
+Needs People
+You’re better with somebody in the room. You always have been.
+Alone, you come apart quietly and quickly.
+Guarded
+It takes a long time to get anywhere with you, and almost nobody has.
+The few who did are load-bearing, and there aren’t many of them.
+An Open Book
+You say the thing. People know where they are with you within about a minute.
+Keeping a thing to yourself has never once happened.
+Peacemaker
+You can feel a room going wrong before it does and you get in front of it.
+You absorb the trouble and then carry it around all day.
+Holds Grudges
+Exactly what was said, by whom, and in what year: it’s all still there.
+It costs you people, slowly, over a very long time.
+Forgiving
+It goes, genuinely, and the next conversation starts from nothing.
+You let the same thing happen twice, and carry it both times.
+MIND
+Curious
+The thing nobody asked you to read gets read, and you go deeper into how to play a part.
+It isn’t useful now, and now is when the work is due.
+Single Minded
+One thing at a time, all the way to the bottom of it: lines drilled until they’re yours.
+Everything else does exist, and it piles up while you’re down there.
+Scattered
+Six things at once, all of them moving: you get around a scene fast.
+Most of them, anyway: something is always the one you dropped.
+Self Critical
+You’re the harshest critic you’ll ever have, and a revision is better for it.
+It isn’t free. It comes out of you.
+Self Assured
+What you can do is settled, and nobody has ever needed to confirm it for you.
+You’re the last to hear that something isn’t working.
+Back
+Continue
+
+=========== Creation, Genres & Background
+🎬
+SLOT 1
+Who Are You Going To Be?
+
+SLATE is a life simulator. Here you create the actress you’ll play.
+
+Cancel
+Identity
+Dispositions & Traits
+Genres & Background
+Starting Point
+Review
+Genres
+
+The films you love: pick as many as are true. Rehearsing or performing a play in a genre you love, a comedy or a tragedy, lifts your morale and eases your stress, though it doesn’t make you any better at it. A genre marked · has no plays here, so it’s only shown on your Player Profile.
+
+0 Chosen
+Select All
+Absurdist
+·
+Action
+·
+Action Comedy
+·
+Adventure
+·
+Alternate History
+·
+Animated
+·
+Anime
+·
+Anthology
+·
+Apocalyptic
+·
+Art House
+·
+Avant-Garde
+·
+Backstage Musical
+·
+Biker
+·
+Biographical
+·
+Black Comedy
+·
+Blaxploitation
+·
+Body Horror
+·
+Buddy Comedy
+·
+Buddy Cop
+·
+Caper
+·
+Chanbara
+·
+Chase
+·
+Children’s
+·
+Christmas
+·
+Comedy
+Coming Of Age
+Concert Film
+·
+Conspiracy Thriller
+·
+Cosmic Horror
+·
+Costume Drama
+·
+Courtroom Drama
+·
+Creature Feature
+·
+Crime
+·
+Cyberpunk
+·
+Dance
+·
+Dark Fantasy
+·
+Detective
+·
+Disaster
+·
+Docudrama
+·
+Docufiction
+·
+Documentary
+·
+Domestic Drama
+Drama
+Dystopian
+·
+Eco-Horror
+·
+Epic
+·
+Erotic Thriller
+·
+Espionage
+·
+Experimental
+·
+Exploitation
+·
+Fairy Tale
+Family
+·
+Fantasy
+·
+Farce
+Film Noir
+·
+Folk Horror
+·
+Found Footage
+·
+Gangster
+·
+Giallo
+·
+Gothic Horror
+·
+Grindhouse
+·
+Hangout
+·
+Heist
+·
+Historical Drama
+Historical Fiction
+·
+Holiday
+·
+Hood Film
+·
+Horror
+·
+Horror Comedy
+·
+Isekai
+·
+Jidaigeki
+·
+Jukebox Musical
+·
+Kaiju
+·
+Kitchen Sink Drama
+·
+Legal Drama
+·
+Magical Realism
+·
+Martial Arts
+·
+Medical Drama
+·
+Melodrama
+·
+Military
+·
+Mockumentary
+·
+Monster Movie
+·
+Mumblecore
+·
+Musical
+·
+Mystery
+Nature Documentary
+·
+Neo-Noir
+·
+Neorealism
+·
+New Wave
+·
+Nordic Noir
+·
+Occult
+·
+Parody
+·
+Period Drama
+·
+Picaresque
+·
+Police Procedural
+·
+Political Drama
+Political Thriller
+·
+Post-Apocalyptic
+·
+Prison Film
+·
+Psychological Horror
+·
+Psychological Thriller
+·
+Queer Cinema
+·
+Revenge
+·
+Road Movie
+·
+Rockumentary
+·
+Romance
+Romantic Comedy
+Romantic Drama
+Samurai
+·
+Satire
+Science Fantasy
+·
+Science Fiction
+·
+Screwball Comedy
+·
+Sea Adventure
+·
+Silent Film
+·
+Slapstick
+·
+Slasher
+·
+Slice Of Life
+·
+Social Realism
+Space Opera
+·
+Spaghetti Western
+·
+Splatter
+·
+Sports
+·
+Spy
+·
+Steampunk
+·
+Stoner Comedy
+·
+Superhero
+·
+Supernatural
+Surrealist
+·
+Survival
+·
+Swashbuckler
+·
+Sword And Sandal
+·
+Sword And Sorcery
+·
+Techno-Thriller
+·
+Teen
+·
+Thriller
+·
+Time Travel
+·
+Tokusatsu
+·
+Tragedy
+Tragicomedy
+True Crime
+·
+Vampire
+·
+War
+·
+Werewolf
+·
+Western
+·
+Whodunit
+·
+Wuxia
+·
+Yakuza
+·
+Zombie
+·
+Background
+
+Who you were before you arrived.
+
+In Your Own Words
+Your Family
+
+The family you come from decides the money in your name on the first morning, and whether Yale finds that you need aid.
+
+The Family You Come From
+Next To Nothing
+Scraping By
+Modest
+Comfortable
+Wealthy
+Inherited Wealth
+
+Money isn’t the constraint. Time and access are. You start with $92,391 in checking and $413,043 in savings, and a card with a $65,217 limit and nothing owed on it.
+
+Yale finds that you don’t need aid, given your family’s means, so there’s no aid for living costs. The term’s Yale Health plan, $1,882.00, comes out of your bank each fall and spring.
+
+Back
+Continue
+
+=========== Creation, Starting Point
+🎬
+SLOT 1
+Who Are You Going To Be?
+
+SLATE is a life simulator. Here you create the actress you’ll play.
+
+Cancel
+Identity
+Dispositions & Traits
+Genres & Background
+Starting Point
+Review
+Your Body
+
+Your height and weight on the first morning. In feet, inches and pounds, the units of the United States, where you live.
+
+Height (Feet)
+Inches
+Weight (Pounds)
+
+Leave them blank and SLATE picks them at random, around the averages where you were born. Once you’re playing, your weight changes with what you eat and how active you are. A heavier body is more likely to develop diabetes, high blood pressure and arthritis over the years, at published rates, and a weight far from the middle either way makes a long life less likely.
+
+Where It Begins
+
+You’re a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, one of 16 actors admitted this year: among the strongest of them, but not ahead of everyone.
+
+You arrive in New Haven on August 24, 2026, the first day of the fall term. Tuition is covered, as it is for every student.
+
+POPULATION
+130K
+TIME ZONE
+EDT
+America/New_York
+COST OF LIVING
+127
+A hundred is the United States’ price level
+Your Money
+
+The money in your own name on the first morning.
+
+Your money is kept in the currency where you start, the dollar (USD), and stays in it wherever you go. Exchange rates are estimated, not live market rates.
+
+Your Bank
+Chase
+Wells Fargo
+Bank of America
+Citi
+Capital One
+
+Chase Total Checking, $15 a month unless waived. Chase Savings, 0.01% a year.
+
+CHECKING
+$92,391
+SAVINGS
+$413,043
+CREDIT RECORD
+795
+CREDIT CARD
+$65,217 Limit
+Each fall and spring, $1,882.00 comes out of your bank for that term’s Yale Health plan, and there’s no aid for living costs.
+Before Yale
+
+If you lived outside America just before Yale, say where, and whether you kept a bank account there. A bank keeps an account open only for a customer who lived and banked in its country. Being born there doesn’t count.
+
+I Lived Where I Was Born
+Where You Lived
+Country
+
+17,342 towns and cities on record.
+
+State Or Region
+Anywhere In The United States
+Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+District of Columbia
+Florida
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+
+51 to choose from.
+
+Town Or City
+New York
+New York · 8,300,000 people
+Los Angeles
+California · 3,900,000 people
+Brooklyn
+New York · 2,736,074 people
+Chicago
+Illinois · 2,700,000 people
+Queens
+New York · 2,316,841 people
+Houston
+Texas · 2,314,157 people
+Phoenix
+Arizona · 1,650,000 people
+Philadelphia
+Pennsylvania · 1,573,916 people
+San Antonio
+Texas · 1,526,656 people
+Manhattan
+New York · 1,487,536 people
+The Bronx
+New York · 1,385,108 people
+San Diego
+California · 1,380,000 people
+Dallas
+Texas · 1,300,000 people
+Jacksonville
+Florida · 1,009,833 people
+Fort Worth
+Texas · 1,008,106 people
+San Jose
+California · 997,368 people
+Austin
+Texas · 970,000 people
+Columbus
+Ohio · 913,175 people
+Charlotte
+North Carolina · 911,311 people
+Indianapolis
+Indiana · 887,642 people
+San Francisco
+California · 810,000 people
+Seattle
+Washington · 750,000 people
+Denver
+Colorado · 715,000 people
+Nashville
+Tennessee · 690,000 people
+Washington
+District of Columbia · 689,545 people
+Oklahoma City
+Oklahoma · 681,054 people
+El Paso
+Texas · 678,815 people
+Las Vegas
+Nevada · 660,000 people
+Boston
+Massachusetts · 650,000 people
+Detroit
+Michigan · 645,705 people
+New South Memphis
+Tennessee · 641,608 people
+Portland
+Oregon · 640,000 people
+Memphis
+Tennessee · 633,104 people
+Louisville
+Kentucky · 624,444 people
+Baltimore
+Maryland · 585,708 people
+South Boston
+Massachusetts · 571,281 people
+Albuquerque
+New Mexico · 564,559 people
+Milwaukee
+Wisconsin · 563,531 people
+Tucson
+Arizona · 542,629 people
+Fresno
+California · 542,107 people
+Sacramento
+California · 524,943 people
+Atlanta
+Georgia · 500,000 people
+Omaha
+Nebraska · 486,051 people
+Raleigh
+North Carolina · 482,295 people
+Kansas City
+Missouri · 475,378 people
+Long Beach
+California · 474,140 people
+Mesa
+Arizona · 471,825 people
+Staten Island
+New York · 468,730 people
+Colorado Springs
+Colorado · 456,568 people
+Virginia Beach
+Virginia · 454,808 people
+Miami
+Florida · 450,000 people
+Oakland
+California · 419,267 people
+Tampa
+Florida · 414,547 people
+Tulsa
+Oklahoma · 413,066 people
+Minneapolis
+Minnesota · 410,939 people
+Wichita
+Kansas · 396,119 people
+Arlington
+Texas · 388,125 people
+New Orleans
+Louisiana · 380,000 people
+Bakersfield
+California · 373,640 people
+Cleveland
+Ohio · 365,379 people
+
+17,282 more match. Keep typing to narrow it down.
+
+Back
+Continue
+
+=========== Creation, Starting Point, Before Yale with an account kept
+🎬
+SLOT 1
+Who Are You Going To Be?
+
+SLATE is a life simulator. Here you create the actress you’ll play.
+
+Cancel
+Identity
+Dispositions & Traits
+Genres & Background
+Starting Point
+Review
+Your Body
+
+Your height and weight on the first morning. In feet, inches and pounds, the units of the United States, where you live.
+
+Height (Feet)
+Inches
+Weight (Pounds)
+
+Leave them blank and SLATE picks them at random, around the averages where you were born. Once you’re playing, your weight changes with what you eat and how active you are. A heavier body is more likely to develop diabetes, high blood pressure and arthritis over the years, at published rates, and a weight far from the middle either way makes a long life less likely.
+
+Where It Begins
+
+You’re a first-year in the MFA in Acting at the David Geffen School of Drama at Yale University, one of 16 actors admitted this year: among the strongest of them, but not ahead of everyone.
+
+You arrive in New Haven on August 24, 2026, the first day of the fall term. Tuition is covered, as it is for every student.
+
+POPULATION
+130K
+TIME ZONE
+EDT
+America/New_York
+COST OF LIVING
+127
+A hundred is the United States’ price level
+Your Money
+
+The money in your own name on the first morning.
+
+Your money is kept in the currency where you start, the dollar (USD), and stays in it wherever you go. Exchange rates are estimated, not live market rates.
+
+Your Bank
+Chase
+Wells Fargo
+Bank of America
+Citi
+Capital One
+
+Chase Total Checking, $15 a month unless waived. Chase Savings, 0.01% a year.
+
+CHECKING
+$92,391
+SAVINGS
+$413,043
+CREDIT RECORD
+795
+CREDIT CARD
+$65,217 Limit
+Each fall and spring, $1,882.00 comes out of your bank for that term’s Yale Health plan, and there’s no aid for living costs.
+Before Yale
+
+If you lived outside America just before Yale, say where, and whether you kept a bank account there. A bank keeps an account open only for a customer who lived and banked in its country. Being born there doesn’t count.
+
+I Lived Where I Was Born
+Where You Lived
+Country
+
+17,342 towns and cities on record.
+
+State Or Region
+Anywhere In The United States
+Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+District of Columbia
+Florida
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+
+51 to choose from.
+
+Town Or City
+New York
+New York · 8,300,000 people
+Los Angeles
+California · 3,900,000 people
+Brooklyn
+New York · 2,736,074 people
+Chicago
+Illinois · 2,700,000 people
+Queens
+New York · 2,316,841 people
+Houston
+Texas · 2,314,157 people
+Phoenix
+Arizona · 1,650,000 people
+Philadelphia
+Pennsylvania · 1,573,916 people
+San Antonio
+Texas · 1,526,656 people
+Manhattan
+New York · 1,487,536 people
+The Bronx
+New York · 1,385,108 people
+San Diego
+California · 1,380,000 people
+Dallas
+Texas · 1,300,000 people
+Jacksonville
+Florida · 1,009,833 people
+Fort Worth
+Texas · 1,008,106 people
+San Jose
+California · 997,368 people
+Austin
+Texas · 970,000 people
+Columbus
+Ohio · 913,175 people
+Charlotte
+North Carolina · 911,311 people
+Indianapolis
+Indiana · 887,642 people
+San Francisco
+California · 810,000 people
+Seattle
+Washington · 750,000 people
+Denver
+Colorado · 715,000 people
+Nashville
+Tennessee · 690,000 people
+Washington
+District of Columbia · 689,545 people
+Oklahoma City
+Oklahoma · 681,054 people
+El Paso
+Texas · 678,815 people
+Las Vegas
+Nevada · 660,000 people
+Boston
+Massachusetts · 650,000 people
+Detroit
+Michigan · 645,705 people
+New South Memphis
+Tennessee · 641,608 people
+Portland
+Oregon · 640,000 people
+Memphis
+Tennessee · 633,104 people
+Louisville
+Kentucky · 624,444 people
+Baltimore
+Maryland · 585,708 people
+South Boston
+Massachusetts · 571,281 people
+Albuquerque
+New Mexico · 564,559 people
+Milwaukee
+Wisconsin · 563,531 people
+Tucson
+Arizona · 542,629 people
+Fresno
+California · 542,107 people
+Sacramento
+California · 524,943 people
+Atlanta
+Georgia · 500,000 people
+Omaha
+Nebraska · 486,051 people
+Raleigh
+North Carolina · 482,295 people
+Kansas City
+Missouri · 475,378 people
+Long Beach
+California · 474,140 people
+Mesa
+Arizona · 471,825 people
+Staten Island
+New York · 468,730 people
+Colorado Springs
+Colorado · 456,568 people
+Virginia Beach
+Virginia · 454,808 people
+Miami
+Florida · 450,000 people
+Oakland
+California · 419,267 people
+Tampa
+Florida · 414,547 people
+Tulsa
+Oklahoma · 413,066 people
+Minneapolis
+Minnesota · 410,939 people
+Wichita
+Kansas · 396,119 people
+Arlington
+Texas · 388,125 people
+New Orleans
+Louisiana · 380,000 people
+Bakersfield
+California · 373,640 people
+Cleveland
+Ohio · 365,379 people
+
+17,282 more match. Keep typing to narrow it down.
+
+Since
+January
+Year
+Clear
+
+Manchester, New Hampshire, United States, from June 2002 to the day you arrive.
+
+You lived in America before Yale, so your account is the one here.
+
+Back
+Continue
+
+=========== Creation, Review
+🎬
+SLOT 1
+Who Are You Going To Be?
+
+SLATE is a life simulator. Here you create the actress you’ll play.
+
+Cancel
+Identity
+Dispositions & Traits
+Genres & Background
+Starting Point
+Review
+READY TO BEGIN
+Ada Cole
+
+24 · Actress · New Haven
+
+IDENTITY
+Legal Name
+Ada Cole
+Pronouns
+She/Her
+Billed As
+Actress
+Race Or Ethnicity
+—
+Born
+June 14, 2002
+Place Of Birth
+Manchester, United States
+Citizenship
+STARTING POINT
+School
+MFA in Acting, class of 2029
+Where You Live
+New Haven, United States
+Bank
+Chase
+Checking
+$92,391
+Savings
+$413,043
+Before Yale
+Manchester, United States, since June 2002
+Credit Record
+795
+Card
+$65,217 limit, nothing owed
+Food Each Month
+$304
+DISPOSITIONS & TRAITS
+Openness
+55/100
+Conscientiousness
+55/100
+Extraversion
+55/100
+Agreeableness
+55/100
+Emotional Stability
+55/100
+Ambition
+60/100
+Risk Tolerance
+50/100
+
+You haven’t picked any traits. That’s fine: the dispositions above still shape your stress, your sleep, your morale and your card.
+
+GENRES & BACKGROUND
+Genres
+—
+Family
+Wealthy, No Need Found
+In Your Own Words
+—
+THE GUIDE
+Guide Me Through It. The game opens a part at a time, each with a short chapter of the guide that explains it. Recommended if you’re new.
+I Know SLATE. Everything is open from the start. The guide’s chapters and How This Works are there whenever you want them.
+Your life starts with the clock paused. Once you press Play, a minute passes in the game for every real minute, and the clock pauses itself at each commitment to ask what you want to do.
+Back
+Begin
+
+=========== First Home, guided
+--- dialogs:
+Guide
+✕
+1
+Your Life, Hour By Hour
+Next
+2
+What’s Coming
+Later
+3
+The Clock
+Later
+4
+Moving Time On
+Later
+5
+What Needs You
+Later
+6
+How You Are
+Later
+7
+Sleep
+Later
+8
+Looking After Yourself
+Later
+9
+Your Own Plans
+Later
+10
+Weather
+Later
+11
+Drama School
+Later
+12
+You As An Actor
+Later
+13
+Cover, Benefits And Returns
+Later
+14
+Passports And ID
+Later
+15
+Money
+Later
+16
+Your Bank
+Later
+17
+A Whole Life
+Later
+CHAPTER 1 OF 17
+Your Life, Hour By Hour
+
+How SLATE works, and how to read Home.
+
+In SLATE you live one life, hour by hour, in a real town with its own time, seasons, weather, prices, money and laws. This guide shows you how, one part at a time, and each chapter you read opens the part of the game it explains.
+
+You start on Home. The line under the greeting shows the time, the town, its time zone, the season and the weather. Where You Are, further down, tells you more about the town.
+
+Underlined words are links: press one to see more. Press the town’s name and its details open just below, with more links inside for its region, its country and its money. The date, the season and the daylight work the same way.
+
+Some words only become links once you’ve read the guide chapter that covers them. A panel you can’t use yet says Locked and names the chapter to read. Press its Read About It button to go straight there.
+
+When you’ve read a chapter, press I’ve Read It at its foot to open what it covers, listed under What It Opens. Then press Next, which names the chapter after it, to read on, or Try It to close the guide and use what just opened. Later closes the guide without opening anything, and the line at the top of the screen keeps a Read button for the next chapter.
+
+Once you’ve read its chapter, you can open each part of your life from Home and from the menu down the left. On a small screen, press Menu to see the menu.
+
+Each panel has a How This Works button that explains what the panel does and how it connects to the rest of the game. Press the ? key anywhere for the help’s contents, or the / key to search it. The clock waits while you read the help or this guide.
+
+Save & Exit, in the top bar, saves your life and takes you back to the save slots. Press Continue there to pick up at the same moment.
+
+A new life starts with the clock paused, so nothing happens until you’re ready. Read “What’s Coming” next to open the Calendar panel.
+
+WHAT IT OPENS
+Where You Are
+The date, the town, its region and country, its money, the season and the daylight, when you press them
+Later
+I’ve Read It
+
+=========== The guide, as it opens
+--- dialogs:
+Guide
+✕
+1
+Your Life, Hour By Hour
+Next
+2
+What’s Coming
+Later
+3
+The Clock
+Later
+4
+Moving Time On
+Later
+5
+What Needs You
+Later
+6
+How You Are
+Later
+7
+Sleep
+Later
+8
+Looking After Yourself
+Later
+9
+Your Own Plans
+Later
+10
+Weather
+Later
+11
+Drama School
+Later
+12
+You As An Actor
+Later
+13
+Cover, Benefits And Returns
+Later
+14
+Passports And ID
+Later
+15
+Money
+Later
+16
+Your Bank
+Later
+17
+A Whole Life
+Later
+CHAPTER 1 OF 17
+Your Life, Hour By Hour
+
+How SLATE works, and how to read Home.
+
+In SLATE you live one life, hour by hour, in a real town with its own time, seasons, weather, prices, money and laws. This guide shows you how, one part at a time, and each chapter you read opens the part of the game it explains.
+
+You start on Home. The line under the greeting shows the time, the town, its time zone, the season and the weather. Where You Are, further down, tells you more about the town.
+
+Underlined words are links: press one to see more. Press the town’s name and its details open just below, with more links inside for its region, its country and its money. The date, the season and the daylight work the same way.
+
+Some words only become links once you’ve read the guide chapter that covers them. A panel you can’t use yet says Locked and names the chapter to read. Press its Read About It button to go straight there.
+
+When you’ve read a chapter, press I’ve Read It at its foot to open what it covers, listed under What It Opens. Then press Next, which names the chapter after it, to read on, or Try It to close the guide and use what just opened. Later closes the guide without opening anything, and the line at the top of the screen keeps a Read button for the next chapter.
+
+Once you’ve read its chapter, you can open each part of your life from Home and from the menu down the left. On a small screen, press Menu to see the menu.
+
+Each panel has a How This Works button that explains what the panel does and how it connects to the rest of the game. Press the ? key anywhere for the help’s contents, or the / key to search it. The clock waits while you read the help or this guide.
+
+Save & Exit, in the top bar, saves your life and takes you back to the save slots. Press Continue there to pick up at the same moment.
+
+A new life starts with the clock paused, so nothing happens until you’re ready. Read “What’s Coming” next to open the Calendar panel.
+
+WHAT IT OPENS
+Where You Are
+The date, the town, its region and country, its money, the season and the daylight, when you press them
+Later
+I’ve Read It
+
+=========== First Home, guide closed
+Skip To Content
+Menu
+🎬
+7:30 AM
+·
+August 24, 2026
+Play
+LOCKED
+Sleep
+LOCKED
+Look After Yourself
+▾
+LOCKED
+Advance
+▾
+LOCKED
+Guide (17 Left)
+Saved
+Save & Exit
+GUIDE · 1 OF 17 Your Life, Hour By Hour
+Read
+MONDAY, AUGUST 24, 2026 · ACTRESS
+Good Morning, Ada.
+
+7:30 AM in New Haven · EDT · Summer · ⛅ 68°F Partly Cloudy
+
+Calendar
+LOCKED
+
+This opens when you read “What’s Coming” in the guide: what’s coming up, and what to do when the clock stops for it.
+
+Read About It
+What Needs You
+LOCKED
+
+This opens when you read “What Needs You” in the guide: what happened while you weren’t looking, and what’s waiting on you.
+
+Read About It
+How You Are
+LOCKED
+
+This opens when you read “How You Are” in the guide: energy, stress, readiness, and the rest of your wellbeing.
+
+Read About It
+Where You Are
+LOCKED
+
+This opens when you read “Your Life, Hour By Hour” in the guide: how SLATE works, and how to read Home.
+
+Read About It
+Weather
+LOCKED
+
+This opens when you read “Weather” in the guide: the weather in your town, today and the days ahead.
+
+Read About It
+Your Affairs
+How This Works
+Money
+LOCKED
+
+This opens when you read “Money” in the guide: everything you have and owe, at a glance.
+
+Read About It
+School
+LOCKED
+
+This opens when you read “Drama School” in the guide: classes, coursework, casting and your degree at Yale.
+
+Read About It
+Papers
+LOCKED
+
+This opens when you read “Cover, Benefits And Returns” in the guide: health cover, benefits, pensions and tax returns.
+
+Read About It
+
+=========== First Home, Advance pressed
+--- dialogs:
+Guide
+✕
+1
+Your Life, Hour By Hour
+Next
+2
+What’s Coming
+Later
+3
+The Clock
+Later
+4
+Moving Time On
+Later
+5
+What Needs You
+Later
+6
+How You Are
+Later
+7
+Sleep
+Later
+8
+Looking After Yourself
+Later
+9
+Your Own Plans
+Later
+10
+Weather
+Later
+11
+Drama School
+Later
+12
+You As An Actor
+Later
+13
+Cover, Benefits And Returns
+Later
+14
+Passports And ID
+Later
+15
+Money
+Later
+16
+Your Bank
+Later
+17
+A Whole Life
+Later
+This chapter opens what you pressed. The chapters open in order, so read “Your Life, Hour By Hour” first.
+CHAPTER 4 OF 17
+Moving Time On
+
+Jumping ahead, and what happens on the way.
+
+To jump ahead instead of waiting, press Advance in the top bar and choose how far: One Hour, This Evening (6 p.m.), Tonight (10 p.m.), Tomorrow Morning (7 a.m.), Next Event, Next Monday (9 a.m.) or One Week. Choose An Event opens Skip To Event: pick one of the next fourteen things on your calendar and press Skip To with its name.
+
+Everything on the way happens, in order. If the jump would pass any commitments, a dialog called On The Way first says how many: press Advance there to go on, or Cancel to stay where you are. The clock still stops at each commitment to ask what you want to do.
+
+Time only moves forward, so you can’t undo a jump.
+
+Read “What Needs You” next: it’s where you find out what happened.
+
+The Details
+WHAT IT OPENS
+Advance
+Choose An Event
+Close
+Next Unread: Your Life, Hour By Hour

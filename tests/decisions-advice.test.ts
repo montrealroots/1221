@@ -303,7 +303,8 @@ describe('L1: repeated advice, for a player who ignores it and one who follows i
       // What it says, worked from the records: since when, its level then and now, and the pieces since that it held back.
       const since = (sim.player.work ?? []).filter((w) => w.at >= was.since);
       const held = since.filter((w) => w.limits.some((l) => l.what === first.target));
-      expect(first.standing).toContain(`It has led the advice on what to train since ${formatDate(was.since, sim.zone)}`);
+      // Named, not “it” (from 2026-10-20, brief 17): the card can put a preparation first, with this behind it.
+      expect(first.standing).toContain(`${first.label.charAt(0)}${first.label.slice(1).toLowerCase()} has led the advice on what to train since ${formatDate(was.since, sim.zone)}`);
       expect(first.standing).toContain(`Of the ${since.length} pieces you’ve done since, it held back ${held.length || 'none'}`);
       expect(first.standing).toContain(`You haven’t practiced ${EXERCISE_BY_ID[first.exercise!]!.label} since`);
       expect(first.next).toContain(`Next: ${EXERCISE_BY_ID[first.exercise!]!.label} at the`);
@@ -527,12 +528,12 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(Math.abs(taped - exact(trainingForecast(sim, sim.player, sim.player.work, [first.target], true).get(first.target)))).toBeLessThan(1e-9);
     // Played, not assumed: here reading the cold take as taped would say less.
     expect(taped).toBeLessThan(exact(first.forecast));
-    expect(first.assumes).toContain(`What the forecast assumes of your last ${byRecords.pieces} pieces: `);
+    expect(first.assumes).toContain(`Of your last ${byRecords.pieces} pieces, `);
     // The pieces are every kind of work judged, so the piece read as prepared is said to have been underprepared, not
     // taped so (from 2026-10-19, brief 15).
     expect(first.assumes).toContain(`${byRecords.prepared.length} was underprepared but is counted as fully prepared.`);
     expect(first.assumes).toContain(`In ${cold.what}, breaking down the text for your reading stood at 0%, learning the lines at 0% and rehearsal on your feet at 0% of the way to complete.`);
-    expect(first.assumes).toContain(`The forecast counts that piece as fully prepared, since its own preparation held it back most. Counted as it was, ${ADVICE.sessions} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} a piece, not ${exact(first.forecast).toFixed(2)}.`);
+    expect(first.assumes).toContain(`The forecast counts that piece as fully prepared, since its own preparation held it back most. Counted as it was, ${ADVICE.sessions} hours of ${first.label.toLowerCase()} would be worth about ${taped.toFixed(2)} points a piece, not ${exact(first.forecast).toFixed(2)}.`);
     expect(first.assumes).toContain(`Each genre is counted as you know it today: of the ${byRecords.genreCount} pieces’ genres, ${byRecords.genreShort} are short of complete and ${byRecords.genreBetter} ${byRecords.genreBetter === 1 ? 'is' : 'are'} known better than when you taped them.`);
     // F1: what completing that preparation would bring, the judge's replay worked from the records, said apart.
     const prep = preparationByRecords(sim);
@@ -584,7 +585,11 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     expect(att.verdict).toBe(byRecords.verdict);
     // Played, not assumed: a take taped cold and genres short, and training worth more than a tenth: both.
     expect(att.verdict).toBe('both');
-    const prepWords = `coming to your recent work fully prepared would have added about ${att.preparation.toFixed(2)} a piece as you are now (${att.own.toFixed(2)} from each piece’s own preparation, ${att.genre.toFixed(2)} from knowing its genre in full)`;
+    // In points a piece, its two parts where both have some (from 2026-10-20, brief 17): until then “about 25.88 a piece …
+    // (25.88 from each piece’s own preparation, 0.00 from knowing its genre in full)”.
+    const n2 = (x: number) => x.toFixed(2);
+    const parts = n2(att.genre) === '0.00' ? 'all of it from each piece’s own preparation' : n2(att.own) === '0.00' ? 'all of it from knowing its genre in full' : `${n2(att.own)} from each piece’s own preparation, ${n2(att.genre)} from knowing its genre in full`;
+    const prepWords = `coming to your recent work fully prepared would have added about ${n2(att.preparation)} points a piece as you are now (${parts})`;
     expect(first.attention).toContain(prepWords);
     expect(first.attention).toContain(`${ADVICE.sessions} hours of ${first.label.toLowerCase()} would add about ${exact(first.forecast).toFixed(2)}`);
     expect(first.attention!.startsWith(att.preparation > exact(first.forecast) ? 'Both preparation and training are worth your time now, preparation more: ' : 'Both training and preparation are worth your time now, training more: ')).toBe(true);
@@ -767,7 +772,7 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     zeroWhereUnmoved(sim, was.target, was.first, since.parts!, 'since it was first given');
     const first = recs.find((r) => r.forecast)!;
     expect(first.standing).toContain(`${PART_WORDS.genre}, ${signed4(since.parts!.genre!)}`);
-    expect(first.assumes).toContain(`What the forecast assumes of your last ${readWork(sim).length} pieces: `);
+    expect(first.assumes).toContain(`Of your last ${readWork(sim).length} pieces, `);
     expect(profileText(sim)).toContain(first.standing!);
     const again = clone(sim);
     expect(adviceFor(again, again.player)).toEqual(recs);
@@ -842,6 +847,20 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
     const stateless = adviceFor(f, f.player).find((r) => r.forecast)!;
     expect(stateless.standing).toContain('can’t be worked out');
     expect(changesOf(f, adviceFor(f, f.player)).filter((x) => x.unexplained).map((x) => x.since)).toEqual(['last']);
+  }, 240_000);
+
+  it('GUARD: S3 reads a standing that names its input, as one that took the lead from another says it (“Adaptability is still at 34”), at the level it says, and still finds one that says another', () => {
+    // From 2026-10-20: until then S3 read only “It’s still at 34”, and brief 17's final advice runs read 1,836 standings
+    // named this way as stale, every figure in them right. The standing is the engine's wording (`next-steps.ts`).
+    const { sim } = tuning('adv-t-19');
+    const recs = adviceFor(sim, sim.player);
+    expect(staleOf(sim, recs)).toEqual([]);
+    const first = recs.find((r) => r.forecast)!;
+    const name = `${first.label.charAt(0)}${first.label.slice(1).toLowerCase()}`;
+    const level = Math.round(levelOf(sim, sim.player, first.target as never) * 10) / 10;
+    const said = (at: number) => recs.map((r) => (r === first ? { ...r, standing: `${name} is still at ${at}, and its forecast is still ${exact(first.forecast).toFixed(2)} a piece.` } : r));
+    expect(staleOf(sim, said(level))).toEqual([]);
+    expect(staleOf(sim, said(level + 1))).toEqual([`S3: ${first.target}’s level now, ${level}, isn’t what the standing says`]);
   }, 240_000);
 
   it('PLAYER JOURNEY: the forecast’s growth is the progression model’s: on the first-named’s ladder it never rises with the level and falls below three quarters of full; the forecast is within (e)’s tolerance of what twenty sessions brought, read under its own assumptions', () => {

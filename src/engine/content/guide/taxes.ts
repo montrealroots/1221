@@ -169,7 +169,9 @@ export const TAXES: readonly GuideEntry[] = [
     available: `From the guide’s chapter “${CHAPTER}”. Each year’s return is ready on February 1 of the next year, if there’s one to file.`,
     short: `Your tax return settles a year’s income tax with the IRS and your state. The game prepares it for you each February 1 from what you earned, what was withheld and where you lived, and you send it with File It.\n\nFiled by the deadline, April 15 or the next business day (June 15 for a 1040-NR with no wages on it), it costs only the tax; filed late with tax owed, the IRS adds penalties and interest. A refund comes ${REFUND_WORDS}.`,
     steps: [
-      'Open Papers, then the Tax Returns tab. Each year has a panel headed with the year, showing Due and its date, or Filed once it’s in.',
+      // Until 2026-10-20 (brief 17, the papers editor's finding) this said the panel showed “Due and its date, or Filed”;
+      // the papers branch says a return past its day is late, and this says the day it's due, which both say.
+      'Open Papers, then the Tax Returns tab. Each year has a panel headed with the year, and under it the day the return is due, or the day it was filed once it’s in.',
       'Read its lines: your wages, interest and any scholarship for living costs, the tax on them and what was withheld. The last line says You Owe or Your Refund.',
       'Press File It, on the panel or on the year’s item in What Needs You. If the IRS has filed one for you, the button reads File Your Own In Its Place.',
       'To correct a year you’ve filed, press Amend The Return…, then File The Amendment. Not Now leaves it as it is.',
@@ -489,7 +491,7 @@ export const TAXES: readonly GuideEntry[] = [
       '“when collection reached that stage” or “because the payment plan requires one” says why it went on record.',
       `The line about its effect is in the authority’s own words. Connecticut’s says “${CT_LIEN.effect}” The IRS’s says it may limit your ability to get credit.`,
       'In the game, no credit record or bank reads a lien, so its status is all that changes.',
-      'On a lien filed for tax you owed, the panel says so instead of offering Ask For Its Withdrawal As Filed In Error: “It was filed for tax you owed, so it wasn’t filed in error. It’s released once that’s paid, not withdrawn.” Connecticut’s always does, because it takes a payment to its penalty and interest before its tax and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',
+      'On a lien filed for tax you owed, the panel says so instead of offering Ask For Its Withdrawal As Filed In Error: “It was filed for tax you owed, so it wasn’t filed in error, and it can’t be withdrawn.” Connecticut’s always does, because it takes a payment to its penalty and interest before its tax and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',
       `A student’s year never owes the IRS ${usd(FEDERAL_LIEN.threshold)}: a year of a living-cost scholarship and work-study owes it less than two thousand dollars. The IRS’s lien and its Form 12277 are for much bigger balances.`,
     ],
     next: [

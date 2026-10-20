@@ -179,10 +179,10 @@ describe('what a purchase moves, held to each bank’s own example', () => {
 describe('a choice the bank leaves to the customer', () => {
   it('is the player’s to make wherever the bank states no default: nothing is filled in, and the refusal names the choices', () => {
     const named: Record<string, string> = {
-      'fr-lcl': 'Choose what to round up to: €1.00, €5.00.',
+      'fr-lcl': 'Choose what to round up to: €1.00 or €5.00.',
       'ca-td': 'Choose the amount each purchase, C$0.50 to C$5.00.',
       'is-landsbankinn': 'Choose how it counts: rounded up, or a set amount.',
-      'us-citi': 'Choose how often it moves: daily, weekly.',
+      'us-citi': 'Choose how often it moves: daily or weekly.',
       'es-bankinter': 'Choose the amount: €1.00 or €2.00.',
     };
     for (const [bankId, rule] of Object.entries(ROUND_UPS)) {
@@ -409,10 +409,14 @@ describe('turning off, switching banks, and a save from before', () => {
     expect(counts(tdOpened, 12_34)).toBe(0);
     tdOpened.advanceTo(after(tdOpened, 6));
     expect(moves(tdOpened)).toEqual([]);
-    expect(tdOpened.player.roundUps).toMatchObject({ on: true, pending: 0, last: { notMoved: 50, why: 'Choose the amount each purchase, C$0.50 to C$5.00.' } });
+    // The reason the tally didn't move is said as one, after “because”, and the choice to make beside it (from 2026-10-20,
+    // brief 17): until then the reason was the refusal, so the panel read “…, because Choose the amount each purchase, C$0.50
+    // to C$5.00..”.
+    expect(tdOpened.player.roundUps).toMatchObject({ on: true, pending: 0, last: { notMoved: 50, why: 'a choice the bank needs from you wasn’t made' } });
     h.sim = tdOpened;
     const text = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'ca-td' })).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
     expect(text).toContain('Round-ups aren’t counting right now. Choose the amount each purchase, C$0.50 to C$5.00.');
+    expect(text).toMatch(/Not moved on [A-Z][a-z]+ \d{1,2}, \d{4}: C\$0\.50, because a choice the bank needs from you wasn’t made\./);
   });
 });
 

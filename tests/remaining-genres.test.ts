@@ -92,7 +92,8 @@ describe('the genres revised on 2026-10-16', () => {
       expect(registerOf(first!)).toEqual(registerOf(second!));
       // The scene it replaced is gone, under an id never reused.
       expect(BRIEF_BY_ID[`brief-${g}-2`]).toBeUndefined();
-      expect(RETIRED_BRIEFS[`brief-${g}-2`]).toMatchObject({ kinds: [g], replacedBy: `brief-${g}-3` });
+      // Kept by its genre alone (from 2026-10-20, brief 17: its title and `replacedBy` were read by nothing, and went).
+      expect(RETIRED_BRIEFS[`brief-${g}-2`]).toEqual({ kinds: [g] });
       const p = pairOf(g)!;
       expect(PARTS.filter((part) => p.same[part])).toEqual(x.same);
       expect(p.repetitive).toBe(false);

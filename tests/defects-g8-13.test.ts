@@ -271,7 +271,8 @@ describe('PLAYER JOURNEY: a blocking note given for a missed call', () => {
     tended(sim, rehearsals[work]!.at + 6 * MS_HOUR + 30 * 60_000);
     const note = proc(sim).notes.at(-1)!;
     expect(note.focus.kind).toBe('blocking');
-    expect(note.text).toBe('The blocking isn’t set in you: go back through the book, so the stage pictures land where they’re meant to.');
+    // In this production's director's voice, encouraging (from 2026-10-20, brief 17: until then every director's, plain's).
+    expect(note.text).toBe('Go back through the blocking in the book, so the stage pictures settle where they’re meant to.');
     sim.must({ kind: 'school.work_note', payload: {} });
     expect(proc(sim).blockingMissed).toBe(0);
     expect(ownWorkRefusal(sim, sim.player, 'school', 'blocking')).toBe('You haven’t missed any blocking.');

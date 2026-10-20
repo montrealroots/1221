@@ -1,0 +1,133 @@
+Brief 17, the health area's checks, 2026-10-20, on the branch's tree before its commit. Each tool's tail and exit as it printed them.
+
+=== npm run typecheck
+
+> slate@1.1.0 typecheck
+> tsc -b --noEmit
+
+exit=0
+
+=== npx eslint (the changed sources, the two new or changed language tests, render-sequences.ts)
+exit=0
+
+=== node tools/title-case.mjs --check
+0 strings in 0 files would change
+exit=0
+=== node tools/voice-check.mjs --check
+      1  src/engine/content/guide/papers.ts
+      1  src/engine/content/scenes-classical.ts
+      1  src/engine/content/security.ts
+      1  src/ui/creation/CharacterCreation.tsx
+      1  src/ui/looks/money.tsx
+      1  src/ui/workspaces/CalendarWorkspace.tsx
+exit=0
+=== node tools/tics.mjs --check
+   0/8    "which is why" / "which is how"
+And how the long lists begin, where one word does too much of it.
+
+  None. Every long list opens more than one way.
+
+29 in all, across 9 habits.
+exit=0
+=== node tools/spelling.mjs
+0 British spellings in 0 files.
+exit=0
+=== node tools/typos.mjs
+0 misspellings or doubled words.
+exit=0
+=== node tools/plural-check.mjs --check
+0 counts printed in front of a plural noun without agreeing with it.
+exit=0
+=== node tools/guide-quotes.mjs --check
+580 quoted sentences in the guide; 580 the game says (5 of them held by the test that plays the example), 0 it no longer says.
+exit=0
+=== node tools/doc-refs.mjs --check
+1029 files named across 25 docs.
+Every one of them is there.
+exit=0
+=== node tools/label-sweep.mjs
+0 labels with a lowercase word
+
+exit=0
+
+=== node tools/text-inventory.mjs --check
+area tutorial       47 sources   12403 words; Rewritten 26 Retained 21 Pending 0 Blocked 0
+all: 4202 sources, 36205 strings, 569002 words, 321 engine-speak hits; second pass: Rewritten 955, Retained 3247, Pending 0, Blocked 0; first pass: Rewritten And Verified 722, Reviewed And Retained 2412, Pending 1068, Blocked 0
+The text inventory holds.
+exit=0
+
+=== npx vitest run (the 47 test files that quote the changed words or play care):
+    tests/attributes-phase-2b.test.ts tests/evidence-g01-life.test.ts tests/evidence-g03-life.test.ts tests/evidence-g04-life.test.ts tests/evidence-g05-life.test.ts tests/evidence-g06-life.test.ts tests/evidence-g07-life.test.ts tests/evidence-g09-life.test.ts tests/evidence-g20-school.test.ts tests/evidence-g22-school.test.ts tests/evidence-g30-ui.test.ts tests/evidence-g33-ui.test.ts tests/evidence2-b01.test.ts tests/evidence2-b02.test.ts tests/evidence2-b03.test.ts tests/evidence2-b11.test.ts tests/evidence2-b12.test.ts tests/evidence3-home.test.ts tests/evidence3-lifepapers.test.ts tests/guide-examples-papers.test.ts tests/injury.test.ts tests/language-dynamic.test.ts tests/language-injury.test.ts tests/remaining-09-journeys.test.ts tests/remaining-health-billing.test.ts tests/scope-health.test.ts tests/scope-people.test.ts tests/language-care17.test.ts tests/finance-paths.test.ts tests/carevisits.test.ts tests/life-fixes.test.ts tests/defects-g8-6.test.ts tests/evidence-g25-school.test.ts tests/clinics.test.ts tests/evidence-g02-life.test.ts tests/cross-journeys.test.ts tests/need-paths.test.ts tests/leave.test.ts tests/claims.test.ts tests/school.test.ts tests/arrears.test.ts tests/defects-g23-1.test.ts tests/evidence-g17-papers.test.ts tests/decisions-advice.test.ts tests/therapy.test.ts tests/language-frame-ui.test.ts tests/evidence3-person.test.ts
+ ✓ tests/language-dynamic.test.ts (34 tests) 77607ms
+ ✓ tests/attributes-phase-2b.test.ts (35 tests) 238674ms
+ ✓ tests/remaining-09-journeys.test.ts (22 tests) 181078ms
+ ✓ tests/evidence-g05-life.test.ts (26 tests) 75081ms
+ ✓ tests/evidence-g22-school.test.ts (20 tests) 132733ms
+ ✓ tests/guide-examples-papers.test.ts (15 tests) 100029ms
+ ✓ tests/decisions-advice.test.ts (30 tests) 448305ms
+ ✓ tests/evidence3-person.test.ts (19 tests) 54617ms
+ ✓ tests/evidence-g20-school.test.ts (27 tests) 138747ms
+ ✓ tests/need-paths.test.ts (17 tests) 53278ms
+ ✓ tests/evidence-g06-life.test.ts (35 tests) 18649ms
+ ✓ tests/evidence-g30-ui.test.ts (29 tests) 161853ms
+ ✓ tests/evidence-g07-life.test.ts (29 tests) 57573ms
+ ✓ tests/evidence-g02-life.test.ts (23 tests) 64828ms
+ ✓ tests/evidence2-b03.test.ts (20 tests) 113052ms
+ ✓ tests/evidence-g33-ui.test.ts (36 tests) 143042ms
+ ✓ tests/evidence-g25-school.test.ts (20 tests) 121427ms
+ ✓ tests/evidence-g03-life.test.ts (25 tests) 72981ms
+ ✓ tests/evidence-g17-papers.test.ts (22 tests) 187422ms
+ ✓ tests/evidence-g04-life.test.ts (25 tests) 57395ms
+ ✓ tests/scope-health.test.ts (15 tests) 40927ms
+ ✓ tests/evidence2-b11.test.ts (15 tests) 69906ms
+ ✓ tests/language-frame-ui.test.ts (22 tests) 7629ms
+ ✓ tests/evidence-g01-life.test.ts (26 tests) 9913ms
+ ✓ tests/evidence2-b02.test.ts (14 tests) 60959ms
+ ✓ tests/evidence3-lifepapers.test.ts (16 tests) 54211ms
+ ✓ tests/evidence2-b01.test.ts (10 tests) 10952ms
+ ✓ tests/school.test.ts (54 tests) 224227ms
+ ✓ tests/evidence2-b12.test.ts (21 tests) 188545ms
+ ✓ tests/remaining-health-billing.test.ts (7 tests) 27248ms
+ ✓ tests/evidence-g09-life.test.ts (20 tests) 69541ms
+ ✓ tests/arrears.test.ts (18 tests) 2667ms
+ ✓ tests/scope-people.test.ts (4 tests) 1973ms
+ ✓ tests/defects-g8-6.test.ts (13 tests) 4072ms
+ ✓ tests/leave.test.ts (16 tests) 58012ms
+ ✓ tests/life-fixes.test.ts (10 tests) 3269ms
+ ✓ tests/defects-g23-1.test.ts (2 tests) 5837ms
+ ✓ tests/finance-paths.test.ts (12 tests) 31313ms
+ ✓ tests/language-injury.test.ts (5 tests) 707ms
+ ✓ tests/language-care17.test.ts (4 tests) 772ms
+ ✓ tests/cross-journeys.test.ts (2 tests) 7925ms
+ ✓ tests/therapy.test.ts (3 tests) 5357ms
+ ✓ tests/claims.test.ts (4 tests) 1928ms
+ ✓ tests/clinics.test.ts (4 tests) 563ms
+ ✓ tests/carevisits.test.ts (3 tests) 544ms
+ ✓ tests/injury.test.ts (5 tests) 63976ms
+ ✓ tests/evidence3-home.test.ts (38 tests) 708237ms
+ Test Files  47 passed (47)
+      Tests  872 passed (872)
+exit=0
+
+=== npx vitest run (the tree-wide text tests, and injury, therapy, clinics)
+ ✓ tests/language-crossarea.test.ts (5 tests) 2615ms
+ ✓ tests/language-frame.test.ts (8 tests) 6521ms
+ ✓ tests/language-data-dates.test.ts (12 tests) 3119ms
+ ✓ tests/cohesion.test.ts (19 tests) 2564ms
+ ✓ tests/interface.test.ts (10 tests) 2636ms
+ ✓ tests/therapy.test.ts (3 tests) 2861ms
+ ✓ tests/language-crossarea-raise.test.ts (1 test) 104ms
+ ✓ tests/clinics.test.ts (4 tests) 241ms
+ ✓ tests/injury.test.ts (5 tests) 21443ms
+ Test Files  9 passed (9)
+      Tests  67 passed (67)
+exit=0
+
+=== the built app (npm run build; vite preview --port 4306), the health scenario save made again on this tree
+health 1440 exit=0
+walk 1440 exit=0
+health 390 exit=0
+walk 390 exit=0
+preview 20682 stopped: 000
+health at 1440: 10 of 10 passed; six missing: none; 0 errors; 0 overflows; 0 language checks failed, 2 recorded
+health at 390: 10 of 10 passed; six missing: none; 0 errors; 0 overflows; 0 language checks failed, 8 recorded

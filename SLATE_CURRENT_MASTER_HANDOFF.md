@@ -1,16 +1,188 @@
-# Read First: Brief 16, Contextual Writing, Distinct Voices And Clear Information, 2026-10-20
+# Read First: Brief 17, The Final Comprehensive Writing And Continuity Pass, 2026-10-20
 
 **This section is the current status, and where a new session starts.** It was written at the end of the owner's
+"Final Comprehensive Writing And Continuity Pass"
+(`docs/verification/briefs-2026-10-16/17-final-comprehensive-writing-and-continuity-pass.txt`, kept verbatim).
+- **Where the work was done:** `claude/peaceful-hamilton-59zdbb`, from `dffc6ea0`, which is `main` at `bbb82253`
+  (#45's merge, brief 16) with the handoff's account of that merge.
+- **Where it is:** pushed, and never force-pushed. **None of it is in `main`:** no pull request was opened for it, and
+  `dffc6ea0` isn't in `main` either.
+- **Nothing is deployed.**
+
+Brief 16's section below was the status until brief 17 began.
+
+## 1. The Repository
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `bbb82253`, #45's merge,
+  as it was when brief 17 began (`git log -1 origin/main`, read on 2026-10-20).
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 17's commits on `dffc6ea0`
+  (`git log --oneline dffc6ea0..origin/claude/peaceful-hamilton-59zdbb`). Eight editors worked in clones, and each area
+  came in as a merge of its own branch: material `cf3d9153`, school `96a20937`, money `e37e0bf3`, health `46d335d4`,
+  profile `c233293c`, frame `b48dec2e`, papers `c341062e`, tutorial `e51ec780`.
+- **The tested code is `ecd961cc`'s.**
+  - **Every measurement after** (`docs/verification/continuity-2026-10-20/after/`) and **every final run** ran on its
+    game, in the lanes of `runs17.sh`: on `ecd961cc`, but the advice's last play, on `a683f9ea`. That commit adds two
+    tools put right (the journeys' check 8 and recheck, the advice harness's S3), a test of S3 and records, and nothing
+    in `src/`, `base44/` or the package files. Each step's commit, command and exit is in
+    `docs/verification/continuity-2026-10-20/runs/exits-*.txt`.
+  - **The gate** ran last, on `3fe960df`, in a clean clone (`final-checks/gate17.sh`), its exit read from a file:
+    exit 0, 405 of 405 test files and 4,867 of 4,867 tests passed, none skipped, every one of the twenty-one checks
+    holding; the build exit 0, in the same clone (`docs/verification/continuity-2026-10-20/runs/gate.txt`,
+    `final-checks/`). Between `a683f9ea` and `3fe960df` only records changed: the advice's third play and what reads
+    it, the matrix and this handoff. After it, only documents changed again: the gate's figures folded in. Until then
+    this said the gate hadn't run, and the line below was 611.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
+  worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
+
+## 2. Where It Stands
+
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+
+- **Against brief 16's close:** the same 612 rows Implemented And Verified, each measured again where what it reads
+  changed: by the engine, the judge and its build on `ecd961cc`, the advice on `a683f9ea`, with brief 16's figures,
+  and the gate's on `3fe960df`. Until the gate had run this said 611, INT-gate's row open.
+- **The game is brief 16's but for the authorized fix,** held two ways (`numbers-same.py`, `numbers-same.json`):
+  - **With the fix taken out** (`fixoff/`, the tested commit with one line put back), every number of every final run
+    is brief 16's, but each run's own record, the notices' counts and the counts of words. The judge's outputs are
+    brief 16's byte for byte, so RULESET stays evaluation-11.
+  - **With it,** every difference first appears on a classmate's day: 20 of the 25 journeys, 9 of the 24 lives (none
+    ending otherwise), three workloads (one piece fewer Unready in a term), five plans (slapstick mastered a day
+    later), and none of the advice. F2's fourth term review is good where brief 16's was concern, 22 of 45 pieces
+    Unready where it had 24.
+  - **The 24 students** of `tools/voices.ts`: 20 the same event for event, and the other 4 first differ on the day of an
+    apology brief 16 repeated (`same-play.py`). With the fix taken out, all 24 are brief 16's.
+- **The incident:** brief 16's nine apologies again, for misses already apologized for, are none, and 103 of 103 late
+  apologies say how late (`incidents.py`, `incidents.json`).
+- **The words,** on the same 24 students and seeds (`measures.md`, each measure's denominator, window and normalizing
+  there):
+  - bodies said in the course's last five fell from 565 to 312;
+  - showings with a sentence another course said fell from 97.1% to 86.2%;
+  - the advice card said word for word fell from 778 to 144;
+  - directors word for word fell from 17 to 3, and classmates from 19 to 0;
+  - claims checked against the record, 0 wrong before and after; a classmate's "last time" wrong 7 before, 0 after.
+  Two are worse, both read in `justified.json`: a first sentence in the course's last five rose from 229 to 253, and a
+  message every sentence of which was said lately from 202 to 296. Most of both is the same limit holding piece after
+  piece, said now as the same thing.
+- **On the built app** (the tested commit's build, from saves made on it):
+  - the acceptance walk 77 of 77 at 1440 and at 390;
+  - brief 13's playthroughs normal 14 of 14, setback 9 of 9, specialist 11 of 11, at each width;
+  - brief 14's journeys document 8 of 8, health 10 of 10, banking 9 of 10, whose step 8 is `journeys-3`, unchanged;
+  - every folded detail on Coursework and the Profile from the keyboard, 184 at each width, 0 failures;
+  - the rendered text of the saves the tested commit wrote, 0 faults.
+  These are automated, and aren't human usability approval.
+- **The text:** the coverage matrix claims all 4,230 sources in 265 surfaces. None is Pending, and engine-speak is 316,
+  from brief 16's 321.
+
+## 3. What Brief 17 Did
+
+The record is `docs/verification/continuity-2026-10-20/`:
+- `README.md` has what changed, the measures before and after with how each was counted, and the gameplay comparison;
+- `PLAYTEST.md` is the owner's route;
+- `docs/text/SURFACES.md` is the coverage matrix.
+
+- **The coverage matrix** (`docs/text/SURFACES.md`, `docs/text/surfaces/*.json`): 265 surfaces a player can reach,
+  claiming all 4,230 sources of player text. Each row has its states, what reading it in context found, what changed or
+  why it was kept, and evidence that opens from the repository. `tools/surfaces.mjs --check` is now the gate's
+  twenty-first check.
+- **The feedback** (`src/engine/systems/feedback.ts`):
+  - five course voices, kept apart by a test;
+  - the rule said as a rule ("A piece shown with it at 75% or more puts the note right."), never "taken";
+  - each situation the brief names, and a success acknowledged and left there;
+  - no "Meanwhile, try this";
+  - a memory of everything the student was told, from the save's own feedback, with no randomness drawn and nothing
+    added to the save.
+- **Directors** speak in three voices, one a production. **Teachers** write their own term notes. **Classmates** each
+  ask in a way of their own, and remember the last answer rightly.
+- **The incident fix, the one authorized change to play:** a classmate's apology covers the misses since their last
+  and marks each (`missesOwed`, `PartnerRehearsal.apologized`), so it never comes again for them. A new miss gets a new
+  apology, and a late one says how late. A save from before is marked once on opening (`school.missesMarked`). The
+  schema stays 94.
+- **Eight editors**, each in a clone, read their surfaces where a player meets them and put what matters, what to do,
+  the cost and the deadline before the button that commits it: material, school, money, health, profile, frame,
+  papers, and the tutorial and help. The tutorial editor followed all 17 chapters and 70 entries as a new player at
+  1440 and 390.
+- **What the final runs found, put right before the tested commit:**
+  - whole messages said again and openings repeated within a course's last five, both from the memory's reach;
+  - eight sentences opening on "Nothing";
+  - "put right on February 23" said on February 23;
+  - six gate checks behind, found by running the full gate, which hadn't run since brief 16's merge.
+- **What reading the final runs found in the tools, put right after the tested commit,** each with its lanes played
+  again (`runs/README.md`, Found In The Runs):
+  - the journeys' check 8 failed F1 for a warning that counted a piece revised to Working after it;
+  - the advice harness's S3 read 1,836 standings as stale for naming the aim that took over;
+  - the journeys' recheck wrote each journey's first three parts again without their counts.
+  None was the game's.
+
+## 4. What Remains, And What It Waits On
+
+- **Found by brief 17, for the owner** (the record's README, What Was Found And Not Changed): mechanics and rules this
+  writing pass left as they are.
+  - **Money:** a card's missed-payment timing a cycle off Reg Z; the first year's yearly fee skippable; no warning
+    before an overdrawn account's closure beyond the day.
+  - **Papers:** Catch Up offered for a CP523 default; California's new balance told as a missed payment; a 1040-NR
+    return's interest line.
+  - **Health:** the flu reaching more than the Profile says; no notice when an injury mends or the flu passes; the
+    fitness look below 35.
+  - **The frame:** Skip It and Call It Off treat a jump differently; Sleep at 7:15 suggests 8 hours; Tomorrow Morning at
+    2 AM skips a day; the Sleep dialog doesn't hold the clock.
+  - **School and the Profile:** an understudy "in the company" goes on in no named part; the fatigue label from one
+    piece; the milestone detail's band keys; Fine's summary always "Sources And Estimates".
+  - **The words:**
+    - the patient voice has two ways to say a choice note slipped again;
+    - the exacting voice has one way to count a note given often;
+    - both repeat within a course's last five (the README, The Measures);
+    - the gazetteer's ASCII names;
+    - glossary rows suggested for blocking, understudy and off book.
+- **From brief 16, unchanged:**
+  - card liability in Japan, Korea, the US and Canada;
+  - the IRS short-term plan's penalty rate;
+  - the missed state-plan notice's figures.
+
+  Brief 16's apology defect is fixed (above).
+- **From briefs 14 and 15, unchanged:**
+  - the dead content;
+  - five of money-data's items;
+  - On The Way before Sunday evening (`journeys-3`);
+  - ST6-R2.e, the owner's question;
+  - decision 4's rows, deferred.
+- **What only a person can judge:** whether the voices read as people and a first view as easy to follow.
+  `docs/verification/continuity-2026-10-20/PLAYTEST.md` is a thirty-minute route for it; every phrase it quotes was
+  found where the game says it.
+- **Merging and deploying are the owner's.** Nothing of brief 17 is in `main`, and no pull request is open for it.
+  Base44 deployment waits for the owner and the gate (rule 14). Read section 10 further down first.
+
+## 5. The Rules, The Schema And The Model
+
+- **The checks:** CLAUDE.md counts twenty-one. The twenty-first is `tools/surfaces.mjs --check`, the coverage matrix,
+  added in this pass; until then CLAUDE.md said twenty.
+- **The save schema is unchanged:** **94** in both places. The incident fix's fields are optional, and a save from
+  before is marked once on opening (`school.missesMarked`).
+- **RULESET is evaluation-11:** nothing the judge reads changed (`final/`, the judge's figures).
+- **New player-facing text** follows `docs/STYLE.md` and `docs/GLOSSARY.md`. A new source of text is claimed by a row
+  of `docs/text/surfaces/` as well as marked in the inventory, or the gate fails.
+- **The matrix:** `criteria.py` reads brief 17's results after brief 16's, the same three ways:
+  - the judge's figures (`final/figures.json`);
+  - the runs' figures (`runs/figures.json`);
+  - `verify.py` and `advice/close.py`.
+
+# Earlier: Brief 16, Contextual Writing, Distinct Voices And Clear Information, 2026-10-20
+
+**This section was the current status until brief 17** (**Superseded 2026-10-20:** the current status is the first
+section above, brief 17's, and so is the completion line; the line below is brief 16's as it was). It was written at the
+end of the owner's
 "Contextual Writing, Distinct Voices, And Clear Information"
 (`docs/verification/briefs-2026-10-16/16-contextual-writing-distinct-voices-and-clear-information.txt`, kept verbatim).
 The work was done on `claude/peaceful-hamilton-59zdbb`, at `d1ae7a79`: `main` at `74259312` (#44's merge) with the
 handoff's account of that merge. Brief 15's section below was the status until brief 16 began. It is pushed, and it's in
-pull request #45 (https://github.com/yvcbcjhsy7-prog/1221/pull/45), which was opened for that account alone and now
-carries brief 16 too. **Nothing of brief 16 is merged, and nothing is deployed.**
+pull request #45 (https://github.com/yvcbcjhsy7-prog/1221/pull/45), which was opened for that account alone and came to
+carry brief 16 too. #45 was merged to `main` with a merge commit at the owner's word ("Both.", 2026-10-20, asked whether
+to merge it or watch it; `bbb82253`); until then this said nothing of brief 16 was merged. **Merged isn't deployed:
+nothing is.**
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `74259312`, #44's merge.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `bbb82253`, #45's merge;
+  until then this said `74259312`, #44's.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 16's commits on `d1ae7a79`
   (`git log --oneline d1ae7a79..origin/claude/peaceful-hamilton-59zdbb`). It was pushed and never force-pushed. The
   five editors worked in clones, and each area came in as its own commit on the branch, with no merge commit:
@@ -84,7 +256,8 @@ was counted; `examples.md` has the words before and after, read from the runs.
 - **Found by brief 16, for the owner** (the record's README, What Was Found And Not Changed). Each is a mechanic, and the
   brief keeps those apart:
   - **A classmate apologizes again, a year on, for the same missed rehearsals:** the apologies are counted from the
-    last 20 moments, so the first falls off.
+    last 20 moments, so the first falls off. Brief 17 fixed it at the owner's leave (its section above); until then it
+    was open.
   - **Card liability:** in Japan, Korea, the US and Canada the game's charge and the law the text gives differ. The
     visible sentence says what the game does.
   - **The IRS short-term plan** takes the installment-agreement penalty rate too.
@@ -98,7 +271,8 @@ was counted; `examples.md` has the words before and after, read from the runs.
   - Decision 4's rows stay deferred.
 - **What only a person can judge:** whether the voices read as distinct and the help as easy to follow. Brief 15's
   `PLAYTEST.md` is still a route: every phrase it quotes is still in the code.
-- **Merging and deploying are the owner's.** Base44 deployment waits for the owner and the gate (rule 14). Read section
+- **Deploying is the owner's.** The pull request was merged at the owner's "Both." (`bbb82253`); until then this said
+  merging was the owner's too. Base44 deployment waits for the owner and the gate (rule 14). Read section
   10 further down first.
 
 ## 5. The Rules, The Schema And The Model

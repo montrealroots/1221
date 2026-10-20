@@ -375,7 +375,7 @@ describe('c-wealth', () => {
     const review = creation(REVIEW, config);
     expect(review.text).toContain('Checking $92,391');
     expect(review.text).toContain('Savings $413,043');
-    expect(review.text).toContain('Card $0 owed of $65,217');
+    expect(review.text).toContain('Card $65,217 limit, nothing owed');
     const { sim } = await begin(review);
     expect(primary(sim).balance).toBe(92_391_00);
     expect(mine(sim, 'savings')[0]!.balance).toBe(413_043_00);

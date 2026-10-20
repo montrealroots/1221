@@ -526,7 +526,7 @@ describe('the craft guide’s worked examples, played', () => {
     expect(r.look.summary).toContain(`${chiefLimit(r.w)}.`);
     expect(r.again.overall).toBe(r.w.overall);
     expect(r.look.provenance).toContain(`Judged again from its record, it comes to ${one(r.w.overall)}`);
-    // Part By Part, as the look draws it, is the take as played, with its draw: each part’s row and the continuity.
+    // Moment By Moment, as the look draws it, is the take as played, with its draw: each part’s row and the continuity.
     for (const s of r.again.piece!.segments) expect(r.body).toMatch(new RegExp(`${s.label} [A-Z][A-Za-z ]* ${one(s.overall)} ${pct(s.part)} of ${pct(s.required)} `));
     expect(r.body).toContain(`from part to part: ${one(r.again.piece!.continuity)}.`);
     // The example’s figures are the take with no draw, which no step shows, so its setup says so; until 2026-10-12 it
@@ -536,7 +536,7 @@ describe('the craft guide’s worked examples, played', () => {
     const segs = r.u.piece!.segments;
     expect(ex.result).toContain(`Moment By Moment gives ${andList(segs.map((s) => `${s.label} ${one(s.overall)}`))}`);
     expect(ex.result).toContain(`${segs.at(-1)!.label} is Tiring, ${pct(1 - segs.at(-1)!.drain)} off, and continuity is ${one(r.u.piece!.continuity)}`);
-    // Part By Part, as the look draws it: stamina draws nothing, so the last beat’s Tiring is the same drawn or not.
+    // Moment By Moment, as the look draws it: stamina draws nothing, so the last beat’s Tiring is the same drawn or not.
     expect(r.body).toContain('Moment By Moment');
     expect(r.body).toContain(`Tiring: ${pct(1 - r.again.piece!.segments.at(-1)!.drain)} off`);
     expect(r.again.piece!.segments.at(-1)!.drain).toBe(segs.at(-1)!.drain);

@@ -4429,11 +4429,6 @@
   "hash": "469f22f9bb99",
   "on": "2026-10-17"
  },
- "src/engine/content/briefs/index.ts#RETIRED_BRIEFS": {
-  "status": "Pending",
-  "hash": "d9c6498d91ab",
-  "on": "2026-10-17"
- },
  "src/engine/content/briefs/second-a.ts#SECOND_A [bait]": {
   "status": "Pending",
   "hash": "2836db7a908b",
@@ -16039,16 +16034,6 @@
   "hash": "ceb15fa2d7c8",
   "on": "2026-10-17"
  },
- "src/engine/systems/classmates.ts#classMoment [apology]": {
-  "status": "Pending",
-  "hash": "1702dc71ef9f",
-  "on": "2026-10-17"
- },
- "src/engine/systems/classmates.ts#classMoment [boundary]": {
-  "status": "Pending",
-  "hash": "1498f7b944ff",
-  "on": "2026-10-17"
- },
  "src/engine/systems/classmates.ts#classMoment [encouragement]": {
   "status": "Pending",
   "hash": "0de2881cb80e",
@@ -17864,11 +17849,6 @@
   "hash": "f1fc7f394573",
   "on": "2026-10-17"
  },
- "src/engine/systems/school.ts#directorsNote": {
-  "status": "Pending",
-  "hash": "b81560137892",
-  "on": "2026-10-17"
- },
  "src/engine/systems/school.ts#drawCohort": {
   "status": "Pending",
   "hash": "f041ef618571",
@@ -18037,11 +18017,6 @@
  "src/engine/systems/school.ts#summerRefusal": {
   "status": "Pending",
   "hash": "1b91916f81e1",
-  "on": "2026-10-17"
- },
- "src/engine/systems/school.ts#teachersNotes": {
-  "status": "Pending",
-  "hash": "f416100f4951",
   "on": "2026-10-17"
  },
  "src/engine/systems/school.ts#termBegins": {

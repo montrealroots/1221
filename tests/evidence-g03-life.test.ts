@@ -249,7 +249,7 @@ describe('health.book', () => {
     // 10,513 cents, times 1.75 = 18,397.75, $183.98, due in 30 days, the plan paying none (no `covered`).
     tended(sim, at(2026, 9, 28, 12));
     const kept = titled(sim, 'A Doctor’s Visit', at(2026, 9, 28, 10));
-    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. You owe $183.98. It’s taken from your checking account on October 28, 2026, and if there isn’t enough then, it becomes medical debt.']]);
+    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'You saw a doctor at Fair Haven Community Health Care. Yale Health pays for a visit only at its own Health Center, not here. You owe $183.98. It’s taken from your checking account on October 28, 2026, and if there isn’t enough then, it becomes medical debt.']]);
     expect(healthOf(sim.player).bills.filter((b) => b.at === at(2026, 9, 28, 10)).map((b) => [b.what, b.amount, b.dueAt, b.covered])).toEqual([['A doctor’s visit, Fair Haven Community Health Care', 18_398, at(2026, 10, 28, 10), undefined]]);
     expect(appointmentsOf(sim.player).filter((a) => a.what === 'A doctor’s visit')).toEqual([]);
     expect(healthOf(sim.player).chronic!.hypertension!.prescribedAt).toBe(at(2026, 9, 28, 10));
@@ -311,7 +311,7 @@ describe('health.book', () => {
         sim = reload(sim);
         tended(sim, at(2026, 2, 24, 12, 0, 'America/Vancouver'));
         // Kept, it renewed the prescription; the health week with a week of supply left filled the medicine again.
-        expect(titled(sim, 'A Doctor’s Visit', when).filter((n) => n.body.startsWith('A prescription to renew'))).toHaveLength(1);
+        expect(titled(sim, 'A Doctor’s Visit', when).filter((n) => n.body.startsWith('You saw a doctor to renew your prescription'))).toHaveLength(1);
         expect(healthOf(sim.player).chronic!.depression!.prescribedAt).toBe(when);
       } else {
         // Left owed: Monday 2 February’s fill finds the prescription past its date and books the visit owed, and says so
@@ -323,7 +323,7 @@ describe('health.book', () => {
         expect(titled(sim, 'A Prescription Ran Out').map((n) => n.at)).toEqual([at(2026, 2, 2)]);
         const when = again[0]!.at;
         tended(sim, at(2026, 2, 24, 12, 0, 'America/Vancouver'));
-        expect(titled(sim, 'A Doctor’s Visit', when).filter((n) => n.body.startsWith('A prescription to renew'))).toHaveLength(1);
+        expect(titled(sim, 'A Doctor’s Visit', when).filter((n) => n.body.startsWith('You saw a doctor to renew your prescription'))).toHaveLength(1);
         expect(healthOf(sim.player).chronic!.depression!.prescribedAt).toBe(when);
       }
       return { sim, supplied };
@@ -391,8 +391,8 @@ describe('health.choose_clinic', () => {
     expect(didnt.notice).toEqual(['A doctor’s visit: booked at Soho Square General Practice for January 26, 2026, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.']);
     // Bupa's pay-as-you-go GP is private, and the NHS doesn't pay it: its 15-minute visit's £79 (`SELF_PAY`). Until
     // 2026-10-13 this held "Nothing to pay." for it, as at Soho Square, the choice moving only the name.
-    expect(chose.kept).toEqual(['A doctor’s visit, Bupa Private GP (pay-as-you-go). You owe £79.00. It’s taken from your checking account on February 25, 2026, and if there isn’t enough then, it becomes medical debt.']);
-    expect(didnt.kept).toEqual(['A doctor’s visit, Soho Square General Practice. There’s nothing to pay.']);
+    expect(chose.kept).toEqual(['You saw a doctor at Bupa Private GP (pay-as-you-go). You owe £79.00. It’s taken from your checking account on February 25, 2026, and if there isn’t enough then, it becomes medical debt.']);
+    expect(didnt.kept).toEqual(['You saw a doctor at Soho Square General Practice. There’s nothing to pay.']);
   });
 
   it('LIFE FIXTURE (Mexico City, a US citizen IMSS doesn’t cover): the doctor chosen bills an uninsured visit at its own published MX$60, named on the bill; a twin is billed at IMSS’s practice', () => {

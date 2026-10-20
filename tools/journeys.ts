@@ -599,10 +599,8 @@ function playPart(spec: Spec, part: number, stateDir: string, out: string): Rec 
 }
 
 /** A part's output while the journey goes on: what it played and what it counted. The whole record is in `--state`. */
-function partSummary(rec: Rec, n = rec.parts.length) {
-  const part = rec.parts[n - 1]!;
-  // Written again after the journey's end (`--recheck`), a part is its own entry alone: the counts below are the part's own only when written as it ends.
-  if (n < rec.parts.length) return { id: rec.id, ...part, done: false, rewritten: 'from the finished record; the counts at the part’s end are in its log' };
+function partSummary(rec: Rec) {
+  const part = rec.parts.at(-1)!;
   return { id: rec.id, ...part, done: false, standing: rec.standings.at(-1)?.standing, reloads: rec.reloads.length, notSame: rec.reloads.filter((r) => !r.same).length, notices: rec.notices.length, showings: rec.showings.length, work: rec.work.length, reviews: rec.reviews.map((r) => `${r.term} ${r.at} ${r.standing}`) };
 }
 
@@ -884,7 +882,14 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
       const cw = r.coursework;
       const forCoursework = cw && cw.shown >= 4 && cw.unready >= 0.5 * cw.shown;
       if (forCoursework && !warned.length) fails.push(`term ${r.term}: stepped for coursework (${cw!.unready} of ${cw!.shown}) with no warning in the term`);
-      for (const w of warned) { const m = /^So far this term, (\d+) of the (\d+)/.exec(w[3]); if (m && cw && Number(m[1]) > cw.unready) fails.push(`term ${r.term}: the warning counted ${m[1]}, the review ${cw.unready}`); }
+      // A piece shown Unready before a warning and revised after it to a band above is counted Unready by the warning and
+      // not by the review, which reads a revision's band (`termTally`): both are true when said. So the warning may
+      // exceed the review by those pieces, and only by them (from 2026-10-20, brief 17's final journeys: F1's fourth
+      // term, its Heightened Text Scene shown Unready on 2028-11-14, warned of with 12 others on the 17th, and revised to
+      // Working on the 20th). Until then a warning above the review failed this whatever the revisions between.
+      const lifted = (w: Rec['notices'][number]) => (courseworkOf(sim, p)?.assignments ?? []).filter((a) => a.term === r.term && a.shown && a.shown.band === 'unready' && day(a.shown.at) <= w[0]
+        && a.revision && !a.revision.missed && a.revision.band && a.revision.band !== 'unready' && a.revision.dueOn > w[0]).length;
+      for (const w of warned) { const m = /^So far this term, (\d+) of the (\d+)/.exec(w[3]); if (m && cw && Number(m[1]) > cw.unready + lifted(w)) fails.push(`term ${r.term}: the warning counted ${m[1]}, the review ${cw.unready}, with ${lifted(w)} revised above Unready after it`); }
       const rank = { good: 0, concern: 1, warning: 2, dismissed: 3 } as Record<string, number>;
       if (r.standing in rank && prevStanding in rank && rank[r.standing]! > rank[prevStanding]! + 1) fails.push(`term ${r.term}: ${prevStanding} to ${r.standing}, more than a step`);
       if (r.standing === 'dismissed' && prevStanding !== 'warning' && !has(rec, /Fails|Disqualif/).length) fails.push(`term ${r.term}: dismissed from ${prevStanding}`);
@@ -892,9 +897,9 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     }
     // The cause a warning names is among the parts short on the pieces it counts.
     for (const w of words) {
-      const m = /What held most of them back was “([^”]+)”, unfinished on/.exec(w[3]);
+      const m = /(?:The part most often left unfinished was “([^”]+)”, on|“([^”]+)” was left unfinished on the one)/.exec(w[3]);
       if (!m) continue;
-      const label = m[1]!.toLowerCase();
+      const label = (m[1] ?? m[2])!.toLowerCase();
       const shortLabels = new Set((rec.showings as { at: string; shortLabels: string[]; band: string }[]).filter((x) => x.at <= w[0] && x.band === 'unready').flatMap((x) => x.shortLabels.map((l) => String(l).toLowerCase())));
       if (!shortLabels.has(label)) fails.push(`${w[0]}: the warning names ${label}, short on none of the unready pieces`);
     }
@@ -1013,8 +1018,10 @@ function recheck(spec: Spec, stateDir: string, out: string): void {
   rec.continuity = continuity(rec);
   writeFileSync(join(stateDir, `${spec.id}.state.json`), JSON.stringify({ rec, st }));
   writeFileSync(out, `${JSON.stringify(compact(rec), null, 1)}\n`);
-  // The parts before, as summaries (their first outputs repeated the whole record so far).
-  if (/-p\d+\.json$/.test(out)) rec.parts.slice(0, -1).forEach((_, i) => writeFileSync(out.replace(/-p\d+\.json$/, `-p${i + 1}.json`), `${JSON.stringify(partSummary(rec, i + 1), null, 1)}\n`));
+  // The parts before are left as they were written. Until brief 17 the recheck wrote them again as their own entries
+  // alone, which made sense when a part's output repeated the whole record so far (before `9e005462`); after it a
+  // part's output was already its summary, and writing it again only lost what it had counted at its end. Brief 17's
+  // recheck of its final journeys lost those counts from 75 parts, and the journeys were played again to have them.
   console.log(JSON.stringify({ id: spec.id, rechecked: true, checks: Object.fromEntries(Object.entries(rec.checks!).map(([k, v]) => [k, v.pass ? 'pass' : v.fails.slice(0, 2)])) }));
 }
 

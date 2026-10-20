@@ -62,7 +62,8 @@ const DOING: Record<WeatherCondition, string> = {
 /** The condition as a thing a day brings. */
 const BRINGS: Record<WeatherCondition, string> = {
   Clear: 'clear skies',
-  'Partly Cloudy': 'broken cloud',
+  // The condition’s own words, as the stat beside it and Home say it (from 2026-10-20, brief 17): until then "broken cloud".
+  'Partly Cloudy': 'partly cloudy skies',
   Overcast: 'an overcast day',
   Drizzle: 'drizzle',
   Rain: 'rain',

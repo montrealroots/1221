@@ -10,7 +10,8 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
-import { COURSES } from '@/engine/content/school';
+import { COURSES, SKILLS } from '@/engine/content/school';
+import { directorVoiceFor } from '@/engine/systems/production';
 import { TOGETHER_BOND, courseworkOf } from '@/engine/systems/coursework';
 import { EVALUATION } from '@/engine/content/tasks';
 
@@ -226,7 +227,8 @@ describe('a night’s reading', () => {
     }
     const nights = Object.values(c.nights ?? {}).reduce((a, b) => a + b, 0);
     expect(nights).toBe(shows.length);
-    expect(c.note).toContain(directorsNote(nightsMean(c.nights!)));
+    // In the voice its director gave at the calls (from 2026-10-20, brief 17).
+    expect(c.note).toContain(directorsNote(nightsMean(c.nights!), directorVoiceFor('school', c)));
     // And names what held the run's nights back most, by the evaluation (from 2026-10-12: until then the play's weakest
     // raw craft skill, named even where nothing held the nights back).
     expect(c.note).toMatch(/ Work on your [a-z -]+: it held your nights back most\.$/);
@@ -320,7 +322,10 @@ describe('the teachers’ notes', () => {
     const tally = sim.player.school!.tally;
     tally.craftAtStart = { ...sim.player.craft! };
     const still = teachersNotes(sim.player, 0);
-    expect(still.every((n) => /You’ve grown less than the class in /.test(n.note))).toBe(true);
+    // Each in its course's voice (from 2026-10-20, brief 17): until then the same sentence from every teacher.
+    expect(still.every((n) => /\b(?:grown less than the class|grew less than the class|Behind the class)\b/.test(n.note)), still.map((n) => n.note).join(' | ')).toBe(true);
+    expect(still.every((n) => n.note.includes(SKILLS.find((k) => k.id === COURSES.find((c) => c.name === n.course)!.skills[0])!.label.toLowerCase())), 'each names its course’s skills').toBe(true);
+    expect(new Set(still.map((n) => n.note.split(' ').slice(0, 3).join(' '))).size).toBeGreaterThan(2);
   }, 120_000);
 });
 

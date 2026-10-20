@@ -37,6 +37,10 @@
  * on 2026-10-14, the owner’s decision, and with it the keeping of a closed question to a date still to come, which no
  * raiser reached either: What Needs You said the save forgot a closed question 180 days on “or on its date if that’s
  * later” until then.
+ *
+ * Until 2026-10-20 (brief 17, the frame editor's finding) Moving Time On's last step named a stop's answers without
+ * saying what each does to the jump: Go carries it on to where it was headed, and Stand Here ends it there with the
+ * clock paused (`onGo` and `clearStandingAt`, `ui/shell/TimeControls.tsx`; `halt`, `app/game-context.tsx`).
  */
 
 import { CHAPTER_BY_ID } from '../tutorial';
@@ -235,7 +239,7 @@ export const DAY: readonly GuideEntry[] = [
       'Press Advance in the top bar and pick a line: One Hour, This Evening (6:00 PM), Tonight (10:00 PM), Tomorrow Morning (7:00 AM), Next Event, Next Monday (9:00 AM) or One Week. Each says where it lands.',
       'If the move passes a commitment, On The Way lists it first: press Advance to go on, or Cancel.',
       'Or pick Choose An Event… for the next fourteen things on the calendar. Skip To Event shows what each jump crosses; press Skip To and the event’s name.',
-      'At each stop, answer the dialog: Go, Stand Here, Skip It on a plan of yours, or Call It Off on a rehearsal with a classmate.',
+      'At each stop, answer the dialog: Go to be there and carry the jump on, or Stand Here to end the jump there, with the clock paused. A plan of yours also offers Skip It, and a rehearsal with a classmate Call It Off.',
     ],
     needs: [
       `Advance and Choose An Event… open with ${chapter('advance')}.`,

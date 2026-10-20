@@ -427,7 +427,7 @@ describe('card.request_hardship', () => {
     setBalance(sim, mine(sim, 'savings'), 0); // TEST SETUP
     sim.advanceTo(edt(10, 11, 12, 5));
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
-    expect(notes(sim, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment on the Chase Freedom Unlimited was $48.00, and nothing was paid by the due date. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record. Pay the card on Money, under Cards.']);
+    expect(notes(sim, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum payment on the Chase Freedom Unlimited, $48.00, was due October 11, 2026, and nothing was paid. That costs a $30.00 late fee. If the payment is still short at the next due date, thirty days late, it goes on your credit record and Chase suspends the card. Pay the card on Money, under Cards.']);
     expect(stateOf(sim.player, card).missed).toBe(1);
     expect(sim.player.credit!.late).toEqual([]);
     expect(sim.player.credit!.score).toBe(795);
@@ -473,7 +473,7 @@ describe('card.request_hardship', () => {
     const second = short.sim.universe.transactions.filter((t) => t.memo === 'Late fee').at(-1)!.at;
     expect(short.sim.player.credit!.late).toEqual([second]);
     expect(second).toBe(est(11, 10, 12, 0));
-    expect(notes(short.sim, 'A Late Card Payment').at(-1)!.body).toBe('The plan’s payment on the Chase Freedom Unlimited was $101.00, and nothing was paid by the due date. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.');
+    expect(notes(short.sim, 'A Late Card Payment').at(-1)!.body).toBe('The plan’s payment on the Chase Freedom Unlimited, $101.00, was due November 10, 2026, and nothing was paid. That costs a $40.00 late fee, and it’s on your credit record now. Pay the card on Money, under Cards.');
   });
 
   it('is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48', () => {
