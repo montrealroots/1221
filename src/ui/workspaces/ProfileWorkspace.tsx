@@ -367,10 +367,15 @@ function AbilitiesPanel() {
             </tbody>
           </table>
         </LookRegion>
+        {/* Where you stand, what builds it, then the rules (from 2026-10-20, brief 16, section 7), with the sources in the
+            Fine below. Until then one paragraph of seven sentences, the rules first and the sources inside them. */}
         <p className="small" style={{ margin: 0 }}>
-          <strong>Stamina is your fitness.</strong> Full is the fittest a body your age can be, {one(staminaFull)} now, and no work asks more of it. A workout builds it and holds it for {FITNESS.heldDays} days, and so does a class that works the body as hard (Movement Invention, stage combat). After that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, where an everyday life keeps it (Mujika &amp; Padilla, 2000, on detraining); that rate is estimated. Two workouts a week keep it up (Hickson &amp; Rosenkoetter, 1981). A second workout on the same day builds half as much. It’s the one ability that fades without use: the others keep what they’ve earned.
+          <strong>Stamina is your fitness.</strong> Yours is {one(abilityOf(sim, person, 'stamina'))}, and full is the fittest a body your age can be, {one(staminaFull)} now: no work asks more of it. A workout builds it, and so does a class that works the body as hard (Movement Invention, stage combat).
         </p>
-        <Fine>Classes and coursework grow an ability up to its reach. Practice takes it past that, all the way to full, where it stops. The same exercise again on the same day gives half as much, and after {PRACTICE.dailyHours} hours in a day, practice stops counting (Ericsson et al., 1993). An ability at its full is marked Mastered. Stamina loses the mark when its fitness falls; the others keep what they’ve earned.</Fine>
+        <p className="small" style={{ margin: 0 }}>
+          It’s the one ability that fades without use: the others keep what they’ve earned. A workout or one of those classes holds it for {FITNESS.heldDays} days, and after that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, where an everyday life keeps it. Two workouts a week keep it up, and a second workout on the same day builds half as much.
+        </p>
+        <Fine>Classes and coursework grow an ability up to its reach. Practice takes it past that, all the way to full, where it stops. The same exercise again on the same day gives half as much, and after {PRACTICE.dailyHours} hours in a day, practice stops counting (Ericsson et al., 1993). An ability at its full is marked Mastered. Stamina loses the mark when its fitness falls; the others keep what they’ve earned. Stamina’s fall of {FITNESS.perDay} a day is estimated from Mujika &amp; Padilla (2000), on detraining, and two workouts a week keeping it up is from Hickson &amp; Rosenkoetter (1981).</Fine>
       </div>
     </Panel>
   );

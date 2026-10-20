@@ -260,9 +260,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
   "status": "Rewritten",
-  "hash": "5a41edebf96d",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under The Calendar",
+  "hash": "b59c185628a6",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app by tools/screen-text.mjs, How This Works opened from the Calendar panel (brief 16): the summary of 4 sentences became 1 and 2 in two paragraphs, naming Skip It and Call It Off; Stand Here now says the commitment starts when the clock next moves (tools/voices.ts --guide, vague 4 to 2).",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.clock]": {
@@ -274,9 +274,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.needs]": {
   "status": "Rewritten",
-  "hash": "fdd3cdf8fcf5",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under What Needs You; its later lines held by tests/defects3-50-70.test.ts",
+  "hash": "108af5a307be",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts --guide (brief 16): the answer step said It does what the same button does; it now names What Needs You and the question’s own screen, with File It on Papers as the example (world.ts runs the same command); tests/guide-examples-start-day-body.test.ts passes.",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.plans]": {
@@ -379,9 +379,9 @@
  },
  "src/engine/content/guide/start.ts#START [start.find]": {
   "status": "Rewritten",
-  "hash": "465dec015c8e",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs, under Finding Your Way",
+  "hash": "c273b73c9ba0",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 5 sentences to 4 in two paragraphs, the menu and Menu on a narrow screen, then the breadcrumbs, Back and an address; tests/guide.test.ts and tests/navigation.test.ts pass.",
   "first": "Pending"
  },
  "src/engine/content/guide/start.ts#START [start.guide]": {
@@ -2542,9 +2542,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#FamilyChoice": {
   "status": "Rewritten",
-  "hash": "268a101c3b26",
-  "on": "2026-10-19",
-  "evidence": "tests/need-paths.test.ts, 'Genres & Background offers the six families…', and tests/language-frame-ui.test.ts, 'creation says what it’s for…', the card owed on and owing nothing",
+  "hash": "60304f9f6893",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app by tools/screen-text.mjs, Creation Step 3 (brief 16): the family callout of 4 sentences, 6 where Yale finds need, became the money you start with, then what Yale finds, then what aid asks later; tests/need-paths.test.ts and tests/language-frame-ui.test.ts pass.",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#IdentityStep": {
@@ -2619,9 +2619,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#PersonalStep": {
   "status": "Rewritten",
-  "hash": "8056fcffa260",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g28-ui.test.ts, 'PLAYER JOURNEY: Genres & Background marks every chip no play’s kind names with ·…', and tests/language-frame-ui.test.ts, 'creation says what it’s for…', the background's line",
+  "hash": "9f000bb95a73",
+  "on": "2026-10-20",
+  "evidence": "Read on the built app by tools/screen-text.mjs, Creation Step 3 (brief 16): the genres paragraph went from 4 sentences to 3, pick as many as are true; tests/evidence-g28-ui.test.ts holds the rest word for word.",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#ReviewStep": {

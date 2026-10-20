@@ -264,7 +264,11 @@ describe('p-abilities', () => {
       const { html, text } = drawn(sim, ProfileWorkspace);
       const rows = abilityRows(html);
       expect(rows.size).toBe(12);
-      return { rows, sentence: text.match(/Full is the fittest a body your age can be, ([\d.]+) now/)?.[1], text };
+      // From 2026-10-20 (brief 16) the sentence under the table says where you stand first, "Yours is …", the row's Now:
+      // until then it opened on "Full is the fittest …".
+      const said = text.match(/Stamina is your fitness\. Yours is ([\d.]+), and full is the fittest a body your age can be, ([\d.]+) now: no work asks more of it\./);
+      expect(said?.[1]).toBe(rows.get('Stamina')![1]);
+      return { rows, sentence: said?.[2], text };
     };
     let { rows, sentence, text } = read();
     expect(rows.get('Stamina')![2]).toBe('99.4');

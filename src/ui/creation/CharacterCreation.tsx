@@ -823,7 +823,7 @@ function PersonalStep({
           <div>
             <h2>Genres</h2>
             <p className="muted small">
-              The films you love. Pick as many as are true: there’s no limit. Rehearsing or performing a
+              The films you love: pick as many as are true. Rehearsing or performing a
               play in a genre you love, a comedy or a tragedy, lifts your morale and eases your stress, though
               it doesn’t make you any better at it. A genre marked · has no plays here, so it’s only shown on
               your Player Profile.
@@ -893,11 +893,18 @@ function FamilyChoice({ config, setConfig }: { config: NewSaveConfig; setConfig:
           {FAMILIES.map((w) => <option key={w} value={w}>{wealthLabel(w)}</option>)}
         </select>
       </div>
+      {/* The money first, then what Yale finds, then what aid asks later (from 2026-10-20, brief 16, section 7): until then
+          one paragraph, six sentences where Yale found need. */}
       <div className="callout">
-        {wealthNote(config.wealth)} {`${whole(wealth.checking)} in checking and ${whole(wealth.savings)} in savings${card}.`}{' '}
-        {findsNeed(config)
-          ? `Yale finds that you need aid. Its living-expense scholarship of ${formatMoney(aided.livingScholarship, cur)} a term pays for that term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, and puts the rest, ${formatMoney(aided.refund, cur)}, into your bank each fall and spring. If you miss work-study hours while you’re ill, you can convert them to grant aid. If you take a leave in the middle of a term, you give back part of the scholarship.`
-          : `Yale finds that you don’t need aid, given your family’s means, so there’s no aid for living costs. The term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, comes out of your bank each fall and spring.`}
+        <p style={{ margin: '0 0 var(--s2)' }}>{wealthNote(config.wealth)} {`You start with ${whole(wealth.checking)} in checking and ${whole(wealth.savings)} in savings${card}.`}</p>
+        {findsNeed(config) ? (
+          <>
+            <p style={{ margin: '0 0 var(--s2)' }}>{`Yale finds that you need aid. Its living-expense scholarship of ${formatMoney(aided.livingScholarship, cur)} a term pays for that term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, and puts the rest, ${formatMoney(aided.refund, cur)}, into your bank each fall and spring.`}</p>
+            <p style={{ margin: 0 }}>If you miss work-study hours while you’re ill, you can convert them to grant aid. If you take a leave in the middle of a term, you give back part of the scholarship.</p>
+          </>
+        ) : (
+          <p style={{ margin: 0 }}>{`Yale finds that you don’t need aid, given your family’s means, so there’s no aid for living costs. The term’s Yale Health plan, ${formatMoney(aided.healthPlan, cur)}, comes out of your bank each fall and spring.`}</p>
+        )}
       </div>
     </div>
   );
