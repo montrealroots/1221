@@ -206,6 +206,8 @@ const cap = (s: string) => `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const ORDINAL = ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'];
 const ordinal = (n: number) => ORDINAL[n] ?? (() => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; })();
+/** "A" or "an" before an ordinal, by its sound: an eighth, an 11th, an 18th, an 80th (found reading brief 16's final runs: "A eighth time"). */
+const aOrdinal = (n: number) => { const o = ordinal(n); return `${/^(?:eighth|11th|18th|8\d*th)$/.test(o) ? 'an' : 'a'} ${o}`; };
 const COUNT = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 const count = (n: number) => COUNT[n] ?? String(n);
 
@@ -390,10 +392,10 @@ function recurringLeads(f: ShowingFacts): string[] {
   if (f.persistent && f.subject) return [
     `The note on ${f.subject} is still open after ${count(n - 1)} notes, the last ${where} on ${b.on}.`,
     `This is the ${ordinal(n)} time you’ve had the note on ${f.subject}, the last ${where} on ${b.on}.`,
-    `A ${ordinal(n)} time for the note on ${f.subject}: it was last given ${where}, on ${b.on}.`,
+    `${cap(aOrdinal(n))} time for the note on ${f.subject}: it was last given ${where}, on ${b.on}.`,
   ];
   return n >= 3
-    ? [`This is the ${ordinal(n)} time you’ve had this note, the last ${where} on ${b.on}, and it’s still there.`, `The same note a ${ordinal(n)} time: it was last given ${where}, on ${b.on}.`, `Still open after ${count(n - 1)} notes, the last ${where} on ${b.on}.`]
+    ? [`This is the ${ordinal(n)} time you’ve had this note, the last ${where} on ${b.on}, and it’s still there.`, `The same note ${aOrdinal(n)} time: it was last given ${where}, on ${b.on}.`, `Still open after ${count(n - 1)} notes, the last ${where} on ${b.on}.`]
     : [`You had this note ${where} on ${b.on} too, and it’s still there.`, `The same note as on ${b.on} ${where}: it hasn’t moved yet.`, `Still there from ${b.on}, ${where}.`];
 }
 

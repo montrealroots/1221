@@ -1132,7 +1132,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
         'The same note as on (\\w+ \\d{1,2}, \\d{4}) in .+?: it hasn’t moved yet\\.',
         'Still there from (\\w+ \\d{1,2}, \\d{4}), in .+?\\.',
         `This is the ${ORD} time you’ve had this note, the last in .+? on (\\w+ \\d{1,2}, \\d{4}), and it’s still there\\.`,
-        `The same note a ${ORD} time: it was last given in .+?, on (\\w+ \\d{1,2}, \\d{4})\\.`,
+        `The same note an? ${ORD} time: it was last given in .+?, on (\\w+ \\d{1,2}, \\d{4})\\.`,
         'Still open after \\w+ notes, the last in .+? on (\\w+ \\d{1,2}, \\d{4})\\.',
         'You fixed this on (\\w+ \\d{1,2}, \\d{4}), but it has slipped back\\.',
         'This had come right on (\\w+ \\d{1,2}, \\d{4}), and it has slipped since\\.',
@@ -1140,7 +1140,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
         // Given often, said short and named by what it's on (from 2026-10-20, later that day).
         'The note on .+? is still open after \\w+ notes, the last in .+? on (\\w+ \\d{1,2}, \\d{4})\\.',
         `This is the ${ORD} time you’ve had the note on .+?, the last in .+? on (\\w+ \\d{1,2}, \\d{4})\\.`,
-        `A ${ORD} time for the note on .+?: it was last given in .+?, on (\\w+ \\d{1,2}, \\d{4})\\.`,
+        `An? ${ORD} time for the note on .+?: it was last given in .+?, on (\\w+ \\d{1,2}, \\d{4})\\.`,
       ].map((x) => new RegExp(x));
       const said = SAID.map((r) => r.exec(t)).find(Boolean);
       if (a.feedback!.kind === 'recurring') {
@@ -1184,6 +1184,12 @@ describe('repetition: a note said before says so, a warning repeated says what c
     // the part's label goes with its figure.
     const eleventh = showingCandidates({ ...facts, subject: 'Lines', kind: 'recurring', before: { on: 'September 8, 2026', course: 'Acting I', given: 10 }, persistent: true });
     for (const c of eleventh) { expect(c).toContain('September 8, 2026'); expect(c).toMatch(/[Tt]he note on Lines/); expect(c).toContain('It’s at 50% now, and the note is taken at 75%.'); expect(c).not.toContain('Lines weren’t secure.'); }
+    // "An eighth", "an 11th", "an 18th"; "a 14th" (from 2026-10-20: the final runs read "A eighth time").
+    for (const [given, said] of [[7, 'An eighth time'], [10, 'An 11th time'], [17, 'An 18th time'], [13, 'A 14th time'], [2, 'A third time']] as const) {
+      const c = showingCandidates({ ...facts, subject: 'Lines', kind: 'recurring', before: { on: 'September 8, 2026', course: 'Acting I', given }, persistent: given >= 3 });
+      expect(c.some((x) => x.includes(said) || x.includes(said.replace(/^A/, 'a'))), `${given}: ${c.join(' | ')}`).toBe(true);
+      for (const x of c) expect(x, x).not.toMatch(/\b[Aa] (?:eighth|11th|18th)\b/);
+    }
     const unnamed = showingCandidates({ ...facts, kind: 'recurring', before: { on: 'September 8, 2026', course: 'Acting I', given: 10 }, persistent: true });
     for (const c of unnamed) expect(c).toContain('Lines: 50% now, and the note is taken at 75%.');
     // The same limit holding the course's last piece back is said as that, with when; a band's move on the same day as

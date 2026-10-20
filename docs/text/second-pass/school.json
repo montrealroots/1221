@@ -2754,133 +2754,133 @@
   "status": "Rewritten",
   "hash": "49ba148051c0",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#CONDITION": {
   "status": "Rewritten",
   "hash": "1a1da5920f2f",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#despiteLeads": {
   "status": "Rewritten",
   "hash": "34c037bd1ac0",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/language-dynamic.test.ts (the school editor's read found the despite form's grammar)",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#HELD_INTROS": {
   "status": "Rewritten",
   "hash": "b4ae6003b375",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#heldAction": {
   "status": "Rewritten",
   "hash": "85cf078249a3",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#heldLeads": {
   "status": "Rewritten",
   "hash": "8ea36817e853",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (after/, examples.md) and held by tests/language-dynamic.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#maintainedLeads": {
   "status": "Rewritten",
   "hash": "0134b36a4da9",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial2 and the practicing rounds check) and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#movedLeads": {
   "status": "Rewritten",
   "hash": "118614225fbc",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#newLeads": {
   "status": "Rewritten",
   "hash": "66bbc96316ac",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#partialLeads": {
   "status": "Rewritten",
   "hash": "420cd37e8ff5",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#partnerSentence": {
   "status": "Rewritten",
   "hash": "c76f07021151",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#recurringLeads": {
   "status": "Rewritten",
-  "hash": "f6030a4ce3e7",
+  "hash": "745e1ceb8c10",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#showingCandidates": {
   "status": "Rewritten",
   "hash": "b00af1a143e3",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#slippedLeads": {
   "status": "Rewritten",
   "hash": "f1509edd2778",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#steadyLeads": {
   "status": "Rewritten",
   "hash": "903cb802ef5e",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#STEP": {
   "status": "Rewritten",
   "hash": "51d329ca44b9",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#STEP_INTROS": {
   "status": "Rewritten",
   "hash": "890f5dcc7101",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#stillOpen": {
   "status": "Rewritten",
   "hash": "4a8ab7bc7bdd",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/feedback.ts#WORK": {
   "status": "Rewritten",
   "hash": "ad4b91f04542",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts transcripts of seven played students (scratchpad trial) and held by tests/feedback.test.ts, tests/language-dynamic.test.ts, tests/repeat-moments.test.ts and tests/evidence2-b11.test.ts",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students (examples.md) and held by tests/language-dynamic.test.ts, which checks an eighth, an 11th, an 18th and a 14th",
   "first": "Pending"
  },
  "src/engine/systems/leave.ts#accountDue": {
