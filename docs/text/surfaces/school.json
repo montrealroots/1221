@@ -126,15 +126,15 @@
   "surface": "From Your Teachers: each course’s note on the term",
   "where": "School, Standing And Craft, From Your Teachers",
   "sources": [
-   "src/engine/systems/school.ts#teachersNotes"
+   "src/engine/systems/school.ts#TEACHERS_NOTE"
   ],
   "states": [
    "teacher",
    "history",
    "repeated"
   ],
-  "outcome": "Kept",
-  "why": "Each note names the skills its course trains and says, against the class’s middle that term, whether the student pulled ahead, kept pace or grew less, with the next step for the last; the panel says the notes are the game’s, not the teachers’. Read on the leave and withdrawn saves, five of eight teachers said the same frame (“Steady work, in step with the class. Keep at …”): giving each teacher a voice is the coordinator’s (sections 4 and 5), and it’s reported with the fix, not rewritten here.",
+  "outcome": "Revised",
+  "why": "Each note names the skills its course trains and says, against the class’s middle that term, whether the student pulled ahead, kept pace or grew less, with the next step for the last; the panel says the notes are the game’s, not the teachers’. Read on the leave and withdrawn saves, five of eight teachers said the same frame (“Steady work, in step with the class. Keep at …”), so the panel read as one voice signing eight names.",
   "evidence": [
    {
     "kind": "walk",
@@ -147,8 +147,13 @@
    {
     "kind": "test",
     "ref": "tests/language-dynamic.test.ts: 'a teacher and a cast member are named as the school names them, in the term’s notes and the cast'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/casting.test.ts: 'give one from each course the term ran, by its teacher, on growth in its skills against the room'"
    }
-  ]
+  ],
+  "changes": "Each course’s teacher writes in the course’s voice (`voiceOf`: direct, warm, exacting, patient, brisk), by the same three edges and naming the same skills: “A good, steady term in vocal expression, growing with the class. Keep it going.”, “In step with the class in physical expression, no further. There’s room to pull ahead.” The direct voice keeps the old words. (Coordinator, 2026-10-20.)"
  },
  {
   "surface": "Withdraw From The School…, and what it says first",
@@ -681,7 +686,7 @@
   "where": "Notices: Out Of The Casting Pool, You Missed A Rehearsal Call, The Director’s Note: …, and Not Cast This Term",
   "sources": [
    "src/engine/systems/school.ts#missedCallsOut",
-   "src/engine/systems/school.ts#directorsNote",
+   "src/engine/systems/school.ts#DIRECTORS_NOTE",
    "src/engine/systems/school.ts#registerSchool closeRun()"
   ],
   "states": [
@@ -691,8 +696,8 @@
    "notification",
    "history"
   ],
-  "outcome": "Kept",
-  "why": "A missed call says how many more take you out of the pool, and out of it says you still play what you’re cast in and what puts you back. The director’s note names the run’s nights in a director’s plain words and the one ability that held them back most; read in the runs, two productions with the same band said the same opening, and the directors’ voices are the coordinator’s (sections 4 to 7), reported, not rewritten here.",
+  "outcome": "Revised",
+  "why": "A missed call says how many more take you out of the pool, and out of it says you still play what you’re cast in and what puts you back. The director’s note names the run’s nights in a director’s plain words and the one ability that held them back most; read in the runs, two productions with the same band said the same opening, whoever directed them.",
   "evidence": [
    {
     "kind": "run",
@@ -705,8 +710,17 @@
    {
     "kind": "source",
     "ref": "src/engine/systems/school.ts"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/feedback-voices.test.ts: 'closes the run in the voice of its calls, its four bands said three ways and the plain way as before'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g21-school.test.ts: 'closes a run whose last night is missed in hospital: the note from the three nights played, one run milestone, the process looked back on, no breach, once across a save'"
    }
-  ]
+  ],
+  "changes": "The director’s note closes the run in the voice the director gave its notes at the calls (`directorVoiceFor`, the run and the production): plain keeps the old words; exacting “Solid, but safe. Next time, take more risks in the nights.”; encouraging “Good, solid nights. Next, let yourself take more risks in them.” (Coordinator, 2026-10-20.)"
  },
  {
   "surface": "The Yale Cabaret and the Summer Cabaret",
