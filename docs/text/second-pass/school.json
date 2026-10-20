@@ -511,11 +511,11 @@
   "first": "Pending"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.feedback]": {
-  "status": "Retained",
-  "hash": "e98043b0bef8",
-  "on": "2026-10-19",
-  "reason": "Feedback and Your Notes: the bands with their figures, what a note names, Taken and Better, Mark As Read, and a worked example of a note taken.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "9d6a38030d74",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
  },
  "src/engine/content/guide/coursework.ts#COURSEWORK [coursework.partners]": {
   "status": "Retained",
@@ -2268,11 +2268,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/systems/classmates.ts#classMoment [apology]": {
-  "status": "Retained",
-  "hash": "1702dc71ef9f",
-  "on": "2026-10-19",
-  "reason": "A classmate's apology for missing a rehearsal, with an everyday reason in their own voice, so Accept It or Take It Coolly has something real to answer.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "618affa2e465",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
  },
  "src/engine/systems/classmates.ts#classMoment [boundary]": {
   "status": "Rewritten",
@@ -2289,11 +2289,11 @@
   "first": "Pending"
  },
  "src/engine/systems/classmates.ts#classMoment [help]": {
-  "status": "Retained",
-  "hash": "5133e2797254",
-  "on": "2026-10-19",
-  "reason": "A classmate's request in their own circumstances: behind on their lines, how long they need, and an everyday reason for being behind, all a player needs to answer.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "e2f536cfac53",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
  },
  "src/engine/systems/classmates.ts#disagreement": {
   "status": "Retained",
@@ -2462,13 +2462,6 @@
   "on": "2026-10-19",
   "reason": "The calendar entry's title for a rehearsal, naming the partner by first name as the calendar names the other people you meet.",
   "first": "Reviewed And Retained"
- },
- "src/engine/systems/coursework.ts#feedbackWords": {
-  "status": "Rewritten",
-  "hash": "b632bbc0de5e",
-  "on": "2026-10-19",
-  "evidence": "tests/feedback.test.ts \"a note on the same thing, over time\" and \"a weakness that keeps coming back\"; tests/language-dynamic.test.ts repetition test; rendered.txt note lines (new, second, fourth, better, slipped back, step beyond)",
-  "first": "Pending"
  },
  "src/engine/systems/coursework.ts#hourWords": {
   "status": "Retained",
@@ -2640,9 +2633,9 @@
  },
  "src/engine/systems/coursework.ts#rehearsalOutcome": {
   "status": "Rewritten",
-  "hash": "3e0292e58cc4",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g22-school.test.ts \"PLAYER JOURNEY: the partner doesn’t come: trust and bond held, their notice and the screen saying so\"",
+  "hash": "c389a1290c3a",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/coursework.ts#remedyWords": {
@@ -2675,16 +2668,9 @@
  },
  "src/engine/systems/coursework.ts#show": {
   "status": "Rewritten",
-  "hash": "30b5f90e7b04",
-  "on": "2026-10-19",
-  "evidence": "rendered.txt NOTICE Shown with \"It didn’t come together today. ... When it does come together, here’s what to try next.\"; tests/attributes-phase-2b.test.ts F1 scene note",
-  "first": "Pending"
- },
- "src/engine/systems/coursework.ts#sinceLast": {
-  "status": "Rewritten",
-  "hash": "58e2ee090cd0",
-  "on": "2026-10-19",
-  "evidence": "rendered.txt NOTICE Shown: \"That’s up from Unready ...\", \"That’s down from Working ...\", \"Unready again, as the course’s last piece was on ...\"",
+  "hash": "78501461e3a0",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/coursework.ts#tableWorkRefusal": {
@@ -2762,6 +2748,139 @@
   "hash": "1c67488fb0c6",
   "on": "2026-10-19",
   "evidence": "rendered.txt limit lines: \"12 points out of 100\", \"1 point out of 100\", \"less than a point\"; tests/editorial-school-words.test.ts and tests/evaluation.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#bestLeads": {
+  "status": "Rewritten",
+  "hash": "49ba148051c0",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#CONDITION": {
+  "status": "Rewritten",
+  "hash": "aac06a06f48d",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#despiteLeads": {
+  "status": "Rewritten",
+  "hash": "67803234d290",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#HELD_INTROS": {
+  "status": "Rewritten",
+  "hash": "b4ae6003b375",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#heldAction": {
+  "status": "Rewritten",
+  "hash": "2f36dbdfa5ca",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#heldLeads": {
+  "status": "Rewritten",
+  "hash": "60ce7e19c94b",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#maintainedLeads": {
+  "status": "Rewritten",
+  "hash": "4c9c405b3197",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#movedLeads": {
+  "status": "Rewritten",
+  "hash": "118614225fbc",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#newLeads": {
+  "status": "Rewritten",
+  "hash": "66bbc96316ac",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#partialLeads": {
+  "status": "Rewritten",
+  "hash": "bfa9cb165b2c",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#partnerSentence": {
+  "status": "Rewritten",
+  "hash": "c76f07021151",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#recurringLeads": {
+  "status": "Rewritten",
+  "hash": "2b68ff9801f9",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#showingCandidates": {
+  "status": "Rewritten",
+  "hash": "b00af1a143e3",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#slippedLeads": {
+  "status": "Rewritten",
+  "hash": "f1509edd2778",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#steadyLeads": {
+  "status": "Rewritten",
+  "hash": "d64d97bb71d7",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#STEP": {
+  "status": "Rewritten",
+  "hash": "51d329ca44b9",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#STEP_INTROS": {
+  "status": "Rewritten",
+  "hash": "890f5dcc7101",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#stillOpen": {
+  "status": "Rewritten",
+  "hash": "484a45100547",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/feedback.ts#WORK": {
+  "status": "Rewritten",
+  "hash": "ad4b91f04542",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/leave.ts#accountDue": {
@@ -3143,11 +3262,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/production.ts#noteText": {
-  "status": "Retained",
-  "hash": "544bcf8ae5b7",
-  "on": "2026-10-19",
-  "reason": "A director's note that comes back says it does, and what you tried for it, then and now, and whether it helped, in the director's voice.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "9ff7b9fe9d8d",
+  "on": "2026-10-20",
+  "evidence": "Read in tools/voices.ts transcripts of seven played students and held by tests/feedback.test.ts and tests/language-dynamic.test.ts",
+  "first": "Pending"
  },
  "src/engine/systems/production.ts#noteWords": {
   "status": "Retained",
@@ -3739,10 +3858,10 @@
  },
  "src/ui/components/BriefPane.tsx#BriefPane": {
   "status": "Rewritten",
-  "hash": "ec032f109362",
-  "on": "2026-10-19",
-  "evidence": "tests/material-words.test.ts (every brief's pane rendered, its beats' reason shown, now once, after the Tone line of What It Asks) and tests/genre-identity-screens.test.ts; at material-b's suggestion",
-  "first": "Rewritten And Verified"
+  "hash": "b3fd2417939e",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "first": "Pending"
  },
  "src/ui/components/BriefPane.tsx#BriefPane step()": {
   "status": "Retained",

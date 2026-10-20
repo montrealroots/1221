@@ -14,6 +14,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { PREP_DIMS, sceneById } from '@/engine/content/coursework';
 import { courseworkOf, interpretationOf, judgeWork, notesOf, questionsFor, readingDiffers, setWork, show, weightsOf, type Assignment } from '@/engine/systems/coursework';
 import { LEARNING } from '@/engine/systems/learning';
+import { STEP } from '@/engine/systems/feedback';
 
 const zone = 'America/New_York';
 const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
@@ -29,6 +30,11 @@ function prepared(sim: Simulation, lines: number, rest = 0.95): Assignment {
   for (const { q, options } of questionsFor(a)) a.answers[q.id] = options.find((o) => o.supported)!.id;
   return a;
 }
+/**
+ * The band against the course's last piece, where it moved, said first (from 2026-10-20, brief 16's `showingWords`), and
+ * the leads below said one of a few true ways: each form is held here with its facts.
+ */
+const MOVED = '^(?:(?:Up from|That’s up from|Better than the|Down from|That’s down from|Lower than the) [^.]+\\. )?';
 const showAt = (sim: Simulation, a: Assignment, day: number) => show(sim, sim.player, a, `2026-10-${String(day).padStart(2, '0')}`, instantFromZoned({ year: 2026, month: 10, day, hour: 10 }, zone));
 
 describe('a note on the same thing, over time', () => {
@@ -45,11 +51,11 @@ describe('a note on the same thing, over time', () => {
     const a2 = prepared(sim, 0.22);
     showAt(sim, a2, 8);
     expect(a2.feedback!.kind).toBe('recurring');
-    expect(a2.feedback!.text).toMatch(/^You had this note in Acting I on October 1, 2026 too, and it’s still there\./);
+    expect(a2.feedback!.text).toMatch(new RegExp(`${MOVED}(?:You had this note in Acting I on October 1, 2026 too, and it’s still there\\.|The same note as on October 1, 2026 in Acting I: it hasn’t moved yet\\.|Still there from October 1, 2026, in Acting I\\.)`));
     const a3 = prepared(sim, 0.5);
     showAt(sim, a3, 15);
     expect(a3.feedback!.kind).toBe('partial');
-    expect(a3.feedback!.text).toMatch(/^This has improved since October 8, 2026 \(22% then, 50% now\), but it isn’t there yet\./);
+    expect(a3.feedback!.text).toMatch(new RegExp(`${MOVED}(?:This has improved since October 8, 2026 \\(22% then, 50% now\\), but it isn’t there yet\\.|Lines went from 22% on October 8, 2026 to 50% now: closer, not there yet\\.|Better than on October 8, 2026 \\(22% then, 50% now\\), though not all the way\\.)`));
     // Put right: taken, said, and the note is about something else.
     const a4 = prepared(sim, 0.9);
     const s4 = showAt(sim, a4, 22);
@@ -77,7 +83,13 @@ describe('a note on the same thing, over time', () => {
     showAt(sim, a2, 8);
     expect(a1.feedback!.kind).toBe('advanced');
     expect(a2.feedback!.kind).toBe('advanced');
-    expect(a1.feedback!.text).toMatch(/^It came together\. Here’s what to try next\. /);
+    // The step beyond in acting's words, after what the piece was (from 2026-10-20, brief 16): until then after "It came
+    // together. Here’s what to try next." in every course.
+    for (const a of [a1, a2]) {
+      const step = STEP.acting[(a.feedback!.focus as { challenge: keyof typeof STEP.acting }).challenge];
+      expect(a.feedback!.text.endsWith(step)).toBe(true);
+      expect(a.feedback!.text).not.toMatch(/It came together/);
+    }
     expect(a2.feedback!.focus).not.toEqual(a1.feedback!.focus);
   });
 });
@@ -127,7 +139,9 @@ describe('a weakness that keeps coming back', () => {
     const shown = days.map((d) => { const a = prepared(sim, 0.2); showAt(sim, a, d); return a; });
     expect(shown.map((a) => a.feedback!.kind)).toEqual(['new', 'recurring', 'recurring', 'recurring']);
     expect(shown[1]!.feedback!.text).not.toMatch(/ time you’ve had this note/);
-    expect(shown[2]!.feedback!.text).toMatch(/^This is the third time you’ve had this note, the last in Acting I on October 8, 2026, and it’s still there\./);
-    expect(shown[3]!.feedback!.text).toMatch(/the fourth time you’ve had this note/);
+    expect(shown[2]!.feedback!.text).toMatch(new RegExp(`${MOVED}(?:This is the third time you’ve had this note, the last in Acting I on October 8, 2026, and it’s still there\\.|The same note a third time: it was last given in Acting I, on October 8, 2026\\.|Still open after two notes, the last in Acting I on October 8, 2026\\.)`));
+    // Given three times and still open, the fourth is said short (from 2026-10-20, brief 16): the count, what's still open,
+    // and where to try another way, not the whole note again.
+    expect(shown[3]!.feedback!.text).toMatch(/^(?:This is the fourth time you’ve had this note, the last in Acting I on October 15, 2026, and it’s still there\.|The same note a fourth time: it was last given in Acting I, on October 15, 2026\.|Still open after three notes, the last in Acting I on October 15, 2026\.) Lines is at 20%, and the note is taken at 75%\. A Note That Keeps Coming Back, on the piece’s card, offers other ways at it\.$/);
   });
 });

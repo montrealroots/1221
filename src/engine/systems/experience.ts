@@ -98,8 +98,8 @@ export function featuresOf(m: MaterialProfile): string[] {
 }
 
 /** How to pace the next hour, by the Focus control's own words: Spaced where the last session was a day to a week ago. */
-const SPACED_NOW = 'Set Focus to Spaced: your last session was a day to a week ago, the gap where spacing pays.';
-const STEADY_FIRST = 'Set Focus to Steady to start. Spaced pays more once your last session is a day to a week old.';
+export const SPACED_NOW = 'Set Focus to Spaced: your last session was a day to a week ago, the gap where spacing pays.';
+export const STEADY_FIRST = 'Set Focus to Steady to start. Spaced pays more once your last session is a day to a week old.';
 
 export const FEATURE_LABEL: Readonly<Record<string, string>> = {
   timing: 'Exact Timing', physical: 'Physical Work', partner: 'Playing Off A Partner', vocal: 'Vocal Demand', improvisation: 'Improvised Freedom',
@@ -148,8 +148,17 @@ export const featureSpeed = (person: Person, m: MaterialProfile | undefined): nu
  */
 export interface Recommendation {
   target: string; label: string; exercise?: string; tier?: 0 | 1 | 2; focus: string; why: string; points: number;
-  /** Where it's the weakness the work so far keeps coming back to (from 2026-10-12): the last piece it held back and what that rests on, which the screens show beside it; the pieces and the points are in `why`. */
-  recurring?: { last: number; evidence: readonly string[] };
+  /**
+   * Where it's the weakness the work so far keeps coming back to (from 2026-10-12): the last piece it held back and what
+   * that rests on, which the screens show beside it; the pieces and the points are in `why`, and from 2026-10-20 here too,
+   * for the Profile's Why This Recommendation (`adviceSummary`).
+   */
+  recurring?: { last: number; evidence: readonly string[]; pieces?: number; whole?: number };
+  /**
+   * `why` in its two parts, where it's said whole (from 2026-10-20, brief 16's Profile, `adviceSummary`): why it matters
+   * now, and what to do; `more` is what's left of it. A forecast's are put together where the forecast is read.
+   */
+  now?: string; act?: string; more?: string;
   /** What its hours were forecast to bring (from 2026-10-16, `systems/advice.ts`): the level now and after, and the hours. */
   forecast?: Forecast;
   /** Other training about as useful as this (from 2026-10-16, `tied`): said beside the first, so a near-tie isn't called a winner. */
@@ -278,11 +287,14 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     const since = ex ? lastPracticed?.(ex.id) : undefined;
     const focus = since !== undefined && since >= 1 && since <= 7 ? 'spaced' : 'steady';
     const each = Math.round(points * 10) / 10;
-    out.push({ target: what, label: c.label, ...(ex ? { exercise: ex.id, tier: matchedTier(now) } : {}), focus, points: each, why: `It cost each of your recent pieces about ${each} ${each === 1 ? 'point' : 'points'} off the whole, the latest counting most. It’s at ${Math.round(now)} of ${Math.round(full)}. ${focus === 'spaced' ? SPACED_NOW : STEADY_FIRST}` });
+    const said = `It cost each of your recent pieces about ${each} ${each === 1 ? 'point' : 'points'} off the whole, the latest counting most. It’s at ${Math.round(now)} of ${Math.round(full)}.`;
+    out.push({ target: what, label: c.label, ...(ex ? { exercise: ex.id, tier: matchedTier(now) } : {}), focus, points: each, why: `${said} ${focus === 'spaced' ? SPACED_NOW : STEADY_FIRST}`, now: said });
   }
   for (const [what, c] of prepCost) {
     if (c.points < RECOMMEND.floor) continue;
-    out.push({ target: `prep:${what}`, label: c.label, focus: 'preparation', points: Math.round(c.points * 10) / 10, why: `Coming to your work short on ${c.label.toLowerCase()} cost each piece about ${pointsWords(Math.round(c.points * 10) / 10)} off the whole. That’s preparation, not training: prepare that part further before you show or tape the next piece.` });
+    const now = `Coming to your work short on ${c.label.toLowerCase()} cost each piece about ${pointsWords(Math.round(c.points * 10) / 10)} off the whole.`;
+    const act = 'That’s preparation, not training: prepare that part further before you show or tape the next piece.';
+    out.push({ target: `prep:${what}`, label: c.label, focus: 'preparation', points: Math.round(c.points * 10) / 10, why: `${now} ${act}`, now, act });
   }
   for (const [k, c] of dayCost) {
     if (c.points < RECOMMEND.floor) continue;
@@ -293,8 +305,13 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     // first found in, "Stamina, By Beat 2 cost about 2.7 points of the whole a piece: come to the work rested and well, or
     // find places to breathe in it", at fitness 15 on long taped briefs: rest restores energy, and a brief's drain reads
     // none of it.
-    if (k === 'condition:stamina') { out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `Tiring through a piece’s later moments cost each one about ${pointsWords(each)} off the whole. Stamina is your fitness, and Work Out, under Look After Yourself, builds it. Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness.` }); continue; }
-    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: c.kind === 'fit' ? `Playing it a way that didn’t fit cost each piece about ${pointsWords(each)} off the whole. Choose a way the material or the direction allows.` : `${c.label} cost each piece about ${pointsWords(each)} off the whole. Come to the work rested and well, or find places to breathe in it.` });
+    if (k === 'condition:stamina') {
+      const [now, act, more] = [`Tiring through a piece’s later moments cost each one about ${pointsWords(each)} off the whole.`, 'Stamina is your fitness, and Work Out, under Look After Yourself, builds it.', 'Places to breathe in a piece leave less of it to drain, and on a night so does coming to the curtain rested. Rest restores energy, not fitness.'];
+      out.push({ target: k, label: 'Stamina', focus: 'stamina', points: each, why: `${now} ${act} ${more}`, now, act, more });
+      continue;
+    }
+    const [now, act] = c.kind === 'fit' ? [`Playing it a way that didn’t fit cost each piece about ${pointsWords(each)} off the whole.`, 'Choose a way the material or the direction allows.'] : [`${c.label} cost each piece about ${pointsWords(each)} off the whole.`, 'Come to the work rested and well, or find places to breathe in it.'];
+    out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: each, why: `${now} ${act}`, now, act });
   }
   // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't. From
   // brief 10 at full precision (`exact`), what the hours are forecast to bring, which is what's said and what's played
@@ -309,7 +326,7 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
   // to lead (F2-A10 (h), tuning case adv-t-10: memory first at 0.335, imagination 0.345).
   const mine = recurring ? out.find((r) => r.target === recurring.target) : undefined;
   if (recurring && mine) {
-    mine.recurring = { last: recurring.last, evidence: recurring.evidence };
+    mine.recurring = { last: recurring.last, evidence: recurring.evidence, pieces: recurring.pieces, whole: recurring.whole };
     mine.why = `${mine.why} It keeps coming back in your work: it has held back ${recurring.pieces} of your pieces in all, ${recurring.whole} ${recurring.whole === 1 ? 'point' : 'points'} off the whole across them.`;
     if (!forecasting && mine.points >= out[0]!.points - RECOMMEND.recurringWithin) out.unshift(...out.splice(out.indexOf(mine), 1));
   }

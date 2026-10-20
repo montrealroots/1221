@@ -42,6 +42,7 @@
  * arithmetic.
  */
 
+import { pick } from './feedback';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -347,7 +348,7 @@ export function noteFor(person: Person, p: Process, reads: Partial<Craft>, n: nu
  * 2026-10-12): until then a note knew only this part, never the actor's history. It's words alone: the note's problem,
  * its figure and what answers it are the same either way.
  */
-export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { target: string; label: string; pieces: number }): string {
+export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { target: string; label: string; pieces: number }, memory?: { key: string; recent: readonly string[] }): string {
   const words = noteWords(f);
   const history = f.kind === 'craft' && recurring && f.problem === `limit:${recurring.target}` ? ` It’s your ${recurring.label.toLowerCase()} again: it’s held back ${recurring.pieces} of your pieces before this.` : '';
   if (!before) return `${words}${history}`;
@@ -356,7 +357,13 @@ export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { targ
   const a = before.answer;
   const moved = a?.solution ? Math.max(a.after, a.now ?? a.after) - a.before : 0;
   const tried = a?.solution ? ` You tried ${(a.label ?? ADJUSTMENTS[a.solution as AdjustmentId]?.label ?? a.solution).toLowerCase()}: ${a.before} then, ${a.now ?? a.after} now${before.outcome === 'learned' || (before.outcome === undefined && moved < WORKBOOK.evidence && !before.taken) ? (Math.min(a.after, a.now ?? a.after) - a.before <= -WORKBOOK.evidence ? ', which made it worse: worth knowing, and not the answer' : ', which didn’t move it: worth knowing, and not the answer') : ''}.` : '';
-  return before.taken ? `Better since the last note.${tried} ${words}${history}` : `Still: ${continued(words)}${tried}${history}`;
+  // Said a few true ways, where the part's own last notes are passed (from 2026-10-20, brief 16, `pick`): until then every
+  // note after one taken began "Better since the last note." and every one not taken "Still:", 17 and 29 of 85 notes in
+  // brief 16's baseline. Without them, the first way, as before.
+  const options = before.taken
+    ? [`Better since the last note.${tried} ${words}${history}`, `That’s moved since the last note.${tried} Now: ${continued(words)}${history}`, `The last note took.${tried} Next: ${continued(words)}${history}`]
+    : [`Still: ${continued(words)}${tried}${history}`, `Same note as at the last call: ${continued(words)}${tried}${history}`, `Not there yet: ${continued(words)}${tried}${history}`];
+  return memory ? pick(options, memory.key, memory.recent) : options[0]!;
 }
 
 /**
@@ -465,7 +472,7 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
     const before = [...p.notes].reverse().find((x) => same(x.focus));
     // A limit on the weakness the actor's work keeps coming back to is said as one (from 2026-10-12, `noteText`).
     const recurring = focus.kind === 'craft' && focus.problem.startsWith('limit:') ? identityOf(person).recurring : undefined;
-    p.notes.push({ at: sim.now, text: noteText(focus, before, recurring), focus });
+    p.notes.push({ at: sim.now, text: noteText(focus, before, recurring, { key: `${which ?? stage}:${p.calls}:${p.notes.length}`, recent: p.notes.slice(-6).map((x) => x.text) }), focus });
     if (focus.kind === 'craft' || focus.kind === 'direction') countDirection(person, { given: true });
     if (p.notes.length > 30) p.notes.splice(0, p.notes.length - 30);
   }

@@ -883,13 +883,18 @@ async function specialist() {
     return said1;
   });
   await step('the advice: What To Work On names what to train, its forecast, what it assumes, and what deserves attention; none of the four strengths', [], async () => {
-    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=..');
+    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=../..');
     must(await work.count(), 'no What To Work On on the brief');
     named = clean(await work.locator('p strong').first().innerText());
     const first = clean(await work.locator('p').first().innerText());
+    // From brief 16 (2026-10-20) the reasoning is behind Why This Recommendation, opened here as a player opens it.
+    const why = work.locator('details[data-why]').first();
+    must(await why.count(), 'no Why This Recommendation');
+    await press(why.locator('summary'), 'Why This Recommendation'); await wait(300);
+    must((await why.getAttribute('open')) !== null, 'Why This Recommendation didn’t open');
     const assumes = clean(await work.locator('[data-assumes]').innerText().catch(() => ''));
     const attention = clean(await work.locator('[data-attention]').innerText().catch(() => ''));
-    must(/\d+ hours of its exercise(?:, an hour a day,)? would take it from \d+ to about \d+\. On your recent work, judged again as you are now, that’s forecast to be worth about [\d.]+ points? a piece/.test(clean(await work.innerText())), `no forecast in hours and points: ${first.slice(0, 300)}`);
+    must(/Estimate: \d+ hours(?:, an hour a day,)? would take it from \d+ to about \d+, worth about [\d.]+ points? a piece on your recent work\.|an estimated [\d.]+ points? a piece for \d+ hours, from \d+ to about \d+\./.test(clean(await work.innerText())), `no estimate in hours and points: ${first.slice(0, 300)}`);
     must(/^What the forecast assumes of your last (piece|\d+ pieces): /.test(assumes), `what it assumes: ${assumes || 'nothing'}`);
     must(/(is|are) worth your time now|^Neither preparation nor training/.test(attention), `what deserves attention: ${attention || 'nothing'}`);
     const ex = work.locator('button', { hasText: /…$/ }).first();
@@ -907,7 +912,7 @@ async function specialist() {
     level0 = await abilityNow(named);
     said(`${named} before the hours: ${level0}`);
     await openBrief('Nordic Noir');
-    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=..');
+    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=../..');
     await press(work.locator('button', { hasText: /…$/ }).first(), `${trains}…`); await wait(400);
     const go = () => work.getByRole('button', { name: /^Practice An Hour$/ }).first();
     const gains = [];
@@ -933,7 +938,7 @@ async function specialist() {
     await advance('Tomorrow Morning');
     must((await dateText()) !== day, `still ${day}`);
     await openBrief('Nordic Noir');
-    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=..');
+    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=../..');
     const ex = work.locator('button', { hasText: new RegExp(`^${trains.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}…$`) }).first();
     const go = () => work.getByRole('button', { name: /^Practice An Hour$/ }).first();
     let gains = 0;
@@ -961,7 +966,7 @@ async function specialist() {
     must(await rows.count() === 2, `${await rows.count()} takes in the table`);
     const top = clean(await rows.first().innerText());
     must(/Better prepared or better able/.test(top), `the newest take’s purpose: ${top}`);
-    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=..');
+    const work = briefPane().locator('.eyebrow', { hasText: /^What To Work On$/ }).locator('xpath=../..');
     said(`What To Work On now: ${clean(await work.innerText().catch(() => '')).slice(0, 400)}`);
     await shot('second-take');
     must(second > firstTake, `the second take ${second} isn’t above the first ${firstTake}`);

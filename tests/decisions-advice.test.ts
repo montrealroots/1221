@@ -320,7 +320,8 @@ describe('L1: repeated advice, for a player who ignores it and one who follows i
     // On the screen: the Player Profile says it, and the next hour.
     const text = profileText(sim);
     expect(text).toContain(weeks.at(-1)!.standing);
-    expect(text).toContain(weeks.at(-1)!.next);
+    // The next hour as the card says it, without its "Next:" (from 2026-10-20, brief 16's `adviceSummary`).
+    expect(text).toContain(weeks.at(-1)!.next.replace(/^Next: /, ''));
     // The player who follows it, from the same save: twenty sessions of its exercise, one a day, inside L1's four weeks.
     const target = weeks.at(-1)!.target;
     const from = levelOf(sim, sim.player, target as never);

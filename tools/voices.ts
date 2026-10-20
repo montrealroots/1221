@@ -263,13 +263,14 @@ function guide() {
   }
   const many = strings.map((x) => ({ ...x, sentences: sentences(x.text).length, words: words(x.text) })).filter((x) => x.sentences > 3);
   const vague = strings.filter((x) => /(?:^|[.:;]\s)(?:It|This|That) (?:happens|does|is done)\b/.test(x.text));
-  return { strings: strings.length, moreThanThreeSentences: many.length, vague: vague.length, examplesMany: many.sort((a, b) => b.sentences - a.sentences).slice(0, 15).map((x) => ({ where: x.where, sentences: x.sentences, words: x.words, text: x.text.slice(0, 220) })), vagueAll: vague.map((x) => ({ where: x.where, text: x.text })) };
+  const five = many.filter((x) => x.sentences >= 5);
+  return { strings: strings.length, moreThanThreeSentences: many.length, fiveOrMore: five.length, vague: vague.length, fiveOrMoreAll: five.map((x) => ({ where: x.where, sentences: x.sentences, words: x.words })), examplesMany: many.sort((a, b) => b.sentences - a.sentences).slice(0, 15).map((x) => ({ where: x.where, sentences: x.sentences, words: x.words, text: x.text.slice(0, 220) })), vagueAll: vague.map((x) => ({ where: x.where, text: x.text })) };
 }
 
 if (argv.includes('--guide')) {
   const g = guide();
   writeFileSync(arg('out', 'voices-guide.json'), `${JSON.stringify(g, null, 1)}\n`);
-  console.log(JSON.stringify({ strings: g.strings, moreThanThreeSentences: g.moreThanThreeSentences, vague: g.vague }));
+  console.log(JSON.stringify({ strings: g.strings, moreThanThreeSentences: g.moreThanThreeSentences, fiveOrMore: g.fiveOrMore, vague: g.vague }));
 } else if (argv.includes('--summarize')) {
   const files = argv.slice(argv.indexOf('--summarize') + 1).filter((a) => !a.startsWith('--') && a.endsWith('.json') && a !== arg('out', ''));
   const runs = files.map((f) => JSON.parse(readFileSync(f, 'utf8')));

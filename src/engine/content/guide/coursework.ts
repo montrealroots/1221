@@ -508,7 +508,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     available: `${OPENED}, once a piece has been shown.`,
     short: `Feedback is the teacher’s note on a piece you’ve shown, telling you what held it back most and what to do next. In the class it’s due, the piece is shown and given a band (Unready under ${EVALUATION.bands.working}, Working, Strong from ${EVALUATION.bands.strong}, Exceptional from ${EVALUATION.bands.exceptional}), what went well, and one note. Notes are kept by what they’re about, across every course, so a note that comes back says so: new, still there, or better but not there yet. Once the part a note named has come right, the note is marked taken, and it comes back only if the part slips. With nothing holding the piece back, the note is a next step to try. The feedback is the game’s, labeled simulated, because the teachers are real people.`,
     steps: [
-      'After the class, read the notice: “Shown:”, the piece’s title and its band, how it compares with the course’s last piece, what went well, and the note.',
+      'After the class, read the notice: “Shown:”, the piece’s title and its band, then the course’s note. It says how the piece compares with the course’s last one where the band moved, what held it back most, and what to try.',
       'On the Coursework tab, a piece to be shown again keeps its Feedback on its card: the band and the score, the kind of note, what went well, the note, and The Scene Together where there’s a partner. Press Mark As Read.',
       `Work on the note before it’s shown again: ${REVISE.label}, or the steps for the part it names.`,
       'Your Notes lists every note by what it’s about: how often it’s been given, when first and last, and whether it’s open, better or taken. Work Shown lists your last twelve pieces and how each went.',
@@ -532,7 +532,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
     interpret: [
       'The heading reads Feedback, the band, the score out of 100 and the kind of note: A New Note, Still There, Better, Not There Yet, Note Taken, or The Next Step.',
       'A note given before says when and in which course; one that’s better gives the figure then and now; one that had been taken and has slipped back says when you put it right.',
-      '“It didn’t come together today.” on a piece whose preparation was in place says what held it back on the day, your condition or your craft, before the next step to try.',
+      'A piece whose preparation was in place and still came out under Strong is told what held it back, your condition on the day or your craft, and what to do about it where there’s something to do. Then comes the next step to try.',
+      'Each course speaks in its own terms: acting of what you want and the other person, voice of breath and sound, movement of the body, and text of the reading. A note given often is said shorter, with what’s still open.',
       'The Scene Together, under a paired piece, is the scene with your partner’s part in it. The band is for your own work.',
       'Your Notes leaves out the next steps to try, and lists open notes first.',
     ],

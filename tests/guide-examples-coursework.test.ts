@@ -548,7 +548,10 @@ describe('Feedback And Your Notes, played', () => {
     // Shown with the parts it was given at.
     expect(pct(r.shown.interpretation!)).toBe(figure(example('coursework.feedback').setup, /Table Work at (\d+)%/));
     expect(r.feedback.focus).toEqual({ kind: 'dim', dim: 'memorization' });
-    expect(r.feedback.text).toBe(said(result, /the note is on it: “(.+?)” Two of/)[0]);
+    // The note the guide quotes, said after one sentence on what it was (from 2026-10-20, brief 16's `showingWords`) and
+    // before the steps that work on it; until then the note was the whole of the feedback.
+    const quoted = said(result, /the note is on it: “(.+?)” Two of/)[0]!;
+    expect(r.feedback.text).toMatch(new RegExp(`^[^.]+\\. ${quoted.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} To work on it: Learn Lines\\.$`));
     expect(r.status).toBe('revising');
     expect(r.a.revision!.dueOn).toBe(r.meetings[1]);
     // Marked read, the note worked twice.

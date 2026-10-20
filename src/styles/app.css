@@ -1347,6 +1347,12 @@ details.fine > summary { cursor: pointer; width: fit-content; }
 details.fine > summary:hover { color: var(--text); }
 details.fine[open] > summary { margin-bottom: 0; }
 
+/* The reasoning behind a recommendation (`AdviceCard`, from 2026-10-20, brief 16): a control that looks like one, and
+   long words that wrap on a phone rather than push the page sideways. */
+details.advice-why > summary { cursor: pointer; width: fit-content; font-weight: 600; color: var(--accent); }
+details.advice-why > summary:hover { text-decoration: underline; }
+details.advice-why { overflow-wrap: anywhere; }
+
 /* A phone (2026-09-28): the tabs wrap onto a second line rather than hide
    off the edge, and a table keeps its words whole, scrolling in its panel
    when it's wider than the screen. Table cells broke words anywhere, which

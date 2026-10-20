@@ -615,7 +615,9 @@ describe('notes and feedback', () => {
     answerAsTheTextSupports(sim, a);
     toMeeting(sim, '2026-10-19');
     const shown = work(sim, a.id);
-    expect(shown.feedback).toMatchObject({ focus: { kind: 'skill', skill: 'character' }, kind: 'new', text: 'This piece asked for more character work than you have yet. Keep building it in class over the next few weeks.' });
+    // Said against the course's last piece and with what held it most, before the note (from 2026-10-20, brief 16's
+    // `showingWords`); until then the note alone.
+    expect(shown.feedback).toMatchObject({ focus: { kind: 'skill', skill: 'character' }, kind: 'new', text: 'Better than the Unready piece on October 5, 2026. At Working, the craft is what held it back most. This piece asked for more character work than you have yet. Keep building it in class over the next few weeks.' });
     expect(shown.status).toBe('revising');
     expect(shown.revision!.dueOn).toBe('2026-10-26');
     const given = notesOf(cwOf(sim)).find((x) => x.key === 'skill:character')!;
@@ -743,7 +745,8 @@ describe('notes and feedback', () => {
     toMeeting(sim, '2026-09-08');
     const first = cwOf(sim).assignments.find((a) => a.course === ACTING_I)!;
     const body = 'The lines weren’t secure, so the attention went to remembering, not to the other person.';
-    expect(first.feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'new', text: `${body} (Lines: 0% prepared.) You played Varya in The Cherry Orchard.` });
+    // That it held the piece back most, the note, and what to do about it (from 2026-10-20, brief 16); until then the note alone.
+    expect(first.feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'new', text: `This is what held it back most. ${body} (Lines: 0% prepared.) You played Varya in The Cherry Orchard. To work on it: Learn Lines.` });
     expect(notesOf(cwOf(sim)).find((x) => x.key === 'dim:memorization')).toMatchObject({ status: 'open', given: 1, level: 0 });
     // The second, set the next day: everything but the lines prepared (TEST SETUP, the table answered through the
     // command), and Learn Lines once, after the partner's ask is answered no.
@@ -761,7 +764,8 @@ describe('notes and feedback', () => {
     expect(lines).toBeLessThan(0.75);
     toMeeting(sim, second.dueOn);
     const pct = Math.round(lines * 100);
-    expect(work(sim, second.id).feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'partial', text: `This has improved since September 8, 2026 (0% then, ${pct}% now), but it isn’t there yet. ${body} (Lines: ${pct}% prepared.) You played The Sergeant in The Rising of the Moon.` });
+    // The figures said once, in the lead (from 2026-10-20, brief 16): until then the note said them again after itself.
+    expect(work(sim, second.id).feedback).toMatchObject({ focus: { kind: 'dim', dim: 'memorization' }, kind: 'partial', text: `Better than on September 8, 2026 (0% then, ${pct}% now), though not all the way. ${body} You played The Sergeant in The Rising of the Moon. To work on it: Learn Lines.` });
     expect(notesOf(cwOf(sim)).find((x) => x.key === 'dim:memorization')).toMatchObject({ status: 'open', given: 2, level: lines });
   });
 

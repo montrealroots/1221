@@ -149,6 +149,8 @@ export const STUDY_KIND = 'school.study_session';
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const first = (mate: Classmate) => mate.name.split(' ')[0]!;
+/** A place in an order, in words to the tenth, as prose says it (from 2026-10-20, brief 16's classmates). */
+const nth = (n: number): string => ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'][n] ?? `${n}th`;
 const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
 
 /** A classmate's priority, drawn once: the driven care most for the work, the rest by the draw. */
@@ -259,14 +261,23 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
     const returning = owesYouLines(mate, now);
     if (!recent(mate, 'study') && (pr === 'craft' || pr === 'people' || returning) && trustOf(mate) >= WORK.trust.wary && !stoppedAsking(mate, now)) cands.push({ kind: 'study', mate: i, build: () => studyEvening(person, i, day, returning) });
     // A request for help: those under pressure to be seen, or with a life outside, are behind.
-    if (!recent(mate, 'help') && (pr === 'career' || pr === 'home')) cands.push({ kind: 'help', mate: i, build: () => ({ text: `${first(mate)} is behind on their lines and asks if you’d run them for three quarters of an hour now. ${pr === 'home' ? 'They’ve had a hard week away from school.' : 'They’re auditioning outside school and short of time.'}` }) });
+    // From 2026-10-20 (brief 16) a request asked before says so, and how it was answered last time, from the classmate's own
+    // record (`moments`): until then each was the first, word for word, seven times a year from the same classmate.
+    if (!recent(mate, 'help') && (pr === 'career' || pr === 'home')) cands.push({ kind: 'help', mate: i, build: () => {
+      const asked = (personOf(mate).moments ?? []).filter((m) => m.kind === 'help');
+      const last = asked.at(-1);
+      const again = asked.length ? ` It’s the ${nth(asked.length + 1)} time they’ve asked${last?.choice === 'help' ? ', and you helped them last time' : last?.choice === 'no' ? ', and last time you said you couldn’t' : ''}.` : '';
+      return { text: `${first(mate)} is behind on their lines and asks if you’d run them for three quarters of an hour now. ${pr === 'home' ? 'They’ve had a hard week away from school.' : 'They’re auditioning outside school and short of time.'}${again}` };
+    } });
     // Encouragement, from a classmate at a bond of `CLASS.encourage.bondFrom` or more, after work of yours that went
     // badly in the last days. Until 2026-10-12 this said from a friend only, a bond the gate doesn't ask (`BONDS.friend`).
     const bad = cw.assignments.find((a) => a.shown?.band === 'unready' && now - a.shown.at < 3 * 86_400_000);
     if (bad && (mate.bond ?? 0) >= CLASS.encourage.bondFrom && !recent(mate, 'encouragement')) cands.push({ kind: 'encouragement', mate: i, build: () => ({ text: `${first(mate)} caught you after class to say everyone has a showing like that, and not to take it to heart.`, assignmentId: bad.id }) });
     // An apology, after a rehearsal they didn't come to, once a time.
     const stood = (mateRecord(mate).stoodUp ?? 0) > (personOf(mate).moments ?? []).filter((m) => m.kind === 'apology').length;
-    if (stood && !recent(mate, 'apology')) cands.push({ kind: 'apology', mate: i, build: () => ({ text: `${first(mate)} apologizes for not coming to rehearse: ${pr === 'home' ? 'something at home took the evening' : 'they lost track of the day'}.` }) });
+    // How many they've missed with you, from the second on (from 2026-10-20, brief 16, `stoodUp`).
+    const missed = mateRecord(mate).stoodUp ?? 0;
+    if (stood && !recent(mate, 'apology')) cands.push({ kind: 'apology', mate: i, build: () => ({ text: `${first(mate)} apologizes for not coming to rehearse: ${pr === 'home' ? 'something at home took the evening' : 'they lost track of the day'}.${missed >= 2 ? ` It’s the ${nth(missed)} rehearsal they’ve missed with you.` : ''}` }) });
     // A boundary, after you've let them down twice and not made it right.
     if (!personOf(mate).boundary && unrepaired(mate).length >= CLASS.boundary.after && !recent(mate, 'boundary')) cands.push({ kind: 'boundary', mate: i, build: () => ({ text: `${first(mate)} says that after the last few times, they’ll only rehearse with you if you ask a day ahead.` }) });
   });

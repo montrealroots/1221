@@ -3949,9 +3949,9 @@
  },
  "src/engine/systems/experience.ts#recommendations": {
   "status": "Rewritten",
-  "hash": "9718383673f0",
-  "on": "2026-10-19",
-  "evidence": "the coordinator's cross-area review on the 1440 walk of the integrated build (the direction save's What To Work On Next): 'cost about 1.8 points off the whole a piece' read garbled; each sentence now says what each piece lost, off the whole, the glossary's term; tests/language-dynamic.test.ts and attributes-phase-2b hold all five forms and fail with the old words (mutation)",
+  "hash": "1519dcd8151a",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/experience.ts#SPACED_NOW": {
@@ -4024,6 +4024,13 @@
   "reason": "A choice's note subject is A Choice with its question's name, and the step beyond is The Next Step: short Title Case names the notes list shows",
   "first": "Reviewed And Retained"
  },
+ "src/engine/systems/next-steps.ts#adviceSummary": {
+  "status": "Rewritten",
+  "hash": "fc95e28cdcaa",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "first": "Pending"
+ },
  "src/engine/systems/next-steps.ts#agoOf": {
   "status": "Rewritten",
   "hash": "3841612f58de",
@@ -4075,9 +4082,16 @@
  },
  "src/engine/systems/next-steps.ts#nextOf": {
   "status": "Rewritten",
-  "hash": "6f3a3580ddd0",
-  "on": "2026-10-19",
-  "evidence": "tests/decisions-advice.test.ts and tests/advice.test.ts on played cases, tools/advice-harness.ts S3 and H checks over the tuning set (docs/verification/editorial-2026-10-19/profile/advice/tuning.json), and docs/verification/editorial-2026-10-19/profile/b2-advice.txt",
+  "hash": "c62d6915284a",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/next-steps.ts#nextParts": {
+  "status": "Rewritten",
+  "hash": "4485b04fc766",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#PART_SAID": {
@@ -4086,6 +4100,13 @@
   "on": "2026-10-19",
   "reason": "The five parts a change of forecast is said in, each a plain name for what moved it (the work it's forecast on, how well you know its genres, your other abilities and techniques, its own level, discipline), read word for word by the harness's H checks",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/next-steps.ts#readOf": {
+  "status": "Rewritten",
+  "hash": "d6fad97655ff",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "first": "Pending"
  },
  "src/engine/systems/next-steps.ts#standingOf": {
   "status": "Rewritten",
@@ -4156,6 +4177,13 @@
   "on": "2026-10-19",
   "reason": "One sentence after a genre's register that says where it comes from, the genre's research at its confidence or an estimate from its conventions, so the player knows how far to trust it",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/components/AdviceCard.tsx#AdviceCard": {
+  "status": "Rewritten",
+  "hash": "9977ff48c835",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
+  "first": "Pending"
  },
  "src/ui/components/AttributesPanel.tsx#AttributesPanel": {
   "status": "Rewritten",
@@ -4243,9 +4271,9 @@
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#NextWork": {
   "status": "Rewritten",
-  "hash": "a4feef4b8f2d",
-  "on": "2026-10-19",
-  "evidence": "tests/language-dynamic.test.ts asserts the empty line exactly on a new life's Profile, and the advice beside it is held by tests/decisions-advice.test.ts",
+  "hash": "7af223be269f",
+  "on": "2026-10-20",
+  "evidence": "Read on the Player Profile and a brief's pane as drawn by tests/attributes-phase-2b.test.ts and tests/defects-r8-1.test.ts",
   "first": "Pending"
  },
  "src/ui/workspaces/ProfileWorkspace.tsx#PracticeButton": {

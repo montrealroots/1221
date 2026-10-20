@@ -70,7 +70,7 @@ import { personalityOf } from './personality';
 import type { PersonalityKnob } from '../content/personality-traits';
 import { inHospital } from './health';
 import {
-  ADVANCED, APPROACH, APPROACHES, LEARNING, OBJECTIVE_DIM, challengesFor, mayGive, noteRecord, noteSubject, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
+  APPROACH, APPROACHES, LEARNING, OBJECTIVE_DIM, challengesFor, mayGive, noteRecord, noteSubject, objectiveLabel, nextChallenge, noteKey, objectiveFor, partnerFor, recordNote, resolveNote, revisitOf, scenePast, scenesFor, targetDifficulty,
   type Approach, type NoteFocus, type NoteKind, type NoteRecord, type Objective, type Revisit,
 } from './learning';
 import { actingOf } from './school';
@@ -81,6 +81,8 @@ import { academicTerm, cabaretEvenings, CABARET_RUN, coursesFor, ESTIMATE, short
 import { choose, materialContext, materialOf, rehearseChoice, sidesOf, type Playing } from './material';
 import { PLAYING } from '../content/approaches';
 import { featureSpeed, noteMaterial } from './experience';
+import { STEP, disciplineOf, showingWords } from './feedback';
+import { exerciseFor } from '../content/practice';
 
 /** What SLATE estimates for the coursework, named where it's read. */
 export const WORK = {
@@ -150,6 +152,9 @@ export function afterTogether(sim: Simulation, person: Person, mateIndex: number
 
 export type Band = 'unready' | 'working' | 'strong' | 'exceptional';
 export const BAND_LABEL: Record<Band, string> = { unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' };
+/** The bands in order, for one against another (from 2026-10-20, brief 16's feedback). */
+const BAND_RANK: Record<Band, number> = { unready: 0, working: 1, strong: 2, exceptional: 3 };
+const strongBand = (b: Band): boolean => BAND_RANK[b] >= BAND_RANK.strong;
 
 /** What a note is about (`NoteFocus` in `systems/learning.ts`): a part of the preparation, a choice at the table, a skill, or the next step beyond the work. */
 export type Focus = NoteFocus;
@@ -928,26 +933,8 @@ export function noteText(a: Assignment, focus: Focus, level?: number, partnerNam
     return `${qo.q.label}: you answered “${picked.text},” but the text doesn’t support it.${picked.why ? ` ${picked.why}` : ''}${as}`;
   }
   if (focus.kind === 'skill') return `This piece asked for more ${SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()} than you have yet. Keep building it in class over the next few weeks.`;
-  return ADVANCED[focus.challenge];
-}
-
-/**
- * A note's words with where it stands against the ones before: new, still there, better but not yet, back after it was
- * taken, or the step beyond. From 2026-10-17 (brief 14) a note back after it was taken (`taken`, the day it was) says so,
- * where until then it read as the same note still there.
- */
-export function feedbackWords(kind: NoteKind, body: string, before?: { on: string; course: string; level?: number; given?: number; taken?: string }, level?: number): string {
-  const when = before ? formatDate(at(parse(before.on), 12), zone()) : '';
-  if (kind === 'advanced') return `It came together. Here’s what to try next. ${body}`;
-  if (kind === 'partial' && before) return `This has improved since ${when}${before.level !== undefined && level !== undefined ? ` (${Math.round(before.level * 100)}% then, ${Math.round(level * 100)}% now)` : ''}, but it isn’t there yet. ${body}`;
-  if (kind === 'recurring' && before?.taken) return `You fixed this on ${formatDate(at(parse(before.taken), 12), zone())}, but it has slipped back. ${body}`;
-  // From the third time, how many: a weakness that keeps coming back is named as one (from a measured run, where one note came seventeen times in a year).
-  // Said as the note it was last time and still is, not as a new finding (from 2026-10-19, brief 15); a rise short of
-  // `LEARNING.better` is still recurring, so it says the note is still there, not that nothing moved.
-  if (kind === 'recurring' && before) return before.given !== undefined && before.given >= 2
-    ? `This is the ${ordinal(before.given + 1)} time you’ve had this note, the last in ${before.course} on ${when}, and it’s still there. ${body}`
-    : `You had this note in ${before.course} on ${when} too, and it’s still there. ${body}`;
-  return body;
+  // The step beyond in the course's own terms (from 2026-10-20, brief 16, `STEP`): until then every course said acting's.
+  return STEP[disciplineOf(courseOf(a.course)?.skills ?? [])][focus.challenge];
 }
 
 /** A place in an order: first to ninth in words, as prose says them, then 10th, 11th, 22nd. */
@@ -1152,12 +1139,42 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const focus: Focus = pick?.focus ?? { kind: 'advanced', challenge: nextChallenge(notes, sim.rng('school.coursework', person.id, `challenge-${a.id}-${onDay}`).next(), challengesFor(t), lastHere?.kind === 'advanced' ? lastHere.challenge : undefined) };
   const { kind, before } = recordNote(notes, focus, onDay, a.id, c.name, pick?.level);
   const partnerName = a.partner !== undefined ? person.school!.classmates[a.partner]?.name : undefined;
-  const body = noteText(a, focus, pick?.level, partnerName);
+  // A new note's measure is said with it, where the card says it; a note given before says its figures in its own words.
+  const body = noteText(a, focus, kind === 'new' ? pick?.level : undefined, partnerName);
   const prior = before ? { on: before.last, course: before.history.at(-1)?.course ?? c.name, given: before.given, ...(before.level !== undefined ? { level: before.level } : {}), ...(before.status === 'resolved' && before.resolvedOn ? { taken: before.resolvedOn } : {}) } : undefined;
   // Prepared, and still Unready or Working: what the evaluation says held it back, the day or the craft, not "it held
   // together" (from 2026-10-10: until then the words came from the preparation alone, and contradicted the band).
-  const held = kind === 'advanced' && (band === 'unready' || band === 'working') ? chiefLimit(withPartLabels(judged, a)) : undefined;
-  const text = held ? `It didn’t come together today. ${held}. When it does come together, here’s what to try next. ${body}` : feedbackWords(kind, body, prior, pick?.level);
+  const limits = withPartLabels(judged, a);
+  const held = kind === 'advanced' && (band === 'unready' || band === 'working') ? chiefLimit(limits) : undefined;
+  // What happened, why and what to try, in the course's voice, from the record (from 2026-10-20, brief 16,
+  // `systems/feedback.ts`). Until then each note went through one frame: "It came together. Here’s what to try next.",
+  // "It didn’t come together today. … When it does come together, here’s what to try next.", "You had this note … and
+  // it’s still there.", the same in every course.
+  const dayWords = (key: string) => formatDate(at(parse(key), 12), zone());
+  const earlier = cw.assignments.filter((x) => x.course === a.course && x.id !== a.id && x.shown && x.shown.at < when).sort((x, y) => x.shown!.at - y.shown!.at);
+  const prev = earlier.at(-1);
+  let run = strongBand(band) ? 1 : 0;
+  for (const x of [...earlier].reverse()) { if (!run || !strongBand(x.shown!.band)) break; run += 1; }
+  const discipline = disciplineOf(c.skills);
+  const recent = cw.assignments.filter((x) => x.id !== a.id && x.shown && x.shown.at < when && x.feedback && disciplineOf(courseOf(x.course)?.skills ?? []) === discipline).sort((x, y) => x.shown!.at - y.shown!.at).slice(-8).map((x) => x.feedback!.text);
+  const heldLimit = held ? limits.limits[0] : undefined;
+  const heldExercise = heldLimit && (heldLimit.kind === 'ability' || heldLimit.kind === 'technique') ? exerciseFor(heldLimit.what as never)?.label : undefined;
+  const day = judged.limits.find((l) => l.kind === 'condition');
+  const share = showing.together && a.partner !== undefined ? showing.together : undefined;
+  const mate = share ? (/^(?:a|an|the) (.+)$/i.exec(share.partner)?.[1] ? `The ${(/^(?:a|an|the) (.+)$/i.exec(share.partner)![1]!).toLowerCase()}` : share.partner.split(' ')[0]!) : undefined;
+  const text = showingWords({
+    key: `${a.id}:${onDay}:${a.round ?? 0}`, discipline, course: c.name, piece: t.title, band, bandLabel: BAND_LABEL[band],
+    ...(prev ? { prev: { band: prev.shown!.band, label: BAND_LABEL[prev.shown!.band], on: formatDate(prev.shown!.at, zone()) } } : {}),
+    run, best: earlier.length > 0 && earlier.every((x) => BAND_RANK[x.shown!.band] < BAND_RANK[band]),
+    kind, note: body, ...(focus.kind !== 'advanced' ? { about: focus.kind === 'dim' ? 'part' as const : focus.kind } : {}),
+    ...(focus.kind === 'dim' && focus.dim !== 'partner' ? { remedy: remedyWords(a, focus.dim) } : {}),
+    ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}) } } : {}),
+    ...(day ? { condition: { what: day.what, whole: day.whole ?? 0, words: day.label } } : {}),
+    ...(share && mate ? { partner: { first: mate, lifted: share.overall - judged.overall >= 1, behind: (together?.parts.prep ?? 1) < 0.6, ...(share.slip ? { slip: { at: share.slip.at, covered: share.slip.covered >= 0.5 } } : {}) } } : {}),
+    ...(prior ? { before: { on: dayWords(prior.on), course: prior.course, given: prior.given, ...(prior.taken ? { taken: dayWords(prior.taken) } : {}) } } : {}),
+    ...(focus.kind === 'dim' ? { part: { label: t.dims[focus.dim]?.label ?? focus.dim, ...(prior?.level !== undefined ? { then: prior.level } : {}), ...(pick?.level !== undefined ? { now: pick.level } : {}) } } : {}),
+    persistent: kind === 'recurring' && (prior?.given ?? 0) >= LEARNING.persistent, enough: LEARNING.enough, recent,
+  });
   a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
   a.shown = showing;
   return showing;
@@ -1454,7 +1471,13 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
         (rec as NoteRecord & { notifiedAt?: number }).notifiedAt = when;
         sim.notify({ category: 'school', title: `Still There: ${noteSubject(rec.key)}`, body: `You showed ${t.title} and it was ${BAND_LABEL[showing.band]}, but the same note came back, for the ${ordinal(rec.given)} time. It stays open under Your Notes. To try something different, find an open piece on the Coursework tab that works on it, and choose a way under A Note That Keeps Coming Back.`, importance: 30, route: '/workspace/school' });
       }
-    } else if (mine) sim.notify({ category: 'school', title: `Shown: ${t.title}${roundLabel}, ${BAND_LABEL[showing.band]}`, body: `${sinceLast(cw, due, showing.band)}${showing.strengths.length ? `${showing.strengths.join('. ')}. ` : ''}${due.feedback ? `Simulated note from ${due.feedback.course}: ${due.feedback.text}` : ''}`, importance: 60, route: '/workspace/school' });
+    } else if (mine) {
+      // The note says what happened against the course's last piece and what the preparation did (from 2026-10-20, brief
+      // 16), so the notice is the note, with a note taken said first in the game's own words. Until then it began with
+      // the band against the last piece and every strength in a list, before the note said its own frame again.
+      const tookWords = showing.strengths.filter((x) => x.startsWith('You took the earlier note'));
+      sim.notify({ category: 'school', title: `Shown: ${t.title}${roundLabel}, ${BAND_LABEL[showing.band]}`, body: `${tookWords.length ? `${tookWords.join('. ')}. ` : ''}${due.feedback ? `Simulated note from ${due.feedback.course}: ${due.feedback.text}` : ''}`, importance: 60, route: '/workspace/school' });
+    }
     // After the showing's own notice (from 2026-10-16, later: until then the warning came before it, from `show`).
     termWarning(sim, person, due);
     return WORK.weight[showing.band];
@@ -1487,20 +1510,6 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
   return 1;
 }
 
-/**
- * How a showing compares with the course's last (from 2026-10-17, brief 14): up, down or the same band, and when. Until
- * then each showing's notice read alone, and a run of the same band read as fifteen first times.
- */
-function sinceLast(cw: Coursework, a: Assignment, band: Band): string {
-  const prev = cw.assignments.filter((x) => x.course === a.course && x.id !== a.id && x.shown && x.shown.at < (a.shown?.at ?? Infinity)).sort((x, y) => x.shown!.at - y.shown!.at).at(-1);
-  if (!prev) return '';
-  const rank: Record<Band, number> = { unready: 0, working: 1, strong: 2, exceptional: 3 };
-  const was = prev.shown!.band;
-  const on = formatDate(prev.shown!.at, zone());
-  if (rank[band] > rank[was]) return `That’s up from ${BAND_LABEL[was]} on the course’s last piece, on ${on}. `;
-  if (rank[band] < rank[was]) return `That’s down from ${BAND_LABEL[was]} on the course’s last piece, on ${on}. `;
-  return `${BAND_LABEL[band]} again, as the course’s last piece was on ${on}. `;
-}
 
 /**
  * A piece shown again, said (from 2026-10-17, brief 14): what the note was on, how far the part it named moved since the
@@ -1699,7 +1708,10 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
     r.status = 'missedByThem';
     m.stoodUp = (m.stoodUp ?? 0) + 1;
     remember(sim, mate, `They didn’t come to rehearse ${what}`);
-    if (mine) sim.notify({ category: 'school', title: `${first} Didn’t Come`, body: `You waited for ${first} to rehearse ${what}, and they didn’t come. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With ${first}, or use ${READER.label} to work on your side of it.`, importance: 50, route: '/workspace/school' });
+    // From the second, how many (from 2026-10-20, brief 16, `stoodUp`): until then each read as the first, nine times in a
+    // year from one classmate in brief 16's baseline.
+    const times = m.stoodUp >= 2 ? `, the ${ordinal(m.stoodUp)} time they haven’t come` : '';
+    if (mine) sim.notify({ category: 'school', title: `${first} Didn’t Come`, body: `You waited for ${first} to rehearse ${what}, and they didn’t come${times}. It isn’t held against you, but the scene got no further. Ask them for another evening under Rehearsing With ${first}, or use ${READER.label} to work on your side of it.`, importance: 50, route: '/workspace/school' });
     return;
   }
   r.status = 'kept';
