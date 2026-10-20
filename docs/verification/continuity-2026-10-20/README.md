@@ -18,7 +18,7 @@ The owner's "Final Comprehensive Writing And Continuity Pass"
   deployed. The handoff said so already; this pass found nothing in it stale on that.
 - **The tested commit** is `ecd961cc`. Every measurement after and every final run was made on its game: on it, but
   the advice's last play, made on `a683f9ea`, which adds to it two tools put right, a test of one and records, nothing in `src/`
-  (The Final Runs, below). The gate ran last on the branch's head (The Gate, below).
+  (The Final Runs, below). The gate ran last, on `3fe960df`, which holds the records (The Gate, below).
 
 ## The Coverage Matrix
 
@@ -428,16 +428,23 @@ its lanes played again on the tested commit's game:
 
 ## The Gate
 
-The gate runs in a clean clone of the commit that holds these records (`final-checks/gate17.sh`), its exit written
-to a file, never read through a pipe. Its result is folded in by the commit after it. Until then this says it hasn't
-run.
+`npm run gate` ran in a clean clone of `3fe960df`, the commit that holds these records (`final-checks/gate17.sh`), its
+exit written to a file, never read through a pipe (`runs/gate.txt`, `final-checks/`):
+- **exit 0**: 405 of 405 test files and 4,867 of 4,867 tests passed, none skipped;
+- every one of the twenty-one checks holding, the coverage matrix's among them ("265 surfaces; 4230 of 4230 sources
+  claimed; 0 problems"), and the completion matrix last;
+- the build exit 0, in the same clone.
+
+Between the tested commit and `3fe960df`, nothing in `src/`, `base44/` or the package files changed. After it, only
+documents changed: the gate's figures folded in, which moved INT-gate's row and the matrix's line from 611 to 612.
+Until then this said the gate hadn't run.
 
 ## Tests
 
 Brief 17 added seven test files and changed 87. The full suite ran on the working tree before the tested commit: 4,864
 of 4,866 tests passed in 405 files. The 2 that failed were `audit-pipeline`'s, which found the audit edited by hand; it
-was regenerated through its pipeline and that file's 4 tests passed. Brief 16's gate ran 398 files and 4,781 tests. The
-gate's own run on the head is below.
+was regenerated through its pipeline and that file's 4 tests passed. Brief 16's gate ran 398 files and 4,781 tests;
+brief 17's ran 405 and 4,867, every one passing (The Gate, above).
 
 New:
 - `feedback-voices.test.ts` (12 tests): every situation in every voice, true to its facts; no two voices sharing a
@@ -522,7 +529,7 @@ merely to improve the sentence"). Each editor's report has its detail.
 - **Merged:** no. Nothing of brief 17 is in `main`, which is at `bbb82253`, and no pull request is open for it (read
   from GitHub on 2026-10-20). Merging is the owner's.
 - **Deployed:** no. Base44 deployment waits for the owner and the gate (rule 14).
-- **The matrix:** **Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred. INT-gate is the one row open, waiting for the gate.
+- **The matrix:** **Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred. The same 612 rows as brief 16's close.
 - **What's left** is under What Was Found And Not Changed, above, and in the handoff's section 4.
 - **To judge it by playing:** `PLAYTEST.md`, a thirty-minute route: the first week, the teachers each in their own
   voice, the class and an apology for its misses, what a screen says first, a save and a load, and a save from before.

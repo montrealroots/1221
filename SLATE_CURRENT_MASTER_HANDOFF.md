@@ -25,18 +25,22 @@ Brief 16's section below was the status until brief 17 began.
     tools put right (the journeys' check 8 and recheck, the advice harness's S3), a test of S3 and records, and nothing
     in `src/`, `base44/` or the package files. Each step's commit, command and exit is in
     `docs/verification/continuity-2026-10-20/runs/exits-*.txt`.
-  - **The gate** runs last, on the commit that holds these records, in a clean clone (`final-checks/gate17.sh`), its exit
-    read from a file. Until it has, this says it hasn't run, and the line below is 611, INT-gate's row open.
+  - **The gate** ran last, on `3fe960df`, in a clean clone (`final-checks/gate17.sh`), its exit read from a file:
+    exit 0, 405 of 405 test files and 4,867 of 4,867 tests passed, none skipped, every one of the twenty-one checks
+    holding; the build exit 0, in the same clone (`docs/verification/continuity-2026-10-20/runs/gate.txt`,
+    `final-checks/`). Between `a683f9ea` and `3fe960df` only records changed: the advice's third play and what reads
+    it, the matrix and this handoff. After it, only documents changed again: the gate's figures folded in. Until then
+    this said the gate hadn't run, and the line below was 611.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
 
 ## 2. Where It Stands
 
-**Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
-- **Against brief 16's close:** the same rows Implemented And Verified but INT-gate, which waits for the gate's run on
-  this commit, as brief 16's did. Each was measured again where what it reads changed: by the engine, the judge and its
-  build on `ecd961cc`, and the advice on `a683f9ea`, with brief 16's figures.
+- **Against brief 16's close:** the same 612 rows Implemented And Verified, each measured again where what it reads
+  changed: by the engine, the judge and its build on `ecd961cc`, the advice on `a683f9ea`, with brief 16's figures,
+  and the gate's on `3fe960df`. Until the gate had run this said 611, INT-gate's row open.
 - **The game is brief 16's but for the authorized fix,** held two ways (`numbers-same.py`, `numbers-same.json`):
   - **With the fix taken out** (`fixoff/`, the tested commit with one line put back), every number of every final run
     is brief 16's, but each run's own record, the notices' counts and the counts of words. The judge's outputs are
