@@ -360,18 +360,26 @@ session, the before walk's), so both walks read the same lives.
   as before: "The note on On Its Feet is still open after six notes…", a doubled word, on the lien save's Coursework tab.
   It's feedback delivered on `bbb82253` and kept in the save as delivered, which brief 17 asks for: delivered feedback
   is never rerolled. The tested commit says no such sentence (the runs, above).
+- **The saves the tested commit wrote** (`final-walk-new/`): lane A's fifteen scenario saves, written on `ecd961cc`
+  (`saves-exits.txt`, 15 of 15 exit 0), walked the same way at both widths. Their feedback is the tested commit's own,
+  and the rendered text has no fault: 0 of 68,846 strings at 1440, and 0 at 390. Their folded details: 184 on 30
+  screens at each width, 0 failures.
 - **Every folded detail, from the keyboard** (`tools/details-check.mjs`, `final-walk/details/`): on each save's
   Coursework tab and Player Profile, 184 disclosures on 30 screens at each width. Every one has words to name it, is
   reached by Tab, opens on Enter and closes on Enter again. Nothing runs past the right edge. 0 failures at 1440 and 0 at
   390.
 - **Desktop and mobile examples** (`shots/`): the Player Profile, with What To Work On Next shut and with Why This
   Recommendation open, and the Coursework tab of a second-year student (Due Soonest first, the first week below the work)
-  and of a rehearsal save, each at 1440 and 390.
+  and of a rehearsal save, each at 1440 and 390; and `fresh-*`, the same two Coursework tabs on the saves the tested
+  commit wrote, with its feedback, Your Notes and Your Class.
 
 **Read by eye** on the screenshots and walks:
 - the advice card reads as a short first view, with its working below the disclosure;
 - a phone-width Coursework tab leads with what's due, its cost shown today, and what finishes each part;
-- the Profile's Dispositions line is still one list of seven clauses, dense at 390, and is listed for the owner below.
+- the Profile's Dispositions line is still one list of seven clauses, dense at 390, and is listed for the owner below;
+- Your Notes keeps "Taken" as a note's status, the actor's word for acting on a note; what puts a note right is said in
+  the feedback's own words ("A piece shown with it at 75% or more puts the note right."), where brief 16 said "the note
+  is taken at 75%".
 
 ## The Final Runs
 

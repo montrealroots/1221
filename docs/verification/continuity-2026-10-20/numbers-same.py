@@ -95,25 +95,34 @@ for d, before, after in (('final', f'{B16}/final', f'{B17}/final'), ('runs', f'{
     for f, v in unexplained.items():
         print(f'  {f}:'); [print(f'    {x}') for x in v]
 # The events the notices tell of: every (day, title) brief 16's journey had is in the fix-off journey's on that day,
-# titles renamed read as one; and what's had more or fewer, by title.
-ev = {'journeys': 0, 'every day and title kept': 0, 'more': {}, 'fewer': {}}
+# titles renamed read as one. What's had more is only a notice whose body now differs from the one before it, so it no
+# longer merges into it (`Simulation.notify`): a classmate's (an apology names the days it's for, a word after class
+# and a request say they've come before) and a late card payment (the money editor gave each its due date). What's had
+# fewer is only Incompletes, which one review now tells in one notice (the school editor).
+MORE_OK = re.compile(r'^(?:\w+: (?:A Different Reading|Run Lines Together\?|A Request For Help|A Word After Class|An Apology|A Boundary)|\w+ Didn’t Come|Ran Lines With \w+|A Late Card Payment)$')
+FEWER_OK = {'Incomplete'}
+ev = {'journeys': 0, 'every day and title kept': 0, 'more only of a body that differs now': 0, 'fewer only of Incompletes': 0, 'more': {}, 'fewer': {}}
 for f in files(f'{B16}/journeys-final'):
     if not f.endswith('-p4.json') or not os.path.exists(f'{OFF}/journeys-final/{f}'): continue
     a, b = load(f'{B16}/journeys-final/{f}'), load(f'{OFF}/journeys-final/{f}')
     if not isinstance(a.get('notices'), list): continue
     ev['journeys'] += 1
     da, db = {(n[0], norm(n[1])) for n in a['notices']}, {(n[0], norm(n[1])) for n in b['notices']}
-    ev['every day and title kept'] += da == db
+    ev['every day and title kept'] += da <= db
     ca, cb = {}, {}
     for n in a['notices']: ca[norm(n[1])] = ca.get(norm(n[1]), 0) + 1
     for n in b['notices']: cb[norm(n[1])] = cb.get(norm(n[1]), 0) + 1
-    for t in set(ca) | set(cb):
-        k = re.sub(r'^\w+(?=(?:: | Didn’t))', 'A classmate', t)
-        if cb.get(t, 0) > ca.get(t, 0): ev['more'][k] = ev['more'].get(k, 0) + cb[t] - ca.get(t, 0)
-        if cb.get(t, 0) < ca.get(t, 0): ev['fewer'][k] = ev['fewer'].get(k, 0) + ca[t] - cb.get(t, 0)
-if not ev['journeys'] or ev['every day and title kept'] != ev['journeys']: failed = True
+    more = [t for t in cb if cb[t] > ca.get(t, 0)]
+    fewer = [t for t in ca if cb.get(t, 0) < ca[t]]
+    ev['more only of a body that differs now'] += all(MORE_OK.match(t) for t in more)
+    ev['fewer only of Incompletes'] += all(t in FEWER_OK for t in fewer)
+    for t in more:
+        k = re.sub(r'^\w+(?=(?:: | Didn’t))', 'A classmate', re.sub(r'^Ran Lines With \w+$', 'Ran Lines With a classmate', t))
+        ev['more'][k] = ev['more'].get(k, 0) + cb[t] - ca.get(t, 0)
+    for t in fewer: ev['fewer'][t] = ev['fewer'].get(t, 0) + ca[t] - cb.get(t, 0)
+if not ev['journeys'] or any(ev[k] != ev['journeys'] for k in ('every day and title kept', 'more only of a body that differs now', 'fewer only of Incompletes')): failed = True
 result['words']['notice events'] = ev
-print(f"words, notice events: {ev['journeys']} journeys; the same days and titles in {ev['every day and title kept']}; more: {ev['more']}; fewer: {ev['fewer']}")
+print(f"words, notice events: {ev['journeys']} journeys; every day and title kept in {ev['every day and title kept']}; more only of a body that differs now in {ev['more only of a body that differs now']}; fewer only of Incompletes in {ev['fewer only of Incompletes']}; more: {ev['more']}; fewer: {ev['fewer']}")
 
 # 2. The fix: the fix taken out against the tested commit's.
 for d in ('runs', 'advice', 'journeys-final'):
