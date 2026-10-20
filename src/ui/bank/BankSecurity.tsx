@@ -14,7 +14,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { bankById } from '@/engine/content/banks';
-import { FRAUD_LAW, SECURITY } from '@/engine/content/security';
+import { FRAUD_LAW, SECURITY, type DebitTier, type FraudLaw } from '@/engine/content/security';
 import { disputeRefusal, ESTIMATE_YEARS, plasticView, type Which } from '@/engine/systems/security';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { cardsOf } from '@/engine/systems/credit';
@@ -22,6 +22,35 @@ import type { Account } from '@/engine/core/ledger';
 import { FRENCH_CARDS, FRENCH_CARDS_SOURCE, cardCeilingRoom } from '@/engine/systems/lending';
 
 const WHY_WORDS = { lost: 'Lost', stolen: 'Stolen', damaged: 'Damaged', fraud: 'Used by somebody else', new: 'Not arrived yet' } as const;
+
+/**
+ * What to do, and by when, to pay as little as the law lets you of a card payment that wasn't you: from the tiers
+ * `liabilityFor` (`systems/security.ts`) charges by and the days from the statement `disputeRefusal` allows, so it says
+ * what the game does (from 2026-10-20, brief 16, section 7). The law's own words fold away under it. Until then they were
+ * the only account of it, five sentences in the US with the deadline in the first. Where a country's law sets no limit
+ * for a credit card, the debit card's tiers are what `liabilityFor` charges a credit card too, and where both have one
+ * limit at any time, it's the same for both: the sentence says "a card payment" for either.
+ */
+function reportByWords(law: FraudLaw, amount: (max: number) => string, credit: boolean): string {
+  const days = (n: number, business?: boolean) => `${n.toLocaleString('en-US')} ${business ? 'business ' : ''}day${n === 1 ? '' : 's'}`;
+  const clock = (t: DebitTier) => `${days(t.withinDays!, t.business)} of ${t.from === 'statement' ? 'the statement that showed it' : 'finding out'}`;
+  const pays = (max: number) => (max === 0 ? 'nothing' : `at most ${amount(max)}`);
+  const claim = law.claimDays !== undefined ? ` within ${days(law.claimDays)} of the statement that showed it` : '';
+  const bounded = law.debitTiers.filter((t) => t.withinDays !== undefined && t.max !== undefined);
+  const rest = law.debitTiers.find((t) => t.withinDays === undefined);
+  const alike = credit && (law.creditMax === undefined || (bounded.length === 0 && rest?.max === law.creditMax));
+  const what = alike ? 'a card payment' : 'a debit card payment';
+  const said: string[] = [];
+  if (bounded.length > 0) {
+    const [first, ...later] = bounded;
+    said.push(`If ${what} wasn’t you, press Report It As Not Mine within ${clock(first!)}, and you pay ${pays(first!.max!)} of it.`);
+    const after = [...later.map((t) => `within ${clock(t)}, you pay ${pays(t.max!)}`), ...(rest ? [`after that, you pay ${rest.max === undefined ? 'all of it' : pays(rest.max)}`] : [])].join(', and ');
+    if (after) said.push(`${after.charAt(0).toUpperCase()}${after.slice(1)}.`);
+  } else if (rest?.max !== undefined) said.push(`If ${what} wasn’t you, press Report It As Not Mine${claim}, and you pay ${pays(rest.max)} of it.`);
+  else said.push(`No law was found here that limits what you pay of ${what} that wasn’t you.`);
+  if (credit && !alike && law.creditMax !== undefined) said.push(`On a credit card, you pay ${pays(law.creditMax)} of one you report${claim}.`);
+  return said.join(' ');
+}
 
 export function BankSecurity({ bankId }: { bankId: string }) {
   const { sim, run, toast } = useGame();
@@ -40,6 +69,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
     ...cardsOf(sim, person).map((account) => ({ which: 'credit' as Which, account })),
   ];
   if (cards.length === 0) return null;
+  const held = cards.some((c) => c.which === 'credit');
   const ceiling = FRENCH_CARDS[bankId];
   const room = cardCeilingRoom(sim, person);
   const learned = (person.fraud ?? []).map((one, index) => ({ one, index })).filter(({ one }) => one.learnedAt <= sim.now && one.reportedAt === undefined
@@ -122,9 +152,21 @@ export function BankSecurity({ bankId }: { bankId: string }) {
         })()}
         {rules?.lostCardWords && <p className="xs dim" style={{ margin: 0 }}>{rules.lostCardWords}</p>}
         {rules?.suspectWords && <p className="xs dim" style={{ margin: 0 }}>{rules.suspectWords}</p>}
-        {law?.debitWords && <p className="xs dim" style={{ margin: 0 }}>The law on the debit card: {law.debitWords}</p>}
-        {law?.creditWords && cards.some((c) => c.which === 'credit') && <p className="xs dim" style={{ margin: 0 }}>The law on the credit card: {law.creditWords}</p>}
-        {law?.refundWords && <p className="xs dim" style={{ margin: 0 }}>The law on a payment you report as not yours: {law.refundWords}</p>}
+        {/* What to do and by when, then the law's own words behind a disclosure (from 2026-10-20, brief 16, section 7):
+            until then the law's words were three paragraphs here, of up to five sentences. */}
+        {law && bank && (
+          <p className="small" style={{ margin: 0 }}>
+            {reportByWords(law, (max) => { const c = inSaveMoney(sim, max, law.inEuros ? 'EUR' : bank.currency); return formatMoney(c, cur, { cents: c % 100 !== 0 }); }, held)}
+          </p>
+        )}
+        {(law?.debitWords || (law?.creditWords && held) || law?.refundWords) && (
+          <details className="xs dim">
+            <summary>What The Law Says</summary>
+            {law?.debitWords && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>The law on the debit card: {law.debitWords}</p>}
+            {law?.creditWords && held && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>The law on the credit card: {law.creditWords}</p>}
+            {law?.refundWords && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>The law on a payment you report as not yours: {law.refundWords}</p>}
+          </details>
+        )}
         {(rules || law) && <Fine>Source: {[rules?.source, law?.source].filter(Boolean).join('; ')}.</Fine>}
       </LookRegion>
     </Panel>

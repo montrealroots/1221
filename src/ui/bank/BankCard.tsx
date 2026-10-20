@@ -99,7 +99,11 @@ function CardApplication({ held }: { held: Account[] }) {
           ? <p className="small" style={{ margin: 0 }}>{held.length ? 'You already have a card from every bank here that issues one.' : `${home?.name ?? 'Your bank'} doesn’t issue a credit card, and no other bank here does.`}</p>
           : (
             <div className="col gap-3">
-              <p className="small" style={{ margin: 0 }}>You can apply to any bank here, not only yours. The bank checks your credit record and whether you have income or money to repay from. If it approves you, the card arrives a week later. Applying takes a few points off your credit score, whether or not you’re approved.{held.length ? ' Credit bureaus look at how much of all your cards’ limits you use, taken together.' : ''}</p>
+              {/* What applying does, then what it asks and costs, then what a second card changes (from 2026-10-20, brief 16,
+                  section 7: until then one paragraph of up to five sentences). */}
+              <p className="small" style={{ margin: 0 }}>You can apply to any bank here, not only yours. If it approves you, the card arrives a week later.</p>
+              <p className="small" style={{ margin: 0 }}>The bank checks your credit record and whether you have income or money to repay from. Applying takes a few points off your credit score, whether or not you’re approved.</p>
+              {held.length > 0 && <p className="small" style={{ margin: 0 }}>Credit bureaus look at how much of all your cards’ limits you use, taken together.</p>}
               <div className="field-row">
                 <div className="field">
                   <label htmlFor="card-apply-bank">Bank</label>
@@ -160,7 +164,10 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   } else if (terms.aprFrom !== undefined && terms.aprTo !== undefined) {
     // The rate the card was set at when it opened (`card.apr`, as `cardTerms` reads it), not today's: from 2026-10-17. Until
     // then this said "yours opened at" the rate charged today, which in the introductory months is 0%.
-    lines.push(`${pct(terms.apr)} a year on any balance you carry${intro}. ${terms.issuer} sets a new card’s rate between ${pct(terms.aprFrom)} and ${pct(terms.aprTo)} from your credit record when it opens. Yours was set at ${pct(card.apr ?? terms.priced)} when it opened, and the bank doesn’t reprice it. With your record today, a new card would get ${pct(terms.priced)}.`);
+    // Your rate first, then how the bank prices a new card (from 2026-10-20, brief 16: until then one paragraph of four
+    // sentences, the bank's range between the rate and when yours was set).
+    lines.push(`${pct(terms.apr)} a year on any balance you carry${intro}. Yours was set at ${pct(card.apr ?? terms.priced)} when it opened, and the bank doesn’t reprice it.`);
+    lines.push(`${terms.issuer} sets a new card’s rate between ${pct(terms.aprFrom)} and ${pct(terms.aprTo)} from your credit record when it opens. With your record today, a new card would get ${pct(terms.priced)}.`);
   } else {
     lines.push(`${pct(terms.apr)} a year on any balance you carry${intro}.`);
   }

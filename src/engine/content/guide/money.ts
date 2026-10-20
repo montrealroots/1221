@@ -581,7 +581,9 @@ export const MONEY: readonly GuideEntry[] = [
       '“That account isn’t dormant.”',
       '“Its cooling-off period has passed, or there isn’t one here for it.”',
       '“You can’t cancel your primary account. Make another account primary first.”',
-      'A checking account can be refused for the same reasons as Close It, shown under it with Cancel It grayed out: “It’s overdrawn by …, and the bank only closes it once that’s paid off. Move money into it first.”, “Money is on its way into or out of it. Wait until it arrives.”, a list of what still uses it, “… is still open at the same bank. Close that first.”, “Card payments are still pending on it. You can close it once they’ve posted.”, or, where its fees, with any overdraft interest, come to more than its balance, a sentence naming each that ends “… more than it holds. Move … into it first.”',
+      // Until 2026-10-20 (brief 16) this quoted Close It's refusals here as well, six sentences run together; they're
+      // listed one to an item under Another Bank, which the reader is sent to.
+      'Cancel It on a checking account is refused for the same reasons as Close It, such as an overdraft or money on its way. It’s grayed out, with the reason under it. Each reason is listed under Another Bank.',
       'Any account whose interest goes back when it holds less: “The interest it was paid, …, goes back, …”, or with its fees, “Its fees, …, and the interest it was paid, …”, each ending “… more than it holds. Move … into it first.”',
       // From 2026-10-15's recheck: a term's interest taken during the term went back out of the primary account unasked.
       'A term deposit whose interest was paid into another account that now holds less: “Canceling takes back the … of interest it paid into …, which holds less than that. Move … into … first.”',
@@ -597,7 +599,7 @@ export const MONEY: readonly GuideEntry[] = [
       'Set A Payment Over low enough to catch a charge you didn’t make, and press Save Alerts.',
       'Move a little money in or out of any account you want to keep, at least once within the bank’s months.',
     ],
-    related: ['bank.accounts', 'bank.term', 'bank.round-ups', 'bank.card-security', 'bank.payments'],
+    related: ['bank.accounts', 'bank.term', 'bank.round-ups', 'bank.card-security', 'bank.payments', 'bank.other-banks'],
     connections: [
       { to: 'bank.card-security', kind: 'immediate', why: `A Payment Over set at or under a stranger’s charge tells you the day it happens, so you know of it from then: in the US, a debit card charge reported within ${clockOf(DEBIT_PROMPT, 'of')} costs you at most ${usd(DEBIT_PROMPT.max ?? 0)}.` },
       { to: 'bank.payments', kind: 'optional', why: `Short For A Payment watches each standing order and payment set for a date, ${LOOKAHEAD_DAYS} days ahead.` },
@@ -740,7 +742,7 @@ export const MONEY: readonly GuideEntry[] = [
       `Have Wages Paid Here: your payers are told to pay there. Yale’s payroll does after ${PAYER_LEAD['yale-payroll']} days and other payers after ${DEPOSIT_LEAD.days}. A payment before then goes where it always did.`,
     ],
     later: [
-      'On a standing order’s day, the whole amount moves if the account it pays from has it. If none of it can go, What Needs You says “A Standing Order Didn’t Go” and why, and it tries again next month. That happens when the account is short, either account is dormant or closing, the account it pays from is blocked after a switch because it owes money, or (in a save from before this was ruled out) it pays into a term deposit.',
+      'On a standing order’s day, the whole amount moves if the account it pays from has it. The order doesn’t go at all if that account is short, either account is dormant or closing, the account it pays from is blocked after a switch because it owes money, or (in a save from before this was ruled out) it pays into a term deposit. What Needs You then says “A Standing Order Didn’t Go” and why, and the order tries again next month.',
       'An order on the 29th, 30th or 31st goes on the last day of a shorter month.',
       'On a payment’s date it moves if the From account has it, and from savings with its withdrawal fee and within any monthly allowance. It doesn’t go, and “A Scheduled Payment Didn’t Go” says why, when the account is short, either account is closed, dormant or closing, the From account is blocked after a switch because it owes money, or (in an older save) either is a term deposit.',
       'Between two of your banks, a standing order or a payment set for a date leaves on its day and arrives as Move Money’s would, shown under On Its Way until then. Sent from Citi, it has to fit Citi’s daily and monthly limits, and doesn’t go if it doesn’t.',
@@ -883,7 +885,7 @@ export const MONEY: readonly GuideEntry[] = [
     questions: ['How do I pay my card?', 'What happens if I only pay the minimum?', 'Why was my card application declined?', 'How do I raise my limit?', 'What does a late payment cost?', 'How does my credit record change?', 'Can I hold more than one card?'],
     where: { route: BANK, tab: CARDS_TAB, label: 'Your Bank, The Cards Tab, Each Card’s Panel' },
     available: `Once you’ve read “${chapter('card.apply')}” in the guide.`,
-    short: 'A credit card lets you spend now and pay later. Each month a statement comes, and you pay at least the minimum payment by the due date. Pay the whole statement every month and you’re never charged interest. Autopay pays it for you from your checking account. Each card has a panel on the Cards tab with its bank’s own terms, and you can hold one card from each bank where you live.',
+    short: 'A credit card lets you spend now and pay later. Each month a statement comes, and at least the minimum payment is due by its due date: Autopay pays the whole statement or the minimum, as you choose, from your checking account. Pay the whole statement every month and you’re never charged interest.\n\nYou can hold one card from each bank where you live, each with its own panel and its bank’s terms on the Cards tab.',
     steps: [
       'On the Cards tab, each card has a panel: Owed, Left To Spend of its limit, and its Rate, then its terms line by line.',
       'Press Pay Card In Full to pay it now from your primary account and its savings. It reads Pay What You Can when they hold less than you owe.',
@@ -1174,7 +1176,7 @@ export const MONEY: readonly GuideEntry[] = [
     questions: ['What happens if my account goes below zero?', 'Should I opt in to debit card overdrafts?', 'How do I borrow money?', 'Why was my loan refused?', 'How do I pay a debt in collections?', 'What happens if I stay overdrawn?'],
     where: { route: BANK, tab: BORROWING, label: 'Your Bank, The Borrowing Tab' },
     available: `Once you’ve read “${chapter('bank.borrow')}” in the guide.`,
-    short: `Borrowing shows how your bank handles an overdraft, what it lends, and any debt in collections. A US bank like Chase pays a payment the account can’t cover for a fee each time (${usd(CHASE_OD.fee)}), and pays a debit card purchase that way only if you opt in. Most banks elsewhere arrange an overdraft up to a limit, at an interest rate. A personal loan is lent at the rate your credit record earns and repaid in equal monthly payments. An account left below zero for ${ESTIMATE.closeAfterDays} days is closed, and what it owes goes to collections.`,
+    short: `Borrowing shows how your bank handles an overdraft, any debt in collections, and what it lends: a personal loan at the rate your credit record earns, repaid in equal monthly payments. Leave an account below zero, past any overdraft the bank arranged, for ${ESTIMATE.closeAfterDays} days, and the bank closes it and sends what it owes to collections.\n\nA US bank like Chase pays a payment the account can’t cover for a fee each time (${usd(CHASE_OD.fee)}), and a debit card purchase only if you opt in. Most banks elsewhere arrange an overdraft up to a limit, at an interest rate.`,
     steps: [
       'Open the Borrowing tab. With checking accounts at two banks, choose the bank in Borrow At.',
       'Under Overdraft, read how the bank handles one. Where it asks, press Opt In To Debit Card Overdrafts, or Opt Out Of Debit Card Overdrafts.',
@@ -1345,7 +1347,18 @@ export const MONEY: readonly GuideEntry[] = [
       // scope reset of 2026-10-09, and it went from `openRefusal` (`systems/bankmoves.ts`) that day.
       'Without a Social Security number, a branch visit is refused while you’re in hospital, while you’re busy elsewhere, or when something starts before the visit would end.',
       '“… asks for an opening deposit of …, sent from another of your accounts.” and “That account is already at …. Pay the deposit from an account at another bank.”',
-      'Closing: “It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.”, “It’s your primary account. Make another account primary first.”, “It’s overdrawn by …, and the bank only closes it once that’s paid off. Move money into it first.”, “Money is on its way into or out of it. Wait until it arrives.”, a list of what still uses it, “… is still open at the same bank. Close that first.”, “Card payments are still pending on it. You can close it once they’ve posted.”, or, where its fees, with any overdraft interest, come to more than its balance, a sentence naming each that ends “… more than it holds. Move … into it first.”',
+      // Close It's refusals one to an item, in the order `closeRefusal` (`systems/bankmoves.ts`) asks them (from 2026-10-20,
+      // brief 16: until then one item of eight sentences). The fee owed by an account at home that can't go below zero was
+      // among them from 2026-10-16 and missing here until 2026-10-20.
+      'Close It on your only checking account: “It’s your only checking account, and you always need one for your wages to be paid into. Open another one first.”',
+      'Close It on your primary account: “It’s your primary account. Make another account primary first.”',
+      'Close It on an overdrawn account: “It’s overdrawn by …, and the bank only closes it once that’s paid off. Move money into it first.”',
+      'Close It on an account at home that owes its fee for customers abroad: “You owe its … fee for customers living abroad, and the bank only closes it once that’s paid. Move money into it: once it holds enough, the bank takes the fee that night.”',
+      'Close It with money on its way into or out of the account: “Money is on its way into or out of it. Wait until it arrives.”',
+      'Close It while something still uses the account: a list of what does, and what to move to another account first or, with your wages already moving, the day you can close it.',
+      'Close It with savings still open beside it at the same bank: “… is still open at the same bank. Close that first.”',
+      'Close It with card payments pending: “Card payments are still pending on it. You can close it once they’ve posted.”',
+      'Close It where its fees and any overdraft interest come to more than it holds: a sentence naming each, ending “… more than it holds. Move … into it first.”',
       'Switching, in the US: “There’s no switching service here: …” Elsewhere: “A switch is already under way.”, “Clear the overdraft before switching. The new bank won’t take it on.” or “A partial switch is only available through Britain’s Current Account Switch Service.”',
       'Calling it off: “This country’s switching service doesn’t let you call a switch off. It goes ahead on its date.” or “You could call it off until …”',
       'Keep The Balance There: “No switch is under way.”, “This country’s switching service has no such step.”, “Its balance transfer is already stopped.” or “The transfer could be stopped until close of business ….”',
@@ -1385,7 +1398,7 @@ export const MONEY: readonly GuideEntry[] = [
     questions: ['Can I keep my bank account from home?', 'Why does creation ask where I lived before Yale?', 'Why can’t I choose my bank there?', 'Why are my savings in pounds?'],
     where: { route: BANK, tab: ACCOUNTS, label: 'Your Bank, The Accounts Tab; made on creation’s Starting Point, Before Yale' },
     available: 'Chosen when you create a life that begins at Yale, under Before Yale on Starting Point.',
-    short: `If you lived outside America before Yale, you can keep your bank account from there. Before Yale, on Starting Point, asks where you lived, since when, and whether you kept an account. Where you lived decides it, not where you were born. The game offers only the ${HOME_BANKS} banks in ${HOME_COUNTRIES} countries with research on what they do when a customer moves to America. If you keep one, your savings can stay there in its currency, and your everyday money is in your American account.`,
+    short: `If you lived outside America before Yale, you can keep your bank account from there: your savings can stay there in its currency, and your everyday money is in your American account. Before Yale, on Starting Point, asks where you lived, since when, and whether you kept an account.\n\nWhere you lived decides it, not where you were born. The game offers only the ${HOME_BANKS} banks in ${HOME_COUNTRIES} countries with research on what they do when a customer moves to America.`,
     steps: [
       'On Starting Point, under Before Yale, tick I Lived Where I Was Born, or choose the town in Where You Lived, then the month and year in Since.',
       'Tick I Kept An Account There and choose Your Bank There. A bank the game can’t offer is grayed out, with the reason under the list.',
@@ -1427,7 +1440,8 @@ export const MONEY: readonly GuideEntry[] = [
       `Berliner Sparkasse’s Giro Digital price doesn’t include its Sparkassen-Card, which costs ${formatMoney(SPARKASSE.card?.yearly ?? 0, 'EUR')} a year, paid in advance: on the first night and each year after. If you close the account, the unused days of that year are refunded, and the line under Close It says so first.`,
       // From brief 10 (2026-10-16, `ARION_CARD_YEAR`): until then Arion's year was charged on each anniversary of the
       // account or its last charge, 365 days apart, a close neither refunded nor charged it, and the guide didn't say it.
-      `Arion’s debit card costs ${formatMoney(ARION.card?.yearly ?? 0, 'ISK')} a year from age ${ARION.card?.freeUnder}, and nothing at ${(ARION.card?.freeUnder ?? 0) - 1} and under, as its price list says. ${ARION_YEAR.paid === 'ahead' ? 'It’s charged in advance, on the first night and on that date each year after' : 'It’s charged at the end of each card year, the first a year after the first night'}, by ${ARION_YEAR.place}’s calendar. If you close the account, the days of that year ${ARION_YEAR.paid === 'ahead' ? 'left are refunded' : 'used are charged'} in proportion, as ${ARION_YEAR.law}, has it. The account’s panel and the line under Close It say so first.${ARION_YEAR.simulated ? ` The timing is estimated: ${ARION_YEAR.simulated}.` : ''}`,
+      `Arion’s debit card costs ${formatMoney(ARION.card?.yearly ?? 0, 'ISK')} a year from age ${ARION.card?.freeUnder}, and nothing at ${(ARION.card?.freeUnder ?? 0) - 1} and under, as its price list says. ${ARION_YEAR.paid === 'ahead' ? 'It’s charged in advance, on the first night and on that date each year after' : 'It’s charged at the end of each card year, the first a year after the first night'}, by ${ARION_YEAR.place}’s calendar.${ARION_YEAR.simulated ? ` The timing is estimated: ${ARION_YEAR.simulated}.` : ''}`,
+      `If you close an Arion account, the days of its card year ${ARION_YEAR.paid === 'ahead' ? 'left are refunded' : 'used are charged'} in proportion, as ${ARION_YEAR.law}, has it. The account’s panel and the line under Close It say so first.`,
       `Move Money sends money between it and your American account as a payment abroad, typed in the sending account’s currency. It leaves at once with the sending bank’s fee, and arrives after its business days in both countries, minus the bank’s margin on the exchange and the receiving bank’s fee. Barclays charges nothing online and takes up to ${percentOf(homeTerms('gb-barclays')!.abroad.margin!)}; Chase charges ${usd(US_WIRES['us-chase']!.incoming!.fixed!)} for a payment from abroad. Where a bank publishes no margin or no time, the game estimates them, and the line under the amount says so.`,
       'Make Primary on its checking account makes its debit card your everyday card here, for its own fee on every purchase in dollars, where its card works abroad and the research has the fee.',
       // From 2026-10-16, module 6: the return reads the interest by its bank's country (`figuresFor`), and the accounts' figures each night (`Account.peak`).

@@ -355,7 +355,7 @@ describe('bank.open_current', () => {
     expect(first.words).toContain('There’s no switching service here. To move banks, open the new account, have your wages paid into it, move each standing order and autopay, move the money across, and then close the old account. The new account starts empty, with its own history.');
     const options = [...first.html.matchAll(/<option value="(us-[a-z-]+)"/g)].map((m) => m[1]);
     expect(options).toEqual(['us-bank-of-america', 'us-wells-fargo', 'us-citi', 'us-capital-one']);
-    expect(first.words).toContain('It decides an application within 2 business days, the longest it says it takes. It asks for an opening deposit of $100, sent from another of your accounts.');
+    expect(first.html).toContain('>It decides an application within 2 business days, the longest it says it takes. The debit card works from the day the account opens, as a digital card in the app.</p><p class="small" style="margin:0">It asks for an opening deposit of $100, sent from another of your accounts as you apply.</p>'); // What Apply does, then what the account needs, a paragraph each from 2026-10-20 (brief 16): until then one, the deposit before the card.
     expect(first.words).toContain('Opening Deposit From');
     press(control('bank.open_current', 'Apply'));
 
@@ -366,7 +366,7 @@ describe('bank.open_current', () => {
     const next = moves(sim);
     expect(next.words).toContain('Bank of America decides by August 26, 2026');
     expect([...next.html.matchAll(/<option value="(us-[a-z-]+)"/g)].map((m) => m[1])).toEqual(['us-wells-fargo', 'us-citi', 'us-capital-one']);
-    expect(next.words).toContain('It opens the account as soon as you apply. It asks for an opening deposit of $25, sent from another of your accounts.');
+    expect(next.html).toContain('>It opens the account as soon as you apply. The debit card arrives in 7 days.</p><p class="small" style="margin:0">It asks for an opening deposit of $25, sent from another of your accounts as you apply.</p>');
 
     sim = reload(sim);
     sim.advanceTo(at(2026, 8, 26, 8));

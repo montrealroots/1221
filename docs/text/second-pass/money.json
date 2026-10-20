@@ -78,9 +78,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.borrowing]": {
   "status": "Rewritten",
-  "hash": "2e15ccb6ab53",
-  "on": "2026-10-19",
-  "evidence": "The charge-off's years on the record, paid or not, and what paying it changes (m2); tests/guide-examples-money.test.ts plays the overdraft example",
+  "hash": "5fde468e7da1",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial16-money.test.ts (How This Works on money keeps each explanation short) and tools/voices.ts --guide; guide-quotes.mjs --check holds each quoted refusal; brief 16: the summary in two paragraphs, the 60-day close first",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card-offers]": {
@@ -99,9 +99,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.card]": {
   "status": "Rewritten",
-  "hash": "929667babb77",
-  "on": "2026-10-19",
-  "evidence": "The short says pay the whole statement every month; the statement's minimum payment named; tests/language-crossarea-raise.test.ts reads the limit lines",
+  "hash": "d86558e4acfd",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial16-money.test.ts (How This Works on money keeps each explanation short) and tools/voices.ts --guide; guide-quotes.mjs --check holds each quoted refusal; brief 16: the summary in two paragraphs, read in tests/language-money.test.ts's guide check",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.cash]": {
@@ -113,23 +113,23 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.home-account]": {
   "status": "Rewritten",
-  "hash": "fca9c1512cc3",
-  "on": "2026-10-19",
-  "evidence": "Checking account and the German fees in the glossary's words; tests/decisions-arion.test.ts reads Arion's line, the example is played",
+  "hash": "d43df0aeb2d4",
+  "on": "2026-10-20",
+  "evidence": "tests/decisions-arion.test.ts holds the two Arion lines; tools/voices.ts --guide; brief 16: summary in two paragraphs",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.other-banks]": {
   "status": "Rewritten",
-  "hash": "d4d4a104c57c",
-  "on": "2026-10-19",
-  "evidence": "Checking account throughout and the fees held over for the quarter's closing; tests/guide-examples-money.test.ts plays the Bank of America example",
+  "hash": "366d4539b4b4",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial16-money.test.ts (How This Works on money keeps each explanation short) and tools/voices.ts --guide; guide-quotes.mjs --check holds each quoted refusal; brief 16: Close It's refusals one to an item, traced to closeRefusal",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.payments]": {
   "status": "Rewritten",
-  "hash": "a207de90f7b9",
-  "on": "2026-10-19",
-  "evidence": "Checking account and the button Savings Covers The Checking Account; tests/guide-examples-money.test.ts plays the standing order example",
+  "hash": "761ebb8b96af",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial16-money.test.ts (How This Works on money keeps each explanation short) and tools/voices.ts --guide; guide-quotes.mjs --check holds each quoted refusal; brief 16: the standing order's reasons said before its notice, no vague 'That happens'",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [bank.round-ups]": {
@@ -155,9 +155,9 @@
  },
  "src/engine/content/guide/money.ts#MONEY [bank.upkeep]": {
   "status": "Rewritten",
-  "hash": "6474e637b8da",
-  "on": "2026-10-19",
-  "evidence": "tests/guide-examples-money.test.ts plays the dormant savings example; tools/guide-quotes.mjs --check reads every quoted refusal, 582 of 582",
+  "hash": "1f9d26ffbe7a",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial16-money.test.ts (How This Works on money keeps each explanation short) and tools/voices.ts --guide; guide-quotes.mjs --check holds each quoted refusal; brief 16: Cancel It's refusals sent to Another Bank's list",
   "first": "Pending"
  },
  "src/engine/content/guide/money.ts#MONEY [evaluation]": {
@@ -1471,16 +1471,16 @@
  },
  "src/ui/bank/BankCard.tsx#CardApplication": {
   "status": "Rewritten",
-  "hash": "b832ca3a2540",
-  "on": "2026-10-19",
-  "evidence": "tests/language-money.test.ts, it('says the card’s rate as set when it opened, its fees and its minimum, in the introductory months') renders Another Card's new lines",
+  "hash": "eecb522dd89d",
+  "on": "2026-10-20",
+  "evidence": "tests/language-money.test.ts renders it paragraph by paragraph; tools/screen-text.mjs on the built app, Money, Cards, a year in (workload save)",
   "first": "Pending"
  },
  "src/ui/bank/BankCard.tsx#CardPanel": {
   "status": "Rewritten",
-  "hash": "37db8bd5f7cb",
-  "on": "2026-10-19",
-  "evidence": "tests/editorial-money-screens.test.ts charge card and capped-rate case, and tests/language-dynamic.test.ts it('payments missed in a row and a payment plan’s months …') render the panel",
+  "hash": "96163521eba2",
+  "on": "2026-10-20",
+  "evidence": "tests/language-money.test.ts renders the rate and the bank's pricing as two paragraphs; tools/screen-text.mjs on the built app, Money, Cards",
   "first": "Pending"
  },
  "src/ui/bank/BankCard.tsx#MONTH_NAMES": {
@@ -1506,9 +1506,9 @@
  },
  "src/ui/bank/BankCardOffers.tsx#CardOffers": {
   "status": "Rewritten",
-  "hash": "2343b89b58d4",
-  "on": "2026-10-19",
-  "evidence": "tests/editorial-money-screens.test.ts, it('names Chase’s plans as published …') and tests/language-money.test.ts, it('says the card’s offers …') render the panel",
+  "hash": "2945779601ef",
+  "on": "2026-10-20",
+  "evidence": "tests/language-money.test.ts renders the rewards and the published list apart; tools/screen-text.mjs on the built app, Money, Cards",
   "first": "Pending"
  },
  "src/ui/bank/BankCash.tsx#BankCash": {
@@ -1534,9 +1534,9 @@
  },
  "src/ui/bank/BankMoves.tsx#BankMoves": {
   "status": "Rewritten",
-  "hash": "4c859ced7994",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g14-money.test.ts, it('shows Bank of America first with its $100 and two business days …') and tests/remaining-09-banking.test.ts render the Your Banks and Open An Account panels",
+  "hash": "b9b47b1ccab3",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial16-money.test.ts and tests/evidence-g14-money.test.ts render the four paragraphs; tools/screen-text.mjs on the built app, Money, Accounts",
   "first": "Pending"
  },
  "src/ui/bank/BankPayments.tsx#BankPayments": {
@@ -1555,9 +1555,16 @@
  },
  "src/ui/bank/BankSecurity.tsx#BankSecurity": {
   "status": "Rewritten",
-  "hash": "349eab06ffbc",
-  "on": "2026-10-19",
-  "evidence": "the coordinator's change at money-data's report: a rush the bank doesn't charge for costs nothing more, not $0.00 more (Citi, Resona); tests/language-money.test.ts draws a Citi life's Your Cards and fails with the old words",
+  "hash": "80287f056479",
+  "on": "2026-10-20",
+  "evidence": "tests/language-money.test.ts and tests/editorial16-money.test.ts render the lead and What The Law Says; tools/screen-text.mjs on the built app",
+  "first": "Pending"
+ },
+ "src/ui/bank/BankSecurity.tsx#reportByWords": {
+  "status": "Rewritten",
+  "hash": "c866a00747ab",
+  "on": "2026-10-20",
+  "evidence": "tests/editorial16-money.test.ts renders it in thirteen countries against liabilityFor; tools/screen-text.mjs on the built app, Money, Cards",
   "first": "Pending"
  },
  "src/ui/bank/BankSecurity.tsx#WHY_WORDS": {
