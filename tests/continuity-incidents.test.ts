@@ -124,7 +124,7 @@ describe('an apology long after the miss', () => {
     mateRecord(mate2).stoodUp = 1;
     const soon = moments(sim2, 40).filter((m) => m.kind === 'apology');
     expect(soon).toHaveLength(1);
-    expect(soon[0]!.text).not.toMatch(/since, and they still wanted to say it/);
+    expect(soon[0]!.text).not.toMatch(/ It’s (?:been )?(?:\w+ (?:weeks|months)|a year|more than a year)\b/);
   }, 120_000);
 });
 

@@ -2185,9 +2185,9 @@
  },
  "src/engine/systems/classmates.ts#apologyWords": {
   "status": "Rewritten",
-  "hash": "30799c7204ac",
+  "hash": "b740b9448afc",
   "on": "2026-10-20",
-  "evidence": "tests/continuity-incidents.test.ts (an apology once for its misses, a late one says so, a classmate's own way of asking) and tests/editorial-class-moments.test.ts; read in order in the after-runs' class moments",
+  "evidence": "tests/continuity-incidents.test.ts ('says how long it’s been, where the miss was weeks or months ago, and nothing of it where it was days', and the apology covering its misses); read in order in the second after-runs' class moments",
   "first": "Pending"
  },
  "src/engine/systems/classmates.ts#boundaryRefusal": {

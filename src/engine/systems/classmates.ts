@@ -253,7 +253,14 @@ function apologyWords(mate: Classmate, pr: Priority, owed: ReturnType<typeof mis
   // An apology weeks or months after the last miss says so (from 2026-10-20, brief 17): until then brief 17's first
   // after-runs had Owen sorry, a year on, about a rehearsal "on September 17, 2026", as though it were last week.
   const gap = (now - Math.max(...owed.map(({ r }) => r.at))) / MS_DAY;
-  const late = gap < 28 ? '' : ` It’s ${gap < 63 ? `${countWords(Math.floor(gap / 7))} weeks` : gap < 330 ? `${countWords(Math.round(gap / 30.4))} months` : gap < 395 ? 'a year' : 'more than a year'} since, and they still wanted to say it.`;
+  const since = gap < 63 ? `${countWords(Math.floor(gap / 7))} weeks` : gap < 330 ? `${countWords(Math.round(gap / 30.4))} months` : gap < 395 ? 'a year' : 'more than a year';
+  // Said in their own manner, as the rest is.
+  const late = gap < 28 ? '' : {
+    craft: ` It’s ${since} on, and it still bothers them.`,
+    people: ` It’s ${since} since, and they still wanted to say it.`,
+    career: ` It’s ${since} late, and they know it.`,
+    home: ` It’s been ${since}, and they wanted you to know.`,
+  }[pr];
   switch (pr) {
     case 'craft': return `${f} finds you before class, sorry about ${rehearsals} of ${what}: they lost track of the day, and they know the scene lost the evening.${late}${more}`;
     case 'people': return `${f} apologizes for not coming to rehearse ${what}. They lost track of the day, and they’re sorry to have left you waiting.${late}${more}`;
