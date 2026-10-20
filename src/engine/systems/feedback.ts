@@ -657,11 +657,11 @@ function despiteLeads(v: Voice, d: Discipline, f: ShowingFacts): string[] {
   const cost = pts >= 1 ? `about ${pts} ${pts === 1 ? 'point' : 'points'}` : 'less than a point';
   const b = f.bandLabel;
   switch (v) {
-    case 'direct': return [`${b}, though ${clause}. That cost ${cost}, and ${WORK[d]} carried it.`];
-    case 'warm': return [`${cap(clause)}, and it still came out ${b}. That cost ${cost}, and you carried it.`];
-    case 'exacting': return [`${b}. ${cap(clause)}, which cost ${cost}, and the preparation made up for it.`];
-    case 'patient': return [`${cap(clause)}, and it cost ${cost}, but it still came out ${b}.`];
-    case 'brisk': return [`${b}, though ${clause}: that cost ${cost}. Well handled.`];
+    case 'direct': return [`${b}, though ${clause}. That cost ${cost}, and ${WORK[d]} carried it.`, `${b} even so: ${clause}, and that cost ${cost}.`];
+    case 'warm': return [`${cap(clause)}, and it still came out ${b}. That cost ${cost}, and you carried it.`, `${b}, on a day when ${clause}. That cost ${cost}, and you carried it well.`];
+    case 'exacting': return [`${b}. ${cap(clause)}, which cost ${cost}, and the preparation made up for it.`, `${cap(clause)}, at a cost of ${cost}. It held at ${b} regardless.`];
+    case 'patient': return [`${cap(clause)}, and it cost ${cost}, but it still came out ${b}.`, `It came out ${b} even though ${clause}. It cost ${cost}, and you still got there.`];
+    case 'brisk': return [`${b}, though ${clause}: that cost ${cost}. Well handled.`, `${b} anyway. ${cap(clause)}, and that cost ${cost}.`];
   }
 }
 
