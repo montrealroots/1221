@@ -448,7 +448,7 @@
    "history"
   ],
   "outcome": "Kept",
-  "why": "Off unless asked for, it says how the account ended the month in the glossary’s words (“It ended the month with $3,025.00 in it.”, “overdrawn by $3.30”, “the quarter” for a German account) and where the statement is; the fee and interest lines on Statements name what was charged and for which month.",
+  "why": "Off unless asked for, it says how the account ended the month in the glossary’s words (“It ended the month with $3,025.00 in it.”, “overdrawn by $3.30”, “the quarter” for a German account) and where the statement is; the lines for fees and interest on Statements name what was charged and for which month.",
   "evidence": [
    {
     "kind": "test",

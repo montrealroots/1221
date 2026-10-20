@@ -1,0 +1,68 @@
+"""
+Whether brief 17's students played the same game as the baseline's (brief 17, section 10: "Gameplay must remain
+unchanged except for the authorized incident-continuity fix"): the 24 runs of `before/` (bbb82253, brief 16 as merged)
+against the same scenarios and seeds after, event by event, each run to its first divergence.
+
+Compared, never typed: every showing's day, course, piece, band and kind of note; every director's note's day and
+speaker; every classmate's moment's day, classmate and kind; every advice card's day and what it recommends; every
+notice's day and title; each run's reloads and last day. The words are what changed, so they aren't compared.
+
+Two differences are expected, and each is counted apart with its reason:
+- **the incident fix (authorized):** an apology covers every rehearsal missed since the last, and none comes again for
+  the same misses. So an apology brief 16 repeated doesn't come, and the class day that held it may bring another
+  moment, or none. Its first divergence is an apology moment present on one side only, and everything after it in that
+  run is downstream of it.
+- **notices that merge:** a notice merges into an unread one with the same title and body (`Simulation.notify`). Where a
+  rewrite makes two bodies differ (the money editor's dated late-payment notice) or alike, fewer or more merge; the days
+  and titles must still be the same.
+
+    python3 docs/verification/continuity-2026-10-20/same-play.py <before dir> <after dir>
+"""
+import json, os, sys
+from collections import Counter
+
+before, after = sys.argv[1], sys.argv[2]
+names = sorted(f[:-5] for f in os.listdir(before) if f.endswith('.json') and not f.startswith('summary'))
+
+def stream(run):
+    """Every event, in order, with what gameplay decides about it."""
+    out = []
+    for x in run['said']:
+        k = x['kind']
+        if k == 'showing': out.append(('showing', x['at'], x.get('course'), x.get('piece'), x.get('band'), x.get('note')))
+        elif k == 'director': out.append(('director', x['at'], x.get('speaker')))
+        elif k == 'moment': out.append(('moment', x['at'], x.get('mate'), x.get('note')))
+        elif k == 'advice': out.append(('advice', x['at'], x.get('focus')))
+    return out
+
+result, unexplained = {}, 0
+for n in names:
+    b = json.load(open(os.path.join(before, f'{n}.json')))
+    a = json.load(open(os.path.join(after, f'{n}.json')))
+    sb, sa = stream(b), stream(a)
+    first = next((i for i in range(min(len(sb), len(sa))) if sb[i] != sa[i]), None if len(sb) == len(sa) else min(len(sb), len(sa)))
+    row = {'events': [len(sb), len(sa)], 'same': first is None}
+    if first is not None:
+        x = sb[first] if first < len(sb) else None
+        y = sa[first] if first < len(sa) else None
+        # The incident fix: the first difference is an apology on one side, the other side's event the next day's
+        # moment or later, never an earlier event of another kind.
+        apology = (x is not None and x[0] == 'moment' and x[3] == 'apology') or (y is not None and y[0] == 'moment' and y[3] == 'apology')
+        row['firstDivergence'] = {'at': (x or y)[1], 'before': x, 'after': y, 'explained': 'the incident fix: an apology brief 16 repeated, or its class day' if apology else None}
+        # What's the same before it, by kind.
+        row['sameBefore'] = dict(Counter(e[0] for e in sb[:first]))
+        if not apology: unexplained += 1
+    # Notices: the days and titles, until the run's first divergence (after it, play differs by the fix).
+    cut = row.get('firstDivergence', {}).get('at')
+    nb = Counter((x['at'], x.get('title')) for x in b['said'] if x['kind'] == 'notice' and (cut is None or x['at'] < cut))
+    na = Counter((x['at'], x.get('title')) for x in a['said'] if x['kind'] == 'notice' and (cut is None or x['at'] < cut))
+    row['notices'] = {'before': sum(nb.values()), 'after': sum(na.values()), 'sameDaysAndTitles': set(nb) == set(na),
+                      'mergedDifferently': sorted({t for (d, t) in set(nb) | set(na) if nb[(d, t)] != na[(d, t)]})[:12],
+                      'onlyBefore': sorted(set(nb) - set(na))[:8], 'onlyAfter': sorted(set(na) - set(nb))[:8]}
+    if set(nb) != set(na): unexplained += 1
+    row['run'] = {'reloads': [b.get('reloads'), a.get('reloads')], 'endedOn': [b.get('endedOn'), a.get('endedOn')]}
+    if first is None and (b.get('reloads') != a.get('reloads') or b.get('endedOn') != a.get('endedOn')): unexplained += 1
+    result[n] = row
+
+print(json.dumps({'runs': len(names), 'identical': sum(1 for r in result.values() if r['same']), 'unexplained': unexplained, 'byRun': result}, indent=1, ensure_ascii=False))
+sys.exit(1 if unexplained else 0)
