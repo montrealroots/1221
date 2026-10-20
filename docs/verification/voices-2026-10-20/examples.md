@@ -170,7 +170,7 @@ The underprepared student, seed v16-0, Acting I, every showing in order. Same da
 
 ## Distinct Voices
 
-The first Strong piece with nothing holding it back in each of four courses, one of each discipline, from the attentive student. Before, each heard "It came together. Here’s what to try next." and acting's step; after, its own.
+The first Strong piece with nothing holding it back in each course where the attentive student had one: 5 of the 6 looked in (Voice I had none), acting, voice, movement and text among them. Before, each heard "It came together. Here’s what to try next." and a step from the one list every course drew on; after, a step from its own discipline's.
 
 - **Acting I, before** (2026-11-30): It came together. Here’s what to try next. Raise what it costs. Play it as though the scene decides everything for your character, and see what that does to the pace.
 - **Acting I, after** (2026-11-30): Your best piece in Acting I so far: Strong, where the last was Working. To take it further: Raise what it costs. Play it as though the scene decides everything for your character, and see what that does to the pace.

@@ -42,11 +42,13 @@ side_by_side('A Highly Skilled Student Maintaining Strong Work', 'skilled', 'Spe
 side_by_side('An Underprepared Student With Recurring Notes', 'underprepared', 'Acting I', until='2027-03-31', limit=10)
 
 w('## Distinct Voices\n')
-w('The first Strong piece with nothing holding it back in each of four courses, one of each discipline, from the attentive student. Before, each heard "It came together. Here’s what to try next." and acting\'s step; after, its own.\n')
-for course in ['Acting I', 'Voice I', 'The Body As Source I', 'Text And Context Across The Repertory', 'Speech And Accents I', 'Alexander Technique I']:
+COURSES = ['Acting I', 'Voice I', 'The Body As Source I', 'Text And Context Across The Repertory', 'Speech And Accents I', 'Alexander Technique I']
+firsts = {(c, side): next((x for x in showings(load(side, 'attentive'), c) if x['note'].startswith('advanced') and x['band'] in ('strong', 'exceptional')), None) for c in COURSES for side in ['before', 'after']}
+had = [c for c in COURSES if firsts[(c, 'after')]]
+w(f'The first Strong piece with nothing holding it back in each course where the attentive student had one: {len(had)} of the {len(COURSES)} looked in ({", ".join(c for c in COURSES if c not in had) or "none"} had none), acting, voice, movement and text among them. Before, each heard "It came together. Here’s what to try next." and a step from the one list every course drew on; after, a step from its own discipline\'s.\n')
+for course in COURSES:
     for side in ['before', 'after']:
-        run = load(side, 'attentive')
-        first = next((x for x in showings(run, course) if x['note'].startswith('advanced') and x['band'] in ('strong', 'exceptional')), None)
+        first = firsts[(course, side)]
         if first:
             w(f'- **{course}, {side}** ({first["at"]}): {first["text"]}')
 w('')
