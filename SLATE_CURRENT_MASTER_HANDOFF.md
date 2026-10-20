@@ -18,18 +18,21 @@ carries brief 16 too. **Nothing of brief 16 is merged, and nothing is deployed.*
 - **The tested code is `4ef5e961`'s.**
   - **Every measurement after** (`docs/verification/voices-2026-10-20/after/`) and **every final run** ran on it, in the
     lanes of `runs16.sh`. Each step's commit, command and exit is in `docs/verification/voices-2026-10-20/runs/exits-*.txt`.
-  - **The gate** hadn't run on brief 16's last commit when this was written: `INT-gate` is Implemented, Verification
-    Incomplete until it has (section 2). It runs in a clean clone through
-    `docs/verification/voices-2026-10-20/final-checks/gate16.sh <commit>`, and writes `runs/gate.txt`.
+  - **The gate** ran last, on `eabb9ef5`, in a clean clone (`final-checks/gate16.sh`): exit 0, 398 of 398 test files
+    and 4,781 of 4,781 tests passed, none skipped, every one of the twenty checks holding; the build exit 0, in the same
+    clone (`docs/verification/voices-2026-10-20/runs/gate.txt`, `final-checks/`). Between `4ef5e961` and `eabb9ef5`,
+    only documents changed: the records, the scripts that write them, the matrix and this handoff. After it, only
+    documents changed again: the examples' count of courses, read from the runs, and the gate's figures folded in.
+    Until then this said the gate hadn't run, and the line below was 611.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
 
 ## 2. Where It Stands
 
-**Completion, by the matrix:** 611 of 636 rows in scope Implemented And Verified (96.0%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 612 of 636 rows in scope Implemented And Verified (96.2%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
-- **Against brief 15's close:** the same rows, each measured again where what it reads changed, on `4ef5e961`. The one
-  row fewer is `INT-gate`, waiting on the gate (section 1).
+- **Against brief 15's close:** the same 612 rows Implemented And Verified, each measured again where what it reads
+  changed: on `4ef5e961` by the engine, the judge and its build, and the gate's on `eabb9ef5`.
 - **The game is the same game.** Every number, id, key and list length in the final runs was compared with brief 15's
   (`numbers-same.py`, `numbers-same.json`). The judge's 36 figures are brief 15's exactly, so RULESET stays
   evaluation-11.

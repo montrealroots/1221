@@ -206,6 +206,13 @@ is brief 15's, but the words and three counted kinds of thing, each checked:
   journeys; every notice brief 15's had on a day is there on that day, none fewer);
 - the run's own record.
 
+## The Gate
+
+`npm run gate` ran last, on `eabb9ef5`, in a clean clone of the branch (`final-checks/gate16.sh`), its exit read from a
+file: exit 0, 398 of 398 test files and 4,781 of 4,781 tests passed, none skipped, every one of the twenty checks
+holding (`runs/gate.txt`, `final-checks/`). `npm run build` exited 0 in the same clone. Between `4ef5e961`, the tested
+code, and `eabb9ef5`, only documents changed.
+
 ## Examples, Read In Order
 
 `examples.md` (made by `examples.py` from `before/` and `after/`, never typed) holds:
