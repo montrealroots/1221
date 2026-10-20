@@ -545,6 +545,13 @@
   "evidence": "docs/verification/editorial-2026-10-19/health/looks-after-1.txt, rendered by render-looks.ts in every band, pronoun and condition, the guide section's connections",
   "first": "Pending"
  },
+ "src/engine/content/guide/body.ts#hoursWords": {
+  "status": "Rewritten",
+  "hash": "bbce7c890355",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
+  "first": "Pending"
+ },
  "src/engine/content/injury.ts#INJURY": {
   "status": "Retained",
   "hash": "ceb5fd6e33a8",

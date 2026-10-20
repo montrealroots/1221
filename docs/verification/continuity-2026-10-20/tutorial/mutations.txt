@@ -1,0 +1,120 @@
+# Each new claim taken out of its source, and the test that holds it run (scripts/mutate.py), 2026-10-20. Every one failed, as it should; the source was restored after each.
+MUTATION calendar-injury-removed: vitest exit=1 (failed, as it should)
+    125|     expect(said.length).toBeGreaterThan(0);
+       |                         ^
+    126|     for (const x of said) expect(x).not.toMatch(/anything but your own…
+    127|     // Only while the game keeps it so: change one, and the sentence m…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION calendar-old-sentence-back: vitest exit=1 (failed, as it should)
+    126|     for (const x of said) expect(x).not.toMatch(/anything but your own…
+       |                                         ^
+    127|     // Only while the game keeps it so: change one, and the sentence m…
+    128|     if (!r.atClass) expect(said.some((x) => /keeps you from[^.]*\bclas…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION school-note-rule-removed: vitest exit=1 (failed, as it should)
+    145|     expect(said.length).toBeGreaterThan(0);
+       |                         ^
+    146|     expect(said.join(' ')).toContain(`in any course, is shown with the…
+    147|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION practice-old-words-back: vitest exit=1 (failed, as it should)
+    161|     if (no) expect(said[0]).toMatch(/Practice An Hour is grayed out un…
+       |                             ^
+    162|   });
+    163| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION breadcrumb-example-old-back: vitest exit=1 (failed, as it should)
+    693|     expect(steps).toEqual(['Press P for the Player Profile.', 'Press S…
+       |                   ^
+    694|     expect(result).toContain('School opens on Coursework, the tab it w…
+    695|     p.unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION partly-open-callout-removed: vitest exit=1 (failed, as it should)
+    527|     expect(p.text).toContain(`Part of this isn’t open yet. Read “${lif…
+       |                    ^
+    528|     expect(p.text).not.toContain('This isn’t open yet.');
+    529|     p.press('Close');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION bank-chapter-sixty-days-back: vitest exit=1 (failed, as it should)
+    200|     expect(words).not.toMatch(/sixty days late/);
+       |                       ^
+    201|     // Only while the second miss is what ends it: change that, and th…
+    202|     if (!first!.introLost && second!.introLost) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION card-entry-sixty-days-back: vitest exit=1 (failed, as it should)
+    204|       expect(GUIDE_BY_ID['bank.card']!.later.join(' ')).toContain('Two…
+       |                                                         ^
+    205|       expect(GUIDE_BY_ID['bank.card-offers']!.reads.find((f) => f.labe…
+    206|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION profile-record-inline-back: vitest exit=1 (failed, as it should)
+    256|     for (const f of GUIDE_BY_ID['craft.profile']!.reads) expect(f.valu…
+       |                                                                              ^
+    257|     // Only while the card keeps them behind its button: change that, …
+    258|     if (behind.includes('From Your Record') && !face.includes('From Yo…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION profile-prep-first-line-back: vitest exit=1 (failed, as it should)
+    256|     for (const f of GUIDE_BY_ID['craft.profile']!.reads) expect(f.valu…
+       |                                                                              ^
+    257|     // Only while the card keeps them behind its button: change that, …
+    258|     if (behind.includes('From Your Record') && !face.includes('From Yo…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION profile-first-line-label-back: vitest exit=1 (failed, as it should)
+    255|     expect(GUIDE_BY_ID['craft.profile']!.reads.map((f) => f.label)).no…
+       |                                                                         ^
+    256|     for (const f of GUIDE_BY_ID['craft.profile']!.reads) expect(f.valu…
+    257|     // Only while the card keeps them behind its button: change that, …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION profile-card-behind-removed: vitest exit=1 (failed, as it should)
+    261|       expect(read('What The Card Shows')).toMatch(/^What to work on, w…
+       |                                           ^
+    262|     }
+    263|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION profile-record-heading-removed: vitest exit=1 (failed, as it should)
+    259|       expect(read('What Each Line Says')).toContain('under From Your R…
+       |                                           ^
+    260|       expect(read('Preparation, Said Apart')).toContain('is said apart…
+    261|       expect(read('What The Card Shows')).toMatch(/^What to work on, w…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION locked-where-falls-back-to-lead: vitest exit=1 (failed, as it should)
+    1031|     expect(before).toContain('Where You Are Locked The town you live i…
+       |                    ^
+    1032|     expect(before).not.toContain('how SLATE works');
+    1033|     expect(before).toContain('Weather Locked The weather in your town,…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION advance-chapter-stand-here-removed: vitest exit=1 (failed, as it should)
+    847|       expect(CHAPTER_BY_ID.advance!.body.join(' ')).toContain('Go take…
+       |                                                     ^
+    848|       expect(GUIDE_BY_ID['day.advance']!.steps.join(' ')).toContain('G…
+    849|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION advance-entry-step-back: vitest exit=1 (failed, as it should)
+    848|       expect(GUIDE_BY_ID['day.advance']!.steps.join(' ')).toContain('G…
+       |                                                           ^
+    849|     }
+    850|     go.p.unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+MUTATION tax-return-panel-step-back: vitest exit=1 (failed, as it should)
+    614|   }
+    615|   expect(onTime.r.penalty).toBe(0);
+ ❯ play tests/guide-examples-papers.test.ts:280:56
+ ❯ tests/guide-examples-papers.test.ts:947:111
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯

@@ -1,0 +1,1945 @@
+{
+ "base": "http://localhost:4301",
+ "width": 1440,
+ "problems": [],
+ "results": [
+  {
+   "part": "new life",
+   "what": "a new life opens on the guide, at its first chapter",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "Calendar, locked, says what it shows, then that “What’s Coming” opens it, with Read About It",
+   "ok": true,
+   "seen": "Calendar LOCKED What’s coming up, and when. It opens when you read “What’s Coming” in the guide. Read About It"
+  },
+  {
+   "part": "new life",
+   "what": "What Needs You, locked, says what it shows, then that “What Needs You” opens it, with Read About It",
+   "ok": true,
+   "seen": "What Needs You LOCKED What happened while you weren’t looking, and the questions waiting on you. It opens when you read “What Needs You” in the guide. Read About It"
+  },
+  {
+   "part": "new life",
+   "what": "How You Are, locked, says what it shows, then that “How You Are” opens it, with Read About It",
+   "ok": true,
+   "seen": "How You Are LOCKED Your energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide. Read About It"
+  },
+  {
+   "part": "new life",
+   "what": "Where You Are, locked, says what it shows, then that “Your Life, Hour By Hour” opens it, with Read About It",
+   "ok": true,
+   "seen": "Where You Are LOCKED The town you live in, its local time and its daylight. It opens when you read “Your Life, Hour By Hour” in the guide. Read About It"
+  },
+  {
+   "part": "new life",
+   "what": "Weather, locked, says what it shows, then that “Weather” opens it, with Read About It",
+   "ok": true,
+   "seen": "Weather LOCKED The weather in your town, today and the days ahead. It opens when you read “Weather” in the guide. Read About It"
+  },
+  {
+   "part": "new life",
+   "what": "Money, locked, says what it shows, then that “Money” opens it, with Read About It",
+   "ok": true,
+   "seen": "Money LOCKED What your main account holds, and what you’re worth after what you owe. It opens when you read “Money” in the guide. Read About It"
+  },
+  {
+   "part": "new life",
+   "what": "School, locked, says what it shows, then that “Drama School” opens it, with Read About It",
+   "ok": true,
+   "seen": "School LOCKED Your year at the School, your standing, your place in the class and what’s next. It opens when you read “Drama School” in the guide. Read About It"
+  },
+  {
+   "part": "new life",
+   "what": "Papers, locked, says what it shows, then that “Cover, Benefits And Returns” opens it, with Read About It",
+   "ok": true,
+   "seen": "Papers LOCKED Your health cover, and any tax return due, tax owed or unemployment you’re paid. It opens when you read “Cover, Benefits And Returns” in the guide. Read About It"
+  },
+  {
+   "part": "new life",
+   "what": "Read on the strip opens the guide at its first chapter again",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "after three chapters the guide is at “Moving Time On”",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Late"
+  },
+  {
+   "part": "new life",
+   "what": "Later closes the guide",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "the strip under the top bar names the next chapter, with Read",
+   "ok": true,
+   "seen": "GUIDE · 4 OF 17 Moving Time On · Jumping ahead, and what happens on the way. Read"
+  },
+  {
+   "part": "new life",
+   "what": "Look After Yourself, before its chapter, says Locked",
+   "ok": true,
+   "seen": "Look After Yourself ▾ LOCKED"
+  },
+  {
+   "part": "new life",
+   "what": "pressed, it opens the guide at its chapter, saying which chapter comes first",
+   "ok": true,
+   "seen": "Guide ✕ 1 Your Life, Hour By Hour Read 2 What’s Coming Read 3 The Clock Read 4 Moving Time On Next 5 What Needs You Later 6 How You Are Later 7 Sleep Later 8 Looking After Yourself Later 9 Your Own Plans Later 10 Weather Later 11 Drama School Later 12 You As A"
+  },
+  {
+   "part": "new life",
+   "what": "a chapter read ahead has no I’ve Read It",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "Next Unread goes to the chapter that comes first, with I’ve Read It",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "search finds the Sleep entry, marked Locked on a life that hasn’t read its chapter",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "the entry says it isn’t open yet, and which chapter opens it",
+   "ok": true,
+   "seen": "How This Works ✕ Contents › Search: Sleep › Sleep Search How This Works Search Sleep Show Everything This isn’t open yet. Read “Sleep” in the guide to open it. Read About It Sleep, in the top bar, asks how many hours, from half an hour to 14 hours, and suggest"
+  },
+  {
+   "part": "new life",
+   "what": "its summary, Where To Find It and Show Me Where are there to read before it opens",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "Read About It opens the guide at that chapter",
+   "ok": true,
+   "seen": "CHAPTER 7 OF 17 Sleep Going to sleep, and getting your energy back. Sleep is how you get your energy back. Press Sleep in the top bar, and the Sleep dialog asks"
+  },
+  {
+   "part": "new life",
+   "what": "Play is open after “The Clock”",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "Play runs the clock: the button says Pause",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "? opens How This Works over the running clock, which says the clock waits",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "new life",
+   "what": "with How This Works open for 65 seconds, the clock doesn’t move",
+   "ok": true,
+   "seen": "7:30 AM → 7:30 AM"
+  },
+  {
+   "part": "new life",
+   "what": "closed, the clock runs on: a minute later it has moved",
+   "ok": true,
+   "seen": "7:30 AM → 7:31 AM"
+  },
+  {
+   "part": "new life",
+   "what": "with the guide open for 65 seconds, the clock doesn’t move",
+   "ok": true,
+   "seen": "7:31 AM → 7:31 AM"
+  },
+  {
+   "part": "new life",
+   "what": "How This Works on How You Are, its panel open, says only the rest waits on “A Whole Life”",
+   "ok": true,
+   "seen": "Are Show Everything Part of this isn’t open yet. Read “A Whole Life” in the guide to open the rest. Read About It How You Are, on Home, shows how you’re doing"
+  },
+  {
+   "part": "new life",
+   "what": "the Sleep dialog doesn’t hold the clock, as The Clock’s entry says: a minute later it has moved",
+   "ok": true,
+   "seen": "7:31 AM → 7:32 AM"
+  },
+  {
+   "part": "show me where",
+   "what": "“Home And Where You Are” opens from the search",
+   "ok": true,
+   "seen": "Home And Where You Are"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Home And Where You Are” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Home And Where You Are"
+  },
+  {
+   "part": "show me where",
+   "what": "“The Guide And This Help” opens from the search",
+   "ok": true,
+   "seen": "The Guide And This Help"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “The Guide And This Help” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "The Guide And This Help"
+  },
+  {
+   "part": "show me where",
+   "what": "“Finding Your Way” opens from the search",
+   "ok": true,
+   "seen": "Finding Your Way"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Finding Your Way” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Finding Your Way"
+  },
+  {
+   "part": "show me where",
+   "what": "“The Calendar” opens from the search",
+   "ok": true,
+   "seen": "The Calendar"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “The Calendar” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "The Calendar"
+  },
+  {
+   "part": "show me where",
+   "what": "“The Clock: Play And Pause” opens from the search",
+   "ok": true,
+   "seen": "The Clock: Play And Pause"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “The Clock: Play And Pause” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "The Clock: Play And Pause"
+  },
+  {
+   "part": "show me where",
+   "what": "“Moving Time On” opens from the search",
+   "ok": true,
+   "seen": "Moving Time On"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Moving Time On” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Moving Time On"
+  },
+  {
+   "part": "show me where",
+   "what": "“What Needs You” opens from the search",
+   "ok": true,
+   "seen": "What Needs You"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “What Needs You” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "What Needs You"
+  },
+  {
+   "part": "show me where",
+   "what": "“Your Own Plans” opens from the search",
+   "ok": true,
+   "seen": "Your Own Plans"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Your Own Plans” lands on /workspace/calendar",
+   "ok": true,
+   "seen": "#/workspace/calendar"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Your Own Plans"
+  },
+  {
+   "part": "show me where",
+   "what": "“The Weather” opens from the search",
+   "ok": true,
+   "seen": "The Weather"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “The Weather” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "The Weather"
+  },
+  {
+   "part": "show me where",
+   "what": "“How You Are” opens from the search",
+   "ok": true,
+   "seen": "How You Are"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “How You Are” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "How You Are"
+  },
+  {
+   "part": "show me where",
+   "what": "“Sleep” opens from the search",
+   "ok": true,
+   "seen": "Sleep"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Sleep” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Sleep"
+  },
+  {
+   "part": "show me where",
+   "what": "“Looking After Yourself” opens from the search",
+   "ok": true,
+   "seen": "Looking After Yourself"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Looking After Yourself” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Looking After Yourself"
+  },
+  {
+   "part": "show me where",
+   "what": "“Your Standing And Classes” opens from the search",
+   "ok": true,
+   "seen": "Your Standing And Classes"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Your Standing And Classes” lands on /workspace/school, Standing And Craft",
+   "ok": true,
+   "seen": "#/workspace/school Standing And Craft"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Your Standing And Classes"
+  },
+  {
+   "part": "show me where",
+   "what": "“Calling In Sick” opens from the search",
+   "ok": true,
+   "seen": "Calling In Sick"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Calling In Sick” lands on /workspace/school, Classes",
+   "ok": true,
+   "seen": "#/workspace/school Classes"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Calling In Sick"
+  },
+  {
+   "part": "show me where",
+   "what": "“Orientation Week” opens from the search",
+   "ok": true,
+   "seen": "Orientation Week"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Orientation Week” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Orientation Week"
+  },
+  {
+   "part": "show me where",
+   "what": "“Leave, Withdrawal And Coming Back” opens from the search",
+   "ok": true,
+   "seen": "Leave, Withdrawal And Coming Back"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Leave, Withdrawal And Coming Back” lands on /workspace/school, Standing And Craft",
+   "ok": true,
+   "seen": "#/workspace/school Standing And Craft"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Leave, Withdrawal And Coming Back"
+  },
+  {
+   "part": "show me where",
+   "what": "“Repeating, Extra Terms And Incompletes” opens from the search",
+   "ok": true,
+   "seen": "Repeating, Extra Terms And Incompletes"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Repeating, Extra Terms And Incompletes” lands on /workspace/school, Standing And Craft",
+   "ok": true,
+   "seen": "#/workspace/school Standing And Craft"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Repeating, Extra Terms And Incompletes"
+  },
+  {
+   "part": "show me where",
+   "what": "“What You Owe The School” opens from the search",
+   "ok": true,
+   "seen": "What You Owe The School"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “What You Owe The School” lands on /workspace/school, Terms And Award",
+   "ok": true,
+   "seen": "#/workspace/school Terms And Award"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "What You Owe The School"
+  },
+  {
+   "part": "show me where",
+   "what": "“Work-Study Shifts” opens from the search",
+   "ok": true,
+   "seen": "Work-Study Shifts"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Work-Study Shifts” lands on /workspace/school, Shifts And Pay",
+   "ok": true,
+   "seen": "#/workspace/school Shifts And Pay"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Work-Study Shifts"
+  },
+  {
+   "part": "show me where",
+   "what": "“Preparing Coursework” opens from the search",
+   "ok": true,
+   "seen": "Preparing Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Preparing Coursework” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Preparing Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "“Table Work” opens from the search",
+   "ok": true,
+   "seen": "Table Work"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Table Work” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Table Work"
+  },
+  {
+   "part": "show me where",
+   "what": "“How You’ll Play A Scene” opens from the search",
+   "ok": true,
+   "seen": "How You’ll Play A Scene"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “How You’ll Play A Scene” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "How You’ll Play A Scene"
+  },
+  {
+   "part": "show me where",
+   "what": "“Feedback And Your Notes” opens from the search",
+   "ok": true,
+   "seen": "Feedback And Your Notes"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Feedback And Your Notes” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Feedback And Your Notes"
+  },
+  {
+   "part": "show me where",
+   "what": "“Another Way At A Note” opens from the search",
+   "ok": true,
+   "seen": "Another Way At A Note"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Another Way At A Note” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Another Way At A Note"
+  },
+  {
+   "part": "show me where",
+   "what": "“Rehearsing With A Partner” opens from the search",
+   "ok": true,
+   "seen": "Rehearsing With A Partner"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Rehearsing With A Partner” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Rehearsing With A Partner"
+  },
+  {
+   "part": "show me where",
+   "what": "“Your Class” opens from the search",
+   "ok": true,
+   "seen": "Your Class"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Your Class” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Your Class"
+  },
+  {
+   "part": "show me where",
+   "what": "“Working A Problem Through” opens from the search",
+   "ok": true,
+   "seen": "Working A Problem Through"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Working A Problem Through” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Working A Problem Through"
+  },
+  {
+   "part": "show me where",
+   "what": "“Casting” opens from the search",
+   "ok": true,
+   "seen": "Casting"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Casting” lands on /workspace/school, Casting",
+   "ok": true,
+   "seen": "#/workspace/school Casting"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Casting"
+  },
+  {
+   "part": "show me where",
+   "what": "“Learning A Part” opens from the search",
+   "ok": true,
+   "seen": "Learning A Part"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Learning A Part” lands on /workspace/school, Casting",
+   "ok": true,
+   "seen": "#/workspace/school Casting"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Learning A Part"
+  },
+  {
+   "part": "show me where",
+   "what": "“The Director’s Notes” opens from the search",
+   "ok": true,
+   "seen": "The Director’s Notes"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “The Director’s Notes” lands on /workspace/school, Casting",
+   "ok": true,
+   "seen": "#/workspace/school Casting"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "The Director’s Notes"
+  },
+  {
+   "part": "show me where",
+   "what": "“How You’ll Play A Part” opens from the search",
+   "ok": true,
+   "seen": "How You’ll Play A Part"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “How You’ll Play A Part” lands on /workspace/school, Casting",
+   "ok": true,
+   "seen": "#/workspace/school Casting"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "How You’ll Play A Part"
+  },
+  {
+   "part": "show me where",
+   "what": "“The Nights” opens from the search",
+   "ok": true,
+   "seen": "The Nights"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “The Nights” lands on /workspace/school, Casting",
+   "ok": true,
+   "seen": "#/workspace/school Casting"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "The Nights"
+  },
+  {
+   "part": "show me where",
+   "what": "“Cabaret And Summer Cabaret” opens from the search",
+   "ok": true,
+   "seen": "Cabaret And Summer Cabaret"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Cabaret And Summer Cabaret” lands on /workspace/school, Casting",
+   "ok": true,
+   "seen": "#/workspace/school Casting"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Cabaret And Summer Cabaret"
+  },
+  {
+   "part": "show me where",
+   "what": "“Plays To Read” opens from the search",
+   "ok": true,
+   "seen": "Plays To Read"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Plays To Read” lands on /workspace/school, Coursework",
+   "ok": true,
+   "seen": "#/workspace/school Coursework"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Plays To Read"
+  },
+  {
+   "part": "show me where",
+   "what": "“The Player Profile” opens from the search",
+   "ok": true,
+   "seen": "The Player Profile"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “The Player Profile” lands on /workspace/profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "The Player Profile"
+  },
+  {
+   "part": "show me where",
+   "what": "“Practice” opens from the search",
+   "ok": true,
+   "seen": "Practice"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Practice” lands on /workspace/profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Practice"
+  },
+  {
+   "part": "show me where",
+   "what": "“Genres” opens from the search",
+   "ok": true,
+   "seen": "Genres"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Genres” lands on /workspace/profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Genres"
+  },
+  {
+   "part": "show me where",
+   "what": "“Preparing A Brief” opens from the search",
+   "ok": true,
+   "seen": "Preparing A Brief"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Preparing A Brief” lands on /workspace/profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Preparing A Brief"
+  },
+  {
+   "part": "show me where",
+   "what": "“A Reading And A Way To Play It” opens from the search",
+   "ok": true,
+   "seen": "A Reading And A Way To Play It"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “A Reading And A Way To Play It” lands on /workspace/profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "A Reading And A Way To Play It"
+  },
+  {
+   "part": "show me where",
+   "what": "“Who Reads With You” opens from the search",
+   "ok": true,
+   "seen": "Who Reads With You"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Who Reads With You” lands on /workspace/profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Who Reads With You"
+  },
+  {
+   "part": "show me where",
+   "what": "“Taping A Brief” opens from the search",
+   "ok": true,
+   "seen": "Taping A Brief"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Taping A Brief” lands on /workspace/profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Taping A Brief"
+  },
+  {
+   "part": "show me where",
+   "what": "“A Piece Of Work, Explained” opens from the search",
+   "ok": true,
+   "seen": "A Piece Of Work, Explained"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “A Piece Of Work, Explained” lands on /workspace/profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "A Piece Of Work, Explained"
+  },
+  {
+   "part": "show me where",
+   "what": "“Your Work So Far” opens from the search",
+   "ok": true,
+   "seen": "Your Work So Far"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Your Work So Far” lands on /workspace/profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Your Work So Far"
+  },
+  {
+   "part": "show me where",
+   "what": "“Your Affairs And What You’re Worth” opens from the search",
+   "ok": true,
+   "seen": "Your Affairs And What You’re Worth"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Your Affairs And What You’re Worth” lands on /home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help",
+   "ok": true,
+   "seen": "Back To Help ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Your Affairs And What You’re Worth"
+  },
+  {
+   "part": "show me where",
+   "what": "“Your Accounts” opens from the search",
+   "ok": true,
+   "seen": "Your Accounts"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Your Accounts” lands on /workspace/bank, Accounts",
+   "ok": true,
+   "seen": "#/workspace/bank Accounts"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Your Accounts"
+  },
+  {
+   "part": "show me where",
+   "what": "“Moving Money” opens from the search",
+   "ok": true,
+   "seen": "Moving Money"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Moving Money” lands on /workspace/bank, Accounts",
+   "ok": true,
+   "seen": "#/workspace/bank Accounts"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Moving Money"
+  },
+  {
+   "part": "show me where",
+   "what": "“Term Deposits” opens from the search",
+   "ok": true,
+   "seen": "Term Deposits"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Term Deposits” lands on /workspace/bank, Accounts",
+   "ok": true,
+   "seen": "#/workspace/bank Accounts"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Term Deposits"
+  },
+  {
+   "part": "show me where",
+   "what": "“Keeping An Account” opens from the search",
+   "ok": true,
+   "seen": "Keeping An Account"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Keeping An Account” lands on /workspace/bank, Accounts",
+   "ok": true,
+   "seen": "#/workspace/bank Accounts"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Keeping An Account"
+  },
+  {
+   "part": "show me where",
+   "what": "“Round-Ups” opens from the search",
+   "ok": true,
+   "seen": "Round-Ups"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Round-Ups” lands on /workspace/bank, Accounts",
+   "ok": true,
+   "seen": "#/workspace/bank Accounts"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Round-Ups"
+  },
+  {
+   "part": "show me where",
+   "what": "“How You Pay” opens from the search",
+   "ok": true,
+   "seen": "How You Pay"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “How You Pay” lands on /workspace/bank, Payments And Cash",
+   "ok": true,
+   "seen": "#/workspace/bank Payments And Cash"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "How You Pay"
+  },
+  {
+   "part": "show me where",
+   "what": "“Cash” opens from the search",
+   "ok": true,
+   "seen": "Cash"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Cash” lands on /workspace/bank, Payments And Cash",
+   "ok": true,
+   "seen": "#/workspace/bank Payments And Cash"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Cash"
+  },
+  {
+   "part": "show me where",
+   "what": "“A Credit Card” opens from the search",
+   "ok": true,
+   "seen": "A Credit Card"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “A Credit Card” lands on /workspace/bank, Cards",
+   "ok": true,
+   "seen": "#/workspace/bank Cards"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "A Credit Card"
+  },
+  {
+   "part": "show me where",
+   "what": "“A Card’s Offers” opens from the search",
+   "ok": true,
+   "seen": "A Card’s Offers"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “A Card’s Offers” lands on /workspace/bank, Cards",
+   "ok": true,
+   "seen": "#/workspace/bank Cards"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "A Card’s Offers"
+  },
+  {
+   "part": "show me where",
+   "what": "“Card Security” opens from the search",
+   "ok": true,
+   "seen": "Card Security"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Card Security” lands on /workspace/bank, Cards",
+   "ok": true,
+   "seen": "#/workspace/bank Cards"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Card Security"
+  },
+  {
+   "part": "show me where",
+   "what": "“Overdrafts And Loans” opens from the search",
+   "ok": true,
+   "seen": "Overdrafts And Loans"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Overdrafts And Loans” lands on /workspace/bank, Borrowing",
+   "ok": true,
+   "seen": "#/workspace/bank Borrowing"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Overdrafts And Loans"
+  },
+  {
+   "part": "show me where",
+   "what": "“Another Bank” opens from the search",
+   "ok": true,
+   "seen": "Another Bank"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Another Bank” lands on /workspace/bank, Accounts",
+   "ok": true,
+   "seen": "#/workspace/bank Accounts"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Another Bank"
+  },
+  {
+   "part": "show me where",
+   "what": "“A Bank At Home” opens from the search",
+   "ok": true,
+   "seen": "A Bank At Home"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “A Bank At Home” lands on /workspace/bank, Accounts",
+   "ok": true,
+   "seen": "#/workspace/bank Accounts"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "A Bank At Home"
+  },
+  {
+   "part": "show me where",
+   "what": "“Papers” opens from the search",
+   "ok": true,
+   "seen": "Papers"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Papers” lands on /workspace/papers",
+   "ok": true,
+   "seen": "#/workspace/papers"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Papers"
+  },
+  {
+   "part": "show me where",
+   "what": "“Health Cover” opens from the search",
+   "ok": true,
+   "seen": "Health Cover"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Health Cover” lands on /workspace/papers, Health Cover",
+   "ok": true,
+   "seen": "#/workspace/papers Health Cover"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Health Cover"
+  },
+  {
+   "part": "show me where",
+   "what": "“The Doctor And The Pharmacy” opens from the search",
+   "ok": true,
+   "seen": "The Doctor And The Pharmacy"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “The Doctor And The Pharmacy” lands on /workspace/papers, Health Cover",
+   "ok": true,
+   "seen": "#/workspace/papers Health Cover"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "The Doctor And The Pharmacy"
+  },
+  {
+   "part": "show me where",
+   "what": "“Conditions And Therapy” opens from the search",
+   "ok": true,
+   "seen": "Conditions And Therapy"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Conditions And Therapy” lands on /workspace/papers, Health Cover",
+   "ok": true,
+   "seen": "#/workspace/papers Health Cover"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Conditions And Therapy"
+  },
+  {
+   "part": "show me where",
+   "what": "“Unemployment And Assistance” opens from the search",
+   "ok": true,
+   "seen": "Unemployment And Assistance"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Unemployment And Assistance” lands on /workspace/papers, Unemployment",
+   "ok": true,
+   "seen": "#/workspace/papers Unemployment"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Unemployment And Assistance"
+  },
+  {
+   "part": "show me where",
+   "what": "“Pensions” opens from the search",
+   "ok": true,
+   "seen": "Pensions"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Pensions” lands on /workspace/papers, Unemployment",
+   "ok": true,
+   "seen": "#/workspace/papers Unemployment"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Pensions"
+  },
+  {
+   "part": "show me where",
+   "what": "“Your Tax Return” opens from the search",
+   "ok": true,
+   "seen": "Your Tax Return"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Your Tax Return” lands on /workspace/papers, Tax Returns",
+   "ok": true,
+   "seen": "#/workspace/papers Tax Returns"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Your Tax Return"
+  },
+  {
+   "part": "show me where",
+   "what": "“Paying Tax Owed” opens from the search",
+   "ok": true,
+   "seen": "Paying Tax Owed"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Paying Tax Owed” lands on /workspace/papers, Tax Returns",
+   "ok": true,
+   "seen": "#/workspace/papers Tax Returns"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Paying Tax Owed"
+  },
+  {
+   "part": "show me where",
+   "what": "“Payment Plans And Waivers” opens from the search",
+   "ok": true,
+   "seen": "Payment Plans And Waivers"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Payment Plans And Waivers” lands on /workspace/papers, Tax Returns",
+   "ok": true,
+   "seen": "#/workspace/papers Tax Returns"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Payment Plans And Waivers"
+  },
+  {
+   "part": "show me where",
+   "what": "“A Tax Lien” opens from the search",
+   "ok": true,
+   "seen": "A Tax Lien"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “A Tax Lien” lands on /workspace/papers, Tax Returns",
+   "ok": true,
+   "seen": "#/workspace/papers Tax Returns"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "A Tax Lien"
+  },
+  {
+   "part": "show me where",
+   "what": "“Passport And ID” opens from the search",
+   "ok": true,
+   "seen": "Passport And ID"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Passport And ID” lands on /workspace/papers, Passport And ID",
+   "ok": true,
+   "seen": "#/workspace/papers Passport And ID"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Passport And ID"
+  },
+  {
+   "part": "show me where",
+   "what": "“Permission To Work” opens from the search",
+   "ok": true,
+   "seen": "Permission To Work"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Permission To Work” lands on /workspace/papers, Permission To Work",
+   "ok": true,
+   "seen": "#/workspace/papers Permission To Work"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Permission To Work"
+  },
+  {
+   "part": "show me where",
+   "what": "“Residence Abroad” opens from the search",
+   "ok": true,
+   "seen": "Residence Abroad"
+  },
+  {
+   "part": "show me where",
+   "what": "Show Me Where for “Residence Abroad” lands on /workspace/papers, Permission To Work",
+   "ok": true,
+   "seen": "#/workspace/papers Permission To Work"
+  },
+  {
+   "part": "show me where",
+   "what": "and offers Back To Help and Back To Home",
+   "ok": true,
+   "seen": "Back To Help Back To Home ✕"
+  },
+  {
+   "part": "show me where",
+   "what": "Back To Help reopens the entry",
+   "ok": true,
+   "seen": "Residence Abroad"
+  },
+  {
+   "part": "show me where",
+   "what": "reading 70 entries and following each Show Me Where moved no clock",
+   "ok": true,
+   "seen": "4:05 PM → 4:05 PM"
+  },
+  {
+   "part": "links and back",
+   "what": "an entry opens with What To Press showing and its other sections shut",
+   "ok": true,
+   "seen": "1 of 8 open"
+  },
+  {
+   "part": "links and back",
+   "what": "Show Everything opens every section, and says Show Less",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "links and back",
+   "what": "Show Less shuts them again, What To Press still open",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "links and back",
+   "what": "a shut section opens on its own when pressed: A Worked Example",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "links and back",
+   "what": "a link under How It Connects opens that entry, with the trail behind it",
+   "ok": true,
+   "seen": "Another Way At A Note; trail: Contents › Search: Feedback And Your Notes › Feedback And Your Notes › Another Way At A Note"
+  },
+  {
+   "part": "links and back",
+   "what": "Back returns to the entry it came from",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "links and back",
+   "what": "the trail’s Contents goes back to the contents",
+   "ok": true,
+   "seen": ""
+  },
+  {
+   "part": "keys and breadcrumbs",
+   "what": "H goes to Home",
+   "ok": true,
+   "seen": "#/home"
+  },
+  {
+   "part": "keys and breadcrumbs",
+   "what": "Finding Your Way’s worked example, followed as it says, comes back to School on Coursework",
+   "ok": true,
+   "seen": "the example presses P, and the School breadcrumb opens School on Coursework"
+  },
+  {
+   "part": "keys and breadcrumbs",
+   "what": "C opens the Calendar screen",
+   "ok": true,
+   "seen": "#/workspace/calendar"
+  },
+  {
+   "part": "keys and breadcrumbs",
+   "what": "P opens the Player Profile",
+   "ok": true,
+   "seen": "#/workspace/profile"
+  },
+  {
+   "part": "keys and breadcrumbs",
+   "what": "the browser’s Back returns to the screen before",
+   "ok": true,
+   "seen": "#/workspace/calendar"
+  },
+  {
+   "part": "keys and breadcrumbs",
+   "what": "the SLATE mark at the top left goes Home",
+   "ok": true,
+   "seen": "#/home"
+  }
+ ]
+}

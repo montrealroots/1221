@@ -1,0 +1,427 @@
+{
+ "base": "http://localhost:4301",
+ "width": 390,
+ "problems": [],
+ "results": [
+  {
+   "id": "start.home",
+   "ok": true,
+   "pieces": 28,
+   "missing": []
+  },
+  {
+   "id": "start.guide",
+   "ok": true,
+   "pieces": 29,
+   "missing": []
+  },
+  {
+   "id": "start.find",
+   "ok": true,
+   "pieces": 22,
+   "missing": []
+  },
+  {
+   "id": "day.calendar",
+   "ok": true,
+   "pieces": 46,
+   "missing": []
+  },
+  {
+   "id": "day.clock",
+   "ok": true,
+   "pieces": 38,
+   "missing": []
+  },
+  {
+   "id": "day.advance",
+   "ok": true,
+   "pieces": 37,
+   "missing": []
+  },
+  {
+   "id": "day.needs",
+   "ok": true,
+   "pieces": 46,
+   "missing": []
+  },
+  {
+   "id": "day.plans",
+   "ok": true,
+   "pieces": 48,
+   "missing": []
+  },
+  {
+   "id": "day.weather",
+   "ok": true,
+   "pieces": 32,
+   "missing": []
+  },
+  {
+   "id": "body.how",
+   "ok": true,
+   "pieces": 51,
+   "missing": []
+  },
+  {
+   "id": "body.sleep",
+   "ok": true,
+   "pieces": 49,
+   "missing": []
+  },
+  {
+   "id": "body.look-after",
+   "ok": true,
+   "pieces": 66,
+   "missing": []
+  },
+  {
+   "id": "school.standing",
+   "ok": true,
+   "pieces": 60,
+   "missing": []
+  },
+  {
+   "id": "school.sick",
+   "ok": true,
+   "pieces": 50,
+   "missing": []
+  },
+  {
+   "id": "school.orientation",
+   "ok": true,
+   "pieces": 44,
+   "missing": []
+  },
+  {
+   "id": "school.leave",
+   "ok": true,
+   "pieces": 77,
+   "missing": []
+  },
+  {
+   "id": "school.repeat",
+   "ok": true,
+   "pieces": 67,
+   "missing": []
+  },
+  {
+   "id": "school.money",
+   "ok": true,
+   "pieces": 62,
+   "missing": []
+  },
+  {
+   "id": "school.shifts",
+   "ok": true,
+   "pieces": 53,
+   "missing": []
+  },
+  {
+   "id": "coursework.prepare",
+   "ok": true,
+   "pieces": 70,
+   "missing": []
+  },
+  {
+   "id": "coursework.table",
+   "ok": true,
+   "pieces": 46,
+   "missing": []
+  },
+  {
+   "id": "coursework.playing",
+   "ok": true,
+   "pieces": 47,
+   "missing": []
+  },
+  {
+   "id": "coursework.feedback",
+   "ok": true,
+   "pieces": 49,
+   "missing": []
+  },
+  {
+   "id": "coursework.approach",
+   "ok": true,
+   "pieces": 47,
+   "missing": []
+  },
+  {
+   "id": "coursework.partners",
+   "ok": true,
+   "pieces": 65,
+   "missing": []
+  },
+  {
+   "id": "coursework.class",
+   "ok": true,
+   "pieces": 52,
+   "missing": []
+  },
+  {
+   "id": "coursework.workbook",
+   "ok": true,
+   "pieces": 62,
+   "missing": []
+  },
+  {
+   "id": "productions.casting",
+   "ok": true,
+   "pieces": 54,
+   "missing": []
+  },
+  {
+   "id": "productions.part",
+   "ok": true,
+   "pieces": 53,
+   "missing": []
+  },
+  {
+   "id": "productions.notes",
+   "ok": true,
+   "pieces": 62,
+   "missing": []
+  },
+  {
+   "id": "productions.playing",
+   "ok": true,
+   "pieces": 50,
+   "missing": []
+  },
+  {
+   "id": "productions.nights",
+   "ok": true,
+   "pieces": 59,
+   "missing": []
+  },
+  {
+   "id": "productions.cabaret",
+   "ok": true,
+   "pieces": 58,
+   "missing": []
+  },
+  {
+   "id": "productions.plays",
+   "ok": true,
+   "pieces": 44,
+   "missing": []
+  },
+  {
+   "id": "craft.profile",
+   "ok": true,
+   "pieces": 51,
+   "missing": []
+  },
+  {
+   "id": "craft.practice",
+   "ok": true,
+   "pieces": 62,
+   "missing": []
+  },
+  {
+   "id": "craft.genre",
+   "ok": true,
+   "pieces": 46,
+   "missing": []
+  },
+  {
+   "id": "craft.brief-prepare",
+   "ok": true,
+   "pieces": 52,
+   "missing": []
+  },
+  {
+   "id": "craft.brief-choose",
+   "ok": true,
+   "pieces": 43,
+   "missing": []
+  },
+  {
+   "id": "craft.brief-reader",
+   "ok": true,
+   "pieces": 46,
+   "missing": []
+  },
+  {
+   "id": "craft.brief-tape",
+   "ok": true,
+   "pieces": 60,
+   "missing": []
+  },
+  {
+   "id": "craft.work",
+   "ok": true,
+   "pieces": 44,
+   "missing": []
+  },
+  {
+   "id": "craft.identity",
+   "ok": true,
+   "pieces": 42,
+   "missing": []
+  },
+  {
+   "id": "money.affairs",
+   "ok": true,
+   "pieces": 43,
+   "missing": []
+  },
+  {
+   "id": "bank.accounts",
+   "ok": true,
+   "pieces": 52,
+   "missing": []
+  },
+  {
+   "id": "bank.transfer",
+   "ok": true,
+   "pieces": 50,
+   "missing": []
+  },
+  {
+   "id": "bank.term",
+   "ok": true,
+   "pieces": 49,
+   "missing": []
+  },
+  {
+   "id": "bank.upkeep",
+   "ok": true,
+   "pieces": 59,
+   "missing": []
+  },
+  {
+   "id": "bank.round-ups",
+   "ok": true,
+   "pieces": 44,
+   "missing": []
+  },
+  {
+   "id": "bank.payments",
+   "ok": true,
+   "pieces": 61,
+   "missing": []
+  },
+  {
+   "id": "bank.cash",
+   "ok": true,
+   "pieces": 49,
+   "missing": []
+  },
+  {
+   "id": "bank.card",
+   "ok": true,
+   "pieces": 76,
+   "missing": []
+  },
+  {
+   "id": "bank.card-offers",
+   "ok": true,
+   "pieces": 46,
+   "missing": []
+  },
+  {
+   "id": "bank.card-security",
+   "ok": true,
+   "pieces": 54,
+   "missing": []
+  },
+  {
+   "id": "bank.borrowing",
+   "ok": true,
+   "pieces": 64,
+   "missing": []
+  },
+  {
+   "id": "bank.other-banks",
+   "ok": true,
+   "pieces": 69,
+   "missing": []
+  },
+  {
+   "id": "bank.home-account",
+   "ok": true,
+   "pieces": 54,
+   "missing": []
+  },
+  {
+   "id": "papers.overview",
+   "ok": true,
+   "pieces": 29,
+   "missing": []
+  },
+  {
+   "id": "papers.health-cover",
+   "ok": true,
+   "pieces": 94,
+   "missing": []
+  },
+  {
+   "id": "papers.doctor",
+   "ok": true,
+   "pieces": 62,
+   "missing": []
+  },
+  {
+   "id": "papers.conditions",
+   "ok": true,
+   "pieces": 49,
+   "missing": []
+  },
+  {
+   "id": "papers.benefits",
+   "ok": true,
+   "pieces": 50,
+   "missing": []
+  },
+  {
+   "id": "papers.pensions",
+   "ok": true,
+   "pieces": 39,
+   "missing": []
+  },
+  {
+   "id": "taxes.return",
+   "ok": true,
+   "pieces": 60,
+   "missing": []
+  },
+  {
+   "id": "taxes.pay",
+   "ok": true,
+   "pieces": 50,
+   "missing": []
+  },
+  {
+   "id": "taxes.plan",
+   "ok": true,
+   "pieces": 68,
+   "missing": []
+  },
+  {
+   "id": "taxes.lien",
+   "ok": true,
+   "pieces": 55,
+   "missing": []
+  },
+  {
+   "id": "documents.passport-id",
+   "ok": true,
+   "pieces": 68,
+   "missing": []
+  },
+  {
+   "id": "documents.work",
+   "ok": true,
+   "pieces": 54,
+   "missing": []
+  },
+  {
+   "id": "documents.residence",
+   "ok": true,
+   "pieces": 30,
+   "missing": []
+  }
+ ]
+}

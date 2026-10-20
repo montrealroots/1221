@@ -600,7 +600,18 @@ PLAYS['taxes.return'] = () => {
   const onTime = ready('guide-papers-return');
   tended(onTime.sim, onTime.r.due - MS_HOUR);
   const filedOnTime = onTime.sim.now;
+  // The year's panel says the day it's due, and once filed, the day it was filed (from 2026-10-20, brief 17: the first
+  // step said “showing Due and its date, or Filed”, which the papers editor's branch, saying a return past its day is
+  // late, outgrew).
+  const unfiled = papersDrawn(onTime.sim, 'returns').text;
+  expect(unfiled).toContain(`Due ${day(onTime.r.due)}`);
   onTime.sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+  const filed = papersDrawn(onTime.sim, 'returns').text;
+  expect(filed).toContain(`Filed ${day(filedOnTime)}`);
+  expect(filed).not.toContain(`Due ${day(onTime.r.due)}`);
+  if (unfiled.includes(`Due ${day(onTime.r.due)}`) && filed.includes(`Filed ${day(filedOnTime)}`)) {
+    expect(GUIDE_BY_ID['taxes.return']!.steps[0]).toContain('headed with the year, and under it the day the return is due, or the day it was filed once it’s in.');
+  }
   expect(onTime.r.penalty).toBe(0);
   const paidOnTime = memos(onTime.sim, /income tax, 2026/, filedOnTime);
   expect(paidOnTime.map((t) => taken(onTime.sim, t))).toEqual([owed]);

@@ -1,5 +1,8 @@
 /**
  * SLATE — the guide's reference: getting started (from 2026-10-12; `content/guide/types.ts`).
+ *
+ * Until 2026-10-20 (brief 17) Finding Your Way called the ? key's page "the guide's contents": it's How This Works'
+ * contents, as the first chapter and `docs/GLOSSARY.md` name it, and the guide is the seventeen chapters.
  */
 
 import { CHAPTERS, CHAPTER_BY_ID } from '../tutorial';
@@ -114,7 +117,7 @@ export const START: readonly GuideEntry[] = [
     short: 'The menu down the left lists every place the guide has opened, with Home at the top and the number of things waiting for you beside it. On a screen narrower than a laptop’s, the menu folds away behind Menu.\n\nThe breadcrumbs above a screen take you back along where you’ve been, and the browser’s Back and Forward buttons work too. Every screen has its own address, so a reload or a link opens it.',
     steps: [
       'Press a place on the menu to go there, or a breadcrumb to go back to it.',
-      'Keys, anywhere but a text box: H for Home, C for the calendar, P for the Player Profile, ? for the guide’s contents, / to search it. None of them act while a dialog is open.',
+      'Keys, anywhere but a text box: H for Home, C for the calendar, P for the Player Profile, ? for How This Works’ contents, / to search it. None of them act while a dialog is open.',
       'Escape closes the dialog on top, and the menu drawer on a phone.',
     ],
     needs: ['A screen whose chapter you haven’t read opens as Locked, and names the chapter to read.'],
@@ -125,16 +128,20 @@ export const START: readonly GuideEntry[] = [
     interpret: ['The number beside Home is the notices and questions waiting in What Needs You.'],
     unavailable: ['A place isn’t on the menu until you’ve read its chapter.'],
     mistakes: ['Leaving a screen with a form half filled in loses what was typed in it; opening help over it doesn’t.'],
-    next: ['Press ? anywhere for the guide’s contents, grouped by what you want to do.'],
+    next: ['Press ? anywhere for How This Works’ contents, grouped by what you want to do.'],
     related: ['start.guide', 'start.home', 'day.needs'],
     connections: [
       { to: 'start.guide', kind: 'prerequisite', why: 'A place joins the menu once you’ve read its chapter.' },
       { to: 'day.needs', kind: 'optional', why: 'Go There on a notice takes you to its screen and tab.' },
     ],
+    // Until 2026-10-20 (brief 17, section 9) this pressed H and then a School breadcrumb on Home, which Home never shows:
+    // going to a screen already in the breadcrumbs cuts them back to it, and Home is always the first, so on Home there
+    // are none (`moved`, `app/game-context.tsx`). Followed on the built app that day
+    // (`docs/verification/continuity-2026-10-20/tutorial/help-follow.mjs`), and held by `tests/help-mechanics.test.ts`.
     example: {
-      setup: 'On the School screen’s Coursework tab, then Home.',
-      steps: ['Press H.', 'Press the School breadcrumb.'],
-      result: 'School opens on Coursework, the tab it was left on.',
+      setup: 'On the School screen’s Coursework tab.',
+      steps: ['Press P for the Player Profile.', 'Press School in the breadcrumbs above it.'],
+      result: 'School opens on Coursework, the tab it was left on. H instead goes to Home, the first breadcrumb, and the breadcrumbs start again from there.',
     },
   },
 ];

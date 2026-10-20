@@ -1,0 +1,59 @@
+# node docs/verification/continuity-2026-10-20/tutorial/scripts/quotes-owned.mjs . (2026-10-20, the clone's final src): each How This Works quote of five words or more whose words are said only in the files brief 17's coordinator owns (feedback, classmates, production, coursework, learning, ClassMoments, CourseworkPane, evaluation). If the coordinator changes one of those sentences, the guide line here quotes the old words; guide-quotes.mjs --check fails it.
+src/engine/content/guide/coursework.ts:313  “You can revise once it’s been shown and you have a note to work on.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:314  “There’s new feedback on this piece. Read it, then press Mark As Read.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:315  “… has asked to rehearse. Answer them first, under Rehearsing With ….”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:315  “… reads the scene differently from you. Answer them first, under Your Class.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:316  “You’ve done this today. It builds over several days, not in one long session.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:319  “You don’t know where the studios are yet. Orientation’s building tour shows you: if you missed it, press Catch”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:394  “Why the text supports it”  ← src/ui/components/CourseworkPane.tsx
+src/engine/content/guide/coursework.ts:394  “Why the text doesn’t support it”  ← src/ui/components/CourseworkPane.tsx
+src/engine/content/guide/coursework.ts:395  “Your answers differ from last time’s.”  ← src/ui/components/CourseworkPane.tsx
+src/engine/content/guide/coursework.ts:395  “So far your answers match last time’s.”  ← src/ui/components/CourseworkPane.tsx
+src/engine/content/guide/coursework.ts:399  “Read the text first. You can answer the Table Work questions once you know it.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:479  “There’s no scene in this piece, so there’s no way of playing it to choose.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:481  “It’s written work: you present it at the table and don’t perform it, so there’s no way of playing it to choose”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:549  “There’s no feedback on that.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:623  “It won’t take the note by itself: you still take it at a showing.”  ← src/ui/components/CourseworkPane.tsx
+src/engine/content/guide/coursework.ts:627  “You’ve already chosen … for this piece.”  ← src/engine/systems/coursework.ts, src/ui/components/CourseworkPane.tsx
+src/engine/content/guide/coursework.ts:628  “This piece can’t help with any of your recurring notes.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:629  “This piece can’t put that part first.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:630  “This piece has no partner.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:630  “That note is already about working with your partner, so this wouldn’t add anything.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:631  “… would rather work alone, after last time.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:632  “On this piece, Table Work is your answers to its questions, so a drill or your partner can’t change it. Change”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:716  “You haven’t met … yet. You’ll meet your class at orientation, or at your first class.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:717  “Ask at least ${WORK.rehearsal.aheadHours} hours ahead.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:718  “That’s after the piece is due.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:721  “You’ll still be in hospital then, so the rehearsal would be called off.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:721  “You’ll still be laid up with … then, so the rehearsal would be called off.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:721  “Rehearsing on your feet with your partner has to wait for that too.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:723  “You didn’t answer in time.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:724  “There’s no such rehearsal booked.”  ← src/engine/systems/coursework.ts
+src/engine/content/guide/coursework.ts:804  “Has Stopped Asking You To Run Lines”  ← src/ui/components/CourseworkPane.tsx
+src/engine/content/guide/coursework.ts:805  “You let them down once and haven’t made it right.”  ← src/ui/components/CourseworkPane.tsx
+src/engine/content/guide/coursework.ts:808  “It’s too late to answer. The moment has passed.”  ← src/engine/systems/classmates.ts
+src/engine/content/guide/coursework.ts:811  “You have … then, so you’ll have to say no.”  ← src/engine/systems/classmates.ts
+src/engine/content/guide/coursework.ts:813  “Your terms at the School are over: there’s no scene left to run lines for. Say no instead.”  ← src/engine/systems/classmates.ts
+src/engine/content/guide/coursework.ts:817  “There’s nothing between you to make right.”  ← src/engine/systems/classmates.ts
+src/engine/content/guide/craft.ts:1012  “It’s your … again: it’s held back … of your pieces before this.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:379  “Be off book: the lines aren’t there yet, and the scene can’t start until they are.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:385  “You aren’t cast in anything there.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:387  “You already know the part.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:388  “You haven’t missed any blocking.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:462  “Better since the last note.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:469  “I don’t know what you want…”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:469  “Who are they to you…?”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:469  “You’re not taking what they give you…”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:469  “The physical life … isn’t clean yet”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:470  “Better since the last note.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:471  “It’s your … again: it’s held back … of your pieces before this.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:475  “There’s no note to work on.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:476  “You’ve worked on it: the next call will show it.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:477  “This note asks for the part played another way: change it under How You’ll Play It.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:477  “You’ve changed how you play it: the next call will show it.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:478  “That isn’t one of the ways at this note.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:479  “There’s no way left at this note that hasn’t been tried and put back, or tried and found to change nothing.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:484  “You aren’t cast in anything there.”  ← src/engine/systems/production.ts
+src/engine/content/guide/productions.ts:564  “You aren’t cast in anything there.”  ← src/engine/systems/production.ts
+src/engine/content/guide/school.ts:435  “This session is still to come. It’s on your calendar.”  ← src/engine/systems/coursework.ts
+57 quotes said only in the coordinator's files

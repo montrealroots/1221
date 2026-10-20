@@ -3543,16 +3543,16 @@
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.practice]": {
   "status": "Rewritten",
-  "hash": "e546682d89a9",
+  "hash": "6d16121b0e52",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 6 sentences to 4, what an hour grows and what to press, then the repeat and the daily limit; the five Focus names moved into What To Press, the exercise origins into Reading The Result; tests/guide-examples-craft.test.ts passes.",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), read as rendered in full, and its worked example played by tests/guide-examples-*.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.profile]": {
   "status": "Rewritten",
-  "hash": "60cc46f83aed",
-  "on": "2026-10-19",
-  "evidence": "The Player Profile entry rendered by render-guide.ts.txt in docs/verification/editorial-2026-10-19/profile/b5-guide.txt; tests/guide-examples-craft.test.ts, tests/guide.test.ts and tests/help-mechanics.test.ts 85 of 85, and guide-quotes: it opens on what the Profile shows and how to open it, names Readiness Today, and quotes the empty state as the game says it",
+  "hash": "1b7c2da073c6",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area, the profile editor's finding: What Each Line Says, Preparation, Said Apart and What The Card Shows read against AdviceCard.tsx and adviceSummary in next-steps.ts, and held to the card by tests/guide-chapter-facts.test.ts ('is said so: the record under From Your Record and the rest behind Why This Recommendation'); every piece of the entry read word for word on the built app with Show Everything pressed (docs/verification/continuity-2026-10-20/tutorial/after/entries-read-1440/log.txt, docs/verification/continuity-2026-10-20/tutorial/after/entries-read-390/log.txt)",
   "first": "Pending"
  },
  "src/engine/content/guide/craft.ts#CRAFT [craft.work]": {

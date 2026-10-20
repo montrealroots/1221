@@ -71,16 +71,16 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [advance]": {
   "status": "Rewritten",
-  "hash": "dee31c895249",
+  "hash": "8333e49d710a",
   "on": "2026-10-20",
-  "evidence": "Choose An Event, Skip To Event, Skip To and On The Way's Advance and Cancel traced to AdvanceMenu, SkipDialog and the confirm modal in src/ui/shell/TimeControls.tsx; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "evidence": "Brief 17 tutorial area, the frame editor's finding: the chapter says what Go and Stand Here do to a jump (onGo, clearStandingAt, halt); tests/help-mechanics.test.ts ('Stand Here ends the jump at the commitment with the clock paused, and Go carries it on'); read word for word in the guide's dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt, docs/verification/continuity-2026-10-20/tutorial/after/follow-390/log.txt)",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [bank]": {
   "status": "Rewritten",
-  "hash": "40e9e41682b5",
+  "hash": "e4d3f23d310d",
   "on": "2026-10-20",
-  "evidence": "Move Money's From, To, Amount and Move It, On Its Way, Statement Day, Autopay, Pay Card In Full and Pay What You Can, Ask For Help With Payments, Apply For This Card, Your Cards' Lock It and Report It, Cash, Overdraft, Personal Loan, Open An Account At Another Bank and Switch Bank traced to src/ui/workspaces/BankWorkspace.tsx and src/ui/bank/*.tsx; tests/defects-g22-1.test.ts passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt), the two-missed rule played and held by tests/guide-chapter-facts.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [body]": {
@@ -92,9 +92,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [calendar]": {
   "status": "Rewritten",
-  "hash": "6fe9e6485bfb",
+  "hash": "7dc10e070a02",
   "on": "2026-10-20",
-  "evidence": "the coordinator traced present (systems/health.ts, systems/school.ts) and presentForCare (appointments.ts, therapy.ts); tests/guide-chapter-facts.test.ts",
+  "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
@@ -106,9 +106,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [documents]": {
   "status": "Rewritten",
-  "hash": "e48346ffb39f",
+  "hash": "88a906d4a151",
   "on": "2026-10-20",
-  "evidence": "Your Passport's Apply For One and its message, Your ID's Get, Report Lost then Cancel It, Replace It and Going Abroad's Country traced to src/ui/papers/Documents.tsx; tests/defects-g27-1.test.ts holds the Report Lost and lost license sentences and passes; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {
@@ -155,16 +155,16 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [profile]": {
   "status": "Rewritten",
-  "hash": "f64311ebf293",
+  "hash": "4b146c07fec2",
   "on": "2026-10-20",
-  "evidence": "matched to the AdviceCard on the built app's Player Profile (Why This Recommendation, Estimate:) and the glossary's worth your time; tests/tutorial*.test.ts",
+  "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {
   "status": "Rewritten",
-  "hash": "8bceb4dc8565",
+  "hash": "6da36150687d",
   "on": "2026-10-20",
-  "evidence": "Call In Sick, Table Work, How You’ll Play It and Play It This Way, Rehearsing With's Day, Time, Ask, Say Yes and Say No, Feedback, Take An Elective Shift, Work It Through's Keep It and Put It Back and the Cabaret panels traced to src/ui/workspaces/SchoolWorkspace.tsx, src/ui/components/CourseworkPane.tsx, PlayingChooser.tsx and WorkThrough.tsx; a piece's showing traced to meetingWeight in src/engine/systems/coursework.ts; tests/remaining-school.test.ts holds its words; tests/help-mechanics.test.ts renders every paragraph of the chapter in the guide and passed on 2026-10-20; tools/voices.ts --guide counts none of its paragraphs at five sentences or more, nor any vague \"It happens\" (brief 16, section 8).",
+  "evidence": "Brief 17 tutorial area: each paragraph read word for word in the guide dialog on the built app by follow.mjs (docs/verification/continuity-2026-10-20/tutorial/after/follow-1440/log.txt and follow-390), its claims held by tests/guide-chapter-facts.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [sleep]": {
@@ -238,11 +238,11 @@
   "first": "Reviewed And Retained"
  },
  "src/ui/guide/Guide.tsx#LockedPanel": {
-  "status": "Retained",
-  "hash": "f3f8850d40ef",
-  "on": "2026-10-19",
-  "reason": "A locked panel keeps its title, says Locked, names the chapter to read in quotes and what the panel will hold, and its Read About It button opens that chapter: every part a player needs, once.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "b96ba1867bc5",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area, the frame editor's finding: each locked Home panel says what it shows, read from Home.tsx's panels, then the chapter that opens it; tests/evidence-g32-ui.test.ts ('Where You Are and the Weather, locked, say what each shows') and tests/evidence-g33-ui.test.ts; all eight read on a new life on the built app (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt)",
+  "first": "Pending"
  },
  "src/ui/guide/Help.tsx#CONNECTION_HEADING": {
   "status": "Retained",
@@ -260,9 +260,9 @@
  },
  "src/ui/guide/Help.tsx#Entry": {
   "status": "Rewritten",
-  "hash": "2c06e6775e21",
-  "on": "2026-10-19",
-  "evidence": "tests/help-mechanics.test.ts, 'Show Everything and Show Less name what a press does, with no pressed state' and 'PLAYER JOURNEY: ? on School’s Casting tab opens the contents with Casting’s entries first, Locked on a guided life before their chapter and not once it’s read, the save as it was' (“This isn’t open yet. Read “…” in the guide to open it.”); read on the built app, docs/verification/editorial-2026-10-19/tutorial/follow-1440/log.txt",
+  "hash": "9fa9466a639b",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area: the part-open callout read on the built app by help-follow.mjs on How You Are's entry (docs/verification/continuity-2026-10-20/tutorial/after/help-follow-1440/log.txt), and held by tests/help-mechanics.test.ts",
   "first": "Pending"
  },
  "src/ui/guide/Help.tsx#EntryLink": {

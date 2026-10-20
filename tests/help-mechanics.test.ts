@@ -19,6 +19,8 @@
  *   pressed, it returns to the screen and tab the player left with no command run; ? on a screen opens the contents with
  *   that screen’s entries first, Locked before their chapter; an entry’s sections come in the brief’s eight questions’
  *   order; and a new life’s guide, read through in its own dialog, shows every chapter’s every paragraph and name.
+ * - From 2026-10-20 (brief 17, the frame editor's finding): a stop on the way of an Advance, answered with Go, carries the
+ *   jump on, and with Stand Here ends it there with the clock paused, as “Moving Time On” and its entry say now.
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York and an actor at Yale in
  * New Haven, played a day on the clock (`advanceTo`) before the help is opened.
@@ -41,7 +43,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY } from '@/engine/core/time';
 import { serialise } from '@/engine/persistence/adapter';
 import { GUIDE, GUIDE_BY_ID, SEARCH_EXAMPLES, search } from '@/engine/content/guide';
-import { CHAPTERS } from '@/engine/content/tutorial';
+import { CHAPTERS, CHAPTER_BY_ID } from '@/engine/content/tutorial';
 import { isOpen } from '@/engine/world/tutorial';
 import { keep, kept } from '@/ui/kept';
 import { tabKey } from '@/ui/shell/sections';
@@ -510,6 +512,31 @@ describe('reading help', () => {
     expect(serialise(sim.universe)).toBe(before);
   });
 
+  // From 2026-10-20 (brief 17, section 9): an entry part open says so. Until then How You Are's entry, its panel open
+  // from “How You Are” and its own page from “A Whole Life”, said the whole of it wasn't open for eleven chapters.
+  it('PLAYER JOURNEY: How This Works on How You Are, read to its chapter, says only the rest waits on “A Whole Life”; every chapter read, it says nothing waits', () => {
+    const sim = createSave(1, 'help-partly', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', tutorial: true });
+    h.sim = sim;
+    windowAt('#/home');
+    const upTo = CHAPTERS.findIndex((c) => c.id === 'body');
+    for (const c of CHAPTERS.slice(0, upTo + 1)) sim.must({ kind: 'tutorial.read', payload: { chapterId: c.id } }); // TEST SETUP: the guide read to “How You Are”
+    const how = GUIDE_BY_ID['body.how']!;
+    expect(isOpen(sim, 'ui.how')).toBe(true);
+    expect(how.covers.some((f) => !isOpen(sim, f))).toBe(true);
+    const p = mounted(() => createElement(GuideProvider, null, createElement(HelpProvider, null, createElement(HowItWorks, { help: 'body.how' }))));
+    p.press(`How This Works: ${how.title}`);
+    const life = CHAPTERS.find((c) => c.id === 'life')!;
+    expect(p.text).toContain(`Part of this isn’t open yet. Read “${life.title}” in the guide to open the rest. Read About It`);
+    expect(p.text).not.toContain('This isn’t open yet.');
+    p.press('Close');
+    // Change the input: every chapter read, and the entry says nothing waits.
+    for (const c of CHAPTERS.slice(upTo + 1)) sim.must({ kind: 'tutorial.read', payload: { chapterId: c.id } }); // TEST SETUP
+    p.press(`How This Works: ${how.title}`);
+    expect(p.text).not.toContain('isn’t open yet');
+    expect(h.runs).toEqual([]);
+    p.unmount();
+  });
+
   // From 2026-10-17 (brief 14): the guide's own words, pressed through on a new life. Each line it says was read here.
   it('PLAYER JOURNEY: a new life’s guide opens at its first chapter, says a later one can be read ahead, says which comes first when a locked control asks for its chapter, and read through to the end opens everything', () => {
     const sim = createSave(1, 'guide-words', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', tutorial: true });
@@ -651,6 +678,51 @@ describe('the address', () => {
   });
 });
 
+describe('the breadcrumbs', () => {
+  /** The real provider as the shell reads it: where the player is and the breadcrumbs, kept for the test to press. */
+  let shell: { route: string; breadcrumbs: { route: string; label: string }[]; navigate: (to: string, label?: string) => void };
+  function Crumbs() {
+    shell = useGame() as typeof shell;
+    return createElement('p', null, `On ${shell.route}; breadcrumbs ${shell.breadcrumbs.map((c) => c.label).join(' › ')}`);
+  }
+  /** A breadcrumb pressed, as the shell's button presses it (`ui/shell/GameShell.tsx`): only one before the last is drawn. */
+  const crumb = (label: string) => shell.breadcrumbs.slice(0, -1).find((c) => c.label === label);
+
+  // From 2026-10-20 (brief 17, section 9): Finding Your Way's example pressed H on School's Coursework tab and then a School
+  // breadcrumb, which Home never has. Followed on the built app, it wasn't there; here the real provider's breadcrumbs.
+  it('PLAYER JOURNEY: Finding Your Way’s example, played: from School, P and then the School breadcrumb come back to School on its tab; H instead leaves no breadcrumb to press', () => {
+    vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval', 'setTimeout', 'clearTimeout', 'Date'] });
+    h.real = actual as never;
+    const sim = student('help-breadcrumbs');
+    h.sim = sim;
+    const { send } = windowAt('#/home');
+    const p = mounted(() => provider(sim, createElement(Crumbs)));
+    shell.navigate('/workspace/school', 'School');
+    p.settle();
+    // TEST SETUP: the tab School keeps once its Coursework tab is pressed (`kept`, as the screen keeps it).
+    keep(tabKey('/workspace/school'), 'coursework');
+    send('keydown', { key: 'p' });
+    p.settle();
+    expect(p.text).toContain('On /workspace/profile; breadcrumbs Home › School › Player Profile');
+    const school = crumb('School')!;
+    expect(school).toBeDefined();
+    shell.navigate(school.route, school.label);
+    p.settle();
+    expect(p.text).toContain('On /workspace/school; breadcrumbs Home › School');
+    expect(kept(tabKey('/workspace/school'))).toBe('coursework');
+    // H, from School: Home is the first breadcrumb, so going there cuts the rest away, and Home has none to press.
+    send('keydown', { key: 'h' });
+    p.settle();
+    expect(p.text).toContain('On /home; breadcrumbs Home');
+    expect(crumb('School')).toBeUndefined();
+    // The example says the way that works.
+    const { steps, result } = GUIDE_BY_ID['start.find']!.example;
+    expect(steps).toEqual(['Press P for the Player Profile.', 'Press School in the breadcrumbs above it.']);
+    expect(result).toContain('School opens on Coursework, the tab it was left on.');
+    p.unmount();
+  });
+});
+
 describe('a link to a place on the page', () => {
   /** Where the real provider says the player is. */
   function Where() {
@@ -725,5 +797,56 @@ describe('the live clock’s hold', () => {
     vi.advanceTimersByTime(5_000);
     expect(sim.now).toBe(start + 15_000);
     p.unmount();
+  });
+});
+
+describe('a stop on the way of an Advance', () => {
+  /**
+   * The real provider over a new life, the clock paused (TEST SETUP: a new life starts live), and Tomorrow Morning
+   * pressed on the Advance menu and then On The Way's Advance: the clock stops at the first commitment on the way.
+   */
+  function stopped(seed: string) {
+    h.real = actual as never;
+    const sim = student(seed);
+    sim.must({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused' } }); // TEST SETUP
+    h.sim = sim;
+    windowAt('#/home');
+    const p = mounted(() => provider(sim, createElement(GuideProvider, null, createElement(HelpProvider, null, createElement(TimeControls)))));
+    const start = sim.now;
+    p.press('Advance ▾');
+    const line = h.elements.find((e) => e.type === 'button' && e.text.startsWith('Tomorrow Morning'));
+    expect(line, 'Tomorrow Morning on the Advance menu').toBeDefined();
+    (line!.props.onClick as () => void)();
+    p.settle();
+    expect(p.text).toContain('On The Way');
+    p.press('Advance');
+    // Stopped on the way: past the start and short of 7 AM tomorrow, under a day from 7:30 AM.
+    const at = sim.now;
+    expect(at).toBeGreaterThan(start);
+    expect(at).toBeLessThan(start + MS_DAY);
+    return { sim, p, at };
+  }
+
+  it('PLAYER JOURNEY: Stand Here ends the jump at the commitment with the clock paused, and Go carries it on, as Moving Time On says', () => {
+    const stand = stopped('help-stop-stand');
+    expect(stand.p.has('Stand Here')).toBe(true);
+    expect(stand.p.has('Go')).toBe(true);
+    stand.p.press('Stand Here');
+    expect(stand.p.has('Stand Here')).toBe(false);
+    expect(stand.sim.now).toBe(stand.at);
+    expect(stand.sim.universe.preferences.timeSpeed).toBe('paused');
+    stand.p.unmount();
+
+    const go = stopped('help-stop-go');
+    expect(go.at).toBe(stand.at);
+    go.p.press('Go');
+    expect(go.sim.now).toBeGreaterThan(go.at);
+
+    // Only while the stop's answers do that: change either, and the words may say otherwise.
+    if (stand.sim.now === stand.at && go.sim.now > go.at) {
+      expect(CHAPTER_BY_ID.advance!.body.join(' ')).toContain('Go takes you to it and carries the jump on afterwards, and Stand Here ends the jump there, with the clock paused.');
+      expect(GUIDE_BY_ID['day.advance']!.steps.join(' ')).toContain('Go to be there and carry the jump on, or Stand Here to end the jump there, with the clock paused.');
+    }
+    go.p.unmount();
   });
 });

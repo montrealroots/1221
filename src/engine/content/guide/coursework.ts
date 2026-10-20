@@ -62,6 +62,13 @@
  * Haven.” and “… is in New Haven.” went from the engine, reached by no play, since every student is in New Haven and
  * nothing moves one; until then the entries listed them, and said a studio, the library, Help Now and Make Amends
  * needed New Haven.
+ *
+ * Until 2026-10-20 (brief 17, sections 3 and 9) the feedback and another way at a note said a note "is taken", "is marked
+ * taken" or that a part "takes the note", which the brief names as words to translate, and Feedback And Your Notes' first
+ * view said nothing of how a note is put right: they say it now, with `LEARNING.enough`, as `show` and `resolveNote` do
+ * it. Table Work said a note on an answer was taken only when the piece was shown again, though a later piece answering
+ * the same question as the text supports takes it too (`show`). And Another Way At A Note's next step read "the a targeted
+ * drill", the label lowercased after an article.
  */
 
 import { GRAIN, GRAIN_LABEL } from '../interpretation';
@@ -379,7 +386,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     later: [
       `In class, your partner may answer one of your questions another way, and you choose between ${andList(CHOICES.disagreement.map((c) => c.label))}.`,
       'When the piece is shown, the table work is one part of the preparation, and each quality it affects is held back by the least prepared part. Its Note Priority only decides what the note is about.',
-      'A note about an answer is taken when the piece is shown again with an answer the text supports.',
+      'You put a note about an answer right when this piece, shown again, or a later one answers that question the way the text supports.',
       'If you come back to a scene and are asked to read it another way, your answers are compared with last time’s.',
     ],
     interpret: [
@@ -506,7 +513,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     questions: ['What did my teacher say?', 'What do Unready, Working, Strong and Exceptional mean?', 'Why do I keep getting the same note?', 'How do I take a note?', 'What does Mark As Read do?', 'When is work shown again?'],
     where: { route: ROUTE, tab: COURSEWORK_TAB, label: 'School, Coursework, Feedback, Work Shown And Your Notes' },
     available: `${OPENED}, once a piece has been shown.`,
-    short: `When you show a piece in class, its course gives it a band (Unready under ${EVALUATION.bands.working}, Working, Strong from ${EVALUATION.bands.strong}, Exceptional from ${EVALUATION.bands.exceptional}), says what went well, and gives one note in its own terms. The note says how the piece compares with the course’s last one where the band moved, what held it back most, and what to try; with nothing holding it back, it’s a next step to try.\n\nNotes are kept by what they’re about, across every course, so a note that comes back says whether it’s still there, better, or back after you’d put it right. The feedback is the game’s, labeled simulated, because the teachers are real people.`,
+    short: `When you show a piece in class, its course gives it a band (Unready under ${EVALUATION.bands.working}, Working, Strong from ${EVALUATION.bands.strong}, Exceptional from ${EVALUATION.bands.exceptional}), says what went well, and gives one note in its own terms. The note says how the piece compares with the course’s last one where the band moved, what held it back most, and what to try; with nothing holding it back, it’s a next step to try. The feedback is the game’s, labeled simulated, because the teachers are real people.\n\nNotes are kept by what they’re about, across every course. You put one right when a later piece is shown with the part it named at ${pct(LEARNING.enough)} or more, or, for a note on an answer at the table, with that question answered the way the text supports. A note that comes back says whether it’s still there, better, or back after you’d put it right.`,
     steps: [
       'After the class, read the notice: “Shown:”, the piece’s title and its band, then the course’s note. It says how the piece compares with the course’s last one where the band moved, what held it back most, and what to try.',
       'On the Coursework tab, a piece to be shown again keeps its Feedback on its card: the band and the score, the kind of note, what went well, the note, and The Scene Together where there’s a partner. Press Mark As Read.',
@@ -524,10 +531,10 @@ export const COURSEWORK: readonly GuideEntry[] = [
     ],
     now: ['Mark As Read marks the feedback read, and the steps on the piece open again.'],
     later: [
-      'Once the part a note named has come right at a later showing, the note is marked taken, and it comes back only if the part slips.',
+      `Once a later piece is shown with the part a note named at ${pct(LEARNING.enough)} or more, Your Notes marks the note Taken, with the day. It can be given again only if a later piece is shown with that part under ${pct(LEARNING.slipped)}.`,
       `A piece the course revises is shown again at its next class. If you’ve taken the note, that class grows your craft ${pct(WORK.revision.applied)} of a usual one; if not, ${pct(WORK.revision.notApplied)}. Its second band is the one that counts for the term.`,
       `A note that’s open and has been given ${word(LEARNING.persistent)} times opens another way to work on it, on any open piece that prepares its part. Given more often still, its notice is titled “Still There:”, at most once in ${LEARNING.quietDays} days.`,
-      'A piece in rounds is shown a round at a time, each round judging its own parts; a note on a part is taken at a later round that judges that part.',
+      'A piece in rounds is shown a round at a time, each round judging its own parts, so a later round that judges the part a note named can put the note right.',
       'The term’s review counts each piece’s band, the second for a piece shown again. If you’re not there to show it again and have no excuse, it counts as Unready.',
     ],
     interpret: [
@@ -566,7 +573,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     example: {
       setup: `${SCENE_STUDY.title} on ${SEAGULL.play} as ${NINA}, ${partOf(SCENE_STUDY, 'memorization')} put first, shown with ${(Object.entries(SHOWN) as [PrepDim, number][]).map(([d, v]) => `${partOf(SCENE_STUDY, d)} at ${pct(v)}`).join(', ')}.`,
       steps: ['It’s shown in the class it’s due at.', 'Mark the feedback read.', `Before it’s shown again, ${REVISE.label} twice.`],
-      result: `${partOf(SCENE_STUDY, SHORTEST.d)} is furthest short for its Note Priority, so the note is on it: “${NOTE_TEXT}” Two of ${REVISE.label}, a little quicker now the showing has met the scene’s material, bring the note’s work to ${pct(NOTE_WORKED)}, past ${pct(WORK.revision.worked)}, so it’s taken at the next class wherever the part stands, and that class grows the course’s skills ${pct(WORK.revision.applied)} of a usual one.`,
+      result: `${partOf(SCENE_STUDY, SHORTEST.d)} is furthest short for its Note Priority, so the note is on it: “${NOTE_TEXT}” Two of ${REVISE.label}, a little quicker now the showing has met the scene’s material, bring the note’s work to ${pct(NOTE_WORKED)}, past ${pct(WORK.revision.worked)}, so the next class counts the note as taken wherever the part stands, and grows the course’s skills ${pct(WORK.revision.applied)} of a usual one.`,
     },
   },
   {
@@ -578,7 +585,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     questions: ['I keep getting the same note: what can I do?', 'What does a targeted drill do?', 'What does A Smaller Piece Of It cost?', 'Can I choose more than one way?'],
     where: { route: ROUTE, tab: COURSEWORK_TAB, label: 'School, Coursework, A Note That Keeps Coming Back' },
     available: `${OPENED}, on an open piece, once a note on a part it prepares has been given ${LEARNING.persistent} times and is still open.`,
-    short: `When the same note keeps coming back, given ${LEARNING.persistent} times and still open, a piece that prepares its part offers four other ways to work on it, one per piece: ${andList(Object.values(APPROACHES).map((a) => a.label))}. Each changes how this piece goes at the weakness. None of them takes the note by itself: the part still has to be prepared far enough by the time the piece is shown.`,
+    short: `When the same note keeps coming back, given ${LEARNING.persistent} times and still open, a piece that prepares its part offers four other ways to work on it, one per piece: ${andList(Object.values(APPROACHES).map((a) => a.label))}. Each changes how this piece goes at the weakness. None of them puts the note right by itself: the part still has to be at ${pct(LEARNING.enough)} or more when the piece is shown.`,
     steps: [
       'Open School, then the Coursework tab. A piece the note can help shows “A Note That Keeps Coming Back:”, the note, and how often it’s been given.',
       'Point at a way to see what it does, or read why it can’t be chosen under the buttons.',
@@ -607,7 +614,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       `${APPROACHES.objective.label}: Put First changes to that part, and its Note Priority rises.`,
     ],
     later: [
-      `When the piece is shown, a part a note named that stands at ${pct(LEARNING.enough)} or more takes the note, however it got there.`,
+      `When the piece is shown with the part the note named at ${pct(LEARNING.enough)} or more, you’ve put the note right, however the part got there.`,
       `${APPROACHES.smaller.label}: shown as no better than Working, since less was shown.`,
       `${APPROACHES.partner.label}: worked once, at the next rehearsal you keep.`,
     ],
@@ -632,8 +639,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
       `Choosing ${APPROACHES.partner.label} with a partner whose trust in you is under ${WORK.trust.wary}: it’s refused. Make amends first.`,
     ],
     next: [
-      `Do the work the way asks: the ${APPROACHES.drill.label.toLowerCase()} once a day, or the steps on the part, or book the rehearsal with your partner.`,
-      'Watch the part’s figure on the card: the note is taken once it’s far enough at the showing.',
+      'Do the work your choice asks for: the drill once a day, the steps on the part, or a rehearsal with your partner, booked under Rehearsing With.',
+      `Watch the part’s figure on the card: at ${pct(LEARNING.enough)} or more when the piece is shown, it puts the note right.`,
     ],
     related: ['coursework.feedback', 'coursework.prepare', 'coursework.partners'],
     connections: [
@@ -645,7 +652,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     example: {
       setup: `${partOf(SCENE_STUDY, 'memorization')} named ${word(LEARNING.persistent)} times and still open, on a piece of ${SCENE_STUDY.title} with the lines at ${pct(LINES_AT)}, at readiness 80, an even nature and memory at 50, in material new to you.`,
       steps: [`Choose ${APPROACHES.drill.label}.`, 'Do it once a day for three days.'],
-      result: `The lines go to ${DRILLED.map(pct).join(', then ')}: past ${pct(LEARNING.enough)}, so a showing then takes the note. With ${APPROACHES.smaller.label} instead, the ${pct(LINES_AT)} would read as ${pct(Math.min(1, LINES_AT / APPROACH.smaller))}, and the band could be no better than Working.`,
+      result: `The lines go to ${DRILLED.map(pct).join(', then ')}: past ${pct(LEARNING.enough)}, so a showing then puts the note right. With ${APPROACHES.smaller.label} instead, the ${pct(LINES_AT)} would read as ${pct(Math.min(1, LINES_AT / APPROACH.smaller))}, and the band could be no better than Working.`,
     },
   },
   {

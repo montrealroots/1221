@@ -253,9 +253,9 @@
  },
  "src/engine/content/guide/day.ts#DAY [day.advance]": {
   "status": "Rewritten",
-  "hash": "d456cd7b6aab",
-  "on": "2026-10-19",
-  "evidence": "docs/verification/editorial-2026-10-19/frame/help-b4.txt, the entry drawn through the Help dialog by render-help.mjs, under Moving Time On",
+  "hash": "9cc3f15c9e6f",
+  "on": "2026-10-20",
+  "evidence": "Brief 17 tutorial area, the frame editor's finding: the last step says what Go and Stand Here do to a jump, read against onGo and clearStandingAt (ui/shell/TimeControls.tsx) and halt (app/game-context.tsx); tests/help-mechanics.test.ts ('Stand Here ends the jump at the commitment with the clock paused, and Go carries it on') presses each on the real provider; read word for word on the built app (docs/verification/continuity-2026-10-20/tutorial/after/entries-read-1440/log.txt)",
   "first": "Pending"
  },
  "src/engine/content/guide/day.ts#DAY [day.calendar]": {
@@ -379,9 +379,9 @@
  },
  "src/engine/content/guide/start.ts#START [start.find]": {
   "status": "Rewritten",
-  "hash": "c273b73c9ba0",
+  "hash": "83ba1b0a23c4",
   "on": "2026-10-20",
-  "evidence": "Read in tools/voices.ts --guide (brief 16): the summary went from 5 sentences to 4 in two paragraphs, the menu and Menu on a narrow screen, then the breadcrumbs, Back and an address; tests/guide.test.ts and tests/navigation.test.ts pass.",
+  "evidence": "Brief 17 tutorial area: the entry opened on the built app with its Show Me Where by help-follow.mjs, which also pressed its old worked example and found no School breadcrumb on Home (docs/verification/continuity-2026-10-20/tutorial/before/help-follow-1440/log.txt); the new example is played by tests/help-mechanics.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/start.ts#START [start.guide]": {
