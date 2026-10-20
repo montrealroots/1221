@@ -424,7 +424,9 @@ describe('standing/term evaluation', () => {
     expect(review!.coursework!.unready * 2).toBeLessThan(review!.coursework!.shown);
     expect(Object.values(far.player.school!.courses ?? {}).filter((r) => r.result === 'fail')).toEqual([]);
     expect(review!.work).toBeUndefined();
-    expect(review!.reason).toMatch(new RegExp(`^You came to 100% of the classes, calls and shifts asked of you. Your craft grew ${p.growth.toFixed(1)} points this term, and the middle student in your class grew ${p.classRaw.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class\\.( The faculty noted your coursework: \\d+ of \\d+ pieces were Strong or better\\.)?$`));
+    // The pace first, as what fell short, with its minimum, then the attendance that met its own (from 2026-10-20, brief 17:
+    // until then the attendance came first and the minimum went unsaid).
+    expect(review!.reason).toMatch(new RegExp(`^Your craft grew ${p.growth.toFixed(1)} points this term, and the middle student in your class grew ${p.classRaw.toFixed(1)}. Allowing for how much room each of you had to grow, that’s behind the class\\. That’s under half its pace, short of what the program asks\\. You came to 100% of the classes, calls and shifts asked of you\\.( The faculty noted your coursework: \\d+ of \\d+ pieces were Strong or better\\.)?$`));
     expect(far.player.school!.standing).toBe('concern');
     expect(drawn(far, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }).text).toContain(`Fall Term 2026 Academic Concern 100% ${p.growth.toFixed(1)} ${p.classRaw.toFixed(1)} ${courseworkCell(review!)} ${review!.reason}`);
   }, 60_000);

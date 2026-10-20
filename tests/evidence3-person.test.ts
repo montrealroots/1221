@@ -439,8 +439,8 @@ describe('c-family: the means go with the family the select last chose', () => {
     // $43 and the scholarship's $13,318.50 left after the plan; $260,870 less the plan's $1,882.
     expect(primary(need).balance).toBe(1_336_150);
     expect(primary(without).balance).toBe(25_898_800);
-    expect(notices(need, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Your living-expense scholarship of $15,200.50 paid this term’s Yale Health plan, $1,882.00, and $13,318.50 is in your Chase Total Checking.']);
-    expect(notices(without, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
+    expect(notices(need, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Classes run from August 31 to December 11, 2026, when the faculty review the term. Tuition, $20,375.00 a term, is covered by the tuition scholarship. Your living-expense scholarship of $15,200.50 paid this term’s Yale Health plan, $1,882.00, and $13,318.50 is in your Chase Total Checking.']);
+    expect(notices(without, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Classes run from August 31 to December 11, 2026, when the faculty review the term. Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and your family’s means rule it out, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.']);
   });
 });
 

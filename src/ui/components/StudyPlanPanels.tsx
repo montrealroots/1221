@@ -47,6 +47,7 @@ export function LeavePanel() {
   // The leave's own terms, the figure `school.buy_affiliate` charges (from 2026-10-12: until then `LEAVE_RULES.terms`).
   const affiliate = l ? affiliateQuote(sim, l) : undefined;
   const noticeNo = l?.status === 'on' && l.kind === 'medical' ? clearedToReturn(person, sim.now) : undefined;
+  const shut = [...lengths.reduce((m, x) => (x.why ? m.set(x.why, [...(m.get(x.why) ?? []), x.terms]) : m), new Map<string, number[]>())];
 
   return (
     <div className="col gap-2">
@@ -136,9 +137,12 @@ export function LeavePanel() {
                   <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('')}>Not Now</button>
                 </>}
           </div>
-          {lengths.filter((x) => x.why).map((x) => <p key={x.terms} className="xs dim" style={{ margin: 0 }}>{x.terms === 1 ? 'One term' : x.terms === 2 ? 'Two terms' : 'Three terms'}: {x.why}</p>)}
-          {/* Why Ask For A Leave… is refused, said once, under the form (from 2026-10-12: until then it was said beside the button as well, so the screen said it twice). */}
-          {no ? <p className="xs dim" style={{ margin: 0 }}>{no}</p> : start && (
+          {/* Lengths refused for one reason said with it once (from 2026-10-20, brief 17): until then each length said its own,
+              so a student who'd had two terms of leave read the same sentence for two terms, for three, and again for Ask For
+              A Leave…, three times on one panel. */}
+          {shut.map(([why, ns]) => <p key={why} className="xs dim" style={{ margin: 0 }}>{lengthWords(ns)}: {why}</p>)}
+          {/* Why Ask For A Leave… is refused, said once, under the form (from 2026-10-12: until then it was said beside the button as well, so the screen said it twice). Where it's a length's reason, said above, it isn't said again. */}
+          {no ? <p className="xs dim" style={{ margin: 0 }}>{shut.some(([why]) => why === no) ? 'None of the three lengths is possible now.' : no}</p> : start && (
             <p className="small" style={{ margin: 0 }}>
               {asking === 'request' ? 'Asking puts it to the chair and the dean, who decide in five working days. ' : ''}
               If it’s granted, it runs from {start.now ? 'the day it’s granted' : `${termLabel(start.term)}`} to {termLabel(start.term + terms)}. {start.now ? 'This term’s courses are left unfinished and taken again when you’re back, its castings and any Cabaret show end, and the term’s scholarship goes back on the rebate schedule. ' : ''}While you’re on leave there’s no aid, and no classes, calls or shifts. {kind === 'medical' ? 'Yale Health goes on as Affiliate cover the School pays for, and you need a physician’s clearance to come back.' : `Yale Health’s student cover ends, and Affiliate cover is ${money(inSaveMoney(sim, LEAVE_RULES.affiliatePerTerm, 'USD'))} a term.`} Give notice of your return eight weeks before, or the leave ends in dismissal. You’d be back in year {Math.floor(academicTerm(school, start.term) / 2) + 1}, with the class of {school.classOf + Math.round(terms / 2)}: your class goes on without you, and stays yours.
@@ -155,6 +159,13 @@ export function LeavePanel() {
     </div>
   );
 }
+
+/** Leave lengths as a line names them: One term, Two or three terms, One, two or three terms. */
+const lengthWords = (ns: readonly number[]): string => {
+  const words = ns.map((n) => ['no', 'one', 'two', 'three'][n] ?? String(n));
+  const said = words.length > 1 ? `${words.slice(0, -1).join(', ')} or ${words.at(-1)}` : words[0]!;
+  return `${said.replace(/^\w/, (c) => c.toUpperCase())} ${ns.length === 1 && ns[0] === 1 ? 'term' : 'terms'}`;
+};
 
 /** A term's first morning in New Haven. */
 const at9 = (term: number) => instantFromZoned({ ...termStart(term).date, hour: 9 }, 'America/New_York');

@@ -228,7 +228,10 @@ export function leaveLengths(sim: Simulation, school: SchoolRecord, kind: LeaveK
   const used = leaveTermsUsed(school);
   const yearLong = COURSES.filter((c) => c.year === yearOfTerm(Math.min(YALE_DRAMA.terms - 1, resume)) && c.terms.length > 1).map((c) => c.code);
   return [1, 2, 3].map((n) => {
-    if (used + n > LEAVE_RULES.maxTerms) return { terms: n, why: `You’ve had ${countWords(used)} term${used === 1 ? '' : 's'} of leave, and the Bulletin allows ${countWords(LEAVE_RULES.maxTerms)} in all.` };
+    // What's left of the three said with it (from 2026-10-20, brief 17): until then the reason stopped at the Bulletin's
+    // three, and a student who'd had two was left to work out that one more term was all a leave could be.
+    const room = LEAVE_RULES.maxTerms - used;
+    if (used + n > LEAVE_RULES.maxTerms) return { terms: n, why: `You’ve had ${countWords(used)} term${used === 1 ? '' : 's'} of leave, and the Bulletin allows ${countWords(LEAVE_RULES.maxTerms)} in all.${room > 0 ? ` ${room === 1 ? 'One more term is' : `${countWords(room).replace(/^\w/, (c) => c.toUpperCase())} more terms are`} the most you can take.` : ''}` };
     const back = termStart(start.term + n).fall;
     if (back !== termStart(start.term).fall && yearLong.length) return { terms: n, why: `You’d come back in the ${back ? 'fall' : 'spring'} to the second halves of year-long courses (${yearLong.slice(0, 2).join(', ')} and others) whose first halves you haven’t taken.` };
     return { terms: n };

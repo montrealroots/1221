@@ -33,7 +33,7 @@ import { courseworkOf, termTally } from '@/engine/systems/coursework';
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  academicTerm, cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, sickRefusal, summerRefusal, schoolEnded, termSupport, termWords, partWords } from '@/engine/systems/school';
+  academicTerm, cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, sickRefusal, summerRefusal, schoolEnded, termSupport, termWords, partWords, bySize } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -170,15 +170,21 @@ function StandingPane() {
               {t.classDays - t.excused + t.calls + t.shifts === 0 ? (ended ? 'There was no class day, call or shift to count toward attendance last term.' : 'There’s been no class day, call or shift to count toward attendance this term yet.') : <>Attendance counts {spokenList([...(t.classDays ? [`${t.attended} of ${plural(t.classDays - t.excused, 'class day')}${t.excused ? ` (${t.excused} excused)` : ''}`] : []), ...(t.calls ? [`${t.answered} of ${plural(t.calls, 'call')}`] : []), ...(t.shifts ? [`${t.worked} of ${plural(t.shifts, 'assigned shift')}`] : [])])}.</>}
             </p>
             {!ended && <p className="small" style={{ margin: 0 }}>{school.castable ? 'You’re in the casting pool.' : 'You’re out of the casting pool after missed calls, until a term review finds you in good standing.'}</p>}
-            <p className="small" style={{ margin: 0 }}>
-              Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}.
-            </p>
-            <p className="small" style={{ margin: 0 }}>
-              At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once {ESTIMATE.coursework.shown} or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing.
-            </p>
-            <p className="small" style={{ margin: 0 }}>
-              After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
-            </p>
+            {/* What a breach, a review and the last term do, said while there are any to come (from 2026-10-20, brief 17): until
+                then a student who had withdrawn, been dismissed or graduated read all three rules, as if a term were ahead. */}
+            {!ended && (
+              <>
+                <p className="small" style={{ margin: 0 }}>
+                  Missing a performance or an understudy call is a grave breach: it puts you straight on academic warning, or dismisses you if you’re already on warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}.
+                </p>
+                <p className="small" style={{ margin: 0 }}>
+                  At the term review, a term falls short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course, or if half or more of your coursework due was Unready or not shown (once {ESTIMATE.coursework.shown} or more pieces are due). A term that falls short moves your standing one step: from good standing to academic concern, then to academic warning, then to dismissal. A term that meets them all puts you back in good standing.
+                </p>
+                <p className="small" style={{ margin: 0 }}>
+                  After your last term, Commencement confers the degree if you’re in good standing or have a concern; if your last term ends on academic warning, the faculty don’t recommend it.
+                </p>
+              </>
+            )}
             <WithdrawControl />
             <LeavePanel />
             <CoursesPanel />
@@ -305,6 +311,16 @@ function ClassesPane() {
   // once they've left (from 2026-10-12: until then it stayed, grayed with "You’re not at school.", for good).
   const sick = sickRefusal(sim, person);
   const offerSick = enrolled && !(sick === 'There’s nothing at school today to miss.' && !classToday);
+  // Once the School has ended there's no week of classes (from 2026-10-20, brief 17): until then a student who had
+  // withdrawn in the first spring read the second year's fall week and its twelve courses, under the rule for an absence,
+  // as the calendar term came round. The courses taken stay under Courses And The Degree.
+  if (!enrolled) {
+    return (
+      <Panel title="No Classes Now" help="school.standing">
+        <p className="small" style={{ margin: 0 }}>{school.standing === 'graduated' ? 'Your degree is conferred' : school.standing === 'withheld' ? 'Your terms at the School are over' : 'You’ve left the School'}, so there are no classes for you.{Object.keys(school.courses ?? {}).length ? ' Every course you took is under Courses And The Degree, on the Standing And Craft tab.' : ''}</p>
+      </Panel>
+    );
+  }
 
   return (
     <div className="col gap-5">
@@ -334,7 +350,7 @@ function ClassesPane() {
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            {next ? <>Next classes: <Open subject={at('day', dateKey(next, sim.homeZone))}>{formatDateTime(next, zone())}</Open>.</> : 'No classes ahead.'} This term’s classes run from {dayOf(period.from)} to {dayOf(period.to)}, with {off === 1 ? 'one break' : `${off} breaks`} for holidays, Community Days, work periods and recesses.
+            {next ? <>Next classes: <Open subject={at('day', dateKey(next, sim.homeZone))}>{formatDateTime(next, zone())}</Open>.</> : 'No classes ahead.'} This term’s classes run from {dayOf(period.from)} to {dayOf(period.to)}, with {off === 1 ? 'one break' : `${off < 10 ? ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][off] : off} breaks`} for holidays, Community Days, work periods and recesses.
           </p>
           {/* The day's rule its own paragraph from 2026-10-20 (brief 16), and calling in sick's three ways to be unwell, as
               `sickRefusal` reads them: until then this named two, condition and the flu, and left out an injury that limits
@@ -384,6 +400,21 @@ const nightsLine = (run: { nights?: Partial<Record<keyof typeof NIGHT_WORD, numb
 
 /** A night's reading as the Casting tab says it. */
 const NIGHT_WORD = { remarkable: 'Remarkable', strong: 'Strong', solid: 'Solid', off: 'Off' } as const;
+
+/**
+ * The class's others in a production, as the Casting tab lists them (from 2026-10-20, brief 17): a role by its name, and
+ * the parts the School casts by size together, each size once. Until then each was its own, and a Carlotta Festival's
+ * fifteen read “a featured part in a new play” seven times.
+ */
+const castWords = (cast: readonly { name: string; part: string }[]): string => {
+  const named = cast.filter((c) => !bySize(c.part)).map((c) => `${c.name} as ${c.part}`);
+  const sizes = cast.filter((c) => bySize(c.part)).reduce((m, c) => m.set(c.part, [...(m.get(c.part) ?? []), c.name]), new Map<string, string[]>());
+  const sized = [...sizes].map(([part, names]) => {
+    const one = partWords(part).replace(/ in (a new play|the festival)$/, '');
+    return `${spokenList(names)} in ${names.length === 1 ? one : one.replace(/^an? (.*?)part\b/, '$1parts')}`;
+  });
+  return [...named, ...sized].join('; ');
+};
 
 /** Whether the kind's words only say the production's name again, as the festivals' do. */
 const repeats = (c: { production: string; kind: string }) => c.production.startsWith((KIND_WORDS[c.kind] ?? '-').replace(/^(A|The) /, ''));
@@ -473,7 +504,7 @@ function CastingPane() {
               <p className="small" style={{ margin: 0 }}>
                 {casting === school.rep
                   ? `From the class in the company with you, each in a featured part: ${casting.cast.map((c) => c.name).join(', ')}. The rest of the company is the Rep’s own.`
-                  : `From the class with you: ${casting.cast.map((c) => (/^(A|An) /.test(c.part) ? `${c.name}, ${partWords(c.part)}` : `${c.name} as ${c.part}`)).join('; ')}. The rest of the cast are from the other two classes.`}
+                  : `From the class with you: ${castWords(casting.cast)}. The rest of the cast are from the other two classes.`}
               </p>
             )}
             {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (
@@ -741,7 +772,12 @@ function WorkPane() {
     >
       <div className="col gap-3">
         {shiftRefusal(person) && <p className="small muted" style={{ margin: 0 }}>{shiftRefusal(person)}</p>}
-        <WorkLimitsBlock />
+        {/* What work-study is first, then the year's hours and Friday's pay, the shifts ahead, and last the weekly cap and
+            converting hours to aid (from 2026-10-20, brief 17, section 8): until then the cap and the conversion came first,
+            with its refusal, and what every student works was said last. */}
+        <p className="small" style={{ margin: 0 }}>
+          Every student works: six hours on class-week Saturdays, assigned, up to {WORK_STUDY.assignedHours} hours a year, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
+        </p>
         <div className="grid grid-3">
           <Stat label="Assigned Hours Booked" value={`${work.assignedBooked ?? 0} of ${WORK_STUDY.assignedHours}`} />
           <Stat label="Elective Hours Asked For" value={`${work.electiveHours}`} note={`The Bulletin’s minimum is ${WORK_STUDY.electiveHours}`} />
@@ -763,9 +799,7 @@ function WorkPane() {
             ))}
           </LookRegion>
         )}
-        <p className="small" style={{ margin: 0 }}>
-          Every student works: six hours on class-week Saturdays, assigned, up to {WORK_STUDY.assignedHours} hours a year, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
-        </p>
+        <WorkLimitsBlock />
         <Fine>The hours and the rate are the school’s. Which Saturdays and evenings is estimated. The protective equipment is the school’s requirement and its $150 the school’s figure; what the kit holds beyond steel-toed work shoes isn’t published. Without it, or the money for it at the shift, the supervisor sends you home. Source: {WORK_STUDY.source}; {REQUIRED_PPE.source}.</Fine>
       </div>
     </Panel>
@@ -794,7 +828,10 @@ function TermsPane() {
   const aidLiving = 2 * aid.livingScholarship - aidBooks;
   // Every calendar term the program runs to, with a leave's or a repeated year's (from 2026-10-10).
   const enrolled = enrolledTerms(school);
-  const terms = Array.from({ length: YALE_DRAMA.terms + (school.offset ?? 0) }, (_, i) => ({ i, ...termStart(i) }));
+  // Once the School has ended, the terms begun only (from 2026-10-20, brief 17): until then a student who had withdrawn in
+  // the first spring read the four terms after it as ones that “Begins” on their dates.
+  const left = schoolEnded(school.standing);
+  const terms = Array.from({ length: YALE_DRAMA.terms + (school.offset ?? 0) }, (_, i) => ({ i, ...termStart(i) })).filter((t) => !left || t.i < school.termsBegun);
   // What the term's living scholarship put on the Yale account and paid to the bank: its own posting once the term has
   // begun, else what it would, a term past six's paying its tuition first (from 2026-10-16, `aidOnAccount`). Until then
   // the table said the whole refund was paid to the bank, whatever the account owed.
@@ -817,6 +854,7 @@ function TermsPane() {
               </span>
             </div>
           ))}
+          {left && school.endedAt !== undefined && (school.standing === 'withdrawn' || school.standing === 'dismissed') && <p className="small" style={{ margin: 0 }}>You left the School on {formatDate(school.endedAt, zone())}, so no term after it is yours.</p>}
           <Fine>
             Source: the Yale Bulletin, for the 2026–2027 dates. Later years aren’t published yet, so they’re estimated from the same pattern.
           </Fine>

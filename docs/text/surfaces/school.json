@@ -1,0 +1,1107 @@
+[
+ {
+  "surface": "The School screen’s head and tabs",
+  "where": "School, at the top of every tab",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#SchoolWorkspace",
+   "src/ui/workspaces/SchoolWorkspace.tsx#SchoolTabs",
+   "src/engine/systems/school.ts#STANDING_LABEL",
+   "src/engine/systems/school.ts#termLabel",
+   "src/engine/systems/school.ts#termWords"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "returning",
+   "empty"
+  ],
+  "outcome": "Kept",
+  "why": "Read on the leave, withdrawn and workload saves: the head line says in one sentence the degree, the class and where the student is now (“Year 1 of 3, good standing.”, “On leave until Spring Term 2028.”, “Left the School.”), and the six tabs keep the names every notice sends the player to (Standing And Craft, Classes, Coursework, Casting, Shifts And Pay, Terms And Award). A life that didn’t begin at school is told so, in a sentence.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-dynamic.test.ts: 'the term review’s notice and the screens at good standing, then a concern, a warning and a dismissal'"
+   }
+  ]
+ },
+ {
+  "surface": "Your Standing: the term so far against its minimums, and the rules for what’s ahead",
+  "where": "School, Standing And Craft, Your Standing",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#StandingPane",
+   "src/engine/systems/school.ts#termGrowth",
+   "src/engine/systems/school.ts#bondWord"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "returning",
+   "explanation",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "Its four figures say where the term stands against each minimum in the review’s own terms (attendance, growth allowing for room to grow, coursework once three pieces are due), and the paragraphs below say what a breach and a short term do. Read on the withdrawn save, the three rules for terms to come (a grave breach, what a review does, Commencement) were shown to a student who had left the School.",
+  "changes": "The grave-breach, term-review and Commencement paragraphs are drawn only while the School hasn’t ended; the figures stay, as the last term’s.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'PLAYER JOURNEY: withdrawn in the first fall, the Classes tab has no week, Terms And Award lists the terms begun, and Standing leaves out the rules for terms to come'"
+   }
+  ]
+ },
+ {
+  "surface": "The term review: its notice and the Term Reviews table",
+  "where": "A notice at the end of each term’s classes (In Good Standing, A Notice Of Academic Concern, Academic Warning, Dismissed From The School, The Degree Isn’t Recommended, Your MFA Is Conferred), and its Why column on Standing And Craft",
+  "sources": [
+   "src/engine/systems/school.ts#evaluate",
+   "src/engine/systems/school.ts#setStanding",
+   "src/engine/systems/school.ts#shortTermWords",
+   "src/engine/systems/school.ts#conferIfReady",
+   "src/engine/systems/school.ts#registerSchool"
+  ],
+  "states": [
+   "success",
+   "setback",
+   "failure",
+   "warning",
+   "notification",
+   "history",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read in order in the underprepared, improving and regressing runs: a notice of concern opened on two sentences of what was fine (attendance 100%, growth ahead of the class) before why, and said “What held most of them back was “Daily Practice”, unfinished on 6 of them” of 39 pieces shown Unready, so “most” was false, and “them” read as every piece due Unready or not shown, where the part is counted over those shown alone. A term short on attendance or growth never said what the minimum was.",
+  "changes": "What fell short comes first, each with its minimum (“That’s under the 90% the program asks.”, “That’s under half its pace, short of what the program asks.”), then what met it. The cause reads “The part most often left unfinished was “Daily Practice”, on 6 of the 39 you showed Unready.”",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/underprepared-v16-0.json"
+   },
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/improving-v16-0.json"
+   },
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/regressing-v16-0.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'say what fell short first, with the minimum it fell under: attendance under 90%, and a grave breach'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'PLAYER JOURNEY: name the part most often left unfinished with its count of the pieces shown Unready, never as what held “most of them” back'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence3-school.test.ts: 'a concern for the pace alone, in its words, on the Standing tab'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/scope-school.test.ts: 'Movement Invention III'"
+   },
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/underprepared-v16-0.json"
+   }
+  ]
+ },
+ {
+  "surface": "From Your Teachers: each course’s note on the term",
+  "where": "School, Standing And Craft, From Your Teachers",
+  "sources": [
+   "src/engine/systems/school.ts#teachersNotes"
+  ],
+  "states": [
+   "teacher",
+   "history",
+   "repeated"
+  ],
+  "outcome": "Kept",
+  "why": "Each note names the skills its course trains and says, against the class’s middle that term, whether the student pulled ahead, kept pace or grew less, with the next step for the last; the panel says the notes are the game’s, not the teachers’. Read on the leave and withdrawn saves, five of eight teachers said the same frame (“Steady work, in step with the class. Keep at …”): giving each teacher a voice is the coordinator’s (sections 4 and 5), and it’s reported with the fix, not rewritten here.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-dynamic.test.ts: 'a teacher and a cast member are named as the school names them, in the term’s notes and the cast'"
+   }
+  ]
+ },
+ {
+  "surface": "Withdraw From The School…, and what it says first",
+  "where": "School, Standing And Craft, under Your Standing; the notice You Withdrew From The School",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#WithdrawControl",
+   "src/engine/systems/school.ts#registerSchool <school.withdraw>"
+  ],
+  "states": [
+   "confirmation",
+   "warning",
+   "notification",
+   "returning"
+  ],
+  "outcome": "Kept",
+  "why": "Before the second press it says what withdrawing gives up today, what becomes of Yale Health’s cover inside and after the first fifteen days, the F-1 grace period and OPT, and that the game offers no return; the confirm is Withdraw beside Stay, and the notice after says the same facts as done. Nothing irreversible waits behind the confirm.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/defects-g8-3.test.ts: 'PLAYER JOURNEY: shows on a class day at school, and not at all after a withdrawal'"
+   }
+  ]
+ },
+ {
+  "surface": "A Leave Of Absence: asking, waiting, on leave, and the way back",
+  "where": "School, Standing And Craft, A Leave Of Absence",
+  "sources": [
+   "src/ui/components/StudyPlanPanels.tsx#LeavePanel",
+   "src/ui/components/StudyPlanPanels.tsx#STATUS",
+   "src/ui/components/StudyPlanPanels.tsx#at9",
+   "src/ui/components/StudyPlanPanels.tsx#DeanLeave",
+   "src/engine/systems/leave.ts#leaveLengths",
+   "src/engine/systems/leave.ts#leaveRefusal",
+   "src/engine/systems/leave.ts#clearedToReturn",
+   "src/engine/systems/leave.ts#LEAVE_REASONS [medical]",
+   "src/engine/systems/leave.ts#LEAVE_REASONS [personal]",
+   "src/engine/systems/leave.ts#requestLeave"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "warning",
+   "overdue",
+   "history",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "Read on the leave save: the form says before the confirm what a leave costs, when it runs and the notice it needs; but a student who’d had two terms of leave read “You’ve had two terms of leave, and the Bulletin allows three in all.” for Two Terms, again for Three Terms, and a third time for Ask For A Leave…, and the sentence stopped before saying what was left.",
+  "changes": "A reason two lengths share is said once (“Two or three terms: …”), with what’s left (“One more term is the most you can take.”); where the refusal is a length’s reason it reads “None of the three lengths is possible now.”",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'a reason two lengths share is said once, with what’s left of the three terms'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/remaining-school.test.ts: 'Give Notice Of Return'"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/leave.json"
+   }
+  ]
+ },
+ {
+  "surface": "A leave’s notices, Yale Health’s assessment and the dean’s decisions",
+  "where": "Notices through a leave: Your Leave Is Granted, Your Leave Has Begun, Two Weeks To Give Notice, Back From Your Leave, Yale Health Asks To See You, A Medical Leave, By The Dean’s Decision, and the rest",
+  "sources": [
+   "src/engine/systems/leave.ts#startLeave",
+   "src/engine/systems/leave.ts#returnFromLeave",
+   "src/engine/systems/leave.ts#registerLeave",
+   "src/engine/systems/leave.ts#considerWelfare",
+   "src/engine/systems/leave.ts#assess",
+   "src/engine/systems/leave.ts#welfareTrigger",
+   "src/engine/systems/leave.ts#rescindable",
+   "src/engine/systems/leave.ts#rescind",
+   "src/engine/systems/leave.ts#tellOutsideTheCover",
+   "src/engine/systems/leave.ts#registerLeave <school.request_leave>",
+   "src/engine/systems/leave.ts#registerLeave <school.appeal_leave>",
+   "src/engine/systems/leave.ts#registerLeave <school.cancel_leave>",
+   "src/engine/systems/leave.ts#registerLeave <school.return_notice>",
+   "src/engine/systems/leave.ts#registerLeave <school.buy_affiliate>",
+   "src/engine/systems/leave.ts#registerLeave <school.reregister>"
+  ],
+  "states": [
+   "notification",
+   "warning",
+   "overdue",
+   "confirmation",
+   "unavailable",
+   "returning"
+  ],
+  "outcome": "Kept",
+  "why": "Read on the leave save’s Home in order (begun, then back): each says what happened, what it costs and by when, and the control to press by its name and tab (“press Give Notice Of Return on the Standing And Craft tab. Without it, the leave ends in dismissal.”, “Press Register on the Standing And Craft tab before classes”). The assessment says it looks at how you’re managing, never a diagnosis, and what it can end in.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-dynamic.test.ts: 'on leave: asked, decided and begun, the screens say until when, and the refusal before it says why'"
+   }
+  ]
+ },
+ {
+  "surface": "Courses And The Degree, an Incomplete’s make-up and its notices",
+  "where": "School, Standing And Craft, Courses And The Degree; the notices Incomplete, A Week Left, Permanent Incomplete and Not Passed",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#CoursesPanel",
+   "src/engine/systems/courserecord.ts#settleCourses",
+   "src/engine/systems/courserecord.ts#registerCourseRecord",
+   "src/engine/systems/courserecord.ts#registerCourseRecord <school.make_up>",
+   "src/engine/systems/courserecord.ts#tellFails",
+   "src/engine/systems/courserecord.ts#remedy",
+   "src/engine/systems/courserecord.ts#scheduleDue",
+   "src/engine/systems/courserecord.ts#extendRefusal",
+   "src/engine/systems/courserecord.ts#makeUpRefusal",
+   "src/engine/systems/courserecord.ts#LAB_CODES"
+  ],
+  "states": [
+   "setback",
+   "notification",
+   "overdue",
+   "warning",
+   "unavailable",
+   "repeated",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read in order in the pressure run (seed v17-1): on April 23, 2027 the review was followed by nine Incomplete notices at once, each with the same seventy words of instruction and the same date, and a week before it nine reminders. One course’s notice said “You were ill for” of meetings a lay-up excused too.",
+  "changes": "Several Incompletes from one review are one notice, Incompletes In Nine Courses, with each course’s sessions and the date once; their week’s reminder is one, A Week Left: Nine Incompletes. One alone reads as before, “ill or hurt”.",
+  "evidence": [
+   {
+    "kind": "transcript",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/notices-before.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'are told in one notice with each course’s sessions and the shared date, and reminded in one, a week before it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'one alone is told as it was, ill or hurt'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g26-school.test.ts: 'PLAYER JOURNEY: Ask For A Month More'"
+   },
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/pressure-v17-1.json"
+   }
+  ]
+ },
+ {
+  "surface": "Finishing The Degree: a repeated year and an additional term",
+  "where": "School, Standing And Craft, Finishing The Degree; its decisions’ notices",
+  "sources": [
+   "src/ui/components/StudyPlanPanels.tsx#RepeatPanel",
+   "src/engine/systems/leave.ts#repeatRefusal",
+   "src/engine/systems/leave.ts#cancelRepeatWarning",
+   "src/engine/systems/leave.ts#requestRepeat",
+   "src/engine/systems/leave.ts#offerRepeat",
+   "src/engine/systems/leave.ts#extraRefusal",
+   "src/engine/systems/leave.ts#facultyReview",
+   "src/engine/systems/leave.ts#disqualified",
+   "src/engine/systems/leave.ts#registerLeave <school.request_extra_term>",
+   "src/engine/systems/leave.ts#registerLeave <school.cancel_repeat>"
+  ],
+  "states": [
+   "unavailable",
+   "confirmation",
+   "warning",
+   "overdue",
+   "notification",
+   "failure"
+  ],
+  "outcome": "Kept",
+  "why": "Read in the source with each branch: asking says before the confirm how many terms the degree would take and what would be billed past six, calling a request off says what that leaves (“If you call it off, the faculty won’t recommend the degree”), and each refusal names the rule (the nine semesters, one repeat of a year) and says which parts are the game’s own.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/ui/components/StudyPlanPanels.tsx"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/scope-school.test.ts: 'additional term'"
+   }
+  ]
+ },
+ {
+  "surface": "Your Classes: the class you’re in, and a first class you left",
+  "where": "School, Standing And Craft, Your Classes",
+  "sources": [
+   "src/ui/components/StudyPlanPanels.tsx#ClassesPanel",
+   "src/engine/systems/leave.ts#joinCohort",
+   "src/engine/systems/leave.ts#followFormerClasses",
+   "src/engine/systems/school.ts#GIVEN_ACTRESS",
+   "src/engine/systems/school.ts#GIVEN_ACTOR",
+   "src/engine/systems/school.ts#FAMILY",
+   "src/engine/systems/school.ts#drawCohort",
+   "src/engine/systems/school.ts#formerProductions",
+   "src/engine/systems/school.ts#formerCompanyRun",
+   "src/engine/systems/school.ts#classCabaret",
+   "src/engine/systems/school.ts#companyPart",
+   "src/engine/systems/school.ts#companyRead"
+  ],
+  "states": [
+   "returning",
+   "history",
+   "classmate"
+  ],
+  "outcome": "Kept",
+  "why": "Read on the leave and withdrawn saves: it names the class you go on with, the first class a year ahead with friends and rivals marked, says what you shared stays on your record, and where that class is now (“They’re in year 2, its spring term.”); what they played without you is behind a disclosure.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+   }
+  ]
+ },
+ {
+  "surface": "What The School Asks, Your Faculty, and Your Craft Against The Class",
+  "where": "School, Standing And Craft, below Your Standing",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#PoliciesPanel",
+   "src/engine/content/school.ts#SCHOOL_POLICIES",
+   "src/engine/content/school.ts#YALE_DRAMA",
+   "src/engine/content/school.ts#SKILLS [*",
+   "src/engine/content/school.ts#SKILL_WORDS",
+   "src/engine/systems/school.ts#CEILING",
+   "src/engine/content/school.ts#COURSES"
+  ],
+  "states": [
+   "explanation",
+   "details",
+   "ordinary"
+  ],
+  "outcome": "Kept",
+  "why": "The policies read as the Bulletin’s rules said to the student, each with its page and the game’s own button where it acts (“In the game, press Call In Sick”); the faculty line says who casts and who meets a student whose standing falls; the craft table puts each skill against the class’s best and middle, with where the ceiling comes from behind Sources And Estimates.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+   }
+  ]
+ },
+ {
+  "surface": "Classes: Your Week, Call In Sick, the year’s courses, and the tab once the School has ended",
+  "where": "School, Classes",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#ClassesPane",
+   "src/ui/workspaces/SchoolWorkspace.tsx#SLOTS",
+   "src/ui/workspaces/SchoolWorkspace.tsx#WEEKDAYS",
+   "src/engine/systems/school.ts#sickRefusal",
+   "src/engine/systems/school.ts#planWeek"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "empty",
+   "returning",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "On a class day the week, the next classes and the rule for an absence are said plainly, and Call In Sick says why it’s grayed under the panel’s title. On the withdrawn save the tab showed the second year’s fall week and its twelve courses to a student who had left in the first spring; the term’s breaks read “with 2 breaks”.",
+  "changes": "Once the School has ended the tab is No Classes Now, saying how it ended and where the courses taken are; the breaks are said in words (“with two breaks”).",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'PLAYER JOURNEY: withdrawn in the first fall, the Classes tab has no week, Terms And Award lists the terms begun, and Standing leaves out the rules for terms to come'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/defects-g8-3.test.ts: 'PLAYER JOURNEY: back from a first-fall leave, shows the first year’s week and courses, which the engine schedules'"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/withdraw.json"
+   }
+  ]
+ },
+ {
+  "surface": "A class day’s notices: classes missed, not registered, and how to register",
+  "where": "Notices at nine on a class day: You Missed Classes, Not Registered",
+  "sources": [
+   "src/engine/systems/school.ts#registerWay",
+   "src/engine/systems/school.ts#registerSchool"
+  ],
+  "states": [
+   "setback",
+   "notification",
+   "unavailable"
+  ],
+  "outcome": "Revised",
+  "why": "Read in the source and its test: the notice said what was missed and that it counts, and then “call in sick before classes start”, which names no control or hour; the day is counted at nine, when the notice is made.",
+  "changes": "“If you’re unwell, press Call In Sick on the School’s Classes tab before classes start at nine.” Registering says the Register button on Standing And Craft or Orientation’s session, as before.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/school.ts"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'a class day slept through says to press Call In Sick on the Classes tab before nine'"
+   }
+  ]
+ },
+ {
+  "surface": "A term’s first notices: the welcome and the term begun",
+  "where": "Notices: Welcome To The Class Of 2029 when a life begins, and Fall Term 2026 Begins at each term",
+  "sources": [
+   "src/engine/systems/school.ts#enroll",
+   "src/engine/systems/school.ts#termBegins",
+   "src/engine/systems/school.ts#classesWords",
+   "src/engine/systems/school.ts#registerSchool"
+  ],
+  "states": [
+   "first use",
+   "notification",
+   "repeated"
+  ],
+  "outcome": "Revised",
+  "why": "Read as the first notices every run meets: the welcome said orientation runs and classes start, not that its sessions were on the calendar or what to do about one missed; each term’s notice said only the money, the same sentence every term, and never the term’s classes or the date of its review.",
+  "changes": "The welcome adds “Orientation’s five sessions, from August 24, 2026, are on your calendar. If you miss one, press Catch Up beside it under Orientation, on the School’s Coursework tab.” A term’s notice opens “Classes run from August 31 to December 11, 2026, when the faculty review the term.”, then the money as before.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/attentive-v16-0.json"
+   },
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/underprepared-v16-0.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'the welcome says orientation’s sessions are on the calendar, and a term’s notice says its classes and its review before the money'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/need-paths.test.ts: 'Fall Term 2026 Begins'"
+   },
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/attentive-v16-0.json"
+   }
+  ]
+ },
+ {
+  "surface": "Casting: Why This Cast",
+  "where": "School, Casting, Why This Cast",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#CastReadPanel",
+   "src/ui/workspaces/SchoolWorkspace.tsx#SOURCE_WORD",
+   "src/engine/systems/school.ts#readRuns"
+  ],
+  "states": [
+   "explanation",
+   "details",
+   "history"
+  ],
+  "outcome": "Kept",
+  "why": "Read on the direction save: it says what the play asks, how the chair reads every student the same way, and how the read becomes a part, with the table of each student’s fit, delivery, balance and part, and what fit leaves out (classmates’ bodies and habits) behind Sources And Estimates.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/direction.json"
+   }
+  ]
+ },
+ {
+  "surface": "Casting: the production’s panel, the class beside you, and the tab with nothing cast",
+  "where": "School, Casting: a production’s panel, Around The Class, Calls Ahead, Not Cast Yet, No Casting Ahead",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#CastingPane",
+   "src/ui/workspaces/SchoolWorkspace.tsx#KIND_WORDS",
+   "src/ui/workspaces/SchoolWorkspace.tsx#nightsLine",
+   "src/ui/workspaces/SchoolWorkspace.tsx#NIGHT_WORD",
+   "src/engine/systems/school.ts#partWords",
+   "src/engine/systems/school.ts#schoolProduction",
+   "src/engine/systems/school.ts#repProduction",
+   "src/engine/systems/school.ts#partLabel",
+   "src/engine/systems/school.ts#partsFor",
+   "src/engine/systems/school.ts#CABARET_RUN",
+   "src/engine/systems/school.ts#NIGHT_WORD_TITLE",
+   "src/engine/systems/school.ts#scheduleLabs",
+   "src/engine/content/school.ts#SEAGULL_2027",
+   "src/engine/content/school.ts#SCHOOL_SEASON",
+   "src/engine/content/school.ts#LABS"
+  ],
+  "states": [
+   "ordinary",
+   "empty",
+   "unavailable",
+   "history",
+   "classmate"
+  ],
+  "outcome": "Revised",
+  "why": "The role, the nights performed and the calls ahead are said as figures, the run’s nights and note after it, and the empty tab says when the chair casts or why not. Read on the direction save, “From the class with you” listed fifteen classmates each with their part, “a featured part in a new play” seven times and “a supporting part in a new play” five.",
+  "changes": "A role is said by name and the parts cast by size together, each size once: “Owen Mendez, Lucia Kim and Priya Walsh in leading parts; …”.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/direction.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'a part cast by size is said in lower case, the understudy’s role and play named, the lead given to a classmate said apart, and the Casting tab says each size once'"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/direction.json"
+   }
+  ]
+ },
+ {
+  "surface": "Cast: a term’s casting notice",
+  "where": "The notice Cast: Carlotta Festival Of New Plays, and each term’s",
+  "sources": [
+   "src/engine/systems/school.ts#cast"
+  ],
+  "states": [
+   "notification",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read in every run’s second and third terms: one sentence joined the School’s casting and the Rep’s, so a part cast by size read as a role (“cast you as A Leading Part In A New Play”), the lead given to a classmate came after a semicolon that the understudy then hung from (“; Nadia Brooks plays Masha, and to understudy in Yale Rep’s October Production”), and an understudy of a play the season names wasn’t told whom they cover. A comment above it said the notice named nobody, which it never did.",
+  "changes": "Each casting its own sentence: “The chair of Acting has cast you in a leading part in a new play at the Carlotta Festival Of New Plays, from its first rehearsal call. You’ll also understudy Nina in Yale Rep’s The Seagull, …: be in New Haven and reachable at every performance.” The lead is “The lead, Masha, went to Nadia Brooks.” The false comment is corrected, and `redateCredits`, which dates an old save’s credits by these notices, finds a part said either way.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/attentive-v16-0.json"
+   },
+   {
+    "kind": "transcript",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/notices-before.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'a part cast by size is said in lower case, the understudy’s role and play named, the lead given to a classmate said apart, and the Casting tab says each size once'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/remaining-school.test.ts: 'The chair of Acting has cast you'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/credits-dated.test.ts: 'are dated by their terms’ casting notices once'"
+   },
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/attentive-v16-0.json"
+   }
+  ]
+ },
+ {
+  "surface": "An understudy at Yale Rep: the run-through, sent on, gone on, and missed",
+  "where": "Notices: Your Understudy Run-Through, You’re On Tonight As …, You Went On As …, and a grave breach when away",
+  "sources": [
+   "src/engine/systems/school.ts#repNamed",
+   "src/engine/systems/school.ts#goOnAs",
+   "src/engine/systems/school.ts#wentOn",
+   "src/engine/systems/school.ts#breach",
+   "src/engine/systems/school.ts#registerSchool"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "failure",
+   "assembled"
+  ],
+  "outcome": "Revised",
+  "why": "Read in order in the attentive, distant, pressure and skilled runs: “you go on in Yale Rep’s Yale Rep’s October Production tonight at 2:00 PM.”, a Sunday matinee called tonight, an understudy of the company told “You’re On Tonight As An Understudy In The Company” and “you played An Understudy In The Company”, and a run-through in the afternoon called “a solid night”.",
+  "changes": "The Rep’s production is named once (“Yale Rep’s October Production”, “Yale Rep’s An Enemy Of The People”); a matinee is “today”; a named role reads “Konstantin’s actor is out, so you go on …”, and the company’s understudy “You’re On Tonight At Yale Rep”, “An actor you cover is out”; the run-through reads “…, and it was solid.”",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/attentive-v16-0.json"
+   },
+   {
+    "kind": "transcript",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/notices-before.txt"
+   },
+   {
+    "kind": "run",
+    "ref": "docs/verification/voices-2026-10-20/after/pressure.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'an understudy of the company goes on “at Yale Rep”, its slot named once, and a matinee is today'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/school.test.ts: 'sends an understudy on when the night calls for it'"
+   },
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/attentive-v16-0.json"
+   }
+  ]
+ },
+ {
+  "surface": "A run’s end: out of the casting pool, a missed call, and the director’s note",
+  "where": "Notices: Out Of The Casting Pool, You Missed A Rehearsal Call, The Director’s Note: …, and Not Cast This Term",
+  "sources": [
+   "src/engine/systems/school.ts#missedCallsOut",
+   "src/engine/systems/school.ts#directorsNote",
+   "src/engine/systems/school.ts#registerSchool closeRun()"
+  ],
+  "states": [
+   "setback",
+   "warning",
+   "director",
+   "notification",
+   "history"
+  ],
+  "outcome": "Kept",
+  "why": "A missed call says how many more take you out of the pool, and out of it says you still play what you’re cast in and what puts you back. The director’s note names the run’s nights in a director’s plain words and the one ability that held them back most; read in the runs, two productions with the same band said the same opening, and the directors’ voices are the coordinator’s (sections 4 to 7), reported, not rewritten here.",
+  "evidence": [
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/underprepared-v16-0.json"
+   },
+   {
+    "kind": "transcript",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/notices-before.txt"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/school.ts"
+   }
+  ]
+ },
+ {
+  "surface": "The Yale Cabaret and the Summer Cabaret",
+  "where": "School, Casting, The Yale Cabaret and The Yale Summer Cabaret; their notices",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#CabaretPanel",
+   "src/ui/workspaces/SchoolWorkspace.tsx#SummerPanel",
+   "src/engine/systems/school.ts#cabaretRefusal",
+   "src/engine/systems/school.ts#cabaretSeason",
+   "src/engine/systems/school.ts#leaveCabaret",
+   "src/engine/systems/school.ts#summerRefusal",
+   "src/engine/systems/school.ts#STIPEND_MEMO",
+   "src/engine/systems/school.ts#registerSchool <school.cabaret>",
+   "src/engine/systems/school.ts#registerSchool <school.summer_cabaret>",
+   "src/engine/systems/school.ts#registerSchool [summer]",
+   "src/engine/content/school.ts#SUMMER_CABARET"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "notification",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "Each panel says where it stands and, where Join can’t be pressed, why in a sentence where the button would be (“You can’t take part in the Cabaret while you’re on academic warning.”); a show lost to a warning says the calls after it don’t count against you, and the summer says what it pays and that its terms are estimated. Read in the source with its branch, The Summer Is Yours told a member of the Summer Cabaret’s company, whose rehearsals and shows went on the calendar the day they joined, that nothing at the School called on them until the fall.",
+  "changes": "A member of the company reads “Classes are done until the fall term. The Summer Cabaret’s rehearsals and shows are on your calendar, and nothing else at the School calls on you until then.”; a student with none reads it as before.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/rehearsal.json"
+   },
+   {
+    "kind": "run",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/attentive-v16-0.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'tells a member of the Summer Cabaret’s company its calls are on the calendar'"
+   }
+  ]
+ },
+ {
+  "surface": "Shifts And Pay: work-study, the weekly cap and converting hours",
+  "where": "School, Shifts And Pay; its shifts’ notices",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#WorkPane",
+   "src/ui/components/StudyPlanPanels.tsx#WorkLimitsBlock",
+   "src/engine/systems/school.ts#shiftRefusal",
+   "src/engine/systems/school.ts#ppeRefusal",
+   "src/engine/systems/school.ts#buyPpe",
+   "src/engine/systems/school.ts#conversionRefusal",
+   "src/engine/systems/school.ts#bookPayday",
+   "src/engine/systems/school.ts#registerSchool <school.buy_ppe>",
+   "src/engine/systems/school.ts#registerSchool <school.request_conversion>",
+   "src/engine/systems/school.ts#registerSchool <school.take_shift>",
+   "src/engine/content/school.ts#WORK_STUDY",
+   "src/engine/content/school.ts#REQUIRED_PPE",
+   "src/engine/content/school.ts#WORK_LIMITS"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "explanation",
+   "details",
+   "notification",
+   "error"
+  ],
+  "outcome": "Revised",
+  "why": "Read on three saves: the tab opened on This Week’s Hours, Hours Excused and Convertible To Grant Aid with its refusal for a student not on aid, and said what every student works only at the foot; the refusals and the bank’s “Your bank can’t cover …, so nothing was charged.” are each one plain sentence.",
+  "changes": "What work-study is comes first, then the year’s hours, Friday’s pay and the equipment, the shifts ahead, and last the weekly cap and the conversion to grant aid.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/decision.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/nonfiler.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/workload.json"
+   }
+  ]
+ },
+ {
+  "surface": "Terms And Award: your terms and your Yale account",
+  "where": "School, Terms And Award",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#TermsPane",
+   "src/ui/components/StudyPlanPanels.tsx#YaleAccountPanel",
+   "src/engine/content/school.ts#COST_2026_27",
+   "src/engine/content/school.ts#YALE_COST_GROWTH",
+   "src/engine/content/school.ts#EXTENDED_STUDY",
+   "src/engine/content/school.ts#LEAVE_RULES",
+   "src/engine/content/school.ts#MANDATORY_LEAVE",
+   "src/engine/systems/school.ts#DEGREE_DATES",
+   "src/engine/systems/leave.ts#billUnsupportedTerm",
+   "src/engine/systems/leave.ts#yaleAccount [loan]",
+   "src/engine/systems/leave.ts#liftHold",
+   "src/engine/systems/leave.ts#holdsOverNothing",
+   "src/engine/systems/leave.ts#creditAccount",
+   "src/engine/systems/leave.ts#aidReviewRefusal",
+   "src/engine/systems/leave.ts#bankShortWords",
+   "src/engine/systems/leave.ts#payBalanceRefusal",
+   "src/engine/systems/leave.ts#payBalance",
+   "src/engine/systems/leave.ts#accountDue",
+   "src/engine/systems/leave.ts#registerLeave <school.request_aid_review>"
+  ],
+  "states": [
+   "ordinary",
+   "overdue",
+   "warning",
+   "unavailable",
+   "returning",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "The account table says what each term bills and credits, the sentence under it what the gift covers and whether need was found, and a hold says what it stops and where to pay. Read on the withdrawn save, Your Terms listed the four terms after the student left as ones that “Begins” on their dates.",
+  "changes": "Once the School has ended, the terms begun only, and for a withdrawal or a dismissal “You left the School on April 7, 2027, so no term after it is yours.”",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'PLAYER JOURNEY: withdrawn in the first fall, the Classes tab has no week, Terms And Award lists the terms begun, and Standing leaves out the rules for terms to come'"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/withdraw.json"
+   }
+  ]
+ },
+ {
+  "surface": "Plays To Read",
+  "where": "School, Coursework, Plays To Read",
+  "sources": [
+   "src/ui/workspaces/SchoolWorkspace.tsx#PlaysToRead",
+   "src/engine/systems/playreading.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "repeated",
+   "history"
+  ],
+  "outcome": "Kept",
+  "why": "Read on the leave save: it says what the twenty-nine plays are, that a copy is borrowed and none is played here, and why a Read It is grayed once above the list; a play read again says when it was last read and that it’s too soon to see it fresh, and research says what’s on record and what isn’t.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/playreading.ts"
+   }
+  ]
+ },
+ {
+  "surface": "The rehearsal process, and the evening’s workload",
+  "where": "School, Casting, a production’s panel, The Rehearsal Process",
+  "sources": [
+   "src/ui/components/RehearsalProcess.tsx#*",
+   "src/engine/systems/workload.ts#*",
+   "src/engine/content/workload.ts#*",
+   "src/engine/systems/workpieces.ts#partWork"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "forecast",
+   "explanation",
+   "details",
+   "director",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "Lines, blocking and the night’s forecast are said as figures with what each means, and why Learn The Part and Catch Up The Blocking are grayed under the buttons. Read on the direction save, The Evening’s Workload was one paragraph of four sentences and its source, and a play run straight through said its running time twice (“The evening runs 1 hour and 40 minutes, straight through. … about 50% of its 1 hour and 40 minutes of playing”).",
+  "changes": "The Evening’s Workload says the drain and the energy, and How It’s Worked Out, a native disclosure under it, holds the running time, the share, the demand, the workload and its source; with no break the share is “of it”. The director’s notes, their state words and their ways are the coordinator’s (production.ts) and are unchanged.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/direction.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/decisions-stamina.test.ts: 'PLAYER JOURNEY: says the workload before the curtain under A Night Now'"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/direction.json"
+   }
+  ]
+ },
+ {
+  "surface": "Work It Through, and a piece moment by moment",
+  "where": "Under a piece in progress: a coursework card, a brief, a production’s part; the Segments table",
+  "sources": [
+   "src/ui/components/WorkThrough.tsx#*",
+   "src/engine/systems/workbook.ts#*",
+   "src/engine/content/workbook.ts#*",
+   "src/engine/systems/workpieces.ts#away",
+   "src/engine/systems/workpieces.ts#briefWork",
+   "src/engine/systems/workpieces.ts#sceneWork",
+   "src/engine/systems/piece.ts#*",
+   "src/engine/systems/ensemble.ts#*"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "forecast",
+   "recommendation",
+   "details",
+   "partial"
+  ],
+  "outcome": "Revised",
+  "why": "Each problem names what the forecast shows, worst first, with its cost and what works on it, and a way tried says before and after and Keep It or Put It Back. Read on the leave save, a part of preparation short said “Its own preparation step works on it.” without saying where that step is.",
+  "changes": "“Its own preparation step, above, works on it.”: the step is above Work It Through on a card, a brief’s Preparation and the rehearsal process alike.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/defects-g8-11.test.ts: 'Not There Yet'"
+   }
+  ]
+ },
+ {
+  "surface": "How You’ll Play It, and what a scene or a play asks",
+  "where": "A scene’s card, a brief and a production’s part: What … Asks and How You’ll Play It",
+  "sources": [
+   "src/ui/components/PlayingChooser.tsx#*",
+   "src/engine/content/material.ts#*",
+   "src/engine/systems/material.ts#misfitOf"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "forecast",
+   "explanation",
+   "details",
+   "director"
+  ],
+  "outcome": "Kept",
+  "why": "Read on the leave and direction saves: What Arms And The Man Asks gives each demand its level and the play’s own reason in a vivid line of the scene (“A fugitive at a window, a pistol, the search, the chocolate creams.”), and the chooser shows every way of playing with whether it suits the scene, the abilities it uses and its fully prepared figure before anything is chosen, saying that choosing isn’t rehearsing. The scenes’ notes are the material’s, kept as written.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/direction.json"
+   }
+  ]
+ },
+ {
+  "surface": "A practice brief, from the breakdown to the take",
+  "where": "Player Profile, a genre’s practice brief",
+  "sources": [
+   "src/ui/components/BriefPane.tsx#*",
+   "src/engine/systems/briefs.ts#*",
+   "src/engine/content/concerns.ts#CONCERNS",
+   "src/engine/content/tasks.ts#TASK_PROFILES [tape]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [tapeOnFeet]"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "unavailable",
+   "forecast",
+   "recommendation",
+   "history",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "Read in the source with each state (the walk doesn’t open a brief): the scene is set out in the breakdown’s own headings, the reading and the way of playing come before the take, and each step’s refusal is on its button. The Rehearsal stat pointed to “part by part below” of a table headed Beat By Beat, and the last take’s limits read “12.3 points of Connection”.",
+  "changes": "The stat says “beat by beat below”; a limit reads as a piece of work’s look says it: “Presence: 12.3 points off connection, 4.1 off the whole”.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/ui/components/BriefPane.tsx"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'points its Rehearsal to the beats below by the table’s own word'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/briefs.test.ts: 'full abilities, mastered techniques, complete preparation'"
+   }
+  ]
+ },
+ {
+  "surface": "What your teacher looks for, and the kinds of work",
+  "where": "A piece of work’s look, the Player Profile’s work, and the coursework card’s parts",
+  "sources": [
+   "src/engine/content/tasks.ts#DIMENSION_LABEL",
+   "src/engine/content/tasks.ts#DIMENSION_MEANS",
+   "src/engine/content/tasks.ts#COURSEWORK_PREP",
+   "src/engine/content/tasks.ts#TASK_PROFILES [scene]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [written]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [voice]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [song]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [movement]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [partnered]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [improvisation]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [clown]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [camera]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [audition]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [performance]"
+  ],
+  "states": [
+   "explanation",
+   "ordinary"
+  ],
+  "outcome": "Kept",
+  "why": "The six qualities keep the glossary’s names and each says in one line what a teacher sees in it (“Whether it reads as true: real feeling under the given circumstances.”); each kind of work says in one plain sentence what it is, and its parts are the task’s own words, which the cards and the feedback name.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/content/tasks.ts"
+   }
+  ]
+ },
+ {
+  "surface": "The school’s looks: the school, a course, a skill, a piece of coursework, a classmate",
+  "where": "The look opened from the school’s name, a course, a skill, a piece, or a classmate’s name",
+  "sources": [
+   "src/ui/looks/school.tsx#*",
+   "src/ui/looks/classmate.tsx#top"
+  ],
+  "states": [
+   "ordinary",
+   "returning",
+   "empty",
+   "details",
+   "classmate"
+  ],
+  "outcome": "Revised",
+  "why": "Read in the source with each state: each look says what the thing is to you now, in the school’s terms, with a missing one refused in a sentence; the school’s look said “the chair of acting” where every notice says the chair of Acting, and “over 6 terms”.",
+  "changes": "“…, the chair of Acting, casts every student.”; “over six terms”.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/ui/looks/school.tsx"
+   },
+   {
+    "kind": "source",
+    "ref": "src/ui/looks/classmate.tsx"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-school.test.ts: 'names the chair of Acting as every notice does'"
+   }
+  ]
+ },
+ {
+  "surface": "Papers: what a license’s issuer asks first",
+  "where": "Papers, a lost driving license replaced, where its issuer asks for a document first",
+  "sources": [
+   "src/engine/content/replacements.ts#LICENSE_REPLACEMENT"
+  ],
+  "states": [
+   "unavailable",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "The two strings are the issuers’ own documents named in their own words, Mexico City’s acta or denuncia and Ireland’s Garda declaration, said where the replacement asks for them first; they read as the thing the player has to bring.",
+  "evidence": [
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/identity.ts"
+   }
+  ]
+ }
+]

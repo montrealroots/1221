@@ -1223,7 +1223,7 @@ describe('repetition: a note said before says so, a warning repeated says what c
       settleCourses(sim, sim.player, courses[key]!.term, () => ({ due: 0, notShown: 0 }));
       const due = formatDate(courses[key]!.dueBy!, sim.zone);
       const first = titled(sim, 'Incomplete: Acting I')[0]!;
-      expect(first.body).toBe(`You were ill for 10 of its 28 classes, so it’s an Incomplete for now. To complete it, make up three sessions with its teachers by ${due}, each covering a week of the course: press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`);
+      expect(first.body).toBe(`You were ill or hurt for 10 of its 28 classes, so it’s an Incomplete for now. To complete it, make up three sessions with its teachers by ${due}, each covering a week of the course: press Make Up A Session on the Standing And Craft tab. If you need longer, press Ask For A Month More, once. If it isn’t made up in time, it becomes a Permanent Incomplete: no credit, and the degree can’t be completed without it.`);
       // Made up, one evening at a time, as the Standing tab's Make Up A Session does it.
       for (let i = 1; i <= made; i += 1) {
         tended(sim, on(2026, 9, 14 + i, 18));

@@ -199,7 +199,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
         <div className="grid grid-3">
           <Stat label="The Breakdown" value={`${pct(prep.interpretation)} of ${pct(req.interpretation!)}`} />
           <Stat label="The Lines" value={`${pct(prep.memorization)} of ${pct(req.memorization!)}`} />
-          <Stat label="Rehearsal" value={`${pct(prep.rehearsal)} of ${pct(req.rehearsal!)}`} note="More in a beat a change leads into: part by part below" />
+          <Stat label="Rehearsal" value={`${pct(prep.rehearsal)} of ${pct(req.rehearsal!)}`} note="More in a beat a change leads into: beat by beat below" />
           <Stat label="Knowing The Genre" value={`${pct(known)} of ${pct(req.genre!)}`} note="Studied, or worked in: the better of the two" />
         </div>
         <div className="row gap-2 wrap">
@@ -265,7 +265,9 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
               </table>
             </div>
           )}
-          {lastWork && lastWork.limits.length > 0 && <ul className="xs" style={{ margin: 0 }}>{lastWork.limits.map((l, i) => <li key={i}>{l.label}: {l.by} points of {DIMENSION_LABEL[l.dimension]}</li>)}</ul>}
+          {/* Each limit as a piece of work's look says it, points off the quality and off the whole (from 2026-10-20, brief 17):
+              until then “12.3 points of Connection”, and the stat above said “part by part below” of the beats' table. */}
+          {lastWork && lastWork.limits.length > 0 && <ul className="xs" style={{ margin: 0 }}>{lastWork.limits.map((l, i) => <li key={i}>{l.label}: {l.by} points off {DIMENSION_LABEL[l.dimension].toLowerCase()}{l.whole !== undefined ? `, ${l.whole} off the whole` : ''}</li>)}</ul>}
         </div>
       )}
 

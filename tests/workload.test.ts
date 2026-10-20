@@ -121,7 +121,9 @@ describe('school workload, said before it’s held against you', () => {
     const concern = sim.universe.notifications.find((n) => n.title === 'A Notice Of Academic Concern');
     expect(concern, 'a term with every piece unprepared draws a concern').toBeDefined();
     expect(concern!.body).toMatch(/pieces due in class were Unready or not shown\. That’s short of what the program asks\. None of them had a single part finished\./);
-    expect(concern!.body).not.toContain('What held most of them back');
+    // The part most often left unfinished is named only where one is (from 2026-10-20, brief 17: until then “What held most
+    // of them back”, the words this held off).
+    expect(concern!.body).not.toContain('The part most often left unfinished');
   }, 300_000);
 });
 

@@ -11,8 +11,9 @@
  * shown as what a night would come to; from 2026-10-09 it reached a night's growth only, and it's said so now.
  *
  * From 2026-10-16 (brief 10) The Evening's Workload under A Night Now says what the night asks of stamina from the
- * forecast's own figures (`workloadWords`): the running time and its breaks, the part's share, the intensity, the
- * workload, the drain at the curtain's fall and the energy it costs, and where the running time comes from.
+ * forecast's own figures: the drain at the curtain's fall and the energy it costs, and, from 2026-10-20 (brief 17) under
+ * How It's Worked Out, the running time and its breaks, the part's share, the workload and where the running time comes
+ * from (`workloadWords`, a part at a time). Until then all of it was one paragraph.
  */
 
 import { useState } from 'react';
@@ -54,6 +55,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
   const last = p?.notes.at(-1);
   const piece = useWorld((s) => workPiece(s, s.player, `part:${which}`), [which]);
   const forecast = piece?.forecast();
+  const load = forecast && workloadWords(forecast) ? { cost: workloadWords(forecast, 'cost')!, working: workloadWords(forecast, 'working')! } : undefined;
   const ways = solutionsOf(piece, last);
   const [way, setWay] = useState(0);
   const chosen = ways[Math.min(way, ways.length - 1)];
@@ -74,10 +76,15 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
         <Stat label="Growth From A Night" value={`${Math.round(nightFactor(casting) * 100)}%`} note="How much a night would grow your craft, against keeping every call. It doesn’t change the night’s result" />
         {forecast && <Stat label="A Night Now" value={forecast.overall.toFixed(1)} note="A forecast: what a night would come to if it opened now, without good or bad luck" />}
       </div>
-      {forecast && workloadWords(forecast) && (
-        <div className="small" data-workload="">
-          <strong>The Evening’s Workload.</strong> {workloadWords(forecast)}
-          {forecast.inputs.piece?.night && <span className="xs dim"> The running time: {forecast.inputs.piece.night.from}.</span>}
+      {/* What the evening does to you first, how it's worked out beneath it (from 2026-10-20, brief 17, section 8): until then
+          one paragraph of four sentences and the running time's source, the drain and the energy first. */}
+      {load && (
+        <div className="small col gap-1" data-workload="">
+          <div><strong>The Evening’s Workload.</strong> {load.cost}</div>
+          <details className="fine">
+            <summary className="xs dim">How It’s Worked Out</summary>
+            <p className="xs dim" style={{ margin: 'var(--s1) 0 0' }}>{load.working}{forecast?.inputs.piece?.night ? ` The running time: ${forecast.inputs.piece.night.from}.` : ''}</p>
+          </details>
         </div>
       )}
       {p?.dress && <div className="small">The dress rehearsal: {DRESS_WORD[p.dress] ?? p.dress}.</div>}
