@@ -5,12 +5,15 @@
 (`docs/verification/briefs-2026-10-16/16-contextual-writing-distinct-voices-and-clear-information.txt`, kept verbatim).
 The work was done on `claude/peaceful-hamilton-59zdbb`, at `d1ae7a79`: `main` at `74259312` (#44's merge) with the
 handoff's account of that merge. Brief 15's section below was the status until brief 16 began. It is pushed, and it's in
-pull request #45 (https://github.com/yvcbcjhsy7-prog/1221/pull/45), which was opened for that account alone and now
-carries brief 16 too. **Nothing of brief 16 is merged, and nothing is deployed.**
+pull request #45 (https://github.com/yvcbcjhsy7-prog/1221/pull/45), which was opened for that account alone and came to
+carry brief 16 too. #45 was merged to `main` with a merge commit at the owner's word ("Both.", 2026-10-20, asked whether
+to merge it or watch it; `bbb82253`); until then this said nothing of brief 16 was merged. **Merged isn't deployed:
+nothing is.**
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `74259312`, #44's merge.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `bbb82253`, #45's merge;
+  until then this said `74259312`, #44's.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 16's commits on `d1ae7a79`
   (`git log --oneline d1ae7a79..origin/claude/peaceful-hamilton-59zdbb`). It was pushed and never force-pushed. The
   five editors worked in clones, and each area came in as its own commit on the branch, with no merge commit:
@@ -98,7 +101,8 @@ was counted; `examples.md` has the words before and after, read from the runs.
   - Decision 4's rows stay deferred.
 - **What only a person can judge:** whether the voices read as distinct and the help as easy to follow. Brief 15's
   `PLAYTEST.md` is still a route: every phrase it quotes is still in the code.
-- **Merging and deploying are the owner's.** Base44 deployment waits for the owner and the gate (rule 14). Read section
+- **Deploying is the owner's.** The pull request was merged at the owner's "Both." (`bbb82253`); until then this said
+  merging was the owner's too. Base44 deployment waits for the owner and the gate (rule 14). Read section
   10 further down first.
 
 ## 5. The Rules, The Schema And The Model
