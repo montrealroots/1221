@@ -15,15 +15,15 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/390/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/390/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/tax.json"
    }
   ]
  },
@@ -54,11 +54,11 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/nonfiler.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/nonfiler.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/nonfiler.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/nonfiler.json"
    }
   ]
  },
@@ -78,11 +78,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/withdraw.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/withdraw.json"
    },
    {
     "kind": "source",
@@ -123,7 +123,7 @@
    },
    {
     "kind": "transcript",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/pressure-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/pressure-v16-0.json"
    }
   ]
  },
@@ -154,11 +154,11 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/lien.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/lien.json"
    }
   ]
  },
@@ -190,7 +190,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    }
   ]
  },
@@ -294,15 +294,15 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/lien.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/lien.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/390/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/390/lien.json"
    }
   ]
  },
@@ -327,11 +327,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/lien.json"
    },
    {
     "kind": "test",
@@ -371,11 +371,11 @@
    },
    {
     "kind": "transcript",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/pressure-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/pressure-v16-0.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/nonfiler.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/nonfiler.json"
    }
   ]
  },
@@ -414,15 +414,15 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/missed-plan.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/missed-plan.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/missed-plan.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/missed-plan.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/390/missed-plan.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/390/missed-plan.json"
    }
   ]
  },
@@ -455,11 +455,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/nonfiler.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/nonfiler.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "test",
@@ -511,7 +511,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/lien.json"
    },
    {
     "kind": "test",
@@ -689,11 +689,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/health.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/health.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/390/health.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/390/health.json"
    },
    {
     "kind": "test",
@@ -723,11 +723,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/withdraw.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/withdraw.json"
    },
    {
     "kind": "test",
@@ -783,11 +783,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/tax.json"
    },
    {
     "kind": "test",
@@ -819,15 +819,15 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/390/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/390/lien.json"
    }
   ]
  },
@@ -852,11 +852,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/lien.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/390/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/390/tax.json"
    },
    {
     "kind": "test",
@@ -886,11 +886,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/lien.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/missed-plan.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/missed-plan.json"
    },
    {
     "kind": "source",
@@ -952,11 +952,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/390/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/390/lien.json"
    },
    {
     "kind": "test",
@@ -998,11 +998,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/tax.json"
    },
    {
     "kind": "test",
@@ -1084,23 +1084,23 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-before-f1/1440/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-before-f1/1440/f1.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/f1.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/390/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/390/f1.json"
    }
   ]
  },
@@ -1133,15 +1133,15 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-before-f1/1440/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-before-f1/1440/f1.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/f1.json"
    }
   ]
  },
@@ -1223,15 +1223,15 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-before-f1/1440/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-before-f1/1440/f1.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/f1.json"
    },
    {
     "kind": "test",
@@ -1261,19 +1261,19 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-before-f1/1440/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-before-f1/1440/f1.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-before-f1/1440/f1-ssn.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-before-f1/1440/f1-ssn.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/f1.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/tax.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/tax.json"
    },
    {
     "kind": "test",
@@ -1307,11 +1307,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/lien.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/lien.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/papers-work/walk-after/1440/f1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/papers-work/walk-after/1440/f1.json"
    },
    {
     "kind": "test",

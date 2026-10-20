@@ -139,5 +139,439 @@
     "ref": "src/engine/systems/learning.ts"
    }
   ]
+ },
+ {
+  "surface": "A piece’s card: what it is, what it asks, and its steps",
+  "where": "School, Coursework, each open piece: its title and course, the scene and part, Shown Today, the preparation steps and Table Work",
+  "sources": [
+   "src/ui/components/CourseworkPane.tsx#AssignmentCard",
+   "src/ui/components/CourseworkPane.tsx#TableWork",
+   "src/engine/content/coursework.ts#QUESTIONS*",
+   "src/engine/content/coursework.ts#TEMPLATES*",
+   "src/engine/content/coursework.ts#SHOWCASE_SCENE",
+   "src/engine/content/coursework.ts#read",
+   "src/engine/content/coursework.ts#learn",
+   "src/engine/content/coursework.ts#alone",
+   "src/engine/content/coursework.ts#withPartner",
+   "src/engine/content/coursework.ts#revise",
+   "src/engine/systems/coursework.ts#setWork",
+   "src/engine/systems/coursework.ts#revisitWords",
+   "src/engine/systems/coursework.ts#BAND_LABEL",
+   "src/engine/systems/coursework.ts#READER"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "returning",
+   "details",
+   "explanation",
+   "unavailable"
+  ],
+  "outcome": "Revised",
+  "why": "Read on the workload and rehearsal saves at 1440, each card leads with the course, the piece and its due day, then the scene and the part, then each step as a button with what it moves. Two lines were the material editor’s finds: a scene taken again named its first time’s byline in Title Case mid-sentence, and the line before the play’s facts said “its Table Work answers” of a list a player hadn’t opened.",
+  "changes": "The original scene’s byline is in lower case inside the sentence, and the facts line reads “The facts its Table Work answers rest on:”. A step’s refusal that ran two clauses on a colon is two sentences (“Read the scene first. You learn lines from a scene you know.”).",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/coordinator/walk-before-workload-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g18-school.test.ts: 'draws each step as a button on the Coursework tab, grayed with the reason it can’t be taken, and Read The Scene pressed takes its 40 minutes'"
+   }
+  ]
+ },
+ {
+  "surface": "The scenes a piece is set from",
+  "where": "School, Coursework, a scene study’s card: the play, the playwright, the scene and the part, and its facts",
+  "sources": [
+   "src/engine/content/coursework.ts#SCENES*"
+  ],
+  "states": [
+   "first use",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Each scene names its play, playwright, year and the moment it is set in plainly enough to act from (“The one act, the Wright kitchen: you play Mrs. Hale”), and its facts are the ones its Table Work questions ask about, so the card and the questions agree; the material editor read them with the briefs and changed nothing here.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/coordinator/walk-before-workload-1440.txt"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/content/coursework.ts"
+   }
+  ]
+ },
+ {
+  "surface": "Why a step, a piece or an ask can’t be done now",
+  "where": "School, Coursework: a grayed step or button’s reason, beside it, and the refusal when pressed",
+  "sources": [
+   "src/engine/systems/coursework.ts#prepareRefusal",
+   "src/engine/systems/coursework.ts#approachRefusal",
+   "src/engine/systems/coursework.ts#tableWorkRefusal",
+   "src/engine/systems/coursework.ts#playingRefusal",
+   "src/engine/systems/coursework.ts#askRefusal",
+   "src/engine/systems/coursework.ts#answerRefusal",
+   "src/engine/systems/coursework.ts#needRefusal",
+   "src/engine/systems/coursework.ts#orientationRefusal",
+   "src/engine/systems/coursework.ts#registerCoursework <school.approach>",
+   "src/engine/systems/coursework.ts#registerCoursework <school.choose>",
+   "src/engine/systems/coursework.ts#registerCoursework <school.read_feedback>",
+   "src/engine/systems/coursework.ts#registerCoursework <school.ask_partner>",
+   "src/engine/systems/coursework.ts#registerCoursework <school.answer_partner>",
+   "src/engine/systems/coursework.ts#registerCoursework <school.cancel_rehearsal>",
+   "src/engine/systems/coursework.ts#registerCoursework"
+  ],
+  "states": [
+   "unavailable",
+   "locked",
+   "error",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "Each refusal says what stands in the way and what to do first (“You don’t know where the studios are yet. Orientation’s building tour shows you: if you missed it, press Catch Up beside it under Orientation.”); eight ran a reason and its remedy into one sentence on a colon, which read as a list.",
+  "changes": "The eight are two sentences each (“Agree how you’ll work first. There’s no partner work until the boundaries are set.”); nothing refused, or when, changed.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g18-school.test.ts: 'is refused under two hours ahead, past the due, over a rehearsal or another commitment, and before the boundaries of an intimacy scene are agreed; and declined by the partner’s own day'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/defects-g8-9.test.ts: 'opens once the questions are answered with readings the text supports, and not before'"
+   }
+  ]
+ },
+ {
+  "surface": "Due Soonest",
+  "where": "School, Coursework, first while work is set and the first week is done",
+  "sources": [
+   "src/ui/components/CourseworkPane.tsx#CourseworkPane"
+  ],
+  "states": [
+   "ordinary",
+   "warning",
+   "forecast",
+   "recommendation"
+  ],
+  "outcome": "Kept",
+  "why": "Read on the workload save at 1440, each line says the piece, its due day, what it would come to shown today with its band, and each part still to finish with the step that finishes it, in the order due: the first view answers what matters now and what to press.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/coordinator/walk-before-workload-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-coordinator.test.ts: 'opens on the first week while a session is to come, and keeps it, below the work, once all five are done'"
+   }
+  ]
+ },
+ {
+  "surface": "Orientation: the first week",
+  "where": "School, Coursework: first in the first week, and below the work once all five sessions are done",
+  "sources": [
+   "src/ui/components/CourseworkPane.tsx#FirstWeek",
+   "src/engine/systems/coursework.ts#ORIENTATION*",
+   "src/engine/systems/coursework.ts#orient"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "history",
+   "unavailable"
+  ],
+  "outcome": "Revised",
+  "why": "Each session says its time, then Done with the day or On The Calendar or Catch Up with its minutes, which is all a player needs; but on the workload save, a second-year student’s tab opened on five sessions done a year before, ahead of Due Soonest.",
+  "changes": "The panel leads while a session is to come or to catch up, and goes below the work, still there, once all five are done. Its words are unchanged.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/coordinator/walk-before-workload-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/editorial17-coordinator.test.ts: 'opens on the first week while a session is to come, and keeps it, below the work, once all five are done'"
+   }
+  ]
+ },
+ {
+  "surface": "Rehearsing With: asking, booking, and how a rehearsal went",
+  "where": "School, Coursework, a partnered piece’s Rehearsing With; the notices Rehearsal With …, … Didn’t Come, … Asks To Rehearse",
+  "sources": [
+   "src/ui/components/CourseworkPane.tsx#Rehearsals",
+   "src/engine/systems/coursework.ts#mateBusy",
+   "src/engine/systems/coursework.ts#hourWords",
+   "src/engine/systems/coursework.ts#partnerAsks",
+   "src/engine/systems/coursework.ts#book",
+   "src/engine/systems/coursework.ts#rehearsalOutcome",
+   "src/engine/systems/coursework.ts#peerNote",
+   "src/engine/systems/coursework.ts#afterTogether"
+  ],
+  "states": [
+   "ordinary",
+   "repeated",
+   "setback",
+   "notification",
+   "classmate",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "Each notice says who, which scene, what happened and what to do next (“Ask them for another evening under Rehearsing With Nadia, or use Run It With A Reader”); a second miss ran its count into the first sentence: “and they didn’t come, the second time they haven’t come.”",
+  "changes": "The count is its own sentence: “It’s the second time they haven’t come.”",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g22-school.test.ts: 'PLAYER JOURNEY: the partner doesn’t come: trust and bond held, their notice and the screen saying so, and the apology the clock brings to class, accepted for 2'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/language-dynamic.test.ts: 'rehearsals with a classmate: none yet, one, several, one more to lift a boundary, and missed by you'"
+   }
+  ]
+ },
+ {
+  "surface": "Your Partners",
+  "where": "School, Coursework, Your Partners",
+  "sources": [
+   "src/ui/components/CourseworkPane.tsx#Partners"
+  ],
+  "states": [
+   "history",
+   "classmate",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "Each partner’s line gives trust, how often they came, their reliability and what they care about most, then the last thing between you, which reads as a person’s record; one never rehearsed with read “Came 0 of 0”.",
+  "changes": "“No Rehearsals Yet” where none was held.",
+  "evidence": [
+   {
+    "kind": "walk",
+    "ref": "docs/verification/continuity-2026-10-20/coordinator/walk-before-workload-1440.txt"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g18-school.test.ts: 'draws Make Amends on the Coursework tab under what wants making right, grayed in class, and pressed makes it right'"
+   }
+  ]
+ },
+ {
+  "surface": "Work Shown",
+  "where": "School, Coursework, Work Shown: the last twelve pieces",
+  "sources": [
+   "src/ui/components/CourseworkPane.tsx#Shown"
+  ],
+  "states": [
+   "history",
+   "success",
+   "failure"
+  ],
+  "outcome": "Kept",
+  "why": "Each piece shown is a line with its course, the day, its band and its figure, and a piece not shown says Not Shown, so the record of a term can be read down the list without opening a card.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/remaining-school-term.test.ts: 'DEFECT: after the first miss, every Shown Today line is an open piece’s, the missed one is in Work Shown as Not Shown, and the Standing tab’s Coursework This Term says the term’s count (until 2026-10-16 no tile said it)'"
+   }
+  ]
+ },
+ {
+  "surface": "A Word On Your Coursework",
+  "where": "Notice, once a term, when the term’s pieces run Unready",
+  "sources": [
+   "src/engine/systems/coursework.ts#termWarning"
+  ],
+  "states": [
+   "warning",
+   "repeated",
+   "recommendation",
+   "notification"
+  ],
+  "outcome": "Revised",
+  "why": "It says the count, whether it’s the first warning or a later one, the review’s day and what it would do, then the cause and its remedy, then what’s still set; but “What held most of them back was “Daily Practice”, unfinished on 6 of the 39 you showed” claimed “most” of a count under half, and “most of them” of one piece.",
+  "changes": "“The part most often left unfinished was “…”, on 6 of the 39 you showed Unready.”; one piece: ““…” was left unfinished on the one you showed Unready.”, as the term review now says it.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/language-dynamic.test.ts: 'the term’s coursework warning: the pieces still set, none, one or several, and the Unready ones, one or several'"
+   }
+  ]
+ },
+ {
+  "surface": "Your Class: what classmates bring you",
+  "where": "School, Coursework, Your Class, and the class’s moments as they open (a request for help, an invitation, a different reading, an apology, a boundary, a word after class)",
+  "sources": [
+   "src/ui/components/ClassMoments.tsx#ClassMoments",
+   "src/engine/systems/classmates.ts#classMoment [help]",
+   "src/engine/systems/classmates.ts#classMoment [encouragement]",
+   "src/engine/systems/classmates.ts#classMoment",
+   "src/engine/systems/classmates.ts#disagreement",
+   "src/engine/systems/classmates.ts#studyEvening",
+   "src/engine/systems/classmates.ts#MOMENT_TITLE",
+   "src/engine/systems/classmates.ts#CHOICES*",
+   "src/engine/systems/classmates.ts#apologyWords",
+   "src/engine/systems/classmates.ts#boundaryWords",
+   "src/engine/systems/classmates.ts#PRIORITY_WORDS",
+   "src/engine/systems/classmates.ts#templateTitle",
+   "src/engine/systems/classmates.ts#lapse"
+  ],
+  "states": [
+   "classmate",
+   "repeated",
+   "returning",
+   "history",
+   "setback",
+   "notification"
+  ],
+  "outcome": "Revised",
+  "why": "Read in order in the baseline’s runs, Nadia apologized on October 8, 2026 for two missed rehearsals and again for the same two on September 30, 2027; “you helped them last time” was said of the oldest request, not the newest; every classmate of a priority asked in one sentence; and an apology a year late read as if the miss were last week.",
+  "changes": "One apology covers every rehearsal missed since the last and marks each, so none comes again for them; a new miss is owed a new one. The last answer is the newest. Each classmate asks in a way of their own, the same each time (`wayOf`). An apology four weeks or more after the miss says how long it’s been. Help, invitations, disagreements and apologies are in the classmate’s voice by what they care about most.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/continuity-incidents.test.ts: 'covers every rehearsal missed since the last, comes once for them however much of the classmate’s history is let go, and comes again for a new miss'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/continuity-incidents.test.ts: 'says how long it’s been, where the miss was weeks or months ago, and nothing of it where it was days'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/continuity-incidents.test.ts: 'is their own, the same each time they ask, and the class doesn’t share one'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/repeat-moments.test.ts: 'PLAYER JOURNEY: to the second fall, every request for help answered yes and every invitation no, each one after the first from the same classmate says how many and how the last went, the same across a reload (TEST SETUP: kept rested while the clock runs)'"
+   }
+  ]
+ },
+ {
+  "surface": "A class moment answered, and making amends",
+  "where": "School, Coursework, Your Class: the answer’s buttons, its result, and Make Amends",
+  "sources": [
+   "src/engine/systems/classmates.ts#respondRefusal",
+   "src/engine/systems/classmates.ts#amendsRefusal",
+   "src/engine/systems/classmates.ts#boundaryRefusal",
+   "src/engine/systems/classmates.ts#registerClassmates <school.respond>",
+   "src/engine/systems/classmates.ts#registerClassmates <school.make_amends>",
+   "src/engine/systems/classmates.ts#registerClassmates"
+  ],
+  "states": [
+   "confirmation",
+   "unavailable",
+   "error",
+   "classmate"
+  ],
+  "outcome": "Kept",
+  "why": "Each answer says in a line what it did between you (“You kept yours. Grace isn’t persuaded, and the text is on their side.”), and each refusal why not, with when it can be done; the buttons keep the same names wherever the moment comes back.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g18-school.test.ts: 'draws Make Amends on the Coursework tab under what wants making right, grayed in class, and pressed makes it right'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/classmates.ts"
+   }
+  ]
+ },
+ {
+  "surface": "A director’s note at a call",
+  "where": "School, Casting, a production’s process: each call’s note, and the Notes panel",
+  "sources": [
+   "src/engine/systems/production.ts#noteText",
+   "src/engine/systems/production.ts#noteWords",
+   "src/engine/systems/production.ts#STAGE_LABEL"
+  ],
+  "states": [
+   "director",
+   "repeated",
+   "success",
+   "partial",
+   "recommendation"
+  ],
+  "outcome": "Revised",
+  "why": "Every director spoke the same words for the same note, so the season’s directors were one voice; and a note whose words had a colon came again as “Still:” before them, two colons in a sentence (“Keep at the last note: get off book: once the lines are in you…”).",
+  "changes": "Three director voices (plain, exacting, encouraging), one per production for its whole run (`directorVoiceFor`); what came of the last note said each voice’s way; never two colons in a sentence: such a note comes again as the same note.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/feedback-voices.test.ts: 'keeps one voice for the run, and says one note three recognizable ways, never two colons in a sentence'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/variety.test.ts: 'moves on from a skill note that was taken to the next thinnest place; one not taken comes again, said as the same note'"
+   }
+  ]
+ },
+ {
+  "surface": "Looking Back at a run",
+  "where": "Notice Looking Back: …, at a run’s close, and the production’s process",
+  "sources": [
+   "src/engine/systems/production.ts#reflect"
+  ],
+  "states": [
+   "history",
+   "assembled",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "It sums the calls kept, the notes given and taken, the dress and the company’s nights in one paragraph, says what goes on into class, and says it’s the game’s summary, not the director’s words, so a player reads it as a record.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g19-school.test.ts: 'PLAYER JOURNEY: every note worked through the festival: the direction tally as the notes have it, a note given again says what was tried, and the closing looks back once, carrying the note not taken into class'"
+   }
+  ]
+ },
+ {
+  "surface": "What a production won’t let you do now",
+  "where": "School, Casting, a production’s controls: a grayed Work On It and the refusal",
+  "sources": [
+   "src/engine/systems/production.ts#partPlayingRefusal",
+   "src/engine/systems/production.ts#ownWorkRefusal",
+   "src/engine/systems/production.ts#registerProduction <school.work_note>"
+  ],
+  "states": [
+   "unavailable",
+   "error"
+  ],
+  "outcome": "Kept",
+  "why": "Each says the one reason in a short sentence (“The run is over.”, “You aren’t cast in anything there.”), and a way already tried and put back says so, so a player doesn’t press again for nothing.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/evidence-g19-school.test.ts: 'is refused not cast there, in class, once the lines are known, and once the run is over, each in its words with nothing spent'"
+   }
+  ]
+ },
+ {
+  "surface": "What held a piece back, as the evaluation names it",
+  "where": "School, Coursework, a piece’s Shown Today and its feedback; Profile, a piece’s look",
+  "sources": [
+   "src/engine/systems/evaluation.ts#judgeExact",
+   "src/engine/systems/evaluation.ts#judgeExact [difficulty]",
+   "src/engine/systems/evaluation.ts#judgeExact [preparation]",
+   "src/engine/systems/evaluation.ts#halfOf"
+  ],
+  "states": [
+   "details",
+   "explanation"
+  ],
+  "outcome": "Kept",
+  "why": "Each limit is named the way a player can act on (“Readiness At 30, Under 60”, “How Hard The Piece Is”, “Rehearsing the way you chose to play it”), and the feedback turns the one that cost most into a sentence with its points, so the label and the sentence agree.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/integration-mastery.test.ts: 'a day too tired and a way the scene doesn’t take are each named, in the take’s own words'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/engine/systems/evaluation.ts"
+   }
+  ]
  }
 ]

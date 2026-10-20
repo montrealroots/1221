@@ -20,11 +20,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/withdraw.json"
    },
    {
     "kind": "test",
@@ -53,11 +53,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/withdraw.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "test",
@@ -90,15 +90,15 @@
   "evidence": [
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/underprepared-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/underprepared-v16-0.json"
    },
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/improving-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/improving-v16-0.json"
    },
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/regressing-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/regressing-v16-0.json"
    },
    {
     "kind": "test",
@@ -118,7 +118,7 @@
    },
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/underprepared-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/after/underprepared-v16-0.json"
    }
   ]
  },
@@ -138,11 +138,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/withdraw.json"
    },
    {
     "kind": "test",
@@ -173,7 +173,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/withdraw.json"
    },
    {
     "kind": "test",
@@ -211,7 +211,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "test",
@@ -223,7 +223,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/walk-after/1440/leave.json"
    }
   ]
  },
@@ -260,7 +260,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "test",
@@ -298,7 +298,7 @@
   "evidence": [
    {
     "kind": "transcript",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/notices-before.txt"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/notices-before.txt"
    },
    {
     "kind": "test",
@@ -314,7 +314,7 @@
    },
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/pressure-v17-1.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/after/pressure-v17-1.json"
    }
   ]
  },
@@ -381,11 +381,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/withdraw.json"
    }
   ]
  },
@@ -411,11 +411,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
    }
   ]
  },
@@ -442,11 +442,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/withdraw.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "test",
@@ -458,7 +458,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/walk-after/1440/withdraw.json"
    }
   ]
  },
@@ -508,11 +508,11 @@
   "evidence": [
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/attentive-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/attentive-v16-0.json"
    },
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/underprepared-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/underprepared-v16-0.json"
    },
    {
     "kind": "test",
@@ -524,7 +524,7 @@
    },
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/attentive-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/after/attentive-v16-0.json"
    }
   ]
  },
@@ -546,7 +546,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/direction.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/direction.json"
    }
   ]
  },
@@ -583,7 +583,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/direction.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/direction.json"
    },
    {
     "kind": "test",
@@ -591,7 +591,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/direction.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/walk-after/1440/direction.json"
    }
   ]
  },
@@ -611,11 +611,11 @@
   "evidence": [
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/attentive-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/attentive-v16-0.json"
    },
    {
     "kind": "transcript",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/notices-before.txt"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/notices-before.txt"
    },
    {
     "kind": "test",
@@ -631,7 +631,7 @@
    },
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/attentive-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/after/attentive-v16-0.json"
    }
   ]
  },
@@ -657,11 +657,11 @@
   "evidence": [
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/attentive-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/attentive-v16-0.json"
    },
    {
     "kind": "transcript",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/notices-before.txt"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/notices-before.txt"
    },
    {
     "kind": "run",
@@ -677,7 +677,7 @@
    },
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/after/attentive-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/after/attentive-v16-0.json"
    }
   ]
  },
@@ -701,11 +701,11 @@
   "evidence": [
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/underprepared-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/underprepared-v16-0.json"
    },
    {
     "kind": "transcript",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/notices-before.txt"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/notices-before.txt"
    },
    {
     "kind": "source",
@@ -750,15 +750,15 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/rehearsal.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/rehearsal.json"
    },
    {
     "kind": "run",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/attentive-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/attentive-v16-0.json"
    },
    {
     "kind": "test",
@@ -798,19 +798,19 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/decision.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/decision.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/nonfiler.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/nonfiler.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/walk-after/1440/workload.json"
    }
   ]
  },
@@ -852,11 +852,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/withdraw.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "test",
@@ -864,7 +864,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/withdraw.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/walk-after/1440/withdraw.json"
    }
   ]
  },
@@ -886,7 +886,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "source",
@@ -918,7 +918,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/direction.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/direction.json"
    },
    {
     "kind": "test",
@@ -926,7 +926,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/e-school-scratch/walk-after/1440/direction.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/e-school-scratch/walk-after/1440/direction.json"
    }
   ]
  },
@@ -957,7 +957,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "test",
@@ -986,11 +986,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/direction.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/direction.json"
    }
   ]
  },
@@ -1059,7 +1059,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/leave.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/leave.json"
    },
    {
     "kind": "source",

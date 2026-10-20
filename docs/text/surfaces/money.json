@@ -20,19 +20,19 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/390/roundups.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/390/roundups.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/overdrawn.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/overdrawn.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/390/overdrawn.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/390/overdrawn.json"
    },
    {
     "kind": "test",
@@ -63,11 +63,11 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/roundups.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/roundups.json"
    },
    {
     "kind": "test",
@@ -109,7 +109,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/card-owed.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/card-owed.json"
    }
   ]
  },
@@ -152,11 +152,11 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/workload.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/overdrawn.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/overdrawn.json"
    }
   ]
  },
@@ -245,7 +245,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/workload.json"
    }
   ]
  },
@@ -275,7 +275,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
    }
   ]
  },
@@ -330,7 +330,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/workload.json"
    }
   ]
  },
@@ -402,7 +402,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/roundups.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/roundups.json"
    }
   ]
  },
@@ -513,11 +513,11 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/card-owed.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/card-owed.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/390/card-owed.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/390/card-owed.json"
    }
   ]
  },
@@ -559,7 +559,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/workload.json"
    }
   ]
  },
@@ -632,7 +632,7 @@
   "evidence": [
    {
     "kind": "transcript",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/before/attentive-v16-0.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/before/attentive-v16-0.json"
    },
    {
     "kind": "test",
@@ -707,7 +707,7 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
    }
   ]
  },
@@ -730,7 +730,7 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
    },
    {
     "kind": "test",
@@ -848,11 +848,11 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/overdrawn.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/overdrawn.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/390/overdrawn.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/390/overdrawn.json"
    },
    {
     "kind": "test",
@@ -984,15 +984,15 @@
   "evidence": [
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/1440/overdrawn.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/1440/overdrawn.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/money-walk/390/overdrawn.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/money-walk/390/overdrawn.json"
    },
    {
     "kind": "test",
@@ -1167,11 +1167,11 @@
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/workload.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/workload.json"
    },
    {
     "kind": "walk",
-    "ref": "/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/b17/walk-before/1440/roundups.json"
+    "ref": "docs/verification/continuity-2026-10-20/evidence/b17/walk-before/1440/roundups.json"
    }
   ]
  },
