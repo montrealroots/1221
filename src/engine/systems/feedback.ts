@@ -88,6 +88,7 @@ export const STEP: Record<Discipline, Record<Step, string>> = {
 const CONDITION: Record<string, string> = {
   fatigue: 'you came to it tired',
   illness: 'you had the flu',
+  injury: 'you were working injured',
   stamina: 'your stamina ran low',
   shaken: 'a slip shook you',
 };
@@ -123,7 +124,7 @@ export interface ShowingFacts {
    * What held a prepared piece back, by the evaluation's limits (`chiefLimit`), its kind and what, and for an ability or a
    * technique the practice exercise that trains it, where one does (`exerciseFor`; none trains discipline or stamina).
    */
-  held?: { words: string; kind: string; what: string; exercise?: string };
+  held?: { words: string; kind: string; what: string; exercise?: string; again?: string };
   /** The day's condition where the evaluation counted one, and what it cost the whole. */
   condition?: { what: string; whole: number; words: string };
   /** The partner's share, where there was one: they lifted it, came less prepared, or slipped (covered or not). */
@@ -132,6 +133,11 @@ export interface ShowingFacts {
   before?: { on: string; course: string; given?: number; taken?: string };
   /** A note on a part: the part's label, and how far it was prepared then and now (0 to 1). */
   part?: { label: string; then?: number; now?: number };
+  /**
+   * What the note is on, as prose names it: the part's label as its card says it, the question for an answer at the table,
+   * the skill in words. A note given often is said short and named by it.
+   */
+  subject?: string;
   /** Given this often and still open (`LEARNING.persistent`): said short, with what's still open. */
   persistent: boolean;
   /** The part's mark for the note to be taken (`LEARNING.enough`). */
@@ -211,7 +217,7 @@ function steadyLeads(d: Discipline, f: ShowingFacts): string[] {
   const b = f.bandLabel;
   switch (d) {
     case 'acting': return [
-      'Nothing in the preparation held this one back, and it played.',
+      'Every part of the preparation held, and it played.',
       'The work you did on it showed: nothing you prepared fell short.',
       `${b}, with every part of the preparation in place.`,
       'You came in with it ready, and nothing pulled it down.',
@@ -220,13 +226,13 @@ function steadyLeads(d: Discipline, f: ShowingFacts): string[] {
       'The voice work was ready, and nothing in it held the piece back.',
       'Everything the piece asked of the voice was prepared, and it showed.',
       `${b}, and the preparation behind the voice held up.`,
-      'Nothing you prepared let the voice down here.',
+      'What you prepared held up in the voice here.',
     ];
     case 'movement': return [
       'The work was in the body, and nothing in the preparation held it back.',
       'Everything you prepared showed in the movement.',
       `${b}: the movement was prepared through to the end.`,
-      'Nothing you prepared fell short in the body here.',
+      'What you prepared held up in the body here.',
     ];
     case 'text': return [
       'The reading was prepared, and nothing in it held the piece back.',
@@ -276,16 +282,21 @@ function despiteLeads(d: Discipline, f: ShowingFacts): string[] {
   ];
 }
 
-/** A prepared piece kept at Working or Unready by something other than its preparation's notes. */
+/**
+ * A prepared piece kept at Working or Unready by something other than its preparation's notes. Where the same limit held
+ * the course's last piece back too (`again`), it's said as that, with when: the same finding isn't new (brief 16,
+ * section 3), and it was said fresh six times running in Voice I in its first transcripts.
+ */
 function heldLeads(d: Discipline, f: ShowingFacts): string[] {
   const h = f.held!;
   const b = f.bandLabel;
+  if (h.again) return [`As on ${h.again}, ${low(h.words)}.`, `${h.words}, as it did on ${h.again}.`, `It stayed at ${b}, held back as on ${h.again}: ${low(h.words)}.`];
   const prep = h.kind === 'preparation';
   const out = [
     `It stayed at ${b}: ${low(h.words)}.`,
-    prep ? `${h.words}. That’s what held it back most.` : `${h.words}. That, not the preparation, held it back most.`,
+    prep ? `${h.words}. That’s what held it back most.` : `${h.words}, more than anything in the preparation.`,
   ];
-  if (!prep) out.push(`What held it back most wasn’t the preparation: ${low(h.words)}.`);
+  if (!prep) out.push(`It wasn’t the preparation: ${low(h.words)}.`);
   if (!prep && d === 'voice') out.push(`The voice work was prepared, but ${low(h.words)}.`);
   if (!prep && d === 'movement') out.push(`The movement was prepared, but ${low(h.words)}.`);
   if (!prep && d === 'text') out.push(`The reading was prepared, but ${low(h.words)}.`);
@@ -299,7 +310,7 @@ function heldAction(f: ShowingFacts): string | undefined {
   if (h.kind === 'ability' || h.kind === 'technique') {
     if (h.what === 'stamina') return 'Work Out, under Look After Yourself, builds stamina.';
     if (h.what === 'discipline') return 'Discipline grows with each day of practice kept up.';
-    return h.exercise ? `Classes build it, and so does ${h.exercise}, under Practice on your Player Profile.` : 'Classes build it over the weeks.';
+    return h.exercise ? `Classes build it, and so does ${h.exercise}, in the Practice column on your Player Profile.` : 'Classes build it over the weeks.';
   }
   if (h.kind === 'condition') {
     if (h.what === 'fatigue') return 'Come to the next one rested.';
@@ -349,7 +360,8 @@ function newLeads(d: Discipline, f: ShowingFacts): string[] {
   }
 }
 
-function partialLeads(f: ShowingFacts): string[] {
+/** A note better but not there. `dated`: the day was said just before (the band's move), so it's "then", not the day again. */
+function partialLeads(f: ShowingFacts, dated = false): string[] {
   const p = f.part;
   const then = p?.then !== undefined ? pct(p.then) : undefined;
   const now = p?.now !== undefined ? pct(p.now) : undefined;
@@ -357,9 +369,9 @@ function partialLeads(f: ShowingFacts): string[] {
   const fig = then && now ? ` (${then} then, ${now} now)` : '';
   const label = p?.label ?? 'It';
   return [
-    `This has improved since ${on}${fig}, but it isn’t there yet.`,
-    then && now ? `${label} went from ${then} on ${on} to ${now} now: closer, not there yet.` : `Closer than on ${on}, not there yet.`,
-    `Better than on ${on}${fig}, though not all the way.`,
+    `This has improved since ${dated ? 'then' : on}${fig}, but it isn’t there yet.`,
+    then && now ? `${label} went from ${then}${dated ? '' : ` on ${on}`} to ${now} now: closer, not there yet.` : `Closer than ${dated ? 'then' : `on ${on}`}, not there yet.`,
+    `Better than ${dated ? 'then' : `on ${on}`}${fig}, though not all the way.`,
   ];
 }
 
@@ -372,16 +384,23 @@ function recurringLeads(f: ShowingFacts): string[] {
   const b = f.before!;
   const n = (b.given ?? 1) + 1;
   const where = b.course === f.course ? `in ${f.course}` : `in ${b.course}`;
+  // Said short, without the note's own words, it names what the note is on (found reading brief 16's first transcripts:
+  // "Still open after seven notes" said nothing of which).
+  if (f.persistent && f.subject) return [
+    `The note on ${f.subject} is still open after ${count(n - 1)} notes, the last ${where} on ${b.on}.`,
+    `This is the ${ordinal(n)} time you’ve had the note on ${f.subject}, the last ${where} on ${b.on}.`,
+    `A ${ordinal(n)} time for the note on ${f.subject}: it was last given ${where}, on ${b.on}.`,
+  ];
   return n >= 3
     ? [`This is the ${ordinal(n)} time you’ve had this note, the last ${where} on ${b.on}, and it’s still there.`, `The same note a ${ordinal(n)} time: it was last given ${where}, on ${b.on}.`, `Still open after ${count(n - 1)} notes, the last ${where} on ${b.on}.`]
     : [`You had this note ${where} on ${b.on} too, and it’s still there.`, `The same note as on ${b.on} ${where}: it hasn’t moved yet.`, `Still there from ${b.on}, ${where}.`];
 }
 
 /** What's still open on a part, where the part measures it: how far it's come against the mark that takes the note. */
-function stillOpen(f: ShowingFacts): string | undefined {
+function stillOpen(f: ShowingFacts, named = false): string | undefined {
   const p = f.part;
   if (!p || p.now === undefined) return undefined;
-  return `${p.label} is at ${pct(p.now)}, and the note is taken at ${pct(f.enough)}.`;
+  return `${named ? 'It’s at' : `${p.label}:`} ${pct(p.now)} now, and the note is taken at ${pct(f.enough)}.`;
 }
 
 /** The partner's share, where it's what the record says mattered: at most one sentence. */
@@ -426,13 +445,13 @@ export function showingCandidates(f: ShowingFacts): string[] {
     candidates = lead0.flatMap((m) => leads.flatMap((lead) => STEP_INTROS.map((intro) => joined(m, lead, with_, `${intro}${f.note}`))));
   } else if (s === 'persistent') {
     // Given often and still open: what's still open and where to try another way, not the whole note again.
-    const open = stillOpen(f);
+    const open = stillOpen(f, Boolean(f.subject));
     candidates = recurringLeads(f).map((lead) => joined(lead, open, 'A Note That Keeps Coming Back, on the piece’s card, offers other ways at it.'));
   } else {
-    const leads = s === 'partial' ? partialLeads(f) : s === 'slipped' ? slippedLeads(f) : s === 'recurring' ? recurringLeads(f) : newLeads(d, f);
+    const leads = (m: string) => (s === 'partial' ? partialLeads(f, Boolean(m) && m.includes(f.before!.on)) : s === 'slipped' ? slippedLeads(f) : s === 'recurring' ? recurringLeads(f) : newLeads(d, f));
     const fix = f.remedy ? `To work on it: ${f.remedy}.` : undefined;
     const open = s === 'recurring' ? stillOpen(f) : undefined;
-    candidates = front.flatMap((m) => leads.map((lead) => joined(m, lead, f.note, open, fix)));
+    candidates = front.flatMap((m) => leads(m).map((lead) => joined(m, lead, f.note, open, fix)));
   }
   return candidates;
 }

@@ -259,7 +259,7 @@ export function classMoment(sim: Simulation, person: Person, day: SchoolDate): M
     // Those who care for the work or the room ask; anyone you helped with their lines asks in turn; nobody who has
     // stopped asking (`stoppedAsking`) does.
     const returning = owesYouLines(mate, now);
-    if (!recent(mate, 'study') && (pr === 'craft' || pr === 'people' || returning) && trustOf(mate) >= WORK.trust.wary && !stoppedAsking(mate, now)) cands.push({ kind: 'study', mate: i, build: () => studyEvening(person, i, day, returning) });
+    if (!recent(mate, 'study') && (pr === 'craft' || pr === 'people' || returning) && trustOf(mate) >= WORK.trust.wary && !stoppedAsking(mate, now)) cands.push({ kind: 'study', mate: i, build: () => studyEvening(person, i, day, returning, (personOf(mate).moments ?? []).filter((m) => m.kind === 'study')) });
     // A request for help: those under pressure to be seen, or with a life outside, are behind.
     // From 2026-10-20 (brief 16) a request asked before says so, and how it was answered last time, from the classmate's own
     // record (`moments`): until then each was the first, word for word, seven times a year from the same classmate.
@@ -329,13 +329,17 @@ function disagreement(a: Assignment, mate: Classmate, draw: number): Omit<Moment
 }
 
 /** An evening in the next three a classmate is free to run lines, at seven. */
-function studyEvening(person: Person, i: number, day: SchoolDate, returning = false): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
+function studyEvening(person: Person, i: number, day: SchoolDate, returning = false, before: readonly { choice?: string }[] = []): Omit<Moment, 'id' | 'mate' | 'kind' | 'at' | 'until' | 'status'> | undefined {
   for (let n = 1; n <= 3; n += 1) {
     const d = new Date(Date.UTC(day.year, day.month - 1, day.day + n));
     const when = instantFromZoned({ year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate(), hour: CLASS.study.hour, minute: 0 }, zone());
     if (mateBusy(person, i, when, CLASS.study.minutes)) continue;
     const mate = person.school!.classmates[i]!;
-    return { when, text: `${first(mate)} asks if you’d run lines together for an hour on ${formatDate(when, zone())} at ${formatTime(when, zone())}.${returning ? ' You ran theirs when they were behind.' : ''}` };
+    // Asked before, said so, with how the last went (from 2026-10-20, brief 16, the classmate's own `moments`): until then
+    // each read as the first, fourteen times in a year from one classmate in brief 16's baseline.
+    const last = before.at(-1)?.choice;
+    const again = before.length ? (last === 'yes' ? ' You ran lines together the last time they asked.' : last === 'no' ? ' Last time, you couldn’t.' : ' They’ve asked before.') : '';
+    return { when, text: `${first(mate)} asks if you’d run lines together for an hour on ${formatDate(when, zone())} at ${formatTime(when, zone())}.${returning ? ' You ran theirs when they were behind.' : again}` };
   }
   return undefined;
 }

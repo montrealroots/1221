@@ -80,7 +80,7 @@ describe('journey: a production, from the read-through to the closing night', ()
     for (let i = 1; i < notes.length; i += 1) {
       const a = notes[i - 1]!, b = notes[i]!;
       const same = a.focus.kind === 'craft' && b.focus.kind === 'craft' ? a.focus.note === b.focus.note && a.focus.segment === b.focus.segment : JSON.stringify(a.focus) === JSON.stringify(b.focus);
-      if (same) expect(b.text).toMatch(a.taken ? /^(?:Better since the last note|That’s moved since the last note|The last note took)\. / : /^(?:Still|Same note as at the last call|Not there yet): /);
+      if (same) expect(b.text).toMatch(a.taken ? /^(?:Better since the last note|That’s moved since the last note|The last note took)\. / : /^(?:Still: |Same note as at the last call\. |Not there yet\. )/);
     }
     const factor = nightFactor(casting());
     expect(factor).toBeGreaterThan(1);
@@ -104,6 +104,6 @@ describe('journey: a production, from the read-through to the closing night', ()
     const notes = (hasProcess(c) ? c.process : undefined)!.notes;
     const untaken = notes.filter((n, i) => i > 0 && notes[i - 1]!.taken === false && JSON.stringify(notes[i - 1]!.focus) === JSON.stringify(n.focus));
     expect(untaken.length).toBeGreaterThan(0);
-    for (const n of untaken) expect(n.text).toMatch(/^(?:Still|Same note as at the last call|Not there yet): /);
+    for (const n of untaken) expect(n.text).toMatch(/^(?:Still: |Same note as at the last call\. |Not there yet\. )/);
   }, 300_000);
 });

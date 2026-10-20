@@ -634,7 +634,11 @@ describe('h-needs', () => {
     const top = order.filter((n) => { const k = `${n.title}|${n.body}`; if (seenTitles.has(k)) return false; seenTitles.add(k); return true; }).slice(0, 6);
     expect(items).toHaveLength(6);
     expect(top.slice(0, 3).map((n) => n.title)).toEqual(['A Notice Of Academic Concern', 'A Deep Cut', 'Welcome To The Class Of 2029']);
-    expect(top.filter((n) => n.title === 'A Word On Your Coursework')).toHaveLength(2);
+    const warnings = top.filter((n) => n.title === 'A Word On Your Coursework').sort((x, y) => x.at - y.at);
+    expect(warnings).toHaveLength(2);
+    // The spring's says it's the second, after the fall's (from 2026-10-20, brief 16): until then each read as the first.
+    expect(warnings[0]!.body).toContain('. This is a warning. ');
+    expect(warnings[1]!.body).toContain('. This is your second coursework warning, after one last term. ');
     expect(items).toEqual(top.map((n) => words(`${n.title} ${n.body} ${ago(n.at, sim.now)}`)));
     // Each has somewhere to go: the return's Go There and six more.
     expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(7);

@@ -37,7 +37,11 @@ const COUNTABLE = [
 const ALLOWED = {
   // An ordinal, not a count: "the 3rd time it's been given" (from 2026-10-08), and the Still There notice's "for the
   // fourth time" (from 2026-10-19, brief 15).
-  'src/engine/systems/coursework.ts': ['${ordinal(before.given + 1)} time', '${ordinal(rec.given)} time'],
+  'src/engine/systems/coursework.ts': ['${ordinal(before.given + 1)} time', '${ordinal(rec.given)} time', '${ordinal(m.stoodUp)} time'],
+  // Ordinals again, and a band's label before "piece" (from 2026-10-20, brief 16's feedback): "the third time you’ve had
+  // this note", "the fourth piece in a row", "the Strong piece on …", "the 2nd time they’ve asked".
+  'src/engine/systems/feedback.ts': ['${ordinal(run)} piece', '${p.label} piece', '${ordinal(n)} time'],
+  'src/engine/systems/classmates.ts': ['${nth(asked.length + 1)} time'],
   // Figures printed to a decimal place read correctly at one: "1.0 hours".
   'src/engine/systems/life.ts': ['hours.toFixed(1)', 'available.toFixed(1)'],
   // Populations, printed with thousands separators.

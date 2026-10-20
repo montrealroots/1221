@@ -141,7 +141,7 @@ describe('a weakness that keeps coming back', () => {
     expect(shown[1]!.feedback!.text).not.toMatch(/ time you’ve had this note/);
     expect(shown[2]!.feedback!.text).toMatch(new RegExp(`${MOVED}(?:This is the third time you’ve had this note, the last in Acting I on October 8, 2026, and it’s still there\\.|The same note a third time: it was last given in Acting I, on October 8, 2026\\.|Still open after two notes, the last in Acting I on October 8, 2026\\.)`));
     // Given three times and still open, the fourth is said short (from 2026-10-20, brief 16): the count, what's still open,
-    // and where to try another way, not the whole note again.
-    expect(shown[3]!.feedback!.text).toMatch(/^(?:This is the fourth time you’ve had this note, the last in Acting I on October 15, 2026, and it’s still there\.|The same note a fourth time: it was last given in Acting I, on October 15, 2026\.|Still open after three notes, the last in Acting I on October 15, 2026\.) Lines is at 20%, and the note is taken at 75%\. A Note That Keeps Coming Back, on the piece’s card, offers other ways at it\.$/);
+    // and where to try another way, not the whole note again; named by what it's on, since its own words aren't said.
+    expect(shown[3]!.feedback!.text).toMatch(/^(?:This is the fourth time you’ve had the note on Lines, the last in Acting I on October 15, 2026\.|A fourth time for the note on Lines: it was last given in Acting I, on October 15, 2026\.|The note on Lines is still open after three notes, the last in Acting I on October 15, 2026\.) It’s at 20% now, and the note is taken at 75%\. A Note That Keeps Coming Back, on the piece’s card, offers other ways at it\.$/);
   });
 });

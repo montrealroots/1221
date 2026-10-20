@@ -1151,14 +1151,19 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   // "It didn’t come together today. … When it does come together, here’s what to try next.", "You had this note … and
   // it’s still there.", the same in every course.
   const dayWords = (key: string) => formatDate(at(parse(key), 12), zone());
-  const earlier = cw.assignments.filter((x) => x.course === a.course && x.id !== a.id && x.shown && x.shown.at < when).sort((x, y) => x.shown!.at - y.shown!.at);
+  // The piece's own earlier round counts as the course's last piece (found reading brief 16's first transcripts: a second
+  // round was compared with the piece before the first).
+  const earlier = cw.assignments.filter((x) => x.course === a.course && x.shown && x.shown.at < when).sort((x, y) => x.shown!.at - y.shown!.at);
   const prev = earlier.at(-1);
   let run = strongBand(band) ? 1 : 0;
   for (const x of [...earlier].reverse()) { if (!run || !strongBand(x.shown!.band)) break; run += 1; }
   const discipline = disciplineOf(c.skills);
-  const recent = cw.assignments.filter((x) => x.id !== a.id && x.shown && x.shown.at < when && x.feedback && disciplineOf(courseOf(x.course)?.skills ?? []) === discipline).sort((x, y) => x.shown!.at - y.shown!.at).slice(-8).map((x) => x.feedback!.text);
+  const recent = cw.assignments.filter((x) => x.shown && x.shown.at < when && x.feedback && disciplineOf(courseOf(x.course)?.skills ?? []) === discipline).sort((x, y) => x.shown!.at - y.shown!.at).slice(-8).map((x) => x.feedback!.text);
   const heldLimit = held ? limits.limits[0] : undefined;
   const heldExercise = heldLimit && (heldLimit.kind === 'ability' || heldLimit.kind === 'technique') ? exerciseFor(heldLimit.what as never)?.label : undefined;
+  // The same limit held the course's last piece back, and was said then: said as continuity, with when.
+  const prevChief = prev && prev.feedback?.kind === 'advanced' && !strongBand(prev.shown!.band) ? (person.work ?? []).find((w) => w.at === prev.shown!.at)?.limits[0] : undefined;
+  const heldAgain = heldLimit && prevChief && prevChief.kind === heldLimit.kind && prevChief.what === heldLimit.what ? formatDate(prev!.shown!.at, zone()) : undefined;
   const day = judged.limits.find((l) => l.kind === 'condition');
   const share = showing.together && a.partner !== undefined ? showing.together : undefined;
   const mate = share ? (/^(?:a|an|the) (.+)$/i.exec(share.partner)?.[1] ? `The ${(/^(?:a|an|the) (.+)$/i.exec(share.partner)![1]!).toLowerCase()}` : share.partner.split(' ')[0]!) : undefined;
@@ -1168,11 +1173,12 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
     run, best: earlier.length > 0 && earlier.every((x) => BAND_RANK[x.shown!.band] < BAND_RANK[band]),
     kind, note: body, ...(focus.kind !== 'advanced' ? { about: focus.kind === 'dim' ? 'part' as const : focus.kind } : {}),
     ...(focus.kind === 'dim' && focus.dim !== 'partner' ? { remedy: remedyWords(a, focus.dim) } : {}),
-    ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}) } } : {}),
+    ...(held && heldLimit ? { held: { words: held, kind: heldLimit.kind, what: heldLimit.what, ...(heldExercise ? { exercise: heldExercise } : {}), ...(heldAgain ? { again: heldAgain } : {}) } } : {}),
     ...(day ? { condition: { what: day.what, whole: day.whole ?? 0, words: day.label } } : {}),
     ...(share && mate ? { partner: { first: mate, lifted: share.overall - judged.overall >= 1, behind: (together?.parts.prep ?? 1) < 0.6, ...(share.slip ? { slip: { at: share.slip.at, covered: share.slip.covered >= 0.5 } } : {}) } } : {}),
     ...(prior ? { before: { on: dayWords(prior.on), course: prior.course, given: prior.given, ...(prior.taken ? { taken: dayWords(prior.taken) } : {}) } } : {}),
     ...(focus.kind === 'dim' ? { part: { label: t.dims[focus.dim]?.label ?? focus.dim, ...(prior?.level !== undefined ? { then: prior.level } : {}), ...(pick?.level !== undefined ? { now: pick.level } : {}) } } : {}),
+    subject: focus.kind === 'dim' ? (t.dims[focus.dim]?.label ?? noteSubject(noteKey(focus))) : focus.kind === 'choice' ? `your answer to “${questionsFor(a).find(({ q }) => q.id === focus.question)?.q.label ?? noteSubject(noteKey(focus))}”` : focus.kind === 'skill' ? (SKILL_WORDS[focus.skill] ?? labelOf(focus.skill).toLowerCase()) : undefined,
     persistent: kind === 'recurring' && (prior?.given ?? 0) >= LEARNING.persistent, enough: LEARNING.enough, recent,
   });
   a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
@@ -1357,6 +1363,10 @@ export function termWarning(sim: Simulation, person: Person, a: Assignment): voi
   if (tally.shown < TERM_CHECK.after) return;
   const mark = ESTIMATE.coursework.unready;
   if (tally.unready < (mark - TERM_CHECK.margin) * tally.shown) return;
+  // A warning after one before says so (from 2026-10-20, brief 16, "Repetition says what changed"): until then each
+  // term's read as the first, three in a row for brief 16's underprepared student.
+  const prior = [...(cw.warned ?? [])];
+  const which = prior.length ? `This is your ${ordinal(prior.length + 1)} coursework warning${prior.includes(a.term - 1) ? ', after one last term' : ''}.` : 'This is a warning.';
   (cw.warned ??= []).push(a.term);
   const top = shortCause(person, tally.unreadyShown);
   const of = tally.unreadyShown.length === 1 ? 'the one you showed' : `${top?.kind === 'part' ? top.n : 0} of the ${tally.unreadyShown.length} you showed`;
@@ -1374,7 +1384,7 @@ export function termWarning(sim: Simulation, person: Person, a: Assignment): voi
   // its longest it ran to 144; it runs to 119 now (`tests/language-dynamic.test.ts`). Until then it said "the faculty reviews the term on", "the term falls short of what the
   // program asks, and the review would", and that Shown Today said "how it would do if you showed it today", which the
   // line's own name says.
-  sim.notify({ category: 'school', title: 'A Word On Your Coursework', body: `${counted}. This is a warning. The term review is on ${formatDate(review, zone())}. If ${share} or more of the term’s pieces are Unready or not shown by then, the review would ${shortTermWords(school, a.term)}.${cause} ${set ? `${set === 1 ? 'One piece is' : `${smallWords(set).replace(/^\w/, (c) => c.toUpperCase())} pieces are`} set and still to be shown.` : 'Everything set so far has been shown.'} On the Coursework tab, each open piece’s Shown Today line says what’s holding it back.`, importance: 75, route: '/workspace/school' });
+  sim.notify({ category: 'school', title: 'A Word On Your Coursework', body: `${counted}. ${which} The term review is on ${formatDate(review, zone())}. If ${share} or more of the term’s pieces are Unready or not shown by then, the review would ${shortTermWords(school, a.term)}.${cause} ${set ? `${set === 1 ? 'One piece is' : `${smallWords(set).replace(/^\w/, (c) => c.toUpperCase())} pieces are`} set and still to be shown.` : 'Everything set so far has been shown.'} On the Coursework tab, each open piece’s Shown Today line says what’s holding it back.`, importance: 75, route: '/workspace/school' });
 }
 
 /** Whether a note was taken by its revision: the part risen enough, the choice now supported, or the note worked on. */

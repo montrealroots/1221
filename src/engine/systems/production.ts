@@ -356,13 +356,15 @@ export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { targ
   // whether it moved it: a way that changed nothing is said to have, not called better.
   const a = before.answer;
   const moved = a?.solution ? Math.max(a.after, a.now ?? a.after) - a.before : 0;
-  const tried = a?.solution ? ` You tried ${(a.label ?? ADJUSTMENTS[a.solution as AdjustmentId]?.label ?? a.solution).toLowerCase()}: ${a.before} then, ${a.now ?? a.after} now${before.outcome === 'learned' || (before.outcome === undefined && moved < WORKBOOK.evidence && !before.taken) ? (Math.min(a.after, a.now ?? a.after) - a.before <= -WORKBOOK.evidence ? ', which made it worse: worth knowing, and not the answer' : ', which didn’t move it: worth knowing, and not the answer') : ''}.` : '';
+  // The way tried named as its control names it (from 2026-10-20, brief 16): until then lower-cased into the sentence,
+  // "You tried work it slowly".
+  const tried = a?.solution ? ` You tried ${a.label ?? ADJUSTMENTS[a.solution as AdjustmentId]?.label ?? a.solution}: ${a.before} then, ${a.now ?? a.after} now${before.outcome === 'learned' || (before.outcome === undefined && moved < WORKBOOK.evidence && !before.taken) ? (Math.min(a.after, a.now ?? a.after) - a.before <= -WORKBOOK.evidence ? ', which made it worse: worth knowing, and not the answer' : ', which didn’t move it: worth knowing, and not the answer') : ''}.` : '';
   // Said a few true ways, where the part's own last notes are passed (from 2026-10-20, brief 16, `pick`): until then every
   // note after one taken began "Better since the last note." and every one not taken "Still:", 17 and 29 of 85 notes in
   // brief 16's baseline. Without them, the first way, as before.
   const options = before.taken
     ? [`Better since the last note.${tried} ${words}${history}`, `That’s moved since the last note.${tried} Now: ${continued(words)}${history}`, `The last note took.${tried} Next: ${continued(words)}${history}`]
-    : [`Still: ${continued(words)}${tried}${history}`, `Same note as at the last call: ${continued(words)}${tried}${history}`, `Not there yet: ${continued(words)}${tried}${history}`];
+    : [`Still: ${continued(words)}${tried}${history}`, `Same note as at the last call. ${words}${tried}${history}`, `Not there yet. ${words}${tried}${history}`];
   return memory ? pick(options, memory.key, memory.recent) : options[0]!;
 }
 

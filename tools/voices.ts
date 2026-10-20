@@ -43,7 +43,8 @@ import { templateById } from '../src/engine/content/coursework';
 import { COURSES } from '../src/engine/content/school';
 import { momentsOf } from '../src/engine/systems/classmates';
 import { WHICH, hasProcess, holderFor } from '../src/engine/systems/production';
-import { adviceFor } from '../src/engine/systems/next-steps';
+import { adviceFor, adviceSummary } from '../src/engine/systems/next-steps';
+import { STEP, disciplineOf, type Discipline } from '../src/engine/systems/feedback';
 import { careFor } from '../src/engine/systems/health';
 import { mayHurt } from '../src/engine/systems/injury';
 import { TECHNIQUES } from '../src/engine/content/abilities';
@@ -57,7 +58,7 @@ const courseOf = (code: string) => COURSES.find((c) => c.code === code);
 const argv = process.argv.slice(2).filter((a) => a !== '--');
 const arg = (n: string, d: string) => { const i = argv.indexOf(`--${n}`); return i >= 0 ? argv[i + 1]! : d; };
 
-interface Said { at: string; kind: 'notice' | 'showing' | 'director' | 'moment' | 'advice'; speaker: string; title?: string; text: string; band?: string; note?: string; course?: string; piece?: string }
+interface Said { at: string; kind: 'notice' | 'showing' | 'director' | 'moment' | 'advice'; speaker: string; title?: string; text: string; band?: string; note?: string; course?: string; piece?: string; details?: string }
 
 const SCENARIOS: Record<string, { config: Record<string, unknown>; setup?: (sim: Simulation) => void; underprepared?: (day: string) => boolean; extra?: boolean; adverse?: boolean }> = {
   attentive: { config: { homeRegionId: 'us-ny-newyork', pronouns: 'she/her' } },
@@ -149,7 +150,10 @@ function play(name: string, seed: string, months: number): { said: Said[]; reloa
         read();
         if (new Date(sim.now).getUTCDay() === 0) {
           const recs = adviceFor(sim, sim.player);
-          if (recs.length) said.push({ at: day, kind: 'advice', speaker: 'profile', text: recs.map((r) => [`${r.label}.`, r.why, r.standing, r.next, r.assumes, r.attention].filter(Boolean).join(' ')).join('\n'), note: String(recs.length) });
+          // As the card draws it (from 2026-10-20, brief 16's `adviceSummary`): what's shown, and what's behind Why This
+          // Recommendation. Until then the block was every recommendation's whole reasoning, all of it shown.
+          const card = recs.length ? adviceSummary(sim, sim.player, recs) : undefined;
+          if (card) said.push({ at: day, kind: 'advice', speaker: 'profile', text: [`${card.what}. ${card.why}`, card.action, card.estimate, card.unavailable].filter(Boolean).join('\n'), details: card.details.map((d) => `${d.heading}: ${d.lines.join(' ')}`).join('\n'), note: String(recs.length) });
         }
         if (sim.now - lastReload >= 30 * MS_DAY) {
           sim = loadSave(deserialise(serialise(sim.universe)) as never);
@@ -217,15 +221,32 @@ export function summarize(runs: { scenario: string; seed: string; said: Said[] }
   const shared = [...courseOfSentence.entries()].filter(([, c]) => c.size >= 2).sort((a, b) => b[1].size - a[1].size || (countOfSentence.get(b[0]) ?? 0) - (countOfSentence.get(a[0]) ?? 0));
   const sharedShowings = showings.filter((x) => sentences(x.text).some((s) => (courseOfSentence.get(norm(s).replace(/You played [^.]+ in [^.]+\./, 'You played ROLE in PLAY.'))?.size ?? 0) >= 2)).length;
   out.shared = { sentencesFromTwoOrMoreCourses: shared.length, showingsWithOne: sharedShowings, top: shared.slice(0, 12).map(([s, c]) => ({ sentence: s, courses: c.size, times: countOfSentence.get(s) })) };
+  // Whose words the step beyond was (from 2026-10-20, brief 16): a showing's step said in another discipline's terms, as
+  // when Voice I heard acting's "trust the text in them". Each course's discipline is read from its skills
+  // (`disciplineOf`); a step is found by its words in any discipline's table (`STEP`, acting's being `ADVANCED`).
+  const discOf = (name?: string) => { const c = COURSES.find((x) => x.name === name); return c ? disciplineOf(c.skills) : undefined; };
+  const stepOf = (text: string) => (Object.entries(STEP) as [Discipline, Record<string, string>][]).flatMap(([d, t]) => Object.values(t).filter((w) => text.includes(w)).map(() => d));
+  const byDisc: Record<string, { showings: number; openings: Set<string>; withStep: number; anotherDisciplinesStep: number }> = {};
+  for (const x of showings) {
+    const d = discOf(x.course) ?? 'unknown';
+    const e = (byDisc[d] ??= { showings: 0, openings: new Set(), withStep: 0, anotherDisciplinesStep: 0 });
+    e.showings += 1; e.openings.add(opening(x.text));
+    const found = stepOf(x.text);
+    if (found.length) { e.withStep += 1; if (!found.includes(d as Discipline)) e.anotherDisciplinesStep += 1; }
+  }
+  out.voices = Object.fromEntries(Object.entries(byDisc).map(([d, e]) => [d, { showings: e.showings, distinctOpenings: e.openings.size, withAStep: e.withStep, stepInAnotherDisciplinesWords: e.anotherDisciplinesStep }]));
   // The Profile's advice, each Sunday.
   const advice = runs.flatMap((r) => r.said.filter((x) => x.kind === 'advice'));
+  // Shown is what the screen shows before anything is opened; with the details, everything there is to read. A run made
+  // before brief 16's card has no details: all of it was shown.
   const blocks = advice.map((x) => {
-    const ss = sentences(x.text.replace(/\n/g, ' ')).map(norm);
+    const all = `${x.text}\n${x.details ?? ''}`;
+    const ss = sentences(all.replace(/\n/g, ' ')).map(norm);
     const again = ss.filter((s, i) => ss.indexOf(s) !== i).length;
-    return { words: words(x.text), figures: (x.text.match(/\d+(?:\.\d+)?/g) ?? []).length, items: Number(x.note ?? 0), sentencesAgain: again };
+    return { words: words(x.text), figures: (x.text.match(/\d+(?:\.\d+)?/g) ?? []).length, allWords: words(all), allFigures: (all.match(/\d+(?:\.\d+)?/g) ?? []).length, items: Number(x.note ?? 0), sentencesAgain: again };
   });
   const mean = (xs: number[]) => (xs.length ? Math.round((xs.reduce((a, b) => a + b, 0) / xs.length) * 10) / 10 : 0);
-  out.advice = { blocks: blocks.length, meanWords: mean(blocks.map((b) => b.words)), maxWords: Math.max(0, ...blocks.map((b) => b.words)), meanFigures: mean(blocks.map((b) => b.figures)), meanItems: mean(blocks.map((b) => b.items)), meanSentencesSaidAgainInTheBlock: mean(blocks.map((b) => b.sentencesAgain)) };
+  out.advice = { blocks: blocks.length, meanWords: mean(blocks.map((b) => b.words)), maxWords: Math.max(0, ...blocks.map((b) => b.words)), meanFigures: mean(blocks.map((b) => b.figures)), meanWordsWithDetails: mean(blocks.map((b) => b.allWords)), maxWordsWithDetails: Math.max(0, ...blocks.map((b) => b.allWords)), meanFiguresWithDetails: mean(blocks.map((b) => b.allFigures)), meanItems: mean(blocks.map((b) => b.items)), meanSentencesSaidAgainInTheBlock: mean(blocks.map((b) => b.sentencesAgain)) };
   // Directors' notes.
   const dir = runs.flatMap((r) => r.said.filter((x) => x.kind === 'director'));
   const dOpen = new Map<string, number>(); let dRep = 0;
